@@ -1,0 +1,96 @@
+{
+  "version": "0.38.0",
+  "passed": true,
+  "verified_at": 1791047936.314142,
+  "tests_run": 379,
+  "current_tests_passed": 309,
+  "new_tests": 18,
+  "historical_combat_tests_skipped": 70,
+  "failures": 0,
+  "errors": 0,
+  "test_modules": [
+    "tests.test_offline_scope_030",
+    "tests.test_damage",
+    "tests.test_timing",
+    "tests.test_relics",
+    "tests.test_relic_extension",
+    "tests.test_relic_conditions_022",
+    "tests.test_relic_events_022",
+    "tests.test_relic_candidates_025",
+    "tests.test_deployment_relics_027",
+    "tests.test_mantra_events_024",
+    "tests.test_report",
+    "tests.test_run_modifiers",
+    "tests.test_wine_timing",
+    "tests.test_difficulty_rules",
+    "tests.test_target_memory",
+    "tests.test_received_sp_026",
+    "tests.test_event_sp_028",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_relic_enemy_modifiers_follow_stage_and_difficulty_and_are_reported",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_portal_keeps_main_depth_and_missing_context_does_not_guess",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_boss_reduction_is_independent_from_relic_vulnerability_and_preserves_healing_and_timing",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_emergency_stage_and_region_use_pinned_enemy_instead_of_manual_defense",
+    "tests.test_offline_relics_031",
+    "tests.test_spawn_hp_033",
+    "tests.test_relic_grade_sync_032",
+    "tests.test_run_reuse_guards_032",
+    "tests.test_sampling_flow",
+    "tests.test_neural_relic_034",
+    "tests.test_neural_sources_035",
+    "tests.test_phase_flow_036",
+    "tests.test_impact_delay_037",
+    "tests.test_summon_modules_038"
+  ],
+  "exact_public_output_cases": 732,
+  "module_matrix_cases": 264,
+  "eligible_module_cases": 108,
+  "unaffected_module_cases": 156,
+  "all_relic_module_damage_invariance_cases": 544,
+  "damage_timing_owner_stats_unchanged": true,
+  "test_log": ".cache/summon-038/tests.log",
+  "test_log_sha256": "5aa14b209a3d6b875dda04e5a1c15c930e6e49f6c13bde46ebe2efce60853679",
+  "data_rule_counts": {
+    "non_output": 52,
+    "numeric": 119,
+    "pending": 61,
+    "conditional": 28,
+    "partial": 12
+  },
+  "offline_scope": {
+    "items": {
+      "reference_only": 75,
+      "mixed": 4,
+      "offline": 193
+    },
+    "offline_mechanism_gaps": {
+      "pending": 10,
+      "partial": 9
+    }
+  },
+  "baseline_hashes": {
+    ".cache/summon-038/before-public-results.json": "9690736ec00bdb0d53ed97ca308a600d7d9d2f44cc62e9cdcecbf07f0378c313",
+    ".cache/summon-038/before-module-results.json": "068cd37113dd001d3fc901e79a7441f03a7256b4add321cc672c76fc9702d73a"
+  },
+  "source_hashes": {
+    "rouge/summons.py": "866390a63d7cc793712ecd953ad822f0eecba69bd7b86664dadccbe728f8fcf9",
+    "rouge/operator_engine.py": "795950a506fd83cd8ddc8fc4a55e3267f3419b19ce505551e006f913e42c45ec",
+    "rouge/relics.py": "9444a8a6dc46ce2ad9f75860a9c06eb17ca739e1d07c26fef72b5ee18bf7ce48",
+    "rouge/reporting.py": "b74509521e82e630b274cf44007a3eb0d8e24c8104a9552fae6154920b9bbec3",
+    "rouge/operator_options.py": "7e1fb1d7a50d5f33383c5e5c25987041bead6f28ed7d10c00d6c0a9af1ddac36",
+    "rouge/data/summon-module-rules.json": "159a89fbd132bf81e4c7422b4d6a8ab038592d2c1b858a3a1c1202a4deb4cbda",
+    "tests/test_summon_modules_038.py": "5ea0d86ac3c362566969792244c2840844d57d7ef1588f47fa5d7597cde679a3",
+    "scripts/verify_summon_modules_038.py": "f45273ecfbedd84d0f53a7ff2ea1b767d5e3e77a83c9939449ec143f850083ae",
+    "scripts/capture_summon_baseline_038.py": "dffbc3e63785b0a687dd1e68d8d40c873847f1d27ddab8352834ed72c58f1cc0"
+  },
+  "elapsed_seconds": 76.48250110005029,
+  "chat_requests": 0,
+  "game_actions": 0,
+  "private_state_used": false,
+  "limits": [
+    "Only Deepcolor SUM-Y token cost, stock and standalone HP references are implemented.",
+    "The module HP modifier layer with other HP sources is unverified; the composite and dependent percentage regeneration stay unknown.",
+    "Stock is not concurrent count. The offline model still supports at most the unlocked base count, up to4.",
+    "Other summon modules, real animation timings and P1-P3 tasks remain incomplete.",
+    "No new recognition throughput or complete inventory accuracy claim."
+  ]
+}

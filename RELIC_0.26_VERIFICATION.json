@@ -1,0 +1,57 @@
+{
+  "version": "0.26.0",
+  "verified_at": 1790998818.467909,
+  "passed": true,
+  "tests": 169,
+  "failures": 0,
+  "errors": 0,
+  "seconds": 2.484,
+  "matrix_skills": 87,
+  "matrix_cases": 696,
+  "matrix_modes": [
+    "frames",
+    "continuous"
+  ],
+  "independent_oracle_cases": 36,
+  "wine_oracle_phases": 46,
+  "data_rule_counts": {
+    "non_output": 52,
+    "numeric": 118,
+    "pending": 66,
+    "conditional": 25,
+    "partial": 11
+  },
+  "changed_relics": [
+    "rogue_6_relic_legacy_118"
+  ],
+  "changed_bindings": [
+    "rogue_6_from_relic_4"
+  ],
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "source_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+  "source_sha256_files": {
+    "scripts/build_relic_mechanics.py": "a18ee611fefbf9dbebe950d429384ab285f2df12fd1f7d6cb8c91d7e10396a72",
+    "rouge/relics.py": "b0f4eadd67c0d8b1d70f3f2a588f8d3de6d3ba5fed5d3ef6fe32ced4e78eac20",
+    "rouge/sp_events.py": "012819245429013d4747a5b97a53b256cc885f65bdf6bcec5dd4868d18fb743e",
+    "rouge/timing.py": "b7bf312b8c9853dba226ab8b76d56aaef19b45b12ca4331148513bf1fb13236d",
+    "rouge/damage.py": "9de45d6921844a03428620f05b9a8a8eaab419e74dffc748ce1b7d53a73dcad8",
+    "rouge/estimate.py": "aa0c48b0b20aa10522371d39b3ad7fde38a43bb6af8026c2951c097fb7c1283d",
+    "rouge/operator_engine.py": "302213601956e04ae6014f97cba22037fb2381bde8191c9bb92bc51ef9b7177b",
+    "rouge/reporting.py": "7f20a59eacbe719225f1645e55689f2f5758418cee73fdc2c54df1f767915054",
+    "rouge/app.py": "18ce07299bc045fd09665a9609e8450e9c78f1f94f9fb570c104a535af3c0df6",
+    "rouge/data/relic-mechanics.json": "cca56756f57660a9025f9daee6db06d4e0166a8f1de757ae086d5d604ce571e1",
+    "tests/test_received_sp_026.py": "f95cb86934eef459be7fd7ab1c3f9ad3e0b10c432c1ab946af5a38213c8fa8f1",
+    "scripts/verify_received_sp_026.py": "8669c258d76696dee5494afe767ead38caa113c5c21b00d4d3759a513ae09983"
+  },
+  "evidence": ".cache/relic-026/evidence.json",
+  "chat_requests": 0,
+  "game_actions": 0,
+  "limits": [
+    "Explicit offline callback tables; no automatic incoming-hit or recipient reading.",
+    "Attack, damage and elemental-loss callbacks cannot be inferred from one another.",
+    "Non-forced SP blocking and next-tick credit are reference assumptions pending client calibration.",
+    "One initial phase and one cycle; no steady-state replay or unlisted future hits.",
+    "Wine phase remains a marginal envelope; its hidden blocking script is unverified.",
+    "No new live incoming-hit measurement or full OCR performance replay."
+  ]
+}

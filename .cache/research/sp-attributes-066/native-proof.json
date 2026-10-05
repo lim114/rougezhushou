@@ -1,0 +1,100 @@
+{
+  "passed": true,
+  "dll_sha256": "6edbc00b11e016c8935bbc45f158d5363f63d35038b0a69f8297612235e533ce",
+  "metadata_sha256": "ee7f1239e1cff67620a7964d651189dbb5c98e13699169096be2a907fd541118",
+  "source_sha256": {
+    ".cache/research/sp-attributes-066/globals-prefabs.json": "b93cc9ce51c08ea9aeb5f1badd5e515926f2aa495479f724293efac26fdcc38e",
+    ".cache/research/sp-attributes-066/abilities-prefabs.json": "6d3780903a1b18ba018a7c294a34541b736020b32873a2ffc95436dc9cf91cda",
+    ".cache/research/sp-attributes-066/global-selector-cfg.json": "29dc13f558400587abfb005cd589b9a5588e69046fcb1b1ba9d0a31339432799",
+    ".cache/research/sp-attributes-066/sp-application-cfg.json": "8c5f4d42dd3bf467a0f51b75347eecf504f3bb677c1cc56ecdeb6882df5784ce",
+    ".cache/research/sp-attributes-066/sp-helpers-cfg.json": "24777544c4094a3ce9c22c71c70dee557461021d7471b6f79e064c276f02afc7",
+    ".cache/research/sp-attributes-066/target-metadata.json": "276976c11dfd92397dd6fed5dba30e2fb1d809ed5ed338abb58a687bc475610d",
+    ".cache/research/sp-attributes-066/read_target_metadata.py": "ce0d0d6e666ba904ece9f694185fc638ab3703e048ad6d28d2a970604d530a58",
+    ".cache/research/sp-attributes-066/read_globals.py": "7a739e47b0610c2148a544f73006d028dcf277ac16639aafb6601b3663f40516",
+    ".cache/research/sp-attributes-066/read_abilities.py": "54cff63cec70d30032a3efd45fb2f7798f903d568d25775738c856a1c6156ff8",
+    ".cache/research/attribute-boundaries-065/native-proof.json": "17cd713628b3822fe2c505239eadede28682cf781b27be91907018d639dea8a6",
+    ".cache/research/p1-native-runtime-054/metadata-native-fields.json": "13f14a94a1546617dee825aa17be6e0931e28d886c587ec331adabafedfd8c29",
+    ".cache/research/p1-native-runtime-054/read_metadata_static.py": "12d1af3cec7ca4a3df8232730df8167d95499594cc180248ce7717089207dc20",
+    ".cache/research/p1-native-runtime-054/blackboard-timers.json": "77b8477db88522e749b541729d84da5968cf5c8781e7f174618302476afd9f57",
+    ".cache/research/p1-native-runtime-054/relic-integration-summary.json": "4a266d54a67bda8f329f00f985af7dd00cef0acee7699448cc9f51ff5911abff",
+    ".cache/research/p1-runtime-source-054/read_unity_stdlib.py": "3e039275ee752c274c0c5f8dde5957f5e40b6ec2bb3ba8ff96bf9e2b159ecac3",
+    ".cache/research/p1-native-cost-054/extract_cfg.py": "e930594c8cb33fb2d0bf08137f3354100b81903a86b1417d992617e5e0b53dff",
+    ".cache/game-data/roguelike_topic_table.json": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+    "scripts/build_relic_mechanics.py": "77af02714f4be22296a702b540ad3374ab6b07ac8f1549d543aa8229f1555f1f",
+    "rouge/data/relic-mechanics.json": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47",
+    "scripts/verify_sp_sources_066.py": "32be8e7b1910b4002d858effed300e0f2f7c90feeb5437c93e30e77f7920f125"
+  },
+  "methods_checked": 11,
+  "instructions_checked": 1589,
+  "natural_sp_inventory": [
+    {
+      "id": "rogue_6_relic_legacy_2",
+      "source_group": "relics",
+      "key": "global_buff_stack",
+      "blackboard": {
+        "key": "modify_sp_recover[normal]",
+        "sp_recovery_per_sec": 0.2
+      }
+    },
+    {
+      "id": "rogue_6_relic_legacy_3",
+      "source_group": "relics",
+      "key": "global_buff_stack",
+      "blackboard": {
+        "key": "modify_sp_recover[normal]",
+        "sp_recovery_per_sec": 0.35
+      }
+    },
+    {
+      "id": "rogue_6_relic_legacy_4",
+      "source_group": "relics",
+      "key": "global_buff_stack",
+      "blackboard": {
+        "key": "modify_sp_recover[normal]",
+        "sp_recovery_per_sec": 0.5
+      }
+    },
+    {
+      "id": "rogue_6_relic_legacy_74",
+      "source_group": "relics",
+      "key": "global_buff_normal",
+      "blackboard": {
+        "key": "modify_sp_recover[medic]",
+        "sp_recovery_per_sec": 0.3
+      }
+    },
+    {
+      "id": "rogue_6_relic_fight_15",
+      "source_group": "relics",
+      "key": "char_ability_new",
+      "blackboard": {
+        "key": "rogue_6_hp_ratio_to_attr_add[sp_recover]",
+        "min_hp_ratio": 0.3,
+        "max_hp_ratio": 1.0,
+        "min_sp_recovery_per_sec": 2.0,
+        "max_sp_recovery_per_sec": 0.0,
+        "selector.profession": "WARRIOR|SNIPER|TANK|MEDIC|SUPPORT|CASTER|SPECIAL|PIONEER"
+      }
+    },
+    {
+      "id": "rogue_6_from_relic_15",
+      "source_group": "charBuffData",
+      "key": "char_ability_new",
+      "blackboard": {
+        "key": "rogue_6_sp_recover",
+        "sp_recovery_per_sec": 0.8
+      }
+    }
+  ],
+  "active_additive_sources_checked": 5,
+  "medical_profession_mask": 8,
+  "medical_selector_corrected": true,
+  "only_production_data_change": "relics/rogue_6_relic_legacy_74/effects/0/profession",
+  "combat_hp_source_reference_only": true,
+  "generic_sp_ratio_or_negative_implementation_added": false,
+  "current_hotfix_equivalence_proven": false,
+  "new_live_panel_acceptance": false,
+  "file_only": true,
+  "dll_executed": false,
+  "process_memory_read": false
+}

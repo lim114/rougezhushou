@@ -1,0 +1,2032 @@
+[
+  {
+    "name": "Torappu.Battle.Deck+Card",
+    "metadata_type_index": 10064,
+    "fields": [
+      {
+        "name": "m_deck",
+        "type": "Torappu.Battle.Deck",
+        "offset": 16,
+        "default": null
+      },
+      {
+        "name": "m_remainingCnt",
+        "type": "System.Int32",
+        "offset": 24,
+        "default": null
+      },
+      {
+        "name": "m_data",
+        "type": "Torappu.Battle.BattleCharacterData",
+        "offset": 32,
+        "default": null
+      },
+      {
+        "name": "m_dataToShow",
+        "type": "Torappu.Battle.BattleCharacterData",
+        "offset": 40,
+        "default": null
+      },
+      {
+        "name": "m_respawnTimer",
+        "type": "Torappu.PeriodicTimer",
+        "offset": 48,
+        "default": null
+      },
+      {
+        "name": "m_fallbackHiddenInternal",
+        "type": "System.Boolean",
+        "offset": 56,
+        "default": null
+      },
+      {
+        "name": "m_hiddenBy",
+        "type": "Torappu.EnableStateWithKey",
+        "offset": 64,
+        "default": null
+      },
+      {
+        "name": "m_originOccupiedRemainingCharacterCnt",
+        "type": "System.Boolean",
+        "offset": 72,
+        "default": null
+      },
+      {
+        "name": "m_originBuildableCondition",
+        "type": "Torappu.Battle.BuildCondition",
+        "offset": 80,
+        "default": null
+      },
+      {
+        "name": "m_dontOccupyDeployCnt",
+        "type": "System.Boolean",
+        "offset": 168,
+        "default": null
+      },
+      {
+        "name": "m_dontOccupyMaxDeployCnt",
+        "type": "System.Boolean",
+        "offset": 169,
+        "default": null
+      },
+      {
+        "name": "m_additionalBuildCondition",
+        "type": "Torappu.Battle.AdditionalBuildCondition",
+        "offset": 172,
+        "default": null
+      },
+      {
+        "name": "m_buildCondition",
+        "type": "Torappu.Battle.BuildCondition",
+        "offset": 192,
+        "default": null
+      },
+      {
+        "name": "m_isSkillRangeToggled",
+        "type": "System.Boolean",
+        "offset": 280,
+        "default": null
+      },
+      {
+        "name": "m_isExcludedFromBattle",
+        "type": "System.Boolean",
+        "offset": 281,
+        "default": null
+      },
+      {
+        "name": "m_deckBuffContainer",
+        "type": "Torappu.Battle.Deck+Card+DeckBuffContainer",
+        "offset": 288,
+        "default": null
+      },
+      {
+        "name": "m_cardBuffs",
+        "type": "System.Collections.Generic.List`1<Torappu.Battle.Deck+Card+CardBuff>",
+        "offset": 296,
+        "default": null
+      },
+      {
+        "name": "m_timeLimitedCardBuffs",
+        "type": "System.Collections.Generic.List`1<Torappu.Battle.Deck+Card+CardBuff>",
+        "offset": 304,
+        "default": null
+      },
+      {
+        "name": "m_cardEffectTypeCounter",
+        "type": "System.Int16[]",
+        "offset": 312,
+        "default": null
+      },
+      {
+        "name": "m_respawnCostMultCnt",
+        "type": "System.Int32",
+        "offset": 320,
+        "default": null
+      },
+      {
+        "name": "m_addRespawnCostMultCnt",
+        "type": "System.Boolean",
+        "offset": 324,
+        "default": null
+      },
+      {
+        "name": "m_respawnCostMaxMultiplier",
+        "type": "Torappu.FP",
+        "offset": 328,
+        "default": null
+      },
+      {
+        "name": "m_respawnCostMultiplier",
+        "type": "Torappu.FP",
+        "offset": 336,
+        "default": null
+      },
+      {
+        "name": "m_queuedRespawnCnt",
+        "type": "System.Int32",
+        "offset": 344,
+        "default": null
+      },
+      {
+        "name": "m_runtimeCostModifiers",
+        "type": "Torappu.ListSet`1<Torappu.Battle.Deck+Card+RuntimeCostModifier>",
+        "offset": 352,
+        "default": null
+      },
+      {
+        "name": "m_runtimeRespawnTimeModifiers",
+        "type": "Torappu.ListSet`1<Torappu.Battle.Deck+Card+RuntimeRespawnTimeModifier>",
+        "offset": 360,
+        "default": null
+      },
+      {
+        "name": "m_cardModifiers",
+        "type": "System.Collections.Generic.List`1<Torappu.Battle.ICardModifier>",
+        "offset": 368,
+        "default": null
+      },
+      {
+        "name": "m_cardEffectPlugins",
+        "type": "System.Collections.Generic.List`1<Torappu.Battle.UI.UICardEffectHolder+CardEffectPlugin>",
+        "offset": 376,
+        "default": null
+      },
+      {
+        "name": "m_cardEffectPluginsInCardBuff",
+        "type": "System.Collections.Generic.Dictionary`2<Torappu.Battle.Deck+Card+CardBuff,System.String>",
+        "offset": 384,
+        "default": null
+      },
+      {
+        "name": "m_runTimeCardEffectPlugins",
+        "type": "System.Collections.Generic.Dictionary`2<System.String,UnityEngine.RectTransform>",
+        "offset": 392,
+        "default": null
+      },
+      {
+        "name": "CARD_EFFECT_NUM",
+        "type": "System.Int32",
+        "offset": 0,
+        "default": {
+          "value": 14,
+          "type": "System.Int32",
+          "data_index": 166456,
+          "raw": "1c"
+        }
+      },
+      {
+        "name": "<comboState>k__BackingField",
+        "type": "Torappu.Battle.Deck+Card+ComboState",
+        "offset": 400,
+        "default": null
+      },
+      {
+        "name": "<comboStateNotChanged>k__BackingField",
+        "type": "System.Boolean",
+        "offset": 404,
+        "default": null
+      },
+      {
+        "name": "<advancedBuildState>k__BackingField",
+        "type": "Torappu.Battle.Deck+Card+AdvancedCardBuildState",
+        "offset": 408,
+        "default": null
+      },
+      {
+        "name": "<state>k__BackingField",
+        "type": "Torappu.Battle.Deck+Card+State",
+        "offset": 412,
+        "default": null
+      },
+      {
+        "name": "m_costDelta",
+        "type": "System.Int32",
+        "offset": 416,
+        "default": null
+      },
+      {
+        "name": "m_rawCostScale",
+        "type": "Torappu.FP",
+        "offset": 424,
+        "default": null
+      },
+      {
+        "name": "m_newRespawnTimePeriod",
+        "type": "Torappu.FP",
+        "offset": 432,
+        "default": null
+      },
+      {
+        "name": "m_notValidToBuildByCardBuff",
+        "type": "System.Boolean",
+        "offset": 440,
+        "default": null
+      },
+      {
+        "name": "m_respawnDisabled",
+        "type": "System.Boolean",
+        "offset": 441,
+        "default": null
+      },
+      {
+        "name": "m_respawnTimerStopped",
+        "type": "System.Boolean",
+        "offset": 442,
+        "default": null
+      },
+      {
+        "name": "ignoreRespawningState",
+        "type": "System.Boolean",
+        "offset": 443,
+        "default": null
+      },
+      {
+        "name": "<attributes>k__BackingField",
+        "type": "Torappu.Battle.Deck+Card+ObscuredAttributesSnapshot",
+        "offset": 448,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_comboState",
+        "type": "XLua.DelegateBridge",
+        "offset": 0,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_comboState",
+        "type": "XLua.DelegateBridge",
+        "offset": 8,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_comboStateNotChanged",
+        "type": "XLua.DelegateBridge",
+        "offset": 16,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_comboStateNotChanged",
+        "type": "XLua.DelegateBridge",
+        "offset": 24,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_advancedBuildState",
+        "type": "XLua.DelegateBridge",
+        "offset": 32,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_advancedBuildState",
+        "type": "XLua.DelegateBridge",
+        "offset": 40,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_state",
+        "type": "XLua.DelegateBridge",
+        "offset": 48,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_state",
+        "type": "XLua.DelegateBridge",
+        "offset": 56,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_uniqueId",
+        "type": "XLua.DelegateBridge",
+        "offset": 64,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_ignoreExcludeFromBattle",
+        "type": "XLua.DelegateBridge",
+        "offset": 72,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_notShowInDeck",
+        "type": "XLua.DelegateBridge",
+        "offset": 80,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_asRewardCardInLegionMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 88,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_remainingCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 96,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isPredefined",
+        "type": "XLua.DelegateBridge",
+        "offset": 104,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isSkillRangeToggled",
+        "type": "XLua.DelegateBridge",
+        "offset": 112,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_isSkillRangeToggled",
+        "type": "XLua.DelegateBridge",
+        "offset": 120,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_cardEffectPlugins",
+        "type": "XLua.DelegateBridge",
+        "offset": 128,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_respawnValid",
+        "type": "XLua.DelegateBridge",
+        "offset": 136,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_respawnProgress",
+        "type": "XLua.DelegateBridge",
+        "offset": 144,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_respawnRemainingTime",
+        "type": "XLua.DelegateBridge",
+        "offset": 152,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_data",
+        "type": "XLua.DelegateBridge",
+        "offset": 160,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_dataToShow",
+        "type": "XLua.DelegateBridge",
+        "offset": 168,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isMockAppearance",
+        "type": "XLua.DelegateBridge",
+        "offset": 176,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_buildCondition",
+        "type": "XLua.DelegateBridge",
+        "offset": 184,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_playerSide",
+        "type": "XLua.DelegateBridge",
+        "offset": 192,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rawCost",
+        "type": "XLua.DelegateBridge",
+        "offset": 200,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rawCostData",
+        "type": "XLua.DelegateBridge",
+        "offset": 208,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_cost",
+        "type": "XLua.DelegateBridge",
+        "offset": 216,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_key",
+        "type": "XLua.DelegateBridge",
+        "offset": 224,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_evolvePhase",
+        "type": "XLua.DelegateBridge",
+        "offset": 232,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isHidden",
+        "type": "XLua.DelegateBridge",
+        "offset": 240,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isHiddenExcludeInternal",
+        "type": "XLua.DelegateBridge",
+        "offset": 248,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isHiddenByCardState",
+        "type": "XLua.DelegateBridge",
+        "offset": 256,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isAvailable",
+        "type": "XLua.DelegateBridge",
+        "offset": 264,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isShowInCardList",
+        "type": "XLua.DelegateBridge",
+        "offset": 272,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInHand",
+        "type": "XLua.DelegateBridge",
+        "offset": 280,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isShow",
+        "type": "XLua.DelegateBridge",
+        "offset": 288,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_readyToSpawn",
+        "type": "XLua.DelegateBridge",
+        "offset": 296,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_readyToSpawnWithoutCheckCost",
+        "type": "XLua.DelegateBridge",
+        "offset": 304,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isMaxDeployed",
+        "type": "XLua.DelegateBridge",
+        "offset": 312,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_occupiedRemainingCharacterCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 320,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_dontOccupyDeployCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 328,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_dontOccupyMaxDeployCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 336,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_overflowOccupiedCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 344,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_additionalBuildCondition",
+        "type": "XLua.DelegateBridge",
+        "offset": 352,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_additionalBuildCondition",
+        "type": "XLua.DelegateBridge",
+        "offset": 360,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_attributes",
+        "type": "XLua.DelegateBridge",
+        "offset": 368,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_attributes",
+        "type": "XLua.DelegateBridge",
+        "offset": 376,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_skill",
+        "type": "XLua.DelegateBridge",
+        "offset": 384,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isHiddenInternal",
+        "type": "XLua.DelegateBridge",
+        "offset": 392,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_deckBuffOnBorn",
+        "type": "XLua.DelegateBridge",
+        "offset": 400,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_UpdateDeckAttributeData",
+        "type": "XLua.DelegateBridge",
+        "offset": 408,
+        "default": null
+      },
+      {
+        "name": "_c__Hotfix0_ctor",
+        "type": "XLua.DelegateBridge",
+        "offset": 416,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_Init",
+        "type": "XLua.DelegateBridge",
+        "offset": 424,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SetHidden",
+        "type": "XLua.DelegateBridge",
+        "offset": 432,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SpawnPrefab",
+        "type": "XLua.DelegateBridge",
+        "offset": 440,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckBuildable",
+        "type": "XLua.DelegateBridge",
+        "offset": 448,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_Draw",
+        "type": "XLua.DelegateBridge",
+        "offset": 456,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_Recharge",
+        "type": "XLua.DelegateBridge",
+        "offset": 464,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ResetRespawnTime",
+        "type": "XLua.DelegateBridge",
+        "offset": 472,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ResetRespawnTimeUseItsNewRespawnTimePeriod",
+        "type": "XLua.DelegateBridge",
+        "offset": 480,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnRecycle",
+        "type": "XLua.DelegateBridge",
+        "offset": 488,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ProcessDeckModifier",
+        "type": "XLua.DelegateBridge",
+        "offset": 496,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__UpdateCardBuff",
+        "type": "XLua.DelegateBridge",
+        "offset": 504,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_AddDeckBuff",
+        "type": "XLua.DelegateBridge",
+        "offset": 512,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_AddDeckBuffWithKey",
+        "type": "XLua.DelegateBridge",
+        "offset": 520,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ContainsDeckBuff",
+        "type": "XLua.DelegateBridge",
+        "offset": 528,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetDeckBuffCountByBuffKey",
+        "type": "XLua.DelegateBridge",
+        "offset": 536,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_FinishDeckBuffByKey",
+        "type": "XLua.DelegateBridge",
+        "offset": 544,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_FinishDeckBuffsOnSpawned",
+        "type": "XLua.DelegateBridge",
+        "offset": 552,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__OnDeckBuffAdded",
+        "type": "XLua.DelegateBridge",
+        "offset": 560,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__UpdateCardEffectType",
+        "type": "XLua.DelegateBridge",
+        "offset": 568,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckEffectType",
+        "type": "XLua.DelegateBridge",
+        "offset": 576,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CreateCardBuff",
+        "type": "XLua.DelegateBridge",
+        "offset": 584,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CreateCardBuffByBuff",
+        "type": "XLua.DelegateBridge",
+        "offset": 592,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CreateCardBuffByCard",
+        "type": "XLua.DelegateBridge",
+        "offset": 600,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_AddCardBuff",
+        "type": "XLua.DelegateBridge",
+        "offset": 608,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RemoveCardBuff",
+        "type": "XLua.DelegateBridge",
+        "offset": 616,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RemoveCardBuffByKey",
+        "type": "XLua.DelegateBridge",
+        "offset": 624,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ContainsCardBuff",
+        "type": "XLua.DelegateBridge",
+        "offset": 632,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ContainsCardBuffFromSpecificSource",
+        "type": "XLua.DelegateBridge",
+        "offset": 640,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_FinishCardBuffByOwner",
+        "type": "XLua.DelegateBridge",
+        "offset": 648,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_FinishCardBuffByKey",
+        "type": "XLua.DelegateBridge",
+        "offset": 656,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_FinishCardBuffByCard",
+        "type": "XLua.DelegateBridge",
+        "offset": 664,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_FinishCardBuffsOnSpawned",
+        "type": "XLua.DelegateBridge",
+        "offset": 672,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckExtraBuildableCondiFromCardBuff",
+        "type": "XLua.DelegateBridge",
+        "offset": 680,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnSpawned",
+        "type": "XLua.DelegateBridge",
+        "offset": 688,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnSpawnOperationSucceed",
+        "type": "XLua.DelegateBridge",
+        "offset": 696,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnCardPutInHand",
+        "type": "XLua.DelegateBridge",
+        "offset": 704,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnCardGetOffHand",
+        "type": "XLua.DelegateBridge",
+        "offset": 712,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__ApplyAttributeModifier",
+        "type": "XLua.DelegateBridge",
+        "offset": 720,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__AffectDeckBuff",
+        "type": "XLua.DelegateBridge",
+        "offset": 728,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetCardBuffStackCount",
+        "type": "XLua.DelegateBridge",
+        "offset": 736,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_MockAppearance",
+        "type": "XLua.DelegateBridge",
+        "offset": 744,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ModifyRespawnParameters",
+        "type": "XLua.DelegateBridge",
+        "offset": 752,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnFetchDataFromPrefab",
+        "type": "XLua.DelegateBridge",
+        "offset": 760,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ChangeStateManually",
+        "type": "XLua.DelegateBridge",
+        "offset": 768,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_BindCardBuffWithEffectPlugin",
+        "type": "XLua.DelegateBridge",
+        "offset": 776,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_AddCardBuffEffectPluginIfNot",
+        "type": "XLua.DelegateBridge",
+        "offset": 784,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RemoveCardBuffEffectPlugin",
+        "type": "XLua.DelegateBridge",
+        "offset": 792,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RefreshEffectPluginParent",
+        "type": "XLua.DelegateBridge",
+        "offset": 800,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnTick",
+        "type": "XLua.DelegateBridge",
+        "offset": 808,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DealDummyTalent",
+        "type": "XLua.DelegateBridge",
+        "offset": 816,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__PreprocessRunes",
+        "type": "XLua.DelegateBridge",
+        "offset": 824,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__PreprocessCharCost",
+        "type": "XLua.DelegateBridge",
+        "offset": 832,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__PreprocessDeckBuffs",
+        "type": "XLua.DelegateBridge",
+        "offset": 840,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__PostCheckCntBalanced",
+        "type": "XLua.DelegateBridge",
+        "offset": 848,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SetExcludeFromBattle",
+        "type": "XLua.DelegateBridge",
+        "offset": 856,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnReset",
+        "type": "XLua.DelegateBridge",
+        "offset": 864,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__ResetData",
+        "type": "XLua.DelegateBridge",
+        "offset": 872,
+        "default": null
+      }
+    ]
+  },
+  {
+    "name": "Torappu.Battle.Deck+TokenCard",
+    "metadata_type_index": 10066,
+    "fields": [
+      {
+        "name": "m_cardPolicy",
+        "type": "Torappu.Battle.Deck+Card+CardPolicy",
+        "offset": 456,
+        "default": null
+      },
+      {
+        "name": "m_hostIsAlive",
+        "type": "System.Boolean",
+        "offset": 460,
+        "default": null
+      },
+      {
+        "name": "m_spawnedCnt",
+        "type": "System.Int32",
+        "offset": 464,
+        "default": null
+      },
+      {
+        "name": "m_rechargeOnlyOnce",
+        "type": "System.Boolean",
+        "offset": 468,
+        "default": null
+      },
+      {
+        "name": "m_rechargeCnt",
+        "type": "System.Int32",
+        "offset": 472,
+        "default": null
+      },
+      {
+        "name": "m_isInfinity",
+        "type": "System.Boolean",
+        "offset": 476,
+        "default": null
+      },
+      {
+        "name": "m_ignoreExcludeFromBattle",
+        "type": "System.Boolean",
+        "offset": 477,
+        "default": null
+      },
+      {
+        "name": "m_notShowInDeck",
+        "type": "System.Boolean",
+        "offset": 478,
+        "default": null
+      },
+      {
+        "name": "m_asRewardCardInLegionMode",
+        "type": "System.Boolean",
+        "offset": 479,
+        "default": null
+      },
+      {
+        "name": "m_isRallyPoint",
+        "type": "System.Boolean",
+        "offset": 480,
+        "default": null
+      },
+      {
+        "name": "<maxDeployCnt>k__BackingField",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+        "offset": 484,
+        "default": null
+      },
+      {
+        "name": "<maxDeckStackCnt>k__BackingField",
+        "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+        "offset": 504,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_cardPolicy",
+        "type": "XLua.DelegateBridge",
+        "offset": 0,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInfinity",
+        "type": "XLua.DelegateBridge",
+        "offset": 8,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_ignoreExcludeFromBattle",
+        "type": "XLua.DelegateBridge",
+        "offset": 16,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_notShowInDeck",
+        "type": "XLua.DelegateBridge",
+        "offset": 24,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_asRewardCardInLegionMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 32,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isFull",
+        "type": "XLua.DelegateBridge",
+        "offset": 40,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isHiddenByCardState",
+        "type": "XLua.DelegateBridge",
+        "offset": 48,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_readyToSpawn",
+        "type": "XLua.DelegateBridge",
+        "offset": 56,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_readyToSpawnWithoutCheckCost",
+        "type": "XLua.DelegateBridge",
+        "offset": 64,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_cost",
+        "type": "XLua.DelegateBridge",
+        "offset": 72,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rawCost",
+        "type": "XLua.DelegateBridge",
+        "offset": 80,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isMaxDeployed",
+        "type": "XLua.DelegateBridge",
+        "offset": 88,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hostIsAlive",
+        "type": "XLua.DelegateBridge",
+        "offset": 96,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_initialCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 104,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_maxDeployCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 112,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_maxDeployCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 120,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_maxDeckStackCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 128,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_maxDeckStackCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 136,
+        "default": null
+      },
+      {
+        "name": "_c__Hotfix0_ctor",
+        "type": "XLua.DelegateBridge",
+        "offset": 144,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_Init",
+        "type": "XLua.DelegateBridge",
+        "offset": 152,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_TouchPrefab",
+        "type": "XLua.DelegateBridge",
+        "offset": 160,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SpawnInternal",
+        "type": "XLua.DelegateBridge",
+        "offset": 168,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CreateDummy",
+        "type": "XLua.DelegateBridge",
+        "offset": 176,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_Recharge",
+        "type": "XLua.DelegateBridge",
+        "offset": 184,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ForceRecharge",
+        "type": "XLua.DelegateBridge",
+        "offset": 192,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RefreshTokenDeployAndDeckStackCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 200,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnHostSpawned",
+        "type": "XLua.DelegateBridge",
+        "offset": 208,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnHostRecycled",
+        "type": "XLua.DelegateBridge",
+        "offset": 216,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnSpawned",
+        "type": "XLua.DelegateBridge",
+        "offset": 224,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnRecycle",
+        "type": "XLua.DelegateBridge",
+        "offset": 232,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnFetchDataFromPrefab",
+        "type": "XLua.DelegateBridge",
+        "offset": 240,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnReset",
+        "type": "XLua.DelegateBridge",
+        "offset": 248,
+        "default": null
+      }
+    ]
+  },
+  {
+    "name": "Torappu.Battle.Token",
+    "metadata_type_index": 11332,
+    "fields": [
+      {
+        "name": "_sideType",
+        "type": "Torappu.Battle.SideType",
+        "offset": 1360,
+        "default": null
+      },
+      {
+        "name": "_category",
+        "type": "Torappu.Battle.EntityCategory",
+        "offset": 1364,
+        "default": null
+      },
+      {
+        "name": "_cardPolicy",
+        "type": "Torappu.Battle.Deck+Card+CardPolicy",
+        "offset": 1368,
+        "default": null
+      },
+      {
+        "name": "_alwaysShowHp",
+        "type": "System.Boolean",
+        "offset": 1372,
+        "default": null
+      },
+      {
+        "name": "_alwaysHideHp",
+        "type": "System.Boolean",
+        "offset": 1373,
+        "default": null
+      },
+      {
+        "name": "_alwaysHideSp",
+        "type": "System.Boolean",
+        "offset": 1374,
+        "default": null
+      },
+      {
+        "name": "_forceUseAllyHud",
+        "type": "System.Boolean",
+        "offset": 1375,
+        "default": null
+      },
+      {
+        "name": "_rewriteTileOptions",
+        "type": "System.Boolean",
+        "offset": 1376,
+        "default": null
+      },
+      {
+        "name": "_rewriteTileHeightTypeOnMode",
+        "type": "System.Boolean",
+        "offset": 1377,
+        "default": null
+      },
+      {
+        "name": "_rewriteTileHeightTypeOnModeBySelf",
+        "type": "System.Boolean",
+        "offset": 1378,
+        "default": null
+      },
+      {
+        "name": "_ignoreBlockAnyRoutes",
+        "type": "System.Boolean",
+        "offset": 1379,
+        "default": null
+      },
+      {
+        "name": "_setTileGraphicDirtyWhenSwitchMode",
+        "type": "System.Boolean",
+        "offset": 1380,
+        "default": null
+      },
+      {
+        "name": "_hideTileOptions",
+        "type": "System.Boolean",
+        "offset": 1381,
+        "default": null
+      },
+      {
+        "name": "_isInfinity",
+        "type": "System.Boolean",
+        "offset": 1382,
+        "default": null
+      },
+      {
+        "name": "_ignoreExcludeFromBattle",
+        "type": "System.Boolean",
+        "offset": 1383,
+        "default": null
+      },
+      {
+        "name": "_notShowInDeck",
+        "type": "System.Boolean",
+        "offset": 1384,
+        "default": null
+      },
+      {
+        "name": "_asRewardCardInLegionMode",
+        "type": "System.Boolean",
+        "offset": 1385,
+        "default": null
+      },
+      {
+        "name": "_rechargeOnlyOnce",
+        "type": "System.Boolean",
+        "offset": 1386,
+        "default": null
+      },
+      {
+        "name": "_willBuildOverlapBuffSource",
+        "type": "Torappu.Battle.Ability",
+        "offset": 1392,
+        "default": null
+      },
+      {
+        "name": "_assignDirectionToBBWhenTryingOverlap",
+        "type": "System.Boolean",
+        "offset": 1400,
+        "default": null
+      },
+      {
+        "name": "_updateCardStateAfterOverlapLikeSpawn",
+        "type": "System.Boolean",
+        "offset": 1401,
+        "default": null
+      },
+      {
+        "name": "_newCardStateAfterOverlapLikeSpawn",
+        "type": "Torappu.Battle.Deck+Card+State",
+        "offset": 1404,
+        "default": null
+      },
+      {
+        "name": "_tokenCanBeOverlapDontAddTileBuff",
+        "type": "System.Boolean",
+        "offset": 1408,
+        "default": null
+      },
+      {
+        "name": "m_category",
+        "type": "Torappu.Battle.EntityCategory",
+        "offset": 1412,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isEnemySideToken",
+        "type": "XLua.DelegateBridge",
+        "offset": 0,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hideTileOption",
+        "type": "XLua.DelegateBridge",
+        "offset": 8,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_initSideType",
+        "type": "XLua.DelegateBridge",
+        "offset": 16,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_category",
+        "type": "XLua.DelegateBridge",
+        "offset": 24,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_cardPolicy",
+        "type": "XLua.DelegateBridge",
+        "offset": 32,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isUnique",
+        "type": "XLua.DelegateBridge",
+        "offset": 40,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_showHpSlider",
+        "type": "XLua.DelegateBridge",
+        "offset": 48,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_showSpSlider",
+        "type": "XLua.DelegateBridge",
+        "offset": 56,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rechargeOnlyOnce",
+        "type": "XLua.DelegateBridge",
+        "offset": 64,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInfinity",
+        "type": "XLua.DelegateBridge",
+        "offset": 72,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_ignoreExcludeFromBattle",
+        "type": "XLua.DelegateBridge",
+        "offset": 80,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_notShowInDeck",
+        "type": "XLua.DelegateBridge",
+        "offset": 88,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_asRewardCardInLegionMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 96,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_alwaysShowHp",
+        "type": "XLua.DelegateBridge",
+        "offset": 104,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_alwaysHideHp",
+        "type": "XLua.DelegateBridge",
+        "offset": 112,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_alwaysHideSp",
+        "type": "XLua.DelegateBridge",
+        "offset": 120,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_forceUseAllyHud",
+        "type": "XLua.DelegateBridge",
+        "offset": 128,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_allowWithdrawGainCost",
+        "type": "XLua.DelegateBridge",
+        "offset": 136,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rewriteTileOptions",
+        "type": "XLua.DelegateBridge",
+        "offset": 144,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rewriteTileHeightTypeOnMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 152,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rewriteTileHeightTypeOnModeBySelf",
+        "type": "XLua.DelegateBridge",
+        "offset": 160,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_setTileGraphicDirtyWhenSwitchMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 168,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_ignoreBlockAnyRoutes",
+        "type": "XLua.DelegateBridge",
+        "offset": 176,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_tokenCanBeOverlapDontAddTileBuff",
+        "type": "XLua.DelegateBridge",
+        "offset": 184,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_tileOptions",
+        "type": "XLua.DelegateBridge",
+        "offset": 192,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_keepCurrentPassableMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 200,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_keepCurrentBuildableType",
+        "type": "XLua.DelegateBridge",
+        "offset": 208,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rewriteTileHeightType",
+        "type": "XLua.DelegateBridge",
+        "offset": 216,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rewriteTileHeight",
+        "type": "XLua.DelegateBridge",
+        "offset": 224,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rewriteHeight",
+        "type": "XLua.DelegateBridge",
+        "offset": 232,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rewriteTileAdvancedBuildMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 240,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_assignDirectionToBBWhenTryingOverlapCharacter",
+        "type": "XLua.DelegateBridge",
+        "offset": 248,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnBorn",
+        "type": "XLua.DelegateBridge",
+        "offset": 256,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnReset",
+        "type": "XLua.DelegateBridge",
+        "offset": 264,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnSwitchMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 272,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetTileLocateHeight",
+        "type": "XLua.DelegateBridge",
+        "offset": 280,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__NeedReduceSelfLocatedHeight",
+        "type": "XLua.DelegateBridge",
+        "offset": 288,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnEntityOverlapLikeOperationSucceed",
+        "type": "XLua.DelegateBridge",
+        "offset": 296,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SwitchCategory",
+        "type": "XLua.DelegateBridge",
+        "offset": 304,
+        "default": null
+      },
+      {
+        "name": "_c__Hotfix0_ctor",
+        "type": "XLua.DelegateBridge",
+        "offset": 312,
+        "default": null
+      }
+    ]
+  },
+  {
+    "name": "Torappu.AttributeType",
+    "metadata_type_index": 37893,
+    "fields": [
+      {
+        "name": "value__",
+        "type": "System.Int32",
+        "offset": 16,
+        "default": null
+      },
+      {
+        "name": "MAX_HP",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 0,
+          "type": "System.Int32",
+          "data_index": 253053,
+          "raw": "00"
+        }
+      },
+      {
+        "name": "ATK",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 1,
+          "type": "System.Int32",
+          "data_index": 253054,
+          "raw": "02"
+        }
+      },
+      {
+        "name": "DEF",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 2,
+          "type": "System.Int32",
+          "data_index": 253055,
+          "raw": "04"
+        }
+      },
+      {
+        "name": "MAGIC_RESISTANCE",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 3,
+          "type": "System.Int32",
+          "data_index": 253056,
+          "raw": "06"
+        }
+      },
+      {
+        "name": "COST",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 4,
+          "type": "System.Int32",
+          "data_index": 253057,
+          "raw": "08"
+        }
+      },
+      {
+        "name": "BLOCK_CNT",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 5,
+          "type": "System.Int32",
+          "data_index": 253058,
+          "raw": "0a"
+        }
+      },
+      {
+        "name": "MOVE_SPEED",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 6,
+          "type": "System.Int32",
+          "data_index": 253059,
+          "raw": "0c"
+        }
+      },
+      {
+        "name": "ATTACK_SPEED",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 7,
+          "type": "System.Int32",
+          "data_index": 253060,
+          "raw": "0e"
+        }
+      },
+      {
+        "name": "BASE_ATTACK_TIME",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 8,
+          "type": "System.Int32",
+          "data_index": 253061,
+          "raw": "10"
+        }
+      },
+      {
+        "name": "RESERVED_0",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 9,
+          "type": "System.Int32",
+          "data_index": 253062,
+          "raw": "12"
+        }
+      },
+      {
+        "name": "RESERVED_1",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 10,
+          "type": "System.Int32",
+          "data_index": 253063,
+          "raw": "14"
+        }
+      },
+      {
+        "name": "RESERVED_2",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 11,
+          "type": "System.Int32",
+          "data_index": 253064,
+          "raw": "16"
+        }
+      },
+      {
+        "name": "RESERVED_3",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 12,
+          "type": "System.Int32",
+          "data_index": 253065,
+          "raw": "18"
+        }
+      },
+      {
+        "name": "HP_RECOVERY_PER_SEC",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 13,
+          "type": "System.Int32",
+          "data_index": 253066,
+          "raw": "1a"
+        }
+      },
+      {
+        "name": "SP_RECOVERY_PER_SEC",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 14,
+          "type": "System.Int32",
+          "data_index": 253067,
+          "raw": "1c"
+        }
+      },
+      {
+        "name": "ABILITY_RANGE_FORWARD_EXTEND",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 15,
+          "type": "System.Int32",
+          "data_index": 253068,
+          "raw": "1e"
+        }
+      },
+      {
+        "name": "MAX_DEPLOY_COUNT",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 16,
+          "type": "System.Int32",
+          "data_index": 253069,
+          "raw": "20"
+        }
+      },
+      {
+        "name": "DEF_PENETRATE",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 17,
+          "type": "System.Int32",
+          "data_index": 253070,
+          "raw": "22"
+        }
+      },
+      {
+        "name": "MAGIC_RESIST_PENETRATE",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 18,
+          "type": "System.Int32",
+          "data_index": 253071,
+          "raw": "24"
+        }
+      },
+      {
+        "name": "HP_RECOVERY_PER_SEC_BY_MAX_HP_RATIO",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 19,
+          "type": "System.Int32",
+          "data_index": 253072,
+          "raw": "26"
+        }
+      },
+      {
+        "name": "TAUNT_LEVEL",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 20,
+          "type": "System.Int32",
+          "data_index": 253073,
+          "raw": "28"
+        }
+      },
+      {
+        "name": "RESPAWN_TIME",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 21,
+          "type": "System.Int32",
+          "data_index": 253074,
+          "raw": "2a"
+        }
+      },
+      {
+        "name": "MAX_DECK_STACK_CNT",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 22,
+          "type": "System.Int32",
+          "data_index": 253075,
+          "raw": "2c"
+        }
+      },
+      {
+        "name": "MASS_LEVEL",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 23,
+          "type": "System.Int32",
+          "data_index": 253076,
+          "raw": "2e"
+        }
+      },
+      {
+        "name": "BASE_FORCE_LEVEL",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 24,
+          "type": "System.Int32",
+          "data_index": 253077,
+          "raw": "30"
+        }
+      },
+      {
+        "name": "DEF_PENETRATE_FIXED",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 25,
+          "type": "System.Int32",
+          "data_index": 253078,
+          "raw": "32"
+        }
+      },
+      {
+        "name": "ONE_MINUS_STATUS_RESISTANCE",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 26,
+          "type": "System.Int32",
+          "data_index": 253079,
+          "raw": "34"
+        }
+      },
+      {
+        "name": "MAGIC_RESIST_PENETRATE_FIXED",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 27,
+          "type": "System.Int32",
+          "data_index": 253080,
+          "raw": "36"
+        }
+      },
+      {
+        "name": "MAX_EP",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 28,
+          "type": "System.Int32",
+          "data_index": 253081,
+          "raw": "38"
+        }
+      },
+      {
+        "name": "EP_RECOVERY_PER_SEC",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 29,
+          "type": "System.Int32",
+          "data_index": 253082,
+          "raw": "3a"
+        }
+      },
+      {
+        "name": "SP_RECOVER_RATIO",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 30,
+          "type": "System.Int32",
+          "data_index": 253083,
+          "raw": "3c"
+        }
+      },
+      {
+        "name": "EP_DAMAGE_RESISTANCE",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 31,
+          "type": "System.Int32",
+          "data_index": 253084,
+          "raw": "3e"
+        }
+      },
+      {
+        "name": "EP_RESISTANCE",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 32,
+          "type": "System.Int32",
+          "data_index": 253085,
+          "raw": "40"
+        }
+      },
+      {
+        "name": "DAMAGE_HITRATE_PHYSICAL",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 33,
+          "type": "System.Int32",
+          "data_index": 253086,
+          "raw": "42"
+        }
+      },
+      {
+        "name": "DAMAGE_HITRATE_MAGICAL",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 34,
+          "type": "System.Int32",
+          "data_index": 253087,
+          "raw": "44"
+        }
+      },
+      {
+        "name": "EP_BREAK_RECOVER_SPEED",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 35,
+          "type": "System.Int32",
+          "data_index": 253088,
+          "raw": "46"
+        }
+      },
+      {
+        "name": "SLOW_DOWN",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 36,
+          "type": "System.Int32",
+          "data_index": 253089,
+          "raw": "48"
+        }
+      },
+      {
+        "name": "BLOCK_RADIUS_SCALE",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 37,
+          "type": "System.Int32",
+          "data_index": 253090,
+          "raw": "4a"
+        }
+      },
+      {
+        "name": "E_NUM",
+        "type": "Torappu.AttributeType",
+        "offset": 0,
+        "default": {
+          "value": 38,
+          "type": "System.Int32",
+          "data_index": 253091,
+          "raw": "4c"
+        }
+      }
+    ]
+  }
+]

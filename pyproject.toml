@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rouge-blackflow-helper"
+version = "0.70.0"
+description = "Windows blackflow exploration and damage test application"
+requires-python = ">=3.12"
+
+[tool.setuptools.packages.find]
+include = ["rouge*"]
+
+[tool.setuptools.package-data]
+rouge = ["data/*.json","data/ui-icons/*.png","data/relic-icons/*.png","data/run-badges/*.webp","data/battle-maps/*.png","data/portraits/*.png","data/skill-icons/*.png","data/profession-icons/*.png","data/page-features/*.json","data/page-features/*.npz","data/page-features/*.png","data/visual-anchors/*.json","data/visual-anchors/*.png"]
+"rouge.bridge" = ["*.cjs"]

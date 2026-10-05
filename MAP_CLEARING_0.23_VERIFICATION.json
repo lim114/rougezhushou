@@ -1,0 +1,75 @@
+{
+  "version": "0.23",
+  "date": "2026-10-03",
+  "seams": [
+    "ScreenReader.read",
+    "RunState.apply",
+    "RunState.reset"
+  ],
+  "tests": 25,
+  "failures": 0,
+  "errors": 0,
+  "passed": true,
+  "seconds": 113.516,
+  "source_sha256": {
+    "rouge/map_recognition.py": "05f03c77867be3d9bec62057847de13461003d3e3af9240bfe3a05f25d6dcfeb",
+    "rouge/run_state.py": "420ff2d6d01a280b38aa2f411580064d8d328fbbdf13587c830b6c46e006402b",
+    "tests/test_map_clearing.py": "06f5d97b0fb85a0237d70168eb562973fa1537df62c644d653463d6d902533bf"
+  },
+  "samples": {
+    "exploration-map.png": {
+      "template": "1b",
+      "clearings": [
+        "0,2",
+        "1,0",
+        "1,2"
+      ]
+    },
+    "map-template-node-detail.png": {
+      "template": "1c",
+      "clearings": [
+        "1,1",
+        "1,2",
+        "2,1",
+        "2,3"
+      ]
+    },
+    "map-live-0.19-2d.png": {
+      "status": "ambiguous",
+      "candidates": [
+        "2b",
+        "2d"
+      ],
+      "no_graph_invented": true
+    }
+  },
+  "checks": [
+    "960x720 scaled content translated into black borders",
+    "1920x1440 scaled content",
+    "purple/teal unknown icon without OCR label never changed to clearing",
+    "occluded ring and cropped map not inferred",
+    "native clearings not automatically visited",
+    "prior revealed shop retained through clearing/restart/partial frame and generation budget",
+    "existing selected node and node-event probability/history regressions"
+  ],
+  "limitations": [
+    "Only layout-matched current observations are rendered as clearing nodes.",
+    "No inference for hidden or occluded circles; ambiguous layouts stay ambiguous.",
+    "Fixture and resized/occluded tests plus a fresh parent-captured background frame; no game input interaction."
+  ],
+  "fresh_background_frame": {
+    "file": "samples\\native-client\\live-0.23.png",
+    "sha256": "780c7bf72c14a3e8809723265335d45cb592813f0c02bf983544d10db8d323d1",
+    "status": "matched",
+    "template": "1c",
+    "clearings": [
+      "1,2",
+      "1,3",
+      "2,3"
+    ],
+    "visible_nodes": 13,
+    "passed": true,
+    "evidence": ".cache/map-clearing-023/live-read.json",
+    "captured_by_parent": true
+  }
+}

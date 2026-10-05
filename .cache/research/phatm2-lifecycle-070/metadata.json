@@ -1,0 +1,5848 @@
+[
+  {
+    "name": "Torappu.Battle.AbilityStandard",
+    "type_index": 9823,
+    "fields": [
+      {
+        "name": "_ignoreIfOwnerDead",
+        "type": "System.Boolean",
+        "offset": 200,
+        "default": null
+      },
+      {
+        "name": "_forceAsDmgOrHealAbility",
+        "type": "System.Boolean",
+        "offset": 201,
+        "default": null
+      },
+      {
+        "name": "m_castTargets",
+        "type": "System.Collections.Generic.List`1<Torappu.ObjectPtr`1<Torappu.Battle.Entity>>",
+        "offset": 208,
+        "default": null
+      },
+      {
+        "name": "m_inputTarget",
+        "type": "System.Collections.Generic.KeyValuePair`2<UnityEngine.Vector2,Torappu.ObjectPtr`1<Torappu.Battle.Entity>>",
+        "offset": 216,
+        "default": null
+      },
+      {
+        "name": "m_playbackSpeed",
+        "type": "System.Single",
+        "offset": 240,
+        "default": null
+      },
+      {
+        "name": "m_behaviours",
+        "type": "Torappu.Battle.AbilityStandard+Behaviour[]",
+        "offset": 248,
+        "default": null
+      },
+      {
+        "name": "m_isDmgOrHealAbility",
+        "type": "System.Boolean",
+        "offset": 256,
+        "default": null
+      },
+      {
+        "name": "m_purposeMask",
+        "type": "Torappu.Battle.ActionPurposeMask",
+        "offset": 260,
+        "default": null
+      },
+      {
+        "name": "<spellCnt>k__BackingField",
+        "type": "System.Int32",
+        "offset": 264,
+        "default": null
+      },
+      {
+        "name": "<firstAttack>k__BackingField",
+        "type": "System.Boolean",
+        "offset": 268,
+        "default": null
+      },
+      {
+        "name": "<isAttackFinished>k__BackingField",
+        "type": "System.Boolean",
+        "offset": 269,
+        "default": null
+      },
+      {
+        "name": "m_isPredelay",
+        "type": "System.Boolean",
+        "offset": 270,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_castTargets",
+        "type": "XLua.DelegateBridge",
+        "offset": 0,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_inputTarget",
+        "type": "XLua.DelegateBridge",
+        "offset": 8,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_selectTargetTiming",
+        "type": "XLua.DelegateBridge",
+        "offset": 16,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_playbackSpeed",
+        "type": "XLua.DelegateBridge",
+        "offset": 24,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_playbackSpeed",
+        "type": "XLua.DelegateBridge",
+        "offset": 32,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_allowNoTarget",
+        "type": "XLua.DelegateBridge",
+        "offset": 40,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_onlyTrigAudioSignalForFirstSpell",
+        "type": "XLua.DelegateBridge",
+        "offset": 48,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_onlyTrigAudioSignalForFirstHit",
+        "type": "XLua.DelegateBridge",
+        "offset": 56,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_spellCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 64,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_spellCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 72,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_firstAttack",
+        "type": "XLua.DelegateBridge",
+        "offset": 80,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_firstAttack",
+        "type": "XLua.DelegateBridge",
+        "offset": 88,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_purposeMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 96,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isAttackFinished",
+        "type": "XLua.DelegateBridge",
+        "offset": 104,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_isAttackFinished",
+        "type": "XLua.DelegateBridge",
+        "offset": 112,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isPredelay",
+        "type": "XLua.DelegateBridge",
+        "offset": 120,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoSetData",
+        "type": "XLua.DelegateBridge",
+        "offset": 128,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__CheckGameObjectActiveBeforeCast",
+        "type": "XLua.DelegateBridge",
+        "offset": 136,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CastToTarget",
+        "type": "XLua.DelegateBridge",
+        "offset": 144,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CastDirectly",
+        "type": "XLua.DelegateBridge",
+        "offset": 152,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CastToInputPosition",
+        "type": "XLua.DelegateBridge",
+        "offset": 160,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetCastDirectlyMapPosition",
+        "type": "XLua.DelegateBridge",
+        "offset": 168,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_StopAffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 176,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckAtPreCastPhase",
+        "type": "XLua.DelegateBridge",
+        "offset": 184,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetFirstBehaviourOrNull",
+        "type": "XLua.DelegateBridge",
+        "offset": 192,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CleanupForNextCast",
+        "type": "XLua.DelegateBridge",
+        "offset": 200,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnEvent",
+        "type": "XLua.DelegateBridge",
+        "offset": 208,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GatherBuffs",
+        "type": "XLua.DelegateBridge",
+        "offset": 216,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GatherEffects",
+        "type": "XLua.DelegateBridge",
+        "offset": 224,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GatherProjectiles",
+        "type": "XLua.DelegateBridge",
+        "offset": 232,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GatherActionNodes",
+        "type": "XLua.DelegateBridge",
+        "offset": 240,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_PlayCheckPointSignal",
+        "type": "XLua.DelegateBridge",
+        "offset": 248,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnCastOnTarget",
+        "type": "XLua.DelegateBridge",
+        "offset": 256,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoApplyActionsOnTarget",
+        "type": "XLua.DelegateBridge",
+        "offset": 264,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnWaitForTriggerDelta",
+        "type": "XLua.DelegateBridge",
+        "offset": 272,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnSpellStart",
+        "type": "XLua.DelegateBridge",
+        "offset": 280,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoOnHasNoTarget",
+        "type": "XLua.DelegateBridge",
+        "offset": 288,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnCastStart",
+        "type": "XLua.DelegateBridge",
+        "offset": 296,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnCastEnd",
+        "type": "XLua.DelegateBridge",
+        "offset": 304,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnAttached",
+        "type": "XLua.DelegateBridge",
+        "offset": 312,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnOverload",
+        "type": "XLua.DelegateBridge",
+        "offset": 320,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnDetached",
+        "type": "XLua.DelegateBridge",
+        "offset": 328,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnAttackFinished",
+        "type": "XLua.DelegateBridge",
+        "offset": 336,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnStunnedChanged",
+        "type": "XLua.DelegateBridge",
+        "offset": 344,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnFrozenChanged",
+        "type": "XLua.DelegateBridge",
+        "offset": 352,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnLevitateChanged",
+        "type": "XLua.DelegateBridge",
+        "offset": 360,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnTick",
+        "type": "XLua.DelegateBridge",
+        "offset": 368,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckActiveBuffs",
+        "type": "XLua.DelegateBridge",
+        "offset": 376,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoCastOnTargets",
+        "type": "XLua.DelegateBridge",
+        "offset": 384,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__DoCast",
+        "type": "XLua.DelegateBridge",
+        "offset": 392,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_UpdateTargets",
+        "type": "XLua.DelegateBridge",
+        "offset": 400,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckAnotherSpell",
+        "type": "XLua.DelegateBridge",
+        "offset": 408,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckFinished",
+        "type": "XLua.DelegateBridge",
+        "offset": 416,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoUpdatePlaybackSpeed",
+        "type": "XLua.DelegateBridge",
+        "offset": 424,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_UpdatePlaybackSpeed",
+        "type": "XLua.DelegateBridge",
+        "offset": 432,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckIsDamageOrHealSource",
+        "type": "XLua.DelegateBridge",
+        "offset": 440,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GeneratePurposeMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 448,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoEmitAudioSignalForSpellOn",
+        "type": "XLua.DelegateBridge",
+        "offset": 456,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoEmitAudioSignalForCastStart",
+        "type": "XLua.DelegateBridge",
+        "offset": 464,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoEmitAudioSignalForHit",
+        "type": "XLua.DelegateBridge",
+        "offset": 472,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_PreloadSpecialAudioSignals",
+        "type": "XLua.DelegateBridge",
+        "offset": 480,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnOutputAttackOrHeal",
+        "type": "XLua.DelegateBridge",
+        "offset": 488,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnOutputAttackOrHealEachSpell",
+        "type": "XLua.DelegateBridge",
+        "offset": 496,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_Awake",
+        "type": "XLua.DelegateBridge",
+        "offset": 504,
+        "default": null
+      },
+      {
+        "name": "_c__Hotfix0_ctor",
+        "type": "XLua.DelegateBridge",
+        "offset": 512,
+        "default": null
+      }
+    ],
+    "vtable": [
+      {
+        "slot": 0,
+        "method": "UnityEngine.Object$$Equals"
+      },
+      {
+        "slot": 1,
+        "method": "System.Object$$Finalize"
+      },
+      {
+        "slot": 2,
+        "method": "UnityEngine.Object$$GetHashCode"
+      },
+      {
+        "slot": 3,
+        "method": "UnityEngine.Object$$ToString"
+      },
+      {
+        "slot": 4,
+        "method": "Torappu.Battle.AbilityStandard$$GatherEffects"
+      },
+      {
+        "slot": 5,
+        "method": "Torappu.Battle.AbilityStandard$$GatherProjectiles"
+      },
+      {
+        "slot": 6,
+        "method": "Torappu.Battle.AbilityStandard$$GatherActionNodes"
+      },
+      {
+        "slot": 7,
+        "method": "Torappu.Battle.AbilityStandard$$GatherBuffs"
+      },
+      {
+        "slot": 8,
+        "method": "Torappu.Battle.Ability$$get_instanceUid"
+      },
+      {
+        "slot": 9,
+        "method": "Torappu.Battle.AbilityStandard$$PreloadSpecialAudioSignals"
+      },
+      {
+        "slot": 10,
+        "method": "Torappu.Battle.Ability$$GetPRDEntityHash"
+      },
+      {
+        "slot": 11,
+        "method": "Torappu.Battle.Ability$$AllocatePRDEntitySubHash"
+      },
+      {
+        "slot": 12,
+        "method": "Torappu.Battle.Ability$$ResetPRDEntity"
+      },
+      {
+        "slot": 13,
+        "method": "Torappu.Battle.Ability$$get_affectedBySlowDown"
+      },
+      {
+        "slot": 15,
+        "method": "Torappu.Battle.Ability$$get_selector"
+      },
+      {
+        "slot": 16,
+        "method": "Torappu.Battle.Ability$$get_rangeToShow"
+      },
+      {
+        "slot": 18,
+        "method": "Torappu.Battle.AbilityStandard$$get_allowNoTarget"
+      },
+      {
+        "slot": 19,
+        "method": "Torappu.Battle.Ability$$get_isReady"
+      },
+      {
+        "slot": 20,
+        "method": "Torappu.Battle.Ability$$get_isAffecting"
+      },
+      {
+        "slot": 21,
+        "method": "Torappu.Battle.Ability$$get_canSelectCamouflageTarget"
+      },
+      {
+        "slot": 22,
+        "method": "Torappu.Battle.Ability$$get_escapeTime"
+      },
+      {
+        "slot": 23,
+        "method": "Torappu.Battle.Ability$$get_applyWay"
+      },
+      {
+        "slot": 24,
+        "method": "Torappu.Battle.AbilityStandard$$get_purposeMask"
+      },
+      {
+        "slot": 25,
+        "method": "Torappu.Battle.AbilityStandard$$get_isPredelay"
+      },
+      {
+        "slot": 26,
+        "method": "Torappu.Battle.Ability$$get_ignorePalsyInterrupt"
+      },
+      {
+        "slot": 27,
+        "method": "Torappu.Battle.AbilityStandard$$DoSetData"
+      },
+      {
+        "slot": 28,
+        "method": "Torappu.Battle.Ability$$UpdateBlackboard"
+      },
+      {
+        "slot": 29,
+        "method": "Torappu.Battle.Ability$$UpdateSelector"
+      },
+      {
+        "slot": 30,
+        "method": "Torappu.Battle.Ability$$DoAttach"
+      },
+      {
+        "slot": 31,
+        "method": "Torappu.Battle.Ability$$DoDetach"
+      },
+      {
+        "slot": 32,
+        "method": "Torappu.Battle.Ability$$OnOwnerLocated"
+      },
+      {
+        "slot": 33,
+        "method": "Torappu.Battle.AbilityStandard$$CastToTarget"
+      },
+      {
+        "slot": 34,
+        "method": "Torappu.Battle.AbilityStandard$$CastDirectly"
+      },
+      {
+        "slot": 35,
+        "method": "Torappu.Battle.AbilityStandard$$CastToInputPosition"
+      },
+      {
+        "slot": 36,
+        "method": "Torappu.Battle.Ability$$InterruptIfNot"
+      },
+      {
+        "slot": 37,
+        "method": "Torappu.Battle.Ability$$DoFinish"
+      },
+      {
+        "slot": 38,
+        "method": "Torappu.Battle.Ability$$ResetCooldown"
+      },
+      {
+        "slot": 39,
+        "method": "Torappu.Battle.Ability$$UpdateCooldown"
+      },
+      {
+        "slot": 40,
+        "method": "Torappu.Battle.Ability$$TrySetCooldownRemainingProgress"
+      },
+      {
+        "slot": 41,
+        "method": "Torappu.Battle.AbilityStandard$$StopAffect"
+      },
+      {
+        "slot": 42,
+        "method": "Torappu.Battle.Ability$$Reset"
+      },
+      {
+        "slot": 43,
+        "method": "Torappu.Battle.AbilityStandard$$CleanupForNextCast"
+      },
+      {
+        "slot": 47,
+        "method": "Torappu.Battle.Ability$$GetAbilityAttachments"
+      },
+      {
+        "slot": 48,
+        "method": "Torappu.Battle.AbilityStandard$$GatherEffects"
+      },
+      {
+        "slot": 49,
+        "method": "Torappu.Battle.AbilityStandard$$GatherProjectiles"
+      },
+      {
+        "slot": 50,
+        "method": "Torappu.Battle.AbilityStandard$$GatherActionNodes"
+      },
+      {
+        "slot": 51,
+        "method": "Torappu.Battle.AbilityStandard$$GatherBuffs"
+      },
+      {
+        "slot": 52,
+        "method": "Torappu.Battle.AbilityStandard$$OnCastStart"
+      },
+      {
+        "slot": 53,
+        "method": "Torappu.Battle.AbilityStandard$$OnCastEnd"
+      },
+      {
+        "slot": 54,
+        "method": "Torappu.Battle.AbilityStandard$$OnAttached"
+      },
+      {
+        "slot": 55,
+        "method": "Torappu.Battle.AbilityStandard$$OnDetached"
+      },
+      {
+        "slot": 56,
+        "method": "Torappu.Battle.AbilityStandard$$OnTick"
+      },
+      {
+        "slot": 57,
+        "method": "Torappu.Battle.AbilityStandard$$OnOverload"
+      },
+      {
+        "slot": 58,
+        "method": "Torappu.Battle.Ability$$OnAttackTimeChanged"
+      },
+      {
+        "slot": 59,
+        "method": "Torappu.Battle.Ability$$OnSlowDownChanged"
+      },
+      {
+        "slot": 60,
+        "method": "Torappu.Battle.Ability$$OnAbilityExtendUpdated"
+      },
+      {
+        "slot": 61,
+        "method": "Torappu.Battle.AbilityStandard$$PreloadSpecialAudioSignals"
+      },
+      {
+        "slot": 62,
+        "method": "Torappu.Battle.AbilityStandard$$CheckAtPreCastPhase"
+      },
+      {
+        "slot": 63,
+        "method": "Torappu.Battle.Ability$$FinishIfNot"
+      },
+      {
+        "slot": 64,
+        "method": "Torappu.Battle.Ability$$AddPassiveBuffs"
+      },
+      {
+        "slot": 65,
+        "method": "Torappu.Battle.Ability$$ClearPassiveBuffs"
+      },
+      {
+        "slot": 66,
+        "method": "Torappu.Battle.Ability$$PreprocessActionsForProjectile"
+      },
+      {
+        "slot": 67,
+        "method": "Torappu.Battle.Ability$$ClearProjectile"
+      },
+      {
+        "slot": 69,
+        "method": "Torappu.Battle.AbilityStandard$$get_selectTargetTiming"
+      },
+      {
+        "slot": 71,
+        "method": "Torappu.Battle.AbilityStandard$$get_onlyTrigAudioSignalForFirstSpell"
+      },
+      {
+        "slot": 72,
+        "method": "Torappu.Battle.AbilityStandard$$get_onlyTrigAudioSignalForFirstHit"
+      },
+      {
+        "slot": 73,
+        "method": "Torappu.Battle.AbilityStandard$$GetCastDirectlyMapPosition"
+      },
+      {
+        "slot": 74,
+        "method": "Torappu.Battle.AbilityStandard$$OnEvent"
+      },
+      {
+        "slot": 76,
+        "method": "Torappu.Battle.AbilityStandard$$OnCastOnTarget"
+      },
+      {
+        "slot": 77,
+        "method": "Torappu.Battle.AbilityStandard$$DoApplyActionsOnTarget"
+      },
+      {
+        "slot": 80,
+        "method": "Torappu.Battle.AbilityStandard$$OnWaitForTriggerDelta"
+      },
+      {
+        "slot": 81,
+        "method": "Torappu.Battle.AbilityStandard$$OnSpellStart"
+      },
+      {
+        "slot": 82,
+        "method": "Torappu.Battle.AbilityStandard$$DoOnHasNoTarget"
+      },
+      {
+        "slot": 83,
+        "method": "Torappu.Battle.AbilityStandard$$OnAttackFinished"
+      },
+      {
+        "slot": 84,
+        "method": "Torappu.Battle.AbilityStandard$$OnStunnedChanged"
+      },
+      {
+        "slot": 85,
+        "method": "Torappu.Battle.AbilityStandard$$OnFrozenChanged"
+      },
+      {
+        "slot": 86,
+        "method": "Torappu.Battle.AbilityStandard$$OnLevitateChanged"
+      },
+      {
+        "slot": 87,
+        "method": "Torappu.Battle.AbilityStandard$$CheckActiveBuffs"
+      },
+      {
+        "slot": 88,
+        "method": "Torappu.Battle.AbilityStandard$$DoCastOnTargets"
+      },
+      {
+        "slot": 89,
+        "method": "Torappu.Battle.AbilityStandard$$UpdateTargets"
+      },
+      {
+        "slot": 90,
+        "method": "Torappu.Battle.AbilityStandard$$CheckAnotherSpell"
+      },
+      {
+        "slot": 91,
+        "method": "Torappu.Battle.AbilityStandard$$UpdatePlaybackSpeed"
+      },
+      {
+        "slot": 92,
+        "method": "Torappu.Battle.AbilityStandard$$CheckIsDamageOrHealSource"
+      },
+      {
+        "slot": 93,
+        "method": "Torappu.Battle.AbilityStandard$$GeneratePurposeMask"
+      },
+      {
+        "slot": 94,
+        "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForSpellOn"
+      },
+      {
+        "slot": 95,
+        "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForCastStart"
+      },
+      {
+        "slot": 96,
+        "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForHit"
+      },
+      {
+        "slot": 97,
+        "method": "Torappu.Battle.AbilityStandard$$OnOutputAttackOrHeal"
+      },
+      {
+        "slot": 98,
+        "method": "Torappu.Battle.AbilityStandard$$OnOutputAttackOrHealEachSpell"
+      },
+      {
+        "slot": 99,
+        "method": "Torappu.Battle.AbilityStandard$$Awake"
+      }
+    ]
+  },
+  {
+    "name": "Torappu.Battle.BasicSkill",
+    "type_index": 10813,
+    "fields": [
+      {
+        "name": "_maxTriggerTime",
+        "type": "System.Int32",
+        "offset": 24,
+        "default": null
+      },
+      {
+        "name": "_allowSpRecoveryWhenAffecting",
+        "type": "System.Boolean",
+        "offset": 28,
+        "default": null
+      },
+      {
+        "name": "_limitGlobalTriggerTime",
+        "type": "System.Boolean",
+        "offset": 29,
+        "default": null
+      },
+      {
+        "name": "_hidden",
+        "type": "System.Boolean",
+        "offset": 30,
+        "default": null
+      },
+      {
+        "name": "_showSpBarEvenHidden",
+        "type": "System.Boolean",
+        "offset": 31,
+        "default": null
+      },
+      {
+        "name": "_showSpAsBulletMode",
+        "type": "System.Boolean",
+        "offset": 32,
+        "default": null
+      },
+      {
+        "name": "_showSpRatioAsProgress",
+        "type": "System.Boolean",
+        "offset": 33,
+        "default": null
+      },
+      {
+        "name": "_playCharWordVoice",
+        "type": "System.Boolean",
+        "offset": 34,
+        "default": null
+      },
+      {
+        "name": "_playCharWordWithPassiveType",
+        "type": "System.Boolean",
+        "offset": 35,
+        "default": null
+      },
+      {
+        "name": "_earlyVoice",
+        "type": "System.Boolean",
+        "offset": 36,
+        "default": null
+      },
+      {
+        "name": "_canCastWithNoSp",
+        "type": "System.Boolean",
+        "offset": 37,
+        "default": null
+      },
+      {
+        "name": "_canSilenced",
+        "type": "System.Boolean",
+        "offset": 38,
+        "default": null
+      },
+      {
+        "name": "_canUseInAbnormalState",
+        "type": "System.Boolean",
+        "offset": 39,
+        "default": null
+      },
+      {
+        "name": "_defaultModeIndex",
+        "type": "System.Int32",
+        "offset": 40,
+        "default": null
+      },
+      {
+        "name": "_attackBlackboardModeIndex",
+        "type": "System.Int32",
+        "offset": 44,
+        "default": null
+      },
+      {
+        "name": "_extraAttackBlackboardModeIndices",
+        "type": "System.Int32[]",
+        "offset": 48,
+        "default": null
+      },
+      {
+        "name": "_rangeIdModeIndex",
+        "type": "System.Int32",
+        "offset": 56,
+        "default": null
+      },
+      {
+        "name": "_extraRangeIdModeIndices",
+        "type": "System.Int32[]",
+        "offset": 64,
+        "default": null
+      },
+      {
+        "name": "_rangeIdUsageType",
+        "type": "Torappu.RangeIdUsage",
+        "offset": 72,
+        "default": null
+      },
+      {
+        "name": "_writeDurationToAttackBlackboard",
+        "type": "System.Boolean",
+        "offset": 73,
+        "default": null
+      },
+      {
+        "name": "_attachSignalIds",
+        "type": "System.Boolean",
+        "offset": 74,
+        "default": null
+      },
+      {
+        "name": "_extraAbilities",
+        "type": "Torappu.Battle.Ability[]",
+        "offset": 80,
+        "default": null
+      },
+      {
+        "name": "_useEscapeTime",
+        "type": "System.Boolean",
+        "offset": 88,
+        "default": null
+      },
+      {
+        "name": "_earlySkillFinishAtAttackFinished",
+        "type": "System.Boolean",
+        "offset": 89,
+        "default": null
+      },
+      {
+        "name": "_stopAffectOnInterrupt",
+        "type": "System.Boolean",
+        "offset": 90,
+        "default": null
+      },
+      {
+        "name": "_showProgressToNext",
+        "type": "System.Boolean",
+        "offset": 91,
+        "default": null
+      },
+      {
+        "name": "_hideSkillStackCount",
+        "type": "System.Boolean",
+        "offset": 92,
+        "default": null
+      },
+      {
+        "name": "_hideHudSkillStackCount",
+        "type": "System.Boolean",
+        "offset": 93,
+        "default": null
+      },
+      {
+        "name": "_playSkillBeginAnim",
+        "type": "System.Boolean",
+        "offset": 94,
+        "default": null
+      },
+      {
+        "name": "_beginAnim",
+        "type": "System.String",
+        "offset": 96,
+        "default": null
+      },
+      {
+        "name": "_beginAnimDown",
+        "type": "System.String",
+        "offset": 104,
+        "default": null
+      },
+      {
+        "name": "_beginEffect",
+        "type": "System.String[]",
+        "offset": 112,
+        "default": null
+      },
+      {
+        "name": "_useFaceVector",
+        "type": "System.Boolean",
+        "offset": 120,
+        "default": null
+      },
+      {
+        "name": "_beginAnimValidator",
+        "type": "Torappu.Battle.TargetValidator",
+        "offset": 128,
+        "default": null
+      },
+      {
+        "name": "_availableValidator",
+        "type": "Torappu.Battle.TargetValidator",
+        "offset": 136,
+        "default": null
+      },
+      {
+        "name": "m_triggerCnt",
+        "type": "System.Int32",
+        "offset": 144,
+        "default": null
+      },
+      {
+        "name": "m_rangeIdModeIndex",
+        "type": "System.Int32",
+        "offset": 148,
+        "default": null
+      },
+      {
+        "name": "m_waitForSkillEnd",
+        "type": "System.Boolean",
+        "offset": 152,
+        "default": null
+      },
+      {
+        "name": "m_isEarlyFinished",
+        "type": "System.Boolean",
+        "offset": 153,
+        "default": null
+      },
+      {
+        "name": "m_isOverloaded",
+        "type": "System.Boolean",
+        "offset": 154,
+        "default": null
+      },
+      {
+        "name": "m_playCharWordWithPassiveType",
+        "type": "System.Boolean",
+        "offset": 155,
+        "default": null
+      },
+      {
+        "name": "m_costMinSp",
+        "type": "System.Int32",
+        "offset": 156,
+        "default": null
+      },
+      {
+        "name": "m_castWithNoSp",
+        "type": "System.Boolean",
+        "offset": 160,
+        "default": null
+      },
+      {
+        "name": "m_owner",
+        "type": "Torappu.Battle.Character",
+        "offset": 168,
+        "default": null
+      },
+      {
+        "name": "m_data",
+        "type": "Torappu.SkillData",
+        "offset": 176,
+        "default": null
+      },
+      {
+        "name": "m_attackBlackboard",
+        "type": "Torappu.Blackboard",
+        "offset": 184,
+        "default": null
+      },
+      {
+        "name": "m_ability",
+        "type": "Torappu.Battle.Ability",
+        "offset": 192,
+        "default": null
+      },
+      {
+        "name": "m_registeredAsModifier",
+        "type": "System.Boolean",
+        "offset": 200,
+        "default": null
+      },
+      {
+        "name": "m_maxTriggerTime",
+        "type": "System.Int32",
+        "offset": 204,
+        "default": null
+      },
+      {
+        "name": "m_beginEffects",
+        "type": "System.Collections.Generic.List`1<Torappu.ObjectPtr`1<Torappu.Battle.Effects.Effect>>",
+        "offset": 208,
+        "default": null
+      },
+      {
+        "name": "m_behaviours",
+        "type": "Torappu.Battle.BasicSkill+Behaviour[]",
+        "offset": 216,
+        "default": null
+      },
+      {
+        "name": "m_chantBehavior",
+        "type": "Torappu.Battle.Skills.ChantBeforeSkill",
+        "offset": 224,
+        "default": null
+      },
+      {
+        "name": "m_startSkill",
+        "type": "System.Action",
+        "offset": 232,
+        "default": null
+      },
+      {
+        "name": "m_startSkillCoroutine",
+        "type": "Torappu.Battle.CoroutineId",
+        "offset": 240,
+        "default": null
+      },
+      {
+        "name": "m_beginAnim",
+        "type": "System.String",
+        "offset": 256,
+        "default": null
+      },
+      {
+        "name": "m_beginAnimDown",
+        "type": "System.String",
+        "offset": 264,
+        "default": null
+      },
+      {
+        "name": "<cachedOperationSide>k__BackingField",
+        "type": "Torappu.PlayerSide",
+        "offset": 272,
+        "default": null
+      },
+      {
+        "name": "<blackboard>k__BackingField",
+        "type": "Torappu.Blackboard",
+        "offset": 280,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isOverloaded",
+        "type": "XLua.DelegateBridge",
+        "offset": 0,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_attributeMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 8,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_triggerCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 16,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_abnormalFlagMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 24,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_abnormalImmuneMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 32,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_abnormalAntiMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 40,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_abnormalComboMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 48,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_abnormalComboImmuneMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 56,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_showSpAsBulletMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 64,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_recoverSpWhenAffecting",
+        "type": "XLua.DelegateBridge",
+        "offset": 72,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_defaultModeIndex",
+        "type": "XLua.DelegateBridge",
+        "offset": 80,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetDefaultModeIndex",
+        "type": "XLua.DelegateBridge",
+        "offset": 88,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_useAttackBlackboardModeIndex",
+        "type": "XLua.DelegateBridge",
+        "offset": 96,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_stateUninterruptible",
+        "type": "XLua.DelegateBridge",
+        "offset": 104,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SatisfySkillRangeIdModeIndex",
+        "type": "XLua.DelegateBridge",
+        "offset": 112,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsAvailable",
+        "type": "XLua.DelegateBridge",
+        "offset": 120,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_ownerCanUseSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 128,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_ownerNotInAbnormalState",
+        "type": "XLua.DelegateBridge",
+        "offset": 136,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_ownerCanUseInAbnormalState",
+        "type": "XLua.DelegateBridge",
+        "offset": 144,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_ownerSkillActivatable",
+        "type": "XLua.DelegateBridge",
+        "offset": 152,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsTriggerable",
+        "type": "XLua.DelegateBridge",
+        "offset": 160,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsAvailableForAutoTrigger",
+        "type": "XLua.DelegateBridge",
+        "offset": 168,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsAutoSkillTriggerable",
+        "type": "XLua.DelegateBridge",
+        "offset": 176,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsOpTriggerable",
+        "type": "XLua.DelegateBridge",
+        "offset": 184,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsClickable",
+        "type": "XLua.DelegateBridge",
+        "offset": 192,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsOpRetriggerable",
+        "type": "XLua.DelegateBridge",
+        "offset": 200,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsRetriggerClickable",
+        "type": "XLua.DelegateBridge",
+        "offset": 208,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsRetriggerAvailable",
+        "type": "XLua.DelegateBridge",
+        "offset": 216,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_isRetriggerable",
+        "type": "XLua.DelegateBridge",
+        "offset": 224,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsSuspendable",
+        "type": "XLua.DelegateBridge",
+        "offset": 232,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsDiscardable",
+        "type": "XLua.DelegateBridge",
+        "offset": 240,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CanTriggerWithReason",
+        "type": "XLua.DelegateBridge",
+        "offset": 248,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_chantSuspendable",
+        "type": "XLua.DelegateBridge",
+        "offset": 256,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isAffecting",
+        "type": "XLua.DelegateBridge",
+        "offset": 264,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_cachedOperationSide",
+        "type": "XLua.DelegateBridge",
+        "offset": 272,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_cachedOperationSide",
+        "type": "XLua.DelegateBridge",
+        "offset": 280,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_shouldCastLikeAttack",
+        "type": "XLua.DelegateBridge",
+        "offset": 288,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_shouldChangeToChargeColor",
+        "type": "XLua.DelegateBridge",
+        "offset": 296,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_overrideAudioSignalId",
+        "type": "XLua.DelegateBridge",
+        "offset": 304,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_overloadRatio",
+        "type": "XLua.DelegateBridge",
+        "offset": 312,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_alwaysShowSpCount",
+        "type": "XLua.DelegateBridge",
+        "offset": 320,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_remainingTime",
+        "type": "XLua.DelegateBridge",
+        "offset": 328,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_remainingProgress",
+        "type": "XLua.DelegateBridge",
+        "offset": 336,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_remainingOverloadProgress",
+        "type": "XLua.DelegateBridge",
+        "offset": 344,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_TryForceToOverloadProgress",
+        "type": "XLua.DelegateBridge",
+        "offset": 352,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_availableCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 360,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_progressToReady",
+        "type": "XLua.DelegateBridge",
+        "offset": 368,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_spCostZero",
+        "type": "XLua.DelegateBridge",
+        "offset": 376,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_blackboard",
+        "type": "XLua.DelegateBridge",
+        "offset": 384,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_blackboard",
+        "type": "XLua.DelegateBridge",
+        "offset": 392,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_ability",
+        "type": "XLua.DelegateBridge",
+        "offset": 400,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_familyGroup",
+        "type": "XLua.DelegateBridge",
+        "offset": 408,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rangeToShow",
+        "type": "XLua.DelegateBridge",
+        "offset": 416,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_playCharWordVoice",
+        "type": "XLua.DelegateBridge",
+        "offset": 424,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_playCharWordWithPassiveType",
+        "type": "XLua.DelegateBridge",
+        "offset": 432,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_earlyVoice",
+        "type": "XLua.DelegateBridge",
+        "offset": 440,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_canCastWithNoSp",
+        "type": "XLua.DelegateBridge",
+        "offset": 448,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_spEnough",
+        "type": "XLua.DelegateBridge",
+        "offset": 456,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_canSkipReduceSp",
+        "type": "XLua.DelegateBridge",
+        "offset": 464,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_forceToShowRange",
+        "type": "XLua.DelegateBridge",
+        "offset": 472,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_forceUseBaseShowRange",
+        "type": "XLua.DelegateBridge",
+        "offset": 480,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isUsedUp",
+        "type": "XLua.DelegateBridge",
+        "offset": 488,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_registeredAsModifier",
+        "type": "XLua.DelegateBridge",
+        "offset": 496,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_registeredAsModifier",
+        "type": "XLua.DelegateBridge",
+        "offset": 504,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_useRangeIdModeIndex",
+        "type": "XLua.DelegateBridge",
+        "offset": 512,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_data",
+        "type": "XLua.DelegateBridge",
+        "offset": 520,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hidden",
+        "type": "XLua.DelegateBridge",
+        "offset": 528,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_needToDisplay",
+        "type": "XLua.DelegateBridge",
+        "offset": 536,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_needToDisplaySpBar",
+        "type": "XLua.DelegateBridge",
+        "offset": 544,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isRemoteControlled",
+        "type": "XLua.DelegateBridge",
+        "offset": 552,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hideProgressFlag",
+        "type": "XLua.DelegateBridge",
+        "offset": 560,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hasPlayedBeginAnim",
+        "type": "XLua.DelegateBridge",
+        "offset": 568,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rangeidUsageType",
+        "type": "XLua.DelegateBridge",
+        "offset": 576,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_owner",
+        "type": "XLua.DelegateBridge",
+        "offset": 584,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_escapeTime",
+        "type": "XLua.DelegateBridge",
+        "offset": 592,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_playSkillBeginAnim",
+        "type": "XLua.DelegateBridge",
+        "offset": 600,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hasSkillBeginAnim",
+        "type": "XLua.DelegateBridge",
+        "offset": 608,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_beginAnim",
+        "type": "XLua.DelegateBridge",
+        "offset": 616,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hasChant",
+        "type": "XLua.DelegateBridge",
+        "offset": 624,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_chantProgress",
+        "type": "XLua.DelegateBridge",
+        "offset": 632,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInChant",
+        "type": "XLua.DelegateBridge",
+        "offset": 640,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInExtraChant",
+        "type": "XLua.DelegateBridge",
+        "offset": 648,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_chantBehaviour",
+        "type": "XLua.DelegateBridge",
+        "offset": 656,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_canCastCheck",
+        "type": "XLua.DelegateBridge",
+        "offset": 664,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_beginEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 672,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_writeDurationToAttackBlackboard",
+        "type": "XLua.DelegateBridge",
+        "offset": 680,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isOverloadSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 688,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_AssignData",
+        "type": "XLua.DelegateBridge",
+        "offset": 696,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_Cast",
+        "type": "XLua.DelegateBridge",
+        "offset": 704,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_Tick",
+        "type": "XLua.DelegateBridge",
+        "offset": 712,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnSkillStart",
+        "type": "XLua.DelegateBridge",
+        "offset": 720,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnSkillEnd",
+        "type": "XLua.DelegateBridge",
+        "offset": 728,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RetriggerSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 736,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_InterruptIfNot",
+        "type": "XLua.DelegateBridge",
+        "offset": 744,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnEnterSkillState",
+        "type": "XLua.DelegateBridge",
+        "offset": 752,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_TryPrepare",
+        "type": "XLua.DelegateBridge",
+        "offset": 760,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CanCastCheckBeforeStart",
+        "type": "XLua.DelegateBridge",
+        "offset": 768,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetBehaviour",
+        "type": "XLua.DelegateBridge",
+        "offset": 776,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnInit",
+        "type": "XLua.DelegateBridge",
+        "offset": 784,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnBorn",
+        "type": "XLua.DelegateBridge",
+        "offset": 792,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnLocate",
+        "type": "XLua.DelegateBridge",
+        "offset": 800,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnOverload",
+        "type": "XLua.DelegateBridge",
+        "offset": 808,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnOwnerFinish",
+        "type": "XLua.DelegateBridge",
+        "offset": 816,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnCastSucceed",
+        "type": "XLua.DelegateBridge",
+        "offset": 824,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnCastFailedInSkillState",
+        "type": "XLua.DelegateBridge",
+        "offset": 832,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnBeforeAttack",
+        "type": "XLua.DelegateBridge",
+        "offset": 840,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnAfterAttack",
+        "type": "XLua.DelegateBridge",
+        "offset": 848,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetValue",
+        "type": "XLua.DelegateBridge",
+        "offset": 856,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetAttackBlackboard",
+        "type": "XLua.DelegateBridge",
+        "offset": 864,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_PlayBeginEffectAndAudio",
+        "type": "XLua.DelegateBridge",
+        "offset": 872,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_InterruptStartIfNot",
+        "type": "XLua.DelegateBridge",
+        "offset": 880,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoStartSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 888,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_PlayBeginAnimation",
+        "type": "XLua.DelegateBridge",
+        "offset": 896,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_PlayBeginAudio",
+        "type": "XLua.DelegateBridge",
+        "offset": 904,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnBeforeSkillBeginAnim",
+        "type": "XLua.DelegateBridge",
+        "offset": 912,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnBeforeSkillStart",
+        "type": "XLua.DelegateBridge",
+        "offset": 920,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnBeforePlayBeginAnimation",
+        "type": "XLua.DelegateBridge",
+        "offset": 928,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ClearBeginEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 936,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DealDummySkillBehaviours",
+        "type": "XLua.DelegateBridge",
+        "offset": 944,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GatherEffects",
+        "type": "XLua.DelegateBridge",
+        "offset": 952,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GatherProjectiles",
+        "type": "XLua.DelegateBridge",
+        "offset": 960,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GatherBuffs",
+        "type": "XLua.DelegateBridge",
+        "offset": 968,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GatherActionNodes",
+        "type": "XLua.DelegateBridge",
+        "offset": 976,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnTick",
+        "type": "XLua.DelegateBridge",
+        "offset": 984,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OverloadIfNecessary",
+        "type": "XLua.DelegateBridge",
+        "offset": 992,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ReduceSp",
+        "type": "XLua.DelegateBridge",
+        "offset": 1000,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_UpdateSpRecovery",
+        "type": "XLua.DelegateBridge",
+        "offset": 1008,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnCastFinish",
+        "type": "XLua.DelegateBridge",
+        "offset": 1016,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_Awake",
+        "type": "XLua.DelegateBridge",
+        "offset": 1024,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__GenerateSignalId",
+        "type": "XLua.DelegateBridge",
+        "offset": 1032,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__OnReceiveAttackFinishEvent",
+        "type": "XLua.DelegateBridge",
+        "offset": 1040,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__ApplyModifierToData",
+        "type": "XLua.DelegateBridge",
+        "offset": 1048,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_PostprocessData",
+        "type": "XLua.DelegateBridge",
+        "offset": 1056,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SwitchSkillRangeIdModeIndex",
+        "type": "XLua.DelegateBridge",
+        "offset": 1064,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SwitchSkillCharWordToPassiveType",
+        "type": "XLua.DelegateBridge",
+        "offset": 1072,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ModifyCostMinSp",
+        "type": "XLua.DelegateBridge",
+        "offset": 1080,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ModifyCastWithNoSp",
+        "type": "XLua.DelegateBridge",
+        "offset": 1088,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__IsStackable",
+        "type": "XLua.DelegateBridge",
+        "offset": 1096,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isAvailableToShowStackCount",
+        "type": "XLua.DelegateBridge",
+        "offset": 1104,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hideHudSkillStackCount",
+        "type": "XLua.DelegateBridge",
+        "offset": 1112,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ReplaceBeginAnim",
+        "type": "XLua.DelegateBridge",
+        "offset": 1120,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ClearReplaceBeginAnim",
+        "type": "XLua.DelegateBridge",
+        "offset": 1128,
+        "default": null
+      },
+      {
+        "name": "_c__Hotfix0_ctor",
+        "type": "XLua.DelegateBridge",
+        "offset": 1136,
+        "default": null
+      }
+    ],
+    "vtable": [
+      {
+        "slot": 0,
+        "method": "UnityEngine.Object$$Equals"
+      },
+      {
+        "slot": 1,
+        "method": "System.Object$$Finalize"
+      },
+      {
+        "slot": 2,
+        "method": "UnityEngine.Object$$GetHashCode"
+      },
+      {
+        "slot": 3,
+        "method": "UnityEngine.Object$$ToString"
+      },
+      {
+        "slot": 4,
+        "method": "Torappu.Battle.BasicSkill$$get_attributeMask"
+      },
+      {
+        "slot": 5,
+        "method": "Torappu.Battle.BasicSkill$$get_abnormalFlagMask"
+      },
+      {
+        "slot": 6,
+        "method": "Torappu.Battle.BasicSkill$$get_abnormalImmuneMask"
+      },
+      {
+        "slot": 7,
+        "method": "Torappu.Battle.BasicSkill$$get_abnormalAntiMask"
+      },
+      {
+        "slot": 8,
+        "method": "Torappu.Battle.BasicSkill$$get_abnormalComboMask"
+      },
+      {
+        "slot": 9,
+        "method": "Torappu.Battle.BasicSkill$$get_abnormalComboImmuneMask"
+      },
+      {
+        "slot": 10,
+        "method": "Torappu.Battle.BasicSkill$$GetValue"
+      },
+      {
+        "slot": 11,
+        "method": "Torappu.Battle.BasicSkill$$GatherEffects"
+      },
+      {
+        "slot": 12,
+        "method": "Torappu.Battle.BasicSkill$$GatherProjectiles"
+      },
+      {
+        "slot": 13,
+        "method": "Torappu.Battle.BasicSkill$$GatherBuffs"
+      },
+      {
+        "slot": 14,
+        "method": "Torappu.Battle.BasicSkill$$GatherActionNodes"
+      },
+      {
+        "slot": 15,
+        "method": "Torappu.Battle.BasicSkill$$get_showSpAsBulletMode"
+      },
+      {
+        "slot": 16,
+        "method": "Torappu.Battle.BasicSkill$$get_recoverSpWhenAffecting"
+      },
+      {
+        "slot": 17,
+        "method": "Torappu.Battle.BasicSkill$$get_stateUninterruptible"
+      },
+      {
+        "slot": 18,
+        "method": "Torappu.Battle.BasicSkill$$SatisfySkillRangeIdModeIndex"
+      },
+      {
+        "slot": 19,
+        "method": "Torappu.Battle.BasicSkill$$IsAvailable"
+      },
+      {
+        "slot": 20,
+        "method": "Torappu.Battle.BasicSkill$$IsClickable"
+      },
+      {
+        "slot": 21,
+        "method": "Torappu.Battle.BasicSkill$$IsRetriggerClickable"
+      },
+      {
+        "slot": 22,
+        "method": "Torappu.Battle.BasicSkill$$IsRetriggerAvailable"
+      },
+      {
+        "slot": 23,
+        "method": "Torappu.Battle.BasicSkill$$isRetriggerable"
+      },
+      {
+        "slot": 24,
+        "method": "Torappu.Battle.BasicSkill$$IsDiscardable"
+      },
+      {
+        "slot": 25,
+        "method": "Torappu.Battle.BasicSkill$$CanTriggerWithReason"
+      },
+      {
+        "slot": 26,
+        "method": "Torappu.Battle.BasicSkill$$get_isAffecting"
+      },
+      {
+        "slot": 27,
+        "method": "Torappu.Battle.BasicSkill$$get_shouldCastLikeAttack"
+      },
+      {
+        "slot": 28,
+        "method": "Torappu.Battle.BasicSkill$$get_shouldChangeToChargeColor"
+      },
+      {
+        "slot": 29,
+        "method": "Torappu.Battle.BasicSkill$$get_overrideAudioSignalId"
+      },
+      {
+        "slot": 30,
+        "method": "Torappu.Battle.BasicSkill$$get_remainingTime"
+      },
+      {
+        "slot": 31,
+        "method": "Torappu.Battle.BasicSkill$$get_remainingProgress"
+      },
+      {
+        "slot": 32,
+        "method": "Torappu.Battle.BasicSkill$$get_remainingOverloadProgress"
+      },
+      {
+        "slot": 33,
+        "method": "Torappu.Battle.BasicSkill$$TryForceToOverloadProgress"
+      },
+      {
+        "slot": 34,
+        "method": "Torappu.Battle.BasicSkill$$get_progressToReady"
+      },
+      {
+        "slot": 35,
+        "method": "Torappu.Battle.BasicSkill$$get_spCostZero"
+      },
+      {
+        "slot": 36,
+        "method": "Torappu.Battle.BasicSkill$$get_ability"
+      },
+      {
+        "slot": 37,
+        "method": "Torappu.Battle.BasicSkill$$get_familyGroup"
+      },
+      {
+        "slot": 38,
+        "method": "Torappu.Battle.BasicSkill$$get_rangeToShow"
+      },
+      {
+        "slot": 39,
+        "method": "Torappu.Battle.BasicSkill$$get_spEnough"
+      },
+      {
+        "slot": 40,
+        "method": "Torappu.Battle.BasicSkill$$get_canSkipReduceSp"
+      },
+      {
+        "slot": 41,
+        "method": "Torappu.Battle.BasicSkill$$get_forceToShowRange"
+      },
+      {
+        "slot": 42,
+        "method": "Torappu.Battle.BasicSkill$$get_forceUseBaseShowRange"
+      },
+      {
+        "slot": 43,
+        "method": "Torappu.Battle.BasicSkill$$get_isUsedUp"
+      },
+      {
+        "slot": 44,
+        "method": "Torappu.Battle.BasicSkill$$get_isRemoteControlled"
+      },
+      {
+        "slot": 45,
+        "method": "Torappu.Battle.BasicSkill$$get_hideProgressFlag"
+      },
+      {
+        "slot": 46,
+        "method": "Torappu.Battle.BasicSkill$$get_hasPlayedBeginAnim"
+      },
+      {
+        "slot": 47,
+        "method": "Torappu.Battle.BasicSkill$$get_beginAnim"
+      },
+      {
+        "slot": 48,
+        "method": "Torappu.Battle.BasicSkill$$get_canCastCheck"
+      },
+      {
+        "slot": 49,
+        "method": "Torappu.Battle.BasicSkill$$get_beginEffect"
+      },
+      {
+        "slot": 50,
+        "method": "Torappu.Battle.BasicSkill$$get_isOverloadSkill"
+      },
+      {
+        "slot": 51,
+        "method": "Torappu.Battle.BasicSkill$$AssignData"
+      },
+      {
+        "slot": 53,
+        "method": "Torappu.Battle.BasicSkill$$OnSkillEnd"
+      },
+      {
+        "slot": 55,
+        "method": "Torappu.Battle.BasicSkill$$RetriggerSkill"
+      },
+      {
+        "slot": 56,
+        "method": "Torappu.Battle.BasicSkill$$InterruptIfNot"
+      },
+      {
+        "slot": 57,
+        "method": "Torappu.Battle.BasicSkill$$OnEnterSkillState"
+      },
+      {
+        "slot": 58,
+        "method": "Torappu.Battle.BasicSkill$$TryPrepare"
+      },
+      {
+        "slot": 59,
+        "method": "Torappu.Battle.BasicSkill$$CanCastCheckBeforeStart"
+      },
+      {
+        "slot": 60,
+        "method": "Torappu.Battle.BasicSkill$$OnInit"
+      },
+      {
+        "slot": 61,
+        "method": "Torappu.Battle.BasicSkill$$OnBorn"
+      },
+      {
+        "slot": 62,
+        "method": "Torappu.Battle.BasicSkill$$OnLocate"
+      },
+      {
+        "slot": 63,
+        "method": "Torappu.Battle.BasicSkill$$OnOverload"
+      },
+      {
+        "slot": 64,
+        "method": "Torappu.Battle.BasicSkill$$OnOwnerFinish"
+      },
+      {
+        "slot": 65,
+        "method": "Torappu.Battle.BasicSkill$$OnCastSucceed"
+      },
+      {
+        "slot": 66,
+        "method": "Torappu.Battle.BasicSkill$$OnCastFailedInSkillState"
+      },
+      {
+        "slot": 67,
+        "method": "Torappu.Battle.BasicSkill$$OnBeforeAttack"
+      },
+      {
+        "slot": 68,
+        "method": "Torappu.Battle.BasicSkill$$OnAfterAttack"
+      },
+      {
+        "slot": 69,
+        "method": "Torappu.Battle.BasicSkill$$PlayBeginEffectAndAudio"
+      },
+      {
+        "slot": 70,
+        "method": "Torappu.Battle.BasicSkill$$PlayBeginAnimation"
+      },
+      {
+        "slot": 71,
+        "method": "Torappu.Battle.BasicSkill$$PlayBeginAudio"
+      },
+      {
+        "slot": 72,
+        "method": "Torappu.Battle.BasicSkill$$OnBeforeSkillBeginAnim"
+      },
+      {
+        "slot": 73,
+        "method": "Torappu.Battle.BasicSkill$$GatherEffects"
+      },
+      {
+        "slot": 74,
+        "method": "Torappu.Battle.BasicSkill$$GatherProjectiles"
+      },
+      {
+        "slot": 75,
+        "method": "Torappu.Battle.BasicSkill$$GatherBuffs"
+      },
+      {
+        "slot": 76,
+        "method": "Torappu.Battle.BasicSkill$$GatherActionNodes"
+      },
+      {
+        "slot": 77,
+        "method": "Torappu.Battle.BasicSkill$$OnTick"
+      },
+      {
+        "slot": 78,
+        "method": "Torappu.Battle.BasicSkill$$UpdateSpRecovery"
+      },
+      {
+        "slot": 79,
+        "method": "Torappu.Battle.BasicSkill$$OnCastFinish"
+      },
+      {
+        "slot": 80,
+        "method": "Torappu.Battle.BasicSkill$$Awake"
+      },
+      {
+        "slot": 81,
+        "method": "Torappu.Battle.BasicSkill$$get_isAvailableToShowStackCount"
+      }
+    ]
+  },
+  {
+    "name": "Torappu.Battle.NextAttackOrCombatSkill",
+    "type_index": 10837,
+    "fields": [
+      {
+        "name": "_trigger",
+        "type": "Torappu.Battle.TargetTrigger",
+        "offset": 288,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_trigger",
+        "type": "XLua.DelegateBridge",
+        "offset": 0,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rangeToShow",
+        "type": "XLua.DelegateBridge",
+        "offset": 8,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_AssignData",
+        "type": "XLua.DelegateBridge",
+        "offset": 16,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnBeforeAttack",
+        "type": "XLua.DelegateBridge",
+        "offset": 24,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_UseSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 32,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoCast",
+        "type": "XLua.DelegateBridge",
+        "offset": 40,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnAfterAttack",
+        "type": "XLua.DelegateBridge",
+        "offset": 48,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnTick",
+        "type": "XLua.DelegateBridge",
+        "offset": 56,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoTick",
+        "type": "XLua.DelegateBridge",
+        "offset": 64,
+        "default": null
+      },
+      {
+        "name": "_c__Hotfix0_ctor",
+        "type": "XLua.DelegateBridge",
+        "offset": 72,
+        "default": null
+      }
+    ],
+    "vtable": [
+      {
+        "slot": 0,
+        "method": "UnityEngine.Object$$Equals"
+      },
+      {
+        "slot": 1,
+        "method": "System.Object$$Finalize"
+      },
+      {
+        "slot": 2,
+        "method": "UnityEngine.Object$$GetHashCode"
+      },
+      {
+        "slot": 3,
+        "method": "UnityEngine.Object$$ToString"
+      },
+      {
+        "slot": 4,
+        "method": "Torappu.Battle.BasicSkill$$get_attributeMask"
+      },
+      {
+        "slot": 5,
+        "method": "Torappu.Battle.BasicSkill$$get_abnormalFlagMask"
+      },
+      {
+        "slot": 6,
+        "method": "Torappu.Battle.BasicSkill$$get_abnormalImmuneMask"
+      },
+      {
+        "slot": 7,
+        "method": "Torappu.Battle.BasicSkill$$get_abnormalAntiMask"
+      },
+      {
+        "slot": 8,
+        "method": "Torappu.Battle.BasicSkill$$get_abnormalComboMask"
+      },
+      {
+        "slot": 9,
+        "method": "Torappu.Battle.BasicSkill$$get_abnormalComboImmuneMask"
+      },
+      {
+        "slot": 10,
+        "method": "Torappu.Battle.BasicSkill$$GetValue"
+      },
+      {
+        "slot": 11,
+        "method": "Torappu.Battle.BasicSkill$$GatherEffects"
+      },
+      {
+        "slot": 12,
+        "method": "Torappu.Battle.BasicSkill$$GatherProjectiles"
+      },
+      {
+        "slot": 13,
+        "method": "Torappu.Battle.BasicSkill$$GatherBuffs"
+      },
+      {
+        "slot": 14,
+        "method": "Torappu.Battle.BasicSkill$$GatherActionNodes"
+      },
+      {
+        "slot": 15,
+        "method": "Torappu.Battle.BasicSkill$$get_showSpAsBulletMode"
+      },
+      {
+        "slot": 16,
+        "method": "Torappu.Battle.BasicSkill$$get_recoverSpWhenAffecting"
+      },
+      {
+        "slot": 17,
+        "method": "Torappu.Battle.BasicSkill$$get_stateUninterruptible"
+      },
+      {
+        "slot": 18,
+        "method": "Torappu.Battle.BasicSkill$$SatisfySkillRangeIdModeIndex"
+      },
+      {
+        "slot": 19,
+        "method": "Torappu.Battle.BasicSkill$$IsAvailable"
+      },
+      {
+        "slot": 20,
+        "method": "Torappu.Battle.BasicSkill$$IsClickable"
+      },
+      {
+        "slot": 21,
+        "method": "Torappu.Battle.BasicSkill$$IsRetriggerClickable"
+      },
+      {
+        "slot": 22,
+        "method": "Torappu.Battle.BasicSkill$$IsRetriggerAvailable"
+      },
+      {
+        "slot": 23,
+        "method": "Torappu.Battle.BasicSkill$$isRetriggerable"
+      },
+      {
+        "slot": 24,
+        "method": "Torappu.Battle.BasicSkill$$IsDiscardable"
+      },
+      {
+        "slot": 25,
+        "method": "Torappu.Battle.BasicSkill$$CanTriggerWithReason"
+      },
+      {
+        "slot": 26,
+        "method": "Torappu.Battle.BasicSkill$$get_isAffecting"
+      },
+      {
+        "slot": 27,
+        "method": "Torappu.Battle.BasicSkill$$get_shouldCastLikeAttack"
+      },
+      {
+        "slot": 28,
+        "method": "Torappu.Battle.BasicSkill$$get_shouldChangeToChargeColor"
+      },
+      {
+        "slot": 29,
+        "method": "Torappu.Battle.BasicSkill$$get_overrideAudioSignalId"
+      },
+      {
+        "slot": 30,
+        "method": "Torappu.Battle.BasicSkill$$get_remainingTime"
+      },
+      {
+        "slot": 31,
+        "method": "Torappu.Battle.BasicSkill$$get_remainingProgress"
+      },
+      {
+        "slot": 32,
+        "method": "Torappu.Battle.BasicSkill$$get_remainingOverloadProgress"
+      },
+      {
+        "slot": 33,
+        "method": "Torappu.Battle.BasicSkill$$TryForceToOverloadProgress"
+      },
+      {
+        "slot": 34,
+        "method": "Torappu.Battle.BasicSkill$$get_progressToReady"
+      },
+      {
+        "slot": 35,
+        "method": "Torappu.Battle.BasicSkill$$get_spCostZero"
+      },
+      {
+        "slot": 36,
+        "method": "Torappu.Battle.BasicSkill$$get_ability"
+      },
+      {
+        "slot": 37,
+        "method": "Torappu.Battle.BasicSkill$$get_familyGroup"
+      },
+      {
+        "slot": 38,
+        "method": "Torappu.Battle.NextAttackOrCombatSkill$$get_rangeToShow"
+      },
+      {
+        "slot": 39,
+        "method": "Torappu.Battle.BasicSkill$$get_spEnough"
+      },
+      {
+        "slot": 40,
+        "method": "Torappu.Battle.BasicSkill$$get_canSkipReduceSp"
+      },
+      {
+        "slot": 41,
+        "method": "Torappu.Battle.BasicSkill$$get_forceToShowRange"
+      },
+      {
+        "slot": 42,
+        "method": "Torappu.Battle.BasicSkill$$get_forceUseBaseShowRange"
+      },
+      {
+        "slot": 43,
+        "method": "Torappu.Battle.BasicSkill$$get_isUsedUp"
+      },
+      {
+        "slot": 44,
+        "method": "Torappu.Battle.BasicSkill$$get_isRemoteControlled"
+      },
+      {
+        "slot": 45,
+        "method": "Torappu.Battle.BasicSkill$$get_hideProgressFlag"
+      },
+      {
+        "slot": 46,
+        "method": "Torappu.Battle.BasicSkill$$get_hasPlayedBeginAnim"
+      },
+      {
+        "slot": 47,
+        "method": "Torappu.Battle.BasicSkill$$get_beginAnim"
+      },
+      {
+        "slot": 48,
+        "method": "Torappu.Battle.BasicSkill$$get_canCastCheck"
+      },
+      {
+        "slot": 49,
+        "method": "Torappu.Battle.BasicSkill$$get_beginEffect"
+      },
+      {
+        "slot": 50,
+        "method": "Torappu.Battle.BasicSkill$$get_isOverloadSkill"
+      },
+      {
+        "slot": 51,
+        "method": "Torappu.Battle.NextAttackOrCombatSkill$$AssignData"
+      },
+      {
+        "slot": 52,
+        "method": "Torappu.Battle.NextAttackOrCombatSkill$$DoCast"
+      },
+      {
+        "slot": 53,
+        "method": "Torappu.Battle.BasicSkill$$OnSkillEnd"
+      },
+      {
+        "slot": 54,
+        "method": "Torappu.Battle.NextAttackOrCombatSkill$$UseSkill"
+      },
+      {
+        "slot": 55,
+        "method": "Torappu.Battle.BasicSkill$$RetriggerSkill"
+      },
+      {
+        "slot": 56,
+        "method": "Torappu.Battle.BasicSkill$$InterruptIfNot"
+      },
+      {
+        "slot": 57,
+        "method": "Torappu.Battle.BasicSkill$$OnEnterSkillState"
+      },
+      {
+        "slot": 58,
+        "method": "Torappu.Battle.BasicSkill$$TryPrepare"
+      },
+      {
+        "slot": 59,
+        "method": "Torappu.Battle.BasicSkill$$CanCastCheckBeforeStart"
+      },
+      {
+        "slot": 60,
+        "method": "Torappu.Battle.BasicSkill$$OnInit"
+      },
+      {
+        "slot": 61,
+        "method": "Torappu.Battle.BasicSkill$$OnBorn"
+      },
+      {
+        "slot": 62,
+        "method": "Torappu.Battle.BasicSkill$$OnLocate"
+      },
+      {
+        "slot": 63,
+        "method": "Torappu.Battle.BasicSkill$$OnOverload"
+      },
+      {
+        "slot": 64,
+        "method": "Torappu.Battle.BasicSkill$$OnOwnerFinish"
+      },
+      {
+        "slot": 65,
+        "method": "Torappu.Battle.BasicSkill$$OnCastSucceed"
+      },
+      {
+        "slot": 66,
+        "method": "Torappu.Battle.BasicSkill$$OnCastFailedInSkillState"
+      },
+      {
+        "slot": 67,
+        "method": "Torappu.Battle.NextAttackOrCombatSkill$$OnBeforeAttack"
+      },
+      {
+        "slot": 68,
+        "method": "Torappu.Battle.NextAttackOrCombatSkill$$OnAfterAttack"
+      },
+      {
+        "slot": 69,
+        "method": "Torappu.Battle.BasicSkill$$PlayBeginEffectAndAudio"
+      },
+      {
+        "slot": 70,
+        "method": "Torappu.Battle.BasicSkill$$PlayBeginAnimation"
+      },
+      {
+        "slot": 71,
+        "method": "Torappu.Battle.BasicSkill$$PlayBeginAudio"
+      },
+      {
+        "slot": 72,
+        "method": "Torappu.Battle.BasicSkill$$OnBeforeSkillBeginAnim"
+      },
+      {
+        "slot": 73,
+        "method": "Torappu.Battle.BasicSkill$$GatherEffects"
+      },
+      {
+        "slot": 74,
+        "method": "Torappu.Battle.BasicSkill$$GatherProjectiles"
+      },
+      {
+        "slot": 75,
+        "method": "Torappu.Battle.BasicSkill$$GatherBuffs"
+      },
+      {
+        "slot": 76,
+        "method": "Torappu.Battle.BasicSkill$$GatherActionNodes"
+      },
+      {
+        "slot": 77,
+        "method": "Torappu.Battle.NextAttackOrCombatSkill$$OnTick"
+      },
+      {
+        "slot": 78,
+        "method": "Torappu.Battle.BasicSkill$$UpdateSpRecovery"
+      },
+      {
+        "slot": 79,
+        "method": "Torappu.Battle.BasicSkill$$OnCastFinish"
+      },
+      {
+        "slot": 80,
+        "method": "Torappu.Battle.BasicSkill$$Awake"
+      },
+      {
+        "slot": 81,
+        "method": "Torappu.Battle.BasicSkill$$get_isAvailableToShowStackCount"
+      },
+      {
+        "slot": 82,
+        "method": "Torappu.Battle.NextAttackOrCombatSkill$$get_trigger"
+      },
+      {
+        "slot": 86,
+        "method": "Torappu.Battle.NextAttackOrCombatSkill$$DoTick"
+      }
+    ]
+  },
+  {
+    "name": "Torappu.Battle.Character",
+    "type_index": 11238,
+    "fields": [
+      {
+        "name": "LOG_SNAPSHOT_PERIOD_RANGE",
+        "type": "UnityEngine.Vector2",
+        "offset": 0,
+        "default": null
+      },
+      {
+        "name": "FIND_BLOCKEE_TICK",
+        "type": "System.Int32",
+        "offset": 0,
+        "default": {
+          "value": 3,
+          "type": "System.Int32",
+          "data_index": 172074,
+          "raw": "06"
+        }
+      },
+      {
+        "name": "TAUNT_LEVEL_HATRED_GAP",
+        "type": "Torappu.FP",
+        "offset": 8,
+        "default": null
+      },
+      {
+        "name": "HATRED_VALUE_GAP",
+        "type": "Torappu.FP",
+        "offset": 16,
+        "default": null
+      },
+      {
+        "name": "HATRED_VALUE_PER_FRAME_GAP",
+        "type": "Torappu.FP",
+        "offset": 24,
+        "default": null
+      },
+      {
+        "name": "DEFAULT_REMAINING_CHARACTER_CNT_VOLUME",
+        "type": "System.Int32",
+        "offset": 0,
+        "default": {
+          "value": 1,
+          "type": "System.Int32",
+          "data_index": 172075,
+          "raw": "02"
+        }
+      },
+      {
+        "name": "_skinHolder",
+        "type": "UnityEngine.Transform",
+        "offset": 704,
+        "default": null
+      },
+      {
+        "name": "_motionMode",
+        "type": "Torappu.MotionMode",
+        "offset": 712,
+        "default": null
+      },
+      {
+        "name": "_blockMode",
+        "type": "Torappu.MotionMode",
+        "offset": 716,
+        "default": null
+      },
+      {
+        "name": "_ignoreBlockMode",
+        "type": "System.Boolean",
+        "offset": 720,
+        "default": null
+      },
+      {
+        "name": "_isFixedRotation",
+        "type": "System.Boolean",
+        "offset": 721,
+        "default": null
+      },
+      {
+        "name": "_occupiedRemainingCharacterCnt",
+        "type": "System.Boolean",
+        "offset": 722,
+        "default": null
+      },
+      {
+        "name": "_useRealBornTimeFromAnim",
+        "type": "System.Boolean",
+        "offset": 723,
+        "default": null
+      },
+      {
+        "name": "_buildCondition",
+        "type": "Torappu.Battle.BuildCondition",
+        "offset": 728,
+        "default": null
+      },
+      {
+        "name": "_traitAbility",
+        "type": "Torappu.Battle.Ability",
+        "offset": 816,
+        "default": null
+      },
+      {
+        "name": "_withdrawCostRecoverRatio",
+        "type": "System.Single",
+        "offset": 824,
+        "default": null
+      },
+      {
+        "name": "_maxWithdrawCostRatioOfRawCost",
+        "type": "System.Single",
+        "offset": 828,
+        "default": null
+      },
+      {
+        "name": "_directionTransform",
+        "type": "UnityEngine.Transform",
+        "offset": 832,
+        "default": null
+      },
+      {
+        "name": "_directionIndicator",
+        "type": "UnityEngine.Transform",
+        "offset": 840,
+        "default": null
+      },
+      {
+        "name": "_startEffect",
+        "type": "System.String",
+        "offset": 848,
+        "default": null
+      },
+      {
+        "name": "_deadEffect",
+        "type": "System.String",
+        "offset": 856,
+        "default": null
+      },
+      {
+        "name": "_playStartVocal",
+        "type": "System.Boolean",
+        "offset": 864,
+        "default": null
+      },
+      {
+        "name": "_showDeadTweenColor",
+        "type": "System.Boolean",
+        "offset": 865,
+        "default": null
+      },
+      {
+        "name": "_useSpecificDeadAnim",
+        "type": "System.Boolean",
+        "offset": 866,
+        "default": null
+      },
+      {
+        "name": "_onlyPlayStartEffectOnce",
+        "type": "System.Boolean",
+        "offset": 867,
+        "default": null
+      },
+      {
+        "name": "_dontMoveCameraWhenFocus",
+        "type": "System.Boolean",
+        "offset": 868,
+        "default": null
+      },
+      {
+        "name": "_disableCharInfoPanel",
+        "type": "System.Boolean",
+        "offset": 869,
+        "default": null
+      },
+      {
+        "name": "_disableRotateWhenDead",
+        "type": "System.Boolean",
+        "offset": 870,
+        "default": null
+      },
+      {
+        "name": "_disableSetDirectionWhenDummy",
+        "type": "System.Boolean",
+        "offset": 871,
+        "default": null
+      },
+      {
+        "name": "_clearProjectileWhenDead",
+        "type": "System.Boolean",
+        "offset": 872,
+        "default": null
+      },
+      {
+        "name": "_useIdForAudioSignalMask",
+        "type": "Torappu.Battle.Character+UseIdForAudioSignalMask",
+        "offset": 873,
+        "default": null
+      },
+      {
+        "name": "_skipBornAudioOnMoveLikeRespawnSelf",
+        "type": "System.Boolean",
+        "offset": 874,
+        "default": null
+      },
+      {
+        "name": "_preprocessData",
+        "type": "System.Boolean",
+        "offset": 875,
+        "default": null
+      },
+      {
+        "name": "_disableClickCharacterInfo",
+        "type": "System.Boolean",
+        "offset": 876,
+        "default": null
+      },
+      {
+        "name": "_skillUiFollowHeadPint",
+        "type": "System.Boolean",
+        "offset": 877,
+        "default": null
+      },
+      {
+        "name": "m_isBuiltPredefined",
+        "type": "System.Boolean",
+        "offset": 878,
+        "default": null
+      },
+      {
+        "name": "m_spawnMannually",
+        "type": "System.Boolean",
+        "offset": 879,
+        "default": null
+      },
+      {
+        "name": "m_freelySpawnedFromDeck",
+        "type": "System.Boolean",
+        "offset": 880,
+        "default": null
+      },
+      {
+        "name": "m_deployCostPostDeltaHandled",
+        "type": "System.Boolean",
+        "offset": 881,
+        "default": null
+      },
+      {
+        "name": "m_dontOccupyDeployCnt",
+        "type": "System.Boolean",
+        "offset": 882,
+        "default": null
+      },
+      {
+        "name": "m_additionalBuildableMask",
+        "type": "Torappu.Battle.AdvancedBuildableMask",
+        "offset": 884,
+        "default": null
+      },
+      {
+        "name": "m_defaultRangeId",
+        "type": "System.String",
+        "offset": 888,
+        "default": null
+      },
+      {
+        "name": "m_defaultModeIndex",
+        "type": "System.Int32",
+        "offset": 896,
+        "default": null
+      },
+      {
+        "name": "m_hatred",
+        "type": "Torappu.FP",
+        "offset": 904,
+        "default": null
+      },
+      {
+        "name": "m_createdTime",
+        "type": "Torappu.FP",
+        "offset": 912,
+        "default": null
+      },
+      {
+        "name": "m_deadTime",
+        "type": "Torappu.FP",
+        "offset": 920,
+        "default": null
+      },
+      {
+        "name": "m_talentRange",
+        "type": "System.String",
+        "offset": 928,
+        "default": null
+      },
+      {
+        "name": "m_rootTile",
+        "type": "Torappu.Battle.Tile",
+        "offset": 936,
+        "default": null
+      },
+      {
+        "name": "m_blockedEnemyMgr",
+        "type": "Torappu.Battle.Character+BlockedEnemyManager",
+        "offset": 944,
+        "default": null
+      },
+      {
+        "name": "m_blockRadiusMgr",
+        "type": "Torappu.Battle.Character+BlockRadiusManager",
+        "offset": 952,
+        "default": null
+      },
+      {
+        "name": "m_findBlockeeTicker",
+        "type": "Torappu.PeriodicTicker",
+        "offset": 960,
+        "default": null
+      },
+      {
+        "name": "m_snapshotTimer",
+        "type": "Torappu.PeriodicTimer",
+        "offset": 968,
+        "default": null
+      },
+      {
+        "name": "m_replacement",
+        "type": "Torappu.Battle.Character+IReplacement",
+        "offset": 976,
+        "default": null
+      },
+      {
+        "name": "m_skill",
+        "type": "Torappu.Battle.BasicSkill",
+        "offset": 984,
+        "default": null
+      },
+      {
+        "name": "m_skillData",
+        "type": "Torappu.SkillData",
+        "offset": 992,
+        "default": null
+      },
+      {
+        "name": "m_rebornData",
+        "type": "Torappu.Battle.Unit+RebornData",
+        "offset": 1000,
+        "default": null
+      },
+      {
+        "name": "m_startEffect",
+        "type": "Torappu.ObjectPtr`1<Torappu.Battle.Effects.Effect>",
+        "offset": 1072,
+        "default": null
+      },
+      {
+        "name": "m_maxEsRatio",
+        "type": "Torappu.FP",
+        "offset": 1088,
+        "default": null
+      },
+      {
+        "name": "m_effectOverrideMap",
+        "type": "Torappu.ListDict`2<System.String,System.String>",
+        "offset": 1096,
+        "default": null
+      },
+      {
+        "name": "m_equipObjects",
+        "type": "Torappu.ListDict`2<UnityEngine.GameObject,System.String>",
+        "offset": 1104,
+        "default": null
+      },
+      {
+        "name": "m_currentSkin",
+        "type": "Torappu.Battle.UnitAnimator",
+        "offset": 1112,
+        "default": null
+      },
+      {
+        "name": "m_deckBuffDatas",
+        "type": "System.Collections.Generic.IList`1<Torappu.Battle.DeckBuff>",
+        "offset": 1120,
+        "default": null
+      },
+      {
+        "name": "m_deckBuffBlackboard",
+        "type": "System.Collections.Generic.IList`1<Torappu.Blackboard>",
+        "offset": 1128,
+        "default": null
+      },
+      {
+        "name": "m_delayToRecycle",
+        "type": "System.Single",
+        "offset": 1136,
+        "default": null
+      },
+      {
+        "name": "m_dataFlowConfig",
+        "type": "Torappu.Battle.UnitDataFlowConfig",
+        "offset": 1144,
+        "default": null
+      },
+      {
+        "name": "m_buildCondition",
+        "type": "Torappu.Battle.BuildCondition",
+        "offset": 1152,
+        "default": null
+      },
+      {
+        "name": "m_additionalBuildCondition",
+        "type": "Torappu.Battle.AdditionalBuildCondition",
+        "offset": 1240,
+        "default": null
+      },
+      {
+        "name": "m_traitAbility",
+        "type": "Torappu.Battle.Ability",
+        "offset": 1264,
+        "default": null
+      },
+      {
+        "name": "m_withdrawCostRecoverRatio",
+        "type": "System.Single",
+        "offset": 1272,
+        "default": null
+      },
+      {
+        "name": "m_limitMaxWithdrawCostByDeployUse",
+        "type": "System.Boolean",
+        "offset": 1276,
+        "default": null
+      },
+      {
+        "name": "m_advancedBuildState",
+        "type": "Torappu.Battle.Deck+Card+AdvancedCardBuildState",
+        "offset": 1280,
+        "default": null
+      },
+      {
+        "name": "m_deployCostThisTime",
+        "type": "System.Int32",
+        "offset": 1284,
+        "default": null
+      },
+      {
+        "name": "m_originRemainingChrCntVolume",
+        "type": "System.Int32",
+        "offset": 1288,
+        "default": null
+      },
+      {
+        "name": "m_lastTileLocateHeight",
+        "type": "System.Single",
+        "offset": 1292,
+        "default": null
+      },
+      {
+        "name": "m_disableClickState",
+        "type": "Torappu.EnableStateWithKey`1<Torappu.Battle.Character+DisableClickCharacterInfoReasonMask>",
+        "offset": 1296,
+        "default": null
+      },
+      {
+        "name": "m_disableFaceToIdleDirection",
+        "type": "Torappu.EnableStateWithKey",
+        "offset": 1304,
+        "default": null
+      },
+      {
+        "name": "m_externWithdrawGainCostFlag",
+        "type": "System.Boolean",
+        "offset": 1312,
+        "default": null
+      },
+      {
+        "name": "m_overrideBornTime",
+        "type": "System.Single",
+        "offset": 1316,
+        "default": null
+      },
+      {
+        "name": "<cardUid>k__BackingField",
+        "type": "System.UInt32",
+        "offset": 1320,
+        "default": null
+      },
+      {
+        "name": "m_changableBlockMode",
+        "type": "Torappu.MotionMode",
+        "offset": 1324,
+        "default": null
+      },
+      {
+        "name": "m_oldBlockMode",
+        "type": "Torappu.MotionMode",
+        "offset": 1328,
+        "default": null
+      },
+      {
+        "name": "<data>k__BackingField",
+        "type": "Torappu.Battle.BattleCharacterData",
+        "offset": 1336,
+        "default": null
+      },
+      {
+        "name": "m_mainTriggerCollider",
+        "type": "UnityEngine.Collider2D",
+        "offset": 1344,
+        "default": null
+      },
+      {
+        "name": "m_mainTriggerColliderRadius",
+        "type": "Torappu.FP",
+        "offset": 1352,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_initSideType",
+        "type": "XLua.DelegateBridge",
+        "offset": 32,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_skinHolder",
+        "type": "XLua.DelegateBridge",
+        "offset": 40,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_graphicHolderTransform",
+        "type": "XLua.DelegateBridge",
+        "offset": 48,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_alive",
+        "type": "XLua.DelegateBridge",
+        "offset": 56,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_advancedBuildState",
+        "type": "XLua.DelegateBridge",
+        "offset": 64,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_aliveOrDying",
+        "type": "XLua.DelegateBridge",
+        "offset": 72,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_disableClickCharacterInfo",
+        "type": "XLua.DelegateBridge",
+        "offset": 80,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_canBlockEnemyOnRootTile",
+        "type": "XLua.DelegateBridge",
+        "offset": 88,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_defaultMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 96,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_defaultModeIndex",
+        "type": "XLua.DelegateBridge",
+        "offset": 104,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_cardUid",
+        "type": "XLua.DelegateBridge",
+        "offset": 112,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_cardUid",
+        "type": "XLua.DelegateBridge",
+        "offset": 120,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_tokenOrHostUid",
+        "type": "XLua.DelegateBridge",
+        "offset": 128,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_characterId",
+        "type": "XLua.DelegateBridge",
+        "offset": 136,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_playStartVocal",
+        "type": "XLua.DelegateBridge",
+        "offset": 144,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rootTile",
+        "type": "XLua.DelegateBridge",
+        "offset": 152,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_oldTile",
+        "type": "XLua.DelegateBridge",
+        "offset": 160,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_animator",
+        "type": "XLua.DelegateBridge",
+        "offset": 168,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInCombat",
+        "type": "XLua.DelegateBridge",
+        "offset": 176,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hatred",
+        "type": "XLua.DelegateBridge",
+        "offset": 184,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_maxEs",
+        "type": "XLua.DelegateBridge",
+        "offset": 192,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_maxEsRatio",
+        "type": "XLua.DelegateBridge",
+        "offset": 200,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_talentRange",
+        "type": "XLua.DelegateBridge",
+        "offset": 208,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_originBuildCondition",
+        "type": "XLua.DelegateBridge",
+        "offset": 216,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_buildCondition",
+        "type": "XLua.DelegateBridge",
+        "offset": 224,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_additionalBuildCondition",
+        "type": "XLua.DelegateBridge",
+        "offset": 232,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_additionalBuildType",
+        "type": "XLua.DelegateBridge",
+        "offset": 240,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_addtionalMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 248,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_attack",
+        "type": "XLua.DelegateBridge",
+        "offset": 256,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rawAttackWithoutReplacement",
+        "type": "XLua.DelegateBridge",
+        "offset": 264,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_combat",
+        "type": "XLua.DelegateBridge",
+        "offset": 272,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hasCombat",
+        "type": "XLua.DelegateBridge",
+        "offset": 280,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rawCombatWithoutReplacement",
+        "type": "XLua.DelegateBridge",
+        "offset": 288,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_attackTrigger",
+        "type": "XLua.DelegateBridge",
+        "offset": 296,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_skill",
+        "type": "XLua.DelegateBridge",
+        "offset": 304,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_skillData",
+        "type": "XLua.DelegateBridge",
+        "offset": 312,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hideTileOption",
+        "type": "XLua.DelegateBridge",
+        "offset": 320,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hasSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 328,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_showSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 336,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_showHpSlider",
+        "type": "XLua.DelegateBridge",
+        "offset": 344,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_showSpSlider",
+        "type": "XLua.DelegateBridge",
+        "offset": 352,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_showShield",
+        "type": "XLua.DelegateBridge",
+        "offset": 360,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_forceUseAllyHud",
+        "type": "XLua.DelegateBridge",
+        "offset": 368,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_traitAbility",
+        "type": "XLua.DelegateBridge",
+        "offset": 376,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_dontMoveCameraWhenFocus",
+        "type": "XLua.DelegateBridge",
+        "offset": 384,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_disableCharInfoPanel",
+        "type": "XLua.DelegateBridge",
+        "offset": 392,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_traitOrTraitAsTalentAbility",
+        "type": "XLua.DelegateBridge",
+        "offset": 400,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_traitAsTalent",
+        "type": "XLua.DelegateBridge",
+        "offset": 408,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_rangeToShow",
+        "type": "XLua.DelegateBridge",
+        "offset": 416,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_defaultRangeId",
+        "type": "XLua.DelegateBridge",
+        "offset": 424,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isToken",
+        "type": "XLua.DelegateBridge",
+        "offset": 432,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_originOccupiedRemainingCharacterCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 440,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_occupiedRemainingCharacterCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 448,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_originRemainingCharacterCntVolume",
+        "type": "XLua.DelegateBridge",
+        "offset": 456,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_originRemainingCharacterCntVolume",
+        "type": "XLua.DelegateBridge",
+        "offset": 464,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_remainingCharacterCntVolume",
+        "type": "XLua.DelegateBridge",
+        "offset": 472,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_overflowOccupiedCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 480,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_withdrawable",
+        "type": "XLua.DelegateBridge",
+        "offset": 488,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isManuallySpawned",
+        "type": "XLua.DelegateBridge",
+        "offset": 496,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isFreelySpawnedFromDeck",
+        "type": "XLua.DelegateBridge",
+        "offset": 504,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_manuallyWithdrawable",
+        "type": "XLua.DelegateBridge",
+        "offset": 512,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isMine",
+        "type": "XLua.DelegateBridge",
+        "offset": 520,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_IsControllable",
+        "type": "XLua.DelegateBridge",
+        "offset": 528,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isBuiltPredefined",
+        "type": "XLua.DelegateBridge",
+        "offset": 536,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isPlayerCharacter",
+        "type": "XLua.DelegateBridge",
+        "offset": 544,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_directionTransform",
+        "type": "XLua.DelegateBridge",
+        "offset": 552,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_blockedEnemies",
+        "type": "XLua.DelegateBridge",
+        "offset": 560,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_blockedTotalVolumn",
+        "type": "XLua.DelegateBridge",
+        "offset": 568,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_directionIndicator",
+        "type": "XLua.DelegateBridge",
+        "offset": 576,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_blockRadiusSquare",
+        "type": "XLua.DelegateBridge",
+        "offset": 584,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_blockCircle",
+        "type": "XLua.DelegateBridge",
+        "offset": 592,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get__blockRadius",
+        "type": "XLua.DelegateBridge",
+        "offset": 600,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_minBlockDistToTarget",
+        "type": "XLua.DelegateBridge",
+        "offset": 608,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_traitBlackboard",
+        "type": "XLua.DelegateBridge",
+        "offset": 616,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetVoiceQuery",
+        "type": "XLua.DelegateBridge",
+        "offset": 624,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_blockMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 632,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_ignoreBlockMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 640,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isFixedRotation",
+        "type": "XLua.DelegateBridge",
+        "offset": 648,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_initState",
+        "type": "XLua.DelegateBridge",
+        "offset": 656,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_delayToRecycle",
+        "type": "XLua.DelegateBridge",
+        "offset": 664,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_allowWithdrawGainCost",
+        "type": "XLua.DelegateBridge",
+        "offset": 672,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SetExternWithdrawGainCostFlag",
+        "type": "XLua.DelegateBridge",
+        "offset": 680,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_stateMachine",
+        "type": "XLua.DelegateBridge",
+        "offset": 688,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_data",
+        "type": "XLua.DelegateBridge",
+        "offset": 696,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_set_data",
+        "type": "XLua.DelegateBridge",
+        "offset": 704,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_sharedData",
+        "type": "XLua.DelegateBridge",
+        "offset": 712,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_managedProjectiles",
+        "type": "XLua.DelegateBridge",
+        "offset": 720,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_createdTime",
+        "type": "XLua.DelegateBridge",
+        "offset": 728,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_deadTime",
+        "type": "XLua.DelegateBridge",
+        "offset": 736,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_startEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 744,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_deadEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 752,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hasReplacement",
+        "type": "XLua.DelegateBridge",
+        "offset": 760,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInSkillState",
+        "type": "XLua.DelegateBridge",
+        "offset": 768,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInAttackState",
+        "type": "XLua.DelegateBridge",
+        "offset": 776,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInCombatState",
+        "type": "XLua.DelegateBridge",
+        "offset": 784,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInRebornState",
+        "type": "XLua.DelegateBridge",
+        "offset": 792,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInIdletState",
+        "type": "XLua.DelegateBridge",
+        "offset": 800,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isInDyingState",
+        "type": "XLua.DelegateBridge",
+        "offset": 808,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_canBeReplace",
+        "type": "XLua.DelegateBridge",
+        "offset": 816,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_skillUiFollowHeadPoint",
+        "type": "XLua.DelegateBridge",
+        "offset": 824,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_alwaysBlockFree",
+        "type": "XLua.DelegateBridge",
+        "offset": 832,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_isIdleFaceToDisabled",
+        "type": "XLua.DelegateBridge",
+        "offset": 840,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_assignDirectionToBBWhenTryingOverlapCharacter",
+        "type": "XLua.DelegateBridge",
+        "offset": 848,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_AssignDataForOverlapCheck",
+        "type": "XLua.DelegateBridge",
+        "offset": 856,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_defaultBlockRadiusScale",
+        "type": "XLua.DelegateBridge",
+        "offset": 864,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_PlayBornAnimationAndEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 872,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_StopBornAnimationAndEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 880,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ResetBornAnimationAndEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 888,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__PlayUniEquipEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 896,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_BuildAt",
+        "type": "XLua.DelegateBridge",
+        "offset": 904,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_BuildAsPredefined",
+        "type": "XLua.DelegateBridge",
+        "offset": 912,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_BuildAsRuntimeInst",
+        "type": "XLua.DelegateBridge",
+        "offset": 920,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_Born",
+        "type": "XLua.DelegateBridge",
+        "offset": 928,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_MakeDummy",
+        "type": "XLua.DelegateBridge",
+        "offset": 936,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OpTrigSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 944,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RemoteTrigSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 952,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_TriggerAutoSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 960,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SwitchToAttackState",
+        "type": "XLua.DelegateBridge",
+        "offset": 968,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SwitchToSkillState",
+        "type": "XLua.DelegateBridge",
+        "offset": 976,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SwitchOutFromSkillState",
+        "type": "XLua.DelegateBridge",
+        "offset": 984,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckIsBornState",
+        "type": "XLua.DelegateBridge",
+        "offset": 992,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_Withdraw",
+        "type": "XLua.DelegateBridge",
+        "offset": 1000,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_WithdrawByLevel",
+        "type": "XLua.DelegateBridge",
+        "offset": 1008,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckBuildable",
+        "type": "XLua.DelegateBridge",
+        "offset": 1016,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckRespawnSelfBuildable",
+        "type": "XLua.DelegateBridge",
+        "offset": 1024,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_LocateOnTile",
+        "type": "XLua.DelegateBridge",
+        "offset": 1032,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RechargeToken",
+        "type": "XLua.DelegateBridge",
+        "offset": 1040,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ForceRechargeToken",
+        "type": "XLua.DelegateBridge",
+        "offset": 1048,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ResetTokenRespawnTime",
+        "type": "XLua.DelegateBridge",
+        "offset": 1056,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RefreshTokenDeployAndStackCnt",
+        "type": "XLua.DelegateBridge",
+        "offset": 1064,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_FetchHost",
+        "type": "XLua.DelegateBridge",
+        "offset": 1072,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_TryGetAtkAsHostBased",
+        "type": "XLua.DelegateBridge",
+        "offset": 1080,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ResetSearchBlockeeTicker",
+        "type": "XLua.DelegateBridge",
+        "offset": 1088,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SearchBlockeeImmediate",
+        "type": "XLua.DelegateBridge",
+        "offset": 1096,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_FetchTokenOrHost",
+        "type": "XLua.DelegateBridge",
+        "offset": 1104,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetCurrentModeRangeId",
+        "type": "XLua.DelegateBridge",
+        "offset": 1112,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetModeRangeId",
+        "type": "XLua.DelegateBridge",
+        "offset": 1120,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetRangeOfSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 1128,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_PlayAudioSignal",
+        "type": "XLua.DelegateBridge",
+        "offset": 1136,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__GetCharacterSignal",
+        "type": "XLua.DelegateBridge",
+        "offset": 1144,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_PreloadSpecialAudioSignals",
+        "type": "XLua.DelegateBridge",
+        "offset": 1152,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckUseIdForAudioSignal",
+        "type": "XLua.DelegateBridge",
+        "offset": 1160,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ShouldPlayBornAudioSignal",
+        "type": "XLua.DelegateBridge",
+        "offset": 1168,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GatherEffects",
+        "type": "XLua.DelegateBridge",
+        "offset": 1176,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ChangeMotionMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 1184,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ResetMotionMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 1192,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ChangeBlockMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 1200,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ResetBlockMode",
+        "type": "XLua.DelegateBridge",
+        "offset": 1208,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnBlockModeChanged",
+        "type": "XLua.DelegateBridge",
+        "offset": 1216,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_FinishMe",
+        "type": "XLua.DelegateBridge",
+        "offset": 1224,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoFakeDeath",
+        "type": "XLua.DelegateBridge",
+        "offset": 1232,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_DoReborn",
+        "type": "XLua.DelegateBridge",
+        "offset": 1240,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ForceDying",
+        "type": "XLua.DelegateBridge",
+        "offset": 1248,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RespawnSelf",
+        "type": "XLua.DelegateBridge",
+        "offset": 1256,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_MoveLikeRespawnSelf",
+        "type": "XLua.DelegateBridge",
+        "offset": 1264,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_FinishWithReason",
+        "type": "XLua.DelegateBridge",
+        "offset": 1272,
+        "default": null
+      },
+      {
+        "name": "__Hotfix1_MoveLikeRespawnSelf",
+        "type": "XLua.DelegateBridge",
+        "offset": 1280,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_MoveLikeRespawnExternal",
+        "type": "XLua.DelegateBridge",
+        "offset": 1288,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__MoveLikeRespawn",
+        "type": "XLua.DelegateBridge",
+        "offset": 1296,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RespawnSelfAsPredefined",
+        "type": "XLua.DelegateBridge",
+        "offset": 1304,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetDelayToRecycleTime",
+        "type": "XLua.DelegateBridge",
+        "offset": 1312,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_FinishWithReplace",
+        "type": "XLua.DelegateBridge",
+        "offset": 1320,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ClearAbilities",
+        "type": "XLua.DelegateBridge",
+        "offset": 1328,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__ClearAbilityProjectilesIfNeeded",
+        "type": "XLua.DelegateBridge",
+        "offset": 1336,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__BuildAtInternal",
+        "type": "XLua.DelegateBridge",
+        "offset": 1344,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__InitAllModeDirection",
+        "type": "XLua.DelegateBridge",
+        "offset": 1352,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_LogSnapshotIfNot",
+        "type": "XLua.DelegateBridge",
+        "offset": 1360,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckHasFilterTag",
+        "type": "XLua.DelegateBridge",
+        "offset": 1368,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SetAdditionalBuildCondition",
+        "type": "XLua.DelegateBridge",
+        "offset": 1376,
+        "default": null
+      },
+      {
+        "name": "__Hotfix1_SetAdditionalBuildCondition",
+        "type": "XLua.DelegateBridge",
+        "offset": 1384,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_AddOverlapSourceId",
+        "type": "XLua.DelegateBridge",
+        "offset": 1392,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RemoveOverlapSourceId",
+        "type": "XLua.DelegateBridge",
+        "offset": 1400,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_AddOverlapSourceUid",
+        "type": "XLua.DelegateBridge",
+        "offset": 1408,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RemoveOverlapSourceUid",
+        "type": "XLua.DelegateBridge",
+        "offset": 1416,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_AddOverlapExcludeSourceId",
+        "type": "XLua.DelegateBridge",
+        "offset": 1424,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RemoveOverlapExcludeSourceId",
+        "type": "XLua.DelegateBridge",
+        "offset": 1432,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ModifyOverlapTakeEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 1440,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetEffectReplacePairs",
+        "type": "XLua.DelegateBridge",
+        "offset": 1448,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_TryHookEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 1456,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_TryHookAudio",
+        "type": "XLua.DelegateBridge",
+        "offset": 1464,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_TryHookProjectile",
+        "type": "XLua.DelegateBridge",
+        "offset": 1472,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RegisterReplacement",
+        "type": "XLua.DelegateBridge",
+        "offset": 1480,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_UnregisterReplacement",
+        "type": "XLua.DelegateBridge",
+        "offset": 1488,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckIsCurrentReplacement",
+        "type": "XLua.DelegateBridge",
+        "offset": 1496,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ClearReplacement",
+        "type": "XLua.DelegateBridge",
+        "offset": 1504,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetStartEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 1512,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetDeadEffect",
+        "type": "XLua.DelegateBridge",
+        "offset": 1520,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetAttackBlackboard",
+        "type": "XLua.DelegateBridge",
+        "offset": 1528,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__CheckCanSwithToAttackState",
+        "type": "XLua.DelegateBridge",
+        "offset": 1536,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__SearchAttackTarget",
+        "type": "XLua.DelegateBridge",
+        "offset": 1544,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__FetchCombatTarget",
+        "type": "XLua.DelegateBridge",
+        "offset": 1552,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_TryFaceToIdleDirection",
+        "type": "XLua.DelegateBridge",
+        "offset": 1560,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_isStillMotionTargetFreeWithImmuneFlag",
+        "type": "XLua.DelegateBridge",
+        "offset": 1568,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckInBlockRange",
+        "type": "XLua.DelegateBridge",
+        "offset": 1576,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__SearchBlockee",
+        "type": "XLua.DelegateBridge",
+        "offset": 1584,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__CheckBlockable",
+        "type": "XLua.DelegateBridge",
+        "offset": 1592,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckBlockVolumeNotExceeded",
+        "type": "XLua.DelegateBridge",
+        "offset": 1600,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ClearAllBlockees",
+        "type": "XLua.DelegateBridge",
+        "offset": 1608,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__ClearAllBlockees",
+        "type": "XLua.DelegateBridge",
+        "offset": 1616,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__AddBlockee",
+        "type": "XLua.DelegateBridge",
+        "offset": 1624,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RemoveBlockee",
+        "type": "XLua.DelegateBridge",
+        "offset": 1632,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RecalculateBlockeesTotalVolume",
+        "type": "XLua.DelegateBridge",
+        "offset": 1640,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_UpdateBlockees",
+        "type": "XLua.DelegateBridge",
+        "offset": 1648,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RevalidateBlockees",
+        "type": "XLua.DelegateBridge",
+        "offset": 1656,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SetupSkin",
+        "type": "XLua.DelegateBridge",
+        "offset": 1664,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_RecycleSkinIfNot",
+        "type": "XLua.DelegateBridge",
+        "offset": 1672,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnRecycle",
+        "type": "XLua.DelegateBridge",
+        "offset": 1680,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnTick",
+        "type": "XLua.DelegateBridge",
+        "offset": 1688,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetTileLocateHeight",
+        "type": "XLua.DelegateBridge",
+        "offset": 1696,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnAwake",
+        "type": "XLua.DelegateBridge",
+        "offset": 1704,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnInit",
+        "type": "XLua.DelegateBridge",
+        "offset": 1712,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__SpawnDeckBuffs",
+        "type": "XLua.DelegateBridge",
+        "offset": 1720,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnBorn",
+        "type": "XLua.DelegateBridge",
+        "offset": 1728,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnReborn",
+        "type": "XLua.DelegateBridge",
+        "offset": 1736,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnHpZero",
+        "type": "XLua.DelegateBridge",
+        "offset": 1744,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnReset",
+        "type": "XLua.DelegateBridge",
+        "offset": 1752,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__AssignLocalPosInternal",
+        "type": "XLua.DelegateBridge",
+        "offset": 1760,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnLocate",
+        "type": "XLua.DelegateBridge",
+        "offset": 1768,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnFinish",
+        "type": "XLua.DelegateBridge",
+        "offset": 1776,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ConstructStateMachine",
+        "type": "XLua.DelegateBridge",
+        "offset": 1784,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnAttributeDirty",
+        "type": "XLua.DelegateBridge",
+        "offset": 1792,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnDisappearChanged",
+        "type": "XLua.DelegateBridge",
+        "offset": 1800,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CheckModeChangeBeforeAttack",
+        "type": "XLua.DelegateBridge",
+        "offset": 1808,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnBeforeAttack",
+        "type": "XLua.DelegateBridge",
+        "offset": 1816,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnAfterAttack",
+        "type": "XLua.DelegateBridge",
+        "offset": 1824,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnBeforeSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 1832,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnAfterSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 1840,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnSkillStart",
+        "type": "XLua.DelegateBridge",
+        "offset": 1848,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnToggleSkillStart",
+        "type": "XLua.DelegateBridge",
+        "offset": 1856,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnSkillRetriggered",
+        "type": "XLua.DelegateBridge",
+        "offset": 1864,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnSkillCastSucceed",
+        "type": "XLua.DelegateBridge",
+        "offset": 1872,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnSkillFinish",
+        "type": "XLua.DelegateBridge",
+        "offset": 1880,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_PopulateSnapshotToHashBuilder",
+        "type": "XLua.DelegateBridge",
+        "offset": 1888,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_PopulateSnapshotToStrBuilder",
+        "type": "XLua.DelegateBridge",
+        "offset": 1896,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_CreateSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 1904,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_BlockeeOffsetPosSet",
+        "type": "XLua.DelegateBridge",
+        "offset": 1912,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_UpdateHatred",
+        "type": "XLua.DelegateBridge",
+        "offset": 1920,
+        "default": null
+      },
+      {
+        "name": "__Hotfix1_UpdateHatred",
+        "type": "XLua.DelegateBridge",
+        "offset": 1928,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_EnsureSkillOnInAbnormalState",
+        "type": "XLua.DelegateBridge",
+        "offset": 1936,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__AssignData",
+        "type": "XLua.DelegateBridge",
+        "offset": 1944,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__PreprocessSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 1952,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__RecycleEquipIfNot",
+        "type": "XLua.DelegateBridge",
+        "offset": 1960,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__AssignSkill",
+        "type": "XLua.DelegateBridge",
+        "offset": 1968,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__PreprocessSkin",
+        "type": "XLua.DelegateBridge",
+        "offset": 1976,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__CheckDontCreateSkinBeforeGameLoaded",
+        "type": "XLua.DelegateBridge",
+        "offset": 1984,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__PreprocessEquip",
+        "type": "XLua.DelegateBridge",
+        "offset": 1992,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__PreprocessTalents",
+        "type": "XLua.DelegateBridge",
+        "offset": 2000,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__AssignTalents",
+        "type": "XLua.DelegateBridge",
+        "offset": 2008,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_ReassignTalents",
+        "type": "XLua.DelegateBridge",
+        "offset": 2016,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__AssignTrait",
+        "type": "XLua.DelegateBridge",
+        "offset": 2024,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__PreprocessTrait",
+        "type": "XLua.DelegateBridge",
+        "offset": 2032,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__EquipProcessTalents",
+        "type": "XLua.DelegateBridge",
+        "offset": 2040,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__EquipProcessTrait",
+        "type": "XLua.DelegateBridge",
+        "offset": 2048,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__GetDefaultModeIndex",
+        "type": "XLua.DelegateBridge",
+        "offset": 2056,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__GetDefaultRangeId",
+        "type": "XLua.DelegateBridge",
+        "offset": 2064,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnEquipProcessed",
+        "type": "XLua.DelegateBridge",
+        "offset": 2072,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetCurrentAttackOrCombatAbility",
+        "type": "XLua.DelegateBridge",
+        "offset": 2080,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetSpecialModeAttack",
+        "type": "XLua.DelegateBridge",
+        "offset": 2088,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_TryMarkDeployCostPostDeltaHandled",
+        "type": "XLua.DelegateBridge",
+        "offset": 2096,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_ColliderRadius",
+        "type": "XLua.DelegateBridge",
+        "offset": 2104,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnRallyPointLikeReborn",
+        "type": "XLua.DelegateBridge",
+        "offset": 2112,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnTokenCategoryChanged",
+        "type": "XLua.DelegateBridge",
+        "offset": 2120,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0__ReactivateMainTriggerCollider",
+        "type": "XLua.DelegateBridge",
+        "offset": 2128,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SetDontOccupyDeployCntFlag",
+        "type": "XLua.DelegateBridge",
+        "offset": 2136,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SetDisableClickCharacterInfo",
+        "type": "XLua.DelegateBridge",
+        "offset": 2144,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SetDisableFaceToIdleDirection",
+        "type": "XLua.DelegateBridge",
+        "offset": 2152,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_SetWithdrawCostRecoverRatio",
+        "type": "XLua.DelegateBridge",
+        "offset": 2160,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_UpdateMaxEs",
+        "type": "XLua.DelegateBridge",
+        "offset": 2168,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnEntityOverlapLikeOperationSucceed",
+        "type": "XLua.DelegateBridge",
+        "offset": 2176,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnEntityWillOverlap",
+        "type": "XLua.DelegateBridge",
+        "offset": 2184,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GatherHudPluginTypes",
+        "type": "XLua.DelegateBridge",
+        "offset": 2192,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_get_hudPluginMask",
+        "type": "XLua.DelegateBridge",
+        "offset": 2200,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_GetBakeMuzzleDataPath",
+        "type": "XLua.DelegateBridge",
+        "offset": 2208,
+        "default": null
+      },
+      {
+        "name": "__Hotfix0_OnDirectionChanged",
+        "type": "XLua.DelegateBridge",
+        "offset": 2216,
+        "default": null
+      },
+      {
+        "name": "_c__Hotfix0_ctor",
+        "type": "XLua.DelegateBridge",
+        "offset": 2224,
+        "default": null
+      }
+    ],
+    "vtable": [
+      {
+        "slot": 0,
+        "method": "UnityEngine.Object$$Equals"
+      },
+      {
+        "slot": 1,
+        "method": "System.Object$$Finalize"
+      },
+      {
+        "slot": 2,
+        "method": "UnityEngine.Object$$GetHashCode"
+      },
+      {
+        "slot": 3,
+        "method": "UnityEngine.Object$$ToString"
+      },
+      {
+        "slot": 4,
+        "method": "Torappu.Battle.VisualObject$$get_mapPosition"
+      },
+      {
+        "slot": 5,
+        "method": "Torappu.Battle.VisualObject$$get_mapPositionV3"
+      },
+      {
+        "slot": 6,
+        "method": "Torappu.Battle.VisualObject$$get_worldPosition"
+      },
+      {
+        "slot": 7,
+        "method": "Torappu.Battle.VisualObject$$get_gridPosition"
+      },
+      {
+        "slot": 8,
+        "method": "Torappu.Battle.Entity$$get_faceTo"
+      },
+      {
+        "slot": 9,
+        "method": "Torappu.Battle.VisualObject$$get_height"
+      },
+      {
+        "slot": 10,
+        "method": "Torappu.Battle.Entity$$get_faceTo"
+      },
+      {
+        "slot": 11,
+        "method": "Torappu.Battle.VisualObject$$get_gridPosition"
+      },
+      {
+        "slot": 12,
+        "method": "Torappu.Battle.VisualObject$$SetHeight"
+      },
+      {
+        "slot": 13,
+        "method": "Torappu.Battle.Character$$_AssignLocalPosInternal"
+      },
+      {
+        "slot": 14,
+        "method": "Torappu.Battle.Unit$$OnAllocate"
+      },
+      {
+        "slot": 15,
+        "method": "Torappu.Battle.Character$$OnRecycle"
+      },
+      {
+        "slot": 16,
+        "method": "Torappu.Battle.BObject$$get_instanceUid"
+      },
+      {
+        "slot": 17,
+        "method": "Torappu.Battle.BObject$$CompareTo"
+      },
+      {
+        "slot": 18,
+        "method": "Torappu.Battle.BObject$$CompareTo"
+      },
+      {
+        "slot": 19,
+        "method": "Torappu.Battle.BObject$$GetPRDEntityHash"
+      },
+      {
+        "slot": 20,
+        "method": "Torappu.Battle.BObject$$AllocatePRDEntitySubHash"
+      },
+      {
+        "slot": 21,
+        "method": "Torappu.Battle.BObject$$ResetPRDEntity"
+      },
+      {
+        "slot": 22,
+        "method": "Torappu.Battle.BObject$$get_side"
+      },
+      {
+        "slot": 23,
+        "method": "Torappu.Battle.BObject$$get_priority"
+      },
+      {
+        "slot": 24,
+        "method": "Torappu.Battle.Character$$Born"
+      },
+      {
+        "slot": 25,
+        "method": "Torappu.Battle.Unit$$OnAllocate"
+      },
+      {
+        "slot": 26,
+        "method": "Torappu.Battle.Character$$OnRecycle"
+      },
+      {
+        "slot": 27,
+        "method": "Torappu.Battle.Character$$OnTick"
+      },
+      {
+        "slot": 28,
+        "method": "Torappu.Battle.Unit$$OnLateTick"
+      },
+      {
+        "slot": 29,
+        "method": "Torappu.Battle.Character$$OnReset"
+      },
+      {
+        "slot": 30,
+        "method": "Torappu.Battle.Character$$OnInit"
+      },
+      {
+        "slot": 31,
+        "method": "Torappu.Battle.Unit$$OnPostInit"
+      },
+      {
+        "slot": 32,
+        "method": "Torappu.Battle.Character$$OnBorn"
+      },
+      {
+        "slot": 33,
+        "method": "Torappu.Battle.Entity$$OnBeforeDisappearChanged"
+      },
+      {
+        "slot": 34,
+        "method": "Torappu.Battle.Character$$OnDisappearChanged"
+      },
+      {
+        "slot": 35,
+        "method": "Torappu.Battle.Entity$$CompareTo"
+      },
+      {
+        "slot": 36,
+        "method": "Torappu.Battle.Entity$$get_isAlive"
+      },
+      {
+        "slot": 37,
+        "method": "Torappu.Battle.VisualObject$$get_worldPosition"
+      },
+      {
+        "slot": 38,
+        "method": "Torappu.Battle.Entity$$get_id"
+      },
+      {
+        "slot": 39,
+        "method": "Torappu.Battle.Character$$get_isMine"
+      },
+      {
+        "slot": 40,
+        "method": "Torappu.Battle.Character$$get_alive"
+      },
+      {
+        "slot": 41,
+        "method": "Torappu.Battle.Character$$get_aliveOrDying"
+      },
+      {
+        "slot": 42,
+        "method": "Torappu.Battle.Entity$$get_aliveOrReborn"
+      },
+      {
+        "slot": 43,
+        "method": "Torappu.Battle.Entity$$get_epIsFull"
+      },
+      {
+        "slot": 44,
+        "method": "Torappu.Battle.Entity$$get_isInEpBreakRecovery"
+      },
+      {
+        "slot": 45,
+        "method": "Torappu.Battle.Unit$$get_faceSign"
+      },
+      {
+        "slot": 46,
+        "method": "Torappu.Battle.Unit$$get_faceToBack"
+      },
+      {
+        "slot": 47,
+        "method": "Torappu.Battle.Unit$$get_faceToDown"
+      },
+      {
+        "slot": 48,
+        "method": "Torappu.Battle.Character$$get_hatred"
+      },
+      {
+        "slot": 49,
+        "method": "Torappu.Battle.Unit$$get_category"
+      },
+      {
+        "slot": 50,
+        "method": "Torappu.Battle.Entity$$get_pathMotionMode"
+      },
+      {
+        "slot": 51,
+        "method": "Torappu.Battle.Unit$$get_allApplyWay"
+      },
+      {
+        "slot": 52,
+        "method": "Torappu.Battle.Character$$get_rootTile"
+      },
+      {
+        "slot": 53,
+        "method": "Torappu.Battle.Character$$get_oldTile"
+      },
+      {
+        "slot": 54,
+        "method": "Torappu.Battle.Character$$get_managedProjectiles"
+      },
+      {
+        "slot": 55,
+        "method": "Torappu.Battle.Entity$$get_spController"
+      },
+      {
+        "slot": 56,
+        "method": "Torappu.Battle.Entity$$get_epController"
+      },
+      {
+        "slot": 57,
+        "method": "Torappu.Battle.Character$$get_createdTime"
+      },
+      {
+        "slot": 58,
+        "method": "Torappu.Battle.Entity$$get_direction"
+      },
+      {
+        "slot": 59,
+        "method": "Torappu.Battle.Unit$$get_faceLOrR"
+      },
+      {
+        "slot": 60,
+        "method": "Torappu.Battle.Unit$$get_bodyTransform"
+      },
+      {
+        "slot": 61,
+        "method": "Torappu.Battle.Unit$$get_graphicTransform"
+      },
+      {
+        "slot": 62,
+        "method": "Torappu.Battle.Unit$$get_graphicFootTransform"
+      },
+      {
+        "slot": 63,
+        "method": "Torappu.Battle.Character$$get_graphicHolderTransform"
+      },
+      {
+        "slot": 64,
+        "method": "Torappu.Battle.Character$$get_directionTransform"
+      },
+      {
+        "slot": 65,
+        "method": "Torappu.Battle.Unit$$get_color"
+      },
+      {
+        "slot": 66,
+        "method": "Torappu.Battle.Unit$$set_color"
+      },
+      {
+        "slot": 67,
+        "method": "Torappu.Battle.Entity$$get_canMove"
+      },
+      {
+        "slot": 68,
+        "method": "Torappu.Battle.Character$$get_delayToRecycle"
+      },
+      {
+        "slot": 69,
+        "method": "Torappu.Battle.Character$$get_isFixedRotation"
+      },
+      {
+        "slot": 70,
+        "method": "Torappu.Battle.Character$$get_initState"
+      },
+      {
+        "slot": 71,
+        "method": "Torappu.Battle.Unit$$get_defaultBodyColor"
+      },
+      {
+        "slot": 72,
+        "method": "Torappu.Battle.Unit$$get_graphicBoundRadius"
+      },
+      {
+        "slot": 73,
+        "method": "Torappu.Battle.Unit$$get_footPoint"
+      },
+      {
+        "slot": 74,
+        "method": "Torappu.Battle.Unit$$get_hitPoint"
+      },
+      {
+        "slot": 75,
+        "method": "Torappu.Battle.Unit$$get_muzzlePoint"
+      },
+      {
+        "slot": 76,
+        "method": "Torappu.Battle.Unit$$get_headPoint"
+      },
+      {
+        "slot": 77,
+        "method": "Torappu.Battle.Unit$$get_uiPoint"
+      },
+      {
+        "slot": 78,
+        "method": "Torappu.Battle.Unit$$get_effectTransform"
+      },
+      {
+        "slot": 79,
+        "method": "Torappu.Battle.Entity$$get_maxEp"
+      },
+      {
+        "slot": 80,
+        "method": "Torappu.Battle.Entity$$get_maxHp"
+      },
+      {
+        "slot": 81,
+        "method": "Torappu.Battle.Character$$get_maxEs"
+      },
+      {
+        "slot": 82,
+        "method": "Torappu.Battle.Entity$$get_esToShow"
+      },
+      {
+        "slot": 83,
+        "method": "Torappu.Battle.Entity$$get_blockCnt"
+      },
+      {
+        "slot": 84,
+        "method": "Torappu.Battle.Entity$$get_moveSpeed"
+      },
+      {
+        "slot": 85,
+        "method": "Torappu.Battle.Entity$$get_initHp"
+      },
+      {
+        "slot": 86,
+        "method": "Torappu.Battle.Character$$isStillMotionTargetFreeWithImmuneFlag"
+      },
+      {
+        "slot": 87,
+        "method": "Torappu.Battle.Unit$$get_isHidden"
+      },
+      {
+        "slot": 88,
+        "method": "Torappu.Battle.Entity$$get_isHiddenToAlly"
+      },
+      {
+        "slot": 89,
+        "method": "Torappu.Battle.Entity$$SetBodyAndFaceDirection"
+      },
+      {
+        "slot": 90,
+        "method": "Torappu.Battle.Unit$$SetGraphicHolderHeightOffset"
+      },
+      {
+        "slot": 91,
+        "method": "Torappu.Battle.Character$$GetEffectReplacePairs"
+      },
+      {
+        "slot": 92,
+        "method": "Torappu.Battle.Unit$$GetMountPoint"
+      },
+      {
+        "slot": 93,
+        "method": "Torappu.Battle.Unit$$GetMountPointForEffect"
+      },
+      {
+        "slot": 94,
+        "method": "Torappu.Battle.Entity$$FinishWithReachExit"
+      },
+      {
+        "slot": 95,
+        "method": "Torappu.Battle.Entity$$IsStayStill"
+      },
+      {
+        "slot": 96,
+        "method": "Torappu.Battle.Entity$$ChangePathMotionMode"
+      },
+      {
+        "slot": 97,
+        "method": "Torappu.Battle.Character$$ChangeMotionMode"
+      },
+      {
+        "slot": 98,
+        "method": "Torappu.Battle.Character$$ResetMotionMode"
+      },
+      {
+        "slot": 99,
+        "method": "Torappu.Battle.Unit$$SwitchSide"
+      },
+      {
+        "slot": 100,
+        "method": "Torappu.Battle.Character$$CheckHasFilterTag"
+      },
+      {
+        "slot": 101,
+        "method": "Torappu.Battle.Unit$$UpdateBodyColor"
+      },
+      {
+        "slot": 102,
+        "method": "Torappu.Battle.Unit$$PlayAnimation"
+      },
+      {
+        "slot": 103,
+        "method": "Torappu.Battle.Unit$$UpdateAnimPlaybackSpeed"
+      },
+      {
+        "slot": 104,
+        "method": "Torappu.Battle.Unit$$GetAnimationTime"
+      },
+      {
+        "slot": 105,
+        "method": "Torappu.Battle.Unit$$GetAnimationTime"
+      },
+      {
+        "slot": 106,
+        "method": "Torappu.Battle.Character$$TryHookEffect"
+      },
+      {
+        "slot": 107,
+        "method": "Torappu.Battle.Unit$$TryIgnoreEffect"
+      },
+      {
+        "slot": 108,
+        "method": "Torappu.Battle.Character$$TryHookAudio"
+      },
+      {
+        "slot": 109,
+        "method": "Torappu.Battle.Character$$TryHookProjectile"
+      },
+      {
+        "slot": 110,
+        "method": "Torappu.Battle.Entity$$SetHpInternal"
+      },
+      {
+        "slot": 111,
+        "method": "Torappu.Battle.Entity$$SetEsInternal"
+      },
+      {
+        "slot": 112,
+        "method": "Torappu.Battle.Entity$$SetSpInternal"
+      },
+      {
+        "slot": 113,
+        "method": "Torappu.Battle.Entity$$SetAllEpInternal"
+      },
+      {
+        "slot": 114,
+        "method": "Torappu.Battle.Entity$$SetEpInternal"
+      },
+      {
+        "slot": 115,
+        "method": "Torappu.Battle.Character$$ConstructStateMachine"
+      },
+      {
+        "slot": 116,
+        "method": "Torappu.Battle.Character$$FinishMe"
+      },
+      {
+        "slot": 117,
+        "method": "Torappu.Battle.Character$$ClearAbilities"
+      },
+      {
+        "slot": 118,
+        "method": "Torappu.Battle.Character$$OnLocate"
+      },
+      {
+        "slot": 119,
+        "method": "Torappu.Battle.Entity$$OnEsOverZero"
+      },
+      {
+        "slot": 120,
+        "method": "Torappu.Battle.Character$$OnHpZero"
+      },
+      {
+        "slot": 121,
+        "method": "Torappu.Battle.Entity$$OnEpZero"
+      },
+      {
+        "slot": 122,
+        "method": "Torappu.Battle.Character$$OnFinish"
+      },
+      {
+        "slot": 123,
+        "method": "Torappu.Battle.Entity$$DoApplyModifier"
+      },
+      {
+        "slot": 124,
+        "method": "Torappu.Battle.Entity$$OnAbilityFinish"
+      },
+      {
+        "slot": 125,
+        "method": "Torappu.Battle.Character$$OnAttributeDirty"
+      },
+      {
+        "slot": 126,
+        "method": "Torappu.Battle.Unit$$OnFaceChanged"
+      },
+      {
+        "slot": 127,
+        "method": "Torappu.Battle.Entity$$OnMotionModeChanged"
+      },
+      {
+        "slot": 128,
+        "method": "Torappu.Battle.Character$$OnDirectionChanged"
+      },
+      {
+        "slot": 129,
+        "method": "Torappu.Battle.Unit$$OnAttackRangeChanged"
+      },
+      {
+        "slot": 130,
+        "method": "Torappu.Battle.Unit$$OnTakeDamage"
+      },
+      {
+        "slot": 131,
+        "method": "Torappu.Battle.Entity$$OnTakeHeal"
+      },
+      {
+        "slot": 132,
+        "method": "Torappu.Battle.Entity$$OnTakeEPDamage"
+      },
+      {
+        "slot": 133,
+        "method": "Torappu.Battle.Entity$$OnTriggerPalsy"
+      },
+      {
+        "slot": 134,
+        "method": "Torappu.Battle.Entity$$IsInHitRange"
+      },
+      {
+        "slot": 135,
+        "method": "Torappu.Battle.Entity$$CanDoAbilitySpellOn"
+      },
+      {
+        "slot": 136,
+        "method": "Torappu.Battle.Character$$GatherEffects"
+      },
+      {
+        "slot": 137,
+        "method": "Torappu.Battle.Unit$$GatherProjectiles"
+      },
+      {
+        "slot": 138,
+        "method": "Torappu.Battle.Unit$$GatherAbilities"
+      },
+      {
+        "slot": 139,
+        "method": "Torappu.Battle.Unit$$GatherActionNodes"
+      },
+      {
+        "slot": 140,
+        "method": "Torappu.Battle.Character$$PreloadSpecialAudioSignals"
+      },
+      {
+        "slot": 141,
+        "method": "Torappu.Battle.Unit$$GatherBuffs"
+      },
+      {
+        "slot": 142,
+        "method": "Torappu.Battle.Unit$$RecollectTalents"
+      },
+      {
+        "slot": 143,
+        "method": "Torappu.Battle.Character$$GatherHudPluginTypes"
+      },
+      {
+        "slot": 144,
+        "method": "Torappu.Battle.Character$$get_defaultMode"
+      },
+      {
+        "slot": 145,
+        "method": "Torappu.Battle.Unit$$get_needUpdateRootHeight"
+      },
+      {
+        "slot": 146,
+        "method": "Torappu.Battle.Character$$get_talentRange"
+      },
+      {
+        "slot": 147,
+        "method": "Torappu.Battle.Character$$get_combat"
+      },
+      {
+        "slot": 148,
+        "method": "Torappu.Battle.Character$$get_hasCombat"
+      },
+      {
+        "slot": 149,
+        "method": "Torappu.Battle.Character$$get_attack"
+      },
+      {
+        "slot": 150,
+        "method": "Torappu.Battle.Character$$get_attackTrigger"
+      },
+      {
+        "slot": 151,
+        "method": "Torappu.Battle.Character$$get_ColliderRadius"
+      },
+      {
+        "slot": 152,
+        "method": "Torappu.Battle.Character$$get_isInCombat"
+      },
+      {
+        "slot": 153,
+        "method": "Torappu.Battle.Character$$get_isInAttackState"
+      },
+      {
+        "slot": 154,
+        "method": "Torappu.Battle.Character$$get_isInCombatState"
+      },
+      {
+        "slot": 155,
+        "method": "Torappu.Battle.Character$$get_isInDyingState"
+      },
+      {
+        "slot": 156,
+        "method": "Torappu.Battle.Character$$get_isInRebornState"
+      },
+      {
+        "slot": 157,
+        "method": "Torappu.Battle.Unit$$get_isMovingBySelf"
+      },
+      {
+        "slot": 158,
+        "method": "Torappu.Battle.Character$$get_rangeToShow"
+      },
+      {
+        "slot": 159,
+        "method": "Torappu.Battle.Unit$$get_extraRangesToShow"
+      },
+      {
+        "slot": 160,
+        "method": "Torappu.Battle.Character$$get_defaultRangeId"
+      },
+      {
+        "slot": 161,
+        "method": "Torappu.Battle.Character$$get_animator"
+      },
+      {
+        "slot": 162,
+        "method": "Torappu.Battle.Unit$$get_hpToShow"
+      },
+      {
+        "slot": 163,
+        "method": "Torappu.Battle.Unit$$get_shieldToShow"
+      },
+      {
+        "slot": 164,
+        "method": "Torappu.Battle.Unit$$get_epArrayToShow"
+      },
+      {
+        "slot": 165,
+        "method": "Torappu.Battle.Unit$$get_minEpTypeToShow"
+      },
+      {
+        "slot": 166,
+        "method": "Torappu.Battle.Character$$FetchHost"
+      },
+      {
+        "slot": 167,
+        "method": "Torappu.Battle.Unit$$get_hudOffset"
+      },
+      {
+        "slot": 168,
+        "method": "Torappu.Battle.Unit$$get_spShowedBuffProgress"
+      },
+      {
+        "slot": 169,
+        "method": "Torappu.Battle.Character$$get_hudPluginMask"
+      },
+      {
+        "slot": 170,
+        "method": "Torappu.Battle.Character$$GatherHudPluginTypes"
+      },
+      {
+        "slot": 171,
+        "method": "Torappu.Battle.Unit$$get_enableNormalHud"
+      },
+      {
+        "slot": 172,
+        "method": "Torappu.Battle.Character$$PlayAudioSignal"
+      },
+      {
+        "slot": 173,
+        "method": "Torappu.Battle.Character$$PreloadSpecialAudioSignals"
+      },
+      {
+        "slot": 174,
+        "method": "Torappu.Battle.Character$$GetAttackBlackboard"
+      },
+      {
+        "slot": 175,
+        "method": "Torappu.Battle.Character$$GatherEffects"
+      },
+      {
+        "slot": 176,
+        "method": "Torappu.Battle.Unit$$GatherProjectiles"
+      },
+      {
+        "slot": 177,
+        "method": "Torappu.Battle.Unit$$GatherActionNodes"
+      },
+      {
+        "slot": 178,
+        "method": "Torappu.Battle.Character$$GetModeRangeId"
+      },
+      {
+        "slot": 179,
+        "method": "Torappu.Battle.Unit$$GetModeRangeRadius"
+      },
+      {
+        "slot": 180,
+        "method": "Torappu.Battle.Unit$$OnGameOver"
+      },
+      {
+        "slot": 181,
+        "method": "Torappu.Battle.Character$$GetCurrentAttackOrCombatAbility"
+      },
+      {
+        "slot": 182,
+        "method": "Torappu.Battle.Unit$$AssignDynamicAbility"
+      },
+      {
+        "slot": 183,
+        "method": "Torappu.Battle.Character$$DoFakeDeath"
+      },
+      {
+        "slot": 184,
+        "method": "Torappu.Battle.Character$$DoReborn"
+      },
+      {
+        "slot": 185,
+        "method": "Torappu.Battle.Unit$$OnSwitchMode"
+      },
+      {
+        "slot": 186,
+        "method": "Torappu.Battle.Character$$OnAwake"
+      },
+      {
+        "slot": 187,
+        "method": "Torappu.Battle.Character$$OnReborn"
+      },
+      {
+        "slot": 188,
+        "method": "Torappu.Battle.Character$$PopulateSnapshotToHashBuilder"
+      },
+      {
+        "slot": 189,
+        "method": "Torappu.Battle.Character$$PopulateSnapshotToStrBuilder"
+      },
+      {
+        "slot": 190,
+        "method": "Torappu.Battle.Unit$$get_hitRangeId"
+      },
+      {
+        "slot": 191,
+        "method": "Torappu.Battle.Character$$GetBakeMuzzleDataPath"
+      },
+      {
+        "slot": 192,
+        "method": "Torappu.Battle.Character$$get_rootTile"
+      },
+      {
+        "slot": 193,
+        "method": "Torappu.Battle.Entity$$get_direction"
+      },
+      {
+        "slot": 194,
+        "method": "Torappu.Battle.Character$$get_buildCondition"
+      },
+      {
+        "slot": 195,
+        "method": "Torappu.Battle.Character$$CheckBuildable"
+      },
+      {
+        "slot": 196,
+        "method": "Torappu.Battle.Character$$get_initSideType"
+      },
+      {
+        "slot": 197,
+        "method": "Torappu.Battle.Character$$get_hideTileOption"
+      },
+      {
+        "slot": 198,
+        "method": "Torappu.Battle.Character$$get_showHpSlider"
+      },
+      {
+        "slot": 199,
+        "method": "Torappu.Battle.Character$$get_showSpSlider"
+      },
+      {
+        "slot": 200,
+        "method": "Torappu.Battle.Character$$get_showShield"
+      },
+      {
+        "slot": 201,
+        "method": "Torappu.Battle.Character$$get_forceUseAllyHud"
+      },
+      {
+        "slot": 202,
+        "method": "Torappu.Battle.Character$$get_occupiedRemainingCharacterCnt"
+      },
+      {
+        "slot": 203,
+        "method": "Torappu.Battle.Character$$get_originRemainingCharacterCntVolume"
+      },
+      {
+        "slot": 204,
+        "method": "Torappu.Battle.Character$$set_originRemainingCharacterCntVolume"
+      },
+      {
+        "slot": 205,
+        "method": "Torappu.Battle.Character$$get_remainingCharacterCntVolume"
+      },
+      {
+        "slot": 206,
+        "method": "Torappu.Battle.Character$$get_withdrawable"
+      },
+      {
+        "slot": 207,
+        "method": "Torappu.Battle.Character$$get_blockRadiusSquare"
+      },
+      {
+        "slot": 208,
+        "method": "Torappu.Battle.Character$$get_blockCircle"
+      },
+      {
+        "slot": 209,
+        "method": "Torappu.Battle.Character$$get__blockRadius"
+      },
+      {
+        "slot": 210,
+        "method": "Torappu.Battle.Character$$get_minBlockDistToTarget"
+      },
+      {
+        "slot": 211,
+        "method": "Torappu.Battle.Character$$get_allowWithdrawGainCost"
+      },
+      {
+        "slot": 212,
+        "method": "Torappu.Battle.Character$$get_startEffect"
+      },
+      {
+        "slot": 213,
+        "method": "Torappu.Battle.Character$$get_deadEffect"
+      },
+      {
+        "slot": 214,
+        "method": "Torappu.Battle.Character$$get_alwaysBlockFree"
+      },
+      {
+        "slot": 215,
+        "method": "Torappu.Battle.Character$$get_assignDirectionToBBWhenTryingOverlapCharacter"
+      },
+      {
+        "slot": 216,
+        "method": "Torappu.Battle.Character$$get_defaultBlockRadiusScale"
+      },
+      {
+        "slot": 217,
+        "method": "Torappu.Battle.Character$$Withdraw"
+      },
+      {
+        "slot": 218,
+        "method": "Torappu.Battle.Character$$LocateOnTile"
+      },
+      {
+        "slot": 219,
+        "method": "Torappu.Battle.Character$$CheckInBlockRange"
+      },
+      {
+        "slot": 220,
+        "method": "Torappu.Battle.Character$$_SearchBlockee"
+      },
+      {
+        "slot": 221,
+        "method": "Torappu.Battle.Character$$GetTileLocateHeight"
+      },
+      {
+        "slot": 222,
+        "method": "Torappu.Battle.Character$$CreateSkill"
+      },
+      {
+        "slot": 223,
+        "method": "Torappu.Battle.Character$$BlockeeOffsetPosSet"
+      },
+      {
+        "slot": 224,
+        "method": "Torappu.Battle.Character$$OnEntityOverlapLikeOperationSucceed"
+      }
+    ]
+  }
+]

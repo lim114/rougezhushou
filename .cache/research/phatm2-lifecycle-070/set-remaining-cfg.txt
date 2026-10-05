@@ -1,0 +1,29 @@
+unmapped_0x181f140f0 0x181f140f0
+0x181f140f0 mov qword ptr [rsp + 8], rbx
+0x181f140f5 mov qword ptr [rsp + 0x10], rsi
+0x181f140fa push rdi
+0x181f140fb sub rsp, 0x20
+0x181f140ff cmp byte ptr [rip + 0x69cd105], 0
+0x181f14106 mov rdi, rdx
+0x181f14109 mov rsi, rcx
+0x181f1410c jne 0x181f14121
+0x181f1410e lea rcx, [rip + 0x65968e3] DATA [{'address': '0x1884aa9f8', 'bytes8': '055c022000000000', 'uint32': 537025541, 'float32': 1.1041875023196391e-19, 'uint64': 537025541}]
+0x181f14115 call 0x1804c1c70
+0x181f1411a mov byte ptr [rip + 0x69cd0ea], 1
+0x181f14121 mov rcx, qword ptr [rip + 0x65968d0] DATA [{'address': '0x1884aa9f8', 'bytes8': '055c022000000000', 'uint32': 537025541, 'float32': 1.1041875023196391e-19, 'uint64': 537025541}]
+0x181f14128 mov rbx, qword ptr [rsi + 0x10]
+0x181f1412c cmp dword ptr [rcx + 0xe0], 0
+0x181f14133 jne 0x181f1413a
+0x181f14135 call 0x1804c1eb0
+0x181f1413a xor r8d, r8d
+0x181f1413d mov rdx, rbx
+0x181f14140 mov rcx, rdi
+0x181f14143 call 0x186316760 ; Torappu.TSMath$$Min
+0x181f14148 mov rbx, qword ptr [rsp + 0x30]
+0x181f1414d mov qword ptr [rsi + 0x18], rax
+0x181f14151 mov rsi, qword ptr [rsp + 0x38]
+0x181f14156 add rsp, 0x20
+0x181f1415a pop rdi
+0x181f1415b ret 
+EDGES [{"from": "0x181f1410c", "kind": "conditional", "to": "0x181f14121"}, {"from": "0x181f1410c", "kind": "fallthrough", "to": "0x181f1410e"}, {"from": "0x181f14133", "kind": "conditional", "to": "0x181f1413a"}, {"from": "0x181f14133", "kind": "fallthrough", "to": "0x181f14135"}]
+LIMITS []

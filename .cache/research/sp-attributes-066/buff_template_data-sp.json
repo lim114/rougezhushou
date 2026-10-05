@@ -1,0 +1,1310 @@
+{
+  "crisisv2_05_sp_recovery_down": {
+    "templateKey": "crisisv2_05_sp_recovery_down",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_OWNER_POST_BORN": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+Act49SideCheckCharacterTileType, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_tileType": "None",
+          "_checkAnyTile": true
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+          "_buff": {
+            "attributes": {
+              "abnormalFlags": [],
+              "abnormalImmunes": [],
+              "abnormalAntis": [],
+              "abnormalCombos": [],
+              "abnormalComboImmunes": [],
+              "attributeModifiers": [
+                {
+                  "attributeType": "SP_RECOVER_RATIO",
+                  "formulaItem": "ADDITION",
+                  "value": 0.0,
+                  "loadFromBlackboard": true,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            },
+            "buffKey": "crisisv2_05_sp_recovery_down[core]",
+            "loadFromDB": false,
+            "isDurableBuff": false,
+            "isDamageMissable": false,
+            "isSilenceable": false,
+            "isStunnable": false,
+            "isFreezable": false,
+            "isLevitatable": false,
+            "isGroundBoundable": false,
+            "statusResistable": "AUTOMATIC",
+            "templateKey": "empty",
+            "disableOverride": false,
+            "overrideKey": null,
+            "overrideType": "DEFAULT",
+            "maxStackCnt": 1,
+            "refreshRemainingTimeWhenStackMax": false,
+            "clearAllStackCntWhenTimeUp": false,
+            "maxValidStackCnt": -1,
+            "independentCharacterSource": false,
+            "overrideEffectKey": null,
+            "overrideOnEventPriority": false,
+            "onEventPriority": "DEFAULT",
+            "audioSignal": null,
+            "lifeTimeType": "INFINITY",
+            "takeSnapshotWhenExtend": false,
+            "durationKey": null,
+            "remainingTimeKey": null,
+            "lifeTime": 0.0,
+            "triggerLifeType": "IMMEDIATELY",
+            "triggerCnt": 0,
+            "triggerInterval": -1.0,
+            "waitFirstTriggerInterval": true,
+            "firstTriggerInterval": -1.0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "stripBlackboardParamsWithBuffKey": false,
+            "blackboard": [],
+            "enableInitDirectionFromSource": false
+          },
+          "_buffOwner": "BUFF_OWNER",
+          "_useSpecialBuffSource": false,
+          "_specialBuffSource": "BUFF_SOURCE",
+          "_isDerivedBuff": false,
+          "_finishDerivedBuffIfParentFinish": false,
+          "_inherateSourceProjectileFromParentBuff": false,
+          "_hookEffectKeyFromSourceProjectile": false
+        }
+      ]
+    }
+  },
+  "trap_lhtown_sp_recover[mark]": {
+    "templateKey": "trap_lhtown_sp_recover[mark]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_START": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+          "_buff": {
+            "attributes": {
+              "abnormalFlags": [],
+              "abnormalImmunes": [],
+              "abnormalAntis": [],
+              "abnormalCombos": [],
+              "abnormalComboImmunes": [],
+              "attributeModifiers": []
+            },
+            "buffKey": "trap_lhtown_sp_recover[stack]",
+            "loadFromDB": false,
+            "isDurableBuff": false,
+            "isDamageMissable": false,
+            "isSilenceable": false,
+            "isStunnable": false,
+            "isFreezable": false,
+            "isLevitatable": false,
+            "isGroundBoundable": false,
+            "statusResistable": "AUTOMATIC",
+            "templateKey": "empty",
+            "disableOverride": false,
+            "overrideKey": null,
+            "overrideType": "STACK",
+            "maxStackCnt": 999,
+            "refreshRemainingTimeWhenStackMax": false,
+            "clearAllStackCntWhenTimeUp": false,
+            "maxValidStackCnt": -1,
+            "independentCharacterSource": false,
+            "overrideEffectKey": null,
+            "overrideOnEventPriority": false,
+            "onEventPriority": "DEFAULT",
+            "audioSignal": null,
+            "lifeTimeType": "INFINITY",
+            "takeSnapshotWhenExtend": false,
+            "durationKey": null,
+            "remainingTimeKey": null,
+            "lifeTime": 0.0,
+            "triggerLifeType": "IMMEDIATELY",
+            "triggerCnt": 0,
+            "triggerInterval": -1.0,
+            "waitFirstTriggerInterval": true,
+            "firstTriggerInterval": -1.0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "stripBlackboardParamsWithBuffKey": false,
+            "blackboard": [],
+            "enableInitDirectionFromSource": false
+          },
+          "_buffOwner": "BUFF_OWNER",
+          "_useSpecialBuffSource": false,
+          "_specialBuffSource": "BUFF_SOURCE",
+          "_isDerivedBuff": false,
+          "_finishDerivedBuffIfParentFinish": false,
+          "_inherateSourceProjectileFromParentBuff": false,
+          "_hookEffectKeyFromSourceProjectile": false
+        }
+      ],
+      "ON_BUFF_FINISH": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+          "_buffKey": "trap_lhtown_sp_recover[stack]",
+          "_loadFromBlackboard": false,
+          "_decCntIfStack": true,
+          "_updateOverrideMap": true,
+          "_targetType": "BUFF_OWNER",
+          "_checkBuffSource": false,
+          "_sourceType": "BUFF_SOURCE",
+          "_alsoClearNullSource": false,
+          "_finishHostBuff": false,
+          "_decCntKey": null,
+          "_decCnt": 1
+        }
+      ]
+    }
+  },
+  "trap_lhtown_sp_recover[core]": {
+    "templateKey": "trap_lhtown_sp_recover[core]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_TRIGGER": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+AssignBuffCountIntoBlackboard, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_buffKey": "trap_lhtown_sp_recover[stack]",
+          "_stackCountKey": "buff_counter",
+          "_stackCountPeeling": 0,
+          "_getStackCountFromFirstBuff": true,
+          "_showOverrideWarning": false,
+          "_checkBuffSource": false,
+          "_sourceType": "BUFF_OWNER",
+          "_useValidStackCount": false
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CalculateBlackboardValueViaParams, Assembly-CSharp",
+          "_inputKey": "sp_each",
+          "_outputKey": "sp",
+          "_multiplyParamKey": "buff_counter",
+          "_dividedParamKey": null,
+          "_useRemainder": false,
+          "_addParamKey": null,
+          "_minusParamKey": null,
+          "_minValueKey": null,
+          "_maxValueKey": null,
+          "_finalAbs": true,
+          "_finalCeil": false,
+          "_finalFloor": false,
+          "_finalRound": false,
+          "_useAbilityBlackboard": false,
+          "_abilityName": ""
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+ModifySp, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_modifyByRatio": false,
+          "_modifyRatio": 0.0,
+          "_modifyByRatioBasedOnCurSP": false,
+          "_modifyBySpCost": false,
+          "_dontCheckSpType": false,
+          "_spMask": "ALL",
+          "_forceFlag": false,
+          "_dontShowSpUI": false,
+          "_modifyValue": 0,
+          "_spString": "sp",
+          "_isMinis": false,
+          "_customModifierKey": ""
+        }
+      ]
+    }
+  },
+  "enemy_murad_check_appear[sp_recover]": {
+    "templateKey": "enemy_murad_check_appear[sp_recover]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_START": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+ModifySp, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_modifyByRatio": false,
+          "_modifyRatio": 0.0,
+          "_modifyByRatioBasedOnCurSP": false,
+          "_modifyBySpCost": false,
+          "_dontCheckSpType": false,
+          "_spMask": "ALL",
+          "_forceFlag": false,
+          "_dontShowSpUI": false,
+          "_modifyValue": 0,
+          "_spString": "sp",
+          "_isMinis": false,
+          "_customModifierKey": ""
+        }
+      ]
+    }
+  },
+  "xb2cve[sp_recover_flag]": {
+    "templateKey": "xb2cve[sp_recover_flag]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_START": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+          "_buff": {
+            "attributes": {
+              "abnormalFlags": [],
+              "abnormalImmunes": [],
+              "abnormalAntis": [],
+              "abnormalCombos": [],
+              "abnormalComboImmunes": [],
+              "attributeModifiers": [
+                {
+                  "attributeType": "SP_RECOVERY_PER_SEC",
+                  "formulaItem": "ADDITION",
+                  "value": 0.0,
+                  "loadFromBlackboard": true,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            },
+            "buffKey": "xb2cve[sp_recovery]",
+            "loadFromDB": false,
+            "isDurableBuff": false,
+            "isDamageMissable": false,
+            "isSilenceable": false,
+            "isStunnable": false,
+            "isFreezable": false,
+            "isLevitatable": false,
+            "isGroundBoundable": false,
+            "statusResistable": "AUTOMATIC",
+            "templateKey": "empty",
+            "disableOverride": false,
+            "overrideKey": null,
+            "overrideType": "STACK",
+            "maxStackCnt": 99,
+            "refreshRemainingTimeWhenStackMax": false,
+            "clearAllStackCntWhenTimeUp": false,
+            "maxValidStackCnt": 99,
+            "independentCharacterSource": false,
+            "overrideEffectKey": null,
+            "overrideOnEventPriority": false,
+            "onEventPriority": "DEFAULT",
+            "audioSignal": null,
+            "lifeTimeType": "INFINITY",
+            "takeSnapshotWhenExtend": false,
+            "durationKey": null,
+            "remainingTimeKey": null,
+            "lifeTime": 0.0,
+            "triggerLifeType": "IMMEDIATELY",
+            "triggerCnt": 0,
+            "triggerInterval": -1.0,
+            "waitFirstTriggerInterval": true,
+            "firstTriggerInterval": -1.0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "stripBlackboardParamsWithBuffKey": false,
+            "blackboard": [],
+            "enableInitDirectionFromSource": false
+          },
+          "_buffOwner": "BUFF_SOURCE",
+          "_useSpecialBuffSource": false,
+          "_specialBuffSource": "BUFF_SOURCE",
+          "_isDerivedBuff": false,
+          "_finishDerivedBuffIfParentFinish": true,
+          "_inherateSourceProjectileFromParentBuff": false,
+          "_hookEffectKeyFromSourceProjectile": false
+        }
+      ],
+      "ON_BUFF_FINISH": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+FinishBuffsById, Assembly-CSharp",
+          "_buffKey": "xb2cve[sp_recovery]",
+          "_loadFromBlackboard": false,
+          "_decCntIfStack": true,
+          "_updateOverrideMap": true,
+          "_targetType": "BUFF_SOURCE",
+          "_checkBuffSource": false,
+          "_sourceType": "BUFF_SOURCE",
+          "_alsoClearNullSource": false,
+          "_finishHostBuff": false,
+          "_decCntKey": null,
+          "_decCnt": 1
+        }
+      ]
+    }
+  },
+  "limit_bonus[sp_recover]": {
+    "templateKey": "limit_bonus[sp_recover]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_TRIGGER": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+HpRatioToAttributeAdd, Assembly-CSharp",
+          "_minHpRatio": 0.0,
+          "_maxHpRatio": 1.0,
+          "_attributeType": "SP_RECOVERY_PER_SEC",
+          "_overrideSource": false,
+          "_hpRatioSource": "SOURCE"
+        }
+      ]
+    }
+  },
+  "halfidle_lhplt_sp_recovery_decrease": {
+    "templateKey": "halfidle_lhplt_sp_recovery_decrease",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_LATE_ENABLE": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CheckFilterTag, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_filterTag": "lhplt",
+          "_bbKey": "tag"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+          "_decCntIfStack": false,
+          "_updateOverrideMap": true
+        }
+      ]
+    }
+  },
+  "legion_gasbot_buff[sp_recover]": {
+    "templateKey": "legion_gasbot_buff[sp_recover]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_AFTER_OUTPUT_DAMAGE": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+          "_conditionNode": {
+            "$type": "Torappu.Battle.Action.Nodes+CheckAbnormalFlags, Assembly-CSharp",
+            "_abnormalFlags": [
+              "FROZEN"
+            ],
+            "_targetType": "MODIFIER_TARGET"
+          },
+          "_succeedNodes": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+ModifySp, Assembly-CSharp",
+              "_targetType": "BUFF_OWNER",
+              "_modifyByRatio": false,
+              "_modifyRatio": 0.0,
+              "_modifyByRatioBasedOnCurSP": false,
+              "_modifyBySpCost": false,
+              "_dontCheckSpType": false,
+              "_spMask": "ALL",
+              "_forceFlag": false,
+              "_dontShowSpUI": false,
+              "_modifyValue": 0,
+              "_spString": "sp_frozen",
+              "_isMinis": false,
+              "_customModifierKey": ""
+            }
+          ],
+          "_failNodes": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+              "_conditionNode": {
+                "$type": "Torappu.Battle.Action.Nodes+CheckAbnormalFlags, Assembly-CSharp",
+                "_abnormalFlags": [
+                  "STUNNED",
+                  "COLD",
+                  "UNMOVABLE",
+                  "LEVITATE"
+                ],
+                "_targetType": "MODIFIER_TARGET"
+              },
+              "_succeedNodes": [
+                {
+                  "$type": "Torappu.Battle.Action.Nodes+ModifySp, Assembly-CSharp",
+                  "_targetType": "BUFF_OWNER",
+                  "_modifyByRatio": false,
+                  "_modifyRatio": 0.0,
+                  "_modifyByRatioBasedOnCurSP": false,
+                  "_modifyBySpCost": false,
+                  "_dontCheckSpType": false,
+                  "_spMask": "ALL",
+                  "_forceFlag": false,
+                  "_dontShowSpUI": false,
+                  "_modifyValue": 0,
+                  "_spString": "sp",
+                  "_isMinis": false,
+                  "_customModifierKey": ""
+                }
+              ],
+              "_failNodes": [
+                {
+                  "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+                  "_targetType": "MODIFIER_TARGET",
+                  "_buffKeys": [
+                    "sluggish"
+                  ],
+                  "isAND": true,
+                  "_loadFromBlackboard": false,
+                  "_checkBuffSource": false,
+                  "_buffSourceType": "BUFF_SOURCE",
+                  "_checkSourceHost": false
+                },
+                {
+                  "$type": "Torappu.Battle.Action.Nodes+ModifySp, Assembly-CSharp",
+                  "_targetType": "BUFF_OWNER",
+                  "_modifyByRatio": false,
+                  "_modifyRatio": 0.0,
+                  "_modifyByRatioBasedOnCurSP": false,
+                  "_modifyBySpCost": false,
+                  "_dontCheckSpType": false,
+                  "_spMask": "ALL",
+                  "_forceFlag": false,
+                  "_dontShowSpUI": false,
+                  "_modifyValue": 0,
+                  "_spString": "sp",
+                  "_isMinis": false,
+                  "_customModifierKey": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "rogue_2_sp_recovery_up[stack]": {
+    "templateKey": "rogue_2_sp_recovery_up[stack]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_SKILL_START": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+          "_buff": {
+            "attributes": {
+              "abnormalFlags": [],
+              "abnormalImmunes": [],
+              "abnormalAntis": [],
+              "abnormalCombos": [],
+              "abnormalComboImmunes": [],
+              "attributeModifiers": [
+                {
+                  "attributeType": "SP_RECOVERY_PER_SEC",
+                  "formulaItem": "ADDITION",
+                  "value": 0.0,
+                  "loadFromBlackboard": true,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            },
+            "buffKey": "rogue_2_sp_recovery_up[stack]",
+            "loadFromDB": false,
+            "isDurableBuff": false,
+            "isDamageMissable": false,
+            "isSilenceable": false,
+            "isStunnable": false,
+            "isFreezable": false,
+            "isLevitatable": false,
+            "isGroundBoundable": false,
+            "statusResistable": "AUTOMATIC",
+            "templateKey": "empty",
+            "disableOverride": false,
+            "overrideKey": null,
+            "overrideType": "STACK",
+            "maxStackCnt": 1,
+            "refreshRemainingTimeWhenStackMax": false,
+            "clearAllStackCntWhenTimeUp": false,
+            "maxValidStackCnt": -1,
+            "independentCharacterSource": false,
+            "overrideEffectKey": null,
+            "overrideOnEventPriority": false,
+            "onEventPriority": "DEFAULT",
+            "audioSignal": null,
+            "lifeTimeType": "INFINITY",
+            "takeSnapshotWhenExtend": false,
+            "durationKey": null,
+            "remainingTimeKey": null,
+            "lifeTime": 0.0,
+            "triggerLifeType": "IMMEDIATELY",
+            "triggerCnt": 0,
+            "triggerInterval": -1.0,
+            "waitFirstTriggerInterval": true,
+            "firstTriggerInterval": -1.0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "stripBlackboardParamsWithBuffKey": false,
+            "blackboard": [],
+            "enableInitDirectionFromSource": false
+          },
+          "_buffOwner": "BUFF_OWNER",
+          "_useSpecialBuffSource": false,
+          "_specialBuffSource": "BUFF_SOURCE",
+          "_isDerivedBuff": false,
+          "_finishDerivedBuffIfParentFinish": false,
+          "_inherateSourceProjectileFromParentBuff": false,
+          "_hookEffectKeyFromSourceProjectile": false
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+IfElse, Assembly-CSharp",
+          "_conditionNode": {
+            "$type": "Torappu.Battle.Action.Nodes+FilterByBuffStackCount, Assembly-CSharp",
+            "_targetType": "BUFF_OWNER",
+            "_buffKey": "rogue_2_sp_recovery_up[stack]",
+            "_stackCount": 0,
+            "_stackCountKey": "max_stack_cnt",
+            "_stackCountPeeling": 0,
+            "_condType": "GE",
+            "_checkFromUnoverridableBuffCount": false,
+            "_checkSnapshotBuff": false,
+            "_checkBuffSource": false,
+            "_sourceType": "BUFF_OWNER",
+            "_checkTargetHost": false
+          },
+          "_succeedNodes": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+              "_targetType": "BUFF_OWNER",
+              "_buffKeys": [
+                "rogue_2_sp_recovery_up[effect_2]"
+              ],
+              "isAND": true,
+              "_loadFromBlackboard": false,
+              "_checkBuffSource": false,
+              "_buffSourceType": "BUFF_SOURCE",
+              "_checkSourceHost": false
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+FinishDerivedBuff, Assembly-CSharp",
+              "_updateOverrideMap": true
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+              "_buff": {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "rogue_2_sp_recovery_up[effect_2]",
+                "loadFromDB": false,
+                "isDurableBuff": false,
+                "isDamageMissable": false,
+                "isSilenceable": false,
+                "isStunnable": false,
+                "isFreezable": false,
+                "isLevitatable": false,
+                "isGroundBoundable": false,
+                "statusResistable": "AUTOMATIC",
+                "templateKey": "empty",
+                "disableOverride": false,
+                "overrideKey": null,
+                "overrideType": "DEFAULT",
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": false,
+                "clearAllStackCntWhenTimeUp": false,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": false,
+                "overrideEffectKey": "rogue_2_relic_fight_135_buff_02",
+                "overrideOnEventPriority": false,
+                "onEventPriority": "DEFAULT",
+                "audioSignal": null,
+                "lifeTimeType": "INFINITY",
+                "takeSnapshotWhenExtend": false,
+                "durationKey": null,
+                "remainingTimeKey": null,
+                "lifeTime": 0.0,
+                "triggerLifeType": "IMMEDIATELY",
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": true,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": false,
+                "blackboard": [],
+                "enableInitDirectionFromSource": false
+              },
+              "_buffOwner": "BUFF_OWNER",
+              "_useSpecialBuffSource": false,
+              "_specialBuffSource": "BUFF_SOURCE",
+              "_isDerivedBuff": true,
+              "_finishDerivedBuffIfParentFinish": true,
+              "_inherateSourceProjectileFromParentBuff": false,
+              "_hookEffectKeyFromSourceProjectile": false
+            }
+          ],
+          "_failNodes": [
+            {
+              "$type": "Torappu.Battle.Action.Nodes+CheckContainsBuff, Assembly-CSharp",
+              "_targetType": "BUFF_OWNER",
+              "_buffKeys": [
+                "rogue_2_sp_recovery_up[effect]"
+              ],
+              "isAND": true,
+              "_loadFromBlackboard": false,
+              "_checkBuffSource": false,
+              "_buffSourceType": "BUFF_SOURCE",
+              "_checkSourceHost": false
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+            },
+            {
+              "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+              "_buff": {
+                "attributes": {
+                  "abnormalFlags": [],
+                  "abnormalImmunes": [],
+                  "abnormalAntis": [],
+                  "abnormalCombos": [],
+                  "abnormalComboImmunes": [],
+                  "attributeModifiers": []
+                },
+                "buffKey": "rogue_2_sp_recovery_up[effect]",
+                "loadFromDB": false,
+                "isDurableBuff": false,
+                "isDamageMissable": false,
+                "isSilenceable": false,
+                "isStunnable": false,
+                "isFreezable": false,
+                "isLevitatable": false,
+                "isGroundBoundable": false,
+                "statusResistable": "AUTOMATIC",
+                "templateKey": "empty",
+                "disableOverride": false,
+                "overrideKey": null,
+                "overrideType": "DEFAULT",
+                "maxStackCnt": 1,
+                "refreshRemainingTimeWhenStackMax": false,
+                "clearAllStackCntWhenTimeUp": false,
+                "maxValidStackCnt": -1,
+                "independentCharacterSource": false,
+                "overrideEffectKey": "rogue_2_relic_fight_135_buff",
+                "overrideOnEventPriority": false,
+                "onEventPriority": "DEFAULT",
+                "audioSignal": null,
+                "lifeTimeType": "INFINITY",
+                "takeSnapshotWhenExtend": false,
+                "durationKey": null,
+                "remainingTimeKey": null,
+                "lifeTime": 0.0,
+                "triggerLifeType": "IMMEDIATELY",
+                "triggerCnt": 0,
+                "triggerInterval": -1.0,
+                "waitFirstTriggerInterval": true,
+                "firstTriggerInterval": -1.0,
+                "priority": -1,
+                "priorityBBKeys": [],
+                "stripBlackboardParamsWithBuffKey": false,
+                "blackboard": [],
+                "enableInitDirectionFromSource": false
+              },
+              "_buffOwner": "BUFF_OWNER",
+              "_useSpecialBuffSource": false,
+              "_specialBuffSource": "BUFF_SOURCE",
+              "_isDerivedBuff": true,
+              "_finishDerivedBuffIfParentFinish": true,
+              "_inherateSourceProjectileFromParentBuff": false,
+              "_hookEffectKeyFromSourceProjectile": false
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "rogue_5_sp_recovery_with_tag_exclude_self[check_tag]": {
+    "templateKey": "rogue_5_sp_recovery_with_tag_exclude_self[check_tag]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_START": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CheckCharacterGroupTag, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_groupTag": "sui"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+AddBuffBlackboard, Assembly-CSharp",
+          "_targetType": "BUFF_SOURCE",
+          "_blackboardKey": "cnt",
+          "_buffKey": "[g]rogue_5_sp_recovery_with_tag[exclude_self]",
+          "_addition": 1.0,
+          "_additionKey": null,
+          "_useCurBuffBBWhenDoAddition": false,
+          "_useCurBuffBBWhenCheckMaxValue": false,
+          "_maxValueKey": null,
+          "_isMinus": false,
+          "_checkBuffSource": false
+        }
+      ]
+    }
+  },
+  "rogue_5_sp_recovery_with_tag[exclude_self]": {
+    "templateKey": "rogue_5_sp_recovery_with_tag[exclude_self]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_TRIGGER": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CheckCharSkillAffecting, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_checkTargetHost": false,
+          "_checkSpShowedBuff": false
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CreateBuffInRange, Assembly-CSharp",
+          "_sourceType": "BUFF_OWNER",
+          "_targetType": "BUFF_OWNER",
+          "_targetOptions": {
+            "targetSide": "ALLY",
+            "targetMotion": "ALL",
+            "targetCategory": "DEFAULT",
+            "enableAdvancedOptions": true,
+            "ignoreTargetFree": false,
+            "ignoreAllyTargetFree": false,
+            "ignoreHealFree": false,
+            "ignoreMotionMode": false,
+            "ignoreTargetSide": false,
+            "excludeSomeAbnormalFlags": false,
+            "containSomeAbnormalFlags": false,
+            "excludeAbnormalFlag": "STUNNED",
+            "containAbnormalFlag": "STUNNED",
+            "purposeMask": "NONE",
+            "professionMask": "WARRIOR, SNIPER, TANK, MEDIC, SUPPORT, CASTER, SPECIAL, PIONEER",
+            "checkUnitType": false,
+            "unitTypeMask": "NONE",
+            "onlyIgnoreSomeOfTargetFreeCase": false,
+            "abnormalFlag": "STUNNED",
+            "abnormalCombo": "SLEEPING"
+          },
+          "_useCentainSide": false,
+          "_side": "NONE",
+          "_useHostAsSource": false,
+          "_excludeTarget": false,
+          "_excludeCurAtkTarget": false,
+          "_alwaysIncudeCurAtkTarget": false,
+          "_alwaysIncludeSourceBlocker": false,
+          "_randomTarget": false,
+          "_limitMaxTarget": false,
+          "_useAttackRange": false,
+          "_useCurrentModeRange": false,
+          "_useRangeToShow": false,
+          "_rangeTargetSideType": "ALLY",
+          "_rangeModeIndex": -1,
+          "_useTargetRangeInsteadOfSource": false,
+          "_rangeId": null,
+          "_useRadius": false,
+          "_useGlobalRange": true,
+          "_radius": 0.0,
+          "_filterByBuildableType": false,
+          "_allowedBuildableType": "NONE",
+          "_filterByTags": false,
+          "_allowFilterTags": null,
+          "_checkGiantTrapAllLocateTiles": false,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": [],
+                "abnormalImmunes": [],
+                "abnormalAntis": [],
+                "abnormalCombos": [],
+                "abnormalComboImmunes": [],
+                "attributeModifiers": []
+              },
+              "buffKey": "rogue_5_sp_recovery_with_tag_exclude_self[check_tag]",
+              "loadFromDB": false,
+              "isDurableBuff": false,
+              "isDamageMissable": false,
+              "isSilenceable": false,
+              "isStunnable": false,
+              "isFreezable": false,
+              "isLevitatable": false,
+              "isGroundBoundable": false,
+              "statusResistable": "AUTOMATIC",
+              "templateKey": "rogue_5_sp_recovery_with_tag_exclude_self[check_tag]",
+              "disableOverride": false,
+              "overrideKey": null,
+              "overrideType": "DEFAULT",
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": false,
+              "clearAllStackCntWhenTimeUp": false,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": false,
+              "overrideEffectKey": null,
+              "overrideOnEventPriority": false,
+              "onEventPriority": "DEFAULT",
+              "audioSignal": null,
+              "lifeTimeType": "IMMEDIATELY",
+              "takeSnapshotWhenExtend": false,
+              "durationKey": null,
+              "remainingTimeKey": null,
+              "lifeTime": 0.0,
+              "triggerLifeType": "IMMEDIATELY",
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": true,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": false,
+              "blackboard": [],
+              "enableInitDirectionFromSource": false
+            }
+          ],
+          "_isDerivedBuff": false,
+          "_finishDerivedBuffIfParentFinish": false,
+          "_removeExcludeTargetBeforeShrink": false,
+          "_filterTargets": false,
+          "_filterType": "ALL",
+          "_maxTargetKey": "max_target"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CalculateBlackboardValueViaParams, Assembly-CSharp",
+          "_inputKey": "cnt",
+          "_outputKey": "sp",
+          "_multiplyParamKey": "sp_value",
+          "_dividedParamKey": null,
+          "_useRemainder": false,
+          "_addParamKey": null,
+          "_minusParamKey": null,
+          "_minValueKey": null,
+          "_maxValueKey": null,
+          "_finalAbs": true,
+          "_finalCeil": false,
+          "_finalFloor": false,
+          "_finalRound": false,
+          "_useAbilityBlackboard": false,
+          "_abilityName": ""
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+ModifySp, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_modifyByRatio": false,
+          "_modifyRatio": 0.0,
+          "_modifyByRatioBasedOnCurSP": false,
+          "_modifyBySpCost": false,
+          "_dontCheckSpType": false,
+          "_spMask": "ALL",
+          "_forceFlag": false,
+          "_dontShowSpUI": false,
+          "_modifyValue": 0,
+          "_spString": "sp",
+          "_isMinis": false,
+          "_customModifierKey": ""
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+AlwaysNext, Assembly-CSharp"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB, Assembly-CSharp",
+          "_blackboardKey": "cnt",
+          "_value": 0.0,
+          "_copyFromKey": null,
+          "_assignString": false
+        }
+      ]
+    }
+  },
+  "rogue_5_sp_recovery_with_tag[check_tag]": {
+    "templateKey": "rogue_5_sp_recovery_with_tag[check_tag]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_START": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CheckCharacterGroupTag, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_groupTag": "sui"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+AddBuffBlackboard, Assembly-CSharp",
+          "_targetType": "BUFF_SOURCE",
+          "_blackboardKey": "cnt",
+          "_buffKey": "[g]rogue_5_sp_recovery_with_tag",
+          "_addition": 1.0,
+          "_additionKey": null,
+          "_useCurBuffBBWhenDoAddition": false,
+          "_useCurBuffBBWhenCheckMaxValue": false,
+          "_maxValueKey": null,
+          "_isMinus": false,
+          "_checkBuffSource": false
+        }
+      ]
+    }
+  },
+  "rogue_5_sp_recovery_with_tag": {
+    "templateKey": "rogue_5_sp_recovery_with_tag",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_TRIGGER": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CheckCharSkillAffecting, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_checkTargetHost": false,
+          "_checkSpShowedBuff": false
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CreateBuffInRange, Assembly-CSharp",
+          "_sourceType": "BUFF_OWNER",
+          "_targetType": "BUFF_OWNER",
+          "_targetOptions": {
+            "targetSide": "ALLY",
+            "targetMotion": "ALL",
+            "targetCategory": "DEFAULT",
+            "enableAdvancedOptions": true,
+            "ignoreTargetFree": false,
+            "ignoreAllyTargetFree": false,
+            "ignoreHealFree": false,
+            "ignoreMotionMode": false,
+            "ignoreTargetSide": false,
+            "excludeSomeAbnormalFlags": false,
+            "containSomeAbnormalFlags": false,
+            "excludeAbnormalFlag": "STUNNED",
+            "containAbnormalFlag": "STUNNED",
+            "purposeMask": "NONE",
+            "professionMask": "WARRIOR, SNIPER, TANK, MEDIC, SUPPORT, CASTER, SPECIAL, PIONEER",
+            "checkUnitType": false,
+            "unitTypeMask": "NONE",
+            "onlyIgnoreSomeOfTargetFreeCase": false,
+            "abnormalFlag": "STUNNED",
+            "abnormalCombo": "SLEEPING"
+          },
+          "_useCentainSide": false,
+          "_side": "NONE",
+          "_useHostAsSource": false,
+          "_excludeTarget": false,
+          "_excludeCurAtkTarget": false,
+          "_alwaysIncudeCurAtkTarget": false,
+          "_alwaysIncludeSourceBlocker": false,
+          "_randomTarget": false,
+          "_limitMaxTarget": false,
+          "_useAttackRange": false,
+          "_useCurrentModeRange": false,
+          "_useRangeToShow": false,
+          "_rangeTargetSideType": "ALLY",
+          "_rangeModeIndex": -1,
+          "_useTargetRangeInsteadOfSource": false,
+          "_rangeId": null,
+          "_useRadius": false,
+          "_useGlobalRange": true,
+          "_radius": 0.0,
+          "_filterByBuildableType": false,
+          "_allowedBuildableType": "NONE",
+          "_filterByTags": false,
+          "_allowFilterTags": null,
+          "_checkGiantTrapAllLocateTiles": false,
+          "_buffs": [
+            {
+              "attributes": {
+                "abnormalFlags": null,
+                "abnormalImmunes": null,
+                "abnormalAntis": null,
+                "abnormalCombos": null,
+                "abnormalComboImmunes": null,
+                "attributeModifiers": null
+              },
+              "buffKey": "rogue_5_sp_recovery_with_tag[check_tag]",
+              "loadFromDB": false,
+              "isDurableBuff": false,
+              "isDamageMissable": false,
+              "isSilenceable": false,
+              "isStunnable": false,
+              "isFreezable": false,
+              "isLevitatable": false,
+              "isGroundBoundable": false,
+              "statusResistable": "AUTOMATIC",
+              "templateKey": "rogue_5_sp_recovery_with_tag[check_tag]",
+              "disableOverride": false,
+              "overrideKey": null,
+              "overrideType": "DEFAULT",
+              "maxStackCnt": 1,
+              "refreshRemainingTimeWhenStackMax": false,
+              "clearAllStackCntWhenTimeUp": false,
+              "maxValidStackCnt": -1,
+              "independentCharacterSource": false,
+              "overrideEffectKey": null,
+              "overrideOnEventPriority": false,
+              "onEventPriority": "DEFAULT",
+              "audioSignal": null,
+              "lifeTimeType": "IMMEDIATELY",
+              "takeSnapshotWhenExtend": false,
+              "durationKey": null,
+              "remainingTimeKey": null,
+              "lifeTime": 0.0,
+              "triggerLifeType": "IMMEDIATELY",
+              "triggerCnt": 0,
+              "triggerInterval": -1.0,
+              "waitFirstTriggerInterval": true,
+              "firstTriggerInterval": -1.0,
+              "priority": -1,
+              "priorityBBKeys": [],
+              "stripBlackboardParamsWithBuffKey": false,
+              "blackboard": [],
+              "enableInitDirectionFromSource": false
+            }
+          ],
+          "_isDerivedBuff": false,
+          "_finishDerivedBuffIfParentFinish": false,
+          "_removeExcludeTargetBeforeShrink": false,
+          "_filterTargets": false,
+          "_filterType": "ALL",
+          "_maxTargetKey": "max_target"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CalculateBlackboardValueViaParams, Assembly-CSharp",
+          "_inputKey": "cnt",
+          "_outputKey": "sp",
+          "_multiplyParamKey": "sp_value",
+          "_dividedParamKey": null,
+          "_useRemainder": false,
+          "_addParamKey": null,
+          "_minusParamKey": null,
+          "_minValueKey": null,
+          "_maxValueKey": null,
+          "_finalAbs": true,
+          "_finalCeil": false,
+          "_finalFloor": false,
+          "_finalRound": false,
+          "_useAbilityBlackboard": false,
+          "_abilityName": ""
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+ModifySp, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_modifyByRatio": false,
+          "_modifyRatio": 0.0,
+          "_modifyByRatioBasedOnCurSP": false,
+          "_modifyBySpCost": false,
+          "_dontCheckSpType": false,
+          "_spMask": "ALL",
+          "_forceFlag": false,
+          "_dontShowSpUI": false,
+          "_modifyValue": 0,
+          "_spString": "sp",
+          "_isMinis": false,
+          "_customModifierKey": ""
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+AlwaysNext, Assembly-CSharp"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+AssignValueToBB, Assembly-CSharp",
+          "_blackboardKey": "cnt",
+          "_value": 0.0,
+          "_copyFromKey": null,
+          "_assignString": false
+        }
+      ],
+      "ON_BUFF_START": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CheckCharacterGroupTag, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_groupTag": "sui"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+          "_decCntIfStack": false,
+          "_updateOverrideMap": true
+        }
+      ]
+    }
+  },
+  "rogue_5_sp_recover_any_char_skill_start_finish": {
+    "templateKey": "rogue_5_sp_recover_any_char_skill_start_finish",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_TRIGGER": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+FilterByGlobalBlackboard, Assembly-CSharp",
+          "_blackboardKey": "rogue_5_sp_recover",
+          "_channel": "ROGUELIKE",
+          "_valueToCompare": 0.0,
+          "_condType": "EQUALS"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+          "_decCntIfStack": false,
+          "_updateOverrideMap": true
+        }
+      ],
+      "ON_BUFF_START": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+FilterByGlobalBlackboard, Assembly-CSharp",
+          "_blackboardKey": "rogue_5_sp_recover",
+          "_channel": "ROGUELIKE",
+          "_valueToCompare": 0.0,
+          "_condType": "EQUALS"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+IfNot, Assembly-CSharp"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+          "_decCntIfStack": false,
+          "_updateOverrideMap": true
+        }
+      ],
+      "ON_SKILL_START": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CheckCharacterSkillType, Assembly-CSharp",
+          "_skillType": "MANUAL",
+          "_targetType": "BUFF_OWNER"
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+AddGlobalBlackboard, Assembly-CSharp",
+          "_blackboardKey": "rogue_5_sp_recover",
+          "_channel": "ROGUELIKE",
+          "_value": 1.0,
+          "_valueBlackboardKey": "",
+          "_addString": false,
+          "_valueStr": null,
+          "_overwrite": false
+        },
+        {
+          "$type": "Torappu.Battle.Action.Nodes+FinishBuff, Assembly-CSharp",
+          "_decCntIfStack": false,
+          "_updateOverrideMap": true
+        }
+      ]
+    }
+  },
+  "sp_recover_up_on_skill_start[stacked]": {
+    "templateKey": "sp_recover_up_on_skill_start[stacked]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_SKILL_START": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+CreateBuff, Assembly-CSharp",
+          "_buff": {
+            "attributes": {
+              "abnormalFlags": [],
+              "abnormalImmunes": [],
+              "abnormalAntis": [],
+              "abnormalCombos": [],
+              "abnormalComboImmunes": [],
+              "attributeModifiers": [
+                {
+                  "attributeType": "SP_RECOVERY_PER_SEC",
+                  "formulaItem": "ADDITION",
+                  "value": 0.0,
+                  "loadFromBlackboard": true,
+                  "fetchBaseValueFromSourceEntity": false
+                }
+              ]
+            },
+            "buffKey": "sp_recover_up_on_skill_start[stacked]",
+            "loadFromDB": false,
+            "isDurableBuff": false,
+            "isDamageMissable": false,
+            "isSilenceable": false,
+            "isStunnable": false,
+            "isFreezable": false,
+            "isLevitatable": false,
+            "isGroundBoundable": false,
+            "statusResistable": "AUTOMATIC",
+            "templateKey": "empty",
+            "disableOverride": false,
+            "overrideKey": null,
+            "overrideType": "STACK",
+            "maxStackCnt": 99,
+            "refreshRemainingTimeWhenStackMax": false,
+            "clearAllStackCntWhenTimeUp": false,
+            "maxValidStackCnt": -1,
+            "independentCharacterSource": false,
+            "overrideEffectKey": null,
+            "overrideOnEventPriority": false,
+            "onEventPriority": "DEFAULT",
+            "audioSignal": null,
+            "lifeTimeType": "INFINITY",
+            "takeSnapshotWhenExtend": false,
+            "durationKey": null,
+            "remainingTimeKey": null,
+            "lifeTime": 0.0,
+            "triggerLifeType": "IMMEDIATELY",
+            "triggerCnt": 0,
+            "triggerInterval": -1.0,
+            "waitFirstTriggerInterval": true,
+            "firstTriggerInterval": -1.0,
+            "priority": -1,
+            "priorityBBKeys": [],
+            "stripBlackboardParamsWithBuffKey": false,
+            "blackboard": [],
+            "enableInitDirectionFromSource": false
+          },
+          "_buffOwner": "BUFF_OWNER",
+          "_useSpecialBuffSource": false,
+          "_specialBuffSource": "BUFF_SOURCE",
+          "_isDerivedBuff": false,
+          "_finishDerivedBuffIfParentFinish": false,
+          "_inherateSourceProjectileFromParentBuff": false,
+          "_hookEffectKeyFromSourceProjectile": false
+        }
+      ]
+    }
+  },
+  "rogue_6_hp_ratio_to_attr_add[sp_recover]": {
+    "templateKey": "rogue_6_hp_ratio_to_attr_add[sp_recover]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_TRIGGER": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+HpRatioToAttributeAdd, Assembly-CSharp",
+          "_minHpRatio": 0.0,
+          "_maxHpRatio": 1.0,
+          "_attributeType": "SP_RECOVERY_PER_SEC",
+          "_overrideSource": true,
+          "_hpRatioSource": "BUFF_OWNER"
+        }
+      ]
+    }
+  },
+  "sandbox_v3_food_17[sp_recover]": {
+    "templateKey": "sandbox_v3_food_17[sp_recover]",
+    "effectKey": "",
+    "onEventPriority": "DEFAULT",
+    "eventToActions": {
+      "ON_BUFF_TRIGGER": [
+        {
+          "$type": "Torappu.Battle.Action.Nodes+ModifySp, Assembly-CSharp",
+          "_targetType": "BUFF_OWNER",
+          "_modifyByRatio": false,
+          "_modifyRatio": 0.0,
+          "_modifyByRatioBasedOnCurSP": false,
+          "_modifyBySpCost": false,
+          "_dontCheckSpType": false,
+          "_spMask": "ALL",
+          "_forceFlag": false,
+          "_dontShowSpUI": false,
+          "_modifyValue": 0,
+          "_spString": "sp",
+          "_isMinis": false,
+          "_customModifierKey": ""
+        }
+      ]
+    }
+  }
+}

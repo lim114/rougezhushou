@@ -1,0 +1,154 @@
+{
+  "version": "0.43.0",
+  "passed": true,
+  "verified_at": 1791061544.5691166,
+  "current_tests_passed": 403,
+  "new_unit_tests": 0,
+  "tests_run": 473,
+  "historical_combat_tests_skipped": 70,
+  "test_modules": [
+    "tests.test_offline_scope_030",
+    "tests.test_damage",
+    "tests.test_timing",
+    "tests.test_relics",
+    "tests.test_relic_extension",
+    "tests.test_relic_conditions_022",
+    "tests.test_relic_events_022",
+    "tests.test_relic_candidates_025",
+    "tests.test_deployment_relics_027",
+    "tests.test_mantra_events_024",
+    "tests.test_report",
+    "tests.test_run_modifiers",
+    "tests.test_wine_timing",
+    "tests.test_difficulty_rules",
+    "tests.test_target_memory",
+    "tests.test_received_sp_026",
+    "tests.test_event_sp_028",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_relic_enemy_modifiers_follow_stage_and_difficulty_and_are_reported",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_portal_keeps_main_depth_and_missing_context_does_not_guess",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_boss_reduction_is_independent_from_relic_vulnerability_and_preserves_healing_and_timing",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_emergency_stage_and_region_use_pinned_enemy_instead_of_manual_defense",
+    "tests.test_offline_relics_031",
+    "tests.test_spawn_hp_033",
+    "tests.test_relic_grade_sync_032",
+    "tests.test_run_reuse_guards_032",
+    "tests.test_sampling_flow",
+    "tests.test_neural_relic_034",
+    "tests.test_neural_sources_035",
+    "tests.test_phase_flow_036",
+    "tests.test_impact_delay_037",
+    "tests.test_summon_modules_038",
+    "tests.test_battle_preview_039",
+    "tests.test_spawn_reference_040",
+    "tests.test_ammo_refill_041",
+    "tests.test_enemy_skills_042"
+  ],
+  "failures": 0,
+  "errors": 0,
+  "exact_public_output_cases": 732,
+  "public_baseline_outputs_unchanged": true,
+  "paired_visual_cases": 14,
+  "public_reader_cases": 5,
+  "exact_records_scores_centers_preserved": true,
+  "exact_public_observation_fields_preserved": true,
+  "benchmarks": [
+    {
+      "case": "run-relic-multicard-closed.png:native",
+      "before_warm_ms": [
+        1062.9256998654455,
+        979.1478000115603,
+        1016.2072998937219,
+        1071.4748001191765,
+        1031.0247999150306,
+        1022.791099967435,
+        917.9330000188202
+      ],
+      "after_warm_ms": [
+        1021.968699991703,
+        1041.0035999957472,
+        915.3265999630094,
+        1072.8955999948084,
+        901.9727997947484,
+        948.2738999649882,
+        903.3663999289274
+      ],
+      "before_median_ms": 1022.791099967435,
+      "after_median_ms": 948.2738999649882,
+      "speedup": 1.0785819371441079
+    },
+    {
+      "case": "run-relic-multicard.png:native",
+      "before_warm_ms": [
+        2047.792199999094,
+        1890.2749000117183,
+        2010.1999999023974,
+        1954.6980999875814,
+        1845.416400115937,
+        2076.201800024137,
+        2972.0414001494646
+      ],
+      "after_warm_ms": [
+        1871.9426000025123,
+        1857.3835999704897,
+        1903.3957000356168,
+        1868.0747000034899,
+        1890.0830000638962,
+        2011.3172999117523,
+        3356.775499880314
+      ],
+      "before_median_ms": 2010.1999999023974,
+      "after_median_ms": 1890.0830000638962,
+      "speedup": 1.0635511772945636
+    }
+  ],
+  "warm_repeats_per_version": 7,
+  "scale_preparation": {
+    "before": {
+      "png_decode_calls": 956,
+      "four_scale_preparation_ms": 2411.7543001193553
+    },
+    "after": {
+      "png_decode_calls": 239,
+      "four_scale_preparation_ms": 1778.044399805367
+    }
+  },
+  "immutable_raw_art_cache_bytes": 24994016,
+  "projection_template_bytes_at_height_900": 12744552,
+  "raw_art_cache_max_entries": 256,
+  "scaled_template_cache_max_entries": 3,
+  "recognition_identity_thresholds_unchanged": true,
+  "no_previous_frame_approximate_reuse": true,
+  "current_frame_terms_recomputed": true,
+  "changed_existing_source_files": [
+    "AGENTS.md",
+    "pyproject.toml",
+    "rouge/app.py",
+    "rouge/relic_recognition.py"
+  ],
+  "source_hashes": {
+    "rouge/relic_recognition.py": "625978ab6d03db5043579bad2264b367d8214cf580952842b6cd7f82ecd741d9",
+    "rouge/recognition.py": "f54d26cb906c1f2ec8a7713219e2e16f5b3e163863a42c8163da8e6bfe5966e3",
+    "rouge/run_recognition.py": "aae1ab7d6faaeb39c044b80e854e599216fa171039774caea37a37295c583d46",
+    "rouge/visual_recognition.py": "b31f87dec1ab20c2c0d9558aaab93840a9be299ab17aca0b16f75dfcfb245ba3",
+    "rouge/app.py": "e260047d053498ffab77a1f4f5f6349a47473b29aa29006a4de81e8c7c37d61f",
+    "AGENTS.md": "681048cc9ea6da1d11ed20bc9f8d01f01490dc868ab37eeee8925015e06acd28",
+    "pyproject.toml": "089e4e73d2ca388e382772e3ead1ad5b76fadfc4acb653c6d9830d91d3977370",
+    "scripts/verify_recognition_043.py": "fd1c9f6803a832e0654dffac5d6f0bf06889ffe460cc66e3394f7e271e3b7db6",
+    "scripts/capture_recognition_baseline_043.py": "721647fd1b1e2b548daf43b70caf7b63efdef5200adb8d6a5b19cf04690bf0d2"
+  },
+  "test_log": ".cache/recognition-043/tests.log",
+  "test_log_sha256": "f7adad05bc822e9fa49e60619f703d28b074dff30c97e4586d1926fc81da56fd",
+  "replay": ".cache/recognition-043/paired-replay.json",
+  "replay_sha256": "9b998d87f2c21738eacbff7a00a244c418b8a4fb560160f3ddbef459b4109048",
+  "elapsed_seconds": 248.94769259984605,
+  "private_state_used": false,
+  "chat_requests": 0,
+  "game_actions": 0,
+  "limits": [
+    "Timing is local replay, not live or all-inventory accuracy.",
+    "Only immutable reference terms/artwork are reused; current pixels and dynamic anchors remain current.",
+    "Public OCR-reader timings are ordered single reads, not an end-to-end speed benchmark.",
+    "Relic-specific cost rounding/card lifecycle remains unknown; no numerical model added.",
+    "P1-P3 remain incomplete."
+  ]
+}

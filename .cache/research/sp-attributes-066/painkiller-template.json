@@ -1,0 +1,17 @@
+{
+  "templateKey": "rogue_6_hp_ratio_to_attr_add[sp_recover]",
+  "effectKey": "",
+  "onEventPriority": "DEFAULT",
+  "eventToActions": {
+    "ON_BUFF_TRIGGER": [
+      {
+        "$type": "Torappu.Battle.Action.Nodes+HpRatioToAttributeAdd, Assembly-CSharp",
+        "_minHpRatio": 0.0,
+        "_maxHpRatio": 1.0,
+        "_attributeType": "SP_RECOVERY_PER_SEC",
+        "_overrideSource": true,
+        "_hpRatioSource": "BUFF_OWNER"
+      }
+    ]
+  }
+}

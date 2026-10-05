@@ -1,0 +1,1035 @@
+"""Explicit operator models over pinned game data; deterministic single-target estimates.
+
+Each emitted hit is mitigated separately. Conditional events are scenario inputs,
+never inferred from a character's name or from another operator's controls.
+"""
+import math
+from .attribute_limits import effective_attack_speed
+from .catalog import catalog
+from .enemy_environment import damage_factor
+from .timing import AttackTimeline,charge_seconds,mixed_charge_seconds,frame_time,FPS,finite,has_periodic_sp,periodic_charge_seconds
+
+
+def selected_talents(profile, scenario):
+    elite=scenario.get('elite',2)
+    level=scenario.get('level') or profile['phases'][elite]['max_level']
+    potential=scenario.get('potential',1)-1
+    def eligible(candidate):
+        condition=candidate.get('unlockCondition')
+        phase=int(condition['phase'][-1]) if condition else candidate['phase']
+        minimum=condition['level'] if condition else candidate['level']
+        rank=candidate.get('requiredPotentialRank',candidate.get('potential_rank',0))
+        return phase<=elite and (phase<elite or minimum<=level) and rank<=potential
+    talents={}
+    for i,candidates in enumerate(profile['talents']):
+        candidates=[t for t in candidates if eligible(t)]
+        if candidates:talents[i]=candidates[-1]
+    module=next((m for m in profile['modules'] if m['id']==scenario.get('module_id')),None)
+    parts=[]
+    if module and elite>=module['unlock_elite'] and level>=module['unlock_level']:
+        parts=module['levels'][scenario['module_level']-1]['parts']
+        for part in parts:
+            if part.get('isToken'):continue
+            candidates=(part.get('addOrOverrideTalentDataBundle') or {}).get('candidates') or []
+            grouped={}
+            for candidate in candidates:
+                index=candidate.get('talentIndex',-1)
+                if index>=0 and eligible(candidate):grouped[index]=candidate
+            for index,talent in grouped.items():
+                talents[index]={'name':talent['name'],'description':talent.get('upgradeDescription'),
+                    'values':{b['key']:b['value'] for b in talent['blackboard']}}
+    return list(talents.values()),parts
+
+
+class Combat:
+    def __init__(self, scenario, attributes):
+        self.s=scenario
+        self.p=catalog()['operators'][scenario['operator']]
+        self.a=attributes
+        self.n=scenario['skill']
+        self.skill=self.p['skills'][self.n-1]['levels'][scenario.get('skill_rank',10)-1]
+        from .relics import effective_skill
+        self.skill=effective_skill(self.skill,scenario)
+        self.bb=self.skill['values']
+        self.talents,self.module_parts=selected_talents(self.p,scenario)
+        self.tv={t['name']:t['values'] for t in self.talents}
+        self.effects=list(scenario.get('effects',[]))
+        # Manual stat effects belong to the operator unless their unit scope is explicit.
+        self.token_effects=[e for e in self.effects if not e.get('_verified_rule') and (e.get('target_scope')=='all_units' or
+            (e['kind']=='damage_taken' and not e.get('profession') and not e.get('position')))]
+        self.token_effects.extend(scenario.get('_token_relic_effects',[]))
+        self.warnings=[];self.notes=[];self.inapplicable=[]
+        for rid in scenario.get('relic_ids',[]):
+            relic=catalog()['relics'].get(rid)
+            if not relic or not relic['supported']:
+                self.warnings.append((relic['name'] if relic else rid)+'：效果未覆盖。');continue
+            applicable=[e for e in relic['effects'] if
+                (not e.get('profession') or self.p['profession'] in e['profession'].split('|')) and
+                (not e.get('position') or e['position']==self.p['position'])]
+            self.effects.extend(applicable)
+            self.token_effects.extend(e for e in relic['effects'] if not e.get('profession') and not e.get('position') and
+                (e['kind']=='damage_taken' or '我方单位' in relic['usage']))
+            if not applicable:self.inapplicable.append(rid)
+        for effect in self.effects:
+            if effect['kind'] not in ('attack_pct','hp_pct','defense_pct','resistance_flat','attack_speed','sp_recovery','damage_taken'):
+                raise ValueError('加成类型尚未支持。')
+            self.value(abs(effect['value']) if effect.get('_verified_rule') and effect['kind'] in ('hp_pct','attack_speed') else effect['value'],'藏品加成')
+        self.enemy_def=self.option('enemy_defense',0)
+        self.enemy_res=self.option('enemy_resistance',0,maximum=100)
+        for field in ('window_seconds','skill_duration_seconds'):
+            if field in scenario:scenario[field]=self.option(field,maximum=3600)
+        self.base=float(scenario['base_attack'])
+        self.value(self.base,'基础攻击')
+        self.atk_bonus=self.total('attack_pct');self.as_bonus=self.total('attack_speed')
+        self.hp_bonus=self.total('hp_pct');self.def_bonus=self.total('defense_pct')
+        self.res_bonus=self.total('resistance_flat')
+        self.initial_bonus=0;self.sp_extra=0
+        self.redeploy=attributes['redeploy_seconds']
+        self.atk_flat=0
+        self.apply_self_talents()
+        self.base_attack=self.base*(1+self.atk_bonus)+self.atk_flat
+        self.base_speed_reference=attributes['attack_speed']+self.as_bonus
+        self.base_speed=effective_attack_speed(self.base_speed_reference)
+        self.normal_interval=attributes['interval']*100/self.base_speed
+        self.stats={'hp':attributes['hp']*(1+self.hp_bonus),'attack':self.base_attack,
+            'defense':attributes['defense']*(1+self.def_bonus),
+            'resistance':min(100,attributes['resistance']+self.res_bonus),
+            'redeploy_seconds':self.redeploy,'attack_speed':self.base_speed,
+            'attack_speed_reference':self.base_speed_reference,
+            'block_count':attributes['block_count']}
+
+    @staticmethod
+    def value(value,label,maximum=None,integer=False):
+        value=float(value)
+        if not math.isfinite(value) or value<0 or (maximum is not None and value>maximum) or (integer and not value.is_integer()):
+            raise ValueError(label+'需要范围内的有限非负'+('整数。' if integer else '数。'))
+        return value
+
+    def option(self,key,default=0,maximum=None,integer=False):
+        return self.value(self.s.get(key,default),key,maximum,integer)
+
+    def total(self,kind):return sum(float(e['value']) for e in self.effects if e['kind']==kind)
+    def talent(self,name,key,default=0):return self.tv.get(name,{}).get(key,default)
+    def effects_for_token(self,token_id):
+        from .relic_attributes import is_attribute_rune
+        return [e for e in self.token_effects if not is_attribute_rune(e) and
+                (not e.get('token_ids') or token_id in e['token_ids'])]
+
+    def token_stats(self,token_id):
+        from .summons import token_attributes
+        from .relic_attributes import is_attribute_rune
+        runes=[e for e in self.token_effects if is_attribute_rune(e) and
+               (not e.get('token_ids') or token_id in e['token_ids'])]
+        runes += [e for e in self.s.get('_attribute_runes',[]) if
+                  e.get('origin')=='run_squad' and e.get('target_scope')=='all_units']
+        hp_pct=sum(e['value'] for e in self.effects_for_token(token_id) if e['kind']=='hp_pct')
+        return token_attributes(self.p,self.s,token_id,hp_pct,rune_effects=runes)
+
+    def apply_self_talents(self):
+        op=self.s['operator']
+        if op=='char_133_mm':
+            self.atk_bonus+=self.talent('维多利亚探员','atk')
+            self.as_bonus+=self.talent('维多利亚探员','attack_speed')
+        stat_talents={'char_4228_closur':'极限调度','char_1050_chen3':'形意洞照',
+            'char_4182_oblvns':'毋畏遗忘','char_328_cammou':'协调一致','char_1001_amiya2':'青色怒火'}
+        if op in stat_talents:
+            name=stat_talents[op]
+            self.atk_bonus+=self.talent(name,'atk')
+            self.as_bonus+=self.talent(name,'attack_speed')
+            self.def_bonus+=self.talent(name,'def')
+        if op=='char_1037_amiya3':self.hp_bonus+=self.talent('诚挚期许','max_hp')
+        if op=='char_1044_hsgma2':
+            ratio=self.option('current_hp_ratio',1,maximum=1)
+            bb=self.tv.get('鬼之架势',{})
+            fraction=min(1,(1-ratio)/(1-bb.get('min_hp_ratio',.3)))
+            self.atk_bonus+=bb.get('min_atk',0)*fraction
+            self.res_bonus+=bb.get('min_magic_resistance',0)*fraction
+        if op=='char_2025_shu':
+            if self.s.get('three_professions'):self.hp_bonus+=self.talent('天有四时','max_hp')
+            if self.s.get('three_same_profession'):self.as_bonus+=self.talent('天有四时','attack_speed')
+            if self.s.get('four_sui'):
+                self.atk_bonus+=self.talent('天有四时','atk')
+                self.sp_extra+=self.talent('天有四时','sp')/self.talent('天有四时','interval',4)
+        if op=='char_1048_orchd2' and '翔虫机动' in self.tv:
+            self.redeploy=max(0,self.redeploy-15)
+            if self.s.get('near_previous_deployment'):self.atk_bonus+=self.talent('翔虫机动','atk')
+        if op=='char_1038_whitw2':self.initial_bonus+=self.talent('叙拉古的荣幸','sp')
+        if op=='char_1041_angel2' and self.skill['duration_type']=='AMMO':
+            self.atk_bonus+=self.talent('铳弹协约','atk')*self.talent('铳弹协约','mult',2)
+        if op=='char_4087_ines':
+            self.atk_flat=self.talent('影织','steal_atk')*self.option('stolen_enemy_count',1,maximum=100,integer=True)
+        if op=='char_437_mizuki' and self.s.get('enemy_below_half'):
+            self.atk_bonus+=self.talent('反移情','atk')
+        if op=='char_1046_sbell2':self.def_bonus+=2;self.res_bonus+=20
+        if op=='char_4107_vrdant' and self.n==1:
+            self.hp_bonus+=self.bb['max_hp'];self.res_bonus+=self.bb['magic_resistance']
+
+    def hit(self,raw,dtype,defense=None,resistance=None,effects=None):
+        defense=self.enemy_def if defense is None else max(0,defense)
+        resistance=self.enemy_res if resistance is None else max(0,resistance)
+        if effects is None:
+            penetration=sum(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='defense_penetration')
+            defense*=max(0,1-penetration)
+        if dtype=='weakness':
+            # Choose against the acting unit's effective defense; mitigate only once.
+            dtype='physical' if max(raw-defense,raw*.05)>=max(raw*(1-resistance/100),raw*.05) else 'magic'
+        if dtype=='physical':damage=max(raw-defense,raw*.05)
+        elif dtype=='magic':damage=max(raw*(1-resistance/100),raw*.05)
+        elif dtype=='true':damage=raw
+        elif dtype=='elemental':damage=raw*(1-self.option('enemy_elemental_resistance',0,maximum=100)/100)
+        else:raise ValueError('未知伤害类型。')
+        return damage*(1+sum(float(e['value']) for e in (self.effects if effects is None else effects) if e['kind']=='damage_taken' and e.get('damage_type')==dtype))*damage_factor(self.s,dtype)
+
+    def neural(self,events,components,recovery_speed=1):
+        threshold=2000 if self.s.get('enemy_is_boss') else 1000
+        initial=self.option('initial_neural_buildup',0,maximum=threshold)
+        remaining=threshold-initial
+        def break_end(time):
+            if isinstance(recovery_speed,tuple):
+                speed,expires=recovery_speed
+                accelerated=max(0,expires-time)
+                return time+10/speed if accelerated*speed>=10 else time+accelerated+10-accelerated*speed
+            return time+10/recovery_speed
+        breaking_until=break_end(0) if self.s.get('enemy_in_neural_break') else -1
+        resistance=self.option('enemy_buildup_resistance',0,maximum=100)
+        buildup_factor=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
+        burst_times=[]
+        for time,amount in sorted(events):
+            if time<breaking_until:continue
+            remaining-=amount*(1-resistance/100)*buildup_factor
+            if remaining<=1e-9:
+                burst_times.append(time);remaining=threshold;breaking_until=break_end(time)
+        burst_rules=[r for r in self.s.get('_relic_rules',[]) if r['kind']=='neural_burst_scale']
+        scale=burst_rules[0]['value'] if len(burst_rules)==1 else 1
+        per=self.hit(6000*scale,'elemental')
+        if len(burst_rules)==1:
+            rule=burst_rules[0]
+            self.neural_relic_reference={
+                'relic_id':rule['relic_id'],'instant_raw_damage':6000*scale,
+                'instant_adjusted_damage':per,'instant_factor':scale,
+                'periodic_raw_damage':rule['periodic_raw_damage'],
+                'periodic_interval':rule['periodic_interval'],
+                'periodic_damage_scheduled':False,
+                'preexisting_break_assumed':bool(self.s.get('enemy_in_neural_break')),
+            }
+        components.append({'name':'神经损伤爆发','damage_type':'elemental','hits':len(burst_times),
+                           'per_hit':per,'total':len(burst_times)*per,'times_seconds':burst_times,
+                           'source_unit':'environment'})
+        return burst_times
+
+    def plan(self,normal=False,window=None):
+        bb={} if normal else self.bb
+        attack=self.base*(1+self.atk_bonus+bb.get('atk',0))+self.atk_flat
+        speed_reference=self.base_speed_reference+bb.get('attack_speed',0)
+        speed=effective_attack_speed(speed_reference)
+        interval=(self.a['interval']+bb.get('base_attack_time',0))*100/speed
+        mode='timed';duration=max(0,self.skill['duration']) if not normal else window
+        if not normal and window is not None:duration=min(duration,window)
+        if not normal and self.s['operator']=='char_1029_yato2':
+            attack+=self.base*self.talent('鬼人强化状态','atk')
+        components=[];neural_events=None;neural_secondary_seeds=[];op=self.s['operator'];ammo_rounds=None;mantra_attacks=[]
+        timeline=AttackTimeline(self.s,normal=normal,offset=self.s.get('_timeline_offset_seconds',0) if normal else 0)
+        def emit(name,raw,dtype,count,defense=None,resistance=None,effects=None,event_times=None):
+            if dtype=='buildup':raw*=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
+            per_hit=raw if dtype in ('healing','regeneration','buildup') else self.hit(raw,dtype,defense,resistance,effects)
+            item={'name':name,'damage_type':dtype,'hits':count,'per_hit':per_hit,'total':per_hit*count}
+            item['source_unit']='operator' if effects is None else 'token'
+            if event_times is not None:item['times_seconds']=event_times
+            components.append(item)
+        def attack_times(seconds=None):
+            horizon=duration if seconds is None else max(0,seconds)
+            if mode=='ammo' and ammo_rounds is not None and (timeline.mode=='frames' or any(
+                    r['kind']=='deployment_attack_speed' for r in self.s.get('_relic_rules',[]))):
+                horizon=3600 if window is None else window
+                stream=timeline.attacks(horizon,interval,speed,attribute_speed=speed_reference,limit=ammo_rounds)
+                return stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
+            if mode=='next_attack' and window is None:horizon+=1/FPS
+            stream=timeline.attacks(horizon,interval,speed,attribute_speed=speed_reference,limit=1 if mode=='next_attack' else None)
+            return stream['emitted_times_seconds'] if timeline.mode=='frames' and window is None and not normal else stream['times_seconds']
+        def attacks(seconds=None):return len(attack_times(seconds))
+        def regular(dtype='physical',scale=1,times=1,seconds=None,name='技能攻击',defense=None,resistance=None):
+            events=attack_times(seconds)
+            emit(name,attack*scale,dtype,len(events)*times,defense,resistance,
+                event_times=[t for t in events for _ in range(int(times))] if float(times).is_integer() else events)
+        def instant(dtype='physical',scale=1,times=1,name='施放伤害'):
+            if timeline.mode=='frames' and (not timeline.selectable(0) or timeline.unavailable(0) or not timeline.selectable_lifetime(0)):
+                times=0
+            emit(name,attack*scale,dtype,times)
+            if times==1:components[-1]['instant_event']=True
+        def damage_healing(name,ratio):
+            # Keep the dependency until ordered damage modifiers have settled.
+            # A damage-based heal must use dealt damage, including the first hit.
+            from .relic_events import DAMAGE
+            sources=[i for i,c in enumerate(components) if c['damage_type'] in DAMAGE]
+            emit(name,0,'healing',1)
+            components[-1]['damage_healing']={'sources':sources,'ratio':ratio}
+        healing_targets=self.option('healing_targets',1,maximum=100,integer=True)
+        if op=='char_110_deepcl':
+            attack=self.base_attack
+            own_events=attack_times()
+            emit('本体普攻',attack if normal else self.base_attack,'magic',len(own_events),event_times=own_events)
+            token=self.token_stats('token_10001_deepcl_tentac')
+            token_effects=self.effects_for_token('token_10001_deepcl_tentac')
+            from .summons import token_concurrent_limit
+            cap=token_concurrent_limit(self.p,self.s,'token_10001_deepcl_tentac')
+            count=self.option('summon_count',1,maximum=cap if cap is not None else
+                self.talent('召唤触手','cnt',2),integer=True)
+            # Token stats are not the operator's stats, and receive no trust or potential ATK.
+            raw=token['attack']*(1+sum(e['value'] for e in token_effects if e['kind']=='attack_pct')+
+                (0 if normal or self.n!=1 else bb['atk']))
+            token_speed=effective_attack_speed(token['attack_speed']+sum(e['value'] for e in token_effects if e['kind']=='attack_speed'))
+            token_events=timeline.attacks(duration,token['interval']*100/token_speed,token_speed,unit=next(iter(self.p['tokens'])))['times_seconds']
+            hits=len(token_events)*count
+            emit('触手',raw,'physical',hits,effects=token_effects,event_times=[t for t in token_events for _ in range(int(count))])
+            if not normal and self.n==1:
+                self.notes.append(f'触手数量 {count:g}；技能生命回复 {bb["hp_recovery_per_sec"]*duration*count:g}，生命回复不计直接治疗。')
+            self.notes.append('触手不继承本体信赖/潜能及职业加成；已确认的所有我方单位藏品攻击/攻速及敌方易伤单独套用。')
+        elif op in ('char_196_sunbr','char_2025_shu','char_298_susuro'):
+            if normal and op=='char_298_susuro':regular('healing',times=min(1,healing_targets),name='普通治疗')
+            elif normal:
+                if op=='char_196_sunbr':
+                    prob=self.talent('平底锅专精','prob');scale=self.talent('平底锅专精','atk_scale',1)
+                    emit('普攻期望',attack,'physical',attacks()*(1-prob))
+                    emit('平底锅专精期望',attack*scale,'physical',attacks()*prob)
+                else:regular(name='普通攻击')
+            elif op=='char_298_susuro':
+                factor=self.talent('微创治疗','heal_scale',1) if self.s.get('low_cost_healing_target') else 1
+                regular('healing',scale=factor,times=min(1,healing_targets))
+                if self.n==2:self.notes.append('深度治疗整场最多开启两次；周期指标仅描述尚可再次开启时的一轮。')
+            elif self.n==1:
+                mode='next_attack';duration=interval
+                emit('治疗替代下次攻击',attack*bb['heal_scale'],'healing',min(1,healing_targets))
+            elif op=='char_196_sunbr':
+                regular('healing',times=min(1,healing_targets),seconds=duration-bb['disarm'])
+                self.notes.append('食粮烹制先停止攻击烹饪，再按特殊间隔治疗。')
+            elif self.n==2:regular('healing',times=min(2,healing_targets))
+            else:
+                if self.s.get('enemy_on_sown_tile'):
+                    attack+=self.base*bb['e_atk'];speed_reference+=bb['e_attack_speed']
+                    speed=effective_attack_speed(speed_reference)
+                    interval=self.a['interval']*100/speed
+                regular(name='本体攻击')
+                regular('healing',times=min(1,healing_targets),name='同步治疗')
+            if op=='char_2025_shu' and not normal:
+                self.notes.append('播种地块生命回复与庇护不混入直接技能治疗；四岁/三职业等条件按所选情景。')
+        elif op=='char_4228_closur':
+            if not normal and self.n==1:attack=self.base_attack
+            if self.s.get('reinforcement_blocks_target'):attack*=1.5
+            regular(scale=bb.get('attack@atk_scale',1))
+            self.notes.append('仅计可露希尔自身输出；指挥中心攻击为0，援军的独立攻击不相加。援军阻挡目标时才计150%特性。')
+        elif op=='char_1050_chen3':
+            dtype='weakness' if '形意洞照' in self.tv else 'magic'
+            if normal:regular(dtype)
+            elif self.n==1:regular(dtype,times=2)
+            elif self.n==2:
+                count=10+self.option('slash_kills',0,maximum=100,integer=True)
+                instant(dtype,bb['atk_scale'],count,'绝影斩击')
+                attack+=self.base*bb['chen3_s2[respawn_buff].atk']
+                regular(dtype,name='斩击后的6秒强化')
+                self.notes.append('绝影包含10次斩击（击倒次数可追加）及斩击后强化期；斩击动画时间另列为未确认，技能表6秒不包括动画。')
+            else:
+                hp=self.option('enemy_current_hp',0)
+                raw=max(hp*bb['hp_ratio'],attack*bb['projectile_min_atk_scale'])
+                emit('天喟剑气',raw,dtype,1)
+                regular(dtype,bb['attack@atk_scale'],3)
+                self.notes.append('剑气按指定目标当前生命值与攻击力保底取较大值；弱点转换在物理/法术易伤之前判定。')
+        elif op in ('char_002_amiya','char_1001_amiya2','char_1037_amiya3'):
+            if op=='char_1001_amiya2' and not normal:
+                attack+=self.base*self.talent('青色怒火','atk')*(bb.get('talent_scale',2)-1)
+            if normal:
+                regular('magic')
+                if op=='char_1037_amiya3':
+                    damage_healing('咒愈师伤害转治疗',.5*min(1,healing_targets))
+            elif op=='char_002_amiya':
+                regular('true' if self.n==3 else 'magic',bb.get('attack@atk_scale',1),bb.get('attack@times',1))
+                if self.n==2:self.notes.append('精神爆发结束后10秒晕眩；仅单一目标情景中八发均命中该目标。')
+                if self.n==3:mode='once_deploy'
+            elif op=='char_1001_amiya2':
+                if self.n==1:regular('magic',times=2)
+                else:
+                    kills=self.option('amiya_slash_kills',0,maximum=bb['amiya2_s_2[kill].max_stack_cnt'],integer=True)
+                    instant('magic',bb['atk_scale'],bb['times']-1,'绝影前九击')
+                    instant('true',bb['atk_scale_2'],name='绝影终击')
+                    attack+=self.base*bb['amiya2_s_2[kill].atk']*kills
+                    regular('true',name='绝影持续真伤')
+                    mode='once';self.notes.append('绝影整场仅一次；斩击击倒加攻用于后续持续攻击，不倒推之前已完成的斩击。')
+            else:
+                if self.n==1:
+                    regular('magic')
+                    damage_healing('咒愈师伤害转治疗',.5*min(1,healing_targets))
+                    regular('healing',bb['heal_scale'],healing_targets,name='哀恸共情范围治疗')
+                else:
+                    attack=self.base_attack
+                    instant('magic',bb['atk_scale'],name='慈悲愿景开启伤害')
+                    attack+=self.base*bb['atk']*min(bb['max_stack_cnt'],self.option('amiya_hit_targets',1,maximum=100,integer=True))
+                    regular('true')
+                    damage_healing('咒愈师伤害转治疗',.5*min(1,healing_targets))
+                    mode='once'
+                # Only own guaranteed regeneration is known without allies' HP profiles.
+                emit('诚挚期许本体生命回复',self.stats['hp']*self.talent('诚挚期许','hp_recovery_per_sec_by_max_hp_ratio'),
+                     'regeneration',duration)
+                self.notes.append('阿米娅医疗：直接治疗与最大生命百分比生命回复分项；未凭空补齐其他友方最大生命。')
+        elif op=='char_1044_hsgma2':
+            if normal:regular()
+            elif self.n==1:
+                mode='infinite';duration=window if window is not None else 30
+                regular('magic')
+                emit('恶业苦果反击',attack*bb['atk_scale'],'magic',self.option('incoming_hits',0,maximum=10000,integer=True))
+            elif self.n==2:
+                mode='instant';duration=0
+                instant('magic',bb['attack@atk_scale'],3,'盾击三连')
+                count=self.option('shield_contact_ticks',1,maximum=1000,integer=True)
+                raw=attack*bb['shield_atk_scale']
+                emit('环绕盾牌',raw,'magic',count)
+                emit('盾牌伤害转治疗',self.hit(raw,'magic')*bb['heal_ratio'],'healing',count)
+                self.notes.append('环绕盾牌每0.5秒判定接触；实际次数取决于目标位置，使用所选接触次数。')
+            else:
+                regular('magic',times=2)
+                terminal=self.option('last_stand_seconds',0,maximum=bb['before_dead_duration'])
+                regular('magic',times=4,seconds=terminal,name='主动关闭后四连击')
+                duration+=terminal
+                if terminal:mode='once_deploy'
+        elif op=='char_437_mizuki':
+            if not normal and self.n==1:
+                mode='next_attack';duration=interval
+                instant('physical',bb['atk_scale'],name='唤醒物理')
+                instant('magic',self.talent('创伤性癔症','attack@mizuki_t_1.atk_scale')*bb['talent_scale'],name='唤醒额外法术')
+            else:
+                regular()
+                regular('magic',self.talent('创伤性癔症','attack@mizuki_t_1.atk_scale'),name='创伤性癔症')
+            self.notes.append('单目标为天赋可选目标；多人时天赋优先最低生命值，不将全场人数乘入当前敌人伤害。')
+        elif op=='char_206_gnosis':
+            status=self.option('cold_state',0,maximum=2,integer=True)
+            fragile=(self.talent('坚冰','damage_scale_freeze',1) if status==2 else
+                     self.talent('坚冰','damage_scale_cold',1) if status==1 else 1)
+            res=max(0,self.enemy_res-(15 if status==2 else 0))
+            def frost(raw,count,name):
+                per=self.hit(raw,'magic',resistance=res)*fragile
+                components.append({'name':name,'damage_type':'magic','hits':count,'per_hit':per,'total':per*count})
+            if normal:frost(attack,attacks(),'普通攻击')
+            elif self.n==1:
+                mode='next_attack';duration=interval;frost(attack*bb['atk_scale'],2,'高速思考')
+            elif self.n==2:
+                mode='instant';duration=0;frost(attack*bb['atk_scale'],1,'零度爆发')
+            else:
+                frost(attack,attacks(),'失温症攻击')
+                if self.s.get('frozen_at_skill_end',True) and (window is None or window>=self.skill['duration']):
+                    frost(attack*bb['atk_scale'],1,'失温症终结')
+            self.notes.append('寒冷/冻结易伤按所选全程状态估算；不把首击后的寒冷倒推至首击。冻结法抗-15与脆弱分开结算。')
+        elif op=='char_4087_ines':
+            if normal:regular()
+            elif self.n==1:
+                mode='next_attack';duration=interval
+                regular(name='淬影突袭物理攻击')
+                emit('淬影突袭持续法术',attack*bb['bleed_atk_scale'],'magic',bb['bleed_duration'])
+            elif self.n==2:
+                # Each successful attack adds 7 ASPD up to 70, not 70 from the first hit.
+                if timeline.mode=='frames':
+                    events=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,
+                        ramp=(bb['attack@steal_atk_speed'],bb['attack@steal_atk_speed_max']))['times_seconds']
+                    count=len(events)
+                else:
+                    elapsed=0;count=0;events=None
+                    while True:
+                        current=effective_attack_speed(speed_reference+min(count*bb['attack@steal_atk_speed'],bb['attack@steal_atk_speed_max']))
+                        elapsed+=self.a['interval']*100/current
+                        if elapsed>duration+1e-9:break
+                        count+=1
+                emit('暗夜无明递增攻速攻击',attack,'physical',count,event_times=events)
+            else:
+                mode='deployment'
+                if self.s.get('ines_first_deployment',False):
+                    duration=0;self.notes.append('伊内丝首次部署仅放置影哨后离场，没有此次技能攻击。')
+                else:
+                    instant('physical',bb['atk_scale'],name='收回影哨')
+                    regular()
+        elif op=='char_4202_haruka':
+            if normal:regular('magic')
+            else:
+                if self.n==2:
+                    repeat=self.s.get('haruka_repeat',False)
+                    attack=self.base*(1+self.atk_bonus+(bb['atk'] if repeat else 0))+self.atk_flat
+                    if repeat:mode='infinite';duration=window if window is not None else 30
+                targets=min(2 if self.n==2 else 1,healing_targets)
+                regular('healing',.75,targets,name='护佑者普通治疗')
+                bursts=self.option('bubble_bursts',0,maximum=10000,integer=True)
+                emit('扶摇花火',attack*self.talent('扶摇花火','heal_scale'),'healing',bursts)
+                if self.n==2:
+                    regular('magic',.75*bb['atk_scale_extra'],targets,name='治疗衍生伤害')
+                    emit('浮泡治疗衍生伤害',attack*self.talent('扶摇花火','heal_scale')*bb['atk_scale_extra'],'magic',bursts)
+                if self.n==3:
+                    triggers=self.option('levitate_triggers',0,maximum=1000,integer=True)
+                    emit('浮泡浮空持续伤害',attack*bb['atk_scale'],'magic',triggers*bb['levitate_duration'])
+                self.notes.append('遥的治疗衍生伤害假设受疗友方与当前敌人邻近；浮泡破碎/浮空触发次数仅用所选情景，不由技能时长自动制造。')
+        elif op=='char_1046_sbell2':
+            if not normal:
+                if self.n==1:mode='instant';duration=0;instant('magic',bb['atk_scale'])
+                elif self.n==2:
+                    mode='infinite';duration=window if window is not None else 30
+                    regular('magic',bb['attack@atk_scale_s2'])
+                    emit('积雪持续伤害',attack*bb['talent@s2_magic_scale'],'magic',
+                         math.floor(duration*self.option('snow_coverage',1,maximum=1)))
+                else:
+                    regular('magic',bb['attack@atk_scale_s3'],resistance=max(0,self.enemy_res-bb['magic_resist_penetrate_fixed']))
+            entries=self.option('snow_entries',0,maximum=1000,integer=True)
+            emit('积雪经过伤害',attack*self.talent('无垠的雪景','talent_magic_scale'),'magic',entries)
+            self.notes.append('阵法术师充能期不进行普通攻击；积雪经过次数与覆盖比例分别指定，不把减速或冻结当伤害。')
+        elif op in ('char_328_cammou','char_1038_whitw2'):
+            if not normal and op=='char_1038_whitw2' and self.n==1:
+                mode='switch';duration=window if window is not None else 30
+            regular('magic',name='本体攻击')
+            trait_candidates=(self.p.get('trait') or {}).get('candidates') or []
+            trait={b['key']:b['value'] for b in trait_candidates[-1]['blackboard']} if trait_candidates else {}
+            lower=trait.get('init_atk_scale',.2);step=trait.get('delta_atk_scale',.15);upper=trait.get('max_atk_scale',1.1)
+            drone_count=1+(0 if normal else (1 if op=='char_1038_whitw2' and self.n==1 else bb.get('attack@cnt',0)))
+            elapsed=self.option('deployment_elapsed_seconds',0,maximum=3600)
+            head_interval=self.talent('头狼','interval',20)
+            starting=self.option('drone_warmup_hits',0,maximum=100,integer=True)
+            for i,event_time in enumerate(attack_times()):
+                time=elapsed+event_time
+                ceiling=upper*(self.talent('头狼','scale',1) if op=='char_1038_whitw2' and time>=head_interval else 1)
+                units=drone_count+(1 if op=='char_1038_whitw2' and time>=3*head_interval else 0)
+                scale=min(ceiling,lower+step*(starting+i))
+                if op!='char_1038_whitw2' or normal or self.n!=3 or event_time>=bb['attack@times']:
+                    emit('浮游单元',attack*scale,'magic',units)
+            if not normal and op=='char_1038_whitw2' and self.n==3:
+                emit('狼群光环（不叠加）',attack*bb['attack@magic_atk_scale'],'magic',math.floor(duration))
+            self.notes.append('浮游单元连续命中同一目标逐击增长，不按开局满倍率；每次情景从指定暖机命中数开始。本体与单元均按持续命中估算，不模拟弹道追踪或重新索敌。')
+        elif op=='char_4182_oblvns':
+            notes=self.option('note_count',0,maximum=self.talent('颂乐音符','max_cnt',10),integer=True)
+            defense=self.enemy_def*(1-notes*self.talent('颂乐音符','def_penetrate_ratio'))
+            resistance=self.enemy_res*(1-notes*self.talent('颂乐音符','magic_resist_penetrate_ratio'))
+            ranged_scale=.8 if self.s.get('ranged_attack',True) else 1
+            if self.s.get('module_id') and not normal and self.tv.get('颂乐音符',{}).get('max_cnt',10)>10:ranged_scale=1
+            if normal:regular('physical',ranged_scale,defense=defense)
+            elif self.n==1:
+                mode='instant';duration=0
+                scales=[bb['atk_scale']]+[bb[f'atk_scale_{i}'] for i in range(2,9)]
+                for i,scale in enumerate(scales):emit(f'新月音符{i+1}',attack*scale*ranged_scale,'magic',1,resistance=resistance)
+            elif self.n==2:
+                mode='switch';duration=window if window is not None else 30
+                organ=self.s.get('organ_mode',False)
+                if organ:
+                    speed_reference+=bb['attack@attack_speed'];speed=effective_attack_speed(speed_reference)
+                    interval=self.a['interval']*100/speed
+                else:attack+=self.base*bb['attack@atk']
+                regular('magic' if organ else 'physical',ranged_scale,2 if self.s.get('fever') else 1,
+                        defense=defense,resistance=resistance)
+            else:
+                regular('physical',bb['attack@atk_scale']*ranged_scale,2,name='钢琴音符',defense=defense)
+                regular('magic',bb['attack@atk_scale']*ranged_scale,2,name='风琴音符',resistance=resistance)
+            self.notes.append('祥子按指定音符数计算穿透，范围内持续供靶；Fever只改变有明确二连击描述的技能。音符飞行延迟和实际碰撞丢失未模拟。')
+        elif op=='char_1015_aglna2':
+            if not normal:
+                attack+=self.base*self.talent('天穹间的舞步','atk')
+                if self.n==1:mode='deployment'
+                if self.n==3:
+                    mode='ammo';ammo_rounds=int(bb['attack@trigger_time']);duration=ammo_rounds*interval
+                    if window is not None:duration=min(duration,window)
+                if self.n==2:duration=max(0,duration-bb['chant_duration'])
+            regular('magic' if not normal and self.n==2 else 'physical',bb.get('attack@atk_scale',1))
+            weight=self.option('enemy_weight',3,maximum=100,integer=True)
+            extra=self.talent('飘浮大地之上','atk_scale_hi' if weight<=self.talent('飘浮大地之上','mass_level',3) else 'atk_scale_lo')
+            regular('magic',extra,name='飘浮大地之上')
+            if not normal and self.n==2:duration+=bb['chant_duration']
+            self.notes.append('予愿安洁莉娜技能按起飞状态计算；二技能滑翔吟唱阶段不计普通攻击，重量决定额外法术倍率。')
+        elif op=='char_1042_phatm2':
+            ep=self.talent('形为心役','attack@ep_damage_ratio')
+            if not normal and self.n==1:
+                from .multi_melee import wine_s1
+                mode='next_attack';duration=interval if window is None else window
+                stream=wine_s1(timeline,interval,speed,speed_reference,bb['times'],window)
+                times=stream['emitted_times_seconds'] if window is None else stream['times_seconds']
+                emit('暗夜回声',attack*bb['atk_scale'],'magic',len(times),event_times=times)
+                events=[(time,attack*ep*bb['ep_damage_scale']) for time in times]
+            else:
+                if not normal and self.n==2:mode='infinite';duration=window if window is not None else 30
+                regular('magic')
+                events=[(t,attack*ep) for t in components[-1]['times_seconds']]
+                if not normal and self.n==2:
+                    bait=self.option('bait_triggers',0,maximum=100,integer=True)
+                    if bait:
+                        # Trigger count alone establishes neither placement ATK
+                        # nor retreat time, first tick, refresh or overlap.
+                        # In particular 25s is not a documented trigger cadence.
+                        self.notes.append('本能的召唤诱饵触发次数不提供部署攻击快照、退场时刻或持续效果首跳；未排程诱饵法伤/损伤，不能按固定25秒间隔生成事件。')
+            if not normal:
+                incoming=self.option('enemy_attack_count',0,maximum=10000,integer=True)
+                events.extend((duration*(i+1)/max(1,incoming),self.talent('堕梦','value')) for i in range(int(incoming)))
+                if self.n==3:
+                    # The original description requires prior neural damage
+                    # by this operator during the skill. Interval=1 does not
+                    # establish first tick, refresh or post-burst lifecycle.
+                    if self.option('enemy_buildup_resistance',0,maximum=100)<100:
+                        neural_secondary_seeds=[t for t,amount in events if amount>0 and t<duration]
+            total_ep=sum(amount for _,amount in events)
+            neural_events=events
+            emit('潜在神经损伤积累（不是生命伤害）',total_ep,'buildup',1)
+            self.neural(events,components,1+(bb.get('talent@ep_break_recover_speed',0) if not normal else 0))
+            self.notes.append('神经损伤独立积累：普通/精英阈值1000、领袖2000，爆发造成6000元素伤害；爆发冷却内不继续积累。只计本体和指定诱饵事件，不将全场麻痹/牢笼触发凭空加入。')
+        elif op=='char_4204_mantra':
+            def mantra_hit(scale,time,name):
+                emit(name,attack*scale,'magic',1,event_times=[time])
+                component=components[-1]
+                component['damage_buildup']={'element':'neural',
+                    'ratio':bb.get('ep_damage_ratio',bb.get('attack@ep_damage_ratio',0))}
+                if self.n==2:
+                    component.update(event_chain=f'mantra_s2:{time}',event_order=0)
+                mantra_attacks.append(component)
+            if normal:regular('magic')
+            elif self.n==1:
+                mode='next_attack';duration=interval if window is None else window
+                # Full skill means its one actual release, even if windup or
+                # reacquisition takes longer than the nominal attack interval.
+                horizon=3600-1/FPS if window is None and timeline.mode=='frames' else None
+                for time in attack_times(horizon):mantra_hit(bb['atk_scale'],time,'共鸣溃缩')
+            elif self.n==2:
+                for time in attack_times():mantra_hit(bb['attack@atk_scale'],time,'意识联协主目标')
+                self.notes.append('意识联协的跳跃攻击其他敌人，不重复计入当前主目标。')
+            else:
+                regular('magic')
+                overflow=self.option('palsy_overflow_hits',0,maximum=10000,integer=True)
+                emit('无言为真溢出跳跃',attack*bb['atk_scale'],'elemental',overflow)
+            if not normal:
+                triggers=self.option('palsy_triggers',0,maximum=10000,integer=True)
+                emit('麻痹触发天赋',attack*self.talent('噤声限域','atk_scale'),'elemental',triggers)
+            # Skill 1 has no evidenced same-hit callback order. If the target
+            # is already breaking, both damage sources exist before modifiers;
+            # the ordinary simultaneous-source guard must remain in force.
+            if not normal and self.n==1 and self.s.get('enemy_in_neural_break'):
+                for component in mantra_attacks:
+                    time=component['times_seconds'][0]
+                    if time<10:
+                        emit('爆发期间附带元素',attack*bb['element_atk_scale'],'elemental',1,event_times=[time])
+            self.notes.append('真言附带神经损伤按实际法术伤害比例积累；麻痹触发/溢出跳跃使用指定次数，不把麻痹层数直接当伤害。')
+        elif op=='char_2027_wang':
+            if normal:regular()
+            else:
+                mode='triggered_ammo' if self.n==3 else 'instant';duration=0
+                lines=self.option('connected_stones',1,maximum=3,integer=True)
+                factor=1+lines*self.talent('料敌机先','attack@per_atk_scale')
+                resistance=max(0,self.enemy_res-lines*self.talent('料敌机先','attack@per_magic_resist_penetrate_fixed'))
+                count=self.option('trap_triggers',1,maximum=1000,integer=True)
+                if self.n==1:
+                    ticks=self.option('trap_dot_ticks',6,maximum=7,integer=True)
+                    emit('取势棋子持续伤害',attack*bb['attack@atk_scale']*factor,'magic',count*ticks,resistance=resistance)
+                else:emit('棋子触发',attack*bb.get('attack@atk_scale',bb.get('atk_scale'))*factor,'magic',count,resistance=resistance)
+                if self.n==3:duration=self.s.get('skill_duration_seconds')
+                self.notes.append('获得棋子不等于触发棋子；当前显示指定触发情景。连线层数与法抗穿透上限3层，弹药耗尽时间依赖手动布子而不是攻速。')
+        elif op=='char_1048_orchd2':
+            bottle=self.talent('强击瓶专家','power_attack_scale',1) if self.s.get('power_coating',True) and not normal else 1
+            if normal:regular(times=3)
+            elif self.n==1:
+                mode='instant';duration=0
+                instant('physical',bb['atk_scale_1']*bottle,4,'刚射')
+                if self.s.get('double_charge',True):instant('physical',bb['atk_scale_2']*bottle,5,'刚连射')
+            elif self.n==2:
+                instant('physical',bb['attack@atk_scale_loop']*bottle,12,'飞翔瞪射箭矢')
+                instant('physical',bb['attack@atk_scale_end']*bottle,name='飞翔瞪射落地')
+            else:
+                mode='instant';duration=3
+                count=self.option('dragon_arrow_hits',1,maximum=1000,integer=True)
+                instant('physical',bb['atk_scale']*bottle,count,'龙之箭物理')
+                instant('magic',bb['atk_scale_magic']*bottle,count,'龙之箭法术')
+            self.notes.append('强击瓶按本次命中仍在首次50次加成覆盖内估算；龙之箭次数取决于敌人体积与路径，使用指定命中次数。')
+        elif op=='char_1041_angel2':
+            if normal:regular()
+            else:
+                mode='ammo';ammo=bb['attack@trigger_time'];cost=5 if self.n==3 else 1
+                if self.n==2 and self.s.get('steal_success',True):
+                    speed_reference+=bb['steal'];speed=effective_attack_speed(speed_reference)
+                    interval=(self.a['interval']+bb['base_attack_time'])*100/speed
+                    ammo+=bb['addtional_ammo_each']
+                duration=ammo/cost*interval
+                from .relic_events import ammunition_rounds
+                ammo_rounds=ammunition_rounds(ammo,cost,self.s,minimum_interval=interval*speed/600)
+                duration=ammo_rounds*interval
+                if window is not None:duration=min(duration,window)
+                regular(scale=bb['attack@atk_scale'],times=cost)
+                consumed=attacks()*cost
+                per=self.hit(attack*self.talent('火力电台','aoe_atk_scale'),'physical')
+                prob=self.talent('火力电台','prob')
+                components.append({'name':'火力电台期望轰炸','damage_type':'physical','hits':consumed*prob,
+                    'per_hit':per,'total':per*consumed*prob})
+                if self.n==3 and self.s.get('delivery_coordinate',True):instant('physical',bb['attack@cannon_atk_scale'],name='投递坐标轰炸')
+                emit('火力电台本体生命回复',self.stats['hp']*self.talent('火力电台','hp_ratio'),'regeneration',consumed)
+            self.notes.append('火力电台按每发弹药触发期望值分项，不把生命回复与屏障计作直接治疗；其他友方耗弹触发需要独立记录，未默认累加。')
+        elif op=='char_1035_wisdel':
+            main=self.talent('好礼','attack@main_atk_scale',1)
+            probability=self.talent('好礼','attack@prob',0)
+            shock_count=2 if self.module_parts and self.s.get('module_id')=='uniequip_002_wisdel' else 1
+            scale=1;shock_scale=.5
+            if not normal and self.n==1:
+                mode='next_attack';duration=interval;shock_count+=2;shock_scale=bb['append_atk_scale']
+            elif not normal and self.n==3:
+                mode='ammo';scale=bb['attack@atk_scale_3'];probability=bb['attack@prob']
+                from .relic_events import ammunition_rounds
+                ammo_rounds=ammunition_rounds(int(bb['attack@trigger_time']),1,self.s,minimum_interval=interval*speed/600);duration=ammo_rounds*interval
+                if window is not None:duration=min(duration,window)
+            count=1 if not normal and self.n==1 else attacks()
+            if not normal and self.n==2 and self.s.get('overload',False):count*=4;scale=bb['attack@atk_scale_ol']
+            emit('维什戴尔主攻击',attack*scale*main,'physical',count)
+            emit('余震',attack*scale*main*shock_scale,'physical',count*shock_count)
+            # A mark is consumed by the first explosion; subsequent shocks cannot explode the same mark again.
+            chance=1-(1-probability)**shock_count
+            emit('单枚残影爆炸期望',attack*self.talent('好礼','attack@bomb_atk_scale'),'physical',count*chance)
+            ghosts=self.option('ghost_count',0,maximum=3,integer=True)
+            if ghosts:
+                token=self.token_stats('token_10035_wisdel_wward')
+                token_effects=self.effects_for_token('token_10035_wisdel_wward')
+                # Explicit cast count avoids asserting a deterministic random SP regeneration schedule.
+                cast_count=self.option('ghost_casts',0,maximum=1000,integer=True)
+                token_attack=token['attack']*(1+sum(e['value'] for e in token_effects if e['kind']=='attack_pct'))
+                emit('魂灵之影施放',token_attack,'magic',cast_count,effects=token_effects)
+            self.notes.append('好礼普通攻击倍率作用于普攻及余震，技能220%倍率不乘残影爆炸；残影消耗后不重复爆炸。魂灵之影有随机技力回复，使用指定施放次数，未推定自动频率。')
+        elif op=='char_4107_vrdant':
+            if not normal and self.n==1:
+                mode='passive';duration=window if window is not None else 30
+            regular('magic' if not normal and self.n==2 else 'physical')
+            self.notes.append('维荻按本体在场计算；切换替身时技能中止，替身生命回复不计直接治疗。')
+        elif op=='char_1029_yato2':
+            arts=self.talent('双雷剑麒麟','attack@atk_scale_1')
+            if normal:
+                count=attacks()
+                emit('普通斩击',attack,'physical',count)
+                emit('双雷剑麒麟',attack*arts,'magic',count)
+            elif self.n==1:
+                attack_count=attacks()
+                # Third attack changes to six hits; the other two attacks have two hits.
+                count=(attack_count//3)*10+(attack_count%3)*2
+                emit('鬼人化',attack,'physical',count)
+                emit('双雷剑麒麟',attack*arts,'magic',count)
+                mode='deployment'
+            elif self.n==2:
+                mode='deployment';duration=0
+                emit('乱舞',attack*bb['atk_scale'],'physical',16)
+                emit('强化双雷剑麒麟',attack*arts*bb['talent_scale'],'magic',16)
+            else:
+                mode='deployment';duration=0
+                count=self.option('dash_hits',1,maximum=100,integer=True)
+                emit('空中回旋乱舞',attack*bb['atk_scale'],'physical',count)
+                emit('双雷剑麒麟',attack*arts*bb['atk_scale'],'magic',count)
+                self.notes.append('回旋命中次数由敌人体积、碰撞、路径决定，不能按攻击速度推算；当前使用明确指定命中次数。')
+        elif op=='char_151_myrtle':
+            if normal:regular(name='普攻')
+            elif self.n==2:emit('治愈之翼',attack*bb['attack@heal_scale'],'healing',math.floor(duration))
+        elif op=='char_133_mm':
+            if self.n==1 and not normal:mode='next_attack';duration=interval;scale=bb['atk_scale']
+            else:scale=1
+            events=attack_times();count=min(1,len(events)) if mode=='next_attack' else len(events)
+            per_hit=self.hit(attack*scale,'physical')
+            components.append({'name':'普攻' if normal else self.skill['name'],'damage_type':'physical',
+                'hits':count,'per_hit':per_hit,'total':count*per_hit,'times_seconds':events[:count]})
+        else:raise ValueError('该干员的明确技能模型尚未实现。')
+        if timeline.mode=='frames' and mode=='next_attack' and window is None and not (op=='char_1042_phatm2' and self.n==1):
+            primary=next((s for s in timeline.streams if s['unit']==op),None)
+            if primary and primary['release_frames']:
+                duration=(primary['release_frames'][-1]+1)/FPS
+                primary['resume_frame']=max(0,primary['start_frames'][-1]+primary['interval_frames']-frame_time(duration))
+        if timeline.mode=='frames' and mode=='ammo' and ammo_rounds is not None and window is None:
+            primary=next((s for s in timeline.streams if s['unit']==op),None)
+            duration=(primary['release_frames'][-1]+1)/FPS if primary and len(primary['release_frames'])>=ammo_rounds else None
+        elif timeline.mode=='continuous' and mode=='ammo' and ammo_rounds is not None and window is None and any(
+                r['kind']=='deployment_attack_speed' for r in self.s.get('_relic_rules',[])):
+            primary=next((s for s in timeline.streams if s['unit']==op),None)
+            duration=primary['times_seconds'][-1] if primary and len(primary['times_seconds'])>=ammo_rounds else None
+        from .relic_events import first_damage
+        first_extra=first_damage(components,self.s,normal=normal)
+        if first_extra is None:
+            self.warnings.append('首伤藏品：存在未排程/期望输出分项或同帧多来源，不能证明首次伤害归属；未套用首伤倍率。')
+        if op=='char_4204_mantra':
+            # Damage-dependent buildup is derived only after sourced damage
+            # modifiers settle. It is not an independent attack-ATK effect.
+            neural_events=[]
+            for component in mantra_attacks:
+                ratio=component['damage_buildup']['ratio']
+                amounts=component.get('event_amounts',[component['per_hit']]*component['hits'])
+                neural_events.extend((time,amount*ratio) for time,amount in
+                    zip(component['times_seconds'],amounts,strict=True))
+            factor=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
+            amounts=[amount*factor for _,amount in neural_events]
+            emit('潜在神经损伤积累（不是生命伤害）',0,'buildup',len(amounts),
+                 event_times=[time for time,_ in neural_events])
+            components[-1].update(event_amounts=amounts,total=sum(amounts),
+                per_hit=sum(amounts)/len(amounts) if amounts else 0)
+            bursts=self.neural(neural_events,components)
+            if self.n==1 and not normal and bursts:
+                warning='共鸣溃缩：同次命中刚触发神经爆发时，附带元素的判断顺序尚未核验；该次附带元素未计入。'
+                if warning not in self.warnings:self.warnings.append(warning)
+            if self.n==2 and not normal:
+                breaks=([0] if self.s.get('enemy_in_neural_break') else [])+bursts
+                for component in mantra_attacks:
+                    time=component['times_seconds'][0]
+                    if any(start<=time<start+10 for start in breaks):
+                        # PRTS skill-2 note: arts -> neural buildup -> element.
+                        # This child occurs after its parent, so cannot consume
+                        # another first-hit bonus or create a fabricated tie.
+                        emit('爆发期间附带元素',attack*bb['attack@element_atk_scale'],'elemental',1,event_times=[time])
+                        components[-1].update(event_chain=component['event_chain'],event_order=2)
+        for c in components:
+            dependency=c.get('damage_healing')
+            if not dependency:continue
+            sources=[components[i] for i in dependency['sources']]
+            ratio=dependency['ratio']
+            c['total']=sum(source['total'] for source in sources)*ratio
+            events=[]
+            for source in sources:
+                times=source.get('times_seconds')
+                if times is None and source.get('instant_event'):times=[0]
+                if times is None:break
+                amounts=source.get('event_amounts',[source['per_hit']]*len(times))
+                if len(times)!=len(amounts):break
+                events.extend((time,amount*ratio) for time,amount in zip(times,amounts))
+            else:
+                events.sort(key=lambda event:event[0])
+                c['times_seconds']=[time for time,_ in events]
+                c['event_amounts']=[amount for _,amount in events]
+                c['hits']=len(events)
+            c['per_hit']=c['total']/c['hits'] if c['hits'] else 0
+        return {'attack':attack,'attack_speed':speed,'attack_speed_reference':speed_reference,
+            'interval':interval,'duration':duration,'mode':mode,
+            'damage':sum(c['total'] for c in components if c['damage_type'] not in ('healing','regeneration','buildup')),
+            'healing':sum(c['total'] for c in components if c['damage_type']=='healing'),
+            'components':components,'neural_events':neural_events,
+            'neural_secondary_seeds':neural_secondary_seeds,'timing':timeline.output()}
+
+    def calculate(self):
+        if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
+            raise ValueError('深度治疗本场已使用两次，不能再次开启。')
+        full=self.plan()
+        shown=self.plan(window=self.s['window_seconds']) if 'window_seconds' in self.s else full
+        if 'window_seconds' not in self.s and self.s.get('timing_mode','frames')=='frames' and full['duration']:
+            shown=self.plan(window=full['duration'])
+        sp=self.skill
+        from .relics import recharge_requirement
+        recharge_cost=recharge_requirement(self.s,sp['sp_cost'])
+        rate=self.a['sp_recovery']+self.total('sp_recovery')+self.sp_extra
+        initial=sp['initial_sp']+self.initial_bonus
+        mixed_recovery=None
+        if sp['sp_type']=='INCREASE_WITH_TIME':
+            recharge=recharge_cost/rate if rate>0 else None
+            first=max(0,sp['sp_cost']-initial)/rate if rate>0 else None
+            if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True):
+                recharge=recharge_requirement(self.s,2*sp['sp_cost'])/rate if rate>0 else None
+                first=max(0,2*sp['sp_cost']-initial)/rate if rate>0 else None
+            if self.s['operator']=='char_002_amiya' and self.s.get('continuous_attacks',True):
+                attack_sp=self.talent('情绪吸收','amiya_t_1[atk].sp')
+                def time_to_charge(required,stun=0):
+                    if required<=0:return 0
+                    if rate<=0 and attack_sp<=0:return None
+                    time=stun;charge=rate*stun
+                    while charge<required:
+                        wait=(required-charge)/rate if rate>0 else math.inf
+                        if wait<=self.normal_interval:return time+wait
+                        time+=self.normal_interval;charge+=rate*self.normal_interval+attack_sp
+                    return time
+                first=time_to_charge(max(0,sp['sp_cost']-initial))
+                recharge=time_to_charge(recharge_cost,sp['values'].get('stun',0))
+                if self.s.get('timing_mode','frames')=='frames':
+                    first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,attack_sp,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)
+                    mixed_recovery=(attack_sp,sp['values'].get('stun',0))
+                self.notes.append('术师阿米娅自然充能与攻击额外技力按事件共同计算；精神爆发后晕眩期间停止攻击，技力自然回复继续。未额外假设击倒回技力。')
+            elif self.s.get('continuous_attacks',True) and any(r['kind']=='attack_sp' for r in self.s.get('_relic_rules',[])):
+                first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,0,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)
+                mixed_recovery=(0,0)
+        elif sp['sp_type']=='INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks',True) or has_periodic_sp(self.s)):
+            recharge=charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,wait_next_attack=full['mode']=='next_attack')
+            first=charge_seconds(self.s,max(0,sp['sp_cost']-initial),sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True,wait_next_attack=full['mode']=='next_attack')
+        elif sp['sp_type']=='INCREASE_WHEN_TAKEN_DAMAGE':
+            incoming=self.option('incoming_attack_interval',0,maximum=3600)
+            recharge=math.ceil(recharge_cost/sp['sp_increment'])*incoming if incoming>0 else None
+            first=math.ceil(max(0,sp['sp_cost']-initial)/sp['sp_increment'])*incoming if incoming>0 else None
+            if has_periodic_sp(self.s):
+                recharge=periodic_charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,incoming_interval=incoming)
+                first=periodic_charge_seconds(self.s,max(0,sp['sp_cost']-initial),sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True,incoming_interval=incoming)
+        else:recharge=first=None
+        mode=full['mode']
+        total_damage=full['damage'];total_healing=full['healing'];duration=full['duration']
+        wine_s1_unresolved=self.s['operator']=='char_1042_phatm2' and self.n==1
+        if wine_s1_unresolved:
+            # The native multihit gap does not establish absolute cast end,
+            # SP observation or normal-attack resumption. A resource anchor
+            # must not turn into a fabricated complete cycle.
+            duration=None;recharge=None
+            first=0.0 if initial>=sp['sp_cost'] else None
+            self.notes.append('暗夜回声单次两段与观察窗口采用原版动作参考；当前客户端首伤相位、技能结束与解除阻回尚未闭合，持续时间、结束后充能及周期输出保持未知。')
+        if mode=='ammo' and duration is None:total_damage=total_healing=None
+        if mode in ('deployment','passive'):first=0;recharge=None
+        nonrepeat=mode in ('infinite','passive','switch','once','once_deploy','deployment','triggered_ammo')
+        if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=1:
+            nonrepeat=True
+        if mode in ('infinite','switch','passive'):
+            duration=None;total_damage=total_healing=None
+            self.notes.append('没有固定的完整技能持续/总量或可重复回转；显示指定观察窗口的伤害与平均输出，默认窗口30秒。')
+        if mode=='triggered_ammo':
+            total_damage=total_healing=None
+            self.notes.append('完整布子弹药技能总量未知；当前棋子触发数量仅为情景总量。')
+        if self.s['operator']=='char_1050_chen3' and self.n==2:
+            nonrepeat=True
+            self.notes.append('斩击动画时间未确认，因此不输出伪精确的完整回转；强化期伤害仍单列计算。')
+        if self.s.get('timing_mode','frames')=='frames':
+            if first is not None:first=frame_time(first)/FPS
+            if duration is not None:duration=frame_time(duration)/FPS
+            lockout=self.value(self.s.get('timing',{}).get('sp_lockout_extra_seconds',0),'额外阻回秒数',maximum=3600)
+            if duration is not None and mixed_recovery is not None:
+                resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)
+                recharge=mixed_charge_seconds(self.s,sp['sp_cost'],rate,mixed_recovery[0],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,
+                    offset=duration,stun=mixed_recovery[1],resume=resume,blocked_seconds=lockout)
+            if duration is not None and sp['sp_type']=='INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks',True) or has_periodic_sp(self.s)):
+                resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)
+                recharge=charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,
+                    offset=duration+lockout,resume=max(0,resume-frame_time(lockout)),wait_next_attack=full['mode']=='next_attack')
+            if duration is not None and sp['sp_type']=='INCREASE_WHEN_TAKEN_DAMAGE' and has_periodic_sp(self.s):
+                recharge=periodic_charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,
+                    offset=duration+lockout,incoming_interval=self.option('incoming_attack_interval',0,maximum=3600))
+            if recharge is not None:recharge=frame_time(recharge+(0 if mixed_recovery is not None else lockout))/FPS
+            if recharge is not None:recharge=max(recharge,math.ceil(finite(self.s.get('timing',{}).get('post_skill_lock_frames',0),'技能结束硬直帧'))/FPS)
+        from .sp_events import has_event_sp,charge as event_charge
+        if self.s.get('timing_mode','frames')=='continuous' and duration is not None and any(
+                r['kind']=='deployment_attack_speed' or r['kind']=='periodic_sp' and r.get('clock')=='deployment'
+                for r in self.s.get('_relic_rules',[])):
+            lockout=finite(self.s.get('timing',{}).get('sp_lockout_extra_seconds',0),'额外阻回秒数',3600)
+            if mixed_recovery is not None:
+                recharge=mixed_charge_seconds(self.s,sp['sp_cost'],rate,mixed_recovery[0],self.normal_interval,
+                    self.base_speed,attribute_speed=self.base_speed_reference,offset=duration,stun=mixed_recovery[1],blocked_seconds=lockout)
+            elif sp['sp_type']=='INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks',True) or has_periodic_sp(self.s)):
+                recharge=charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,
+                    offset=duration+lockout,wait_next_attack=full['mode']=='next_attack')
+                if recharge is not None:recharge+=lockout
+            elif sp['sp_type']=='INCREASE_WHEN_TAKEN_DAMAGE' and has_periodic_sp(self.s):
+                recharge=periodic_charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,
+                    self.base_speed,attribute_speed=self.base_speed_reference,offset=duration+lockout,incoming_interval=self.option('incoming_attack_interval',0,maximum=3600))
+                if recharge is not None:recharge+=lockout
+        sp_events={}
+        if has_event_sp(self.s) and mode not in ('deployment','passive'):
+            cost=sp['sp_cost']*(2 if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True) else 1)
+            attack_sp=self.talent('情绪吸收','amiya_t_1[atk].sp') if self.s['operator']=='char_002_amiya' else 0
+            sp_events['initial']=event_charge(self.s,sp,max(0,cost-initial),rate,self.normal_interval,
+                self.base_speed,attribute_speed=self.base_speed_reference,initial=True,attack_sp=attack_sp,wait_next_attack=mode=='next_attack')
+            first=sp_events['initial']['seconds']
+            if not nonrepeat and duration is not None:
+                resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)
+                sp_events['cycle']=event_charge(self.s,sp,cost,rate,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,
+                    offset=duration,resume=resume,attack_sp=attack_sp,wait_next_attack=mode=='next_attack',
+                    stun=sp['values'].get('stun',0) if self.s['operator']=='char_002_amiya' and self.n==2 else 0)
+                recharge=sp_events['cycle']['seconds']
+            else:recharge=None
+        if wine_s1_unresolved:
+            recharge=None
+            first=0.0 if initial>=sp['sp_cost'] else None
+        cycle=duration+recharge if not nonrepeat and duration is not None and recharge is not None else None
+        self.s['_timeline_offset_seconds']=duration or 0
+        from .relic_events import DAMAGE
+        self.s['_first_damage_consumed_in_skill']=any(c['total']>0 and c['damage_type'] in DAMAGE and
+            c.get('source_unit','operator')=='operator' for c in full['components'])
+        resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)
+        self.s['timing']={**self.s.get('timing',{}),'_resume_frames':resume}
+        if self.s['operator']=='char_002_amiya' and self.n==2 and self.s.get('timing_mode','frames')=='frames':
+            self.s['timing']['interrupt_windows']=[*self.s['timing'].get('interrupt_windows',[]),[duration,duration+sp['values'].get('stun',0)]]
+        normal=self.plan(normal=True,window=recharge) if cycle is not None and not (
+            sp['sp_type']=='INCREASE_WHEN_ATTACK' and not self.s.get('continuous_attacks',True)) else None
+        damage=full['damage']+(normal['damage'] if normal else 0)
+        healing=full['healing']+(normal['healing'] if normal else 0)
+        from .timing import phase_totals
+        phase_damage,phase_healing=phase_totals(full['components'],duration) if duration is not None else (None,None)
+        if cycle is not None and self.s.get('timing_mode','frames')=='frames':
+            inside_damage,inside_healing=phase_totals(full['components'],cycle)
+            damage=inside_damage+(normal['damage'] if normal else 0)
+            healing=inside_healing+(normal['healing'] if normal else 0)
+        cycle_neural_burst_times=[];cycle_neural_burst_damage=0
+        if normal is not None and full['neural_events'] is not None:
+            # Damage from isolated phases cannot be added when their EP state is shared.
+            events=full['neural_events']+[(duration+t,amount) for t,amount in normal['neural_events']]
+            if self.s.get('timing_mode','frames')=='frames':events=[(t,a) for t,a in events if t<cycle]
+            bursts=[]
+            recovery=(1+self.bb.get('talent@ep_break_recover_speed',0),duration)
+            self.neural(events,bursts,recovery)
+            cycle_neural_burst_times=[t for c in bursts for t in c.get('times_seconds',[])]
+            cycle_neural_burst_damage=sum(c['total'] for c in bursts)
+            separate=sum(phase_totals([c],cycle if phase is full else recharge)[0]
+                for phase in (full,normal) for c in phase['components'] if c['name']=='神经损伤爆发')
+            if self.s.get('timing_mode','frames')!='frames':
+                separate=sum(c['total'] for phase in (full,normal) for c in phase['components'] if c['name']=='神经损伤爆发')
+            damage=damage-separate+sum(c['total'] for c in bursts)
+            self.notes.append('周期神经损伤连续结算技能与充能期，共享已有积累和爆发冷却；不将两个独立爆发算例相加。跨多轮稳态仍需时序校准。')
+        inventory=self.s.get('inventory_status')
+        unconfirmed=self.s.get('unconfirmed_training',[])
+        if unconfirmed:self.notes.insert(0,'尚未从画面确认：'+'、'.join(unconfirmed)+'；当前为已标注的培养预览。')
+        if inventory and not inventory.get('complete'):
+            self.notes.insert(0,f'本局藏品读取未完整：已确认{inventory.get("recognized",0)}件；沿用本局已确认记录。')
+        if self.module_parts:
+            self.notes.append('已计模组基础属性与适用天赋数据覆盖；未建模的新增模组特性/隐藏战斗脚本不自动推断。')
+        self.notes.append('单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。')
+        complete=not wine_s1_unresolved and not self.warnings and not unconfirmed and not self.module_parts and (not inventory or inventory.get('complete'))
+        result={'attack':shown['attack'],'total_damage':shown['damage'],'total_healing':shown['healing'],
+            'attack_speed':shown['attack_speed'],'base_attack_speed':self.base_speed,
+            'attack_speed_reference':shown['attack_speed_reference'],
+            'base_attack_speed_reference':self.base_speed_reference,
+            'interval_seconds':shown['interval'],'components':shown['components'],'applied_effects':self.effects,
+            'inapplicable_relics':self.inapplicable,'complete':not self.warnings,'warnings':self.warnings,
+            'complete_definition':'complete仅表示所选藏品规则支持；不代表完整战斗模拟。',
+            'scope':'单个持续命中目标的明确技能情景；多段逐段结算防御。','timing':shown['timing']}
+        result['timing']['recharge_streams']=normal['timing']['streams'] if normal else []
+        result['estimate']={'base_stats':self.stats,**({'sp_events':sp_events} if sp_events else {}),'skill':{
+            'name':sp['name'],'initial_seconds':first,'recharge_seconds':recharge,'cycle_seconds':cycle,
+            'duration_seconds':duration,'total_damage':total_damage,'total_healing':total_healing,
+            'phase_damage':phase_damage,'phase_healing':phase_healing,
+            'cycle_dps':damage/cycle if cycle else None,'cycle_hps':healing/cycle if cycle else None,
+            'cycle_damage':damage if cycle else None,'cycle_healing':healing if cycle else None,
+            'skill_attack':full['attack'],'skill_attack_speed':full['attack_speed'],
+            'skill_attack_speed_reference':full['attack_speed_reference'],
+            'sp_recovery_per_second':rate if sp['sp_type']=='INCREASE_WITH_TIME' else None,'mode':mode,
+            'hit_counts':{name:sum(c['hits'] for c in full['components'] if c['name']==name)
+                for name in sorted({c['name'] for c in full['components']})},
+            'window_seconds':shown['duration'],
+            'window_healing':shown['healing'],
+            'window_dps':shown['damage']/shown['duration'] if shown['duration'] else None,
+            'window_hps':shown['healing']/shown['duration'] if shown['duration'] else None},
+            'training':{'elite':self.s.get('elite',2),'level':self.s.get('level') or self.p['phases'][self.s.get('elite',2)]['max_level'],
+                'trust':self.s.get('trust',100),'potential':self.s.get('potential',1),'module_id':self.s.get('module_id'),'module_level':self.s.get('module_level',0)},
+            'complete':complete,
+            'warnings':self.warnings,'notes':list(dict.fromkeys(self.notes))+['连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。'],
+            'scenario_scope':result['scope']}
+        if hasattr(self,'neural_relic_reference'):
+            result['neural_relic_reference']={**self.neural_relic_reference,
+                'cast_burst_times':[t for c in full['components'] if c['name']=='神经损伤爆发' for t in c.get('times_seconds',[])],
+                'window_burst_times':[t for c in shown['components'] if c['name']=='神经损伤爆发' for t in c.get('times_seconds',[])],
+                'cycle_burst_times':cycle_neural_burst_times}
+        if full['neural_secondary_seeds'] or shown['neural_secondary_seeds']:
+            cast_bursts=[c for c in full['components'] if c['name']=='神经损伤爆发']
+            result['neural_skill_reference']={
+                'skill':'空剧场','periodic_buildup_ratio':self.bb['ep_damage_ratio'],
+                'periodic_buildup_raw':full['attack']*self.bb['ep_damage_ratio'],
+                'periodic_interval':self.bb['interval'],'first_tick_seconds':None,
+                'secondary_events_scheduled':False,
+                'qualified_seed_times':{'cast':full['neural_secondary_seeds'],'window':shown['neural_secondary_seeds']},
+                'affected_damage_phases':{'cast':bool(full['neural_secondary_seeds']),
+                    'window':bool(shown['neural_secondary_seeds']),
+                    'cycle':bool(full['neural_secondary_seeds']) and cycle is not None},
+                # These direct-only bursts cannot be claimed as the real
+                # sequence when an unplaced secondary source changes EP state.
+                'excluded_burst_damage':{
+                    'cast':sum(c['total'] for c in cast_bursts),
+                    'phase':phase_totals(cast_bursts,duration)[0] if duration is not None else 0,
+                    'window':sum(c['total'] for c in shown['components'] if c['name']=='神经损伤爆发'),
+                    'cycle':cycle_neural_burst_damage}}
+        if self.s['operator']=='char_1042_phatm2' and self.n==2 and self.s.get('bait_triggers',0):
+            alive=self.s.get('timing',{}).get('target_disappears_seconds')!=0
+            cast_bursts=[c for c in full['components'] if c['name']=='神经损伤爆发']
+            result['neural_bait_reference']={
+                'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                'attack_snapshot':'deployment','snapshot_attack':None,
+                'duration_seconds':self.bb['buff_time'],'tick_interval_seconds':self.bb['interval_damage'],
+                'arts_attack_scale':self.bb['atk_scale'],'buildup_attack_ratio':self.bb['ep_damage_ratio_token'],
+                'buildup_ignores_resistance':True,'first_tick_seconds':None,
+                'events_scheduled':False,
+                'affected_damage_phases':{'cast':alive and full['duration']>0,
+                    'window':alive and shown['duration']>0,'cycle':alive and cycle is not None},
+                'excluded_burst_damage':{'cast':sum(c['total'] for c in cast_bursts),
+                    'phase':phase_totals(cast_bursts,duration)[0] if duration is not None else 0,
+                    'window':sum(c['total'] for c in shown['components'] if c['name']=='神经损伤爆发'),
+                    'cycle':cycle_neural_burst_damage}}
+        return result
+
+
+def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()

@@ -1,0 +1,162 @@
+unmapped_0x181155960 0x181155960
+0x181155960 mov qword ptr [rsp + 8], rbx
+0x181155965 mov qword ptr [rsp + 0x10], rbp
+0x18115596a mov qword ptr [rsp + 0x18], rsi
+0x18115596f push rdi
+0x181155970 sub rsp, 0x210
+0x181155977 cmp byte ptr [rip + 0x7780f07], 0
+0x18115597e mov rdi, r9
+0x181155981 mov esi, r8d
+0x181155984 mov rbp, rdx
+0x181155987 mov rbx, rcx
+0x18115598a jne 0x1811559ab
+0x18115598c lea rcx, [rip + 0x7474ffd] DATA [{'address': '0x1885ca990', 'bytes8': '8d36012000000000', 'uint32': 536950413, 'float32': 1.0944774359040323e-19, 'uint64': 536950413}]
+0x181155993 call 0x1804c1c70
+0x181155998 lea rcx, [rip + 0x74744b1] DATA [{'address': '0x1885c9e50', 'bytes8': '158308c000000000', 'uint32': 3221783317, 'float32': -2.133000612258911, 'uint64': 3221783317}]
+0x18115599f call 0x1804c1c70
+0x1811559a4 mov byte ptr [rip + 0x7780eda], 1
+0x1811559ab xor edx, edx
+0x1811559ad lea rcx, [rsp + 0x30]
+0x1811559b2 mov r8d, 0xf0
+0x1811559b8 call 0x180536950
+0x1811559bd mov rax, qword ptr [rip + 0x7474fcc] DATA [{'address': '0x1885ca990', 'bytes8': '8d36012000000000', 'uint32': 536950413, 'float32': 1.0944774359040323e-19, 'uint64': 536950413}]
+0x1811559c4 mov rcx, qword ptr [rax + 0xb8]
+0x1811559cb mov rdx, qword ptr [rcx + 0x10]
+0x1811559cf test rdx, rdx
+0x1811559d2 jne 0x181155b3f
+0x1811559d8 mov rcx, qword ptr [rip + 0x7474471] DATA [{'address': '0x1885c9e50', 'bytes8': '158308c000000000', 'uint32': 3221783317, 'float32': -2.133000612258911, 'uint64': 3221783317}]
+0x1811559df call 0x1851f0000
+0x1811559e4 test rax, rax
+0x1811559e7 je 0x181155bfb
+0x1811559ed xor edx, edx
+0x1811559ef mov rcx, rax
+0x1811559f2 call 0x18064e4f0 ; Torappu.Battle.BattleController$$get_context
+0x1811559f7 test rax, rax
+0x1811559fa je 0x181155bfb
+0x181155a00 xor r8d, r8d
+0x181155a03 lea rcx, [rsp + 0x120]
+0x181155a0b mov rdx, rax
+0x181155a0e call 0x1806b3980 ; Torappu.Battle.Context$$TakeSnapshot
+0x181155a13 lea rcx, [rsp + 0x30]
+0x181155a18 mov qword ptr [rsp + 0x20], 0
+0x181155a21 lea rcx, [rcx + 0x80]
+0x181155a28 mov r8, rdi
+0x181155a2b lea r9, [rsp + 0x30]
+0x181155a30 mov edx, esi
+0x181155a32 movups xmm0, xmmword ptr [rax]
+0x181155a35 movups xmmword ptr [rcx - 0x80], xmm0
+0x181155a39 movups xmm1, xmmword ptr [rax + 0x10]
+0x181155a3d movups xmmword ptr [rcx - 0x70], xmm1
+0x181155a41 movups xmm0, xmmword ptr [rax + 0x20]
+0x181155a45 movups xmmword ptr [rcx - 0x60], xmm0
+0x181155a49 movups xmm1, xmmword ptr [rax + 0x30]
+0x181155a4d movups xmmword ptr [rcx - 0x50], xmm1
+0x181155a51 movups xmm0, xmmword ptr [rax + 0x40]
+0x181155a55 movups xmmword ptr [rcx - 0x40], xmm0
+0x181155a59 movups xmm1, xmmword ptr [rax + 0x50]
+0x181155a5d movups xmmword ptr [rcx - 0x30], xmm1
+0x181155a61 movups xmm0, xmmword ptr [rax + 0x60]
+0x181155a65 movups xmmword ptr [rcx - 0x20], xmm0
+0x181155a69 movups xmm0, xmmword ptr [rax + 0x70]
+0x181155a6d sub rax, -0x80
+0x181155a71 movups xmmword ptr [rcx - 0x10], xmm0
+0x181155a75 movups xmm1, xmmword ptr [rax]
+0x181155a78 movups xmmword ptr [rcx], xmm1
+0x181155a7b movups xmm0, xmmword ptr [rax + 0x10]
+0x181155a7f movups xmmword ptr [rcx + 0x10], xmm0
+0x181155a83 movups xmm1, xmmword ptr [rax + 0x20]
+0x181155a87 movups xmmword ptr [rcx + 0x20], xmm1
+0x181155a8b movups xmm0, xmmword ptr [rax + 0x30]
+0x181155a8f movups xmmword ptr [rcx + 0x30], xmm0
+0x181155a93 movups xmm1, xmmword ptr [rax + 0x40]
+0x181155a97 movups xmmword ptr [rcx + 0x40], xmm1
+0x181155a9b movups xmm0, xmmword ptr [rax + 0x50]
+0x181155a9f movups xmmword ptr [rcx + 0x50], xmm0
+0x181155aa3 movups xmm1, xmmword ptr [rax + 0x60]
+0x181155aa7 movups xmmword ptr [rcx + 0x60], xmm1
+0x181155aab mov rcx, rbp
+0x181155aae call 0x181155c10 ; Torappu.Battle.Action.ActionUtil$$RunActions
+0x181155ab3 lea rax, [rsp + 0x30]
+0x181155ab8 movups xmm0, xmmword ptr [rax]
+0x181155abb lea rcx, [rbx + 0x80]
+0x181155ac2 movups xmm1, xmmword ptr [rax + 0x10]
+0x181155ac6 lea rax, [rax + 0x80]
+0x181155acd movups xmmword ptr [rbx], xmm0
+0x181155ad0 movups xmm0, xmmword ptr [rax - 0x60]
+0x181155ad4 movups xmmword ptr [rbx + 0x10], xmm1
+0x181155ad8 movups xmm1, xmmword ptr [rax - 0x50]
+0x181155adc movups xmmword ptr [rbx + 0x20], xmm0
+0x181155ae0 movups xmm0, xmmword ptr [rax - 0x40]
+0x181155ae4 movups xmmword ptr [rbx + 0x30], xmm1
+0x181155ae8 movups xmm1, xmmword ptr [rax - 0x30]
+0x181155aec movups xmmword ptr [rbx + 0x40], xmm0
+0x181155af0 movups xmm0, xmmword ptr [rax - 0x20]
+0x181155af4 movups xmmword ptr [rbx + 0x50], xmm1
+0x181155af8 movups xmm1, xmmword ptr [rax - 0x10]
+0x181155afc movups xmmword ptr [rbx + 0x60], xmm0
+0x181155b00 movups xmm0, xmmword ptr [rax]
+0x181155b03 movups xmmword ptr [rcx - 0x10], xmm1
+0x181155b07 movups xmm1, xmmword ptr [rax + 0x10]
+0x181155b0b movups xmmword ptr [rcx], xmm0
+0x181155b0e movups xmm0, xmmword ptr [rax + 0x20]
+0x181155b12 movups xmmword ptr [rcx + 0x10], xmm1
+0x181155b16 movups xmm1, xmmword ptr [rax + 0x30]
+0x181155b1a movups xmmword ptr [rcx + 0x20], xmm0
+0x181155b1e movups xmm0, xmmword ptr [rax + 0x40]
+0x181155b22 movups xmmword ptr [rcx + 0x30], xmm1
+0x181155b26 movups xmm1, xmmword ptr [rax + 0x50]
+0x181155b2a movups xmmword ptr [rcx + 0x40], xmm0
+0x181155b2e movups xmm0, xmmword ptr [rax + 0x60]
+0x181155b32 movups xmmword ptr [rcx + 0x50], xmm1
+0x181155b36 movups xmmword ptr [rcx + 0x60], xmm0
+0x181155b3a jmp 0x181155bdf
+0x181155b3f mov qword ptr [rsp + 0x28], 0
+0x181155b48 lea rcx, [rsp + 0x120]
+0x181155b50 mov r9d, esi
+0x181155b53 mov qword ptr [rsp + 0x20], rdi
+0x181155b58 mov r8, rbp
+0x181155b5b call 0x1831bc190 ; XLua.DelegateBridge$$__Gen_Delegate_Imp12191
+0x181155b60 lea rcx, [rbx + 0x80]
+0x181155b67 movups xmm0, xmmword ptr [rax]
+0x181155b6a movups xmm1, xmmword ptr [rax + 0x10]
+0x181155b6e movups xmmword ptr [rbx], xmm0
+0x181155b71 movups xmm0, xmmword ptr [rax + 0x20]
+0x181155b75 movups xmmword ptr [rbx + 0x10], xmm1
+0x181155b79 movups xmm1, xmmword ptr [rax + 0x30]
+0x181155b7d movups xmmword ptr [rbx + 0x20], xmm0
+0x181155b81 movups xmm0, xmmword ptr [rax + 0x40]
+0x181155b85 movups xmmword ptr [rbx + 0x30], xmm1
+0x181155b89 movups xmm1, xmmword ptr [rax + 0x50]
+0x181155b8d movups xmmword ptr [rbx + 0x40], xmm0
+0x181155b91 movups xmm0, xmmword ptr [rax + 0x60]
+0x181155b95 movups xmmword ptr [rbx + 0x50], xmm1
+0x181155b99 movups xmmword ptr [rbx + 0x60], xmm0
+0x181155b9d movups xmm0, xmmword ptr [rax + 0x70]
+0x181155ba1 sub rax, -0x80
+0x181155ba5 movups xmmword ptr [rcx - 0x10], xmm0
+0x181155ba9 movups xmm1, xmmword ptr [rax]
+0x181155bac movups xmm0, xmmword ptr [rax + 0x10]
+0x181155bb0 movups xmmword ptr [rcx], xmm1
+0x181155bb3 movups xmm1, xmmword ptr [rax + 0x20]
+0x181155bb7 movups xmmword ptr [rcx + 0x10], xmm0
+0x181155bbb movups xmm0, xmmword ptr [rax + 0x30]
+0x181155bbf movups xmmword ptr [rcx + 0x20], xmm1
+0x181155bc3 movups xmm1, xmmword ptr [rax + 0x40]
+0x181155bc7 movups xmmword ptr [rcx + 0x30], xmm0
+0x181155bcb movups xmm0, xmmword ptr [rax + 0x50]
+0x181155bcf movups xmmword ptr [rcx + 0x40], xmm1
+0x181155bd3 movups xmm1, xmmword ptr [rax + 0x60]
+0x181155bd7 movups xmmword ptr [rcx + 0x50], xmm0
+0x181155bdb movups xmmword ptr [rcx + 0x60], xmm1
+0x181155bdf lea r11, [rsp + 0x210]
+0x181155be7 mov rax, rbx
+0x181155bea mov rbx, qword ptr [r11 + 0x10]
+0x181155bee mov rbp, qword ptr [r11 + 0x18]
+0x181155bf2 mov rsi, qword ptr [r11 + 0x20]
+0x181155bf6 mov rsp, r11
+0x181155bf9 pop rdi
+0x181155bfa ret 
+0x181155bfb call 0x1804c1e20
+0x181155c00 int3 
+EDGES [{"from": "0x18115598a", "kind": "conditional", "to": "0x1811559ab"}, {"from": "0x18115598a", "kind": "fallthrough", "to": "0x18115598c"}, {"from": "0x1811559d2", "kind": "conditional", "to": "0x181155b3f"}, {"from": "0x1811559d2", "kind": "fallthrough", "to": "0x1811559d8"}, {"from": "0x1811559e7", "kind": "conditional", "to": "0x181155bfb"}, {"from": "0x1811559e7", "kind": "fallthrough", "to": "0x1811559ed"}, {"from": "0x1811559fa", "kind": "conditional", "to": "0x181155bfb"}, {"from": "0x1811559fa", "kind": "fallthrough", "to": "0x181155a00"}, {"from": "0x181155b3a", "kind": "direct_jump", "to": "0x181155bdf"}]
+LIMITS []

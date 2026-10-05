@@ -1,0 +1,103 @@
+{
+  "version": "0.39.0",
+  "passed": true,
+  "verified_at": 1791053178.145576,
+  "tests_run": 403,
+  "current_tests_passed": 333,
+  "new_tests": 24,
+  "historical_combat_tests_skipped": 70,
+  "failures": 0,
+  "errors": 0,
+  "test_modules": [
+    "tests.test_offline_scope_030",
+    "tests.test_damage",
+    "tests.test_timing",
+    "tests.test_relics",
+    "tests.test_relic_extension",
+    "tests.test_relic_conditions_022",
+    "tests.test_relic_events_022",
+    "tests.test_relic_candidates_025",
+    "tests.test_deployment_relics_027",
+    "tests.test_mantra_events_024",
+    "tests.test_report",
+    "tests.test_run_modifiers",
+    "tests.test_wine_timing",
+    "tests.test_difficulty_rules",
+    "tests.test_target_memory",
+    "tests.test_received_sp_026",
+    "tests.test_event_sp_028",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_relic_enemy_modifiers_follow_stage_and_difficulty_and_are_reported",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_portal_keeps_main_depth_and_missing_context_does_not_guess",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_boss_reduction_is_independent_from_relic_vulnerability_and_preserves_healing_and_timing",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_emergency_stage_and_region_use_pinned_enemy_instead_of_manual_defense",
+    "tests.test_offline_relics_031",
+    "tests.test_spawn_hp_033",
+    "tests.test_relic_grade_sync_032",
+    "tests.test_run_reuse_guards_032",
+    "tests.test_sampling_flow",
+    "tests.test_neural_relic_034",
+    "tests.test_neural_sources_035",
+    "tests.test_phase_flow_036",
+    "tests.test_impact_delay_037",
+    "tests.test_summon_modules_038",
+    "tests.test_battle_preview_039"
+  ],
+  "exact_public_output_cases": 732,
+  "calculation_outputs_unchanged": true,
+  "stages": 105,
+  "images": 105,
+  "main_spawn_rows": 3639,
+  "conditional_branch_rows": 299,
+  "main_spawns_mapped": 3639,
+  "branch_spawns_unmapped": 299,
+  "enemy_references": 1087,
+  "enemy_environment_scenarios": 2174,
+  "enemy_contexts_with_pending": 1593,
+  "source_actions_and_geometry_exactly_preserved": true,
+  "data_rule_counts": {
+    "non_output": 52,
+    "numeric": 119,
+    "pending": 61,
+    "conditional": 28,
+    "partial": 12
+  },
+  "offline_scope": {
+    "items": {
+      "reference_only": 75,
+      "mixed": 4,
+      "offline": 193
+    },
+    "offline_mechanism_gaps": {
+      "pending": 10,
+      "partial": 9
+    }
+  },
+  "source_hashes": {
+    "rouge/app.py": "b2b5a0cc5112a90ff684c862bb09f0ea634da1a095463771ee224ea85421f402",
+    "rouge/battle_preview.py": "f17825c833a9749c3686aae9cb23b9d0ecaf5a435c083edd7d5245e77a2cdd42",
+    "rouge/battle_view.py": "a605d2e099586b6ae3b5f133f075d7c4cdb594fd12b0d2baa3a3e28d26013fd9",
+    "rouge/data/battle-previews.json": "7f5abddbcca167bcb735e606ff71b40b306bf968730bf46cdb02a1cb91e219ec",
+    "scripts/build_battle_previews_039.py": "63144f20336d4327a46e047121230bc1db91822490870cd4e258f66a33fef20a",
+    "scripts/verify_battle_039.py": "28bcc002d2b0c9d5bff0af2f06726cac50b4070048cafcf18ef05c056c87ee59",
+    "scripts/verify_battle_widgets_039.py": "42428cfcdcfd03e1be51865f33ff3be69d49eeae5cfc2a584842bae7aa32bf57",
+    "tests/test_battle_preview_039.py": "053634ecb300336be5c3d15e233ae94bee861393852d10a56f43449c6248793d",
+    "pyproject.toml": "ca911731413135b599a3f351c98bd7abfe410c3ca2270d4da755bfda3e454c1b"
+  },
+  "test_log": ".cache/battle-039/tests.log",
+  "test_log_sha256": "777ccb0bdb57d1ccae3556ad736e92876f817c6b8312ed6c68c55f8f09c70ce9",
+  "baseline_hashes": {
+    ".cache/battle-039/before-public-results.json": "9690736ec00bdb0d53ed97ca308a600d7d9d2f44cc62e9cdcecbf07f0378c313"
+  },
+  "elapsed_seconds": 82.31323860003613,
+  "chat_requests": 0,
+  "game_actions": 0,
+  "private_state_used": false,
+  "limits": [
+    "原图与关卡数据分别固定版本；同ID绑定不等于跨版本几何一致，原图不承载坐标投影。",
+    "只映射主波次的基础routes；分支路由作用域未核验，分支出怪位置保持未知。",
+    "波/片段/条目延迟及间隔是原始调度参数；绝对时间与阻塞、隐藏脚本未核验。",
+    "列表包含随机候选及隐藏组，不合计为实际敌人数量，不将原始权重当概率。",
+    "路线显示起终点和空间检查点，非实际寻路或移动到达时间。",
+    "敌人机制是图鉴/关卡参考，不覆盖所有阶段脚本；缺失免疫定义不是免疫=false。"
+  ]
+}

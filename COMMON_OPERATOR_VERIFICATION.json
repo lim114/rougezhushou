@@ -1,0 +1,1794 @@
+{
+  "verified_at": 1790918269.8847287,
+  "identity_count": 30,
+  "form_profiles": 32,
+  "skill_count": 87,
+  "cases": {
+    "skill_rank_cases": 870,
+    "cultivation_cases": 366,
+    "module_cases": 279,
+    "relic_cases": 174
+  },
+  "public_entry": "calculate_damage",
+  "sources": [
+    {
+      "id": "launch",
+      "date": "2026-07-19",
+      "url": "https://www.pttweb.cc/bbs/C_Chat/M.1784420026.A.AE5",
+      "image_url": "https://i.imgur.com/OWvzJGA.jpg",
+      "kind": "公开转载的首日分职业抓取榜图片",
+      "limitations": "每职业3项；阿米娅出现于两个职业；无次数、样本量或全局排序。不是当前全服前30。"
+    },
+    {
+      "id": "later",
+      "date": "2026-09-02",
+      "url": "https://www.233leyuan.com/post-detail/2095144606919159808",
+      "kind": "玩家实战推荐和不完全外援抓位记录",
+      "limitations": "个人样本与赛事观察，不是全服统计。用于补充候选，不赋予排名或使用率。"
+    },
+    {
+      "id": "official",
+      "url": "https://ak.hypergryph.com/is/blackflowofdrowningseekers",
+      "endpoint": "https://ak.hypergryph.com/is/api/topic/rogue_6/serverSummary",
+      "anonymous_status": 401,
+      "limitations": "匿名调用要求授权，未使用登录凭据，未获取全服排名。"
+    }
+  ],
+  "ranking_claim": false,
+  "catalog_sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+  "calculation_source_sha256": {
+    "rouge/damage.py": "00fb36152eda09bb97332ef84f9309683e66654e4e64c47fa771dc7504ccb4f0",
+    "rouge/operator_engine.py": "72f9e47ae276a6ca702a124f317916ed92bc3c7264c12b3a7d26d1bcbfa72709",
+    "rouge/catalog.py": "9f0387e83773c253e721217c570c66032a01145c2d2d689e1f034013e82c8a30",
+    "rouge/estimate.py": "179d929538449aa8eb40d51db8d31c37679ade61056cb166f6bcd8bf8493a77a",
+    "rouge/reporting.py": "e87a26883c5a8168e87c76b224b1aeabccc0ed3985913d12026541f19f438937",
+    "rouge/timing.py": "e44cd8598c47ed5a5af32ebc2e64cc87c79078917deb554ebc39f4f0355d988e",
+    "rouge/relics.py": "b5bd4bb0c1f437f50f444a13bde5abbf7ad0a96b1ab6c33bb8d87ab4458daa23",
+    "rouge/data/relic-mechanics.json": "65084c9c6680dd4802dd65890e2376bc31adce970e73b9d77d93d69b26d2ba4a",
+    "rouge/data/timing-profiles.json": "f65ef84219e6b7dae18d6b5ee1dadce304a616978336ea1edf83a7b05b73e324"
+  },
+  "limits": [
+    "遍历仅证明可执行、有限非负和报告/状态契约，不证明每项战斗机制数值精确。",
+    "连续供靶机制算例见tests/test_damage.py；逐帧时序算例见tests/test_timing.py；不是30名干员的实战对照。",
+    "常规时序已接入，动画模板/皮肤/多段/部分周期分项仍未完整校准；模组隐藏条件、难度/分队/特训及条件藏品仍有缺失。"
+  ],
+  "chat_requests": 0,
+  "game_capture_requests": 0,
+  "profiles": [
+    {
+      "id": "char_1052_kalts2",
+      "key": "kaltsit",
+      "name": "凯尔希·思衡托",
+      "profession": "medic",
+      "skills": [
+        {
+          "number": 1,
+          "name": "应急肃正防线",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "legacy"
+        },
+        {
+          "number": 2,
+          "name": "保护性拒止",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "legacy"
+        },
+        {
+          "number": 3,
+          "name": "破梏重生",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "legacy"
+        }
+      ]
+    },
+    {
+      "id": "char_1045_svash2",
+      "key": "silverash",
+      "name": "凛御银灰",
+      "profession": "pioneer",
+      "skills": [
+        {
+          "number": 1,
+          "name": "周旋的谋略",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "legacy"
+        },
+        {
+          "number": 2,
+          "name": "御敌的锋锐",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "legacy"
+        },
+        {
+          "number": 3,
+          "name": "变革已至",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "legacy"
+        }
+      ]
+    },
+    {
+      "id": "char_4230_mcnist",
+      "key": "mechanist",
+      "name": "机械师",
+      "profession": "tank",
+      "skills": [
+        {
+          "number": 1,
+          "name": "聚类分析",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "legacy"
+        },
+        {
+          "number": 2,
+          "name": "协防术式",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "legacy"
+        },
+        {
+          "number": 3,
+          "name": "工程学十字星",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "legacy"
+        }
+      ]
+    },
+    {
+      "id": "char_151_myrtle",
+      "key": "char_151_myrtle",
+      "name": "桃金娘",
+      "profession": "pioneer",
+      "skills": [
+        {
+          "number": 1,
+          "name": "支援号令·β型",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 2,
+          "name": "治愈之翼",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_4228_closur",
+      "key": "char_4228_closur",
+      "name": "可露希尔",
+      "profession": "pioneer",
+      "skills": [
+        {
+          "number": 1,
+          "name": "递归策略",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 2,
+          "name": "模型扩展",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "Q.E.D.",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_1050_chen3",
+      "key": "char_1050_chen3",
+      "name": "赤刃明霄陈",
+      "profession": "warrior",
+      "skills": [
+        {
+          "number": 1,
+          "name": "赤霄·奔夜",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 2,
+          "name": "赤霄·绝影-驰",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "赤霄·天喟",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_4182_oblvns",
+      "key": "char_4182_oblvns",
+      "name": "丰川祥子",
+      "profession": "warrior",
+      "skills": [
+        {
+          "number": 1,
+          "name": "新月的苏醒",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "instant"
+        },
+        {
+          "number": 2,
+          "name": "满月的舞会",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "switch"
+        },
+        {
+          "number": 3,
+          "name": "残月的余响",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_002_amiya",
+      "key": "char_002_amiya",
+      "name": "阿米娅",
+      "profession": "caster",
+      "skills": [
+        {
+          "number": 1,
+          "name": "战术咏唱·γ型",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 2,
+          "name": "精神爆发",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "奇美拉",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "once_deploy"
+        }
+      ]
+    },
+    {
+      "id": "char_1001_amiya2",
+      "key": "char_1001_amiya2",
+      "name": "阿米娅",
+      "profession": "warrior",
+      "skills": [
+        {
+          "number": 1,
+          "name": "影霄·奔夜",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 2,
+          "name": "影霄·绝影",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "once"
+        }
+      ]
+    },
+    {
+      "id": "char_1037_amiya3",
+      "key": "char_1037_amiya3",
+      "name": "阿米娅",
+      "profession": "medic",
+      "skills": [
+        {
+          "number": 1,
+          "name": "哀恸共情",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 2,
+          "name": "慈悲愿景",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "once"
+        }
+      ]
+    },
+    {
+      "id": "char_196_sunbr",
+      "key": "char_196_sunbr",
+      "name": "古米",
+      "profession": "tank",
+      "skills": [
+        {
+          "number": 1,
+          "name": "备用军粮",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "next_attack"
+        },
+        {
+          "number": 2,
+          "name": "食粮烹制",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_1044_hsgma2",
+      "key": "char_1044_hsgma2",
+      "name": "斩业星熊",
+      "profession": "tank",
+      "skills": [
+        {
+          "number": 1,
+          "name": "恶业苦果",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "infinite"
+        },
+        {
+          "number": 2,
+          "name": "无始无明",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "instant"
+        },
+        {
+          "number": 3,
+          "name": "地狱变相",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_2025_shu",
+      "key": "char_2025_shu",
+      "name": "黍",
+      "profession": "tank",
+      "skills": [
+        {
+          "number": 1,
+          "name": "化被草木",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "next_attack"
+        },
+        {
+          "number": 2,
+          "name": "嘉禾盈仓",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "离离枯荣",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_1035_wisdel",
+      "key": "char_1035_wisdel",
+      "name": "维什戴尔",
+      "profession": "sniper",
+      "skills": [
+        {
+          "number": 1,
+          "name": "定点清算",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "next_attack"
+        },
+        {
+          "number": 2,
+          "name": "饱和复仇",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "爆裂黎明",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "ammo"
+        }
+      ]
+    },
+    {
+      "id": "char_1048_orchd2",
+      "key": "char_1048_orchd2",
+      "name": "焰狐龙梓兰",
+      "profession": "sniper",
+      "skills": [
+        {
+          "number": 1,
+          "name": "刚射",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "instant"
+        },
+        {
+          "number": 2,
+          "name": "飞翔瞪射",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "龙之箭",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "instant"
+        }
+      ]
+    },
+    {
+      "id": "char_133_mm",
+      "key": "char_133_mm",
+      "name": "梅",
+      "profession": "sniper",
+      "skills": [
+        {
+          "number": 1,
+          "name": "麻痹弹",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "next_attack"
+        },
+        {
+          "number": 2,
+          "name": "束缚电击",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_1046_sbell2",
+      "key": "char_1046_sbell2",
+      "name": "圣聆初雪",
+      "profession": "caster",
+      "skills": [
+        {
+          "number": 1,
+          "name": "铃音吹雪",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "instant"
+        },
+        {
+          "number": 2,
+          "name": "霜涛覆岭",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "infinite"
+        },
+        {
+          "number": 3,
+          "name": "群山俯首",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_328_cammou",
+      "key": "char_328_cammou",
+      "name": "卡达",
+      "profession": "caster",
+      "skills": [
+        {
+          "number": 1,
+          "name": "攻击力强化·β型",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 2,
+          "name": "同步索敌攻击",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_1038_whitw2",
+      "key": "char_1038_whitw2",
+      "name": "荒芜拉普兰德",
+      "profession": "caster",
+      "skills": [
+        {
+          "number": 1,
+          "name": "慵怠者悲鸣",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "switch"
+        },
+        {
+          "number": 2,
+          "name": "逐猎狂飙",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "终幕·浩劫",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_298_susuro",
+      "key": "char_298_susuro",
+      "name": "苏苏洛",
+      "profession": "medic",
+      "skills": [
+        {
+          "number": 1,
+          "name": "治疗强化·β型",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 2,
+          "name": "深度治疗",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_1042_phatm2",
+      "key": "char_1042_phatm2",
+      "name": "酒神",
+      "profession": "support",
+      "skills": [
+        {
+          "number": 1,
+          "name": "暗夜回声",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "next_attack"
+        },
+        {
+          "number": 2,
+          "name": "群体性谵妄",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "infinite"
+        },
+        {
+          "number": 3,
+          "name": "空剧场",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_4202_haruka",
+      "key": "char_4202_haruka",
+      "name": "遥",
+      "profession": "support",
+      "skills": [
+        {
+          "number": 1,
+          "name": "夜啼彩羽",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 2,
+          "name": "幽隙栖萤",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "夏末游鳞",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_110_deepcl",
+      "key": "char_110_deepcl",
+      "name": "深海色",
+      "profession": "support",
+      "skills": [
+        {
+          "number": 1,
+          "name": "光影之触",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 2,
+          "name": "视觉陷阱",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_2027_wang",
+      "key": "char_2027_wang",
+      "name": "望",
+      "profession": "special",
+      "skills": [
+        {
+          "number": 1,
+          "name": "取势",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "instant"
+        },
+        {
+          "number": 2,
+          "name": "连星",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "instant"
+        },
+        {
+          "number": 3,
+          "name": "天下劫",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "triggered_ammo"
+        }
+      ]
+    },
+    {
+      "id": "char_1041_angel2",
+      "key": "char_1041_angel2",
+      "name": "新约能天使",
+      "profession": "special",
+      "skills": [
+        {
+          "number": 1,
+          "name": "天空大扫除",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "ammo"
+        },
+        {
+          "number": 2,
+          "name": "开火成瘾症",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "ammo"
+        },
+        {
+          "number": 3,
+          "name": "使命必达！",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "ammo"
+        }
+      ]
+    },
+    {
+      "id": "char_1029_yato2",
+      "key": "char_1029_yato2",
+      "name": "麒麟R夜刀",
+      "profession": "special",
+      "skills": [
+        {
+          "number": 1,
+          "name": "鬼人化",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "deployment"
+        },
+        {
+          "number": 2,
+          "name": "乱舞",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "deployment"
+        },
+        {
+          "number": 3,
+          "name": "空中回旋乱舞",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "deployment"
+        }
+      ]
+    },
+    {
+      "id": "char_4087_ines",
+      "key": "char_4087_ines",
+      "name": "伊内丝",
+      "profession": "pioneer",
+      "skills": [
+        {
+          "number": 1,
+          "name": "淬影突袭",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "next_attack"
+        },
+        {
+          "number": 2,
+          "name": "暗夜无明",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "独影归途",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "deployment"
+        }
+      ]
+    },
+    {
+      "id": "char_206_gnosis",
+      "key": "char_206_gnosis",
+      "name": "灵知",
+      "profession": "support",
+      "skills": [
+        {
+          "number": 1,
+          "name": "高速思考",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "next_attack"
+        },
+        {
+          "number": 2,
+          "name": "零度爆发",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "instant"
+        },
+        {
+          "number": 3,
+          "name": "失温症",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_4107_vrdant",
+      "key": "char_4107_vrdant",
+      "name": "维荻",
+      "profession": "special",
+      "skills": [
+        {
+          "number": 1,
+          "name": "苍翠屏障",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "passive"
+        },
+        {
+          "number": 2,
+          "name": "双刃毒藤",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_1015_aglna2",
+      "key": "char_1015_aglna2",
+      "name": "予愿安洁莉娜",
+      "profession": "special",
+      "skills": [
+        {
+          "number": 1,
+          "name": "极速送达",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "deployment"
+        },
+        {
+          "number": 2,
+          "name": "重力自定义",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "酸橙的心事",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "ammo"
+        }
+      ]
+    },
+    {
+      "id": "char_4204_mantra",
+      "key": "char_4204_mantra",
+      "name": "真言",
+      "profession": "caster",
+      "skills": [
+        {
+          "number": 1,
+          "name": "共鸣溃缩",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "next_attack"
+        },
+        {
+          "number": 2,
+          "name": "意识联协",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "无言为真",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    },
+    {
+      "id": "char_437_mizuki",
+      "key": "char_437_mizuki",
+      "name": "水月",
+      "profession": "special",
+      "skills": [
+        {
+          "number": 1,
+          "name": "唤醒",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "next_attack"
+        },
+        {
+          "number": 2,
+          "name": "囚徒困境",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        },
+        {
+          "number": 3,
+          "name": "镜花水月",
+          "ranks_verified": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "mode": "timed"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "version": "0.24",
+  "date": "2026-10-03",
+  "seam": "calculate_damage",
+  "tests": 122,
+  "failures": 0,
+  "errors": 0,
+  "matrix_cases": 384,
+  "matrix_problems": [],
+  "passed": true,
+  "seconds": 1.654,
+  "source_sha256": {
+    "rouge/operator_engine.py": "24c8fd7323178bb884a1a9c0277e1181bb4c794bab4042ca375af98e543fdcfb",
+    "rouge/relic_events.py": "cba290694df9f2c93a407969b0c3cf5d5ef5f8311ee5cb4c7afc2cac104980cc",
+    "tests/test_mantra_events_024.py": "b201d99e9990ad839ec2acdfd5925d336bcd213513738522d71cc4af27b32479",
+    "tests/test_damage.py": "f740b92533ae5896132f2bb34e3383e44c97bd8adff26d0b6e7f98cebe3df30a"
+  },
+  "evidence": {
+    "same_hit_s2_order": ".cache/research/event-next/mantra-raw.txt:217",
+    "s1_same_hit_order": "unverified; missing attached damage disclosed"
+  },
+  "limitations": [
+    "Animation timing remains explicit scenarios/reference frames, not client-script calibration.",
+    "S1 newly-burst attachment remains unverified and excluded with a warning.",
+    "Unscheduled palsy/overflow callbacks keep first-hit identity unresolved.",
+    "This verifies one skill/recharge cycle, not infinite steady state."
+  ]
+}

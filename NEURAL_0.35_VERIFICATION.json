@@ -1,0 +1,368 @@
+{
+  "version": "0.35.0",
+  "passed": true,
+  "verified_at": 1791032864.1485417,
+  "tests_run": 338,
+  "current_tests_passed": 268,
+  "new_tests": 20,
+  "historical_combat_tests_skipped": 70,
+  "skipped_tests": [
+    {
+      "test": "tests.test_relics.RelicMechanismTests.test_hp_curve_and_unverified_stacking_remain_explicit",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_extension.RelicExtensionTests.test_castle_resident_waits_eighty_deployed_seconds_and_adds_flat_defense",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_extension.RelicExtensionTests.test_city_wall_condition_does_not_buff_tokens_or_increase_damage",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_extension.RelicExtensionTests.test_crown_boosts_one_damage_event_and_does_not_repeat_during_recharge",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_extension.RelicExtensionTests.test_glory_uses_actual_blocked_count_and_independent_summon_conditions",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_conditions_022.RelicConditionsTests.test_deployment_barriers_use_own_hp_and_keep_tokens_separate_from_high_tile_operators",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_conditions_022.RelicConditionsTests.test_dodge_relics_report_per_source_and_type_without_adding_probabilities_or_dps",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_conditions_022.RelicConditionsTests.test_dog_aura_needs_active_other_sources_and_never_inherits_to_tokens",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_conditions_022.RelicConditionsTests.test_medicine_seeds_are_two_shield_layers_not_hp_barrier_or_healing",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_events_022.RelicEventTests.test_first_damage_also_updates_incantation_medic_damage_based_healing",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_events_022.RelicEventTests.test_first_damage_healing_respects_projectile_window_boundary",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_events_022.RelicEventTests.test_simultaneous_distinct_damage_sources_do_not_invent_first_hit_order",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_events_022.RelicEventTests.test_source_free_neural_burst_cannot_consume_operator_first_damage",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_events_022.RelicEventTests.test_summon_damage_does_not_consume_owners_first_hit_in_recharge",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_already_consumed_deployment_and_new_deployment_are_distinct",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_damage_and_low_hp_buffs_are_not_inferred_from_deployment_loss",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_deployment_does_not_change_maximum_hp_skill_damage_or_recovery",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_hp_reference_follows_cultivation_and_confirmed_max_hp_bonus",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_loss_ratio_and_flag_are_strictly_validated",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_missing_current_hp_or_deployment_state_is_never_guessed",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_report_marks_fractional_cost_and_lifecycle_limits",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_zero_and_full_hp_are_valid_but_not_defaults",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_mantra_events_024.MantraEventTests.test_s1_same_hit_order_stays_explicitly_unverified",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_mantra_events_024.MantraEventTests.test_s2_buildup_events_follow_each_final_damage_amount",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_mantra_events_024.MantraEventTests.test_s2_first_damage_changes_buildup_before_burst_without_reusing_bonus",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_mantra_events_024.MantraEventTests.test_s2_full_skill_and_cycle_do_not_depend_on_display_window",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_already_full_initial_sp_needs_no_extra_event_table",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_amiya_stun_stops_attack_sp_but_not_natural_recovery",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_attack_damage_and_elemental_loss_are_separate_callback_types",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_attack_recovery_can_charge_from_incoming_events_without_outgoing_attacks",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_display_window_does_not_change_full_cycle_or_event_origin",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_empty_event_wine_stays_on_existing_discrete_clock_in_both_modes",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_end_sp_refund_and_extra_lockout_are_counted_once",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_invalid_tables_are_rejected_instead_of_ignored",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_missing_phase_is_unknown_and_empty_phase_is_confirmed_no_hits",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_native_defensive_recovery_adds_once_and_does_not_require_unused_cycle",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_natural_sp_cookie_and_talent_attack_sp_are_not_lost",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_next_attack_waits_for_legal_slot_and_empty_targets_cannot_cast",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_no_natural_recovery_uses_finite_events_without_inventing_future_hits",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_only_applicable_actors_get_the_incoming_sp_report",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_passive_and_deployment_skills_have_no_event_fields_or_missing_conditions",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_possession_does_not_bind_and_duplicates_do_not_double_grant",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_received_callback_and_native_attack_sp_use_independent_axes",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_same_frame_separate_hits_are_not_deduplicated",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_skill_and_extra_lockout_discard_events_and_never_bank_sp",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_tank_training_merges_attack_events_with_natural_sp",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_wine_phase_still_uses_discrete_envelope",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_caster_end_refund_remains_independent_and_wave_attack_stack_is_unknown",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_continuous_mode_keeps_exact_callback_time_and_frame_mode_next_tick",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_display_window_preserves_full_cycle_and_origin",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_duplicate_relic_ids_do_not_grant_extra_callback_sp",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_horn_callbacks_can_share_existing_wine_phase_envelope",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_horn_kill_updates_initial_recharge_and_cycle_not_per_cast_damage",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_incoming_and_outgoing_receipts_remain_separate",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_invalid_outgoing_table_not_silently_converted_to_success",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_kill_is_not_attack_dealt_damage_or_received_damage",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_missing_phase_unknown_and_explicit_empty_table_preserves_native_clock",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_native_attack_recovery_uses_own_attack_clock_beside_kill_callbacks",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_native_defensive_attack_and_kill_are_each_counted_once",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_no_token_callback_inheritance_and_report_only_applicable_types",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_passive_deployment_skills_have_no_event_panel_or_requirements",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_raw_selectors_and_partial_status_preserved",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_same_frame_events_preserve_multiplicity_and_cap_usable_sp",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_skill_and_extra_lockout_drop_kills_without_banking",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_skills_without_repeat_do_not_require_unused_cycle_phase",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_wave_and_horn_distinct_callbacks_on_same_timestamp_share_one_clock",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_wave_damage_callback_applies_to_both_supported_funnel_operators_all_skills",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_wave_received_damage_and_kills_do_not_trigger_outgoing_damage_sp",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_wave_selector_does_not_apply_to_other_casters_or_other_professions",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_wave_synergy_warning_hidden_for_other_subclasses_even_when_book_held",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    }
+  ],
+  "failures": 0,
+  "errors": 0,
+  "test_modules": [
+    "tests.test_offline_scope_030",
+    "tests.test_damage",
+    "tests.test_timing",
+    "tests.test_relics",
+    "tests.test_relic_extension",
+    "tests.test_relic_conditions_022",
+    "tests.test_relic_events_022",
+    "tests.test_relic_candidates_025",
+    "tests.test_deployment_relics_027",
+    "tests.test_mantra_events_024",
+    "tests.test_report",
+    "tests.test_run_modifiers",
+    "tests.test_wine_timing",
+    "tests.test_difficulty_rules",
+    "tests.test_target_memory",
+    "tests.test_received_sp_026",
+    "tests.test_event_sp_028",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_relic_enemy_modifiers_follow_stage_and_difficulty_and_are_reported",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_portal_keeps_main_depth_and_missing_context_does_not_guess",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_boss_reduction_is_independent_from_relic_vulnerability_and_preserves_healing_and_timing",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_emergency_stage_and_region_use_pinned_enemy_instead_of_manual_defense",
+    "tests.test_offline_relics_031",
+    "tests.test_spawn_hp_033",
+    "tests.test_relic_grade_sync_032",
+    "tests.test_run_reuse_guards_032",
+    "tests.test_sampling_flow",
+    "tests.test_neural_relic_034",
+    "tests.test_neural_sources_035"
+  ],
+  "test_log": ".cache/neural-035/tests.log",
+  "test_log_sha256": "075b8732ad4fc9956ea285cc7adc180d596b911d1f6c3834d401e0074d04a784",
+  "public_before_after_cases": 348,
+  "unchanged_cases": 344,
+  "changed_s3_cases": 4,
+  "baseline_sha256": "cdae42420e9c8e7cc07bdc5e5111b18ed1aadd585294ca0ac96a995c0822af6a",
+  "raw_relic_data_unchanged": true,
+  "data_rule_counts": {
+    "non_output": 52,
+    "numeric": 119,
+    "pending": 61,
+    "conditional": 28,
+    "partial": 12
+  },
+  "offline_scope": {
+    "items": {
+      "reference_only": 75,
+      "mixed": 4,
+      "offline": 193
+    },
+    "offline_mechanism_gaps": {
+      "pending": 10,
+      "partial": 9
+    }
+  },
+  "source_hashes": {
+    "AGENTS.md": "aaf201d13c704d6f309975cdd2fe7d151bb212132b3a5dd6c8903c956c8b49d0",
+    "rouge/operator_engine.py": "08fa88e63e5c2f2093f0e7ffd793c77543df4f4eb62aa25b9186ed4a6abc8deb",
+    "rouge/elemental_relics.py": "e3c541d6aff13fbcc4f09c1453682081fff7c1e9f537116572523ee047b72832",
+    "rouge/reporting.py": "c0bf6eaefe6f8ad6badbdd8f8d488c810afdb68c46147b8b9f2f93782a6f87d3",
+    "rouge/app.py": "fceda6dbbaa756e80d10158c26b38c09f4b10410ff1dd86c8c51cd18b5582622",
+    "pyproject.toml": "a645e945b4e4b1f5b68032a723121e7e51deec2dc35969a8a3c9d30c0008aaf1",
+    "tests/test_neural_sources_035.py": "685fb33bd7a4d1dd89e0f07d25ba28c4c13cc977ccae013ff44fc5519357ece7",
+    "scripts/verify_neural_sources_035.py": "d205a2d4b1497f3ad03f404842b2be81f5ceae9aa0f8e477c1d43a51751ca140"
+  },
+  "chat_requests": 0,
+  "game_actions": 0,
+  "new_live_combat_measurements": 0,
+  "elapsed_seconds": 6.76284520002082,
+  "limits": [
+    "No secondary first-tick/refresh/lifecycle is invented; affected neural totals and burst counts remain unknown.",
+    "Only known arts subtotal is retained when secondary buildup changes neural sequencing.",
+    "Preexisting S1 multi-hit timing/client binding and other skill gaps remain disclosed.",
+    "No new relic completeness, recognition speed, full-inventory accuracy or live-combat measurements."
+  ]
+}

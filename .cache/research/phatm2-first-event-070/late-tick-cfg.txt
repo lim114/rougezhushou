@@ -1,0 +1,196 @@
+Torappu.Battle.ObjectManager$$OnLateFixedUpdate 0x1808c3310
+0x1808c3310 push rbx
+0x1808c3312 push rsi
+0x1808c3313 sub rsp, 0x28
+0x1808c3317 cmp byte ptr [rip + 0x800d66e], 0
+0x1808c331e mov rbx, rdx
+0x1808c3321 mov rsi, rcx
+0x1808c3324 jne 0x1808c3375
+0x1808c3326 lea rcx, [rip + 0x7c6a183] DATA [{'address': '0x18852d4b0', 'bytes8': '972708c000000000', 'uint32': 3221759895, 'float32': -2.1274163722991943, 'uint64': 3221759895}]
+0x1808c332d call 0x1804c1c70
+0x1808c3332 lea rcx, [rip + 0x7c6a3ff] DATA [{'address': '0x18852d738', 'bytes8': '992708c000000000', 'uint32': 3221759897, 'float32': -2.1274168491363525, 'uint64': 3221759897}]
+0x1808c3339 call 0x1804c1c70
+0x1808c333e lea rcx, [rip + 0x7c6a67b] DATA [{'address': '0x18852d9c0', 'bytes8': '9b2708c000000000', 'uint32': 3221759899, 'float32': -2.1274173259735107, 'uint64': 3221759899}]
+0x1808c3345 call 0x1804c1c70
+0x1808c334a lea rcx, [rip + 0x7c6a8f7] DATA [{'address': '0x18852dc48', 'bytes8': '9d2708c000000000', 'uint32': 3221759901, 'float32': -2.127417802810669, 'uint64': 3221759901}]
+0x1808c3351 call 0x1804c1c70
+0x1808c3356 lea rcx, [rip + 0x7bf3ab3] DATA [{'address': '0x1884b6e10', 'bytes8': 'c57908c000000000', 'uint32': 3221780933, 'float32': -2.132432222366333, 'uint64': 3221780933}]
+0x1808c335d call 0x1804c1c70
+0x1808c3362 lea rcx, [rip + 0x7bf3d27] DATA [{'address': '0x1884b7090', 'bytes8': 'c77908c000000000', 'uint32': 3221780935, 'float32': -2.132432699203491, 'uint64': 3221780935}]
+0x1808c3369 call 0x1804c1c70
+0x1808c336e mov byte ptr [rip + 0x800d617], 1
+0x1808c3375 mov rcx, qword ptr [rsi + 0x10]
+0x1808c3379 mov qword ptr [rsp + 0x40], rbp
+0x1808c337e mov qword ptr [rsp + 0x48], rdi
+0x1808c3383 mov qword ptr [rsp + 0x50], r14
+0x1808c3388 mov qword ptr [rsp + 0x20], r15
+0x1808c338d test rcx, rcx
+0x1808c3390 je 0x1808c34d1
+0x1808c3396 mov rdx, qword ptr [rip + 0x7bf3cf3] DATA [{'address': '0x1884b7090', 'bytes8': 'c77908c000000000', 'uint32': 3221780935, 'float32': -2.132432699203491, 'uint64': 3221780935}]
+0x1808c339d call 0x18495dcf0
+0x1808c33a2 mov rcx, qword ptr [rsi + 0x18]
+0x1808c33a6 mov r15d, eax
+0x1808c33a9 test rcx, rcx
+0x1808c33ac je 0x1808c34d1
+0x1808c33b2 mov r8d, dword ptr [rcx + 0x18]
+0x1808c33b6 xor ebp, ebp
+0x1808c33b8 inc dword ptr [rcx + 0x1c]
+0x1808c33bb mov dword ptr [rcx + 0x18], ebp
+0x1808c33be test r8d, r8d
+0x1808c33c1 jle 0x1808c33d1
+0x1808c33c3 mov rcx, qword ptr [rcx + 0x10]
+0x1808c33c7 xor r9d, r9d
+0x1808c33ca xor edx, edx
+0x1808c33cc call 0x185aeb3b0
+0x1808c33d1 mov edi, ebp
+0x1808c33d3 test r15d, r15d
+0x1808c33d6 jle 0x1808c3453
+0x1808c33d8 nop dword ptr [rax + rax]
+0x1808c33e0 mov rcx, qword ptr [rsi + 0x10]
+0x1808c33e4 test rcx, rcx
+0x1808c33e7 je 0x1808c34d1
+0x1808c33ed mov r8, qword ptr [rip + 0x7bf3a1c] DATA [{'address': '0x1884b6e10', 'bytes8': 'c57908c000000000', 'uint32': 3221780933, 'float32': -2.132432222366333, 'uint64': 3221780933}]
+0x1808c33f4 mov edx, edi
+0x1808c33f6 call 0x184d3d960
+0x1808c33fb test rax, rax
+0x1808c33fe je 0x1808c34d1
+0x1808c3404 xor edx, edx
+0x1808c3406 mov rcx, rax
+0x1808c3409 call 0x18066f9c0 ; Torappu.Battle.BObject$$get_validAndBorned
+0x1808c340e test al, al
+0x1808c3410 je 0x1808c344c
+0x1808c3412 mov rcx, qword ptr [rsi + 0x10]
+0x1808c3416 mov r14, qword ptr [rsi + 0x18]
+0x1808c341a test rcx, rcx
+0x1808c341d je 0x1808c34d1
+0x1808c3423 mov r8, qword ptr [rip + 0x7bf39e6] DATA [{'address': '0x1884b6e10', 'bytes8': 'c57908c000000000', 'uint32': 3221780933, 'float32': -2.132432222366333, 'uint64': 3221780933}]
+0x1808c342a mov edx, edi
+0x1808c342c call 0x184d3d960
+0x1808c3431 test r14, r14
+0x1808c3434 je 0x1808c34d1
+0x1808c343a mov r8, qword ptr [rip + 0x7c6a06f] DATA [{'address': '0x18852d4b0', 'bytes8': '972708c000000000', 'uint32': 3221759895, 'float32': -2.1274163722991943, 'uint64': 3221759895}]
+0x1808c3441 mov rdx, rax
+0x1808c3444 mov rcx, r14
+0x1808c3447 call 0x18053c2c0
+0x1808c344c inc edi
+0x1808c344e cmp edi, r15d
+0x1808c3451 jl 0x1808c33e0
+0x1808c3453 mov r14, qword ptr [rsi + 0x18]
+0x1808c3457 test r14, r14
+0x1808c345a je 0x1808c34d1
+0x1808c345c mov r14d, dword ptr [r14 + 0x18]
+0x1808c3460 test r14d, r14d
+0x1808c3463 jle 0x1808c34b6
+0x1808c3465 mov rcx, qword ptr [rsi + 0x18]
+0x1808c3469 test rcx, rcx
+0x1808c346c je 0x1808c34d1
+0x1808c346e mov r8, qword ptr [rip + 0x7c6a7d3] DATA [{'address': '0x18852dc48', 'bytes8': '9d2708c000000000', 'uint32': 3221759901, 'float32': -2.127417802810669, 'uint64': 3221759901}]
+0x1808c3475 mov edx, ebp
+0x1808c3477 call 0x184da0c70
+0x1808c347c mov rdi, rax
+0x1808c347f test rax, rax
+0x1808c3482 je 0x1808c34d1
+0x1808c3484 cmp byte ptr [rip + 0x804a385], 0
+0x1808c348b jbe 0x1808c3495
+0x1808c348d mov rcx, qword ptr [rax]
+0x1808c3490 call 0x18047cdd0
+0x1808c3495 mov r8, qword ptr [rdi]
+0x1808c3498 mov rdx, rbx
+0x1808c349b mov rcx, rdi
+0x1808c349e mov r9, qword ptr [r8 + 0x2f8]
+0x1808c34a5 mov r8, qword ptr [r8 + 0x300]
+0x1808c34ac call r9
+0x1808c34af inc ebp
+0x1808c34b1 cmp ebp, r14d
+0x1808c34b4 jl 0x1808c3465
+0x1808c34b6 mov r15, qword ptr [rsp + 0x20]
+0x1808c34bb mov r14, qword ptr [rsp + 0x50]
+0x1808c34c0 mov rdi, qword ptr [rsp + 0x48]
+0x1808c34c5 mov rbp, qword ptr [rsp + 0x40]
+0x1808c34ca add rsp, 0x28
+0x1808c34ce pop rsi
+0x1808c34cf pop rbx
+0x1808c34d0 ret 
+0x1808c34d1 call 0x1804c1e20
+0x1808c34d6 int3 
+EDGES [{"from": "0x1808c3324", "kind": "conditional", "to": "0x1808c3375"}, {"from": "0x1808c3324", "kind": "fallthrough", "to": "0x1808c3326"}, {"from": "0x1808c3390", "kind": "conditional", "to": "0x1808c34d1"}, {"from": "0x1808c3390", "kind": "fallthrough", "to": "0x1808c3396"}, {"from": "0x1808c33ac", "kind": "conditional", "to": "0x1808c34d1"}, {"from": "0x1808c33ac", "kind": "fallthrough", "to": "0x1808c33b2"}, {"from": "0x1808c33c1", "kind": "conditional", "to": "0x1808c33d1"}, {"from": "0x1808c33c1", "kind": "fallthrough", "to": "0x1808c33c3"}, {"from": "0x1808c33d6", "kind": "conditional", "to": "0x1808c3453"}, {"from": "0x1808c33d6", "kind": "fallthrough", "to": "0x1808c33d8"}, {"from": "0x1808c33e7", "kind": "conditional", "to": "0x1808c34d1"}, {"from": "0x1808c33e7", "kind": "fallthrough", "to": "0x1808c33ed"}, {"from": "0x1808c33fe", "kind": "conditional", "to": "0x1808c34d1"}, {"from": "0x1808c33fe", "kind": "fallthrough", "to": "0x1808c3404"}, {"from": "0x1808c3410", "kind": "conditional", "to": "0x1808c344c"}, {"from": "0x1808c3410", "kind": "fallthrough", "to": "0x1808c3412"}, {"from": "0x1808c341d", "kind": "conditional", "to": "0x1808c34d1"}, {"from": "0x1808c341d", "kind": "fallthrough", "to": "0x1808c3423"}, {"from": "0x1808c3434", "kind": "conditional", "to": "0x1808c34d1"}, {"from": "0x1808c3434", "kind": "fallthrough", "to": "0x1808c343a"}, {"from": "0x1808c3451", "kind": "conditional", "to": "0x1808c33e0"}, {"from": "0x1808c3451", "kind": "fallthrough", "to": "0x1808c3453"}, {"from": "0x1808c345a", "kind": "conditional", "to": "0x1808c34d1"}, {"from": "0x1808c345a", "kind": "fallthrough", "to": "0x1808c345c"}, {"from": "0x1808c3463", "kind": "conditional", "to": "0x1808c34b6"}, {"from": "0x1808c3463", "kind": "fallthrough", "to": "0x1808c3465"}, {"from": "0x1808c346c", "kind": "conditional", "to": "0x1808c34d1"}, {"from": "0x1808c346c", "kind": "fallthrough", "to": "0x1808c346e"}, {"from": "0x1808c3482", "kind": "conditional", "to": "0x1808c34d1"}, {"from": "0x1808c3482", "kind": "fallthrough", "to": "0x1808c3484"}, {"from": "0x1808c348b", "kind": "conditional", "to": "0x1808c3495"}, {"from": "0x1808c348b", "kind": "fallthrough", "to": "0x1808c348d"}, {"from": "0x1808c34b4", "kind": "conditional", "to": "0x1808c3465"}, {"from": "0x1808c34b4", "kind": "fallthrough", "to": "0x1808c34b6"}]
+LIMITS []
+
+Torappu.Battle.Unit$$OnLateTick 0x180aa9850
+0x180aa9850 mov qword ptr [rsp + 0x10], rbx
+0x180aa9855 push rdi
+0x180aa9856 sub rsp, 0x20
+0x180aa985a cmp byte ptr [rip + 0x7e285a5], 0
+0x180aa9861 mov rbx, rdx
+0x180aa9864 mov rdi, rcx
+0x180aa9867 jne 0x180aa9888
+0x180aa9869 lea rcx, [rip + 0x7abc558] DATA [{'address': '0x188565dc8', 'bytes8': 'e7e9012000000000', 'uint32': 536996327, 'float32': 1.100411681317276e-19, 'uint64': 536996327}]
+0x180aa9870 call 0x1804c1c70
+0x180aa9875 lea rcx, [rip + 0x7b10f0c] DATA [{'address': '0x1885ba788', 'bytes8': '8f7d022000000000', 'uint32': 537034127, 'float32': 1.1052972168101673e-19, 'uint64': 537034127}]
+0x180aa987c call 0x1804c1c70
+0x180aa9881 mov byte ptr [rip + 0x7e2857e], 1
+0x180aa9888 mov rax, qword ptr [rip + 0x7b10ef9] DATA [{'address': '0x1885ba788', 'bytes8': '8f7d022000000000', 'uint32': 537034127, 'float32': 1.1052972168101673e-19, 'uint64': 537034127}]
+0x180aa988f mov rdx, qword ptr [rax + 0xb8]
+0x180aa9896 mov rcx, qword ptr [rdx + 0x460]
+0x180aa989d test rcx, rcx
+0x180aa98a0 jne 0x180aa9960
+0x180aa98a6 mov qword ptr [rsp + 0x30], rsi
+0x180aa98ab xor r8d, r8d
+0x180aa98ae mov rdx, rbx
+0x180aa98b1 mov rcx, rdi
+0x180aa98b4 call 0x180542070 ; BattleTimer$$EventOnEntryClick,BattleTimer$$EventOnTimerPlayNPause,BattleTimer$$EventOnTimerRecord [aliases 2287]
+0x180aa98b9 cmp byte ptr [rip + 0x7e63f50], 0
+0x180aa98c0 jbe 0x180aa98ca
+0x180aa98c2 mov rcx, qword ptr [rdi]
+0x180aa98c5 call 0x18047cdd0
+0x180aa98ca mov rdx, qword ptr [rdi]
+0x180aa98cd mov rcx, rdi
+0x180aa98d0 mov rax, qword ptr [rdx + 0xb48]
+0x180aa98d7 mov rdx, qword ptr [rdx + 0xb50]
+0x180aa98de call rax
+0x180aa98e0 mov rcx, qword ptr [rip + 0x7abc4e1] DATA [{'address': '0x188565dc8', 'bytes8': 'e7e9012000000000', 'uint32': 536996327, 'float32': 1.100411681317276e-19, 'uint64': 536996327}]
+0x180aa98e7 mov rsi, rax
+0x180aa98ea cmp dword ptr [rcx + 0xe0], 0
+0x180aa98f1 jne 0x180aa98f8
+0x180aa98f3 call 0x1804c1eb0
+0x180aa98f8 xor r8d, r8d
+0x180aa98fb xor edx, edx
+0x180aa98fd mov rcx, rsi
+0x180aa9900 call 0x186780bb0
+0x180aa9905 test al, al
+0x180aa9907 je 0x180aa9938
+0x180aa9909 test rsi, rsi
+0x180aa990c je 0x180aa9978
+0x180aa990e cmp byte ptr [rip + 0x7e63efb], 0
+0x180aa9915 jbe 0x180aa991f
+0x180aa9917 mov rcx, qword ptr [rsi]
+0x180aa991a call 0x18047cdd0
+0x180aa991f mov r8, qword ptr [rsi]
+0x180aa9922 mov rdx, rbx
+0x180aa9925 mov rcx, rsi
+0x180aa9928 mov rax, qword ptr [r8 + 0x318]
+0x180aa992f mov r8, qword ptr [r8 + 0x320]
+0x180aa9936 call rax
+0x180aa9938 xor edx, edx
+0x180aa993a mov rcx, rdi
+0x180aa993d call 0x180ab0050 ; Torappu.Battle.Unit$$get_graphicFollow
+0x180aa9942 test rax, rax
+0x180aa9945 je 0x180aa9978
+0x180aa9947 xor edx, edx
+0x180aa9949 mov rcx, rax
+0x180aa994c mov rsi, qword ptr [rsp + 0x30]
+0x180aa9951 mov rbx, qword ptr [rsp + 0x38]
+0x180aa9956 add rsp, 0x20
+0x180aa995a pop rdi
+0x180aa995b jmp 0x180a92080 ; Torappu.Battle.GraphicFollowController$$Tick
+0x180aa9960 xor r9d, r9d
+0x180aa9963 mov r8, rbx
+0x180aa9966 mov rdx, rdi
+0x180aa9969 mov rbx, qword ptr [rsp + 0x38]
+0x180aa996e add rsp, 0x20
+0x180aa9972 pop rdi
+0x180aa9973 jmp 0x1833e1c10 ; XLua.DelegateBridge$$__Gen_Delegate_Imp421
+0x180aa9978 call 0x1804c1e20
+0x180aa997d int3 
+EDGES [{"from": "0x180aa9867", "kind": "conditional", "to": "0x180aa9888"}, {"from": "0x180aa9867", "kind": "fallthrough", "to": "0x180aa9869"}, {"from": "0x180aa98a0", "kind": "conditional", "to": "0x180aa9960"}, {"from": "0x180aa98a0", "kind": "fallthrough", "to": "0x180aa98a6"}, {"from": "0x180aa98c0", "kind": "conditional", "to": "0x180aa98ca"}, {"from": "0x180aa98c0", "kind": "fallthrough", "to": "0x180aa98c2"}, {"from": "0x180aa98f1", "kind": "conditional", "to": "0x180aa98f8"}, {"from": "0x180aa98f1", "kind": "fallthrough", "to": "0x180aa98f3"}, {"from": "0x180aa9907", "kind": "conditional", "to": "0x180aa9938"}, {"from": "0x180aa9907", "kind": "fallthrough", "to": "0x180aa9909"}, {"from": "0x180aa990c", "kind": "conditional", "to": "0x180aa9978"}, {"from": "0x180aa990c", "kind": "fallthrough", "to": "0x180aa990e"}, {"from": "0x180aa9915", "kind": "conditional", "to": "0x180aa991f"}, {"from": "0x180aa9915", "kind": "fallthrough", "to": "0x180aa9917"}, {"from": "0x180aa9945", "kind": "conditional", "to": "0x180aa9978"}, {"from": "0x180aa9945", "kind": "fallthrough", "to": "0x180aa9947"}, {"from": "0x180aa995b", "kind": "external_tailcall", "to": "0x180a92080", "symbols": ["Torappu.Battle.GraphicFollowController$$Tick"]}, {"from": "0x180aa9973", "kind": "external_tailcall", "to": "0x1833e1c10", "symbols": ["XLua.DelegateBridge$$__Gen_Delegate_Imp421"]}]
+LIMITS []

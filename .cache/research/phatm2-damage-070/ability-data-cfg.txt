@@ -1,0 +1,81 @@
+Torappu.Battle.Ability$$SetData 0x1805ea280
+0x1805ea280 mov qword ptr [rsp + 0x10], rbx
+0x1805ea285 mov qword ptr [rsp + 0x18], rbp
+0x1805ea28a push rsi
+0x1805ea28b sub rsp, 0x50
+0x1805ea28f cmp byte ptr [rip + 0x82e4d89], 0
+0x1805ea296 mov rsi, r8
+0x1805ea299 mov rbp, rdx
+0x1805ea29c mov rbx, rcx
+0x1805ea29f jne 0x1805ea2c0
+0x1805ea2a1 lea rcx, [rip + 0x7fd0fa0] DATA [{'address': '0x1885bb248', 'bytes8': 'd510012000000000', 'uint32': 536940757, 'float32': 1.093229427154843e-19, 'uint64': 536940757}]
+0x1805ea2a8 call 0x1804c1c70
+0x1805ea2ad lea rcx, [rip + 0x7f79cac] DATA [{'address': '0x188563f60', 'bytes8': 'b757012000000000', 'uint32': 536958903, 'float32': 1.0955747426853722e-19, 'uint64': 536958903}]
+0x1805ea2b4 call 0x1804c1c70
+0x1805ea2b9 mov byte ptr [rip + 0x82e4d5f], 1
+0x1805ea2c0 mov rax, qword ptr [rip + 0x7fd0f81] DATA [{'address': '0x1885bb248', 'bytes8': 'd510012000000000', 'uint32': 536940757, 'float32': 1.093229427154843e-19, 'uint64': 536940757}]
+0x1805ea2c7 mov rdx, qword ptr [rax + 0xb8]
+0x1805ea2ce mov rcx, qword ptr [rdx + 0x140]
+0x1805ea2d5 test rcx, rcx
+0x1805ea2d8 jne 0x1805ea39c
+0x1805ea2de mov qword ptr [rsp + 0x60], rdi
+0x1805ea2e3 mov rcx, qword ptr [rip + 0x7f79c76] DATA [{'address': '0x188563f60', 'bytes8': 'b757012000000000', 'uint32': 536958903, 'float32': 1.0955747426853722e-19, 'uint64': 536958903}]
+0x1805ea2ea cmp dword ptr [rcx + 0xe0], 0
+0x1805ea2f1 jne 0x1805ea2f8
+0x1805ea2f3 call 0x1804c1eb0
+0x1805ea2f8 xor ecx, ecx
+0x1805ea2fa call 0x180634450 ; Torappu.Battle.BattleController$$GenNextUniqueId
+0x1805ea2ff cmp byte ptr [rip + 0x82e4cf5], 0
+0x1805ea306 mov edi, eax
+0x1805ea308 jne 0x1805ea31d
+0x1805ea30a lea rcx, [rip + 0x7fd0f37] DATA [{'address': '0x1885bb248', 'bytes8': 'd510012000000000', 'uint32': 536940757, 'float32': 1.093229427154843e-19, 'uint64': 536940757}]
+0x1805ea311 call 0x1804c1c70
+0x1805ea316 mov byte ptr [rip + 0x82e4cde], 1
+0x1805ea31d mov rcx, qword ptr [rip + 0x7fd0f24] DATA [{'address': '0x1885bb248', 'bytes8': 'd510012000000000', 'uint32': 536940757, 'float32': 1.093229427154843e-19, 'uint64': 536940757}]
+0x1805ea324 mov rdx, qword ptr [rcx + 0xb8]
+0x1805ea32b mov rcx, qword ptr [rdx + 0x20]
+0x1805ea32f test rcx, rcx
+0x1805ea332 jne 0x1805ea339
+0x1805ea334 mov dword ptr [rbx + 0x78], edi
+0x1805ea337 jmp 0x1805ea347
+0x1805ea339 xor r9d, r9d
+0x1805ea33c mov r8d, edi
+0x1805ea33f mov rdx, rbx
+0x1805ea342 call 0x18306ed30 ; XLua.DelegateBridge$$__Gen_Delegate_Imp1007
+0x1805ea347 cmp byte ptr [rip + 0x83234c2], 0
+0x1805ea34e mov rdi, qword ptr [rsp + 0x60]
+0x1805ea353 jbe 0x1805ea35d
+0x1805ea355 mov rcx, qword ptr [rbx]
+0x1805ea358 call 0x18047cdd0
+0x1805ea35d mov r9, qword ptr [rbx]
+0x1805ea360 lea r8, [rsp + 0x30]
+0x1805ea365 movups xmm0, xmmword ptr [rsi]
+0x1805ea368 mov rdx, rbp
+0x1805ea36b mov rcx, rbx
+0x1805ea36e movups xmm1, xmmword ptr [rsi + 0x10]
+0x1805ea372 mov rax, qword ptr [r9 + 0x2e8]
+0x1805ea379 mov r9, qword ptr [r9 + 0x2f0]
+0x1805ea380 movaps xmmword ptr [rsp + 0x30], xmm0
+0x1805ea385 movaps xmmword ptr [rsp + 0x40], xmm1
+0x1805ea38a call rax
+0x1805ea38c mov rbx, qword ptr [rsp + 0x68]
+0x1805ea391 mov rbp, qword ptr [rsp + 0x70]
+0x1805ea396 add rsp, 0x50
+0x1805ea39a pop rsi
+0x1805ea39b ret 
+0x1805ea39c movups xmm0, xmmword ptr [rsi]
+0x1805ea39f lea r9, [rsp + 0x30]
+0x1805ea3a4 mov r8, rbp
+0x1805ea3a7 movups xmm1, xmmword ptr [rsi + 0x10]
+0x1805ea3ab mov rdx, rbx
+0x1805ea3ae mov qword ptr [rsp + 0x20], 0
+0x1805ea3b7 movaps xmmword ptr [rsp + 0x30], xmm0
+0x1805ea3bc movaps xmmword ptr [rsp + 0x40], xmm1
+0x1805ea3c1 call 0x1832e1ab0 ; XLua.DelegateBridge$$__Gen_Delegate_Imp2594
+0x1805ea3c6 mov rbx, qword ptr [rsp + 0x68]
+0x1805ea3cb mov rbp, qword ptr [rsp + 0x70]
+0x1805ea3d0 add rsp, 0x50
+0x1805ea3d4 pop rsi
+0x1805ea3d5 ret 
+EDGES [{"from": "0x1805ea29f", "kind": "conditional", "to": "0x1805ea2c0"}, {"from": "0x1805ea29f", "kind": "fallthrough", "to": "0x1805ea2a1"}, {"from": "0x1805ea2d8", "kind": "conditional", "to": "0x1805ea39c"}, {"from": "0x1805ea2d8", "kind": "fallthrough", "to": "0x1805ea2de"}, {"from": "0x1805ea2f1", "kind": "conditional", "to": "0x1805ea2f8"}, {"from": "0x1805ea2f1", "kind": "fallthrough", "to": "0x1805ea2f3"}, {"from": "0x1805ea308", "kind": "conditional", "to": "0x1805ea31d"}, {"from": "0x1805ea308", "kind": "fallthrough", "to": "0x1805ea30a"}, {"from": "0x1805ea332", "kind": "conditional", "to": "0x1805ea339"}, {"from": "0x1805ea332", "kind": "fallthrough", "to": "0x1805ea334"}, {"from": "0x1805ea337", "kind": "direct_jump", "to": "0x1805ea347"}, {"from": "0x1805ea353", "kind": "conditional", "to": "0x1805ea35d"}, {"from": "0x1805ea353", "kind": "fallthrough", "to": "0x1805ea355"}]
+LIMITS []

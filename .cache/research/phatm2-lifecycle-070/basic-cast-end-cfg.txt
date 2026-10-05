@@ -1,0 +1,36 @@
+unmapped_0x180e7b8d0 0x180e7b8d0
+0x180e7b8d0 mov qword ptr [rsp + 8], rbx
+0x180e7b8d5 push rdi
+0x180e7b8d6 sub rsp, 0x20
+0x180e7b8da cmp byte ptr [rip + 0x7a58bbf], 0
+0x180e7b8e1 mov edi, edx
+0x180e7b8e3 mov rbx, rcx
+0x180e7b8e6 jne 0x180e7b8fb
+0x180e7b8e8 lea rcx, [rip + 0x7742dd9] DATA [{'address': '0x1885be6c8', 'bytes8': '3111012000000000', 'uint32': 536940849, 'float32': 1.0932413178761484e-19, 'uint64': 536940849}]
+0x180e7b8ef call 0x1804c1c70
+0x180e7b8f4 mov byte ptr [rip + 0x7a58ba5], 1
+0x180e7b8fb mov rax, qword ptr [rip + 0x7742dc6] DATA [{'address': '0x1885be6c8', 'bytes8': '3111012000000000', 'uint32': 536940849, 'float32': 1.0932413178761484e-19, 'uint64': 536940849}]
+0x180e7b902 mov r8, qword ptr [rax + 0xb8]
+0x180e7b909 mov rcx, qword ptr [r8 + 0x70]
+0x180e7b90d test rcx, rcx
+0x180e7b910 jne 0x180e7b936
+0x180e7b912 xor r8d, r8d
+0x180e7b915 xor edx, edx
+0x180e7b917 mov rcx, rbx
+0x180e7b91a call 0x1805ebfc0 ; Torappu.Battle.Ability$$set_damageMissFlag
+0x180e7b91f xor r8d, r8d
+0x180e7b922 mov edx, edi
+0x180e7b924 mov rcx, rbx
+0x180e7b927 mov rbx, qword ptr [rsp + 0x30]
+0x180e7b92c add rsp, 0x20
+0x180e7b930 pop rdi
+0x180e7b931 jmp 0x180ec7dc0 ; Torappu.Battle.Abilities.AbstractAnimatedAbility$$OnCastEnd
+0x180e7b936 xor r9d, r9d
+0x180e7b939 mov r8d, edi
+0x180e7b93c mov rdx, rbx
+0x180e7b93f mov rbx, qword ptr [rsp + 0x30]
+0x180e7b944 add rsp, 0x20
+0x180e7b948 pop rdi
+0x180e7b949 jmp 0x1832e3970 ; XLua.DelegateBridge$$__Gen_Delegate_Imp2607
+EDGES [{"from": "0x180e7b8e6", "kind": "conditional", "to": "0x180e7b8fb"}, {"from": "0x180e7b8e6", "kind": "fallthrough", "to": "0x180e7b8e8"}, {"from": "0x180e7b910", "kind": "conditional", "to": "0x180e7b936"}, {"from": "0x180e7b910", "kind": "fallthrough", "to": "0x180e7b912"}, {"from": "0x180e7b931", "kind": "external_tailcall", "to": "0x180ec7dc0", "symbols": ["Torappu.Battle.Abilities.AbstractAnimatedAbility$$OnCastEnd"]}, {"from": "0x180e7b949", "kind": "external_tailcall", "to": "0x1832e3970", "symbols": ["XLua.DelegateBridge$$__Gen_Delegate_Imp2607"]}]
+LIMITS []

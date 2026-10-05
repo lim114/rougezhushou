@@ -1,0 +1,120 @@
+{
+  "version": "0.41.0",
+  "passed": true,
+  "verified_at": 1791057498.85872,
+  "tests_run": 453,
+  "current_tests_passed": 383,
+  "new_tests": 24,
+  "historical_combat_tests_skipped": 70,
+  "failures": 0,
+  "errors": 0,
+  "test_modules": [
+    "tests.test_offline_scope_030",
+    "tests.test_damage",
+    "tests.test_timing",
+    "tests.test_relics",
+    "tests.test_relic_extension",
+    "tests.test_relic_conditions_022",
+    "tests.test_relic_events_022",
+    "tests.test_relic_candidates_025",
+    "tests.test_deployment_relics_027",
+    "tests.test_mantra_events_024",
+    "tests.test_report",
+    "tests.test_run_modifiers",
+    "tests.test_wine_timing",
+    "tests.test_difficulty_rules",
+    "tests.test_target_memory",
+    "tests.test_received_sp_026",
+    "tests.test_event_sp_028",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_relic_enemy_modifiers_follow_stage_and_difficulty_and_are_reported",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_portal_keeps_main_depth_and_missing_context_does_not_guess",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_boss_reduction_is_independent_from_relic_vulnerability_and_preserves_healing_and_timing",
+    "tests.test_enemy_environment.EnemyEnvironmentTests.test_emergency_stage_and_region_use_pinned_enemy_instead_of_manual_defense",
+    "tests.test_offline_relics_031",
+    "tests.test_spawn_hp_033",
+    "tests.test_relic_grade_sync_032",
+    "tests.test_run_reuse_guards_032",
+    "tests.test_sampling_flow",
+    "tests.test_neural_relic_034",
+    "tests.test_neural_sources_035",
+    "tests.test_phase_flow_036",
+    "tests.test_impact_delay_037",
+    "tests.test_summon_modules_038",
+    "tests.test_battle_preview_039",
+    "tests.test_spawn_reference_040",
+    "tests.test_ammo_refill_041"
+  ],
+  "exact_public_output_cases": 732,
+  "public_baseline_outputs_unchanged": true,
+  "book_cases": 1008,
+  "book_comparison": {
+    "exact_same": 468,
+    "non_ammo_unchanged": 468,
+    "changed": 540,
+    "ammo_scenarios": 540,
+    "known_ammo_reference": 180,
+    "positive_refill": 140,
+    "unknown_skill_reference": 360,
+    "known_no_effect": 40
+  },
+  "book_metric_changes": {
+    "total_damage": 340,
+    "total_healing": 320,
+    "duration_seconds": 340,
+    "cycle_seconds": 340,
+    "cycle_dps": 340,
+    "cycle_hps": 260
+  },
+  "source_files_sha256_and_git_blob_verified": true,
+  "raw_relic_data_unchanged": true,
+  "battle_source_and_ui_unchanged": true,
+  "data_rule_counts": {
+    "non_output": 52,
+    "numeric": 119,
+    "pending": 61,
+    "conditional": 28,
+    "partial": 12
+  },
+  "offline_scope": {
+    "items": {
+      "reference_only": 75,
+      "mixed": 4,
+      "offline": 193
+    },
+    "offline_mechanism_gaps": {
+      "pending": 10,
+      "partial": 9
+    }
+  },
+  "source_hashes": {
+    "rouge/ammo_reference.py": "e93992a809c1712982053bccd46d89021f54da4b26cd2d4464ac8ef6b884a7b0",
+    "rouge/data/ammo-refill-reference.json": "ce6a6d8371bbacc98f698f534cb4ca3244f5a553245c5b0eb0f5683c66f541ba",
+    "rouge/relics.py": "5b17fb585894230e90e165be77365f8c7ae4e2b298235a45ac1e19cffac97420",
+    "rouge/relic_events.py": "3cad748256c52f11f66105e48c0a764b033af145db378dee4aaf3e3040b3b436",
+    "rouge/damage.py": "46c774d93e6a1482b61344fba82a52db9c0b402929f27963a84dc3da5e6ccbba",
+    "rouge/operator_engine.py": "888ac3be934cd130daaed4dcd98455688c697344f6ffeb2403ceb595bd3655f8",
+    "rouge/reporting.py": "0bb4aa8200c742ffee870c0d1435c25d364d959f79553c0e9db5eb18334409ad",
+    "tests/test_ammo_refill_041.py": "2792658077a0db245a20d8e9ecd0ba18c68042c77702ba293371ac8db8f7d708",
+    "tests/test_relic_extension.py": "1491b8954944fb55518cbdbe21547f8b0001bff2454fc04940e4a4dfdee2ea45",
+    "scripts/verify_ammo_041.py": "7e887c00d03b7293d3bb9672ca6b75a537497fe9040947895741f4d3a68bb62a",
+    "rouge/data/relic-mechanics.json": "d6e003ce856fdaac9c959c1c50430e4d790c142fddf993b24ecf3ee66fa745e7",
+    "pyproject.toml": "39d94b1326ccef9f1eed24e22bd03e6ea349754ef09c4f3a8a47422fb112cf5d"
+  },
+  "test_log": ".cache/ammo-041/tests.log",
+  "test_log_sha256": "7bddaecfba9ff9f3bd9fce713f26a4894f4e55770abfbeeda15c1e79cc84dafd",
+  "baseline_hashes": {
+    ".cache/ammo-041/before-public-results.json": "9690736ec00bdb0d53ed97ca308a600d7d9d2f44cc62e9cdcecbf07f0378c313",
+    ".cache/ammo-041/before-book-results.json": "540d7e463ffc5ab31e10145c39d79baaa1b6e11357e7daaea15fc41873e8b6d6",
+    ".cache/ammo-041/after-book-results.json": "955ae721cac65a524d7415d54dcdf2f13ad027ab9c680805c990b0cb66326c65"
+  },
+  "elapsed_seconds": 111.53773380001076,
+  "chat_requests": 0,
+  "game_actions": 0,
+  "private_state_used": false,
+  "limits": [
+    "Count references use only the two sourced ratios; not a generic fixed-point emulator.",
+    "Polling phase and client frames are not calibrated; four frames are a conservative reference bound.",
+    "Dynamic max ammo, special consumption/partial packets and multi-book acquisition order remain unknown.",
+    "No new recognition timing or inventory-accuracy measurement. P1-P3 remain incomplete."
+  ]
+}

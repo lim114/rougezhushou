@@ -1,0 +1,121 @@
+{
+  "version": "0.24.0",
+  "verified_at": 1790966440.1712525,
+  "sample": "samples/native-client/live-0.23.png",
+  "sample_sha256": "780c7bf72c14a3e8809723265335d45cb592813f0c02bf983544d10db8d323d1",
+  "baseline_performance": {
+    "stages_ms": {
+      "initialization": 827.5174000300467,
+      "viewport": 59.68599999323487,
+      "full_ocr": 3354.302299907431,
+      "visible_labels": 19.051200011745095,
+      "operator": 38.39519992470741,
+      "run": 6700.860799988732,
+      "node_content": 3.1575001776218414,
+      "map": 77.82049989327788,
+      "evidence": 1.1676999274641275
+    },
+    "ocr": {
+      "mode": "full_discovery",
+      "pixels": 2408399,
+      "regions": 1
+    },
+    "reuse": "none",
+    "total_ms": 11082.947499817237,
+    "icon_cache_hits": 0,
+    "ocr_cache_hits": 0
+  },
+  "optimized_performance": {
+    "stages_ms": {
+      "initialization": 704.2293001431972,
+      "viewport": 59.341999934986234,
+      "full_ocr": 3293.5725001152605,
+      "visible_labels": 15.921399928629398,
+      "operator": 36.49599989876151,
+      "run": 2339.9862002115697,
+      "node_content": 1.734699821099639,
+      "map": 45.56520003825426,
+      "evidence": 0.30479999259114265
+    },
+    "ocr": {
+      "mode": "full_discovery",
+      "pixels": 2408399,
+      "regions": 1
+    },
+    "reuse": "none",
+    "total_ms": 6497.7484999690205,
+    "icon_cache_hits": 0,
+    "ocr_cache_hits": 0
+  },
+  "exact_repeat_performance": {
+    "reuse": "exact_frame",
+    "total_ms": 3.1255001667886972,
+    "icon_cache_hits": 0,
+    "ocr_cache_hits": 0,
+    "stages_ms": {}
+  },
+  "changed_background_cached": {
+    "stages_ms": {
+      "initialization": 0.002300133928656578,
+      "viewport": 46.63489991798997,
+      "full_ocr": 271.4921000879258,
+      "visible_labels": 0.32670004293322563,
+      "operator": 0.10950001887977123,
+      "run": 172.91529988870025,
+      "node_content": 0.2669999375939369,
+      "map": 60.9693001024425,
+      "evidence": 1.2506998609751463
+    },
+    "ocr": {
+      "mode": "dirty_regions",
+      "pixels": 14336,
+      "regions": 1
+    },
+    "reuse": "none",
+    "total_ms": 557.2146000340581,
+    "icon_cache_hits": 1,
+    "ocr_cache_hits": 3
+  },
+  "changed_background_fresh": {
+    "stages_ms": {
+      "initialization": 454.1694999206811,
+      "viewport": 63.40730004012585,
+      "full_ocr": 3385.1185999810696,
+      "visible_labels": 0.43630017898976803,
+      "operator": 0.13619987294077873,
+      "run": 1698.094299994409,
+      "node_content": 0.17010001465678215,
+      "map": 43.817800004035234,
+      "evidence": 0.5232999101281166
+    },
+    "ocr": {
+      "mode": "full_discovery",
+      "pixels": 2408399,
+      "regions": 1
+    },
+    "reuse": "none",
+    "total_ms": 5646.477600093931,
+    "icon_cache_hits": 0,
+    "ocr_cache_hits": 0
+  },
+  "all_other_observation_fields_identical": true,
+  "intentional_correction": {
+    "crew_count_before": 9,
+    "crew_count_after": 6,
+    "pixel_evidence": ".cache/recognition-024/numeric-crop-3.png"
+  },
+  "changed_frame_evidence_parity": true,
+  "changed_frame_raw_ocr_identical": false,
+  "changed_frame_parity_scope": "All structured observations and text values; OCR boxes and confidences may differ at full versus local inference scale.",
+  "source_hashes": {
+    "rouge/recognition.py": "4b0039e7d5d879eaf5704b695451e78758b3464ad8bf03639069cf9e552da27e",
+    "rouge/relic_recognition.py": "7204015bcd10426b33ad733dc3831682b0375d3aee9c5ae6a4d087d69fe03877",
+    "rouge/run_recognition.py": "d83ebd931beba093cd0bf2811de7a5ef1cace7cbb7a90043407739c93c7da821",
+    "rouge/dynamic_ocr.py": "0dcaef768e8e8a2cece0ee9c7acb28cb429ee7c8cfc52c4cb4503ea78f68bbae"
+  },
+  "limitations": [
+    "Same saved real frame; one complete before/after read, not a multi-run latency guarantee.",
+    "Baseline profiled earlier under shared CPU workload; final read after unit tests. Component paired comparison is in RECOGNITION_ICONS_0.24_VERIFICATION.json.",
+    "Changed background is a controlled 8x8 patch; full animated pages still require rediscovery. Raw boxes/confidences differed for two unchanged text values; structured observations and values are identical."
+  ]
+}

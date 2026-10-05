@@ -1,0 +1,5077 @@
+{
+  "source_metadata_sha256": "ee7f1239e1cff67620a7964d651189dbb5c98e13699169096be2a907fd541118",
+  "source_game_dll_sha256": "6edbc00b11e016c8935bbc45f158d5363f63d35038b0a69f8297612235e533ce",
+  "selected": [
+    {
+      "name": "Torappu.Battle.AbilityStandard+<_DoCast>d__85",
+      "type_index": 9822,
+      "parent": "System.Object",
+      "fields": [
+        {
+          "name": "<>1__state",
+          "type": "System.Int32",
+          "offset": 16
+        },
+        {
+          "name": "<>2__current",
+          "type": "System.Object",
+          "offset": 24
+        },
+        {
+          "name": "<>4__this",
+          "type": "Torappu.Battle.AbilityStandard",
+          "offset": 32
+        }
+      ],
+      "vtable": [
+        {
+          "slot": 0,
+          "usage_type": 3,
+          "decoded_index": 240677,
+          "method": "System.Object$$Equals"
+        },
+        {
+          "slot": 1,
+          "usage_type": 3,
+          "decoded_index": 240680,
+          "method": "System.Object$$Finalize"
+        },
+        {
+          "slot": 2,
+          "usage_type": 3,
+          "decoded_index": 240681,
+          "method": "System.Object$$GetHashCode"
+        },
+        {
+          "slot": 3,
+          "usage_type": 3,
+          "decoded_index": 240684,
+          "method": "System.Object$$ToString"
+        },
+        {
+          "slot": 4,
+          "usage_type": 3,
+          "decoded_index": 62709,
+          "method": "Torappu.Battle.AbilityStandard+<_DoCast>d__85$$System.Collections.Generic.IEnumerator<System.Object>.get_Current"
+        },
+        {
+          "slot": 5,
+          "usage_type": 3,
+          "decoded_index": 62707,
+          "method": "Torappu.Battle.AbilityStandard+<_DoCast>d__85$$System.IDisposable.Dispose"
+        },
+        {
+          "slot": 6,
+          "usage_type": 3,
+          "decoded_index": 62708,
+          "method": "Torappu.Battle.AbilityStandard+<_DoCast>d__85$$MoveNext"
+        },
+        {
+          "slot": 7,
+          "usage_type": 3,
+          "decoded_index": 62711,
+          "method": "Torappu.Battle.AbilityStandard+<_DoCast>d__85$$System.Collections.IEnumerator.get_Current"
+        },
+        {
+          "slot": 8,
+          "usage_type": 3,
+          "decoded_index": 62710,
+          "method": "Torappu.Battle.AbilityStandard+<_DoCast>d__85$$System.Collections.IEnumerator.Reset"
+        }
+      ]
+    },
+    {
+      "name": "Torappu.Battle.AbilityStandard",
+      "type_index": 9823,
+      "parent": "Torappu.Battle.Ability",
+      "fields": [
+        {
+          "name": "_ignoreIfOwnerDead",
+          "type": "System.Boolean",
+          "offset": 200
+        },
+        {
+          "name": "_forceAsDmgOrHealAbility",
+          "type": "System.Boolean",
+          "offset": 201
+        },
+        {
+          "name": "m_castTargets",
+          "type": "System.Collections.Generic.List`1<Torappu.ObjectPtr`1<Torappu.Battle.Entity>>",
+          "offset": 208
+        },
+        {
+          "name": "m_inputTarget",
+          "type": "System.Collections.Generic.KeyValuePair`2<UnityEngine.Vector2,Torappu.ObjectPtr`1<Torappu.Battle.Entity>>",
+          "offset": 216
+        },
+        {
+          "name": "m_playbackSpeed",
+          "type": "System.Single",
+          "offset": 240
+        },
+        {
+          "name": "m_behaviours",
+          "type": "Torappu.Battle.AbilityStandard+Behaviour[]",
+          "offset": 248
+        },
+        {
+          "name": "m_isDmgOrHealAbility",
+          "type": "System.Boolean",
+          "offset": 256
+        },
+        {
+          "name": "m_purposeMask",
+          "type": "Torappu.Battle.ActionPurposeMask",
+          "offset": 260
+        },
+        {
+          "name": "<spellCnt>k__BackingField",
+          "type": "System.Int32",
+          "offset": 264
+        },
+        {
+          "name": "<firstAttack>k__BackingField",
+          "type": "System.Boolean",
+          "offset": 268
+        },
+        {
+          "name": "<isAttackFinished>k__BackingField",
+          "type": "System.Boolean",
+          "offset": 269
+        },
+        {
+          "name": "m_isPredelay",
+          "type": "System.Boolean",
+          "offset": 270
+        },
+        {
+          "name": "__Hotfix0_get_castTargets",
+          "type": "XLua.DelegateBridge",
+          "offset": 0
+        },
+        {
+          "name": "__Hotfix0_get_inputTarget",
+          "type": "XLua.DelegateBridge",
+          "offset": 8
+        },
+        {
+          "name": "__Hotfix0_get_selectTargetTiming",
+          "type": "XLua.DelegateBridge",
+          "offset": 16
+        },
+        {
+          "name": "__Hotfix0_get_playbackSpeed",
+          "type": "XLua.DelegateBridge",
+          "offset": 24
+        },
+        {
+          "name": "__Hotfix0_set_playbackSpeed",
+          "type": "XLua.DelegateBridge",
+          "offset": 32
+        },
+        {
+          "name": "__Hotfix0_get_allowNoTarget",
+          "type": "XLua.DelegateBridge",
+          "offset": 40
+        },
+        {
+          "name": "__Hotfix0_get_onlyTrigAudioSignalForFirstSpell",
+          "type": "XLua.DelegateBridge",
+          "offset": 48
+        },
+        {
+          "name": "__Hotfix0_get_onlyTrigAudioSignalForFirstHit",
+          "type": "XLua.DelegateBridge",
+          "offset": 56
+        },
+        {
+          "name": "__Hotfix0_get_spellCnt",
+          "type": "XLua.DelegateBridge",
+          "offset": 64
+        },
+        {
+          "name": "__Hotfix0_set_spellCnt",
+          "type": "XLua.DelegateBridge",
+          "offset": 72
+        },
+        {
+          "name": "__Hotfix0_get_firstAttack",
+          "type": "XLua.DelegateBridge",
+          "offset": 80
+        },
+        {
+          "name": "__Hotfix0_set_firstAttack",
+          "type": "XLua.DelegateBridge",
+          "offset": 88
+        },
+        {
+          "name": "__Hotfix0_get_purposeMask",
+          "type": "XLua.DelegateBridge",
+          "offset": 96
+        },
+        {
+          "name": "__Hotfix0_get_isAttackFinished",
+          "type": "XLua.DelegateBridge",
+          "offset": 104
+        },
+        {
+          "name": "__Hotfix0_set_isAttackFinished",
+          "type": "XLua.DelegateBridge",
+          "offset": 112
+        },
+        {
+          "name": "__Hotfix0_get_isPredelay",
+          "type": "XLua.DelegateBridge",
+          "offset": 120
+        },
+        {
+          "name": "__Hotfix0_DoSetData",
+          "type": "XLua.DelegateBridge",
+          "offset": 128
+        },
+        {
+          "name": "__Hotfix0__CheckGameObjectActiveBeforeCast",
+          "type": "XLua.DelegateBridge",
+          "offset": 136
+        },
+        {
+          "name": "__Hotfix0_CastToTarget",
+          "type": "XLua.DelegateBridge",
+          "offset": 144
+        },
+        {
+          "name": "__Hotfix0_CastDirectly",
+          "type": "XLua.DelegateBridge",
+          "offset": 152
+        },
+        {
+          "name": "__Hotfix0_CastToInputPosition",
+          "type": "XLua.DelegateBridge",
+          "offset": 160
+        },
+        {
+          "name": "__Hotfix0_GetCastDirectlyMapPosition",
+          "type": "XLua.DelegateBridge",
+          "offset": 168
+        },
+        {
+          "name": "__Hotfix0_StopAffect",
+          "type": "XLua.DelegateBridge",
+          "offset": 176
+        },
+        {
+          "name": "__Hotfix0_CheckAtPreCastPhase",
+          "type": "XLua.DelegateBridge",
+          "offset": 184
+        },
+        {
+          "name": "__Hotfix0_GetFirstBehaviourOrNull",
+          "type": "XLua.DelegateBridge",
+          "offset": 192
+        },
+        {
+          "name": "__Hotfix0_CleanupForNextCast",
+          "type": "XLua.DelegateBridge",
+          "offset": 200
+        },
+        {
+          "name": "__Hotfix0_OnEvent",
+          "type": "XLua.DelegateBridge",
+          "offset": 208
+        },
+        {
+          "name": "__Hotfix0_GatherBuffs",
+          "type": "XLua.DelegateBridge",
+          "offset": 216
+        },
+        {
+          "name": "__Hotfix0_GatherEffects",
+          "type": "XLua.DelegateBridge",
+          "offset": 224
+        },
+        {
+          "name": "__Hotfix0_GatherProjectiles",
+          "type": "XLua.DelegateBridge",
+          "offset": 232
+        },
+        {
+          "name": "__Hotfix0_GatherActionNodes",
+          "type": "XLua.DelegateBridge",
+          "offset": 240
+        },
+        {
+          "name": "__Hotfix0_PlayCheckPointSignal",
+          "type": "XLua.DelegateBridge",
+          "offset": 248
+        },
+        {
+          "name": "__Hotfix0_OnCastOnTarget",
+          "type": "XLua.DelegateBridge",
+          "offset": 256
+        },
+        {
+          "name": "__Hotfix0_DoApplyActionsOnTarget",
+          "type": "XLua.DelegateBridge",
+          "offset": 264
+        },
+        {
+          "name": "__Hotfix0_OnWaitForTriggerDelta",
+          "type": "XLua.DelegateBridge",
+          "offset": 272
+        },
+        {
+          "name": "__Hotfix0_OnSpellStart",
+          "type": "XLua.DelegateBridge",
+          "offset": 280
+        },
+        {
+          "name": "__Hotfix0_DoOnHasNoTarget",
+          "type": "XLua.DelegateBridge",
+          "offset": 288
+        },
+        {
+          "name": "__Hotfix0_OnCastStart",
+          "type": "XLua.DelegateBridge",
+          "offset": 296
+        },
+        {
+          "name": "__Hotfix0_OnCastEnd",
+          "type": "XLua.DelegateBridge",
+          "offset": 304
+        },
+        {
+          "name": "__Hotfix0_OnAttached",
+          "type": "XLua.DelegateBridge",
+          "offset": 312
+        },
+        {
+          "name": "__Hotfix0_OnOverload",
+          "type": "XLua.DelegateBridge",
+          "offset": 320
+        },
+        {
+          "name": "__Hotfix0_OnDetached",
+          "type": "XLua.DelegateBridge",
+          "offset": 328
+        },
+        {
+          "name": "__Hotfix0_OnAttackFinished",
+          "type": "XLua.DelegateBridge",
+          "offset": 336
+        },
+        {
+          "name": "__Hotfix0_OnStunnedChanged",
+          "type": "XLua.DelegateBridge",
+          "offset": 344
+        },
+        {
+          "name": "__Hotfix0_OnFrozenChanged",
+          "type": "XLua.DelegateBridge",
+          "offset": 352
+        },
+        {
+          "name": "__Hotfix0_OnLevitateChanged",
+          "type": "XLua.DelegateBridge",
+          "offset": 360
+        },
+        {
+          "name": "__Hotfix0_OnTick",
+          "type": "XLua.DelegateBridge",
+          "offset": 368
+        },
+        {
+          "name": "__Hotfix0_CheckActiveBuffs",
+          "type": "XLua.DelegateBridge",
+          "offset": 376
+        },
+        {
+          "name": "__Hotfix0_DoCastOnTargets",
+          "type": "XLua.DelegateBridge",
+          "offset": 384
+        },
+        {
+          "name": "__Hotfix0__DoCast",
+          "type": "XLua.DelegateBridge",
+          "offset": 392
+        },
+        {
+          "name": "__Hotfix0_UpdateTargets",
+          "type": "XLua.DelegateBridge",
+          "offset": 400
+        },
+        {
+          "name": "__Hotfix0_CheckAnotherSpell",
+          "type": "XLua.DelegateBridge",
+          "offset": 408
+        },
+        {
+          "name": "__Hotfix0_CheckFinished",
+          "type": "XLua.DelegateBridge",
+          "offset": 416
+        },
+        {
+          "name": "__Hotfix0_DoUpdatePlaybackSpeed",
+          "type": "XLua.DelegateBridge",
+          "offset": 424
+        },
+        {
+          "name": "__Hotfix0_UpdatePlaybackSpeed",
+          "type": "XLua.DelegateBridge",
+          "offset": 432
+        },
+        {
+          "name": "__Hotfix0_CheckIsDamageOrHealSource",
+          "type": "XLua.DelegateBridge",
+          "offset": 440
+        },
+        {
+          "name": "__Hotfix0_GeneratePurposeMask",
+          "type": "XLua.DelegateBridge",
+          "offset": 448
+        },
+        {
+          "name": "__Hotfix0_DoEmitAudioSignalForSpellOn",
+          "type": "XLua.DelegateBridge",
+          "offset": 456
+        },
+        {
+          "name": "__Hotfix0_DoEmitAudioSignalForCastStart",
+          "type": "XLua.DelegateBridge",
+          "offset": 464
+        },
+        {
+          "name": "__Hotfix0_DoEmitAudioSignalForHit",
+          "type": "XLua.DelegateBridge",
+          "offset": 472
+        },
+        {
+          "name": "__Hotfix0_PreloadSpecialAudioSignals",
+          "type": "XLua.DelegateBridge",
+          "offset": 480
+        },
+        {
+          "name": "__Hotfix0_OnOutputAttackOrHeal",
+          "type": "XLua.DelegateBridge",
+          "offset": 488
+        },
+        {
+          "name": "__Hotfix0_OnOutputAttackOrHealEachSpell",
+          "type": "XLua.DelegateBridge",
+          "offset": 496
+        },
+        {
+          "name": "__Hotfix0_Awake",
+          "type": "XLua.DelegateBridge",
+          "offset": 504
+        },
+        {
+          "name": "_c__Hotfix0_ctor",
+          "type": "XLua.DelegateBridge",
+          "offset": 512
+        }
+      ],
+      "vtable": [
+        {
+          "slot": 0,
+          "usage_type": 3,
+          "decoded_index": 280865,
+          "method": "UnityEngine.Object$$Equals"
+        },
+        {
+          "slot": 1,
+          "usage_type": 3,
+          "decoded_index": 240680,
+          "method": "System.Object$$Finalize"
+        },
+        {
+          "slot": 2,
+          "usage_type": 3,
+          "decoded_index": 280864,
+          "method": "UnityEngine.Object$$GetHashCode"
+        },
+        {
+          "slot": 3,
+          "usage_type": 3,
+          "decoded_index": 280916,
+          "method": "UnityEngine.Object$$ToString"
+        },
+        {
+          "slot": 4,
+          "usage_type": 3,
+          "decoded_index": 62628,
+          "method": "Torappu.Battle.AbilityStandard$$GatherEffects"
+        },
+        {
+          "slot": 5,
+          "usage_type": 3,
+          "decoded_index": 62629,
+          "method": "Torappu.Battle.AbilityStandard$$GatherProjectiles"
+        },
+        {
+          "slot": 6,
+          "usage_type": 3,
+          "decoded_index": 62630,
+          "method": "Torappu.Battle.AbilityStandard$$GatherActionNodes"
+        },
+        {
+          "slot": 7,
+          "usage_type": 3,
+          "decoded_index": 62627,
+          "method": "Torappu.Battle.AbilityStandard$$GatherBuffs"
+        },
+        {
+          "slot": 8,
+          "usage_type": 3,
+          "decoded_index": 62488,
+          "method": "Torappu.Battle.Ability$$get_instanceUid"
+        },
+        {
+          "slot": 9,
+          "usage_type": 3,
+          "decoded_index": 62662,
+          "method": "Torappu.Battle.AbilityStandard$$PreloadSpecialAudioSignals"
+        },
+        {
+          "slot": 10,
+          "usage_type": 3,
+          "decoded_index": 62583,
+          "method": "Torappu.Battle.Ability$$GetPRDEntityHash"
+        },
+        {
+          "slot": 11,
+          "usage_type": 3,
+          "decoded_index": 62584,
+          "method": "Torappu.Battle.Ability$$AllocatePRDEntitySubHash"
+        },
+        {
+          "slot": 12,
+          "usage_type": 3,
+          "decoded_index": 62585,
+          "method": "Torappu.Battle.Ability$$ResetPRDEntity"
+        },
+        {
+          "slot": 13,
+          "usage_type": 3,
+          "decoded_index": 62487,
+          "method": "Torappu.Battle.Ability$$get_affectedBySlowDown"
+        },
+        {
+          "slot": 14,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 15,
+          "usage_type": 3,
+          "decoded_index": 62502,
+          "method": "Torappu.Battle.Ability$$get_selector"
+        },
+        {
+          "slot": 16,
+          "usage_type": 3,
+          "decoded_index": 62503,
+          "method": "Torappu.Battle.Ability$$get_rangeToShow"
+        },
+        {
+          "slot": 17,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 18,
+          "usage_type": 3,
+          "decoded_index": 62604,
+          "method": "Torappu.Battle.AbilityStandard$$get_allowNoTarget"
+        },
+        {
+          "slot": 19,
+          "usage_type": 3,
+          "decoded_index": 62510,
+          "method": "Torappu.Battle.Ability$$get_isReady"
+        },
+        {
+          "slot": 20,
+          "usage_type": 3,
+          "decoded_index": 62513,
+          "method": "Torappu.Battle.Ability$$get_isAffecting"
+        },
+        {
+          "slot": 21,
+          "usage_type": 3,
+          "decoded_index": 62518,
+          "method": "Torappu.Battle.Ability$$get_canSelectCamouflageTarget"
+        },
+        {
+          "slot": 22,
+          "usage_type": 3,
+          "decoded_index": 62520,
+          "method": "Torappu.Battle.Ability$$get_escapeTime"
+        },
+        {
+          "slot": 23,
+          "usage_type": 3,
+          "decoded_index": 62521,
+          "method": "Torappu.Battle.Ability$$get_applyWay"
+        },
+        {
+          "slot": 24,
+          "usage_type": 3,
+          "decoded_index": 62611,
+          "method": "Torappu.Battle.AbilityStandard$$get_purposeMask"
+        },
+        {
+          "slot": 25,
+          "usage_type": 3,
+          "decoded_index": 62614,
+          "method": "Torappu.Battle.AbilityStandard$$get_isPredelay"
+        },
+        {
+          "slot": 26,
+          "usage_type": 3,
+          "decoded_index": 62530,
+          "method": "Torappu.Battle.Ability$$get_ignorePalsyInterrupt"
+        },
+        {
+          "slot": 27,
+          "usage_type": 3,
+          "decoded_index": 62615,
+          "method": "Torappu.Battle.AbilityStandard$$DoSetData"
+        },
+        {
+          "slot": 28,
+          "usage_type": 3,
+          "decoded_index": 62533,
+          "method": "Torappu.Battle.Ability$$UpdateBlackboard"
+        },
+        {
+          "slot": 29,
+          "usage_type": 3,
+          "decoded_index": 62534,
+          "method": "Torappu.Battle.Ability$$UpdateSelector"
+        },
+        {
+          "slot": 30,
+          "usage_type": 3,
+          "decoded_index": 62538,
+          "method": "Torappu.Battle.Ability$$DoAttach"
+        },
+        {
+          "slot": 31,
+          "usage_type": 3,
+          "decoded_index": 62539,
+          "method": "Torappu.Battle.Ability$$DoDetach"
+        },
+        {
+          "slot": 32,
+          "usage_type": 3,
+          "decoded_index": 62540,
+          "method": "Torappu.Battle.Ability$$OnOwnerLocated"
+        },
+        {
+          "slot": 33,
+          "usage_type": 3,
+          "decoded_index": 62617,
+          "method": "Torappu.Battle.AbilityStandard$$CastToTarget"
+        },
+        {
+          "slot": 34,
+          "usage_type": 3,
+          "decoded_index": 62618,
+          "method": "Torappu.Battle.AbilityStandard$$CastDirectly"
+        },
+        {
+          "slot": 35,
+          "usage_type": 3,
+          "decoded_index": 62619,
+          "method": "Torappu.Battle.AbilityStandard$$CastToInputPosition"
+        },
+        {
+          "slot": 36,
+          "usage_type": 3,
+          "decoded_index": 62544,
+          "method": "Torappu.Battle.Ability$$InterruptIfNot"
+        },
+        {
+          "slot": 37,
+          "usage_type": 3,
+          "decoded_index": 62545,
+          "method": "Torappu.Battle.Ability$$DoFinish"
+        },
+        {
+          "slot": 38,
+          "usage_type": 3,
+          "decoded_index": 62546,
+          "method": "Torappu.Battle.Ability$$ResetCooldown"
+        },
+        {
+          "slot": 39,
+          "usage_type": 3,
+          "decoded_index": 62548,
+          "method": "Torappu.Battle.Ability$$UpdateCooldown"
+        },
+        {
+          "slot": 40,
+          "usage_type": 3,
+          "decoded_index": 62549,
+          "method": "Torappu.Battle.Ability$$TrySetCooldownRemainingProgress"
+        },
+        {
+          "slot": 41,
+          "usage_type": 3,
+          "decoded_index": 62621,
+          "method": "Torappu.Battle.AbilityStandard$$StopAffect"
+        },
+        {
+          "slot": 42,
+          "usage_type": 3,
+          "decoded_index": 62554,
+          "method": "Torappu.Battle.Ability$$Reset"
+        },
+        {
+          "slot": 43,
+          "usage_type": 3,
+          "decoded_index": 62624,
+          "method": "Torappu.Battle.AbilityStandard$$CleanupForNextCast"
+        },
+        {
+          "slot": 44,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 45,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 46,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 47,
+          "usage_type": 3,
+          "decoded_index": 62559,
+          "method": "Torappu.Battle.Ability$$GetAbilityAttachments"
+        },
+        {
+          "slot": 48,
+          "usage_type": 3,
+          "decoded_index": 62628,
+          "method": "Torappu.Battle.AbilityStandard$$GatherEffects"
+        },
+        {
+          "slot": 49,
+          "usage_type": 3,
+          "decoded_index": 62629,
+          "method": "Torappu.Battle.AbilityStandard$$GatherProjectiles"
+        },
+        {
+          "slot": 50,
+          "usage_type": 3,
+          "decoded_index": 62630,
+          "method": "Torappu.Battle.AbilityStandard$$GatherActionNodes"
+        },
+        {
+          "slot": 51,
+          "usage_type": 3,
+          "decoded_index": 62627,
+          "method": "Torappu.Battle.AbilityStandard$$GatherBuffs"
+        },
+        {
+          "slot": 52,
+          "usage_type": 3,
+          "decoded_index": 62639,
+          "method": "Torappu.Battle.AbilityStandard$$OnCastStart"
+        },
+        {
+          "slot": 53,
+          "usage_type": 3,
+          "decoded_index": 62640,
+          "method": "Torappu.Battle.AbilityStandard$$OnCastEnd"
+        },
+        {
+          "slot": 54,
+          "usage_type": 3,
+          "decoded_index": 62641,
+          "method": "Torappu.Battle.AbilityStandard$$OnAttached"
+        },
+        {
+          "slot": 55,
+          "usage_type": 3,
+          "decoded_index": 62643,
+          "method": "Torappu.Battle.AbilityStandard$$OnDetached"
+        },
+        {
+          "slot": 56,
+          "usage_type": 3,
+          "decoded_index": 62648,
+          "method": "Torappu.Battle.AbilityStandard$$OnTick"
+        },
+        {
+          "slot": 57,
+          "usage_type": 3,
+          "decoded_index": 62642,
+          "method": "Torappu.Battle.AbilityStandard$$OnOverload"
+        },
+        {
+          "slot": 58,
+          "usage_type": 3,
+          "decoded_index": 62570,
+          "method": "Torappu.Battle.Ability$$OnAttackTimeChanged"
+        },
+        {
+          "slot": 59,
+          "usage_type": 3,
+          "decoded_index": 62571,
+          "method": "Torappu.Battle.Ability$$OnSlowDownChanged"
+        },
+        {
+          "slot": 60,
+          "usage_type": 3,
+          "decoded_index": 62572,
+          "method": "Torappu.Battle.Ability$$OnAbilityExtendUpdated"
+        },
+        {
+          "slot": 61,
+          "usage_type": 3,
+          "decoded_index": 62662,
+          "method": "Torappu.Battle.AbilityStandard$$PreloadSpecialAudioSignals"
+        },
+        {
+          "slot": 62,
+          "usage_type": 3,
+          "decoded_index": 62622,
+          "method": "Torappu.Battle.AbilityStandard$$CheckAtPreCastPhase"
+        },
+        {
+          "slot": 63,
+          "usage_type": 3,
+          "decoded_index": 62575,
+          "method": "Torappu.Battle.Ability$$FinishIfNot"
+        },
+        {
+          "slot": 64,
+          "usage_type": 3,
+          "decoded_index": 62576,
+          "method": "Torappu.Battle.Ability$$AddPassiveBuffs"
+        },
+        {
+          "slot": 65,
+          "usage_type": 3,
+          "decoded_index": 62577,
+          "method": "Torappu.Battle.Ability$$ClearPassiveBuffs"
+        },
+        {
+          "slot": 66,
+          "usage_type": 3,
+          "decoded_index": 62578,
+          "method": "Torappu.Battle.Ability$$PreprocessActionsForProjectile"
+        },
+        {
+          "slot": 67,
+          "usage_type": 3,
+          "decoded_index": 62582,
+          "method": "Torappu.Battle.Ability$$ClearProjectile"
+        },
+        {
+          "slot": 68,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 69,
+          "usage_type": 3,
+          "decoded_index": 62600,
+          "method": "Torappu.Battle.AbilityStandard$$get_selectTargetTiming"
+        },
+        {
+          "slot": 70,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 71,
+          "usage_type": 3,
+          "decoded_index": 62605,
+          "method": "Torappu.Battle.AbilityStandard$$get_onlyTrigAudioSignalForFirstSpell"
+        },
+        {
+          "slot": 72,
+          "usage_type": 3,
+          "decoded_index": 62606,
+          "method": "Torappu.Battle.AbilityStandard$$get_onlyTrigAudioSignalForFirstHit"
+        },
+        {
+          "slot": 73,
+          "usage_type": 3,
+          "decoded_index": 62620,
+          "method": "Torappu.Battle.AbilityStandard$$GetCastDirectlyMapPosition"
+        },
+        {
+          "slot": 74,
+          "usage_type": 3,
+          "decoded_index": 62625,
+          "method": "Torappu.Battle.AbilityStandard$$OnEvent"
+        },
+        {
+          "slot": 75,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 76,
+          "usage_type": 3,
+          "decoded_index": 62632,
+          "method": "Torappu.Battle.AbilityStandard$$OnCastOnTarget"
+        },
+        {
+          "slot": 77,
+          "usage_type": 3,
+          "decoded_index": 62633,
+          "method": "Torappu.Battle.AbilityStandard$$DoApplyActionsOnTarget"
+        },
+        {
+          "slot": 78,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 79,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 80,
+          "usage_type": 3,
+          "decoded_index": 62636,
+          "method": "Torappu.Battle.AbilityStandard$$OnWaitForTriggerDelta"
+        },
+        {
+          "slot": 81,
+          "usage_type": 3,
+          "decoded_index": 62637,
+          "method": "Torappu.Battle.AbilityStandard$$OnSpellStart"
+        },
+        {
+          "slot": 82,
+          "usage_type": 3,
+          "decoded_index": 62638,
+          "method": "Torappu.Battle.AbilityStandard$$DoOnHasNoTarget"
+        },
+        {
+          "slot": 83,
+          "usage_type": 3,
+          "decoded_index": 62644,
+          "method": "Torappu.Battle.AbilityStandard$$OnAttackFinished"
+        },
+        {
+          "slot": 84,
+          "usage_type": 3,
+          "decoded_index": 62645,
+          "method": "Torappu.Battle.AbilityStandard$$OnStunnedChanged"
+        },
+        {
+          "slot": 85,
+          "usage_type": 3,
+          "decoded_index": 62646,
+          "method": "Torappu.Battle.AbilityStandard$$OnFrozenChanged"
+        },
+        {
+          "slot": 86,
+          "usage_type": 3,
+          "decoded_index": 62647,
+          "method": "Torappu.Battle.AbilityStandard$$OnLevitateChanged"
+        },
+        {
+          "slot": 87,
+          "usage_type": 3,
+          "decoded_index": 62649,
+          "method": "Torappu.Battle.AbilityStandard$$CheckActiveBuffs"
+        },
+        {
+          "slot": 88,
+          "usage_type": 3,
+          "decoded_index": 62650,
+          "method": "Torappu.Battle.AbilityStandard$$DoCastOnTargets"
+        },
+        {
+          "slot": 89,
+          "usage_type": 3,
+          "decoded_index": 62652,
+          "method": "Torappu.Battle.AbilityStandard$$UpdateTargets"
+        },
+        {
+          "slot": 90,
+          "usage_type": 3,
+          "decoded_index": 62653,
+          "method": "Torappu.Battle.AbilityStandard$$CheckAnotherSpell"
+        },
+        {
+          "slot": 91,
+          "usage_type": 3,
+          "decoded_index": 62656,
+          "method": "Torappu.Battle.AbilityStandard$$UpdatePlaybackSpeed"
+        },
+        {
+          "slot": 92,
+          "usage_type": 3,
+          "decoded_index": 62657,
+          "method": "Torappu.Battle.AbilityStandard$$CheckIsDamageOrHealSource"
+        },
+        {
+          "slot": 93,
+          "usage_type": 3,
+          "decoded_index": 62658,
+          "method": "Torappu.Battle.AbilityStandard$$GeneratePurposeMask"
+        },
+        {
+          "slot": 94,
+          "usage_type": 3,
+          "decoded_index": 62659,
+          "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForSpellOn"
+        },
+        {
+          "slot": 95,
+          "usage_type": 3,
+          "decoded_index": 62660,
+          "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForCastStart"
+        },
+        {
+          "slot": 96,
+          "usage_type": 3,
+          "decoded_index": 62661,
+          "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForHit"
+        },
+        {
+          "slot": 97,
+          "usage_type": 3,
+          "decoded_index": 62663,
+          "method": "Torappu.Battle.AbilityStandard$$OnOutputAttackOrHeal"
+        },
+        {
+          "slot": 98,
+          "usage_type": 3,
+          "decoded_index": 62664,
+          "method": "Torappu.Battle.AbilityStandard$$OnOutputAttackOrHealEachSpell"
+        },
+        {
+          "slot": 99,
+          "usage_type": 3,
+          "decoded_index": 62665,
+          "method": "Torappu.Battle.AbilityStandard$$Awake"
+        }
+      ]
+    },
+    {
+      "name": "Torappu.Battle.AsyncUtil+<WaitForFixedSeconds>d__0",
+      "type_index": 9921,
+      "parent": "System.Object",
+      "fields": [
+        {
+          "name": "<>1__state",
+          "type": "System.Int32",
+          "offset": 16
+        },
+        {
+          "name": "<>2__current",
+          "type": "System.Object",
+          "offset": 24
+        },
+        {
+          "name": "time",
+          "type": "System.Single",
+          "offset": 32
+        },
+        {
+          "name": "<frameCnt>5__2",
+          "type": "System.Int32",
+          "offset": 36
+        },
+        {
+          "name": "<frameI>5__3",
+          "type": "System.Int32",
+          "offset": 40
+        }
+      ],
+      "vtable": [
+        {
+          "slot": 0,
+          "usage_type": 3,
+          "decoded_index": 240677,
+          "method": "System.Object$$Equals"
+        },
+        {
+          "slot": 1,
+          "usage_type": 3,
+          "decoded_index": 240680,
+          "method": "System.Object$$Finalize"
+        },
+        {
+          "slot": 2,
+          "usage_type": 3,
+          "decoded_index": 240681,
+          "method": "System.Object$$GetHashCode"
+        },
+        {
+          "slot": 3,
+          "usage_type": 3,
+          "decoded_index": 240684,
+          "method": "System.Object$$ToString"
+        },
+        {
+          "slot": 4,
+          "usage_type": 3,
+          "decoded_index": 63577,
+          "method": "Torappu.Battle.AsyncUtil+<WaitForFixedSeconds>d__0$$System.Collections.Generic.IEnumerator<System.Object>.get_Current"
+        },
+        {
+          "slot": 5,
+          "usage_type": 3,
+          "decoded_index": 63575,
+          "method": "Torappu.Battle.AsyncUtil+<WaitForFixedSeconds>d__0$$System.IDisposable.Dispose"
+        },
+        {
+          "slot": 6,
+          "usage_type": 3,
+          "decoded_index": 63576,
+          "method": "Torappu.Battle.AsyncUtil+<WaitForFixedSeconds>d__0$$MoveNext"
+        },
+        {
+          "slot": 7,
+          "usage_type": 3,
+          "decoded_index": 63579,
+          "method": "Torappu.Battle.AsyncUtil+<WaitForFixedSeconds>d__0$$System.Collections.IEnumerator.get_Current"
+        },
+        {
+          "slot": 8,
+          "usage_type": 3,
+          "decoded_index": 63578,
+          "method": "Torappu.Battle.AsyncUtil+<WaitForFixedSeconds>d__0$$System.Collections.IEnumerator.Reset"
+        }
+      ]
+    },
+    {
+      "name": "Torappu.Battle.ReplacementSkill",
+      "type_index": 10839,
+      "parent": "Torappu.Battle.NextAttackOrCombatSkill",
+      "fields": [
+        {
+          "name": "_cancelIfSearchTargetFailed",
+          "type": "System.Boolean",
+          "offset": 296
+        },
+        {
+          "name": "_recoverSpIfTargetDead",
+          "type": "System.Boolean",
+          "offset": 297
+        },
+        {
+          "name": "_rangeToShow",
+          "type": "Torappu.Battle.TargetSelector",
+          "offset": 304
+        },
+        {
+          "name": "__Hotfix0_get_rangeToShow",
+          "type": "XLua.DelegateBridge",
+          "offset": 0
+        },
+        {
+          "name": "__Hotfix0_OnInit",
+          "type": "XLua.DelegateBridge",
+          "offset": 8
+        },
+        {
+          "name": "__Hotfix0_CheckIfToModify",
+          "type": "XLua.DelegateBridge",
+          "offset": 16
+        },
+        {
+          "name": "__Hotfix0_DoCast",
+          "type": "XLua.DelegateBridge",
+          "offset": 24
+        },
+        {
+          "name": "__Hotfix0_ApplyModification",
+          "type": "XLua.DelegateBridge",
+          "offset": 32
+        },
+        {
+          "name": "__Hotfix0_CancelAfterAttack",
+          "type": "XLua.DelegateBridge",
+          "offset": 40
+        },
+        {
+          "name": "__Hotfix0_OnCastFinish",
+          "type": "XLua.DelegateBridge",
+          "offset": 48
+        },
+        {
+          "name": "__Hotfix0_TryHookSearchTarget",
+          "type": "XLua.DelegateBridge",
+          "offset": 56
+        },
+        {
+          "name": "__Hotfix0__RecoverSp",
+          "type": "XLua.DelegateBridge",
+          "offset": 64
+        },
+        {
+          "name": "_c__Hotfix0_ctor",
+          "type": "XLua.DelegateBridge",
+          "offset": 72
+        }
+      ],
+      "vtable": [
+        {
+          "slot": 0,
+          "usage_type": 3,
+          "decoded_index": 280865,
+          "method": "UnityEngine.Object$$Equals"
+        },
+        {
+          "slot": 1,
+          "usage_type": 3,
+          "decoded_index": 240680,
+          "method": "System.Object$$Finalize"
+        },
+        {
+          "slot": 2,
+          "usage_type": 3,
+          "decoded_index": 280864,
+          "method": "UnityEngine.Object$$GetHashCode"
+        },
+        {
+          "slot": 3,
+          "usage_type": 3,
+          "decoded_index": 280916,
+          "method": "UnityEngine.Object$$ToString"
+        },
+        {
+          "slot": 4,
+          "usage_type": 3,
+          "decoded_index": 71726,
+          "method": "Torappu.Battle.BasicSkill$$get_attributeMask"
+        },
+        {
+          "slot": 5,
+          "usage_type": 3,
+          "decoded_index": 71728,
+          "method": "Torappu.Battle.BasicSkill$$get_abnormalFlagMask"
+        },
+        {
+          "slot": 6,
+          "usage_type": 3,
+          "decoded_index": 71729,
+          "method": "Torappu.Battle.BasicSkill$$get_abnormalImmuneMask"
+        },
+        {
+          "slot": 7,
+          "usage_type": 3,
+          "decoded_index": 71730,
+          "method": "Torappu.Battle.BasicSkill$$get_abnormalAntiMask"
+        },
+        {
+          "slot": 8,
+          "usage_type": 3,
+          "decoded_index": 71731,
+          "method": "Torappu.Battle.BasicSkill$$get_abnormalComboMask"
+        },
+        {
+          "slot": 9,
+          "usage_type": 3,
+          "decoded_index": 71732,
+          "method": "Torappu.Battle.BasicSkill$$get_abnormalComboImmuneMask"
+        },
+        {
+          "slot": 10,
+          "usage_type": 3,
+          "decoded_index": 71834,
+          "method": "Torappu.Battle.BasicSkill$$GetValue"
+        },
+        {
+          "slot": 11,
+          "usage_type": 3,
+          "decoded_index": 71846,
+          "method": "Torappu.Battle.BasicSkill$$GatherEffects"
+        },
+        {
+          "slot": 12,
+          "usage_type": 3,
+          "decoded_index": 71847,
+          "method": "Torappu.Battle.BasicSkill$$GatherProjectiles"
+        },
+        {
+          "slot": 13,
+          "usage_type": 3,
+          "decoded_index": 71848,
+          "method": "Torappu.Battle.BasicSkill$$GatherBuffs"
+        },
+        {
+          "slot": 14,
+          "usage_type": 3,
+          "decoded_index": 71849,
+          "method": "Torappu.Battle.BasicSkill$$GatherActionNodes"
+        },
+        {
+          "slot": 15,
+          "usage_type": 3,
+          "decoded_index": 71733,
+          "method": "Torappu.Battle.BasicSkill$$get_showSpAsBulletMode"
+        },
+        {
+          "slot": 16,
+          "usage_type": 3,
+          "decoded_index": 71734,
+          "method": "Torappu.Battle.BasicSkill$$get_recoverSpWhenAffecting"
+        },
+        {
+          "slot": 17,
+          "usage_type": 3,
+          "decoded_index": 71738,
+          "method": "Torappu.Battle.BasicSkill$$get_stateUninterruptible"
+        },
+        {
+          "slot": 18,
+          "usage_type": 3,
+          "decoded_index": 71739,
+          "method": "Torappu.Battle.BasicSkill$$SatisfySkillRangeIdModeIndex"
+        },
+        {
+          "slot": 19,
+          "usage_type": 3,
+          "decoded_index": 71740,
+          "method": "Torappu.Battle.BasicSkill$$IsAvailable"
+        },
+        {
+          "slot": 20,
+          "usage_type": 3,
+          "decoded_index": 71749,
+          "method": "Torappu.Battle.BasicSkill$$IsClickable"
+        },
+        {
+          "slot": 21,
+          "usage_type": 3,
+          "decoded_index": 71751,
+          "method": "Torappu.Battle.BasicSkill$$IsRetriggerClickable"
+        },
+        {
+          "slot": 22,
+          "usage_type": 3,
+          "decoded_index": 71752,
+          "method": "Torappu.Battle.BasicSkill$$IsRetriggerAvailable"
+        },
+        {
+          "slot": 23,
+          "usage_type": 3,
+          "decoded_index": 71753,
+          "method": "Torappu.Battle.BasicSkill$$isRetriggerable"
+        },
+        {
+          "slot": 24,
+          "usage_type": 3,
+          "decoded_index": 71755,
+          "method": "Torappu.Battle.BasicSkill$$IsDiscardable"
+        },
+        {
+          "slot": 25,
+          "usage_type": 3,
+          "decoded_index": 71756,
+          "method": "Torappu.Battle.BasicSkill$$CanTriggerWithReason"
+        },
+        {
+          "slot": 26,
+          "usage_type": 3,
+          "decoded_index": 71758,
+          "method": "Torappu.Battle.BasicSkill$$get_isAffecting"
+        },
+        {
+          "slot": 27,
+          "usage_type": 3,
+          "decoded_index": 71761,
+          "method": "Torappu.Battle.BasicSkill$$get_shouldCastLikeAttack"
+        },
+        {
+          "slot": 28,
+          "usage_type": 3,
+          "decoded_index": 71762,
+          "method": "Torappu.Battle.BasicSkill$$get_shouldChangeToChargeColor"
+        },
+        {
+          "slot": 29,
+          "usage_type": 3,
+          "decoded_index": 71763,
+          "method": "Torappu.Battle.BasicSkill$$get_overrideAudioSignalId"
+        },
+        {
+          "slot": 30,
+          "usage_type": 3,
+          "decoded_index": 71766,
+          "method": "Torappu.Battle.BasicSkill$$get_remainingTime"
+        },
+        {
+          "slot": 31,
+          "usage_type": 3,
+          "decoded_index": 71767,
+          "method": "Torappu.Battle.BasicSkill$$get_remainingProgress"
+        },
+        {
+          "slot": 32,
+          "usage_type": 3,
+          "decoded_index": 71768,
+          "method": "Torappu.Battle.BasicSkill$$get_remainingOverloadProgress"
+        },
+        {
+          "slot": 33,
+          "usage_type": 3,
+          "decoded_index": 71769,
+          "method": "Torappu.Battle.BasicSkill$$TryForceToOverloadProgress"
+        },
+        {
+          "slot": 34,
+          "usage_type": 3,
+          "decoded_index": 71771,
+          "method": "Torappu.Battle.BasicSkill$$get_progressToReady"
+        },
+        {
+          "slot": 35,
+          "usage_type": 3,
+          "decoded_index": 71772,
+          "method": "Torappu.Battle.BasicSkill$$get_spCostZero"
+        },
+        {
+          "slot": 36,
+          "usage_type": 3,
+          "decoded_index": 71775,
+          "method": "Torappu.Battle.BasicSkill$$get_ability"
+        },
+        {
+          "slot": 37,
+          "usage_type": 3,
+          "decoded_index": 71776,
+          "method": "Torappu.Battle.BasicSkill$$get_familyGroup"
+        },
+        {
+          "slot": 38,
+          "usage_type": 3,
+          "decoded_index": 72275,
+          "method": "Torappu.Battle.ReplacementSkill$$get_rangeToShow"
+        },
+        {
+          "slot": 39,
+          "usage_type": 3,
+          "decoded_index": 71782,
+          "method": "Torappu.Battle.BasicSkill$$get_spEnough"
+        },
+        {
+          "slot": 40,
+          "usage_type": 3,
+          "decoded_index": 71783,
+          "method": "Torappu.Battle.BasicSkill$$get_canSkipReduceSp"
+        },
+        {
+          "slot": 41,
+          "usage_type": 3,
+          "decoded_index": 71784,
+          "method": "Torappu.Battle.BasicSkill$$get_forceToShowRange"
+        },
+        {
+          "slot": 42,
+          "usage_type": 3,
+          "decoded_index": 71785,
+          "method": "Torappu.Battle.BasicSkill$$get_forceUseBaseShowRange"
+        },
+        {
+          "slot": 43,
+          "usage_type": 3,
+          "decoded_index": 71786,
+          "method": "Torappu.Battle.BasicSkill$$get_isUsedUp"
+        },
+        {
+          "slot": 44,
+          "usage_type": 3,
+          "decoded_index": 71794,
+          "method": "Torappu.Battle.BasicSkill$$get_isRemoteControlled"
+        },
+        {
+          "slot": 45,
+          "usage_type": 3,
+          "decoded_index": 71795,
+          "method": "Torappu.Battle.BasicSkill$$get_hideProgressFlag"
+        },
+        {
+          "slot": 46,
+          "usage_type": 3,
+          "decoded_index": 71796,
+          "method": "Torappu.Battle.BasicSkill$$get_hasPlayedBeginAnim"
+        },
+        {
+          "slot": 47,
+          "usage_type": 3,
+          "decoded_index": 71802,
+          "method": "Torappu.Battle.BasicSkill$$get_beginAnim"
+        },
+        {
+          "slot": 48,
+          "usage_type": 3,
+          "decoded_index": 71808,
+          "method": "Torappu.Battle.BasicSkill$$get_canCastCheck"
+        },
+        {
+          "slot": 49,
+          "usage_type": 3,
+          "decoded_index": 71809,
+          "method": "Torappu.Battle.BasicSkill$$get_beginEffect"
+        },
+        {
+          "slot": 50,
+          "usage_type": 3,
+          "decoded_index": 71811,
+          "method": "Torappu.Battle.BasicSkill$$get_isOverloadSkill"
+        },
+        {
+          "slot": 51,
+          "usage_type": 3,
+          "decoded_index": 72257,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$AssignData"
+        },
+        {
+          "slot": 52,
+          "usage_type": 3,
+          "decoded_index": 72278,
+          "method": "Torappu.Battle.ReplacementSkill$$DoCast"
+        },
+        {
+          "slot": 53,
+          "usage_type": 3,
+          "decoded_index": 71817,
+          "method": "Torappu.Battle.BasicSkill$$OnSkillEnd"
+        },
+        {
+          "slot": 54,
+          "usage_type": 3,
+          "decoded_index": 72259,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$UseSkill"
+        },
+        {
+          "slot": 55,
+          "usage_type": 3,
+          "decoded_index": 71819,
+          "method": "Torappu.Battle.BasicSkill$$RetriggerSkill"
+        },
+        {
+          "slot": 56,
+          "usage_type": 3,
+          "decoded_index": 71820,
+          "method": "Torappu.Battle.BasicSkill$$InterruptIfNot"
+        },
+        {
+          "slot": 57,
+          "usage_type": 3,
+          "decoded_index": 71821,
+          "method": "Torappu.Battle.BasicSkill$$OnEnterSkillState"
+        },
+        {
+          "slot": 58,
+          "usage_type": 3,
+          "decoded_index": 71822,
+          "method": "Torappu.Battle.BasicSkill$$TryPrepare"
+        },
+        {
+          "slot": 59,
+          "usage_type": 3,
+          "decoded_index": 71823,
+          "method": "Torappu.Battle.BasicSkill$$CanCastCheckBeforeStart"
+        },
+        {
+          "slot": 60,
+          "usage_type": 3,
+          "decoded_index": 72276,
+          "method": "Torappu.Battle.ReplacementSkill$$OnInit"
+        },
+        {
+          "slot": 61,
+          "usage_type": 3,
+          "decoded_index": 71826,
+          "method": "Torappu.Battle.BasicSkill$$OnBorn"
+        },
+        {
+          "slot": 62,
+          "usage_type": 3,
+          "decoded_index": 71827,
+          "method": "Torappu.Battle.BasicSkill$$OnLocate"
+        },
+        {
+          "slot": 63,
+          "usage_type": 3,
+          "decoded_index": 71828,
+          "method": "Torappu.Battle.BasicSkill$$OnOverload"
+        },
+        {
+          "slot": 64,
+          "usage_type": 3,
+          "decoded_index": 71829,
+          "method": "Torappu.Battle.BasicSkill$$OnOwnerFinish"
+        },
+        {
+          "slot": 65,
+          "usage_type": 3,
+          "decoded_index": 71830,
+          "method": "Torappu.Battle.BasicSkill$$OnCastSucceed"
+        },
+        {
+          "slot": 66,
+          "usage_type": 3,
+          "decoded_index": 71831,
+          "method": "Torappu.Battle.BasicSkill$$OnCastFailedInSkillState"
+        },
+        {
+          "slot": 67,
+          "usage_type": 3,
+          "decoded_index": 72258,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$OnBeforeAttack"
+        },
+        {
+          "slot": 68,
+          "usage_type": 3,
+          "decoded_index": 72261,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$OnAfterAttack"
+        },
+        {
+          "slot": 69,
+          "usage_type": 3,
+          "decoded_index": 71836,
+          "method": "Torappu.Battle.BasicSkill$$PlayBeginEffectAndAudio"
+        },
+        {
+          "slot": 70,
+          "usage_type": 3,
+          "decoded_index": 71839,
+          "method": "Torappu.Battle.BasicSkill$$PlayBeginAnimation"
+        },
+        {
+          "slot": 71,
+          "usage_type": 3,
+          "decoded_index": 71840,
+          "method": "Torappu.Battle.BasicSkill$$PlayBeginAudio"
+        },
+        {
+          "slot": 72,
+          "usage_type": 3,
+          "decoded_index": 71841,
+          "method": "Torappu.Battle.BasicSkill$$OnBeforeSkillBeginAnim"
+        },
+        {
+          "slot": 73,
+          "usage_type": 3,
+          "decoded_index": 71846,
+          "method": "Torappu.Battle.BasicSkill$$GatherEffects"
+        },
+        {
+          "slot": 74,
+          "usage_type": 3,
+          "decoded_index": 71847,
+          "method": "Torappu.Battle.BasicSkill$$GatherProjectiles"
+        },
+        {
+          "slot": 75,
+          "usage_type": 3,
+          "decoded_index": 71848,
+          "method": "Torappu.Battle.BasicSkill$$GatherBuffs"
+        },
+        {
+          "slot": 76,
+          "usage_type": 3,
+          "decoded_index": 71849,
+          "method": "Torappu.Battle.BasicSkill$$GatherActionNodes"
+        },
+        {
+          "slot": 77,
+          "usage_type": 3,
+          "decoded_index": 72262,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$OnTick"
+        },
+        {
+          "slot": 78,
+          "usage_type": 3,
+          "decoded_index": 71853,
+          "method": "Torappu.Battle.BasicSkill$$UpdateSpRecovery"
+        },
+        {
+          "slot": 79,
+          "usage_type": 3,
+          "decoded_index": 72281,
+          "method": "Torappu.Battle.ReplacementSkill$$OnCastFinish"
+        },
+        {
+          "slot": 80,
+          "usage_type": 3,
+          "decoded_index": 71855,
+          "method": "Torappu.Battle.BasicSkill$$Awake"
+        },
+        {
+          "slot": 81,
+          "usage_type": 3,
+          "decoded_index": 71865,
+          "method": "Torappu.Battle.BasicSkill$$get_isAvailableToShowStackCount"
+        },
+        {
+          "slot": 82,
+          "usage_type": 3,
+          "decoded_index": 72252,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$get_trigger"
+        },
+        {
+          "slot": 83,
+          "usage_type": 3,
+          "decoded_index": 72277,
+          "method": "Torappu.Battle.ReplacementSkill$$CheckIfToModify"
+        },
+        {
+          "slot": 84,
+          "usage_type": 3,
+          "decoded_index": 72279,
+          "method": "Torappu.Battle.ReplacementSkill$$ApplyModification"
+        },
+        {
+          "slot": 85,
+          "usage_type": 3,
+          "decoded_index": 72280,
+          "method": "Torappu.Battle.ReplacementSkill$$CancelAfterAttack"
+        },
+        {
+          "slot": 86,
+          "usage_type": 3,
+          "decoded_index": 72263,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$DoTick"
+        },
+        {
+          "slot": 87,
+          "usage_type": 3,
+          "decoded_index": 71775,
+          "method": "Torappu.Battle.BasicSkill$$get_ability"
+        },
+        {
+          "slot": 88,
+          "usage_type": 3,
+          "decoded_index": 72252,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$get_trigger"
+        },
+        {
+          "slot": 89,
+          "usage_type": 3,
+          "decoded_index": 72282,
+          "method": "Torappu.Battle.ReplacementSkill$$TryHookSearchTarget"
+        }
+      ]
+    },
+    {
+      "name": "Torappu.Battle.ReplacementSkillFixed",
+      "type_index": 10840,
+      "parent": "Torappu.Battle.ReplacementSkill",
+      "fields": [
+        {
+          "name": "__Hotfix0_DoTick",
+          "type": "XLua.DelegateBridge",
+          "offset": 0
+        },
+        {
+          "name": "_c__Hotfix0_ctor",
+          "type": "XLua.DelegateBridge",
+          "offset": 8
+        }
+      ],
+      "vtable": [
+        {
+          "slot": 0,
+          "usage_type": 3,
+          "decoded_index": 280865,
+          "method": "UnityEngine.Object$$Equals"
+        },
+        {
+          "slot": 1,
+          "usage_type": 3,
+          "decoded_index": 240680,
+          "method": "System.Object$$Finalize"
+        },
+        {
+          "slot": 2,
+          "usage_type": 3,
+          "decoded_index": 280864,
+          "method": "UnityEngine.Object$$GetHashCode"
+        },
+        {
+          "slot": 3,
+          "usage_type": 3,
+          "decoded_index": 280916,
+          "method": "UnityEngine.Object$$ToString"
+        },
+        {
+          "slot": 4,
+          "usage_type": 3,
+          "decoded_index": 71726,
+          "method": "Torappu.Battle.BasicSkill$$get_attributeMask"
+        },
+        {
+          "slot": 5,
+          "usage_type": 3,
+          "decoded_index": 71728,
+          "method": "Torappu.Battle.BasicSkill$$get_abnormalFlagMask"
+        },
+        {
+          "slot": 6,
+          "usage_type": 3,
+          "decoded_index": 71729,
+          "method": "Torappu.Battle.BasicSkill$$get_abnormalImmuneMask"
+        },
+        {
+          "slot": 7,
+          "usage_type": 3,
+          "decoded_index": 71730,
+          "method": "Torappu.Battle.BasicSkill$$get_abnormalAntiMask"
+        },
+        {
+          "slot": 8,
+          "usage_type": 3,
+          "decoded_index": 71731,
+          "method": "Torappu.Battle.BasicSkill$$get_abnormalComboMask"
+        },
+        {
+          "slot": 9,
+          "usage_type": 3,
+          "decoded_index": 71732,
+          "method": "Torappu.Battle.BasicSkill$$get_abnormalComboImmuneMask"
+        },
+        {
+          "slot": 10,
+          "usage_type": 3,
+          "decoded_index": 71834,
+          "method": "Torappu.Battle.BasicSkill$$GetValue"
+        },
+        {
+          "slot": 11,
+          "usage_type": 3,
+          "decoded_index": 71846,
+          "method": "Torappu.Battle.BasicSkill$$GatherEffects"
+        },
+        {
+          "slot": 12,
+          "usage_type": 3,
+          "decoded_index": 71847,
+          "method": "Torappu.Battle.BasicSkill$$GatherProjectiles"
+        },
+        {
+          "slot": 13,
+          "usage_type": 3,
+          "decoded_index": 71848,
+          "method": "Torappu.Battle.BasicSkill$$GatherBuffs"
+        },
+        {
+          "slot": 14,
+          "usage_type": 3,
+          "decoded_index": 71849,
+          "method": "Torappu.Battle.BasicSkill$$GatherActionNodes"
+        },
+        {
+          "slot": 15,
+          "usage_type": 3,
+          "decoded_index": 71733,
+          "method": "Torappu.Battle.BasicSkill$$get_showSpAsBulletMode"
+        },
+        {
+          "slot": 16,
+          "usage_type": 3,
+          "decoded_index": 71734,
+          "method": "Torappu.Battle.BasicSkill$$get_recoverSpWhenAffecting"
+        },
+        {
+          "slot": 17,
+          "usage_type": 3,
+          "decoded_index": 71738,
+          "method": "Torappu.Battle.BasicSkill$$get_stateUninterruptible"
+        },
+        {
+          "slot": 18,
+          "usage_type": 3,
+          "decoded_index": 71739,
+          "method": "Torappu.Battle.BasicSkill$$SatisfySkillRangeIdModeIndex"
+        },
+        {
+          "slot": 19,
+          "usage_type": 3,
+          "decoded_index": 71740,
+          "method": "Torappu.Battle.BasicSkill$$IsAvailable"
+        },
+        {
+          "slot": 20,
+          "usage_type": 3,
+          "decoded_index": 71749,
+          "method": "Torappu.Battle.BasicSkill$$IsClickable"
+        },
+        {
+          "slot": 21,
+          "usage_type": 3,
+          "decoded_index": 71751,
+          "method": "Torappu.Battle.BasicSkill$$IsRetriggerClickable"
+        },
+        {
+          "slot": 22,
+          "usage_type": 3,
+          "decoded_index": 71752,
+          "method": "Torappu.Battle.BasicSkill$$IsRetriggerAvailable"
+        },
+        {
+          "slot": 23,
+          "usage_type": 3,
+          "decoded_index": 71753,
+          "method": "Torappu.Battle.BasicSkill$$isRetriggerable"
+        },
+        {
+          "slot": 24,
+          "usage_type": 3,
+          "decoded_index": 71755,
+          "method": "Torappu.Battle.BasicSkill$$IsDiscardable"
+        },
+        {
+          "slot": 25,
+          "usage_type": 3,
+          "decoded_index": 71756,
+          "method": "Torappu.Battle.BasicSkill$$CanTriggerWithReason"
+        },
+        {
+          "slot": 26,
+          "usage_type": 3,
+          "decoded_index": 71758,
+          "method": "Torappu.Battle.BasicSkill$$get_isAffecting"
+        },
+        {
+          "slot": 27,
+          "usage_type": 3,
+          "decoded_index": 71761,
+          "method": "Torappu.Battle.BasicSkill$$get_shouldCastLikeAttack"
+        },
+        {
+          "slot": 28,
+          "usage_type": 3,
+          "decoded_index": 71762,
+          "method": "Torappu.Battle.BasicSkill$$get_shouldChangeToChargeColor"
+        },
+        {
+          "slot": 29,
+          "usage_type": 3,
+          "decoded_index": 71763,
+          "method": "Torappu.Battle.BasicSkill$$get_overrideAudioSignalId"
+        },
+        {
+          "slot": 30,
+          "usage_type": 3,
+          "decoded_index": 71766,
+          "method": "Torappu.Battle.BasicSkill$$get_remainingTime"
+        },
+        {
+          "slot": 31,
+          "usage_type": 3,
+          "decoded_index": 71767,
+          "method": "Torappu.Battle.BasicSkill$$get_remainingProgress"
+        },
+        {
+          "slot": 32,
+          "usage_type": 3,
+          "decoded_index": 71768,
+          "method": "Torappu.Battle.BasicSkill$$get_remainingOverloadProgress"
+        },
+        {
+          "slot": 33,
+          "usage_type": 3,
+          "decoded_index": 71769,
+          "method": "Torappu.Battle.BasicSkill$$TryForceToOverloadProgress"
+        },
+        {
+          "slot": 34,
+          "usage_type": 3,
+          "decoded_index": 71771,
+          "method": "Torappu.Battle.BasicSkill$$get_progressToReady"
+        },
+        {
+          "slot": 35,
+          "usage_type": 3,
+          "decoded_index": 71772,
+          "method": "Torappu.Battle.BasicSkill$$get_spCostZero"
+        },
+        {
+          "slot": 36,
+          "usage_type": 3,
+          "decoded_index": 71775,
+          "method": "Torappu.Battle.BasicSkill$$get_ability"
+        },
+        {
+          "slot": 37,
+          "usage_type": 3,
+          "decoded_index": 71776,
+          "method": "Torappu.Battle.BasicSkill$$get_familyGroup"
+        },
+        {
+          "slot": 38,
+          "usage_type": 3,
+          "decoded_index": 72275,
+          "method": "Torappu.Battle.ReplacementSkill$$get_rangeToShow"
+        },
+        {
+          "slot": 39,
+          "usage_type": 3,
+          "decoded_index": 71782,
+          "method": "Torappu.Battle.BasicSkill$$get_spEnough"
+        },
+        {
+          "slot": 40,
+          "usage_type": 3,
+          "decoded_index": 71783,
+          "method": "Torappu.Battle.BasicSkill$$get_canSkipReduceSp"
+        },
+        {
+          "slot": 41,
+          "usage_type": 3,
+          "decoded_index": 71784,
+          "method": "Torappu.Battle.BasicSkill$$get_forceToShowRange"
+        },
+        {
+          "slot": 42,
+          "usage_type": 3,
+          "decoded_index": 71785,
+          "method": "Torappu.Battle.BasicSkill$$get_forceUseBaseShowRange"
+        },
+        {
+          "slot": 43,
+          "usage_type": 3,
+          "decoded_index": 71786,
+          "method": "Torappu.Battle.BasicSkill$$get_isUsedUp"
+        },
+        {
+          "slot": 44,
+          "usage_type": 3,
+          "decoded_index": 71794,
+          "method": "Torappu.Battle.BasicSkill$$get_isRemoteControlled"
+        },
+        {
+          "slot": 45,
+          "usage_type": 3,
+          "decoded_index": 71795,
+          "method": "Torappu.Battle.BasicSkill$$get_hideProgressFlag"
+        },
+        {
+          "slot": 46,
+          "usage_type": 3,
+          "decoded_index": 71796,
+          "method": "Torappu.Battle.BasicSkill$$get_hasPlayedBeginAnim"
+        },
+        {
+          "slot": 47,
+          "usage_type": 3,
+          "decoded_index": 71802,
+          "method": "Torappu.Battle.BasicSkill$$get_beginAnim"
+        },
+        {
+          "slot": 48,
+          "usage_type": 3,
+          "decoded_index": 71808,
+          "method": "Torappu.Battle.BasicSkill$$get_canCastCheck"
+        },
+        {
+          "slot": 49,
+          "usage_type": 3,
+          "decoded_index": 71809,
+          "method": "Torappu.Battle.BasicSkill$$get_beginEffect"
+        },
+        {
+          "slot": 50,
+          "usage_type": 3,
+          "decoded_index": 71811,
+          "method": "Torappu.Battle.BasicSkill$$get_isOverloadSkill"
+        },
+        {
+          "slot": 51,
+          "usage_type": 3,
+          "decoded_index": 72257,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$AssignData"
+        },
+        {
+          "slot": 52,
+          "usage_type": 3,
+          "decoded_index": 72278,
+          "method": "Torappu.Battle.ReplacementSkill$$DoCast"
+        },
+        {
+          "slot": 53,
+          "usage_type": 3,
+          "decoded_index": 71817,
+          "method": "Torappu.Battle.BasicSkill$$OnSkillEnd"
+        },
+        {
+          "slot": 54,
+          "usage_type": 3,
+          "decoded_index": 72259,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$UseSkill"
+        },
+        {
+          "slot": 55,
+          "usage_type": 3,
+          "decoded_index": 71819,
+          "method": "Torappu.Battle.BasicSkill$$RetriggerSkill"
+        },
+        {
+          "slot": 56,
+          "usage_type": 3,
+          "decoded_index": 71820,
+          "method": "Torappu.Battle.BasicSkill$$InterruptIfNot"
+        },
+        {
+          "slot": 57,
+          "usage_type": 3,
+          "decoded_index": 71821,
+          "method": "Torappu.Battle.BasicSkill$$OnEnterSkillState"
+        },
+        {
+          "slot": 58,
+          "usage_type": 3,
+          "decoded_index": 71822,
+          "method": "Torappu.Battle.BasicSkill$$TryPrepare"
+        },
+        {
+          "slot": 59,
+          "usage_type": 3,
+          "decoded_index": 71823,
+          "method": "Torappu.Battle.BasicSkill$$CanCastCheckBeforeStart"
+        },
+        {
+          "slot": 60,
+          "usage_type": 3,
+          "decoded_index": 72276,
+          "method": "Torappu.Battle.ReplacementSkill$$OnInit"
+        },
+        {
+          "slot": 61,
+          "usage_type": 3,
+          "decoded_index": 71826,
+          "method": "Torappu.Battle.BasicSkill$$OnBorn"
+        },
+        {
+          "slot": 62,
+          "usage_type": 3,
+          "decoded_index": 71827,
+          "method": "Torappu.Battle.BasicSkill$$OnLocate"
+        },
+        {
+          "slot": 63,
+          "usage_type": 3,
+          "decoded_index": 71828,
+          "method": "Torappu.Battle.BasicSkill$$OnOverload"
+        },
+        {
+          "slot": 64,
+          "usage_type": 3,
+          "decoded_index": 71829,
+          "method": "Torappu.Battle.BasicSkill$$OnOwnerFinish"
+        },
+        {
+          "slot": 65,
+          "usage_type": 3,
+          "decoded_index": 71830,
+          "method": "Torappu.Battle.BasicSkill$$OnCastSucceed"
+        },
+        {
+          "slot": 66,
+          "usage_type": 3,
+          "decoded_index": 71831,
+          "method": "Torappu.Battle.BasicSkill$$OnCastFailedInSkillState"
+        },
+        {
+          "slot": 67,
+          "usage_type": 3,
+          "decoded_index": 72258,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$OnBeforeAttack"
+        },
+        {
+          "slot": 68,
+          "usage_type": 3,
+          "decoded_index": 72261,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$OnAfterAttack"
+        },
+        {
+          "slot": 69,
+          "usage_type": 3,
+          "decoded_index": 71836,
+          "method": "Torappu.Battle.BasicSkill$$PlayBeginEffectAndAudio"
+        },
+        {
+          "slot": 70,
+          "usage_type": 3,
+          "decoded_index": 71839,
+          "method": "Torappu.Battle.BasicSkill$$PlayBeginAnimation"
+        },
+        {
+          "slot": 71,
+          "usage_type": 3,
+          "decoded_index": 71840,
+          "method": "Torappu.Battle.BasicSkill$$PlayBeginAudio"
+        },
+        {
+          "slot": 72,
+          "usage_type": 3,
+          "decoded_index": 71841,
+          "method": "Torappu.Battle.BasicSkill$$OnBeforeSkillBeginAnim"
+        },
+        {
+          "slot": 73,
+          "usage_type": 3,
+          "decoded_index": 71846,
+          "method": "Torappu.Battle.BasicSkill$$GatherEffects"
+        },
+        {
+          "slot": 74,
+          "usage_type": 3,
+          "decoded_index": 71847,
+          "method": "Torappu.Battle.BasicSkill$$GatherProjectiles"
+        },
+        {
+          "slot": 75,
+          "usage_type": 3,
+          "decoded_index": 71848,
+          "method": "Torappu.Battle.BasicSkill$$GatherBuffs"
+        },
+        {
+          "slot": 76,
+          "usage_type": 3,
+          "decoded_index": 71849,
+          "method": "Torappu.Battle.BasicSkill$$GatherActionNodes"
+        },
+        {
+          "slot": 77,
+          "usage_type": 3,
+          "decoded_index": 72262,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$OnTick"
+        },
+        {
+          "slot": 78,
+          "usage_type": 3,
+          "decoded_index": 71853,
+          "method": "Torappu.Battle.BasicSkill$$UpdateSpRecovery"
+        },
+        {
+          "slot": 79,
+          "usage_type": 3,
+          "decoded_index": 72281,
+          "method": "Torappu.Battle.ReplacementSkill$$OnCastFinish"
+        },
+        {
+          "slot": 80,
+          "usage_type": 3,
+          "decoded_index": 71855,
+          "method": "Torappu.Battle.BasicSkill$$Awake"
+        },
+        {
+          "slot": 81,
+          "usage_type": 3,
+          "decoded_index": 71865,
+          "method": "Torappu.Battle.BasicSkill$$get_isAvailableToShowStackCount"
+        },
+        {
+          "slot": 82,
+          "usage_type": 3,
+          "decoded_index": 72252,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$get_trigger"
+        },
+        {
+          "slot": 83,
+          "usage_type": 3,
+          "decoded_index": 72277,
+          "method": "Torappu.Battle.ReplacementSkill$$CheckIfToModify"
+        },
+        {
+          "slot": 84,
+          "usage_type": 3,
+          "decoded_index": 72279,
+          "method": "Torappu.Battle.ReplacementSkill$$ApplyModification"
+        },
+        {
+          "slot": 85,
+          "usage_type": 3,
+          "decoded_index": 72280,
+          "method": "Torappu.Battle.ReplacementSkill$$CancelAfterAttack"
+        },
+        {
+          "slot": 86,
+          "usage_type": 3,
+          "decoded_index": 72289,
+          "method": "Torappu.Battle.ReplacementSkillFixed$$DoTick"
+        },
+        {
+          "slot": 87,
+          "usage_type": 3,
+          "decoded_index": 71775,
+          "method": "Torappu.Battle.BasicSkill$$get_ability"
+        },
+        {
+          "slot": 88,
+          "usage_type": 3,
+          "decoded_index": 72252,
+          "method": "Torappu.Battle.NextAttackOrCombatSkill$$get_trigger"
+        },
+        {
+          "slot": 89,
+          "usage_type": 3,
+          "decoded_index": 72282,
+          "method": "Torappu.Battle.ReplacementSkill$$TryHookSearchTarget"
+        }
+      ]
+    },
+    {
+      "name": "Torappu.Battle.Abilities.MultiMeleeAttack+<OnWaitForTriggerDelta>d__38",
+      "type_index": 12968,
+      "parent": "System.Object",
+      "fields": [
+        {
+          "name": "<>1__state",
+          "type": "System.Int32",
+          "offset": 16
+        },
+        {
+          "name": "<>2__current",
+          "type": "System.Object",
+          "offset": 24
+        },
+        {
+          "name": "<>4__this",
+          "type": "Torappu.Battle.Abilities.MultiMeleeAttack",
+          "offset": 32
+        }
+      ],
+      "vtable": [
+        {
+          "slot": 0,
+          "usage_type": 3,
+          "decoded_index": 240677,
+          "method": "System.Object$$Equals"
+        },
+        {
+          "slot": 1,
+          "usage_type": 3,
+          "decoded_index": 240680,
+          "method": "System.Object$$Finalize"
+        },
+        {
+          "slot": 2,
+          "usage_type": 3,
+          "decoded_index": 240681,
+          "method": "System.Object$$GetHashCode"
+        },
+        {
+          "slot": 3,
+          "usage_type": 3,
+          "decoded_index": 240684,
+          "method": "System.Object$$ToString"
+        },
+        {
+          "slot": 4,
+          "usage_type": 3,
+          "decoded_index": 89424,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack+<OnWaitForTriggerDelta>d__38$$System.Collections.Generic.IEnumerator<System.Object>.get_Current"
+        },
+        {
+          "slot": 5,
+          "usage_type": 3,
+          "decoded_index": 89422,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack+<OnWaitForTriggerDelta>d__38$$System.IDisposable.Dispose"
+        },
+        {
+          "slot": 6,
+          "usage_type": 3,
+          "decoded_index": 89423,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack+<OnWaitForTriggerDelta>d__38$$MoveNext"
+        },
+        {
+          "slot": 7,
+          "usage_type": 3,
+          "decoded_index": 89426,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack+<OnWaitForTriggerDelta>d__38$$System.Collections.IEnumerator.get_Current"
+        },
+        {
+          "slot": 8,
+          "usage_type": 3,
+          "decoded_index": 89425,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack+<OnWaitForTriggerDelta>d__38$$System.Collections.IEnumerator.Reset"
+        }
+      ]
+    },
+    {
+      "name": "Torappu.Battle.Abilities.MultiMeleeAttack",
+      "type_index": 12969,
+      "parent": "Torappu.Battle.Abilities.MeleeAttack",
+      "fields": [
+        {
+          "name": "_additionalTimes",
+          "type": "System.Int32",
+          "offset": 536
+        },
+        {
+          "name": "_triggerDelta",
+          "type": "System.Single",
+          "offset": 540
+        },
+        {
+          "name": "_waitAttackEventForAllAttacks",
+          "type": "System.Boolean",
+          "offset": 544
+        },
+        {
+          "name": "_splitDamage",
+          "type": "System.Boolean",
+          "offset": 545
+        },
+        {
+          "name": "_minPostDelay",
+          "type": "System.Single",
+          "offset": 548
+        },
+        {
+          "name": "_onlyFeedActiveBuffToLastOne",
+          "type": "System.Boolean",
+          "offset": 552
+        },
+        {
+          "name": "_onlyFeedActiveBuffToFirstOne",
+          "type": "System.Boolean",
+          "offset": 553
+        },
+        {
+          "name": "_addSpellCntToAllSignalId",
+          "type": "System.Boolean",
+          "offset": 554
+        },
+        {
+          "name": "_addSpellCntToLastSignalId",
+          "type": "System.Boolean",
+          "offset": 555
+        },
+        {
+          "name": "_onlyTrigAudioSignalForFirstSpell",
+          "type": "System.Boolean",
+          "offset": 556
+        },
+        {
+          "name": "_onlyTrigAudioSignalForFirstHit",
+          "type": "System.Boolean",
+          "offset": 557
+        },
+        {
+          "name": "_addSpellCntToAllHitSignalId",
+          "type": "System.Boolean",
+          "offset": 558
+        },
+        {
+          "name": "_refreshInputTargetOnCheckSpell",
+          "type": "System.Boolean",
+          "offset": 559
+        },
+        {
+          "name": "_refreshInputTargetTrigger",
+          "type": "Torappu.Battle.TargetTrigger",
+          "offset": 560
+        },
+        {
+          "name": "_refreshTimesOnCastStart",
+          "type": "System.Boolean",
+          "offset": 568
+        },
+        {
+          "name": "_refreshTimesOnCheckAnotherSpell",
+          "type": "System.Boolean",
+          "offset": 569
+        },
+        {
+          "name": "m_additionalTimes",
+          "type": "System.Int32",
+          "offset": 572
+        },
+        {
+          "name": "m_triggerDelta",
+          "type": "System.Single",
+          "offset": 576
+        },
+        {
+          "name": "m_damageSplitter",
+          "type": "Torappu.Battle.ModifierSplitter",
+          "offset": 584
+        },
+        {
+          "name": "m_multiEventListener",
+          "type": "Torappu.Battle.MultiEventListener",
+          "offset": 592
+        },
+        {
+          "name": "__Hotfix0_get_waitAttackEventForAllAttacks",
+          "type": "XLua.DelegateBridge",
+          "offset": 0
+        },
+        {
+          "name": "__Hotfix0_get_postDelay",
+          "type": "XLua.DelegateBridge",
+          "offset": 8
+        },
+        {
+          "name": "__Hotfix0_get_onlyTrigAudioSignalForFirstSpell",
+          "type": "XLua.DelegateBridge",
+          "offset": 16
+        },
+        {
+          "name": "__Hotfix0_get_onlyTrigAudioSignalForFirstHit",
+          "type": "XLua.DelegateBridge",
+          "offset": 24
+        },
+        {
+          "name": "__Hotfix0_GetActiveBuffs",
+          "type": "XLua.DelegateBridge",
+          "offset": 32
+        },
+        {
+          "name": "__Hotfix0_DoAttach",
+          "type": "XLua.DelegateBridge",
+          "offset": 40
+        },
+        {
+          "name": "__Hotfix0_DoSetData",
+          "type": "XLua.DelegateBridge",
+          "offset": 48
+        },
+        {
+          "name": "__Hotfix0_CheckAnotherSpell",
+          "type": "XLua.DelegateBridge",
+          "offset": 56
+        },
+        {
+          "name": "__Hotfix0_DoEmitAudioSignalForSpellOn",
+          "type": "XLua.DelegateBridge",
+          "offset": 64
+        },
+        {
+          "name": "__Hotfix0_DoEmitAudioSignalForHit",
+          "type": "XLua.DelegateBridge",
+          "offset": 72
+        },
+        {
+          "name": "__Hotfix0_OnCastStart",
+          "type": "XLua.DelegateBridge",
+          "offset": 80
+        },
+        {
+          "name": "__Hotfix0_OnCastEnd",
+          "type": "XLua.DelegateBridge",
+          "offset": 88
+        },
+        {
+          "name": "__Hotfix0_DoApplyActionsOnTarget",
+          "type": "XLua.DelegateBridge",
+          "offset": 96
+        },
+        {
+          "name": "__Hotfix0_OnWaitForPreDelay",
+          "type": "XLua.DelegateBridge",
+          "offset": 104
+        },
+        {
+          "name": "__Hotfix0_OnWaitForTriggerDelta",
+          "type": "XLua.DelegateBridge",
+          "offset": 112
+        },
+        {
+          "name": "_c__Hotfix0_ctor",
+          "type": "XLua.DelegateBridge",
+          "offset": 120
+        }
+      ],
+      "vtable": [
+        {
+          "slot": 0,
+          "usage_type": 3,
+          "decoded_index": 280865,
+          "method": "UnityEngine.Object$$Equals"
+        },
+        {
+          "slot": 1,
+          "usage_type": 3,
+          "decoded_index": 240680,
+          "method": "System.Object$$Finalize"
+        },
+        {
+          "slot": 2,
+          "usage_type": 3,
+          "decoded_index": 280864,
+          "method": "UnityEngine.Object$$GetHashCode"
+        },
+        {
+          "slot": 3,
+          "usage_type": 3,
+          "decoded_index": 280916,
+          "method": "UnityEngine.Object$$ToString"
+        },
+        {
+          "slot": 4,
+          "usage_type": 3,
+          "decoded_index": 62628,
+          "method": "Torappu.Battle.AbilityStandard$$GatherEffects"
+        },
+        {
+          "slot": 5,
+          "usage_type": 3,
+          "decoded_index": 62629,
+          "method": "Torappu.Battle.AbilityStandard$$GatherProjectiles"
+        },
+        {
+          "slot": 6,
+          "usage_type": 3,
+          "decoded_index": 62630,
+          "method": "Torappu.Battle.AbilityStandard$$GatherActionNodes"
+        },
+        {
+          "slot": 7,
+          "usage_type": 3,
+          "decoded_index": 62627,
+          "method": "Torappu.Battle.AbilityStandard$$GatherBuffs"
+        },
+        {
+          "slot": 8,
+          "usage_type": 3,
+          "decoded_index": 62488,
+          "method": "Torappu.Battle.Ability$$get_instanceUid"
+        },
+        {
+          "slot": 9,
+          "usage_type": 3,
+          "decoded_index": 62662,
+          "method": "Torappu.Battle.AbilityStandard$$PreloadSpecialAudioSignals"
+        },
+        {
+          "slot": 10,
+          "usage_type": 3,
+          "decoded_index": 62583,
+          "method": "Torappu.Battle.Ability$$GetPRDEntityHash"
+        },
+        {
+          "slot": 11,
+          "usage_type": 3,
+          "decoded_index": 62584,
+          "method": "Torappu.Battle.Ability$$AllocatePRDEntitySubHash"
+        },
+        {
+          "slot": 12,
+          "usage_type": 3,
+          "decoded_index": 62585,
+          "method": "Torappu.Battle.Ability$$ResetPRDEntity"
+        },
+        {
+          "slot": 13,
+          "usage_type": 3,
+          "decoded_index": 90767,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_affectedBySlowDown"
+        },
+        {
+          "slot": 14,
+          "usage_type": 3,
+          "decoded_index": 90783,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_category"
+        },
+        {
+          "slot": 15,
+          "usage_type": 3,
+          "decoded_index": 62502,
+          "method": "Torappu.Battle.Ability$$get_selector"
+        },
+        {
+          "slot": 16,
+          "usage_type": 3,
+          "decoded_index": 62503,
+          "method": "Torappu.Battle.Ability$$get_rangeToShow"
+        },
+        {
+          "slot": 17,
+          "usage_type": 3,
+          "decoded_index": 90784,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_cooldown"
+        },
+        {
+          "slot": 18,
+          "usage_type": 3,
+          "decoded_index": 90780,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_allowNoTarget"
+        },
+        {
+          "slot": 19,
+          "usage_type": 3,
+          "decoded_index": 62510,
+          "method": "Torappu.Battle.Ability$$get_isReady"
+        },
+        {
+          "slot": 20,
+          "usage_type": 3,
+          "decoded_index": 62513,
+          "method": "Torappu.Battle.Ability$$get_isAffecting"
+        },
+        {
+          "slot": 21,
+          "usage_type": 3,
+          "decoded_index": 90775,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_canSelectCamouflageTarget"
+        },
+        {
+          "slot": 22,
+          "usage_type": 3,
+          "decoded_index": 90782,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_escapeTime"
+        },
+        {
+          "slot": 23,
+          "usage_type": 3,
+          "decoded_index": 89351,
+          "method": "Torappu.Battle.Abilities.MeleeAttack$$get_applyWay"
+        },
+        {
+          "slot": 24,
+          "usage_type": 3,
+          "decoded_index": 62611,
+          "method": "Torappu.Battle.AbilityStandard$$get_purposeMask"
+        },
+        {
+          "slot": 25,
+          "usage_type": 3,
+          "decoded_index": 62614,
+          "method": "Torappu.Battle.AbilityStandard$$get_isPredelay"
+        },
+        {
+          "slot": 26,
+          "usage_type": 3,
+          "decoded_index": 90785,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_ignorePalsyInterrupt"
+        },
+        {
+          "slot": 27,
+          "usage_type": 3,
+          "decoded_index": 89390,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$DoSetData"
+        },
+        {
+          "slot": 28,
+          "usage_type": 3,
+          "decoded_index": 62533,
+          "method": "Torappu.Battle.Ability$$UpdateBlackboard"
+        },
+        {
+          "slot": 29,
+          "usage_type": 3,
+          "decoded_index": 62534,
+          "method": "Torappu.Battle.Ability$$UpdateSelector"
+        },
+        {
+          "slot": 30,
+          "usage_type": 3,
+          "decoded_index": 89389,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$DoAttach"
+        },
+        {
+          "slot": 31,
+          "usage_type": 3,
+          "decoded_index": 62539,
+          "method": "Torappu.Battle.Ability$$DoDetach"
+        },
+        {
+          "slot": 32,
+          "usage_type": 3,
+          "decoded_index": 62540,
+          "method": "Torappu.Battle.Ability$$OnOwnerLocated"
+        },
+        {
+          "slot": 33,
+          "usage_type": 3,
+          "decoded_index": 62617,
+          "method": "Torappu.Battle.AbilityStandard$$CastToTarget"
+        },
+        {
+          "slot": 34,
+          "usage_type": 3,
+          "decoded_index": 62618,
+          "method": "Torappu.Battle.AbilityStandard$$CastDirectly"
+        },
+        {
+          "slot": 35,
+          "usage_type": 3,
+          "decoded_index": 62619,
+          "method": "Torappu.Battle.AbilityStandard$$CastToInputPosition"
+        },
+        {
+          "slot": 36,
+          "usage_type": 3,
+          "decoded_index": 62544,
+          "method": "Torappu.Battle.Ability$$InterruptIfNot"
+        },
+        {
+          "slot": 37,
+          "usage_type": 3,
+          "decoded_index": 62545,
+          "method": "Torappu.Battle.Ability$$DoFinish"
+        },
+        {
+          "slot": 38,
+          "usage_type": 3,
+          "decoded_index": 62546,
+          "method": "Torappu.Battle.Ability$$ResetCooldown"
+        },
+        {
+          "slot": 39,
+          "usage_type": 3,
+          "decoded_index": 62548,
+          "method": "Torappu.Battle.Ability$$UpdateCooldown"
+        },
+        {
+          "slot": 40,
+          "usage_type": 3,
+          "decoded_index": 62549,
+          "method": "Torappu.Battle.Ability$$TrySetCooldownRemainingProgress"
+        },
+        {
+          "slot": 41,
+          "usage_type": 3,
+          "decoded_index": 62621,
+          "method": "Torappu.Battle.AbilityStandard$$StopAffect"
+        },
+        {
+          "slot": 42,
+          "usage_type": 3,
+          "decoded_index": 62554,
+          "method": "Torappu.Battle.Ability$$Reset"
+        },
+        {
+          "slot": 43,
+          "usage_type": 3,
+          "decoded_index": 62624,
+          "method": "Torappu.Battle.AbilityStandard$$CleanupForNextCast"
+        },
+        {
+          "slot": 44,
+          "usage_type": 3,
+          "decoded_index": 90790,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$GetPassiveBuffs"
+        },
+        {
+          "slot": 45,
+          "usage_type": 3,
+          "decoded_index": 89388,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$GetActiveBuffs"
+        },
+        {
+          "slot": 46,
+          "usage_type": 3,
+          "decoded_index": 89356,
+          "method": "Torappu.Battle.Abilities.MeleeAttack$$GetProjectileActions"
+        },
+        {
+          "slot": 47,
+          "usage_type": 3,
+          "decoded_index": 62559,
+          "method": "Torappu.Battle.Ability$$GetAbilityAttachments"
+        },
+        {
+          "slot": 48,
+          "usage_type": 3,
+          "decoded_index": 62628,
+          "method": "Torappu.Battle.AbilityStandard$$GatherEffects"
+        },
+        {
+          "slot": 49,
+          "usage_type": 3,
+          "decoded_index": 62629,
+          "method": "Torappu.Battle.AbilityStandard$$GatherProjectiles"
+        },
+        {
+          "slot": 50,
+          "usage_type": 3,
+          "decoded_index": 62630,
+          "method": "Torappu.Battle.AbilityStandard$$GatherActionNodes"
+        },
+        {
+          "slot": 51,
+          "usage_type": 3,
+          "decoded_index": 62627,
+          "method": "Torappu.Battle.AbilityStandard$$GatherBuffs"
+        },
+        {
+          "slot": 52,
+          "usage_type": 3,
+          "decoded_index": 89394,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$OnCastStart"
+        },
+        {
+          "slot": 53,
+          "usage_type": 3,
+          "decoded_index": 89395,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$OnCastEnd"
+        },
+        {
+          "slot": 54,
+          "usage_type": 3,
+          "decoded_index": 62641,
+          "method": "Torappu.Battle.AbilityStandard$$OnAttached"
+        },
+        {
+          "slot": 55,
+          "usage_type": 3,
+          "decoded_index": 62643,
+          "method": "Torappu.Battle.AbilityStandard$$OnDetached"
+        },
+        {
+          "slot": 56,
+          "usage_type": 3,
+          "decoded_index": 62648,
+          "method": "Torappu.Battle.AbilityStandard$$OnTick"
+        },
+        {
+          "slot": 57,
+          "usage_type": 3,
+          "decoded_index": 62642,
+          "method": "Torappu.Battle.AbilityStandard$$OnOverload"
+        },
+        {
+          "slot": 58,
+          "usage_type": 3,
+          "decoded_index": 90786,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$OnAttackTimeChanged"
+        },
+        {
+          "slot": 59,
+          "usage_type": 3,
+          "decoded_index": 90787,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$OnSlowDownChanged"
+        },
+        {
+          "slot": 60,
+          "usage_type": 3,
+          "decoded_index": 62572,
+          "method": "Torappu.Battle.Ability$$OnAbilityExtendUpdated"
+        },
+        {
+          "slot": 61,
+          "usage_type": 3,
+          "decoded_index": 62662,
+          "method": "Torappu.Battle.AbilityStandard$$PreloadSpecialAudioSignals"
+        },
+        {
+          "slot": 62,
+          "usage_type": 3,
+          "decoded_index": 62622,
+          "method": "Torappu.Battle.AbilityStandard$$CheckAtPreCastPhase"
+        },
+        {
+          "slot": 63,
+          "usage_type": 3,
+          "decoded_index": 62575,
+          "method": "Torappu.Battle.Ability$$FinishIfNot"
+        },
+        {
+          "slot": 64,
+          "usage_type": 3,
+          "decoded_index": 62576,
+          "method": "Torappu.Battle.Ability$$AddPassiveBuffs"
+        },
+        {
+          "slot": 65,
+          "usage_type": 3,
+          "decoded_index": 62577,
+          "method": "Torappu.Battle.Ability$$ClearPassiveBuffs"
+        },
+        {
+          "slot": 66,
+          "usage_type": 3,
+          "decoded_index": 62578,
+          "method": "Torappu.Battle.Ability$$PreprocessActionsForProjectile"
+        },
+        {
+          "slot": 67,
+          "usage_type": 3,
+          "decoded_index": 62582,
+          "method": "Torappu.Battle.Ability$$ClearProjectile"
+        },
+        {
+          "slot": 68,
+          "usage_type": 3,
+          "decoded_index": 90776,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_selectTargetSource"
+        },
+        {
+          "slot": 69,
+          "usage_type": 3,
+          "decoded_index": 90777,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_selectTargetTiming"
+        },
+        {
+          "slot": 70,
+          "usage_type": 3,
+          "decoded_index": 90778,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_alwaysIncludeTarget"
+        },
+        {
+          "slot": 71,
+          "usage_type": 3,
+          "decoded_index": 89386,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$get_onlyTrigAudioSignalForFirstSpell"
+        },
+        {
+          "slot": 72,
+          "usage_type": 3,
+          "decoded_index": 89387,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$get_onlyTrigAudioSignalForFirstHit"
+        },
+        {
+          "slot": 73,
+          "usage_type": 3,
+          "decoded_index": 62620,
+          "method": "Torappu.Battle.AbilityStandard$$GetCastDirectlyMapPosition"
+        },
+        {
+          "slot": 74,
+          "usage_type": 3,
+          "decoded_index": 62625,
+          "method": "Torappu.Battle.AbilityStandard$$OnEvent"
+        },
+        {
+          "slot": 75,
+          "usage_type": 3,
+          "decoded_index": 89354,
+          "method": "Torappu.Battle.Abilities.MeleeAttack$$GetEventActions"
+        },
+        {
+          "slot": 76,
+          "usage_type": 3,
+          "decoded_index": 62632,
+          "method": "Torappu.Battle.AbilityStandard$$OnCastOnTarget"
+        },
+        {
+          "slot": 77,
+          "usage_type": 3,
+          "decoded_index": 89396,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$DoApplyActionsOnTarget"
+        },
+        {
+          "slot": 78,
+          "usage_type": 3,
+          "decoded_index": 89397,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$OnWaitForPreDelay"
+        },
+        {
+          "slot": 79,
+          "usage_type": 3,
+          "decoded_index": 90854,
+          "method": "Torappu.Battle.Abilities.EasyToStartAbility$$OnWaitForPostDelay"
+        },
+        {
+          "slot": 80,
+          "usage_type": 3,
+          "decoded_index": 89398,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$OnWaitForTriggerDelta"
+        },
+        {
+          "slot": 81,
+          "usage_type": 3,
+          "decoded_index": 62637,
+          "method": "Torappu.Battle.AbilityStandard$$OnSpellStart"
+        },
+        {
+          "slot": 82,
+          "usage_type": 3,
+          "decoded_index": 62638,
+          "method": "Torappu.Battle.AbilityStandard$$DoOnHasNoTarget"
+        },
+        {
+          "slot": 83,
+          "usage_type": 3,
+          "decoded_index": 62644,
+          "method": "Torappu.Battle.AbilityStandard$$OnAttackFinished"
+        },
+        {
+          "slot": 84,
+          "usage_type": 3,
+          "decoded_index": 62645,
+          "method": "Torappu.Battle.AbilityStandard$$OnStunnedChanged"
+        },
+        {
+          "slot": 85,
+          "usage_type": 3,
+          "decoded_index": 62646,
+          "method": "Torappu.Battle.AbilityStandard$$OnFrozenChanged"
+        },
+        {
+          "slot": 86,
+          "usage_type": 3,
+          "decoded_index": 62647,
+          "method": "Torappu.Battle.AbilityStandard$$OnLevitateChanged"
+        },
+        {
+          "slot": 87,
+          "usage_type": 3,
+          "decoded_index": 89355,
+          "method": "Torappu.Battle.Abilities.MeleeAttack$$CheckActiveBuffs"
+        },
+        {
+          "slot": 88,
+          "usage_type": 3,
+          "decoded_index": 62650,
+          "method": "Torappu.Battle.AbilityStandard$$DoCastOnTargets"
+        },
+        {
+          "slot": 89,
+          "usage_type": 3,
+          "decoded_index": 89358,
+          "method": "Torappu.Battle.Abilities.MeleeAttack$$UpdateTargets"
+        },
+        {
+          "slot": 90,
+          "usage_type": 3,
+          "decoded_index": 89391,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$CheckAnotherSpell"
+        },
+        {
+          "slot": 91,
+          "usage_type": 3,
+          "decoded_index": 90802,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$UpdatePlaybackSpeed"
+        },
+        {
+          "slot": 92,
+          "usage_type": 3,
+          "decoded_index": 89314,
+          "method": "Torappu.Battle.Abilities.AbstractBasicAttack$$CheckIsDamageOrHealSource"
+        },
+        {
+          "slot": 93,
+          "usage_type": 3,
+          "decoded_index": 89315,
+          "method": "Torappu.Battle.Abilities.AbstractBasicAttack$$GeneratePurposeMask"
+        },
+        {
+          "slot": 94,
+          "usage_type": 3,
+          "decoded_index": 89392,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$DoEmitAudioSignalForSpellOn"
+        },
+        {
+          "slot": 95,
+          "usage_type": 3,
+          "decoded_index": 62660,
+          "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForCastStart"
+        },
+        {
+          "slot": 96,
+          "usage_type": 3,
+          "decoded_index": 89393,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$DoEmitAudioSignalForHit"
+        },
+        {
+          "slot": 97,
+          "usage_type": 3,
+          "decoded_index": 62663,
+          "method": "Torappu.Battle.AbilityStandard$$OnOutputAttackOrHeal"
+        },
+        {
+          "slot": 98,
+          "usage_type": 3,
+          "decoded_index": 62664,
+          "method": "Torappu.Battle.AbilityStandard$$OnOutputAttackOrHealEachSpell"
+        },
+        {
+          "slot": 99,
+          "usage_type": 3,
+          "decoded_index": 62665,
+          "method": "Torappu.Battle.AbilityStandard$$Awake"
+        },
+        {
+          "slot": 100,
+          "usage_type": 3,
+          "decoded_index": 90781,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_preDelay"
+        },
+        {
+          "slot": 101,
+          "usage_type": 3,
+          "decoded_index": 89385,
+          "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$get_postDelay"
+        },
+        {
+          "slot": 102,
+          "usage_type": 3,
+          "decoded_index": 90801,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$GetDuration"
+        },
+        {
+          "slot": 103,
+          "usage_type": 3,
+          "decoded_index": 89305,
+          "method": "Torappu.Battle.Abilities.AbstractBasicAttack$$get_attackType"
+        },
+        {
+          "slot": 104,
+          "usage_type": 3,
+          "decoded_index": 89306,
+          "method": "Torappu.Battle.Abilities.AbstractBasicAttack$$get_useDynamicAttackType"
+        },
+        {
+          "slot": 105,
+          "usage_type": 3,
+          "decoded_index": 90793,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$DealWithFaceDirection"
+        },
+        {
+          "slot": 106,
+          "usage_type": 3,
+          "decoded_index": 90795,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$CreateDamageNode"
+        },
+        {
+          "slot": 107,
+          "usage_type": 3,
+          "decoded_index": 90796,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$NewDamageNode"
+        },
+        {
+          "slot": 108,
+          "usage_type": 3,
+          "decoded_index": 90797,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$CreateElementDamageNode"
+        },
+        {
+          "slot": 109,
+          "usage_type": 3,
+          "decoded_index": 90803,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$GetAnimKey"
+        },
+        {
+          "slot": 110,
+          "usage_type": 3,
+          "decoded_index": 90804,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$CheckDownAttack"
+        },
+        {
+          "slot": 111,
+          "usage_type": 3,
+          "decoded_index": 90805,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$CheckUpAttack"
+        },
+        {
+          "slot": 112,
+          "usage_type": 3,
+          "decoded_index": 89352,
+          "method": "Torappu.Battle.Abilities.MeleeAttack$$get_damageType"
+        },
+        {
+          "slot": 113,
+          "usage_type": 3,
+          "decoded_index": 89353,
+          "method": "Torappu.Battle.Abilities.MeleeAttack$$get_extraDamageType"
+        }
+      ]
+    },
+    {
+      "name": "Torappu.Battle.Abilities.AbstractAnimatedAbility",
+      "type_index": 13081,
+      "parent": "Torappu.Battle.Abilities.EasyToStartAbility",
+      "fields": [
+        {
+          "name": "MIN_ANIM_SCALE",
+          "type": "System.Single",
+          "offset": 0
+        },
+        {
+          "name": "_selectTargetSource",
+          "type": "Torappu.Battle.AbilityStandard+SelectTargetSource",
+          "offset": 304
+        },
+        {
+          "name": "_selectTargetTiming",
+          "type": "Torappu.Battle.AbilityStandard+SelectTargetTiming",
+          "offset": 308
+        },
+        {
+          "name": "_timeMode",
+          "type": "Torappu.Battle.Abilities.AbstractAnimatedAbility+TimeMode",
+          "offset": 312
+        },
+        {
+          "name": "_alwaysIncludeTarget",
+          "type": "System.Boolean",
+          "offset": 316
+        },
+        {
+          "name": "_allowNoTarget",
+          "type": "System.Boolean",
+          "offset": 317
+        },
+        {
+          "name": "_animKey",
+          "type": "System.String",
+          "offset": 320
+        },
+        {
+          "name": "_endAnimKey",
+          "type": "System.String",
+          "offset": 328
+        },
+        {
+          "name": "_downAnimKey",
+          "type": "System.String",
+          "offset": 336
+        },
+        {
+          "name": "_downEndAnimKey",
+          "type": "System.String",
+          "offset": 344
+        },
+        {
+          "name": "_upAnimKey",
+          "type": "System.String",
+          "offset": 352
+        },
+        {
+          "name": "_upEndAnimKey",
+          "type": "System.String",
+          "offset": 360
+        },
+        {
+          "name": "_cooldown",
+          "type": "System.Single",
+          "offset": 368
+        },
+        {
+          "name": "_cooldownKey",
+          "type": "System.String",
+          "offset": 376
+        },
+        {
+          "name": "_preDelay",
+          "type": "System.Single",
+          "offset": 384
+        },
+        {
+          "name": "_escapeTime",
+          "type": "System.Single",
+          "offset": 388
+        },
+        {
+          "name": "_faceToTarget",
+          "type": "System.Boolean",
+          "offset": 392
+        },
+        {
+          "name": "_faceToDefault",
+          "type": "System.Boolean",
+          "offset": 393
+        },
+        {
+          "name": "_faceToFront",
+          "type": "System.Boolean",
+          "offset": 394
+        },
+        {
+          "name": "_faceToFirstCastTarget",
+          "type": "System.Boolean",
+          "offset": 395
+        },
+        {
+          "name": "_checkFaceToFirstCastTargetDownAttack",
+          "type": "System.Boolean",
+          "offset": 396
+        },
+        {
+          "name": "_forceFaceToDirection",
+          "type": "System.Boolean",
+          "offset": 397
+        },
+        {
+          "name": "_activeBuffs",
+          "type": "Torappu.BuffData[]",
+          "offset": 400
+        },
+        {
+          "name": "_maxAnimScale",
+          "type": "System.Single",
+          "offset": 408
+        },
+        {
+          "name": "_onlyPlayEndAnimWhenIsLastAbility",
+          "type": "System.Boolean",
+          "offset": 412
+        },
+        {
+          "name": "_ignorePalsyInterrupt",
+          "type": "System.Boolean",
+          "offset": 413
+        },
+        {
+          "name": "_affectedBySlowDown",
+          "type": "System.Boolean",
+          "offset": 414
+        },
+        {
+          "name": "m_preDelay",
+          "type": "Torappu.FP",
+          "offset": 416
+        },
+        {
+          "name": "m_attackTime",
+          "type": "Torappu.FP",
+          "offset": 424
+        },
+        {
+          "name": "m_animScale",
+          "type": "System.Single",
+          "offset": 432
+        },
+        {
+          "name": "m_spineAnimSpeed",
+          "type": "System.Single",
+          "offset": 436
+        },
+        {
+          "name": "m_damageNode",
+          "type": "Torappu.Battle.Action.Nodes+ApplyDamage",
+          "offset": 440
+        },
+        {
+          "name": "m_epDamageNode",
+          "type": "Torappu.Battle.Action.Nodes+ApplyElementDamage",
+          "offset": 448
+        },
+        {
+          "name": "__Hotfix0_get_affectedBySlowDown",
+          "type": "XLua.DelegateBridge",
+          "offset": 0
+        },
+        {
+          "name": "__Hotfix0_get_needSpecifiedCooldown",
+          "type": "XLua.DelegateBridge",
+          "offset": 8
+        },
+        {
+          "name": "__Hotfix0_get_loadFromBlackboard",
+          "type": "XLua.DelegateBridge",
+          "offset": 16
+        },
+        {
+          "name": "__Hotfix0_get_timeMode",
+          "type": "XLua.DelegateBridge",
+          "offset": 24
+        },
+        {
+          "name": "__Hotfix0_get_animScale",
+          "type": "XLua.DelegateBridge",
+          "offset": 32
+        },
+        {
+          "name": "__Hotfix0_get_spineAnimSpeed",
+          "type": "XLua.DelegateBridge",
+          "offset": 40
+        },
+        {
+          "name": "__Hotfix0_get_attackType",
+          "type": "XLua.DelegateBridge",
+          "offset": 48
+        },
+        {
+          "name": "__Hotfix0_get_useDynamicAttackType",
+          "type": "XLua.DelegateBridge",
+          "offset": 56
+        },
+        {
+          "name": "__Hotfix0_get_canSelectCamouflageTarget",
+          "type": "XLua.DelegateBridge",
+          "offset": 64
+        },
+        {
+          "name": "__Hotfix0_get_selectTargetSource",
+          "type": "XLua.DelegateBridge",
+          "offset": 72
+        },
+        {
+          "name": "__Hotfix0_get_selectTargetTiming",
+          "type": "XLua.DelegateBridge",
+          "offset": 80
+        },
+        {
+          "name": "__Hotfix0_get_alwaysIncludeTarget",
+          "type": "XLua.DelegateBridge",
+          "offset": 88
+        },
+        {
+          "name": "__Hotfix0_get_forceFaceToDirection",
+          "type": "XLua.DelegateBridge",
+          "offset": 96
+        },
+        {
+          "name": "__Hotfix0_get_allowNoTarget",
+          "type": "XLua.DelegateBridge",
+          "offset": 104
+        },
+        {
+          "name": "__Hotfix0_get_preDelay",
+          "type": "XLua.DelegateBridge",
+          "offset": 112
+        },
+        {
+          "name": "__Hotfix0_get_escapeTime",
+          "type": "XLua.DelegateBridge",
+          "offset": 120
+        },
+        {
+          "name": "__Hotfix0_get_category",
+          "type": "XLua.DelegateBridge",
+          "offset": 128
+        },
+        {
+          "name": "__Hotfix0_get_cooldown",
+          "type": "XLua.DelegateBridge",
+          "offset": 136
+        },
+        {
+          "name": "__Hotfix0_get_ignorePalsyInterrupt",
+          "type": "XLua.DelegateBridge",
+          "offset": 144
+        },
+        {
+          "name": "__Hotfix0_OnAttackTimeChanged",
+          "type": "XLua.DelegateBridge",
+          "offset": 152
+        },
+        {
+          "name": "__Hotfix0_OnSlowDownChanged",
+          "type": "XLua.DelegateBridge",
+          "offset": 160
+        },
+        {
+          "name": "__Hotfix0_ApplyAttackTime",
+          "type": "XLua.DelegateBridge",
+          "offset": 168
+        },
+        {
+          "name": "__Hotfix0_GetActiveBuffs",
+          "type": "XLua.DelegateBridge",
+          "offset": 176
+        },
+        {
+          "name": "__Hotfix0_GetPassiveBuffs",
+          "type": "XLua.DelegateBridge",
+          "offset": 184
+        },
+        {
+          "name": "__Hotfix0_DoAttach",
+          "type": "XLua.DelegateBridge",
+          "offset": 192
+        },
+        {
+          "name": "__Hotfix0_OnCastStart",
+          "type": "XLua.DelegateBridge",
+          "offset": 200
+        },
+        {
+          "name": "__Hotfix0_DealWithFaceDirection",
+          "type": "XLua.DelegateBridge",
+          "offset": 208
+        },
+        {
+          "name": "__Hotfix0_OnCastEnd",
+          "type": "XLua.DelegateBridge",
+          "offset": 216
+        },
+        {
+          "name": "__Hotfix0_CreateDamageNode",
+          "type": "XLua.DelegateBridge",
+          "offset": 224
+        },
+        {
+          "name": "__Hotfix0_NewDamageNode",
+          "type": "XLua.DelegateBridge",
+          "offset": 232
+        },
+        {
+          "name": "__Hotfix0_CreateElementDamageNode",
+          "type": "XLua.DelegateBridge",
+          "offset": 240
+        },
+        {
+          "name": "__Hotfix0_NewElementDamageNode",
+          "type": "XLua.DelegateBridge",
+          "offset": 248
+        },
+        {
+          "name": "__Hotfix0_HasThreePartAnim",
+          "type": "XLua.DelegateBridge",
+          "offset": 256
+        },
+        {
+          "name": "__Hotfix0_AutoDetermineAffectedBySlowDown",
+          "type": "XLua.DelegateBridge",
+          "offset": 264
+        },
+        {
+          "name": "__Hotfix0_GetDuration",
+          "type": "XLua.DelegateBridge",
+          "offset": 272
+        },
+        {
+          "name": "__Hotfix0_UpdatePlaybackSpeed",
+          "type": "XLua.DelegateBridge",
+          "offset": 280
+        },
+        {
+          "name": "__Hotfix0_GetAnimKey",
+          "type": "XLua.DelegateBridge",
+          "offset": 288
+        },
+        {
+          "name": "__Hotfix0_CheckDownAttack",
+          "type": "XLua.DelegateBridge",
+          "offset": 296
+        },
+        {
+          "name": "__Hotfix0_CheckUpAttack",
+          "type": "XLua.DelegateBridge",
+          "offset": 304
+        },
+        {
+          "name": "_c__Hotfix0_ctor",
+          "type": "XLua.DelegateBridge",
+          "offset": 312
+        }
+      ],
+      "vtable": [
+        {
+          "slot": 0,
+          "usage_type": 3,
+          "decoded_index": 280865,
+          "method": "UnityEngine.Object$$Equals"
+        },
+        {
+          "slot": 1,
+          "usage_type": 3,
+          "decoded_index": 240680,
+          "method": "System.Object$$Finalize"
+        },
+        {
+          "slot": 2,
+          "usage_type": 3,
+          "decoded_index": 280864,
+          "method": "UnityEngine.Object$$GetHashCode"
+        },
+        {
+          "slot": 3,
+          "usage_type": 3,
+          "decoded_index": 280916,
+          "method": "UnityEngine.Object$$ToString"
+        },
+        {
+          "slot": 4,
+          "usage_type": 3,
+          "decoded_index": 62628,
+          "method": "Torappu.Battle.AbilityStandard$$GatherEffects"
+        },
+        {
+          "slot": 5,
+          "usage_type": 3,
+          "decoded_index": 62629,
+          "method": "Torappu.Battle.AbilityStandard$$GatherProjectiles"
+        },
+        {
+          "slot": 6,
+          "usage_type": 3,
+          "decoded_index": 62630,
+          "method": "Torappu.Battle.AbilityStandard$$GatherActionNodes"
+        },
+        {
+          "slot": 7,
+          "usage_type": 3,
+          "decoded_index": 62627,
+          "method": "Torappu.Battle.AbilityStandard$$GatherBuffs"
+        },
+        {
+          "slot": 8,
+          "usage_type": 3,
+          "decoded_index": 62488,
+          "method": "Torappu.Battle.Ability$$get_instanceUid"
+        },
+        {
+          "slot": 9,
+          "usage_type": 3,
+          "decoded_index": 62662,
+          "method": "Torappu.Battle.AbilityStandard$$PreloadSpecialAudioSignals"
+        },
+        {
+          "slot": 10,
+          "usage_type": 3,
+          "decoded_index": 62583,
+          "method": "Torappu.Battle.Ability$$GetPRDEntityHash"
+        },
+        {
+          "slot": 11,
+          "usage_type": 3,
+          "decoded_index": 62584,
+          "method": "Torappu.Battle.Ability$$AllocatePRDEntitySubHash"
+        },
+        {
+          "slot": 12,
+          "usage_type": 3,
+          "decoded_index": 62585,
+          "method": "Torappu.Battle.Ability$$ResetPRDEntity"
+        },
+        {
+          "slot": 13,
+          "usage_type": 3,
+          "decoded_index": 90767,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_affectedBySlowDown"
+        },
+        {
+          "slot": 14,
+          "usage_type": 3,
+          "decoded_index": 90783,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_category"
+        },
+        {
+          "slot": 15,
+          "usage_type": 3,
+          "decoded_index": 62502,
+          "method": "Torappu.Battle.Ability$$get_selector"
+        },
+        {
+          "slot": 16,
+          "usage_type": 3,
+          "decoded_index": 62503,
+          "method": "Torappu.Battle.Ability$$get_rangeToShow"
+        },
+        {
+          "slot": 17,
+          "usage_type": 3,
+          "decoded_index": 90784,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_cooldown"
+        },
+        {
+          "slot": 18,
+          "usage_type": 3,
+          "decoded_index": 90780,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_allowNoTarget"
+        },
+        {
+          "slot": 19,
+          "usage_type": 3,
+          "decoded_index": 62510,
+          "method": "Torappu.Battle.Ability$$get_isReady"
+        },
+        {
+          "slot": 20,
+          "usage_type": 3,
+          "decoded_index": 62513,
+          "method": "Torappu.Battle.Ability$$get_isAffecting"
+        },
+        {
+          "slot": 21,
+          "usage_type": 3,
+          "decoded_index": 90775,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_canSelectCamouflageTarget"
+        },
+        {
+          "slot": 22,
+          "usage_type": 3,
+          "decoded_index": 90782,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_escapeTime"
+        },
+        {
+          "slot": 23,
+          "usage_type": 3,
+          "decoded_index": 62521,
+          "method": "Torappu.Battle.Ability$$get_applyWay"
+        },
+        {
+          "slot": 24,
+          "usage_type": 3,
+          "decoded_index": 62611,
+          "method": "Torappu.Battle.AbilityStandard$$get_purposeMask"
+        },
+        {
+          "slot": 25,
+          "usage_type": 3,
+          "decoded_index": 62614,
+          "method": "Torappu.Battle.AbilityStandard$$get_isPredelay"
+        },
+        {
+          "slot": 26,
+          "usage_type": 3,
+          "decoded_index": 90785,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_ignorePalsyInterrupt"
+        },
+        {
+          "slot": 27,
+          "usage_type": 3,
+          "decoded_index": 62615,
+          "method": "Torappu.Battle.AbilityStandard$$DoSetData"
+        },
+        {
+          "slot": 28,
+          "usage_type": 3,
+          "decoded_index": 62533,
+          "method": "Torappu.Battle.Ability$$UpdateBlackboard"
+        },
+        {
+          "slot": 29,
+          "usage_type": 3,
+          "decoded_index": 62534,
+          "method": "Torappu.Battle.Ability$$UpdateSelector"
+        },
+        {
+          "slot": 30,
+          "usage_type": 3,
+          "decoded_index": 90791,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$DoAttach"
+        },
+        {
+          "slot": 31,
+          "usage_type": 3,
+          "decoded_index": 62539,
+          "method": "Torappu.Battle.Ability$$DoDetach"
+        },
+        {
+          "slot": 32,
+          "usage_type": 3,
+          "decoded_index": 62540,
+          "method": "Torappu.Battle.Ability$$OnOwnerLocated"
+        },
+        {
+          "slot": 33,
+          "usage_type": 3,
+          "decoded_index": 62617,
+          "method": "Torappu.Battle.AbilityStandard$$CastToTarget"
+        },
+        {
+          "slot": 34,
+          "usage_type": 3,
+          "decoded_index": 62618,
+          "method": "Torappu.Battle.AbilityStandard$$CastDirectly"
+        },
+        {
+          "slot": 35,
+          "usage_type": 3,
+          "decoded_index": 62619,
+          "method": "Torappu.Battle.AbilityStandard$$CastToInputPosition"
+        },
+        {
+          "slot": 36,
+          "usage_type": 3,
+          "decoded_index": 62544,
+          "method": "Torappu.Battle.Ability$$InterruptIfNot"
+        },
+        {
+          "slot": 37,
+          "usage_type": 3,
+          "decoded_index": 62545,
+          "method": "Torappu.Battle.Ability$$DoFinish"
+        },
+        {
+          "slot": 38,
+          "usage_type": 3,
+          "decoded_index": 62546,
+          "method": "Torappu.Battle.Ability$$ResetCooldown"
+        },
+        {
+          "slot": 39,
+          "usage_type": 3,
+          "decoded_index": 62548,
+          "method": "Torappu.Battle.Ability$$UpdateCooldown"
+        },
+        {
+          "slot": 40,
+          "usage_type": 3,
+          "decoded_index": 62549,
+          "method": "Torappu.Battle.Ability$$TrySetCooldownRemainingProgress"
+        },
+        {
+          "slot": 41,
+          "usage_type": 3,
+          "decoded_index": 62621,
+          "method": "Torappu.Battle.AbilityStandard$$StopAffect"
+        },
+        {
+          "slot": 42,
+          "usage_type": 3,
+          "decoded_index": 62554,
+          "method": "Torappu.Battle.Ability$$Reset"
+        },
+        {
+          "slot": 43,
+          "usage_type": 3,
+          "decoded_index": 62624,
+          "method": "Torappu.Battle.AbilityStandard$$CleanupForNextCast"
+        },
+        {
+          "slot": 44,
+          "usage_type": 3,
+          "decoded_index": 90790,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$GetPassiveBuffs"
+        },
+        {
+          "slot": 45,
+          "usage_type": 3,
+          "decoded_index": 90789,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$GetActiveBuffs"
+        },
+        {
+          "slot": 46,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 47,
+          "usage_type": 3,
+          "decoded_index": 62559,
+          "method": "Torappu.Battle.Ability$$GetAbilityAttachments"
+        },
+        {
+          "slot": 48,
+          "usage_type": 3,
+          "decoded_index": 62628,
+          "method": "Torappu.Battle.AbilityStandard$$GatherEffects"
+        },
+        {
+          "slot": 49,
+          "usage_type": 3,
+          "decoded_index": 62629,
+          "method": "Torappu.Battle.AbilityStandard$$GatherProjectiles"
+        },
+        {
+          "slot": 50,
+          "usage_type": 3,
+          "decoded_index": 62630,
+          "method": "Torappu.Battle.AbilityStandard$$GatherActionNodes"
+        },
+        {
+          "slot": 51,
+          "usage_type": 3,
+          "decoded_index": 62627,
+          "method": "Torappu.Battle.AbilityStandard$$GatherBuffs"
+        },
+        {
+          "slot": 52,
+          "usage_type": 3,
+          "decoded_index": 90792,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$OnCastStart"
+        },
+        {
+          "slot": 53,
+          "usage_type": 3,
+          "decoded_index": 90794,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$OnCastEnd"
+        },
+        {
+          "slot": 54,
+          "usage_type": 3,
+          "decoded_index": 62641,
+          "method": "Torappu.Battle.AbilityStandard$$OnAttached"
+        },
+        {
+          "slot": 55,
+          "usage_type": 3,
+          "decoded_index": 62643,
+          "method": "Torappu.Battle.AbilityStandard$$OnDetached"
+        },
+        {
+          "slot": 56,
+          "usage_type": 3,
+          "decoded_index": 62648,
+          "method": "Torappu.Battle.AbilityStandard$$OnTick"
+        },
+        {
+          "slot": 57,
+          "usage_type": 3,
+          "decoded_index": 62642,
+          "method": "Torappu.Battle.AbilityStandard$$OnOverload"
+        },
+        {
+          "slot": 58,
+          "usage_type": 3,
+          "decoded_index": 90786,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$OnAttackTimeChanged"
+        },
+        {
+          "slot": 59,
+          "usage_type": 3,
+          "decoded_index": 90787,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$OnSlowDownChanged"
+        },
+        {
+          "slot": 60,
+          "usage_type": 3,
+          "decoded_index": 62572,
+          "method": "Torappu.Battle.Ability$$OnAbilityExtendUpdated"
+        },
+        {
+          "slot": 61,
+          "usage_type": 3,
+          "decoded_index": 62662,
+          "method": "Torappu.Battle.AbilityStandard$$PreloadSpecialAudioSignals"
+        },
+        {
+          "slot": 62,
+          "usage_type": 3,
+          "decoded_index": 62622,
+          "method": "Torappu.Battle.AbilityStandard$$CheckAtPreCastPhase"
+        },
+        {
+          "slot": 63,
+          "usage_type": 3,
+          "decoded_index": 62575,
+          "method": "Torappu.Battle.Ability$$FinishIfNot"
+        },
+        {
+          "slot": 64,
+          "usage_type": 3,
+          "decoded_index": 62576,
+          "method": "Torappu.Battle.Ability$$AddPassiveBuffs"
+        },
+        {
+          "slot": 65,
+          "usage_type": 3,
+          "decoded_index": 62577,
+          "method": "Torappu.Battle.Ability$$ClearPassiveBuffs"
+        },
+        {
+          "slot": 66,
+          "usage_type": 3,
+          "decoded_index": 62578,
+          "method": "Torappu.Battle.Ability$$PreprocessActionsForProjectile"
+        },
+        {
+          "slot": 67,
+          "usage_type": 3,
+          "decoded_index": 62582,
+          "method": "Torappu.Battle.Ability$$ClearProjectile"
+        },
+        {
+          "slot": 68,
+          "usage_type": 3,
+          "decoded_index": 90776,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_selectTargetSource"
+        },
+        {
+          "slot": 69,
+          "usage_type": 3,
+          "decoded_index": 90777,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_selectTargetTiming"
+        },
+        {
+          "slot": 70,
+          "usage_type": 3,
+          "decoded_index": 90778,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_alwaysIncludeTarget"
+        },
+        {
+          "slot": 71,
+          "usage_type": 3,
+          "decoded_index": 62605,
+          "method": "Torappu.Battle.AbilityStandard$$get_onlyTrigAudioSignalForFirstSpell"
+        },
+        {
+          "slot": 72,
+          "usage_type": 3,
+          "decoded_index": 62606,
+          "method": "Torappu.Battle.AbilityStandard$$get_onlyTrigAudioSignalForFirstHit"
+        },
+        {
+          "slot": 73,
+          "usage_type": 3,
+          "decoded_index": 62620,
+          "method": "Torappu.Battle.AbilityStandard$$GetCastDirectlyMapPosition"
+        },
+        {
+          "slot": 74,
+          "usage_type": 3,
+          "decoded_index": 62625,
+          "method": "Torappu.Battle.AbilityStandard$$OnEvent"
+        },
+        {
+          "slot": 75,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 76,
+          "usage_type": 3,
+          "decoded_index": 62632,
+          "method": "Torappu.Battle.AbilityStandard$$OnCastOnTarget"
+        },
+        {
+          "slot": 77,
+          "usage_type": 3,
+          "decoded_index": 62633,
+          "method": "Torappu.Battle.AbilityStandard$$DoApplyActionsOnTarget"
+        },
+        {
+          "slot": 78,
+          "usage_type": 3,
+          "decoded_index": 90853,
+          "method": "Torappu.Battle.Abilities.EasyToStartAbility$$OnWaitForPreDelay"
+        },
+        {
+          "slot": 79,
+          "usage_type": 3,
+          "decoded_index": 90854,
+          "method": "Torappu.Battle.Abilities.EasyToStartAbility$$OnWaitForPostDelay"
+        },
+        {
+          "slot": 80,
+          "usage_type": 3,
+          "decoded_index": 62636,
+          "method": "Torappu.Battle.AbilityStandard$$OnWaitForTriggerDelta"
+        },
+        {
+          "slot": 81,
+          "usage_type": 3,
+          "decoded_index": 62637,
+          "method": "Torappu.Battle.AbilityStandard$$OnSpellStart"
+        },
+        {
+          "slot": 82,
+          "usage_type": 3,
+          "decoded_index": 62638,
+          "method": "Torappu.Battle.AbilityStandard$$DoOnHasNoTarget"
+        },
+        {
+          "slot": 83,
+          "usage_type": 3,
+          "decoded_index": 62644,
+          "method": "Torappu.Battle.AbilityStandard$$OnAttackFinished"
+        },
+        {
+          "slot": 84,
+          "usage_type": 3,
+          "decoded_index": 62645,
+          "method": "Torappu.Battle.AbilityStandard$$OnStunnedChanged"
+        },
+        {
+          "slot": 85,
+          "usage_type": 3,
+          "decoded_index": 62646,
+          "method": "Torappu.Battle.AbilityStandard$$OnFrozenChanged"
+        },
+        {
+          "slot": 86,
+          "usage_type": 3,
+          "decoded_index": 62647,
+          "method": "Torappu.Battle.AbilityStandard$$OnLevitateChanged"
+        },
+        {
+          "slot": 87,
+          "usage_type": 3,
+          "decoded_index": 62649,
+          "method": "Torappu.Battle.AbilityStandard$$CheckActiveBuffs"
+        },
+        {
+          "slot": 88,
+          "usage_type": 3,
+          "decoded_index": 62650,
+          "method": "Torappu.Battle.AbilityStandard$$DoCastOnTargets"
+        },
+        {
+          "slot": 89,
+          "usage_type": 3,
+          "decoded_index": 62652,
+          "method": "Torappu.Battle.AbilityStandard$$UpdateTargets"
+        },
+        {
+          "slot": 90,
+          "usage_type": 3,
+          "decoded_index": 62653,
+          "method": "Torappu.Battle.AbilityStandard$$CheckAnotherSpell"
+        },
+        {
+          "slot": 91,
+          "usage_type": 3,
+          "decoded_index": 90802,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$UpdatePlaybackSpeed"
+        },
+        {
+          "slot": 92,
+          "usage_type": 3,
+          "decoded_index": 62657,
+          "method": "Torappu.Battle.AbilityStandard$$CheckIsDamageOrHealSource"
+        },
+        {
+          "slot": 93,
+          "usage_type": 3,
+          "decoded_index": 62658,
+          "method": "Torappu.Battle.AbilityStandard$$GeneratePurposeMask"
+        },
+        {
+          "slot": 94,
+          "usage_type": 3,
+          "decoded_index": 62659,
+          "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForSpellOn"
+        },
+        {
+          "slot": 95,
+          "usage_type": 3,
+          "decoded_index": 62660,
+          "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForCastStart"
+        },
+        {
+          "slot": 96,
+          "usage_type": 3,
+          "decoded_index": 62661,
+          "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForHit"
+        },
+        {
+          "slot": 97,
+          "usage_type": 3,
+          "decoded_index": 62663,
+          "method": "Torappu.Battle.AbilityStandard$$OnOutputAttackOrHeal"
+        },
+        {
+          "slot": 98,
+          "usage_type": 3,
+          "decoded_index": 62664,
+          "method": "Torappu.Battle.AbilityStandard$$OnOutputAttackOrHealEachSpell"
+        },
+        {
+          "slot": 99,
+          "usage_type": 3,
+          "decoded_index": 62665,
+          "method": "Torappu.Battle.AbilityStandard$$Awake"
+        },
+        {
+          "slot": 100,
+          "usage_type": 3,
+          "decoded_index": 90781,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_preDelay"
+        },
+        {
+          "slot": 101,
+          "usage_type": 3,
+          "decoded_index": 90849,
+          "method": "Torappu.Battle.Abilities.EasyToStartAbility$$get_postDelay"
+        },
+        {
+          "slot": 102,
+          "usage_type": 3,
+          "decoded_index": 90801,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$GetDuration"
+        },
+        {
+          "slot": 103,
+          "usage_type": 3,
+          "decoded_index": 90773,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_attackType"
+        },
+        {
+          "slot": 104,
+          "usage_type": 3,
+          "decoded_index": 90774,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$get_useDynamicAttackType"
+        },
+        {
+          "slot": 105,
+          "usage_type": 3,
+          "decoded_index": 90793,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$DealWithFaceDirection"
+        },
+        {
+          "slot": 106,
+          "usage_type": 3,
+          "decoded_index": 90795,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$CreateDamageNode"
+        },
+        {
+          "slot": 107,
+          "usage_type": 3,
+          "decoded_index": 90796,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$NewDamageNode"
+        },
+        {
+          "slot": 108,
+          "usage_type": 3,
+          "decoded_index": 90797,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$CreateElementDamageNode"
+        },
+        {
+          "slot": 109,
+          "usage_type": 3,
+          "decoded_index": 90803,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$GetAnimKey"
+        },
+        {
+          "slot": 110,
+          "usage_type": 3,
+          "decoded_index": 90804,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$CheckDownAttack"
+        },
+        {
+          "slot": 111,
+          "usage_type": 3,
+          "decoded_index": 90805,
+          "method": "Torappu.Battle.Abilities.AbstractAnimatedAbility$$CheckUpAttack"
+        }
+      ]
+    },
+    {
+      "name": "Torappu.Battle.Abilities.EasyToStartAbility",
+      "type_index": 13087,
+      "parent": "Torappu.Battle.AbilityStandard",
+      "fields": [
+        {
+          "name": "_waitForAttackEvent",
+          "type": "System.Boolean",
+          "offset": 272
+        },
+        {
+          "name": "_interuptIfTargetDead",
+          "type": "System.Boolean",
+          "offset": 273
+        },
+        {
+          "name": "_resetCdStrategy",
+          "type": "Torappu.Battle.Abilities.EasyToStartAbility+ResetCooldownStrategy",
+          "offset": 276
+        },
+        {
+          "name": "m_cachedDuration",
+          "type": "Torappu.FP",
+          "offset": 280
+        },
+        {
+          "name": "m_receivedEvent",
+          "type": "System.Boolean",
+          "offset": 288
+        },
+        {
+          "name": "m_realStartTime",
+          "type": "Torappu.FP",
+          "offset": 296
+        },
+        {
+          "name": "__Hotfix0_get_waitForAttackEvent",
+          "type": "XLua.DelegateBridge",
+          "offset": 0
+        },
+        {
+          "name": "__Hotfix0_get_postDelay",
+          "type": "XLua.DelegateBridge",
+          "offset": 8
+        },
+        {
+          "name": "__Hotfix0_OnCastStart",
+          "type": "XLua.DelegateBridge",
+          "offset": 16
+        },
+        {
+          "name": "__Hotfix0_OnCastEnd",
+          "type": "XLua.DelegateBridge",
+          "offset": 24
+        },
+        {
+          "name": "__Hotfix0_WaitForNextEvent",
+          "type": "XLua.DelegateBridge",
+          "offset": 32
+        },
+        {
+          "name": "__Hotfix0_OnWaitForPreDelay",
+          "type": "XLua.DelegateBridge",
+          "offset": 40
+        },
+        {
+          "name": "__Hotfix0_OnWaitForPostDelay",
+          "type": "XLua.DelegateBridge",
+          "offset": 48
+        },
+        {
+          "name": "__Hotfix0__CheckNeedResetCooldown",
+          "type": "XLua.DelegateBridge",
+          "offset": 56
+        },
+        {
+          "name": "__Hotfix0__OnReceiveEvent",
+          "type": "XLua.DelegateBridge",
+          "offset": 64
+        },
+        {
+          "name": "__Hotfix0__CheckNotReceiveEvent",
+          "type": "XLua.DelegateBridge",
+          "offset": 72
+        },
+        {
+          "name": "__Hotfix0__CheckNotReceiveEventAndTargetAlive",
+          "type": "XLua.DelegateBridge",
+          "offset": 80
+        },
+        {
+          "name": "_c__Hotfix0_ctor",
+          "type": "XLua.DelegateBridge",
+          "offset": 88
+        }
+      ],
+      "vtable": [
+        {
+          "slot": 0,
+          "usage_type": 3,
+          "decoded_index": 280865,
+          "method": "UnityEngine.Object$$Equals"
+        },
+        {
+          "slot": 1,
+          "usage_type": 3,
+          "decoded_index": 240680,
+          "method": "System.Object$$Finalize"
+        },
+        {
+          "slot": 2,
+          "usage_type": 3,
+          "decoded_index": 280864,
+          "method": "UnityEngine.Object$$GetHashCode"
+        },
+        {
+          "slot": 3,
+          "usage_type": 3,
+          "decoded_index": 280916,
+          "method": "UnityEngine.Object$$ToString"
+        },
+        {
+          "slot": 4,
+          "usage_type": 3,
+          "decoded_index": 62628,
+          "method": "Torappu.Battle.AbilityStandard$$GatherEffects"
+        },
+        {
+          "slot": 5,
+          "usage_type": 3,
+          "decoded_index": 62629,
+          "method": "Torappu.Battle.AbilityStandard$$GatherProjectiles"
+        },
+        {
+          "slot": 6,
+          "usage_type": 3,
+          "decoded_index": 62630,
+          "method": "Torappu.Battle.AbilityStandard$$GatherActionNodes"
+        },
+        {
+          "slot": 7,
+          "usage_type": 3,
+          "decoded_index": 62627,
+          "method": "Torappu.Battle.AbilityStandard$$GatherBuffs"
+        },
+        {
+          "slot": 8,
+          "usage_type": 3,
+          "decoded_index": 62488,
+          "method": "Torappu.Battle.Ability$$get_instanceUid"
+        },
+        {
+          "slot": 9,
+          "usage_type": 3,
+          "decoded_index": 62662,
+          "method": "Torappu.Battle.AbilityStandard$$PreloadSpecialAudioSignals"
+        },
+        {
+          "slot": 10,
+          "usage_type": 3,
+          "decoded_index": 62583,
+          "method": "Torappu.Battle.Ability$$GetPRDEntityHash"
+        },
+        {
+          "slot": 11,
+          "usage_type": 3,
+          "decoded_index": 62584,
+          "method": "Torappu.Battle.Ability$$AllocatePRDEntitySubHash"
+        },
+        {
+          "slot": 12,
+          "usage_type": 3,
+          "decoded_index": 62585,
+          "method": "Torappu.Battle.Ability$$ResetPRDEntity"
+        },
+        {
+          "slot": 13,
+          "usage_type": 3,
+          "decoded_index": 62487,
+          "method": "Torappu.Battle.Ability$$get_affectedBySlowDown"
+        },
+        {
+          "slot": 14,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 15,
+          "usage_type": 3,
+          "decoded_index": 62502,
+          "method": "Torappu.Battle.Ability$$get_selector"
+        },
+        {
+          "slot": 16,
+          "usage_type": 3,
+          "decoded_index": 62503,
+          "method": "Torappu.Battle.Ability$$get_rangeToShow"
+        },
+        {
+          "slot": 17,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 18,
+          "usage_type": 3,
+          "decoded_index": 62604,
+          "method": "Torappu.Battle.AbilityStandard$$get_allowNoTarget"
+        },
+        {
+          "slot": 19,
+          "usage_type": 3,
+          "decoded_index": 62510,
+          "method": "Torappu.Battle.Ability$$get_isReady"
+        },
+        {
+          "slot": 20,
+          "usage_type": 3,
+          "decoded_index": 62513,
+          "method": "Torappu.Battle.Ability$$get_isAffecting"
+        },
+        {
+          "slot": 21,
+          "usage_type": 3,
+          "decoded_index": 62518,
+          "method": "Torappu.Battle.Ability$$get_canSelectCamouflageTarget"
+        },
+        {
+          "slot": 22,
+          "usage_type": 3,
+          "decoded_index": 62520,
+          "method": "Torappu.Battle.Ability$$get_escapeTime"
+        },
+        {
+          "slot": 23,
+          "usage_type": 3,
+          "decoded_index": 62521,
+          "method": "Torappu.Battle.Ability$$get_applyWay"
+        },
+        {
+          "slot": 24,
+          "usage_type": 3,
+          "decoded_index": 62611,
+          "method": "Torappu.Battle.AbilityStandard$$get_purposeMask"
+        },
+        {
+          "slot": 25,
+          "usage_type": 3,
+          "decoded_index": 62614,
+          "method": "Torappu.Battle.AbilityStandard$$get_isPredelay"
+        },
+        {
+          "slot": 26,
+          "usage_type": 3,
+          "decoded_index": 62530,
+          "method": "Torappu.Battle.Ability$$get_ignorePalsyInterrupt"
+        },
+        {
+          "slot": 27,
+          "usage_type": 3,
+          "decoded_index": 62615,
+          "method": "Torappu.Battle.AbilityStandard$$DoSetData"
+        },
+        {
+          "slot": 28,
+          "usage_type": 3,
+          "decoded_index": 62533,
+          "method": "Torappu.Battle.Ability$$UpdateBlackboard"
+        },
+        {
+          "slot": 29,
+          "usage_type": 3,
+          "decoded_index": 62534,
+          "method": "Torappu.Battle.Ability$$UpdateSelector"
+        },
+        {
+          "slot": 30,
+          "usage_type": 3,
+          "decoded_index": 62538,
+          "method": "Torappu.Battle.Ability$$DoAttach"
+        },
+        {
+          "slot": 31,
+          "usage_type": 3,
+          "decoded_index": 62539,
+          "method": "Torappu.Battle.Ability$$DoDetach"
+        },
+        {
+          "slot": 32,
+          "usage_type": 3,
+          "decoded_index": 62540,
+          "method": "Torappu.Battle.Ability$$OnOwnerLocated"
+        },
+        {
+          "slot": 33,
+          "usage_type": 3,
+          "decoded_index": 62617,
+          "method": "Torappu.Battle.AbilityStandard$$CastToTarget"
+        },
+        {
+          "slot": 34,
+          "usage_type": 3,
+          "decoded_index": 62618,
+          "method": "Torappu.Battle.AbilityStandard$$CastDirectly"
+        },
+        {
+          "slot": 35,
+          "usage_type": 3,
+          "decoded_index": 62619,
+          "method": "Torappu.Battle.AbilityStandard$$CastToInputPosition"
+        },
+        {
+          "slot": 36,
+          "usage_type": 3,
+          "decoded_index": 62544,
+          "method": "Torappu.Battle.Ability$$InterruptIfNot"
+        },
+        {
+          "slot": 37,
+          "usage_type": 3,
+          "decoded_index": 62545,
+          "method": "Torappu.Battle.Ability$$DoFinish"
+        },
+        {
+          "slot": 38,
+          "usage_type": 3,
+          "decoded_index": 62546,
+          "method": "Torappu.Battle.Ability$$ResetCooldown"
+        },
+        {
+          "slot": 39,
+          "usage_type": 3,
+          "decoded_index": 62548,
+          "method": "Torappu.Battle.Ability$$UpdateCooldown"
+        },
+        {
+          "slot": 40,
+          "usage_type": 3,
+          "decoded_index": 62549,
+          "method": "Torappu.Battle.Ability$$TrySetCooldownRemainingProgress"
+        },
+        {
+          "slot": 41,
+          "usage_type": 3,
+          "decoded_index": 62621,
+          "method": "Torappu.Battle.AbilityStandard$$StopAffect"
+        },
+        {
+          "slot": 42,
+          "usage_type": 3,
+          "decoded_index": 62554,
+          "method": "Torappu.Battle.Ability$$Reset"
+        },
+        {
+          "slot": 43,
+          "usage_type": 3,
+          "decoded_index": 62624,
+          "method": "Torappu.Battle.AbilityStandard$$CleanupForNextCast"
+        },
+        {
+          "slot": 44,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 45,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 46,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 47,
+          "usage_type": 3,
+          "decoded_index": 62559,
+          "method": "Torappu.Battle.Ability$$GetAbilityAttachments"
+        },
+        {
+          "slot": 48,
+          "usage_type": 3,
+          "decoded_index": 62628,
+          "method": "Torappu.Battle.AbilityStandard$$GatherEffects"
+        },
+        {
+          "slot": 49,
+          "usage_type": 3,
+          "decoded_index": 62629,
+          "method": "Torappu.Battle.AbilityStandard$$GatherProjectiles"
+        },
+        {
+          "slot": 50,
+          "usage_type": 3,
+          "decoded_index": 62630,
+          "method": "Torappu.Battle.AbilityStandard$$GatherActionNodes"
+        },
+        {
+          "slot": 51,
+          "usage_type": 3,
+          "decoded_index": 62627,
+          "method": "Torappu.Battle.AbilityStandard$$GatherBuffs"
+        },
+        {
+          "slot": 52,
+          "usage_type": 3,
+          "decoded_index": 90850,
+          "method": "Torappu.Battle.Abilities.EasyToStartAbility$$OnCastStart"
+        },
+        {
+          "slot": 53,
+          "usage_type": 3,
+          "decoded_index": 90851,
+          "method": "Torappu.Battle.Abilities.EasyToStartAbility$$OnCastEnd"
+        },
+        {
+          "slot": 54,
+          "usage_type": 3,
+          "decoded_index": 62641,
+          "method": "Torappu.Battle.AbilityStandard$$OnAttached"
+        },
+        {
+          "slot": 55,
+          "usage_type": 3,
+          "decoded_index": 62643,
+          "method": "Torappu.Battle.AbilityStandard$$OnDetached"
+        },
+        {
+          "slot": 56,
+          "usage_type": 3,
+          "decoded_index": 62648,
+          "method": "Torappu.Battle.AbilityStandard$$OnTick"
+        },
+        {
+          "slot": 57,
+          "usage_type": 3,
+          "decoded_index": 62642,
+          "method": "Torappu.Battle.AbilityStandard$$OnOverload"
+        },
+        {
+          "slot": 58,
+          "usage_type": 3,
+          "decoded_index": 62570,
+          "method": "Torappu.Battle.Ability$$OnAttackTimeChanged"
+        },
+        {
+          "slot": 59,
+          "usage_type": 3,
+          "decoded_index": 62571,
+          "method": "Torappu.Battle.Ability$$OnSlowDownChanged"
+        },
+        {
+          "slot": 60,
+          "usage_type": 3,
+          "decoded_index": 62572,
+          "method": "Torappu.Battle.Ability$$OnAbilityExtendUpdated"
+        },
+        {
+          "slot": 61,
+          "usage_type": 3,
+          "decoded_index": 62662,
+          "method": "Torappu.Battle.AbilityStandard$$PreloadSpecialAudioSignals"
+        },
+        {
+          "slot": 62,
+          "usage_type": 3,
+          "decoded_index": 62622,
+          "method": "Torappu.Battle.AbilityStandard$$CheckAtPreCastPhase"
+        },
+        {
+          "slot": 63,
+          "usage_type": 3,
+          "decoded_index": 62575,
+          "method": "Torappu.Battle.Ability$$FinishIfNot"
+        },
+        {
+          "slot": 64,
+          "usage_type": 3,
+          "decoded_index": 62576,
+          "method": "Torappu.Battle.Ability$$AddPassiveBuffs"
+        },
+        {
+          "slot": 65,
+          "usage_type": 3,
+          "decoded_index": 62577,
+          "method": "Torappu.Battle.Ability$$ClearPassiveBuffs"
+        },
+        {
+          "slot": 66,
+          "usage_type": 3,
+          "decoded_index": 62578,
+          "method": "Torappu.Battle.Ability$$PreprocessActionsForProjectile"
+        },
+        {
+          "slot": 67,
+          "usage_type": 3,
+          "decoded_index": 62582,
+          "method": "Torappu.Battle.Ability$$ClearProjectile"
+        },
+        {
+          "slot": 68,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 69,
+          "usage_type": 3,
+          "decoded_index": 62600,
+          "method": "Torappu.Battle.AbilityStandard$$get_selectTargetTiming"
+        },
+        {
+          "slot": 70,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 71,
+          "usage_type": 3,
+          "decoded_index": 62605,
+          "method": "Torappu.Battle.AbilityStandard$$get_onlyTrigAudioSignalForFirstSpell"
+        },
+        {
+          "slot": 72,
+          "usage_type": 3,
+          "decoded_index": 62606,
+          "method": "Torappu.Battle.AbilityStandard$$get_onlyTrigAudioSignalForFirstHit"
+        },
+        {
+          "slot": 73,
+          "usage_type": 3,
+          "decoded_index": 62620,
+          "method": "Torappu.Battle.AbilityStandard$$GetCastDirectlyMapPosition"
+        },
+        {
+          "slot": 74,
+          "usage_type": 3,
+          "decoded_index": 62625,
+          "method": "Torappu.Battle.AbilityStandard$$OnEvent"
+        },
+        {
+          "slot": 75,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 76,
+          "usage_type": 3,
+          "decoded_index": 62632,
+          "method": "Torappu.Battle.AbilityStandard$$OnCastOnTarget"
+        },
+        {
+          "slot": 77,
+          "usage_type": 3,
+          "decoded_index": 62633,
+          "method": "Torappu.Battle.AbilityStandard$$DoApplyActionsOnTarget"
+        },
+        {
+          "slot": 78,
+          "usage_type": 3,
+          "decoded_index": 90853,
+          "method": "Torappu.Battle.Abilities.EasyToStartAbility$$OnWaitForPreDelay"
+        },
+        {
+          "slot": 79,
+          "usage_type": 3,
+          "decoded_index": 90854,
+          "method": "Torappu.Battle.Abilities.EasyToStartAbility$$OnWaitForPostDelay"
+        },
+        {
+          "slot": 80,
+          "usage_type": 3,
+          "decoded_index": 62636,
+          "method": "Torappu.Battle.AbilityStandard$$OnWaitForTriggerDelta"
+        },
+        {
+          "slot": 81,
+          "usage_type": 3,
+          "decoded_index": 62637,
+          "method": "Torappu.Battle.AbilityStandard$$OnSpellStart"
+        },
+        {
+          "slot": 82,
+          "usage_type": 3,
+          "decoded_index": 62638,
+          "method": "Torappu.Battle.AbilityStandard$$DoOnHasNoTarget"
+        },
+        {
+          "slot": 83,
+          "usage_type": 3,
+          "decoded_index": 62644,
+          "method": "Torappu.Battle.AbilityStandard$$OnAttackFinished"
+        },
+        {
+          "slot": 84,
+          "usage_type": 3,
+          "decoded_index": 62645,
+          "method": "Torappu.Battle.AbilityStandard$$OnStunnedChanged"
+        },
+        {
+          "slot": 85,
+          "usage_type": 3,
+          "decoded_index": 62646,
+          "method": "Torappu.Battle.AbilityStandard$$OnFrozenChanged"
+        },
+        {
+          "slot": 86,
+          "usage_type": 3,
+          "decoded_index": 62647,
+          "method": "Torappu.Battle.AbilityStandard$$OnLevitateChanged"
+        },
+        {
+          "slot": 87,
+          "usage_type": 3,
+          "decoded_index": 62649,
+          "method": "Torappu.Battle.AbilityStandard$$CheckActiveBuffs"
+        },
+        {
+          "slot": 88,
+          "usage_type": 3,
+          "decoded_index": 62650,
+          "method": "Torappu.Battle.AbilityStandard$$DoCastOnTargets"
+        },
+        {
+          "slot": 89,
+          "usage_type": 3,
+          "decoded_index": 62652,
+          "method": "Torappu.Battle.AbilityStandard$$UpdateTargets"
+        },
+        {
+          "slot": 90,
+          "usage_type": 3,
+          "decoded_index": 62653,
+          "method": "Torappu.Battle.AbilityStandard$$CheckAnotherSpell"
+        },
+        {
+          "slot": 91,
+          "usage_type": 3,
+          "decoded_index": 62656,
+          "method": "Torappu.Battle.AbilityStandard$$UpdatePlaybackSpeed"
+        },
+        {
+          "slot": 92,
+          "usage_type": 3,
+          "decoded_index": 62657,
+          "method": "Torappu.Battle.AbilityStandard$$CheckIsDamageOrHealSource"
+        },
+        {
+          "slot": 93,
+          "usage_type": 3,
+          "decoded_index": 62658,
+          "method": "Torappu.Battle.AbilityStandard$$GeneratePurposeMask"
+        },
+        {
+          "slot": 94,
+          "usage_type": 3,
+          "decoded_index": 62659,
+          "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForSpellOn"
+        },
+        {
+          "slot": 95,
+          "usage_type": 3,
+          "decoded_index": 62660,
+          "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForCastStart"
+        },
+        {
+          "slot": 96,
+          "usage_type": 3,
+          "decoded_index": 62661,
+          "method": "Torappu.Battle.AbilityStandard$$DoEmitAudioSignalForHit"
+        },
+        {
+          "slot": 97,
+          "usage_type": 3,
+          "decoded_index": 62663,
+          "method": "Torappu.Battle.AbilityStandard$$OnOutputAttackOrHeal"
+        },
+        {
+          "slot": 98,
+          "usage_type": 3,
+          "decoded_index": 62664,
+          "method": "Torappu.Battle.AbilityStandard$$OnOutputAttackOrHealEachSpell"
+        },
+        {
+          "slot": 99,
+          "usage_type": 3,
+          "decoded_index": 62665,
+          "method": "Torappu.Battle.AbilityStandard$$Awake"
+        },
+        {
+          "slot": 100,
+          "usage_type": 0,
+          "decoded_index": 0
+        },
+        {
+          "slot": 101,
+          "usage_type": 3,
+          "decoded_index": 90849,
+          "method": "Torappu.Battle.Abilities.EasyToStartAbility$$get_postDelay"
+        },
+        {
+          "slot": 102,
+          "usage_type": 0,
+          "decoded_index": 0
+        }
+      ]
+    }
+  ],
+  "literal_keys": [
+    {
+      "cfg": "multi-cfg.json",
+      "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$DoSetData",
+      "instruction": "0x180e9109d",
+      "literal_address": "0x188477dc8",
+      "literal": "times"
+    },
+    {
+      "cfg": "multi-cfg.json",
+      "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$DoSetData",
+      "instruction": "0x180e910a9",
+      "literal_address": "0x188434b28",
+      "literal": "hit_interval"
+    },
+    {
+      "cfg": "multi-cfg.json",
+      "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$DoSetData",
+      "instruction": "0x180e9114d",
+      "literal_address": "0x188477dc8",
+      "literal": "times"
+    },
+    {
+      "cfg": "multi-cfg.json",
+      "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$DoSetData",
+      "instruction": "0x180e91194",
+      "literal_address": "0x188434b28",
+      "literal": "hit_interval"
+    },
+    {
+      "cfg": "multi-cfg.json",
+      "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$CheckAnotherSpell",
+      "instruction": "0x180e90689",
+      "literal_address": "0x188477dc8",
+      "literal": "times"
+    },
+    {
+      "cfg": "multi-cfg.json",
+      "method": "Torappu.Battle.Abilities.MultiMeleeAttack$$CheckAnotherSpell",
+      "instruction": "0x180e906eb",
+      "literal_address": "0x188477dc8",
+      "literal": "times"
+    }
+  ],
+  "dll_executed": false,
+  "process_memory_read": false
+}

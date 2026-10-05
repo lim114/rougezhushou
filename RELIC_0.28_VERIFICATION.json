@@ -1,0 +1,55 @@
+{
+  "version": "0.28.0",
+  "passed": true,
+  "verified_at": 1791003648.6130393,
+  "tests": 220,
+  "new_tests": 23,
+  "seconds": 3.971,
+  "skill_matrix_skills": 87,
+  "skill_matrix_cases": 1740,
+  "matrix_modes": [
+    "frames",
+    "continuous"
+  ],
+  "independent_oracle_cases": 60,
+  "wine_oracle_phases": 46,
+  "changed_relics": [
+    "rogue_6_relic_fight_5",
+    "rogue_6_relic_hand_5"
+  ],
+  "changed_bindings": [],
+  "data_rule_counts": {
+    "non_output": 52,
+    "numeric": 118,
+    "pending": 63,
+    "conditional": 27,
+    "partial": 12
+  },
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "source_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+  "source_sha256_files": {
+    "scripts/build_relic_mechanics.py": "60b8147c00b8220c23c7509cdb726dc90ed1d4b54dca446730a863563b0c30fb",
+    "rouge/relics.py": "faa5c86ab2c3865a144d08bcfd91cea56ade63c2eb4ebe561703299b8f242782",
+    "rouge/sp_events.py": "ee8e983f032b2c538e92e787a3e4537766a0d22e256322e32bc4af9ca1bcaa06",
+    "rouge/timing.py": "b7bf312b8c9853dba226ab8b76d56aaef19b45b12ca4331148513bf1fb13236d",
+    "rouge/damage.py": "9de45d6921844a03428620f05b9a8a8eaab419e74dffc748ce1b7d53a73dcad8",
+    "rouge/estimate.py": "bf15c9fb8fc9626bd04ecdf216d2dcef18792a3fe7eaf1cf9e11af90cc6d97f9",
+    "rouge/operator_engine.py": "9916f788814a57fcb6aca4ff0001ef1322e0ef397b1b7ba947b3a0f2fa99554e",
+    "rouge/reporting.py": "198c9ded28a82ab9d3f4f21a3f5ee33addd6205da1c86e783a394452be65d7e3",
+    "rouge/app.py": "410a1a991e13d49c8ae2abd396a7374213e0d9de90cf3f603b97d11b1c2e26c5",
+    "rouge/data/relic-mechanics.json": "7ac83e80b896a3f807ce359df2164b2efa159ab2632fe47aa63dab9d6bf3bbd5",
+    "tests/test_event_sp_028.py": "6748e64d9e5a7dd2128abd90a272e56eeca8d5dd412389b53e51d1a8faaad8c7",
+    "scripts/verify_event_sp_028.py": "0218f7780ec528d23bf939afeef47e25b4444950d23a27c02eb74068f79fe638"
+  },
+  "evidence": ".cache/relic-028/evidence.json",
+  "chat_requests": 0,
+  "game_actions": 0,
+  "limits": [
+    "Only explicit own-unit successful-damage and kill callback scenarios; no live combat scan.",
+    "Wave plus Book attack-stack refresh, ownership and per-hit values remain unknown.",
+    "Non-forced SP blocking, next tick and simultaneous callback order remain reference assumptions.",
+    "One initial and one cycle, not repeated steady state; no token callback inheritance.",
+    "Wine phase remains a marginal envelope; hidden blocking and same-key wine stacking unknown.",
+    "Recognition unchanged; no new speed or inventory-reading measurement."
+  ]
+}

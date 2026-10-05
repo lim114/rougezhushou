@@ -1,0 +1,84 @@
+{
+  "version": "0.27.0",
+  "passed": true,
+  "verified_at": 1791001697.1581411,
+  "seconds": 2.504,
+  "tests": 197,
+  "new_tests": 24,
+  "skill_matrix_cases": 1218,
+  "matrix_modes": [
+    "frames",
+    "continuous"
+  ],
+  "resident_stage_ids": [
+    "ro6_t_8",
+    "ro6_t_8_b",
+    "ro6_t_8_c",
+    "ro6_t_9",
+    "ro6_t_9_b",
+    "ro6_t_9_c",
+    "ro6_t_10",
+    "ro6_t_11"
+  ],
+  "resident_enemy_difficulty_cases": 125,
+  "hp_combination_cases": 80,
+  "hp_combinations_guarded": 71,
+  "synthetic_canonical_examples": [
+    {
+      "max_hp": 3000,
+      "ratio": 0.6666666666666666,
+      "loss_unused": 1,
+      "expected_loss": 1400,
+      "expected_remaining": 600,
+      "passed": true
+    },
+    {
+      "max_hp": 3000,
+      "ratio": 0.6666666666666666,
+      "loss_unused": 0,
+      "expected_loss": 0,
+      "expected_remaining": 2000,
+      "passed": true
+    },
+    {
+      "max_hp": 3000,
+      "ratio": 1,
+      "loss_unused": 1,
+      "expected_loss": 2100,
+      "expected_remaining": 900,
+      "passed": true
+    }
+  ],
+  "changed_relic_ids": [
+    "rogue_6_relic_cargo_11",
+    "rogue_6_relic_fight_11"
+  ],
+  "changed_char_buff_ids": [],
+  "data_rule_counts": {
+    "non_output": 52,
+    "numeric": 118,
+    "pending": 65,
+    "conditional": 26,
+    "partial": 11
+  },
+  "source_sha256_files": {
+    "rouge/relics.py": "29d646f895e2a18c4f0098de41deef819f5e1708fe6026d4d87887c6c6d1b486",
+    "rouge/deployment.py": "a25e8990716e8d344cdc4bae6e566d4ad9dd3e90ea4bd4f88fcd1a8fd8d4b187",
+    "rouge/run_modifiers.py": "ebfde339e3ce13876d6031ecc303c05c5f6182edafb69d7367632a0cb18b3ddd",
+    "rouge/reporting.py": "d3bfd321d75eda24933c603014b90c980fdedd5bf73693ea783bd576481e4784",
+    "rouge/app.py": "ef12da500f43d1c8156d5d6cbc1200d055303977eac7e8f68d747a264ffcf37e",
+    "rouge/data/relic-mechanics.json": "6c4665197bb335d1f5e0f35813f74454e018bd41bacefb2d52a4b7bd429d17a1",
+    "scripts/build_relic_mechanics.py": "dfb1a4379853f1768d29deddc90add83f55bd271180772f9101a3562a3e99bdf",
+    "tests/test_deployment_relics_027.py": "761640797075fe7960269ff2275cb8e6b2bea30c52f09706e7a0cafa13220666",
+    "tests/test_relic_candidates_025.py": "2e4fd2b8db9baf2c1ef8436996265bcb05332c3fd4d4f1a6bab11b13f3992745"
+  },
+  "game_actions": 0,
+  "chat_requests": 0,
+  "new_live_combat_measurements": 0,
+  "limits": [
+    "Deployment HP is an explicit offline event reference, not live lifecycle tracking.",
+    "Cost rune values stay unrounded; actual deductions and skill/trait discounts are unknown.",
+    "Resident HP applies only to eight pinned stages; mixed HP relic scripts remain unverified.",
+    "These public matrices are regression coverage, not combat accuracy or new recognition measurements."
+  ]
+}

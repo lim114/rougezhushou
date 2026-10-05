@@ -1,0 +1,118 @@
+{
+  "version": "0.32.0",
+  "passed": true,
+  "verified_at": 1791016364.522785,
+  "tests_run": 40,
+  "current_tests_passed": 40,
+  "test_scope": "current_source_targeted",
+  "test_modules": [
+    "tests.test_relic_grade_sync_032",
+    "tests.test_run_reuse_guards_032",
+    "tests.test_difficulty_relics",
+    "tests.test_inventory_tools",
+    "tests.test_sampling_flow"
+  ],
+  "test_log": ".cache\\relic-032\\targeted-tests.log",
+  "test_log_sha256": "87c5d6055b5b26da39d3a38943dc29bd25a0f7c2bf0dad178ae985111e123a86",
+  "new_tests": 26,
+  "historical_combat_tests_skipped": 0,
+  "skipped_tests": [],
+  "failures": 0,
+  "errors": 0,
+  "difficulty_groups": 13,
+  "family_variants": 52,
+  "grade_cases": 208,
+  "paired_behaviors": {
+    "late_grade_before": [],
+    "late_grade_after": [
+      "rogue_6_relic_legacy_24_c"
+    ],
+    "grade_correction_before": [
+      "rogue_6_relic_legacy_24_c"
+    ],
+    "grade_correction_after": [
+      "rogue_6_relic_legacy_24_a"
+    ]
+  },
+  "paired_replays": [
+    {
+      "sample": "run-map-closed.png",
+      "trials": 3,
+      "without_run_memory_ms": [
+        559.8179998341948,
+        398.8835997879505,
+        388.9866000972688
+      ],
+      "with_run_memory_ms": [
+        494.6235998068005,
+        325.49650012515485,
+        314.3081001471728
+      ],
+      "without_memory_median_ms": 398.8835997879505,
+      "with_memory_median_ms": 325.49650012515485,
+      "badge_searches_before": 3,
+      "badge_searches_after": 0,
+      "semantic_equal": true,
+      "original_config_timestamps_preserved": true
+    },
+    {
+      "sample": "exploration-map.png",
+      "trials": 3,
+      "without_run_memory_ms": [
+        559.5880001783371,
+        371.52679986320436,
+        392.1469999477267
+      ],
+      "with_run_memory_ms": [
+        493.2126998901367,
+        314.3964000046253,
+        349.65569991618395
+      ],
+      "without_memory_median_ms": 392.1469999477267,
+      "with_memory_median_ms": 349.65569991618395,
+      "badge_searches_before": 3,
+      "badge_searches_after": 0,
+      "semantic_equal": true,
+      "original_config_timestamps_preserved": true
+    }
+  ],
+  "explicit_visible_panel_overrides_memory": true,
+  "source_hashes": {
+    "rouge/relic_recognition.py": "266fc3f7e88bac061c7c1a99a59a4b3932062940cc90478b2ef25bd39453ea70",
+    "rouge/run_state.py": "def1e4a32a3b6760e39e53040ce529fec2c561a72bbf848f7a33084a269b6e4e",
+    "rouge/run_config.py": "e35262ce5fc74db31ea80704f5689bb05619fd9dc9798a334f8cac3455b4ac99",
+    "rouge/run_recognition.py": "aae1ab7d6faaeb39c044b80e854e599216fa171039774caea37a37295c583d46",
+    "rouge/recognition.py": "f54d26cb906c1f2ec8a7713219e2e16f5b3e163863a42c8163da8e6bfe5966e3",
+    "rouge/visual_recognition.py": "b31f87dec1ab20c2c0d9558aaab93840a9be299ab17aca0b16f75dfcfb245ba3",
+    "rouge/app.py": "94a853598e7366e5dd4bf1093f3d329bd320576d0edadfbf06a7009a54b3d334",
+    "rouge/data/run-config.json": "d35b08029a4dee14b7955136d127c0af22529858ffb559d652ac77e4e7f2c19e",
+    "rouge/data/relic-reference-equivalence.json": "31035d3398ac4e98b2ea4ae9e426218cbef76d5baba905745731f69196f9549a",
+    "rouge/data/relic-mechanics.json": "bf8b1a217dfc7aca3d5c49de6c217388304fed7927b10921594088814ff421ff",
+    "scripts/build_run_config.py": "b772fc1e093552e3764ddd173e5ee35e09de92946a8c2ad22823ea1bdbb6a0d4",
+    "tests/test_relic_grade_sync_032.py": "d3f3347c6d834b5fc150f4a6e178ba16c4016d70806ebaf85e672e875bfce5ef",
+    "tests/test_run_reuse_guards_032.py": "0bf6a7ad935ad007c2c4760907899a7dba171adc4f9e3649d34c457918f64990",
+    "scripts/verify_relic_grade_sync_032.py": "5f1d7f9e76228c0c31504fa09c08a118f7ea2118a2f75dc0a70234c2c0324442"
+  },
+  "relic_mechanics_unchanged": true,
+  "chat_requests": 0,
+  "game_actions": 0,
+  "new_live_capture_measurements": 0,
+  "elapsed_seconds": 37.20278210006654,
+  "limits": [
+    "Paired historical replay timings are not live all-page performance or full-inventory accuracy.",
+    "Only confirmed same-run squad and difficulty skip repeat badge work; changing fields remain current reads.",
+    "Exact owned descriptions override grade inference with a discrepancy; missing grade/cross-family ambiguity remains unknown.",
+    "334 full regression passes precede the final run-ID/geometry guards; current-source targeted checks, replay and UI checks cover those final changes separately."
+  ],
+  "full_regression_before_final_guards": {
+    "receipt": ".cache/relic-032/full-suite-before-guards.json",
+    "sha256": "4cac2ea1ec3f0e02016eebbd3453f321c3649de5ffdd9baae01b8f1aca957533",
+    "current_tests_passed": 334,
+    "historical_combat_tests_skipped": 70,
+    "changed_source_files_since_full_suite": [
+      "rouge/run_state.py",
+      "rouge/run_config.py",
+      "scripts/verify_relic_grade_sync_032.py"
+    ]
+  }
+}
