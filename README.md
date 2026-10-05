@@ -1,3 +1,9 @@
+# rougezhushou 云端开发副本
+
+当前源代码版本为 0.70.0。云端接续说明见 [CLOUD_HANDOFF.md](CLOUD_HANDOFF.md)，最新待办见 [PROJECT_PROGRESS.md](PROJECT_PROGRESS.md)。此副本独立于本机 rouge 项目，未包含私人配置、本局记忆和个人游戏截图。
+
+## 历史 README（下方旧版本号仅为历史记录）
+
 # 黑流树海助手 · 0.59 代码测试版
 
 “视觉判页与区域 OCR”新增收藏品增益弹窗：当前静态控件定位随缩放、平移调整的区域，再读当前文字。修复半尺寸桃金娘页脚置信不足和正文复读误字，能确认“钝爪－新典训＋零食盒”。遮住的培养字段保持未知，相似藏品图标仍需充分证据确认。
@@ -243,7 +249,4 @@ node --test tests\desktop-backend.test.cjs
 `scripts/verify_run_ui.py` 回放持有栏和队伍页，核对自动计算、账号/本局隔离、缺失帧保留、重启恢复及仅手动重置，回执为 `RUN_STATE_VERIFICATION.json`。`scripts/verify_run_auto.py` 用于本局机械师队伍页的真实后台连续采样验收，成功回执为 `RUN_AUTO_VERIFICATION.json`；战斗页不会伪造队伍或藏品新观测。
 
 0.9 藏品资料与验证：[RELIC_MECHANICS.md](RELIC_MECHANICS.md)、[RELIC_COVERAGE.md](RELIC_COVERAGE.md)、`RELIC_VERIFICATION.json`。`scripts/verify_relic_mechanics.py` 遍历 272 件与 32 个档案的公共计算入口，仅验证可执行性、状态与有限数值，不等同于实战准确率。
-# rougezhushou 云端开发副本
-
-当前源代码版本为 0.70.0。云端接续说明见 [CLOUD_HANDOFF.md](CLOUD_HANDOFF.md)，最新待办见 [PROJECT_PROGRESS.md](PROJECT_PROGRESS.md)。下方保留历史 README，旧版本号不代表当前源码版本。此副本独立于本机 rouge 项目，未包含私人配置、本局记忆和个人游戏截图。
 
