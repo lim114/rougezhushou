@@ -708,19 +708,29 @@ class Combat:
             shock_count=2 if self.module_parts and self.s.get('module_id')=='uniequip_002_wisdel' else 1
             scale=1;shock_scale=.5
             if not normal and self.n==1:
-                mode='next_attack';duration=interval;shock_count+=2;shock_scale=bb['append_atk_scale']
+                mode='next_attack';duration=interval if window is None else window;shock_count+=2;shock_scale=bb['append_atk_scale']
             elif not normal and self.n==3:
                 mode='ammo';scale=bb['attack@atk_scale_3'];probability=bb['attack@prob']
                 from .relic_events import ammunition_rounds
                 ammo_rounds=ammunition_rounds(int(bb['attack@trigger_time']),1,self.s,minimum_interval=interval*speed/600);duration=ammo_rounds*interval
                 if window is not None:duration=min(duration,window)
-            count=1 if not normal and self.n==1 else attacks()
-            if not normal and self.n==2 and self.s.get('overload',False):count*=4;scale=bb['attack@atk_scale_ol']
-            emit('维什戴尔主攻击',attack*scale*main,'physical',count)
+            if not normal and self.n==1:
+                stream=timeline.attacks(3600 if window is None else window,interval,speed,
+                    attribute_speed=speed_reference,limit=1)
+                events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
+            else:events=attack_times()
+            count=len(events)
+            overload=not normal and self.n==2 and self.s.get('overload',False)
+            if overload:count*=4;scale=bb['attack@atk_scale_ol']
+            emit('维什戴尔主攻击',attack*scale*main,'physical',count,
+                event_times=None if overload or mode=='next_attack' else events)
+            if count and (overload or mode=='next_attack'):components[-1]['actual_total']=None
             emit('余震',attack*scale*main*shock_scale,'physical',count*shock_count)
-            # A mark is consumed by the first explosion; subsequent shocks cannot explode the same mark again.
-            chance=1-(1-probability)**shock_count
-            emit('单枚残影爆炸期望',attack*self.talent('好礼','attack@bomb_atk_scale'),'physical',count*chance)
+            if count:components[-1]['actual_total']=None
+            # The described single-check chance does not prove independent
+            # draws, shadow consumption order or an explosion count.
+            emit('残影单次爆炸条件参考',attack*self.talent('好礼','attack@bomb_atk_scale'),'physical',0)
+            if count and probability:components[-1]['actual_total']=None
             ghosts=self.option('ghost_count',0,maximum=3,integer=True)
             if ghosts:
                 token=self.token_stats('token_10035_wisdel_wward')
@@ -729,7 +739,7 @@ class Combat:
                 cast_count=self.option('ghost_casts',0,maximum=1000,integer=True)
                 token_attack=token['attack']*(1+sum(e['value'] for e in token_effects if e['kind']=='attack_pct'))
                 emit('魂灵之影施放',token_attack,'magic',cast_count,effects=token_effects)
-            self.notes.append('好礼普通攻击倍率作用于普攻及余震，技能220%倍率不乘残影爆炸；残影消耗后不重复爆炸。魂灵之影有随机技力回复，使用指定施放次数，未推定自动频率。')
+            self.notes.append('好礼和余震只列条件参数参考；随机独立性、残影刷新/消耗顺序及次生事件时间未核验，不推算爆炸期望。魂灵之影有随机技力回复，使用指定施放次数，未推定自动频率。')
         elif op=='char_4107_vrdant':
             if not normal and self.n==1:
                 mode='passive';duration=window if window is not None else 30
@@ -899,6 +909,7 @@ class Combat:
         total_damage=full['damage'];total_healing=full['healing'];duration=full['duration']
         wine_s1_unresolved=self.s['operator']=='char_1042_phatm2' and self.n==1
         gnosis_s1_unresolved=self.s['operator']=='char_206_gnosis' and self.n==1
+        wisdel_s1_unresolved=self.s['operator']=='char_1035_wisdel' and self.n==1
         if wine_s1_unresolved:
             # The native multihit gap does not establish absolute cast end,
             # SP observation or normal-attack resumption. A resource anchor
@@ -910,6 +921,10 @@ class Combat:
             duration=None;recharge=None
             first=0.0 if initial>=sp['sp_cost'] else None
             self.notes.append('高速思考两段的实际技能绑定、间隔及结束/阻回相位未核验；不把两段当同刻命中或套用常规攻击结束，完整持续和周期未知。')
+        if wisdel_s1_unresolved:
+            duration=None;recharge=None
+            first=0.0 if initial>=sp['sp_cost'] else None
+            self.notes.append('定点清算实际技能绑定、余震命中和结束/阻回未核验；不由普通攻击结束推导完整周期。')
         if mode=='ammo' and duration is None:total_damage=total_healing=None
         if mode in ('deployment','passive'):first=0;recharge=None
         nonrepeat=mode in ('infinite','passive','switch','once','once_deploy','deployment','triggered_ammo')
@@ -971,7 +986,7 @@ class Combat:
                     stun=sp['values'].get('stun',0) if self.s['operator']=='char_002_amiya' and self.n==2 else 0)
                 recharge=sp_events['cycle']['seconds']
             else:recharge=None
-        if wine_s1_unresolved or gnosis_s1_unresolved:
+        if wine_s1_unresolved or gnosis_s1_unresolved or wisdel_s1_unresolved:
             recharge=None
             first=0.0 if initial>=sp['sp_cost'] else None
         cycle=duration+recharge if not nonrepeat and duration is not None and recharge is not None else None
@@ -1094,6 +1109,20 @@ class Combat:
                 observed['actual_total']=None
             result['complete']=False
             result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
+        if self.s['operator']=='char_1035_wisdel':
+            result['wisdel_secondary_reference']={
+                'described_single_check_probability':self.bb.get('attack@prob',self.talent('好礼','attack@prob',0)) if self.n==3 else self.talent('好礼','attack@prob',0),
+                'explosion_per_hit_reference':next(c['per_hit'] for c in full['components'] if c['name']=='残影单次爆炸条件参考'),
+                'explosion_expected_count':None,'random_independence_verified':False,
+                'shadow_lifecycle_verified':False,'secondary_hit_times_seconds':None,
+                'source_possible':{'cast':any(c['hits'] for c in full['components'] if c['name']=='维什戴尔主攻击'),
+                    'window':any(c['hits'] for c in shown['components'] if c['name']=='维什戴尔主攻击')},
+                's1_binding_verified':False,
+            }
+            from .uncertain_sources import mask_pending_damage
+            mask_pending_damage(result,full,shown,normal,duration,cycle)
+            result['complete_definition']='余震与残影只列条件参数；实际命中时钟、随机独立性和生命周期未核验。'
+            if wisdel_s1_unresolved:result['complete']=False;result['estimate']['complete']=False
         if hasattr(self,'neural_relic_reference'):
             result['neural_relic_reference']={**self.neural_relic_reference,
                 'cast_burst_times':[t for c in full['components'] if c['name']=='神经损伤爆发' for t in c.get('times_seconds',[])],

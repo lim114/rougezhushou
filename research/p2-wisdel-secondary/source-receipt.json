@@ -1,0 +1,292 @@
+{
+  "repository": "Kengxxiao/ArknightsGameData",
+  "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "rechecked_utc": "2026-10-07T16:27:37.565742+00:00",
+  "sources": {
+    "character_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "path": ".cache/p2-s1-binding/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "sha256_matched": true,
+      "reused_existing_download": true
+    },
+    "skill_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "path": ".cache/p2-s1-binding/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "sha256_matched": true,
+      "reused_existing_download": true
+    }
+  },
+  "selectors": {
+    "character_table.char_1035_wisdel.talents[0].candidates[2]": {
+      "unlockCondition": {
+        "phase": "PHASE_2",
+        "level": 1
+      },
+      "requiredPotentialRank": 0,
+      "prefabKey": "1",
+      "name": "好礼",
+      "description": "攻击时对主目标的攻击力提升至115%并为其附着残影，残影受到维什戴尔的余震影响时有15%概率爆炸，对周围所有敌人造成150%攻击力的物理伤害并使其<$ba.stun>晕眩</>1秒",
+      "rangeId": null,
+      "blackboard": [
+        {
+          "key": "attack@main_atk_scale",
+          "value": 1.15,
+          "valueStr": null
+        },
+        {
+          "key": "attack@prob",
+          "value": 0.15,
+          "valueStr": null
+        },
+        {
+          "key": "attack@bomb_atk_scale",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "attack@stun",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@range_radius",
+          "value": 1.1,
+          "valueStr": null
+        }
+      ],
+      "tokenKey": null,
+      "isHideTalent": false
+    },
+    "skill_table.skchr_wisdel_1.levels[9]": {
+      "name": "定点清算",
+      "rangeId": null,
+      "description": "下次攻击额外造成2次余震并使所有目标<$ba.stun>晕眩</><@ba.vup>{stun_duration}</>秒，此次攻击的溅射范围<@ba.vup>略微扩大</>且余震伤害变为攻击力的<@ba.vup>{append_atk_scale:0%}</>",
+      "skillType": "AUTO",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WHEN_ATTACK",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 2,
+        "initSp": 0,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_wisdel_1",
+      "duration": 0.0,
+      "blackboard": [
+        {
+          "key": "append_atk_scale",
+          "value": 1.2,
+          "valueStr": null
+        },
+        {
+          "key": "stun_duration",
+          "value": 1.5,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_wisdel_2.levels[9]": {
+      "name": "饱和复仇",
+      "rangeId": null,
+      "description": "攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vup>缩短</>，可同时攻击<@ba.vup>3</>名敌人\\n<$ba.overdrive>过载</>：攻击改为攻击力<@ba.vup>{attack@atk_scale_ol:0%}</>的<@ba.vup>4</>连发，随机攻击范围内的目标\\n<@ba.rem>该技能可随时主动关闭</>",
+      "skillType": "MANUAL",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 25,
+        "initSp": 15,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_wisdel_2",
+      "duration": 25.0,
+      "blackboard": [
+        {
+          "key": "base_attack_time",
+          "value": -0.7,
+          "valueStr": null
+        },
+        {
+          "key": "atk",
+          "value": 0.35,
+          "valueStr": null
+        },
+        {
+          "key": "attack@atk_scale_ol",
+          "value": 0.8,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_wisdel_3.levels[9]": {
+      "name": "爆裂黎明",
+      "rangeId": null,
+      "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+      "skillType": "MANUAL",
+      "durationType": "AMMO",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 50,
+        "initSp": 40,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_wisdel_3",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 1.8,
+          "valueStr": null
+        },
+        {
+          "key": "max_cnt",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "base_attack_time",
+          "value": 2.9,
+          "valueStr": null
+        },
+        {
+          "key": "attack@atk_scale_3",
+          "value": 2.2,
+          "valueStr": null
+        },
+        {
+          "key": "attack@prob",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "attack@trigger_time",
+          "value": 6.0,
+          "valueStr": null
+        },
+        {
+          "key": "sp",
+          "value": 3.0,
+          "valueStr": null
+        }
+      ]
+    }
+  },
+  "motion_refs": [
+    {
+      "id": "char_1035_wisdel:Front:Skill_1",
+      "orientation": "Front",
+      "skin": "original",
+      "animation": "Skill_1",
+      "spine_version": "3.8.99",
+      "duration": {
+        "seconds": 2.0999999046325684,
+        "raw_frames_30hz": 62.99999713897705,
+        "strict_ceil_frames_30hz": 63,
+        "representation_normalized_frames_30hz": 63,
+        "ceil_frames_30hz": 63
+      },
+      "events": [
+        {
+          "name": "OnAttack",
+          "seconds": 0.6000000238418579,
+          "raw_frames_30hz": 18.000000715255737,
+          "strict_ceil_frames_30hz": 19,
+          "representation_normalized_frames_30hz": 18,
+          "ceil_frames_30hz": 18
+        }
+      ],
+      "selectable_as_conventional_reference": true,
+      "unverified_reasons": [],
+      "runtime_binding_verified": false,
+      "source": {
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/spine/char_1035_wisdel/char_1035_wisdel/Front/char_1035_wisdel.skel",
+        "sha256": "3d80d908389551703f7422f63c950cea8eaf199372d201ea238bcf879901aec0",
+        "git_blob": "bcf3528e3ba60f4ae735d42a9b6631dc8fdc6a21",
+        "bytes": 1274279
+      },
+      "preview": {
+        "windup_frames": 18,
+        "recovery_frames": 45,
+        "animation_frames": 63
+      }
+    },
+    {
+      "id": "char_1035_wisdel:Back:Skill_1",
+      "orientation": "Back",
+      "skin": "original",
+      "animation": "Skill_1",
+      "spine_version": "3.8.99",
+      "duration": {
+        "seconds": 2.0999999046325684,
+        "raw_frames_30hz": 62.99999713897705,
+        "strict_ceil_frames_30hz": 63,
+        "representation_normalized_frames_30hz": 63,
+        "ceil_frames_30hz": 63
+      },
+      "events": [
+        {
+          "name": "OnAttack",
+          "seconds": 0.6000000238418579,
+          "raw_frames_30hz": 18.000000715255737,
+          "strict_ceil_frames_30hz": 19,
+          "representation_normalized_frames_30hz": 18,
+          "ceil_frames_30hz": 18
+        }
+      ],
+      "selectable_as_conventional_reference": true,
+      "unverified_reasons": [],
+      "runtime_binding_verified": false,
+      "source": {
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/spine/char_1035_wisdel/char_1035_wisdel/Back/char_1035_wisdel.skel",
+        "sha256": "82ae6d4e016c52c2ae39009ca3f4667774bba6677084c76f53303540fc0df825",
+        "git_blob": "94ab6834ad0c418662aaddd00dcc473076b431f3",
+        "bytes": 515540
+      },
+      "preview": {
+        "windup_frames": 18,
+        "recovery_frames": 45,
+        "animation_frames": 63
+      }
+    }
+  ],
+  "mechanism_proven": [
+    "Attack attaches shadow to main target; shadow hit by Wisdel aftershock has 15% described chance to explode",
+    "E2 main target scale 1.15, shadow explosion scale 1.5 (pot1)",
+    "S1 next attack has 2 extra aftershocks; aftershock scale 1.2; stun 1.5",
+    "Skill_1 visual original OnAttack at nominal18 frames; runtime binding NOT verified"
+  ],
+  "mechanism_unknown": [
+    "RNG draws independence or correlation between aftershocks",
+    "mark refresh/stack/consumption ordering",
+    "aftershock impact times and projectile-to-target delay",
+    "whether one shadow survives failed checks until successful explosion",
+    "whether a newly attached mark overwrites an old one before a pending aftershock",
+    "current hotpatch script behavior; no fresh native DLL verification"
+  ],
+  "public_page_attempts": [
+    {
+      "attempt": 1,
+      "operation": "GET verified HTTPS via requests",
+      "failure": "System Python requests module missing; no network request sent"
+    },
+    {
+      "attempt": 2,
+      "operation": "GET verified HTTPS via stdlib urllib to https://prts.wiki/w/%E7%BB%B4%E4%BB%80%E6%88%B4%E5%B0%94",
+      "failure": "URLError: Tunnel connection failed: 403 Forbidden; proxy restricted policy lacks prts.wiki"
+    }
+  ],
+  "deferral": {
+    "reason": "Confirmed proxy policy denial; unchanged denied route not retried, no proxy/TLS bypass",
+    "resume_condition": "A supported allowed-domain addition for prts.wiki has propagated, or independently verified public/native evidence establishing Wisdel RNG and shadow lifecycle is supplied",
+    "failed_attempts": 2,
+    "three_failures_not_claimed": true
+  }
+}

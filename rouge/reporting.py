@@ -372,6 +372,15 @@ def build_report(scenario,result):
             metric('gap','实际两段间隔',None,'秒')],
             ['没有有效出手参考时不生成两段伤害；两段的实际技能绑定、间隔和结束相位未核验。',
              '不把原版两事件默认当同刻命中，不从普通攻击结束推导完整周期。']))
+    wisdel=result.get('wisdel_secondary_reference')
+    if wisdel:
+        sections.append(section('wisdel_secondary','好礼与余震 · 次生事件待核验',[
+            metric('probability','单次判定概率描述参数',wisdel['described_single_check_probability']*100,'%'),
+            metric('explosion','单次残影爆炸条件参考',wisdel['explosion_per_hit_reference']),
+            metric('expected_count','实际爆炸期望次数',None,'次'),
+            metric('secondary_clock','余震命中时间',None,'秒')],
+            ['没有有效出手参考时不生成技能来源；出手参考不证明余震或残影实际命中。',
+             '随机独立性、残影刷新/消耗顺序未核验，不套用多次独立判定公式；S1完整结束与周期未知。']))
     charge=result.get('charge_reference')
     if charge:
         sections.append(section('charge_reference','结构性原理 · 冲锋次数参考',[
@@ -447,6 +456,8 @@ def build_report(scenario,result):
             ['这些数值仅包含可确定法伤，不含持续损伤及受其影响的未知爆发，不能当作完整总伤或完整 DPS。'
              if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
              if bait_reference else
+             '这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。'
+             if wisdel or result.get('drone_lifecycle_reference') else
              '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']))
     if has_healing(op,number):
         rows=[];window_healing=skill['window_healing']
