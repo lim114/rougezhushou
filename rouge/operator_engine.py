@@ -305,8 +305,10 @@ class Combat:
                 regular('healing',scale=factor,times=min(1,healing_targets))
                 if self.n==2:self.notes.append('深度治疗整场最多开启两次；周期指标仅描述尚可再次开启时的一轮。')
             elif self.n==1:
-                mode='next_attack';duration=interval
-                emit('治疗替代下次攻击',attack*bb['heal_scale'],'healing',min(1,healing_targets))
+                mode='next_attack';duration=interval if window is None else window
+                recipients=min(1,healing_targets) if duration>0 else 0
+                emit('治疗替代下次攻击',attack*bb['heal_scale'],'healing',recipients)
+                if recipients:components[-1]['actual_total']=None
             elif op=='char_196_sunbr':
                 stream=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,start_delay=bb['disarm'])
                 events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
@@ -965,6 +967,7 @@ class Combat:
         wisdel_s1_unresolved=self.s['operator']=='char_1035_wisdel' and self.n==1
         mizuki_s1_unresolved=self.s['operator']=='char_437_mizuki' and self.n==1
         ines_s1_unresolved=self.s['operator']=='char_4087_ines' and self.n==1
+        healing_s1_unresolved=self.s['operator'] in ('char_196_sunbr','char_2025_shu') and self.n==1
         aglna_s2_unresolved=self.s['operator']=='char_1015_aglna2' and self.n==2
         manual_close_unresolved=self.s['operator']=='char_1044_hsgma2' and self.n==3 and self.option('last_stand_seconds',0,maximum=self.bb['before_dead_duration'])>0
         if wine_s1_unresolved:
@@ -992,6 +995,9 @@ class Combat:
         if aglna_s2_unresolved:
             duration=None;recharge=None
             self.notes.append('2.5秒chant参数仅保留已有孤立攻击阶段参考；实际起飞/循环绑定与结束时钟未知，未将其当作固定到达时间。')
+        if healing_s1_unresolved:
+            duration=None;recharge=None
+            self.notes.append('治疗替代下次攻击只列符合条件的单次友方治疗参考；实际友方获取、判断阈值、结束及多充能链未知，不使用敌方供靶时钟。')
         if mode=='ammo' and duration is None:total_damage=total_healing=None
         if mode in ('deployment','passive'):first=0;recharge=None
         nonrepeat=mode in ('infinite','passive','switch','once','once_deploy','deployment','triggered_ammo')
@@ -1176,6 +1182,19 @@ class Combat:
                 observed['actual_total']=None
             result['complete']=False
             result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
+        if healing_s1_unresolved:
+            heal=next(c for c in full['components'] if c['name']=='治疗替代下次攻击')
+            result['next_attack_healing_reference']={
+                'per_heal_reference':heal['per_hit'],'recipient_limit':1,
+                'recipient_condition_reference':'附近生命不足一半的友方' if self.s['operator']=='char_2025_shu' else '附近友方',
+                'charge_count_parameter':self.bb['ct'],'actual_acquisition_times_seconds':None,
+                'source_possible':{'cast':'actual_total' in heal,
+                    'window':any('actual_total' in c for c in shown['components'])},
+                'skill_end_seconds':None,'multi_charge_chain_verified':False,
+            }
+            from .uncertain_sources import mask_pending_healing
+            mask_pending_healing(result,full,shown,normal,duration,cycle)
+            result['complete']=False;result['estimate']['complete']=False
         if aglna_s2_unresolved:
             result['aglna_liftoff_reference']={
                 'chant_duration_parameter_seconds':self.bb['chant_duration'],

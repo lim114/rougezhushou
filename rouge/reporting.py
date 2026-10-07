@@ -365,6 +365,15 @@ def build_report(scenario,result):
             metric('actual_end','实际结束当帧',None,'帧')],
             ['目标在名义结束前消失时不生成终结来源；同帧消失顺序未核验时完整伤害未知。',
              '实际结束相位、冻结移除顺序及离开范围的后续适用性尚未核验。']))
+    next_heal=result.get('next_attack_healing_reference')
+    if next_heal:
+        sections.append(section('next_attack_healing','下次攻击治疗 · 获取与结束待核验',[
+            metric('per_heal','单名友方治疗条件参考',next_heal['per_heal_reference'],'生命'),
+            metric('recipients','单次治疗目标上限',next_heal['recipient_limit'],'名'),
+            metric('charges','可充能次数参数',next_heal['charge_count_parameter'],'次'),
+            metric('acquisition','实际友方治疗时刻',None,'秒')],
+            ['友方条件：'+next_heal['recipient_condition_reference']+'；符合条件的受疗人数采用情景输入。',
+             '敌方供靶区间不代表友方受疗资格；零窗口/零受疗目标不生成治疗。获取、阈值判断、结束和多充能链未核验。']))
     liftoff=result.get('aglna_liftoff_reference')
     if liftoff:
         sections.append(section('aglna_liftoff','重力自定义 · 起飞阶段待核验',[
@@ -527,7 +536,7 @@ def build_report(scenario,result):
         if windowed or 'window_seconds' in scenario or window_healing!=skill['total_healing']:
             rows.append(metric('window_healing','观察窗口治疗',window_healing))
             if skill.get('window_seconds'):
-                rows.append(metric('window_hps','窗口平均 HPS',window_healing/skill['window_seconds'],'治疗/秒'))
+                rows.append(metric('window_hps','窗口平均 HPS',window_healing/skill['window_seconds'] if window_healing is not None else None,'治疗/秒'))
         if not nonrepeat:rows.append(metric('hps','本轮周期 HPS',skill['cycle_hps'],'治疗/秒'))
         sections.append(section('healing','治疗输出',rows,['满额潜在治疗，未扣过量治疗；生命回复和屏障单独列出。']))
     fee=fee_section(scenario,bb,skill)

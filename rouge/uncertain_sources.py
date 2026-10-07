@@ -4,7 +4,7 @@ from .timing import phase_totals
 
 def mask_pending_damage(result, full, shown, normal, duration, cycle):
     def pending(plan):
-        return bool(plan and any('actual_total' in c and c['actual_total'] is None
+        return bool(plan and any(c['damage_type'] not in ('healing','regeneration','buildup') and 'actual_total' in c and c['actual_total'] is None
                                 for c in plan['components']))
 
     def known(plan, boundary=None):
@@ -38,3 +38,33 @@ def mask_pending_damage(result, full, shown, normal, duration, cycle):
         if 'actual_total' in c and c['actual_total'] is None:
             skill['hit_counts'][c['name']] = None
     result['complete'] = result['estimate']['complete'] = False
+
+
+def mask_pending_healing(result, full, shown, normal, duration, cycle):
+    def pending(plan):
+        return bool(plan and any(c['damage_type']=='healing' and 'actual_total' in c
+                                and c['actual_total'] is None for c in plan['components']))
+
+    def known(plan, boundary=None):
+        components=[c for c in plan['components'] if c['damage_type']=='healing' and 'actual_total' not in c]
+        return phase_totals(components,boundary)[1] if boundary is not None else sum(c['total'] for c in components)
+
+    if not any(pending(plan) for plan in (full,shown,normal)):
+        return
+    skill=result['estimate']['skill']
+    subtotal={'total_healing':known(full),
+        'phase_healing':known(full,duration) if duration is not None else None,
+        'window_healing':known(shown),
+        'cycle_healing':known(full,cycle)+(known(normal) if normal else 0) if cycle is not None else None}
+    subtotal['cycle_hps']=subtotal['cycle_healing']/cycle if cycle else None
+    subtotal['window_hps']=subtotal['window_healing']/shown['duration'] if shown['duration'] else None
+    result['known_healing_subtotals']=subtotal
+    if pending(full):skill['total_healing']=skill['phase_healing']=None
+    if cycle is not None and (pending(full) or pending(normal)):skill['cycle_healing']=skill['cycle_hps']=None
+    if pending(shown):
+        result['total_healing']=None
+        skill['window_healing']=skill['window_hps']=None
+    for c in full['components']:
+        if c['damage_type']=='healing' and 'actual_total' in c and c['actual_total'] is None:
+            skill['hit_counts'][c['name']]=None
+    result['complete']=result['estimate']['complete']=False
