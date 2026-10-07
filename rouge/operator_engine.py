@@ -1824,6 +1824,8 @@ class Combat:
             mask_pending_damage(result,full,shown,normal,duration,cycle)
             result['complete_definition']='余震与残影只列条件参数；实际命中时钟、随机独立性和生命周期未核验。'
             if wisdel_s1_unresolved:result['complete']=False;result['estimate']['complete']=False
+            from .wisdel_summon_qualification import reference as summon_qualification_reference
+            result['wisdel_summon_qualification_reference']=summon_qualification_reference(self.p,self.s)
         if hasattr(self,'neural_relic_reference'):
             result['neural_relic_reference']={**self.neural_relic_reference,
                 'cast_burst_times':[t for c in full['components'] if c['name']=='神经损伤爆发' for t in c.get('times_seconds',[])],

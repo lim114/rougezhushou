@@ -1,0 +1,378 @@
+diff --git a/rouge/operator_engine.py b/rouge/operator_engine.py
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -1820,6 +1820,8 @@
+             mask_pending_damage(result,full,shown,normal,duration,cycle)
+             result['complete_definition']='余震与残影只列条件参数；实际命中时钟、随机独立性和生命周期未核验。'
+             if wisdel_s1_unresolved:result['complete']=False;result['estimate']['complete']=False
++            from .wisdel_summon_qualification import reference as summon_qualification_reference
++            result['wisdel_summon_qualification_reference']=summon_qualification_reference(self.p,self.s)
+         if hasattr(self,'neural_relic_reference'):
+             result['neural_relic_reference']={**self.neural_relic_reference,
+                 'cast_burst_times':[t for c in full['components'] if c['name']=='神经损伤爆发' for t in c.get('times_seconds',[])],
+diff --git a/rouge/reporting.py b/rouge/reporting.py
+--- a/rouge/reporting.py
++++ b/rouge/reporting.py
+@@ -624,6 +624,22 @@
+                 metric('hits','同目标实际命中计数',None,'次')],
+                 ['S3单元全场追敌，不能用本体范围或被抑制的本体事件生成独立命中与暖机。',
+                  '到达、重选目标、暖机及技能结束返回后的连续性未核验；本体攻击参考小计保留。']))
++    summon_routes=result.get('wisdel_summon_qualification_reference')
++    if summon_routes:
++        talent=summon_routes['talent_route'];route=summon_routes['skill_route']
++        status=lambda path:'已达原表培养门槛' if path['cultivation_qualified'] else '未达原表培养门槛'
++        level_source=route['selected_level_source']
++        skill_text=(readable_description(level_source['description'],level_source['values']) if level_source else
++                    '…'.join(route['original_common_fragments']))
++        sections.append(section('wisdel_summon_qualification','魂灵之影 · 本体召唤途径培养资料',[
++            metric('talent_qualification',talent['name']+' · 精二1级门槛',status(talent)),
++            metric('s3_qualification','第三技能 · 精二1级门槛',status(route)),
++            metric('s3_selected','当前是否选中第三技能','是' if route['currently_selected'] else '否')],
++            ['第二天赋原文：'+readable_description(talent['description'],{}),
++             ('当前第三技能原文：' if level_source else '第三技能各级原文共通部分（省略数量）：')+skill_text,
++             '以上仅列固定原表第二天赋与第三技能两条本体途径的培养资格，不表示实际召唤、当前存在或已完成施放。',
++             '魂灵数量与施放次数仍是窗口来源声明，未确定其来源归属；本资料不涵盖模组或藏品可能附着的全部途径。',
++             '实际来源、存活和施放时钟仍待核验；未改变指定次数的条件参考。']))
+     wisdel=result.get('wisdel_secondary_reference')
+     if wisdel:
+         sections.append(section('wisdel_secondary','好礼与余震 · 次生事件待核验',[
+diff --git a/rouge/wisdel_summon_qualification.py b/rouge/wisdel_summon_qualification.py
+new file mode 100644
+--- /dev/null
++++ b/rouge/wisdel_summon_qualification.py
+@@ -0,0 +1,39 @@
++"""Two pinned original summon routes; qualification data never places a token."""
++from copy import deepcopy
++from functools import lru_cache
++import json
++from pathlib import Path
++
++
++@lru_cache(maxsize=1)
++def _source():
++    return json.loads((Path(__file__).with_name('data') /
++                       'wisdel-summon-qualification-reference.json').read_text(encoding='utf-8'))
++
++
++def reference(profile, scenario):
++    data = _source()
++    elite = scenario.get('elite', 2)
++    level = scenario.get('level') or profile['phases'][elite]['max_level']
++    potential = scenario.get('potential', 1)
++
++    def qualified(route):
++        phase = route['unlock_elite']
++        return (elite >= phase and (elite > phase or level >= route['unlock_level']) and
++                potential - 1 >= route.get('required_potential_rank', 0))
++
++    talent = deepcopy(data['talent_route'])
++    talent['cultivation_qualified'] = qualified(talent)
++    skill = deepcopy(data['skill_route'])
++    levels = skill.pop('levels')
++    skill['cultivation_qualified'] = qualified(skill)
++    skill['currently_selected'] = scenario['skill'] == skill['skill_number']
++    skill['selected_level_source'] = (levels[scenario.get('skill_rank', 10)-1]
++                                     if skill['currently_selected'] else None)
++    return {'operator_id': data['operator_id'], 'token_id': data['token_id'],
++            'scope': data['scope'], 'source_commit': data['source_commit'],
++            'current_cultivation': {'elite': elite, 'level': level, 'potential': potential},
++            'talent_route': talent, 'skill_route': skill,
++            'actual_source_provenance': None, 'actual_presence_verified': False,
++            'actual_cast_clock_verified': False, 'covers_all_routes': False,
++            'declared_counts_reinterpreted': False}
+diff --git a/rouge/data/wisdel-summon-qualification-reference.json b/rouge/data/wisdel-summon-qualification-reference.json
+new file mode 100644
+--- /dev/null
++++ b/rouge/data/wisdel-summon-qualification-reference.json
+@@ -0,0 +1,184 @@
++{
++  "schema_version": 1,
++  "operator_id": "char_1035_wisdel",
++  "token_id": "token_10035_wisdel_wward",
++  "scope": "仅固定原表第二天赋与第三技能两条本体召唤途径的培养资格资料；不证明声明来源、当前存在、实际施放或全部模组/藏品途径。",
++  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
++  "sources": {
++    "character_table": {
++      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
++      "bytes": 14975251,
++      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697"
++    },
++    "skill_table": {
++      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
++      "bytes": 11447929,
++      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca"
++    }
++  },
++  "talent_route": {
++    "source_selector": "character_table.char_1035_wisdel.talents[1].candidates[0]",
++    "talent_index": 1,
++    "prefab_key": "2",
++    "name": "死魂灵的余息",
++    "description": "部署后立刻在攻击范围内召唤一个魂灵之影，在魂灵之影周围时获得<$ba.camou>迷彩</>",
++    "unlock_elite": 2,
++    "unlock_level": 1,
++    "required_potential_rank": 0,
++    "token_key": "token_10035_wisdel_wward"
++  },
++  "skill_route": {
++    "source_selector": "character_table.char_1035_wisdel.skills[2]",
++    "skill_number": 3,
++    "skill_id": "skchr_wisdel_3",
++    "override_token_key": "token_10035_wisdel_wward",
++    "unlock_elite": 2,
++    "unlock_level": 1,
++    "original_common_fragments": [
++      "立刻在攻击范围内召唤",
++      "个魂灵之影（最多存在3个，技能结束后保留）"
++    ],
++    "levels": [
++      {
++        "source_selector": "skill_table.skchr_wisdel_3.levels[0]",
++        "rank": 1,
++        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
++        "values": {
++          "atk": 0.95,
++          "max_cnt": 1.0,
++          "base_attack_time": 2.9,
++          "attack@atk_scale_3": 1.6,
++          "attack@prob": 1.0,
++          "attack@trigger_time": 6.0,
++          "sp": 3.0
++        }
++      },
++      {
++        "source_selector": "skill_table.skchr_wisdel_3.levels[1]",
++        "rank": 2,
++        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
++        "values": {
++          "atk": 1.0,
++          "max_cnt": 1.0,
++          "base_attack_time": 2.9,
++          "attack@atk_scale_3": 1.65,
++          "attack@prob": 1.0,
++          "attack@trigger_time": 6.0,
++          "sp": 3.0
++        }
++      },
++      {
++        "source_selector": "skill_table.skchr_wisdel_3.levels[2]",
++        "rank": 3,
++        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
++        "values": {
++          "atk": 1.1,
++          "max_cnt": 1.0,
++          "base_attack_time": 2.9,
++          "attack@atk_scale_3": 1.7,
++          "attack@prob": 1.0,
++          "attack@trigger_time": 6.0,
++          "sp": 3.0
++        }
++      },
++      {
++        "source_selector": "skill_table.skchr_wisdel_3.levels[3]",
++        "rank": 4,
++        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
++        "values": {
++          "atk": 1.2,
++          "max_cnt": 1.0,
++          "base_attack_time": 2.9,
++          "attack@atk_scale_3": 1.75,
++          "attack@prob": 1.0,
++          "attack@trigger_time": 6.0,
++          "sp": 3.0
++        }
++      },
++      {
++        "source_selector": "skill_table.skchr_wisdel_3.levels[4]",
++        "rank": 5,
++        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
++        "values": {
++          "atk": 1.3,
++          "max_cnt": 1.0,
++          "base_attack_time": 2.9,
++          "attack@atk_scale_3": 1.8,
++          "attack@prob": 1.0,
++          "attack@trigger_time": 6.0,
++          "sp": 3.0
++        }
++      },
++      {
++        "source_selector": "skill_table.skchr_wisdel_3.levels[5]",
++        "rank": 6,
++        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
++        "values": {
++          "atk": 1.4,
++          "max_cnt": 1.0,
++          "base_attack_time": 2.9,
++          "attack@atk_scale_3": 1.85,
++          "attack@prob": 1.0,
++          "attack@trigger_time": 6.0,
++          "sp": 3.0
++        }
++      },
++      {
++        "source_selector": "skill_table.skchr_wisdel_3.levels[6]",
++        "rank": 7,
++        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
++        "values": {
++          "atk": 1.5,
++          "max_cnt": 2.0,
++          "base_attack_time": 2.9,
++          "attack@atk_scale_3": 1.9,
++          "attack@prob": 1.0,
++          "attack@trigger_time": 6.0,
++          "sp": 3.0
++        }
++      },
++      {
++        "source_selector": "skill_table.skchr_wisdel_3.levels[7]",
++        "rank": 8,
++        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
++        "values": {
++          "atk": 1.6,
++          "max_cnt": 2.0,
++          "base_attack_time": 2.9,
++          "attack@atk_scale_3": 2.0,
++          "attack@prob": 1.0,
++          "attack@trigger_time": 6.0,
++          "sp": 3.0
++        }
++      },
++      {
++        "source_selector": "skill_table.skchr_wisdel_3.levels[8]",
++        "rank": 9,
++        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
++        "values": {
++          "atk": 1.7,
++          "max_cnt": 2.0,
++          "base_attack_time": 2.9,
++          "attack@atk_scale_3": 2.1,
++          "attack@prob": 1.0,
++          "attack@trigger_time": 6.0,
++          "sp": 3.0
++        }
++      },
++      {
++        "source_selector": "skill_table.skchr_wisdel_3.levels[9]",
++        "rank": 10,
++        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
++        "values": {
++          "atk": 1.8,
++          "max_cnt": 2.0,
++          "base_attack_time": 2.9,
++          "attack@atk_scale_3": 2.2,
++          "attack@prob": 1.0,
++          "attack@trigger_time": 6.0,
++          "sp": 3.0
++        }
++      }
++    ]
++  }
++}
+diff --git a/tests/test_wisdel_summon_qualification_reference.py b/tests/test_wisdel_summon_qualification_reference.py
+new file mode 100644
+--- /dev/null
++++ b/tests/test_wisdel_summon_qualification_reference.py
+@@ -0,0 +1,102 @@
++"""Original summon-route qualification is separate from declared ghost sources."""
++from copy import deepcopy
++import unittest
++
++from rouge.damage import calculate_damage
++from rouge.reporting import format_report
++
++
++KEY = 'wisdel_summon_qualification_reference'
++
++
++def evaluate(**extra):
++    return calculate_damage({'operator': 'char_1035_wisdel', 'skill': 1,
++                             'skill_rank': 7, 'window_seconds': 3,
++                             'ghost_count': 1, 'ghost_casts': 2, **extra})
++
++
++class WisdelSummonQualificationReferenceTests(unittest.TestCase):
++    def test_e0_e1_e2_original_routes_have_separate_qualification_data(self):
++        for elite in (0, 1, 2):
++            for potential in (1, 6):
++                ref = evaluate(elite=elite, level=1, potential=potential)[KEY]
++                self.assertEqual(ref['talent_route']['cultivation_qualified'], elite == 2)
++                self.assertEqual(ref['skill_route']['cultivation_qualified'], elite == 2)
++                self.assertEqual(ref['current_cultivation']['level'], 1)
++                self.assertFalse(ref['actual_presence_verified'])
++                self.assertIsNone(ref['actual_source_provenance'])
++
++    def test_e0_e1_positive_declarations_remain_accepted_and_unplaced(self):
++        for elite in (0, 1):
++            result = evaluate(elite=elite)
++            self.assertEqual(result['wisdel_secondary_reference']['ghost_casts_requested'], 2)
++            self.assertGreater(result['wisdel_secondary_reference']['ghost_declared_count_damage_reference'], 0)
++            self.assertIsNone(result['wisdel_secondary_reference']['ghost_cast_times_seconds'])
++            ghost = next(c for c in result['components'] if c['name'] == '魂灵之影施放')
++            self.assertEqual(ghost['hits'], 0)
++            self.assertIsNone(ghost['actual_total'])
++            self.assertFalse(result[KEY]['declared_counts_reinterpreted'])
++
++    def test_only_selected_s3_binds_a_rank_specific_original_description(self):
++        for skill in (1, 2, 3):
++            ref = evaluate(skill=skill)[KEY]['skill_route']
++            self.assertTrue(ref['cultivation_qualified'])
++            self.assertEqual(ref['currently_selected'], skill == 3)
++            if skill == 3:
++                self.assertEqual(ref['selected_level_source']['rank'], 7)
++                self.assertEqual(ref['selected_level_source']['values']['max_cnt'], 2)
++            else:
++                self.assertIsNone(ref['selected_level_source'])
++                self.assertIn('最多存在3个', ref['original_common_fragments'][1])
++
++    def test_route_token_keys_and_original_identity_are_separate_from_live_state(self):
++        ref = evaluate()[KEY]
++        self.assertEqual(ref['talent_route']['name'], '死魂灵的余息')
++        self.assertEqual(ref['talent_route']['token_key'], 'token_10035_wisdel_wward')
++        self.assertEqual(ref['skill_route']['override_token_key'], 'token_10035_wisdel_wward')
++        self.assertFalse(ref['covers_all_routes'])
++        self.assertFalse(ref['actual_cast_clock_verified'])
++        self.assertEqual(ref['talent_route']['source_selector'],
++                         'character_table.char_1035_wisdel.talents[1].candidates[0]')
++
++    def test_module_and_window_declarations_do_not_rewrite_original_route_gates(self):
++        for stage in range(4):
++            for ghosts in (0, 3):
++                result = evaluate(module_id='uniequip_002_wisdel' if stage else None,
++                                  module_level=stage, ghost_count=ghosts, ghost_casts=0,
++                                  window_seconds=0)
++                self.assertTrue(result[KEY]['talent_route']['cultivation_qualified'])
++                self.assertTrue(result[KEY]['skill_route']['cultivation_qualified'])
++                self.assertEqual(result['wisdel_secondary_reference']['ghost_casts_requested'], 0)
++
++    def test_existing_zero_window_and_active_boolean_count_errors_are_preserved(self):
++        with self.assertRaisesRegex(ValueError, '零长度观察窗口不能声明魂灵施放命中'):
++            evaluate(window_seconds=0)
++        for field in ('ghost_count', 'ghost_casts'):
++            with self.assertRaisesRegex(ValueError, field+'需要范围内的有限非负整数'):
++                evaluate(**{field: True})
++        result = evaluate(ghost_count=0, ghost_casts={'unused': True})
++        self.assertEqual(result['wisdel_secondary_reference']['ghost_casts_requested'], 0)
++
++    def test_report_distinguishes_cultivation_routes_from_actual_sources(self):
++        text = format_report(evaluate(elite=0))
++        self.assertIn('魂灵之影 · 本体召唤途径培养资料', text)
++        self.assertIn('未达原表培养门槛', text)
++        self.assertIn('未确定其来源归属', text)
++        self.assertIn('第三技能各级原文共通部分（省略数量）', text)
++        self.assertIn('本资料不涵盖模组或藏品', text)
++
++    def test_result_reference_is_isolated_and_unrelated_owner_has_no_section(self):
++        first = evaluate()
++        expected = deepcopy(evaluate())
++        first[KEY]['talent_route']['token_key'] = 'mutated'
++        first[KEY]['skill_route']['original_common_fragments'].clear()
++        self.assertEqual(evaluate(), expected)
++        other = calculate_damage({'operator': 'char_328_cammou', 'skill': 1,
++                                  'skill_rank': 7, 'window_seconds': 3})
++        self.assertNotIn(KEY, other)
++        self.assertNotIn('wisdel_summon_qualification', [s['id'] for s in other['report']['sections']])
++
++
++if __name__ == '__main__':
++    unittest.main()

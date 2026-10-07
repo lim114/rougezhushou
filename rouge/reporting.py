@@ -638,6 +638,22 @@ def build_report(scenario,result):
                 metric('hits','同目标实际命中计数',None,'次')],
                 ['S3单元全场追敌，不能用本体范围或被抑制的本体事件生成独立命中与暖机。',
                  '到达、重选目标、暖机及技能结束返回后的连续性未核验；本体攻击参考小计保留。']))
+    summon_routes=result.get('wisdel_summon_qualification_reference')
+    if summon_routes:
+        talent=summon_routes['talent_route'];route=summon_routes['skill_route']
+        status=lambda path:'已达原表培养门槛' if path['cultivation_qualified'] else '未达原表培养门槛'
+        level_source=route['selected_level_source']
+        skill_text=(readable_description(level_source['description'],level_source['values']) if level_source else
+                    '…'.join(route['original_common_fragments']))
+        sections.append(section('wisdel_summon_qualification','魂灵之影 · 本体召唤途径培养资料',[
+            metric('talent_qualification',talent['name']+' · 精二1级门槛',status(talent)),
+            metric('s3_qualification','第三技能 · 精二1级门槛',status(route)),
+            metric('s3_selected','当前是否选中第三技能','是' if route['currently_selected'] else '否')],
+            ['第二天赋原文：'+readable_description(talent['description'],{}),
+             ('当前第三技能原文：' if level_source else '第三技能各级原文共通部分（省略数量）：')+skill_text,
+             '以上仅列固定原表第二天赋与第三技能两条本体途径的培养资格，不表示实际召唤、当前存在或已完成施放。',
+             '魂灵数量与施放次数仍是窗口来源声明，未确定其来源归属；本资料不涵盖模组或藏品可能附着的全部途径。',
+             '实际来源、存活和施放时钟仍待核验；未改变指定次数的条件参考。']))
     wisdel=result.get('wisdel_secondary_reference')
     if wisdel:
         sections.append(section('wisdel_secondary','好礼与余震 · 次生事件待核验',[

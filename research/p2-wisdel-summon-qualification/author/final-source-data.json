@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "operator_id": "char_1035_wisdel",
+  "token_id": "token_10035_wisdel_wward",
+  "scope": "仅固定原表第二天赋与第三技能两条本体召唤途径的培养资格资料；不证明声明来源、当前存在、实际施放或全部模组/藏品途径。",
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "sources": {
+    "character_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697"
+    },
+    "skill_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca"
+    }
+  },
+  "talent_route": {
+    "source_selector": "character_table.char_1035_wisdel.talents[1].candidates[0]",
+    "talent_index": 1,
+    "prefab_key": "2",
+    "name": "死魂灵的余息",
+    "description": "部署后立刻在攻击范围内召唤一个魂灵之影，在魂灵之影周围时获得<$ba.camou>迷彩</>",
+    "unlock_elite": 2,
+    "unlock_level": 1,
+    "required_potential_rank": 0,
+    "token_key": "token_10035_wisdel_wward"
+  },
+  "skill_route": {
+    "source_selector": "character_table.char_1035_wisdel.skills[2]",
+    "skill_number": 3,
+    "skill_id": "skchr_wisdel_3",
+    "override_token_key": "token_10035_wisdel_wward",
+    "unlock_elite": 2,
+    "unlock_level": 1,
+    "original_common_fragments": [
+      "立刻在攻击范围内召唤",
+      "个魂灵之影（最多存在3个，技能结束后保留）"
+    ],
+    "levels": [
+      {
+        "source_selector": "skill_table.skchr_wisdel_3.levels[0]",
+        "rank": 1,
+        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "values": {
+          "atk": 0.95,
+          "max_cnt": 1.0,
+          "base_attack_time": 2.9,
+          "attack@atk_scale_3": 1.6,
+          "attack@prob": 1.0,
+          "attack@trigger_time": 6.0,
+          "sp": 3.0
+        }
+      },
+      {
+        "source_selector": "skill_table.skchr_wisdel_3.levels[1]",
+        "rank": 2,
+        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "values": {
+          "atk": 1.0,
+          "max_cnt": 1.0,
+          "base_attack_time": 2.9,
+          "attack@atk_scale_3": 1.65,
+          "attack@prob": 1.0,
+          "attack@trigger_time": 6.0,
+          "sp": 3.0
+        }
+      },
+      {
+        "source_selector": "skill_table.skchr_wisdel_3.levels[2]",
+        "rank": 3,
+        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "values": {
+          "atk": 1.1,
+          "max_cnt": 1.0,
+          "base_attack_time": 2.9,
+          "attack@atk_scale_3": 1.7,
+          "attack@prob": 1.0,
+          "attack@trigger_time": 6.0,
+          "sp": 3.0
+        }
+      },
+      {
+        "source_selector": "skill_table.skchr_wisdel_3.levels[3]",
+        "rank": 4,
+        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "values": {
+          "atk": 1.2,
+          "max_cnt": 1.0,
+          "base_attack_time": 2.9,
+          "attack@atk_scale_3": 1.75,
+          "attack@prob": 1.0,
+          "attack@trigger_time": 6.0,
+          "sp": 3.0
+        }
+      },
+      {
+        "source_selector": "skill_table.skchr_wisdel_3.levels[4]",
+        "rank": 5,
+        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "values": {
+          "atk": 1.3,
+          "max_cnt": 1.0,
+          "base_attack_time": 2.9,
+          "attack@atk_scale_3": 1.8,
+          "attack@prob": 1.0,
+          "attack@trigger_time": 6.0,
+          "sp": 3.0
+        }
+      },
+      {
+        "source_selector": "skill_table.skchr_wisdel_3.levels[5]",
+        "rank": 6,
+        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "values": {
+          "atk": 1.4,
+          "max_cnt": 1.0,
+          "base_attack_time": 2.9,
+          "attack@atk_scale_3": 1.85,
+          "attack@prob": 1.0,
+          "attack@trigger_time": 6.0,
+          "sp": 3.0
+        }
+      },
+      {
+        "source_selector": "skill_table.skchr_wisdel_3.levels[6]",
+        "rank": 7,
+        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "values": {
+          "atk": 1.5,
+          "max_cnt": 2.0,
+          "base_attack_time": 2.9,
+          "attack@atk_scale_3": 1.9,
+          "attack@prob": 1.0,
+          "attack@trigger_time": 6.0,
+          "sp": 3.0
+        }
+      },
+      {
+        "source_selector": "skill_table.skchr_wisdel_3.levels[7]",
+        "rank": 8,
+        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "values": {
+          "atk": 1.6,
+          "max_cnt": 2.0,
+          "base_attack_time": 2.9,
+          "attack@atk_scale_3": 2.0,
+          "attack@prob": 1.0,
+          "attack@trigger_time": 6.0,
+          "sp": 3.0
+        }
+      },
+      {
+        "source_selector": "skill_table.skchr_wisdel_3.levels[8]",
+        "rank": 9,
+        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "values": {
+          "atk": 1.7,
+          "max_cnt": 2.0,
+          "base_attack_time": 2.9,
+          "attack@atk_scale_3": 2.1,
+          "attack@prob": 1.0,
+          "attack@trigger_time": 6.0,
+          "sp": 3.0
+        }
+      },
+      {
+        "source_selector": "skill_table.skchr_wisdel_3.levels[9]",
+        "rank": 10,
+        "description": "立刻在攻击范围内召唤<@ba.vup>{max_cnt}</>个魂灵之影（最多存在3个，技能结束后保留），攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vdown>大幅增大</>，攻击时攻击力提升至<@ba.vup>{attack@atk_scale_3:0%}</>，溅射范围<@ba.vup>大幅扩大</>且第一天赋的发动概率提高至<@ba.vup>{attack@prob:0%}</>\\n<@ba.rem>攻击装有{attack@trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+        "values": {
+          "atk": 1.8,
+          "max_cnt": 2.0,
+          "base_attack_time": 2.9,
+          "attack@atk_scale_3": 2.2,
+          "attack@prob": 1.0,
+          "attack@trigger_time": 6.0,
+          "sp": 3.0
+        }
+      }
+    ]
+  }
+}
