@@ -372,6 +372,15 @@ def build_report(scenario,result):
             metric('gap','实际两段间隔',None,'秒')],
             ['没有有效出手参考时不生成两段伤害；两段的实际技能绑定、间隔和结束相位未核验。',
              '不把原版两事件默认当同刻命中，不从普通攻击结束推导完整周期。']))
+    drone_lifecycle=result.get('drone_lifecycle_reference')
+    if drone_lifecycle:
+        sections.append(section('drone_aura','狼群光环 · 覆盖与跳伤待核验',[
+            metric('per_tick','单次跳伤条件参考',drone_lifecycle['aura_per_tick_damage_reference']),
+            metric('interval','每秒伤害描述间隔',drone_lifecycle['aura_interval_description_seconds'],'秒'),
+            metric('first_tick','实际首跳',None,'秒'),
+            metric('tick_count','实际跳伤次数',None,'次')],
+            ['光环围绕全场追敌的浮游单元且不叠加；本体攻击范围没有目标不证明光环无覆盖。',
+             '单元位置、首跳与边界未知时不按技能时长生成满覆盖跳伤；零窗口或目标立即消失不产生来源。']))
     wisdel=result.get('wisdel_secondary_reference')
     if wisdel:
         sections.append(section('wisdel_secondary','好礼与余震 · 次生事件待核验',[

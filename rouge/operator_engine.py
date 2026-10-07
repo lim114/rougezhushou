@@ -528,7 +528,12 @@ class Combat:
                     emit('浮游单元',attack*scale,'magic',units,event_times=[event_time]*int(units))
                     components[-1]['timing_reference']='owner_attack_clock; independent drone clock unverified'
             if not normal and op=='char_1038_whitw2' and self.n==3:
-                emit('狼群光环（不叠加）',attack*bb['attack@magic_atk_scale'],'magic',math.floor(duration))
+                # Aura is around globally pursuing drones. Owner range windows
+                # cannot prove its coverage, and a per-second description does
+                # not establish the first tick or count at an arbitrary boundary.
+                emit('狼群光环（不叠加）',attack*bb['attack@magic_atk_scale'],'magic',0)
+                if duration>0 and timeline.options.get('target_disappears_seconds')!=0:
+                    components[-1]['actual_total']=None
             self.notes.append('浮游单元连续命中同一目标逐击增长，不按开局满倍率；每次情景从指定暖机命中数开始。本体与单元共享局外命中时间参考用于阶段截断；实际独立单元时钟未核验，不模拟弹道追踪或重新索敌。')
         elif op=='char_4182_oblvns':
             notes=self.option('note_count',0,maximum=self.talent('颂乐音符','max_cnt',10),integer=True)
@@ -1109,6 +1114,20 @@ class Combat:
                 observed['actual_total']=None
             result['complete']=False
             result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
+        if self.s['operator']=='char_1038_whitw2' and self.n==3:
+            aura=next(c for c in full['components'] if c['name']=='狼群光环（不叠加）')
+            observed=next(c for c in shown['components'] if c['name']=='狼群光环（不叠加）')
+            result['drone_lifecycle_reference']={
+                'aura_per_tick_damage_reference':aura['per_hit'],
+                'aura_interval_description_seconds':1,'aura_first_tick_seconds':None,
+                'aura_tick_count':None,'aura_coverage_verified':False,'aura_stacks':False,
+                'aura_source_possible':{'cast':'actual_total' in aura,
+                    'window':'actual_total' in observed},
+                'global_target_search':True,'native_lifecycle_verified':False,
+            }
+            from .uncertain_sources import mask_pending_damage
+            mask_pending_damage(result,full,shown,normal,duration,cycle)
+            result['estimate']['notes'].append('狼群光环围绕独立追敌单元；每秒伤害描述不证明首跳、覆盖或边界，不以本体供靶区间替代单元位置。')
         if self.s['operator']=='char_1035_wisdel':
             result['wisdel_secondary_reference']={
                 'described_single_check_probability':self.bb.get('attack@prob',self.talent('好礼','attack@prob',0)) if self.n==3 else self.talent('好礼','attack@prob',0),
