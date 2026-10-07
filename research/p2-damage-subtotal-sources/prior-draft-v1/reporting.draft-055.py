@@ -697,7 +697,8 @@ def build_report(scenario,result):
             if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
             if bait_reference else generic_note
             if amiya_continuous or wisdel or mizuki or mizuki_amb_y or ines_dot or manual_close or liftoff or snow or unbound or external or chen_phase or result.get('drone_lifecycle_reference') or binding or incoming else
-            river_note if neural_reference else generic_note]
+            river_note if neural_reference or any(record.get('id')==RELIC_ID
+                for record in result.get('relic_resolution',{}).get('records',[])) else generic_note]
         if binding:
             subtotal_notes.append('暗夜回声的束缚倍率首次生效与刷新顺序尚未核验；小计不含受其影响的未知神经爆发。')
         if incoming:

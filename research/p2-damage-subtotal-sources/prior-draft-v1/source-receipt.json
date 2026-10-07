@@ -1,0 +1,204 @@
+{
+  "public_code_head": "15e0fa455aad05d27303428299d24d15db4c572c",
+  "source_repository": "Kengxxiao/ArknightsGameData",
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "source_mode": "Reuse previously pinned public raw files; fresh local SHA256 check, no new binary/game access",
+  "tables": {
+    "character_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "reused_local_path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "sha256_matched": true
+    },
+    "skill_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "reused_local_path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "sha256_matched": true
+    }
+  },
+  "selectors": {
+    "skill_table.skchr_phatm2_1.levels[9]": {
+      "name": "暗夜回声",
+      "rangeId": null,
+      "description": "下次攻击造成两次相当于攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害并使目标<$ba.root>束缚</><@ba.vup>{unmove}</>秒，该次<$ba.root>束缚</>期间目标受到的<$ba.dt.neural2>神经损伤</>提升至<@ba.vup>{ep_damage_scale}</>倍，优先攻击未处于爆发期间的敌人",
+      "skillType": "AUTO",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WHEN_ATTACK",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 2,
+        "initSp": 2,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_phatm2_1",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk_scale",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "ep_damage_scale",
+          "value": 1.8,
+          "valueStr": null
+        },
+        {
+          "key": "unmove",
+          "value": 3.0,
+          "valueStr": null
+        },
+        {
+          "key": "times",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "character_table.char_1042_phatm2.talents[0].candidates[PHASE_2,potentialRank=0]": {
+      "unlockCondition": {
+        "phase": "PHASE_2",
+        "level": 1
+      },
+      "requiredPotentialRank": 0,
+      "prefabKey": "1",
+      "name": "形为心役",
+      "description": "攻击附带相当于攻击力30%的<$ba.dt.neural2>神经损伤</>，并对目标周围其他敌人造成一次相当于攻击力20%的<$ba.dt.neural2>神经损伤</>",
+      "rangeId": null,
+      "blackboard": [
+        {
+          "key": "attack@ep_damage_ratio",
+          "value": 0.3,
+          "valueStr": null
+        },
+        {
+          "key": "ep_damage_ratio",
+          "value": 0.2,
+          "valueStr": null
+        },
+        {
+          "key": "range_radius",
+          "value": 1.3,
+          "valueStr": null
+        }
+      ],
+      "tokenKey": null,
+      "isHideTalent": false
+    },
+    "character_table.char_1042_phatm2.talents[1].candidates[PHASE_2,potentialRank=0]": {
+      "unlockCondition": {
+        "phase": "PHASE_2",
+        "level": 1
+      },
+      "requiredPotentialRank": 0,
+      "prefabKey": "2",
+      "name": "堕梦",
+      "description": "在场时，全场处于<$ba.dt.neural2>神经损伤</>爆发期间的敌人攻击速度-12；攻击范围内的敌人普通攻击时受到70点<$ba.dt.neural2>神经损伤</>",
+      "rangeId": null,
+      "blackboard": [
+        {
+          "key": "attack_speed",
+          "value": -12.0,
+          "valueStr": null
+        },
+        {
+          "key": "value",
+          "value": 70.0,
+          "valueStr": null
+        }
+      ],
+      "tokenKey": null,
+      "isHideTalent": false
+    }
+  },
+  "reused_receipts": {
+    "research/p2-s1-binding/source-receipt.json": {
+      "sha256": "b96a05f90f98510e207f19d2611f3910d6848185e4528b4e81d72e7ea49f6f94",
+      "bytes": 3821
+    },
+    "research/p2-incoming-clock/source-receipt.json": {
+      "sha256": "4135bc82cc0e3af283bc7d2874cf6dc17db520ce1e51dcbb0a4a32f83c8c3df9",
+      "bytes": 2338
+    },
+    "research/p2-amiya-phase-reference/NOTE.md": {
+      "sha256": "9907b9fc5f21fe8f3a77496765c23e9ba33b529dac82f75fc249e22948aa548f",
+      "bytes": 7705
+    },
+    "research/p2-healing-subtotal-scaling/NOTE.md": {
+      "sha256": "af744aa93f88b39994fb0ce11bb7dae08e5ee0c3ab9b5d4d00554d0df67b9e48",
+      "bytes": 861
+    },
+    ".cache/research/phatm2-s1-069/REPORT.md": {
+      "sha256": "6375e4a94b357c89e0897c19b0d63eb1dee32ab952fbf7137d07adc001510df2",
+      "bytes": 3780
+    },
+    ".cache/research/phatm2-first-event-070/REPORT.md": {
+      "sha256": "9c8f642c37762cd91eab4d767fd2e5fb0b53599a64d9d2e9489b084ae4563410",
+      "bytes": 10767
+    },
+    ".cache/research/phatm2-damage-070/REPORT.md": {
+      "sha256": "8950a11233d2cafeddbdbda9276e199792311fe6adf2b27651d1f435b565485d",
+      "bytes": 9276
+    },
+    ".cache/research/phatm2-damage-070/native-proof.json": {
+      "sha256": "547c456396a4af63219eae259eb948fb5338c6b85bc5462e849e2ae632094b5d",
+      "bytes": 26275
+    },
+    ".cache/research/phatm2-damage-070/s1-unmove-template.json": {
+      "sha256": "3bd14c0681cb27100e8b9164a342f10beed021be1a21f7486ecba773ed68985b",
+      "bytes": 1128
+    }
+  },
+  "source_supports": [
+    "S1 two 1.5-ATK magic strikes; binding neural multiplier 1.8 for 3 seconds is conditional on target buff",
+    "E2 attack talent direct neural buildup is 30% attack, independent of damage-taken modifier",
+    "E2 incoming talent is 70 neural buildup per within-range target normal attack; a count alone is not timestamps",
+    "Public empty relic selection contains no River source; this is independently shown by request and resolution",
+    "Existing native receipts support original relative action reference, not a complete current actual schedule"
+  ],
+  "source_does_not_support": [
+    "Current native first binding attachment, refresh order, actual burst event times or hotfix equivalence",
+    "Any new actual burst count or total, skill end, recharge, or cycle inferred from the source parameters",
+    "A numerical damage/healing defect based solely on the wrong report source note"
+  ],
+  "candidate": {
+    "kind": "report_source_misattribution_only",
+    "code_location": "rouge/reporting.py:692-704",
+    "public_cases": [
+      "wine_s1_explicit_empty_relics",
+      "wine_s2_incoming_no_river"
+    ],
+    "one_shared_branch": true,
+    "actual_aggregate_still_unknown": true
+  },
+  "section": 59,
+  "change_scope": "known_damage_subtotals report notes only",
+  "prior_readonly_audit_head": "15e0fa455aad05d27303428299d24d15db4c572c",
+  "reused_evidence_directory": "/workspace/.continuation/p2-after-055-audit/derived-report",
+  "fresh_table_hashes": {
+    "character_table": {
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "matches_prior": true
+    },
+    "skill_table": {
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "matches_prior": true
+    }
+  },
+  "source_facts_used_for_change": [
+    "Public neural_s1_reference already marks unresolved first binding attachment and refresh, independently of relic choice.",
+    "Public neural_incoming_reference already marks unavailable normal-attack timestamps; count alone cannot schedule neural events.",
+    "Public neural_relic_reference or actual River selection supports naming that relic; absent reference and empty selection do not.",
+    "S3 continuous-damage and bait notes retain their existing source boundary when other pending sources coexist.",
+    "Shield S2 declared break-count public reference is an additional no-River reachability of the same fallback; generic warning attributes no invented source."
+  ],
+  "new_native_mechanism_inferred": false,
+  "reused_shield_receipt": {
+    "path": "research/p2-shield-break-reference/NOTE.md",
+    "sha256": "7938a720d28177a44d1c3e5f9434c58f37c668e5dcc41bbe7cdc9a0a38015f93"
+  }
+}

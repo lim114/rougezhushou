@@ -1,3 +1,9 @@
+# 连续开发 059 · 伤害小计按实际未知来源说明
+
+小计按真实束缚倍率、普通攻击未定时、持续损伤/诱饵及真实River引用并列说明；仅持有River不证明它引起该小计未知。屏障/其它无River来源默认通用说明，保留持有资料；数字、None、scope、完整性及clock完全不动。root79相关全过、799精选798通过/1历史跳过；作者55冻结512对91仅notes变/421whole同、独立40对80调用无阻断。v1 heldRiver误归因和原schema错误证据保留，v2修正后重新全矩阵。 见 `verification/sections/059.json`。
+
+---
+
 # 连续开发 058 · 同行者应急招募条件保留未知
 
 原查询把未知/错误招募身份当已确认非应急，现只接受两个实际producer枚举，其他复用原None pending并保留三条ATK/HP/DEF条件待确认。合法两枚举、absence/None及无适用藏品完整结果保持。root48相关47通过/1历史跳过、792精选791通过/1历史跳过；外部55冻结3096配对/6192调用含2310全保持及786 matching None修正，独立1152配对/2304调用无阻断，原topic正常TLS重新hash与精确selector闭合。 见 `verification/sections/058.json`。

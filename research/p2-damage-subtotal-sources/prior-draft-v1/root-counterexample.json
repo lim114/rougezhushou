@@ -1,0 +1,737 @@
+{
+  "reporting_draft_sha256": "2c2630bd55b4af91eb9f2ba19964ab8a3c085fbd6518b92a2046755cfb8fe8c1",
+  "case": {
+    "scenario": {
+      "operator": "mechanist",
+      "skill": 2,
+      "base_attack": 1000,
+      "timing_mode": "frames",
+      "shield_break_count": 2,
+      "relic_ids": [
+        "rogue_6_relic_fight_22"
+      ]
+    },
+    "result": {
+      "attack": 2500.0,
+      "per_hit": 5000.0,
+      "total_damage": null,
+      "hits": 2,
+      "damage_type": "magic",
+      "inapplicable_relics": [],
+      "complete": false,
+      "warnings": [
+        "河谷祭祈：未覆盖 凋亡额外减攻的实际生效和结束时刻，以及与其他减攻效果的组合尚未确认、灼燃额外减法抗的实际生效和结束时刻，以及与其他法抗变化的组合尚未确认、神经追加伤害的实际首跳和结束顺序、逐跳麻痹状态与目标减伤尚未确认、侵蚀追加伤害的实际创建和触发时刻、目标减伤及当前热更新适用性尚未确认。"
+      ],
+      "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+      "scope": "声明总破屏次数的法术爆炸条件参考，事件时刻未知；已计普通攻击仅为手动结束参数参考。",
+      "assumptions": [
+        "培养条件采用已读记录或明确标注的预览条件；模组条件机制、特训、条件藏品及难度环境修正尚未完整套用。",
+        "使用30Hz参考事件模型，实际攻击模板绑定和未排程特殊分项仍需校准。"
+      ],
+      "attack_speed": 100.0,
+      "base_attack_speed": 100.0,
+      "attack_speed_reference": 100.0,
+      "base_attack_speed_reference": 100.0,
+      "interval_seconds": 1.2,
+      "applied_effects": [],
+      "estimate": {
+        "base_stats": {
+          "hp": 3631,
+          "attack": 1000.0,
+          "defense": 765,
+          "resistance": 0.0,
+          "redeploy_seconds": 70.0,
+          "attack_speed": 100.0,
+          "attack_speed_reference": 100.0,
+          "block_count": 3.0
+        },
+        "skill": {
+          "name": "协防术式",
+          "initial_seconds": 15.0,
+          "recharge_seconds": 50.0,
+          "cycle_seconds": null,
+          "duration_seconds": null,
+          "total_damage": null,
+          "total_healing": 0,
+          "phase_damage": null,
+          "phase_healing": 0,
+          "cycle_dps": null,
+          "cycle_hps": null,
+          "cycle_damage": null,
+          "cycle_healing": null,
+          "sp_type": "INCREASE_WITH_TIME",
+          "initial_sp": 35.0,
+          "sp_cost": 50,
+          "sp_recovery_per_second": 1.0,
+          "skill_attack": 2500.0,
+          "skill_attack_speed": 100.0,
+          "skill_attack_speed_reference": 100.0,
+          "healing_targets": 1,
+          "window_healing": 0,
+          "window_damage": null,
+          "window_seconds": 0.0,
+          "window_dps": null
+        },
+        "training": {
+          "elite": 2,
+          "level": 90,
+          "trust": 100,
+          "potential": 1,
+          "module_id": null,
+          "module_level": 0
+        },
+        "complete": false,
+        "warnings": [
+          "河谷祭祈：未覆盖 凋亡额外减攻的实际生效和结束时刻，以及与其他减攻效果的组合尚未确认、灼燃额外减法抗的实际生效和结束时刻，以及与其他法抗变化的组合尚未确认、神经追加伤害的实际首跳和结束顺序、逐跳麻痹状态与目标减伤尚未确认、侵蚀追加伤害的实际创建和触发时刻、目标减伤及当前热更新适用性尚未确认。"
+        ],
+        "notes": [
+          "基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。",
+          "回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。",
+          "周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。",
+          "已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。",
+          "基础攻击使用手动测试值；其余属性仍来自当前选择的培养条件。",
+          "协防术式依赖本体/结构性原理屏障破碎与弹药消耗，单次完整技能总伤和持续时间未知。可指定本次技能结束时间进行条件估算；情景爆炸伤害另列。",
+          "协防术式总破屏次数只列命中当前敌人的条件伤害；破屏/爆炸时刻、双方耗弹对应和实际结束未核验，未自动放入观察窗口、技能阶段或周期。指定结束时间只保留手动条件参数和既有普通攻击小计，不能定位破屏事件。",
+          "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+          "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+          "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+          "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+          "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+          "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+          "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+          "尚未统一排入时间轴的输出分项：协防术式破屏爆炸条件参考。",
+          "藏品按固定版本黑板、职业/分支/位置及已确认条件解析；资料核验不代表隐藏脚本和实战全部已验证。"
+        ],
+        "scenario_scope": "声明总破屏次数的法术爆炸条件参考，事件时刻未知；已计普通攻击仅为手动结束参数参考。"
+      },
+      "known_damage_subtotals": {
+        "total_damage": null,
+        "phase_damage": null,
+        "cycle_damage": null,
+        "window_damage": 0,
+        "cycle_dps": null,
+        "window_dps": null
+      },
+      "components": [
+        {
+          "name": "协防术式破屏爆炸条件参考",
+          "damage_type": "magic",
+          "hits": 2,
+          "per_hit": 5000.0,
+          "total": 10000.0,
+          "timing_reference": "declared whole-skill shield-break amount; actual break/collision clock unverified",
+          "actual_total": null
+        }
+      ],
+      "shield_break_reference": {
+        "hits_requested": 2,
+        "per_hit_damage_reference": 5000.0,
+        "declared_count_damage_reference": 10000.0,
+        "nominal_ammunition_parameter": 8.0,
+        "manual_duration_parameter_seconds": null,
+        "source_possible": {
+          "cast": true,
+          "window": true
+        },
+        "actual_break_times_seconds": null,
+        "actual_collision_times_seconds": null,
+        "actual_end_seconds": null,
+        "actual_ammunition_consumption_times_seconds": null,
+        "owner_and_structure_count_mapping_verified": false,
+        "events_scheduled": false,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+      },
+      "timing": {
+        "mode": "frames",
+        "fps": 30,
+        "streams": [],
+        "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+        "scenario_provided": false,
+        "target_scope_notes": [],
+        "complete": false,
+        "notes": [
+          "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+          "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+        ],
+        "phase_clock_unbound": true,
+        "resource_and_damage_shared_clock": false,
+        "unplaced_components": [
+          "协防术式破屏爆炸条件参考"
+        ],
+        "initial_seconds": 15.0,
+        "cycle_seconds": null
+      },
+      "relic_regeneration_multiplier": 1,
+      "relic_regeneration_rate": 0,
+      "relic_features": [],
+      "deployment_cost": 23.0,
+      "relic_token_stats": [],
+      "relic_protection": [],
+      "relic_resolution": {
+        "records": [
+          {
+            "id": "rogue_6_relic_fight_22",
+            "name": "河谷祭祈",
+            "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+            "applied": [
+              {
+                "kind": "neural_burst_scale",
+                "value": 2.0,
+                "profession": "",
+                "position": "",
+                "subprofession": "",
+                "group": "rogue_6_enemy_ep_break_fix[sanity]",
+                "stacking": "unverified",
+                "periodic_raw_damage": 1000.0,
+                "periodic_interval": 1.0,
+                "source_buff_key": "global_buff_normal",
+                "source_buff_index": 2,
+                "relic_id": "rogue_6_relic_fight_22",
+                "_verified_rule": true
+              }
+            ],
+            "missing_conditions": [],
+            "pending": [
+              "凋亡额外减攻的实际生效和结束时刻，以及与其他减攻效果的组合尚未确认",
+              "灼燃额外减法抗的实际生效和结束时刻，以及与其他法抗变化的组合尚未确认",
+              "神经追加伤害的实际首跳和结束顺序、逐跳麻痹状态与目标减伤尚未确认",
+              "侵蚀追加伤害的实际创建和触发时刻、目标减伤及当前热更新适用性尚未确认"
+            ],
+            "reference_effects": [],
+            "reference_pending": [],
+            "reference_usage": "我方凋亡、灼燃、神经和侵蚀损伤的爆发效果增强",
+            "status": "incomplete"
+          }
+        ],
+        "warnings": [
+          "河谷祭祈：未覆盖 凋亡额外减攻的实际生效和结束时刻，以及与其他减攻效果的组合尚未确认、灼燃额外减法抗的实际生效和结束时刻，以及与其他法抗变化的组合尚未确认、神经追加伤害的实际首跳和结束顺序、逐跳麻痹状态与目标减伤尚未确认、侵蚀追加伤害的实际创建和触发时刻、目标减伤及当前热更新适用性尚未确认。"
+        ],
+        "inapplicable": [],
+        "rules": [
+          {
+            "kind": "neural_burst_scale",
+            "value": 2.0,
+            "profession": "",
+            "position": "",
+            "subprofession": "",
+            "group": "rogue_6_enemy_ep_break_fix[sanity]",
+            "stacking": "unverified",
+            "periodic_raw_damage": 1000.0,
+            "periodic_interval": 1.0,
+            "source_buff_key": "global_buff_normal",
+            "source_buff_index": 2,
+            "relic_id": "rogue_6_relic_fight_22",
+            "_verified_rule": true
+          }
+        ],
+        "calculation_scope": "offline_stable_effects",
+        "combat_effects_reference_only": true,
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "complete": false,
+        "enemy_effects": {
+          "defense_factor": 1,
+          "hp_factors": [],
+          "resident_hp_applied": false,
+          "hp_composition_pending": [],
+          "spawn_hp_rules": [],
+          "atk_factors": [],
+          "weight_delta": 0
+        },
+        "token_effects": [],
+        "context": {},
+        "context_source": "明确提供的计算情景",
+        "timing_unresolved": false
+      },
+      "run_resolution": {
+        "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+        "squad": null,
+        "difficulty": null,
+        "applied": [],
+        "pending": [],
+        "notes": []
+      },
+      "token_duration_references": [
+        {
+          "scope": "duration_parameter_reference",
+          "operator_id": "char_4230_mcnist",
+          "token_id": "token_10069_mcnist_mcgraf",
+          "token_name": "结构性原理",
+          "unlocked": true,
+          "state": "finite",
+          "duration_seconds": 30.0,
+          "base_duration_seconds": 30.0,
+          "parameter_key": "skill@duration",
+          "parameter_value": 30.0,
+          "map_tag": "rogue_6",
+          "map_context": "current_product_theme",
+          "base_source_selector": "character_table.token_10069_mcnist_mcgraf.talents[0].candidates[1]",
+          "module_override": {
+            "module_id": "uniequip_002_mcnist",
+            "unlock_elite": 2,
+            "unlock_level": 60,
+            "applied": false,
+            "conditions": [
+              {
+                "module_level": 2,
+                "unlock_elite": 2,
+                "unlock_level": 60,
+                "required_potential_rank": 0,
+                "map_tag": "rogue_6",
+                "parameter_value": -1.0,
+                "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[1].parts[3].addOrOverrideTalentDataBundle.candidates[0]"
+              },
+              {
+                "module_level": 3,
+                "unlock_elite": 2,
+                "unlock_level": 60,
+                "required_potential_rank": 0,
+                "map_tag": "rogue_6",
+                "parameter_value": -1.0,
+                "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[2].parts[2].addOrOverrideTalentDataBundle.candidates[0]"
+              }
+            ],
+            "source_selector": null
+          },
+          "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+          "sources": {
+            "character_table": {
+              "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+              "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json"
+            },
+            "battle_equip_table": {
+              "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+              "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json"
+            },
+            "uniequip_table": {
+              "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+              "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json"
+            }
+          },
+          "deployment_completed_seconds": null,
+          "actual_exit_seconds": null,
+          "actual_alive_seconds": null,
+          "live_state_verified": false,
+          "damage_timing_applied": false
+        }
+      ],
+      "report": {
+        "schema_version": 2,
+        "operator": {
+          "id": "mechanist",
+          "name": "机械师",
+          "profession": "tank"
+        },
+        "skill_number": 2,
+        "skill_rank": 10,
+        "mode": "ammo",
+        "sections": [
+          {
+            "id": "token_duration_token_10069_mcnist_mcgraf",
+            "title": "结构性原理 · 持续参数参考",
+            "metrics": [
+              {
+                "key": "duration",
+                "label": "部署后持续参数",
+                "value": 30.0,
+                "unit": "秒"
+              }
+            ],
+            "notes": [
+              "显示部署后持续参数，实际在场时间尚未确认。",
+              "无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。",
+              "实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。"
+            ]
+          },
+          {
+            "id": "timing",
+            "title": "技能时序",
+            "metrics": [
+              {
+                "key": "initial",
+                "label": "预计初动",
+                "value": 15.0,
+                "unit": "秒"
+              },
+              {
+                "key": "duration",
+                "label": "持续时间",
+                "value": null,
+                "unit": "秒"
+              },
+              {
+                "key": "cycle",
+                "label": "预计回转",
+                "value": null,
+                "unit": "秒"
+              },
+              {
+                "key": "recharge",
+                "label": "结束后充能",
+                "value": 50.0,
+                "unit": "秒"
+              }
+            ],
+            "notes": []
+          },
+          {
+            "id": "execution",
+            "title": "战斗时序参考",
+            "metrics": [
+              {
+                "key": "fps",
+                "label": "模拟逻辑频率",
+                "value": 30,
+                "unit": "帧/秒"
+              }
+            ],
+            "notes": [
+              "前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。",
+              "时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。",
+              "初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。"
+            ]
+          },
+          {
+            "id": "skill_stats",
+            "title": "技能属性变化",
+            "metrics": [
+              {
+                "key": "skill_attack",
+                "label": "技能期间攻击力",
+                "value": 2500.0,
+                "unit": ""
+              }
+            ],
+            "notes": []
+          },
+          {
+            "id": "damage",
+            "title": "伤害输出",
+            "metrics": [
+              {
+                "key": "per_cast",
+                "label": "单次技能总伤",
+                "value": null,
+                "unit": ""
+              },
+              {
+                "key": "cycle_dps",
+                "label": "本轮周期 DPS",
+                "value": null,
+                "unit": "伤害/秒"
+              }
+            ],
+            "notes": []
+          },
+          {
+            "id": "shield_break",
+            "title": "协防术式 · 破屏条件来源待核验",
+            "metrics": [
+              {
+                "key": "count",
+                "label": "声明本次总破屏次数",
+                "value": 2,
+                "unit": "次"
+              },
+              {
+                "key": "per_hit",
+                "label": "破屏单次法伤条件参考",
+                "value": 5000.0,
+                "unit": ""
+              },
+              {
+                "key": "declared",
+                "label": "给定总次数条件伤害参考",
+                "value": 10000.0,
+                "unit": ""
+              },
+              {
+                "key": "ammo",
+                "label": "原表弹药数量参数",
+                "value": 8.0,
+                "unit": "发"
+              },
+              {
+                "key": "manual_duration",
+                "label": "手动结束时间条件参数",
+                "value": null,
+                "unit": "秒"
+              },
+              {
+                "key": "break_times",
+                "label": "实际破屏/爆炸时刻",
+                "value": null,
+                "unit": "秒"
+              },
+              {
+                "key": "actual_end",
+                "label": "实际结束时刻",
+                "value": null,
+                "unit": "秒"
+              }
+            ],
+            "notes": [
+              "总次数不证明当前窗口内的事件数量；零观察窗口和当前敌人0秒生命周期不产生实际伤害。",
+              "本体与结构性原理的破屏、耗弹与再次屏障顺序未闭合；普通攻击沿用既有手动结束参数参考，未并入未定位的爆炸来源。"
+            ]
+          },
+          {
+            "id": "river_dark",
+            "title": "河谷祭祈 · 凋亡机制资料",
+            "metrics": [
+              {
+                "key": "burst_factor",
+                "label": "凋亡瞬时爆发倍率",
+                "value": 2.5,
+                "unit": "倍"
+              },
+              {
+                "key": "enemy_attack_factor",
+                "label": "爆发期目标攻击最终倍率",
+                "value": 0.7,
+                "unit": "倍"
+              }
+            ],
+            "notes": [
+              "该次凋亡爆发结束后，额外减攻结束。",
+              "其他相同减攻效果同时存在时，不能默认将倍率重复相乘。"
+            ]
+          },
+          {
+            "id": "river_fire",
+            "title": "河谷祭祈 · 灼燃机制资料",
+            "metrics": [
+              {
+                "key": "burst_factor",
+                "label": "灼燃瞬时爆发倍率",
+                "value": 3.8,
+                "unit": "倍"
+              },
+              {
+                "key": "enemy_mr_addition",
+                "label": "爆发期目标额外法抗变化",
+                "value": -20,
+                "unit": ""
+              }
+            ],
+            "notes": [
+              "该次灼燃爆发结束后，额外法抗减算结束。",
+              "与其他减法抗效果的组合需分别核对，不能默认全部累加。"
+            ]
+          },
+          {
+            "id": "river_sanity",
+            "title": "河谷祭祈 · 神经机制资料",
+            "metrics": [
+              {
+                "key": "burst_factor",
+                "label": "神经瞬时爆发倍率",
+                "value": 2.0,
+                "unit": "倍"
+              },
+              {
+                "key": "pulse_raw",
+                "label": "单跳原始元素伤害",
+                "value": 1000.0,
+                "unit": ""
+              },
+              {
+                "key": "period",
+                "label": "追加伤害间隔参考",
+                "value": 1.0,
+                "unit": "秒"
+              },
+              {
+                "key": "first_wait",
+                "label": "创建后首个完整等待间隔",
+                "value": 1.0,
+                "unit": "秒"
+              }
+            ],
+            "notes": [
+              "该次神经爆发结束后，本次追加持续伤害结束。",
+              "不默认重复叠加额外持续伤害。",
+              "每一次追加触发都需目标仍有神经爆发麻痹；状态未确认时保留未知，不按爆发次数默认生成追加伤害。",
+              "这里展示目标减伤和伤害修饰前的原始量，未排程追加伤害，也未将其加入当前总伤或每秒伤害。"
+            ]
+          },
+          {
+            "id": "river_water",
+            "title": "河谷祭祈 · 侵蚀机制资料",
+            "metrics": [
+              {
+                "key": "burst_factor",
+                "label": "侵蚀瞬时爆发倍率",
+                "value": 1.0,
+                "unit": "倍"
+              },
+              {
+                "key": "pulse_raw",
+                "label": "单跳原始物理伤害",
+                "value": 1500.0,
+                "unit": ""
+              },
+              {
+                "key": "period",
+                "label": "追加伤害间隔参考",
+                "value": 0.03,
+                "unit": "秒"
+              },
+              {
+                "key": "maximum_pulses",
+                "label": "每次效果最大追加伤害次数",
+                "value": 10,
+                "unit": "次"
+              },
+              {
+                "key": "enemy_def_addition",
+                "label": "每次持续效果额外防御变化",
+                "value": -120,
+                "unit": ""
+              }
+            ],
+            "notes": [
+              "十次伤害结束后防御减算继续；侵蚀爆发结束不会移除它。",
+              "每次已确认产生的效果分别计算减防，未知次数不默认叠加。",
+              "首跳不等待完整间隔，在下一次可执行的目标更新触发；是否在爆发当帧触发尚未确认。第十跳包含在十次伤害内。",
+              "每次目标更新最多执行一次，不追赶补跳；0.03秒是原始间隔参数，不保证实际每0.03秒造成伤害。",
+              "这里展示目标减伤和伤害修饰前的原始量，未排程追加伤害，也未将其加入当前总伤或每秒伤害。"
+            ]
+          },
+          {
+            "id": "river_limits",
+            "title": "河谷祭祈 · 已知边界与待确认",
+            "metrics": [],
+            "notes": [
+              "以上是已核对的四元素效果资料，不能作为常驻干员属性加成。",
+              "爆发产生、伤害触发和爆发结束的先后，以及每跳目标是否满足条件，无法由培养或藏品页面确定。实际追加跳数与完整总伤仍未知。",
+              "没有默认目标处于麻痹，也不默认追加伤害在爆发当帧开始。",
+              "未发现河谷能独立加快元素爆发冷却的依据，本应用不另加冷却加速。",
+              "客户端热更新版本是否改变这些效果尚未核验。所有输出只作局外参考，不采集实战站位或要求补填战斗事件。",
+              "来源：https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json"
+            ]
+          },
+          {
+            "id": "known_damage_subtotals",
+            "title": "已建模伤害小计",
+            "metrics": [
+              {
+                "key": "cast",
+                "label": "单次技能已计伤害小计",
+                "value": null,
+                "unit": ""
+              },
+              {
+                "key": "window",
+                "label": "观察窗口已计伤害小计",
+                "value": 0,
+                "unit": ""
+              },
+              {
+                "key": "cycle",
+                "label": "本轮周期已计伤害小计",
+                "value": null,
+                "unit": ""
+              },
+              {
+                "key": "cycle_dps",
+                "label": "已计部分本轮周期 DPS",
+                "value": null,
+                "unit": "伤害/秒"
+              }
+            ],
+            "notes": [
+              "这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。"
+            ]
+          },
+          {
+            "id": "protection",
+            "title": "屏障与防护",
+            "metrics": [
+              {
+                "key": "body_barrier",
+                "label": "本体每层屏障耐久",
+                "value": 363.1,
+                "unit": "伤害吸收量"
+              },
+              {
+                "key": "barrier_ratio",
+                "label": "屏障相对各自生命上限",
+                "value": 10.0,
+                "unit": "%"
+              }
+            ],
+            "notes": [
+              "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+              "护盾/屏障是防护，不计入直接治疗；未推定实战吸收总量或有效覆盖率。"
+            ]
+          },
+          {
+            "id": "control",
+            "title": "控制与状态",
+            "metrics": [],
+            "notes": [
+              "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+              "这里是当前等级技能资料，实际控制时长/覆盖率取决于免疫、命中和时序，尚未统一模拟。"
+            ]
+          },
+          {
+            "id": "summons",
+            "title": "召唤与协同",
+            "metrics": [],
+            "notes": [
+              "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障",
+              "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+              "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+              "召唤/协同伤害如已计入总伤，不再重复相加；没有独立模型或已确认触发的数据不会补成确定输出。"
+            ]
+          },
+          {
+            "id": "ammo",
+            "title": "弹药机制",
+            "metrics": [
+              {
+                "key": "ammo",
+                "label": "完整技能弹药/触发数",
+                "value": 8.0,
+                "unit": "次"
+              }
+            ],
+            "notes": [
+              "这是触发资源数量，不自动等于命中次数；破屏、布子或多连击的实际消耗规则以当前技能资料为准。"
+            ]
+          },
+          {
+            "id": "talents",
+            "title": "当前已解锁天赋资料",
+            "metrics": [],
+            "notes": [
+              "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+              "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+              "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+            ]
+          },
+          {
+            "id": "mechanics",
+            "title": "技能机制（当前等级资料）",
+            "metrics": [],
+            "notes": [
+              "攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障\n攻击装有8发弹药，打完后结束（可随时停止技能）"
+            ]
+          },
+          {
+            "id": "relic_evidence",
+            "title": "藏品核验",
+            "metrics": [],
+            "notes": [
+              "河谷祭祈：条件缺失或机制未覆盖"
+            ]
+          }
+        ]
+      }
+    },
+    "formatted_report": "机械师 · 重装\n计算状态：不完整（见待确认与适用范围）\n\n【培养信息】\n精英 2 · 等级 90 · 潜能 1 · 信赖加成进度 100%\n\n【预计属性】\n含已支持的天赋和藏品；不是未修正基础值。\n生命值：3,631    攻击力：1,000\n防御：765    法抗：0\n再部署时间：70.00 秒    阻挡数：3\n攻速：100（游戏数值单位，基础 100）\n\n【当前技能】\n协防术式 · 7级 · 专精3 · 攻击弹药\n\n【结构性原理 · 持续参数参考】\n部署后持续参数：30.00 秒\n\n【技能时序】\n预计初动：15.00 秒\n持续时间：未知（需要条件或尚未建模）\n预计回转：未知（需要条件或尚未建模）\n结束后充能：50.00 秒\n\n【战斗时序参考】\n模拟逻辑频率：30 帧/秒\n\n【技能属性变化】\n技能期间攻击力：2,500\n\n【伤害输出】\n单次技能总伤：未知（需要条件或尚未建模）\n本轮周期每秒伤害：未知（需要条件或尚未建模）\n\n【协防术式 · 破屏条件来源待核验】\n声明本次总破屏次数：2 次\n破屏单次法伤条件参考：5,000\n给定总次数条件伤害参考：10,000\n原表弹药数量参数：8 发\n手动结束时间条件参数：未知（需要条件或尚未建模）\n实际破屏/爆炸时刻：未知（需要条件或尚未建模）\n实际结束时刻：未知（需要条件或尚未建模）\n\n【河谷祭祈 · 凋亡机制资料】\n凋亡瞬时爆发倍率：2.5 倍\n爆发期目标攻击最终倍率：0.7 倍\n\n【河谷祭祈 · 灼燃机制资料】\n灼燃瞬时爆发倍率：3.8 倍\n爆发期目标额外法抗变化：-20\n\n【河谷祭祈 · 神经机制资料】\n神经瞬时爆发倍率：2 倍\n单跳原始元素伤害：1,000\n追加伤害间隔参考：1.00 秒\n创建后首个完整等待间隔：1.00 秒\n\n【河谷祭祈 · 侵蚀机制资料】\n侵蚀瞬时爆发倍率：1 倍\n单跳原始物理伤害：1,500\n追加伤害间隔参考：0.03 秒\n每次效果最大追加伤害次数：10 次\n每次持续效果额外防御变化：-120\n\n【河谷祭祈 · 已知边界与待确认】\n• 以上是已核对的四元素效果资料，不能作为常驻干员属性加成。\n• 爆发产生、伤害触发和爆发结束的先后，以及每跳目标是否满足条件，无法由培养或藏品页面确定。实际追加跳数与完整总伤仍未知。\n• 没有默认目标处于麻痹，也不默认追加伤害在爆发当帧开始。\n• 未发现河谷能独立加快元素爆发冷却的依据，本应用不另加冷却加速。\n• 客户端热更新版本是否改变这些效果尚未核验。所有输出只作局外参考，不采集实战站位或要求补填战斗事件。\n\n【已建模伤害小计】\n单次技能已计伤害小计：未知（需要条件或尚未建模）\n观察窗口已计伤害小计：0\n本轮周期已计伤害小计：未知（需要条件或尚未建模）\n已计部分本轮周期每秒伤害：未知（需要条件或尚未建模）\n\n【屏障与防护】\n本体每层屏障耐久：363.1 伤害吸收量\n屏障相对各自生命上限：10 %\n\n【控制与状态】\n• 攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障\n• 这里是当前等级技能资料，实际控制时长/覆盖率取决于免疫、命中和时序，尚未统一模拟。\n\n【召唤与协同】\n• 攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障\n• 可以使用一个持续30秒的结构性原理，拥有独立的再部署时间\n• 自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害\n• 召唤/协同伤害如已计入总伤，不再重复相加；没有独立模型或已确认触发的数据不会补成确定输出。\n\n【弹药机制】\n完整技能弹药/触发数：8 次\n\n【当前已解锁天赋资料】\n• 可以使用一个持续30秒的结构性原理，拥有独立的再部署时间\n• 自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害\n• 仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。\n\n【技能机制（当前等级资料）】\n• 攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障\n攻击装有8发弹药，打完后结束（可随时停止技能）\n\n【藏品核验】\n• 河谷祭祈：条件缺失或机制未覆盖\n\n【计算说明】\n结构性原理 · 持续参数参考：\n• 显示部署后持续参数，实际在场时间尚未确认。\n• 无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。\n• 实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。\n战斗时序参考：\n• 前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。\n• 时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。\n• 初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。\n协防术式 · 破屏条件来源待核验：\n• 总次数不证明当前窗口内的事件数量；零观察窗口和当前敌人0秒生命周期不产生实际伤害。\n• 本体与结构性原理的破屏、耗弹与再次屏障顺序未闭合；普通攻击沿用既有手动结束参数参考，未并入未定位的爆炸来源。\n河谷祭祈 · 凋亡机制资料：\n• 该次凋亡爆发结束后，额外减攻结束。\n• 其他相同减攻效果同时存在时，不能默认将倍率重复相乘。\n河谷祭祈 · 灼燃机制资料：\n• 该次灼燃爆发结束后，额外法抗减算结束。\n• 与其他减法抗效果的组合需分别核对，不能默认全部累加。\n河谷祭祈 · 神经机制资料：\n• 该次神经爆发结束后，本次追加持续伤害结束。\n• 不默认重复叠加额外持续伤害。\n• 每一次追加触发都需目标仍有神经爆发麻痹；状态未确认时保留未知，不按爆发次数默认生成追加伤害。\n• 这里展示目标减伤和伤害修饰前的原始量，未排程追加伤害，也未将其加入当前总伤或每秒伤害。\n河谷祭祈 · 侵蚀机制资料：\n• 十次伤害结束后防御减算继续；侵蚀爆发结束不会移除它。\n• 每次已确认产生的效果分别计算减防，未知次数不默认叠加。\n• 首跳不等待完整间隔，在下一次可执行的目标更新触发；是否在爆发当帧触发尚未确认。第十跳包含在十次伤害内。\n• 每次目标更新最多执行一次，不追赶补跳；0.03秒是原始间隔参数，不保证实际每0.03秒造成伤害。\n• 这里展示目标减伤和伤害修饰前的原始量，未排程追加伤害，也未将其加入当前总伤或每秒伤害。\n已建模伤害小计：\n• 这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整每秒伤害。\n屏障与防护：\n• 攻击力+150%，自身和结构性原理立刻获得最大生命10%的屏障，屏障被摧毁时对周围敌人造成攻击力200%的法术伤害和3秒的战栗，并消耗1发弹药再次获得屏障\n• 护盾/屏障是防护，不计入直接治疗；未推定实战吸收总量或有效覆盖率。\n弹药机制：\n• 这是触发资源数量，不自动等于命中次数；破屏、布子或多连击的实际消耗规则以当前技能资料为准。\n\n【待确认与适用范围】\n情景范围：声明总破屏次数的法术爆炸条件参考，事件时刻未知；已计普通攻击仅为手动结束参数参考。\n• 基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。\n• 回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。\n• 周期平均指标包含技能与结束后充能阶段；各指标仅在相应能力存在时显示。\n• 已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。\n• 基础攻击使用手动测试值；其余属性仍来自当前选择的培养条件。\n• 协防术式依赖本体/结构性原理屏障破碎与弹药消耗，单次完整技能总伤和持续时间未知。可指定本次技能结束时间进行条件估算；情景爆炸伤害另列。\n• 协防术式总破屏次数只列命中当前敌人的条件伤害；破屏/爆炸时刻、双方耗弹对应和实际结束未核验，未自动放入观察窗口、技能阶段或周期。指定结束时间只保留手动条件参数和既有普通攻击小计，不能定位破屏事件。\n• 常规攻击按30帧/秒逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。\n• 只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。\n• 时序采用30帧/秒参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。\n• 动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。\n• 未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。\n• 攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。\n• 单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。\n• 尚未统一排入时间轴的输出分项：协防术式破屏爆炸条件参考。\n• 藏品按固定版本黑板、职业/分支/位置及已确认条件解析；资料核验不代表隐藏脚本和实战全部已验证。\n• 河谷祭祈：未覆盖 凋亡额外减攻的实际生效和结束时刻，以及与其他减攻效果的组合尚未确认、灼燃额外减法抗的实际生效和结束时刻，以及与其他法抗变化的组合尚未确认、神经追加伤害的实际首跳和结束顺序、逐跳麻痹状态与目标减伤尚未确认、侵蚀追加伤害的实际创建和触发时刻、目标减伤及当前热更新适用性尚未确认。\n资料引用已保留；勾选“显示技术资料”可查看完整来源。"
+  },
+  "source_of_observation": "Root public API probe; reproduced in existing full-output matrix, not deleted",
+  "finding": "Held relic record is not proof of actual River source of mechanical shield-break uncertainty",
+  "native_mechanism_inferred": false
+}

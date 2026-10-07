@@ -691,24 +691,17 @@ def build_report(scenario,result):
         sections.extend(river_reference_sections(lifecycle))
     subtotals=result.get('known_damage_subtotals')
     if subtotals:
-        generic_note='这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。'
-        river_note='这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。'
-        subtotal_notes=['这些数值仅包含可确定法伤，不含持续损伤及受其影响的未知爆发，不能当作完整总伤或完整 DPS。'
-            if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
-            if bait_reference else generic_note
-            if amiya_continuous or wisdel or mizuki or mizuki_amb_y or ines_dot or manual_close or liftoff or snow or unbound or external or chen_phase or result.get('drone_lifecycle_reference') or binding or incoming else
-            river_note if neural_reference else generic_note]
-        if binding:
-            subtotal_notes.append('暗夜回声的束缚倍率首次生效与刷新顺序尚未核验；小计不含受其影响的未知神经爆发。')
-        if incoming:
-            subtotal_notes.append('堕梦的目标普通攻击次数没有事件时刻；小计不含受其影响的未知神经爆发。')
-        if neural_reference and subtotal_notes[0]!=river_note:
-            subtotal_notes.append(river_note)
         sections.append(section('known_damage_subtotals','已建模伤害小计',[
             metric('cast','单次技能已计伤害小计',subtotals['total_damage']),
             metric('window','观察窗口已计伤害小计',subtotals['window_damage']),
             metric('cycle','本轮周期已计伤害小计',subtotals['cycle_damage']),
-            metric('cycle_dps','已计部分本轮周期 DPS',subtotals['cycle_dps'],'伤害/秒')],subtotal_notes))
+            metric('cycle_dps','已计部分本轮周期 DPS',subtotals['cycle_dps'],'伤害/秒')],
+            ['这些数值仅包含可确定法伤，不含持续损伤及受其影响的未知爆发，不能当作完整总伤或完整 DPS。'
+             if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
+             if bait_reference else
+             '这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。'
+             if amiya_continuous or wisdel or mizuki or mizuki_amb_y or ines_dot or manual_close or liftoff or snow or unbound or external or chen_phase or result.get('drone_lifecycle_reference') else
+             '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']))
     healing_subtotals=result.get('known_healing_subtotals')
     if healing_subtotals:
         sections.append(section('known_healing_subtotals','已建模治疗小计',[
