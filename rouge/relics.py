@@ -421,16 +421,17 @@ def finish(result,resolution,attributes,scenario):
     from .catalog import catalog
     profile=catalog()['operators'][scenario['operator']]
     result['relic_token_stats']=[]
-    from .summons import module_reference,token_attributes
+    from .summons import module_reference,token_attributes,token_cost_reference
     for tid,token in profile.get('tokens',{}).items():
         applied=[e for e in resolution['token_effects'] if tid in e.get('token_ids',[])]
         run_effects=[e for e in scenario.get('_attribute_runes',[])+scenario.get('effects',[])
                     if e.get('origin')=='run_squad' and e.get('target_scope')=='all_units']
         module=module_reference(profile,scenario,tid)
-        sources=(['模组'] if module else [])+(['藏品'] if applied else [])+(['分队'] if run_effects else [])
-        applied+=run_effects
+        cost_module=token_cost_reference(profile,scenario,tid)
         features=[r for r in rules if r.get('token_only') and tid in r.get('token_ids',[])]
-        if not applied and not features and not module:continue
+        sources=(['模组'] if module or cost_module else [])+(['藏品'] if applied or cost_module and features else [])+(['分队'] if run_effects else [])
+        applied+=run_effects
+        if not applied and not features and not module and not cost_module:continue
         from .relic_attributes import is_attribute_rune
         runes=[e for e in applied if is_attribute_rune(e)]
         def total(kind):return sum(e['value'] for e in applied+features if e['kind']==kind and not is_attribute_rune(e))

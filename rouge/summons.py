@@ -88,6 +88,36 @@ def module_reference(profile,scenario,token_id):
             'source_url':rule['source_url']}
 
 
+@lru_cache(maxsize=1)
+def _token_cost_rules():
+    return json.loads((Path(__file__).with_name('data')/'token-module-cost-reference.json').read_text(encoding='utf-8'))
+
+
+def token_cost_reference(profile,scenario,token_id):
+    """Only the pinned direct token cost addition is applied.
+
+    Hidden talents, token deployment limits and actual lifecycle remain separate
+    from this cultivation cost. The existing SUM-Y path is not duplicated.
+    """
+    from copy import deepcopy
+    data=_token_cost_rules()
+    rule=next((r for r in data['rules'] if r['operator_id']==profile['id'] and
+        r['token_id']==token_id and r['module_id']==scenario.get('module_id') and
+        token_id in profile.get('tokens',{})),None)
+    if rule is None:return None
+    module=next((m for m in profile['modules'] if m['id']==rule['module_id']),None)
+    elite=scenario.get('elite',2)
+    level=scenario.get('level') or profile['phases'][elite]['max_level']
+    stage=next((s for s in rule['stages'] if s['module_level']==scenario.get('module_level',0)),None)
+    if (not module or not stage or elite<rule['module_unlock_elite'] or
+            level<rule['module_unlock_level'] or elite<module['unlock_elite'] or level<module['unlock_level']):return None
+    return {'scope':data['scope'],'operator_id':rule['operator_id'],'token_id':token_id,
+        'module_id':rule['module_id'],'module_level':stage['module_level'],'cost_add':stage['cost_add'],
+        'source_selector':stage['source_selector'],'module_source_selector':rule['module_source_selector'],
+        'source_commit':data['source_commit'],'sources':deepcopy(data['sources']),
+        'actual_deployment_count':None,'actual_alive_seconds':None,'live_state_verified':False}
+
+
 def token_concurrent_limit(profile,scenario,token_id):
     """Verified per-token cap for a normal operator, not global free slots.
 
@@ -134,6 +164,12 @@ def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=()):
                 stats['hp']=None;reference['hp_composition_pending']=True
             else:stats['hp']=reference['module_only_hp']
         stats['module_reference']=reference
+    cost_reference=token_cost_reference(profile,scenario,token_id)
+    if cost_reference:
+        base_cost=stats['deployment_cost']
+        stats['deployment_cost']=max(0,base_cost+cost_reference['cost_add'])
+        stats['module_cost_reference']={**cost_reference,'base_cost':base_cost,
+            'module_only_cost':stats['deployment_cost']}
     duration=duration_reference(profile,scenario,token_id)
     if duration is not None:stats['duration_reference']=duration
     return stats

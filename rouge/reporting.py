@@ -746,8 +746,10 @@ def build_report(scenario,result):
         if protection:sections.append(protection)
         sources='及'.join(token.get('modifier_sources',['藏品']))
         module=token.get('module_reference')
+        cost_module=token.get('module_cost_reference')
         notes=['使用独立召唤物档案与适用的'+sources+'；不继承召唤师信赖或职业加成，'+
                ('已覆盖深海色SUM-Y的费用、持有/在场上限及生命叠加；未覆盖其他召唤物模组。' if module else
+                '已覆盖望TRP-X的棋子固定费用修正；额外部署数、特殊天赋与实际在场数量仍未核验。' if cost_module else
                 '未覆盖召唤物模组与特殊天赋修正。')]
         sections.append(section('relic_token_'+token['id'],token['name']+' · '+sources+'属性参考',[
             metric('hp','生命',token['hp']),metric('attack','攻击',token['attack']),
@@ -769,6 +771,11 @@ def build_report(scenario,result):
                     metric('module_only_hp','仅模组的生命参考',module['module_only_hp']),
                     metric('other_sources_only_hp','不含模组的其他来源生命参考',module['other_sources_only_hp'])])
                 sections[-1]['notes'].append('模组与藏品/分队生命的叠加层尚未核验：复合生命及依赖该生命的回复未知；上述两个单项不可自行相加或相乘。已确认伤害与固定生命回复不受影响。')
+        if cost_module:
+            sections[-1]['metrics'].extend([
+                metric('module_stage','装备模组阶段',cost_module['module_level'],'级'),
+                metric('module_cost_add','模组棋子费用修正',cost_module['cost_add'],'费')])
+            sections[-1]['notes'].append('仅修正已解锁模组对应棋子的培养费用参考；不扩大棋子数量、不推断库存、地块或真实部署。')
         if 'regeneration_rate' in token:
             sections[-1]['metrics'].append(metric('regeneration_rate','藏品常态生命回复',token['regeneration_rate'],'生命/秒'))
     incoming=[r for r in features if r['kind']=='incoming_element_resistance']
