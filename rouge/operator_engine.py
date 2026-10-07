@@ -188,6 +188,10 @@ class Combat:
             if self.s.get('three_same_profession'):self.as_bonus+=self.talent('天有四时','attack_speed')
             if '天有四时' in self.tv and isinstance(self.s.get('four_sui'),str):
                 raise ValueError('four_sui 不接受文本条件；请使用布尔值。')
+            if '天有四时' in self.tv:
+                for field in ('three_professions','three_same_profession'):
+                    if isinstance(self.s.get(field),str):
+                        raise ValueError(field+' 不接受文本条件；请使用布尔值。')
             if self.s.get('four_sui'):
                 self.atk_bonus+=self.talent('天有四时','atk')
                 if self.talent('天有四时','sp')>0:
