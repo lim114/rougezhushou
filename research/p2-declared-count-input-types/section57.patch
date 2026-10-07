@@ -1,0 +1,132 @@
+--- a/rouge/damage.py
++++ b/rouge/damage.py
+@@ -251,3 +251,9 @@
++    declared_counts={('mechanist',2):('shield_break_count',),
++                     ('mechanist',3):('charge_count',),
++                     ('silverash',2):('activation_count','deployment_stacks')}
++    for field in declared_counts.get((scenario['operator'],skill),()):
++        if isinstance(scenario.get(field),bool):
++            raise ValueError(f'{field} 需要非负整数；部署触发叠层最多为 2。')
+     from .relics import prepare
+     from .run_modifiers import prepare_run
+     scenario,run_resolution=prepare_run(scenario)
+--- /dev/null
++++ b/tests/test_declared_count_input_types.py
+@@ -0,0 +1,117 @@
++import copy
++import re
++import unittest
++
++from rouge.catalog import catalog
++from rouge.damage import calculate_damage
++
++
++ACTIVE = (('mechanist', 2, 'shield_break_count'),
++          ('mechanist', 3, 'charge_count'),
++          ('silverash', 2, 'activation_count'),
++          ('silverash', 2, 'deployment_stacks'))
++FIELDS = tuple(row[2] for row in ACTIVE)
++
++
++def scenario(operator, skill, mode='frames', **extra):
++    return {'operator': operator, 'skill': skill, 'base_attack': 1000,
++            'companion_attack': 2000, 'window_seconds': 10,
++            'timing_mode': mode, **extra}
++
++
++class DeclaredCountInputTypesTests(unittest.TestCase):
++    def test_active_declared_counts_reject_both_raw_bools_in_both_modes(self):
++        for operator, skill, field in ACTIVE:
++            for mode in ('frames', 'continuous'):
++                for value in (False, True):
++                    with self.subTest(operator=operator, skill=skill, field=field, mode=mode, value=value):
++                        error = f'{field} 需要非负整数；部署触发叠层最多为 2。'
++                        with self.assertRaisesRegex(ValueError, '^' + re.escape(error) + '$'):
++                            calculate_damage(scenario(operator, skill, mode, **{field: value}))
++
++    def test_existing_integer_floats_and_legal_strings_keep_full_results(self):
++        for operator, skill, field in ACTIVE:
++            for mode in ('frames', 'continuous'):
++                for count in (0, 1, 2):
++                    integer = calculate_damage(scenario(operator, skill, mode, **{field: count}))
++                    values = (float(count), str(count))
++                    if field != 'charge_count':
++                        values += (str(float(count)),)
++                    for value in values:
++                        with self.subTest(field=field, mode=mode, value=value):
++                            self.assertEqual(calculate_damage(scenario(operator, skill, mode,
++                                             **{field: value})), integer)
++
++    def test_existing_ranges_are_not_replaced_with_ui_or_ammunition_caps(self):
++        for operator, skill, field in ACTIVE:
++            for mode in ('frames', 'continuous'):
++                for value in (-1, .5, float('inf'), float('nan')):
++                    with self.subTest(field=field, mode=mode, value=value):
++                        with self.assertRaisesRegex(ValueError, '^' + re.escape(
++                                f'{field} 需要非负整数；部署触发叠层最多为 2。') + '$'):
++                            calculate_damage(scenario(operator, skill, mode, **{field: value}))
++                if field == 'deployment_stacks':
++                    with self.assertRaisesRegex(ValueError, '部署触发叠层最多为 2'):
++                        calculate_damage(scenario(operator, skill, mode, deployment_stacks=3))
++                else:
++                    calculate_damage(scenario(operator, skill, mode, **{field: 1000}))
++
++    def test_inactive_declared_bools_remain_ignored_by_both_engines(self):
++        examples = (('mechanist', 1), ('mechanist', 2), ('mechanist', 3),
++                    ('silverash', 1), ('silverash', 2), ('silverash', 3),
++                    ('kaltsit', 1), ('kaltsit', 2), ('kaltsit', 3),
++                    ('char_151_myrtle', 2), ('char_298_susuro', 2),
++                    ('char_1037_amiya3', 2))
++        for operator, skill in examples:
++            for mode in ('frames', 'continuous'):
++                absent = calculate_damage(scenario(operator, skill, mode))
++                for field in FIELDS:
++                    if (operator, skill, field) in ACTIVE:
++                        continue
++                    for value in (False, True):
++                        with self.subTest(operator=operator, skill=skill, field=field, mode=mode, value=value):
++                            self.assertEqual(calculate_damage(scenario(operator, skill, mode,
++                                             **{field: value})), absent)
++
++    def test_real_boolean_options_and_zero_or_default_counts_are_preserved(self):
++        for mode in ('frames', 'continuous'):
++            for operator, skill, field, default in (
++                    ('mechanist', 2, 'shield_break_count', 0),
++                    ('mechanist', 3, 'charge_count', 0),
++                    ('silverash', 2, 'activation_count', 1),
++                    ('silverash', 2, 'deployment_stacks', 0)):
++                self.assertEqual(calculate_damage(scenario(operator, skill, mode)),
++                                 calculate_damage(scenario(operator, skill, mode, **{field: default})))
++            for operator, skill, option in (('silverash', 3, 'cooperative'),
++                                            ('silverash', 3, 'preexisting_fragile'),
++                                            ('char_298_susuro', 2, 'low_cost_healing_target')):
++                for value in (False, True):
++                    calculate_damage(scenario(operator, skill, mode, **{option: value}))
++
++    def test_positive_charge_keeps_unknown_collision_clock_and_cast_assignment(self):
++        for mode in ('frames', 'continuous'):
++            result = calculate_damage(scenario('mechanist', 3, mode, charge_count=2))
++            reference = result['charge_reference']
++            self.assertEqual(reference['hits_requested'], 2)
++            self.assertEqual(reference['declared_count_damage'], reference['per_hit_damage'] * 2)
++            self.assertIsNone(reference['collision_times_seconds'])
++            self.assertFalse(reference['events_scheduled'])
++            self.assertFalse(reference['full_cast_count_verified'])
++            for field in ('total_damage', 'phase_damage', 'cycle_damage', 'cycle_dps'):
++                self.assertIsNone(result['estimate']['skill'][field])
++            with self.assertRaisesRegex(ValueError, '零长度观察窗口不能声明冲锋命中'):
++                calculate_damage(scenario('mechanist', 3, mode, charge_count=1, window_seconds=0))
++
++    def test_rejection_preserves_caller_and_cached_catalog(self):
++        original_catalog = copy.deepcopy(catalog())
++        for operator, skill, field in ACTIVE:
++            args = scenario(operator, skill, **{field: True})
++            original = copy.deepcopy(args)
++            with self.assertRaises(ValueError):
++                calculate_damage(args)
++            self.assertEqual(args, original)
++        self.assertEqual(catalog(), original_catalog)
++
++
++if __name__ == '__main__':
++    unittest.main()

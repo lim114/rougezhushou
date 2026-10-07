@@ -112,13 +112,13 @@ class TargetCountInputTypesTests(unittest.TestCase):
                         result = self.evaluate(operator, skill, mode, **{field: value})
                         self.assertEqual(result['report']['operator']['id'], operator)
 
-    def test_other_integer_options_are_outside_this_target_count_change(self):
+    def test_unrelated_integer_options_keep_existing_boolean_compatibility(self):
         cases = (('char_110_deepcl', 1, 'summon_count'),
                  ('char_206_gnosis', 2, 'cold_state'),
                  ('char_4202_haruka', 1, 'bubble_bursts'),
                  ('char_1035_wisdel', 1, 'ghost_casts'),
-                 ('mechanist', 3, 'charge_count'),
-                 ('silverash', 2, 'activation_count'))
+                 ('mechanist', 1, 'charge_count'),
+                 ('silverash', 1, 'activation_count'))
         for operator, skill, field in cases:
             for mode in ('frames', 'continuous'):
                 for value in (False, True):

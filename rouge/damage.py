@@ -259,6 +259,12 @@ def _prepare_damage(scenario: dict):
         active_counts.append(('stolen_enemy_count','stolen_enemy_count需要范围内的有限非负整数。'))
     for field,error in active_counts:
         if isinstance(scenario.get(field),bool):raise ValueError(error)
+    declared_counts={('mechanist',2):('shield_break_count',),
+                     ('mechanist',3):('charge_count',),
+                     ('silverash',2):('activation_count','deployment_stacks')}
+    for field in declared_counts.get((scenario['operator'],skill),()):
+        if isinstance(scenario.get(field),bool):
+            raise ValueError(f'{field} 需要非负整数；部署触发叠层最多为 2。')
     from .relics import prepare
     from .run_modifiers import prepare_run
     scenario,run_resolution=prepare_run(scenario)
