@@ -1,0 +1,51 @@
+{
+  "utc": "2026-10-07T23:11:10.827711+00:00",
+  "package": "/workspace/.continuation/p2-run-environment-audit-after-070/draft071",
+  "test_sources": {
+    "tests/test_run_modifiers.py": {
+      "sha256": "209ba2c9ba501f329b368235350197d86b08c9ab8db71bcb04fa01aadc015cba",
+      "source_commit": "59531ff2e9475410a84ef0e60836f89793fd35a9"
+    },
+    "tests/test_run_config_validation.py": {
+      "sha256": "082ba6ee0a96d99f9c69585a429ace811ffc70cc7bbd97ebe83f8f6908a2ccfe",
+      "source_commit": "59531ff2e9475410a84ef0e60836f89793fd35a9"
+    },
+    "tests/test_enemy_environment.py": {
+      "sha256": "146d24c0a13fb5ca86624ff4dc4ccda05615b4e3ec8e5b9af725f719f4ed2fe9",
+      "source_commit": "59531ff2e9475410a84ef0e60836f89793fd35a9"
+    },
+    "tests/test_enemy_rune_selectors.py": {
+      "sha256": "63419a2d0c921870187d0f3367c015097cb140e704a94268152cf4e238cc2c48",
+      "source_commit": "59531ff2e9475410a84ef0e60836f89793fd35a9"
+    },
+    "tests/test_technology_reference.py": {
+      "sha256": "8f3fe3505b778d587975578eddbad394fc14c962c1abcb3995865b06d6d85871",
+      "source_commit": "59531ff2e9475410a84ef0e60836f89793fd35a9"
+    },
+    "tests/test_shu_periodic_sp_reference.py": {
+      "sha256": "522251064ba7f8608fc01dd66a06def50e92917ed97c0f44c74a3b5a14eecb79",
+      "source_commit": "59531ff2e9475410a84ef0e60836f89793fd35a9"
+    }
+  },
+  "run": 59,
+  "passed": 58,
+  "failures": [],
+  "errors": [
+    {
+      "id": "tests.test_enemy_environment.EnemyEnvironmentTests.test_visible_region_updates_and_survives_partial_pages_and_restart",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/.continuation/p2-run-environment-audit-after-070/draft071/tests/test_enemy_environment.py\", line 37, in test_visible_region_updates_and_survives_partial_pages_and_restart\n    image=cv2.imdecode(np.fromfile(root/'samples/native-client/run-map-empty.png',dtype=np.uint8),1)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/workspace/.continuation/p2-run-environment-audit-after-070/draft071/samples/native-client/run-map-empty.png'\n"
+    }
+  ],
+  "skipped": [],
+  "source_start_sha256": {
+    "rouge/run_modifiers.py": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e",
+    "rouge/reporting.py": "cad245e936cc83f5467215eedff37d3054d48d0bb2f81dd4363004c3ccbf4a0a",
+    "rouge/squad_unlock_reference.py": "5ff9929aa0e01c60d3da75d26c5531384b01aab7c0123d17c6ee7c2b21429b73"
+  },
+  "source_end_sha256": {
+    "rouge/run_modifiers.py": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e",
+    "rouge/reporting.py": "cad245e936cc83f5467215eedff37d3054d48d0bb2f81dd4363004c3ccbf4a0a",
+    "rouge/squad_unlock_reference.py": "5ff9929aa0e01c60d3da75d26c5531384b01aab7c0123d17c6ee7c2b21429b73"
+  },
+  "available_checks_passed": false
+}

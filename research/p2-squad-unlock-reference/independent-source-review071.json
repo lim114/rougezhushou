@@ -1,0 +1,351 @@
+{
+  "status": "source_review_passed_final_patch_pending",
+  "baseline_commit": "59531ff2e9475410a84ef0e60836f89793fd35a9",
+  "baseline_public_files_checked_against_manifest_and_actual_committed_git_blobs": 2179,
+  "baseline_contains_no_root_working_tree_files": true,
+  "raw_path": "/workspace/.continuation/p2-after-055-audit/relic-scope/roguelike_topic_table.json",
+  "raw_bytes": 17943244,
+  "raw_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+  "exact_22_squad_source_composites": true,
+  "exact_common_development_projection": true,
+  "node_count": 57,
+  "node_types": {
+    "NORMAL": 33,
+    "KEY": 21,
+    "DIFFICULTY": 3
+  },
+  "token_count": 9,
+  "raw_text_group_count": 6,
+  "gate_count": 3,
+  "strengthened_conditions": {
+    "rogue_6_band_2": {
+      "variant": {
+        "itemId": "rogue_6_band_2",
+        "bandLevel": 1,
+        "normalBandId": "rogue_6_band_1"
+      },
+      "name": "指挥分队",
+      "original_condition": "生命游戏中激活“分裂”",
+      "condition_selector": "$.details.rogue_6.items.rogue_6_band_2.unlockCondDesc",
+      "technology_id_by_exact_forward_and_reverse_text": "rogue_6_difficulty_1",
+      "original_node": {
+        "buffId": "rogue_6_difficulty_1",
+        "nodeType": "DIFFICULTY",
+        "frontNodeId": [
+          "rogue_6_outbuff_10",
+          "rogue_6_outbuff_11"
+        ],
+        "nextNodeId": [
+          "rogue_6_outbuff_12",
+          "rogue_6_outbuff_13",
+          "rogue_6_outbuff_14"
+        ],
+        "positionRow": 6,
+        "positionOrder": 1,
+        "tokenCost": 0,
+        "buffName": "分裂",
+        "activeIconId": "rogue_6_grow_icon_difficult3_active",
+        "inactiveIconId": "rogue_6_grow_icon_difficult3_inactive",
+        "bottomIconId": "rogue_6_grow_icon_difficult3_active",
+        "effectType": "RAW_TEXT_EFFECT",
+        "rawDesc": [
+          "“指挥分队”效果提升",
+          "源流样本获取效率+2%",
+          "“羽瞰点”揭露的视野范围变大"
+        ],
+        "buffDisplayInfo": [],
+        "groupId": "group_1",
+        "enrollId": null
+      },
+      "original_gate": {
+        "buffId": "rogue_6_difficulty_1",
+        "nodeMap": [
+          {
+            "frontNodes": [
+              "rogue_6_outbuff_10",
+              "rogue_6_outbuff_11"
+            ],
+            "nextNode": "rogue_6_outbuff_12"
+          },
+          {
+            "frontNodes": [
+              "rogue_6_outbuff_10",
+              "rogue_6_outbuff_11"
+            ],
+            "nextNode": "rogue_6_outbuff_13"
+          },
+          {
+            "frontNodes": [
+              "rogue_6_outbuff_10",
+              "rogue_6_outbuff_11"
+            ],
+            "nextNode": "rogue_6_outbuff_14"
+          }
+        ],
+        "enableGrade": 3,
+        "enableDesc": "<保密等级3>及以上难度进行探索时生效",
+        "lightId": "rogue_6_difficulty_1_light",
+        "decoId": null
+      }
+    },
+    "rogue_6_band_22": {
+      "variant": {
+        "itemId": "rogue_6_band_22",
+        "bandLevel": 1,
+        "normalBandId": "rogue_6_band_3"
+      },
+      "name": "特勤分队",
+      "original_condition": "机械师提升至精英二阶段",
+      "condition_selector": "$.details.rogue_6.items.rogue_6_band_22.unlockCondDesc",
+      "technology_id_by_exact_forward_and_reverse_text": null,
+      "original_node": null,
+      "original_gate": null
+    },
+    "rogue_6_band_5": {
+      "variant": {
+        "itemId": "rogue_6_band_5",
+        "bandLevel": 1,
+        "normalBandId": "rogue_6_band_4"
+      },
+      "name": "后勤分队",
+      "original_condition": "生命游戏中激活“卵生”",
+      "condition_selector": "$.details.rogue_6.items.rogue_6_band_5.unlockCondDesc",
+      "technology_id_by_exact_forward_and_reverse_text": "rogue_6_difficulty_2",
+      "original_node": {
+        "buffId": "rogue_6_difficulty_2",
+        "nodeType": "DIFFICULTY",
+        "frontNodeId": [
+          "rogue_6_outbuff_25"
+        ],
+        "nextNodeId": [
+          "rogue_6_outbuff_26",
+          "rogue_6_outbuff_27"
+        ],
+        "positionRow": 13,
+        "positionOrder": 1,
+        "tokenCost": 0,
+        "buffName": "卵生",
+        "activeIconId": "rogue_6_grow_icon_difficult6_active",
+        "inactiveIconId": "rogue_6_grow_icon_difficult6_inactive",
+        "bottomIconId": "rogue_6_grow_icon_difficult6_active",
+        "effectType": "RAW_TEXT_EFFECT",
+        "rawDesc": [
+          "“后勤分队”效果提升",
+          "源流样本获取效率+2%",
+          "“诡意行商”中会额外出售两个商品"
+        ],
+        "buffDisplayInfo": [],
+        "groupId": "group_2",
+        "enrollId": null
+      },
+      "original_gate": {
+        "buffId": "rogue_6_difficulty_2",
+        "nodeMap": [
+          {
+            "frontNodes": [
+              "rogue_6_outbuff_25"
+            ],
+            "nextNode": "rogue_6_outbuff_26"
+          },
+          {
+            "frontNodes": [
+              "rogue_6_outbuff_25"
+            ],
+            "nextNode": "rogue_6_outbuff_27"
+          }
+        ],
+        "enableGrade": 6,
+        "enableDesc": "<保密等级6>及以上难度进行探索时生效",
+        "lightId": "rogue_6_difficulty_2_light",
+        "decoId": null
+      }
+    },
+    "rogue_6_band_7": {
+      "variant": {
+        "itemId": "rogue_6_band_7",
+        "bandLevel": 1,
+        "normalBandId": "rogue_6_band_6"
+      },
+      "name": "矛头分队",
+      "original_condition": "生命游戏中激活“胎生”",
+      "condition_selector": "$.details.rogue_6.items.rogue_6_band_7.unlockCondDesc",
+      "technology_id_by_exact_forward_and_reverse_text": "rogue_6_difficulty_3",
+      "original_node": {
+        "buffId": "rogue_6_difficulty_3",
+        "nodeType": "DIFFICULTY",
+        "frontNodeId": [
+          "rogue_6_outbuff_38",
+          "rogue_6_outbuff_39",
+          "rogue_6_outbuff_40"
+        ],
+        "nextNodeId": [
+          "rogue_6_outbuff_41",
+          "rogue_6_outbuff_42"
+        ],
+        "positionRow": 20,
+        "positionOrder": 1,
+        "tokenCost": 0,
+        "buffName": "胎生",
+        "activeIconId": "rogue_6_grow_icon_difficult9_active",
+        "inactiveIconId": "rogue_6_grow_icon_difficult9_inactive",
+        "bottomIconId": "rogue_6_grow_icon_difficult9_active",
+        "effectType": "RAW_TEXT_EFFECT",
+        "rawDesc": [
+          "“矛头分队”效果提升",
+          "源流样本获取效率+2%",
+          "通过“险路尽头”或“险路小径”进入下一区域后目标生命上限+2"
+        ],
+        "buffDisplayInfo": [],
+        "groupId": "group_3",
+        "enrollId": null
+      },
+      "original_gate": {
+        "buffId": "rogue_6_difficulty_3",
+        "nodeMap": [
+          {
+            "frontNodes": [
+              "rogue_6_outbuff_38",
+              "rogue_6_outbuff_39",
+              "rogue_6_outbuff_40"
+            ],
+            "nextNode": "rogue_6_outbuff_41"
+          },
+          {
+            "frontNodes": [
+              "rogue_6_outbuff_38",
+              "rogue_6_outbuff_39",
+              "rogue_6_outbuff_40"
+            ],
+            "nextNode": "rogue_6_outbuff_42"
+          }
+        ],
+        "enableGrade": 9,
+        "enableDesc": "<保密等级9>及以上难度进行探索时生效",
+        "lightId": "rogue_6_difficulty_3_light",
+        "decoId": null
+      }
+    },
+    "rogue_6_band_16": {
+      "variant": {
+        "itemId": "rogue_6_band_16",
+        "bandLevel": 1,
+        "normalBandId": "rogue_6_band_15"
+      },
+      "name": "文明开化分队",
+      "original_condition": "生命游戏中激活“顶冠”",
+      "condition_selector": "$.details.rogue_6.items.rogue_6_band_16.unlockCondDesc",
+      "technology_id_by_exact_forward_and_reverse_text": "rogue_6_outbuff_43",
+      "original_node": {
+        "buffId": "rogue_6_outbuff_43",
+        "nodeType": "KEY",
+        "frontNodeId": [
+          "rogue_6_outbuff_41"
+        ],
+        "nextNodeId": [
+          "rogue_6_outbuff_46"
+        ],
+        "positionRow": 22,
+        "positionOrder": 1,
+        "tokenCost": 5,
+        "buffName": "顶冠",
+        "activeIconId": "rogue_6_grow_icon_weather_active",
+        "inactiveIconId": "rogue_6_grow_icon_weather_inactive",
+        "bottomIconId": "rogue_6_grow_icon_weather_active",
+        "effectType": "RAW_TEXT_EFFECT",
+        "rawDesc": [
+          "“文明开化分队”效果提升"
+        ],
+        "buffDisplayInfo": [],
+        "groupId": "group_4",
+        "enrollId": null
+      },
+      "original_gate": null
+    },
+    "rogue_6_band_18": {
+      "variant": {
+        "itemId": "rogue_6_band_18",
+        "bandLevel": 1,
+        "normalBandId": "rogue_6_band_17"
+      },
+      "name": "开拓者分队",
+      "original_condition": "生命游戏中激活“角”",
+      "condition_selector": "$.details.rogue_6.items.rogue_6_band_18.unlockCondDesc",
+      "technology_id_by_exact_forward_and_reverse_text": "rogue_6_outbuff_45",
+      "original_node": {
+        "buffId": "rogue_6_outbuff_45",
+        "nodeType": "KEY",
+        "frontNodeId": [
+          "rogue_6_outbuff_42"
+        ],
+        "nextNodeId": [
+          "rogue_6_outbuff_48"
+        ],
+        "positionRow": 22,
+        "positionOrder": 3,
+        "tokenCost": 5,
+        "buffName": "角",
+        "activeIconId": "rogue_6_grow_icon_vehicle_active",
+        "inactiveIconId": "rogue_6_grow_icon_vehicle_inactive",
+        "bottomIconId": "rogue_6_grow_icon_vehicle_active",
+        "effectType": "RAW_TEXT_EFFECT",
+        "rawDesc": [
+          "“开拓者分队”效果提升"
+        ],
+        "buffDisplayInfo": [],
+        "groupId": "group_4",
+        "enrollId": null
+      },
+      "original_gate": null
+    },
+    "rogue_6_band_20": {
+      "variant": {
+        "itemId": "rogue_6_band_20",
+        "bandLevel": 1,
+        "normalBandId": "rogue_6_band_19"
+      },
+      "name": "多边贸易分队",
+      "original_condition": "生命游戏中激活“鳍”",
+      "condition_selector": "$.details.rogue_6.items.rogue_6_band_20.unlockCondDesc",
+      "technology_id_by_exact_forward_and_reverse_text": "rogue_6_outbuff_44",
+      "original_node": {
+        "buffId": "rogue_6_outbuff_44",
+        "nodeType": "KEY",
+        "frontNodeId": [
+          "rogue_6_outbuff_41",
+          "rogue_6_outbuff_42"
+        ],
+        "nextNodeId": [
+          "rogue_6_outbuff_47"
+        ],
+        "positionRow": 22,
+        "positionOrder": 2,
+        "tokenCost": 5,
+        "buffName": "鳍",
+        "activeIconId": "rogue_6_grow_icon_finance_active",
+        "inactiveIconId": "rogue_6_grow_icon_finance_inactive",
+        "bottomIconId": "rogue_6_grow_icon_finance_active",
+        "effectType": "RAW_TEXT_EFFECT",
+        "rawDesc": [
+          "“多边贸易分队”效果提升"
+        ],
+        "buffDisplayInfo": [],
+        "groupId": "group_4",
+        "enrollId": null
+      },
+      "original_gate": null
+    }
+  },
+  "details_development_id_dictionary_key_bindings": [],
+  "details_char_buff_records": 15,
+  "details_squad_buff_records": 0,
+  "bounded_conclusion": "Original item text and development text establish six condition-reference links, plus mechanist E2 text. They do not establish account unlock state, actual activation, AND/OR prerequisites, attribute layers, or mode execution semantics.",
+  "source_files_sha256": {
+    "rouge/data/run-config.json": "d35b08029a4dee14b7955136d127c0af22529858ffb559d652ac77e4e7f2c19e",
+    "rouge/data/technology-reference.json": "30640cb8ca4d9c2bbedce971a7545cbdbed7b6aab177a880c9faaf4eddee0d30",
+    "rouge/technology.py": "9cb329ce496543a9bc7a05bb77c69ea0d83e393a4be0edcb8307cb8faf909b86",
+    "research/p2-technology/NOTE.md": "68579c08c6f6ac3c713ee94856d83fe7e017a20f4d962ae79bd68afffa2f869f"
+  },
+  "no_tracked_edits": true,
+  "no_private_state_reads": true,
+  "no_wine_or_gui": true
+}

@@ -17,6 +17,9 @@ def prepare_run(scenario):
         record=config_data()['squads'].get(squad.get('id'))
         if not record or squad.get('name',record['name'])!=record['name']:raise ValueError('本局分队身份与固定档案不符。')
         resolution['squad']={**squad,'name':record['name']}
+        from .squad_unlock_reference import squad_unlock_reference
+        reference=squad_unlock_reference(record['id'])
+        if reference is not None:resolution['squad_unlock_reference']=reference
         rules=[]
         for buff in record['buffs']:
             if buff['key']!='char_attribute_mul':continue
