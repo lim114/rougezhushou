@@ -4,7 +4,7 @@
 
 ## 恢复开发
 
-后续开发统一在 `codex/p2-development` 分支进行。开始修改前检查当前分支，沿用现有工作目录并保留本地改动。最新云端批次见 `BATCH_CLOUD_P2_S1_BINDING.md`；其验证范围是 Linux 计算与报告，不代表 Windows 实机验收。
+后续开发统一在 `codex/p2-development` 分支进行。开始修改前检查当前分支，沿用现有工作目录并保留本地改动。最新连续开发断点见 `DEVELOPMENT_CHECKPOINT.json`、`WORK_IN_PROGRESS.md` 顶部及 `BATCH_CONTINUOUS_P2.md`；每节提交，每五节全量可用测试。P2 完成后继续 P3，同问题三次失败则搁置。Wine 兼容验证已获授权，原生 Windows 状态单独记录。此前批次见 `BATCH_CLOUD_P2_S1_BINDING.md`；其验证范围是 Linux 计算与报告，不代表 Windows 实机验收。
 
 先读取 AGENTS.md、PROJECT_PROGRESS.md，以及 WORK_IN_PROGRESS.md 顶部的 0.70 交接。当前先做 P2，未完成 P1 保留；识别优化放在所有其它事项之后。不要根据旧交接改变当前优先顺序，不重新做已验证项。已完成范围在 PROJECT_COMPLETED.md。
 

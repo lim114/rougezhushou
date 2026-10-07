@@ -227,7 +227,7 @@ class Combat:
         if not normal and window is not None:duration=min(duration,window)
         if not normal and self.s['operator']=='char_1029_yato2':
             attack+=self.base*self.talent('鬼人强化状态','atk')
-        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];op=self.s['operator'];ammo_rounds=None;mantra_attacks=[]
+        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[]
         timeline=AttackTimeline(self.s,normal=normal,offset=self.s.get('_timeline_offset_seconds',0) if normal else 0)
         def emit(name,raw,dtype,count,defense=None,resistance=None,effects=None,event_times=None):
             if dtype=='buildup':raw*=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
@@ -561,7 +561,11 @@ class Combat:
                         self.notes.append('本能的召唤诱饵触发次数不提供部署攻击快照、退场时刻或持续效果首跳；未排程诱饵法伤/损伤，不能按固定25秒间隔生成事件。')
             if not normal:
                 incoming=self.option('enemy_attack_count',0,maximum=10000,integer=True)
-                events.extend((duration*(i+1)/max(1,incoming),self.talent('堕梦','value')) for i in range(int(incoming)))
+                # A count contains no attack timestamps. Evenly placing the
+                # events can invent a burst or a S3 seed before any real hit.
+                neural_incoming_pending=bool(incoming and self.talent('堕梦','value')>0 and
+                    self.option('enemy_buildup_resistance',0,maximum=100)<100 and duration>0 and
+                    timeline.selectable_lifetime(0))
                 if self.n==3:
                     # The original description requires prior neural damage
                     # by this operator during the skill. Interval=1 does not
@@ -801,7 +805,8 @@ class Combat:
             'healing':sum(c['total'] for c in components if c['damage_type']=='healing'),
             'components':components,'neural_events':neural_events,
             'neural_secondary_seeds':neural_secondary_seeds,
-            'neural_binding_seeds':neural_binding_seeds,'timing':timeline.output()}
+            'neural_binding_seeds':neural_binding_seeds,
+            'neural_incoming_pending':neural_incoming_pending,'timing':timeline.output()}
 
     def calculate(self):
         if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
@@ -1005,6 +1010,19 @@ class Combat:
                 'cast_burst_times':[t for c in full['components'] if c['name']=='神经损伤爆发' for t in c.get('times_seconds',[])],
                 'window_burst_times':[t for c in shown['components'] if c['name']=='神经损伤爆发' for t in c.get('times_seconds',[])],
                 'cycle_burst_times':cycle_neural_burst_times}
+        if full['neural_incoming_pending'] or shown['neural_incoming_pending']:
+            result['neural_incoming_reference']={
+                'talent':'堕梦','attacks_requested':int(self.s['enemy_attack_count']),
+                'buildup_per_attack':self.talent('堕梦','value'),
+                'events_scheduled':False,'attack_times_seconds':None,
+                'affected_damage_phases':{'cast':full['neural_incoming_pending'],
+                    'window':shown['neural_incoming_pending'],
+                    'cycle':full['neural_incoming_pending'] and cycle is not None},
+                'excluded_burst_damage':{
+                    'cast':sum(c['total'] for c in full['components'] if c['name']=='神经损伤爆发'),
+                    'phase':phase_totals([c for c in full['components'] if c['name']=='神经损伤爆发'],duration)[0] if duration is not None else 0,
+                    'window':sum(c['total'] for c in shown['components'] if c['name']=='神经损伤爆发'),
+                    'cycle':cycle_neural_burst_damage}}
         if full['neural_binding_seeds'] or shown['neural_binding_seeds']:
             result['neural_s1_reference']={
                 'skill':'暗夜回声',

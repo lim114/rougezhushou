@@ -201,17 +201,20 @@ def mechanism_sections(scenario,result,source,profile):
         buildup=op=='char_1042_phatm2' or (op=='char_4204_mantra' and number in (1,2))
         rows=[];notes=[]
         if buildup:
-            binding_unknown=result.get('neural_s1_reference',{}).get('affected_damage_phases',{}).get('window',False)
+            binding_unknown=any(result.get(key,{}).get('affected_damage_phases',{}).get('window',False)
+                for key in ('neural_s1_reference','neural_incoming_reference'))
             rows=[metric('potential_buildup','潜在损伤积累',None if binding_unknown else sum(c['total'] for c in elementary if c['damage_type']=='buildup'),'损伤值'),
                 metric('bursts','当前情景损伤爆发次数',None if
                     any(result.get(key,{}).get('affected_damage_phases',{}).get('window') for key in
-                        ('neural_s1_reference','neural_skill_reference','neural_bait_reference')) else
+                        ('neural_incoming_reference','neural_s1_reference','neural_skill_reference','neural_bait_reference')) else
                     sum(c['hits'] for c in elementary if c['name']=='神经损伤爆发'),'次')]
             notes.append('潜在积累未扣除爆发冷却暂停；不是敌人生命伤害。')
         partial=bool(result.get('known_damage_subtotals'))
         rows.append(metric('elemental_damage','已建模元素伤害小计' if partial else '当前情景元素伤害',
             sum(c['total'] for c in elementary if c['damage_type']=='elemental')))
-        partial_note=('束缚倍率首次生效与刷新尚未核验；法伤小计不含未知的神经爆发，损伤基础参考没有套用束缚倍率。'
+        partial_note=('目标普通攻击次数没有事件时刻，未生成堕梦损伤事件或实际爆发序列；法伤小计独立保留。'
+                      if result.get('neural_incoming_reference') else
+                      '束缚倍率首次生效与刷新尚未核验；法伤小计不含未知的神经爆发，损伤基础参考没有套用束缚倍率。'
                       if result.get('neural_s1_reference') else
                       '已计小计不含未排程的持续损伤及受其影响而未知的神经爆发；当前积累仅列直接来源。'
                       if result.get('neural_skill_reference') else
@@ -344,6 +347,14 @@ def build_report(scenario,result):
         if not nonrepeat:
             rows.append(metric('cycle_dps','本轮周期 DPS',skill['cycle_dps'],'伤害/秒'))
         sections.append(section('damage','伤害输出',rows))
+    incoming=result.get('neural_incoming_reference')
+    if incoming:
+        sections.append(section('neural_incoming','堕梦 · 目标攻击时间待确认',[
+            metric('attacks','指定目标普通攻击次数',incoming['attacks_requested'],'次'),
+            metric('buildup','每次普通攻击损伤参数',incoming['buildup_per_attack'],'损伤值'),
+            metric('first_attack','目标首个普通攻击时刻',None,'秒')],
+            ['次数不确定攻击时刻，不按技能时长或观察窗口均匀分配。',
+             '缺少事件时刻时，损伤积累、爆发序列和受影响的完整总伤未知；保留已排程法伤小计。']))
     binding=result.get('neural_s1_reference')
     if binding:
         sections.append(section('neural_s1','暗夜回声 · 束缚倍率待核验',[

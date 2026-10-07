@@ -15,6 +15,7 @@ MODULES = (
     "tests.test_attack_speed_bounds_065",
     "tests.test_run_modifiers", "tests.test_multi_melee_070",
     "tests.test_neural_sources_035", "tests.test_s1_neural_boundary",
+    "tests.test_neural_incoming_clock",
 )
 
 if __name__ == "__main__":
