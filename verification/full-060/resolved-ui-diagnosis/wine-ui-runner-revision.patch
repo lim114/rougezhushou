@@ -1,0 +1,14 @@
+--- wine-ui-smoke-060-failed-attempt-1.py
++++ wine-ui-smoke-060-revised.py
+@@ -632,7 +632,10 @@
+                         assert record['applied']==[]
+                         assert result['relic_resolution']['complete'] is False
+                         assert result['estimate']['base_stats']==plain['estimate']['base_stats']
+-                        assert 'emergency_hire' in window.damage_text.toPlainText()
++                        actual_human=window.damage_text.toPlainText()
++                        assert '同行者：条件缺失或机制未覆盖；缺 应急招募来源' in actual_human
++                        assert '同行者：尚未确认条件 应急招募来源，未按0或满层套用。' in actual_human
++                        assert 'emergency_hire' not in actual_human
+                         if kind is None:pending_reference=deepcopy(result)
+                         else:assert result==pending_reference
+                     else:
