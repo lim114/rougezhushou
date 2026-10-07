@@ -1,0 +1,323 @@
+{
+  "captured_at_utc": "2026-10-07T19:13:10.953185+00:00",
+  "scope": "section36 Mei S1 next-attack acquisition, declared observation and real-binding protection draft",
+  "source_audit": {
+    "path": "/tmp/p2-audit/remaining-independent/source-and-reproduction.json",
+    "sha256": "cb00c59610bb7f903524e607f554a72eea2e465d7dd3215099575065febf8386",
+    "public_calls": 182,
+    "reused_without_new_network_request": true
+  },
+  "sources": {
+    "skill_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "reused_pinned_cache": true,
+      "verified_in_draft": true
+    },
+    "character_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "reused_pinned_cache": true,
+      "verified_in_draft": true
+    },
+    "dps_anim": {
+      "path": "/tmp/p2-audit/remaining-independent/dps_anim.json",
+      "url": "https://raw.githubusercontent.com/xulai1001/arkdps_data_collection/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json",
+      "commit": "31269be4ca10124ca3f994ab33382dfc3d502991",
+      "bytes": 398759,
+      "sha256": "9d8f619420552358c9feb595163b11d9555b6f35d35cae4735c0082768ff4d02",
+      "sha256_matched": true,
+      "fetched_after_calculations": true,
+      "verified_in_draft": true
+    }
+  },
+  "selectors": {
+    "skill_table.skchr_mm_1.levels[9]": {
+      "name": "麻痹弹",
+      "rangeId": null,
+      "description": "下次攻击的攻击力提高至<@ba.vup>{atk_scale:0%}</>，并使目标<$ba.sluggish>停顿</><@ba.vup>{sluggish:0.0}</>秒",
+      "skillType": "AUTO",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WHEN_ATTACK",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 3,
+        "initSp": 0,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_mm_1",
+      "duration": 0.0,
+      "blackboard": [
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "sluggish",
+          "value": 2.5,
+          "valueStr": null
+        }
+      ]
+    },
+    "character_table.char_133_mm.skills[0]": {
+      "skillId": "skchr_mm_1",
+      "overridePrefabKey": null,
+      "overrideTokenKey": null,
+      "levelUpCostCond": [
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 28800,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 2,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30084",
+              "count": 1,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30063",
+              "count": 3,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 57600,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30104",
+              "count": 2,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30084",
+              "count": 2,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 86400,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30135",
+              "count": 2,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30034",
+              "count": 2,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ],
+      "unlockCond": {
+        "phase": "PHASE_0",
+        "level": 1
+      }
+    },
+    "character_table.char_133_mm.talents": [
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "维多利亚探员",
+            "description": "攻击力+4%，攻击速度+4",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "attack_speed",
+                "value": 4.0,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.04,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "1",
+            "name": "维多利亚探员",
+            "description": "攻击力+5%<@ba.talpu>（+1%）</>，攻击速度+5<@ba.talpu>（+1）</>",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "attack_speed",
+                "value": 5.0,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.05,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "维多利亚探员",
+            "description": "攻击力+7%，攻击速度+7",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "attack_speed",
+                "value": 7.0,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.07,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "1",
+            "name": "维多利亚探员",
+            "description": "攻击力+8%<@ba.talpu>（+1%）</>，攻击速度+8<@ba.talpu>（+1）</>",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "attack_speed",
+                "value": 8.0,
+                "valueStr": null
+              },
+              {
+                "key": "atk",
+                "value": 0.08,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      }
+    ],
+    "timing-profiles.operators.char_133_mm": {
+      "id": "char_133_mm",
+      "normal": {
+        "animation": "Attack_Loop",
+        "windup_frames": 1,
+        "recovery_frames": 29,
+        "animation_frames": 30,
+        "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+      },
+      "skills": {
+        "1": {
+          "animation": "Attack_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 29,
+          "animation_frames": 30,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        },
+        "2": {
+          "animation": "Skill_Loop",
+          "windup_frames": 1,
+          "recovery_frames": 44,
+          "animation_frames": 45,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      },
+      "binding_status": "reference_only",
+      "missing": "客户端攻击模板、皮肤、技能重置/阻回绑定未经实测"
+    },
+    "dps_anim.char_133_mm": {
+      "version": "3.8.99",
+      "Attack_End": 10,
+      "Attack_Loop": {
+        "duration": 30,
+        "OnAttack": 1
+      },
+      "Attack_Start": 10,
+      "Default": 0,
+      "Die": 30,
+      "Idle": 60,
+      "Skill_Loop": {
+        "duration": 45,
+        "OnAttack": 1
+      },
+      "Start": {
+        "duration": 30,
+        "OnStart": 6
+      }
+    }
+  },
+  "facts": [
+    "char_133_mm.skills[0] binds skchr_mm_1; rank10 AUTO next attack, attack scale2, sluggish2.5 seconds, duration0, attack recovery3 SP/increment1.",
+    "E2 potential1 talent +7% ATK/+7 ASPD; rank4 potential candidate +8%/+8. Manual base1000 yields2140/2160 conditional physical damage before mitigation.",
+    "Pinned original v3.8.99 animation has Attack_Loop30/OnAttack1, Attack_Start10/Attack_End10; the source does not map the real S1 script to an action.",
+    "Existing zero-frame and 6-frame+wine examples retain their exact damage and timing arithmetic in parameter_clock_reference; neither supplies real S1 binding."
+  ],
+  "unknown": [
+    "Actual S1 script/action choice, actual first-impact phase, absolute cast end, SP lockout/resumption, skin and newer-client behavior.",
+    "General continuous acquisition/blocking phase; only explicit known absence boundaries are locally protected."
+  ],
+  "non_claims": [
+    "No native Windows/game/chat integration validated; no live game/private state accessed; no Start/End10 frames added to S1."
+  ]
+}

@@ -464,6 +464,17 @@ def build_report(scenario,result):
             metric('ticks','实际跳数',None,'次')],
             ['下次攻击命中是持续伤害必要来源；无有效出手参考时不生成持续伤害。',
              '3秒和每秒伤害参数不证明首跳、刷新或边界，不生成3个假定跳伤；物理攻击参考小计保留。']))
+    mei=result.get('mei_s1_reference')
+    if mei:
+        clock=mei['parameter_clock_reference']
+        sections.append(section('mei_s1','麻痹弹 · 下次攻击与结束待核验',[
+            metric('per_hit','单次物理伤害条件参考',mei['per_hit_damage_reference']),
+            metric('sluggish','停顿持续参数',mei['sluggish_duration_parameter_seconds'],'秒'),
+            metric('parameter_initial','常规动作算例初动',clock['initial_seconds'],'秒'),
+            metric('parameter_cycle','常规动作算例回转',clock['cycle_seconds'],'秒'),
+            metric('actual_end','实际技能结束',None,'秒')],
+            ['观察窗口保持声明值；下次攻击可等待后续有效供靶，只保留一次出手参考。',
+             '常规动作与手动时序的充能结果仅作参数算例；实际S1动作绑定、结束/阻回与完整周期未知。']))
     mizuki=result.get('mizuki_s1_reference')
     if mizuki:
         sections.append(section('mizuki_s1','唤醒 · 下次攻击与结束待核验',[

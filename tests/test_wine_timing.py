@@ -57,7 +57,7 @@ class WineTimingTests(unittest.TestCase):
         result=calculate_damage({'operator':'char_133_mm','skill':1,
             'relic_ids':['rogue_6_relic_legacy_97'],
             'timing':{'windup_frames':6,'recovery_frames':9}})
-        skill=result['estimate']['skill']
+        skill=result['mei_s1_reference']['parameter_clock_reference']
         self.assertEqual(skill['initial_seconds'],0) #wine initialSP exceeds cost
         # Attack slots every28 frames, windup6. Normal credits on35/63,
         # wine on45; three SP are ready63 but next skill slot is84.

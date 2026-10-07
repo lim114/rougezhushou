@@ -954,9 +954,25 @@ class Combat:
                 emit('治愈之翼',attack*bb['attack@heal_scale'],'healing',math.floor(duration)*min(1,healing_targets))
                 self.notes.append('治愈之翼每秒至多治疗一名友方，零受疗目标不产生治疗；敌方供靶区间不代替友方受疗条件。')
         elif op=='char_133_mm':
-            if self.n==1 and not normal:mode='next_attack';duration=interval;scale=bb['atk_scale']
-            else:scale=1
-            events=attack_times();count=min(1,len(events)) if mode=='next_attack' else len(events)
+            if self.n==1 and not normal:
+                mode='next_attack';duration=interval if window is None else window;scale=bb['atk_scale']
+                # One next attack may acquire its target long after the nominal
+                # interval. Keep the user's observation and the full search apart.
+                horizon=3600 if window is None else window
+                if timeline.options.get('target_disappears_seconds')==0 or timeline.options.get('target_windows')==[]:
+                    horizon=0
+                # A fully blocked observation is a known absence in either
+                # mode; this does not add general continuous acquisition timing.
+                blocked_until=0
+                for begin,end in timeline.blocked:
+                    if begin>blocked_until:break
+                    blocked_until=max(blocked_until,end)
+                if blocked_until>=frame_time(horizon):horizon=0
+                stream=timeline.attacks(horizon,interval,speed,attribute_speed=speed_reference,limit=1)
+                events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
+                if window is None and not stream['release_frames']:duration=None
+            else:scale=1;events=attack_times()
+            count=min(1,len(events)) if mode=='next_attack' else len(events)
             per_hit=self.hit(attack*scale,'physical')
             components.append({'name':'普攻' if normal else self.skill['name'],'damage_type':'physical',
                 'hits':count,'per_hit':per_hit,'total':count*per_hit,'times_seconds':events[:count]})
@@ -1408,6 +1424,44 @@ class Combat:
             from .uncertain_sources import mask_pending_damage
             mask_pending_damage(result,full,shown,normal,duration,cycle)
             result['complete']=False;result['estimate']['complete']=False
+        if self.s['operator']=='char_133_mm' and self.n==1:
+            # Preserve the established ordinary-action/explicit-preview clock as
+            # a parameter example before protecting the unverified actual bind.
+            skill_result=result['estimate']['skill']
+            clock_keys=('initial_seconds','duration_seconds','recharge_seconds','cycle_seconds',
+                'total_damage','phase_damage','cycle_damage','cycle_dps','cycle_healing','cycle_hps')
+            parameter_clock={key:skill_result[key] for key in clock_keys}
+            parameter_clock['recharge_streams']=result['timing']['recharge_streams']
+            result['mei_s1_reference']={
+                'per_hit_damage_reference':next(c['per_hit'] for c in full['components'] if c['name']==sp['name']),
+                'attack_scale_parameter':self.bb['atk_scale'],'sluggish_duration_parameter_seconds':self.bb['sluggish'],
+                'source_possible':{'cast':any(c['hits'] for c in full['components']),
+                    'window':any(c['hits'] for c in shown['components'])},
+                'source_acquisition_times':{'cast':[f/FPS for stream in full['timing']['streams']
+                    for f in stream.get('emitted_release_frames',stream['release_frames'])],
+                    'window':[f/FPS for stream in shown['timing']['streams']
+                    for f in stream.get('emitted_release_frames',stream['release_frames'])]},
+                'impact_times_reference':{'cast':[t for c in full['components'] for t in c.get('times_seconds',[])],
+                    'window':[t for c in shown['components'] for t in c.get('times_seconds',[])]},
+                'parameter_clock_reference':parameter_clock,
+                'parameter_clock_binding_verified':False,'skill_binding_verified':False,'actual_cast_end_seconds':None,
+            }
+            for plan in (full,shown):
+                for component in plan['components']:
+                    component.pop('times_seconds',None)
+                    component['timing_reference']='next attack conditional reference; actual S1 binding unverified'
+                    if component['hits']:component['actual_total']=None
+            from .uncertain_sources import mask_pending_damage
+            mask_pending_damage(result,full,shown,None,None,None)
+            for key in ('duration_seconds','phase_damage','phase_healing','recharge_seconds',
+                        'cycle_seconds','cycle_damage','cycle_dps','cycle_healing','cycle_hps'):
+                skill_result[key]=None
+            skill_result['initial_seconds']=0.0 if initial>=sp['sp_cost'] else None
+            result['timing']['recharge_streams']=[]
+            result['timing']['parameter_clock_only']=True
+            result['timing']['phase_clock_unbound']=True
+            result['complete']=False;result['estimate']['complete']=False
+            result['estimate']['notes'].append('麻痹弹有效出手采用已有常规动作参考；原版Attack_Loop及手动时序的充能算例保留，实际S1动作绑定、结束/阻回与完整周期未知。')
         if mizuki_s1_unresolved:
             result['mizuki_s1_reference']={
                 'physical_per_hit_reference':next(c['per_hit'] for c in full['components'] if c['name']=='唤醒物理'),

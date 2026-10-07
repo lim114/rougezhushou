@@ -127,7 +127,7 @@ class DamageTests(unittest.TestCase):
             'enemy_defense':200,'effects':[{'kind':'attack_pct','value':.5}]})
         # E2 potential 1: +7% ATK/+7 ASPD; S1 M3 = 200% ATK.
         # (1000 * (1 + .07 + .5)) * 2 - 200 = 2940.
-        self.assertAlmostEqual(result['estimate']['skill']['total_damage'],2940)
+        self.assertAlmostEqual(result['mei_s1_reference']['parameter_clock_reference']['total_damage'],2940)
         self.assertEqual(result['estimate']['base_stats']['attack_speed'],107)
 
     def test_partial_run_inventory_is_not_reported_as_complete_or_empty(self):

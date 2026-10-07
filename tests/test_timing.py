@@ -23,8 +23,8 @@ class FrameTimingTests(unittest.TestCase):
     def test_next_attack_skill_ends_after_release_and_keeps_normal_cadence(self):
         r=calculate_damage({'operator':'char_133_mm','skill':1,
             'timing':{'windup_frames':0,'recovery_frames':0}})
-        skill=r['estimate']['skill']
-        self.assertEqual(skill['hit_counts'][skill['name']],1)
+        skill=r['mei_s1_reference']['parameter_clock_reference']
+        self.assertEqual(r['components'][0]['hits'],1)
         self.assertEqual(skill['duration_seconds'],1/30)
         #3SP,28-frame normal cadence; next skill attack starts at112.
         self.assertEqual(skill['cycle_seconds'],112/30)

@@ -165,7 +165,7 @@ class RelicMechanismTests(unittest.TestCase):
     def test_global_enemy_defense_reduction_is_applied_before_per_hit_mitigation(self):
         r=calculate_damage({'operator':'char_133_mm','skill':1,'base_attack':1000,
             'enemy_defense':1000,'timing_mode':'continuous','relic_ids':['rogue_6_relic_legacy_84']})
-        self.assertEqual(r['estimate']['skill']['total_damage'],1240)  #1070*2 -900
+        self.assertEqual(r['mei_s1_reference']['parameter_clock_reference']['total_damage'],1240)  #1070*2 -900
 
     def test_received_healing_multiplier_is_not_attack_or_direct_damage(self):
         r=calculate_damage({'operator':'char_196_sunbr','skill':2,'base_attack':1000,
