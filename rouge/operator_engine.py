@@ -558,8 +558,19 @@ class Combat:
                 if self.s.get('ines_first_deployment',False):
                     duration=0;self.notes.append('伊内丝首次部署仅放置影哨后离场，没有此次技能攻击。')
                 else:
-                    instant('physical',bb['atk_scale'],name='收回影哨')
-                    regular()
+                    # The recalled shadow crosses an independent path. The
+                    # owner attack windows do not locate that collision.
+                    emit('收回影哨',attack*bb['atk_scale'],'physical',1)
+                    from .uncertain_sources import preserve_unplaced_sources
+                    external_event_reference={**preserve_unplaced_sources([components[-1]],window=window,
+                        target_lifetime=timeline.options.get('target_disappears_seconds')),
+                        'kind':'ines_shadow_return',
+                        'parameter_rows':[('穿过敌人数上限参数',bb['max_target'],'名')],
+                        'notes':['收回影哨列单个穿过目标的条件伤害；立刻收回不证明路径碰撞发生在开启当帧。',
+                                 '本体供靶/打断窗口不代表影哨路径覆盖；实际路径、碰撞及施放归属未核验，未叠加到完整输出。']}
+                    if timeline.options.get('target_disappears_seconds')==0:
+                        emit('技能攻击',attack,'physical',0,event_times=[])
+                    else:regular()
         elif op=='char_4202_haruka':
             if normal:regular('magic')
             else:
@@ -899,13 +910,24 @@ class Combat:
                 ammo_rounds=ammunition_rounds(ammo,cost,self.s,minimum_interval=interval*speed/600)
                 duration=ammo_rounds*interval
                 if window is not None:duration=min(duration,window)
-                regular(scale=bb['attack@atk_scale'],times=cost)
-                consumed=attacks()*cost
+                no_current_target=self.n==3 and timeline.options.get('target_disappears_seconds')==0
+                if no_current_target:
+                    emit('技能攻击',attack*bb['attack@atk_scale'],'physical',0,event_times=[])
+                else:regular(scale=bb['attack@atk_scale'],times=cost)
+                consumed=0 if no_current_target else attacks()*cost
                 per=self.hit(attack*self.talent('火力电台','aoe_atk_scale'),'physical')
                 prob=self.talent('火力电台','prob')
                 components.append({'name':'火力电台期望轰炸','damage_type':'physical','hits':consumed*prob,
                     'per_hit':per,'total':per*consumed*prob})
-                if self.n==3 and self.s.get('delivery_coordinate',True):instant('physical',bb['attack@cannon_atk_scale'],name='投递坐标轰炸')
+                if self.n==3 and self.s.get('delivery_coordinate',True):
+                    emit('投递坐标轰炸',attack*bb['attack@cannon_atk_scale'],'physical',1)
+                    from .uncertain_sources import preserve_unplaced_sources
+                    external_event_reference={**preserve_unplaced_sources([components[-1]],window=window,
+                        target_lifetime=timeline.options.get('target_disappears_seconds')),
+                        'kind':'angel_coordinate_bomb',
+                        'parameter_rows':[('投递坐标轰炸倍率参数',bb['attack@cannon_atk_scale'],'倍')],
+                        'notes':['投递坐标存在时列一次物理溅射的单目标条件伤害；立即对该处轰炸不证明目标覆盖或实际命中帧。',
+                                 '本体供靶/打断窗口不定位坐标轰炸；实际覆盖、碰撞及阶段归属未核验，弹药攻击参考单独保留。']}
                 emit('火力电台本体生命回复',self.stats['hp']*self.talent('火力电台','hp_ratio'),'regeneration',consumed)
             self.notes.append('火力电台按每发弹药触发期望值分项，不把生命回复与屏障计作直接治疗；其他友方耗弹触发需要独立记录，未默认累加。')
         elif op=='char_1035_wisdel':

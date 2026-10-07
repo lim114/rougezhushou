@@ -174,8 +174,11 @@ class AmmoRefillReferenceTests(unittest.TestCase):
             self.assertEqual(r['estimate']['skill']['hit_counts']['技能攻击'],70)
             self.assertEqual(r['estimate']['skill']['hit_counts']['火力电台本体生命回复'],70)
             self.assertEqual(r['relic_resolution']['rules'][0]['ammo_parameters']['partial_packet_reference']['skill'],3)
-            for key in ('total_damage','duration_seconds','cycle_seconds','cycle_dps'):
+            for key in ('duration_seconds','cycle_seconds'):
                 self.assertIsNotNone(r['estimate']['skill'][key])
+            for key in ('total_damage','cycle_dps'):
+                self.assertIsNone(r['estimate']['skill'][key])
+                self.assertIsNotNone(r['known_damage_subtotals'][key])
             self.assertIsNotNone(r['estimate']['skill']['initial_seconds'])
             self.assertIsNotNone(r['estimate']['skill']['recharge_seconds'])
 
@@ -203,7 +206,10 @@ class AmmoRefillReferenceTests(unittest.TestCase):
                 self.assertTrue(reference['count_order_invariant'])
                 self.assertEqual(len(reference['cases']),2)
                 self.assertEqual({tuple(c['order']) for c in reference['cases']},{(BOOK,YA),(YA,BOOK)})
-                self.assertIsNotNone(r['estimate']['skill']['total_damage'])
+                if op=='char_1041_angel2' and n==3:
+                    self.assertIsNone(r['estimate']['skill']['total_damage'])
+                    self.assertIsNotNone(r['known_damage_subtotals']['total_damage'])
+                else:self.assertIsNotNone(r['estimate']['skill']['total_damage'])
                 self.assertIsNotNone(r['estimate']['skill']['cycle_seconds'])
 
     def test_poll_race_masks_derived_metrics_without_hiding_independent_training(self):

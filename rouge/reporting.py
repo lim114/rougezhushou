@@ -99,7 +99,7 @@ def has_healing(op,number):
 
 def fee_section(scenario,bb,skill):
     op=scenario['operator'];number=scenario['skill']
-    immediate=gradual=0
+    immediate=gradual=0;unplaced_shadow=False
     if op=='char_151_myrtle':gradual=bb['value']
     elif op=='char_4228_closur':
         if number==1:
@@ -114,7 +114,9 @@ def fee_section(scenario,bb,skill):
         if number==1:immediate=bb['cost']*counts.get('淬影突袭物理攻击',0)
         elif number==2:gradual=bb['cost']*counts.get('暗夜无明递增攻速攻击',0)
         else:
-            immediate=bb['cost']*counts.get('收回影哨',0)
+            shadow_count=counts.get('收回影哨',0)
+            unplaced_shadow=shadow_count is None
+            immediate=0 if unplaced_shadow else bb['cost']*shadow_count
             gradual=bb['cost']*counts.get('技能攻击',0)
     elif op=='silverash' and number==1:immediate=bb['cost']
     elif op=='silverash' and number==3:
@@ -123,13 +125,17 @@ def fee_section(scenario,bb,skill):
     else:
         if not any(r['kind']=='skill_start_dp' for r in scenario.get('_relic_rules',[])):return None
     immediate+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='skill_start_dp')
-    total=immediate+gradual;duration=skill['duration_seconds'];cycle=skill['cycle_seconds']
+    known_total=immediate+gradual;total=None if unplaced_shadow else known_total
+    duration=skill['duration_seconds'];cycle=skill['cycle_seconds']
     rows=[metric('per_cast','单次技能回费',total,'费')]
+    if unplaced_shadow:
+        rows += [metric('known_subtotal','已排程本体/开启回费参考小计',known_total,'费'),
+                 metric('shadow_per_hit','影哨每个路径伤害事件回费参数',bb['cost'],'费')]
     if immediate:rows.append(metric('immediate','下次攻击回费条件参考' if op=='char_4087_ines' and number==1 else '开启时立即回费',immediate,'费'))
     if gradual:rows.append(metric('gradual','持续回费合计',gradual,'费'))
-    if duration:rows.append(metric('active_rate','技能内平均回费',total/duration,'费/秒'))
+    if duration:rows.append(metric('active_rate','技能内平均回费',total/duration if total is not None else None,'费/秒'))
     if cycle:
-        rows.append(metric('cycle_rate','本轮周期平均回费',total/cycle,'费/秒'))
+        rows.append(metric('cycle_rate','本轮周期平均回费',total/cycle if total is not None else None,'费/秒'))
     elif skill.get('mode')!='deployment':
         rows.append(metric('cycle_rate','本轮周期平均回费',None,'费/秒'))
     notes=['主动技能产生的费用，未包含系统自然回费；不等于扣除部署费用后的净收益。','费用总量以完整技能为准，短观察窗口不替代它。']
@@ -139,6 +145,7 @@ def fee_section(scenario,bb,skill):
         rows.append(metric('mature_cycle_rate','成长完成后周期平均',bb['cost_add_max']/cycle if cycle else None,'费/秒'))
     if op=='char_4087_ines':
         notes.append('按当前单目标持续供靶的有效攻击/伤害事件估算；持续法术跳数不当作额外回费。其他敌人的影哨路径命中未默认加入。')
+        if unplaced_shadow:notes.append('影哨路径碰撞尚未定位；每个伤害事件回费只列参数，未确认开启时回费或完整技能回费。')
         if number==3 and scenario.get('ines_first_deployment'):
             notes.append('首次部署只放影哨后离场，此次没有伤害回费；免部署费是费用免除，不是产生费用。')
     return section('dp','费用收益',rows,notes)

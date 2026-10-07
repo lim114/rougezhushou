@@ -37,9 +37,13 @@ class PartialLastAmmoPacket054Tests(unittest.TestCase):
                     self.assertTrue(result['relic_resolution']['complete'])
                     self.assertEqual(skill['hit_counts']['技能攻击'], 70)
                     self.assertEqual(skill['hit_counts']['火力电台本体生命回复'], 70)
-                    for key in ('total_damage', 'duration_seconds', 'cycle_seconds', 'cycle_dps'):
+                    for key in ('duration_seconds', 'cycle_seconds'):
                         self.assertIsNotNone(skill[key])
                         self.assertTrue(math.isfinite(skill[key]))
+                    self.assertIsNone(skill['total_damage'])
+                    self.assertIsNone(skill['cycle_dps'])
+                    self.assertTrue(math.isfinite(result['known_damage_subtotals']['total_damage']))
+                    self.assertTrue(math.isfinite(result['known_damage_subtotals']['cycle_dps']))
                     self.assertGreater(skill['duration_seconds'], calc([], skill_rank=rank, timing_mode=mode)['estimate']['skill']['duration_seconds'])
 
     def test_final_packet_main_damage_and_talent_attempts_are_full_five(self):
@@ -52,7 +56,8 @@ class PartialLastAmmoPacket054Tests(unittest.TestCase):
                     c = component(result, name)
                     self.assertAlmostEqual(c['hits'], b['hits'] * 1.4)
                     self.assertAlmostEqual(c['total'], b['total'] * 1.4)
-            self.assertEqual(result['estimate']['skill']['hit_counts']['投递坐标轰炸'], 1)
+            self.assertIsNone(result['estimate']['skill']['hit_counts']['投递坐标轰炸'])
+            self.assertEqual(result['external_event_reference']['conditional_components'][0]['hits'], 1)
             self.assertEqual(result['estimate']['skill']['hit_counts']['火力电台期望轰炸'], 17.5)
 
     def test_fifty_percent_refill_retains_fifteen_complete_packets(self):
@@ -67,8 +72,11 @@ class PartialLastAmmoPacket054Tests(unittest.TestCase):
             with self.subTest(window=window):
                 result = calc([BOOK], window_seconds=window)
                 self.assertTrue(result['relic_resolution']['complete'])
-                self.assertLessEqual(result['total_damage'], full['total_damage'])
-                self.assertEqual(result['estimate']['skill']['total_damage'], full['estimate']['skill']['total_damage'])
+                self.assertLessEqual(result['known_damage_subtotals']['window_damage'],
+                                     full['known_damage_subtotals']['window_damage'])
+                self.assertEqual(result['known_damage_subtotals']['total_damage'],
+                                 full['known_damage_subtotals']['total_damage'])
+                self.assertIsNone(result['estimate']['skill']['total_damage'])
 
     def test_polling_race_is_not_unlocked_by_partial_packet_support(self):
         with patch('rouge.ammo_reference.refill_before_empty_is_safe', return_value=False):

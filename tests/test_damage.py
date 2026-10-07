@@ -38,9 +38,13 @@ class DamageTests(unittest.TestCase):
         result=calculate_damage(scenario)
         # Pot1: own Laterano ammo ATK +18%; S3 +30% =>1480.
         # 50*(1480*1.6-200) + 50*.25*(1480*1.5-200) + (1480*2.5-200).
-        self.assertEqual(result['total_damage'],137150)
+        self.assertIsNone(result['total_damage'])
+        def conditional_total(r):
+            return r['known_damage_subtotals']['window_damage']+r['external_event_reference']['conditional_components'][0]['total']
+        self.assertEqual(conditional_total(result),137150)
         faster=calculate_damage({**scenario,'effects':[{'kind':'attack_speed','value':100}]})
-        self.assertEqual(faster['total_damage'],result['total_damage'])
+        self.assertIsNone(faster['total_damage'])
+        self.assertEqual(conditional_total(faster),conditional_total(result))
         self.assertLess(faster['estimate']['skill']['duration_seconds'],result['estimate']['skill']['duration_seconds'])
 
     def test_infinite_skill_uses_window_output_without_inventing_cast_total_or_rotation(self):
