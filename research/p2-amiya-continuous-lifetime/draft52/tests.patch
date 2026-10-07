@@ -1,0 +1,241 @@
+--- /dev/null
++++ b/tests/test_amiya_continuous_lifetime.py
+@@ -0,0 +1,238 @@
++"""Restricted continuous caster S1 is a parameter reference, not a native clock."""
++from copy import deepcopy
++import unittest
++
++from rouge.catalog import catalog, operator_attributes
++from rouge.damage import calculate_damage
++from rouge.estimate import format_estimate
++from rouge.operator_engine import Combat
++
++
++def scenario(**extra):
++    return {'operator': 'char_002_amiya', 'skill': 1, 'base_attack': 1000,
++            'timing_mode': 'continuous', 'window_seconds': 10, **extra}
++
++
++def evaluate(**extra):
++    return calculate_damage(scenario(**extra))
++
++
++class AmiyaContinuousLifetimeTests(unittest.TestCase):
++    def test_positive_lifetime_preserves_the_old_conditional_arithmetic(self):
++        result = evaluate(timing={'target_disappears_seconds': .1})
++        ref = result['amiya_continuous_reference']
++        clock = ref['parameter_clock_reference']
++        self.assertEqual(clock['window_damage'], 11000)
++        self.assertEqual(clock['total_damage'], 35000)
++        self.assertEqual(clock['cycle_damage'], 43000)
++        self.assertAlmostEqual(clock['recharge_seconds'], 14)
++        self.assertAlmostEqual(clock['cycle_seconds'], 44)
++        self.assertEqual(result['estimate']['skill']['initial_seconds'], 7)
++        self.assertEqual(result['estimate']['skill']['duration_seconds'], 30)
++        self.assertIsNone(result['total_damage'])
++        self.assertFalse(ref['native_clock_binding_verified'])
++
++    def test_all_explicit_positive_lifetimes_keep_actual_damage_and_cycle_unknown(self):
++        for lifetime in (.01, .1, 1, 100, 3600, '1'):
++            with self.subTest(lifetime=lifetime):
++                result = evaluate(timing={'target_disappears_seconds': lifetime})
++                skill = result['estimate']['skill']
++                for key in ('total_damage', 'phase_damage', 'window_damage', 'window_dps',
++                            'recharge_seconds', 'cycle_seconds', 'cycle_damage', 'cycle_dps',
++                            'cycle_healing', 'cycle_hps'):
++                    self.assertIsNone(skill[key], key)
++                self.assertIsNone(result['total_damage'])
++                self.assertTrue(result['timing']['phase_clock_unbound'])
++                self.assertFalse(result['timing']['resource_and_damage_shared_clock'])
++                self.assertFalse(result['complete'])
++                self.assertFalse(result['estimate']['complete'])
++
++    def test_nonempty_ranges_do_not_create_a_uniform_uptime_or_native_acquisition_clock(self):
++        for windows in ([[0, 1]], [[10, 20]], [[0, 100]], [[0, .1], [5, 6]]):
++            with self.subTest(windows=windows):
++                result = evaluate(timing={'target_windows': windows})
++                self.assertIsNone(result['total_damage'])
++                self.assertEqual(result['amiya_continuous_reference']['parameter_clock_reference']['window_damage'], 11000)
++                self.assertIsNone(result['amiya_continuous_reference']['actual_acquisition_times_seconds'])
++
++    def test_short_positive_window_reference_hit_zero_is_not_actual_zero(self):
++        result = evaluate(window_seconds=.01, timing={'target_disappears_seconds': .1})
++        self.assertEqual(result['components'][0]['hits'], 0)
++        self.assertIsNone(result['components'][0]['actual_total'])
++        self.assertIsNone(result['total_damage'])
++        ref = result['amiya_continuous_reference']
++        self.assertEqual(ref['parameter_clock_reference']['window_damage'], 0)
++        self.assertTrue(ref['window_reference']['source_possible'])
++
++    def test_zero_observation_does_not_erase_the_unbound_full_cast_or_recharge(self):
++        result = evaluate(window_seconds=0, timing={'target_disappears_seconds': .1})
++        self.assertEqual(result['total_damage'], 0)
++        self.assertFalse(any('actual_total' in c for c in result['components']))
++        self.assertIsNone(result['estimate']['skill']['total_damage'])
++        self.assertIsNone(result['estimate']['skill']['recharge_seconds'])
++        ref = result['amiya_continuous_reference']
++        self.assertTrue(ref['cast_reference']['source_possible'])
++        self.assertFalse(ref['window_reference']['source_possible'])
++        self.assertEqual(ref['parameter_clock_reference']['total_damage'], 35000)
++
++    def test_empty_range_excludes_enemy_damage_but_does_not_prove_a_native_cycle(self):
++        for timing in ({'target_windows': []},
++                       {'target_windows': [], 'target_disappears_seconds': 1}):
++            with self.subTest(timing=timing):
++                result = evaluate(timing=timing)
++                skill = result['estimate']['skill']
++                self.assertEqual(result['total_damage'], 0)
++                self.assertEqual(skill['total_damage'], 0)
++                self.assertEqual(skill['phase_damage'], 0)
++                self.assertEqual(skill['initial_seconds'], 7)
++                self.assertIsNone(skill['recharge_seconds'])
++                self.assertIsNone(skill['cycle_seconds'])
++                self.assertIsNone(skill['cycle_damage'])
++                ref = result['amiya_continuous_reference']
++                self.assertTrue(ref['enemy_source_excluded'])
++                self.assertEqual(ref['parameter_clock_reference']['recharge_seconds'], 30)
++                self.assertEqual(ref['parameter_clock_reference']['cycle_seconds'], 60)
++                self.assertEqual(ref['natural_only_recharge_seconds_reference'], 30)
++
++    def test_established_numeric_lifetime_zero_path_has_no_new_guard(self):
++        for timing in ({'target_disappears_seconds': 0},
++                       {'target_disappears_seconds': 0, 'target_windows': [[0, 1]]},
++                       {'target_disappears_seconds': 0, 'target_windows': []}):
++            with self.subTest(timing=timing):
++                result = evaluate(timing=timing)
++                self.assertNotIn('amiya_continuous_reference', result)
++                self.assertEqual(result['total_damage'], 0)
++                self.assertEqual(result['estimate']['skill']['recharge_seconds'], 30)
++                self.assertEqual(result['estimate']['skill']['cycle_seconds'], 60)
++                self.assertEqual(result['estimate']['skill']['initial_seconds'], 7)
++                self.assertEqual(result['scope'], '单个持续命中目标的明确技能情景；多段逐段结算防御。')
++
++    def test_valid_numeric_string_zero_is_a_mathematical_empty_source(self):
++        result = evaluate(timing={'target_disappears_seconds': '0'})
++        self.assertEqual(result['total_damage'], 0)
++        self.assertTrue(result['amiya_continuous_reference']['enemy_source_excluded'])
++        self.assertEqual(result['amiya_continuous_reference']['natural_only_recharge_seconds_reference'], 30)
++        self.assertIsNone(result['estimate']['skill']['recharge_seconds'])
++        self.assertIsNone(result['estimate']['skill']['cycle_seconds'])
++
++    def test_empty_reference_keeps_event_arrays_consistent_after_source_exclusion(self):
++        from rouge.amiya_continuous_reference import preserve_plan
++        from rouge.timing import phase_totals
++        components = [{'name': '技能攻击', 'damage_type': 'magic', 'hits': 2,
++                       'per_hit': 125, 'total': 250, 'times_seconds': [.8, 1.6],
++                       'event_amounts': [150, 100]}]
++        reference = preserve_plan(scenario(timing={'target_windows': []}), components, 30)
++        self.assertEqual(reference['conditional_components'][0]['event_amounts'], [])
++        self.assertEqual(components[0]['event_amounts'], [])
++        self.assertEqual(phase_totals(reference['conditional_components'], 30)[0], 0)
++
++    def test_disabled_attack_sp_keeps_its_old_initial_and_natural_reference(self):
++        result = evaluate(continuous_attacks=False, timing={'target_disappears_seconds': 1})
++        skill = result['estimate']['skill']
++        ref = result['amiya_continuous_reference']
++        self.assertEqual(skill['initial_seconds'], 15)
++        self.assertEqual(ref['parameter_clock_reference']['recharge_seconds'], 30)
++        self.assertFalse(ref['attack_sp_enabled_in_reference'])
++        self.assertIsNone(skill['recharge_seconds'])
++        self.assertIsNone(result['total_damage'])
++
++    def test_below_e2_has_no_attack_sp_talent_but_not_a_proven_lifetime_clock(self):
++        for elite, rank in ((0, 1), (1, 7)):
++            with self.subTest(elite=elite):
++                result = evaluate(elite=elite, skill_rank=rank,
++                                  timing={'target_disappears_seconds': 1})
++                ref = result['amiya_continuous_reference']
++                self.assertEqual(ref['attack_sp_per_attack_parameter'], 0)
++                self.assertEqual(result['estimate']['skill']['initial_seconds'],
++                                 ref['parameter_clock_reference']['initial_seconds'])
++                self.assertIsNone(result['estimate']['skill']['recharge_seconds'])
++                self.assertIsNone(result['total_damage'])
++
++    def test_potential_and_natural_sp_parameters_are_not_hardcoded_to_default(self):
++        result = evaluate(potential=6, effects=[{'kind': 'sp_recovery', 'value': 1}],
++                          timing={'target_disappears_seconds': 1})
++        ref = result['amiya_continuous_reference']
++        self.assertEqual(ref['attack_sp_per_attack_parameter'], 3)
++        self.assertEqual(ref['natural_sp_rate_parameter'], 2)
++        self.assertEqual(ref['natural_only_recharge_seconds_reference'], 15)
++        self.assertEqual(result['estimate']['skill']['initial_seconds'],
++                         ref['parameter_clock_reference']['initial_seconds'])
++
++    def test_old_half_open_phase_parameter_is_preserved_at_exact_interval_boundary(self):
++        result = evaluate(effects=[{'kind': 'attack_speed', 'value': 50}],
++                          timing={'target_disappears_seconds': 1})
++        clock = result['amiya_continuous_reference']['parameter_clock_reference']
++        self.assertEqual(clock['total_damage'], 45000)
++        self.assertEqual(clock['phase_damage'], 44000)
++        self.assertIsNone(result['estimate']['skill']['phase_damage'])
++
++    def test_normal_recharge_component_has_a_conditional_reference_without_actual_times(self):
++        args = scenario(timing={'target_disappears_seconds': 1})
++        attrs = operator_attributes('char_002_amiya')
++        normal = Combat(args, attrs).plan(normal=True, window=14)
++        component = normal['components'][0]
++        self.assertEqual(component['per_hit'], 1000)
++        self.assertEqual(component['total'], 8000)
++        self.assertIsNone(component['actual_total'])
++        self.assertNotIn('times_seconds', component)
++        self.assertEqual(len(normal['amiya_continuous_reference']['conditional_components'][0]['times_seconds']), 8)
++
++    def test_masked_cycle_is_not_reintroduced_as_a_known_subtotal(self):
++        result = evaluate(timing={'target_disappears_seconds': 1})
++        subtotal = result['known_damage_subtotals']
++        self.assertEqual(subtotal['window_damage'], 0)
++        self.assertIsNone(subtotal['cycle_damage'])
++        self.assertIsNone(subtotal['cycle_dps'])
++
++    def test_other_skills_frames_friendly_and_instant_sources_keep_their_scope(self):
++        for extra in ({'skill': 2}, {'skill': 3}, {'timing_mode': 'frames'},
++                      {'operator': 'char_298_susuro'}, {'operator': 'char_206_gnosis', 'skill': 2}):
++            with self.subTest(extra=extra):
++                result = evaluate(timing={'target_disappears_seconds': 1}, **extra)
++                self.assertNotIn('amiya_continuous_reference', result)
++        friend = evaluate(operator='char_298_susuro', timing={'target_disappears_seconds': 1})
++        self.assertGreater(friend['total_healing'], 0)
++        instant = evaluate(operator='char_206_gnosis', skill=2, timing={'target_disappears_seconds': .1})
++        self.assertEqual(instant['total_damage'], 2000)
++        self.assertTrue(instant['components'][0]['instant_event'])
++
++    def test_default_continuous_supply_remains_the_existing_reference(self):
++        result = evaluate()
++        self.assertNotIn('amiya_continuous_reference', result)
++        self.assertEqual(result['total_damage'], 11000)
++        self.assertEqual(result['estimate']['skill']['total_damage'], 35000)
++        self.assertAlmostEqual(result['estimate']['skill']['recharge_seconds'], 14)
++        self.assertEqual(result['estimate']['skill']['cycle_damage'], 43000)
++        self.assertEqual(result['scope'], '单个持续命中目标的明确技能情景；多段逐段结算防御。')
++
++    def test_report_labels_condition_parameters_and_unknown_actual_resource_clock(self):
++        result = evaluate(timing={'target_disappears_seconds': 1})
++        text = format_estimate(result)
++        self.assertIn('术师阿米娅S1 · 受限连续时序参考', text)
++        self.assertIn('连续供靶窗口伤害参数参考：11,000', text)
++        self.assertIn('旧连续供靶充能参数参考：14.00 秒', text)
++        self.assertIn('实际结束后充能：未知', text)
++        self.assertIn('预计回转：未知', text)
++        self.assertIn('不证明没有其它游戏目标或来源', text)
++        self.assertEqual(result['scope'], result['estimate']['scenario_scope'])
++        self.assertIn('旧连续供靶条件参数与当前有限约束的实际伤害/回转分列', text)
++        self.assertIn('旧连续供靶条件参考假设单目标持续存活', text)
++        self.assertIn('按合成间隔事件计算', text)
++        self.assertNotIn('单个持续命中目标的明确技能情景', text)
++        self.assertNotIn('单目标持续存活、供靶情景', text)
++        self.assertNotIn('精神爆发后晕眩期间停止攻击', text)
++
++    def test_input_catalog_and_returned_reference_are_independent(self):
++        args = scenario(timing={'target_windows': [[0, 1]]})
++        original = deepcopy(args)
++        profile = catalog()['operators']['char_002_amiya']
++        before = deepcopy(profile)
++        result = calculate_damage(args)
++        result['amiya_continuous_reference']['declared_target_windows_seconds'][0][0] = 9
++        result['amiya_continuous_reference']['cast_reference']['conditional_components'][0]['per_hit'] = 9
++        self.assertEqual(args, original)
++        self.assertEqual(profile, before)
++
++
++if __name__ == '__main__':
++    unittest.main()

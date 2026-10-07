@@ -1,0 +1,118 @@
+{
+  "source_scope": "original caster Amiya S1 parameters and attack-SP talent; native finite-positive continuous clocks unverified",
+  "sources": {
+    "character_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "reused_pinned_cache": true,
+      "current_sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697"
+    },
+    "skill_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "reused_pinned_cache": true,
+      "current_sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca"
+    }
+  },
+  "selectors": {
+    "skill_mapping": "character_table.char_002_amiya.skills[0].skillId",
+    "skill": "skill_table.skcom_magic_rage[3].levels[9]",
+    "talent": "character_table.char_002_amiya.talents[0].candidates[1]",
+    "base_interval": "character_table.char_002_amiya.phases[2].attributesKeyFrames[0].data.baseAttackTime"
+  },
+  "source_skill": {
+    "name": "战术咏唱·γ型",
+    "rangeId": null,
+    "description": "攻击速度<@ba.vup>+{attack_speed}</>",
+    "skillType": "MANUAL",
+    "durationType": "NONE",
+    "spData": {
+      "spType": "INCREASE_WITH_TIME",
+      "levelUpCost": null,
+      "maxChargeTime": 1,
+      "spCost": 30,
+      "initSp": 15,
+      "increment": 1.0
+    },
+    "prefabId": "skcom_attack_speed_up",
+    "duration": 30.0,
+    "blackboard": [
+      {
+        "key": "attack_speed",
+        "value": 90.0,
+        "valueStr": null
+      }
+    ]
+  },
+  "source_talent": {
+    "unlockCondition": {
+      "phase": "PHASE_2",
+      "level": 1
+    },
+    "requiredPotentialRank": 0,
+    "prefabKey": "1",
+    "name": "情绪吸收",
+    "description": "攻击敌人时额外回复2点技力，消灭敌人后额外获得8点技力",
+    "rangeId": null,
+    "blackboard": [
+      {
+        "key": "amiya_t_1[atk].sp",
+        "value": 2.0,
+        "valueStr": null
+      },
+      {
+        "key": "amiya_t_1[kill].sp",
+        "value": 8.0,
+        "valueStr": null
+      }
+    ],
+    "tokenKey": null,
+    "isHideTalent": false
+  },
+  "base_interval_parameter_seconds": 1.6,
+  "reused_receipts": [
+    "research/p2-empty-enemy-scope/source-receipt.json",
+    "research/p2-empty-enemy-scope/NOTE.md",
+    "research/p2-phase-guards/source-receipt.json",
+    "research/p2-environment-and-lifecycle/source-receipt.json"
+  ],
+  "reused_unknown_statement": "research/p2-empty-enemy-scope/NOTE.md explicitly preserves finite-positive/nonempty-range continuous calculations as previous parameter references and leaves actual target/attack clocks unknown",
+  "continuous_times_provenance": "AttackTimeline.attacks generates ready+(i+1)*interval; existence of times_seconds does not establish native timing or first-hit phase",
+  "native_first_hit_and_release_binding_verified": false,
+  "actual_finite_positive_lifecycle_clipping_verified": false,
+  "current_claims": {
+    "estimate_complete": true,
+    "status": "支持范围内估算",
+    "window_damage": 11000,
+    "cast_damage": 35000,
+    "recharge_seconds": 13.999999999999995,
+    "cycle_damage": 43000,
+    "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+  },
+  "counterexample_families": 2,
+  "public_calls": 6,
+  "no_proposed_native_replacement_counts": true,
+  "skill_relative_constraints_do_not_redefine_precast_initial": true,
+  "baseline_head": "ab1a2f49332e9dbb577eb3ffa1a497c0bb969fa6",
+  "frozen_production_hashes": {
+    "rouge/timing.py": "1de2c21196049fe41265c3b0bba3c851ace730ff1b5a091a8f9a1cbe287ddab8",
+    "rouge/operator_engine.py": "f50792dc0d8359988dd9eeb2bf0f7dfa083aa9e1d8f5635530820d08280fa249",
+    "rouge/reporting.py": "280a4b99a26c54d1f2ce8ed734205f426bebbf37ab8cd24226d24d38bed5db59",
+    "rouge/damage.py": "c336e89db709cf09e5133b1659e6e913124bdb574046d81b04369a145caea22c",
+    "rouge/data/catalog.json": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+  },
+  "frozen_package_hashes_match_baseline": true,
+  "repo_mutations_by_this_audit": 0,
+  "private_state_read": false,
+  "game_actions": 0,
+  "messages_sent": 0,
+  "network_requests": 0
+}

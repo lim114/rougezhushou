@@ -377,6 +377,19 @@ def build_report(scenario,result):
             metric('maximum','基础倍率上限参数',params['max_atk_scale']*100,'%'),
             metric('stacks','最大层数参数',params['max_stack_cnt'],'层')],
             ['仅更新已有暖机参考的直接数据参数；实际独立单元时钟、重选目标重置与当前热更新仍未核验。']))
+    amiya_continuous=result.get('amiya_continuous_reference')
+    if amiya_continuous:
+        clock=amiya_continuous['parameter_clock_reference']
+        sections.append(section('amiya_continuous','术师阿米娅S1 · 受限连续时序参考',[
+            metric('per_hit','单次攻击伤害条件参考',amiya_continuous['per_hit_damage_reference']),
+            metric('window_reference','连续供靶窗口伤害参数参考',clock['window_damage']),
+            metric('cast_reference','连续供靶单次伤害参数参考',clock['total_damage']),
+            metric('recharge_reference','旧连续供靶充能参数参考',clock['recharge_seconds'],'秒'),
+            metric('natural_reference','无攻击回技力的自然充能参数参考',amiya_continuous['natural_only_recharge_seconds_reference'],'秒'),
+            metric('actual_recharge','实际结束后充能',None,'秒')],
+            ['间隔算例中的合成时刻不证明实际首击、供靶获取、命中或回技力；有限正约束下的伤害及实际回转未知。',
+             '空范围只排除当前敌人的数学来源；自然SP参数不证明没有其它游戏目标或来源。',
+             '施放后的生命周期/范围不重写原施放前初动约定；旧数值只保留条件参数，未作minlife或均匀比例裁剪。']))
     terminal=result.get('gnosis_terminal_reference')
     if terminal:
         sections.append(section('gnosis_terminal','失温症 · 终结条件参考',[
@@ -675,7 +688,7 @@ def build_report(scenario,result):
              if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
              if bait_reference else
              '这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。'
-             if wisdel or mizuki or mizuki_amb_y or ines_dot or manual_close or liftoff or snow or unbound or external or chen_phase or result.get('drone_lifecycle_reference') else
+             if amiya_continuous or wisdel or mizuki or mizuki_amb_y or ines_dot or manual_close or liftoff or snow or unbound or external or chen_phase or result.get('drone_lifecycle_reference') else
              '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']))
     healing_subtotals=result.get('known_healing_subtotals')
     if healing_subtotals:

@@ -1239,7 +1239,10 @@ class Combat:
                 c['event_amounts']=[amount for _,amount in events]
                 c['hits']=len(events)
             c['per_hit']=c['total']/c['hits'] if c['hits'] else 0
-        return {'attack':attack,'attack_speed':speed,'attack_speed_reference':speed_reference,
+        from .amiya_continuous_reference import preserve_plan
+        amiya_continuous_reference=preserve_plan(self.s,components,duration)
+        return {**({'amiya_continuous_reference':amiya_continuous_reference} if amiya_continuous_reference else {}),
+            'attack':attack,'attack_speed':speed,'attack_speed_reference':speed_reference,
             'interval':interval,'duration':duration,'mode':mode,
             'damage':sum(c['total'] for c in components if c['damage_type'] not in ('healing','regeneration','buildup')),
             'healing':sum(c['total'] for c in components if c['damage_type']=='healing'),
@@ -1281,7 +1284,8 @@ class Combat:
                 first=time_to_charge(max(0,sp['sp_cost']-initial))
                 recharge=(max(sp['values'].get('stun',0),recharge_cost/rate) if rate>0 else None) if (
                     self.s.get('timing_mode','frames')=='continuous' and
-                    self.s.get('timing',{}).get('target_disappears_seconds')==0) else time_to_charge(recharge_cost,sp['values'].get('stun',0))
+                    (self.s.get('timing',{}).get('target_disappears_seconds')==0 or
+                     full.get('amiya_continuous_reference',{}).get('enemy_source_excluded'))) else time_to_charge(recharge_cost,sp['values'].get('stun',0))
                 if self.s.get('timing_mode','frames')=='frames':
                     first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,attack_sp,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)
                     mixed_recovery=(attack_sp,sp['values'].get('stun',0))
@@ -1699,6 +1703,10 @@ class Combat:
             from .uncertain_sources import mask_pending_damage
             mask_pending_damage(result,full,shown,normal,duration,cycle)
             result['complete']=False;result['estimate']['complete']=False
+        if full.get('amiya_continuous_reference'):
+            from .amiya_continuous_reference import attach_result as attach_amiya_continuous
+            attach_amiya_continuous(result,self.s,full,shown,normal,duration,cycle,rate=rate,
+                cost=recharge_cost,attack_credit=self.talent('情绪吸收','amiya_t_1[atk].sp'))
         if self.gnosis_isw_a_reference:
             from .gnosis_module_reference import attach_result
             attach_result(result,self.gnosis_isw_a_reference,full,shown,normal,duration,cycle)
