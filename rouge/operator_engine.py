@@ -289,8 +289,10 @@ class Combat:
             elif normal:
                 if op=='char_196_sunbr':
                     prob=self.talent('平底锅专精','prob');scale=self.talent('平底锅专精','atk_scale',1)
-                    emit('普攻期望',attack,'physical',attacks()*(1-prob))
-                    emit('平底锅专精期望',attack*scale,'physical',attacks()*prob)
+                    events=attack_times()
+                    for name,raw,weight in (('普攻期望',attack,1-prob),('平底锅专精期望',attack*scale,prob)):
+                        emit(name,raw,'physical',len(events)*weight,event_times=list(events))
+                        components[-1]['event_amounts']=[components[-1]['per_hit']*weight for _ in events]
                 else:regular(name='普通攻击')
             elif op=='char_298_susuro':
                 factor=self.talent('微创治疗','heal_scale',1) if self.s.get('low_cost_healing_target') else 1
