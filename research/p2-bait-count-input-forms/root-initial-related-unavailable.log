@@ -1,0 +1,19 @@
+======================================================================
+ERROR: setUpClass (tests.test_river_reporting_060.RiverReportingTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_river_reporting_060.py", line 36, in setUpClass
+    blob = BASELINE.read_bytes()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/river-effects-060/integration-before.json'
+
+----------------------------------------------------------------------
+Ran 78 tests in 2.346s
+
+FAILED (errors=1)

@@ -1865,11 +1865,12 @@ class Combat:
                     'phase':phase_totals(cast_bursts,duration)[0] if duration is not None else 0,
                     'window':sum(c['total'] for c in shown['components'] if c['name']=='神经损伤爆发'),
                     'cycle':cycle_neural_burst_damage}}
-        if self.s['operator']=='char_1042_phatm2' and self.n==2 and self.s.get('bait_triggers',0):
+        bait_triggers=int(self.option('bait_triggers',0,maximum=100,integer=True)) if self.s['operator']=='char_1042_phatm2' and self.n==2 else 0
+        if bait_triggers:
             alive=self.s.get('timing',{}).get('target_disappears_seconds')!=0
             cast_bursts=[c for c in full['components'] if c['name']=='神经损伤爆发']
             result['neural_bait_reference']={
-                'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
+                'skill':'本能的召唤','triggers_requested':bait_triggers,
                 'attack_snapshot':'deployment','snapshot_attack':None,
                 'duration_seconds':self.bb['buff_time'],'tick_interval_seconds':self.bb['interval_damage'],
                 'arts_attack_scale':self.bb['atk_scale'],'buildup_attack_ratio':self.bb['ep_damage_ratio_token'],

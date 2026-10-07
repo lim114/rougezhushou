@@ -1,0 +1,20 @@
+{
+  "preparatory_snapshots": [
+    {
+      "path": "baseline493-full60-preparation",
+      "head": "49368bb06f90ba9feaea62752f3fa641ccad5201",
+      "actual_stage": "full60 preparation",
+      "never_used_as_final61": true
+    },
+    {
+      "path": "baseline127-full60-preparation",
+      "head": "127fb0b34c74cea0bbceaa457fc1f9a324052f34",
+      "actual_stage": "full60 validation archive",
+      "never_used_as_final61": true
+    }
+  ],
+  "diagnosis": "two source-diff assertions rejected premature stage61 assumptions before any patch or final61 receipt; rolling HEAD is not a stage identity",
+  "resolved_by": "verify explicit d0ec6b6 commit subject and actual integer boolguard, then extract exact immutable git blobs",
+  "final_baseline_receipt": "baseline61-freeze.json",
+  "source_or_root_edits": 0
+}

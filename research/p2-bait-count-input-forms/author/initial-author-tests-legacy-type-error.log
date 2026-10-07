@@ -1,0 +1,45 @@
+test_existing_finite_integer_range_and_bool_errors_are_preserved (test_bait_count_input_forms.BaitCountInputFormsTests.test_existing_finite_integer_range_and_bool_errors_are_preserved) ... ok
+test_irrelevant_skills_and_operators_ignore_unused_field (test_bait_count_input_forms.BaitCountInputFormsTests.test_irrelevant_skills_and_operators_ignore_unused_field) ... ok
+test_missing_count_and_zero_observation_preserve_numeric_contract (test_bait_count_input_forms.BaitCountInputFormsTests.test_missing_count_and_zero_observation_preserve_numeric_contract) ... ok
+test_positive_aliases_match_full_integer_result_at_every_rank (test_bait_count_input_forms.BaitCountInputFormsTests.test_positive_aliases_match_full_integer_result_at_every_rank) ... ok
+test_positive_count_keeps_snapshot_clock_and_event_schedule_unknown (test_bait_count_input_forms.BaitCountInputFormsTests.test_positive_count_keeps_snapshot_clock_and_event_schedule_unknown) ... ok
+test_public_input_and_shared_parameter_caches_are_unchanged (test_bait_count_input_forms.BaitCountInputFormsTests.test_public_input_and_shared_parameter_caches_are_unchanged) ... ERROR
+test_resistance_and_river_contexts_match_existing_integer_reference (test_bait_count_input_forms.BaitCountInputFormsTests.test_resistance_and_river_contexts_match_existing_integer_reference) ... ok
+test_zero_aliases_keep_full_numeric_zero_result_and_report (test_bait_count_input_forms.BaitCountInputFormsTests.test_zero_aliases_keep_full_numeric_zero_result_and_report) ... ok
+
+======================================================================
+ERROR: test_public_input_and_shared_parameter_caches_are_unchanged (test_bait_count_input_forms.BaitCountInputFormsTests.test_public_input_and_shared_parameter_caches_are_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/draft/tests/test_bait_count_input_forms.py", line 107, in test_public_input_and_shared_parameter_caches_are_unchanged
+    calculate_damage(args)
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/draft/rouge/damage.py", line 373, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/draft/rouge/damage.py", line 326, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/draft/rouge/damage.py", line 294, in _evaluate_damage_once
+    result=calculate_extended(scenario,attributes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/draft/rouge/operator_engine.py", line 1925, in calculate_extended
+    def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/draft/rouge/operator_engine.py", line 1275, in calculate
+    full=self.plan()
+         ^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/draft/rouge/operator_engine.py", line 903, in plan
+    bait=self.option('bait_triggers',0,maximum=100,integer=True)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/draft/rouge/operator_engine.py", line 148, in option
+    return self.value(value,key,maximum,integer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/.continuation/p2-raw-integer-report-audit-065/draft/rouge/operator_engine.py", line 138, in value
+    value=float(value)
+          ^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'dict'
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.579s
+
+FAILED (errors=1)
