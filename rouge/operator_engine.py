@@ -175,9 +175,15 @@ class Combat:
             if self.s.get('four_sui'):
                 self.atk_bonus+=self.talent('天有四时','atk')
                 self.sp_extra+=self.talent('天有四时','sp')/self.talent('天有四时','interval',4)
-        if op=='char_1048_orchd2' and '翔虫机动' in self.tv:
-            self.redeploy=max(0,self.redeploy-15)
-            if self.s.get('near_previous_deployment'):self.atk_bonus+=self.talent('翔虫机动','atk')
+        if op=='char_1048_orchd2':
+            self.orchid_redeploy_delta=0
+            if '翔虫机动' in self.tv:
+                # Reviewed original index3/prefab3 and its same-identity
+                # TALENT_DATA_ONLY overrides retain a redeploy parameter.
+                self.orchid_redeploy_delta=next((t['values']['respawn_time'] for t in self.talents
+                    if 'respawn_time' in t['values']),-15)
+                self.redeploy=max(0,self.redeploy+self.orchid_redeploy_delta)
+                if self.s.get('near_previous_deployment'):self.atk_bonus+=self.talent('翔虫机动','atk')
         if op=='char_1038_whitw2':self.initial_bonus+=self.talent('叙拉古的荣幸','sp')
         if op=='char_1041_angel2' and self.skill['duration_type']=='AMMO':
             self.atk_bonus+=self.talent('铳弹协约','atk')*self.talent('铳弹协约','mult',2)
@@ -1707,6 +1713,34 @@ class Combat:
                     'phase':phase_totals(cast_bursts,duration)[0] if duration is not None else 0,
                     'window':sum(c['total'] for c in shown['components'] if c['name']=='神经损伤爆发'),
                     'cycle':cycle_neural_burst_damage}}
+        if self.s['operator']=='char_1048_orchd2':
+            module=next((m for m in self.p['modules'] if m['id']==self.s.get('module_id')),None)
+            elite=self.s.get('elite',2)
+            level=self.s.get('level') or self.p['phases'][elite]['max_level']
+            applied=bool(module and elite>=module['unlock_elite'] and level>=module['unlock_level'])
+            module_delta=module['levels'][self.s['module_level']-1]['attributes'].get('respawn_time',0) if applied else 0
+            result['orchid_redeploy_reference']={
+                'scope':'cultivated attribute and same-identity talent parameter reference',
+                'operator_id':self.p['id'],'module_id':self.s.get('module_id'),
+                'module_level':self.s.get('module_level',0),'module_unlocked':applied,
+                'module_attribute_delta_seconds_parameter':module_delta,
+                'after_attribute_sources_seconds_reference':self.a['redeploy_seconds'],
+                'talent_delta_seconds_parameter':self.orchid_redeploy_delta,
+                'parameter_seconds':self.redeploy,
+                'original_talent_identity':{'talent_index':3,'prefab_key':'3'},
+                'actual_retreat_seconds':None,'actual_defeat_seconds':None,
+                'actual_next_deployment_seconds':None,'events_scheduled':False,
+                'native_attachment_verified':False,'live_state_verified':False,
+                'source_commit':'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add',
+                'source_selectors':[
+                    'character_table.char_1048_orchd2.phases[*].attributesKeyFrames[*].data.respawnTime',
+                    'character_table.char_1048_orchd2.potentialRanks[1].buff.attributes.attributeModifiers',
+                    'character_table.char_1048_orchd2.talents[1].candidates',
+                    'character_table.char_1048_orchd2.talents[3].candidates',
+                    'uniequip_table.equipDict.uniequip_002_orchd2',
+                    'battle_equip_table.uniequip_002_orchd2.phases[*].attributeBlackboard',
+                    'battle_equip_table.uniequip_002_orchd2.phases[*].parts[*].addOrOverrideTalentDataBundle.candidates']}
+            result['estimate']['notes'].append('梓兰再部署为原始培养与同身份天赋的参数参考；实际撤退、倒下和再次部署的时刻及当前热更新未核验，未安排部署事件。')
         return result
 
 

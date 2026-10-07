@@ -52,6 +52,7 @@ def operator_attributes(operator, elite=2, level=None, trust=100, potential=1,mo
             raise ValueError('模组身份或等级尚无可用规则。')
         if elite>=module['unlock_elite'] and level>=module['unlock_level']:
             for attr,value in module['levels'][module_level-1]['attributes'].items():
-                field={'atk':'attack','def':'defense','max_hp':'hp','magic_resistance':'resistance','attack_speed':'attack_speed'}.get(attr)
+                field={'atk':'attack','def':'defense','max_hp':'hp','magic_resistance':'resistance','attack_speed':'attack_speed',
+                       'respawn_time':'redeploy_seconds'}.get(attr)
                 if field:stats[field]+=value
     return stats
