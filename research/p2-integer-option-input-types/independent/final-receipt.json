@@ -1,0 +1,126 @@
+{
+  "independent_final_review_passed": true,
+  "findings": [],
+  "blockers": [],
+  "baseline_head": "4543b9b91ac7b61fc019bb96a3d6d5ac2593a6bc",
+  "reviewed_patch": "/workspace/.continuation/p2-integer-option-audit-061/section61.patch",
+  "reviewed_patch_sha256": "b12e5ca02ca6587661e82651a2b586b0c563a78a18480250a9bbde490c44e27c",
+  "reviewed_production_change": "Combat.option only; raw bool rejected at actual integer query, with healing_targets capability exception",
+  "runtime_manifest_files_checked": 121,
+  "baseline_source_drift": [],
+  "draft_runtime_changes": [
+    "rouge/operator_engine.py"
+  ],
+  "all_other_operator_engine_AST_unchanged": true,
+  "new_test_methods": 8,
+  "source_closure_control_records_independently_checked": 25,
+  "cached_raw_tables_freshly_rehashed": true,
+  "raw_skill_rank_blackboards_independently_compared": 510,
+  "amiya_char_patch_mapping_historical_receipt_only": true,
+  "main_completed_JSON_pairs_independently_recompared_no_calculation_rerun": 1354,
+  "main_bool_errors_verified": 192,
+  "main_full_public_outcomes_preserved": 1162,
+  "preserved_group_counts": {
+    "active_integer": 828,
+    "inactive_other_operator": 144,
+    "inactive_query_gate": 6,
+    "real_checkbox": 184
+  },
+  "old_comparator_false_differences_preserved": 374,
+  "old_failed_cases_all_preserved_in_completed_JSON": true,
+  "tuple_diagnostic_live_example": {
+    "original_failed_index": 62,
+    "runtime_vs_saved_Python_equality": false,
+    "strict_serialized_public_JSON_equal": true,
+    "tuple_vs_list_paths": [
+      {
+        "path": "outcome.result.unbound_cast_reference.parameter_rows[0]",
+        "runtime_type": "tuple",
+        "saved_JSON_type": "list"
+      },
+      {
+        "path": "outcome.result.unbound_cast_reference.parameter_rows[1]",
+        "runtime_type": "tuple",
+        "saved_JSON_type": "list"
+      },
+      {
+        "path": "outcome.result.unbound_cast_reference.parameter_rows[2]",
+        "runtime_type": "tuple",
+        "saved_JSON_type": "list"
+      },
+      {
+        "path": "outcome.result.unbound_cast_reference.parameter_rows[3]",
+        "runtime_type": "tuple",
+        "saved_JSON_type": "list"
+      },
+      {
+        "path": "outcome.result.unbound_cast_reference.parameter_rows[4]",
+        "runtime_type": "tuple",
+        "saved_JSON_type": "list"
+      },
+      {
+        "path": "outcome.result.unbound_cast_reference.window_reference.parameter_rows[0]",
+        "runtime_type": "tuple",
+        "saved_JSON_type": "list"
+      },
+      {
+        "path": "outcome.result.unbound_cast_reference.window_reference.parameter_rows[1]",
+        "runtime_type": "tuple",
+        "saved_JSON_type": "list"
+      },
+      {
+        "path": "outcome.result.unbound_cast_reference.window_reference.parameter_rows[2]",
+        "runtime_type": "tuple",
+        "saved_JSON_type": "list"
+      },
+      {
+        "path": "outcome.result.unbound_cast_reference.window_reference.parameter_rows[3]",
+        "runtime_type": "tuple",
+        "saved_JSON_type": "list"
+      },
+      {
+        "path": "outcome.result.unbound_cast_reference.window_reference.parameter_rows[4]",
+        "runtime_type": "tuple",
+        "saved_JSON_type": "list"
+      }
+    ]
+  },
+  "independent_small_paired_cases": 94,
+  "independent_small_public_calls_with_diagnostic": 190,
+  "independent_small_new_bool_errors": 22,
+  "independent_small_complete_outcomes_preserved": 72,
+  "independent_test_methods_run": 26,
+  "independent_test_failures": [],
+  "independent_test_errors": [],
+  "independent_test_skips": [],
+  "readonly_source_audit_files_not_overwritten": [
+    "NOTE.md",
+    "receipt.json",
+    "source_audit.py"
+  ],
+  "current_guard_vs_initial_candidate": "Initial readonly review suggested a key set; final uses the existing integer=True contract except healing_targets. Current remaining fields and upstream guards were independently checked; no extra current public behavior changes.",
+  "test54_migration_reviewed": "Only 4 active integer-count expectations move to new bool errors; legacy inactive charge_count/activation_count and capability guards remain tested.",
+  "root_tracked_edits": 0,
+  "author_draft_edits": 0,
+  "private_state_read": false,
+  "game_actions": 0,
+  "Wine_validated": false,
+  "actual_GUI_validated": false,
+  "native_Windows_validated": false,
+  "remaining_validation": "Frozen HEAD58 final draft review only; root must integrate after full60 archive and run fresh related/selected checks and later batch validation.",
+  "artifact_hashes": {
+    "FINAL_NOTE.md": "aa21d7f040d8165c5a4cde7e1a4cab4ebc097042c5bd1a48a0dc1d2ebc3d4914",
+    "NOTE.md": "9de21a5db67d770f640cfcc77c53e406e86d0524eda90c3c32a6c9b0803dbf17",
+    "final-baseline-probes.json": "8973f982892a4d0950e8325e6f5fef98a5807c7ba9cb527f83b833bcafc458b3",
+    "final-baseline-probes.log": "0516f6899f1e5d5aceaab3e1903588b27cdd24b60be6c5b7243f4f33bcc960d1",
+    "final-draft-probes.json": "47788f9f0cc42a84f623b93e58228a4f1ec5e0008fba82c2faa2e9bd3356be56",
+    "final-draft-probes.log": "375f7b1e3d12cb58ab9ea47268a5ae2c12379e72627e1ae273caebeac82a6fe0",
+    "final-tests.json": "9de1139802517fc3517ddc187ac776a6251240031de066b5ab8c4a9d0dba3328",
+    "final-tests.log": "391a37f83a394b099d1fb8863efcdda72741e4ee770f845110f078e4e015fa15",
+    "final_probe.py": "43df9dcfe2a9a0badb85a2145e36719258200361a66db207ae9f8a7a9c207840",
+    "final_review.py": "c7cd3ad563ef039d2553c7306014ef0cd211ca7ac69e18e7a3f6fb2d7e73c078",
+    "final_tests.py": "c50004def250facfbdc7cd461f6f663c5bc6fd23f47553015b63f9c2d03c8991",
+    "receipt.json": "2cc3d26eb5073bc04ebcde9b2246e3737e3f894ca7ecc4bc026bc7b606d72539",
+    "source_audit.py": "601050d42fa4f95f68f805a17aea7926445eb978dcb7f2e57dc5451a5af2bb53"
+  }
+}

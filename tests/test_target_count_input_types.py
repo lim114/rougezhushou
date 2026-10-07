@@ -112,7 +112,7 @@ class TargetCountInputTypesTests(unittest.TestCase):
                         result = self.evaluate(operator, skill, mode, **{field: value})
                         self.assertEqual(result['report']['operator']['id'], operator)
 
-    def test_unrelated_integer_options_keep_existing_boolean_compatibility(self):
+    def test_remaining_integer_bools_are_rejected_and_inactive_legacy_fields_keep_compatibility(self):
         cases = (('char_110_deepcl', 1, 'summon_count'),
                  ('char_206_gnosis', 2, 'cold_state'),
                  ('char_4202_haruka', 1, 'bubble_bursts'),
@@ -123,6 +123,12 @@ class TargetCountInputTypesTests(unittest.TestCase):
             for mode in ('frames', 'continuous'):
                 for value in (False, True):
                     with self.subTest(operator=operator, field=field, mode=mode, value=value):
+                        if field in ('summon_count', 'cold_state', 'bubble_bursts', 'ghost_casts'):
+                            extra = {'ghost_count': 1} if field == 'ghost_casts' else {}
+                            with self.assertRaisesRegex(ValueError, re.escape(
+                                    field + '需要范围内的有限非负整数。')):
+                                self.evaluate(operator, skill, mode, **{field: value}, **extra)
+                            continue
                         actual = self.evaluate(operator, skill, mode, **{field: value})
                         expected = self.evaluate(operator, skill, mode, **{field: int(value)})
                         # Some existing report rows retain the raw parameter type.
