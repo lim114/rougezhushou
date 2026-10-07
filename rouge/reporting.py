@@ -396,9 +396,14 @@ def build_report(scenario,result):
             metric('probability','单次判定概率描述参数',wisdel['described_single_check_probability']*100,'%'),
             metric('explosion','单次残影爆炸条件参考',wisdel['explosion_per_hit_reference']),
             metric('expected_count','实际爆炸期望次数',None,'次'),
-            metric('secondary_clock','余震命中时间',None,'秒')],
+            metric('secondary_clock','余震命中时间',None,'秒')]+([
+                metric('ghost_count','指定魂灵之影施放次数参考',wisdel['ghost_casts_requested'],'次'),
+                metric('ghost_per_cast','魂灵之影单次条件伤害',wisdel['ghost_per_cast_damage_reference']),
+                metric('ghost_declared_damage','指定次数条件伤害参考',wisdel['ghost_declared_count_damage_reference']),
+                metric('ghost_times','魂灵之影施放时刻',None,'秒')] if wisdel.get('ghost_casts_requested') else []),
             ['没有有效出手参考时不生成技能来源；出手参考不证明余震或残影实际命中。',
-             '随机独立性、残影刷新/消耗顺序未核验，不套用多次独立判定公式；S1完整结束与周期未知。']))
+             '随机独立性、残影刷新/消耗顺序未核验，不套用多次独立判定公式；S1完整结束与周期未知。',
+             '指定魂灵施放次数只列窗口条件参考，不证明完整施放或周期归属，不在两个阶段重复计入。']))
     charge=result.get('charge_reference')
     if charge:
         sections.append(section('charge_reference','结构性原理 · 冲锋次数参考',[

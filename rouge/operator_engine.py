@@ -752,8 +752,12 @@ class Combat:
                 token_effects=self.effects_for_token('token_10035_wisdel_wward')
                 # Explicit cast count avoids asserting a deterministic random SP regeneration schedule.
                 cast_count=self.option('ghost_casts',0,maximum=1000,integer=True)
+                if cast_count and window==0:
+                    raise ValueError('零长度观察窗口不能声明魂灵施放命中。')
                 token_attack=token['attack']*(1+sum(e['value'] for e in token_effects if e['kind']=='attack_pct'))
-                emit('魂灵之影施放',token_attack,'magic',cast_count,effects=token_effects)
+                emit('魂灵之影施放',token_attack,'magic',0,effects=token_effects)
+                if cast_count and duration>0 and timeline.options.get('target_disappears_seconds')!=0:
+                    components[-1]['actual_total']=None
             self.notes.append('好礼和余震只列条件参数参考；随机独立性、残影刷新/消耗顺序及次生事件时间未核验，不推算爆炸期望。魂灵之影有随机技力回复，使用指定施放次数，未推定自动频率。')
         elif op=='char_4107_vrdant':
             if not normal and self.n==1:
@@ -1153,6 +1157,10 @@ class Combat:
                 'source_possible':{'cast':any(c['hits'] for c in full['components'] if c['name']=='维什戴尔主攻击'),
                     'window':any(c['hits'] for c in shown['components'] if c['name']=='维什戴尔主攻击')},
                 's1_binding_verified':False,
+                'ghost_casts_requested':int(self.s.get('ghost_casts',0)) if self.s.get('ghost_count',0) else 0,
+                'ghost_per_cast_damage_reference':next((c['per_hit'] for c in full['components'] if c['name']=='魂灵之影施放'),None),
+                'ghost_cast_times_seconds':None,'ghost_full_cast_attribution_verified':False,
+                'ghost_declared_count_damage_reference':int(self.s.get('ghost_casts',0))*next((c['per_hit'] for c in full['components'] if c['name']=='魂灵之影施放'),0),
             }
             from .uncertain_sources import mask_pending_damage
             mask_pending_damage(result,full,shown,normal,duration,cycle)
