@@ -127,6 +127,9 @@ class MainWindow(QMainWindow):
         self.battle_preview=BattlePreviewPanel()
         self.battle_preview.stageSelected.connect(self.select_battle_stage)
         tabs.addTab(self.battle_preview,'战斗预览')
+        from .technology_view import TechnologyReferencePanel
+        self.technology_reference=TechnologyReferencePanel()
+        tabs.addTab(self.technology_reference,'长期科技')
         self.battle_preview.set_stage(self.target_stage.currentData())
         self.timer = QTimer(self)
         self.timer.timeout.connect(lambda:self.sample_now(automatic=True))
