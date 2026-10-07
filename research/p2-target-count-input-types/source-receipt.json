@@ -1,0 +1,210 @@
+{
+  "recorded_at_utc": "2026-10-07T20:54:27.950489+00:00",
+  "sources": [
+    {
+      "name": "character_table",
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "expected_sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "actual_sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    {
+      "name": "skill_table",
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "expected_sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "actual_sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    }
+  ],
+  "selectors": {
+    "character_table.char_4087_ines.talents[0].candidates": [
+      {
+        "unlockCondition": {
+          "phase": "PHASE_1",
+          "level": 1
+        },
+        "requiredPotentialRank": 0,
+        "prefabKey": "1",
+        "name": "影织",
+        "description": "对每个敌人首次造成伤害后，使目标<$ba.root>束缚</>3秒并<$ba.steal>偷取</>其50点攻击力（持续至目标被击倒或伊内丝离场）",
+        "rangeId": null,
+        "blackboard": [
+          {
+            "key": "steal_atk",
+            "value": 50.0,
+            "valueStr": null
+          },
+          {
+            "key": "steal_atk_max",
+            "value": 10000.0,
+            "valueStr": null
+          },
+          {
+            "key": "duration",
+            "value": 3.0,
+            "valueStr": null
+          }
+        ],
+        "tokenKey": null,
+        "isHideTalent": false
+      },
+      {
+        "unlockCondition": {
+          "phase": "PHASE_1",
+          "level": 1
+        },
+        "requiredPotentialRank": 4,
+        "prefabKey": "1",
+        "name": "影织",
+        "description": "对每个敌人首次造成伤害后，使目标<$ba.root>束缚</>3秒并<$ba.steal>偷取</>其60<@ba.talpu>（+10）</>点攻击力（持续至目标被击倒或伊内丝离场）",
+        "rangeId": null,
+        "blackboard": [
+          {
+            "key": "steal_atk",
+            "value": 60.0,
+            "valueStr": null
+          },
+          {
+            "key": "steal_atk_max",
+            "value": 12000.0,
+            "valueStr": null
+          },
+          {
+            "key": "duration",
+            "value": 3.0,
+            "valueStr": null
+          }
+        ],
+        "tokenKey": null,
+        "isHideTalent": false
+      },
+      {
+        "unlockCondition": {
+          "phase": "PHASE_2",
+          "level": 1
+        },
+        "requiredPotentialRank": 0,
+        "prefabKey": "1",
+        "name": "影织",
+        "description": "对每个敌人首次造成伤害后，使目标<$ba.root>束缚</>5秒并<$ba.steal>偷取</>其90点攻击力（持续至目标被击倒或伊内丝离场）",
+        "rangeId": null,
+        "blackboard": [
+          {
+            "key": "steal_atk",
+            "value": 90.0,
+            "valueStr": null
+          },
+          {
+            "key": "steal_atk_max",
+            "value": 18000.0,
+            "valueStr": null
+          },
+          {
+            "key": "duration",
+            "value": 5.0,
+            "valueStr": null
+          }
+        ],
+        "tokenKey": null,
+        "isHideTalent": false
+      },
+      {
+        "unlockCondition": {
+          "phase": "PHASE_2",
+          "level": 1
+        },
+        "requiredPotentialRank": 4,
+        "prefabKey": "1",
+        "name": "影织",
+        "description": "对每个敌人首次造成伤害后，使目标<$ba.root>束缚</>5秒并<$ba.steal>偷取</>其100<@ba.talpu>（+10）</>点攻击力（持续至目标被击倒或伊内丝离场）",
+        "rangeId": null,
+        "blackboard": [
+          {
+            "key": "steal_atk",
+            "value": 100.0,
+            "valueStr": null
+          },
+          {
+            "key": "steal_atk_max",
+            "value": 20000.0,
+            "valueStr": null
+          },
+          {
+            "key": "duration",
+            "value": 5.0,
+            "valueStr": null
+          }
+        ],
+        "tokenKey": null,
+        "isHideTalent": false
+      }
+    ],
+    "skill_table.skchr_myrtle_2.levels[9]": {
+      "name": "治愈之翼",
+      "rangeId": "x-4",
+      "description": "停止攻击，持续时间内回复总共<@ba.vup>{value}</>点部署费用，并每秒治疗周围一名友方单位相当于桃金娘攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+      "skillType": "MANUAL",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 24,
+        "initSp": 10,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_myrtle_2",
+      "duration": 16.0,
+      "blackboard": [
+        {
+          "key": "attack@heal_scale",
+          "value": 0.5,
+          "valueStr": null
+        },
+        {
+          "key": "interval",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "value",
+          "value": 16.0,
+          "valueStr": null
+        },
+        {
+          "key": "cost",
+          "value": 1.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "catalog.char_1037_amiya3.skills[1].levels[9]": {
+      "name": "慈悲愿景",
+      "duration": 32.0,
+      "description": "立刻对攻击范围内所有敌人造成进行一次攻击力为<@ba.vup>{atk_scale:0%}</>的攻击并使目标在<@ba.vup>{amiya3_s_2[debuff].duration}</>秒内攻击速度<@ba.vup>{amiya3_s_2[debuff].attack_speed}</>，移动速度<@ba.vup>{amiya3_s_2[debuff].move_speed:0%}</>，该次攻击每击中一个敌人获得攻击力<@ba.vup>+{atk:0%}</>（最多叠加<@ba.vup>{max_stack_cnt}</>次），接下来的伤害类型变为<@ba.vup>真实</>且可以同时攻击<@ba.vup>2</>名敌人；<@ba.rem>整场战斗中该技能只能释放一次</>",
+      "duration_type": "NONE",
+      "sp_type": "INCREASE_WITH_TIME",
+      "sp_cost": 20,
+      "initial_sp": 10,
+      "sp_increment": 1.0,
+      "max_charges": 1,
+      "values": {
+        "atk_scale": 2.0,
+        "atk": 0.3,
+        "max_stack_cnt": 5.0,
+        "skill_max_trigger_time": 1.0,
+        "amiya3_s_2[debuff].duration": 10.0,
+        "amiya3_s_2[debuff].attack_speed": -60.0,
+        "amiya3_s_2[debuff].move_speed": -0.6
+      }
+    }
+  },
+  "prior_receipts_reused": [
+    "research/p2-amiya-input-qualification/source-receipt.json",
+    "research/p2-haruka-healing-targets/source-receipt.json",
+    "research/p2-deployment-independent-sources/source-and-reproduction.json"
+  ],
+  "evidence_limit": "Counts are numeric GUI/API scenario inputs; these facts do not establish actual target acquisition, timing, stacking, or native UI success."
+}

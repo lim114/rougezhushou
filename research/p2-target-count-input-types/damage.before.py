@@ -248,17 +248,6 @@ def _prepare_damage(scenario: dict):
     elite=scenario.get('elite',2)
     if profile['skills'][skill-1].get('unlock_elite',skill-1)>elite or (elite<2 and rank>7):
         raise ValueError('当前精英阶段尚未开放所选技能或专精。')
-    # Preserve raw count types before either engine converts them to numbers.
-    from .reporting import has_healing
-    active_counts=[]
-    if has_healing(scenario['operator'],skill):
-        active_counts.append(('healing_targets','治疗目标数需要为 0–100 的整数。'))
-    if scenario['operator']=='char_1037_amiya3' and skill==2:
-        active_counts.append(('amiya_hit_targets','amiya_hit_targets需要1到100之间的整数。'))
-    if scenario['operator']=='char_4087_ines':
-        active_counts.append(('stolen_enemy_count','stolen_enemy_count需要范围内的有限非负整数。'))
-    for field,error in active_counts:
-        if isinstance(scenario.get(field),bool):raise ValueError(error)
     from .relics import prepare
     from .run_modifiers import prepare_run
     scenario,run_resolution=prepare_run(scenario)
@@ -284,8 +273,6 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
         result['estimate']=build_estimate(scenario,result,attributes,_skill_damage)
     from .charge_reference import finish_charge_reference
     finish_charge_reference(scenario,result)
-    from .shield_break_reference import finish_shield_break_reference
-    finish_shield_break_reference(scenario,result)
     from .timing import annotate_result
     annotate_result(scenario,result)
     finish(result,resolution,attributes,scenario)

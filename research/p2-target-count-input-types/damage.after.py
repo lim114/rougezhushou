@@ -284,8 +284,6 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
         result['estimate']=build_estimate(scenario,result,attributes,_skill_damage)
     from .charge_reference import finish_charge_reference
     finish_charge_reference(scenario,result)
-    from .shield_break_reference import finish_shield_break_reference
-    finish_shield_break_reference(scenario,result)
     from .timing import annotate_result
     annotate_result(scenario,result)
     finish(result,resolution,attributes,scenario)

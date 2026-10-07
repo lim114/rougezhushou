@@ -1,0 +1,109 @@
+{
+  "recorded_at_utc": "2026-10-07T21:03:22.617349+00:00",
+  "base_head": "fba536e118906f58ed2bcef359480f76e0ae4d67",
+  "branch": "codex/p2-development",
+  "tracked_edited_by_this_agent": false,
+  "scope": "Raw boolean rejection at _prepare_damage for current has_healing controls, medical Amiya S2 opening hit target count, and Ines stolen enemy count; current numeric conversion/default/ranges and inactive fields preserved.",
+  "code_files": [
+    "rouge/damage.py"
+  ],
+  "new_test_files": [
+    "tests/test_target_count_input_types.py"
+  ],
+  "root_integration_required": [
+    "Apply changes.patch after section 53; it contains damage.py and the new test only.",
+    "Add tests.test_target_count_input_types to scripts/verify_cloud.py MODULES; draft copy already includes it.",
+    "Root independently reviews/applies, archives selected research/checkpoint, commits, and performs required UI/Wine checks."
+  ],
+  "checks": [
+    {
+      "command": "python -m unittest tests.test_target_count_input_types -v",
+      "run": 11,
+      "passed": 11,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0,
+      "log": "new-tests.log"
+    },
+    {
+      "command": "python -m unittest tests.test_target_count_input_types tests.test_amiya_input_qualification tests.test_myrtle_healing_targets tests.test_haruka_healing_targets tests.test_ines_dot_reference tests.test_amiya_phase_reference tests.test_damage tests.test_empty_enemy_scope -v",
+      "run": 113,
+      "passed": 113,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0,
+      "log": "draft-related-tests.log"
+    },
+    {
+      "command": "python scripts/verify_cloud.py",
+      "run": 727,
+      "passed": 726,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0,
+      "log": "draft-cloud-tests.log"
+    },
+    {
+      "command": "git apply --check changes.patch",
+      "exit_code": 0,
+      "tracked_writes": false
+    }
+  ],
+  "public_matrix": {
+    "before_calls": 908,
+    "after_calls": 908,
+    "total_public_calls": 1816,
+    "identical_complete_public_result_cases": 826,
+    "changed_complete_public_result_cases": 82,
+    "changed_categories": {
+      "active_bool": 82
+    },
+    "same_categories": {
+      "non_boolean_active": 756,
+      "active_bool": 2,
+      "inactive_bool": 28,
+      "checkbox_bool": 16,
+      "other_integer_bool": 24
+    },
+    "all_active_bools_rejected_after": true,
+    "all_inputs_unchanged": true,
+    "changes_only_reject_active_target_count_bools": true,
+    "native_windows": false,
+    "gui_run": false,
+    "wine_run": false
+  },
+  "non_boolean_matrix_accepted": 540,
+  "non_boolean_matrix_rejected": 216,
+  "crlf_preserved": true,
+  "hashes": {
+    "changes.patch": "07b13a792af50d7e27f1195eca7a455e885e8d6e5d5431ee47ed9e74707b568e",
+    "damage.before.py": "c336e89db709cf09e5133b1659e6e913124bdb574046d81b04369a145caea22c",
+    "damage.after.py": "9f5e7ffed7998bbc4f59e50f31dad10f50d2059447a227914393ee1585266c1a",
+    "test_target_count_input_types.py": "d49d92f3ce1ab96cef86ef6d1b6c863bccdf89d6a6c1fc5cbef332e2ffecca98",
+    "matrix-before.json": "005b9aa534bd7f42d6ee884774ea15cafba0e4122b09d8a572d5a27a4e89aa29",
+    "matrix-after.json": "0e3731823a965d32696f49413c4ad9c8399399e159a90e1a63576bf8832b4724",
+    "matrix-comparison.json": "b422169e97209a293f85d966e963437a80576afce1485dcad004c9606fcbfe45",
+    "source-receipt.json": "d378ab0cec56d474b0395d1b4238f57a86117ca321b87dbc1bef832e58544504"
+  },
+  "retained_initial_failures": [
+    {
+      "log": "initial-new-tests.log",
+      "run": 11,
+      "failures": 4,
+      "errors": 16,
+      "diagnosis": "Test fixture used nonexistent result.operator instead of report.operator.id and required bool/raw reported summon parameter JSON to equal numeric JSON. Corrected fixture; no production change was needed."
+    },
+    {
+      "log": "initial-draft-cloud-tests.log",
+      "run": 727,
+      "failures": 0,
+      "errors": 1,
+      "skipped": 1,
+      "diagnosis": "External draft lacked the existing public research/p2-yato-deployment-reference/source-receipt.json. Added a read-only symlink to existing research; rerun passed."
+    }
+  ],
+  "mechanism_limits": [
+    "No numerical, timing, stacking, actual acquisition, or unknown model changes.",
+    "No GUI, Wine, native Windows, game, or desktop integration run by this subagent."
+  ]
+}
