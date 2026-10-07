@@ -1,0 +1,127 @@
+{
+  "section": 72,
+  "status": "source patch and independent verification complete; root fresh merged testing separate",
+  "baseline_head": "552a6f3ab8b16cce49a9cf0de1e247c3ff49e3a9",
+  "freeze_receipt_sha256": "229c4f413402f9a1c9ed3f18fbf72375ddc1edd9b5f6e2826a6e63792229cf74",
+  "patch": {
+    "file": "/workspace/.continuation/p2-headwolf-qualification-072/section72.patch",
+    "bytes": 6773,
+    "sha256": "b92662a951f4dc66389f582c33438aa1229639e6d4b4b05bb440f9ab2d2e50eb",
+    "production_scope": [
+      "rouge/operator_engine.py"
+    ],
+    "new_test_path": "tests/test_headwolf_talent_qualification.py",
+    "new_test_sha256": "a281d33736f5e1d70678f6c681d227e38e55916593c1d66f4239c098ba097367"
+  },
+  "author_tests": {
+    "baseline_head": "552a6f3ab8b16cce49a9cf0de1e247c3ff49e3a9",
+    "source": "explicit frozen public312files, package121 plus tests191",
+    "new_tests": 8,
+    "old_related_tests": 56,
+    "total_tests_run": 64,
+    "passed": 64,
+    "failed": 0,
+    "errors": 0,
+    "skips": 0,
+    "production_patch_sha256": "b92662a951f4dc66389f582c33438aa1229639e6d4b4b05bb440f9ab2d2e50eb",
+    "new_test_sha256": "a281d33736f5e1d70678f6c681d227e38e55916593c1d66f4239c098ba097367",
+    "log_sha256": "6eeed061717334a66c2dd1565e54f7b1d72d2f287db6f9c95f5c2627d0871b76",
+    "modules": [
+      "test_headwolf_talent_qualification",
+      "test_headwolf_phase_clock",
+      "test_drone_attack_clock",
+      "test_drone_traits",
+      "test_drone_aura_reference",
+      "test_drone_arrival_reference",
+      "test_integer_option_input_types"
+    ],
+    "comparison_harness_distinct_from_test_pass": true
+  },
+  "author_recorded_pairs": {
+    "cases": 2544,
+    "calls": 5088,
+    "public_calculate_eachside": 2328,
+    "prepared_normal_reference_eachside": 216,
+    "comparison_harness": "deferred after three author harness errors, whole recorded evidence independently compared using reviewer own program",
+    "independently_confirmed_comparison": {
+      "scenarios": 2544,
+      "per_side_actual_kind": {
+        "calculate": 2328,
+        "private_normal_reference": 216
+      },
+      "changed": 156,
+      "unchanged": 2388,
+      "changed_public_calculate": 146,
+      "changed_private_normal": 10,
+      "accepted_each_side": 1502,
+      "error_each_side": 1042,
+      "all_error_contracts_unchanged": true,
+      "all_body_and_identity_fields_unchanged": true,
+      "author_compare_py_used": false,
+      "new_calls_for_diff": 0,
+      "receipt": "author72-archives-independent-diff.json"
+    }
+  },
+  "independent_review": {
+    "path": "/workspace/.continuation/p2-skill-evidence-next-independent/final72-review-receipt.json",
+    "sha256": "d29d9cbe3b98e38fce7d3aa480618b5c0152afed71567ee15df30d1b58d54acd",
+    "matrix": {
+      "baseline_head": "552a6f3ab8b16cce49a9cf0de1e247c3ff49e3a9",
+      "fixed_patch_sha256": "b92662a951f4dc66389f582c33438aa1229639e6d4b4b05bb440f9ab2d2e50eb",
+      "scenarios": 2448,
+      "actual_matrix_calls": {
+        "baseline_discovery": 2448,
+        "draft": 2448,
+        "total": 4896,
+        "reused_from_complete_recorded_runs_without_new_calls": true
+      },
+      "changed": 252,
+      "unchanged": 2196,
+      "qualified_e1_e2_pairs": 2112,
+      "qualified_e1_e2_drift": [],
+      "e0_pairs": 336,
+      "e0_age0_anchor_groups": 84,
+      "all_e0_corrected_full_outcomes_equal_age0_baseline_anchor": true,
+      "anchor_failures": [],
+      "baseline_and_draft_whole_result_and_report_strict_json": true,
+      "compression": {
+        "file": "final72-reviewed-paired-outcomes.json.gz",
+        "gzip_sha256": "32606946b4431fb0d623be64db7d1c5d1cb017e7a3a879ab8826730aa4875ea9",
+        "gzip_bytes": 1214325,
+        "raw_sha256": "db773d626262f72a24bd6da7839bc46863e11d1431c8f6413bc6984bc6c4cff5",
+        "raw_bytes": 64329659,
+        "roundtrip_verified": true
+      },
+      "attempt1_preserved": "final_compare72.py.attempt1 and final72-matrix-receipt.json.attempt1; original paired outcomes kept unchanged",
+      "attempt1_false_assumption": "An observation window1 at age59 having no extra unit does not prove that the canonical full30s reference lacks it; source plan makes those scopes distinct.",
+      "production_changes_during_review": 0,
+      "native_clock_claimed": false
+    },
+    "tests": {
+      "test_methods_by_module": {
+        "test_headwolf72_independent": 8,
+        "tests.test_headwolf_talent_qualification": 8,
+        "tests.test_drone_traits": 18,
+        "tests.test_drone_attack_clock": 6,
+        "tests.test_drone_aura_reference": 8,
+        "tests.test_drone_arrival_reference": 9,
+        "tests.test_wisdel_secondary_reference": 11,
+        "tests.test_wisdel_ghost_clock": 6,
+        "tests.test_module_qualification_notes": 6
+      },
+      "methods_total": 80,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "success": true,
+      "interpreter": "/workspace/rougezhushou/.venv/bin/python",
+      "kind": "Independent review tests plus untouched author new8 and immutable related old tests; no native/Wine"
+    }
+  },
+  "source_closure_sha256": "4d49dc4634548169cd6918eb29d587eb714501f95328011381870c87220be902",
+  "native_windows_wine_validation": false,
+  "independent_clock_or_probability_new_claim": false,
+  "private_user_state_read": false,
+  "root_tracked_changes": 0,
+  "all_final_artifacts_sealed": true
+}

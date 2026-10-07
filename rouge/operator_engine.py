@@ -806,6 +806,7 @@ class Combat:
             drone_count=1+(0 if normal else (1 if op=='char_1038_whitw2' and self.n==1 else bb.get('attack@cnt',0)))
             elapsed=self.option('deployment_elapsed_seconds',0,maximum=3600)
             head_interval=self.talent('头狼','interval',20)
+            headwolf=op=='char_1038_whitw2' and '头狼' in self.tv
             starting=self.option('drone_warmup_hits',0,maximum=100,integer=True)
             if op=='char_1038_whitw2' and self.n==3:
                 # Special S3 units acquire enemies independently. Neither the
@@ -818,8 +819,8 @@ class Combat:
             else:
                 for i,event_time in enumerate(attack_times()):
                     time=elapsed+timeline.offset/FPS+event_time
-                    ceiling=upper*(self.talent('头狼','scale',1) if op=='char_1038_whitw2' and time>=head_interval else 1)
-                    units=drone_count+(1 if op=='char_1038_whitw2' and time>=3*head_interval else 0)
+                    ceiling=upper*(self.talent('头狼','scale',1) if headwolf and time>=head_interval else 1)
+                    units=drone_count+(1 if headwolf and time>=3*head_interval else 0)
                     scale=min(ceiling,lower+step*(starting+i))
                     emit('浮游单元',attack*scale,'magic',units,event_times=[event_time]*int(units))
                     components[-1]['timing_reference']='owner_attack_clock; independent drone clock unverified'

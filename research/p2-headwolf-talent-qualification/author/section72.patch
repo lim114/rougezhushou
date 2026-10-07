@@ -1,0 +1,124 @@
+diff --git a/rouge/operator_engine.py b/rouge/operator_engine.py
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -806,6 +806,7 @@
+             drone_count=1+(0 if normal else (1 if op=='char_1038_whitw2' and self.n==1 else bb.get('attack@cnt',0)))
+             elapsed=self.option('deployment_elapsed_seconds',0,maximum=3600)
+             head_interval=self.talent('头狼','interval',20)
++            headwolf=op=='char_1038_whitw2' and '头狼' in self.tv
+             starting=self.option('drone_warmup_hits',0,maximum=100,integer=True)
+             if op=='char_1038_whitw2' and self.n==3:
+                 # Special S3 units acquire enemies independently. Neither the
+@@ -818,8 +819,8 @@
+             else:
+                 for i,event_time in enumerate(attack_times()):
+                     time=elapsed+timeline.offset/FPS+event_time
+-                    ceiling=upper*(self.talent('头狼','scale',1) if op=='char_1038_whitw2' and time>=head_interval else 1)
+-                    units=drone_count+(1 if op=='char_1038_whitw2' and time>=3*head_interval else 0)
++                    ceiling=upper*(self.talent('头狼','scale',1) if headwolf and time>=head_interval else 1)
++                    units=drone_count+(1 if headwolf and time>=3*head_interval else 0)
+                     scale=min(ceiling,lower+step*(starting+i))
+                     emit('浮游单元',attack*scale,'magic',units,event_times=[event_time]*int(units))
+                     components[-1]['timing_reference']='owner_attack_clock; independent drone clock unverified'
+diff --git a/tests/test_headwolf_talent_qualification.py b/tests/test_headwolf_talent_qualification.py
+new file mode 100644
+--- /dev/null
++++ b/tests/test_headwolf_talent_qualification.py
+@@ -0,0 +1,97 @@
++"""Headwolf cultivation gates the existing owner-clock reference only."""
++import unittest
++
++from rouge.damage import _prepare_damage, calculate_damage
++from rouge.operator_engine import Combat
++
++
++WHITW2 = 'char_1038_whitw2'
++
++
++def evaluate(**extra):
++    return calculate_damage({'operator': WHITW2, 'skill': 1, 'skill_rank': 7,
++                             'base_attack': 1000, 'window_seconds': 1,
++                             'timing_mode': 'frames', **extra})
++
++
++def normal_plan(**extra):
++    scenario, attributes, _, _ = _prepare_damage({
++        'operator': WHITW2, 'skill': 1, 'skill_rank': 7, 'base_attack': 1000,
++        'timing_mode': 'frames', 'drone_warmup_hits': 100,
++        'timing': {'windup_frames': 0, 'recovery_frames': 0}, **extra})
++    return Combat(scenario, attributes).plan(normal=True, window=1)
++
++
++def drones(result):
++    return [c for c in result['components'] if c['name'] == '浮游单元']
++
++
++class HeadwolfTalentQualificationTests(unittest.TestCase):
++    def test_e0_keeps_s1_passive_unit_without_locked_headwolf_extra(self):
++        for potential in range(1, 7):
++            for elapsed in (0, 59, 60, 120, 3600):
++                with self.subTest(potential=potential, elapsed=elapsed):
++                    result = evaluate(elite=0, potential=potential,
++                                      deployment_elapsed_seconds=elapsed)
++                    self.assertEqual(drones(result)[0]['hits'], 2)
++                    self.assertEqual(result['total_damage'], 1722)
++                    self.assertIn('independent drone clock unverified',
++                                  drones(result)[0]['timing_reference'])
++
++    def test_e0_normal_reference_never_creates_a_second_unit(self):
++        for potential in range(1, 7):
++            for elapsed in (60, 120, 3600):
++                result = normal_plan(elite=0, potential=potential,
++                                     deployment_elapsed_seconds=elapsed)
++                self.assertEqual(drones(result)[0]['hits'], 1)
++                self.assertAlmostEqual(drones(result)[0]['per_hit'], 1100)
++
++    def test_e0_phase_offset_cannot_unlock_headwolf(self):
++        self.assertEqual(drones(normal_plan(elite=0, deployment_elapsed_seconds=60)),
++                         drones(normal_plan(elite=0, _timeline_offset_seconds=60)))
++        self.assertEqual(drones(normal_plan(elite=0, _timeline_offset_seconds=60))[0]['hits'], 1)
++
++    def test_e1_level1_uses_original_ninety_second_count_threshold(self):
++        self.assertEqual(drones(normal_plan(elite=1, level=1,
++                                            deployment_elapsed_seconds=89.999))[0]['hits'], 1)
++        result = normal_plan(elite=1, level=1, deployment_elapsed_seconds=90)
++        self.assertEqual(drones(result)[0]['hits'], 2)
++        self.assertAlmostEqual(drones(result)[0]['per_hit'], 1166)
++
++    def test_selected_e1_e2_potential_thresholds_remain_inclusive(self):
++        for elite, potential, threshold in ((1, 6, 78), (2, 1, 60), (2, 6, 48)):
++            with self.subTest(elite=elite, potential=potential):
++                before = normal_plan(elite=elite, potential=potential,
++                                     deployment_elapsed_seconds=threshold-.001)
++                at = normal_plan(elite=elite, potential=potential,
++                                 deployment_elapsed_seconds=threshold)
++                self.assertEqual(drones(before)[0]['hits'], 1)
++                self.assertEqual(drones(at)[0]['hits'], 2)
++
++    def test_empty_observation_and_enemy_lifetime_do_not_create_reference_hits(self):
++        for extra in ({'window_seconds': 0},
++                      {'timing': {'target_disappears_seconds': 0}},
++                      {'timing': {'target_windows': []}}):
++            result = evaluate(elite=0, deployment_elapsed_seconds=120, **extra)
++            self.assertFalse(drones(result))
++            self.assertEqual(result['total_damage'], 0)
++
++    def test_unavailable_skills_and_mastery_keep_existing_qualification_errors(self):
++        for extra in ({'skill': 2}, {'skill': 3}, {'skill_rank': 8}):
++            with self.assertRaisesRegex(ValueError, '当前精英阶段尚未开放所选技能或专精'):
++                evaluate(elite=0, deployment_elapsed_seconds=120, **extra)
++
++    def test_s3_independent_arrival_and_aura_remain_unknown(self):
++        result = evaluate(elite=2, skill=3, skill_rank=10,
++                          deployment_elapsed_seconds=120)
++        ref = result['drone_lifecycle_reference']
++        self.assertIsNone(ref['arrival_seconds'])
++        self.assertIsNone(ref['same_target_hit_counter'])
++        self.assertIsNone(ref['aura_first_tick_seconds'])
++        self.assertIsNone(ref['aura_tick_count'])
++        self.assertEqual(next(c for c in result['components']
++                              if c['name'] == '特殊浮游单元条件参考')['hits'], 0)
++
++
++if __name__ == '__main__':
++    unittest.main()

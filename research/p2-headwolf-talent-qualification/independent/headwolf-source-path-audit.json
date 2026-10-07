@@ -1,0 +1,196 @@
+{
+  "head": "552a6f3ab8b16cce49a9cf0de1e247c3ff49e3a9",
+  "character_to_catalog_headwolf_checks": [
+    {
+      "selector": "character_table.char_1038_whitw2.talents[0].candidates[0]",
+      "normalized_selector": "catalog.operators.char_1038_whitw2.talents[0][0]",
+      "exact_normalized_match": true,
+      "parameters": {
+        "phase": 1,
+        "level": 1,
+        "potential_rank": 0,
+        "name": "头狼",
+        "description": "每在场上停留30秒，浮游单元依次获得以下一个效果：伤害上限提高6%、造成伤害时使目标特殊能力失效1秒、数量+1",
+        "values": {
+          "interval": 30.0,
+          "scale": 1.06,
+          "attack@silence_duration": 1.0
+        }
+      }
+    },
+    {
+      "selector": "character_table.char_1038_whitw2.talents[0].candidates[1]",
+      "normalized_selector": "catalog.operators.char_1038_whitw2.talents[0][1]",
+      "exact_normalized_match": true,
+      "parameters": {
+        "phase": 1,
+        "level": 1,
+        "potential_rank": 5,
+        "name": "头狼",
+        "description": "每在场上停留26<@ba.talpu>（-4）</>秒，浮游单元依次获得以下一个效果：伤害上限提高6%、造成伤害时使目标特殊能力失效1秒、数量+1",
+        "values": {
+          "interval": 26.0,
+          "scale": 1.06,
+          "attack@silence_duration": 1.0
+        }
+      }
+    },
+    {
+      "selector": "character_table.char_1038_whitw2.talents[0].candidates[2]",
+      "normalized_selector": "catalog.operators.char_1038_whitw2.talents[0][2]",
+      "exact_normalized_match": true,
+      "parameters": {
+        "phase": 2,
+        "level": 1,
+        "potential_rank": 0,
+        "name": "头狼",
+        "description": "每在场上停留20秒，浮游单元依次获得以下一个效果：伤害上限提高10%、造成伤害时使目标特殊能力失效2秒、数量+1",
+        "values": {
+          "interval": 20.0,
+          "scale": 1.1,
+          "attack@silence_duration": 2.0
+        }
+      }
+    },
+    {
+      "selector": "character_table.char_1038_whitw2.talents[0].candidates[3]",
+      "normalized_selector": "catalog.operators.char_1038_whitw2.talents[0][3]",
+      "exact_normalized_match": true,
+      "parameters": {
+        "phase": 2,
+        "level": 1,
+        "potential_rank": 5,
+        "name": "头狼",
+        "description": "每在场上停留16<@ba.talpu>（-4）</>秒，浮游单元依次获得以下一个效果：伤害上限提高10%、造成伤害时使目标特殊能力失效2秒、数量+1",
+        "values": {
+          "interval": 16.0,
+          "scale": 1.1,
+          "attack@silence_duration": 2.0
+        }
+      }
+    }
+  ],
+  "all_four_exact": true,
+  "consumer_audit": {
+    "rouge/operator_engine.py": {
+      "sha256": "27c7c8fb3aa4a85fe3ceb1229ed5923c30bc309bedb48b7bc4c2d798809d61a7",
+      "matches": [
+        {
+          "line": 13,
+          "text": "def selected_talents(profile, scenario):"
+        },
+        {
+          "line": 284,
+          "text": "    def plan(self,normal=False,window=None):"
+        },
+        {
+          "line": 737,
+          "text": "                        if triggers>0 and r['source_possible']:c['actual_total']=None"
+        },
+        {
+          "line": 806,
+          "text": "            drone_count=1+(0 if normal else (1 if op=='char_1038_whitw2' and self.n==1 else bb.get('attack@cnt',0)))"
+        },
+        {
+          "line": 807,
+          "text": "            elapsed=self.option('deployment_elapsed_seconds',0,maximum=3600)"
+        },
+        {
+          "line": 808,
+          "text": "            head_interval=self.talent('头狼','interval',20)"
+        },
+        {
+          "line": 821,
+          "text": "                    ceiling=upper*(self.talent('头狼','scale',1) if op=='char_1038_whitw2' and time>=head_interval else 1)"
+        },
+        {
+          "line": 822,
+          "text": "                    units=drone_count+(1 if op=='char_1038_whitw2' and time>=3*head_interval else 0)"
+        },
+        {
+          "line": 1200,
+          "text": "            if amiya_phase_reference is not None and unbound_cast_reference['source_possible']:"
+        },
+        {
+          "line": 1532,
+          "text": "                'source_possible':{'cast':bool(cast and cast['hits']),"
+        },
+        {
+          "line": 1557,
+          "text": "                'source_possible':{'cast':bool(cast['hits']),'window':bool(observed['hits'])},"
+        },
+        {
+          "line": 1614,
+          "text": "                'source_possible':{'cast':'actual_total' in snow,"
+        },
+        {
+          "line": 1649,
+          "text": "                'source_possible':{'cast':'actual_total' in heal,"
+        },
+        {
+          "line": 1687,
+          "text": "                'source_possible':{'cast':'actual_total' in dot,"
+        },
+        {
+          "line": 1704,
+          "text": "                'source_possible':{'cast':any(c['hits'] for c in full['components']),"
+        },
+        {
+          "line": 1735,
+          "text": "                'source_possible':{'cast':any(c['hits'] for c in full['components']),"
+        },
+        {
+          "line": 1760,
+          "text": "                'source_possible':{'cast':bool(arts['hits']),"
+        },
+        {
+          "line": 1786,
+          "text": "            result['drone_lifecycle_reference']={"
+        },
+        {
+          "line": 1811,
+          "text": "                'source_possible':{'cast':any(c['hits'] for c in full['components'] if c['name']=='维什戴尔主攻击'),"
+        }
+      ]
+    },
+    "rouge/estimate.py": {
+      "sha256": "c507348af56f26bb3628684badad5d0c08102eb59ea8199d37cab9ddda86601a",
+      "matches": [
+        {
+          "line": 21,
+          "text": "    elapsed=nonnegative('deployment_elapsed_seconds',0)"
+        }
+      ]
+    },
+    "rouge/relics.py": {
+      "sha256": "5dcc2906d0066c323b8e23dccf3c306d4ebd01ed130e1e30081d749043623f8e",
+      "matches": [
+        {
+          "line": 502,
+          "text": "        age=finite(scenario.get('deployment_elapsed_seconds',0),'部署经过秒数',3600)"
+        }
+      ]
+    },
+    "rouge/operator_options.py": {
+      "sha256": "a9d7e474920ce4747b6216361a57c9874482a2a31cfa929280189443ea0eaa83",
+      "matches": [
+        {
+          "line": 25,
+          "text": " 'char_1038_whitw2':[('drone_warmup_hits','单元已有连续命中数',0,100,(1,2,3)),('deployment_elapsed_seconds','技能开启前已在场秒数',0.0,3600,(1,2,3))],"
+        }
+      ]
+    },
+    "rouge/app.py": {
+      "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "matches": [
+        {
+          "line": 1027,
+          "text": "            **self.training_conditions(),'deployment_elapsed_seconds':self.deployment_elapsed.value(),"
+        }
+      ]
+    }
+  },
+  "binding": "The public raw cultivation/potential gates identify the named selected talent. Its interval/scale/description bind the existing reference stage bonuses; they do not bind an independent runtime attack clock.",
+  "narrow_candidate": "Both headwolf-stage bonus conditions require the already selected headwolf talent; keep existing E1/E2 intervals, skill-provided baseline units, warmup and owner-clock references.",
+  "remaining_separate_observation": "S1 passive +1 is statically excluded when normal=True, but switch mode has cycle=None and the public evaluate path calls normal only for an existing cycle. No reachable public S1 selector is established; this is deferred and not a section72 defect count."
+}
