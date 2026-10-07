@@ -233,7 +233,7 @@ class Combat:
         if not normal and window is not None:duration=min(duration,window)
         if not normal and self.s['operator']=='char_1029_yato2':
             attack+=self.base*self.talent('鬼人强化状态','atk')
-        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None;unbound_cast_reference=None;chen_phase_reference=None
+        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None;unbound_cast_reference=None;external_event_reference=None;chen_phase_reference=None
         timeline=AttackTimeline(self.s,normal=normal,offset=self.s.get('_timeline_offset_seconds',0) if normal else 0)
         def emit(name,raw,dtype,count,defense=None,resistance=None,effects=None,event_times=None):
             if dtype=='buildup':raw*=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
@@ -549,10 +549,34 @@ class Combat:
                 if self.n==2:
                     regular('magic',.75*bb['atk_scale_extra'],targets,name='治疗衍生伤害')
                     emit('浮泡治疗衍生伤害',attack*self.talent('扶摇花火','heal_scale')*bb['atk_scale_extra'],'magic',bursts)
+                triggers=0
                 if self.n==3:
                     triggers=self.option('levitate_triggers',0,maximum=1000,integer=True)
-                    emit('浮泡浮空持续伤害',attack*bb['atk_scale'],'magic',triggers*bb['levitate_duration'])
-                self.notes.append('遥的治疗衍生伤害假设受疗友方与当前敌人邻近；浮泡破碎/浮空触发次数仅用所选情景，不由技能时长自动制造。')
+                    emit('浮泡浮空持续伤害',attack*bb['atk_scale'],'magic',0)
+                manual=[c for c in components if c['name'] in ('扶摇花火','浮泡治疗衍生伤害','浮泡浮空持续伤害')]
+                from .uncertain_sources import preserve_unplaced_sources
+                references=[]
+                for c in manual:
+                    alive=None if c['damage_type']=='healing' else timeline.options.get('target_disappears_seconds')
+                    r=preserve_unplaced_sources([c],window=window,target_lifetime=alive)
+                    references.extend(r['conditional_components'])
+                    if c['name']=='浮泡浮空持续伤害':
+                        references[-1]['hits']=references[-1]['total']=None
+                        if triggers>0 and r['source_possible']:c['actual_total']=None
+                if timeline.options.get('target_disappears_seconds')==0:
+                    for c in components:
+                        if c['damage_type'] not in ('healing','regeneration','buildup'):
+                            c['hits']=0;c['total']=0
+                            if 'times_seconds' in c:c['times_seconds']=[]
+                rows=[('声明窗口内浮泡破碎次数',bursts,'次')]
+                if self.n==3:
+                    dot=next(c for c in manual if c['name']=='浮泡浮空持续伤害')
+                    rows += [('声明浮空触发次数',triggers,'次'),('浮空持续参数',bb['levitate_duration'],'秒'),
+                             ('浮空每跳伤害条件参考',dot['per_hit'],'伤害'),('跳伤间隔参数',bb['interval'],'秒')]
+                external_event_reference={'kind':'haruka_bubbles','conditional_components':references,'parameter_rows':rows,
+                    'notes':['破裂次数只声明观察窗口内条件来源，未定位破裂/受疗及派生伤害时刻；不自动归完整施放、阶段或周期。',
+                             '敌方0秒生命周期不取消独立友方受疗；派生伤害需当前敌人邻接覆盖。浮空持续参数不证明首跳、刷新或实际跳数。']}
+                self.notes.append('遥的治疗衍生伤害保留邻近目标的条件参考；浮泡破碎/浮空计数不生成实际时钟或每次固定四跳。')
         elif op=='char_1046_sbell2':
             if not normal:
                 if self.n==1:mode='instant';duration=0;instant('magic',bb['atk_scale'])
@@ -992,7 +1016,7 @@ class Combat:
             'components':components,'neural_events':neural_events,'drone_trait_reference':drone_trait_reference,
             'neural_secondary_seeds':neural_secondary_seeds,
             'neural_binding_seeds':neural_binding_seeds,
-            'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'unbound_cast_reference':unbound_cast_reference,'chen_phase_reference':chen_phase_reference,'timing':timeline.output()}
+            'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'unbound_cast_reference':unbound_cast_reference,'external_event_reference':external_event_reference,'chen_phase_reference':chen_phase_reference,'timing':timeline.output()}
 
     def calculate(self):
         if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
@@ -1269,6 +1293,13 @@ class Combat:
                 observed['actual_total']=None
             result['complete']=False
             result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
+        if full['external_event_reference'] is not None:
+            result['external_event_reference']={**full['external_event_reference'],
+                'window_reference':shown['external_event_reference'],'actual_event_times_seconds':None}
+            from .uncertain_sources import mask_pending_damage,mask_pending_healing
+            mask_pending_damage(result,full,shown,normal,duration,cycle)
+            mask_pending_healing(result,full,shown,normal,duration,cycle)
+            result['complete']=False;result['estimate']['complete']=False
         if full['unbound_cast_reference'] is not None:
             result['unbound_cast_reference']={**full['unbound_cast_reference'],
                 'window_reference':shown['unbound_cast_reference'],

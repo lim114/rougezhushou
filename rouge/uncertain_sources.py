@@ -52,7 +52,7 @@ def mask_pending_healing(result, full, shown, normal, duration, cycle):
     if not any(pending(plan) for plan in (full,shown,normal)):
         return
     skill=result['estimate']['skill']
-    subtotal={'total_healing':known(full),
+    subtotal={'total_healing':known(full) if skill['mode'] not in ('infinite','switch','passive','triggered_ammo') else None,
         'phase_healing':known(full,duration) if duration is not None else None,
         'window_healing':known(shown),
         'cycle_healing':known(full,cycle)+(known(normal) if normal else 0) if cycle is not None else None}
