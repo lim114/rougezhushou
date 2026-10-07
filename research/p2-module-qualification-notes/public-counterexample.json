@@ -1,0 +1,1934 @@
+{
+  "scenario": {
+    "operator": "mechanist",
+    "elite": 2,
+    "level": 59,
+    "skill": 1,
+    "skill_rank": 7,
+    "timing_mode": "frames",
+    "module_id": "uniequip_002_mcnist",
+    "module_level": 3
+  },
+  "qualification_source_selector": "uniequip_table.equipDict.uniequip_002_mcnist",
+  "original_unlock": {
+    "unlockEvolvePhase": "PHASE_2",
+    "unlockLevel": 60
+  },
+  "training_request_preserved": true,
+  "base_stats_equal_without_module": true,
+  "baseline_requested": {
+    "attack": 542.0,
+    "per_hit": 596.2,
+    "total_damage": 8943.0,
+    "hits": 15,
+    "components": [
+      {
+        "name": "五连击",
+        "damage_type": "physical",
+        "hits": 15,
+        "per_hit": 596.2,
+        "total": 8943.0,
+        "times_seconds": [
+          3.8,
+          4.0,
+          4.2,
+          4.4,
+          4.6,
+          6.3,
+          6.5,
+          6.7,
+          6.9,
+          7.1,
+          8.8,
+          9.0,
+          9.2,
+          9.4,
+          9.6
+        ]
+      }
+    ],
+    "interval_seconds": 2.5,
+    "damage_type": "physical",
+    "inapplicable_relics": [],
+    "complete": true,
+    "warnings": [],
+    "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+    "scope": "指定技能伤害部分，单个持续命中的目标。",
+    "assumptions": [
+      "培养条件采用已读记录或明确标注的预览条件；模组条件机制、特训、条件藏品及难度环境修正尚未完整套用。",
+      "使用30Hz参考事件模型，实际攻击模板绑定和未排程特殊分项仍需校准。"
+    ],
+    "attack_speed": 100.0,
+    "base_attack_speed": 100.0,
+    "attack_speed_reference": 100.0,
+    "base_attack_speed_reference": 100.0,
+    "applied_effects": [],
+    "ammo_rounds": 3,
+    "timing": {
+      "mode": "frames",
+      "fps": 30,
+      "streams": [
+        {
+          "unit": "mechanist",
+          "target_scope": "enemy",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 75,
+          "interval_seconds": 2.5,
+          "start_frames": [
+            0,
+            75,
+            150
+          ],
+          "release_frames": [
+            75,
+            150,
+            225
+          ],
+          "impact_frames": [
+            114,
+            120,
+            126,
+            132,
+            138,
+            189,
+            195,
+            201,
+            207,
+            213,
+            264,
+            270,
+            276,
+            282,
+            288
+          ],
+          "times_seconds": [
+            3.8,
+            4.0,
+            4.2,
+            4.4,
+            4.6,
+            6.3,
+            6.5,
+            6.7,
+            6.9,
+            7.1,
+            8.8,
+            9.0,
+            9.2,
+            9.4,
+            9.6
+          ],
+          "emitted_impact_frames": [
+            75,
+            150,
+            225
+          ],
+          "emitted_times_seconds": [
+            2.5,
+            5.0,
+            7.5
+          ],
+          "emitted_release_frames": [
+            75,
+            150,
+            225
+          ],
+          "hit_release_frames": [
+            75,
+            150,
+            225
+          ],
+          "interval_frames_by_attack": [
+            75,
+            75,
+            75
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ],
+      "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+      "scenario_provided": false,
+      "target_scope_notes": [],
+      "complete": false,
+      "notes": [
+        "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。"
+      ],
+      "recharge_streams": [
+        {
+          "unit": "mechanist",
+          "target_scope": "enemy",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 36,
+          "interval_seconds": 1.2,
+          "start_frames": [
+            0,
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288
+          ],
+          "release_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "impact_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "times_seconds": [
+            1.2,
+            2.4,
+            3.6,
+            4.8,
+            6.0,
+            7.2,
+            8.4,
+            9.6,
+            10.8
+          ],
+          "emitted_impact_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "emitted_times_seconds": [
+            1.2,
+            2.4,
+            3.6,
+            4.8,
+            6.0,
+            7.2,
+            8.4,
+            9.6,
+            10.8
+          ],
+          "emitted_release_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "hit_release_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "interval_frames_by_attack": [
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ],
+      "unplaced_components": [],
+      "resource_and_damage_shared_clock": true,
+      "initial_seconds": 10.833333333333334,
+      "cycle_seconds": 19.166666666666668
+    },
+    "execution_seconds": 8.333333333333334,
+    "estimate": {
+      "base_stats": {
+        "hp": 3277,
+        "attack": 542.0,
+        "defense": 698,
+        "resistance": 0.0,
+        "redeploy_seconds": 70.0,
+        "attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "block_count": 3.0
+      },
+      "skill": {
+        "name": "聚类分析",
+        "initial_seconds": 10.833333333333334,
+        "recharge_seconds": 10.833333333333334,
+        "cycle_seconds": 19.166666666666668,
+        "duration_seconds": 8.333333333333334,
+        "total_damage": 8943.0,
+        "total_healing": 0,
+        "phase_damage": 5962.0,
+        "phase_healing": 0,
+        "cycle_dps": 721.095652173913,
+        "cycle_hps": 0.0,
+        "cycle_damage": 13821.0,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WHEN_ATTACK",
+        "initial_sp": 0.0,
+        "sp_cost": 9,
+        "sp_recovery_per_second": null,
+        "skill_attack": 542.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 5962.0,
+        "window_seconds": 8.333333333333334
+      },
+      "training": {
+        "elite": 2,
+        "level": 59,
+        "trust": 100,
+        "potential": 1,
+        "module_id": "uniequip_002_mcnist",
+        "module_level": 3
+      },
+      "complete": false,
+      "warnings": [],
+      "notes": [
+        "基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。",
+        "回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。",
+        "周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。",
+        "已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。",
+        "当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。",
+        "攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。",
+        "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。",
+        "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。"
+      ],
+      "scenario_scope": "指定技能伤害部分，单个持续命中的目标。"
+    },
+    "relic_regeneration_multiplier": 1,
+    "relic_regeneration_rate": 0,
+    "relic_features": [],
+    "deployment_cost": 23.0,
+    "relic_token_stats": [],
+    "relic_protection": [],
+    "relic_resolution": {
+      "records": [],
+      "warnings": [],
+      "inapplicable": [],
+      "rules": [],
+      "calculation_scope": "offline_stable_effects",
+      "combat_effects_reference_only": true,
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "complete": true,
+      "enemy_effects": {
+        "defense_factor": 1,
+        "hp_factors": [],
+        "resident_hp_applied": false,
+        "hp_composition_pending": [],
+        "spawn_hp_rules": [],
+        "atk_factors": [],
+        "weight_delta": 0
+      },
+      "token_effects": [],
+      "context": {},
+      "context_source": "明确提供的计算情景",
+      "timing_unresolved": false
+    },
+    "run_resolution": {
+      "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "squad": null,
+      "difficulty": null,
+      "applied": [],
+      "pending": [],
+      "notes": []
+    },
+    "token_duration_references": [
+      {
+        "scope": "duration_parameter_reference",
+        "operator_id": "char_4230_mcnist",
+        "token_id": "token_10069_mcnist_mcgraf",
+        "token_name": "结构性原理",
+        "unlocked": true,
+        "state": "finite",
+        "duration_seconds": 30.0,
+        "base_duration_seconds": 30.0,
+        "parameter_key": "skill@duration",
+        "parameter_value": 30.0,
+        "map_tag": "rogue_6",
+        "map_context": "current_product_theme",
+        "base_source_selector": "character_table.token_10069_mcnist_mcgraf.talents[0].candidates[1]",
+        "module_override": {
+          "module_id": "uniequip_002_mcnist",
+          "unlock_elite": 2,
+          "unlock_level": 60,
+          "applied": false,
+          "conditions": [
+            {
+              "module_level": 2,
+              "unlock_elite": 2,
+              "unlock_level": 60,
+              "required_potential_rank": 0,
+              "map_tag": "rogue_6",
+              "parameter_value": -1.0,
+              "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[1].parts[3].addOrOverrideTalentDataBundle.candidates[0]"
+            },
+            {
+              "module_level": 3,
+              "unlock_elite": 2,
+              "unlock_level": 60,
+              "required_potential_rank": 0,
+              "map_tag": "rogue_6",
+              "parameter_value": -1.0,
+              "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[2].parts[2].addOrOverrideTalentDataBundle.candidates[0]"
+            }
+          ],
+          "source_selector": null
+        },
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "sources": {
+          "character_table": {
+            "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json"
+          },
+          "battle_equip_table": {
+            "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json"
+          },
+          "uniequip_table": {
+            "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json"
+          }
+        },
+        "deployment_completed_seconds": null,
+        "actual_exit_seconds": null,
+        "actual_alive_seconds": null,
+        "live_state_verified": false,
+        "damage_timing_applied": false
+      }
+    ],
+    "report": {
+      "schema_version": 2,
+      "operator": {
+        "id": "mechanist",
+        "name": "机械师",
+        "profession": "tank"
+      },
+      "skill_number": 1,
+      "skill_rank": 7,
+      "mode": "ammo",
+      "sections": [
+        {
+          "id": "token_duration_token_10069_mcnist_mcgraf",
+          "title": "结构性原理 · 持续参数参考",
+          "metrics": [
+            {
+              "key": "duration",
+              "label": "部署后持续参数",
+              "value": 30.0,
+              "unit": "秒"
+            }
+          ],
+          "notes": [
+            "显示部署后持续参数，实际在场时间尚未确认。",
+            "无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。",
+            "实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。"
+          ]
+        },
+        {
+          "id": "timing",
+          "title": "技能时序",
+          "metrics": [
+            {
+              "key": "initial",
+              "label": "预计初动",
+              "value": 10.833333333333334,
+              "unit": "秒"
+            },
+            {
+              "key": "duration",
+              "label": "持续时间",
+              "value": 8.333333333333334,
+              "unit": "秒"
+            },
+            {
+              "key": "cycle",
+              "label": "预计回转",
+              "value": 19.166666666666668,
+              "unit": "秒"
+            },
+            {
+              "key": "recharge",
+              "label": "结束后充能",
+              "value": 10.833333333333334,
+              "unit": "秒"
+            }
+          ],
+          "notes": []
+        },
+        {
+          "id": "execution",
+          "title": "战斗时序参考",
+          "metrics": [
+            {
+              "key": "fps",
+              "label": "模拟逻辑频率",
+              "value": 30,
+              "unit": "帧/秒"
+            },
+            {
+              "key": "interval",
+              "label": "当前攻击间隔",
+              "value": 2.5,
+              "unit": "秒"
+            },
+            {
+              "key": "interval_frames",
+              "label": "当前攻击间隔帧数",
+              "value": 75,
+              "unit": "帧"
+            },
+            {
+              "key": "windup",
+              "label": "参考前摇",
+              "value": null,
+              "unit": "帧"
+            },
+            {
+              "key": "recovery",
+              "label": "参考后摇",
+              "value": null,
+              "unit": "帧"
+            },
+            {
+              "key": "first_release",
+              "label": "窗口首个出手",
+              "value": 2.5,
+              "unit": "秒"
+            },
+            {
+              "key": "first_impact",
+              "label": "窗口首个命中/治疗",
+              "value": 3.8,
+              "unit": "秒"
+            }
+          ],
+          "notes": [
+            "前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。",
+            "时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。",
+            "初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。"
+          ]
+        },
+        {
+          "id": "damage",
+          "title": "伤害输出",
+          "metrics": [
+            {
+              "key": "per_cast",
+              "label": "单次技能总伤",
+              "value": 8943.0,
+              "unit": ""
+            },
+            {
+              "key": "active_dps",
+              "label": "技能阶段平均 DPS",
+              "value": 715.4399999999999,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "window_damage",
+              "label": "观察窗口总伤",
+              "value": 5962.0,
+              "unit": ""
+            },
+            {
+              "key": "window_seconds",
+              "label": "伤害观察窗口",
+              "value": 8.333333333333334,
+              "unit": "秒"
+            },
+            {
+              "key": "window_dps",
+              "label": "窗口平均 DPS",
+              "value": 715.4399999999999,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "cycle_dps",
+              "label": "本轮周期 DPS",
+              "value": 721.095652173913,
+              "unit": "伤害/秒"
+            }
+          ],
+          "notes": []
+        },
+        {
+          "id": "summons",
+          "title": "召唤与协同",
+          "metrics": [],
+          "notes": [
+            "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+            "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+            "召唤/协同伤害如已计入总伤，不再重复相加；没有独立模型或已确认触发的数据不会补成确定输出。"
+          ]
+        },
+        {
+          "id": "ammo",
+          "title": "弹药机制",
+          "metrics": [
+            {
+              "key": "ammo",
+              "label": "完整技能弹药/触发数",
+              "value": 3.0,
+              "unit": "次"
+            }
+          ],
+          "notes": [
+            "这是触发资源数量，不自动等于命中次数；破屏、布子或多连击的实际消耗规则以当前技能资料为准。"
+          ]
+        },
+        {
+          "id": "talents",
+          "title": "当前已解锁天赋资料",
+          "metrics": [],
+          "notes": [
+            "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+            "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+            "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+          ]
+        },
+        {
+          "id": "mechanics",
+          "title": "技能机制（当前等级资料）",
+          "metrics": [],
+          "notes": [
+            "攻击间隔增大，攻击变为五连击的群体攻击，每次造成攻击力110%的范围物理伤害\n攻击装有3发弹药，打完后结束（可随时停止技能）"
+          ]
+        }
+      ]
+    }
+  },
+  "draft_requested": {
+    "attack": 542.0,
+    "per_hit": 596.2,
+    "total_damage": 8943.0,
+    "hits": 15,
+    "components": [
+      {
+        "name": "五连击",
+        "damage_type": "physical",
+        "hits": 15,
+        "per_hit": 596.2,
+        "total": 8943.0,
+        "times_seconds": [
+          3.8,
+          4.0,
+          4.2,
+          4.4,
+          4.6,
+          6.3,
+          6.5,
+          6.7,
+          6.9,
+          7.1,
+          8.8,
+          9.0,
+          9.2,
+          9.4,
+          9.6
+        ]
+      }
+    ],
+    "interval_seconds": 2.5,
+    "damage_type": "physical",
+    "inapplicable_relics": [],
+    "complete": true,
+    "warnings": [],
+    "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+    "scope": "指定技能伤害部分，单个持续命中的目标。",
+    "assumptions": [
+      "培养条件采用已读记录或明确标注的预览条件；模组条件机制、特训、条件藏品及难度环境修正尚未完整套用。",
+      "使用30Hz参考事件模型，实际攻击模板绑定和未排程特殊分项仍需校准。"
+    ],
+    "attack_speed": 100.0,
+    "base_attack_speed": 100.0,
+    "attack_speed_reference": 100.0,
+    "base_attack_speed_reference": 100.0,
+    "applied_effects": [],
+    "ammo_rounds": 3,
+    "timing": {
+      "mode": "frames",
+      "fps": 30,
+      "streams": [
+        {
+          "unit": "mechanist",
+          "target_scope": "enemy",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 75,
+          "interval_seconds": 2.5,
+          "start_frames": [
+            0,
+            75,
+            150
+          ],
+          "release_frames": [
+            75,
+            150,
+            225
+          ],
+          "impact_frames": [
+            114,
+            120,
+            126,
+            132,
+            138,
+            189,
+            195,
+            201,
+            207,
+            213,
+            264,
+            270,
+            276,
+            282,
+            288
+          ],
+          "times_seconds": [
+            3.8,
+            4.0,
+            4.2,
+            4.4,
+            4.6,
+            6.3,
+            6.5,
+            6.7,
+            6.9,
+            7.1,
+            8.8,
+            9.0,
+            9.2,
+            9.4,
+            9.6
+          ],
+          "emitted_impact_frames": [
+            75,
+            150,
+            225
+          ],
+          "emitted_times_seconds": [
+            2.5,
+            5.0,
+            7.5
+          ],
+          "emitted_release_frames": [
+            75,
+            150,
+            225
+          ],
+          "hit_release_frames": [
+            75,
+            150,
+            225
+          ],
+          "interval_frames_by_attack": [
+            75,
+            75,
+            75
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ],
+      "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+      "scenario_provided": false,
+      "target_scope_notes": [],
+      "complete": false,
+      "notes": [
+        "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。"
+      ],
+      "recharge_streams": [
+        {
+          "unit": "mechanist",
+          "target_scope": "enemy",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 36,
+          "interval_seconds": 1.2,
+          "start_frames": [
+            0,
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288
+          ],
+          "release_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "impact_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "times_seconds": [
+            1.2,
+            2.4,
+            3.6,
+            4.8,
+            6.0,
+            7.2,
+            8.4,
+            9.6,
+            10.8
+          ],
+          "emitted_impact_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "emitted_times_seconds": [
+            1.2,
+            2.4,
+            3.6,
+            4.8,
+            6.0,
+            7.2,
+            8.4,
+            9.6,
+            10.8
+          ],
+          "emitted_release_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "hit_release_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "interval_frames_by_attack": [
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ],
+      "unplaced_components": [],
+      "resource_and_damage_shared_clock": true,
+      "initial_seconds": 10.833333333333334,
+      "cycle_seconds": 19.166666666666668
+    },
+    "execution_seconds": 8.333333333333334,
+    "estimate": {
+      "base_stats": {
+        "hp": 3277,
+        "attack": 542.0,
+        "defense": 698,
+        "resistance": 0.0,
+        "redeploy_seconds": 70.0,
+        "attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "block_count": 3.0
+      },
+      "skill": {
+        "name": "聚类分析",
+        "initial_seconds": 10.833333333333334,
+        "recharge_seconds": 10.833333333333334,
+        "cycle_seconds": 19.166666666666668,
+        "duration_seconds": 8.333333333333334,
+        "total_damage": 8943.0,
+        "total_healing": 0,
+        "phase_damage": 5962.0,
+        "phase_healing": 0,
+        "cycle_dps": 721.095652173913,
+        "cycle_hps": 0.0,
+        "cycle_damage": 13821.0,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WHEN_ATTACK",
+        "initial_sp": 0.0,
+        "sp_cost": 9,
+        "sp_recovery_per_second": null,
+        "skill_attack": 542.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 5962.0,
+        "window_seconds": 8.333333333333334
+      },
+      "training": {
+        "elite": 2,
+        "level": 59,
+        "trust": 100,
+        "potential": 1,
+        "module_id": "uniequip_002_mcnist",
+        "module_level": 3
+      },
+      "complete": false,
+      "warnings": [],
+      "notes": [
+        "基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。",
+        "回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。",
+        "周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。",
+        "已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。",
+        "所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。",
+        "攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。",
+        "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。",
+        "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。"
+      ],
+      "scenario_scope": "指定技能伤害部分，单个持续命中的目标。"
+    },
+    "relic_regeneration_multiplier": 1,
+    "relic_regeneration_rate": 0,
+    "relic_features": [],
+    "deployment_cost": 23.0,
+    "relic_token_stats": [],
+    "relic_protection": [],
+    "relic_resolution": {
+      "records": [],
+      "warnings": [],
+      "inapplicable": [],
+      "rules": [],
+      "calculation_scope": "offline_stable_effects",
+      "combat_effects_reference_only": true,
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "complete": true,
+      "enemy_effects": {
+        "defense_factor": 1,
+        "hp_factors": [],
+        "resident_hp_applied": false,
+        "hp_composition_pending": [],
+        "spawn_hp_rules": [],
+        "atk_factors": [],
+        "weight_delta": 0
+      },
+      "token_effects": [],
+      "context": {},
+      "context_source": "明确提供的计算情景",
+      "timing_unresolved": false
+    },
+    "run_resolution": {
+      "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "squad": null,
+      "difficulty": null,
+      "applied": [],
+      "pending": [],
+      "notes": []
+    },
+    "token_duration_references": [
+      {
+        "scope": "duration_parameter_reference",
+        "operator_id": "char_4230_mcnist",
+        "token_id": "token_10069_mcnist_mcgraf",
+        "token_name": "结构性原理",
+        "unlocked": true,
+        "state": "finite",
+        "duration_seconds": 30.0,
+        "base_duration_seconds": 30.0,
+        "parameter_key": "skill@duration",
+        "parameter_value": 30.0,
+        "map_tag": "rogue_6",
+        "map_context": "current_product_theme",
+        "base_source_selector": "character_table.token_10069_mcnist_mcgraf.talents[0].candidates[1]",
+        "module_override": {
+          "module_id": "uniequip_002_mcnist",
+          "unlock_elite": 2,
+          "unlock_level": 60,
+          "applied": false,
+          "conditions": [
+            {
+              "module_level": 2,
+              "unlock_elite": 2,
+              "unlock_level": 60,
+              "required_potential_rank": 0,
+              "map_tag": "rogue_6",
+              "parameter_value": -1.0,
+              "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[1].parts[3].addOrOverrideTalentDataBundle.candidates[0]"
+            },
+            {
+              "module_level": 3,
+              "unlock_elite": 2,
+              "unlock_level": 60,
+              "required_potential_rank": 0,
+              "map_tag": "rogue_6",
+              "parameter_value": -1.0,
+              "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[2].parts[2].addOrOverrideTalentDataBundle.candidates[0]"
+            }
+          ],
+          "source_selector": null
+        },
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "sources": {
+          "character_table": {
+            "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json"
+          },
+          "battle_equip_table": {
+            "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json"
+          },
+          "uniequip_table": {
+            "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json"
+          }
+        },
+        "deployment_completed_seconds": null,
+        "actual_exit_seconds": null,
+        "actual_alive_seconds": null,
+        "live_state_verified": false,
+        "damage_timing_applied": false
+      }
+    ],
+    "report": {
+      "schema_version": 2,
+      "operator": {
+        "id": "mechanist",
+        "name": "机械师",
+        "profession": "tank"
+      },
+      "skill_number": 1,
+      "skill_rank": 7,
+      "mode": "ammo",
+      "sections": [
+        {
+          "id": "token_duration_token_10069_mcnist_mcgraf",
+          "title": "结构性原理 · 持续参数参考",
+          "metrics": [
+            {
+              "key": "duration",
+              "label": "部署后持续参数",
+              "value": 30.0,
+              "unit": "秒"
+            }
+          ],
+          "notes": [
+            "显示部署后持续参数，实际在场时间尚未确认。",
+            "无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。",
+            "实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。"
+          ]
+        },
+        {
+          "id": "timing",
+          "title": "技能时序",
+          "metrics": [
+            {
+              "key": "initial",
+              "label": "预计初动",
+              "value": 10.833333333333334,
+              "unit": "秒"
+            },
+            {
+              "key": "duration",
+              "label": "持续时间",
+              "value": 8.333333333333334,
+              "unit": "秒"
+            },
+            {
+              "key": "cycle",
+              "label": "预计回转",
+              "value": 19.166666666666668,
+              "unit": "秒"
+            },
+            {
+              "key": "recharge",
+              "label": "结束后充能",
+              "value": 10.833333333333334,
+              "unit": "秒"
+            }
+          ],
+          "notes": []
+        },
+        {
+          "id": "execution",
+          "title": "战斗时序参考",
+          "metrics": [
+            {
+              "key": "fps",
+              "label": "模拟逻辑频率",
+              "value": 30,
+              "unit": "帧/秒"
+            },
+            {
+              "key": "interval",
+              "label": "当前攻击间隔",
+              "value": 2.5,
+              "unit": "秒"
+            },
+            {
+              "key": "interval_frames",
+              "label": "当前攻击间隔帧数",
+              "value": 75,
+              "unit": "帧"
+            },
+            {
+              "key": "windup",
+              "label": "参考前摇",
+              "value": null,
+              "unit": "帧"
+            },
+            {
+              "key": "recovery",
+              "label": "参考后摇",
+              "value": null,
+              "unit": "帧"
+            },
+            {
+              "key": "first_release",
+              "label": "窗口首个出手",
+              "value": 2.5,
+              "unit": "秒"
+            },
+            {
+              "key": "first_impact",
+              "label": "窗口首个命中/治疗",
+              "value": 3.8,
+              "unit": "秒"
+            }
+          ],
+          "notes": [
+            "前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。",
+            "时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。",
+            "初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。"
+          ]
+        },
+        {
+          "id": "damage",
+          "title": "伤害输出",
+          "metrics": [
+            {
+              "key": "per_cast",
+              "label": "单次技能总伤",
+              "value": 8943.0,
+              "unit": ""
+            },
+            {
+              "key": "active_dps",
+              "label": "技能阶段平均 DPS",
+              "value": 715.4399999999999,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "window_damage",
+              "label": "观察窗口总伤",
+              "value": 5962.0,
+              "unit": ""
+            },
+            {
+              "key": "window_seconds",
+              "label": "伤害观察窗口",
+              "value": 8.333333333333334,
+              "unit": "秒"
+            },
+            {
+              "key": "window_dps",
+              "label": "窗口平均 DPS",
+              "value": 715.4399999999999,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "cycle_dps",
+              "label": "本轮周期 DPS",
+              "value": 721.095652173913,
+              "unit": "伤害/秒"
+            }
+          ],
+          "notes": []
+        },
+        {
+          "id": "summons",
+          "title": "召唤与协同",
+          "metrics": [],
+          "notes": [
+            "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+            "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+            "召唤/协同伤害如已计入总伤，不再重复相加；没有独立模型或已确认触发的数据不会补成确定输出。"
+          ]
+        },
+        {
+          "id": "ammo",
+          "title": "弹药机制",
+          "metrics": [
+            {
+              "key": "ammo",
+              "label": "完整技能弹药/触发数",
+              "value": 3.0,
+              "unit": "次"
+            }
+          ],
+          "notes": [
+            "这是触发资源数量，不自动等于命中次数；破屏、布子或多连击的实际消耗规则以当前技能资料为准。"
+          ]
+        },
+        {
+          "id": "talents",
+          "title": "当前已解锁天赋资料",
+          "metrics": [],
+          "notes": [
+            "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+            "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+            "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+          ]
+        },
+        {
+          "id": "mechanics",
+          "title": "技能机制（当前等级资料）",
+          "metrics": [],
+          "notes": [
+            "攻击间隔增大，攻击变为五连击的群体攻击，每次造成攻击力110%的范围物理伤害\n攻击装有3发弹药，打完后结束（可随时停止技能）"
+          ]
+        }
+      ]
+    }
+  },
+  "no_module": {
+    "attack": 542.0,
+    "per_hit": 596.2,
+    "total_damage": 8943.0,
+    "hits": 15,
+    "components": [
+      {
+        "name": "五连击",
+        "damage_type": "physical",
+        "hits": 15,
+        "per_hit": 596.2,
+        "total": 8943.0,
+        "times_seconds": [
+          3.8,
+          4.0,
+          4.2,
+          4.4,
+          4.6,
+          6.3,
+          6.5,
+          6.7,
+          6.9,
+          7.1,
+          8.8,
+          9.0,
+          9.2,
+          9.4,
+          9.6
+        ]
+      }
+    ],
+    "interval_seconds": 2.5,
+    "damage_type": "physical",
+    "inapplicable_relics": [],
+    "complete": true,
+    "warnings": [],
+    "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+    "scope": "指定技能伤害部分，单个持续命中的目标。",
+    "assumptions": [
+      "培养条件采用已读记录或明确标注的预览条件；模组条件机制、特训、条件藏品及难度环境修正尚未完整套用。",
+      "使用30Hz参考事件模型，实际攻击模板绑定和未排程特殊分项仍需校准。"
+    ],
+    "attack_speed": 100.0,
+    "base_attack_speed": 100.0,
+    "attack_speed_reference": 100.0,
+    "base_attack_speed_reference": 100.0,
+    "applied_effects": [],
+    "ammo_rounds": 3,
+    "timing": {
+      "mode": "frames",
+      "fps": 30,
+      "streams": [
+        {
+          "unit": "mechanist",
+          "target_scope": "enemy",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 75,
+          "interval_seconds": 2.5,
+          "start_frames": [
+            0,
+            75,
+            150
+          ],
+          "release_frames": [
+            75,
+            150,
+            225
+          ],
+          "impact_frames": [
+            114,
+            120,
+            126,
+            132,
+            138,
+            189,
+            195,
+            201,
+            207,
+            213,
+            264,
+            270,
+            276,
+            282,
+            288
+          ],
+          "times_seconds": [
+            3.8,
+            4.0,
+            4.2,
+            4.4,
+            4.6,
+            6.3,
+            6.5,
+            6.7,
+            6.9,
+            7.1,
+            8.8,
+            9.0,
+            9.2,
+            9.4,
+            9.6
+          ],
+          "emitted_impact_frames": [
+            75,
+            150,
+            225
+          ],
+          "emitted_times_seconds": [
+            2.5,
+            5.0,
+            7.5
+          ],
+          "emitted_release_frames": [
+            75,
+            150,
+            225
+          ],
+          "hit_release_frames": [
+            75,
+            150,
+            225
+          ],
+          "interval_frames_by_attack": [
+            75,
+            75,
+            75
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ],
+      "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+      "scenario_provided": false,
+      "target_scope_notes": [],
+      "complete": false,
+      "notes": [
+        "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。"
+      ],
+      "recharge_streams": [
+        {
+          "unit": "mechanist",
+          "target_scope": "enemy",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 36,
+          "interval_seconds": 1.2,
+          "start_frames": [
+            0,
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288
+          ],
+          "release_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "impact_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "times_seconds": [
+            1.2,
+            2.4,
+            3.6,
+            4.8,
+            6.0,
+            7.2,
+            8.4,
+            9.6,
+            10.8
+          ],
+          "emitted_impact_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "emitted_times_seconds": [
+            1.2,
+            2.4,
+            3.6,
+            4.8,
+            6.0,
+            7.2,
+            8.4,
+            9.6,
+            10.8
+          ],
+          "emitted_release_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "hit_release_frames": [
+            36,
+            72,
+            108,
+            144,
+            180,
+            216,
+            252,
+            288,
+            324
+          ],
+          "interval_frames_by_attack": [
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36,
+            36
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ],
+      "unplaced_components": [],
+      "resource_and_damage_shared_clock": true,
+      "initial_seconds": 10.833333333333334,
+      "cycle_seconds": 19.166666666666668
+    },
+    "execution_seconds": 8.333333333333334,
+    "estimate": {
+      "base_stats": {
+        "hp": 3277,
+        "attack": 542.0,
+        "defense": 698,
+        "resistance": 0.0,
+        "redeploy_seconds": 70.0,
+        "attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "block_count": 3.0
+      },
+      "skill": {
+        "name": "聚类分析",
+        "initial_seconds": 10.833333333333334,
+        "recharge_seconds": 10.833333333333334,
+        "cycle_seconds": 19.166666666666668,
+        "duration_seconds": 8.333333333333334,
+        "total_damage": 8943.0,
+        "total_healing": 0,
+        "phase_damage": 5962.0,
+        "phase_healing": 0,
+        "cycle_dps": 721.095652173913,
+        "cycle_hps": 0.0,
+        "cycle_damage": 13821.0,
+        "cycle_healing": 0,
+        "sp_type": "INCREASE_WHEN_ATTACK",
+        "initial_sp": 0.0,
+        "sp_cost": 9,
+        "sp_recovery_per_second": null,
+        "skill_attack": 542.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "healing_targets": 1,
+        "window_healing": 0,
+        "window_damage": 5962.0,
+        "window_seconds": 8.333333333333334
+      },
+      "training": {
+        "elite": 2,
+        "level": 59,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0
+      },
+      "complete": false,
+      "warnings": [],
+      "notes": [
+        "基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。",
+        "回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。",
+        "周期 DPS/HPS 包含技能与充能期普攻/普疗，按单个敌人和指定满额受疗目标计算。",
+        "已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。",
+        "攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。",
+        "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。",
+        "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。"
+      ],
+      "scenario_scope": "指定技能伤害部分，单个持续命中的目标。"
+    },
+    "relic_regeneration_multiplier": 1,
+    "relic_regeneration_rate": 0,
+    "relic_features": [],
+    "deployment_cost": 23.0,
+    "relic_token_stats": [],
+    "relic_protection": [],
+    "relic_resolution": {
+      "records": [],
+      "warnings": [],
+      "inapplicable": [],
+      "rules": [],
+      "calculation_scope": "offline_stable_effects",
+      "combat_effects_reference_only": true,
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "complete": true,
+      "enemy_effects": {
+        "defense_factor": 1,
+        "hp_factors": [],
+        "resident_hp_applied": false,
+        "hp_composition_pending": [],
+        "spawn_hp_rules": [],
+        "atk_factors": [],
+        "weight_delta": 0
+      },
+      "token_effects": [],
+      "context": {},
+      "context_source": "明确提供的计算情景",
+      "timing_unresolved": false
+    },
+    "run_resolution": {
+      "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "squad": null,
+      "difficulty": null,
+      "applied": [],
+      "pending": [],
+      "notes": []
+    },
+    "token_duration_references": [
+      {
+        "scope": "duration_parameter_reference",
+        "operator_id": "char_4230_mcnist",
+        "token_id": "token_10069_mcnist_mcgraf",
+        "token_name": "结构性原理",
+        "unlocked": true,
+        "state": "finite",
+        "duration_seconds": 30.0,
+        "base_duration_seconds": 30.0,
+        "parameter_key": "skill@duration",
+        "parameter_value": 30.0,
+        "map_tag": "rogue_6",
+        "map_context": "current_product_theme",
+        "base_source_selector": "character_table.token_10069_mcnist_mcgraf.talents[0].candidates[1]",
+        "module_override": {
+          "module_id": "uniequip_002_mcnist",
+          "unlock_elite": 2,
+          "unlock_level": 60,
+          "applied": false,
+          "conditions": [
+            {
+              "module_level": 2,
+              "unlock_elite": 2,
+              "unlock_level": 60,
+              "required_potential_rank": 0,
+              "map_tag": "rogue_6",
+              "parameter_value": -1.0,
+              "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[1].parts[3].addOrOverrideTalentDataBundle.candidates[0]"
+            },
+            {
+              "module_level": 3,
+              "unlock_elite": 2,
+              "unlock_level": 60,
+              "required_potential_rank": 0,
+              "map_tag": "rogue_6",
+              "parameter_value": -1.0,
+              "source_selector": "battle_equip_table.uniequip_002_mcnist.phases[2].parts[2].addOrOverrideTalentDataBundle.candidates[0]"
+            }
+          ],
+          "source_selector": null
+        },
+        "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+        "sources": {
+          "character_table": {
+            "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json"
+          },
+          "battle_equip_table": {
+            "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json"
+          },
+          "uniequip_table": {
+            "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json"
+          }
+        },
+        "deployment_completed_seconds": null,
+        "actual_exit_seconds": null,
+        "actual_alive_seconds": null,
+        "live_state_verified": false,
+        "damage_timing_applied": false
+      }
+    ],
+    "report": {
+      "schema_version": 2,
+      "operator": {
+        "id": "mechanist",
+        "name": "机械师",
+        "profession": "tank"
+      },
+      "skill_number": 1,
+      "skill_rank": 7,
+      "mode": "ammo",
+      "sections": [
+        {
+          "id": "token_duration_token_10069_mcnist_mcgraf",
+          "title": "结构性原理 · 持续参数参考",
+          "metrics": [
+            {
+              "key": "duration",
+              "label": "部署后持续参数",
+              "value": 30.0,
+              "unit": "秒"
+            }
+          ],
+          "notes": [
+            "显示部署后持续参数，实际在场时间尚未确认。",
+            "无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。",
+            "实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。"
+          ]
+        },
+        {
+          "id": "timing",
+          "title": "技能时序",
+          "metrics": [
+            {
+              "key": "initial",
+              "label": "预计初动",
+              "value": 10.833333333333334,
+              "unit": "秒"
+            },
+            {
+              "key": "duration",
+              "label": "持续时间",
+              "value": 8.333333333333334,
+              "unit": "秒"
+            },
+            {
+              "key": "cycle",
+              "label": "预计回转",
+              "value": 19.166666666666668,
+              "unit": "秒"
+            },
+            {
+              "key": "recharge",
+              "label": "结束后充能",
+              "value": 10.833333333333334,
+              "unit": "秒"
+            }
+          ],
+          "notes": []
+        },
+        {
+          "id": "execution",
+          "title": "战斗时序参考",
+          "metrics": [
+            {
+              "key": "fps",
+              "label": "模拟逻辑频率",
+              "value": 30,
+              "unit": "帧/秒"
+            },
+            {
+              "key": "interval",
+              "label": "当前攻击间隔",
+              "value": 2.5,
+              "unit": "秒"
+            },
+            {
+              "key": "interval_frames",
+              "label": "当前攻击间隔帧数",
+              "value": 75,
+              "unit": "帧"
+            },
+            {
+              "key": "windup",
+              "label": "参考前摇",
+              "value": null,
+              "unit": "帧"
+            },
+            {
+              "key": "recovery",
+              "label": "参考后摇",
+              "value": null,
+              "unit": "帧"
+            },
+            {
+              "key": "first_release",
+              "label": "窗口首个出手",
+              "value": 2.5,
+              "unit": "秒"
+            },
+            {
+              "key": "first_impact",
+              "label": "窗口首个命中/治疗",
+              "value": 3.8,
+              "unit": "秒"
+            }
+          ],
+          "notes": [
+            "前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。",
+            "时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。",
+            "初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。"
+          ]
+        },
+        {
+          "id": "damage",
+          "title": "伤害输出",
+          "metrics": [
+            {
+              "key": "per_cast",
+              "label": "单次技能总伤",
+              "value": 8943.0,
+              "unit": ""
+            },
+            {
+              "key": "active_dps",
+              "label": "技能阶段平均 DPS",
+              "value": 715.4399999999999,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "window_damage",
+              "label": "观察窗口总伤",
+              "value": 5962.0,
+              "unit": ""
+            },
+            {
+              "key": "window_seconds",
+              "label": "伤害观察窗口",
+              "value": 8.333333333333334,
+              "unit": "秒"
+            },
+            {
+              "key": "window_dps",
+              "label": "窗口平均 DPS",
+              "value": 715.4399999999999,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "cycle_dps",
+              "label": "本轮周期 DPS",
+              "value": 721.095652173913,
+              "unit": "伤害/秒"
+            }
+          ],
+          "notes": []
+        },
+        {
+          "id": "summons",
+          "title": "召唤与协同",
+          "metrics": [],
+          "notes": [
+            "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+            "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+            "召唤/协同伤害如已计入总伤，不再重复相加；没有独立模型或已确认触发的数据不会补成确定输出。"
+          ]
+        },
+        {
+          "id": "ammo",
+          "title": "弹药机制",
+          "metrics": [
+            {
+              "key": "ammo",
+              "label": "完整技能弹药/触发数",
+              "value": 3.0,
+              "unit": "次"
+            }
+          ],
+          "notes": [
+            "这是触发资源数量，不自动等于命中次数；破屏、布子或多连击的实际消耗规则以当前技能资料为准。"
+          ]
+        },
+        {
+          "id": "talents",
+          "title": "当前已解锁天赋资料",
+          "metrics": [],
+          "notes": [
+            "可以使用一个持续30秒的结构性原理，拥有独立的再部署时间",
+            "自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害",
+            "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+          ]
+        },
+        {
+          "id": "mechanics",
+          "title": "技能机制（当前等级资料）",
+          "metrics": [],
+          "notes": [
+            "攻击间隔增大，攻击变为五连击的群体攻击，每次造成攻击力110%的范围物理伤害\n攻击装有3发弹药，打完后结束（可随时停止技能）"
+          ]
+        }
+      ]
+    }
+  },
+  "baseline_formatted_report": "机械师 · 重装\n计算状态：不完整（见待确认与适用范围）\n\n【培养信息】\n精英 2 · 等级 59 · 潜能 1 · 信赖加成进度 100%\n\n【预计属性】\n含已支持的天赋和藏品；不是未修正基础值。\n生命值：3,277    攻击力：542\n防御：698    法抗：0\n再部署时间：70.00 秒    阻挡数：3\n攻速：100（游戏数值单位，基础 100）\n\n【当前技能】\n聚类分析 · 7级 · 攻击弹药\n\n【结构性原理 · 持续参数参考】\n部署后持续参数：30.00 秒\n\n【技能时序】\n预计初动：10.83 秒\n持续时间：8.33 秒\n预计回转：19.17 秒\n结束后充能：10.83 秒\n\n【战斗时序参考】\n模拟逻辑频率：30 帧/秒\n当前攻击间隔：2.50 秒\n当前攻击间隔帧数：75 帧\n参考前摇：未知（需要条件或尚未建模）\n参考后摇：未知（需要条件或尚未建模）\n窗口首个出手：2.50 秒\n窗口首个命中/治疗：3.80 秒\n\n【伤害输出】\n单次技能总伤：8,943\n技能阶段平均每秒伤害：715.44 伤害/秒\n观察窗口总伤：5,962\n伤害观察窗口：8.33 秒\n窗口平均每秒伤害：715.44 伤害/秒\n本轮周期每秒伤害：721.1 伤害/秒\n\n【召唤与协同】\n• 可以使用一个持续30秒的结构性原理，拥有独立的再部署时间\n• 自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害\n• 召唤/协同伤害如已计入总伤，不再重复相加；没有独立模型或已确认触发的数据不会补成确定输出。\n\n【弹药机制】\n完整技能弹药/触发数：3 次\n\n【当前已解锁天赋资料】\n• 可以使用一个持续30秒的结构性原理，拥有独立的再部署时间\n• 自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害\n• 仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。\n\n【技能机制（当前等级资料）】\n• 攻击间隔增大，攻击变为五连击的群体攻击，每次造成攻击力110%的范围物理伤害\n攻击装有3发弹药，打完后结束（可随时停止技能）\n\n【计算说明】\n结构性原理 · 持续参数参考：\n• 显示部署后持续参数，实际在场时间尚未确认。\n• 无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。\n• 实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。\n战斗时序参考：\n• 前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。\n• 时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。\n• 初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。\n弹药机制：\n• 这是触发资源数量，不自动等于命中次数；破屏、布子或多连击的实际消耗规则以当前技能资料为准。\n\n【待确认与适用范围】\n情景范围：指定技能伤害部分，单个持续命中的目标。\n• 基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。\n• 回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。\n• 周期平均指标包含技能与结束后充能阶段；各指标仅在相应能力存在时显示。\n• 已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。\n• 当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。\n• 攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。\n• 常规攻击按30帧/秒逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。\n• 只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。\n• 机械师S1按档案档案弹道延迟参数和档案连击间隔参数分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。\n• 时序采用30帧/秒参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。\n• 动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。\n• 未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。\n• 攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。\n• 单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。\n• 当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。",
+  "draft_formatted_report": "机械师 · 重装\n计算状态：不完整（见待确认与适用范围）\n\n【培养信息】\n精英 2 · 等级 59 · 潜能 1 · 信赖加成进度 100%\n\n【预计属性】\n含已支持的天赋和藏品；不是未修正基础值。\n生命值：3,277    攻击力：542\n防御：698    法抗：0\n再部署时间：70.00 秒    阻挡数：3\n攻速：100（游戏数值单位，基础 100）\n\n【当前技能】\n聚类分析 · 7级 · 攻击弹药\n\n【结构性原理 · 持续参数参考】\n部署后持续参数：30.00 秒\n\n【技能时序】\n预计初动：10.83 秒\n持续时间：8.33 秒\n预计回转：19.17 秒\n结束后充能：10.83 秒\n\n【战斗时序参考】\n模拟逻辑频率：30 帧/秒\n当前攻击间隔：2.50 秒\n当前攻击间隔帧数：75 帧\n参考前摇：未知（需要条件或尚未建模）\n参考后摇：未知（需要条件或尚未建模）\n窗口首个出手：2.50 秒\n窗口首个命中/治疗：3.80 秒\n\n【伤害输出】\n单次技能总伤：8,943\n技能阶段平均每秒伤害：715.44 伤害/秒\n观察窗口总伤：5,962\n伤害观察窗口：8.33 秒\n窗口平均每秒伤害：715.44 伤害/秒\n本轮周期每秒伤害：721.1 伤害/秒\n\n【召唤与协同】\n• 可以使用一个持续30秒的结构性原理，拥有独立的再部署时间\n• 自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害\n• 召唤/协同伤害如已计入总伤，不再重复相加；没有独立模型或已确认触发的数据不会补成确定输出。\n\n【弹药机制】\n完整技能弹药/触发数：3 次\n\n【当前已解锁天赋资料】\n• 可以使用一个持续30秒的结构性原理，拥有独立的再部署时间\n• 自身和结构性原理部署时获得最大生命30%的屏障；来自自身的屏障可以抵挡超额的伤害\n• 仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。\n\n【技能机制（当前等级资料）】\n• 攻击间隔增大，攻击变为五连击的群体攻击，每次造成攻击力110%的范围物理伤害\n攻击装有3发弹药，打完后结束（可随时停止技能）\n\n【计算说明】\n结构性原理 · 持续参数参考：\n• 显示部署后持续参数，实际在场时间尚未确认。\n• 无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。\n• 实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。\n战斗时序参考：\n• 前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。\n• 时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。\n• 初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。\n弹药机制：\n• 这是触发资源数量，不自动等于命中次数；破屏、布子或多连击的实际消耗规则以当前技能资料为准。\n\n【待确认与适用范围】\n情景范围：指定技能伤害部分，单个持续命中的目标。\n• 基础数值先按培养、信赖、潜能和模组计算，再套用藏品/分队符文，最后计算已覆盖天赋；不含技能加成。\n• 回转为本次开启至下次开启；充能为技能结束后恢复一份技力的时间。\n• 周期平均指标包含技能与结束后充能阶段；各指标仅在相应能力存在时显示。\n• 已支持已选模组的基础属性；模组条件机制、机械师特训、分队和难度环境修正仍有缺失。\n• 所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。\n• 攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。\n• 常规攻击按30帧/秒逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。\n• 只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。\n• 机械师S1按档案档案弹道延迟参数和档案连击间隔参数分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。\n• 时序采用30帧/秒参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。\n• 动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。\n• 未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。\n• 攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。\n• 单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。\n• 当前存在缺失的前后摇资料：保持延迟首击参考，不伪造零前摇；时序值需实测校准。"
+}

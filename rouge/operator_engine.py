@@ -1449,6 +1449,12 @@ class Combat:
         if unconfirmed:self.notes.insert(0,'尚未从画面确认：'+'、'.join(unconfirmed)+'；当前为已标注的培养预览。')
         if inventory and not inventory.get('complete'):
             self.notes.insert(0,f'本局藏品读取未完整：已确认{inventory.get("recognized",0)}件；沿用本局已确认记录。')
+        if self.s.get('module_id'):
+            module=next(m for m in self.p['modules'] if m['id']==self.s['module_id'])
+            elite=self.s.get('elite',2)
+            level=self.s.get('level') or self.p['phases'][elite]['max_level']
+            if elite<module['unlock_elite'] or level<module['unlock_level']:
+                self.notes.append('所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。')
         if self.module_parts:
             self.notes.append('已计模组基础属性与适用天赋数据覆盖；未建模的新增模组特性/隐藏战斗脚本不自动推断。')
         self.notes.append('单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。')

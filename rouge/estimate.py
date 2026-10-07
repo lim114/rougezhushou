@@ -84,7 +84,11 @@ def build_estimate(scenario,result,attributes,compute_skill):
     if unconfirmed:
         notes.insert(0,'尚未从画面确认：'+ '、'.join(unconfirmed)+'；当前使用清楚标出的数据档案预览条件，不代表本局真实面板。')
     if scenario.get('module_id'):
-        notes.append('当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。')
+        module=next(m for m in profile['modules'] if m['id']==scenario['module_id'])
+        if elite>=module['unlock_elite'] and level>=module['unlock_level']:
+            notes.append('当前模组基础属性已参与估算；条件伤害和召唤物模组机制尚未完整计入。')
+        else:
+            notes.append('所选模组未满足当前精英阶段或等级门槛，本次未计模组基础属性与能力覆盖。')
     if skill['sp_type']=='INCREASE_WITH_TIME' and sp_rate>0:
         recharge=recharge_requirement(scenario,skill['sp_cost'])/sp_rate
         initial=max(0,skill['sp_cost']-initial_sp)/sp_rate
