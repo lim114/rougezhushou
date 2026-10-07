@@ -734,17 +734,34 @@ class Combat:
             bottle=self.talent('强击瓶专家','power_attack_scale',1) if self.s.get('power_coating',True) and not normal else 1
             if normal:regular(times=3)
             elif self.n==1:
-                mode='instant';duration=0
-                instant('physical',bb['atk_scale_1']*bottle,4,'刚射')
-                if self.s.get('double_charge',True):instant('physical',bb['atk_scale_2']*bottle,5,'刚连射')
+                mode='instant';duration=0 if window is None else window
+                emit('刚射',attack*bb['atk_scale_1']*bottle,'physical',4)
+                if self.s.get('double_charge',True):emit('刚连射',attack*bb['atk_scale_2']*bottle,'physical',5)
+                unbound_cast_reference={'kind':'orchid_arrows',
+                    'parameter_rows':[('首轮箭矢数量参数',4,'支'),
+                                      ('追加箭矢数量情景',5 if self.s.get('double_charge',True) else 0,'支'),
+                                      ('可充能次数参数',self.skill['max_charges'],'次')],
+                    'notes':['四箭及可选五箭保留条件量；额外充能消费、发射/飞行、强击瓶逐箭覆盖和实际结束未绑定。']}
             elif self.n==2:
-                instant('physical',bb['attack@atk_scale_loop']*bottle,12,'飞翔瞪射箭矢')
-                instant('physical',bb['attack@atk_scale_end']*bottle,name='飞翔瞪射落地')
+                duration=self.skill['duration'] if window is None else window
+                emit('飞翔瞪射箭矢',attack*bb['attack@atk_scale_loop']*bottle,'physical',12)
+                emit('飞翔瞪射落地',attack*bb['attack@atk_scale_end']*bottle,'physical',1)
+                unbound_cast_reference={'kind':'orchid_arrows',
+                    'parameter_rows':[('三轮箭矢数量参数',12,'支'),
+                                      ('名义技能持续参数',self.skill['duration'],'秒'),
+                                      ('起飞参数',bb['attack@fly_duration'],'秒'),
+                                      ('落地参数',bb['attack@fly_end_duration'],'秒')],
+                    'notes':['三轮3/4/5箭和落地只列条件来源；4.2秒与起落参数不证明各箭、落地或结束的实际相位。']}
             else:
-                mode='instant';duration=3
+                mode='instant';duration=0 if window is None else window
                 count=self.option('dragon_arrow_hits',1,maximum=1000,integer=True)
-                instant('physical',bb['atk_scale']*bottle,count,'龙之箭物理')
-                instant('magic',bb['atk_scale_magic']*bottle,count,'龙之箭法术')
+                emit('龙之箭物理',attack*bb['atk_scale']*bottle,'physical',count)
+                emit('龙之箭法术',attack*bb['atk_scale_magic']*bottle,'magic',count)
+                unbound_cast_reference={'kind':'orchid_arrows',
+                    'parameter_rows':[('描述蓄力时长参数',3,'秒'),('原表等待参数',bb['wait_duration'],'秒'),
+                                      ('声明龙之箭命中次数',count,'次')],
+                    'notes':['先蓄力后射箭有描述依据；3秒与wait_duration参数不证明当前观察时钟上的释放/命中或整箭结束。',
+                             '贯穿路径和距离参数不转换为时间，不把指定次数放在开启或3秒时刻。']}
             self.notes.append('强击瓶按本次命中仍在首次50次加成覆盖内估算；龙之箭次数取决于敌人体积与路径，使用指定命中次数。')
         elif op=='char_1041_angel2':
             if normal:regular()
