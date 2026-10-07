@@ -381,6 +381,14 @@ def build_report(scenario,result):
             metric('tick_count','实际跳伤次数',None,'次')],
             ['光环围绕全场追敌的浮游单元且不叠加；本体攻击范围没有目标不证明光环无覆盖。',
              '单元位置、首跳与边界未知时不按技能时长生成满覆盖跳伤；零窗口或目标立即消失不产生来源。']))
+        if 'unbound_attack_times_parameter' in drone_lifecycle:
+            sections.append(section('drone_arrival','特殊浮游单元 · 独立攻击待核验',[
+                metric('initial','初始倍率单次伤害条件参考',drone_lifecycle['drone_initial_per_hit_reference']),
+                metric('unbound_parameter','attack@times原始参数（含义未绑定）',drone_lifecycle['unbound_attack_times_parameter']),
+                metric('arrival','实际到达时间',None,'秒'),
+                metric('hits','同目标实际命中计数',None,'次')],
+                ['S3单元全场追敌，不能用本体范围或被抑制的本体事件生成独立命中与暖机。',
+                 '到达、重选目标、暖机及技能结束返回后的连续性未核验；本体攻击参考小计保留。']))
     wisdel=result.get('wisdel_secondary_reference')
     if wisdel:
         sections.append(section('wisdel_secondary','好礼与余震 · 次生事件待核验',[

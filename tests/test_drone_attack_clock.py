@@ -15,7 +15,7 @@ class DroneAttackClockTests(unittest.TestCase):
         self.assertEqual(r['estimate']['skill']['total_damage'], 87465)
 
     def test_all_drone_units_retain_the_existing_owner_clock_reference(self):
-        for skill in (1, 2, 3):
+        for skill in (1, 2):
             r = evaluate('char_1038_whitw2', skill=skill,
                          window_seconds=10, deployment_elapsed_seconds=60)
             for c in r['components']:

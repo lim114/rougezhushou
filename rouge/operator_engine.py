@@ -519,12 +519,20 @@ class Combat:
             elapsed=self.option('deployment_elapsed_seconds',0,maximum=3600)
             head_interval=self.talent('头狼','interval',20)
             starting=self.option('drone_warmup_hits',0,maximum=100,integer=True)
-            for i,event_time in enumerate(attack_times()):
-                time=elapsed+timeline.offset/FPS+event_time
-                ceiling=upper*(self.talent('头狼','scale',1) if op=='char_1038_whitw2' and time>=head_interval else 1)
-                units=drone_count+(1 if op=='char_1038_whitw2' and time>=3*head_interval else 0)
-                scale=min(ceiling,lower+step*(starting+i))
-                if op!='char_1038_whitw2' or normal or self.n!=3 or event_time>=bb['attack@times']:
+            if op=='char_1038_whitw2' and self.n==3:
+                # Special S3 units acquire enemies independently. Neither the
+                # unlabeled attack@times nor suppressed owner attempts prove
+                # arrival, actual hits, warmup, or their return-phase clock.
+                emit('特殊浮游单元条件参考',attack*lower,'magic',0)
+                disappears=timeline.options.get('target_disappears_seconds')
+                if duration>0 and (disappears is None or disappears>timeline.offset/FPS):
+                    components[-1]['actual_total']=None
+            else:
+                for i,event_time in enumerate(attack_times()):
+                    time=elapsed+timeline.offset/FPS+event_time
+                    ceiling=upper*(self.talent('头狼','scale',1) if op=='char_1038_whitw2' and time>=head_interval else 1)
+                    units=drone_count+(1 if op=='char_1038_whitw2' and time>=3*head_interval else 0)
+                    scale=min(ceiling,lower+step*(starting+i))
                     emit('浮游单元',attack*scale,'magic',units,event_times=[event_time]*int(units))
                     components[-1]['timing_reference']='owner_attack_clock; independent drone clock unverified'
             if not normal and op=='char_1038_whitw2' and self.n==3:
@@ -534,7 +542,9 @@ class Combat:
                 emit('狼群光环（不叠加）',attack*bb['attack@magic_atk_scale'],'magic',0)
                 if duration>0 and timeline.options.get('target_disappears_seconds')!=0:
                     components[-1]['actual_total']=None
-            self.notes.append('浮游单元连续命中同一目标逐击增长，不按开局满倍率；每次情景从指定暖机命中数开始。本体与单元共享局外命中时间参考用于阶段截断；实际独立单元时钟未核验，不模拟弹道追踪或重新索敌。')
+            if op=='char_1038_whitw2' and self.n==3:
+                self.notes.append('特殊浮游单元的到达、独立命中、同目标暖机和返回阶段连续性未知；不解释无语义绑定的attack@times参数，也不从本体事件推进暖机。')
+            else:self.notes.append('浮游单元连续命中同一目标逐击增长，不按开局满倍率；每次情景从指定暖机命中数开始。本体与单元共享局外命中时间参考用于阶段截断；实际独立单元时钟未核验，不模拟弹道追踪或重新索敌。')
         elif op=='char_4182_oblvns':
             notes=self.option('note_count',0,maximum=self.talent('颂乐音符','max_cnt',10),integer=True)
             defense=self.enemy_def*(1-notes*self.talent('颂乐音符','def_penetrate_ratio'))
@@ -1124,6 +1134,12 @@ class Combat:
                 'aura_source_possible':{'cast':'actual_total' in aura,
                     'window':'actual_total' in observed},
                 'global_target_search':True,'native_lifecycle_verified':False,
+                'unbound_attack_times_parameter':self.bb['attack@times'],
+                'arrival_seconds':None,'independent_attack_times_seconds':None,
+                'same_target_hit_counter':None,'return_phase_clock_verified':False,
+                'drone_initial_per_hit_reference':next(c['per_hit'] for c in full['components'] if c['name']=='特殊浮游单元条件参考'),
+                'drone_source_possible':{'cast':any('actual_total' in c for c in full['components'] if c['name']=='特殊浮游单元条件参考'),
+                    'window':any('actual_total' in c for c in shown['components'] if c['name']=='特殊浮游单元条件参考')},
             }
             from .uncertain_sources import mask_pending_damage
             mask_pending_damage(result,full,shown,normal,duration,cycle)
