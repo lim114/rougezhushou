@@ -261,23 +261,25 @@ class Combat:
             item['source_unit']='operator' if effects is None else 'token'
             if event_times is not None:item['times_seconds']=event_times
             components.append(item)
-        def attack_times(seconds=None):
+        def attack_times(seconds=None,target_scope='enemy'):
             horizon=duration if seconds is None else max(0,seconds)
             if mode=='ammo' and ammo_rounds is not None and (timeline.mode=='frames' or any(
                     r['kind']=='deployment_attack_speed' for r in self.s.get('_relic_rules',[]))):
                 horizon=3600 if window is None else window
-                stream=timeline.attacks(horizon,interval,speed,attribute_speed=speed_reference,limit=ammo_rounds)
+                stream=timeline.attacks(horizon,interval,speed,attribute_speed=speed_reference,limit=ammo_rounds,target_scope=target_scope)
                 return stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
             if mode=='next_attack' and window is None:horizon+=1/FPS
-            stream=timeline.attacks(horizon,interval,speed,attribute_speed=speed_reference,limit=1 if mode=='next_attack' else None)
+            stream=timeline.attacks(horizon,interval,speed,attribute_speed=speed_reference,limit=1 if mode=='next_attack' else None,target_scope=target_scope)
             return stream['emitted_times_seconds'] if timeline.mode=='frames' and window is None and not normal else stream['times_seconds']
         def attacks(seconds=None):return len(attack_times(seconds))
-        def regular(dtype='physical',scale=1,times=1,seconds=None,name='技能攻击',defense=None,resistance=None):
-            events=attack_times(seconds)
+        def regular(dtype='physical',scale=1,times=1,seconds=None,name='技能攻击',defense=None,resistance=None,target_scope=None):
+            scope=target_scope if target_scope is not None else ('friendly' if dtype=='healing' else 'enemy')
+            events=attack_times(seconds,target_scope=scope)
             emit(name,attack*scale,dtype,len(events)*times,defense,resistance,
                 event_times=[t for t in events for _ in range(int(times))] if float(times).is_integer() else events)
         def instant(dtype='physical',scale=1,times=1,name='施放伤害'):
-            if timeline.mode=='frames' and (not timeline.selectable(0) or timeline.unavailable(0) or not timeline.selectable_lifetime(0)):
+            if (timeline.options.get('target_disappears_seconds')==0 or
+                    timeline.mode=='frames' and (not timeline.selectable(0) or timeline.unavailable(0) or not timeline.selectable_lifetime(0))):
                 times=0
             emit(name,attack*scale,dtype,times)
             if times==1:components[-1]['instant_event']=True
@@ -329,7 +331,7 @@ class Combat:
                 emit('治疗替代下次攻击',attack*bb['heal_scale'],'healing',recipients)
                 if recipients:components[-1]['actual_total']=None
             elif op=='char_196_sunbr':
-                stream=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,start_delay=bb['disarm'])
+                stream=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,start_delay=bb['disarm'],target_scope='friendly')
                 events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
                 events=[t for t in events for _ in range(int(min(1,healing_targets)))]
                 emit('技能攻击',attack,'healing',len(events),event_times=events)
@@ -427,7 +429,9 @@ class Combat:
                 if self.n==1:
                     regular('magic')
                     damage_healing('咒愈师伤害转治疗',.5*min(1,healing_targets))
-                    regular('healing',bb['heal_scale'],healing_targets,name='哀恸共情范围治疗')
+                    # The skill grants this extra heal on each attack; it is
+                    # not an independently acquired friendly treatment.
+                    regular('healing',bb['heal_scale'],healing_targets,name='哀恸共情范围治疗',target_scope='enemy')
                 else:
                     attack=self.base_attack
                     instant('magic',bb['atk_scale'],name='慈悲愿景开启伤害')
@@ -445,6 +449,10 @@ class Combat:
                 mode='infinite';duration=window if window is not None else 30
                 regular('magic')
                 emit('恶业苦果反击',attack*bb['atk_scale'],'magic',self.option('incoming_hits',0,maximum=10000,integer=True))
+                if timeline.options.get('target_disappears_seconds')==0:
+                    counter=components[-1]
+                    counter.update(conditional_hits_reference=counter['hits'],
+                        conditional_damage_reference=counter['total'],hits=0,total=0)
             elif self.n==2:
                 mode='instant';duration=0 if window is None else window
                 emit('盾击三连',attack*bb['attack@atk_scale'],'magic',3)
@@ -511,7 +519,7 @@ class Combat:
                 frost(attack*bb['atk_scale'],2 if events else 0,'高速思考')
             elif self.n==2:
                 mode='instant';duration=0
-                available=(window is None or window>0) and (timeline.mode!='frames' or (
+                available=timeline.options.get('target_disappears_seconds')!=0 and (window is None or window>0) and (timeline.mode!='frames' or (
                     timeline.selectable(0) and not timeline.unavailable(0)))
                 frost(attack*bb['atk_scale'],1 if available else 0,'零度爆发')
                 if available:components[-1]['instant_event']=True
@@ -547,7 +555,7 @@ class Combat:
                     count=len(events)
                 else:
                     elapsed=0;count=0;events=None
-                    while True:
+                    while timeline.options.get('target_disappears_seconds')!=0:
                         current=effective_attack_speed(speed_reference+min(count*bb['attack@steal_atk_speed'],bb['attack@steal_atk_speed_max']))
                         elapsed+=self.a['interval']*100/current
                         if elapsed>duration+1e-9:break
@@ -1148,7 +1156,9 @@ class Combat:
                         time+=self.normal_interval;charge+=rate*self.normal_interval+attack_sp
                     return time
                 first=time_to_charge(max(0,sp['sp_cost']-initial))
-                recharge=time_to_charge(recharge_cost,sp['values'].get('stun',0))
+                recharge=(max(sp['values'].get('stun',0),recharge_cost/rate) if rate>0 else None) if (
+                    self.s.get('timing_mode','frames')=='continuous' and
+                    self.s.get('timing',{}).get('target_disappears_seconds')==0) else time_to_charge(recharge_cost,sp['values'].get('stun',0))
                 if self.s.get('timing_mode','frames')=='frames':
                     first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,attack_sp,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)
                     mixed_recovery=(attack_sp,sp['values'].get('stun',0))

@@ -1,0 +1,33 @@
+{
+  "section": 40,
+  "completion_ref": "p2-section-040",
+  "branch": "codex/p2-development",
+  "validated_at": "2026-10-07T19:33:31.045760+00:00",
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest tests.test_empty_enemy_scope tests.test_timing tests.test_gummy_cooking_clock tests.test_haruka_event_reference tests.test_next_attack_healing_reference tests.test_charge_reference tests.test_damage tests.test_attack_speed_bounds_065 tests.test_ammo_counter_055 -q",
+      "run": 126,
+      "passed": 126,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/verify_cloud.py",
+      "run": 600,
+      "passed": 599,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "new_tests": 11,
+  "failed_attempts": 1,
+  "integration_launcher_error": "initial root command named three nonexistent test modules; corrected to actual *_clock/_065/_055 filenames, 126 checks passed; not a production or mechanism failure",
+  "public_empty_target_matrix": {
+    "cases": 174,
+    "actual_damage_zero": true,
+    "known_cast_phase_window_cycle_damage_zero": true
+  },
+  "source_receipt": "research/p2-empty-enemy-scope/source-receipt.json",
+  "native_windows": false
+}

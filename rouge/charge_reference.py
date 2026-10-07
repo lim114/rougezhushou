@@ -23,7 +23,7 @@ def finish_charge_reference(scenario, result):
     result['known_damage_subtotals'] = subtotals
     result['charge_reference'] = {
         'hits_requested': count, 'per_hit_damage': charge['per_hit'],
-        'declared_count_damage': charge['total'], 'collision_times_seconds': None,
+        'declared_count_damage': charge['per_hit']*count, 'collision_times_seconds': None,
         'events_scheduled': False, 'scope': 'declared scenario hit count',
         'full_cast_count_verified': False,
     }

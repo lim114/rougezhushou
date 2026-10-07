@@ -119,10 +119,11 @@ def build_estimate(scenario,result,attributes,compute_skill):
                 hit*=1+sum(e['value'] for e in effects if e['kind']=='damage_taken' and e.get('damage_type')=='physical')
                 hit*=damage_factor(scenario,'physical')
                 damage=full['total_damage']+math.floor(duration/full['interval_seconds']+1e-9)*hit
-                if scenario.get('timing_mode','frames')=='frames':
+                if (scenario.get('timing_mode','frames')=='frames' or
+                        scenario.get('timing',{}).get('target_disappears_seconds')==0):
                     timeline=AttackTimeline(scenario,normal=True)
                     stream=timeline.attacks(duration,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])
-                    events=stream['emitted_times_seconds']
+                    events=stream.get('emitted_times_seconds',stream['times_seconds'])
                     damage=full['total_damage']+len(events)*hit
                     full['components']=[{'name':'指定破屏爆炸','damage_type':'magic','total':full['total_damage']},
                         {'name':'协防术式期间普通攻击','damage_type':'physical','total':len(events)*hit,'times_seconds':events}]
@@ -133,7 +134,7 @@ def build_estimate(scenario,result,attributes,compute_skill):
                 notes.append('协防术式依赖本体/结构性原理屏障破碎与弹药消耗，单次完整技能总伤和持续时间未知。可指定本次技能结束时间进行条件估算；情景爆炸伤害另列。')
         else:duration=full.get('execution_seconds',full.get('ammo_rounds',skill['values']['attack@trigger_time'])*full['interval_seconds'])
     if operator=='kaltsit' and skill_index==2:
-        healing=full['attack']*skill['values']['attack@heal_scale']*full['hits']*healing_targets
+        healing=full['attack']*skill['values']['attack@heal_scale']*full.get('healing_hits',full['hits'])*healing_targets
         notes.append('治疗量为满额潜在治疗，未扣过量治疗；医者丰碑的进入范围增益另行建模。')
     if operator=='kaltsit' and skill_index in (1,3):
         maximum=2 if skill_index==3 else 1
@@ -142,7 +143,7 @@ def build_estimate(scenario,result,attributes,compute_skill):
     window_healing=0
     if operator=='kaltsit':
         if skill_index==2:
-            window_healing=result['attack']*skill['values']['attack@heal_scale']*result['hits']*healing_targets
+            window_healing=result['attack']*skill['values']['attack@heal_scale']*result.get('healing_hits',result['hits'])*healing_targets
         else:window_healing=result['total_healing']*min(2 if skill_index==3 else 1,healing_targets)
     window_seconds=nonnegative('window_seconds',duration or 0)
     if duration is not None:window_seconds=min(window_seconds,duration)
@@ -193,7 +194,8 @@ def build_estimate(scenario,result,attributes,compute_skill):
     if cycle is not None and cycle>0:
         resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)
         normal=AttackTimeline({**scenario,'timing':{**scenario.get('timing',{}),'_resume_frames':resume}},normal=True,offset=duration)
-        normal_hits=len(normal.attacks(recharge,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])['times_seconds'])
+        normal_hits=len(normal.attacks(recharge,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],
+            target_scope='friendly' if operator=='kaltsit' else 'enemy')['times_seconds'])
         if skill['sp_type']=='INCREASE_WHEN_ATTACK' and not scenario.get('continuous_attacks',True):
             normal_hits=0
             normal.streams=[]

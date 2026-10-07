@@ -158,7 +158,9 @@ def mixed_charge_seconds(scenario,required,rate,attack_sp,interval,speed,offset=
 
 
 class AttackTimeline:
-    def __init__(self,scenario,normal=False,offset=0):
+    def __init__(self,scenario,normal=False,offset=0,target_scope='enemy'):
+        if target_scope not in ('enemy','friendly'):raise ValueError('目标来源需要为enemy或friendly。')
+        self.target_scope=target_scope
         self.s=scenario;self.normal=normal;self.offset=frame_time(offset)
         self.mode=scenario.get('timing_mode','frames')
         if self.mode not in ('frames','continuous'):raise ValueError('时序模式需要为frames或continuous。')
@@ -189,6 +191,8 @@ class AttackTimeline:
         return sorted(found)
 
     def selectable(self,frame):
+        if self.target_scope=='friendly' and (self.options.get('target_disappears_seconds')==0 or
+                self.options.get('target_windows')==[]):return self.selectable_lifetime(frame)
         return self.selectable_lifetime(frame) and ('target_windows' not in self.options or any(a<=frame<b for a,b in self.windows))
 
     def unavailable(self,frame):return any(a<=frame<b for a,b in self.blocked)
@@ -201,7 +205,15 @@ class AttackTimeline:
         selected=p.get('normal') if self.normal else p.get('skills',{}).get(str(self.s['skill']))
         return selected or p.get('normal') or {},bool(selected)
 
-    def attacks(self,seconds,interval,speed=100,unit=None,limit=None,delay=0,start_delay=0,ramp=None,attribute_speed=None):
+    def attacks(self,seconds,interval,speed=100,unit=None,limit=None,delay=0,start_delay=0,ramp=None,attribute_speed=None,target_scope=None):
+        if target_scope is not None and target_scope!=self.target_scope:
+            child=AttackTimeline(self.s,normal=self.normal,offset=self.offset/FPS,target_scope=target_scope)
+            stream=child.attacks(seconds,interval,speed,unit=unit,limit=limit,delay=delay,
+                start_delay=start_delay,ramp=ramp,attribute_speed=attribute_speed)
+            self.streams.extend(child.streams)
+            note='空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。'
+            if target_scope=='friendly' and note not in self.notes:self.notes.append(note)
+            return stream
         if attribute_speed is None:attribute_speed=speed
         if unit is not None:
             scoped=self.options.get('units',{})
@@ -209,7 +221,7 @@ class AttackTimeline:
             config=dict(scoped.get(unit,{}))
             if 'target_disappears_seconds' in self.options:config.setdefault('target_disappears_seconds',self.options['target_disappears_seconds'])
             child=AttackTimeline({**self.s,'operator':unit,'timing':config,
-                '_relic_rules':[r for r in self.s.get('_relic_rules',[]) if r['kind']!='deployment_attack_speed']},normal=True,offset=self.offset/FPS)
+                '_relic_rules':[r for r in self.s.get('_relic_rules',[]) if r['kind']!='deployment_attack_speed']},normal=True,offset=self.offset/FPS,target_scope=self.target_scope)
             stream=child.attacks(seconds,interval,speed,attribute_speed=attribute_speed,limit=limit,delay=delay,start_delay=start_delay)
             self.streams.extend(child.streams)
             return stream
@@ -230,11 +242,15 @@ class AttackTimeline:
                 if limit is not None:count=min(count,limit)
                 times=[ready+(i+1)*interval for i in range(count)]
                 starts=[t-interval for t in times];steps=[interval]*len(times)
+            if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:
+                times=[];starts=[];steps=[]
             stream={'start_frames':([frame_time(t) for t in starts] if deployment_speed else
                 [cadence(t)-cadence(interval) for t in times]),
                 'release_frames':[cadence(t) for t in times],'impact_frames':[cadence(t) for t in times],
                 'times_seconds':times,'interval_frames':cadence(interval),'interval_seconds':interval,
-                'known_animation':False,'resume_frame':frame_time(duration),'unit':unit or self.s['operator']}
+                'known_animation':False,'resume_frame':frame_time(duration),'unit':unit or self.s['operator'],
+                'target_scope':self.target_scope}
+            if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:stream['resume_frame']=0
             if deployment_speed:
                 stream.update(temporary_attack_speed=True,interval_frames_by_attack=[cadence(s) for s in steps],
                     deployment_origin_seconds=(self.offset+self.deployment_offset)/FPS)
@@ -309,7 +325,7 @@ class AttackTimeline:
                 emitted_releases.append(release)
                 if impact<end:impacts.append(impact);impact_releases.append(release)
             now+=step
-        stream={'unit':unit or self.s['operator'],'known_animation':known,'exact_binding':False,'reference_binding':exact,
+        stream={'unit':unit or self.s['operator'],'target_scope':self.target_scope,'known_animation':known,'exact_binding':False,'reference_binding':exact,
             'animation':data.get('animation'),'windup_frames':windup if known else None,
             'recovery_frames':recovery if known else None,'interval_frames':step,'interval_seconds':step/FPS,
             'start_frames':[x-self.offset for x in starts],'release_frames':[x-self.offset for x in releases],
@@ -338,6 +354,7 @@ class AttackTimeline:
 
     def selectable_lifetime(self,frame):
         # Leaving range alone does not destroy a previously locked projectile.
+        if self.target_scope=='friendly' and self.options.get('target_disappears_seconds')==0:return True
         ends=self.options.get('target_disappears_seconds')
         return ends is None or frame<frame_time(ends)
 

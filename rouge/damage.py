@@ -122,8 +122,11 @@ def _skill_damage_base(scenario: dict) -> dict:
         attack_speed_reference=speed_reference,base_attack_speed_reference=base_speed_reference,
         interval_seconds=interval,applied_effects=effects)
     timeline=AttackTimeline(scenario)
+    empty_enemy=timeline.options.get('target_disappears_seconds')==0
+    medical_fallback=not healing and scenario['operator']=='kaltsit' and empty_enemy and float(scenario.get('healing_targets',1))>0
     def attack_events(duration,limit=None):
-        stream=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,limit=limit)
+        stream=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,limit=limit,
+            target_scope='friendly' if healing or medical_fallback else 'enemy')
         if timeline.mode=='frames' and 'window_seconds' not in scenario:
             stream['times_seconds']=stream['emitted_times_seconds']
         status['timing']=timeline.output()
@@ -142,15 +145,16 @@ def _skill_damage_base(scenario: dict) -> dict:
         raw = attack * bb['atk_scale']
         damage = max(raw - scenario.get('enemy_defense', 0), raw * .05) * taken('physical')
         own_count = int(scenario.get('activation_count', 1))
-        components = [{'name': '本体技能触发', 'hits': own_count, 'damage_type': 'physical', 'per_hit': damage, 'total': damage * own_count}]
+        components = [{'name': '本体技能触发', 'hits': 0 if empty_enemy else own_count, 'damage_type': 'physical', 'per_hit': damage, 'total': 0 if empty_enemy else damage * own_count}]
         stacks = int(scenario.get('deployment_stacks', 0))
         if stacks:
             recipient = float(scenario['companion_attack']) * bb['atk_scale']
             hit = max(recipient - scenario.get('enemy_defense', 0), recipient * .05) * taken('physical')
-            components.append({'name': '受益干员部署触发', 'hits': stacks, 'damage_type': 'physical', 'per_hit': hit, 'total': hit * stacks})
+            components.append({'name': '受益干员部署触发', 'hits': 0 if empty_enemy else stacks, 'damage_type': 'physical', 'per_hit': hit, 'total': 0 if empty_enemy else hit * stacks})
         return {'attack': attack, 'total_damage': sum(c['total'] for c in components), 'components': components, 'inapplicable_relics': inapplicable, **status}
     if shield:
         count = int(scenario.get('shield_break_count', 0))
+        if empty_enemy:count=0
         raw = attack * bb['atk_scale']
         damage = max(raw * (1 - scenario.get('enemy_resistance', 0) / 100), raw * .05) * taken('magic')
         return {'attack': attack, 'per_hit': damage, 'total_damage': damage * count,
@@ -167,6 +171,8 @@ def _skill_damage_base(scenario: dict) -> dict:
             raise ValueError('零长度观察窗口不能声明冲锋命中。')
         components = [{'name': '轰击', 'damage_type': 'magic', 'hits': hits, 'per_hit': per_hit, 'total': hits * per_hit,'times_seconds':events['times_seconds']},
                       {'name': '结构性原理冲锋', 'damage_type': 'physical', 'hits': count, 'per_hit': charge, 'total': count * charge}]
+        if empty_enemy:
+            components[1].update(hits=0,total=0)
         if any(r['kind']=='temporary_attack' for r in scenario.get('_relic_rules',[])):
             amounts=timed_damage(attack*bb['attack@atk_scale'],bb['attack@atk_scale'],'magic',events)
             components[0].update(event_amounts=amounts,total=sum(amounts),per_hit=sum(amounts)/len(amounts) if amounts else per_hit)
@@ -196,7 +202,7 @@ def _skill_damage_base(scenario: dict) -> dict:
     if scenario.get('_ammo_refill_reference'):
         status['ammo_refill_reference']=scenario['_ammo_refill_reference']
     events=attack_events(scenario.get('window_seconds',3600),limit=shots)
-    if timeline.mode=='continuous' and 'window_seconds' not in scenario:
+    if timeline.mode=='continuous' and 'window_seconds' not in scenario and not empty_enemy:
         hits=shots*int(bb.get('attack@times',1))
     else:hits=len(events['times_seconds'])*int(bb.get('attack@times',1))
     if timeline.mode=='frames':
@@ -207,7 +213,7 @@ def _skill_damage_base(scenario: dict) -> dict:
         pellet_count=int(bb.get('attack@times',1))
         impacts=[t+intrinsic+travel+i*spacing for t in events['release_frames'] for i in range(pellet_count)
             if ('window_seconds' not in scenario or t+intrinsic+travel+i*spacing<frame_time(scenario['window_seconds']))
-            and timeline.selectable_lifetime(t+intrinsic+travel+i*spacing)]
+            and (medical_fallback or timeline.selectable_lifetime(t+intrinsic+travel+i*spacing))]
         events['impact_frames']=impacts;events['times_seconds']=[t/30 for t in impacts]
         hits=len(impacts)
         status['execution_seconds']=(events['release_frames'][-1]+(pellet_count-1)*spacing+1)/30 if events['release_frames'] else None
@@ -216,9 +222,13 @@ def _skill_damage_base(scenario: dict) -> dict:
         if mechanist:status['timing']['notes'].append('机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。')
     elif any(r['kind']=='deployment_attack_speed' for r in scenario.get('_relic_rules',[])) and 'window_seconds' not in scenario:
         status['execution_seconds']=events['times_seconds'][-1] if len(events['times_seconds'])>=shots else None
+    if empty_enemy and not medical_fallback:status['execution_seconds']=None
+    if medical_fallback:
+        status['healing_hits']=hits
+    damage_hits=0 if empty_enemy else hits
     components=[{'name':'五连击' if mechanist else '弹药攻击','damage_type':'physical' if mechanist else 'true',
-        'hits':hits,'per_hit':damage,'total':damage*hits,'times_seconds':events['times_seconds']}]
-    return {'attack': attack, 'per_hit': damage, 'total_damage': damage * hits, 'hits': hits,'components':components,
+        'hits':damage_hits,'per_hit':damage,'total':damage*damage_hits,'times_seconds':[] if empty_enemy else events['times_seconds']}]
+    return {'attack': attack, 'per_hit': damage, 'total_damage': damage * damage_hits, 'hits': damage_hits,'components':components,
         'interval_seconds': interval, 'damage_type': 'physical' if mechanist else 'true', 'inapplicable_relics': inapplicable, **status}
 
 
