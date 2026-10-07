@@ -81,12 +81,13 @@ class FourSuiTextInputTests(unittest.TestCase):
                     for text in ('false','unknown','0','1',''):
                         self.assertEqual(calculate_damage({**args,'four_sui':text}),absent)
 
-    def test_other_checkbox_text_behavior_and_prior_training_errors_are_preserved(self):
+    def test_unguarded_and_inactive_checkbox_text_and_prior_training_errors_are_preserved(self):
         for mode in ('frames','continuous'):
             args=scenario(3,mode,operator='silverash')
-            # This section deliberately does not change the second audited candidate.
-            self.assertEqual(calculate_damage({**args,'preexisting_fragile':'false'}),
-                             calculate_damage({**args,'preexisting_fragile':True}))
+            # S3 text is guarded separately; the unrelated S1 field stays ignored.
+            inactive=scenario(1,mode,operator='silverash')
+            self.assertEqual(calculate_damage({**inactive,'preexisting_fragile':'false'}),
+                             calculate_damage(inactive))
             self.assertEqual(calculate_damage({**args,'cooperative':'unknown'}),
                              calculate_damage({**args,'cooperative':True}))
         for args in (scenario(2,elite=0,skill_rank=1,four_sui='false'),

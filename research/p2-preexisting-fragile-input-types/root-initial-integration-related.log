@@ -1,0 +1,18 @@
+======================================================================
+ERROR: test_other_checkbox_text_behavior_and_prior_training_errors_are_preserved (tests.test_four_sui_text_input.FourSuiTextInputTests.test_other_checkbox_text_behavior_and_prior_training_errors_are_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_four_sui_text_input.py", line 88, in test_other_checkbox_text_behavior_and_prior_training_errors_are_preserved
+    self.assertEqual(calculate_damage({**args,'preexisting_fragile':'false'}),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/rougezhushou/rouge/damage.py", line 373, in calculate_damage
+    prepared=_prepare_damage(scenario)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/rougezhushou/rouge/damage.py", line 252, in _prepare_damage
+    raise ValueError('preexisting_fragile不接受字符串，请提供明确的布尔条件。')
+ValueError: preexisting_fragile不接受字符串，请提供明确的布尔条件。
+
+----------------------------------------------------------------------
+Ran 90 tests in 1.481s
+
+FAILED (errors=1)

@@ -248,6 +248,8 @@ def _prepare_damage(scenario: dict):
     elite=scenario.get('elite',2)
     if profile['skills'][skill-1].get('unlock_elite',skill-1)>elite or (elite<2 and rank>7):
         raise ValueError('当前精英阶段尚未开放所选技能或专精。')
+    if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('preexisting_fragile'),str):
+        raise ValueError('preexisting_fragile不接受字符串，请提供明确的布尔条件。')
     # Preserve raw count types before either engine converts them to numbers.
     from .reporting import has_healing
     active_counts=[]
