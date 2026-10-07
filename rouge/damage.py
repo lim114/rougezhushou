@@ -163,6 +163,8 @@ def _skill_damage_base(scenario: dict) -> dict:
         per_hit *= taken('magic')
         charge *= taken('physical')
         count = int(scenario.get('charge_count', 0))
+        if count and scenario.get('window_seconds') == 0:
+            raise ValueError('零长度观察窗口不能声明冲锋命中。')
         components = [{'name': '轰击', 'damage_type': 'magic', 'hits': hits, 'per_hit': per_hit, 'total': hits * per_hit,'times_seconds':events['times_seconds']},
                       {'name': '结构性原理冲锋', 'damage_type': 'physical', 'hits': count, 'per_hit': charge, 'total': count * charge}]
         if any(r['kind']=='temporary_attack' for r in scenario.get('_relic_rules',[])):
@@ -259,6 +261,8 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
     else:
         result=_skill_damage(scenario)
         result['estimate']=build_estimate(scenario,result,attributes,_skill_damage)
+    from .charge_reference import finish_charge_reference
+    finish_charge_reference(scenario,result)
     from .timing import annotate_result
     annotate_result(scenario,result)
     finish(result,resolution,attributes,scenario)

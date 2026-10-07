@@ -339,14 +339,23 @@ def build_report(scenario,result):
                 rows.append(metric('active_dps','技能阶段平均 DPS',skill.get('phase_damage',skill['total_damage'])/skill['duration_seconds'],'伤害/秒'))
         window_damage=skill.get('window_damage',result['total_damage'])
         if windowed or 'window_seconds' in scenario or skill['total_damage']!=window_damage:
-            rows.append(metric('window_damage','观察窗口总伤',window_damage))
+            rows.append(metric('window_damage','情景伤害参考（含给定冲锋次数）' if result.get('charge_reference') else '观察窗口总伤',window_damage))
             if skill.get('window_seconds'):
                 rows.append(metric('window_seconds','伤害观察窗口',skill['window_seconds'],'秒'))
-                rows.append(metric('window_dps','窗口平均 DPS',
+                rows.append(metric('window_dps','情景平均伤害参考' if result.get('charge_reference') else '窗口平均 DPS',
                     window_damage/skill['window_seconds'] if window_damage is not None else None,'伤害/秒'))
         if not nonrepeat:
             rows.append(metric('cycle_dps','本轮周期 DPS',skill['cycle_dps'],'伤害/秒'))
         sections.append(section('damage','伤害输出',rows))
+    charge=result.get('charge_reference')
+    if charge:
+        sections.append(section('charge_reference','结构性原理 · 冲锋次数参考',[
+            metric('hits','指定情景命中次数',charge['hits_requested'],'次'),
+            metric('per_hit','每次冲锋伤害参考',charge['per_hit_damage']),
+            metric('declared_damage','给定次数伤害参考',charge['declared_count_damage']),
+            metric('collision','冲锋碰撞时刻',None,'秒')],
+            ['次数参考不证明碰撞时间或完整施放次数；技能阶段和周期总伤未知。',
+             '本体0.8秒落地延迟不用于冲锋。']))
     incoming=result.get('neural_incoming_reference')
     if incoming:
         sections.append(section('neural_incoming','堕梦 · 目标攻击时间待确认',[
