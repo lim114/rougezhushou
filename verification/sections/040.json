@@ -29,5 +29,12 @@
     "known_cast_phase_window_cycle_damage_zero": true
   },
   "source_receipt": "research/p2-empty-enemy-scope/source-receipt.json",
-  "native_windows": false
+  "native_windows": false,
+  "ui_integration_correction": {
+    "issue": "Actual MainWindow ignored timing JSON in continuous mode; existing calculator zero-life source guard was not reached",
+    "change": "Parse supplied timing JSON for both timing modes; animation selection remains frame-specific",
+    "full_validation_repeat_required": true,
+    "initial_ui_receipts": "wine-ui-040-initial.json and wine-ui-040.json",
+    "verification_driver_error": "Initial driver also failed to restore per-skill timing JSON after switching operator; corrected using actual preview state contract"
+  }
 }

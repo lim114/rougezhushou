@@ -1129,7 +1129,7 @@ class MainWindow(QMainWindow):
             scenario['relic_context']=context
             scenario['relic_context_source']='本局最近确认的计数；测试条件仅用于预览'
             scenario['timing_mode']='frames' if self.frame_timing.isChecked() else 'continuous'
-            if self.frame_timing.isChecked() and self.timing_scenario.toPlainText().strip():
+            if self.timing_scenario.toPlainText().strip():
                 try:scenario['timing']=json.loads(self.timing_scenario.toPlainText())
                 except json.JSONDecodeError:raise ValueError('战斗时序情景需要合法JSON对象。') from None
                 if not isinstance(scenario['timing'],dict):raise ValueError('战斗时序情景需要JSON对象。')
