@@ -408,6 +408,13 @@ def finish(result,resolution,attributes,scenario):
             if c.get('damage_type')=='healing':
                 c['total']*=factor;c['per_hit']*=factor
                 if c.get('event_amounts') is not None:c['event_amounts']=[amount*factor for amount in c['event_amounts']]
+                for source in c.get('known_healing_sources',[]):
+                    source['total']*=factor;source['per_hit']*=factor
+                    if source.get('event_amounts') is not None:source['event_amounts']=[amount*factor for amount in source['event_amounts']]
+        amiya=result.get('amiya_phase_reference')
+        if amiya and amiya['kind']=='medical_opening':
+            amiya['opening_healing_reference']*=factor
+            amiya['window_reference']['opening_healing_reference']*=factor
     regeneration={r['relic_id']:r['value'] for r in rules if r['kind']=='regeneration_factor'}
     factor=next(iter(regeneration.values())) if len(regeneration)==1 else 1
     result['relic_regeneration_multiplier']=factor

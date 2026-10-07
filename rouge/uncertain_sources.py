@@ -47,6 +47,8 @@ def mask_pending_healing(result, full, shown, normal, duration, cycle):
 
     def known(plan, boundary=None):
         components=[c for c in plan['components'] if c['damage_type']=='healing' and 'actual_total' not in c]
+        components += [source for c in plan['components'] if c['damage_type']=='healing'
+                       for source in c.get('known_healing_sources',[])]
         return phase_totals(components,boundary)[1] if boundary is not None else sum(c['total'] for c in components)
 
     if not any(pending(plan) for plan in (full,shown,normal)):

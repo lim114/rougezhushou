@@ -202,6 +202,10 @@ def mechanism_sections(scenario,result,source,profile):
             factor=result.get('relic_regeneration_multiplier',1)
             rows=[metric('per_token_rate','每只触手生命回复速度',bb['hp_recovery_per_sec']*factor,'生命/秒'),
                 metric('all_tokens_rate','所选触手合计回复速度',bb['hp_recovery_per_sec']*factor*scenario.get('summon_count',1),'生命/秒')]
+        elif any('nominal_duration_reference_seconds' in c for c in regeneration):
+            rows=[metric('nominal_regeneration','名义持续参数下生命回复条件参考',sum(c['total'] for c in regeneration),'生命'),
+                metric('window_regeneration','实际情景生命回复总量',
+                    None if any(c.get('actual_total',0) is None for c in regeneration) else sum(c['total'] for c in regeneration),'生命')]
         else:rows=[metric('window_regeneration','当前情景生命回复总量',sum(c['total'] for c in regeneration),'生命')]
         blocks.append(section('regeneration','生命回复',rows,['生命回复独立于直接治疗 HPS，不扣当前生命已满导致的无效回复。']))
     elementary=[c for c in components if c.get('damage_type') in ('elemental','buildup')]
@@ -401,6 +405,28 @@ def build_report(scenario,result):
         sections.append(section('unbound_cast','多段技能 · 实际时钟待核验',rows,
             unbound['notes']+['条件总量保留当前培养和情景倍率；未排程来源不代表观察窗口、完整阶段或本轮周期输出。',
              '本体供靶或打断区间不证明独立弹道/接触范围；零窗口或当前敌人0秒生命周期不产生对它的实际输出。']))
+    amiya_phase=result.get('amiya_phase_reference')
+    if amiya_phase:
+        isolated=amiya_phase['isolated_attack_phase_reference']
+        rows=[metric('duration','原表技能持续参数',amiya_phase['nominal_skill_duration_parameter_seconds'],'秒'),
+            metric('attack','后续攻击力条件参考',amiya_phase['strengthened_attack_reference']),
+            metric('hits','孤立攻击阶段次数参考',isolated['conditional_hits'],'次'),
+            metric('damage','孤立攻击阶段伤害参考',isolated['conditional_damage']),
+            metric('start','实际后续攻击阶段起点',None,'秒'),
+            metric('end','实际技能结束时刻',None,'秒')]
+        notes=['孤立阶段沿用既有攻击参数和情景；原表持续参数不证明开启或斩击结束后另有该段时长。',
+            '孤立攻击的相对时刻不代表技能开启后的实际命中时刻，完整输出和结束保持未知。']
+        if amiya_phase['kind']=='tactical_slashes':
+            rows.append(metric('slash_end','实际斩击结束时刻',None,'秒'))
+            title='影霄·绝影 · 斩击与后续参考'
+            notes.append('立即寻找目标不证明十次同帧命中；声明击倒只保留既有后续加攻条件参考，不推算击倒先后。')
+        else:
+            rows[0:0]=[metric('opening_damage','立即开启单击伤害条件参考',amiya_phase['opening_damage_reference']),
+                metric('opening_healing','开启伤害派生治疗条件参考',amiya_phase['opening_healing_reference'],'治疗')]
+            title='慈悲愿景 · 开启与后续参考'
+            notes.append('开启来源保留原描述立刻一次的既有参数算术，单击数额不代表实机命中证明；零观察窗口不计开启及派生治疗。')
+            notes.append('开启伤害、命中加攻和派生治疗的实际链顺序未知；完整直接治疗随后续伤害保持未知。')
+        sections.append(section('amiya_phase',title,rows,notes))
     chen_phase=result.get('chen_phase_reference')
     if chen_phase and chen_phase['kind']=='post_slash_strengthening':
         isolated=chen_phase['isolated_attack_phase_reference']

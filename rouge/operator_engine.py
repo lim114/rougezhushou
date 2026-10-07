@@ -258,7 +258,7 @@ class Combat:
         if not normal and window is not None:duration=min(duration,window)
         if not normal and self.s['operator']=='char_1029_yato2':
             attack+=self.base*self.talent('鬼人强化状态','atk')
-        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None;unbound_cast_reference=None;external_event_reference=None;chen_phase_reference=None
+        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None;unbound_cast_reference=None;external_event_reference=None;chen_phase_reference=None;amiya_phase_reference=None;unbound_source_components=None
         timeline=AttackTimeline(self.s,normal=normal,offset=self.s.get('_timeline_offset_seconds',0) if normal else 0)
         def emit(name,raw,dtype,count,defense=None,resistance=None,effects=None,event_times=None):
             if dtype=='buildup':raw*=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
@@ -284,7 +284,7 @@ class Combat:
             emit(name,attack*scale,dtype,len(events)*times,defense,resistance,
                 event_times=[t for t in events for _ in range(int(times))] if float(times).is_integer() else events)
         def instant(dtype='physical',scale=1,times=1,name='施放伤害'):
-            if (timeline.options.get('target_disappears_seconds')==0 or
+            if (window==0 or timeline.options.get('target_disappears_seconds')==0 or
                     timeline.mode=='frames' and (not timeline.selectable(0) or timeline.unavailable(0) or not timeline.selectable_lifetime(0))):
                 times=0
             emit(name,attack*scale,dtype,times)
@@ -426,11 +426,38 @@ class Combat:
                 if self.n==1:regular('magic',times=2)
                 else:
                     kills=self.option('amiya_slash_kills',0,maximum=bb['amiya2_s_2[kill].max_stack_cnt'],integer=True)
-                    instant('magic',bb['atk_scale'],bb['times']-1,'绝影前九击')
-                    instant('true',bb['atk_scale_2'],name='绝影终击')
+                    # Immediate target search does not establish ten t=0 hits.
+                    emit('绝影前九击',attack*bb['atk_scale'],'magic',bb['times']-1)
+                    emit('绝影终击',attack*bb['atk_scale_2'],'true',1)
                     attack+=self.base*bb['amiya2_s_2[kill].atk']*kills
-                    regular('true',name='绝影持续真伤')
-                    mode='once';self.notes.append('绝影整场仅一次；斩击击倒加攻用于后续持续攻击，不倒推之前已完成的斩击。')
+                    regular('true',seconds=self.skill['duration'],name='绝影持续真伤')
+                    strengthened=components[-1]
+                    amiya_phase_reference={
+                        'kind':'tactical_slashes',
+                        'nominal_skill_duration_parameter_seconds':self.skill['duration'],
+                        'declared_slash_kills':kills,
+                        'kill_attack_bonus_parameter':bb['amiya2_s_2[kill].atk'],
+                        'kill_stack_cap_parameter':bb['amiya2_s_2[kill].max_stack_cnt'],
+                        'strengthened_attack_reference':attack,
+                        'isolated_attack_phase_reference':{
+                            'phase_seconds':self.skill['duration'],'timing':timeline.output(),
+                            'conditional_damage':strengthened['total'],
+                            'conditional_hits':strengthened['hits'],
+                            'per_hit_damage_reference':strengthened['per_hit']},
+                        'actual_slash_end_seconds':None,'actual_strengthening_start_seconds':None,
+                        'actual_skill_end_seconds':None,'phase_clock_verified':False}
+                    unbound_cast_reference={'kind':'amiya_slashes',
+                        'parameter_rows':[('斩击次数参数',bb['times'],'次'),
+                            ('前九击法术倍率参数',bb['atk_scale'],'倍'),
+                            ('最后一击真实倍率参数',bb['atk_scale_2'],'倍'),
+                            ('原表技能持续参数',self.skill['duration'],'秒'),
+                            ('声明斩击击倒数量',kills,'个'),
+                            ('每层击倒攻击加成参数',bb['amiya2_s_2[kill].atk']*100,'%')],
+                        'notes':['立即寻找目标不证明10次斩击均在开启时命中；实际斩击结束、强化起点和完整结束未知。',
+                            '声明击倒只沿用后续攻击力条件参考；击倒的先后未知，不倒推重写斩击。']}
+                    timeline.streams=[]
+                    if window is not None:duration=window
+                    mode='once';self.notes.append('绝影整场仅一次；35秒仅为原表技能持续参数，既有孤立攻击参考不证明斩击结束后另有35秒。')
             else:
                 if self.n==1:
                     regular('magic')
@@ -442,12 +469,44 @@ class Combat:
                     attack=self.base_attack
                     instant('magic',bb['atk_scale'],name='慈悲愿景开启伤害')
                     attack+=self.base*bb['atk']*min(bb['max_stack_cnt'],self.option('amiya_hit_targets',1,maximum=100,integer=True))
-                    regular('true')
+                    regular('true',seconds=self.skill['duration'])
+                    strengthened=components[-1]
+                    unbound_source_components=[strengthened]
                     damage_healing('咒愈师伤害转治疗',.5*min(1,healing_targets))
+                    amiya_phase_reference={
+                        'kind':'medical_opening',
+                        'nominal_skill_duration_parameter_seconds':self.skill['duration'],
+                        'opening_attack_scale_parameter':bb['atk_scale'],
+                        'opening_damage_reference':components[0]['total'],
+                        'opening_healing_reference':components[0]['total']*.5*min(1,healing_targets),
+                        'declared_opening_hit_targets':self.option('amiya_hit_targets',1,maximum=100,integer=True),
+                        'hit_attack_bonus_parameter':bb['atk'],
+                        'hit_stack_cap_parameter':bb['max_stack_cnt'],
+                        'strengthened_attack_reference':attack,
+                        'isolated_attack_phase_reference':{
+                            'phase_seconds':self.skill['duration'],'timing':timeline.output(),
+                            'conditional_damage':strengthened['total'],
+                            'conditional_hits':strengthened['hits'],
+                            'per_hit_damage_reference':strengthened['per_hit']},
+                        'actual_strengthening_start_seconds':None,'actual_skill_end_seconds':None,
+                        'opening_buff_healing_order_verified':False,'phase_clock_verified':False}
+                    unbound_cast_reference={'kind':'amiya_medical_followup',
+                        'parameter_rows':[('开启单次攻击倍率参数',bb['atk_scale'],'倍'),
+                            ('原表技能持续参数',self.skill['duration'],'秒'),
+                            ('声明开启命中敌人数',amiya_phase_reference['declared_opening_hit_targets'],'个'),
+                            ('每层命中攻击加成参数',bb['atk']*100,'%')],
+                        'notes':['原描述立刻范围攻击保留既有单次参数来源，显式零观察窗口不产生开启伤害或其派生治疗。',
+                            '开启伤害、命中加攻及派生治疗的实际链顺序未知；后续攻击只保留孤立条件参考。']}
+                    timeline.streams=[]
                     mode='once'
-                # Only own guaranteed regeneration is known without allies' HP profiles.
+                # Own regeneration is independent of the hostile target.
                 emit('诚挚期许本体生命回复',self.stats['hp']*self.talent('诚挚期许','hp_recovery_per_sec_by_max_hp_ratio'),
                      'regeneration',duration)
+                if self.n==2:
+                    components[-1]['nominal_duration_reference_seconds']=duration
+                    if duration>0:components[-1]['actual_total']=None
+                    if window is not None:duration=window
+                    self.notes.append('32秒仅为原表技能持续参数；本体生命回复分项沿用名义时长参考，不受敌人零生命周期取消，实际总回复随结束时钟保持未知。')
                 self.notes.append('阿米娅医疗：直接治疗与最大生命百分比生命回复分项；未凭空补齐其他友方最大生命。')
         elif op=='char_1044_hsgma2':
             if normal:regular()
@@ -1067,8 +1126,13 @@ class Combat:
             duration=primary['times_seconds'][-1] if primary and len(primary['times_seconds'])>=ammo_rounds else None
         if unbound_cast_reference is not None:
             from .uncertain_sources import preserve_unplaced_sources
-            unbound_cast_reference.update(preserve_unplaced_sources(components,window=window,
+            unbound_cast_reference.update(preserve_unplaced_sources(
+                components if unbound_source_components is None else unbound_source_components,window=window,
                 target_lifetime=timeline.options.get('target_disappears_seconds')))
+            if amiya_phase_reference is not None and unbound_cast_reference['source_possible']:
+                # An empty isolated reference does not bind the absolute phase.
+                body_name='绝影持续真伤' if amiya_phase_reference['kind']=='tactical_slashes' else '技能攻击'
+                next(c for c in components if c['name']==body_name)['actual_total']=None
         from .relic_events import first_damage
         first_extra=first_damage(components,self.s,normal=normal)
         if first_extra is None:
@@ -1108,6 +1172,17 @@ class Combat:
             sources=[components[i] for i in dependency['sources']]
             ratio=dependency['ratio']
             c['total']=sum(source['total'] for source in sources)*ratio
+            if ratio>0 and any(source.get('actual_total',0) is None for source in sources):
+                c['actual_total']=None
+                c['timing_reference']='damage-dependent healing; parent damage clock unverified'
+                c['known_healing_sources']=[]
+                for source in sources:
+                    if source.get('actual_total',0) is None:continue
+                    known={key:source[key] for key in ('name','hits','times_seconds','instant_event') if key in source}
+                    known.update(damage_type='healing',total=source['total']*ratio,
+                        per_hit=source['per_hit']*ratio)
+                    if 'event_amounts' in source:known['event_amounts']=[amount*ratio for amount in source['event_amounts']]
+                    c['known_healing_sources'].append(known)
             events=[]
             for source in sources:
                 times=source.get('times_seconds')
@@ -1129,7 +1204,7 @@ class Combat:
             'components':components,'neural_events':neural_events,'drone_trait_reference':drone_trait_reference,
             'neural_secondary_seeds':neural_secondary_seeds,
             'neural_binding_seeds':neural_binding_seeds,
-            'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'unbound_cast_reference':unbound_cast_reference,'external_event_reference':external_event_reference,'chen_phase_reference':chen_phase_reference,'timing':timeline.output()}
+            'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'unbound_cast_reference':unbound_cast_reference,'external_event_reference':external_event_reference,'chen_phase_reference':chen_phase_reference,'amiya_phase_reference':amiya_phase_reference,'timing':timeline.output()}
 
     def calculate(self):
         if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
@@ -1429,6 +1504,10 @@ class Combat:
                 if self.n in (1,2):
                     result['estimate']['skill']['total_damage']=0
                     if 'known_damage_subtotals' in result:result['known_damage_subtotals']['total_damage']=0
+            result['complete']=False;result['estimate']['complete']=False
+        if full['amiya_phase_reference'] is not None:
+            result['amiya_phase_reference']={**full['amiya_phase_reference'],
+                'window_reference':shown['amiya_phase_reference']}
             result['complete']=False;result['estimate']['complete']=False
         if full['chen_phase_reference'] is not None:
             result['chen_phase_reference']={**full['chen_phase_reference'],
