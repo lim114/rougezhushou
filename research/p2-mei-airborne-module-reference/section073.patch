@@ -1,0 +1,237 @@
+diff --git a/rouge/mei_module_reference.py b/rouge/mei_module_reference.py
+new file mode 100644
+--- /dev/null
++++ b/rouge/mei_module_reference.py
+@@ -0,0 +1,54 @@
++"""Mei MAR-X conditional parameters; no target or native formula inference."""
++
++
++def reference(profile, scenario, module_parts):
++    if profile.get('id') != 'char_133_mm' or scenario.get('operator') != 'char_133_mm':
++        return None
++    module_id = 'uniequip_002_mm'
++    if scenario.get('module_id') != module_id:
++        return None
++    module = next((m for m in profile['modules'] if m['id'] == module_id), None)
++    stage = scenario.get('module_level', 0)
++    elite = scenario.get('elite', 2)
++    level = scenario.get('level') or profile['phases'][elite]['max_level']
++    if (module is None or type(stage) is not int or not 1 <= stage <= len(module['levels'])
++            or elite < module['unlock_elite'] or level < module['unlock_level']):
++        return None
++    catalog_parts = module['levels'][stage - 1]['parts']
++    for part in module_parts or ():
++        if (part not in catalog_parts or part.get('target') != 'TRAIT'
++                or part.get('isToken') or part.get('validInGameTag') is not None
++                or part.get('validInMapTag') is not None):
++            continue
++        candidates = (part.get('overrideTraitDataBundle') or {}).get('candidates') or []
++        for index, candidate in enumerate(candidates):
++            condition = candidate['unlockCondition']
++            phase = int(condition['phase'][-1])
++            if (phase > elite or phase == elite and condition['level'] > level
++                    or candidate.get('requiredPotentialRank', 0) > scenario.get('potential', 1) - 1):
++                continue
++            values = {b['key']: b['value'] for b in candidate['blackboard']}
++            if 'atk_scale' not in values:
++                continue
++            part_index = catalog_parts.index(part)
++            return {
++                'operator_id': profile['id'], 'module_id': module_id,
++                'module_name': module['name'], 'module_level': stage,
++                'unlock_elite': module['unlock_elite'], 'unlock_level': module['unlock_level'],
++                'candidate_unlock_condition': dict(condition),
++                'required_potential_rank': candidate.get('requiredPotentialRank', 0),
++                'trait_description': candidate['additionalDescription'],
++                'attack_scale_parameter': values['atk_scale'],
++                'actual_target_is_airborne': None,
++                'actual_conditional_damage': None,
++                'reference_only': True, 'applied_to_numeric_estimate': False,
++                'native_attachment_verified': False, 'damage_composition_verified': False,
++                'live_state_verified': False,
++                'source_commit': 'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add',
++                'source_selectors': [
++                    'character_table.char_133_mm',
++                    'uniequip_table.equipDict.uniequip_002_mm',
++                    'battle_equip_table.uniequip_002_mm.phases[' + str(stage - 1)
++                    + '].parts[' + str(part_index) + '].overrideTraitDataBundle.candidates['
++                    + str(index) + ']']}
++    return None
+diff --git a/rouge/operator_engine.py b/rouge/operator_engine.py
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -1520,6 +1520,9 @@
+             'complete':complete,
+             'warnings':self.warnings,'notes':list(dict.fromkeys(self.notes))+['连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。'],
+             'scenario_scope':result['scope']}
++        from .mei_module_reference import reference as mei_module_reference
++        mei_reference=mei_module_reference(self.p,self.s,self.module_parts)
++        if mei_reference is not None:result['mei_airborne_module_reference']=mei_reference
+         if full['drone_trait_reference']:
+             result['drone_trait_reference']=full['drone_trait_reference']
+         if self.s['operator']=='char_206_gnosis' and self.n==3 and self.s.get('frozen_at_skill_end',True):
+diff --git a/rouge/reporting.py b/rouge/reporting.py
+--- a/rouge/reporting.py
++++ b/rouge/reporting.py
+@@ -262,6 +262,20 @@
+                '实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。']
+         sections.append(section('token_duration_'+reference['token_id'],reference['token_name']+' · 持续参数参考',[
+             metric('duration','部署后持续参数',reference['duration_seconds'],'秒')],notes))
++    mei_module=result.get('mei_airborne_module_reference')
++    if mei_module:
++        sections.append(section('mei_airborne_module','梅 MAR-X · 空中条件参数参考',[
++            metric('unlock_elite','模组解锁精英阶段',mei_module['unlock_elite']),
++            metric('unlock_level','模组解锁等级',mei_module['unlock_level']),
++            metric('module_level','当前模组等级',mei_module['module_level']),
++            metric('attack_scale','空中条件攻击倍率原参数',mei_module['attack_scale_parameter']*100,'%'),
++            metric('target_airborne','当前目标空中条件',mei_module['actual_target_is_airborne']),
++            metric('conditional_damage','该特性实际条件伤害',mei_module['actual_conditional_damage'])],
++            [readable_description(mei_module['trait_description'],{'atk_scale':mei_module['attack_scale_parameter']}),
++             '仅列当前已解锁新手侦探礼包的原表条件参数；本次未确认目标是否为空中单位。',
++             '空中条件、真实模组附着以及与技能或其他加成的组合层尚未核验；110%参数未计入当前伤害数值。',
++             '现有伤害、攻击时钟与培养数值保持；本参考不表示该条件模组机制已完整覆盖。',
++             result['complete_definition']]))
+     mode=skill.get('mode','ammo' if source['duration_type']=='AMMO' else 'instant' if source['duration']<=0 else 'timed')
+     sections.append(section('timing','技能时序',[
+         metric('initial','预计初动',skill['initial_seconds'],'秒'),
+diff --git a/tests/test_mei_airborne_module_reference.py b/tests/test_mei_airborne_module_reference.py
+new file mode 100644
+--- /dev/null
++++ b/tests/test_mei_airborne_module_reference.py
+@@ -0,0 +1,136 @@
++"""Mei MAR-X source parameters stay distinct from unverified combat behavior."""
++import copy
++import json
++import re
++import unittest
++
++from rouge.catalog import catalog
++from rouge.damage import calculate_damage
++from rouge.mei_module_reference import reference
++from rouge.operator_engine import selected_talents
++from rouge.reporting import format_report
++
++
++def scenario(**extra):
++    return {'operator': 'char_133_mm', 'skill': 1, 'skill_rank': 10,
++            'elite': 2, 'level': 40, 'base_attack': 1000,
++            'module_id': 'uniequip_002_mm', 'module_level': 1, **extra}
++
++
++class MeiAirborneModuleReferenceTests(unittest.TestCase):
++    def test_all_three_levels_expose_exact_trait_source_and_unknown_actual_condition(self):
++        for stage in (1, 2, 3):
++            for skill in (1, 2):
++                for mode in ('frames', 'continuous'):
++                    with self.subTest(stage=stage, skill=skill, mode=mode):
++                        result = calculate_damage(scenario(module_level=stage, skill=skill,
++                                                           timing_mode=mode))
++                        ref = result['mei_airborne_module_reference']
++                        self.assertEqual(ref['attack_scale_parameter'], 1.1)
++                        self.assertEqual((ref['unlock_elite'], ref['unlock_level']), (2, 40))
++                        self.assertEqual(ref['candidate_unlock_condition'], {'phase': 'PHASE_2', 'level': 40})
++                        self.assertEqual(ref['required_potential_rank'], 0)
++                        self.assertIn('phases[' + str(stage - 1) + '].parts[0]', ref['source_selectors'][-1])
++                        self.assertIsNone(ref['actual_target_is_airborne'])
++                        self.assertIsNone(ref['actual_conditional_damage'])
++                        self.assertFalse(ref['applied_to_numeric_estimate'])
++                        self.assertFalse(ref['native_attachment_verified'])
++                        self.assertFalse(ref['damage_composition_verified'])
++                        self.assertFalse(ref['live_state_verified'])
++
++    def test_real_module_unlock_and_skill_rank_qualification_stay_separate(self):
++        for elite, level in ((1, 60), (2, 39)):
++            for stage in (1, 2, 3):
++                result = calculate_damage(scenario(elite=elite, level=level,
++                                                  skill_rank=7, module_level=stage))
++                self.assertNotIn('mei_airborne_module_reference', result)
++                self.assertNotIn('mei_airborne_module', [s['id'] for s in result['report']['sections']])
++        for rank in (1, 7, 10):
++            result = calculate_damage(scenario(skill_rank=rank))
++            self.assertIn('mei_airborne_module_reference', result)
++
++    def test_trait_parameter_does_not_multiply_existing_skill_damage_or_attack(self):
++        # Current module talent overrides are already modeled. Their old S1
++        # raw values are 2140/2200/2240 for the explicit base=1000, potential1.
++        for stage, raw in ((1, 2140), (2, 2200), (3, 2240)):
++            for mode in ('frames', 'continuous'):
++                result = calculate_damage(scenario(module_level=stage, enemy_defense=200,
++                                                   timing_mode=mode))
++                self.assertAlmostEqual(result['components'][0]['per_hit'], raw - 200)
++                self.assertAlmostEqual(result['attack'], raw / 2)
++                self.assertIsNone(result['total_damage'])
++                self.assertIsNone(result['components'][0]['actual_total'])
++                self.assertFalse(result['estimate']['complete'])
++                self.assertEqual(result['complete_definition'],
++                                 'complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。')
++
++    def test_report_discloses_unused_parameter_and_unknown_composition(self):
++        result = calculate_damage(scenario(skill=2, module_level=3))
++        section = next(s for s in result['report']['sections'] if s['id'] == 'mei_airborne_module')
++        metrics = {m['key']: m['value'] for m in section['metrics']}
++        self.assertAlmostEqual(metrics['attack_scale'], 110)
++        self.assertIsNone(metrics['target_airborne'])
++        self.assertIsNone(metrics['conditional_damage'])
++        text = format_report(result)
++        self.assertIn('本次未确认目标是否为空中单位', text)
++        self.assertIn('110%参数未计入当前伤害数值', text)
++        self.assertIn('组合层尚未核验', text)
++        self.assertIn(result['complete_definition'], text)
++        self.assertFalse(result['timing']['complete'])
++
++    def test_no_target_motion_inference_from_weight_name_or_unrecognized_condition(self):
++        plain = calculate_damage(scenario())
++        for fields in ({'enemy_weight': 0}, {'enemy_name': '飞行目标'},
++                       {'enemy_is_airborne': True}, {'enemy_is_airborne': 'false'}):
++            with self.subTest(fields=fields):
++                self.assertEqual(calculate_damage(scenario(**fields)), plain)
++
++    def test_no_module_other_owner_and_foreign_parts_cannot_gain_this_reference(self):
++        plain = calculate_damage(scenario(module_id=None, module_level=0))
++        self.assertNotIn('mei_airborne_module_reference', plain)
++        other = calculate_damage({'operator': 'char_328_cammou', 'skill': 1,
++                                  'module_id': 'uniequip_002_cammou', 'module_level': 1})
++        self.assertNotIn('mei_airborne_module_reference', other)
++        profile = catalog()['operators']['char_133_mm']
++        args = scenario()
++        foreign = catalog()['operators']['char_328_cammou']['modules'][0]['levels'][0]['parts']
++        self.assertIsNone(reference(profile, args, foreign))
++        self.assertIsNone(reference(profile, args, []))
++
++    def test_empty_window_and_known_empty_enemy_scope_do_not_become_airborne_claims(self):
++        for skill in (1, 2):
++            for mode in ('frames', 'continuous'):
++                for extra in ({'window_seconds': 0},
++                              {'timing': {'target_disappears_seconds': 0}},
++                              {'timing': {'target_windows': []}}):
++                    with self.subTest(skill=skill, mode=mode, extra=extra):
++                        result = calculate_damage(scenario(skill=skill, timing_mode=mode, **extra))
++                        ref = result['mei_airborne_module_reference']
++                        self.assertIsNone(ref['actual_target_is_airborne'])
++                        self.assertIsNone(ref['actual_conditional_damage'])
++                        self.assertFalse(ref['applied_to_numeric_estimate'])
++                        self.assertFalse(ref['native_attachment_verified'])
++
++    def test_public_training_errors_and_input_catalog_immutability_are_preserved(self):
++        for fields, message in (({'elite': 1, 'level': 60}, '当前精英阶段尚未开放所选技能或专精。'),
++                                ({'module_level': True}, '模组身份或等级尚无可用规则。'),
++                                ({'potential': True}, '潜能需要为 1–6。')):
++            with self.assertRaisesRegex(ValueError, '^' + re.escape(message) + '$'):
++                calculate_damage(scenario(**fields))
++        args = scenario(module_level=3, potential=6, skill=2, window_seconds=10)
++        original = copy.deepcopy(args)
++        snapshot = json.dumps(catalog(), sort_keys=True, ensure_ascii=False)
++        first = calculate_damage(args)
++        second = calculate_damage(args)
++        self.assertEqual(first, second)
++        self.assertEqual(args, original)
++        self.assertEqual(json.dumps(catalog(), sort_keys=True, ensure_ascii=False), snapshot)
++        profile = catalog()['operators']['char_133_mm']
++        _, parts = selected_talents(profile, args)
++        ref = reference(profile, args, parts)
++        ref['candidate_unlock_condition']['level'] = 999
++        self.assertEqual(reference(profile, args, parts)['candidate_unlock_condition']['level'], 40)
++
++
++if __name__ == '__main__':
++    unittest.main()

@@ -990,18 +990,6 @@ def build_report(scenario,result):
         labels={'attack_pct':'分队攻击加成','hp_pct':'分队生命加成','defense_pct':'分队防御加成'}
         rows=[metric(r['kind'],labels[r['kind']],r['value']*100,'%') for r in environment.get('applied',[]) if r['kind'] in labels]
         sections.append(section('run_environment','本局配置与修正',rows,notes))
-    squad_reference=environment.get('squad_unlock_reference')
-    if squad_reference:
-        notes=['档案解锁条件：'+squad_reference['unlock_condition_reference']]
-        technology=squad_reference['technology_node_reference']
-        if technology:
-            notes.append('对应科技资料：'+technology['name'])
-            gate=technology['gate_reference']
-            if gate:notes.append('科技生效门槛资料：'+gate['enable_description_reference'])
-        notes.append('这里只列条件资料；账户解锁与条件实际激活未知，不据此切换分队版本或追加效果。当前明确确认的本局效果按原情景计算。')
-        sections.append(section('squad_unlock_reference','强化分队 · 条件资料',[
-            metric('account_unlock','账户解锁状态',None),
-            metric('activation','解锁条件实际激活',None)],notes))
     return {'schema_version':2,'operator':{'id':op,'name':p['name'],'profession':p['profession']},
         'skill_number':number,'skill_rank':scenario.get('skill_rank',10),'mode':mode,'sections':sections}
 
