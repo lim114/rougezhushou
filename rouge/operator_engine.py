@@ -318,7 +318,9 @@ class Combat:
                 self.notes.append(f'触手数量 {count:g}；技能生命回复 {bb["hp_recovery_per_sec"]*duration*count:g}，生命回复不计直接治疗。')
             self.notes.append('触手不继承本体信赖/潜能及职业加成；已确认的所有我方单位藏品攻击/攻速及敌方易伤单独套用。')
         elif op in ('char_196_sunbr','char_2025_shu','char_298_susuro'):
-            if normal and op=='char_298_susuro':regular('healing',times=min(1,healing_targets),name='普通治疗')
+            recipient_factor=self.talent('微创治疗','heal_scale',1) if (
+                op=='char_298_susuro' and self.s.get('low_cost_healing_target')) else 1
+            if normal and op=='char_298_susuro':regular('healing',scale=recipient_factor,times=min(1,healing_targets),name='普通治疗')
             elif normal:
                 if op=='char_196_sunbr':
                     prob=self.talent('平底锅专精','prob');scale=self.talent('平底锅专精','atk_scale',1)
@@ -328,8 +330,7 @@ class Combat:
                         components[-1]['event_amounts']=[components[-1]['per_hit']*weight for _ in events]
                 else:regular(name='普通攻击')
             elif op=='char_298_susuro':
-                factor=self.talent('微创治疗','heal_scale',1) if self.s.get('low_cost_healing_target') else 1
-                regular('healing',scale=factor,times=min(1,healing_targets))
+                regular('healing',scale=recipient_factor,times=min(1,healing_targets))
                 if self.n==2:self.notes.append('深度治疗整场最多开启两次；周期指标仅描述尚可再次开启时的一轮。')
             elif self.n==1:
                 mode='next_attack';duration=interval if window is None else window
