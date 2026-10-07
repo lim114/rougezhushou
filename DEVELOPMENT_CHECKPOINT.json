@@ -275,7 +275,21 @@
   },
   "windows_native_validation": "unavailable: attached environment is Linux",
   "wine_validation": "Wine10/WindowsCPython3.12.10/Qt6.9.3/NumPy2.2.6 + Microsoft UCRT; full available suite +87 actualskillcontrols passed",
-  "deferred_problems": [],
+  "deferred_problems": [
+    {
+      "id": "friendly_clock_ui_explanation",
+      "failed_attempts": 3,
+      "status": "deferred",
+      "scope": "Exact friendly acquisition clock explanation visible in actual MainWindow; portable calculation/assertions passed",
+      "evidence": [
+        "wine-ui-040-initial.json",
+        "wine-ui-040.json",
+        "wine-ui-040-r2.json"
+      ],
+      "restart_conditions": "Independently inspect actual UI scenario/report diagnostic and qualify source or preview mapping before retry; do not repeat exact assertion",
+      "counts_as_passed": false
+    }
+  ],
   "problem_attempts": {
     "gnosis_attack_clock": {
       "checks": 3,
