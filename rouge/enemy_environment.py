@@ -13,10 +13,18 @@ def damage_factor(scenario,dtype):
     return scenario.get('_run_damage_factor',1)*scenario.get('_enemy_type_factors',{}).get(dtype,1)
 
 def resolve_enemy(scenario,resolution):
-    # Weight may only come from the selected, pinned enemy reference.
-    scenario.pop('enemy_weight',None)
     target=scenario.get('target_enemy')
-    if not target:return
+    if not target:
+        if scenario.get('operator')=='char_1015_aglna2' and 'enemy_weight' in scenario:
+            weight=scenario['enemy_weight']
+            if (not isinstance(weight,(int,float)) or isinstance(weight,bool)
+                    or not math.isfinite(weight) or not 0<=weight<=100 or weight!=int(weight)):
+                raise ValueError('手动敌人重量必须是0到100之间的整数。')
+            scenario['enemy_weight']=int(weight)
+        else:scenario.pop('enemy_weight',None)
+        return
+    # Selected identity overrides the separate manual operator reference.
+    scenario.pop('enemy_weight',None)
     if not isinstance(target,dict):raise ValueError('目标敌人需要关卡、敌人ID及引用等级。')
     sid=target.get('stage_id');stage=catalog()['stages'].get(sid);preview=stage_previews().get(sid)
     if not stage or not preview:raise ValueError('目标关卡没有固定敌人档案。')
@@ -97,6 +105,8 @@ def resolve_enemy(scenario,resolution):
     weight=stats.get('massLevel')
     if isinstance(weight,(int,float)) and not isinstance(weight,bool) and math.isfinite(weight):
         scenario['enemy_weight']=weight
+    elif scenario.get('operator')=='char_1015_aglna2':
+        raise ValueError('固定敌人重量档案缺失，无法选择重量天赋分支。')
     scenario['enemy_is_boss']=record['level_type']=='BOSS';scenario['enemy_level_type']=record['level_type']
     scenario['_run_damage_factor']=enemy['damage_factor']
     resolution['pending'].extend(enemy['pending'])
