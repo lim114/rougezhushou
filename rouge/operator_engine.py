@@ -419,11 +419,24 @@ class Combat:
                 events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
                 frost(attack*bb['atk_scale'],2 if events else 0,'高速思考')
             elif self.n==2:
-                mode='instant';duration=0;frost(attack*bb['atk_scale'],1,'零度爆发')
+                mode='instant';duration=0
+                available=(window is None or window>0) and (timeline.mode!='frames' or (
+                    timeline.selectable(0) and not timeline.unavailable(0)))
+                frost(attack*bb['atk_scale'],1 if available else 0,'零度爆发')
+                if available:components[-1]['instant_event']=True
             else:
                 events=attack_times();frost(attack,len(events),'失温症攻击',events)
                 if self.s.get('frozen_at_skill_end',True) and (window is None or window>=self.skill['duration']):
-                    frost(attack*bb['atk_scale'],1,'失温症终结')
+                    disappears=timeline.options.get('target_disappears_seconds')
+                    # A target absent before the nominal end cannot receive
+                    # this conditional terminal source. Equal-frame order is
+                    # unresolved; do not turn it into a known zero.
+                    alive=disappears is None or frame_time(disappears)>=frame_time(self.skill['duration'])
+                    frost(attack*bb['atk_scale'],1 if alive else 0,'失温症终结')
+                    components[-1]['terminal_clock_verified']=False
+                    components[-1]['nominal_terminal_seconds']=self.skill['duration']
+                    if disappears is not None and frame_time(disappears)==frame_time(self.skill['duration']):
+                        components[-1]['actual_total']=None
             self.notes.append('寒冷/冻结易伤按所选全程状态估算；不把首击后的寒冷倒推至首击。冻结法抗-15与脆弱分开结算。')
         elif op=='char_4087_ines':
             if normal:regular()
@@ -1019,6 +1032,32 @@ class Combat:
             'complete':complete,
             'warnings':self.warnings,'notes':list(dict.fromkeys(self.notes))+['连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。'],
             'scenario_scope':result['scope']}
+        if self.s['operator']=='char_206_gnosis' and self.n==3 and self.s.get('frozen_at_skill_end',True):
+            cast=next((c for c in full['components'] if c['name']=='失温症终结'),None)
+            observed=next((c for c in shown['components'] if c['name']=='失温症终结'),None)
+            result['gnosis_terminal_reference']={
+                'nominal_skill_end_seconds':self.skill['duration'],
+                'terminal_clock_verified':False,'freeze_removal_order_verified':False,
+                'conditional_terminal_damage':cast['per_hit'] if cast else None,
+                'source_possible':{'cast':bool(cast and cast['hits']),
+                    'window':bool(observed and observed['hits'])},
+                'same_frame_disappearance_unresolved':bool(cast and 'actual_total' in cast),
+            }
+            if cast and 'actual_total' in cast:
+                result['known_damage_subtotals']={
+                    key:(value-cast['total'] if value is not None and key in ('total_damage','phase_damage','cycle_damage') else value)
+                    for key,value in result['estimate']['skill'].items()
+                    if key in ('total_damage','phase_damage','cycle_damage','cycle_dps')}
+                subtotal=result['known_damage_subtotals']
+                subtotal['window_damage']=shown['damage']-(observed['total'] if observed else 0)
+                subtotal['window_dps']=subtotal['window_damage']/shown['duration'] if shown['duration'] else None
+                subtotal['cycle_dps']=subtotal['cycle_damage']/cycle if cycle else None
+                for key in ('total_damage','phase_damage','cycle_damage','cycle_dps'):
+                    result['estimate']['skill'][key]=None
+                if observed and observed['hits']:
+                    result['total_damage']=None;result['estimate']['skill']['window_dps']=None
+                result['complete']=False;result['estimate']['complete']=False
+            result['estimate']['notes'].append('失温症终结按给定技能结束时冻结条件列伤害参考；名义持续参数不证明实际结束当帧、冻结移除顺序或同帧消失顺序。')
         if gnosis_s1_unresolved:
             cast=next(c for c in full['components'] if c['name']=='高速思考')
             observed=next(c for c in shown['components'] if c['name']=='高速思考')

@@ -347,6 +347,14 @@ def build_report(scenario,result):
         if not nonrepeat:
             rows.append(metric('cycle_dps','本轮周期 DPS',skill['cycle_dps'],'伤害/秒'))
         sections.append(section('damage','伤害输出',rows))
+    terminal=result.get('gnosis_terminal_reference')
+    if terminal:
+        sections.append(section('gnosis_terminal','失温症 · 终结条件参考',[
+            metric('nominal_end','技能持续参数',terminal['nominal_skill_end_seconds'],'秒'),
+            metric('conditional_damage','冻结终结单次伤害条件参考',terminal['conditional_terminal_damage']),
+            metric('actual_end','实际结束当帧',None,'帧')],
+            ['目标在名义结束前消失时不生成终结来源；同帧消失顺序未核验时完整伤害未知。',
+             '实际结束相位、冻结移除顺序及离开范围的后续适用性尚未核验。']))
     gnosis=result.get('gnosis_s1_reference')
     if gnosis:
         sections.append(section('gnosis_s1','高速思考 · 两段时间待核验',[
