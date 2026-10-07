@@ -365,6 +365,14 @@ def build_report(scenario,result):
             metric('actual_end','实际结束当帧',None,'帧')],
             ['目标在名义结束前消失时不生成终结来源；同帧消失顺序未核验时完整伤害未知。',
              '实际结束相位、冻结移除顺序及离开范围的后续适用性尚未核验。']))
+    mizuki=result.get('mizuki_s1_reference')
+    if mizuki:
+        sections.append(section('mizuki_s1','唤醒 · 下次攻击与结束待核验',[
+            metric('physical','单次物理伤害条件参考',mizuki['physical_per_hit_reference']),
+            metric('arts','单次额外法术条件参考',mizuki['arts_per_hit_reference']),
+            metric('actual_end','实际技能结束',None,'秒')],
+            ['有效出手获取仅用已有常规参考；零窗口、无目标或全程打断不生成技能来源。',
+             '下次攻击不当作开启瞬间命中；当前动作绑定、结束/阻回与完整周期未核验。']))
     gnosis=result.get('gnosis_s1_reference')
     if gnosis:
         sections.append(section('gnosis_s1','高速思考 · 两段时间待核验',[
@@ -480,7 +488,7 @@ def build_report(scenario,result):
              if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
              if bait_reference else
              '这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。'
-             if wisdel or result.get('drone_lifecycle_reference') else
+             if wisdel or mizuki or result.get('drone_lifecycle_reference') else
              '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']))
     if has_healing(op,number):
         rows=[];window_healing=skill['window_healing']

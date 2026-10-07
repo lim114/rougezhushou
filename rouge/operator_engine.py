@@ -402,9 +402,14 @@ class Combat:
                 if terminal:mode='once_deploy'
         elif op=='char_437_mizuki':
             if not normal and self.n==1:
-                mode='next_attack';duration=interval
-                instant('physical',bb['atk_scale'],name='唤醒物理')
-                instant('magic',self.talent('创伤性癔症','attack@mizuki_t_1.atk_scale')*bb['talent_scale'],name='唤醒额外法术')
+                mode='next_attack';duration=interval if window is None else window
+                stream=timeline.attacks(3600 if window is None else window,interval,speed,
+                    attribute_speed=speed_reference,limit=1)
+                events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
+                emit('唤醒物理',attack*bb['atk_scale'],'physical',1 if events else 0)
+                if events:components[-1]['actual_total']=None
+                emit('唤醒额外法术',attack*self.talent('创伤性癔症','attack@mizuki_t_1.atk_scale')*bb['talent_scale'],'magic',1 if events else 0)
+                if events:components[-1]['actual_total']=None
             else:
                 regular()
                 regular('magic',self.talent('创伤性癔症','attack@mizuki_t_1.atk_scale'),name='创伤性癔症')
@@ -935,6 +940,7 @@ class Combat:
         wine_s1_unresolved=self.s['operator']=='char_1042_phatm2' and self.n==1
         gnosis_s1_unresolved=self.s['operator']=='char_206_gnosis' and self.n==1
         wisdel_s1_unresolved=self.s['operator']=='char_1035_wisdel' and self.n==1
+        mizuki_s1_unresolved=self.s['operator']=='char_437_mizuki' and self.n==1
         if wine_s1_unresolved:
             # The native multihit gap does not establish absolute cast end,
             # SP observation or normal-attack resumption. A resource anchor
@@ -946,10 +952,10 @@ class Combat:
             duration=None;recharge=None
             first=0.0 if initial>=sp['sp_cost'] else None
             self.notes.append('高速思考两段的实际技能绑定、间隔及结束/阻回相位未核验；不把两段当同刻命中或套用常规攻击结束，完整持续和周期未知。')
-        if wisdel_s1_unresolved:
+        if wisdel_s1_unresolved or mizuki_s1_unresolved:
             duration=None;recharge=None
             first=0.0 if initial>=sp['sp_cost'] else None
-            self.notes.append('定点清算实际技能绑定、余震命中和结束/阻回未核验；不由普通攻击结束推导完整周期。')
+            self.notes.append(('定点清算' if wisdel_s1_unresolved else '唤醒')+'实际技能绑定与结束/阻回未核验；不由普通攻击结束推导完整周期。')
         if mode=='ammo' and duration is None:total_damage=total_healing=None
         if mode in ('deployment','passive'):first=0;recharge=None
         nonrepeat=mode in ('infinite','passive','switch','once','once_deploy','deployment','triggered_ammo')
@@ -1011,7 +1017,7 @@ class Combat:
                     stun=sp['values'].get('stun',0) if self.s['operator']=='char_002_amiya' and self.n==2 else 0)
                 recharge=sp_events['cycle']['seconds']
             else:recharge=None
-        if wine_s1_unresolved or gnosis_s1_unresolved or wisdel_s1_unresolved:
+        if wine_s1_unresolved or gnosis_s1_unresolved or wisdel_s1_unresolved or mizuki_s1_unresolved:
             recharge=None
             first=0.0 if initial>=sp['sp_cost'] else None
         cycle=duration+recharge if not nonrepeat and duration is not None and recharge is not None else None
@@ -1134,6 +1140,19 @@ class Combat:
                 observed['actual_total']=None
             result['complete']=False
             result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
+        if mizuki_s1_unresolved:
+            result['mizuki_s1_reference']={
+                'physical_per_hit_reference':next(c['per_hit'] for c in full['components'] if c['name']=='唤醒物理'),
+                'arts_per_hit_reference':next(c['per_hit'] for c in full['components'] if c['name']=='唤醒额外法术'),
+                'source_possible':{'cast':any(c['hits'] for c in full['components']),
+                    'window':any(c['hits'] for c in shown['components'])},
+                'source_acquisition_times':{'cast':[t for stream in full['timing']['streams'] for t in stream['times_seconds']],
+                    'window':[t for stream in shown['timing']['streams'] for t in stream['times_seconds']]},
+                'skill_binding_verified':False,'actual_cast_end_seconds':None,
+            }
+            from .uncertain_sources import mask_pending_damage
+            mask_pending_damage(result,full,shown,normal,duration,cycle)
+            result['complete']=False;result['estimate']['complete']=False
         if self.s['operator']=='char_1038_whitw2' and self.n==3:
             aura=next(c for c in full['components'] if c['name']=='狼群光环（不叠加）')
             observed=next(c for c in shown['components'] if c['name']=='狼群光环（不叠加）')
