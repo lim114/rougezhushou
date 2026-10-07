@@ -389,13 +389,18 @@ class Combat:
                 regular('magic')
                 emit('恶业苦果反击',attack*bb['atk_scale'],'magic',self.option('incoming_hits',0,maximum=10000,integer=True))
             elif self.n==2:
-                mode='instant';duration=0
-                instant('magic',bb['attack@atk_scale'],3,'盾击三连')
+                mode='instant';duration=0 if window is None else window
+                emit('盾击三连',attack*bb['attack@atk_scale'],'magic',3)
                 count=self.option('shield_contact_ticks',1,maximum=1000,integer=True)
                 raw=attack*bb['shield_atk_scale']
                 emit('环绕盾牌',raw,'magic',count)
                 emit('盾牌伤害转治疗',self.hit(raw,'magic')*bb['heal_ratio'],'healing',count)
-                self.notes.append('环绕盾牌每0.5秒判定接触；实际次数取决于目标位置，使用所选接触次数。')
+                unbound_cast_reference={'kind':'shield_contact',
+                    'parameter_rows':[('盾击段数参数',3,'段'),('接触判定间隔参数',bb['interval'],'秒'),
+                                      ('声明盾牌接触次数',count,'次'),('盾牌伤转治疗比例',bb['heal_ratio']*100,'%')],
+                    'notes':['盾击三连与独立盾牌环绕只列条件来源；接触次数不证明投盾、首跳或一圈结束时刻。',
+                             '治疗依赖盾牌实际造成的伤害；缺少接触时钟时，实际伤害和对应治疗同时未知。']}
+                self.notes.append('环绕盾牌0.5秒为接触判定参数；所选次数只给条件参考，不生成实际接触时刻。')
             else:
                 regular('magic',times=2)
                 terminal=self.option('last_stand_seconds',0,maximum=bb['before_dead_duration'])

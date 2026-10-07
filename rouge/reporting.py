@@ -94,7 +94,7 @@ def has_damage(op,number):
 
 
 def has_healing(op,number):
-    return op in ('kaltsit','char_196_sunbr','char_2025_shu','char_298_susuro','char_1037_amiya3','char_4202_haruka') or (op=='char_151_myrtle' and number==2)
+    return op in ('kaltsit','char_196_sunbr','char_2025_shu','char_298_susuro','char_1037_amiya3','char_4202_haruka') or (op=='char_151_myrtle' and number==2) or (op=='char_1044_hsgma2' and number==2)
 
 
 def fee_section(scenario,bb,skill):
@@ -554,7 +554,7 @@ def build_report(scenario,result):
              if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
              if bait_reference else
              '这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。'
-             if wisdel or mizuki or ines_dot or manual_close or liftoff or snow or result.get('drone_lifecycle_reference') else
+             if wisdel or mizuki or ines_dot or manual_close or liftoff or snow or unbound or result.get('drone_lifecycle_reference') else
              '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']))
     if has_healing(op,number):
         rows=[];window_healing=skill['window_healing']
