@@ -227,7 +227,7 @@ class Combat:
         if not normal and window is not None:duration=min(duration,window)
         if not normal and self.s['operator']=='char_1029_yato2':
             attack+=self.base*self.talent('鬼人强化状态','atk')
-        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[]
+        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None
         timeline=AttackTimeline(self.s,normal=normal,offset=self.s.get('_timeline_offset_seconds',0) if normal else 0)
         def emit(name,raw,dtype,count,defense=None,resistance=None,effects=None,event_times=None):
             if dtype=='buildup':raw*=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
@@ -504,7 +504,14 @@ class Combat:
                 mode='switch';duration=window if window is not None else 30
             regular('magic',name='本体攻击')
             trait_candidates=(self.p.get('trait') or {}).get('candidates') or []
-            trait={b['key']:b['value'] for b in trait_candidates[-1]['blackboard']} if trait_candidates else {}
+            base_trait={b['key']:b['value'] for b in trait_candidates[-1]['blackboard']} if trait_candidates else {}
+            from .drone_traits import selected_drone_trait
+            trait=selected_drone_trait(self.p,self.s,self.module_parts)
+            if trait!=base_trait:
+                drone_trait_reference={'module_id':self.s.get('module_id'),
+                    'module_level':self.s.get('module_level'),'parameters':trait,
+                    'independent_clock_verified':False,'live_panel_verified':False}
+                self.notes.append('浮游单元暖机参数采用已核对且满足培养门槛的模组直接特性覆盖；实际独立单元时序、重选目标重置和当前热更新仍未核验。')
             lower=trait.get('init_atk_scale',.2);step=trait.get('delta_atk_scale',.15);upper=trait.get('max_atk_scale',1.1)
             drone_count=1+(0 if normal else (1 if op=='char_1038_whitw2' and self.n==1 else bb.get('attack@cnt',0)))
             elapsed=self.option('deployment_elapsed_seconds',0,maximum=3600)
@@ -831,7 +838,7 @@ class Combat:
             'interval':interval,'duration':duration,'mode':mode,
             'damage':sum(c['total'] for c in components if c['damage_type'] not in ('healing','regeneration','buildup')),
             'healing':sum(c['total'] for c in components if c['damage_type']=='healing'),
-            'components':components,'neural_events':neural_events,
+            'components':components,'neural_events':neural_events,'drone_trait_reference':drone_trait_reference,
             'neural_secondary_seeds':neural_secondary_seeds,
             'neural_binding_seeds':neural_binding_seeds,
             'neural_incoming_pending':neural_incoming_pending,'timing':timeline.output()}
@@ -1038,6 +1045,8 @@ class Combat:
             'complete':complete,
             'warnings':self.warnings,'notes':list(dict.fromkeys(self.notes))+['连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。'],
             'scenario_scope':result['scope']}
+        if full['drone_trait_reference']:
+            result['drone_trait_reference']=full['drone_trait_reference']
         if self.s['operator']=='char_206_gnosis' and self.n==3 and self.s.get('frozen_at_skill_end',True):
             cast=next((c for c in full['components'] if c['name']=='失温症终结'),None)
             observed=next((c for c in shown['components'] if c['name']=='失温症终结'),None)

@@ -347,6 +347,15 @@ def build_report(scenario,result):
         if not nonrepeat:
             rows.append(metric('cycle_dps','本轮周期 DPS',skill['cycle_dps'],'伤害/秒'))
         sections.append(section('damage','伤害输出',rows))
+    drone=result.get('drone_trait_reference')
+    if drone:
+        params=drone['parameters']
+        sections.append(section('drone_trait','浮游单元 · 模组特性参数',[
+            metric('initial','初始攻击倍率参数',params['init_atk_scale']*100,'%'),
+            metric('increment','每层增长参数',params['delta_atk_scale']*100,'%'),
+            metric('maximum','基础倍率上限参数',params['max_atk_scale']*100,'%'),
+            metric('stacks','最大层数参数',params['max_stack_cnt'],'层')],
+            ['仅更新已有暖机参考的直接数据参数；实际独立单元时钟、重选目标重置与当前热更新仍未核验。']))
     terminal=result.get('gnosis_terminal_reference')
     if terminal:
         sections.append(section('gnosis_terminal','失温症 · 终结条件参考',[
