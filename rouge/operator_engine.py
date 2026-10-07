@@ -467,9 +467,11 @@ class Combat:
                     # not an independently acquired friendly treatment.
                     regular('healing',bb['heal_scale'],healing_targets,name='哀恸共情范围治疗',target_scope='enemy')
                 else:
+                    declared_hits=self.option('amiya_hit_targets',1,maximum=100,integer=True)
+                    if declared_hits<1:raise ValueError('amiya_hit_targets需要1到100之间的整数。')
                     attack=self.base_attack
                     instant('magic',bb['atk_scale'],name='慈悲愿景开启伤害')
-                    attack+=self.base*bb['atk']*min(bb['max_stack_cnt'],self.option('amiya_hit_targets',1,maximum=100,integer=True))
+                    attack+=self.base*bb['atk']*min(bb['max_stack_cnt'],declared_hits)
                     regular('true',seconds=self.skill['duration'])
                     strengthened=components[-1]
                     unbound_source_components=[strengthened]
@@ -480,7 +482,7 @@ class Combat:
                         'opening_attack_scale_parameter':bb['atk_scale'],
                         'opening_damage_reference':components[0]['total'],
                         'opening_healing_reference':components[0]['total']*.5*min(1,healing_targets),
-                        'declared_opening_hit_targets':self.option('amiya_hit_targets',1,maximum=100,integer=True),
+                        'declared_opening_hit_targets':declared_hits,
                         'hit_attack_bonus_parameter':bb['atk'],
                         'hit_stack_cap_parameter':bb['max_stack_cnt'],
                         'strengthened_attack_reference':attack,
