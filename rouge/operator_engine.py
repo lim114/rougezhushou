@@ -28,6 +28,12 @@ def selected_talents(profile, scenario):
     parts=[]
     if module and elite>=module['unlock_elite'] and level>=module['unlock_level']:
         parts=module['levels'][scenario['module_level']-1]['parts']
+        from .gnosis_module_reference import selected_reference
+        gnosis_reference=selected_reference(profile,module,scenario['module_level'],parts,talents.get(0),eligible)
+        if gnosis_reference:
+            talents[0]={**talents[0],'reference_only':True,
+                'reference_identity':{'talent_index':0,'prefab_key':'1'},
+                'gnosis_isw_a_reference':gnosis_reference}
         for part in parts:
             if part.get('isToken'):continue
             candidates=(part.get('addOrOverrideTalentDataBundle') or {}).get('candidates') or []
@@ -36,6 +42,7 @@ def selected_talents(profile, scenario):
                 index=candidate.get('talentIndex',-1)
                 if index>=0 and eligible(candidate):grouped[index]=candidate
             for index,talent in grouped.items():
+                if gnosis_reference and index==0:continue
                 if (profile['id']=='char_437_mizuki' and module['id']=='uniequip_003_mizuki' and
                         part.get('target')=='TALENT' and index==0 and talent.get('prefabKey')=='10' and
                         talent.get('isHideTalent') is True and talent.get('name') is None and
@@ -76,6 +83,8 @@ class Combat:
         self.bb=self.skill['values']
         self.talents,self.module_parts=selected_talents(self.p,scenario)
         self.tv={t['name']:t['values'] for t in self.talents}
+        self.gnosis_isw_a_reference=next((t['gnosis_isw_a_reference'] for t in self.talents
+            if t.get('gnosis_isw_a_reference')),None)
         self.mizuki_amb_y_reference=next((t for t in self.talents
             if t.get('unresolved_module_ability')),None)
         self.effects=list(scenario.get('effects',[]))
@@ -605,6 +614,12 @@ class Combat:
                     if disappears is not None and frame_time(disappears)==frame_time(self.skill['duration']):
                         components[-1]['actual_total']=None
             self.notes.append('寒冷/冻结易伤按所选全程状态估算；不把首击后的寒冷倒推至首击。冻结法抗-15与脆弱分开结算。')
+            if self.gnosis_isw_a_reference:
+                from .gnosis_module_reference import preserve_plan
+                preserve_plan(components,self.gnosis_isw_a_reference,window=window,
+                    target_lifetime=timeline.options.get('target_disappears_seconds'),
+                    per_tick=self.hit(attack*self.gnosis_isw_a_reference['dot_parameters']['atk_scale'],
+                        'magic',resistance=res)*fragile)
         elif op=='char_4087_ines':
             if normal:regular()
             elif self.n==1:
@@ -1656,6 +1671,9 @@ class Combat:
             from .uncertain_sources import mask_pending_damage
             mask_pending_damage(result,full,shown,normal,duration,cycle)
             result['complete']=False;result['estimate']['complete']=False
+        if self.gnosis_isw_a_reference:
+            from .gnosis_module_reference import attach_result
+            attach_result(result,self.gnosis_isw_a_reference,full,shown,normal,duration,cycle)
         if self.mizuki_amb_y_reference:
             talent=self.mizuki_amb_y_reference
             arts=next(c for c in full['components'] if c['name'] in ('唤醒额外法术','创伤性癔症'))

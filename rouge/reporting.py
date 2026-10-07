@@ -532,6 +532,17 @@ def build_report(scenario,result):
             metric('extra_recovery','模组实际额外回复',mizuki_amb_y['actual_extra_healing'])],
             ['原版第一天赋参数保留条件参考；隐藏能力是否附着及与原天赋并存未核验，完整伤害未知。',
              '每击杀回复描述只保留来源；实际额外回复与触发时钟未知，未排治疗事件。']))
+    gnosis_module=result.get('gnosis_isw_a_reference')
+    if gnosis_module:
+        sections.append(section('gnosis_isw_a','灵知ISW-A · 天赋与持续法术待核验',[
+            metric('dot_per_tick','每跳法术伤害条件参考',gnosis_module['per_tick_damage_reference']),
+            metric('dot_scale','每跳攻击倍率参数',gnosis_module['dot_parameters']['atk_scale']*100,'%'),
+            metric('dot_interval','持续法术间隔参数',gnosis_module['dot_parameters']['interval'],'秒'),
+            metric('dot_count','实际持续法术跳数',gnosis_module['actual_tick_count'],'次')],
+            [readable_description(gnosis_module['trait_description'],gnosis_module['dot_parameters']),
+             '原版坚冰保留条件参考；模组能力与原天赋的实际并存、隐藏附着及增长/重置顺序未核验。',
+             '自身在场及寒冷/冻结只列原描述条件；首跳、攻击快照、状态覆盖和技能后生命周期未知，未排持续法术事件。',
+             '初始未寒冷不证明后续不会寒冷；普通攻击附加1秒寒冷参数不证明持续法术时钟。']))
     gnosis=result.get('gnosis_s1_reference')
     if gnosis:
         sections.append(section('gnosis_s1','高速思考 · 两段时间待核验',[
