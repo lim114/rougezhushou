@@ -1,0 +1,29 @@
+{
+  "section": 50,
+  "completion_ref": "p2-section-050",
+  "branch": "codex/p2-development",
+  "validated_at": "2026-10-07T20:41:27.330416+00:00",
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest tests.test_friendly_scope_report tests.test_empty_enemy_scope tests.test_timing tests.test_haruka_healing_targets tests.test_gnosis_isw_a_reference tests.test_susuro_recipient_factor tests.test_amiya_phase_reference -q",
+      "run": 85,
+      "passed": 85,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "command": ".venv/bin/python scripts/verify_cloud.py",
+      "run": 710,
+      "passed": 709,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "new_tests": 6,
+  "failed_attempts": 3,
+  "failed_attempt_details": "One frozen-test prep error and two legacy serialization errors resolved before new public run; original UI3 failures remain deferred until actual full50. Lost /tmp results were recomputed after restart.",
+  "source_receipt": "research/p2-friendly-scope-report/source-receipt.json",
+  "native_windows": false
+}

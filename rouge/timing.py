@@ -173,7 +173,7 @@ class AttackTimeline:
             if key in self.options:finite(self.options[key],key)
         for key in ('sp_lockout_extra_seconds','projectile_travel_seconds','target_disappears_seconds'):
             if key in self.options:finite(self.options[key],key,3600)
-        self.streams=[];self.notes=[]
+        self.streams=[];self.notes=[];self.target_scope_notes=[]
         self.deployment_offset=0 if self.options.get('_deployment_initial') else frame_time(scenario.get('_deployment_skill_start_seconds',0))
         self.windows=self.ranges('target_windows')
         self.blocked=sorted(self.ranges('movement_windows')+self.ranges('interrupt_windows'))
@@ -212,7 +212,8 @@ class AttackTimeline:
                 start_delay=start_delay,ramp=ramp,attribute_speed=attribute_speed)
             self.streams.extend(child.streams)
             note='空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。'
-            if target_scope=='friendly' and note not in self.notes:self.notes.append(note)
+            if target_scope=='friendly' and note not in self.notes:
+                self.notes.append(note);self.target_scope_notes.append(note)
             return stream
         if attribute_speed is None:attribute_speed=speed
         if unit is not None:
@@ -362,6 +363,7 @@ class AttackTimeline:
         return {'mode':self.mode,'fps':FPS,'streams':self.streams,
             'window_convention':'[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消',
             'scenario_provided':bool({k:v for k,v in self.options.items() if not k.startswith('_')}),
+            'target_scope_notes':list(self.target_scope_notes),
             'complete':False,
             'notes':['常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。',
                 '只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。',*self.notes]}
@@ -384,7 +386,9 @@ def phase_totals(components,boundary):
 
 def annotate_result(scenario,result):
     timing=result.setdefault('timing',AttackTimeline(scenario).output())
-    if timing['mode']=='continuous':return
+    if timing['mode']=='continuous':
+        result['estimate']['notes'].extend(timing.get('target_scope_notes',[]))
+        return
     timing['unplaced_components']=[c['name'] for c in result.get('components',[]) if c.get('hits') and 'times_seconds' not in c]
     skill=result['estimate']['skill']
     timing['resource_and_damage_shared_clock']=not timing.get('phase_clock_unbound',False)
