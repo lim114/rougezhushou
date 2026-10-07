@@ -1,0 +1,9 @@
+{
+  "scope": "root integration preparation only, no applied product change or source mechanism failure",
+  "attempts": 1,
+  "reason": "Observed intermediate author handoff before final seal; hash recheck rejected first command before any mutation. Root orchestration mistakenly started dependent checks despite nonzero preparation exit.",
+  "patch_applied": false,
+  "old_checkout_checks_count_as_section75_passed": false,
+  "source_check_before_patch": "KeyError on absent stage_move_speed_rune_reference, expected old checkout contract",
+  "correction": "Wait for explicit final sealed author hashes; verify final manifest and patch; require successful apply command before dispatching integrated checks. Preserve all earlier logs separately."
+}

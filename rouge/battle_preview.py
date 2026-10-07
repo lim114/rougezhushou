@@ -161,6 +161,13 @@ def enemy_text(entry,technical=False):
             '原始伤害类型：'+json.dumps(entry['damage_types'],ensure_ascii=False),
             '免疫引用字段：'+json.dumps(entry['immunity_reference'],ensure_ascii=False),
             '环境待确认原文：'+json.dumps(entry['context_pending'],ensure_ascii=False)])
+        movement=entry['movement_reference']
+        rune=movement.get('stage_move_speed_rune_reference')
+        if rune:
+            lines.extend(['关卡移速符文参数参考：'+value_text(rune['parameter']),
+                '基础移速×关卡倍率小计：'+value_text(movement['base_times_stage_speed']),
+                '符文与关卡倍率合成的移速：未知；原生目标、写入及叠加层尚未核验。'])
+            if rune['source']:lines.append('关卡移速参数来源：'+rune['source']['url'])
         source=battle_data()['source']
         for key,label in (('enemy_database','敌人原始数据'),('handbook','中文图鉴')):
             if source.get(key,{}).get('url'):lines.append(label+'：'+source[key]['url'])

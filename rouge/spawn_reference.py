@@ -49,6 +49,33 @@ def movement_reference(stage,base_speed):
     if finite_nonnegative(base_speed) and finite_nonnegative(multiplier):
         speed=base_speed*multiplier
         if finite_nonnegative(speed):result['base_times_stage_speed']=speed
+    # This pinned stage declares an additional parameter. Its native writer
+    # and composition with options.moveMultiplier are not verified.
+    if stage.get('id')=='ro6_e_3_6' and stage.get('difficulty')=='FOUR_STAR':
+        runes=stage.get('runes')
+        for index,rune in enumerate(runes if isinstance(runes,list) else []):
+            if not isinstance(rune,dict) or rune.get('key')!='enemy_attribute_mul':continue
+            if (rune.get('difficultyMask')!='FOUR_STAR' or rune.get('professionMask')!=1023
+                    or rune.get('buildableMask')!='ALL'):continue
+            blackboard=rune.get('blackboard')
+            if not isinstance(blackboard,list) or any(not isinstance(b,dict) for b in blackboard):continue
+            if any(b.get('key') in ('enemy','rune_alias') for b in blackboard):continue
+            values=[(bi,b) for bi,b in enumerate(blackboard) if b.get('key')=='move_speed']
+            if len(values)!=1:continue
+            bi,value=values[0]
+            if value.get('valueStr') is not None or not finite_nonnegative(value.get('value')):continue
+            from copy import deepcopy
+            result['stage_move_speed_rune_reference']={
+                'parameter':value['value'],'rune_key':rune['key'],'blackboard_key':'move_speed',
+                'source_selector':f'$.runes[{index}].blackboard[{bi}]',
+                'source':deepcopy(stage.get('level_source')),
+                'difficulty_mask_parameter':rune['difficultyMask'],
+                'profession_mask_parameter':rune['professionMask'],
+                'buildable_mask_parameter':rune['buildableMask'],
+                'native_target_writer_layer_verified':False,
+                'combined_with_stage_multiplier_speed':None,
+                'complete_effective_speed_verified':False,
+            }
     return result
 
 def sequence_text(row):
