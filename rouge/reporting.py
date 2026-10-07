@@ -374,6 +374,17 @@ def build_report(scenario,result):
             metric('actual_end','实际结束当帧',None,'帧')],
             ['目标在名义结束前消失时不生成终结来源；同帧消失顺序未核验时完整伤害未知。',
              '实际结束相位、冻结移除顺序及离开范围的后续适用性尚未核验。']))
+    unbound=result.get('unbound_cast_reference')
+    if unbound:
+        rows=[metric('source_'+str(i),c['name']+'条件总量',c['total'],
+                     '治疗' if c['damage_type']=='healing' else '伤害')
+              for i,c in enumerate(unbound['conditional_components'])]
+        rows += [metric('parameter_'+str(i),label,value,unit)
+                 for i,(label,value,unit) in enumerate(unbound['parameter_rows'])]
+        rows.append(metric('hits','实际命中时刻',None,'秒'))
+        sections.append(section('unbound_cast','多段技能 · 实际时钟待核验',rows,
+            unbound['notes']+['条件总量保留当前培养和情景倍率；未排程来源不代表观察窗口、完整阶段或本轮周期输出。',
+             '本体供靶或打断区间不证明独立弹道/接触范围；零窗口或当前敌人0秒生命周期不产生对它的实际输出。']))
     snow=result.get('snow_field_reference')
     if snow:
         sections.append(section('snow_field','积雪场地 · 覆盖与首跳待核验',[

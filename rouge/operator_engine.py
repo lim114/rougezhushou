@@ -233,7 +233,7 @@ class Combat:
         if not normal and window is not None:duration=min(duration,window)
         if not normal and self.s['operator']=='char_1029_yato2':
             attack+=self.base*self.talent('鬼人强化状态','atk')
-        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None
+        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None;unbound_cast_reference=None
         timeline=AttackTimeline(self.s,normal=normal,offset=self.s.get('_timeline_offset_seconds',0) if normal else 0)
         def emit(name,raw,dtype,count,defense=None,resistance=None,effects=None,event_times=None):
             if dtype=='buildup':raw*=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
@@ -582,9 +582,12 @@ class Combat:
             if self.s.get('module_id') and not normal and self.tv.get('颂乐音符',{}).get('max_cnt',10)>10:ranged_scale=1
             if normal:regular('physical',ranged_scale,defense=defense)
             elif self.n==1:
-                mode='instant';duration=0
+                mode='instant';duration=0 if window is None else window
                 scales=[bb['atk_scale']]+[bb[f'atk_scale_{i}'] for i in range(2,9)]
                 for i,scale in enumerate(scales):emit(f'新月音符{i+1}',attack*scale*ranged_scale,'magic',1,resistance=resistance)
+                unbound_cast_reference={'kind':'xiangzi_notes',
+                    'parameter_rows':[('音符数量参数',8,'个'),('可充能次数参数',self.skill['max_charges'],'次')],
+                    'notes':['八音符倍率是条件来源参考；首个音符、后续间隔、独立碰撞与实际结束未绑定。']}
             elif self.n==2:
                 mode='switch';duration=window if window is not None else 30
                 organ=self.s.get('organ_mode',False)
@@ -855,6 +858,10 @@ class Combat:
                 r['kind']=='deployment_attack_speed' for r in self.s.get('_relic_rules',[])):
             primary=next((s for s in timeline.streams if s['unit']==op),None)
             duration=primary['times_seconds'][-1] if primary and len(primary['times_seconds'])>=ammo_rounds else None
+        if unbound_cast_reference is not None:
+            from .uncertain_sources import preserve_unplaced_sources
+            unbound_cast_reference.update(preserve_unplaced_sources(components,window=window,
+                target_lifetime=timeline.options.get('target_disappears_seconds')))
         from .relic_events import first_damage
         first_extra=first_damage(components,self.s,normal=normal)
         if first_extra is None:
@@ -915,7 +922,7 @@ class Combat:
             'components':components,'neural_events':neural_events,'drone_trait_reference':drone_trait_reference,
             'neural_secondary_seeds':neural_secondary_seeds,
             'neural_binding_seeds':neural_binding_seeds,
-            'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'timing':timeline.output()}
+            'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'unbound_cast_reference':unbound_cast_reference,'timing':timeline.output()}
 
     def calculate(self):
         if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
@@ -1005,6 +1012,9 @@ class Combat:
         if healing_s1_unresolved:
             duration=None;recharge=None
             self.notes.append('治疗替代下次攻击只列符合条件的单次友方治疗参考；实际友方获取、判断阈值、结束及多充能链未知，不使用敌方供靶时钟。')
+        if full['unbound_cast_reference'] is not None:
+            duration=None;recharge=None
+            self.notes.append('未绑定实际命中和结束时钟的多段来源只列条件参考，未用瞬时触发分类推导0秒结束或完整充能周期。')
         if mode=='ammo' and duration is None:total_damage=total_healing=None
         if mode in ('deployment','passive'):first=0;recharge=None
         nonrepeat=mode in ('infinite','passive','switch','once','once_deploy','deployment','triggered_ammo')
@@ -1189,6 +1199,15 @@ class Combat:
                 observed['actual_total']=None
             result['complete']=False
             result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
+        if full['unbound_cast_reference'] is not None:
+            result['unbound_cast_reference']={**full['unbound_cast_reference'],
+                'window_reference':shown['unbound_cast_reference'],
+                'actual_hit_times_seconds':None,'actual_end_seconds':None}
+            from .uncertain_sources import mask_pending_damage,mask_pending_healing
+            mask_pending_damage(result,full,shown,normal,duration,cycle)
+            mask_pending_healing(result,full,shown,normal,duration,cycle)
+            result['timing']['phase_clock_unbound']=True
+            result['complete']=False;result['estimate']['complete']=False
         if self.s['operator']=='char_1046_sbell2' and self.n==2:
             snow=next(c for c in full['components'] if c['name']=='积雪持续伤害')
             result['snow_field_reference']={

@@ -68,3 +68,20 @@ def mask_pending_healing(result, full, shown, normal, duration, cycle):
         if c['damage_type']=='healing' and 'actual_total' in c and c['actual_total'] is None:
             skill['hit_counts'][c['name']]=None
     result['complete']=result['estimate']['complete']=False
+
+
+def preserve_unplaced_sources(components, *, window, target_lifetime):
+    """Keep conditional source amounts without inventing cast-time collisions.
+
+    Owner acquisition/interrupt windows are not projectile coverage. Only an
+    explicit empty observation or zero current-target lifetime excludes hits.
+    """
+    reference=[{k:c[k] for k in ('name','damage_type','per_hit','hits','total')} for c in components]
+    possible=window!=0 and target_lifetime!=0
+    for c in components:
+        c.pop('times_seconds',None);c.pop('instant_event',None)
+        c['timing_reference']='unplaced conditional source; actual collision clock unverified'
+        if possible and c['hits']>0:c['actual_total']=None
+        else:c['hits']=0;c['total']=0
+    return {'conditional_components':reference,'source_possible':possible,
+            'observation_seconds':window,'collision_clock_verified':False}
