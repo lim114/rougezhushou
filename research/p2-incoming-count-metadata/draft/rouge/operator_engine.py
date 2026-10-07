@@ -1795,8 +1795,6 @@ class Combat:
             mask_pending_damage(result,full,shown,normal,duration,cycle)
             result['estimate']['notes'].append('狼群光环围绕独立追敌单元；每秒伤害描述不证明首跳、覆盖或边界，不以本体供靶区间替代单元位置。')
         if self.s['operator']=='char_1035_wisdel':
-            ghosts=self.option('ghost_count',0,maximum=3,integer=True)
-            ghost_casts=int(self.option('ghost_casts',0,maximum=1000,integer=True)) if ghosts>0 else 0
             result['wisdel_secondary_reference']={
                 'described_single_check_probability':self.bb.get('attack@prob',self.talent('好礼','attack@prob',0)) if self.n==3 else self.talent('好礼','attack@prob',0),
                 'explosion_per_hit_reference':next(c['per_hit'] for c in full['components'] if c['name']=='残影单次爆炸条件参考'),
@@ -1805,10 +1803,10 @@ class Combat:
                 'source_possible':{'cast':any(c['hits'] for c in full['components'] if c['name']=='维什戴尔主攻击'),
                     'window':any(c['hits'] for c in shown['components'] if c['name']=='维什戴尔主攻击')},
                 's1_binding_verified':False,
-                'ghost_casts_requested':ghost_casts,
+                'ghost_casts_requested':int(self.s.get('ghost_casts',0)) if self.s.get('ghost_count',0) else 0,
                 'ghost_per_cast_damage_reference':next((c['per_hit'] for c in full['components'] if c['name']=='魂灵之影施放'),None),
                 'ghost_cast_times_seconds':None,'ghost_full_cast_attribution_verified':False,
-                'ghost_declared_count_damage_reference':ghost_casts*next((c['per_hit'] for c in full['components'] if c['name']=='魂灵之影施放'),0),
+                'ghost_declared_count_damage_reference':int(self.s.get('ghost_casts',0))*next((c['per_hit'] for c in full['components'] if c['name']=='魂灵之影施放'),0),
             }
             from .uncertain_sources import mask_pending_damage
             mask_pending_damage(result,full,shown,normal,duration,cycle)
@@ -1867,12 +1865,11 @@ class Combat:
                     'phase':phase_totals(cast_bursts,duration)[0] if duration is not None else 0,
                     'window':sum(c['total'] for c in shown['components'] if c['name']=='神经损伤爆发'),
                     'cycle':cycle_neural_burst_damage}}
-        bait_triggers=int(self.option('bait_triggers',0,maximum=100,integer=True)) if self.s['operator']=='char_1042_phatm2' and self.n==2 else 0
-        if bait_triggers:
+        if self.s['operator']=='char_1042_phatm2' and self.n==2 and self.s.get('bait_triggers',0):
             alive=self.s.get('timing',{}).get('target_disappears_seconds')!=0
             cast_bursts=[c for c in full['components'] if c['name']=='神经损伤爆发']
             result['neural_bait_reference']={
-                'skill':'本能的召唤','triggers_requested':bait_triggers,
+                'skill':'本能的召唤','triggers_requested':int(self.s['bait_triggers']),
                 'attack_snapshot':'deployment','snapshot_attack':None,
                 'duration_seconds':self.bb['buff_time'],'tick_interval_seconds':self.bb['interval_damage'],
                 'arts_attack_scale':self.bb['atk_scale'],'buildup_attack_ratio':self.bb['ep_damage_ratio_token'],

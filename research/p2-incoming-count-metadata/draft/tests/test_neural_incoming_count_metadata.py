@@ -1,0 +1,145 @@
+"""Legal integer aliases describe the same count, without supplying a clock."""
+import copy
+import re
+import unittest
+
+from rouge.damage import calculate_damage
+
+
+OP = 'char_1042_phatm2'
+MODES = ('frames', 'continuous')
+ALIASES = ((1, ('1.0', '1e0')), (20, ('20.0', '2e1')),
+           (10000, ('1e4',)))
+
+
+def scenario(skill, mode, **extra):
+    return {'operator': OP, 'skill': skill, 'base_attack': 1000,
+            'timing_mode': mode, **extra}
+
+
+class NeuralIncomingCountMetadataTests(unittest.TestCase):
+    def test_positive_integer_text_aliases_preserve_complete_public_output(self):
+        for skill in (1, 2, 3):
+            for mode in MODES:
+                for extra in ({}, {'window_seconds': .1}, {'window_seconds': 10},
+                              {'relic_ids': ['rogue_6_relic_fight_22']}):
+                    for number, aliases in ALIASES:
+                        numeric = calculate_damage(scenario(skill, mode,
+                            enemy_attack_count=number, **extra))
+                        for alias in aliases:
+                            with self.subTest(skill=skill, mode=mode, extra=extra, alias=alias):
+                                args = scenario(skill, mode, enemy_attack_count=alias, **extra)
+                                before = copy.deepcopy(args)
+                                self.assertEqual(calculate_damage(args), numeric)
+                                self.assertEqual(args, before)
+
+    def test_zero_text_preserves_absent_count_and_existing_source_gates(self):
+        for skill in (1, 2, 3):
+            for mode in MODES:
+                for extra in ({}, {'window_seconds': 0},
+                              {'timing': {'target_windows': []}}):
+                    plain = calculate_damage(scenario(skill, mode, **extra))
+                    for value in (0, 0.0, '0', '0.0', '0e0'):
+                        with self.subTest(skill=skill, mode=mode, extra=extra, value=value):
+                            result = calculate_damage(scenario(skill, mode,
+                                enemy_attack_count=value, **extra))
+                            self.assertEqual(result, plain)
+                            self.assertNotIn('neural_incoming_reference', result)
+
+    def test_zero_window_keeps_known_zero_and_unknown_cast_attack_clock(self):
+        for skill in (1, 2, 3):
+            for mode in MODES:
+                numeric = calculate_damage(scenario(skill, mode,
+                    enemy_attack_count=1, window_seconds=0))
+                for value in ('1.0', '1e0'):
+                    result = calculate_damage(scenario(skill, mode,
+                        enemy_attack_count=value, window_seconds=0))
+                    self.assertEqual(result, numeric)
+                    self.assertEqual(result['total_damage'], 0)
+                    reference = result['neural_incoming_reference']
+                    self.assertTrue(reference['affected_damage_phases']['cast'])
+                    self.assertFalse(reference['affected_damage_phases']['window'])
+                    self.assertFalse(reference['events_scheduled'])
+                    self.assertIsNone(reference['attack_times_seconds'])
+
+    def test_empty_targets_do_not_turn_declared_count_into_attack_timestamps(self):
+        for skill in (1, 2, 3):
+            for mode in MODES:
+                numeric = calculate_damage(scenario(skill, mode,
+                    enemy_attack_count=20, timing={'target_windows': []}))
+                for value in ('20.0', '2e1'):
+                    result = calculate_damage(scenario(skill, mode,
+                        enemy_attack_count=value, timing={'target_windows': []}))
+                    self.assertEqual(result, numeric)
+                    self.assertIsNone(result['total_damage'])
+                    # The preexisting continuous estimate does not share the
+                    # frame-mode supply-window convention; preserve each mode.
+                    if mode == 'frames':
+                        self.assertEqual(result['known_damage_subtotals']['window_damage'], 0)
+                        self.assertFalse(any(c['name'] == '神经损伤爆发' for c in result['components']))
+                    reference = result['neural_incoming_reference']
+                    self.assertEqual(reference['attacks_requested'], 20)
+                    self.assertEqual(reference['buildup_per_attack'], 70)
+                    self.assertFalse(reference['events_scheduled'])
+                    self.assertIsNone(reference['attack_times_seconds'])
+
+    def test_immediate_disappearance_immunity_and_locked_talent_keep_old_gates(self):
+        for skill in (1, 2, 3):
+            for mode in MODES:
+                extras = [{'timing': {'target_disappears_seconds': 0}},
+                          {'enemy_buildup_resistance': 100}]
+                if skill in (1, 2):
+                    extras.append({'elite': 1, 'level': 80, 'skill_rank': 7})
+                for extra in extras:
+                    numeric = calculate_damage(scenario(skill, mode,
+                        enemy_attack_count=1, **extra))
+                    self.assertNotIn('neural_incoming_reference', numeric)
+                    for value in ('1.0', '1e0'):
+                        self.assertEqual(calculate_damage(scenario(skill, mode,
+                            enemy_attack_count=value, **extra)), numeric)
+
+    def test_actual_integer_query_rejects_bool_before_pending_qualification(self):
+        message = '^' + re.escape('enemy_attack_count需要范围内的有限非负整数。') + '$'
+        for skill in (1, 2, 3):
+            for mode in MODES:
+                extras = [{}, {'window_seconds': 0},
+                          {'timing': {'target_disappears_seconds': 0}},
+                          {'enemy_buildup_resistance': 100}]
+                if skill in (1, 2):
+                    extras.append({'elite': 1, 'level': 80, 'skill_rank': 7})
+                for extra in extras:
+                    for value in (False, True):
+                        args = scenario(skill, mode, enemy_attack_count=value, **extra)
+                        before = copy.deepcopy(args)
+                        with self.assertRaisesRegex(ValueError, message):
+                            calculate_damage(args)
+                        self.assertEqual(args, before)
+        # S2's earlier bait query keeps the original error precedence.
+        with self.assertRaisesRegex(ValueError, '^' + re.escape(
+                'bait_triggers需要范围内的有限非负整数。') + '$'):
+            calculate_damage(scenario(2, 'frames', bait_triggers=True,
+                                      enemy_attack_count=True))
+
+    def test_inactive_owners_keep_ignoring_unqueried_count_values(self):
+        for operator, skill in (('mechanist', 1), ('silverash', 3),
+                                ('char_002_amiya', 1), ('char_2025_shu', 3)):
+            for mode in MODES:
+                plain = {'operator': operator, 'skill': skill, 'base_attack': 1000,
+                         'timing_mode': mode, 'window_seconds': 10}
+                expected = calculate_damage(plain)
+                for value in ('1.0', '1e0', '0.0', False, True, None,
+                              'unknown', .5, 10001):
+                    self.assertEqual(calculate_damage({**plain,
+                        'enemy_attack_count': value}), expected)
+
+    def test_noninteger_and_range_errors_are_not_normalized_into_counts(self):
+        message = '^' + re.escape('enemy_attack_count需要范围内的有限非负整数。') + '$'
+        for skill in (1, 2, 3):
+            for mode in MODES:
+                for value in (-1, .5, '1.5', 10001, '1e5', 'nan'):
+                    with self.assertRaisesRegex(ValueError, message):
+                        calculate_damage(scenario(skill, mode, enemy_attack_count=value))
+
+
+if __name__ == '__main__':
+    unittest.main()
