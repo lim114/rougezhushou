@@ -2,11 +2,18 @@
 from .run_config import config_data
 
 def prepare_run(scenario):
-    scenario=dict(scenario);config=scenario.get('run_config') or {}
+    scenario=dict(scenario);config=scenario.get('run_config')
+    if config is None:config={}
     if not isinstance(config,dict):raise ValueError('本局配置需要对象。')
+    for field,label in (('squad','分队'),('difficulty','保密等级')):
+        if config.get(field) is not None and not isinstance(config[field],dict):
+            raise ValueError('本局'+label+'配置需要对象或空值。')
     resolution={'source':config_data()['source_url'],'squad':None,'difficulty':None,'applied':[],'pending':[],'notes':[]}
     squad=config.get('squad')
     if squad:
+        if 'effect_verified' in squad and type(squad['effect_verified']) is not bool:
+            raise ValueError('分队效果确认标记需要布尔值。')
+        if not isinstance(squad.get('id'),str):raise ValueError('本局分队身份与固定档案不符。')
         record=config_data()['squads'].get(squad.get('id'))
         if not record or squad.get('name',record['name'])!=record['name']:raise ValueError('本局分队身份与固定档案不符。')
         resolution['squad']={**squad,'name':record['name']}
@@ -29,6 +36,9 @@ def prepare_run(scenario):
         resolution['notes'].append('分队起始赠送物品与资源不自动加入当前持有清单，仍以本局实际读取为准。')
     difficulty=config.get('difficulty')
     if difficulty:
+        for field in ('modeDifficulty','mode'):
+            if field in difficulty and difficulty[field]!='NORMAL':
+                raise ValueError('当前保密等级数值计算仅支持NORMAL模式，其他模式不能套用常规难度修正。')
         value=difficulty.get('value')
         if isinstance(value,bool) or not isinstance(value,int) or str(value) not in config_data()['difficulties']:
             raise ValueError('本局保密等级需要0–15的整数。')

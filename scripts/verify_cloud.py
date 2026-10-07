@@ -13,7 +13,7 @@ MODULES = (
     "tests.test_ammo_events_067", "tests.test_summon_modules_038",
     "tests.test_summon_composition_068", "tests.test_summon_limits_069",
     "tests.test_attack_speed_bounds_065",
-    "tests.test_run_modifiers", "tests.test_multi_melee_070",
+    "tests.test_run_modifiers", "tests.test_run_config_validation", "tests.test_multi_melee_070",
     "tests.test_neural_sources_035", "tests.test_s1_neural_boundary",
     "tests.test_neural_incoming_clock", "tests.test_charge_reference", "tests.test_gnosis_attack_clock", "tests.test_gnosis_s1_reference", "tests.test_gnosis_target_lifetime",
 )
