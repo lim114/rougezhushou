@@ -513,10 +513,11 @@ class Combat:
                 units=drone_count+(1 if op=='char_1038_whitw2' and time>=3*head_interval else 0)
                 scale=min(ceiling,lower+step*(starting+i))
                 if op!='char_1038_whitw2' or normal or self.n!=3 or event_time>=bb['attack@times']:
-                    emit('浮游单元',attack*scale,'magic',units)
+                    emit('浮游单元',attack*scale,'magic',units,event_times=[event_time]*int(units))
+                    components[-1]['timing_reference']='owner_attack_clock; independent drone clock unverified'
             if not normal and op=='char_1038_whitw2' and self.n==3:
                 emit('狼群光环（不叠加）',attack*bb['attack@magic_atk_scale'],'magic',math.floor(duration))
-            self.notes.append('浮游单元连续命中同一目标逐击增长，不按开局满倍率；每次情景从指定暖机命中数开始。本体与单元均按持续命中估算，不模拟弹道追踪或重新索敌。')
+            self.notes.append('浮游单元连续命中同一目标逐击增长，不按开局满倍率；每次情景从指定暖机命中数开始。本体与单元共享局外命中时间参考用于阶段截断；实际独立单元时钟未核验，不模拟弹道追踪或重新索敌。')
         elif op=='char_4182_oblvns':
             notes=self.option('note_count',0,maximum=self.talent('颂乐音符','max_cnt',10),integer=True)
             defense=self.enemy_def*(1-notes*self.talent('颂乐音符','def_penetrate_ratio'))
