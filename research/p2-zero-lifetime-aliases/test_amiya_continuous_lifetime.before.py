@@ -108,16 +108,12 @@ class AmiyaContinuousLifetimeTests(unittest.TestCase):
                 self.assertEqual(result['scope'], '单个持续命中目标的明确技能情景；多段逐段结算防御。')
 
     def test_valid_numeric_string_zero_is_a_mathematical_empty_source(self):
-        numeric = evaluate(timing={'target_disappears_seconds': 0})
-        for alias in ('0', '0.0', '-0'):
-            with self.subTest(lifetime=alias):
-                result = evaluate(timing={'target_disappears_seconds': alias})
-                self.assertEqual(result, numeric)
-                self.assertEqual(result['total_damage'], 0)
-                self.assertNotIn('amiya_continuous_reference', result)
-                self.assertEqual(result['estimate']['skill']['recharge_seconds'], 30)
-                self.assertEqual(result['estimate']['skill']['cycle_seconds'], 60)
-                self.assertEqual(result['estimate']['skill']['initial_seconds'], 7)
+        result = evaluate(timing={'target_disappears_seconds': '0'})
+        self.assertEqual(result['total_damage'], 0)
+        self.assertTrue(result['amiya_continuous_reference']['enemy_source_excluded'])
+        self.assertEqual(result['amiya_continuous_reference']['natural_only_recharge_seconds_reference'], 30)
+        self.assertIsNone(result['estimate']['skill']['recharge_seconds'])
+        self.assertIsNone(result['estimate']['skill']['cycle_seconds'])
 
     def test_empty_reference_keeps_event_arrays_consistent_after_source_exclusion(self):
         from rouge.amiya_continuous_reference import preserve_plan

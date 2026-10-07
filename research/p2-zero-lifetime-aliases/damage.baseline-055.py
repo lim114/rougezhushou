@@ -265,13 +265,6 @@ def _prepare_damage(scenario: dict):
     scenario,resolution=prepare(scenario,profile)
     from .relic_attributes import prepare_attribute_runes
     scenario,attributes=prepare_attribute_runes(scenario,attributes)
-    # Reuse the existing numeric-zero gates after validating the raw timing.
-    timing=scenario.get('timing',{})
-    if isinstance(timing,dict) and isinstance(timing.get('target_disappears_seconds'),str):
-        from .timing import finite
-        AttackTimeline(scenario)
-        if finite(timing['target_disappears_seconds'],'target_disappears_seconds',3600)==0:
-            scenario['timing']={**timing,'target_disappears_seconds':0}
     return scenario,attributes,resolution,run_resolution
 
 

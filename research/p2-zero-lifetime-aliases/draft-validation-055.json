@@ -1,0 +1,87 @@
+{
+  "recorded_at_utc": "2026-10-07T21:32:36.355109+00:00",
+  "base_head": "15e0fa455aad05d27303428299d24d15db4c572c",
+  "tracked_edited_by_this_agent": false,
+  "draft_files": [
+    "rouge/damage.py",
+    "tests/test_amiya_continuous_lifetime.py",
+    "scripts/verify_cloud.py",
+    "tests/test_zero_lifetime_aliases.py"
+  ],
+  "new_tests": 10,
+  "checks": [
+    {
+      "command": "python -m unittest tests.test_zero_lifetime_aliases tests.test_amiya_continuous_lifetime tests.test_empty_enemy_scope tests.test_timing tests.test_friendly_scope_report tests.test_amiya_phase_reference tests.test_haruka_healing_targets tests.test_shield_break_reference -v",
+      "run": 104,
+      "passed": 104,
+      "skipped": 0,
+      "failures": 0,
+      "errors": 0,
+      "log": "related-tests-055.log"
+    },
+    {
+      "command": "python scripts/verify_cloud.py",
+      "run": 777,
+      "passed": 776,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0,
+      "log": "cloud-tests-055.log"
+    },
+    {
+      "command": "git apply --check section56.patch",
+      "exit_code": 0,
+      "tracked_writes": false
+    }
+  ],
+  "public_comparison": {
+    "base_head": "15e0fa455aad05d27303428299d24d15db4c572c",
+    "all87_public_calls_before": 696,
+    "all87_public_calls_after": 696,
+    "manual_source_calls_before": 64,
+    "manual_source_calls_after": 64,
+    "zero_alias_pairs": 570,
+    "all_zero_alias_results_equal_numeric0": true,
+    "all_preexisting_numeric0_results_preserved": true,
+    "zero_alias_changed_pairs": 393,
+    "changed_by_category_mode": {
+      "all87/frames": 114,
+      "all87/continuous": 237,
+      "manual/frames": 18,
+      "manual/continuous": 24
+    },
+    "nonzero_invalid_other_timing_calls_before": 348,
+    "nonzero_invalid_other_timing_calls_after": 348,
+    "all_nonzero_invalid_other_timing_results_preserved": true,
+    "all_caller_inputs_unchanged": true,
+    "total_public_calls": 2216,
+    "applied_to_tracked": false,
+    "baseline55_full_validation_status": "Parent runs in progress at snapshot capture; this receipt does not certify parentfull55/UI.",
+    "wine_run_by_this_agent": false,
+    "native_windows_run": false
+  },
+  "hashes": {
+    "section56.patch": "f8d946423ebc34377d43b02b45ec6d1dd1a4b419bd4aa8ae008d90531d151193",
+    "source-receipt.json": "bdd07f7d3f1678a355c26cf9fca01a6baa9b819c68bec47ff2c912a19eebd5e2",
+    "public-comparison-055.json": "adbfbfe3d5ede42d45d78abedb69451871ed72bcc1f39c63be17011484ee3309",
+    "draft-freeze-055.json": "b2597c19ec8394d11f1269a018a984cebfb74883efe4540cda44660cc0f05d54",
+    "test_zero_lifetime_aliases.py": "2035c7d6ade18100d5ced1719287bb4baa3e9cea2989cedfff9ffeaa51dcc4d5",
+    "NOTE.md": "a5632d18584a0e94fd1fbb9074a8f7ceb76ec997bcd65cdb1ebe49a8f6c331db"
+  },
+  "historical_failures_retained": [
+    {
+      "log": "initial-cloud-tests-052.log",
+      "kind": "Transition52/53 draft, one obsolete52 metadata lookup error after normalized0 reused numeric0 path."
+    },
+    {
+      "log": "second-cloud-tests-052.log",
+      "kind": "Transition snapshot oldtest edit initially retained two contradictory None-clock assertions; corrected to original numeric0 clocks30/60. Focused29 tests then passed."
+    }
+  ],
+  "limitations": [
+    "Root applies only after its full55 Linux/Wine/actualUI run passes and is archived.",
+    "This agent did not run Wine/GUI/native Windows/game checks."
+  ],
+  "source_hashes_match_current_root55": true,
+  "parent_full55_status_at_delivery": "Root reports full55 Linux/Wine/actualGUI completed, root archiving; no claim of independently running parent checks."
+}
