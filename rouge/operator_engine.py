@@ -748,7 +748,9 @@ class Combat:
                 self.notes.append('回旋命中次数由敌人体积、碰撞、路径决定，不能按攻击速度推算；当前使用明确指定命中次数。')
         elif op=='char_151_myrtle':
             if normal:regular(name='普攻')
-            elif self.n==2:emit('治愈之翼',attack*bb['attack@heal_scale'],'healing',math.floor(duration))
+            elif self.n==2:
+                emit('治愈之翼',attack*bb['attack@heal_scale'],'healing',math.floor(duration)*min(1,healing_targets))
+                self.notes.append('治愈之翼每秒至多治疗一名友方，零受疗目标不产生治疗；敌方供靶区间不代替友方受疗条件。')
         elif op=='char_133_mm':
             if self.n==1 and not normal:mode='next_attack';duration=interval;scale=bb['atk_scale']
             else:scale=1

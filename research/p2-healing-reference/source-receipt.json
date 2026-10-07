@@ -1,0 +1,102 @@
+{
+  "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "original_table": {
+    "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+    "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+    "bytes": 11447929,
+    "sha256_matched": true
+  },
+  "selectors": [
+    "skill_table.skchr_myrtle_2.levels[9]",
+    "skill_table.skchr_sunbr_2.levels[9]"
+  ],
+  "skills": {
+    "skchr_myrtle_2": {
+      "name": "治愈之翼",
+      "rangeId": "x-4",
+      "description": "停止攻击，持续时间内回复总共<@ba.vup>{value}</>点部署费用，并每秒治疗周围一名友方单位相当于桃金娘攻击力<@ba.vup>{attack@heal_scale:0%}</>的生命",
+      "skillType": "MANUAL",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 24,
+        "initSp": 10,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_myrtle_2",
+      "duration": 16.0,
+      "blackboard": [
+        {
+          "key": "attack@heal_scale",
+          "value": 0.5,
+          "valueStr": null
+        },
+        {
+          "key": "interval",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "value",
+          "value": 16.0,
+          "valueStr": null
+        },
+        {
+          "key": "cost",
+          "value": 1.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skchr_sunbr_2": {
+      "name": "食粮烹制",
+      "rangeId": "x-4",
+      "description": "开始烹饪，<@ba.vdown>{disarm}</>秒内停止攻击敌人，防御力<@ba.vup>+{def:0%}</>\\n烹饪完成后专注于治疗附近的友方角色，攻击力<@ba.vup>+{atk:0%}</>",
+      "skillType": "MANUAL",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 30,
+        "initSp": 20,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_sunbr_2",
+      "duration": 30.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 0.8,
+          "valueStr": null
+        },
+        {
+          "key": "base_attack_time",
+          "value": 1.3,
+          "valueStr": null
+        },
+        {
+          "key": "disarm",
+          "value": 10.0,
+          "valueStr": null
+        },
+        {
+          "key": "def",
+          "value": 0.8,
+          "valueStr": null
+        }
+      ]
+    }
+  },
+  "facts": [
+    "Myrtle S2 heals one nearby friendly unit every second",
+    "Gummy S2 first stops attacks and cooks for10 seconds, then heals"
+  ],
+  "unknowns": [
+    "Current native healing animation binding",
+    "Actual initial periodic heal phase and target switches"
+  ],
+  "fresh_native_binary_verification": false
+}
