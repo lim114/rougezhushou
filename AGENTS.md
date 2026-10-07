@@ -6,6 +6,8 @@ This independent project is named rougezhushou and starts from local version 0.7
 
 ## Current work order
 
+Continue development on `codex/p2-development`. The user requested that all subsequent changes be applied on this branch. Check the active branch before editing; preserve existing changes and do not switch to or apply new work on another branch unless the user changes this instruction. Use the existing checkout.
+
 User instruction on 2026-10-06: advance P2 first. Preserve the unfinished P1 checkpoint; do not resume P1 automatically from older handoff text. Recognition optimization remains after all other work.
 
 User instruction on 2026-10-05: recognition optimization comes after all other project work. Prioritize mechanics, calculation, state handling, map/event data, chat compatibility and delivery. Keep recognition coverage, layout adaptation, accuracy and performance improvements together at the end of PROJECT_PROGRESS.md. Existing recognition remains available; do not resume its optimization from an older handoff paragraph.

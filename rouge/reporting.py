@@ -201,16 +201,19 @@ def mechanism_sections(scenario,result,source,profile):
         buildup=op=='char_1042_phatm2' or (op=='char_4204_mantra' and number in (1,2))
         rows=[];notes=[]
         if buildup:
-            rows=[metric('potential_buildup','潜在损伤积累',sum(c['total'] for c in elementary if c['damage_type']=='buildup'),'损伤值'),
+            binding_unknown=result.get('neural_s1_reference',{}).get('affected_damage_phases',{}).get('window',False)
+            rows=[metric('potential_buildup','潜在损伤积累',None if binding_unknown else sum(c['total'] for c in elementary if c['damage_type']=='buildup'),'损伤值'),
                 metric('bursts','当前情景损伤爆发次数',None if
                     any(result.get(key,{}).get('affected_damage_phases',{}).get('window') for key in
-                        ('neural_skill_reference','neural_bait_reference')) else
+                        ('neural_s1_reference','neural_skill_reference','neural_bait_reference')) else
                     sum(c['hits'] for c in elementary if c['name']=='神经损伤爆发'),'次')]
             notes.append('潜在积累未扣除爆发冷却暂停；不是敌人生命伤害。')
         partial=bool(result.get('known_damage_subtotals'))
         rows.append(metric('elemental_damage','已建模元素伤害小计' if partial else '当前情景元素伤害',
             sum(c['total'] for c in elementary if c['damage_type']=='elemental')))
-        partial_note=('已计小计不含未排程的持续损伤及受其影响而未知的神经爆发；当前积累仅列直接来源。'
+        partial_note=('束缚倍率首次生效与刷新尚未核验；法伤小计不含未知的神经爆发，损伤基础参考没有套用束缚倍率。'
+                      if result.get('neural_s1_reference') else
+                      '已计小计不含未排程的持续损伤及受其影响而未知的神经爆发；当前积累仅列直接来源。'
                       if result.get('neural_skill_reference') else
                       '诱饵持续效果与受其影响的神经爆发未排程；当前积累与元素小计仅列已排程的本体来源。'
                       if result.get('neural_bait_reference') else
@@ -341,6 +344,16 @@ def build_report(scenario,result):
         if not nonrepeat:
             rows.append(metric('cycle_dps','本轮周期 DPS',skill['cycle_dps'],'伤害/秒'))
         sections.append(section('damage','伤害输出',rows))
+    binding=result.get('neural_s1_reference')
+    if binding:
+        sections.append(section('neural_s1','暗夜回声 · 束缚倍率待核验',[
+            metric('direct_ratio','附带损伤攻击力比例',binding['direct_buildup_ratio']*100,'%'),
+            metric('direct_raw','单段未计束缚倍率的损伤基础参考',binding['direct_buildup_raw'],'损伤值'),
+            metric('binding_multiplier','束缚期间神经损伤倍率参数',binding['binding_multiplier'],'倍'),
+            metric('binding_duration','束缚持续时间参数',binding['binding_duration_seconds'],'秒')],
+            ['倍率只作用于该次束缚期间；首次生效、黑板初始化与刷新顺序尚未核验。',
+             '参数和未计倍率的基础参考不等于当前目标实际积累；受影响的爆发次数与完整总伤未知。',
+             '已计法伤小计沿用原版两段动作参考，不包含未知的神经爆发。']))
     neural_skill=result.get('neural_skill_reference')
     if neural_skill:
         sections.append(section('neural_skill','空剧场 · 持续损伤待核验',[

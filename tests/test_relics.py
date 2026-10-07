@@ -141,8 +141,11 @@ class RelicMechanismTests(unittest.TestCase):
         r=calculate_damage({'operator':'char_1042_phatm2','skill':1,'base_attack':1000,
             'timing_mode':'continuous','relic_ids':['rogue_6_relic_fight_21']})
         buildup=sum(c['total'] for c in r['components'] if c['damage_type']=='buildup')
-        self.assertEqual(buildup,1890)  #two540 buildup events*1.75
-        self.assertEqual(r['total_damage'],13500)  #3000 arts +6000*1.75 elemental HP damage
+        # Two300 source references*1.75. The S1 buff parameter1.8 is not
+        # an established first-hit multiplier; neither creates HP damage.
+        self.assertEqual(buildup,1050)
+        self.assertEqual(r['known_damage_subtotals']['total_damage'],3000)
+        self.assertIsNone(r['total_damage'])
 
     def test_regeneration_relic_is_separate_from_direct_healing(self):
         r=calculate_damage({'operator':'mechanist','skill':3,'relic_ids':['rogue_6_relic_legacy_22']})

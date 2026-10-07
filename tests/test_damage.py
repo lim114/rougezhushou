@@ -11,9 +11,10 @@ def calculate_damage(scenario):
 class DamageTests(unittest.TestCase):
     def test_wine_single_cast_burst_does_not_invent_unverified_recharge_cycle(self):
         result=calculate_damage({'operator':'char_1042_phatm2','skill':1,'base_attack':2000})
-        # Two3000 arts hits trigger one6000 burst in the original reference.
-        # Native end/SP/normal resume phases are not a proven complete cycle.
-        self.assertEqual(result['estimate']['skill']['total_damage'],12000)
+        # Two3000 arts hits are independent of the unresolved first buff
+        # attachment; no burst schedule or complete cycle is proven.
+        self.assertEqual(result['known_damage_subtotals']['total_damage'],6000)
+        self.assertIsNone(result['estimate']['skill']['total_damage'])
         self.assertIsNone(result['estimate']['skill']['cycle_damage'])
 
     def test_deepcolor_global_relics_apply_to_token_without_inheriting_operator_stats(self):
@@ -65,14 +66,16 @@ class DamageTests(unittest.TestCase):
         # S2 resolves arts -> neural -> elemental, so hits three and four add 250 each.
         self.assertEqual(result['total_damage'],16100)
 
-    def test_neural_buildup_is_not_counted_as_hp_damage_and_boss_threshold_differs(self):
+    def test_s1_unresolved_buildup_is_not_counted_as_hp_damage_for_either_threshold(self):
         scenario={'operator':'char_1042_phatm2','skill':1,'base_attack':1000,'enemy_resistance':0}
         result=calculate_damage(scenario)
-        # Two 1500 arts hits; each adds 1000*.30*1.8=540 neural buildup.
-        # A 1000 threshold produces one 6000 elemental burst, not 1080 HP damage.
-        self.assertEqual(result['total_damage'],9000)
+        # Two1500 arts hits and two1000*.30 base neural references. The
+        # buff parameter1.8 alone does not prove either hit receives it.
+        self.assertEqual(result['known_damage_subtotals']['total_damage'],3000)
+        self.assertIsNone(result['total_damage'])
         boss=calculate_damage({**scenario,'enemy_is_boss':True})
-        self.assertEqual(boss['total_damage'],3000)
+        self.assertEqual(boss['known_damage_subtotals']['total_damage'],3000)
+        self.assertIsNone(boss['total_damage'])
 
     def test_chen_weakness_chooses_type_before_type_specific_injury_bonus(self):
         scenario={'operator':'char_1050_chen3','skill':2,'base_attack':1000,

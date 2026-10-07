@@ -69,14 +69,16 @@ class NeuralRelic034Tests(unittest.TestCase):
         self.assertNotIn('known_damage_subtotals',r)
         self.assertFalse(r['neural_relic_reference']['periodic_damage_possible'])
 
-    def test_unverified_phantom_recharge_does_not_erase_known_skill_or_window(self):
+    def test_unverified_phantom_binding_preserves_arts_but_not_full_total(self):
         # A historical3.2s recharge burst used an unverified S1 end/resume.
         r=calculate(operator='char_1042_phatm2',skill=1,initial_neural_buildup=400)
-        self.assertEqual(r['total_damage'],1590)
-        self.assertEqual(r['estimate']['skill']['total_damage'],1590)
+        self.assertEqual(r['known_damage_subtotals']['window_damage'],1590)
+        self.assertEqual(r['known_damage_subtotals']['total_damage'],1590)
+        self.assertIsNone(r['total_damage'])
+        self.assertIsNone(r['estimate']['skill']['total_damage'])
         self.assertIsNone(r['estimate']['skill']['cycle_damage'])
         self.assertEqual(r['neural_relic_reference']['affected_damage_phases'],
-                         {'cast':False,'window':False,'cycle':False})
+                         {'cast':True,'window':True,'cycle':False})
         self.assertEqual(r['neural_relic_reference']['cycle_burst_times'],[])
 
     def test_elemental_vulnerability_applies_without_doubling_the_attached_source(self):

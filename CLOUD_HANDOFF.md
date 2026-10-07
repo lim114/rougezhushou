@@ -4,6 +4,8 @@
 
 ## 恢复开发
 
+后续开发统一在 `codex/p2-development` 分支进行。开始修改前检查当前分支，沿用现有工作目录并保留本地改动。最新云端批次见 `BATCH_CLOUD_P2_S1_BINDING.md`；其验证范围是 Linux 计算与报告，不代表 Windows 实机验收。
+
 先读取 AGENTS.md、PROJECT_PROGRESS.md，以及 WORK_IN_PROGRESS.md 顶部的 0.70 交接。当前先做 P2，未完成 P1 保留；识别优化放在所有其它事项之后。不要根据旧交接改变当前优先顺序，不重新做已验证项。已完成范围在 PROJECT_COMPLETED.md。
 
 本项目仅做局外计算、建议及 Windows 后台只读采样。禁止操作游戏、分析实时站位、发送聊天或建立定时任务。不能伪造概率、机制证据或完成状态。未知机制先查已有研究，再查固定原始资料和新来源。

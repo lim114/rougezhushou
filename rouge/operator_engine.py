@@ -227,7 +227,7 @@ class Combat:
         if not normal and window is not None:duration=min(duration,window)
         if not normal and self.s['operator']=='char_1029_yato2':
             attack+=self.base*self.talent('鬼人强化状态','atk')
-        components=[];neural_events=None;neural_secondary_seeds=[];op=self.s['operator'];ammo_rounds=None;mantra_attacks=[]
+        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];op=self.s['operator'];ammo_rounds=None;mantra_attacks=[]
         timeline=AttackTimeline(self.s,normal=normal,offset=self.s.get('_timeline_offset_seconds',0) if normal else 0)
         def emit(name,raw,dtype,count,defense=None,resistance=None,effects=None,event_times=None):
             if dtype=='buildup':raw*=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
@@ -541,7 +541,13 @@ class Combat:
                 stream=wine_s1(timeline,interval,speed,speed_reference,bb['times'],window)
                 times=stream['emitted_times_seconds'] if window is None else stream['times_seconds']
                 emit('暗夜回声',attack*bb['atk_scale'],'magic',len(times),event_times=times)
-                events=[(time,attack*ep*bb['ep_damage_scale']) for time in times]
+                # The target buff callback is verified, but first attachment,
+                # blackboard initialization and refresh are not. Preserve the
+                # source amount; the finisher masks dependent burst totals.
+                events=[(time,attack*ep) for time in times]
+                if attack*ep>0 and self.option('enemy_buildup_resistance',0,maximum=100)<100:
+                    break_end=10 if self.s.get('enemy_in_neural_break') else 0
+                    neural_binding_seeds=[t for t in times if t>=break_end]
             else:
                 if not normal and self.n==2:mode='infinite';duration=window if window is not None else 30
                 regular('magic')
@@ -565,6 +571,9 @@ class Combat:
             total_ep=sum(amount for _,amount in events)
             neural_events=events
             emit('潜在神经损伤积累（不是生命伤害）',total_ep,'buildup',1)
+            if not normal and self.n==1:
+                components[-1]['name']='未计束缚倍率的损伤基础参考（不是生命伤害）'
+                components[-1]['binding_multiplier_applied']=False
             self.neural(events,components,1+(bb.get('talent@ep_break_recover_speed',0) if not normal else 0))
             self.notes.append('神经损伤独立积累：普通/精英阈值1000、领袖2000，爆发造成6000元素伤害；爆发冷却内不继续积累。只计本体和指定诱饵事件，不将全场麻痹/牢笼触发凭空加入。')
         elif op=='char_4204_mantra':
@@ -791,7 +800,8 @@ class Combat:
             'damage':sum(c['total'] for c in components if c['damage_type'] not in ('healing','regeneration','buildup')),
             'healing':sum(c['total'] for c in components if c['damage_type']=='healing'),
             'components':components,'neural_events':neural_events,
-            'neural_secondary_seeds':neural_secondary_seeds,'timing':timeline.output()}
+            'neural_secondary_seeds':neural_secondary_seeds,
+            'neural_binding_seeds':neural_binding_seeds,'timing':timeline.output()}
 
     def calculate(self):
         if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
@@ -995,6 +1005,23 @@ class Combat:
                 'cast_burst_times':[t for c in full['components'] if c['name']=='神经损伤爆发' for t in c.get('times_seconds',[])],
                 'window_burst_times':[t for c in shown['components'] if c['name']=='神经损伤爆发' for t in c.get('times_seconds',[])],
                 'cycle_burst_times':cycle_neural_burst_times}
+        if full['neural_binding_seeds'] or shown['neural_binding_seeds']:
+            result['neural_s1_reference']={
+                'skill':'暗夜回声',
+                'direct_buildup_ratio':self.talent('形为心役','attack@ep_damage_ratio'),
+                'direct_buildup_raw':full['attack']*self.talent('形为心役','attack@ep_damage_ratio'),
+                'binding_multiplier':self.bb['ep_damage_scale'],
+                'binding_duration_seconds':self.bb['unmove'],
+                'first_attachment_verified':False,'refresh_order_verified':False,
+                'binding_multiplier_applied':False,
+                'qualified_hit_times':{'cast':full['neural_binding_seeds'],
+                    'window':shown['neural_binding_seeds']},
+                'affected_damage_phases':{'cast':bool(full['neural_binding_seeds']),
+                    'window':bool(shown['neural_binding_seeds']),'cycle':False},
+                'excluded_burst_damage':{
+                    'cast':sum(c['total'] for c in full['components'] if c['name']=='神经损伤爆发'),
+                    'phase':0,'window':sum(c['total'] for c in shown['components'] if c['name']=='神经损伤爆发'),
+                    'cycle':0}}
         if full['neural_secondary_seeds'] or shown['neural_secondary_seeds']:
             cast_bursts=[c for c in full['components'] if c['name']=='神经损伤爆发']
             result['neural_skill_reference']={

@@ -1,0 +1,109 @@
+{
+  "repository": "Kengxxiao/ArknightsGameData",
+  "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "downloaded_original_tables": {
+    "skill_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "bytes": 11447929,
+      "sha256_matched": true
+    },
+    "character_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251,
+      "sha256_matched": true
+    }
+  },
+  "skill_selector": "skill_table.skchr_phatm2_1.levels[9]",
+  "skill": {
+    "name": "暗夜回声",
+    "rangeId": null,
+    "description": "下次攻击造成两次相当于攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害并使目标<$ba.root>束缚</><@ba.vup>{unmove}</>秒，该次<$ba.root>束缚</>期间目标受到的<$ba.dt.neural2>神经损伤</>提升至<@ba.vup>{ep_damage_scale}</>倍，优先攻击未处于爆发期间的敌人",
+    "skillType": "AUTO",
+    "durationType": "NONE",
+    "spData": {
+      "spType": "INCREASE_WHEN_ATTACK",
+      "levelUpCost": null,
+      "maxChargeTime": 1,
+      "spCost": 2,
+      "initSp": 2,
+      "increment": 1.0
+    },
+    "prefabId": "skchr_phatm2_1",
+    "duration": -1.0,
+    "blackboard": [
+      {
+        "key": "atk_scale",
+        "value": 1.5,
+        "valueStr": null
+      },
+      {
+        "key": "ep_damage_scale",
+        "value": 1.8,
+        "valueStr": null
+      },
+      {
+        "key": "unmove",
+        "value": 3.0,
+        "valueStr": null
+      },
+      {
+        "key": "times",
+        "value": 2.0,
+        "valueStr": null
+      }
+    ]
+  },
+  "talent_selector": "character_table.char_1042_phatm2.talents[0].candidates[PHASE_2,potentialRank=0]",
+  "talent": {
+    "unlockCondition": {
+      "phase": "PHASE_2",
+      "level": 1
+    },
+    "requiredPotentialRank": 0,
+    "prefabKey": "1",
+    "name": "形为心役",
+    "description": "攻击附带相当于攻击力30%的<$ba.dt.neural2>神经损伤</>，并对目标周围其他敌人造成一次相当于攻击力20%的<$ba.dt.neural2>神经损伤</>",
+    "rangeId": null,
+    "blackboard": [
+      {
+        "key": "attack@ep_damage_ratio",
+        "value": 0.3,
+        "valueStr": null
+      },
+      {
+        "key": "ep_damage_ratio",
+        "value": 0.2,
+        "valueStr": null
+      },
+      {
+        "key": "range_radius",
+        "value": 1.3,
+        "valueStr": null
+      }
+    ],
+    "tokenKey": null,
+    "isHideTalent": false
+  },
+  "reused_evidence_sha256": {
+    ".cache/research/phatm2-damage-070/REPORT.md": "8950a11233d2cafeddbdbda9276e199792311fe6adf2b27651d1f435b565485d",
+    ".cache/research/phatm2-damage-070/native-proof.json": "547c456396a4af63219eae259eb948fb5338c6b85bc5462e849e2ae632094b5d",
+    ".cache/research/phatm2-damage-070/s1-unmove-template.json": "3bd14c0681cb27100e8b9164a342f10beed021be1a21f7486ecba773ed68985b"
+  },
+  "verified_in_current_machine": [
+    "HTTPS original-table download",
+    "original SHA256 match",
+    "selected skill and talent parameter lookup",
+    "migrated evidence file hashes"
+  ],
+  "fresh_native_binary_verification": false,
+  "current_hotfix_equivalence_proven": false,
+  "remaining_unknowns": [
+    "first buff attachment",
+    "buff blackboard initialization/copy",
+    "refresh order",
+    "absolute hit/end/SP/normal-resume phase"
+  ],
+  "conclusion": "The parameter is conditional on the target buff; do not assume its multiplier applies to both S1 hits before attachment and refresh are proven."
+}
