@@ -1,0 +1,270 @@
+        # Sections61-65: real Qt producers, not invented bool/text spinbox input.
+        new_start=len(checks);new_section_counts={}
+        def strict_json(value):
+            return json.dumps(value,ensure_ascii=False,sort_keys=True,allow_nan=False)
+        from rouge.operator_options import OPTIONS
+        option_widgets={(owner,key):widget for owner,key,_skills,widget in window.model_option_widgets}
+        def reset_owner_options(owner):
+            for key,label,default,maximum,skills in OPTIONS.get(owner,[]):
+                widget=option_widgets[(owner,key)]
+                widget.setChecked(default) if isinstance(widget,QCheckBox) else widget.setValue(default)
+        def report_metrics(result,section_id):
+            sections=[section for section in result['report']['sections'] if section['id']==section_id]
+            assert len(sections)==1,(section_id,len(sections))
+            return {row['key']:row['value'] for row in sections[0]['metrics']}
+        window.damage_technical.setChecked(False);window.timing_scenario.clear();relics([])
+        window.limit_window.setChecked(True);window.window_seconds.setValue(10)
+        window.target_enemy.setCurrentIndex(0);window.defense.setValue(0);window.resistance.setValue(0)
+        window.cooperative.setChecked(False);window.fragile.setChecked(False)
+        assert window.target_enemy.currentData() is None
+
+        #61: all24 existing owner/key integer controls, covering23 distinct keys.
+        # Raw bool rejection is API regression scope; real QSpinBox emits int.
+        count_fields={'summon_count','casts_used','slash_kills','amiya_slash_kills',
+            'incoming_hits','shield_contact_ticks','cold_state','dash_hits','bubble_bursts',
+            'levitate_triggers','snow_entries','drone_warmup_hits','note_count',
+            'bait_triggers','enemy_attack_count','palsy_triggers','palsy_overflow_hits',
+            'connected_stones','trap_triggers','trap_dot_ticks','dragon_arrow_hits',
+            'ghost_count','ghost_casts'}
+        integer_controls=[(owner,key,default,maximum,skills)
+            for owner,entries in OPTIONS.items() for key,label,default,maximum,skills in entries
+            if key in count_fields]
+        assert len(integer_controls)==24 and {row[1] for row in integer_controls}==count_fields
+        section_start=len(checks)
+        for owner,key,default,maximum,skills in integer_controls:
+            profile=module.catalog()['operators'][owner]
+            train(owner,{'elite':2,'level':profile['phases'][2]['max_level'],'potential':1,
+                         'trust':100,'module_id':None,'module_level':0})
+            number=skills[0];window.skill.setCurrentIndex(window.skill.findData(number))
+            reset_owner_options(owner);window.healing_targets.setValue(1)
+            widget=option_widgets[(owner,key)]
+            assert isinstance(widget,QSpinBox) and widget.isVisible() and widget.isEnabled()
+            assert widget.minimum()==0 and widget.maximum()==(4 if key=='summon_count' else maximum)
+            if key=='ghost_casts':option_widgets[(owner,'ghost_count')].setValue(1)
+            for use_frames in (True,False):
+                window.frame_timing.setChecked(use_frames)
+                for value in (0,1):
+                    widget.setValue(value);result=click_result();args=window.damage_result['scenario']
+                    assert type(widget.value()) is int and type(args[key]) is int
+                    assert args[key]==value
+                    assert args['timing_mode']==('frames' if use_frames else 'continuous')
+                    checks.append({'scope':'actual_all_integer_option_spinbox_serializer',
+                        'section':61,'operator':owner,'skill':number,'key':key,
+                        'mode':args['timing_mode'],'value':value,'widget':'QSpinBox',
+                        'submitted_type':'int','gui_minimum':widget.minimum(),
+                        'gui_maximum':widget.maximum(),'calculation_returned':True,'passed':True})
+            widget.setValue(default)
+        new_section_counts[61]=len(checks)-section_start
+        assert new_section_counts[61]==len(integer_controls)*2*2
+        receipt['section61_input_scope']='All24 real owner/key QSpinBox controls emit integer0/1;23 distinct queried keys are covered. API raw bool errors are separate regression evidence. GUI maximums are control limits, not new native stock/event/deployment caps.'
+
+        #62: true/false are actual checkbox values above and below the E2 gate.
+        section_start=len(checks);four_sui=option_widgets[('char_2025_shu','four_sui')]
+        for elite,number,rank in ((2,3,10),(1,2,7)):
+            train('char_2025_shu',{'elite':elite,'level':90 if elite==2 else 80,
+                'potential':1,'trust':100,'module_id':None,'module_level':0},
+                ranks={'1':rank,'2':rank,'3':rank})
+            reset_owner_options('char_2025_shu');window.skill.setCurrentIndex(window.skill.findData(number))
+            window.window_seconds.setValue(10);window.timing_scenario.clear()
+            assert isinstance(four_sui,QCheckBox) and four_sui.isVisible() and four_sui.isEnabled()
+            for use_frames in (True,False):
+                window.frame_timing.setChecked(use_frames);plain=None
+                for flag in (False,True):
+                    four_sui.setChecked(flag);result=click_result();args=window.damage_result['scenario']
+                    assert type(four_sui.isChecked()) is bool and args['four_sui'] is flag
+                    if not flag:
+                        plain=deepcopy(result);assert 'shu_periodic_sp_reference' not in result
+                    elif elite==1:
+                        assert strict_json(result)==strict_json(plain)
+                        assert 'shu_periodic_sp_reference' not in result
+                    else:
+                        ref=result['shu_periodic_sp_reference'];skill=result['estimate']['skill']
+                        assert abs(result['estimate']['base_stats']['attack']-
+                                   plain['estimate']['base_stats']['attack']*1.12)<1e-7
+                        assert ref['interval_seconds_parameter']==4 and ref['sp_per_pulse_parameter']==1
+                        assert ref['first_tick_seconds'] is None and ref['clock_verified'] is False
+                        assert ref['events_scheduled'] is False
+                        assert skill['initial_seconds'] is None and skill['recharge_seconds'] is None
+                        assert skill['cycle_seconds'] is None
+                        assert '实际周期首跳：未知' in window.damage_text.toPlainText()
+                    checks.append({'scope':'actual_four_sui_typed_bool_qualification',
+                        'section':62,'operator':'char_2025_shu','elite':elite,'skill':number,
+                        'mode':args['timing_mode'],'value':flag,'widget':'QCheckBox',
+                        'submitted_type':'bool','talent_qualified':elite==2,
+                        'periodic_clock_verified':False,'passed':True})
+        four_sui.setChecked(False);new_section_counts[62]=len(checks)-section_start
+        assert new_section_counts[62]==8
+        receipt['section62_input_scope']='Existing four_sui QCheckBox serializes genuine bool False/True; E1 excludes the talent, E2 preserves static attack and original4s/1SP parameters with actual resource clocks unknown. API text refusal cannot be submitted through this checkbox and is covered by regression.'
+
+        #63: real declared integer count and original cultivation/module caps.
+        section_start=len(checks);deepcl='char_110_deepcl';mod='uniequip_002_deepcl'
+        count_widget=option_widgets[(deepcl,'summon_count')]
+        deepcl_training=[({'elite':0,'level':45,'module_id':None,'module_level':0},4,2),
+            ({'elite':1,'level':60,'module_id':None,'module_level':0},7,3),
+            ({'elite':2,'level':70,'module_id':None,'module_level':0},10,4),
+            ({'elite':2,'level':39,'module_id':mod,'module_level':3},10,4),
+            ({'elite':2,'level':40,'module_id':mod,'module_level':1},10,7),
+            ({'elite':2,'level':40,'module_id':mod,'module_level':2},10,7),
+            ({'elite':2,'level':40,'module_id':mod,'module_level':3},10,7)]
+        expected63=0
+        for fields,rank,cap in deepcl_training:
+            train(deepcl,{**fields,'potential':1,'trust':100},
+                  ranks={'1':rank,'2':rank})
+            reset_owner_options(deepcl)
+            for number in ((1,) if fields['elite']==0 else (1,2)):
+                window.skill.setCurrentIndex(window.skill.findData(number))
+                assert isinstance(count_widget,QSpinBox) and count_widget.isVisible() and count_widget.isEnabled()
+                assert count_widget.minimum()==0 and count_widget.maximum()==cap
+                for use_frames in (True,False):
+                    window.frame_timing.setChecked(use_frames)
+                    for value in (0,1,cap):
+                        count_widget.setValue(value);result=click_result();args=window.damage_result['scenario']
+                        assert type(args['summon_count']) is int and args['summon_count']==value
+                        rates=report_metrics(result,'summons')
+                        assert type(rates['summon_count']) is int and rates['summon_count']==value
+                        assert rates['concurrent_limit']==cap
+                        if number==1:
+                            regeneration=report_metrics(result,'regeneration')
+                            bb=module.catalog()['operators'][deepcl]['skills'][0]['levels'][rank-1]['values']
+                            assert regeneration['per_token_rate']==bb['hp_recovery_per_sec']
+                            assert regeneration['all_tokens_rate']==bb['hp_recovery_per_sec']*value
+                        if cap==7:
+                            module_metrics=report_metrics(result,'relic_token_token_10001_deepcl_tentac')
+                            assert type(module_metrics['model_count']) is int and module_metrics['model_count']==value
+                            assert module_metrics['held_limit']==7 and module_metrics['concurrent_limit']==7
+                            assert '关卡可用部署位、地块和当前库存约束' in window.damage_text.toPlainText()
+                        assert '局外假设' in window.damage_text.toPlainText()
+                        checks.append({'scope':'actual_deepcolor_declared_integer_count_report',
+                            'section':63,'operator':deepcl,'skill':number,'skill_rank':rank,
+                            'elite':fields['elite'],'level':fields['level'],'module_id':fields['module_id'],
+                            'module_level':fields['module_level'],'mode':args['timing_mode'],
+                            'value':value,'widget':'QSpinBox','submitted_type':'int',
+                            'gui_concurrent_cap':cap,'actual_stock_or_deployment_clock_verified':False,'passed':True})
+                        expected63+=1
+        count_widget.setValue(1);new_section_counts[63]=len(checks)-section_start
+        assert new_section_counts[63]==expected63
+        receipt['section63_input_scope']='Actual Deepcolor QSpinBox produces declared integer0/1/currentcap with existing E0/E1/E2 and SUM-Y unlock gates, typed report counts and S1 fixed per-token regeneration reference. Legal API numeric strings are verified separately; no actual stock, presence, concurrency, deployment event or recovery tick is inferred.'
+
+        #64: select both real checkbox states; never infer the API flag from GUI default.
+        section_start=len(checks)
+        train('silverash',{'elite':2,'level':90,'potential':1,'trust':100,'module_id':None,'module_level':0})
+        window.skill.setCurrentIndex(window.skill.findData(3));window.window_seconds.setValue(10)
+        window.timing_scenario.clear()
+        assert isinstance(window.fragile,QCheckBox) and window.fragile.isVisible() and window.fragile.isEnabled()
+        assert isinstance(window.cooperative,QCheckBox) and window.cooperative.isVisible()
+        for rank in (1,7,10):
+            train('silverash',{'elite':2,'level':90,'potential':1,'trust':100,'module_id':None,'module_level':0},
+                  ranks={'1':rank,'2':rank,'3':rank})
+            window.skill.setCurrentIndex(window.skill.findData(3))
+            factor=module.catalog()['operators']['silverash']['skills'][2]['levels'][rank-1]['values']['damage_scale']
+            assert factor==({1:1.15,7:1.25,10:1.3}[rank])
+            for use_frames in (True,False):
+                window.frame_timing.setChecked(use_frames)
+                for cooperation in (False,True):
+                    window.cooperative.setChecked(cooperation);plain=None
+                    for flag in (False,True):
+                        window.fragile.setChecked(flag);result=click_result();args=window.damage_result['scenario']
+                        assert args['preexisting_fragile'] is flag and type(window.fragile.isChecked()) is bool
+                        assert args['cooperative'] is cooperation and type(window.cooperative.isChecked()) is bool
+                        components=result['components']
+                        assert [row['name'] for row in components]==(['本体丹增','协同丹增'] if cooperation else ['本体丹增'])
+                        assert all(row['damage_type']=='physical' for row in components)
+                        if not flag:plain=deepcopy(result)
+                        else:
+                            assert abs(result['total_damage']-plain['total_damage']*factor)<1e-7
+                            for old,row in zip(plain['components'],components):
+                                assert row['hits']==old['hits']
+                                assert abs(row['per_hit']-old['per_hit']*factor)<1e-7
+                        checks.append({'scope':'actual_fragile_and_cooperative_typed_checkbox_controls',
+                            'section':64,'operator':'silverash','skill':3,'skill_rank':rank,
+                            'mode':args['timing_mode'],'preexisting_fragile':flag,'cooperative':cooperation,
+                            'submitted_types':'bool/bool','selected_skill_factor':factor,
+                            'native_attachment_or_overlap_rule_verified':False,'passed':True})
+        train('silverash',{'elite':1,'level':80,'potential':1,'trust':100,'module_id':None,'module_level':0},
+              ranks={'1':7,'2':7})
+        assert window.skill.findData(3)==-1
+        window.skill.setCurrentIndex(window.skill.findData(2))
+        assert not window.fragile.isVisible() and not window.cooperative.isVisible()
+        window.cooperative.setChecked(False)
+        for use_frames in (True,False):
+            window.frame_timing.setChecked(use_frames);plain=None
+            for flag in (False,True):
+                window.fragile.setChecked(flag);result=click_result();args=window.damage_result['scenario']
+                assert args['preexisting_fragile'] is flag
+                if not flag:plain=deepcopy(result)
+                else:assert strict_json(result)==strict_json(plain)
+                checks.append({'scope':'actual_fragile_checkbox_inactive_skill_qualification',
+                    'section':64,'operator':'silverash','elite':1,'skill':2,'skill_rank':7,
+                    'mode':args['timing_mode'],'preexisting_fragile':flag,
+                    's3_unavailable':True,'checkbox_hidden':True,'passed':True})
+        window.fragile.setChecked(False);window.cooperative.setChecked(False)
+        new_section_counts[64]=len(checks)-section_start
+        assert new_section_counts[64]==3*2*2*2+2*2
+        receipt['section64_input_scope']='Actual fragile/cooperative QCheckBox states serialize bool, preserve chosen S3 rank1/7/10 factor1.15/1.25/1.3 and physical component arithmetic; E1 excludes S3 and hides these controls for S2. Text rejection is API-only regression. No first-hit attachment, overlapping-source identity, max-source composition or native dynamic coverage is certified.'
+
+        #65: only real integer bait count; original positive/empty boundary remains.
+        section_start=len(checks);phatm='char_1042_phatm2'
+        train(phatm,{'elite':2,'level':60,'potential':1,'trust':100,'module_id':None,'module_level':0})
+        reset_owner_options(phatm);window.skill.setCurrentIndex(window.skill.findData(2))
+        bait=option_widgets[(phatm,'bait_triggers')]
+        assert isinstance(bait,QSpinBox) and bait.isVisible() and bait.isEnabled()
+        assert bait.minimum()==0 and bait.maximum()==100
+        scopes=[('positive',10,{}),('zero_window',0,{}),
+                ('zero_lifetime',10,{'target_disappears_seconds':0}),
+                ('empty_target_windows',10,{'target_windows':[]})]
+        for use_frames in (True,False):
+            window.frame_timing.setChecked(use_frames)
+            for scope_name,horizon,timing in scopes:
+                window.window_seconds.setValue(horizon)
+                window.timing_scenario.setPlainText(json.dumps(timing) if timing else '')
+                for value in (0,1):
+                    bait.setValue(value);result=click_result();args=window.damage_result['scenario']
+                    assert type(bait.value()) is int and type(args['bait_triggers']) is int
+                    assert args['bait_triggers']==value
+                    sections=[section['id'] for section in result['report']['sections']]
+                    if value==0:
+                        assert 'neural_bait_reference' not in result and 'neural_bait' not in sections
+                        assert '本能的召唤 · 诱饵持续效果待核验' not in window.damage_text.toPlainText()
+                    else:
+                        ref=result['neural_bait_reference']
+                        assert type(ref['triggers_requested']) is int and ref['triggers_requested']==1
+                        assert ref['snapshot_attack'] is None and ref['first_tick_seconds'] is None
+                        assert ref['events_scheduled'] is False
+                        metrics=report_metrics(result,'neural_bait')
+                        assert metrics['trigger_count']==1 and metrics['snapshot_attack'] is None
+                        assert metrics['first_tick'] is None
+                        assert '本能的召唤 · 诱饵持续效果待核验' in window.damage_text.toPlainText()
+                        if scope_name in ('zero_window','zero_lifetime'):
+                            assert ref['affected_damage_phases']['window'] is False
+                        else:
+                            assert result['total_damage'] is None and result['estimate']['skill']['window_dps'] is None
+                    if scope_name in ('zero_window','zero_lifetime'):assert result['total_damage']==0
+                    checks.append({'scope':'actual_bait_integer_count_and_unknown_event_boundary',
+                        'section':65,'operator':phatm,'skill':2,'mode':args['timing_mode'],
+                        'scenario_scope':scope_name,'window_seconds':horizon,'value':value,
+                        'widget':'QSpinBox','submitted_type':'int','reference_present':value>0,
+                        'actual_snapshot_attack':None,'actual_first_tick':None,'events_scheduled':False,
+                        'gui_maximum_not_native_cap':100,'passed':True})
+            window.skill.setCurrentIndex(window.skill.findData(1));window.window_seconds.setValue(10)
+            window.timing_scenario.clear();bait.setValue(1)
+            assert not bait.isVisible()
+            result=click_result();args=window.damage_result['scenario']
+            assert 'bait_triggers' not in args and 'neural_bait_reference' not in result
+            checks.append({'scope':'actual_bait_integer_widget_inactive_skill_serializer',
+                'section':65,'operator':phatm,'skill':1,'mode':args['timing_mode'],
+                'widget_hidden':True,'inactive_key_submitted':False,'passed':True})
+            window.skill.setCurrentIndex(window.skill.findData(2))
+        bait.setValue(0);window.timing_scenario.clear();relics([])
+        new_section_counts[65]=len(checks)-section_start
+        assert new_section_counts[65]==len(scopes)*2*2+2
+        receipt['section65_input_scope']='Real bait_triggers QSpinBox integer0 has no bait reference; positive1 retains unplaced effect with actual deployment snapshot/firsttick unknown, and zero observation/enemy lifetime preserve original zero-window output. API string aliases use separate regression; no fixed trigger interval, original maxcap, scheduled tick or overlapping effect is inferred.'
+
+        new_end=len(checks)
+        receipt['supplemental_sections_61_65']=[61,62,63,64,65]
+        receipt['supplemental_checks_by_section_61_65']=new_section_counts
+        receipt['supplemental_checks_61_65']=new_end-new_start
+        assert sum(new_section_counts.values())==new_end-new_start
+        receipt['section65_final_checks_pending']=True
+        assert receipt['section65_final_checks_pending'] is False,'Section65 source review is not finalized; do not execute this draft as a complete UI runner'
+        # Root replaces the pending marker after final schema/source review,
+        # freezes integrated source on a clean commit and alone executes Wine.
