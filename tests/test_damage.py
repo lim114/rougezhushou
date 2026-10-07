@@ -82,10 +82,10 @@ class DamageTests(unittest.TestCase):
                   'enemy_defense':500,'enemy_resistance':50}
         result=calculate_damage(scenario)
         # Pot1 E2 +13% ATK; ten 480% hits: 5424 - 500 > 5424 * .5.
-        slashes=next(c for c in result['components'] if c['name']=='绝影斩击')
+        slashes=next(c for c in result['unbound_cast_reference']['conditional_components'] if c['name']=='绝影斩击')
         self.assertAlmostEqual(slashes['total'],49240)
         bonus=calculate_damage({**scenario,'effects':[{'kind':'damage_taken','damage_type':'magic','value':2}]})
-        self.assertEqual(slashes['total'],next(c for c in bonus['components'] if c['name']=='绝影斩击')['total'])
+        self.assertEqual(slashes['total'],next(c for c in bonus['unbound_cast_reference']['conditional_components'] if c['name']=='绝影斩击')['total'])
 
     def test_gummy_cooking_delay_and_healing_interval_are_included(self):
         result=calculate_damage({'operator':'char_196_sunbr','skill':2,'base_attack':1000})

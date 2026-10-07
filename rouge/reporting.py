@@ -385,6 +385,30 @@ def build_report(scenario,result):
         sections.append(section('unbound_cast','多段技能 · 实际时钟待核验',rows,
             unbound['notes']+['条件总量保留当前培养和情景倍率；未排程来源不代表观察窗口、完整阶段或本轮周期输出。',
              '本体供靶或打断区间不证明独立弹道/接触范围；零窗口或当前敌人0秒生命周期不产生对它的实际输出。']))
+    chen_phase=result.get('chen_phase_reference')
+    if chen_phase and chen_phase['kind']=='post_slash_strengthening':
+        isolated=chen_phase['isolated_attack_phase_reference']
+        sections.append(section('chen_strengthening','绝影 · 孤立强化阶段参考',[
+            metric('duration','斩击后强化持续参数',chen_phase['strengthening_duration_parameter_seconds'],'秒'),
+            metric('attack','强化攻击力参考',chen_phase['strengthened_attack_reference']),
+            metric('hits','孤立强化阶段攻击次数参考',isolated['conditional_hits'],'次'),
+            metric('damage','孤立强化阶段伤害参考',isolated['conditional_damage']),
+            metric('slash_end','实际斩击结束时刻',None,'秒'),
+            metric('start','实际强化起点',None,'秒')],
+            ['孤立阶段沿用既有普通攻击参考；其相对时刻不代表技能开启后的绝对命中时刻。',
+             '6秒参数不包括未绑定的斩击阶段，不能证明完整技能结束、结束后充能或本轮周期。']))
+    if chen_phase and chen_phase['kind']=='swordwave':
+        wave=chen_phase['conditional_components'][0]
+        sections.append(section('chen_swordwave','天喟 · 剑气碰撞待核验',[
+            metric('hp','声明目标当前生命',chen_phase['declared_current_hp'],'生命'),
+            metric('ratio','当前生命伤害比例参数',chen_phase['hp_ratio_parameter']*100,'%'),
+            metric('minimum','攻击力保底倍率参数',chen_phase['minimum_attack_scale_parameter'],'倍'),
+            metric('damage','剑气单次伤害条件参考',wave['per_hit']),
+            metric('body_duration','本体技能持续参数',chen_phase['body_duration_parameter_seconds'],'秒'),
+            metric('collision','实际剑气碰撞时刻',None,'秒')],
+            ['剑气取声明当前生命比例与攻击力保底的较大值；实际碰撞时生命、路径和独立时钟尚未绑定。',
+             '已建模本体三连保留原有时钟小计；完整窗口、阶段和周期伤害不合入未排程剑气。',
+             '本体供靶或打断区间不证明剑气路径覆盖；零窗口或当前目标0秒生命周期没有对它的实际输出。']))
     snow=result.get('snow_field_reference')
     if snow:
         sections.append(section('snow_field','积雪场地 · 覆盖与首跳待核验',[
@@ -554,7 +578,7 @@ def build_report(scenario,result):
              if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
              if bait_reference else
              '这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。'
-             if wisdel or mizuki or ines_dot or manual_close or liftoff or snow or unbound or result.get('drone_lifecycle_reference') else
+             if wisdel or mizuki or ines_dot or manual_close or liftoff or snow or unbound or chen_phase or result.get('drone_lifecycle_reference') else
              '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']))
     if has_healing(op,number):
         rows=[];window_healing=skill['window_healing']

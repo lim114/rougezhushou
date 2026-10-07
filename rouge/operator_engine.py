@@ -233,7 +233,7 @@ class Combat:
         if not normal and window is not None:duration=min(duration,window)
         if not normal and self.s['operator']=='char_1029_yato2':
             attack+=self.base*self.talent('鬼人强化状态','atk')
-        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None;unbound_cast_reference=None
+        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None;unbound_cast_reference=None;chen_phase_reference=None
         timeline=AttackTimeline(self.s,normal=normal,offset=self.s.get('_timeline_offset_seconds',0) if normal else 0)
         def emit(name,raw,dtype,count,defense=None,resistance=None,effects=None,event_times=None):
             if dtype=='buildup':raw*=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
@@ -336,16 +336,54 @@ class Combat:
             elif self.n==1:regular(dtype,times=2)
             elif self.n==2:
                 count=10+self.option('slash_kills',0,maximum=100,integer=True)
-                instant(dtype,bb['atk_scale'],count,'绝影斩击')
+                # Slash counts establish a conditional amount, not a cast-time hit.
+                emit('绝影斩击',attack*bb['atk_scale'],dtype,count)
                 attack+=self.base*bb['chen3_s2[respawn_buff].atk']
                 regular(dtype,name='斩击后的6秒强化')
-                self.notes.append('绝影包含10次斩击（击倒次数可追加）及斩击后强化期；斩击动画时间另列为未确认，技能表6秒不包括动画。')
+                strengthened=components[-1]
+                chen_phase_reference={
+                    'kind':'post_slash_strengthening',
+                    'strengthening_duration_parameter_seconds':self.skill['duration'],
+                    'attack_bonus_parameter':bb['chen3_s2[respawn_buff].atk'],
+                    'strengthened_attack_reference':attack,
+                    'isolated_attack_phase_reference':{
+                        'phase_seconds':duration,'timing':timeline.output(),
+                        'conditional_damage':strengthened['total'],
+                        'conditional_hits':strengthened['hits'],
+                        'per_hit_damage_reference':strengthened['per_hit']},
+                    'actual_slash_end_seconds':None,'actual_strengthening_start_seconds':None,
+                    'actual_skill_end_seconds':None,'phase_clock_verified':False}
+                unbound_cast_reference={'kind':'chen_slashes',
+                    'parameter_rows':[('基础斩击次数参数',10,'次'),
+                        ('声明击倒追加斩击次数',count-10,'次'),
+                        ('斩击倍率参数',bb['atk_scale'],'倍'),
+                        ('斩击后强化持续参数',self.skill['duration'],'秒'),
+                        ('斩击后攻击力加成参数',bb['chen3_s2[respawn_buff].atk']*100,'%')],
+                    'notes':['斩击次数与孤立强化阶段只列条件来源；实际斩击结束、强化起点和普通攻击冷却交接未绑定。']}
+                timeline.streams=[]
+                if window is not None:duration=window
+                self.notes.append('绝影的10次斩击（声明击倒可追加）与斩击后强化分开保留参考；6秒仅为强化阶段参数，不证明完整技能持续或强化在开启时开始。')
             else:
                 hp=self.option('enemy_current_hp',0)
                 raw=max(hp*bb['hp_ratio'],attack*bb['projectile_min_atk_scale'])
                 emit('天喟剑气',raw,dtype,1)
+                from .uncertain_sources import preserve_unplaced_sources
+                chen_phase_reference={
+                    'kind':'swordwave','declared_current_hp':hp,
+                    'hp_ratio_parameter':bb['hp_ratio'],
+                    'minimum_attack_scale_parameter':bb['projectile_min_atk_scale'],
+                    'body_duration_parameter_seconds':self.skill['duration'],
+                    'actual_collision_times_seconds':None,'collision_clock_verified':False,
+                    **preserve_unplaced_sources([components[-1]],window=window,
+                        target_lifetime=timeline.options.get('target_disappears_seconds'))}
                 regular(dtype,bb['attack@atk_scale'],3)
-                self.notes.append('剑气按指定目标当前生命值与攻击力保底取较大值；弱点转换在物理/法术易伤之前判定。')
+                self.notes.append('剑气仅按声明当前生命与攻击力保底列单次条件参考；开启时释放不证明立即碰撞，独立剑气时钟不套用本体攻击或弹道时间。')
+            if timeline.options.get('target_disappears_seconds')==0 and self.n==3:
+                # The current target has no life even in continuous mode.
+                for c in components:
+                    c['hits']=0;c['total']=0
+                    if 'times_seconds' in c:c['times_seconds']=[]
+                timeline.streams=[]
         elif op in ('char_002_amiya','char_1001_amiya2','char_1037_amiya3'):
             if op=='char_1001_amiya2' and not normal:
                 attack+=self.base*self.talent('青色怒火','atk')*(bb.get('talent_scale',2)-1)
@@ -954,7 +992,7 @@ class Combat:
             'components':components,'neural_events':neural_events,'drone_trait_reference':drone_trait_reference,
             'neural_secondary_seeds':neural_secondary_seeds,
             'neural_binding_seeds':neural_binding_seeds,
-            'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'unbound_cast_reference':unbound_cast_reference,'timing':timeline.output()}
+            'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'unbound_cast_reference':unbound_cast_reference,'chen_phase_reference':chen_phase_reference,'timing':timeline.output()}
 
     def calculate(self):
         if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
@@ -1060,7 +1098,7 @@ class Combat:
             self.notes.append('完整布子弹药技能总量未知；当前棋子触发数量仅为情景总量。')
         if self.s['operator']=='char_1050_chen3' and self.n==2:
             nonrepeat=True
-            self.notes.append('斩击动画时间未确认，因此不输出伪精确的完整回转；强化期伤害仍单列计算。')
+            self.notes.append('斩击结束与强化阶段的绝对起点未确认，完整持续、结束后充能与完整回转保持未知；孤立强化参考不作为开启后的实际命中时钟。')
         if self.s.get('timing_mode','frames')=='frames':
             if first is not None:first=frame_time(first)/FPS
             if duration is not None:duration=frame_time(duration)/FPS
@@ -1239,6 +1277,13 @@ class Combat:
             mask_pending_damage(result,full,shown,normal,duration,cycle)
             mask_pending_healing(result,full,shown,normal,duration,cycle)
             result['timing']['phase_clock_unbound']=True
+            result['complete']=False;result['estimate']['complete']=False
+        if full['chen_phase_reference'] is not None:
+            result['chen_phase_reference']={**full['chen_phase_reference'],
+                'window_reference':shown['chen_phase_reference']}
+            if self.n==3:
+                from .uncertain_sources import mask_pending_damage
+                mask_pending_damage(result,full,shown,normal,duration,cycle)
             result['complete']=False;result['estimate']['complete']=False
         if self.s['operator']=='char_1046_sbell2' and self.n==2:
             snow=next(c for c in full['components'] if c['name']=='积雪持续伤害')
