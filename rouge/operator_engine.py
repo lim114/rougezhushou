@@ -604,7 +604,9 @@ class Combat:
                 self.notes.append('遥的治疗衍生伤害保留邻近目标的条件参考；浮泡破碎/浮空计数不生成实际时钟或每次固定四跳。')
         elif op=='char_1046_sbell2':
             if not normal:
-                if self.n==1:mode='instant';duration=0;instant('magic',bb['atk_scale'])
+                if self.n==1:
+                    mode='instant';duration=0 if window is None else window
+                    instant('magic',bb['atk_scale'])
                 elif self.n==2:
                     mode='infinite';duration=window if window is not None else 30
                     regular('magic',bb['attack@atk_scale_s2'])
@@ -615,12 +617,25 @@ class Combat:
                     components[-1]['timing_reference']='snow field coverage and first tick unverified'
                 else:
                     regular('magic',bb['attack@atk_scale_s3'],resistance=max(0,self.enemy_res-bb['magic_resist_penetrate_fixed']))
-            entries=self.option('snow_entries',0,maximum=1000,integer=True)
+            # A declared observation count has no sourced stage/phase identity.
+            # Never replay it as another count during the recharge plan.
+            entries=0 if normal else self.option('snow_entries',0,maximum=1000,integer=True)
             emit('积雪经过伤害',attack*self.talent('无垠的雪景','talent_magic_scale'),'magic',entries)
-            if not normal and self.n==2 and (duration==0 or timeline.options.get('target_disappears_seconds')==0):
+            if entries>0:
+                from .uncertain_sources import preserve_unplaced_sources
+                reference=preserve_unplaced_sources([components[-1]],window=window,
+                    target_lifetime=timeline.options.get('target_disappears_seconds'))
+                external_event_reference={**reference,'kind':'snow_entries',
+                    'parameter_rows':[('声明观察窗口内积雪经过次数',entries,'次'),
+                                      ('当前阶段攻击力条件参考',attack,'攻击'),
+                                      ('经过伤害倍率参数',self.talent('无垠的雪景','talent_magic_scale'),'倍')],
+                    'notes':['经过计数只声明观察窗口内条件来源；实际进入时刻、施放前后归属和经过时攻击快照未知。',
+                             '不向充能期复制声明次数；本体攻击范围不证明积雪场地覆盖，当前阶段攻击仅作条件参考。']}
+            if window==0 or timeline.options.get('target_disappears_seconds')==0:
                 for c in components:
                     c['hits']=0;c['total']=0
                     if 'times_seconds' in c:c['times_seconds']=[]
+                    c.pop('instant_event',None)
             self.notes.append('阵法术师充能期不进行普通攻击；积雪经过次数与覆盖比例分别指定，不把减速或冻结当伤害。')
         elif op in ('char_328_cammou','char_1038_whitw2'):
             if not normal and op=='char_1038_whitw2' and self.n==1:
@@ -1399,6 +1414,27 @@ class Combat:
             mask_pending_damage(result,full,shown,normal,duration,cycle)
             result['complete']=False;result['estimate']['complete']=False
             self.notes.append('积雪覆盖比例不证明首跳、实际覆盖区间或技能后雪的生命周期；仅列每秒条件参数，不生成实际跳数。')
+        if self.s['operator']=='char_1046_sbell2' and self.n==1:
+            # Retain the old zero-duration arithmetic as a parameter reference,
+            # not proof of skill end/SP lockout or a complete repeating cycle.
+            known=[c for c in full['components'] if 'actual_total' not in c]
+            body_cycle=phase_totals(known,cycle)[0]+(normal['damage'] if normal else 0) if cycle is not None else None
+            skill=result['estimate']['skill']
+            result['sbell_instant_reference']={
+                'per_hit_damage_reference':next(c['per_hit'] for c in full['components'] if c['name']=='施放伤害'),
+                'attack_scale_parameter':self.bb['atk_scale'],'charge_count_parameter':sp['max_charges'],
+                'parameter_clock_reference':{**{k:skill[k] for k in ('initial_seconds','duration_seconds','recharge_seconds','cycle_seconds')},
+                    'cycle_damage':body_cycle,'cycle_dps':body_cycle/cycle if cycle else None},
+                'actual_skill_end_seconds':None,'skill_lifecycle_binding_verified':False,
+                'observation_seconds':shown['duration']}
+            for key in ('duration_seconds','recharge_seconds','cycle_seconds','phase_damage','phase_healing',
+                        'cycle_damage','cycle_healing','cycle_dps','cycle_hps'):
+                skill[key]=None
+            if 'known_damage_subtotals' in result:
+                for key in ('phase_damage','cycle_damage','cycle_dps'):result['known_damage_subtotals'][key]=None
+            result['timing']['phase_clock_unbound']=True
+            result['complete']=False;result['estimate']['complete']=False
+            result['estimate']['notes'].append('铃音吹雪原描述的立即伤害保留参数来源参考；原有0秒结束/回转算术另存参数参考，不证明实际技能结束、阻回和多充能链。观察窗口保留指定长度，零窗口没有伤害。')
         if healing_s1_unresolved:
             heal=next(c for c in full['components'] if c['name']=='治疗替代下次攻击')
             result['next_attack_healing_reference']={

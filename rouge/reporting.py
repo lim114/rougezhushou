@@ -418,6 +418,15 @@ def build_report(scenario,result):
             ['剑气取声明当前生命比例与攻击力保底的较大值；实际碰撞时生命、路径和独立时钟尚未绑定。',
              '已建模本体三连保留原有时钟小计；完整窗口、阶段和周期伤害不合入未排程剑气。',
              '本体供靶或打断区间不证明剑气路径覆盖；零窗口或当前目标0秒生命周期没有对它的实际输出。']))
+    sbell=result.get('sbell_instant_reference')
+    if sbell:
+        sections.append(section('sbell_instant','铃音吹雪 · 立即来源与结束待核验',[
+            metric('per_hit','立即伤害单次条件参考',sbell['per_hit_damage_reference']),
+            metric('scale','立即伤害倍率参数',sbell['attack_scale_parameter'],'倍'),
+            metric('charges','可充能次数参数',sbell['charge_count_parameter'],'次'),
+            metric('end','实际技能结束时刻',None,'秒')],
+            ['原描述立即伤害保留既有参数来源；零观察窗口没有伤害，正观察窗口不被0秒结束参考覆盖。',
+             '原有结束/回转算术另存参数参考，实际结束、阻回和多充能链尚未绑定；经过伤害独立列条件来源。']))
     snow=result.get('snow_field_reference')
     if snow:
         sections.append(section('snow_field','积雪场地 · 覆盖与首跳待核验',[
