@@ -397,9 +397,14 @@ class Combat:
             else:
                 regular('magic',times=2)
                 terminal=self.option('last_stand_seconds',0,maximum=bb['before_dead_duration'])
-                regular('magic',times=4,seconds=terminal,name='主动关闭后四连击')
-                duration+=terminal
-                if terminal:mode='once_deploy'
+                if terminal:
+                    # The declared terminal duration is not a close timestamp.
+                    # Even the active-phase hit count depends on when it closes.
+                    if components[-1]['hits']:components[-1]['actual_total']=None
+                    emit('主动关闭后四连击',attack,'magic',0)
+                    if duration>0 and timeline.options.get('target_disappears_seconds')!=0 and timeline.options.get('target_windows')!=[]:
+                        components[-1]['actual_total']=None
+                    mode='once_deploy'
         elif op=='char_437_mizuki':
             if not normal and self.n==1:
                 mode='next_attack';duration=interval if window is None else window
@@ -946,6 +951,7 @@ class Combat:
         wisdel_s1_unresolved=self.s['operator']=='char_1035_wisdel' and self.n==1
         mizuki_s1_unresolved=self.s['operator']=='char_437_mizuki' and self.n==1
         ines_s1_unresolved=self.s['operator']=='char_4087_ines' and self.n==1
+        manual_close_unresolved=self.s['operator']=='char_1044_hsgma2' and self.n==3 and self.option('last_stand_seconds',0,maximum=self.bb['before_dead_duration'])>0
         if wine_s1_unresolved:
             # The native multihit gap does not establish absolute cast end,
             # SP observation or normal-attack resumption. A resource anchor
@@ -965,6 +971,9 @@ class Combat:
             duration=None;recharge=None
             first=0.0 if initial>=sp['sp_cost'] else None
             self.notes.append('淬影突袭持续法术首跳、刷新和技能结束/阻回未核验，3秒参数不证明实际跳数或完整周期。')
+        if manual_close_unresolved:
+            duration=None;recharge=None
+            self.notes.append('主动关闭的绝对时刻和转换后攻击相位未知；尾段时长不扩长观察窗口，关闭前后完整输出未知。')
         if mode=='ammo' and duration is None:total_damage=total_healing=None
         if mode in ('deployment','passive'):first=0;recharge=None
         nonrepeat=mode in ('infinite','passive','switch','once','once_deploy','deployment','triggered_ammo')
@@ -1149,6 +1158,19 @@ class Combat:
                 observed['actual_total']=None
             result['complete']=False
             result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
+        if manual_close_unresolved:
+            tail=next(c for c in full['components'] if c['name']=='主动关闭后四连击')
+            result['manual_close_reference']={
+                'declared_terminal_seconds':self.option('last_stand_seconds',0,maximum=self.bb['before_dead_duration']),
+                'terminal_limit_parameter_seconds':self.bb['before_dead_duration'],
+                'four_hit_attack_damage_reference':tail['per_hit']*4,
+                'active_body_damage_reference':sum(c['total'] for c in full['components'] if c['name']=='技能攻击'),
+                'close_seconds':None,'transition_clock_verified':False,
+                'terminal_hit_times_seconds':None,
+            }
+            from .uncertain_sources import mask_pending_damage
+            mask_pending_damage(result,full,shown,normal,duration,cycle)
+            result['complete']=False;result['estimate']['complete']=False
         if ines_s1_unresolved:
             dot=next(c for c in full['components'] if c['name']=='淬影突袭持续法术')
             result['ines_dot_reference']={
