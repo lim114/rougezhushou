@@ -403,16 +403,19 @@ class Combat:
             fragile=(self.talent('坚冰','damage_scale_freeze',1) if status==2 else
                      self.talent('坚冰','damage_scale_cold',1) if status==1 else 1)
             res=max(0,self.enemy_res-(15 if status==2 else 0))
-            def frost(raw,count,name):
+            def frost(raw,count,name,event_times=None):
                 per=self.hit(raw,'magic',resistance=res)*fragile
-                components.append({'name':name,'damage_type':'magic','hits':count,'per_hit':per,'total':per*count})
-            if normal:frost(attack,attacks(),'普通攻击')
+                item={'name':name,'damage_type':'magic','hits':count,'per_hit':per,'total':per*count}
+                if event_times is not None:item['times_seconds']=event_times
+                components.append(item)
+            if normal:
+                events=attack_times();frost(attack,len(events),'普通攻击',events)
             elif self.n==1:
                 mode='next_attack';duration=interval;frost(attack*bb['atk_scale'],2,'高速思考')
             elif self.n==2:
                 mode='instant';duration=0;frost(attack*bb['atk_scale'],1,'零度爆发')
             else:
-                frost(attack,attacks(),'失温症攻击')
+                events=attack_times();frost(attack,len(events),'失温症攻击',events)
                 if self.s.get('frozen_at_skill_end',True) and (window is None or window>=self.skill['duration']):
                     frost(attack*bb['atk_scale'],1,'失温症终结')
             self.notes.append('寒冷/冻结易伤按所选全程状态估算；不把首击后的寒冷倒推至首击。冻结法抗-15与脆弱分开结算。')
