@@ -141,11 +141,7 @@ class Combat:
         return value
 
     def option(self,key,default=0,maximum=None,integer=False):
-        value=self.s.get(key,default)
-        # Healing-target validation uses the public capability gate; inactive fields stay ignored.
-        if integer and key!='healing_targets' and isinstance(value,bool):
-            raise ValueError(key+'需要范围内的有限非负整数。')
-        return self.value(value,key,maximum,integer)
+        return self.value(self.s.get(key,default),key,maximum,integer)
 
     def total(self,kind):return sum(float(e['value']) for e in self.effects if e['kind']==kind)
     def talent(self,name,key,default=0):return self.tv.get(name,{}).get(key,default)

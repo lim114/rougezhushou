@@ -141,11 +141,7 @@ class Combat:
         return value
 
     def option(self,key,default=0,maximum=None,integer=False):
-        value=self.s.get(key,default)
-        # Healing-target validation uses the public capability gate; inactive fields stay ignored.
-        if integer and key!='healing_targets' and isinstance(value,bool):
-            raise ValueError(key+'需要范围内的有限非负整数。')
-        return self.value(value,key,maximum,integer)
+        return self.value(self.s.get(key,default),key,maximum,integer)
 
     def total(self,kind):return sum(float(e['value']) for e in self.effects if e['kind']==kind)
     def talent(self,name,key,default=0):return self.tv.get(name,{}).get(key,default)
@@ -186,8 +182,6 @@ class Combat:
         if op=='char_2025_shu':
             if self.s.get('three_professions'):self.hp_bonus+=self.talent('天有四时','max_hp')
             if self.s.get('three_same_profession'):self.as_bonus+=self.talent('天有四时','attack_speed')
-            if '天有四时' in self.tv and isinstance(self.s.get('four_sui'),str):
-                raise ValueError('four_sui 不接受文本条件；请使用布尔值。')
             if self.s.get('four_sui'):
                 self.atk_bonus+=self.talent('天有四时','atk')
                 if self.talent('天有四时','sp')>0:

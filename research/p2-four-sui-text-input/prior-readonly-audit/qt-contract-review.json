@@ -1,0 +1,50 @@
+{
+  "scope": "Read-only Qt serializer source contract; no additional GUI/Wine execution",
+  "gui_executed_by_this_review": false,
+  "wine_executed_by_this_review": false,
+  "source_sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+  "source_readings": [
+    {
+      "file": "rouge/app.py",
+      "lines": [
+        665,
+        666,
+        667
+      ],
+      "code": "if isinstance(default,bool): widget=QCheckBox(label);widget.setChecked(default)",
+      "conclusion": "OPTIONS bool defaults construct QCheckBox widgets"
+    },
+    {
+      "file": "rouge/app.py",
+      "lines": [
+        1028
+      ],
+      "code": "'continuous_attacks':self.continuous_attacks.isChecked()"
+    },
+    {
+      "file": "rouge/app.py",
+      "lines": [
+        1031
+      ],
+      "code": "'cooperative':self.cooperative.isChecked(),'preexisting_fragile':self.fragile.isChecked()"
+    },
+    {
+      "file": "rouge/app.py",
+      "lines": [
+        1035,
+        1036,
+        1037
+      ],
+      "code": "scenario[key]=widget.isChecked() if isinstance(widget,QCheckBox) else widget.value()",
+      "conclusion": "Only current owner and skill model options are serialized; checkbox values come from isChecked()"
+    }
+  ],
+  "existing_runner_assertion_presence_only": {
+    "file": "/workspace/.continuation/ui-060-draft/wine-ui-smoke-060.py",
+    "four_sui_type_assert": true,
+    "preexisting_fragile_explicit_type_assert": false,
+    "cooperative_explicit_type_assert": false,
+    "not_a_new_GUI_success_claim": true
+  },
+  "api_documented_domain": "Not established by this limited source review. Qt bool serialization does not establish API permission for 0/1/null or existing truthiness compatibility."
+}
