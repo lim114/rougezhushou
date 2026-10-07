@@ -18,7 +18,7 @@ User instruction on 2026-10-05: recognition optimization comes after all other p
 
 ## Evidence before mechanism changes
 
-User requirement recorded on 2026-10-03: whenever a mechanism is unknown, look up evidence directly. Apply this rule on every later operation in this project.
+User requirement reaffirmed globally on 2026-10-07 (originally recorded on 2026-10-03): whenever a mechanism is unknown, look up evidence directly. Apply this rule on every later operation in this project.
 
 - Check existing research receipts first, then consult pinned original game data and relevant mechanism documentation. For a new or unresolved detail, perform a targeted source search before changing its numerical model.
 - Do not spend effort inventing activation order, tick phase, stacking rules, probabilities, hidden scripts or timing from adjacent mechanics. Parameters alone do not prove a missing script.
