@@ -111,7 +111,7 @@ def fee_section(scenario,bb,skill):
         else:gradual=bb['cost_period']
     elif op=='char_4087_ines':
         counts=skill['hit_counts']
-        if number==1:immediate=bb['cost']
+        if number==1:immediate=bb['cost']*counts.get('淬影突袭物理攻击',0)
         elif number==2:gradual=bb['cost']*counts.get('暗夜无明递增攻速攻击',0)
         else:
             immediate=bb['cost']*counts.get('收回影哨',0)
@@ -125,7 +125,7 @@ def fee_section(scenario,bb,skill):
     immediate+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='skill_start_dp')
     total=immediate+gradual;duration=skill['duration_seconds'];cycle=skill['cycle_seconds']
     rows=[metric('per_cast','单次技能回费',total,'费')]
-    if immediate:rows.append(metric('immediate','开启时立即回费',immediate,'费'))
+    if immediate:rows.append(metric('immediate','下次攻击回费条件参考' if op=='char_4087_ines' and number==1 else '开启时立即回费',immediate,'费'))
     if gradual:rows.append(metric('gradual','持续回费合计',gradual,'费'))
     if duration:rows.append(metric('active_rate','技能内平均回费',total/duration,'费/秒'))
     if cycle:
@@ -365,6 +365,15 @@ def build_report(scenario,result):
             metric('actual_end','实际结束当帧',None,'帧')],
             ['目标在名义结束前消失时不生成终结来源；同帧消失顺序未核验时完整伤害未知。',
              '实际结束相位、冻结移除顺序及离开范围的后续适用性尚未核验。']))
+    ines_dot=result.get('ines_dot_reference')
+    if ines_dot:
+        sections.append(section('ines_dot','淬影突袭 · 持续伤害待核验',[
+            metric('per_second','每秒伤害条件参考',ines_dot['per_second_damage_reference']),
+            metric('duration','持续时间参数',ines_dot['duration_parameter_seconds'],'秒'),
+            metric('first_tick','实际首跳',None,'秒'),
+            metric('ticks','实际跳数',None,'次')],
+            ['下次攻击命中是持续伤害必要来源；无有效出手参考时不生成持续伤害。',
+             '3秒和每秒伤害参数不证明首跳、刷新或边界，不生成3个假定跳伤；物理攻击参考小计保留。']))
     mizuki=result.get('mizuki_s1_reference')
     if mizuki:
         sections.append(section('mizuki_s1','唤醒 · 下次攻击与结束待核验',[
@@ -488,7 +497,7 @@ def build_report(scenario,result):
              if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
              if bait_reference else
              '这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。'
-             if wisdel or mizuki or result.get('drone_lifecycle_reference') else
+             if wisdel or mizuki or ines_dot or result.get('drone_lifecycle_reference') else
              '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']))
     if has_healing(op,number):
         rows=[];window_healing=skill['window_healing']

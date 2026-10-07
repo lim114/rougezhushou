@@ -457,9 +457,13 @@ class Combat:
         elif op=='char_4087_ines':
             if normal:regular()
             elif self.n==1:
-                mode='next_attack';duration=interval
-                regular(name='淬影突袭物理攻击')
-                emit('淬影突袭持续法术',attack*bb['bleed_atk_scale'],'magic',bb['bleed_duration'])
+                mode='next_attack';duration=interval if window is None else window
+                stream=timeline.attacks(3600 if window is None else window,interval,speed,
+                    attribute_speed=speed_reference,limit=1)
+                events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
+                emit('淬影突袭物理攻击',attack,'physical',len(events),event_times=events)
+                emit('淬影突袭持续法术',attack*bb['bleed_atk_scale'],'magic',0)
+                if events:components[-1]['actual_total']=None
             elif self.n==2:
                 # Each successful attack adds 7 ASPD up to 70, not 70 from the first hit.
                 if timeline.mode=='frames':
@@ -941,6 +945,7 @@ class Combat:
         gnosis_s1_unresolved=self.s['operator']=='char_206_gnosis' and self.n==1
         wisdel_s1_unresolved=self.s['operator']=='char_1035_wisdel' and self.n==1
         mizuki_s1_unresolved=self.s['operator']=='char_437_mizuki' and self.n==1
+        ines_s1_unresolved=self.s['operator']=='char_4087_ines' and self.n==1
         if wine_s1_unresolved:
             # The native multihit gap does not establish absolute cast end,
             # SP observation or normal-attack resumption. A resource anchor
@@ -956,6 +961,10 @@ class Combat:
             duration=None;recharge=None
             first=0.0 if initial>=sp['sp_cost'] else None
             self.notes.append(('定点清算' if wisdel_s1_unresolved else '唤醒')+'实际技能绑定与结束/阻回未核验；不由普通攻击结束推导完整周期。')
+        if ines_s1_unresolved:
+            duration=None;recharge=None
+            first=0.0 if initial>=sp['sp_cost'] else None
+            self.notes.append('淬影突袭持续法术首跳、刷新和技能结束/阻回未核验，3秒参数不证明实际跳数或完整周期。')
         if mode=='ammo' and duration is None:total_damage=total_healing=None
         if mode in ('deployment','passive'):first=0;recharge=None
         nonrepeat=mode in ('infinite','passive','switch','once','once_deploy','deployment','triggered_ammo')
@@ -1017,7 +1026,7 @@ class Combat:
                     stun=sp['values'].get('stun',0) if self.s['operator']=='char_002_amiya' and self.n==2 else 0)
                 recharge=sp_events['cycle']['seconds']
             else:recharge=None
-        if wine_s1_unresolved or gnosis_s1_unresolved or wisdel_s1_unresolved or mizuki_s1_unresolved:
+        if wine_s1_unresolved or gnosis_s1_unresolved or wisdel_s1_unresolved or mizuki_s1_unresolved or ines_s1_unresolved:
             recharge=None
             first=0.0 if initial>=sp['sp_cost'] else None
         cycle=duration+recharge if not nonrepeat and duration is not None and recharge is not None else None
@@ -1140,6 +1149,18 @@ class Combat:
                 observed['actual_total']=None
             result['complete']=False
             result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
+        if ines_s1_unresolved:
+            dot=next(c for c in full['components'] if c['name']=='淬影突袭持续法术')
+            result['ines_dot_reference']={
+                'per_second_damage_reference':dot['per_hit'],'duration_parameter_seconds':self.bb['bleed_duration'],
+                'interval_description_seconds':1,'actual_first_tick_seconds':None,
+                'actual_tick_count':None,'refresh_order_verified':False,'dot_stacks':False,
+                'source_possible':{'cast':'actual_total' in dot,
+                    'window':any('actual_total' in c for c in shown['components'] if c['name']=='淬影突袭持续法术')},
+            }
+            from .uncertain_sources import mask_pending_damage
+            mask_pending_damage(result,full,shown,normal,duration,cycle)
+            result['complete']=False;result['estimate']['complete']=False
         if mizuki_s1_unresolved:
             result['mizuki_s1_reference']={
                 'physical_per_hit_reference':next(c['per_hit'] for c in full['components'] if c['name']=='唤醒物理'),
