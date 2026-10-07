@@ -136,7 +136,14 @@ class AmmoRefillReferenceTests(unittest.TestCase):
                 for rid,count in zip((BOOK,YA),counts):
                     r=calc(op,n,rid,timing_mode=mode)
                     self.assertEqual(r['estimate']['skill']['hit_counts'][name],count)
-                    self.assertGreater(r['estimate']['skill']['total_damage'],b['estimate']['skill']['total_damage'])
+                    if op=='char_1035_wisdel':
+                        # Refills increase the sourced owner attack count;
+                        # unverified aftershock/shadow totals remain unknown.
+                        self.assertIsNone(r['estimate']['skill']['total_damage'])
+                        self.assertIsNone(b['estimate']['skill']['total_damage'])
+                        self.assertGreater(r['known_damage_subtotals']['total_damage'],
+                                           b['known_damage_subtotals']['total_damage'])
+                    else:self.assertGreater(r['estimate']['skill']['total_damage'],b['estimate']['skill']['total_damage'])
                     self.assertGreater(r['estimate']['skill']['duration_seconds'],b['estimate']['skill']['duration_seconds'])
                     self.assertTrue(r['relic_resolution']['complete'])
 

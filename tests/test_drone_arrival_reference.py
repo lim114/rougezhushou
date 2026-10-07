@@ -34,6 +34,7 @@ class DroneArrivalReferenceTests(unittest.TestCase):
         self.assertEqual(body['times_seconds'][0], .4)
         self.assertEqual(r['known_damage_subtotals']['window_damage'], 55800)
         self.assertIsNone(r['total_damage'])
+        self.assertIn('当前情景召唤/协同分项伤害：未知', format_estimate(r))
 
     def test_empty_owner_range_cannot_cancel_global_drone_source(self):
         r = evaluate(timing={'target_windows': []})
@@ -46,6 +47,7 @@ class DroneArrivalReferenceTests(unittest.TestCase):
             r = evaluate(**extra)
             self.assertEqual(r['total_damage'], 0)
             self.assertFalse(r['drone_lifecycle_reference']['drone_source_possible']['window'])
+            self.assertIn('当前情景召唤/协同分项伤害：0', format_estimate(r))
 
     def test_warmup_and_deployment_age_cannot_supply_missing_independent_hits(self):
         for warmup, age in ((0, 0), (7, 60), (100, 100)):

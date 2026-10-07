@@ -182,7 +182,8 @@ def mechanism_sections(scenario,result,source,profile):
     summoned=[c for c in components if any(word in c['name'] for word in summon_words)]
     source_summons=[c for c in clauses+descriptions if any(word in c for word in summon_words)]
     if summoned or source_summons or op in ('char_328_cammou','char_1038_whitw2') or (op=='silverash' and number==3 and scenario.get('cooperative')):
-        rows=[metric('summon_damage','当前情景召唤/协同分项伤害',sum(c['total'] for c in summoned))] if summoned else []
+        rows=[metric('summon_damage','当前情景召唤/协同分项伤害',None if any(
+            'actual_total' in c and c['actual_total'] is None for c in summoned) else sum(c['total'] for c in summoned))] if summoned else []
         if op=='char_110_deepcl':
             from .summons import token_concurrent_limit
             rows[0:0]=[metric('summon_count','参与测算触手数（局外假设）',scenario.get('summon_count',1),'个'),
