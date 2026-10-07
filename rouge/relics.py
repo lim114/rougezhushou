@@ -434,6 +434,11 @@ def finish(result,resolution,attributes,scenario):
         features=[r for r in rules if r.get('token_only') and tid in r.get('token_ids',[])]
         sources=(['模组'] if module or cost_module else [])+(['藏品'] if applied or cost_module and features else [])+(['分队'] if run_effects else [])
         applied+=run_effects
+        from .summons import manual_token_stat_effects
+        manual_effects=manual_token_stat_effects(scenario,tid)
+        if manual_effects:
+            applied+=manual_effects
+            sources.append('手动输入')
         if not applied and not features and not module and not cost_module:continue
         from .relic_attributes import is_attribute_rune
         runes=[e for e in applied if is_attribute_rune(e)]
@@ -441,6 +446,7 @@ def finish(result,resolution,attributes,scenario):
         stats=token_attributes(profile,scenario,tid,total('hp_pct'),rune_effects=runes)
         for key,kind in (('attack','attack_pct'),('defense','defense_pct')):stats[key]*=1+total(kind)
         stats['attack_speed']=effective_attack_speed(stats['attack_speed']+total('attack_speed'))
+        stats['resistance']=min(100,stats['resistance']+sum(e['value'] for e in manual_effects if e['kind']=='resistance_flat'))
         stats['deployment_cost']=max(0,stats['deployment_cost']+total('deployment_cost_add'))
         stats['free_deployment_slot']=bool(total('token_deploy_slot_free'))
         if total('regeneration_hp_ratio') or total('regeneration'):

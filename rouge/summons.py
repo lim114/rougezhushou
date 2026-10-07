@@ -9,6 +9,27 @@ from functools import lru_cache
 from pathlib import Path
 
 
+def manual_token_effects(scenario,token_id=None):
+    """Keep the existing explicit unit scope and enemy damage-taken fallback.
+
+    This reads supplied parameters only. It does not establish a new talent,
+    module layer, acquisition event, deployment or token lifecycle.
+    """
+    from copy import deepcopy
+    return [deepcopy(e) for e in scenario.get('effects',[]) if not e.get('_verified_rule') and
+        (e.get('target_scope')=='all_units' or
+         (e['kind']=='damage_taken' and not e.get('profession') and not e.get('position'))) and
+        (token_id is None or not e.get('token_ids') or token_id in e['token_ids'])]
+
+
+def manual_token_stat_effects(scenario,token_id):
+    """Select only ordinary explicit all-unit attributes for the token panel."""
+    from .relic_attributes import is_attribute_rune
+    return [e for e in manual_token_effects(scenario,token_id) if e.get('target_scope')=='all_units' and
+        e.get('origin')!='run_squad' and not is_attribute_rune(e) and
+        e['kind'] in ('hp_pct','attack_pct','defense_pct','resistance_flat','attack_speed')]
+
+
 @lru_cache(maxsize=1)
 def _duration_rules():
     return json.loads((Path(__file__).with_name('data')/'token-duration-reference.json').read_text(encoding='utf-8'))
