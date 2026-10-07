@@ -10,6 +10,65 @@ from pathlib import Path
 
 
 @lru_cache(maxsize=1)
+def _duration_rules():
+    return json.loads((Path(__file__).with_name('data')/'token-duration-reference.json').read_text(encoding='utf-8'))
+
+
+def duration_reference(profile,scenario,token_id):
+    """Return an isolated duration parameter; actual token presence is unknown.
+
+    The product's current theme is rogue_6. An explicit map_tag allows callers
+    to inspect another map without inheriting its conditional module override.
+    No parameter here schedules deployment, withdrawal, death or damage.
+    """
+    from copy import deepcopy
+    data=_duration_rules()
+    rule=next((r for r in data['rules'] if r['operator_id']==profile['id'] and
+        r['token_id']==token_id and token_id in profile.get('tokens',{})),None)
+    if rule is None:return None
+    elite=scenario.get('elite',2)
+    level=scenario.get('level') or profile['phases'][elite]['max_level']
+    potential=scenario.get('potential',1)-1
+    def eligible(candidate):
+        phase=candidate['unlock_elite']
+        return phase<=elite and (phase<elite or candidate['unlock_level']<=level) and candidate['required_potential_rank']<=potential
+    candidates=[c for c in rule['base_candidates'] if eligible(c)]
+    base=candidates[-1] if candidates else None
+    map_tag=scenario.get('map_tag','rogue_6')
+    override=next((o for o in rule['module_overrides'] if base and
+        scenario.get('module_id')==rule['module_id'] and
+        scenario.get('module_level',0)==o['module_level'] and
+        elite>=rule['module_unlock_elite'] and level>=rule['module_unlock_level'] and
+        eligible(o) and map_tag==o['map_tag'] and
+        any(m['id']==rule['module_id'] for m in profile['modules'])),None)
+    state='locked' if base is None else 'unlimited' if override else 'finite'
+    return {'scope':data['scope'],'operator_id':rule['operator_id'],'token_id':token_id,
+        'token_name':rule['token_name'],'unlocked':base is not None,'state':state,
+        'duration_seconds':base['duration_seconds'] if state=='finite' else None,
+        'base_duration_seconds':base['duration_seconds'] if base else None,
+        'parameter_key':rule['parameter_key'],
+        'parameter_value':override['parameter_value'] if override else base['duration_seconds'] if base else None,
+        'map_tag':map_tag,'map_context':'explicit' if 'map_tag' in scenario else 'current_product_theme',
+        'base_source_selector':base['source_selector'] if base else None,
+        'module_override':{'module_id':rule['module_id'],'unlock_elite':rule['module_unlock_elite'],
+            'unlock_level':rule['module_unlock_level'],'applied':override is not None,
+            'conditions':deepcopy(rule['module_overrides']),
+            'source_selector':override['source_selector'] if override else None},
+        'source_commit':data['source_commit'],'sources':deepcopy(data['sources']),
+        'deployment_completed_seconds':None,'actual_exit_seconds':None,'actual_alive_seconds':None,
+        'live_state_verified':False,'damage_timing_applied':False}
+
+
+def finish_duration_references(scenario,result):
+    """Expose documented token parameters separately from relic stat panels."""
+    from .catalog import catalog
+    profile=catalog()['operators'][scenario['operator']]
+    references=[r for token_id in profile.get('tokens',{}) if
+        (r:=duration_reference(profile,scenario,token_id)) is not None]
+    if references:result['token_duration_references']=references
+
+
+@lru_cache(maxsize=1)
 def module_rules():
     return json.loads((Path(__file__).with_name('data')/'summon-module-rules.json').read_text(encoding='utf-8'))
 
@@ -75,4 +134,6 @@ def token_attributes(profile,scenario,token_id,hp_pct=0,*,rune_effects=()):
                 stats['hp']=None;reference['hp_composition_pending']=True
             else:stats['hp']=reference['module_only_hp']
         stats['module_reference']=reference
+    duration=duration_reference(profile,scenario,token_id)
+    if duration is not None:stats['duration_reference']=duration
     return stats

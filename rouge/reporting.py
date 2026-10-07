@@ -239,6 +239,15 @@ def build_report(scenario,result):
     source=p['skills'][number-1]['levels'][scenario.get('skill_rank',10)-1]
     bb=source['values'];estimate=result['estimate'];skill=estimate['skill']
     sections=[]
+    for reference in result.get('token_duration_references',[]):
+        state=reference['state']
+        notes=['当前培养尚未解锁结构性原理。' if state=='locked' else
+               '当前持续参数为无限；这不保证持续存活，仍可能死亡或撤退。' if state=='unlimited' else
+               '显示部署后持续参数，实际在场时间尚未确认。',
+               '无限仅适用于【沉沦者的黑流树海】、精二60级及以上的二/三阶模组；一阶仍用基础持续参数。',
+               '实际部署完成、退场和存活时长未知；本参考不改变技能伤害或回转。']
+        sections.append(section('token_duration_'+reference['token_id'],reference['token_name']+' · 持续参数参考',[
+            metric('duration','部署后持续参数',reference['duration_seconds'],'秒')],notes))
     mode=skill.get('mode','ammo' if source['duration_type']=='AMMO' else 'instant' if source['duration']<=0 else 'timed')
     sections.append(section('timing','技能时序',[
         metric('initial','预计初动',skill['initial_seconds'],'秒'),

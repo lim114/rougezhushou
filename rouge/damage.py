@@ -274,6 +274,8 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
         result['total_healing']=result['estimate']['skill']['window_healing']
     from .attribute_limits import finalize_attack_speed_references
     finalize_attack_speed_references(result)
+    from .summons import finish_duration_references
+    finish_duration_references(scenario,result)
     from .reporting import build_report
     result['report']=build_report(scenario,result)
     return result
