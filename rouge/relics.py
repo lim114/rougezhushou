@@ -27,7 +27,8 @@ def context_value(effect,scenario):
     if not isinstance(context,dict):raise ValueError('藏品条件需要JSON对象。')
     if condition=='emergency_hire':
         kind=scenario.get('recruitment_kind')
-        return None if kind is None else int(kind=='emergency_hire')
+        if type(kind) is not str or kind not in ('non_emergency','emergency_hire'):return None
+        return int(kind=='emergency_hire')
     value=context.get(condition,scenario.get(condition) if condition=='current_hp_ratio' else None)
     if value is None:return None
     if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value) or value<0:

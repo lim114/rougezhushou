@@ -1,0 +1,75 @@
+{
+  "rouge/recruitment_recognition.py": {
+    "sha256": "b445e4307c91388d6ecf0a742db2b73707e2d5c58e6d80d2095e3537744ff47c",
+    "matching_lines": [
+      {
+        "line": 18,
+        "text": "if not crop.size:return None"
+      },
+      {
+        "line": 27,
+        "text": "if best is None or best[0]<.65:return None"
+      },
+      {
+        "line": 34,
+        "text": "return None"
+      },
+      {
+        "line": 55,
+        "text": "if best>=.70:return {'kind':'emergency_hire','score':best,'version':2,'source':'等级左侧人形与时钟应急标识'}"
+      },
+      {
+        "line": 57,
+        "text": "return {'kind':'non_emergency','score':best,'version':2,'source':'等级左侧区域未显示应急人形/时钟标识'}"
+      },
+      {
+        "line": 58,
+        "text": "return None"
+      }
+    ]
+  },
+  "rouge/run_recognition.py": {
+    "sha256": "c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150",
+    "matching_lines": [
+      {
+        "line": 298,
+        "text": "result['recruitment_kind']=marker['kind'];sources['recruitment_kind']=marker"
+      }
+    ]
+  },
+  "rouge/app.py": {
+    "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+    "matching_lines": [
+      {
+        "line": 1039,
+        "text": "scenario['recruitment_kind']=state.get('recruitment_kind') if state.get('scope')=='run' else None"
+      }
+    ]
+  },
+  "rouge/run_state.py": {
+    "sha256": "6d36bc955af40aff99ac9079706342b67e6df0bc8d1f93e55e2cc580cabcbdac",
+    "matching_lines": [
+      {
+        "line": 96,
+        "text": "or member.get('recruitment_kind') not in ('non_emergency','emergency_hire')):continue"
+      }
+    ]
+  },
+  "rouge/relics.py": {
+    "sha256": "c69a424650e488b436663372d1a09345ffa174f627a1c2bb748c46c3e3a85c1a",
+    "matching_lines": [
+      {
+        "line": 28,
+        "text": "if condition=='emergency_hire':"
+      },
+      {
+        "line": 29,
+        "text": "kind=scenario.get('recruitment_kind')"
+      },
+      {
+        "line": 30,
+        "text": "return None if kind is None else int(kind=='emergency_hire')"
+      }
+    ]
+  }
+}

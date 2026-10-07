@@ -1,0 +1,227 @@
+{
+  "baseline_head": "15e0fa455aad05d27303428299d24d15db4c572c",
+  "review_scope": "Read-only frozen public game/source closure; no fresh network request or private/game reads",
+  "frozen_public_files_checked": 121,
+  "frozen_source_drift": [],
+  "pinned_original_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "pinned_original_path": "/workspace/.continuation/p2-after-055-audit/relic-scope/roguelike_topic_table.json",
+  "pinned_original_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+  "pinned_original_bytes": 17943244,
+  "usage_selector": "roguelike_topic_table.details.rogue_6.items.rogue_6_relic_cargo_10.usage",
+  "usage": "应急助力节点中招募所需源石锭-50%，应急干员的生命值、攻击力和防御力+40%",
+  "buff_selector": "roguelike_topic_table.details.rogue_6.relics.rogue_6_relic_cargo_10.buffs[1]",
+  "buff": {
+    "key": "global_buff_normal",
+    "blackboard": [
+      {
+        "key": "key",
+        "value": 0.0,
+        "valueStr": "rogue_6_relic_employ"
+      },
+      {
+        "key": "atk",
+        "value": 0.4,
+        "valueStr": null
+      },
+      {
+        "key": "def",
+        "value": 0.4,
+        "valueStr": null
+      },
+      {
+        "key": "max_hp",
+        "value": 0.4,
+        "valueStr": null
+      }
+    ]
+  },
+  "emergency_condition_selectors": [
+    {
+      "selector": "relic-mechanics.relics.rogue_6_relic_cargo_10.effects[0]",
+      "effect": {
+        "kind": "attack_pct",
+        "value": 0.4,
+        "profession": "",
+        "position": "",
+        "subprofession": "",
+        "condition": "emergency_hire",
+        "source_buff_key": "global_buff_normal",
+        "source_buff_index": 1
+      }
+    },
+    {
+      "selector": "relic-mechanics.relics.rogue_6_relic_cargo_10.effects[1]",
+      "effect": {
+        "kind": "hp_pct",
+        "value": 0.4,
+        "profession": "",
+        "position": "",
+        "subprofession": "",
+        "condition": "emergency_hire",
+        "source_buff_key": "global_buff_normal",
+        "source_buff_index": 1
+      }
+    },
+    {
+      "selector": "relic-mechanics.relics.rogue_6_relic_cargo_10.effects[2]",
+      "effect": {
+        "kind": "defense_pct",
+        "value": 0.4,
+        "profession": "",
+        "position": "",
+        "subprofession": "",
+        "condition": "emergency_hire",
+        "source_buff_key": "global_buff_normal",
+        "source_buff_index": 1
+      }
+    }
+  ],
+  "public_source_contracts": {
+    "rouge/recruitment_recognition.py": {
+      "sha256": "b445e4307c91388d6ecf0a742db2b73707e2d5c58e6d80d2095e3537744ff47c",
+      "matching_lines": [
+        {
+          "line": 18,
+          "text": "if not crop.size:return None"
+        },
+        {
+          "line": 27,
+          "text": "if best is None or best[0]<.65:return None"
+        },
+        {
+          "line": 34,
+          "text": "return None"
+        },
+        {
+          "line": 55,
+          "text": "if best>=.70:return {'kind':'emergency_hire','score':best,'version':2,'source':'等级左侧人形与时钟应急标识'}"
+        },
+        {
+          "line": 57,
+          "text": "return {'kind':'non_emergency','score':best,'version':2,'source':'等级左侧区域未显示应急人形/时钟标识'}"
+        },
+        {
+          "line": 58,
+          "text": "return None"
+        }
+      ]
+    },
+    "rouge/run_recognition.py": {
+      "sha256": "c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150",
+      "matching_lines": [
+        {
+          "line": 298,
+          "text": "result['recruitment_kind']=marker['kind'];sources['recruitment_kind']=marker"
+        }
+      ]
+    },
+    "rouge/app.py": {
+      "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "matching_lines": [
+        {
+          "line": 1039,
+          "text": "scenario['recruitment_kind']=state.get('recruitment_kind') if state.get('scope')=='run' else None"
+        }
+      ]
+    },
+    "rouge/run_state.py": {
+      "sha256": "6d36bc955af40aff99ac9079706342b67e6df0bc8d1f93e55e2cc580cabcbdac",
+      "matching_lines": [
+        {
+          "line": 96,
+          "text": "or member.get('recruitment_kind') not in ('non_emergency','emergency_hire')):continue"
+        }
+      ]
+    },
+    "rouge/relics.py": {
+      "sha256": "c69a424650e488b436663372d1a09345ffa174f627a1c2bb748c46c3e3a85c1a",
+      "matching_lines": [
+        {
+          "line": 28,
+          "text": "if condition=='emergency_hire':"
+        },
+        {
+          "line": 29,
+          "text": "kind=scenario.get('recruitment_kind')"
+        },
+        {
+          "line": 30,
+          "text": "return None if kind is None else int(kind=='emergency_hire')"
+        }
+      ]
+    }
+  },
+  "legal_public_identity_values": [
+    "non_emergency",
+    "emergency_hire"
+  ],
+  "active_input_policy": {
+    "authority": "Explicit root instruction for external section-58 implementation, superseding original audit policy suggestion.",
+    "prior_suggestion": "Explicit invalid names/types raise ValueError.",
+    "active_policy": "Exact built-in strings non_emergency and emergency_hire yield known 0/1; all absent/None/invalid/unrecognized values yield None and use the existing missing-condition pending path.",
+    "scope": "Only when an applicable emergency_hire effect queries context_value; no global enum validator.",
+    "effects_using_condition": [
+      {
+        "selector": "relic-mechanics.relics.rogue_6_relic_cargo_10.effects[0]",
+        "value": {
+          "kind": "attack_pct",
+          "value": 0.4,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "condition": "emergency_hire",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 1
+        }
+      },
+      {
+        "selector": "relic-mechanics.relics.rogue_6_relic_cargo_10.effects[1]",
+        "value": {
+          "kind": "hp_pct",
+          "value": 0.4,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "condition": "emergency_hire",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 1
+        }
+      },
+      {
+        "selector": "relic-mechanics.relics.rogue_6_relic_cargo_10.effects[2]",
+        "value": {
+          "kind": "defense_pct",
+          "value": 0.4,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "condition": "emergency_hire",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 1
+        }
+      }
+    ],
+    "condition_currently_only_cargo10": true,
+    "prepare_order": {
+      "query_line": 210,
+      "none_missing_line": 214,
+      "resolved_rule_relic_id_line": 219,
+      "token_query_line": 146,
+      "token_resolved_rule_relic_id_line": 149
+    },
+    "must_preserve": [
+      "Full public outputs for both legal strings",
+      "Full public outputs for omitted and None identity",
+      "Full public outputs with no relevant relic",
+      "Public caller input and cached mechanics"
+    ],
+    "source_facts_unchanged": true,
+    "production_edits": 0
+  },
+  "superseded_audit_recommendation": "Original source-receipt ValueError recommendation is historical only; policy-override.json and NOTE override are active.",
+  "native_attachment_proven": false,
+  "hotfix_equivalence_proven": false,
+  "new_timing_or_stacking_claim": false,
+  "findings": [],
+  "source_review_passed": true
+}
