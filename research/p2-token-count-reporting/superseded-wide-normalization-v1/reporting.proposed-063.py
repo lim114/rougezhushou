@@ -247,9 +247,9 @@ def mechanism_sections(scenario,result,source,profile):
 
 def build_report(scenario,result):
     op=scenario['operator'];number=scenario['skill'];p=catalog()['operators'][op]
-    if op=='char_110_deepcl' and type(scenario.get('summon_count')) is str:
-        # Combat.plan already validated this finite, nonnegative integer string.
-        scenario={**scenario,'summon_count':int(float(scenario['summon_count']))}
+    if op=='char_110_deepcl':
+        # Combat.plan already validated this finite, nonnegative integer count.
+        scenario={**scenario,'summon_count':int(float(scenario.get('summon_count',1)))}
     source=p['skills'][number-1]['levels'][scenario.get('skill_rank',10)-1]
     bb=source['values'];estimate=result['estimate'];skill=estimate['skill']
     sections=[]
@@ -999,8 +999,6 @@ def format_report(result,*,technical=False):
         text=re.sub(r'\b(?:NORMAL|ELITE|BOSS|FOUR_STAR)\b',lambda m:{
             'NORMAL':'普通','ELITE':'精英','BOSS':'领袖','FOUR_STAR':'紧急'}[m.group()],text)
         if technical:return text
-        # Translate this verified condition only; unknown script keys stay opaque.
-        text=re.sub(r'(?<![\w:.\[\]@])emergency_hire(?![\w:.\[\]@])','应急招募来源',text)
         for url in re.findall(r'https?://[^\s；，。<>）]+',text):
             if url not in sources:sources.append(url)
         text=re.sub(r'\s*原生算术证明[:：]\s*[0-9a-f]{64}','',text)

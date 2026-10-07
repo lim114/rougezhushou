@@ -1,0 +1,12 @@
+--- a/rouge/reporting.py
++++ b/rouge/reporting.py
+@@ -247,6 +247,9 @@
+ 
+ def build_report(scenario,result):
+     op=scenario['operator'];number=scenario['skill'];p=catalog()['operators'][op]
++    if op=='char_110_deepcl' and type(scenario.get('summon_count')) is str:
++        # Combat.plan already validated this finite, nonnegative integer string.
++        scenario={**scenario,'summon_count':int(float(scenario['summon_count']))}
+     source=p['skills'][number-1]['levels'][scenario.get('skill_rank',10)-1]
+     bb=source['values'];estimate=result['estimate'];skill=estimate['skill']
+     sections=[]
