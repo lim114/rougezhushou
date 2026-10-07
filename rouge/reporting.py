@@ -415,6 +415,18 @@ def build_report(scenario,result):
         sections.append(section('haruka_healing','遥 · 满额潜在治疗参考',rows,[
             '普通治疗沿用既有动作参考和明确的特性人数参数；实际友方获取时刻、模组附着及当前客户端尚未核验。',
             '特性人数与当前技能增加人数保留独立来源；人数相加只列条件参数，超出已建模范围的份额及其派生伤害不并入已计小计。']))
+    shield=result.get('shield_break_reference')
+    if shield:
+        rows=[metric('count','声明本次总破屏次数',shield['hits_requested'],'次'),
+            metric('per_hit','破屏单次法伤条件参考',shield['per_hit_damage_reference']),
+            metric('declared','给定总次数条件伤害参考',shield['declared_count_damage_reference']),
+            metric('ammo','原表弹药数量参数',shield['nominal_ammunition_parameter'],'发'),
+            metric('manual_duration','手动结束时间条件参数',shield['manual_duration_parameter_seconds'],'秒'),
+            metric('break_times','实际破屏/爆炸时刻',None,'秒'),
+            metric('actual_end','实际结束时刻',None,'秒')]
+        sections.append(section('shield_break','协防术式 · 破屏条件来源待核验',rows,[
+            '总次数不证明当前窗口内的事件数量；零观察窗口和当前敌人0秒生命周期不产生实际伤害。',
+            '本体与结构性原理的破屏、耗弹与再次屏障顺序未闭合；普通攻击沿用既有手动结束参数参考，未并入未定位的爆炸来源。']))
     external=result.get('external_event_reference')
     if external:
         rows=[metric('source_'+str(i),c['name']+'条件总量',c['total'],

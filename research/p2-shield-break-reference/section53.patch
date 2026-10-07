@@ -1,0 +1,342 @@
+--- a/rouge/damage.py
++++ b/rouge/damage.py
+@@ -273,6 +273,8 @@
+         result['estimate']=build_estimate(scenario,result,attributes,_skill_damage)
+     from .charge_reference import finish_charge_reference
+     finish_charge_reference(scenario,result)
++    from .shield_break_reference import finish_shield_break_reference
++    finish_shield_break_reference(scenario,result)
+     from .timing import annotate_result
+     annotate_result(scenario,result)
+     finish(result,resolution,attributes,scenario)
+--- a/rouge/reporting.py
++++ b/rouge/reporting.py
+@@ -402,6 +402,18 @@
+         sections.append(section('haruka_healing','遥 · 满额潜在治疗参考',rows,[
+             '普通治疗沿用既有动作参考和明确的特性人数参数；实际友方获取时刻、模组附着及当前客户端尚未核验。',
+             '特性人数与当前技能增加人数保留独立来源；人数相加只列条件参数，超出已建模范围的份额及其派生伤害不并入已计小计。']))
++    shield=result.get('shield_break_reference')
++    if shield:
++        rows=[metric('count','声明本次总破屏次数',shield['hits_requested'],'次'),
++            metric('per_hit','破屏单次法伤条件参考',shield['per_hit_damage_reference']),
++            metric('declared','给定总次数条件伤害参考',shield['declared_count_damage_reference']),
++            metric('ammo','原表弹药数量参数',shield['nominal_ammunition_parameter'],'发'),
++            metric('manual_duration','手动结束时间条件参数',shield['manual_duration_parameter_seconds'],'秒'),
++            metric('break_times','实际破屏/爆炸时刻',None,'秒'),
++            metric('actual_end','实际结束时刻',None,'秒')]
++        sections.append(section('shield_break','协防术式 · 破屏条件来源待核验',rows,[
++            '总次数不证明当前窗口内的事件数量；零观察窗口和当前敌人0秒生命周期不产生实际伤害。',
++            '本体与结构性原理的破屏、耗弹与再次屏障顺序未闭合；普通攻击沿用既有手动结束参数参考，未并入未定位的爆炸来源。']))
+     external=result.get('external_event_reference')
+     if external:
+         rows=[metric('source_'+str(i),c['name']+'条件总量',c['total'],
+--- a/tests/test_damage.py
++++ b/tests/test_damage.py
+@@ -148,13 +148,17 @@
+         self.assertEqual(result['estimate']['base_stats']['defense'],845)
+ 
+     def test_shield_skill_can_estimate_a_cast_with_an_explicit_end_time(self):
+-        skill=calculate_damage({'operator':'mechanist','skill':2,'base_attack':1000,
+-            'shield_break_count':2,'skill_duration_seconds':20})['estimate']['skill']
+-        # Two 5000 explosions and 16 ordinary 2500 hits during the skill;
+-        # 41 ordinary 1000 hits during its 50-second recharge.
+-        self.assertEqual(skill['total_damage'],50000)
++        result=calculate_damage({'operator':'mechanist','skill':2,'base_attack':1000,
++            'shield_break_count':2,'skill_duration_seconds':20})
++        skill=result['estimate']['skill']
++        # Keep 16 ordinary 2500 hits and 41 ordinary recharge hits as subtotals;
++        # two 5000 shield explosions have no verified event/cast placement.
++        self.assertIsNone(skill['total_damage'])
++        self.assertEqual(result['known_damage_subtotals']['total_damage'],40000)
++        self.assertEqual(result['shield_break_reference']['declared_count_damage_reference'],10000)
+         self.assertEqual(skill['cycle_seconds'],70)
+-        self.assertEqual(skill['cycle_dps'],1300)
++        self.assertIsNone(skill['cycle_dps'])
++        self.assertEqual(result['known_damage_subtotals']['cycle_damage'],81000)
+ 
+     def test_silverash_shield_skill_is_not_misreported_as_healing(self):
+         skill=calculate_damage({'operator':'silverash','skill':1})['estimate']['skill']
+@@ -227,7 +231,8 @@
+ 
+     def test_shield_break_count_is_not_enough_to_infer_a_full_cycle(self):
+         result=calculate_damage({'operator':'mechanist','skill':2,'base_attack':1000,'shield_break_count':2})
+-        self.assertEqual(result['total_damage'],10000)
++        self.assertIsNone(result['total_damage'])
++        self.assertEqual(result['shield_break_reference']['declared_count_damage_reference'],10000)
+         self.assertIsNone(result['estimate']['skill']['total_damage'])
+         self.assertIsNone(result['estimate']['skill']['cycle_seconds'])
+         self.assertEqual(result['estimate']['skill']['initial_seconds'],15)
+@@ -276,7 +281,8 @@
+         result = calculate_damage({'operator': 'mechanist', 'skill': 2, 'skill_rank': 10,
+             'base_attack': 1000, 'enemy_resistance': 50, 'shield_break_count': 2})
+         # 2500 ATK * 200% * 50% RES * two observed shield breaks.
+-        self.assertAlmostEqual(result['total_damage'], 5000)
++        self.assertIsNone(result['total_damage'])
++        self.assertAlmostEqual(result['shield_break_reference']['declared_count_damage_reference'], 5000)
+     def test_skill_rank_seven_uses_non_mastery_profile(self):
+         result = calculate_damage({'operator': 'kaltsit', 'skill': 2, 'skill_rank': 7, 'base_attack': 1000})
+         # Rank 7: ATK +125%; 350% true damage, ten shots => 78750.
+--- a/scripts/verify_cloud.py
++++ b/scripts/verify_cloud.py
+@@ -15,7 +15,7 @@
+     "tests.test_attack_speed_bounds_065",
+     "tests.test_run_modifiers", "tests.test_run_config_validation", "tests.test_training_input_types", "tests.test_multi_melee_070",
+     "tests.test_neural_sources_035", "tests.test_s1_neural_boundary",
+-    "tests.test_neural_incoming_clock", "tests.test_charge_reference", "tests.test_gnosis_attack_clock", "tests.test_gnosis_s1_reference", "tests.test_gnosis_target_lifetime", "tests.test_gnosis_isw_a_reference", "tests.test_drone_attack_clock", "tests.test_myrtle_healing_targets", "tests.test_gummy_cooking_clock", "tests.test_drone_traits", "tests.test_gummy_expected_clock", "tests.test_headwolf_phase_clock", "tests.test_wisdel_secondary_reference", "tests.test_wisdel_ghost_clock", "tests.test_mizuki_talent_identity", "tests.test_mizuki_amb_y_reference", "tests.test_mizuki_s1_reference", "tests.test_mei_s1_reference", "tests.test_ines_dot_reference", "tests.test_manual_close_reference", "tests.test_aglna_liftoff_reference", "tests.test_next_attack_healing_reference", "tests.test_snow_field_reference", "tests.test_snow_entry_reference", "tests.test_xiangzi_notes_reference", "tests.test_shield_contact_reference", "tests.test_orchid_arrow_reference", "tests.test_orchid_redeploy_reference", "tests.test_haruka_event_reference", "tests.test_haruka_healing_targets", "tests.test_healing_subtotal_scaling", "tests.test_wang_passive_reference", "tests.test_mantra_manual_events", "tests.test_deployment_independent_sources", "tests.test_empty_enemy_scope", "tests.test_friendly_scope_report", "tests.test_susuro_recipient_factor", "tests.test_chen_phase_reference", "tests.test_amiya_phase_reference", "tests.test_amiya_input_qualification", "tests.test_yato_deployment_reference", "tests.test_enemy_rune_selectors", "tests.test_aglna_manual_weight", "tests.test_drone_aura_reference", "tests.test_drone_arrival_reference", "tests.test_token_duration_reference", "tests.test_technology_reference",
++    "tests.test_neural_incoming_clock", "tests.test_charge_reference", "tests.test_shield_break_reference", "tests.test_gnosis_attack_clock", "tests.test_gnosis_s1_reference", "tests.test_gnosis_target_lifetime", "tests.test_gnosis_isw_a_reference", "tests.test_drone_attack_clock", "tests.test_myrtle_healing_targets", "tests.test_gummy_cooking_clock", "tests.test_drone_traits", "tests.test_gummy_expected_clock", "tests.test_headwolf_phase_clock", "tests.test_wisdel_secondary_reference", "tests.test_wisdel_ghost_clock", "tests.test_mizuki_talent_identity", "tests.test_mizuki_amb_y_reference", "tests.test_mizuki_s1_reference", "tests.test_mei_s1_reference", "tests.test_ines_dot_reference", "tests.test_manual_close_reference", "tests.test_aglna_liftoff_reference", "tests.test_next_attack_healing_reference", "tests.test_snow_field_reference", "tests.test_snow_entry_reference", "tests.test_xiangzi_notes_reference", "tests.test_shield_contact_reference", "tests.test_orchid_arrow_reference", "tests.test_orchid_redeploy_reference", "tests.test_haruka_event_reference", "tests.test_haruka_healing_targets", "tests.test_healing_subtotal_scaling", "tests.test_wang_passive_reference", "tests.test_mantra_manual_events", "tests.test_deployment_independent_sources", "tests.test_empty_enemy_scope", "tests.test_friendly_scope_report", "tests.test_susuro_recipient_factor", "tests.test_chen_phase_reference", "tests.test_amiya_phase_reference", "tests.test_amiya_input_qualification", "tests.test_yato_deployment_reference", "tests.test_enemy_rune_selectors", "tests.test_aglna_manual_weight", "tests.test_drone_aura_reference", "tests.test_drone_arrival_reference", "tests.test_token_duration_reference", "tests.test_technology_reference",
+ )
+ 
+ if __name__ == "__main__":
+--- /dev/null
++++ b/rouge/shield_break_reference.py
+@@ -0,0 +1,71 @@
++"""Separate a declared shield-break total from unknown event and end clocks."""
++from .catalog import catalog
++from .timing import AttackTimeline, finite
++
++
++NAME = '协防术式破屏爆炸条件参考'
++
++
++def finish_shield_break_reference(scenario, result):
++    if scenario['operator'] != 'mechanist' or scenario['skill'] != 2:
++        return
++    # The legacy evaluator validated float-to-int on its local scenario copy.
++    count = int(float(scenario.get('shield_break_count', 0)))
++    per_hit = result['per_hit']
++    declared = count * per_hit
++    lifetime = scenario.get('timing', {}).get('target_disappears_seconds')
++    alive = lifetime is None or finite(lifetime, '目标生命周期', 3600) != 0
++    skill = result['estimate']['skill']
++    empty = 'window_seconds' in scenario and skill['window_seconds'] == 0
++    pending = bool(count and alive)
++    window_pending = pending and not empty
++    source = catalog()['operators']['mechanist']['skills'][1]['levels'][scenario.get('skill_rank', 10)-1]
++    # These legacy estimates already contain the optional, explicitly timed
++    # ordinary-attack subtotal. Remove only the unplaced shield amount; do not
++    # generate an ordinary attack or locate a break inside a short window.
++    if count:
++        excluded = per_hit * result['hits']
++        def ordinary(key):
++            value = skill.get(key)
++            if value is None:return None
++            return max(0, value - excluded) if alive else 0
++        subtotal = {key: ordinary(key) for key in
++            ('total_damage', 'phase_damage', 'cycle_damage')}
++        subtotal['window_damage'] = ordinary('window_damage')
++        if subtotal['window_damage'] is None:
++            subtotal['window_damage'] = 0
++        cycle = skill.get('cycle_seconds')
++        window = skill.get('window_seconds')
++        subtotal['cycle_dps'] = subtotal['cycle_damage'] / cycle if cycle and subtotal['cycle_damage'] is not None else None
++        subtotal['window_dps'] = subtotal['window_damage'] / window if window else None
++        result['known_damage_subtotals'] = subtotal
++        for key in ('total_damage', 'phase_damage', 'cycle_damage', 'cycle_dps'):
++            skill[key] = None if pending else subtotal[key]
++        result['total_damage'] = None if window_pending else subtotal['window_damage']
++        skill['window_damage'] = result['total_damage']
++        skill['window_dps'] = None if window_pending else subtotal['window_dps']
++    component = {'name': NAME, 'damage_type': 'magic', 'hits': count if window_pending else 0,
++        'per_hit': per_hit, 'total': declared if window_pending else 0,
++        'timing_reference': 'declared whole-skill shield-break amount; actual break/collision clock unverified'}
++    if window_pending:
++        component['actual_total'] = None
++    if count:
++        result['components'] = [component]
++    result['shield_break_reference'] = {
++        'hits_requested': count, 'per_hit_damage_reference': per_hit,
++        'declared_count_damage_reference': declared,
++        'nominal_ammunition_parameter': source['values']['trigger_time'],
++        'manual_duration_parameter_seconds': scenario.get('skill_duration_seconds'),
++        'source_possible': {'cast': pending, 'window': window_pending},
++        'actual_break_times_seconds': None, 'actual_collision_times_seconds': None,
++        'actual_end_seconds': None, 'actual_ammunition_consumption_times_seconds': None,
++        'owner_and_structure_count_mapping_verified': False,
++        'events_scheduled': False, 'source_commit': 'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add'}
++    result.setdefault('timing', AttackTimeline(scenario).output())['phase_clock_unbound'] = True
++    result['timing']['resource_and_damage_shared_clock'] = False
++    result['scope'] = result['estimate']['scenario_scope'] = (
++        '声明总破屏次数的法术爆炸条件参考，事件时刻未知；已计普通攻击仅为手动结束参数参考。')
++    result['complete'] = result['estimate']['complete'] = False
++    result['estimate']['notes'].append(
++        '协防术式总破屏次数只列命中当前敌人的条件伤害；破屏/爆炸时刻、双方耗弹对应和实际结束未核验，'
++        '未自动放入观察窗口、技能阶段或周期。指定结束时间只保留手动条件参数和既有普通攻击小计，不能定位破屏事件。')
+--- /dev/null
++++ b/tests/test_shield_break_reference.py
+@@ -0,0 +1,176 @@
++"""Whole-skill shield-break declarations do not locate an actual event."""
++import copy
++import unittest
++from rouge.damage import calculate_damage
++from rouge.estimate import format_estimate
++from rouge.shield_break_reference import NAME
++
++
++def evaluate(**extra):
++    return calculate_damage({'operator':'mechanist','skill':2,'base_attack':1000,
++                             'shield_break_count':2,**extra})
++
++
++class ShieldBreakReferenceTests(unittest.TestCase):
++    def test_zero_observation_excludes_actual_hit_and_keeps_isolated_amount(self):
++        for mode in ('frames','continuous'):
++            r=evaluate(timing_mode=mode,window_seconds=0)
++            self.assertEqual(r['total_damage'],0)
++            self.assertEqual(r['estimate']['skill']['window_damage'],0)
++            self.assertEqual(r['shield_break_reference']['declared_count_damage_reference'],10000)
++            self.assertFalse(r['shield_break_reference']['source_possible']['window'])
++            self.assertFalse(any(c['hits'] or 'actual_total' in c for c in r['components']))
++
++    def test_numeric_string_zero_observation_and_lifetime_match_normalized_zero(self):
++        for mode in ('frames','continuous'):
++            for extra in ({'window_seconds':'0'}, {'window_seconds':10,'timing':{'target_disappears_seconds':'0'}},
++                          {'window_seconds':10,'skill_duration_seconds':20,'timing':{'target_disappears_seconds':'0'}}):
++                r=evaluate(timing_mode=mode,**extra)
++                self.assertEqual(r['total_damage'],0)
++                self.assertEqual(r['estimate']['skill']['window_damage'],0)
++                self.assertEqual(r['known_damage_subtotals']['window_damage'],0)
++                self.assertFalse(r['shield_break_reference']['source_possible']['window'])
++                if 'skill_duration_seconds' in extra:
++                    for key in ('total_damage','phase_damage','cycle_damage','cycle_dps'):
++                        self.assertEqual(r['estimate']['skill'][key],0)
++
++    def test_positive_observation_is_unknown_without_a_synthetic_event(self):
++        for mode in ('frames','continuous'):
++            r=evaluate(timing_mode=mode,window_seconds=10)
++            self.assertIsNone(r['total_damage'])
++            self.assertIsNone(r['estimate']['skill']['window_damage'])
++            self.assertIsNone(r['estimate']['skill']['window_dps'])
++            self.assertFalse(r['complete']);self.assertFalse(r['estimate']['complete'])
++            c=next(c for c in r['components'] if c['name']==NAME)
++            self.assertIsNone(c['actual_total'])
++            self.assertNotIn('times_seconds',c)
++            self.assertFalse(r['timing']['resource_and_damage_shared_clock'])
++
++    def test_manual_end_preserves_old_ordinary_cast_phase_and_cycle_subtotals(self):
++        for mode in ('frames','continuous'):
++            plain=evaluate(timing_mode=mode,skill_duration_seconds=20,shield_break_count=0)
++            r=evaluate(timing_mode=mode,skill_duration_seconds=20)
++            for key in ('total_damage','phase_damage','cycle_damage','cycle_dps','window_damage'):
++                self.assertEqual(r['known_damage_subtotals'][key],plain['estimate']['skill'][key])
++            self.assertEqual(r['known_damage_subtotals']['total_damage'],40000)
++            self.assertEqual(r['known_damage_subtotals']['cycle_damage'],81000)
++            for key in ('initial_seconds','recharge_seconds','duration_seconds','cycle_seconds'):
++                self.assertEqual(r['estimate']['skill'][key],plain['estimate']['skill'][key])
++            self.assertIsNone(r['estimate']['skill']['total_damage'])
++            self.assertIsNone(r['estimate']['skill']['phase_damage'])
++            self.assertIsNone(r['estimate']['skill']['cycle_damage'])
++            self.assertEqual(r['shield_break_reference']['manual_duration_parameter_seconds'],20)
++            self.assertIsNone(r['shield_break_reference']['actual_end_seconds'])
++
++    def test_explicit_short_window_does_not_add_new_ordinary_clock(self):
++        r=evaluate(window_seconds=10,skill_duration_seconds=20)
++        plain=evaluate(window_seconds=10,skill_duration_seconds=20,shield_break_count=0)
++        self.assertEqual(r['known_damage_subtotals']['window_damage'],plain['estimate']['skill']['window_damage'])
++        self.assertEqual(r['known_damage_subtotals']['window_damage'],0)
++        self.assertEqual(r['known_damage_subtotals']['total_damage'],40000)
++        self.assertIsNone(r['total_damage'])
++
++    def test_empty_owner_range_does_not_locate_independent_structure_explosion(self):
++        for timing in ({'target_windows':[]},{'interrupt_windows':[[0,100]]}):
++            r=evaluate(window_seconds=10,skill_duration_seconds=20,timing=timing)
++            self.assertIsNone(r['total_damage'])
++            self.assertTrue(r['shield_break_reference']['source_possible']['window'])
++            self.assertIsNone(r['shield_break_reference']['actual_collision_times_seconds'])
++
++    def test_enemy_zero_lifetime_keeps_condition_and_zero_actual_damage(self):
++        for mode in ('frames','continuous'):
++            for manual in ({},{'skill_duration_seconds':20}):
++                r=evaluate(timing_mode=mode,window_seconds=10,
++                           timing={'target_disappears_seconds':0},**manual)
++                self.assertEqual(r['total_damage'],0)
++                self.assertEqual(r['shield_break_reference']['declared_count_damage_reference'],10000)
++                self.assertFalse(r['shield_break_reference']['source_possible']['cast'])
++                self.assertFalse(r['shield_break_reference']['source_possible']['window'])
++                if manual:self.assertEqual(r['known_damage_subtotals']['total_damage'],0)
++
++    def test_resistance_and_supported_effects_stay_in_conditional_per_hit(self):
++        r=evaluate(enemy_defense=9999,enemy_resistance=50)
++        self.assertEqual(r['shield_break_reference']['per_hit_damage_reference'],2500)
++        self.assertEqual(r['shield_break_reference']['declared_count_damage_reference'],5000)
++        e=evaluate(effects=[{'kind':'attack_pct','value':.1},
++                            {'kind':'damage_taken','damage_type':'magic','value':.2}])
++        self.assertEqual(e['shield_break_reference']['per_hit_damage_reference'],6240)
++        self.assertIsNone(e['total_damage'])
++
++    def test_healing_relic_does_not_scale_magic_condition_or_ordinary_subtotal(self):
++        plain=evaluate(skill_duration_seconds=20)
++        r=evaluate(skill_duration_seconds=20,relic_ids=['rogue_6_relic_legacy_81'])
++        self.assertEqual(r['shield_break_reference'],plain['shield_break_reference'])
++        self.assertEqual(r['known_damage_subtotals'],plain['known_damage_subtotals'])
++        self.assertIsNone(r['total_damage'])
++
++    def test_zero_break_count_keeps_ordinary_numerical_reference(self):
++        for mode in ('frames','continuous'):
++            r=evaluate(timing_mode=mode,shield_break_count=0,skill_duration_seconds=20)
++            self.assertEqual(r['total_damage'],0)
++            self.assertEqual(r['estimate']['skill']['total_damage'],40000)
++            self.assertNotIn('known_damage_subtotals',r)
++            self.assertFalse(r['complete']);self.assertFalse(r['estimate']['complete'])
++            self.assertEqual(r['shield_break_reference']['hits_requested'],0)
++            self.assertNotIn('components',r)
++
++    def test_already_validated_decimal_counts_preserve_legacy_numeric_equivalence(self):
++        for mode in ('frames','continuous'):
++            for count in (0,1,2):
++                for extra in ({},{'window_seconds':0},{'window_seconds':10,'skill_duration_seconds':20}):
++                    plain=evaluate(timing_mode=mode,shield_break_count=count,**extra)
++                    for raw in (float(count),f'{count}.0',f'{count}e0'):
++                        r=evaluate(timing_mode=mode,shield_break_count=raw,**extra)
++                        self.assertEqual(r,plain)
++
++    def test_ammunition_is_a_parameter_not_a_cap_or_schedule_for_both_sources(self):
++        r=evaluate(shield_break_count=30)
++        ref=r['shield_break_reference']
++        self.assertEqual(ref['hits_requested'],30)
++        self.assertEqual(ref['nominal_ammunition_parameter'],8)
++        self.assertEqual(ref['declared_count_damage_reference'],150000)
++        self.assertFalse(ref['owner_and_structure_count_mapping_verified'])
++        self.assertFalse(ref['events_scheduled'])
++        self.assertIsNone(ref['actual_ammunition_consumption_times_seconds'])
++
++    def test_report_distinguishes_condition_actual_unknown_and_ordinary_subtotal(self):
++        for mode in ('frames','continuous'):
++            for count in (0,2):
++                r=evaluate(timing_mode=mode,skill_duration_seconds=20,shield_break_count=count)
++                text=format_estimate(r)
++                self.assertNotIn('仅实际屏障破碎',text)
++                self.assertIn('声明总破屏次数的法术爆炸条件参考，事件时刻未知',text)
++                self.assertIn('已计普通攻击仅为手动结束参数参考',text)
++                self.assertEqual(r['scope'],r['estimate']['scenario_scope'])
++                self.assertIn('实际破屏/爆炸时刻：未知',text)
++                self.assertIn('实际结束时刻：未知',text)
++                self.assertIn('不完整',text)
++                if count:
++                    self.assertIn('给定总次数条件伤害参考：10,000',text)
++                    self.assertIn('单次技能已计伤害小计：40,000',text)
++                    self.assertIn('单次技能总伤：未知',text)
++
++    def test_public_first_damage_relic_stays_reference_only_and_keeps_zero_values(self):
++        for mode in ('frames','continuous'):
++            for count in (0,2):
++                plain=evaluate(timing_mode=mode,shield_break_count=count,skill_duration_seconds=20)
++                for rid in ('rogue_6_relic_fight_1','rogue_6_relic_fight_2'):
++                    r=evaluate(timing_mode=mode,shield_break_count=count,skill_duration_seconds=20,
++                               relic_ids=[rid],relic_context={'enemy_first_damage_unused':1})
++                    self.assertEqual(r['total_damage'],plain['total_damage'])
++                    self.assertEqual(r['estimate']['skill'],plain['estimate']['skill'])
++                    self.assertEqual(r.get('components'),plain.get('components'))
++                    self.assertEqual(r.get('known_damage_subtotals'),plain.get('known_damage_subtotals'))
++                    self.assertFalse(any(c.get('first_damage_relic') for c in r.get('components',[])))
++                    self.assertFalse(any(a['kind']=='first_damage_scale'
++                                         for record in r['relic_resolution']['records'] for a in record['applied']))
++
++    def test_public_input_remains_unchanged_and_other_skills_have_no_new_reference(self):
++        s={'operator':'mechanist','skill':2,'base_attack':1000,'shield_break_count':1,
++           'window_seconds':10,'skill_duration_seconds':20,'timing':{'target_windows':[]}}
++        before=copy.deepcopy(s);calculate_damage(s);self.assertEqual(s,before)
++        for op,skill in (('mechanist',1),('mechanist',3),('kaltsit',2),('silverash',2)):
++            self.assertNotIn('shield_break_reference',calculate_damage({'operator':op,'skill':skill}))
++
++
++if __name__=='__main__':unittest.main()

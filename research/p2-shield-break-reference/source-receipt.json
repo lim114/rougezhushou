@@ -1,0 +1,666 @@
+{
+  "captured_at_utc": "2026-10-07T21:07:05.030964+00:00",
+  "reviewed_head": "fba536e118906f58ed2bcef359480f76e0ae4d67",
+  "workflow": "Read-only pinned raw source audit; external draft only; no private state or new network requests.",
+  "sources": {
+    "character_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "reused_pinned_cache": true,
+      "sha256_matched": true
+    },
+    "skill_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "bytes": 11447929,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "reused_pinned_cache": true,
+      "sha256_matched": true
+    }
+  },
+  "selectors": {
+    "character_table.char_4230_mcnist.skills[1]": {
+      "skillId": "skchr_mcnist_2",
+      "overridePrefabKey": null,
+      "overrideTokenKey": null,
+      "levelUpCostCond": [
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 28800,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 8,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31094",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30093",
+              "count": 6,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 57600,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 12,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31114",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31064",
+              "count": 9,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 86400,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 15,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30145",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31074",
+              "count": 1,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ],
+      "unlockCond": {
+        "phase": "PHASE_1",
+        "level": 1
+      }
+    },
+    "skill_table.skchr_mcnist_2.levels[0]": {
+      "name": "协防术式",
+      "rangeId": null,
+      "description": "攻击力<@ba.vup>+{atk:0%}</>，自身和结构性原理立刻获得最大生命<@ba.vup>{hp_ratio:0%}</>的<$ba.barrier>屏障</>，<$ba.barrier>屏障</>被摧毁时对周围敌人造成攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害和<@ba.vup>{not_combat}</>秒的<$ba.tremble>战栗</>，并消耗1发弹药再次获得<$ba.barrier>屏障</>\\n<@ba.rem>攻击装有{trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+      "skillType": "MANUAL",
+      "durationType": "AMMO",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 65,
+        "initSp": 27,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_mcnist_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 0.6,
+          "valueStr": null
+        },
+        {
+          "key": "hp_ratio",
+          "value": 0.1,
+          "valueStr": null
+        },
+        {
+          "key": "trigger_time",
+          "value": 5.0,
+          "valueStr": null
+        },
+        {
+          "key": "range_radius",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "not_combat",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_mcnist_2.levels[1]": {
+      "name": "协防术式",
+      "rangeId": null,
+      "description": "攻击力<@ba.vup>+{atk:0%}</>，自身和结构性原理立刻获得最大生命<@ba.vup>{hp_ratio:0%}</>的<$ba.barrier>屏障</>，<$ba.barrier>屏障</>被摧毁时对周围敌人造成攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害和<@ba.vup>{not_combat}</>秒的<$ba.tremble>战栗</>，并消耗1发弹药再次获得<$ba.barrier>屏障</>\\n<@ba.rem>攻击装有{trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+      "skillType": "MANUAL",
+      "durationType": "AMMO",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 65,
+        "initSp": 27,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_mcnist_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 0.7,
+          "valueStr": null
+        },
+        {
+          "key": "hp_ratio",
+          "value": 0.1,
+          "valueStr": null
+        },
+        {
+          "key": "trigger_time",
+          "value": 5.0,
+          "valueStr": null
+        },
+        {
+          "key": "range_radius",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "not_combat",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_mcnist_2.levels[2]": {
+      "name": "协防术式",
+      "rangeId": null,
+      "description": "攻击力<@ba.vup>+{atk:0%}</>，自身和结构性原理立刻获得最大生命<@ba.vup>{hp_ratio:0%}</>的<$ba.barrier>屏障</>，<$ba.barrier>屏障</>被摧毁时对周围敌人造成攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害和<@ba.vup>{not_combat}</>秒的<$ba.tremble>战栗</>，并消耗1发弹药再次获得<$ba.barrier>屏障</>\\n<@ba.rem>攻击装有{trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+      "skillType": "MANUAL",
+      "durationType": "AMMO",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 65,
+        "initSp": 27,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_mcnist_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 0.8,
+          "valueStr": null
+        },
+        {
+          "key": "hp_ratio",
+          "value": 0.1,
+          "valueStr": null
+        },
+        {
+          "key": "trigger_time",
+          "value": 5.0,
+          "valueStr": null
+        },
+        {
+          "key": "range_radius",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "not_combat",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_mcnist_2.levels[3]": {
+      "name": "协防术式",
+      "rangeId": null,
+      "description": "攻击力<@ba.vup>+{atk:0%}</>，自身和结构性原理立刻获得最大生命<@ba.vup>{hp_ratio:0%}</>的<$ba.barrier>屏障</>，<$ba.barrier>屏障</>被摧毁时对周围敌人造成攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害和<@ba.vup>{not_combat}</>秒的<$ba.tremble>战栗</>，并消耗1发弹药再次获得<$ba.barrier>屏障</>\\n<@ba.rem>攻击装有{trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+      "skillType": "MANUAL",
+      "durationType": "AMMO",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 60,
+        "initSp": 30,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_mcnist_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 0.9,
+          "valueStr": null
+        },
+        {
+          "key": "hp_ratio",
+          "value": 0.1,
+          "valueStr": null
+        },
+        {
+          "key": "trigger_time",
+          "value": 6.0,
+          "valueStr": null
+        },
+        {
+          "key": "range_radius",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "not_combat",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_mcnist_2.levels[4]": {
+      "name": "协防术式",
+      "rangeId": null,
+      "description": "攻击力<@ba.vup>+{atk:0%}</>，自身和结构性原理立刻获得最大生命<@ba.vup>{hp_ratio:0%}</>的<$ba.barrier>屏障</>，<$ba.barrier>屏障</>被摧毁时对周围敌人造成攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害和<@ba.vup>{not_combat}</>秒的<$ba.tremble>战栗</>，并消耗1发弹药再次获得<$ba.barrier>屏障</>\\n<@ba.rem>攻击装有{trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+      "skillType": "MANUAL",
+      "durationType": "AMMO",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 60,
+        "initSp": 30,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_mcnist_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "hp_ratio",
+          "value": 0.1,
+          "valueStr": null
+        },
+        {
+          "key": "trigger_time",
+          "value": 6.0,
+          "valueStr": null
+        },
+        {
+          "key": "range_radius",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "not_combat",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_mcnist_2.levels[5]": {
+      "name": "协防术式",
+      "rangeId": null,
+      "description": "攻击力<@ba.vup>+{atk:0%}</>，自身和结构性原理立刻获得最大生命<@ba.vup>{hp_ratio:0%}</>的<$ba.barrier>屏障</>，<$ba.barrier>屏障</>被摧毁时对周围敌人造成攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害和<@ba.vup>{not_combat}</>秒的<$ba.tremble>战栗</>，并消耗1发弹药再次获得<$ba.barrier>屏障</>\\n<@ba.rem>攻击装有{trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+      "skillType": "MANUAL",
+      "durationType": "AMMO",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 60,
+        "initSp": 30,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_mcnist_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 1.1,
+          "valueStr": null
+        },
+        {
+          "key": "hp_ratio",
+          "value": 0.1,
+          "valueStr": null
+        },
+        {
+          "key": "trigger_time",
+          "value": 6.0,
+          "valueStr": null
+        },
+        {
+          "key": "range_radius",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "not_combat",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_mcnist_2.levels[6]": {
+      "name": "协防术式",
+      "rangeId": null,
+      "description": "攻击力<@ba.vup>+{atk:0%}</>，自身和结构性原理立刻获得最大生命<@ba.vup>{hp_ratio:0%}</>的<$ba.barrier>屏障</>，<$ba.barrier>屏障</>被摧毁时对周围敌人造成攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害和<@ba.vup>{not_combat}</>秒的<$ba.tremble>战栗</>，并消耗1发弹药再次获得<$ba.barrier>屏障</>\\n<@ba.rem>攻击装有{trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+      "skillType": "MANUAL",
+      "durationType": "AMMO",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 55,
+        "initSp": 33,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_mcnist_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 1.2,
+          "valueStr": null
+        },
+        {
+          "key": "hp_ratio",
+          "value": 0.1,
+          "valueStr": null
+        },
+        {
+          "key": "trigger_time",
+          "value": 7.0,
+          "valueStr": null
+        },
+        {
+          "key": "range_radius",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "not_combat",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_mcnist_2.levels[7]": {
+      "name": "协防术式",
+      "rangeId": null,
+      "description": "攻击力<@ba.vup>+{atk:0%}</>，自身和结构性原理立刻获得最大生命<@ba.vup>{hp_ratio:0%}</>的<$ba.barrier>屏障</>，<$ba.barrier>屏障</>被摧毁时对周围敌人造成攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害和<@ba.vup>{not_combat}</>秒的<$ba.tremble>战栗</>，并消耗1发弹药再次获得<$ba.barrier>屏障</>\\n<@ba.rem>攻击装有{trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+      "skillType": "MANUAL",
+      "durationType": "AMMO",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 53,
+        "initSp": 34,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_mcnist_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 1.3,
+          "valueStr": null
+        },
+        {
+          "key": "hp_ratio",
+          "value": 0.1,
+          "valueStr": null
+        },
+        {
+          "key": "trigger_time",
+          "value": 7.0,
+          "valueStr": null
+        },
+        {
+          "key": "range_radius",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "not_combat",
+          "value": 2.5,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_mcnist_2.levels[8]": {
+      "name": "协防术式",
+      "rangeId": null,
+      "description": "攻击力<@ba.vup>+{atk:0%}</>，自身和结构性原理立刻获得最大生命<@ba.vup>{hp_ratio:0%}</>的<$ba.barrier>屏障</>，<$ba.barrier>屏障</>被摧毁时对周围敌人造成攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害和<@ba.vup>{not_combat}</>秒的<$ba.tremble>战栗</>，并消耗1发弹药再次获得<$ba.barrier>屏障</>\\n<@ba.rem>攻击装有{trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+      "skillType": "MANUAL",
+      "durationType": "AMMO",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 52,
+        "initSp": 34,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_mcnist_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 1.4,
+          "valueStr": null
+        },
+        {
+          "key": "hp_ratio",
+          "value": 0.1,
+          "valueStr": null
+        },
+        {
+          "key": "trigger_time",
+          "value": 7.0,
+          "valueStr": null
+        },
+        {
+          "key": "range_radius",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "not_combat",
+          "value": 3.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_mcnist_2.levels[9]": {
+      "name": "协防术式",
+      "rangeId": null,
+      "description": "攻击力<@ba.vup>+{atk:0%}</>，自身和结构性原理立刻获得最大生命<@ba.vup>{hp_ratio:0%}</>的<$ba.barrier>屏障</>，<$ba.barrier>屏障</>被摧毁时对周围敌人造成攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害和<@ba.vup>{not_combat}</>秒的<$ba.tremble>战栗</>，并消耗1发弹药再次获得<$ba.barrier>屏障</>\\n<@ba.rem>攻击装有{trigger_time}发弹药，打完后结束（可随时停止技能）</>",
+      "skillType": "MANUAL",
+      "durationType": "AMMO",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 50,
+        "initSp": 35,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_mcnist_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "hp_ratio",
+          "value": 0.1,
+          "valueStr": null
+        },
+        {
+          "key": "trigger_time",
+          "value": 8.0,
+          "valueStr": null
+        },
+        {
+          "key": "range_radius",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "not_combat",
+          "value": 3.0,
+          "valueStr": null
+        }
+      ]
+    }
+  },
+  "alias_bindings": {
+    "scripts/build_catalog.py": "char_4230_mcnist -> mechanist",
+    "scripts/build_operator_profiles.py": "char_4230_mcnist -> mechanist"
+  },
+  "gui_binding": {
+    "path": "rouge/app.py",
+    "baseline_sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+    "label": "机械师 S2 本次实际/预计总破屏次数",
+    "tooltip": "本体与结构性原理的爆炸中，命中当前目标的总次数。用于条件估算，不自动推断弹药消耗。",
+    "range": [
+      0,
+      100
+    ],
+    "manual_end_label": "指定本次技能结束时间（含手动停止）",
+    "manual_end_minimum_seconds": 0.01
+  },
+  "source_supported": {
+    "instant_shields_for_owner_and_structure": true,
+    "destruction_conditional_magic_amount": true,
+    "rank10_ammunition_parameter": 8,
+    "rank10_attack_bonus": 1.5,
+    "rank10_explosion_attack_scale": 2,
+    "can_stop_skill_manually": true
+  },
+  "source_not_closed": [
+    "actual shield-break timestamps",
+    "explosion collision timestamps",
+    "individual owner/structure attribution within declared total",
+    "shared or separate ammunition mapping between owner and structure",
+    "native destroy/consume/re-shield/end order",
+    "actual skill-end timestamp",
+    "current-client event acquisition"
+  ],
+  "closure": "Count and per-hit amount form an isolated whole-skill condition reference. Explicit normalized observation zero or enemy lifetime zero excludes actual damage. Positive/unprovided observations do not locate an event; actual aggregate damage remains unknown. Existing manual-end ordinary references and SP parameters remain inspectable.",
+  "native_script_verified": false,
+  "events_scheduled": false,
+  "product_scope_closure": {
+    "before": "仅实际屏障破碎的法术爆炸，未计普通攻击。",
+    "after": "声明总破屏次数的法术爆炸条件参考，事件时刻未知；已计普通攻击仅为手动结束参数参考。",
+    "fields": [
+      "result.scope",
+      "result.estimate.scenario_scope"
+    ],
+    "reason": "Existing GUI declared total and pinned raw table do not prove actual acquisition/collision clocks. Optional ordinary output belongs only to the existing explicit manual-end reference."
+  },
+  "legacy_input_compatibility": {
+    "prevalidated_source": "rouge/damage.py _skill_damage_base local-copy finite/nonnegative/integer float validation followed by int conversion",
+    "finisher_conversion": "int(float(raw shield_break_count))",
+    "retained_examples": [
+      0,
+      1,
+      2,
+      0.0,
+      1.0,
+      2.0,
+      "0.0",
+      "1.0",
+      "2.0",
+      "0e0",
+      "1e0",
+      "2e0"
+    ],
+    "new_qualification": false,
+    "bool_scope": "section57",
+    "independent_finding_artifact": "independent-count-compatibility-finding.json"
+  }
+}

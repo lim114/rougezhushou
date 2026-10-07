@@ -1,0 +1,53 @@
+{
+  "review_type": "Completed parent independent core review and final child independent revised-artifact review",
+  "parent_findings": [
+    {
+      "finding": "Raw ==0 misses accepted numeric-string zero for observation/lifetime.",
+      "resolution": "Only explicitly present window_seconds uses the validated estimate.skill.window_seconds==0; lifetime uses existing timing.finite normalization. Added 12 paired cases and both-mode regression."
+    },
+    {
+      "finding": "Do not interpret absent observation with estimate.window_seconds=0 as an empty actual window.",
+      "resolution": "Explicit-key guard; absence keeps actual event unknown."
+    },
+    {
+      "finding": "Review first_damage components and zero declaration preservation.",
+      "resolution": "8 real-public first-damage relic cases confirm reference-only status; zero declaration preserves original components and all old numerical values. Conditional component has no invented source_unit ownership."
+    },
+    {
+      "finding": "Legacy scope text still called shield breaks actual and was inherited by estimate/report.",
+      "resolution": "The finisher now synchronizes result.scope and estimate.scenario_scope to the conditional-source description, with unknown event times and manual-end ordinary reference. Both-mode/count0-and-positive report assertions and all 740 paired public reports reject the old actual-break wording. Damage/SP/end model numbers remain unchanged."
+    },
+    {
+      "finding": "Independent section55/57 reviewer showed raw decimal/scientific count strings accepted by legacy were rejected by the new helper int(raw).",
+      "resolution": "Restored legacy prevalidated float-to-int conversion. Added one meaningful full-result equivalence test (54 public variant evaluations) and 54 paired matrix scenarios; 15 new / 89 related / 731 selected / 794 paired scenarios pass. Bool and charge_count remain outside this section."
+    }
+  ],
+  "remaining_unknown": [
+    "Native break/collision/end clocks",
+    "Owner/structure ammunition and source attribution",
+    "Current-client actual acquisition"
+  ],
+  "boundaries": "No artificial shield event times; no new ordinary short-window attack stream; no owner range exclusion of structure explosion; no ammo count cap inferred from the raw parameter.",
+  "parent_final_core_review": {
+    "received": true,
+    "scope": "New core helper, 14 new tests, and changed legacy assertions",
+    "current_blockers": [],
+    "parent_confirmed": [
+      "Numeric-string zero compatibility",
+      "No invented source_unit attribution"
+    ],
+    "integration_pending": true,
+    "latest_scope_followup": "Parent finding implemented and verified; final post-scope acknowledgement pending.",
+    "latest_count_followup": "Parent-reported independent finding implemented and verified; final post-followup acknowledgement pending."
+  },
+  "child_final_review": {
+    "verdict": "Final revised section53 scoped review passed with no blocking finding.",
+    "initial_public_calls": 32,
+    "followup_public_calls": 20,
+    "final_new_tests": 15,
+    "source": "independent-review.json",
+    "followup_source": "independent-scope-count-final-review.json",
+    "initial_evidence_preserved": "independent-review-initial.json",
+    "patch_sha256": "1e0993a11b6ca572de3ab748570341381abde30a1f4652f6e04cd2a69f43c173"
+  }
+}

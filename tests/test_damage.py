@@ -148,13 +148,17 @@ class DamageTests(unittest.TestCase):
         self.assertEqual(result['estimate']['base_stats']['defense'],845)
 
     def test_shield_skill_can_estimate_a_cast_with_an_explicit_end_time(self):
-        skill=calculate_damage({'operator':'mechanist','skill':2,'base_attack':1000,
-            'shield_break_count':2,'skill_duration_seconds':20})['estimate']['skill']
-        # Two 5000 explosions and 16 ordinary 2500 hits during the skill;
-        # 41 ordinary 1000 hits during its 50-second recharge.
-        self.assertEqual(skill['total_damage'],50000)
+        result=calculate_damage({'operator':'mechanist','skill':2,'base_attack':1000,
+            'shield_break_count':2,'skill_duration_seconds':20})
+        skill=result['estimate']['skill']
+        # Keep 16 ordinary 2500 hits and 41 ordinary recharge hits as subtotals;
+        # two 5000 shield explosions have no verified event/cast placement.
+        self.assertIsNone(skill['total_damage'])
+        self.assertEqual(result['known_damage_subtotals']['total_damage'],40000)
+        self.assertEqual(result['shield_break_reference']['declared_count_damage_reference'],10000)
         self.assertEqual(skill['cycle_seconds'],70)
-        self.assertEqual(skill['cycle_dps'],1300)
+        self.assertIsNone(skill['cycle_dps'])
+        self.assertEqual(result['known_damage_subtotals']['cycle_damage'],81000)
 
     def test_silverash_shield_skill_is_not_misreported_as_healing(self):
         skill=calculate_damage({'operator':'silverash','skill':1})['estimate']['skill']
@@ -227,7 +231,8 @@ class DamageTests(unittest.TestCase):
 
     def test_shield_break_count_is_not_enough_to_infer_a_full_cycle(self):
         result=calculate_damage({'operator':'mechanist','skill':2,'base_attack':1000,'shield_break_count':2})
-        self.assertEqual(result['total_damage'],10000)
+        self.assertIsNone(result['total_damage'])
+        self.assertEqual(result['shield_break_reference']['declared_count_damage_reference'],10000)
         self.assertIsNone(result['estimate']['skill']['total_damage'])
         self.assertIsNone(result['estimate']['skill']['cycle_seconds'])
         self.assertEqual(result['estimate']['skill']['initial_seconds'],15)
@@ -276,7 +281,8 @@ class DamageTests(unittest.TestCase):
         result = calculate_damage({'operator': 'mechanist', 'skill': 2, 'skill_rank': 10,
             'base_attack': 1000, 'enemy_resistance': 50, 'shield_break_count': 2})
         # 2500 ATK * 200% * 50% RES * two observed shield breaks.
-        self.assertAlmostEqual(result['total_damage'], 5000)
+        self.assertIsNone(result['total_damage'])
+        self.assertAlmostEqual(result['shield_break_reference']['declared_count_damage_reference'], 5000)
     def test_skill_rank_seven_uses_non_mastery_profile(self):
         result = calculate_damage({'operator': 'kaltsit', 'skill': 2, 'skill_rank': 7, 'base_attack': 1000})
         # Rank 7: ATK +125%; 350% true damage, ten shots => 78750.
