@@ -401,6 +401,9 @@ def finish(result,resolution,attributes,scenario):
         skill=result['estimate']['skill']
         for key in ('total_healing','phase_healing','window_healing','cycle_healing','cycle_hps','window_hps'):
             if skill.get(key) is not None:skill[key]*=factor
+        subtotals=result.get('known_healing_subtotals',{})
+        for key in ('total_healing','phase_healing','window_healing','cycle_healing','cycle_hps','window_hps'):
+            if subtotals.get(key) is not None:subtotals[key]*=factor
         for c in result.get('components',[]):
             if c.get('damage_type')=='healing':
                 c['total']*=factor;c['per_hit']*=factor
