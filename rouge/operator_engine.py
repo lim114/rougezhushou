@@ -769,6 +769,21 @@ class Combat:
             if not normal:
                 triggers=self.option('palsy_triggers',0,maximum=10000,integer=True)
                 emit('麻痹触发天赋',attack*self.talent('噤声限域','atk_scale'),'elemental',triggers)
+                manual=[c for c in components if c['name'] in ('麻痹触发天赋','无言为真溢出跳跃')]
+                from .uncertain_sources import preserve_unplaced_sources
+                reference=preserve_unplaced_sources(manual,window=window,
+                    target_lifetime=timeline.options.get('target_disappears_seconds'))
+                rows=[('声明当前目标麻痹触发次数',triggers,'次')]
+                if self.n==3:rows += [('声明当前目标溢出跳跃命中次数',overflow,'次'),
+                                    ('溢出跳跃间隔原表参数',bb['interval_projectile_trigger'],'秒')]
+                external_event_reference={**reference,'kind':'mantra_events','parameter_rows':rows,
+                    'notes':['场上麻痹与溢出次数只保留当前培养/当前技能攻击力下的条件参考；实际发生时技能阶段和快照未知。',
+                             '不从层数、总技能时长或间隔参数生成时刻；不自动归属完整施放或周期，不推测10%不消耗层数的独立次数。']}
+            if timeline.options.get('target_disappears_seconds')==0:
+                for c in components:
+                    c['hits']=0;c['total']=0
+                    if 'times_seconds' in c:c['times_seconds']=[]
+                mantra_attacks=[];timeline.streams=[]
             # Skill 1 has no evidenced same-hit callback order. If the target
             # is already breaking, both damage sources exist before modifiers;
             # the ordinary simultaneous-source guard must remain in force.
