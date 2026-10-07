@@ -27,13 +27,13 @@ def operator_attack(operator, elite=2, level=None, trust=100):
 
 def operator_attributes(operator, elite=2, level=None, trust=100, potential=1,module_id=None,module_level=0):
     profile = operator_profiles()[operator]
-    if not isinstance(elite,int) or not 0<=elite<len(profile['phases']):
+    if not isinstance(elite,int) or isinstance(elite,bool) or not 0<=elite<len(profile['phases']):
         raise ValueError('精英阶段需要为 0、1 或 2。')
     phase = profile['phases'][elite]
     level = phase['max_level'] if level is None else level
-    if not isinstance(level,int) or not 1 <= level <= phase['max_level'] or not math.isfinite(trust) or not 0 <= trust <= 100:
+    if not isinstance(level,int) or isinstance(level,bool) or not 1 <= level <= phase['max_level'] or not math.isfinite(trust) or not 0 <= trust <= 100:
         raise ValueError('等级或信赖超出范围（信赖按加成进度 0–100%）。')
-    if not isinstance(potential,int) or not 1<=potential<=6:
+    if not isinstance(potential,int) or isinstance(potential,bool) or not 1<=potential<=6:
         raise ValueError('潜能需要为 1–6。')
     first, last = phase['frames'][0], phase['frames'][-1]
     fraction = (level - first['level']) / (last['level'] - first['level']) if last['level'] != first['level'] else 0
@@ -48,7 +48,7 @@ def operator_attributes(operator, elite=2, level=None, trust=100, potential=1,mo
             if field and modifier['formulaItem']=='ADDITION':stats[field]+=modifier['value']
     if module_id:
         module=next((m for m in profile['modules'] if m['id']==module_id),None)
-        if not module or not isinstance(module_level,int) or not 1<=module_level<=len(module['levels']):
+        if not module or not isinstance(module_level,int) or isinstance(module_level,bool) or not 1<=module_level<=len(module['levels']):
             raise ValueError('模组身份或等级尚无可用规则。')
         if elite>=module['unlock_elite'] and level>=module['unlock_level']:
             for attr,value in module['levels'][module_level-1]['attributes'].items():

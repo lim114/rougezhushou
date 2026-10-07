@@ -1,0 +1,100 @@
+{
+  "public_calculation_pairs": 4596,
+  "public_attributes_pairs": 678,
+  "integer_result_digests_and_attributes_equal": true,
+  "public_controls": 42,
+  "changed_boolean_controls": 5,
+  "unchanged_controls": 37,
+  "internal_qualification_matrix_cases": 2610,
+  "internal_matrix_equal": true,
+  "internal_matrix_is_not_native_legality_evidence": true,
+  "differences": [
+    {
+      "before": {
+        "field": "elite",
+        "value": false,
+        "value_type": "bool",
+        "accepted": true,
+        "result_total_healing": 4468.5
+      },
+      "draft": {
+        "field": "elite",
+        "value": false,
+        "value_type": "bool",
+        "accepted": false,
+        "error_type": "ValueError",
+        "error": "精英阶段需要为 0、1 或 2。"
+      }
+    },
+    {
+      "before": {
+        "field": "elite",
+        "value": true,
+        "value_type": "bool",
+        "accepted": true,
+        "result_total_healing": 5629.5
+      },
+      "draft": {
+        "field": "elite",
+        "value": true,
+        "value_type": "bool",
+        "accepted": false,
+        "error_type": "ValueError",
+        "error": "精英阶段需要为 0、1 或 2。"
+      }
+    },
+    {
+      "before": {
+        "field": "level",
+        "value": true,
+        "value_type": "bool",
+        "accepted": true,
+        "result_total_healing": 6142.5
+      },
+      "draft": {
+        "field": "level",
+        "value": true,
+        "value_type": "bool",
+        "accepted": false,
+        "error_type": "ValueError",
+        "error": "等级或信赖超出范围（信赖按加成进度 0–100%）。"
+      }
+    },
+    {
+      "before": {
+        "field": "potential",
+        "value": true,
+        "value_type": "bool",
+        "accepted": true,
+        "result_total_healing": 6858.0
+      },
+      "draft": {
+        "field": "potential",
+        "value": true,
+        "value_type": "bool",
+        "accepted": false,
+        "error_type": "ValueError",
+        "error": "潜能需要为 1–6。"
+      }
+    },
+    {
+      "before": {
+        "field": "module_level",
+        "value": true,
+        "value_type": "bool",
+        "accepted": true,
+        "result_total_healing": 6858.0
+      },
+      "draft": {
+        "field": "module_level",
+        "value": true,
+        "value_type": "bool",
+        "accepted": false,
+        "error_type": "ValueError",
+        "error": "模组身份或等级尚无可用规则。"
+      }
+    }
+  ],
+  "integer_baseline_sha256": "0df75ae914675f9e460262e6dab151ee9748a57c63851f6780526f4617f86ec4",
+  "integer_draft_sha256": "0df75ae914675f9e460262e6dab151ee9748a57c63851f6780526f4617f86ec4"
+}
