@@ -36,7 +36,13 @@ def selected_talents(profile, scenario):
                 index=candidate.get('talentIndex',-1)
                 if index>=0 and eligible(candidate):grouped[index]=candidate
             for index,talent in grouped.items():
-                talents[index]={'name':talent['name'],'description':talent.get('upgradeDescription'),
+                name=talent['name']
+                if (profile['id']=='char_437_mizuki' and module['id']=='uniequip_004_mizuki' and
+                        part.get('target')=='TALENT_DATA_ONLY' and index==0 and name is None):
+                    # Reviewed IS data-only overlay targets the same existing
+                    # talent; its null label must not erase that identity.
+                    name=talents.get(index,{}).get('name')
+                talents[index]={'name':name,'description':talent.get('upgradeDescription'),
                     'values':{b['key']:b['value'] for b in talent['blackboard']}}
     return list(talents.values()),parts
 
