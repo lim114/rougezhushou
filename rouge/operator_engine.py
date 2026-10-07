@@ -267,7 +267,7 @@ class Combat:
         if not normal and window is not None:duration=min(duration,window)
         if not normal and self.s['operator']=='char_1029_yato2':
             attack+=self.base*self.talent('鬼人强化状态','atk')
-        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None;unbound_cast_reference=None;external_event_reference=None;chen_phase_reference=None;amiya_phase_reference=None;unbound_source_components=None
+        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None;unbound_cast_reference=None;external_event_reference=None;chen_phase_reference=None;amiya_phase_reference=None;unbound_source_components=None;haruka_healing_reference=None
         timeline=AttackTimeline(self.s,normal=normal,offset=self.s.get('_timeline_offset_seconds',0) if normal else 0)
         def emit(name,raw,dtype,count,defense=None,resistance=None,effects=None,event_times=None):
             if dtype=='buildup':raw*=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
@@ -669,24 +669,43 @@ class Combat:
                     repeat=self.s.get('haruka_repeat',False)
                     attack=self.base*(1+self.atk_bonus+(bb['atk'] if repeat else 0))+self.atk_flat
                     if repeat:mode='infinite';duration=window if window is not None else 30
-                targets=min(2 if self.n==2 else 1,healing_targets)
-                regular('healing',.75,targets,name='护佑者普通治疗')
+                from .haruka_healing_reference import reference
+                haruka_healing_reference=reference(self.p,self.s,self.skill)
+                scale=haruka_healing_reference['healing_scale_parameter']
+                targets=min(haruka_healing_reference['modeled_target_limit_reference'],healing_targets)
+                declared=min(haruka_healing_reference['conditional_target_limit_reference'],healing_targets)
+                extra_targets=max(0,declared-targets)
+                regular('healing',scale,targets,name='护佑者普通治疗')
+                body=components[-1]
+                if extra_targets:
+                    emit('护佑者额外目标治疗（组合待核验）',attack*scale,'healing',
+                        len(body['times_seconds'])//int(targets)*extra_targets)
                 bursts=self.option('bubble_bursts',0,maximum=10000,integer=True)
                 emit('扶摇花火',attack*self.talent('扶摇花火','heal_scale'),'healing',bursts)
                 if self.n==2:
-                    regular('magic',.75*bb['atk_scale_extra'],targets,name='治疗衍生伤害')
+                    regular('magic',scale*bb['atk_scale_extra'],targets,name='治疗衍生伤害')
+                    if extra_targets:
+                        count=components[-1]['hits']/targets*extra_targets
+                        emit('额外目标治疗衍生伤害（组合待核验）',
+                            attack*scale*bb['atk_scale_extra'],'magic',count)
                     emit('浮泡治疗衍生伤害',attack*self.talent('扶摇花火','heal_scale')*bb['atk_scale_extra'],'magic',bursts)
                 triggers=0
                 if self.n==3:
                     triggers=self.option('levitate_triggers',0,maximum=1000,integer=True)
                     emit('浮泡浮空持续伤害',attack*bb['atk_scale'],'magic',0)
-                manual=[c for c in components if c['name'] in ('扶摇花火','浮泡治疗衍生伤害','浮泡浮空持续伤害')]
+                manual=[c for c in components if c['name'] in ('扶摇花火','浮泡治疗衍生伤害','浮泡浮空持续伤害',
+                    '护佑者额外目标治疗（组合待核验）','额外目标治疗衍生伤害（组合待核验）')]
                 from .uncertain_sources import preserve_unplaced_sources
                 references=[]
                 for c in manual:
                     alive=None if c['damage_type']=='healing' else timeline.options.get('target_disappears_seconds')
                     r=preserve_unplaced_sources([c],window=window,target_lifetime=alive)
                     references.extend(r['conditional_components'])
+                    if c['name'] in ('护佑者额外目标治疗（组合待核验）','额外目标治疗衍生伤害（组合待核验）'):
+                        # The existing body clock only supplies a relative
+                        # amount reference; it cannot prove acquisition for an
+                        # unverified extra recipient, including blocked owners.
+                        if window!=0 and duration>0 and alive!=0:c['actual_total']=None
                     if c['name']=='浮泡浮空持续伤害':
                         references[-1]['hits']=references[-1]['total']=None
                         if triggers>0 and r['source_possible']:c['actual_total']=None
@@ -696,6 +715,11 @@ class Combat:
                             c['hits']=0;c['total']=0
                             if 'times_seconds' in c:c['times_seconds']=[]
                 rows=[('声明窗口内浮泡破碎次数',bursts,'次')]
+                haruka_healing_reference.update(declared_healing_targets=healing_targets,
+                    modeled_healing_targets=targets,conditional_healing_targets=declared,
+                    additional_conditional_targets=extra_targets,
+                    body_healing_reference_before_recipient_factor={
+                        key:body[key] for key in ('per_hit','hits','total')})
                 if self.n==3:
                     dot=next(c for c in manual if c['name']=='浮泡浮空持续伤害')
                     rows += [('声明浮空触发次数',triggers,'次'),('浮空持续参数',bb['levitate_duration'],'秒'),
@@ -1222,7 +1246,7 @@ class Combat:
             'components':components,'neural_events':neural_events,'drone_trait_reference':drone_trait_reference,
             'neural_secondary_seeds':neural_secondary_seeds,
             'neural_binding_seeds':neural_binding_seeds,
-            'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'unbound_cast_reference':unbound_cast_reference,'external_event_reference':external_event_reference,'chen_phase_reference':chen_phase_reference,'amiya_phase_reference':amiya_phase_reference,'timing':timeline.output()}
+            'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'unbound_cast_reference':unbound_cast_reference,'external_event_reference':external_event_reference,'haruka_healing_reference':haruka_healing_reference,'chen_phase_reference':chen_phase_reference,'amiya_phase_reference':amiya_phase_reference,'timing':timeline.output()}
 
     def calculate(self):
         if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
@@ -1501,6 +1525,10 @@ class Combat:
                 observed['actual_total']=None
             result['complete']=False
             result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
+        if full['haruka_healing_reference'] is not None:
+            result['haruka_healing_reference']={**full['haruka_healing_reference'],
+                'window_reference':shown['haruka_healing_reference']}
+            result['estimate']['notes'].append('遥的普通治疗人数按已核特性和当前技能参数列满额潜在参考；未证明实际友方获取、模组附着或当前客户端。特性人数与当前技能增加人数分别保留，额外份额仅为组合条件来源。')
         if full['external_event_reference'] is not None:
             result['external_event_reference']={**full['external_event_reference'],
                 'window_reference':shown['external_event_reference'],'actual_event_times_seconds':None}

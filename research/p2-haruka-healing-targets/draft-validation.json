@@ -1,0 +1,46 @@
+{
+  "scope": "Section49 draft validation only; all edits remain under /tmp; no native Windows/game verification",
+  "baseline_head": "04a9a3fbe3680dd221fc5254fadc9aeb050eb1cf",
+  "new_tests": 13,
+  "relevant_tests": {
+    "run": 69,
+    "passed": 69,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "portable_regression": {
+    "run": 689,
+    "passed": 688,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1
+  },
+  "commands": [
+    "/workspace/rougezhushou/.venv/bin/python -m unittest tests.test_haruka_healing_targets tests.test_haruka_event_reference tests.test_healing_subtotal_scaling tests.test_deployment_independent_sources tests.test_empty_enemy_scope tests.test_susuro_recipient_factor tests.test_amiya_input_qualification",
+    "/workspace/rougezhushou/.venv/bin/python scripts/verify_cloud.py",
+    "/workspace/rougezhushou/.venv/bin/python research/p2-haruka-healing-targets/reproduce.py"
+  ],
+  "public_calls": 1088,
+  "public_comparison": "research/p2-haruka-healing-targets/public-comparison.json",
+  "source_receipt": "research/p2-haruka-healing-targets/source-receipt.json",
+  "source_search": "research/p2-haruka-healing-targets/source-search.json",
+  "initial_validation_diagnosis": [
+    "One draft test overasserted that empty observation precludes a full-cast unknown subtotal; corrected it to assert current window output/subtotal0 while preserving full-cast unknown.",
+    "First portable run tested stale frozen engine2180a22 against newer tests46/47 and failed four Susuro/two Amiya checks. Replayed only49 hunks onto current root04a9a3f engine in/tmp; all six existing checks then passed.",
+    "Reproduction initially compared whole timing metadata. Extra unplaced-component annotations are required; the final harness compares unchanged actual clock/stream hashes and checks only required new annotations. Continuous mode has no unplaced_components key and is handled as an empty annotation."
+  ],
+  "production_hashes": {
+    "rouge/operator_engine.py": "5eb937d2e204aaac4b41682325191b29a2adf61f1b9b5a91b32e4707360395e2",
+    "rouge/app.py": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+    "rouge/reporting.py": "843df2283df0257c7817e2c73954591c7bc0600ab78626f0545fae790e084394",
+    "rouge/haruka_healing_reference.py": "a0a01fda3f0223ab39c841b7cf2f3ce0f0a0bb178fa495c078e89caf70f23ef6",
+    "tests/test_haruka_healing_targets.py": "5c9f8d731e6bfd4d2d0f455a4a65be6c3c17200d5039456b1ab5b04eaf95e753",
+    "scripts/verify_cloud.py": "86ae932b7b3306ddfafd8a28510e3ac6e33ba7f6824dcd08377de6830480af2f"
+  },
+  "actual_friend_acquisition_verified": false,
+  "native_target_composition_verified": false,
+  "native_windows_verified": false,
+  "actual_gui_window_checked": false,
+  "handoff": "Root must merge only49 hunks plus new helper/test/research and verifier module-list insertion, retain its48/50 changes, and perform actual app window/full Linux/Wine checks."
+}

@@ -975,8 +975,17 @@ class MainWindow(QMainWindow):
                 widget.blockSignals(False)
                 widget.setToolTip(f'当前培养/模组的触手在场上限：{cap if cap is not None else "未核验"}；仅作局外数量假设，仍受关卡部署位和库存约束。')
         self.healing_targets.blockSignals(True)
-        self.healing_targets.setMaximum(100 if (op=='char_1037_amiya3' and skill==1) or (op=='kaltsit' and skill==2) else
-                                       2 if (op in ('char_2025_shu','char_4202_haruka') and skill==2) or (op=='kaltsit' and skill==3) else 1)
+        if op=='char_4202_haruka' and skill:
+            from .haruka_healing_reference import conditional_input_limit
+            limit=conditional_input_limit(profile,{'operator':op,**self.training_conditions(),
+                'skill_rank':self.skill_rank_value()},current)
+            tooltip='按当前培养和原表特性/技能参数声明满额潜在受疗数；实际友方获取未核验。BLS-Y基础人数与当前S2增加人数的组合仅列条件参考，额外份额不计实际合计。'
+        else:
+            limit=100 if (op=='char_1037_amiya3' and skill==1) or (op=='kaltsit' and skill==2) else (
+                2 if (op=='char_2025_shu' and skill==2) or (op=='kaltsit' and skill==3) else 1)
+            tooltip=''
+        self.healing_targets.setMaximum(limit)
+        self.healing_targets.setToolTip(tooltip)
         self.healing_targets.blockSignals(False)
         known=self.current_operator_state().get('skill_ranks',{})
         if skill is None:
