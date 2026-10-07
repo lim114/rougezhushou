@@ -370,7 +370,7 @@ def annotate_result(scenario,result):
     if timing['mode']=='continuous':return
     timing['unplaced_components']=[c['name'] for c in result.get('components',[]) if c.get('hits') and 'times_seconds' not in c]
     skill=result['estimate']['skill']
-    timing['resource_and_damage_shared_clock']=True
+    timing['resource_and_damage_shared_clock']=not timing.get('phase_clock_unbound',False)
     timing['initial_seconds']=skill['initial_seconds'];timing['cycle_seconds']=skill['cycle_seconds']
     if 'assumptions' in result:
         result['assumptions']=[n for n in result['assumptions'] if '未模拟首击、前后摇、帧取整及空转' not in n]

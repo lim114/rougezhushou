@@ -1,0 +1,2408 @@
+{
+  "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "read_at_utc": "2026-10-07T16:55:35.646861+00:00",
+  "tracked_edits": false,
+  "fresh_native_verification": false,
+  "sources": {
+    "skill_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "path": ".cache/p2-s1-binding/skill_table.json",
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "bytes": 11447929,
+      "reused_previously_verified_download": true,
+      "expected_pinned_sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "sha256_matched": true
+    },
+    "character_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "path": ".cache/p2-s1-binding/character_table.json",
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251,
+      "reused_previously_verified_download": true,
+      "expected_pinned_sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "sha256_matched": true
+    },
+    "battle_equip_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json",
+      "path": "/tmp/p2-audit/drone-traits/battle_equip_table.json",
+      "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+      "bytes": 5710707,
+      "reused_previously_verified_download": true,
+      "expected_pinned_sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+      "sha256_matched": true
+    },
+    "roguelike_topic_table": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "path": "/tmp/p2-audit/p3-independent/roguelike_topic_table.json",
+      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "bytes": 17943244,
+      "reused_previously_verified_download": true,
+      "expected_pinned_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "sha256_matched": true
+    }
+  },
+  "selectors": {
+    "skill_table.skchr_sunbr_1.levels[9]": {
+      "name": "备用军粮",
+      "rangeId": "x-4",
+      "description": "下次攻击会恢复附近一名友方角色相当于古米攻击力<@ba.vup>{heal_scale:0%}</>的生命值\\n<@ba.rem>可充能{ct}次</>",
+      "skillType": "AUTO",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 3,
+        "spCost": 4,
+        "initSp": 0,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_sunbr_1",
+      "duration": 0.0,
+      "blackboard": [
+        {
+          "key": "heal_scale",
+          "value": 1.6,
+          "valueStr": null
+        },
+        {
+          "key": "ct",
+          "value": 3.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_shu_1.levels[9]": {
+      "name": "化被草木",
+      "rangeId": "x-4",
+      "description": "下一次攻击会为周围血量不足一半的一名友方单位恢复相当于攻击力<@ba.vup>{heal_scale:0%}</>的生命\\n<@ba.rem>可充能{ct}次</>",
+      "skillType": "AUTO",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 3,
+        "spCost": 4,
+        "initSp": 0,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_shu_1",
+      "duration": 0.0,
+      "blackboard": [
+        {
+          "key": "heal_scale",
+          "value": 1.8,
+          "valueStr": null
+        },
+        {
+          "key": "ct",
+          "value": 3.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_sbell2_2.levels[9]": {
+      "name": "霜涛覆岭",
+      "rangeId": null,
+      "description": "每次攻击造成相当于攻击力<@ba.vup>{attack@atk_scale_s2:0%}</>的法术伤害，积雪超过5层时会向周围扩散一层（最多向外扩散20格），处于积雪上的地面敌人每秒受到攻击力<@ba.vup>{talent@s2_magic_scale:0%}</>的法术伤害，敌人离开积雪时获得<@ba.vup>5</>秒<$ba.cold>寒冷</>，积雪在目标点积累至5层时，使目标点变为<$ba.frozen>冻结</>状态\\n<@ba.rem>持续时间无限，可主动关闭技能（期间可随时停止技能）</>",
+      "skillType": "AUTO",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 45,
+        "initSp": 0,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_sbell2_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "attack@atk_scale_s2",
+          "value": 3.8,
+          "valueStr": null
+        },
+        {
+          "key": "talent@s2_magic_scale",
+          "value": 0.2,
+          "valueStr": null
+        },
+        {
+          "key": "talent@max_cast_tile_count",
+          "value": 20.0,
+          "valueStr": null
+        },
+        {
+          "key": "talent@cold",
+          "value": 5.0,
+          "valueStr": null
+        },
+        {
+          "key": "talent@token_key",
+          "value": 0.0,
+          "valueStr": "token_10058_sbell2_icetgt"
+        }
+      ]
+    },
+    "character_table.token_10069_mcnist_mcgraf.talents[0]": {
+      "candidates": [
+        {
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "prefabKey": "1",
+          "name": "结构性原理",
+          "description": "部署后持续20秒",
+          "rangeId": null,
+          "blackboard": [
+            {
+              "key": "skill@duration",
+              "value": 20.0,
+              "valueStr": null
+            }
+          ],
+          "tokenKey": null,
+          "isHideTalent": false
+        },
+        {
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "prefabKey": "1",
+          "name": "结构性原理",
+          "description": "部署后持续30秒",
+          "rangeId": null,
+          "blackboard": [
+            {
+              "key": "skill@duration",
+              "value": 30.0,
+              "valueStr": null
+            }
+          ],
+          "tokenKey": null,
+          "isHideTalent": false
+        }
+      ]
+    },
+    "battle_equip_table.uniequip_002_mcnist.phases[1].parts[3]": {
+      "resKey": null,
+      "target": "TALENT_DATA_ONLY",
+      "isToken": true,
+      "validInGameTag": null,
+      "validInMapTag": "rogue_6",
+      "addOrOverrideTalentDataBundle": {
+        "candidates": [
+          {
+            "displayRangeId": false,
+            "upgradeDescription": "持续时间无限",
+            "talentIndex": 0,
+            "validModeIndices": null,
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 60
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "结构性原理",
+            "description": null,
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "skill@duration",
+                "value": -1.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      },
+      "overrideTraitDataBundle": {
+        "candidates": null
+      }
+    },
+    "battle_equip_table.uniequip_002_mcnist.phases[2].parts[2]": {
+      "resKey": null,
+      "target": "TALENT_DATA_ONLY",
+      "isToken": true,
+      "validInGameTag": null,
+      "validInMapTag": "rogue_6",
+      "addOrOverrideTalentDataBundle": {
+        "candidates": [
+          {
+            "displayRangeId": false,
+            "upgradeDescription": "持续时间无限",
+            "talentIndex": 0,
+            "validModeIndices": null,
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 60
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "结构性原理",
+            "description": null,
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "skill@duration",
+                "value": -1.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      },
+      "overrideTraitDataBundle": {
+        "candidates": null
+      }
+    }
+  },
+  "public_read_only_reproductions": [
+    {
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000
+      },
+      "observed_healing": 1600.0,
+      "shown_window": 1.2,
+      "duration": 1.2,
+      "components": [
+        {
+          "name": "治疗替代下次攻击",
+          "damage_type": "healing",
+          "hits": 1,
+          "per_hit": 1600.0,
+          "total": 1600.0,
+          "source_unit": "operator"
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000,
+        "window_seconds": 0
+      },
+      "observed_healing": 1600.0,
+      "shown_window": 1.2,
+      "duration": 1.2,
+      "components": [
+        {
+          "name": "治疗替代下次攻击",
+          "damage_type": "healing",
+          "hits": 1,
+          "per_hit": 1600.0,
+          "total": 1600.0,
+          "source_unit": "operator"
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "operator": "char_196_sunbr",
+        "skill": 1,
+        "base_attack": 1000,
+        "window_seconds": 1
+      },
+      "observed_healing": 1600.0,
+      "shown_window": 1.2,
+      "duration": 1.2,
+      "components": [
+        {
+          "name": "治疗替代下次攻击",
+          "damage_type": "healing",
+          "hits": 1,
+          "per_hit": 1600.0,
+          "total": 1600.0,
+          "source_unit": "operator"
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "operator": "char_2025_shu",
+        "skill": 1,
+        "base_attack": 1000
+      },
+      "observed_healing": 1800.0,
+      "shown_window": 1.2,
+      "duration": 1.2,
+      "components": [
+        {
+          "name": "治疗替代下次攻击",
+          "damage_type": "healing",
+          "hits": 1,
+          "per_hit": 1800.0,
+          "total": 1800.0,
+          "source_unit": "operator"
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "operator": "char_2025_shu",
+        "skill": 1,
+        "base_attack": 1000,
+        "window_seconds": 0
+      },
+      "observed_healing": 1800.0,
+      "shown_window": 1.2,
+      "duration": 1.2,
+      "components": [
+        {
+          "name": "治疗替代下次攻击",
+          "damage_type": "healing",
+          "hits": 1,
+          "per_hit": 1800.0,
+          "total": 1800.0,
+          "source_unit": "operator"
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "operator": "char_2025_shu",
+        "skill": 1,
+        "base_attack": 1000,
+        "window_seconds": 1
+      },
+      "observed_healing": 1800.0,
+      "shown_window": 1.2,
+      "duration": 1.2,
+      "components": [
+        {
+          "name": "治疗替代下次攻击",
+          "damage_type": "healing",
+          "hits": 1,
+          "per_hit": 1800.0,
+          "total": 1800.0,
+          "source_unit": "operator"
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "operator": "char_1046_sbell2",
+        "skill": 2,
+        "base_attack": 1000,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "observed_damage": 6000.0,
+      "components": [
+        {
+          "name": "技能攻击",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 3800.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        },
+        {
+          "name": "积雪持续伤害",
+          "damage_type": "magic",
+          "hits": 30,
+          "per_hit": 200.0,
+          "total": 6000.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "积雪经过伤害",
+          "damage_type": "magic",
+          "hits": 0.0,
+          "per_hit": 750.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "operator": "char_1046_sbell2",
+        "skill": 2,
+        "base_attack": 1000,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "observed_damage": 6000.0,
+      "components": [
+        {
+          "name": "技能攻击",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 3800.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        },
+        {
+          "name": "积雪持续伤害",
+          "damage_type": "magic",
+          "hits": 30,
+          "per_hit": 200.0,
+          "total": 6000.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "积雪经过伤害",
+          "damage_type": "magic",
+          "hits": 0.0,
+          "per_hit": 750.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        }
+      ]
+    },
+    {
+      "scenario": {
+        "operator": "char_1046_sbell2",
+        "skill": 2,
+        "base_attack": 1000,
+        "timing": {}
+      },
+      "observed_damage": 59200.0,
+      "components": [
+        {
+          "name": "技能攻击",
+          "damage_type": "magic",
+          "hits": 14,
+          "per_hit": 3800.0,
+          "total": 53200.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            2.0,
+            4.0,
+            6.0,
+            8.0,
+            10.0,
+            12.0,
+            14.0,
+            16.0,
+            18.0,
+            20.0,
+            22.0,
+            24.0,
+            26.0,
+            28.0
+          ]
+        },
+        {
+          "name": "积雪持续伤害",
+          "damage_type": "magic",
+          "hits": 30,
+          "per_hit": 200.0,
+          "total": 6000.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "积雪经过伤害",
+          "damage_type": "magic",
+          "hits": 0.0,
+          "per_hit": 750.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        }
+      ]
+    }
+  ],
+  "environment_receipts": "/tmp/p2-audit/environment-22-25/NOTE.md",
+  "long_term_technology": {
+    "development_selector": "customizeData.rogue_6.commonDevelopment",
+    "node_count": 57,
+    "nodes": {
+      "developments": {
+        "rogue_6_outbuff_1": {
+          "buffId": "rogue_6_outbuff_1",
+          "nodeType": "NORMAL",
+          "frontNodeId": [],
+          "nextNodeId": [
+            "rogue_6_outbuff_2",
+            "rogue_6_outbuff_3"
+          ],
+          "positionRow": 1,
+          "positionOrder": 1,
+          "tokenCost": 1,
+          "buffName": "骨架",
+          "activeIconId": "rogue_6_grow_icon_pro_active",
+          "inactiveIconId": "rogue_6_grow_icon_pro_inactive",
+          "bottomIconId": "rogue_6_grow_icon_pro_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "初始护盾值+1"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_pro",
+              "displayNum": 1,
+              "displayForm": "ABSOLUTE_VAL",
+              "tokenDesc": "初始护盾值",
+              "sortId": 8
+            }
+          ],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_2": {
+          "buffId": "rogue_6_outbuff_2",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_1"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_4",
+            "rogue_6_outbuff_5"
+          ],
+          "positionRow": 2,
+          "positionOrder": 1,
+          "tokenCost": 1,
+          "buffName": "子宫",
+          "activeIconId": "rogue_6_grow_icon_effic_active",
+          "inactiveIconId": "rogue_6_grow_icon_effic_inactive",
+          "bottomIconId": "rogue_6_grow_icon_effic_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "源流样本获取效率+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_grow_point",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "源流样本获取效率",
+              "sortId": 9
+            }
+          ],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_3": {
+          "buffId": "rogue_6_outbuff_3",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_1"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_5",
+            "rogue_6_outbuff_6"
+          ],
+          "positionRow": 2,
+          "positionOrder": 2,
+          "tokenCost": 1,
+          "buffName": "脑",
+          "activeIconId": "rogue_6_grow_icon_exp_active",
+          "inactiveIconId": "rogue_6_grow_icon_exp_inactive",
+          "bottomIconId": "rogue_6_grow_icon_exp_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "战斗获取指挥经验+10%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_exp",
+              "displayNum": 10,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "战斗获取指挥经验",
+              "sortId": 5
+            }
+          ],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_4": {
+          "buffId": "rogue_6_outbuff_4",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_2"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_7"
+          ],
+          "positionRow": 3,
+          "positionOrder": 1,
+          "tokenCost": 1,
+          "buffName": "皮",
+          "activeIconId": "rogue_6_grow_icon_def_active",
+          "inactiveIconId": "rogue_6_grow_icon_def_inactive",
+          "bottomIconId": "rogue_6_grow_icon_def_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位防御力+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_def",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位防御力",
+              "sortId": 3
+            }
+          ],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_5": {
+          "buffId": "rogue_6_outbuff_5",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_2",
+            "rogue_6_outbuff_3"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_8"
+          ],
+          "positionRow": 3,
+          "positionOrder": 2,
+          "tokenCost": 1,
+          "buffName": "心脏",
+          "activeIconId": "rogue_6_grow_icon_hp_active",
+          "inactiveIconId": "rogue_6_grow_icon_hp_inactive",
+          "bottomIconId": "rogue_6_grow_icon_hp_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位生命值+5%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_max_hp",
+              "displayNum": 5,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位生命值",
+              "sortId": 4
+            }
+          ],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_6": {
+          "buffId": "rogue_6_outbuff_6",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_3"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_9"
+          ],
+          "positionRow": 3,
+          "positionOrder": 3,
+          "tokenCost": 1,
+          "buffName": "爪",
+          "activeIconId": "rogue_6_grow_icon_atk_active",
+          "inactiveIconId": "rogue_6_grow_icon_atk_inactive",
+          "bottomIconId": "rogue_6_grow_icon_atk_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位攻击力+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_attack",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位攻击力",
+              "sortId": 1
+            }
+          ],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_7": {
+          "buffId": "rogue_6_outbuff_7",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_4"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_10"
+          ],
+          "positionRow": 4,
+          "positionOrder": 1,
+          "tokenCost": 1,
+          "buffName": "育儿袋",
+          "activeIconId": "rogue_6_grow_icon_mystery_active",
+          "inactiveIconId": "rogue_6_grow_icon_mystery_inactive",
+          "bottomIconId": "rogue_6_grow_icon_mystery_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "探险中会出现“误入奇境”节点"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_8": {
+          "buffId": "rogue_6_outbuff_8",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_5"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_10",
+            "rogue_6_outbuff_11"
+          ],
+          "positionRow": 4,
+          "positionOrder": 2,
+          "tokenCost": 1,
+          "buffName": "声带",
+          "activeIconId": "rogue_6_grow_icon_exchange_active",
+          "inactiveIconId": "rogue_6_grow_icon_exchange_inactive",
+          "bottomIconId": "rogue_6_grow_icon_exchange_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "“失与得”出现额外选项（可以交换零件）"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_9": {
+          "buffId": "rogue_6_outbuff_9",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_6"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_11"
+          ],
+          "positionRow": 4,
+          "positionOrder": 3,
+          "tokenCost": 1,
+          "buffName": "眼睛",
+          "activeIconId": "rogue_6_grow_icon_scout_active",
+          "inactiveIconId": "rogue_6_grow_icon_scout_inactive",
+          "bottomIconId": "rogue_6_grow_icon_scout_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "探险中会出现“先行一步”节点"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_10": {
+          "buffId": "rogue_6_outbuff_10",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_7",
+            "rogue_6_outbuff_8"
+          ],
+          "nextNodeId": [
+            "rogue_6_difficulty_1"
+          ],
+          "positionRow": 5,
+          "positionOrder": 1,
+          "tokenCost": 2,
+          "buffName": "脊髓",
+          "activeIconId": "rogue_6_grow_icon_refresh_active",
+          "inactiveIconId": "rogue_6_grow_icon_refresh_inactive",
+          "bottomIconId": "rogue_6_grow_icon_refresh_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "“诡意行商”与“秘境行商”节点可刷新商品"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_11": {
+          "buffId": "rogue_6_outbuff_11",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_8",
+            "rogue_6_outbuff_9"
+          ],
+          "nextNodeId": [
+            "rogue_6_difficulty_1"
+          ],
+          "positionRow": 5,
+          "positionOrder": 2,
+          "tokenCost": 2,
+          "buffName": "额叶",
+          "activeIconId": "rogue_6_grow_icon_sell_active",
+          "inactiveIconId": "rogue_6_grow_icon_sell_inactive",
+          "bottomIconId": "rogue_6_grow_icon_sell_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "“诡意行商”节点可以出售零件"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_difficulty_1": {
+          "buffId": "rogue_6_difficulty_1",
+          "nodeType": "DIFFICULTY",
+          "frontNodeId": [
+            "rogue_6_outbuff_10",
+            "rogue_6_outbuff_11"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_12",
+            "rogue_6_outbuff_13",
+            "rogue_6_outbuff_14"
+          ],
+          "positionRow": 6,
+          "positionOrder": 1,
+          "tokenCost": 0,
+          "buffName": "分裂",
+          "activeIconId": "rogue_6_grow_icon_difficult3_active",
+          "inactiveIconId": "rogue_6_grow_icon_difficult3_inactive",
+          "bottomIconId": "rogue_6_grow_icon_difficult3_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "“指挥分队”效果提升",
+            "源流样本获取效率+2%",
+            "“羽瞰点”揭露的视野范围变大"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_1",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_12": {
+          "buffId": "rogue_6_outbuff_12",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_difficulty_1"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_15"
+          ],
+          "positionRow": 7,
+          "positionOrder": 1,
+          "tokenCost": 1,
+          "buffName": "骨架",
+          "activeIconId": "rogue_6_grow_icon_pro_active",
+          "inactiveIconId": "rogue_6_grow_icon_pro_inactive",
+          "bottomIconId": "rogue_6_grow_icon_pro_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "初始护盾值+1"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_pro",
+              "displayNum": 1,
+              "displayForm": "ABSOLUTE_VAL",
+              "tokenDesc": "初始护盾值",
+              "sortId": 8
+            }
+          ],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_13": {
+          "buffId": "rogue_6_outbuff_13",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_difficulty_1"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_16"
+          ],
+          "positionRow": 7,
+          "positionOrder": 2,
+          "tokenCost": 1,
+          "buffName": "子宫",
+          "activeIconId": "rogue_6_grow_icon_effic_active",
+          "inactiveIconId": "rogue_6_grow_icon_effic_inactive",
+          "bottomIconId": "rogue_6_grow_icon_effic_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "源流样本获取效率+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_grow_point",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "源流样本获取效率",
+              "sortId": 9
+            }
+          ],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_14": {
+          "buffId": "rogue_6_outbuff_14",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_difficulty_1"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_17"
+          ],
+          "positionRow": 7,
+          "positionOrder": 3,
+          "tokenCost": 1,
+          "buffName": "壳",
+          "activeIconId": "rogue_6_grow_icon_gold_active",
+          "inactiveIconId": "rogue_6_grow_icon_gold_inactive",
+          "bottomIconId": "rogue_6_grow_icon_gold_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "初始源石锭+2"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_gold",
+              "displayNum": 2,
+              "displayForm": "ABSOLUTE_VAL",
+              "tokenDesc": "初始源石锭",
+              "sortId": 2
+            }
+          ],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_15": {
+          "buffId": "rogue_6_outbuff_15",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_12"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_18"
+          ],
+          "positionRow": 8,
+          "positionOrder": 1,
+          "tokenCost": 2,
+          "buffName": "羽毛",
+          "activeIconId": "rogue_6_grow_icon_weather_active",
+          "inactiveIconId": "rogue_6_grow_icon_weather_inactive",
+          "bottomIconId": "rogue_6_grow_icon_weather_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "解锁“文明开化分队”"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_16": {
+          "buffId": "rogue_6_outbuff_16",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_13"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_19"
+          ],
+          "positionRow": 8,
+          "positionOrder": 2,
+          "tokenCost": 2,
+          "buffName": "鳃",
+          "activeIconId": "rogue_6_grow_icon_finance_active",
+          "inactiveIconId": "rogue_6_grow_icon_finance_inactive",
+          "bottomIconId": "rogue_6_grow_icon_finance_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "解锁“多边贸易分队”"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_17": {
+          "buffId": "rogue_6_outbuff_17",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_14"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_20"
+          ],
+          "positionRow": 8,
+          "positionOrder": 3,
+          "tokenCost": 2,
+          "buffName": "蹄",
+          "activeIconId": "rogue_6_grow_icon_vehicle_active",
+          "inactiveIconId": "rogue_6_grow_icon_vehicle_inactive",
+          "bottomIconId": "rogue_6_grow_icon_vehicle_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "解锁“开拓者分队”"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_18": {
+          "buffId": "rogue_6_outbuff_18",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_15"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_21"
+          ],
+          "positionRow": 9,
+          "positionOrder": 1,
+          "tokenCost": 1,
+          "buffName": "皮",
+          "activeIconId": "rogue_6_grow_icon_def_active",
+          "inactiveIconId": "rogue_6_grow_icon_def_inactive",
+          "bottomIconId": "rogue_6_grow_icon_def_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位防御力+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_def",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位防御力",
+              "sortId": 3
+            }
+          ],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_19": {
+          "buffId": "rogue_6_outbuff_19",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_16"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_21",
+            "rogue_6_outbuff_22"
+          ],
+          "positionRow": 9,
+          "positionOrder": 2,
+          "tokenCost": 1,
+          "buffName": "心脏",
+          "activeIconId": "rogue_6_grow_icon_hp_active",
+          "inactiveIconId": "rogue_6_grow_icon_hp_inactive",
+          "bottomIconId": "rogue_6_grow_icon_hp_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位生命值+5%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_max_hp",
+              "displayNum": 5,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位生命值",
+              "sortId": 4
+            }
+          ],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_20": {
+          "buffId": "rogue_6_outbuff_20",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_17"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_22"
+          ],
+          "positionRow": 9,
+          "positionOrder": 3,
+          "tokenCost": 1,
+          "buffName": "爪",
+          "activeIconId": "rogue_6_grow_icon_atk_active",
+          "inactiveIconId": "rogue_6_grow_icon_atk_inactive",
+          "bottomIconId": "rogue_6_grow_icon_atk_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位攻击力+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_attack",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位攻击力",
+              "sortId": 1
+            }
+          ],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_21": {
+          "buffId": "rogue_6_outbuff_21",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_18",
+            "rogue_6_outbuff_19"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_23"
+          ],
+          "positionRow": 10,
+          "positionOrder": 1,
+          "tokenCost": 3,
+          "buffName": "瘤胃",
+          "activeIconId": "rogue_6_grow_icon_endgold_active",
+          "inactiveIconId": "rogue_6_grow_icon_endgold_inactive",
+          "bottomIconId": "rogue_6_grow_icon_endgold_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "每次通过结局后，前瞻性投资系统源石锭余额+5"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_22": {
+          "buffId": "rogue_6_outbuff_22",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_19",
+            "rogue_6_outbuff_20"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_24"
+          ],
+          "positionRow": 10,
+          "positionOrder": 2,
+          "tokenCost": 3,
+          "buffName": "前肢",
+          "activeIconId": "rogue_6_grow_icon_bring_active",
+          "inactiveIconId": "rogue_6_grow_icon_bring_inactive",
+          "bottomIconId": "rogue_6_grow_icon_bring_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "可携带干员数+1"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_squad_capacity",
+              "displayNum": 1,
+              "displayForm": "ABSOLUTE_VAL",
+              "tokenDesc": "可携带干员数",
+              "sortId": 6
+            }
+          ],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_23": {
+          "buffId": "rogue_6_outbuff_23",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_21"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_25"
+          ],
+          "positionRow": 11,
+          "positionOrder": 1,
+          "tokenCost": 2,
+          "buffName": "毛皮",
+          "activeIconId": "rogue_6_grow_icon_def_active",
+          "inactiveIconId": "rogue_6_grow_icon_def_inactive",
+          "bottomIconId": "rogue_6_grow_icon_def_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位防御力+4%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_def",
+              "displayNum": 4,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位防御力",
+              "sortId": 3
+            }
+          ],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_24": {
+          "buffId": "rogue_6_outbuff_24",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_22"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_25"
+          ],
+          "positionRow": 11,
+          "positionOrder": 2,
+          "tokenCost": 2,
+          "buffName": "利爪",
+          "activeIconId": "rogue_6_grow_icon_atk_active",
+          "inactiveIconId": "rogue_6_grow_icon_atk_inactive",
+          "bottomIconId": "rogue_6_grow_icon_atk_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位攻击力+4%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_attack",
+              "displayNum": 4,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位攻击力",
+              "sortId": 1
+            }
+          ],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_25": {
+          "buffId": "rogue_6_outbuff_25",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_23",
+            "rogue_6_outbuff_24"
+          ],
+          "nextNodeId": [
+            "rogue_6_difficulty_2"
+          ],
+          "positionRow": 12,
+          "positionOrder": 1,
+          "tokenCost": 3,
+          "buffName": "颊囊",
+          "activeIconId": "rogue_6_grow_icon_seed_active",
+          "inactiveIconId": "rogue_6_grow_icon_seed_inactive",
+          "bottomIconId": "rogue_6_grow_icon_seed_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "初始额外获得1个“种子”零件"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_difficulty_2": {
+          "buffId": "rogue_6_difficulty_2",
+          "nodeType": "DIFFICULTY",
+          "frontNodeId": [
+            "rogue_6_outbuff_25"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_26",
+            "rogue_6_outbuff_27"
+          ],
+          "positionRow": 13,
+          "positionOrder": 1,
+          "tokenCost": 0,
+          "buffName": "卵生",
+          "activeIconId": "rogue_6_grow_icon_difficult6_active",
+          "inactiveIconId": "rogue_6_grow_icon_difficult6_inactive",
+          "bottomIconId": "rogue_6_grow_icon_difficult6_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "“后勤分队”效果提升",
+            "源流样本获取效率+2%",
+            "“诡意行商”中会额外出售两个商品"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_2",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_26": {
+          "buffId": "rogue_6_outbuff_26",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_difficulty_2"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_28",
+            "rogue_6_outbuff_29"
+          ],
+          "positionRow": 14,
+          "positionOrder": 1,
+          "tokenCost": 2,
+          "buffName": "子宫",
+          "activeIconId": "rogue_6_grow_icon_effic_active",
+          "inactiveIconId": "rogue_6_grow_icon_effic_inactive",
+          "bottomIconId": "rogue_6_grow_icon_effic_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "源流样本获取效率+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_grow_point",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "源流样本获取效率",
+              "sortId": 9
+            }
+          ],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_27": {
+          "buffId": "rogue_6_outbuff_27",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_difficulty_2"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_29",
+            "rogue_6_outbuff_30"
+          ],
+          "positionRow": 14,
+          "positionOrder": 2,
+          "tokenCost": 2,
+          "buffName": "脑",
+          "activeIconId": "rogue_6_grow_icon_exp_active",
+          "inactiveIconId": "rogue_6_grow_icon_exp_inactive",
+          "bottomIconId": "rogue_6_grow_icon_exp_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "战斗获取指挥经验+10%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_exp",
+              "displayNum": 10,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "战斗获取指挥经验",
+              "sortId": 5
+            }
+          ],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_28": {
+          "buffId": "rogue_6_outbuff_28",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_26"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_31"
+          ],
+          "positionRow": 15,
+          "positionOrder": 1,
+          "tokenCost": 2,
+          "buffName": "皮",
+          "activeIconId": "rogue_6_grow_icon_def_active",
+          "inactiveIconId": "rogue_6_grow_icon_def_inactive",
+          "bottomIconId": "rogue_6_grow_icon_def_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位防御力+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_def",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位防御力",
+              "sortId": 3
+            }
+          ],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_29": {
+          "buffId": "rogue_6_outbuff_29",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_26",
+            "rogue_6_outbuff_27"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_32"
+          ],
+          "positionRow": 15,
+          "positionOrder": 2,
+          "tokenCost": 2,
+          "buffName": "心脏",
+          "activeIconId": "rogue_6_grow_icon_hp_active",
+          "inactiveIconId": "rogue_6_grow_icon_hp_inactive",
+          "bottomIconId": "rogue_6_grow_icon_hp_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位生命值+5%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_max_hp",
+              "displayNum": 5,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位生命值",
+              "sortId": 4
+            }
+          ],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_30": {
+          "buffId": "rogue_6_outbuff_30",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_27"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_33"
+          ],
+          "positionRow": 15,
+          "positionOrder": 3,
+          "tokenCost": 2,
+          "buffName": "爪",
+          "activeIconId": "rogue_6_grow_icon_atk_active",
+          "inactiveIconId": "rogue_6_grow_icon_atk_inactive",
+          "bottomIconId": "rogue_6_grow_icon_atk_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位攻击力+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_attack",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位攻击力",
+              "sortId": 1
+            }
+          ],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_31": {
+          "buffId": "rogue_6_outbuff_31",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_28"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_34"
+          ],
+          "positionRow": 16,
+          "positionOrder": 1,
+          "tokenCost": 3,
+          "buffName": "血液",
+          "activeIconId": "rogue_6_grow_icon_rest_active",
+          "inactiveIconId": "rogue_6_grow_icon_rest_inactive",
+          "bottomIconId": "rogue_6_grow_icon_rest_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "进入“安全的角落”时回复3点目标生命值"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_32": {
+          "buffId": "rogue_6_outbuff_32",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_29"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_34"
+          ],
+          "positionRow": 16,
+          "positionOrder": 2,
+          "tokenCost": 3,
+          "buffName": "手掌",
+          "activeIconId": "rogue_6_grow_icon_exchangemore_active",
+          "inactiveIconId": "rogue_6_grow_icon_exchangemore_inactive",
+          "bottomIconId": "rogue_6_grow_icon_exchangemore_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "“失与得”节点可交换次数+1"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_33": {
+          "buffId": "rogue_6_outbuff_33",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_30"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_34"
+          ],
+          "positionRow": 16,
+          "positionOrder": 3,
+          "tokenCost": 3,
+          "buffName": "喙",
+          "activeIconId": "rogue_6_grow_icon_scoutget_active",
+          "inactiveIconId": "rogue_6_grow_icon_scoutget_inactive",
+          "bottomIconId": "rogue_6_grow_icon_scoutget_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "“先行一步”归来时额外获得随机加工品"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_34": {
+          "buffId": "rogue_6_outbuff_34",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_31",
+            "rogue_6_outbuff_32",
+            "rogue_6_outbuff_33"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_35",
+            "rogue_6_outbuff_36",
+            "rogue_6_outbuff_37"
+          ],
+          "positionRow": 17,
+          "positionOrder": 1,
+          "tokenCost": 3,
+          "buffName": "壳",
+          "activeIconId": "rogue_6_grow_icon_gold_active",
+          "inactiveIconId": "rogue_6_grow_icon_gold_inactive",
+          "bottomIconId": "rogue_6_grow_icon_gold_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "初始源石锭+2"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_gold",
+              "displayNum": 2,
+              "displayForm": "ABSOLUTE_VAL",
+              "tokenDesc": "初始源石锭",
+              "sortId": 2
+            }
+          ],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_35": {
+          "buffId": "rogue_6_outbuff_35",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_34"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_38"
+          ],
+          "positionRow": 18,
+          "positionOrder": 1,
+          "tokenCost": 4,
+          "buffName": "颊囊",
+          "activeIconId": "rogue_6_grow_icon_seed_active",
+          "inactiveIconId": "rogue_6_grow_icon_seed_inactive",
+          "bottomIconId": "rogue_6_grow_icon_seed_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "初始额外获得1个“种子”零件"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_36": {
+          "buffId": "rogue_6_outbuff_36",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_34"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_39"
+          ],
+          "positionRow": 18,
+          "positionOrder": 2,
+          "tokenCost": 4,
+          "buffName": "牙齿",
+          "activeIconId": "rogue_6_grow_icon_partchoice_active",
+          "inactiveIconId": "rogue_6_grow_icon_partchoice_inactive",
+          "bottomIconId": "rogue_6_grow_icon_partchoice_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "战斗获得零件时额外增加1个可选项"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_37": {
+          "buffId": "rogue_6_outbuff_37",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_34"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_40"
+          ],
+          "positionRow": 18,
+          "positionOrder": 3,
+          "tokenCost": 4,
+          "buffName": "翅膀",
+          "activeIconId": "rogue_6_grow_icon_ap_active",
+          "inactiveIconId": "rogue_6_grow_icon_ap_inactive",
+          "bottomIconId": "rogue_6_grow_icon_ap_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "进入第一层时，行动力+1"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_38": {
+          "buffId": "rogue_6_outbuff_38",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_35"
+          ],
+          "nextNodeId": [
+            "rogue_6_difficulty_3"
+          ],
+          "positionRow": 19,
+          "positionOrder": 1,
+          "tokenCost": 3,
+          "buffName": "毛皮",
+          "activeIconId": "rogue_6_grow_icon_def_active",
+          "inactiveIconId": "rogue_6_grow_icon_def_inactive",
+          "bottomIconId": "rogue_6_grow_icon_def_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位防御力+4%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_def",
+              "displayNum": 4,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位防御力",
+              "sortId": 3
+            }
+          ],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_39": {
+          "buffId": "rogue_6_outbuff_39",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_36"
+          ],
+          "nextNodeId": [
+            "rogue_6_difficulty_3"
+          ],
+          "positionRow": 19,
+          "positionOrder": 2,
+          "tokenCost": 3,
+          "buffName": "心脏",
+          "activeIconId": "rogue_6_grow_icon_hp_active",
+          "inactiveIconId": "rogue_6_grow_icon_hp_inactive",
+          "bottomIconId": "rogue_6_grow_icon_hp_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位生命值+5%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_max_hp",
+              "displayNum": 5,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位生命值",
+              "sortId": 4
+            }
+          ],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_40": {
+          "buffId": "rogue_6_outbuff_40",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_37"
+          ],
+          "nextNodeId": [
+            "rogue_6_difficulty_3"
+          ],
+          "positionRow": 19,
+          "positionOrder": 3,
+          "tokenCost": 3,
+          "buffName": "利爪",
+          "activeIconId": "rogue_6_grow_icon_atk_active",
+          "inactiveIconId": "rogue_6_grow_icon_atk_inactive",
+          "bottomIconId": "rogue_6_grow_icon_atk_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位攻击力+4%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_attack",
+              "displayNum": 4,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位攻击力",
+              "sortId": 1
+            }
+          ],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_difficulty_3": {
+          "buffId": "rogue_6_difficulty_3",
+          "nodeType": "DIFFICULTY",
+          "frontNodeId": [
+            "rogue_6_outbuff_38",
+            "rogue_6_outbuff_39",
+            "rogue_6_outbuff_40"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_41",
+            "rogue_6_outbuff_42"
+          ],
+          "positionRow": 20,
+          "positionOrder": 1,
+          "tokenCost": 0,
+          "buffName": "胎生",
+          "activeIconId": "rogue_6_grow_icon_difficult9_active",
+          "inactiveIconId": "rogue_6_grow_icon_difficult9_inactive",
+          "bottomIconId": "rogue_6_grow_icon_difficult9_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "“矛头分队”效果提升",
+            "源流样本获取效率+2%",
+            "通过“险路尽头”或“险路小径”进入下一区域后目标生命上限+2"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_3",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_41": {
+          "buffId": "rogue_6_outbuff_41",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_difficulty_3"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_43",
+            "rogue_6_outbuff_44"
+          ],
+          "positionRow": 21,
+          "positionOrder": 1,
+          "tokenCost": 3,
+          "buffName": "甲壳",
+          "activeIconId": "rogue_6_grow_icon_gold_active",
+          "inactiveIconId": "rogue_6_grow_icon_gold_inactive",
+          "bottomIconId": "rogue_6_grow_icon_gold_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "初始源石锭+4"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_gold",
+              "displayNum": 4,
+              "displayForm": "ABSOLUTE_VAL",
+              "tokenDesc": "初始源石锭",
+              "sortId": 2
+            }
+          ],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_42": {
+          "buffId": "rogue_6_outbuff_42",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_difficulty_3"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_44",
+            "rogue_6_outbuff_45"
+          ],
+          "positionRow": 21,
+          "positionOrder": 2,
+          "tokenCost": 3,
+          "buffName": "脑",
+          "activeIconId": "rogue_6_grow_icon_exp_active",
+          "inactiveIconId": "rogue_6_grow_icon_exp_inactive",
+          "bottomIconId": "rogue_6_grow_icon_exp_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "战斗获取指挥经验+10%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_exp",
+              "displayNum": 10,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "战斗获取指挥经验",
+              "sortId": 5
+            }
+          ],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_43": {
+          "buffId": "rogue_6_outbuff_43",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_41"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_46"
+          ],
+          "positionRow": 22,
+          "positionOrder": 1,
+          "tokenCost": 5,
+          "buffName": "顶冠",
+          "activeIconId": "rogue_6_grow_icon_weather_active",
+          "inactiveIconId": "rogue_6_grow_icon_weather_inactive",
+          "bottomIconId": "rogue_6_grow_icon_weather_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "“文明开化分队”效果提升"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_44": {
+          "buffId": "rogue_6_outbuff_44",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_41",
+            "rogue_6_outbuff_42"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_47"
+          ],
+          "positionRow": 22,
+          "positionOrder": 2,
+          "tokenCost": 5,
+          "buffName": "鳍",
+          "activeIconId": "rogue_6_grow_icon_finance_active",
+          "inactiveIconId": "rogue_6_grow_icon_finance_inactive",
+          "bottomIconId": "rogue_6_grow_icon_finance_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "“多边贸易分队”效果提升"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_45": {
+          "buffId": "rogue_6_outbuff_45",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_42"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_48"
+          ],
+          "positionRow": 22,
+          "positionOrder": 3,
+          "tokenCost": 5,
+          "buffName": "角",
+          "activeIconId": "rogue_6_grow_icon_vehicle_active",
+          "inactiveIconId": "rogue_6_grow_icon_vehicle_inactive",
+          "bottomIconId": "rogue_6_grow_icon_vehicle_active",
+          "effectType": "RAW_TEXT_EFFECT",
+          "rawDesc": [
+            "“开拓者分队”效果提升"
+          ],
+          "buffDisplayInfo": [],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_46": {
+          "buffId": "rogue_6_outbuff_46",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_43"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_49",
+            "rogue_6_outbuff_50"
+          ],
+          "positionRow": 23,
+          "positionOrder": 1,
+          "tokenCost": 3,
+          "buffName": "皮",
+          "activeIconId": "rogue_6_grow_icon_def_active",
+          "inactiveIconId": "rogue_6_grow_icon_def_inactive",
+          "bottomIconId": "rogue_6_grow_icon_def_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位防御力+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_def",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位防御力",
+              "sortId": 3
+            }
+          ],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_47": {
+          "buffId": "rogue_6_outbuff_47",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_44"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_50"
+          ],
+          "positionRow": 23,
+          "positionOrder": 2,
+          "tokenCost": 3,
+          "buffName": "心脏",
+          "activeIconId": "rogue_6_grow_icon_hp_active",
+          "inactiveIconId": "rogue_6_grow_icon_hp_inactive",
+          "bottomIconId": "rogue_6_grow_icon_hp_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位生命值+5%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_max_hp",
+              "displayNum": 5,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位生命值",
+              "sortId": 4
+            }
+          ],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_48": {
+          "buffId": "rogue_6_outbuff_48",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_45"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_50",
+            "rogue_6_outbuff_51"
+          ],
+          "positionRow": 23,
+          "positionOrder": 3,
+          "tokenCost": 3,
+          "buffName": "爪",
+          "activeIconId": "rogue_6_grow_icon_atk_active",
+          "inactiveIconId": "rogue_6_grow_icon_atk_inactive",
+          "bottomIconId": "rogue_6_grow_icon_atk_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位攻击力+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_attack",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位攻击力",
+              "sortId": 1
+            }
+          ],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_49": {
+          "buffId": "rogue_6_outbuff_49",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_46"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_52"
+          ],
+          "positionRow": 24,
+          "positionOrder": 1,
+          "tokenCost": 3,
+          "buffName": "毛皮",
+          "activeIconId": "rogue_6_grow_icon_def_active",
+          "inactiveIconId": "rogue_6_grow_icon_def_inactive",
+          "bottomIconId": "rogue_6_grow_icon_def_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位防御力+4%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_def",
+              "displayNum": 4,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位防御力",
+              "sortId": 3
+            }
+          ],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_50": {
+          "buffId": "rogue_6_outbuff_50",
+          "nodeType": "KEY",
+          "frontNodeId": [
+            "rogue_6_outbuff_46",
+            "rogue_6_outbuff_47",
+            "rogue_6_outbuff_48"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_53"
+          ],
+          "positionRow": 24,
+          "positionOrder": 2,
+          "tokenCost": 5,
+          "buffName": "信息素",
+          "activeIconId": "rogue_6_grow_icon_deploy_active",
+          "inactiveIconId": "rogue_6_grow_icon_deploy_inactive",
+          "bottomIconId": "rogue_6_grow_icon_deploy_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "可部署人数+1"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_char_limit",
+              "displayNum": 1,
+              "displayForm": "ABSOLUTE_VAL",
+              "tokenDesc": "可同时部署人数",
+              "sortId": 7
+            }
+          ],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_51": {
+          "buffId": "rogue_6_outbuff_51",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_48"
+          ],
+          "nextNodeId": [
+            "rogue_6_outbuff_54"
+          ],
+          "positionRow": 24,
+          "positionOrder": 3,
+          "tokenCost": 3,
+          "buffName": "利爪",
+          "activeIconId": "rogue_6_grow_icon_atk_active",
+          "inactiveIconId": "rogue_6_grow_icon_atk_inactive",
+          "bottomIconId": "rogue_6_grow_icon_atk_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "我方单位攻击力+4%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_bat_attack",
+              "displayNum": 4,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "我方单位攻击力",
+              "sortId": 1
+            }
+          ],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_52": {
+          "buffId": "rogue_6_outbuff_52",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_49"
+          ],
+          "nextNodeId": [],
+          "positionRow": 25,
+          "positionOrder": 1,
+          "tokenCost": 3,
+          "buffName": "子宫",
+          "activeIconId": "rogue_6_grow_icon_effic_active",
+          "inactiveIconId": "rogue_6_grow_icon_effic_inactive",
+          "bottomIconId": "rogue_6_grow_icon_effic_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "源流样本获取效率+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_grow_point",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "源流样本获取效率",
+              "sortId": 9
+            }
+          ],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_53": {
+          "buffId": "rogue_6_outbuff_53",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_50"
+          ],
+          "nextNodeId": [],
+          "positionRow": 25,
+          "positionOrder": 2,
+          "tokenCost": 3,
+          "buffName": "甲壳",
+          "activeIconId": "rogue_6_grow_icon_gold_active",
+          "inactiveIconId": "rogue_6_grow_icon_gold_inactive",
+          "bottomIconId": "rogue_6_grow_icon_gold_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "初始源石锭+4"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_gold",
+              "displayNum": 4,
+              "displayForm": "ABSOLUTE_VAL",
+              "tokenDesc": "初始源石锭",
+              "sortId": 2
+            }
+          ],
+          "groupId": "group_4",
+          "enrollId": null
+        },
+        "rogue_6_outbuff_54": {
+          "buffId": "rogue_6_outbuff_54",
+          "nodeType": "NORMAL",
+          "frontNodeId": [
+            "rogue_6_outbuff_51"
+          ],
+          "nextNodeId": [],
+          "positionRow": 25,
+          "positionOrder": 3,
+          "tokenCost": 3,
+          "buffName": "子宫",
+          "activeIconId": "rogue_6_grow_icon_effic_active",
+          "inactiveIconId": "rogue_6_grow_icon_effic_inactive",
+          "bottomIconId": "rogue_6_grow_icon_effic_active",
+          "effectType": "BUFF",
+          "rawDesc": [
+            "源流样本获取效率+2%"
+          ],
+          "buffDisplayInfo": [
+            {
+              "displayType": "display_grow_point",
+              "displayNum": 2,
+              "displayForm": "PERCENTAGE",
+              "tokenDesc": "源流样本获取效率",
+              "sortId": 9
+            }
+          ],
+          "groupId": "group_4",
+          "enrollId": null
+        }
+      },
+      "developmentsTokens": {
+        "display_bat_attack": {
+          "sortId": 1,
+          "displayForm": "PERCENTAGE",
+          "tokenDesc": "我方单位攻击力"
+        },
+        "display_gold": {
+          "sortId": 2,
+          "displayForm": "ABSOLUTE_VAL",
+          "tokenDesc": "初始源石锭"
+        },
+        "display_bat_def": {
+          "sortId": 3,
+          "displayForm": "PERCENTAGE",
+          "tokenDesc": "我方单位防御力"
+        },
+        "display_bat_max_hp": {
+          "sortId": 4,
+          "displayForm": "PERCENTAGE",
+          "tokenDesc": "我方单位生命值"
+        },
+        "display_exp": {
+          "sortId": 5,
+          "displayForm": "PERCENTAGE",
+          "tokenDesc": "战斗获取指挥经验"
+        },
+        "display_squad_capacity": {
+          "sortId": 6,
+          "displayForm": "ABSOLUTE_VAL",
+          "tokenDesc": "可携带干员数"
+        },
+        "display_bat_char_limit": {
+          "sortId": 7,
+          "displayForm": "ABSOLUTE_VAL",
+          "tokenDesc": "可同时部署人数"
+        },
+        "display_pro": {
+          "sortId": 8,
+          "displayForm": "ABSOLUTE_VAL",
+          "tokenDesc": "初始护盾值"
+        },
+        "display_grow_point": {
+          "sortId": 9,
+          "displayForm": "PERCENTAGE",
+          "tokenDesc": "源流样本获取效率"
+        }
+      },
+      "developmentRawTextGroup": [
+        {
+          "nodeIdList": [
+            "rogue_6_outbuff_7",
+            "rogue_6_outbuff_8",
+            "rogue_6_outbuff_9",
+            "rogue_6_outbuff_10",
+            "rogue_6_outbuff_11"
+          ],
+          "groupIconId": "img_summary_node_lock",
+          "sortId": 1
+        },
+        {
+          "nodeIdList": [
+            "rogue_6_outbuff_15",
+            "rogue_6_outbuff_16",
+            "rogue_6_outbuff_17"
+          ],
+          "groupIconId": "img_summary_node_lock",
+          "sortId": 2
+        },
+        {
+          "nodeIdList": [
+            "rogue_6_outbuff_21",
+            "rogue_6_outbuff_22",
+            "rogue_6_outbuff_25"
+          ],
+          "groupIconId": "img_summary_node_lock",
+          "sortId": 3
+        },
+        {
+          "nodeIdList": [
+            "rogue_6_outbuff_31",
+            "rogue_6_outbuff_32",
+            "rogue_6_outbuff_33"
+          ],
+          "groupIconId": "img_summary_node_lock",
+          "sortId": 4
+        },
+        {
+          "nodeIdList": [
+            "rogue_6_outbuff_35",
+            "rogue_6_outbuff_36",
+            "rogue_6_outbuff_37"
+          ],
+          "groupIconId": "img_summary_node_lock",
+          "sortId": 5
+        },
+        {
+          "nodeIdList": [
+            "rogue_6_outbuff_43",
+            "rogue_6_outbuff_44",
+            "rogue_6_outbuff_45",
+            "rogue_6_outbuff_50"
+          ],
+          "groupIconId": "img_summary_node_lock",
+          "sortId": 6
+        }
+      ],
+      "developmentsDifficultyNodeInfos": {
+        "rogue_6_difficulty_1": {
+          "buffId": "rogue_6_difficulty_1",
+          "nodeMap": [
+            {
+              "frontNodes": [
+                "rogue_6_outbuff_10",
+                "rogue_6_outbuff_11"
+              ],
+              "nextNode": "rogue_6_outbuff_12"
+            },
+            {
+              "frontNodes": [
+                "rogue_6_outbuff_10",
+                "rogue_6_outbuff_11"
+              ],
+              "nextNode": "rogue_6_outbuff_13"
+            },
+            {
+              "frontNodes": [
+                "rogue_6_outbuff_10",
+                "rogue_6_outbuff_11"
+              ],
+              "nextNode": "rogue_6_outbuff_14"
+            }
+          ],
+          "enableGrade": 3,
+          "enableDesc": "<保密等级3>及以上难度进行探索时生效",
+          "lightId": "rogue_6_difficulty_1_light",
+          "decoId": null
+        },
+        "rogue_6_difficulty_2": {
+          "buffId": "rogue_6_difficulty_2",
+          "nodeMap": [
+            {
+              "frontNodes": [
+                "rogue_6_outbuff_25"
+              ],
+              "nextNode": "rogue_6_outbuff_26"
+            },
+            {
+              "frontNodes": [
+                "rogue_6_outbuff_25"
+              ],
+              "nextNode": "rogue_6_outbuff_27"
+            }
+          ],
+          "enableGrade": 6,
+          "enableDesc": "<保密等级6>及以上难度进行探索时生效",
+          "lightId": "rogue_6_difficulty_2_light",
+          "decoId": null
+        },
+        "rogue_6_difficulty_3": {
+          "buffId": "rogue_6_difficulty_3",
+          "nodeMap": [
+            {
+              "frontNodes": [
+                "rogue_6_outbuff_38",
+                "rogue_6_outbuff_39",
+                "rogue_6_outbuff_40"
+              ],
+              "nextNode": "rogue_6_outbuff_41"
+            },
+            {
+              "frontNodes": [
+                "rogue_6_outbuff_38",
+                "rogue_6_outbuff_39",
+                "rogue_6_outbuff_40"
+              ],
+              "nextNode": "rogue_6_outbuff_42"
+            }
+          ],
+          "enableGrade": 9,
+          "enableDesc": "<保密等级9>及以上难度进行探索时生效",
+          "lightId": "rogue_6_difficulty_3_light",
+          "decoId": null
+        }
+      }
+    },
+    "sufficient_for": [
+      "Display/reference catalogue of57 technology nodes",
+      "Explicit display values and prerequisite/next-node edges",
+      "Difficulty threshold display references3/6/9"
+    ],
+    "insufficient_for": [
+      "Current account unlocked state",
+      "Actual skill/buff script linkage and attribute composition",
+      "Activation/persistence/reset/order in current NORMAL or other mode"
+    ]
+  },
+  "module_status": {
+    "deepcolor": "Existing reviewed rule supported; current hotpatch/native panel still unknown",
+    "mechanist": "Raw token lifetime20/30 and conditional rogue_6 module lifetime-1 reference are proved; only parameter/reference feature independently safe, no new actual deployment or barrier timeline",
+    "other_pairs": "Supported catalog has no further directly applicable isToken module data-only numerical parameter overrides; expanding supported operators or scripts requires targeted evidence first"
+  },
+  "same_problem_attempt_policy": "No repeated missing DLL/PRTS route searches. Source queries succeeded except one new buff_table raw404; no invented three-failure claim."
+}

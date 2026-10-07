@@ -365,6 +365,15 @@ def build_report(scenario,result):
             metric('actual_end','实际结束当帧',None,'帧')],
             ['目标在名义结束前消失时不生成终结来源；同帧消失顺序未核验时完整伤害未知。',
              '实际结束相位、冻结移除顺序及离开范围的后续适用性尚未核验。']))
+    liftoff=result.get('aglna_liftoff_reference')
+    if liftoff:
+        sections.append(section('aglna_liftoff','重力自定义 · 起飞阶段待核验',[
+            metric('chant','吟唱时长参数参考',liftoff['chant_duration_parameter_seconds'],'秒'),
+            metric('duration_parameter','原始技能持续参数',liftoff['nominal_skill_duration_parameter_seconds'],'秒'),
+            metric('conditional_damage','已有孤立攻击阶段条件伤害参考',liftoff['cast_attack_phase_reference']['conditional_damage']),
+            metric('takeoff','实际起飞时刻',None,'秒')],
+            ['观察窗口按给定长度保留，不因扣除后回加chant参数变长。',
+             '保留旧攻击阶段参数参考，不将孤立阶段事件当作实际开启后的命中时刻；起飞、循环和结束绑定未知。']))
     manual_close=result.get('manual_close_reference')
     if manual_close:
         sections.append(section('manual_close','地狱变相 · 关闭尾段待核验',[
@@ -507,7 +516,7 @@ def build_report(scenario,result):
              if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
              if bait_reference else
              '这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。'
-             if wisdel or mizuki or ines_dot or manual_close or result.get('drone_lifecycle_reference') else
+             if wisdel or mizuki or ines_dot or manual_close or liftoff or result.get('drone_lifecycle_reference') else
              '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']))
     if has_healing(op,number):
         rows=[];window_healing=skill['window_healing']

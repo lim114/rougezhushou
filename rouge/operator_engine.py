@@ -233,7 +233,7 @@ class Combat:
         if not normal and window is not None:duration=min(duration,window)
         if not normal and self.s['operator']=='char_1029_yato2':
             attack+=self.base*self.talent('鬼人强化状态','atk')
-        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None
+        components=[];neural_events=None;neural_secondary_seeds=[];neural_binding_seeds=[];neural_incoming_pending=False;op=self.s['operator'];ammo_rounds=None;mantra_attacks=[];drone_trait_reference=None;aglna_attack_phase_reference=None
         timeline=AttackTimeline(self.s,normal=normal,offset=self.s.get('_timeline_offset_seconds',0) if normal else 0)
         def emit(name,raw,dtype,count,defense=None,resistance=None,effects=None,event_times=None):
             if dtype=='buildup':raw*=math.prod(r['value'] for r in self.s.get('_relic_rules',[]) if r['kind']=='buildup_factor')
@@ -596,12 +596,26 @@ class Combat:
                 if self.n==3:
                     mode='ammo';ammo_rounds=int(bb['attack@trigger_time']);duration=ammo_rounds*interval
                     if window is not None:duration=min(duration,window)
-                if self.n==2:duration=max(0,duration-bb['chant_duration'])
+                if self.n==2:
+                    nominal_horizon=duration
+                    duration=max(0,duration-bb['chant_duration'])
             regular('magic' if not normal and self.n==2 else 'physical',bb.get('attack@atk_scale',1))
             weight=self.option('enemy_weight',3,maximum=100,integer=True)
             extra=self.talent('飘浮大地之上','atk_scale_hi' if weight<=self.talent('飘浮大地之上','mass_level',3) else 'atk_scale_lo')
             regular('magic',extra,name='飘浮大地之上')
-            if not normal and self.n==2:duration+=bb['chant_duration']
+            if not normal and self.n==2:
+                # Keep the existing isolated attack-phase parameter reference;
+                # its origin is not a proved absolute takeoff clock.
+                aglna_attack_phase_reference={'timing':timeline.output(),
+                    'conditional_damage':sum(c['total'] for c in components),
+                    'attack_phase_seconds':duration}
+                for c in components:
+                    c.pop('times_seconds',None)
+                    c['timing_reference']='isolated attack phase; absolute takeoff binding unverified'
+                    if nominal_horizon>0 and timeline.options.get('target_disappears_seconds')!=0 and timeline.options.get('target_windows')!=[]:
+                        c['actual_total']=None
+                timeline.streams=[]
+                duration=nominal_horizon
             self.notes.append('予愿安洁莉娜技能按起飞状态计算；二技能滑翔吟唱阶段不计普通攻击，重量决定额外法术倍率。')
         elif op=='char_1042_phatm2':
             ep=self.talent('形为心役','attack@ep_damage_ratio')
@@ -892,7 +906,7 @@ class Combat:
             'components':components,'neural_events':neural_events,'drone_trait_reference':drone_trait_reference,
             'neural_secondary_seeds':neural_secondary_seeds,
             'neural_binding_seeds':neural_binding_seeds,
-            'neural_incoming_pending':neural_incoming_pending,'timing':timeline.output()}
+            'neural_incoming_pending':neural_incoming_pending,'aglna_attack_phase_reference':aglna_attack_phase_reference,'timing':timeline.output()}
 
     def calculate(self):
         if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:
@@ -951,6 +965,7 @@ class Combat:
         wisdel_s1_unresolved=self.s['operator']=='char_1035_wisdel' and self.n==1
         mizuki_s1_unresolved=self.s['operator']=='char_437_mizuki' and self.n==1
         ines_s1_unresolved=self.s['operator']=='char_4087_ines' and self.n==1
+        aglna_s2_unresolved=self.s['operator']=='char_1015_aglna2' and self.n==2
         manual_close_unresolved=self.s['operator']=='char_1044_hsgma2' and self.n==3 and self.option('last_stand_seconds',0,maximum=self.bb['before_dead_duration'])>0
         if wine_s1_unresolved:
             # The native multihit gap does not establish absolute cast end,
@@ -974,6 +989,9 @@ class Combat:
         if manual_close_unresolved:
             duration=None;recharge=None
             self.notes.append('主动关闭的绝对时刻和转换后攻击相位未知；尾段时长不扩长观察窗口，关闭前后完整输出未知。')
+        if aglna_s2_unresolved:
+            duration=None;recharge=None
+            self.notes.append('2.5秒chant参数仅保留已有孤立攻击阶段参考；实际起飞/循环绑定与结束时钟未知，未将其当作固定到达时间。')
         if mode=='ammo' and duration is None:total_damage=total_healing=None
         if mode in ('deployment','passive'):first=0;recharge=None
         nonrepeat=mode in ('infinite','passive','switch','once','once_deploy','deployment','triggered_ammo')
@@ -1158,6 +1176,18 @@ class Combat:
                 observed['actual_total']=None
             result['complete']=False
             result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
+        if aglna_s2_unresolved:
+            result['aglna_liftoff_reference']={
+                'chant_duration_parameter_seconds':self.bb['chant_duration'],
+                'nominal_skill_duration_parameter_seconds':self.skill['duration'],
+                'actual_takeoff_seconds':None,'lifecycle_binding_verified':False,
+                'cast_attack_phase_reference':full['aglna_attack_phase_reference'],
+                'window_attack_phase_reference':shown['aglna_attack_phase_reference'],
+            }
+            from .uncertain_sources import mask_pending_damage
+            mask_pending_damage(result,full,shown,normal,duration,cycle)
+            result['timing']['phase_clock_unbound']=True
+            result['complete']=False;result['estimate']['complete']=False
         if manual_close_unresolved:
             tail=next(c for c in full['components'] if c['name']=='主动关闭后四连击')
             result['manual_close_reference']={
