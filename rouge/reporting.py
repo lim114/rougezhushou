@@ -265,6 +265,17 @@ def build_report(scenario,result):
         metric('duration','持续时间',skill['duration_seconds'],'秒'),
         metric('cycle','预计回转',skill['cycle_seconds'],'秒'),
         metric('recharge','结束后充能',skill['recharge_seconds'],'秒')]))
+    shu_sp=result.get('shu_periodic_sp_reference')
+    if shu_sp:
+        sections.append(section('shu_periodic_sp','天有四时 · 周期技力待核验',[
+            metric('interval','周期间隔原参数',shu_sp['interval_seconds_parameter'],'秒'),
+            metric('sp','单次周期技力原参数',shu_sp['sp_per_pulse_parameter'],'技力'),
+            metric('natural_rate','已计自然技力回复速度',skill['sp_recovery_per_second'],'技力/秒'),
+            metric('first_tick','实际周期首跳',shu_sp['first_tick_seconds'],'秒')],
+            ['四岁编队条件由当前情景声明；原天赋培养门槛和攻击力加成保持。',
+             '4秒获得1点技力是周期原参数，不能当作每秒自然回复+0.25。',
+             '周期首跳、计时起点、重置和阻回期间归属尚未核验；未排周期事件，完整初动、充能与回转保持未知。',
+             '初始技力已足够时保留0秒就绪；敌方供靶或空观察窗口不取消这一独立友方技力来源。']))
     received=[r for r in result.get('relic_resolution',{}).get('rules',[]) if r['kind'] in ('received_sp','event_sp') and not r.get('token_only')]
     if received:
         from .sp_events import EVENT_TYPES
@@ -340,7 +351,7 @@ def build_report(scenario,result):
         sections.append(section('execution','战斗时序参考',rows,[
             '前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。',
             '时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。',
-            '初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。',*reference_notes]))
+            ('技能相对窗口保留帧参考；独立技力算例不包含四岁周期来源，完整初动、结束后充能与回转未知。' if shu_sp else '初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。'),*reference_notes]))
     changed=[]
     base_speed=estimate['base_stats'].get('attack_speed_reference',estimate['base_stats']['attack_speed'])
     skill_speed=skill.get('skill_attack_speed_reference',skill['skill_attack_speed'])

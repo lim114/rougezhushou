@@ -1,0 +1,5 @@
+第60节把已查原离散周期SP参数与自然SP速率分开，不猜周期首跳、reset、clock_origin或blocked_credit。保留四岁资格、静态攻击以及技能相对单次/窗口量；actual资源/周期未知，初始已满SP保持0，独立SP算例仅reference。
+
+作者55冻结3060pairs/6120calls、独立960pairs/3842calls与root59之后fresh58相关、812精选分开。两项生成器缺原topic源在外部审阅中unavailable，不冒称通过；原36次旧schema提取KeyError属于提取器，实际calculate调用成功，与修正后零错误矩阵区别。旧测试把已经retired的事件SP当active等准备失败日志原样保留，不能当native机制。
+
+>2 MB完整公共返回确定gzip无损存储，manifest保留解压与存储SHA/bytes，可gzip -dk恢复。未复制baseline/draft整个package。实际Wine/GUI及全可用检查由60组末另外归档，原生Windows/game尚未验证。

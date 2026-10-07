@@ -1,0 +1,43 @@
+test_callback_table_does_not_override_unknown_talent_clock (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_callback_table_does_not_override_unknown_talent_clock) ... ERROR
+test_enemy_absence_and_zero_window_do_not_erase_independent_friend_sp (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_enemy_absence_and_zero_window_do_not_erase_independent_friend_sp) ... ok
+test_full_initial_sp_retains_zero_without_claiming_postcast_clock (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_full_initial_sp_retains_zero_without_claiming_postcast_clock) ... ok
+test_inactive_flag_does_not_loan_shu_talent_to_another_operator (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_inactive_flag_does_not_loan_shu_talent_to_another_operator) ... ok
+test_independent_natural_and_attack_sp_sources_remain_separate (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_independent_natural_and_attack_sp_sources_remain_separate) ... FAIL
+test_ineligible_elite_and_false_flag_have_no_reference_or_output_change (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_ineligible_elite_and_false_flag_have_no_reference_or_output_change) ... ok
+test_input_and_catalog_remain_isolated_between_requests (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_input_and_catalog_remain_isolated_between_requests) ... ok
+test_missing_callback_table_still_reports_missing_conditions (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_missing_callback_table_still_reports_missing_conditions) ... FAIL
+test_module_gate_and_potential_do_not_supply_periodic_clock (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_module_gate_and_potential_do_not_supply_periodic_clock) ... ok
+test_original_parameters_do_not_supply_tick_reset_or_lockout_rule (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_original_parameters_do_not_supply_tick_reset_or_lockout_rule) ... ok
+test_qualified_static_attack_and_skill_relative_amounts_survive (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_qualified_static_attack_and_skill_relative_amounts_survive) ... ok
+test_readonly_report_exposes_periodic_unknown_and_true_natural_rate (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_readonly_report_exposes_periodic_unknown_and_true_natural_rate) ... ok
+test_unverified_periodic_credit_leaves_resource_and_cycle_unknown (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_unverified_periodic_credit_leaves_resource_and_cycle_unknown) ... ok
+
+======================================================================
+ERROR: test_callback_table_does_not_override_unknown_talent_clock (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_callback_table_does_not_override_unknown_talent_clock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-after-055-sp-audit/test_shu_periodic_sp_reference.py", line 121, in test_callback_table_does_not_override_unknown_talent_clock
+    for ref in r['estimate']['sp_events'].values():
+               ~~~~~~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'sp_events'
+
+======================================================================
+FAIL: test_independent_natural_and_attack_sp_sources_remain_separate (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_independent_natural_and_attack_sp_sources_remain_separate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-after-055-sp-audit/test_shu_periodic_sp_reference.py", line 106, in test_independent_natural_and_attack_sp_sources_remain_separate
+    self.assertTrue(any(rule['kind'] == 'attack_sp' and rule['value'] == 2
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_missing_callback_table_still_reports_missing_conditions (test_shu_periodic_sp_reference.ShuPeriodicSpReferenceTests.test_missing_callback_table_still_reports_missing_conditions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/.continuation/p2-after-055-sp-audit/test_shu_periodic_sp_reference.py", line 130, in test_missing_callback_table_still_reports_missing_conditions
+    self.assertFalse(r['relic_resolution']['complete'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.188s
+
+FAILED (failures=2, errors=1)

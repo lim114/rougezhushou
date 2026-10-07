@@ -118,6 +118,7 @@ class Combat:
         self.hp_bonus=self.total('hp_pct');self.def_bonus=self.total('defense_pct')
         self.res_bonus=self.total('resistance_flat')
         self.initial_bonus=0;self.sp_extra=0
+        self.shu_periodic_sp_reference=None
         self.redeploy=attributes['redeploy_seconds']
         self.atk_flat=0
         self.apply_self_talents()
@@ -183,7 +184,20 @@ class Combat:
             if self.s.get('three_same_profession'):self.as_bonus+=self.talent('天有四时','attack_speed')
             if self.s.get('four_sui'):
                 self.atk_bonus+=self.talent('天有四时','atk')
-                self.sp_extra+=self.talent('天有四时','sp')/self.talent('天有四时','interval',4)
+                if self.talent('天有四时','sp')>0:
+                    # A discrete talent interval is not a natural SP rate.
+                    # The original selector does not establish its first pulse,
+                    # owner clock, reset or credit during skill lockout.
+                    self.shu_periodic_sp_reference={
+                        'interval_seconds_parameter':self.talent('天有四时','interval'),
+                        'sp_per_pulse_parameter':self.talent('天有四时','sp'),
+                        'attack_bonus_parameter':self.talent('天有四时','atk'),
+                        'first_tick_seconds':None,'actual_tick_times_seconds':None,
+                        'clock_origin':None,'reset_rule':None,'blocked_credit_rule':None,
+                        'native_attachment_verified':False,'clock_verified':False,
+                        'events_scheduled':False,
+                        'source_commit':'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add',
+                        'source_selector':'character_table.char_2025_shu.talents[1].candidates[0]'}
         if op=='char_1048_orchd2':
             self.orchid_redeploy_delta=0
             if '翔虫机动' in self.tv:
@@ -1409,6 +1423,12 @@ class Combat:
         if wine_s1_unresolved or gnosis_s1_unresolved or wisdel_s1_unresolved or mizuki_s1_unresolved or ines_s1_unresolved:
             recharge=None
             first=0.0 if initial>=sp['sp_cost'] else None
+        if self.shu_periodic_sp_reference is not None:
+            self.shu_periodic_sp_reference['independent_sp_clock_reference']={
+                'initial_seconds':first,'recharge_seconds':recharge,
+                'excludes_four_sui_periodic_credit':True}
+            first=0.0 if initial>=sp['sp_cost'] else None
+            recharge=None
         cycle=duration+recharge if not nonrepeat and duration is not None and recharge is not None else None
         self.s['_timeline_offset_seconds']=duration or 0
         from .relic_events import DAMAGE
@@ -1883,7 +1903,18 @@ class Combat:
                     'battle_equip_table.uniequip_002_orchd2.phases[*].attributeBlackboard',
                     'battle_equip_table.uniequip_002_orchd2.phases[*].parts[*].addOrOverrideTalentDataBundle.candidates']}
             result['estimate']['notes'].append('梓兰再部署为原始培养与同身份天赋的参数参考；实际撤退、倒下和再次部署的时刻及当前热更新未核验，未安排部署事件。')
+        if self.shu_periodic_sp_reference is not None:
+            result['shu_periodic_sp_reference']=self.shu_periodic_sp_reference
+            result['timing']['phase_clock_unbound']=True
+            result['timing']['resource_and_damage_shared_clock']=False
+            result['complete']=result['estimate']['complete']=False
+            result['scope']=result['estimate']['scenario_scope']=(
+                '所选技能阶段与观察窗口沿用明确情景；四岁周期技力首跳与阻回归属未核验，完整资源回转未知。')
+            result['estimate']['notes'].append(
+                '四岁条件下保留攻击力加成与4秒获得1点技力原参数；周期首跳、计时起点、重置和阻回期间归属未核验，'
+                '不折算成自然回复速度，不用其它来源的充能算例证明完整初动、结束后充能或周期。')
         return result
+
 
 
 def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()
