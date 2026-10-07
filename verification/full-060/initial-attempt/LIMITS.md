@@ -1,0 +1,1 @@
+首次实际UI验证在第190条记录后失败：测试要求人类界面出现内部key emergency_hire，但非technical渲染隐藏内部key；已有可见待确认提示也未明确已核验的应急招募来源。原验证不计通过。实际隔离MainWindow的1例及8例诊断均捕获缺口，诊断不属于完整UI验收。修正仅给该已核验条件添加中文名称，保持technical原文、缺条件状态及零加成；其它未知key保持泛化。原receipt、runner及日志不覆盖。修正后新commit重新冻结并重跑两侧全量、精选和实际UI；Wine不代表原生Windows验收。

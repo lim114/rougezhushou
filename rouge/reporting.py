@@ -996,6 +996,8 @@ def format_report(result,*,technical=False):
         text=re.sub(r'\b(?:NORMAL|ELITE|BOSS|FOUR_STAR)\b',lambda m:{
             'NORMAL':'普通','ELITE':'精英','BOSS':'领袖','FOUR_STAR':'紧急'}[m.group()],text)
         if technical:return text
+        # Translate this verified condition only; unknown script keys stay opaque.
+        text=re.sub(r'(?<![\w:.\[\]@])emergency_hire(?![\w:.\[\]@])','应急招募来源',text)
         for url in re.findall(r'https?://[^\s；，。<>）]+',text):
             if url not in sources:sources.append(url)
         text=re.sub(r'\s*原生算术证明[:：]\s*[0-9a-f]{64}','',text)
