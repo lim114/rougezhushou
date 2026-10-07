@@ -1,0 +1,1 @@
+Read-only source inventory of eight current token-profile modules and 24 original stages. Existing native attachment/own-cap/current-panel gaps stay unknown. This audit is not a completed development section or native verification.

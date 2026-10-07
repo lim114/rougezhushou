@@ -1,0 +1,423 @@
+--- wine-ui-smoke-070.py
++++ wine-ui-smoke-075.py
+@@ -96,6 +96,199 @@
+         assert result['total_damage']==0 and result['total_healing']==0
+     elif scope=='zero_lifetime':
+         assert result['total_damage']==0 and result['total_healing']>0
++
++
++"""Shared public-output assertions; API use does not prove actual Qt execution."""
++import json
++
++def canonical075(value):
++    return json.dumps(value,ensure_ascii=False,sort_keys=True,allow_nan=False)
++
++def require_squad075(result,args,text,record):
++    resolution=result['run_resolution']
++    assert resolution['squad']['id']==record['id']
++    assert resolution['squad']['effect_verified'] is args['run_config']['squad']['effect_verified']
++    section_ids=[s['id'] for s in result['report']['sections']]
++    if record['bandLevel']!=1:
++        assert 'squad_unlock_reference' not in resolution
++        assert 'squad_unlock_reference' not in section_ids
++        return
++    ref=resolution['squad_unlock_reference']
++    assert ref['squad_id']==record['id'] and ref['base_squad_id']==record['normalBandId']
++    assert ref['variant_level_parameter']==1
++    assert ref['unlock_condition_reference']==record['unlockCondDesc']
++    assert ref['account_unlocked'] is None and ref['actual_activation'] is None
++    assert ref['reference_only'] is True
++    assert section_ids.count('squad_unlock_reference')==1
++    assert '强化分队 · 条件资料' in text and record['unlockCondDesc'] in text
++    assert '账户解锁状态：未知' in text and '解锁条件实际激活：未知' in text
++    assert '不据此切换分队版本或追加效果' in text
++    assert 'rogue_6_band_' not in text and 'commonDevelopment' not in text
++    gates={'rogue_6_band_2':3,'rogue_6_band_5':6,'rogue_6_band_7':9}
++    node=ref['technology_node_reference']
++    if record['id'] in gates:
++        assert node['gate_reference']['enable_grade_parameter']==gates[record['id']]
++        assert node['gate_reference']['enable_description_reference'] in text
++    elif record['id']=='rogue_6_band_22':
++        assert node is None
++    else:
++        assert node['gate_reference'] is None
++    if record['id']=='rogue_6_band_7':
++        if args['run_config']['squad']['effect_verified']:
++            assert len(resolution['applied'])==3
++            assert all(r['value']==.15 for r in resolution['applied'])
++        else:
++            assert resolution['applied']==[]
++            assert any('效果阶段尚未确认' in s for s in resolution['pending'])
++
++def require_headwolf075(result,args,text,plain=None):
++    assert args['operator']=='char_1038_whitw2'
++    drones=[c for c in result['components'] if c['name']=='浮游单元']
++    if args['skill'] in (1,2):
++        assert bool(drones) is (args.get('window_seconds')!=0)
++        assert all(c['timing_reference']=='owner_attack_clock; independent drone clock unverified' for c in drones)
++        if args['elite']==0:
++            assert args['skill']==1
++            if plain is not None:
++                assert canonical075(result)==canonical075(plain)
++    if args['skill']==3:
++        ref=result['drone_lifecycle_reference']
++        for key in ('aura_first_tick_seconds','aura_tick_count','arrival_seconds','same_target_hit_counter'):
++            assert ref[key] is None
++    assert '独立' in text and ('未核验' in text or '未知' in text)
++
++def require_mei075(result,args,text,qualified,stage):
++    section_ids=[s['id'] for s in result['report']['sections']]
++    if not qualified:
++        assert 'mei_airborne_module_reference' not in result
++        assert 'mei_airborne_module' not in section_ids
++        return
++    ref=result['mei_airborne_module_reference']
++    assert ref['module_id']=='uniequip_002_mm' and ref['module_level']==stage
++    assert ref['unlock_elite']==2 and ref['unlock_level']==40
++    assert ref['attack_scale_parameter']==1.1
++    assert ref['actual_target_is_airborne'] is None and ref['actual_conditional_damage'] is None
++    assert ref['reference_only'] is True and ref['applied_to_numeric_estimate'] is False
++    for key in ('native_attachment_verified','damage_composition_verified','live_state_verified'):
++        assert ref[key] is False
++    assert section_ids.count('mei_airborne_module')==1
++    assert '梅 MAR-X · 空中条件参数参考' in text
++    assert '当前目标空中条件：未知' in text and '该特性实际条件伤害：未知' in text
++    assert '110%参数未计入当前伤害数值' in text
++
++def require_wisdel_routes075(result,args,text):
++    ref=result['wisdel_summon_qualification_reference']
++    assert ref['operator_id']=='char_1035_wisdel'
++    assert ref['token_id']=='token_10035_wisdel_wward'
++    assert ref['current_cultivation']=={k:args[k] for k in ('elite','level','potential')}
++    talent=ref['talent_route'];skill=ref['skill_route'];qualified=args['elite']==2
++    assert talent['cultivation_qualified'] is qualified and skill['cultivation_qualified'] is qualified
++    assert talent['unlock_elite']==skill['unlock_elite']==2
++    assert talent['unlock_level']==skill['unlock_level']==1
++    assert skill['currently_selected'] is (args['skill']==3)
++    if args['skill']==3:
++        assert skill['selected_level_source']['rank']==args['skill_rank']
++    else:
++        assert skill['selected_level_source'] is None
++    assert ref['actual_source_provenance'] is None
++    for key in ('actual_presence_verified','actual_cast_clock_verified','covers_all_routes','declared_counts_reinterpreted'):
++        assert ref[key] is False
++    assert '魂灵之影 · 本体召唤途径培养资料' in text
++    status='已达原表培养门槛' if qualified else '未达原表培养门槛'
++    assert status in text and '未确定其来源归属' in text
++    assert '本资料不涵盖模组或藏品' in text
++    source=result['wisdel_secondary_reference']
++    count=args['ghost_casts'] if args['ghost_count'] else 0
++    assert type(source['ghost_casts_requested']) is int and source['ghost_casts_requested']==count
++    assert source['ghost_cast_times_seconds'] is None
++    assert source['shadow_lifecycle_verified'] is False
++
++def require_movement075(entry,text,technical,stage):
++    move=entry['movement_reference']
++    assert move['complete_effective_speed_verified'] is False
++    assert '预计有效移速：未知' in text
++    if stage['id']=='ro6_e_3_6':
++        ref=move['stage_move_speed_rune_reference']
++        assert ref['parameter']==1.5 and ref['source_selector']=='$.runes[0].blackboard[2]'
++        assert ref['source']==stage['level_source']
++        assert ref['source']['sha256']=='2d2e89306c3d3c4a2a6c21f71b3828f66cb7a7996ab149faaad043d4867e8296'
++        assert (ref['difficulty_mask_parameter'],ref['profession_mask_parameter'],ref['buildable_mask_parameter'])==('FOUR_STAR',1023,'ALL')
++        assert ref['native_target_writer_layer_verified'] is False
++        assert ref['combined_with_stage_multiplier_speed'] is None
++        assert ref['complete_effective_speed_verified'] is False
++        if technical:
++            assert '关卡移速符文参数参考：1.5' in text
++            assert '基础移速×关卡倍率小计：' in text
++            assert '符文与关卡倍率合成的移速：未知' in text
++            assert '原生目标、写入及叠加层尚未核验' in text
++            assert ref['source']['url'] in text
++        else:
++            assert '关卡移速符文参数参考' not in text
++            assert '基础移速×关卡倍率小计' not in text
++    else:
++        assert 'stage_move_speed_rune_reference' not in move
++        assert '关卡移速符文参数参考' not in text
++    if move['base_attribute'] is not None:
++        assert move['base_times_stage_speed']==move['base_attribute']*stage['movement_multiplier']
++
++"""Public design cases; list construction performs no API, GUI or state reads."""
++def cases075(squads):
++    rows=[]
++    def add(section,owner,number,elite,level,rank,mode,**extra):
++        args={'operator':owner,'skill':number,'elite':elite,'level':level,'skill_rank':rank,
++              'potential':1,'trust':100,'module_id':None,'module_level':0,
++              'timing_mode':mode,'window_seconds':10,'enemy_defense':0,'enemy_resistance':0,
++              'preexisting_fragile':False,'cooperative':False,'healing_targets':1,'relic_ids':[]}
++        args.update(extra);rows.append({'section':section,'input':args})
++    modes=('frames','continuous')
++    for record in squads.values():
++        for mode in modes:
++            for flag in (False,True):
++                add(71,'silverash',3,2,90,10,mode,run_config={'squad':{
++                    'id':record['id'],'name':record['name'],'level':record['bandLevel'],'effect_verified':flag}})
++    for sid,gate in (('rogue_6_band_2',3),('rogue_6_band_5',6),('rogue_6_band_7',9)):
++        record=squads[sid]
++        for grade in (gate-1,gate):
++            for mode in modes:
++                add(71,'silverash',3,2,90,10,mode,run_config={'squad':{
++                    'id':sid,'name':record['name'],'level':1,'effect_verified':True},
++                    'difficulty':{'value':grade,'modeDifficulty':'NORMAL'}})
++    record=squads['rogue_6_band_22']
++    for elite,level,rank in ((0,50,4),(1,80,7),(2,90,10)):
++        for mode in modes:
++            add(71,'mechanist',1,elite,level,rank,mode,run_config={'squad':{
++                'id':record['id'],'name':record['name'],'level':1,'effect_verified':True}})
++    for elite,level,rank,numbers in ((0,50,4,(1,)),(1,80,7,(1,2)),(2,90,10,(1,2,3))):
++        for potential in (1,6):
++            interval={(1,1):30,(1,6):26,(2,1):20,(2,6):16}.get((elite,potential))
++            # Existing option QDoubleSpinBox has two decimal places.
++            ages=(0,59,60,120,3600) if interval is None else (0,interval-.01,interval,3*interval-.01,3*interval,3600)
++            for number in numbers:
++                for mode in modes:
++                    for warmup in (0,100):
++                        for age in ages:
++                            add(72,'char_1038_whitw2',number,elite,level,rank,mode,potential=potential,
++                                deployment_elapsed_seconds=age,drone_warmup_hits=warmup)
++    for elite,level,rank in ((1,60,7),(2,39,7),(2,40,10)):
++        for stage in (1,2,3):
++            for number in (1,2):
++                for mode in modes:
++                    for horizon in (0,10):
++                        add(73,'char_133_mm',number,elite,level,rank,mode,module_id='uniequip_002_mm',
++                            module_level=stage,window_seconds=horizon)
++    for elite,level,rank,numbers in ((0,50,4,(1,)),(1,80,7,(1,2)),(2,1,1,(1,2,3)),(2,90,10,(1,2,3))):
++        for stage in ((0,1,2,3) if elite==2 and level==90 else (0,)):
++            for number in numbers:
++                for mode in modes:
++                    for ghosts,casts,horizon in ((0,0,10),(1,2,10),(3,0,0)):
++                        add(74,'char_1035_wisdel',number,elite,level,rank,mode,
++                            module_id='uniequip_002_wisdel' if stage else None,module_level=stage,
++                            ghost_count=ghosts,ghost_casts=casts,window_seconds=horizon)
++    return rows
++
++def preview_cases075(stages):
++    return [{'section':75,'stage_id':sid,'enemy_id':enemy['id'],'level':enemy['level'],'technical':technical}
++        for sid in ('ro6_n_3_6','ro6_e_3_6') for enemy in stages[sid]['enemies'] for technical in (False,True)]
+ 
+ 
+ def source_hashes():
+@@ -151,7 +344,7 @@
+                 result=window.damage_result['result']
+                 actual=window.damage_text.toPlainText();expected=format_report(result,technical=window.damage_technical.isChecked()).replace(chr(160),' ')
+                 if actual!=expected:
+-                    (OUT/'wine-ui-report-difference-070.json').write_text(json.dumps({'operator':op,'skill':skill,'actual':actual,'expected':expected},ensure_ascii=False,indent=2),encoding='utf-8')
++                    (OUT/'wine-ui-report-difference-075.json').write_text(json.dumps({'operator':op,'skill':skill,'actual':actual,'expected':expected},ensure_ascii=False,indent=2),encoding='utf-8')
+                     raise AssertionError(f'report text differs for {op} skill {skill}')
+                 skills+=1
+         assert skills==87,skills
+@@ -1422,8 +1615,8 @@
+                             if not tile:plain=deepcopy(result)
+                             require_sown(result,args,window.damage_text.toPlainText(),plain,scope_name,bb)
+                             if rank==10 and use_frames and not four and scope_name=='positive' and tile:
+-                                assert tile_widget.grab().save(str(OUT/'wine-sown-tile-control-070.png'))
+-                                receipt['section70_actual_checkbox_screenshot']='wine-sown-tile-control-070.png'
++                                assert tile_widget.grab().save(str(OUT/'wine-sown-tile-control-075.png'))
++                                receipt['section70_actual_checkbox_screenshot']='wine-sown-tile-control-075.png'
+                             checks.append({'scope':'actual_ground_enemy_presence_label_and_sown_checkbox',
+                                 'section':70,'operator':shu,'skill':3,'skill_rank':rank,
+                                 'mode':args['timing_mode'],'observation_scope':scope_name,
+@@ -1456,6 +1649,156 @@
+         assert sum(latest_section_counts.values())==latest_end-latest_start
+         receipt['section70_final_checks_pending']=False
+         assert receipt['section70_final_checks_pending'] is False
++
++        #71-75 genuine Qt controls and read-only public observation previews.
++        from PySide6.QtWidgets import QDoubleSpinBox
++        current_start=len(checks);current_section_counts={}
++        window.damage_technical.setChecked(False);relics([])
++        window.target_enemy.setCurrentIndex(0);window.defense.setValue(0);window.resistance.setValue(0)
++        window.limit_window.setChecked(True);window.healing_targets.setValue(1)
++        window.cooperative.setChecked(False);window.fragile.setChecked(False)
++        window.deployment_elapsed.setValue(0)
++        from rouge.run_config import config_data
++        config075=config_data();design075=cases075(config075['squads'])
++        state075=deepcopy(window.run.state);account075=deepcopy(window.operator_observations)
++        run_training075=window.use_run_training.isChecked()
++        difficulty075=window.difficulty.currentIndex();summary075=window.run_summary.text()
++        plain_e0_075={}
++        try:
++            window.run.state['operators']={};window.use_run_training.setChecked(False)
++            for case075 in design075:
++                section075=case075['section'];requested075=case075['input']
++                owner075=requested075['operator'];number075=requested075['skill']
++                fields075={k:requested075[k] for k in ('elite','level','potential','trust','module_id','module_level')}
++                # These are public synthetic observation records in the same
++                #temporary window, not recognition, account files or selectors.
++                window.run.state['config']=deepcopy(requested075.get('run_config',{}))
++                window.run_summary.setText(window.run.summary());window.sync_run_config()
++                train(owner075,fields075,ranks={str(n):requested075['skill_rank'] for n in (1,2,3)})
++                reset_owner_options(owner075)
++                index075=window.skill.findData(number075);assert index075>=0
++                window.skill.setCurrentIndex(index075)
++                assert window.elite.text()==f'精英 {fields075["elite"]}'
++                assert window.potential.text()==str(fields075['potential'])
++                if fields075['module_id']:assert f'阶段 {fields075["module_level"]}' in window.module.text()
++                if fields075['elite']==0:assert window.skill.findData(2)==window.skill.findData(3)==-1
++                if fields075['elite']==1:assert window.skill.findData(3)==-1
++                window.frame_timing.setChecked(requested075['timing_mode']=='frames')
++                window.window_seconds.setValue(requested075['window_seconds']);window.timing_scenario.clear()
++                for key075 in ('deployment_elapsed_seconds','drone_warmup_hits','ghost_count','ghost_casts'):
++                    if key075 in requested075:
++                        widget075=option_widgets[(owner075,key075)]
++                        widget075.setValue(requested075[key075])
++                result075=click_result();args075=window.damage_result['scenario']
++                for key075 in ('operator','skill','elite','level','potential','trust','skill_rank',
++                        'module_id','module_level','timing_mode','window_seconds'):
++                    assert args075[key075]==requested075[key075],(section075,key075,args075[key075],requested075[key075])
++                actual075=window.damage_text.toPlainText()
++                if section075==71:
++                    assert canonical075(args075['run_config'])==canonical075(requested075['run_config'])
++                    record075=config075['squads'][args075['run_config']['squad']['id']]
++                    assert record075['name'] in window.run_summary.text()
++                    assert ('（强化）' if record075['bandLevel']==1 else '（基础）') in window.run_summary.text()
++                    grade075=requested075['run_config'].get('difficulty')
++                    assert window.difficulty.isEnabled() is (grade075 is None)
++                    if grade075:assert window.difficulty.currentData()==grade075['value']
++                    require_squad075(result075,args075,actual075,record075)
++                elif section075==72:
++                    elapsed075=option_widgets[(owner075,'deployment_elapsed_seconds')]
++                    assert isinstance(elapsed075,QDoubleSpinBox) and elapsed075.isVisible() and elapsed075.isEnabled()
++                    assert elapsed075.minimum()==0 and elapsed075.maximum()==3600 and elapsed075.decimals()==2
++                    assert type(elapsed075.value()) is float and type(args075['deployment_elapsed_seconds']) is float
++                    assert elapsed075.value()==args075['deployment_elapsed_seconds']==requested075['deployment_elapsed_seconds']
++                    require_real_int070(option_widgets[(owner075,'drone_warmup_hits')],args075,
++                                        'drone_warmup_hits',requested075['drone_warmup_hits'])
++                    baseline_key075=(args075['potential'],args075['timing_mode'],args075['drone_warmup_hits'])
++                    if args075['elite']==0 and args075['deployment_elapsed_seconds']==0:
++                        plain_e0_075[baseline_key075]=deepcopy(result075)
++                    require_headwolf075(result075,args075,actual075,
++                        plain_e0_075.get(baseline_key075) if args075['elite']==0 else None)
++                elif section075==73:
++                    require_mei075(result075,args075,actual075,args075['elite']==2 and args075['level']>=40,args075['module_level'])
++                    if args075['window_seconds']==0:assert result075['total_damage']==0
++                elif section075==74:
++                    for key075 in ('ghost_count','ghost_casts'):
++                        require_real_int070(option_widgets[(owner075,key075)],args075,key075,requested075[key075])
++                    require_wisdel_routes075(result075,args075,actual075)
++                    if args075['window_seconds']==0:assert result075['total_damage']==0
++                else:raise AssertionError(('Unsealed section',section075))
++                current_section_counts[section075]=current_section_counts.get(section075,0)+1
++                checks.append({'scope':'actual_qt_public_config_and_readonly_cultivation_contract' if section075==71 else
++                    'actual_qt_owner_controls_and_readonly_cultivation_reference',
++                    'section':section075,'operator':owner075,'skill':number075,'mode':args075['timing_mode'],
++                    'elite':args075['elite'],'level':args075['level'],'potential':args075['potential'],
++                    'module_level':args075['module_level'],'window_seconds':args075['window_seconds'],
++                    'input_design':requested075,'state_scope':'temporary public in-memory observation/config only',
++                    'actual_account_source_or_clock_verified':False,'passed':True})
++        finally:
++            window.run.state=state075;window.operator_observations=account075
++            window.use_run_training.setChecked(run_training075)
++            window.run_summary.setText(summary075);window.sync_run_config()
++            if not state075.get('config',{}).get('difficulty'):window.difficulty.setCurrentIndex(difficulty075)
++            window.update_operator();relics([]);window.timing_scenario.clear()
++        assert current_section_counts=={71:106,72:280,73:72,74:108},current_section_counts
++
++        #75 The battle-preview combos/checkbox produce their real read-only text.
++        #This is selected public stage data, not actual movement or game capture.
++        from rouge.battle_preview import battle_data,enemy_preview,enemy_text
++        preview075=window.battle_preview;stage075=window.target_stage.currentData()
++        enemy075=window.target_enemy.currentData();page075=window.centralWidget().currentIndex()
++        technical075=preview075.technical.isChecked()
++        try:
++            window.centralWidget().setCurrentIndex(4);app.processEvents()
++            for case075 in preview_cases075(battle_data()['stages']):
++                sid075=case075['stage_id'];eid075=case075['enemy_id'];level075=case075['level']
++                # BranchChoice reveals the genuine stage/identity combo and emits
++                #its normal Qt selection signal; no private _render API is called.
++                assert preview075.stage_choices.select_value(sid075)
++                app.processEvents()
++                assert preview075.stage_combo.currentData()==sid075 and preview075.current_stage==sid075
++                assert preview075.stage_combo.isVisible() and preview075.stage_combo.isEnabled()
++                assert preview075.enemy_choices.select_value((eid075,level075))
++                app.processEvents()
++                assert tuple(preview075.enemy_combo.currentData())==(eid075,level075)
++                assert preview075.enemy_combo.isVisible() and preview075.enemy_combo.isEnabled()
++                preview075.technical.setChecked(case075['technical']);app.processEvents()
++                assert isinstance(preview075.technical,QCheckBox) and preview075.technical.isVisible()
++                assert preview075.technical.isChecked() is case075['technical']
++                entry075=enemy_preview(sid075,eid075,level075,preview075.context)
++                actual075=preview075.enemy_detail.toPlainText()
++                assert preview075.enemy_detail.isReadOnly() and preview075.enemy_detail.isVisible()
++                assert actual075==enemy_text(entry075,technical=case075['technical']).replace(chr(160),' ')
++                require_movement075(entry075,actual075,case075['technical'],battle_data()['stages'][sid075])
++                current_section_counts[75]=current_section_counts.get(75,0)+1
++                checks.append({'scope':'actual_stage_enemy_combo_and_technical_movement_source_reference',
++                    **case075,'old_base_times_stage_subtotal':entry075['movement_reference']['base_times_stage_speed'],
++                    'effective_movement_known':False,'rune_composition_known':False,'passed':True})
++                if sid075=='ro6_e_3_6' and eid075=='enemy_10107_mjcdog_2' and case075['technical']:
++                    from PySide6.QtGui import QTextCursor
++                    preview075.enemy_detail.moveCursor(QTextCursor.MoveOperation.Start)
++                    assert preview075.enemy_detail.find('关卡移速符文参数参考')
++                    preview075.enemy_detail.ensureCursorVisible();app.processEvents()
++                    assert window.grab().save(str(OUT/'wine-movement-reference-075.png'))
++                    receipt['section75_actual_technical_screenshot']='wine-movement-reference-075.png'
++        finally:
++            preview075.technical.setChecked(technical075)
++            assert window.target_stage_choices.select_value(stage075)
++            if enemy075 is None:window.target_enemy.setCurrentIndex(0)
++            else:assert window.target_enemy_choices.select_value(enemy075)
++            window.centralWidget().setCurrentIndex(page075);app.processEvents()
++        assert current_section_counts[75]==48
++        current_end=len(checks)
++        receipt['supplemental_sections_71_75']=[71,72,73,74,75]
++        receipt['supplemental_checks_by_section_71_75']=current_section_counts
++        receipt['supplemental_checks_71_75']=current_end-current_start
++        assert sum(current_section_counts.values())==current_end-current_start
++        receipt['section71_input_scope']='No squad selector exists. Synthetic public run config plus real button/read-only summary/difficulty preset; grades and Mechanist cultivation never prove account unlock or actual activation. Entire state/observations/preset are restored.'
++        receipt['section72_input_scope']='Owner QDoubleSpinBox elapsed has two decimals; QSpinBox warmup emits int. Cultivation is read-only public observation preview. E0 age does not activate absent Headwolf; original E1/E2 owner-clock reference remains distinct from unknown independent drone arrival/targeting/aura.'
++        receipt['section73_input_scope']='Module stage/cultivation are existing QLabel public observation previews, not invented selectors. Exact110% airborne source parameter is unused; actual target, native attachment and composition remain unknown.'
++        receipt['section74_input_scope']='Existing ghost count/cast QSpinBoxes retain legal E0/E1 declarations despite both original native body routes requiring E2level1. Qualification does not prove source, presence, cast clock or all module/relic routes.'
++        receipt['section75_input_scope']='Actual battle-preview stage/enemy selectors and technical checkbox retain all12 enemy records in each normal/emergency stage. Exact emergency raw rune1.5 remains a source parameter; old base-times-stage subtotal is unchanged, effective speed and native writer/composition remain unknown. No capture, actual route or movement clock is certified.'
++        receipt['section75_final_checks_pending']=False
++        assert receipt['section75_final_checks_pending'] is False,'Final section75 source/independent review is not yet sealed'
+ 
+         # Final visible screenshot scenario demonstrates the restored explanation.
+         train('char_298_susuro',{'elite':2,'level':60,'potential':1,'trust':100,'module_id':None,'module_level':0})
+@@ -1493,19 +1836,21 @@
+         assert window.damage_text.find('真实友方获取时钟未核验')
+         window.damage_text.ensureCursorVisible();app.processEvents()
+         checks.append({'scope':'actual_friendly_scope_text_scrolled_visible_for_screenshot','passed':True})
+-        screenshot=OUT/'wine-window-070.png'
++        screenshot=OUT/'wine-window-075.png'
+         assert window.grab().save(str(screenshot))
+-        receipt['window_screenshot']='wine-window-070.png'
++        receipt['window_screenshot']='wine-window-075.png'
+         assert not isolated.joinpath('chat').exists()
+         assert not window.auto.isChecked() and window.capture.target is None
+         assert not window.desktop.process
+         checks.append({'scope':'no_external_operations','game_captures':0,'chat_requests':0,'temporary_state':True})
+-        receipt['preserved_old_checks']=len(checks)-(supplemental_end-supplemental_start)-(new_end-new_start)-(latest_end-latest_start)
++        receipt['preserved_old_checks']=len(checks)-(supplemental_end-supplemental_start)-(new_end-new_start)-(latest_end-latest_start)-(current_end-current_start)
+         assert receipt['preserved_old_checks']==152,receipt['preserved_old_checks']
+-        receipt['preserved_full_060_checks']=len(checks)-(new_end-new_start)-(latest_end-latest_start)
++        receipt['preserved_full_060_checks']=len(checks)-(new_end-new_start)-(latest_end-latest_start)-(current_end-current_start)
+         assert receipt['preserved_full_060_checks']==231,receipt['preserved_full_060_checks']
+-        receipt['preserved_full_065_checks']=len(checks)-(latest_end-latest_start)
++        receipt['preserved_full_065_checks']=len(checks)-(latest_end-latest_start)-(current_end-current_start)
+         assert receipt['preserved_full_065_checks']==459,receipt['preserved_full_065_checks']
++        receipt['preserved_full_070_checks']=len(checks)-(current_end-current_start)
++        assert receipt['preserved_full_070_checks']==841,receipt['preserved_full_070_checks']
+         receipt['total_actual_checks']=len(checks)
+         window.close();app.processEvents();window=None
+     receipt['passed']=True
+@@ -1520,7 +1865,7 @@
+                 'skill':window.skill.currentData(),'visible_report_text':window.damage_text.toPlainText(),
+                 'technical_checkbox':window.damage_technical.isChecked(),
+                 'last_calculation':window.damage_result,'timing_text':window.timing_scenario.toPlainText()}
+-            failure_screenshot=OUT/'wine-ui-failure-070.png'
++            failure_screenshot=OUT/'wine-ui-failure-075.png'
+             if window.grab().save(str(failure_screenshot)):
+                 receipt['failure_screenshot']=failure_screenshot.name
+         except Exception as context_error:
+@@ -1533,6 +1878,6 @@
+     after=source_hashes();drift=[n for n in sorted(set(before)|set(after)) if before.get(n)!=after.get(n)]
+     receipt['source_sha256']=before;receipt['source_sha256_after']=after;receipt['source_drift']=drift
+     if drift:receipt['passed']=False;receipt['complete_ui_validation']=False
+-    (OUT/'wine-ui-070.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')
++    (OUT/'wine-ui-075.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')
+     print(json.dumps(receipt,ensure_ascii=False))
+     sys.exit(0 if receipt['passed'] else 1)
