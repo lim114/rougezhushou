@@ -397,7 +397,7 @@ def finish(result,resolution,attributes,scenario):
     healing=[r for r in rules if r['kind']=='healing_factor']
     if len(healing)==1:
         factor=healing[0]['value']
-        if 'total_healing' in result:result['total_healing']*=factor
+        if result.get('total_healing') is not None:result['total_healing']*=factor
         skill=result['estimate']['skill']
         for key in ('total_healing','phase_healing','window_healing','cycle_healing','cycle_hps','window_hps'):
             if skill.get(key) is not None:skill[key]*=factor

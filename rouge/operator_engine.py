@@ -36,6 +36,23 @@ def selected_talents(profile, scenario):
                 index=candidate.get('talentIndex',-1)
                 if index>=0 and eligible(candidate):grouped[index]=candidate
             for index,talent in grouped.items():
+                if (profile['id']=='char_437_mizuki' and module['id']=='uniequip_003_mizuki' and
+                        part.get('target')=='TALENT' and index==0 and talent.get('prefabKey')=='10' and
+                        talent.get('isHideTalent') is True and talent.get('name') is None and
+                        talents.get(index,{}).get('name')=='创伤性癔症' and
+                        talents[index]['values'].get('attack@mizuki_t_1.atk_scale')==.5):
+                    # Pinned original prefab 1 remains a conditional reference.
+                    # Prefab 10's attachment/retention CFG is not available;
+                    # keep its distinct fields without merging talent values.
+                    talents[index]={**talents[index],'reference_only':True,
+                        'reference_identity':{'talent_index':0,'prefab_key':'1'},
+                        'unresolved_module_ability':{
+                            'target':part['target'],'talent_index':index,
+                            'prefab_key':talent['prefabKey'],'res_key':part.get('resKey'),
+                            'hidden':True,'name':talent['name'],
+                            'blackboard':{b['key']:b['value'] for b in talent['blackboard']},
+                            'attachment_verified':False}}
+                    continue
                 name=talent['name']
                 if (profile['id']=='char_437_mizuki' and module['id']=='uniequip_004_mizuki' and
                         part.get('target')=='TALENT_DATA_ONLY' and index==0 and name is None):
@@ -59,6 +76,8 @@ class Combat:
         self.bb=self.skill['values']
         self.talents,self.module_parts=selected_talents(self.p,scenario)
         self.tv={t['name']:t['values'] for t in self.talents}
+        self.mizuki_amb_y_reference=next((t for t in self.talents
+            if t.get('unresolved_module_ability')),None)
         self.effects=list(scenario.get('effects',[]))
         # Manual stat effects belong to the operator unless their unit scope is explicit.
         self.token_effects=[e for e in self.effects if not e.get('_verified_rule') and (e.get('target_scope')=='all_units' or
@@ -463,6 +482,12 @@ class Combat:
             else:
                 regular()
                 regular('magic',self.talent('创伤性癔症','attack@mizuki_t_1.atk_scale'),name='创伤性癔症')
+            if self.mizuki_amb_y_reference:
+                for component in components:
+                    if component['name'] in ('唤醒额外法术','创伤性癔症'):
+                        component.pop('times_seconds',None)
+                        component['timing_reference']='original first-talent conditional reference; module attachment unverified'
+                        if component['hits']:component['actual_total']=None
             self.notes.append('单目标为天赋可选目标；多人时天赋优先最低生命值，不将全场人数乘入当前敌人伤害。')
         elif op=='char_206_gnosis':
             status=self.option('cold_state',0,maximum=2,integer=True)
@@ -1475,6 +1500,38 @@ class Combat:
             from .uncertain_sources import mask_pending_damage
             mask_pending_damage(result,full,shown,normal,duration,cycle)
             result['complete']=False;result['estimate']['complete']=False
+        if self.mizuki_amb_y_reference:
+            talent=self.mizuki_amb_y_reference
+            arts=next(c for c in full['components'] if c['name'] in ('唤醒额外法术','创伤性癔症'))
+            result['mizuki_amb_y_reference']={
+                'original_first_talent':{'name':talent['name'],**talent['reference_identity'],
+                    'blackboard':dict(talent['values']),'reference_only':True,
+                    'per_hit_damage_reference':arts['per_hit'],'attachment_verified':False},
+                'hidden_module_ability':talent['unresolved_module_ability'],
+                'actual_extra_healing':None,'kill_recovery_clock_verified':False,
+                'source_possible':{'cast':bool(arts['hits']),
+                    'window':any(c['hits'] for c in shown['components']
+                        if c['name'] in ('唤醒额外法术','创伤性癔症'))}}
+            from .uncertain_sources import mask_pending_damage
+            mask_pending_damage(result,full,shown,normal,duration,cycle)
+            # No kill-count/kill-clock input or native recovery callback exists.
+            # Keep the old modeled healing subtotal, not an actual zero total.
+            # A missing current target does not exclude kills elsewhere.
+            recovery_possible=lambda plan:bool(plan and plan['duration']>0)
+            cast_recovery=recovery_possible(full);window_recovery=recovery_possible(shown)
+            cycle_recovery=cycle is not None and (cast_recovery or recovery_possible(normal))
+            skill=result['estimate']['skill']
+            result['known_healing_subtotals']={key:skill[key] for key in
+                ('total_healing','phase_healing','window_healing','cycle_healing','cycle_hps','window_hps')}
+            result['mizuki_amb_y_reference']['recovery_source_possible']={
+                'cast':cast_recovery,'window':window_recovery,'cycle':bool(cycle_recovery)}
+            if cast_recovery:skill['total_healing']=skill['phase_healing']=None
+            if window_recovery:
+                result['total_healing']=None
+                skill['window_healing']=skill['window_hps']=None
+            if cycle_recovery:skill['cycle_healing']=skill['cycle_hps']=None
+            result['complete']=False;result['estimate']['complete']=False
+            result['estimate']['notes'].append('AMB-Y原版第一天赋参数仅保留条件参考；隐藏能力与原天赋的实际附着关系未核验，额外回复不生成治疗事件。')
         if self.s['operator']=='char_1038_whitw2' and self.n==3:
             aura=next(c for c in full['components'] if c['name']=='狼群光环（不叠加）')
             observed=next(c for c in shown['components'] if c['name']=='狼群光环（不叠加）')

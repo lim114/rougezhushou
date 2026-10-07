@@ -483,6 +483,13 @@ def build_report(scenario,result):
             metric('actual_end','实际技能结束',None,'秒')],
             ['有效出手获取仅用已有常规参考；零窗口、无目标或全程打断不生成技能来源。',
              '下次攻击不当作开启瞬间命中；当前动作绑定、结束/阻回与完整周期未核验。']))
+    mizuki_amb_y=result.get('mizuki_amb_y_reference')
+    if mizuki_amb_y:
+        sections.append(section('mizuki_amb_y','水月AMB-Y · 天赋与回复待核验',[
+            metric('first_talent','原版第一天赋单次法术条件参考',mizuki_amb_y['original_first_talent']['per_hit_damage_reference']),
+            metric('extra_recovery','模组实际额外回复',mizuki_amb_y['actual_extra_healing'])],
+            ['原版第一天赋参数保留条件参考；隐藏能力是否附着及与原天赋并存未核验，完整伤害未知。',
+             '每击杀回复描述只保留来源；实际额外回复与触发时钟未知，未排治疗事件。']))
     gnosis=result.get('gnosis_s1_reference')
     if gnosis:
         sections.append(section('gnosis_s1','高速思考 · 两段时间待核验',[
@@ -598,7 +605,7 @@ def build_report(scenario,result):
              if neural_skill else '这些数值仅包含已排程的本体法伤，不含诱饵持续效果和受其影响的未知爆发，不能当作完整输出。'
              if bait_reference else
              '这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。'
-             if wisdel or mizuki or ines_dot or manual_close or liftoff or snow or unbound or external or chen_phase or result.get('drone_lifecycle_reference') else
+             if wisdel or mizuki or mizuki_amb_y or ines_dot or manual_close or liftoff or snow or unbound or external or chen_phase or result.get('drone_lifecycle_reference') else
              '这些数值不包含河谷祭祈未排程的额外持续伤害，不能当作完整总伤或完整 DPS。']))
     healing_subtotals=result.get('known_healing_subtotals')
     if healing_subtotals:
