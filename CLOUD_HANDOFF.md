@@ -26,7 +26,7 @@ bash scripts/cloud_setup.sh
 .venv/bin/python scripts/verify_cloud.py
 ```
 
-Windows 完整依赖仍由 requirements.txt 安装，界面入口仍为 run.cmd。云端依赖没有 Windows 专属采样库。不要用导入占位、虚假成功或跳过错误来冒充 Windows 实机验收。手机可以继续查看、修改代码并运行计算测试；Windows 游戏画面采样、客户端聊天管道和最终界面验收需回到本机执行。
+Windows 完整依赖仍由 requirements.txt 安装，界面入口仍为 run.cmd。Linux精选依赖没有 Windows 专属采样库；用户授权的Wine兼容环境已独立安装真实Windows依赖，见 WINDOWS_COMPATIBILITY.md 和 verification/full-005。不要用导入占位、虚假成功或跳过错误来冒充 Windows 实机验收。手机可以继续查看、修改代码并运行计算测试；Windows 游戏画面采样、客户端聊天管道和最终界面验收需回到本机执行。
 
 ## 证据与迁移边界
 
