@@ -846,14 +846,24 @@ class Combat:
                 emit('双雷剑麒麟',attack*arts,'magic',count)
                 mode='deployment'
             elif self.n==2:
-                mode='deployment';duration=0
+                mode='deployment';duration=0 if window is None else window
                 emit('乱舞',attack*bb['atk_scale'],'physical',16)
                 emit('强化双雷剑麒麟',attack*arts*bb['talent_scale'],'magic',16)
+                unbound_cast_reference={'kind':'yato_deployment',
+                    'parameter_rows':[('斩击数量参数',16,'次'),('物理斩击倍率参数',bb['atk_scale'],'倍'),
+                                      ('第一天赋运算倍率参数',bb['talent_scale'],'倍')],
+                    'notes':['16次斩击与第一天赋保留逐段条件伤害；首伤、段间隔、碰撞与实际结束未绑定。',
+                             '部署触发不证明0秒完成；不按攻击速度均分斩击，也不推导技能结束后天赋的绝对起点。']}
             else:
-                mode='deployment';duration=0
+                mode='deployment';duration=0 if window is None else window
                 count=self.option('dash_hits',1,maximum=100,integer=True)
                 emit('空中回旋乱舞',attack*bb['atk_scale'],'physical',count)
                 emit('双雷剑麒麟',attack*arts*bb['atk_scale'],'magic',count)
+                unbound_cast_reference={'kind':'yato_deployment',
+                    'parameter_rows':[('声明回旋命中次数',count,'次'),('斩击倍率参数',bb['atk_scale'],'倍'),
+                                      ('基础突进距离参数',bb['min_dist'],'格'),('最大突进距离参数',bb['max_dist'],'格')],
+                    'notes':['突进斩击与第一天赋保留指定次数的条件伤害；实际速度、路径碰撞和结束未绑定。',
+                             '距离参数不转换为时间，指定命中次数不证明开启即命中；本体供靶范围不证明独立突进路径覆盖。']}
                 self.notes.append('回旋命中次数由敌人体积、碰撞、路径决定，不能按攻击速度推算；当前使用明确指定命中次数。')
         elif op=='char_151_myrtle':
             if normal:regular(name='普攻')

@@ -98,9 +98,11 @@ class DamageTests(unittest.TestCase):
         result=calculate_damage(scenario)
         # Pot1 E2: +13% ATK, 16 slashes, 150% physical + 75% arts.
         # 16 * ((1130*1.5-100) + 1130*.75*.5) = 32300.
-        self.assertAlmostEqual(result['total_damage'],32300)
+        refs=result['unbound_cast_reference']['conditional_components']
+        self.assertAlmostEqual(sum(c['total'] for c in refs),32300)
+        self.assertIsNone(result['total_damage'])
         faster=calculate_damage({**scenario,'effects':[{'kind':'attack_speed','value':100}]})
-        self.assertEqual(result['total_damage'],faster['total_damage'])
+        self.assertEqual(refs,faster['unbound_cast_reference']['conditional_components'])
 
     def test_deepcolor_summon_uses_own_level_curve_without_operator_trust_attack(self):
         result=calculate_damage({'operator':'char_110_deepcl','skill':1,'base_attack':1000,
