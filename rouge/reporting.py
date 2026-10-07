@@ -347,6 +347,14 @@ def build_report(scenario,result):
         if not nonrepeat:
             rows.append(metric('cycle_dps','本轮周期 DPS',skill['cycle_dps'],'伤害/秒'))
         sections.append(section('damage','伤害输出',rows))
+    gnosis=result.get('gnosis_s1_reference')
+    if gnosis:
+        sections.append(section('gnosis_s1','高速思考 · 两段时间待核验',[
+            metric('per_hit','每段伤害条件参考',gnosis['per_hit_damage_reference']),
+            metric('two_hits','两段合计条件参考',gnosis['two_hit_damage_reference']),
+            metric('gap','实际两段间隔',None,'秒')],
+            ['没有有效出手参考时不生成两段伤害；两段的实际技能绑定、间隔和结束相位未核验。',
+             '不把原版两事件默认当同刻命中，不从普通攻击结束推导完整周期。']))
     charge=result.get('charge_reference')
     if charge:
         sections.append(section('charge_reference','结构性原理 · 冲锋次数参考',[

@@ -411,7 +411,13 @@ class Combat:
             if normal:
                 events=attack_times();frost(attack,len(events),'普通攻击',events)
             elif self.n==1:
-                mode='next_attack';duration=interval;frost(attack*bb['atk_scale'],2,'高速思考')
+                mode='next_attack';duration=interval if window is None else window
+                # Two animation events exist, but their S1 binding and relative
+                # clock are not verified. Use acquisition only as a source guard.
+                stream=timeline.attacks(3600 if window is None else window,interval,speed,
+                    attribute_speed=speed_reference,limit=1)
+                events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
+                frost(attack*bb['atk_scale'],2 if events else 0,'高速思考')
             elif self.n==2:
                 mode='instant';duration=0;frost(attack*bb['atk_scale'],1,'零度爆发')
             else:
@@ -864,6 +870,7 @@ class Combat:
         mode=full['mode']
         total_damage=full['damage'];total_healing=full['healing'];duration=full['duration']
         wine_s1_unresolved=self.s['operator']=='char_1042_phatm2' and self.n==1
+        gnosis_s1_unresolved=self.s['operator']=='char_206_gnosis' and self.n==1
         if wine_s1_unresolved:
             # The native multihit gap does not establish absolute cast end,
             # SP observation or normal-attack resumption. A resource anchor
@@ -871,6 +878,10 @@ class Combat:
             duration=None;recharge=None
             first=0.0 if initial>=sp['sp_cost'] else None
             self.notes.append('暗夜回声单次两段与观察窗口采用原版动作参考；当前客户端首伤相位、技能结束与解除阻回尚未闭合，持续时间、结束后充能及周期输出保持未知。')
+        if gnosis_s1_unresolved:
+            duration=None;recharge=None
+            first=0.0 if initial>=sp['sp_cost'] else None
+            self.notes.append('高速思考两段的实际技能绑定、间隔及结束/阻回相位未核验；不把两段当同刻命中或套用常规攻击结束，完整持续和周期未知。')
         if mode=='ammo' and duration is None:total_damage=total_healing=None
         if mode in ('deployment','passive'):first=0;recharge=None
         nonrepeat=mode in ('infinite','passive','switch','once','once_deploy','deployment','triggered_ammo')
@@ -932,7 +943,7 @@ class Combat:
                     stun=sp['values'].get('stun',0) if self.s['operator']=='char_002_amiya' and self.n==2 else 0)
                 recharge=sp_events['cycle']['seconds']
             else:recharge=None
-        if wine_s1_unresolved:
+        if wine_s1_unresolved or gnosis_s1_unresolved:
             recharge=None
             first=0.0 if initial>=sp['sp_cost'] else None
         cycle=duration+recharge if not nonrepeat and duration is not None and recharge is not None else None
@@ -978,7 +989,7 @@ class Combat:
         if self.module_parts:
             self.notes.append('已计模组基础属性与适用天赋数据覆盖；未建模的新增模组特性/隐藏战斗脚本不自动推断。')
         self.notes.append('单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。')
-        complete=not wine_s1_unresolved and not self.warnings and not unconfirmed and not self.module_parts and (not inventory or inventory.get('complete'))
+        complete=not (wine_s1_unresolved or gnosis_s1_unresolved) and not self.warnings and not unconfirmed and not self.module_parts and (not inventory or inventory.get('complete'))
         result={'attack':shown['attack'],'total_damage':shown['damage'],'total_healing':shown['healing'],
             'attack_speed':shown['attack_speed'],'base_attack_speed':self.base_speed,
             'attack_speed_reference':shown['attack_speed_reference'],
@@ -1008,6 +1019,25 @@ class Combat:
             'complete':complete,
             'warnings':self.warnings,'notes':list(dict.fromkeys(self.notes))+['连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。'],
             'scenario_scope':result['scope']}
+        if gnosis_s1_unresolved:
+            cast=next(c for c in full['components'] if c['name']=='高速思考')
+            observed=next(c for c in shown['components'] if c['name']=='高速思考')
+            result['gnosis_s1_reference']={
+                'two_hit_damage_reference':cast['per_hit']*2,
+                'per_hit_damage_reference':cast['per_hit'],
+                'source_possible':{'cast':bool(cast['hits']),'window':bool(observed['hits'])},
+                'relative_hit_times_seconds':None,'multi_event_binding_verified':False,
+                'source_acquisition_times':{'cast':[t for stream in full['timing']['streams']
+                    for t in stream['times_seconds']],
+                    'window':[t for stream in shown['timing']['streams'] for t in stream['times_seconds']]},
+            }
+            if cast['hits']:result['estimate']['skill']['total_damage']=None
+            if observed['hits']:
+                result['total_damage']=None
+                result['estimate']['skill']['window_dps']=None
+                observed['actual_total']=None
+            result['complete']=False
+            result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
         if hasattr(self,'neural_relic_reference'):
             result['neural_relic_reference']={**self.neural_relic_reference,
                 'cast_burst_times':[t for c in full['components'] if c['name']=='神经损伤爆发' for t in c.get('times_seconds',[])],
