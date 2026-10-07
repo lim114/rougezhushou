@@ -38,9 +38,16 @@ def resolve_enemy(scenario,resolution):
         if rune['key']=='enemy_attribute_mul':
             if rune['professionMask']!=1023 or rune['buildableMask']!='ALL':
                 enemy['pending'].append('关卡属性修正的目标范围尚未覆盖。');continue
+            selectors=[b for b in rune['blackboard'] if b['key']=='enemy']
+            if selectors:
+                selector=selectors[0].get('valueStr') if len(selectors)==1 else None
+                known_ids={e['id'] for e in preview['possible_enemies']}
+                if not isinstance(selector,str) or selector not in known_ids:
+                    enemy['pending'].append('关卡属性修正的敌人选择器尚未覆盖。');continue
+                if selector!=record['id']:continue
             keys={'atk':'atk','def':'def','max_hp':'maxHp','magic_resistance':'magicResistance'}
             values={keys[b['key']]:b['value'] for b in rune['blackboard'] if b['key'] in keys}
-            if len(values)!=len(rune['blackboard']):enemy['pending'].append('关卡存在未覆盖的属性修正字段。')
+            if len(values)!=len(rune['blackboard'])-len(selectors):enemy['pending'].append('关卡存在未覆盖的属性修正字段。')
             multiply('关卡 '+stage['difficulty'],values)
         elif rune['key']!='level_hidden_group_enable':
             enemy['pending'].append('关卡脚本修正待核验：'+rune['key'])
