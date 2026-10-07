@@ -516,12 +516,19 @@ class Combat:
                 elif self.n==2:
                     mode='infinite';duration=window if window is not None else 30
                     regular('magic',bb['attack@atk_scale_s2'])
-                    emit('积雪持续伤害',attack*bb['talent@s2_magic_scale'],'magic',
-                         math.floor(duration*self.option('snow_coverage',1,maximum=1)))
+                    coverage=self.option('snow_coverage',1,maximum=1)
+                    emit('积雪持续伤害',attack*bb['talent@s2_magic_scale'],'magic',0)
+                    if duration>0 and coverage>0 and timeline.options.get('target_disappears_seconds')!=0:
+                        components[-1]['actual_total']=None
+                    components[-1]['timing_reference']='snow field coverage and first tick unverified'
                 else:
                     regular('magic',bb['attack@atk_scale_s3'],resistance=max(0,self.enemy_res-bb['magic_resist_penetrate_fixed']))
             entries=self.option('snow_entries',0,maximum=1000,integer=True)
             emit('积雪经过伤害',attack*self.talent('无垠的雪景','talent_magic_scale'),'magic',entries)
+            if not normal and self.n==2 and (duration==0 or timeline.options.get('target_disappears_seconds')==0):
+                for c in components:
+                    c['hits']=0;c['total']=0
+                    if 'times_seconds' in c:c['times_seconds']=[]
             self.notes.append('阵法术师充能期不进行普通攻击；积雪经过次数与覆盖比例分别指定，不把减速或冻结当伤害。')
         elif op in ('char_328_cammou','char_1038_whitw2'):
             if not normal and op=='char_1038_whitw2' and self.n==1:
@@ -1182,6 +1189,21 @@ class Combat:
                 observed['actual_total']=None
             result['complete']=False
             result['complete_definition']='高速思考两段只列条件伤害参考；实际两段时间和完整结束/周期未核验。'
+        if self.s['operator']=='char_1046_sbell2' and self.n==2:
+            snow=next(c for c in full['components'] if c['name']=='积雪持续伤害')
+            result['snow_field_reference']={
+                'per_tick_damage_reference':snow['per_hit'],'tick_interval_parameter_seconds':1,
+                'declared_coverage_fraction':self.option('snow_coverage',1,maximum=1),
+                'target_condition_reference':'处于积雪上的地面敌人',
+                'actual_coverage_windows_seconds':None,'actual_tick_times_seconds':None,
+                'source_possible':{'cast':'actual_total' in snow,
+                    'window':any(c['name']=='积雪持续伤害' and 'actual_total' in c for c in shown['components'])},
+                'skill_duration_kind':'infinite','post_skill_snow_lifecycle_verified':False,
+            }
+            from .uncertain_sources import mask_pending_damage
+            mask_pending_damage(result,full,shown,normal,duration,cycle)
+            result['complete']=False;result['estimate']['complete']=False
+            self.notes.append('积雪覆盖比例不证明首跳、实际覆盖区间或技能后雪的生命周期；仅列每秒条件参数，不生成实际跳数。')
         if healing_s1_unresolved:
             heal=next(c for c in full['components'] if c['name']=='治疗替代下次攻击')
             result['next_attack_healing_reference']={

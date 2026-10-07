@@ -18,7 +18,7 @@ def mask_pending_damage(result, full, shown, normal, duration, cycle):
         return
     skill = result['estimate']['skill']
     subtotal = {
-        'total_damage': known(full),
+        'total_damage': known(full) if skill['mode'] not in ('infinite','switch','passive','triggered_ammo') else None,
         'phase_damage': known(full, duration) if duration is not None else None,
         'window_damage': known(shown),
         'cycle_damage': (known(full, cycle) + (known(normal) if normal else 0))
