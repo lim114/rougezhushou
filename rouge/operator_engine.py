@@ -520,7 +520,7 @@ class Combat:
             head_interval=self.talent('头狼','interval',20)
             starting=self.option('drone_warmup_hits',0,maximum=100,integer=True)
             for i,event_time in enumerate(attack_times()):
-                time=elapsed+event_time
+                time=elapsed+timeline.offset/FPS+event_time
                 ceiling=upper*(self.talent('头狼','scale',1) if op=='char_1038_whitw2' and time>=head_interval else 1)
                 units=drone_count+(1 if op=='char_1038_whitw2' and time>=3*head_interval else 0)
                 scale=min(ceiling,lower+step*(starting+i))
