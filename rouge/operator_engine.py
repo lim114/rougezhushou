@@ -781,7 +781,7 @@ class Combat:
         elif op=='char_2027_wang':
             if normal:regular()
             else:
-                mode='triggered_ammo' if self.n==3 else 'instant';duration=0
+                mode='triggered_ammo' if self.n==3 else 'instant';duration=0 if window is None else window
                 lines=self.option('connected_stones',1,maximum=3,integer=True)
                 factor=1+lines*self.talent('料敌机先','attack@per_atk_scale')
                 resistance=max(0,self.enemy_res-lines*self.talent('料敌机先','attack@per_magic_resist_penetrate_fixed'))
@@ -790,8 +790,14 @@ class Combat:
                     ticks=self.option('trap_dot_ticks',6,maximum=7,integer=True)
                     emit('取势棋子持续伤害',attack*bb['attack@atk_scale']*factor,'magic',count*ticks,resistance=resistance)
                 else:emit('棋子触发',attack*bb.get('attack@atk_scale',bb.get('atk_scale'))*factor,'magic',count,resistance=resistance)
-                if self.n==3:duration=self.s.get('skill_duration_seconds')
-                self.notes.append('获得棋子不等于触发棋子；当前显示指定触发情景。连线层数与法抗穿透上限3层，弹药耗尽时间依赖手动布子而不是攻速。')
+                if self.n==3 and window is None:duration=self.s.get('skill_duration_seconds')
+                rows=[('主动获得棋子参数',bb['cnt'],'枚'),('声明当前目标棋子触发次数',count,'次')]
+                if self.n==1:rows += [('持续伤害时长参数',bb['attack@sluggish'],'秒'),('声明每次触发跳数情景',ticks,'次')]
+                if self.n==3:rows += [('弹药数量参数',bb['trigger_time'],'发')]
+                unbound_cast_reference={'kind':'wang_traps','parameter_rows':rows,
+                    'notes':['主动获得棋子不产生对敌直接伤害，也不证明被动触发；手动触发/跳数只给条件参考，不归入完整主动施放。',
+                             '连线与法抗穿透保留已有条件参考；首跳/刷新、棋子部署/进入地块及弹药创建消耗时钟未知，持续参数不扩长观察窗口。']}
+                self.notes.append('主动资源获取与被动棋子触发分开；所选触发/跳数不生成实际时钟，弹药耗尽不由攻速推导。')
         elif op=='char_1048_orchd2':
             bottle=self.talent('强击瓶专家','power_attack_scale',1) if self.s.get('power_coating',True) and not normal else 1
             if normal:regular(times=3)
@@ -1308,6 +1314,12 @@ class Combat:
             mask_pending_damage(result,full,shown,normal,duration,cycle)
             mask_pending_healing(result,full,shown,normal,duration,cycle)
             result['timing']['phase_clock_unbound']=True
+            if full['unbound_cast_reference']['kind']=='wang_traps':
+                result['active_resource_reference']={'direct_enemy_damage':0,
+                    'granted_stones_parameter':self.bb['cnt'],'passive_event_attribution_verified':False}
+                if self.n in (1,2):
+                    result['estimate']['skill']['total_damage']=0
+                    if 'known_damage_subtotals' in result:result['known_damage_subtotals']['total_damage']=0
             result['complete']=False;result['estimate']['complete']=False
         if full['chen_phase_reference'] is not None:
             result['chen_phase_reference']={**full['chen_phase_reference'],
