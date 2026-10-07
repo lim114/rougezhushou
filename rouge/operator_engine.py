@@ -378,6 +378,8 @@ class Combat:
                 self.notes.append('食粮烹制先停止攻击烹饪，再按特殊间隔治疗。')
             elif self.n==2:regular('healing',times=min(2,healing_targets))
             else:
+                if isinstance(self.s.get('enemy_on_sown_tile'),str):
+                    raise ValueError('enemy_on_sown_tile 不接受文本条件；请使用布尔值。')
                 if self.s.get('enemy_on_sown_tile'):
                     attack+=self.base*bb['e_atk'];speed_reference+=bb['e_attack_speed']
                     speed=effective_attack_speed(speed_reference)

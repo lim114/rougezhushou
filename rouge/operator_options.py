@@ -4,7 +4,7 @@ OPTIONS={
  'char_110_deepcl':[('summon_count','测算触手数（局外假设）',1,7,(1,2))],
  'char_196_sunbr':[],
  'char_2025_shu':[('three_professions','三种不同职业在场',False,1,(1,2,3)),('three_same_profession','三名相同职业在场',False,1,(1,2,3)),
-    ('four_sui','编队中四名岁干员',False,1,(1,2,3)),('enemy_on_sown_tile','敌人在播种地块',False,1,(3,))],
+    ('four_sui','编队中四名岁干员',False,1,(1,2,3)),('enemy_on_sown_tile','存在地面敌人处于播种地块',False,1,(3,))],
  'char_298_susuro':[('low_cost_healing_target','受疗干员初始费用不超过10',False,1,(1,2)),('casts_used','本场此前深度治疗次数',0,2,(2,))],
  'char_4228_closur':[('reinforcement_blocks_target','援军阻挡当前目标',False,1,(1,2,3)),
     ('closure_prior_casts','部署后此前技能次数（情景预览）',0,1000,(1,))],
