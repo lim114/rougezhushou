@@ -15,7 +15,7 @@ MODULES = (
     "tests.test_attack_speed_bounds_065",
     "tests.test_run_modifiers", "tests.test_run_config_validation", "tests.test_multi_melee_070",
     "tests.test_neural_sources_035", "tests.test_s1_neural_boundary",
-    "tests.test_neural_incoming_clock", "tests.test_charge_reference", "tests.test_gnosis_attack_clock", "tests.test_gnosis_s1_reference", "tests.test_gnosis_target_lifetime", "tests.test_drone_attack_clock", "tests.test_myrtle_healing_targets",
+    "tests.test_neural_incoming_clock", "tests.test_charge_reference", "tests.test_gnosis_attack_clock", "tests.test_gnosis_s1_reference", "tests.test_gnosis_target_lifetime", "tests.test_drone_attack_clock", "tests.test_myrtle_healing_targets", "tests.test_gummy_cooking_clock",
 )
 
 if __name__ == "__main__":

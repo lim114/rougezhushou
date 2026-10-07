@@ -300,7 +300,10 @@ class Combat:
                 mode='next_attack';duration=interval
                 emit('治疗替代下次攻击',attack*bb['heal_scale'],'healing',min(1,healing_targets))
             elif op=='char_196_sunbr':
-                regular('healing',times=min(1,healing_targets),seconds=duration-bb['disarm'])
+                stream=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,start_delay=bb['disarm'])
+                events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
+                events=[t for t in events for _ in range(int(min(1,healing_targets)))]
+                emit('技能攻击',attack,'healing',len(events),event_times=events)
                 self.notes.append('食粮烹制先停止攻击烹饪，再按特殊间隔治疗。')
             elif self.n==2:regular('healing',times=min(2,healing_targets))
             else:

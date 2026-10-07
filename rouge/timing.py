@@ -214,10 +214,11 @@ class AttackTimeline:
             self.streams.extend(child.streams)
             return stream
         duration=finite(seconds,'窗口秒数',3600)
+        ready=finite(start_delay,'起始延迟秒数',3600)
         deployment_speed=[r for r in self.s.get('_relic_rules',[]) if r['kind']=='deployment_attack_speed']
         if self.mode=='continuous':
             if deployment_speed:
-                times=[];starts=[];steps=[];now=0
+                times=[];starts=[];steps=[];now=ready
                 while now<duration and (limit is None or len(times)<limit):
                     age=(self.offset+self.deployment_offset)/FPS+now
                     bonus=sum(r['value'] for r in deployment_speed if age<r['duration'])
@@ -225,9 +226,9 @@ class AttackTimeline:
                     if now+step>duration+1e-9:break
                     starts.append(now);steps.append(step);now+=step;times.append(now)
             else:
-                count=math.floor(duration/interval+1e-9)
+                count=max(0,math.floor((duration-ready)/interval+1e-9))
                 if limit is not None:count=min(count,limit)
-                times=[(i+1)*interval for i in range(count)]
+                times=[ready+(i+1)*interval for i in range(count)]
                 starts=[t-interval for t in times];steps=[interval]*len(times)
             stream={'start_frames':([frame_time(t) for t in starts] if deployment_speed else
                 [cadence(t)-cadence(interval) for t in times]),
