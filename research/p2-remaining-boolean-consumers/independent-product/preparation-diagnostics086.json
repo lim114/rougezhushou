@@ -1,0 +1,17 @@
+{
+  "status": "CORRECTED_READ_ONLY_PREPARATION_ERROR",
+  "attempts": [
+    {
+      "operation": "Read the static child receipt by a guessed filename",
+      "command": "cat /workspace/.continuation/p2-remaining-boolean-consumers-086-independent/source-subreview/receipt-static086.json",
+      "exit_code": 1,
+      "output": "cat: /workspace/.continuation/p2-remaining-boolean-consumers-086-independent/source-subreview/receipt-static086.json: No such file or directory\n",
+      "cause": "Filename guessed before inspecting the complete child manifest; actual stable receipt is receipt-static-final086.json.",
+      "correction": "Read the exact path supplied by the frozen manifest. No project execution or product changes were involved.",
+      "fresh_project_calls": 0,
+      "file_mutations": 0
+    }
+  ],
+  "product_failures": 0,
+  "matrix_or_new_test_retries": 0
+}

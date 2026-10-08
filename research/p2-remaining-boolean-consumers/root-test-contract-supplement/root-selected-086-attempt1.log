@@ -1,0 +1,26 @@
+..........E......................................................................................................................................................................................................................................................................................................................................................s.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+======================================================================
+ERROR: test_double_charge_scope_defaults_and_unbound_clock_are_preserved (tests.test_orchid_near_text_input.OrchidNearTextInputTests.test_double_charge_scope_defaults_and_unbound_clock_are_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_orchid_near_text_input.py", line 113, in test_double_charge_scope_defaults_and_unbound_clock_are_preserved
+    self.assertEqual(record({**args,'double_charge':'false'}),default)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/rougezhushou/tests/test_orchid_near_text_input.py", line 20, in record
+    result=calculate_damage(args)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/rougezhushou/rouge/damage.py", line 413, in calculate_damage
+    if len(wines)!=1 or all(w.get('clock')=='deployment' for w in wines):return _evaluate_damage(prepared)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/rougezhushou/rouge/damage.py", line 366, in _evaluate_damage
+    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/rougezhushou/rouge/damage.py", line 356, in _evaluate_damage_once
+    raise ValueError(field+' 不接受文本条件；请使用布尔值。')
+ValueError: double_charge 不接受文本条件；请使用布尔值。
+
+----------------------------------------------------------------------
+Ran 1027 tests in 20.678s
+
+FAILED (errors=1, skipped=1)
+{"passed": false, "platform": "Linux", "tests_run": 1027, "skipped": 1, "failures": 0, "errors": 1, "scope": "portable calculation regression; no Windows UI/capture or private state"}

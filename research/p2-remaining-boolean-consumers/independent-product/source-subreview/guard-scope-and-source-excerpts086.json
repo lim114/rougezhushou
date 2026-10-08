@@ -1,0 +1,1521 @@
+{
+  "source_bindings": {
+    "fixed_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+    "author_freeze_sha256": "aa066032869298b11b06819a2533fa53e78096dd725d4006f01bbde551edab55",
+    "frozen_patch_sha256": "4834ec66e47ebdf8df0e8ef0c57e19dafe1693d80f51e9061245879c33005f87",
+    "baseline_count": 723,
+    "unchanged_old_draft": 721,
+    "full_git_fixed_blob_and_baseline_byte_check": true,
+    "new_test_sha256": "3f65ea9bc16f62a9103f8ee83000e2b5aada668a0408910d70e1d54f5d0bb438",
+    "production_changes": {
+      "rouge/damage.py": {
+        "old_sha256": "4b756392c9536323fd5ec8110e61eaa9373113e28828caeae25f5e846d73e389",
+        "draft_sha256": "6cc15cf93eb52fc42120fff6b795e2cbbf2903cf0af8d7d293ffea9f73f121c6"
+      },
+      "rouge/operator_engine.py": {
+        "old_sha256": "071b60914f40a0281c7acc8e3648520b496a448339f8d9b8c983fde47955ada4",
+        "draft_sha256": "c6a7b5e5cd444480f3579a8174246a31f891cb7a2b1c93bbf0826aa4a7765c68"
+      }
+    },
+    "old_engine_restored_by_removing_only_reset1_signal3_lines": true,
+    "old_damage_restored_by_removing_guard_and_reverting_exact_wrapper_call": true,
+    "guard_sha256": "97a6e84cf3a5e80eb346302414f89ff577c27d58d648ce973dc0dffba6fddee8",
+    "marker_reset_sha256": "72a8e009377c4d18974afb15af7a370a19aa3596a40bede7960928387fbd789f",
+    "marker_update_sha256": "8e26c920045b6650361189b29b90e7bf2f3d437ce50aae6ff2f003a6826fc8ff",
+    "old83_85_guards_and_every_other_prior_byte_preserved": true
+  },
+  "consumers17": [
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "enemy_below_half",
+      "line": 225,
+      "expression": "self.s.get('enemy_below_half')"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "reinforcement_blocks_target",
+      "line": 396,
+      "expression": "self.s.get('reinforcement_blocks_target')"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "frozen_at_skill_end",
+      "line": 644,
+      "expression": "self.s.get('frozen_at_skill_end', True)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "ines_first_deployment",
+      "line": 688,
+      "expression": "self.s.get('ines_first_deployment', False)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "ranged_attack",
+      "line": 857,
+      "expression": "self.s.get('ranged_attack', True)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "organ_mode",
+      "line": 869,
+      "expression": "self.s.get('organ_mode', False)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "fever",
+      "line": 874,
+      "expression": "self.s.get('fever')"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "power_coating",
+      "line": 1026,
+      "expression": "self.s.get('power_coating', True)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1031,
+      "expression": "self.s.get('double_charge', True)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1034,
+      "expression": "self.s.get('double_charge', True)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "steal_success",
+      "line": 1062,
+      "expression": "self.s.get('steal_success', True)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "delivery_coordinate",
+      "line": 1080,
+      "expression": "self.s.get('delivery_coordinate', True)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "overload",
+      "line": 1109,
+      "expression": "self.s.get('overload', False)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1314,
+      "expression": "self.s.get('double_charge', True)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "double_charge",
+      "line": 1441,
+      "expression": "self.s.get('double_charge', True)"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "field": "frozen_at_skill_end",
+      "line": 1549,
+      "expression": "self.s.get('frozen_at_skill_end', True)"
+    },
+    {
+      "path": "rouge/reporting.py",
+      "field": "ines_first_deployment",
+      "line": 149,
+      "expression": "scenario.get('ines_first_deployment')"
+    }
+  ],
+  "consumer_counts": {
+    "enemy_below_half": 1,
+    "frozen_at_skill_end": 2,
+    "double_charge": 4,
+    "reinforcement_blocks_target": 1,
+    "ines_first_deployment": 2,
+    "ranged_attack": 1,
+    "organ_mode": 1,
+    "fever": 1,
+    "power_coating": 1,
+    "steal_success": 1,
+    "delivery_coordinate": 1,
+    "overload": 1
+  },
+  "guard11_other_fields_eligibility": "Fixed owner/number domains exactly match prior source; Mizuki 反移情 and Orchid 强击瓶专家 query actual selected_talents before adding field; nonstr aliases preserved. Gnosis/Ines second consumers and all4 Orchid double_charge reads unchanged.",
+  "oblvns_marker": {
+    "reset_line": 1298,
+    "normal_assign_line": 1471,
+    "update_lines": [
+      1473,
+      1474,
+      1475
+    ],
+    "skill_override_test": "self.s.get('module_id') and (not normal) and (self.tv.get('颂乐音符', {}).get('max_cnt', 10) > 10)",
+    "whole_api_marker_expr": "not ranged_overridden or normal is not None",
+    "normal_actual_gate": "self.plan(normal=True, window=recharge) if cycle is not None and (not (sp['sp_type'] == 'INCREASE_WHEN_ATTACK' and (not self.s.get('continuous_attacks', True)))) else None",
+    "dominant_construction_line": 298,
+    "read_guard_owner": "char_4182_oblvns",
+    "legacy_owners_have_no_marker_read": true,
+    "S1_unbound_duration_recharge_None_lines": [
+      1389,
+      1390,
+      1462
+    ],
+    "S2_switch_nonrepeat_no_normal_lines": [
+      1394,
+      1397,
+      1398
+    ],
+    "marker_not_input_or_public_result": true
+  },
+  "late_error_order": "After core report321, unchanged neural323, Haruka327, Orchidnear329; actual per-core preparation/engine/finishers/report legacy errors remain earlier. No outer universal error-order claim.",
+  "excerpts": [
+    {
+      "path": "rouge/damage.py",
+      "sha256": "6cc15cf93eb52fc42120fff6b795e2cbbf2903cf0af8d7d293ffea9f73f121c6",
+      "ranges": [
+        {
+          "start": 288,
+          "end": 357,
+          "lines": [
+            {
+              "line": 288,
+              "text": "def _evaluate_damage_once(prepared,wine_phase=None) -> dict:"
+            },
+            {
+              "line": 289,
+              "text": "    \"\"\"Consume one isolated preparation; finishers may annotate its resolutions.\"\"\""
+            },
+            {
+              "line": 290,
+              "text": "    from .estimate import build_estimate"
+            },
+            {
+              "line": 291,
+              "text": "    from .relics import finish"
+            },
+            {
+              "line": 292,
+              "text": "    from .run_modifiers import finish_run"
+            },
+            {
+              "line": 293,
+              "text": "    scenario,attributes,resolution,run_resolution=prepared"
+            },
+            {
+              "line": 294,
+              "text": "    scenario.pop('_wine_phase_frame',None)"
+            },
+            {
+              "line": 295,
+              "text": "    if wine_phase is not None:scenario['_wine_phase_frame']=wine_phase"
+            },
+            {
+              "line": 296,
+              "text": "    if scenario['operator'] not in ('kaltsit','silverash','mechanist'):"
+            },
+            {
+              "line": 297,
+              "text": "        from .operator_engine import Combat"
+            },
+            {
+              "line": 298,
+              "text": "        combat=Combat(scenario,attributes)"
+            },
+            {
+              "line": 299,
+              "text": "        result=combat.calculate()"
+            },
+            {
+              "line": 300,
+              "text": "    else:"
+            },
+            {
+              "line": 301,
+              "text": "        result=_skill_damage(scenario)"
+            },
+            {
+              "line": 302,
+              "text": "        result['estimate']=build_estimate(scenario,result,attributes,_skill_damage)"
+            },
+            {
+              "line": 303,
+              "text": "    from .charge_reference import finish_charge_reference"
+            },
+            {
+              "line": 304,
+              "text": "    finish_charge_reference(scenario,result)"
+            },
+            {
+              "line": 305,
+              "text": "    from .shield_break_reference import finish_shield_break_reference"
+            },
+            {
+              "line": 306,
+              "text": "    finish_shield_break_reference(scenario,result)"
+            },
+            {
+              "line": 307,
+              "text": "    from .timing import annotate_result"
+            },
+            {
+              "line": 308,
+              "text": "    annotate_result(scenario,result)"
+            },
+            {
+              "line": 309,
+              "text": "    finish(result,resolution,attributes,scenario)"
+            },
+            {
+              "line": 310,
+              "text": "    finish_run(result,run_resolution)"
+            },
+            {
+              "line": 311,
+              "text": "    if scenario['operator']=='kaltsit' and scenario['skill'] in (1,3):"
+            },
+            {
+              "line": 312,
+              "text": "        # The internal helper supplies healing per recipient to build_estimate."
+            },
+            {
+              "line": 313,
+              "text": "        # Public totals use its capped recipient count and requested window,"
+            },
+            {
+              "line": 314,
+              "text": "        # after the finishers have applied relic multipliers exactly once."
+            },
+            {
+              "line": 315,
+              "text": "        result['total_healing']=result['estimate']['skill']['window_healing']"
+            },
+            {
+              "line": 316,
+              "text": "    from .attribute_limits import finalize_attack_speed_references"
+            },
+            {
+              "line": 317,
+              "text": "    finalize_attack_speed_references(result)"
+            },
+            {
+              "line": 318,
+              "text": "    from .summons import finish_duration_references"
+            },
+            {
+              "line": 319,
+              "text": "    finish_duration_references(scenario,result)"
+            },
+            {
+              "line": 320,
+              "text": "    from .reporting import build_report"
+            },
+            {
+              "line": 321,
+              "text": "    result['report']=build_report(scenario,result)"
+            },
+            {
+              "line": 322,
+              "text": "    # Validate the processed neural scenario after preserving legacy errors."
+            },
+            {
+              "line": 323,
+              "text": "    if scenario['operator'] in ('char_1042_phatm2','char_4204_mantra'):"
+            },
+            {
+              "line": 324,
+              "text": "        for field in ('enemy_is_boss','enemy_in_neural_break'):"
+            },
+            {
+              "line": 325,
+              "text": "            if isinstance(scenario.get(field),str):"
+            },
+            {
+              "line": 326,
+              "text": "                raise ValueError(field+' 不接受文本条件；请使用布尔值。')"
+            },
+            {
+              "line": 327,
+              "text": "    if scenario['operator']=='char_4202_haruka' and scenario['skill']==2 and isinstance(scenario.get('haruka_repeat'),str):"
+            },
+            {
+              "line": 328,
+              "text": "        raise ValueError('haruka_repeat 不接受文本条件；请使用布尔值。')"
+            },
+            {
+              "line": 329,
+              "text": "    if (scenario['operator']=='char_1048_orchd2' and"
+            },
+            {
+              "line": 330,
+              "text": "            isinstance(scenario.get('near_previous_deployment'),str)):"
+            },
+            {
+              "line": 331,
+              "text": "        from .operator_engine import selected_talents"
+            },
+            {
+              "line": 332,
+              "text": "        talents,_=selected_talents(catalog()['operators'][scenario['operator']],scenario)"
+            },
+            {
+              "line": 333,
+              "text": "        if any(t.get('name')=='翔虫机动' for t in talents):"
+            },
+            {
+              "line": 334,
+              "text": "            raise ValueError('near_previous_deployment 不接受文本条件；请使用布尔值。')"
+            },
+            {
+              "line": 335,
+              "text": "    # Keep legacy calculation/finisher/report errors before text-only conditions."
+            },
+            {
+              "line": 336,
+              "text": "    op=scenario['operator'];number=scenario['skill']"
+            },
+            {
+              "line": 337,
+              "text": "    conditions={"
+            },
+            {
+              "line": 338,
+              "text": "        'char_4228_closur':('reinforcement_blocks_target',),"
+            },
+            {
+              "line": 339,
+              "text": "        'char_206_gnosis':('frozen_at_skill_end',) if number==3 else (),"
+            },
+            {
+              "line": 340,
+              "text": "        'char_4087_ines':('ines_first_deployment',) if number==3 else (),"
+            },
+            {
+              "line": 341,
+              "text": "        'char_1041_angel2':('steal_success',) if number==2 else ('delivery_coordinate',) if number==3 else (),"
+            },
+            {
+              "line": 342,
+              "text": "        'char_1035_wisdel':('overload',) if number==2 else (),"
+            },
+            {
+              "line": 343,
+              "text": "    }.get(op,())"
+            },
+            {
+              "line": 344,
+              "text": "    if op=='char_4182_oblvns':"
+            },
+            {
+              "line": 345,
+              "text": "        conditions=(('ranged_attack',) if combat.ranged_attack_condition_consumed else ())"
+            },
+            {
+              "line": 346,
+              "text": "        if number==2:conditions+=('organ_mode','fever')"
+            },
+            {
+              "line": 347,
+              "text": "    if op in ('char_437_mizuki','char_1048_orchd2'):"
+            },
+            {
+              "line": 348,
+              "text": "        field,talent=('enemy_below_half','反移情') if op=='char_437_mizuki' else ('power_coating','强击瓶专家')"
+            },
+            {
+              "line": 349,
+              "text": "        if isinstance(scenario.get(field),str):"
+            },
+            {
+              "line": 350,
+              "text": "            from .operator_engine import selected_talents"
+            },
+            {
+              "line": 351,
+              "text": "            talents,_=selected_talents(catalog()['operators'][op],scenario)"
+            },
+            {
+              "line": 352,
+              "text": "            if any(t.get('name')==talent for t in talents):conditions+=(field,)"
+            },
+            {
+              "line": 353,
+              "text": "        if op=='char_1048_orchd2' and number==1:conditions+=('double_charge',)"
+            },
+            {
+              "line": 354,
+              "text": "    for field in conditions:"
+            },
+            {
+              "line": 355,
+              "text": "        if isinstance(scenario.get(field),str):"
+            },
+            {
+              "line": 356,
+              "text": "            raise ValueError(field+' 不接受文本条件；请使用布尔值。')"
+            },
+            {
+              "line": 357,
+              "text": "    return result"
+            }
+          ]
+        },
+        {
+          "start": 359,
+          "end": 389,
+          "lines": [
+            {
+              "line": 359,
+              "text": "def _evaluate_damage(prepared,wine_phase=None) -> dict:"
+            },
+            {
+              "line": 360,
+              "text": "    \"\"\"Resolve deployment readiness before placing finite buffs or wine pulses.\"\"\""
+            },
+            {
+              "line": 361,
+              "text": "    from copy import deepcopy"
+            },
+            {
+              "line": 362,
+              "text": "    from .reporting import build_report"
+            },
+            {
+              "line": 363,
+              "text": "    rules=prepared[0].get('_relic_rules',[])"
+            },
+            {
+              "line": 364,
+              "text": "    finite_speed=any(r['kind']=='deployment_attack_speed' for r in rules)"
+            },
+            {
+              "line": 365,
+              "text": "    deployment_clock=finite_speed or any(r['kind']=='periodic_sp' and r.get('clock')=='deployment' for r in rules)"
+            },
+            {
+              "line": 366,
+              "text": "    if not deployment_clock:return _evaluate_damage_once(prepared,wine_phase)"
+            },
+            {
+              "line": 367,
+              "text": "    first_result=_evaluate_damage_once(deepcopy(prepared),wine_phase)"
+            },
+            {
+              "line": 368,
+              "text": "    first=first_result['estimate']['skill']['initial_seconds']"
+            },
+            {
+              "line": 369,
+              "text": "    if first is None:"
+            },
+            {
+              "line": 370,
+              "text": "        result=first_result"
+            },
+            {
+              "line": 371,
+              "text": "        if finite_speed:"
+            },
+            {
+              "line": 372,
+              "text": "            skill=result['estimate']['skill']"
+            },
+            {
+              "line": 373,
+              "text": "            for key in ('total_damage','total_healing','phase_damage','phase_healing','cycle_seconds','cycle_damage',"
+            },
+            {
+              "line": 374,
+              "text": "                        'cycle_healing','cycle_dps','cycle_hps','window_damage','window_healing','window_dps','window_hps'):"
+            },
+            {
+              "line": 375,
+              "text": "                if key in skill:skill[key]=None"
+            },
+            {
+              "line": 376,
+              "text": "            result['total_damage']=None;result['total_healing']=None"
+            },
+            {
+              "line": 377,
+              "text": "            result['estimate']['notes'].append('初动条件未确认，无法定位技能与部署后10秒攻速加成的重叠；依赖该重叠的输出保持未知。')"
+            },
+            {
+              "line": 378,
+              "text": "            result['report']=build_report(prepared[0],result)"
+            },
+            {
+              "line": 379,
+              "text": "        return result"
+            },
+            {
+              "line": 380,
+              "text": "    pristine=deepcopy(prepared)"
+            },
+            {
+              "line": 381,
+              "text": "    pristine[0]['_deployment_skill_start_seconds']=first"
+            },
+            {
+              "line": 382,
+              "text": "    result=_evaluate_damage_once(pristine,wine_phase)"
+            },
+            {
+              "line": 383,
+              "text": "    result['deployment_clock_reference']={'first_skill_start_seconds':first,"
+            },
+            {
+              "line": 384,
+              "text": "        'origin':'deployment','owner_tick_boundary_frames':1,'live_state_verified':False}"
+            },
+            {
+              "line": 385,
+              "text": "    result['estimate']['notes'].append('限时藏品与酒类共享部署时钟；技能在预计初动时开启，充能期沿用原计时，不按每轮重新获得部署加成。部署挂载与首个owner逻辑帧存在至多一帧边界。')"
+            },
+            {
+              "line": 386,
+              "text": "    result['report']=build_report(pristine[0],result)"
+            },
+            {
+              "line": 387,
+              "text": "    return result"
+            },
+            {
+              "line": 388,
+              "text": ""
+            },
+            {
+              "line": 389,
+              "text": "def _calculate_damage(scenario: dict,wine_phase=None) -> dict:"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "sha256": "c6a7b5e5cd444480f3579a8174246a31f891cb7a2b1c93bbf0826aa4a7765c68",
+      "ranges": [
+        {
+          "start": 13,
+          "end": 29,
+          "lines": [
+            {
+              "line": 13,
+              "text": "def selected_talents(profile, scenario):"
+            },
+            {
+              "line": 14,
+              "text": "    elite=scenario.get('elite',2)"
+            },
+            {
+              "line": 15,
+              "text": "    level=scenario.get('level') or profile['phases'][elite]['max_level']"
+            },
+            {
+              "line": 16,
+              "text": "    potential=scenario.get('potential',1)-1"
+            },
+            {
+              "line": 17,
+              "text": "    def eligible(candidate):"
+            },
+            {
+              "line": 18,
+              "text": "        condition=candidate.get('unlockCondition')"
+            },
+            {
+              "line": 19,
+              "text": "        phase=int(condition['phase'][-1]) if condition else candidate['phase']"
+            },
+            {
+              "line": 20,
+              "text": "        minimum=condition['level'] if condition else candidate['level']"
+            },
+            {
+              "line": 21,
+              "text": "        rank=candidate.get('requiredPotentialRank',candidate.get('potential_rank',0))"
+            },
+            {
+              "line": 22,
+              "text": "        return phase<=elite and (phase<elite or minimum<=level) and rank<=potential"
+            },
+            {
+              "line": 23,
+              "text": "    talents={}"
+            },
+            {
+              "line": 24,
+              "text": "    for i,candidates in enumerate(profile['talents']):"
+            },
+            {
+              "line": 25,
+              "text": "        candidates=[t for t in candidates if eligible(t)]"
+            },
+            {
+              "line": 26,
+              "text": "        if candidates:talents[i]=candidates[-1]"
+            },
+            {
+              "line": 27,
+              "text": "    module=next((m for m in profile['modules'] if m['id']==scenario.get('module_id')),None)"
+            },
+            {
+              "line": 28,
+              "text": "    parts=[]"
+            },
+            {
+              "line": 29,
+              "text": "    if module and elite>=module['unlock_elite'] and level>=module['unlock_level']:"
+            }
+          ]
+        },
+        {
+          "start": 79,
+          "end": 85,
+          "lines": [
+            {
+              "line": 79,
+              "text": "        self.n=scenario['skill']"
+            },
+            {
+              "line": 80,
+              "text": "        self.skill=self.p['skills'][self.n-1]['levels'][scenario.get('skill_rank',10)-1]"
+            },
+            {
+              "line": 81,
+              "text": "        from .relics import effective_skill"
+            },
+            {
+              "line": 82,
+              "text": "        self.skill=effective_skill(self.skill,scenario)"
+            },
+            {
+              "line": 83,
+              "text": "        self.bb=self.skill['values']"
+            },
+            {
+              "line": 84,
+              "text": "        self.talents,self.module_parts=selected_talents(self.p,scenario)"
+            },
+            {
+              "line": 85,
+              "text": "        self.tv={t['name']:t['values'] for t in self.talents}"
+            }
+          ]
+        },
+        {
+          "start": 150,
+          "end": 151,
+          "lines": [
+            {
+              "line": 150,
+              "text": "    def total(self,kind):return sum(float(e['value']) for e in self.effects if e['kind']==kind)"
+            },
+            {
+              "line": 151,
+              "text": "    def talent(self,name,key,default=0):return self.tv.get(name,{}).get(key,default)"
+            }
+          ]
+        },
+        {
+          "start": 219,
+          "end": 226,
+          "lines": [
+            {
+              "line": 219,
+              "text": "                if self.s.get('near_previous_deployment'):self.atk_bonus+=self.talent('翔虫机动','atk')"
+            },
+            {
+              "line": 220,
+              "text": "        if op=='char_1038_whitw2':self.initial_bonus+=self.talent('叙拉古的荣幸','sp')"
+            },
+            {
+              "line": 221,
+              "text": "        if op=='char_1041_angel2' and self.skill['duration_type']=='AMMO':"
+            },
+            {
+              "line": 222,
+              "text": "            self.atk_bonus+=self.talent('铳弹协约','atk')*self.talent('铳弹协约','mult',2)"
+            },
+            {
+              "line": 223,
+              "text": "        if op=='char_4087_ines':"
+            },
+            {
+              "line": 224,
+              "text": "            self.atk_flat=self.talent('影织','steal_atk')*self.option('stolen_enemy_count',1,maximum=100,integer=True)"
+            },
+            {
+              "line": 225,
+              "text": "        if op=='char_437_mizuki' and self.s.get('enemy_below_half'):"
+            },
+            {
+              "line": 226,
+              "text": "            self.atk_bonus+=self.talent('反移情','atk')"
+            }
+          ]
+        },
+        {
+          "start": 616,
+          "end": 650,
+          "lines": [
+            {
+              "line": 616,
+              "text": "        elif op=='char_206_gnosis':"
+            },
+            {
+              "line": 617,
+              "text": "            status=self.option('cold_state',0,maximum=2,integer=True)"
+            },
+            {
+              "line": 618,
+              "text": "            fragile=(self.talent('坚冰','damage_scale_freeze',1) if status==2 else"
+            },
+            {
+              "line": 619,
+              "text": "                     self.talent('坚冰','damage_scale_cold',1) if status==1 else 1)"
+            },
+            {
+              "line": 620,
+              "text": "            res=max(0,self.enemy_res-(15 if status==2 else 0))"
+            },
+            {
+              "line": 621,
+              "text": "            def frost(raw,count,name,event_times=None):"
+            },
+            {
+              "line": 622,
+              "text": "                per=self.hit(raw,'magic',resistance=res)*fragile"
+            },
+            {
+              "line": 623,
+              "text": "                item={'name':name,'damage_type':'magic','hits':count,'per_hit':per,'total':per*count}"
+            },
+            {
+              "line": 624,
+              "text": "                if event_times is not None:item['times_seconds']=event_times"
+            },
+            {
+              "line": 625,
+              "text": "                components.append(item)"
+            },
+            {
+              "line": 626,
+              "text": "            if normal:"
+            },
+            {
+              "line": 627,
+              "text": "                events=attack_times();frost(attack,len(events),'普通攻击',events)"
+            },
+            {
+              "line": 628,
+              "text": "            elif self.n==1:"
+            },
+            {
+              "line": 629,
+              "text": "                mode='next_attack';duration=interval if window is None else window"
+            },
+            {
+              "line": 630,
+              "text": "                # Two animation events exist, but their S1 binding and relative"
+            },
+            {
+              "line": 631,
+              "text": "                # clock are not verified. Use acquisition only as a source guard."
+            },
+            {
+              "line": 632,
+              "text": "                stream=timeline.attacks(3600 if window is None else window,interval,speed,"
+            },
+            {
+              "line": 633,
+              "text": "                    attribute_speed=speed_reference,limit=1)"
+            },
+            {
+              "line": 634,
+              "text": "                events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']"
+            },
+            {
+              "line": 635,
+              "text": "                frost(attack*bb['atk_scale'],2 if events else 0,'高速思考')"
+            },
+            {
+              "line": 636,
+              "text": "            elif self.n==2:"
+            },
+            {
+              "line": 637,
+              "text": "                mode='instant';duration=0"
+            },
+            {
+              "line": 638,
+              "text": "                available=timeline.options.get('target_disappears_seconds')!=0 and (window is None or window>0) and (timeline.mode!='frames' or ("
+            },
+            {
+              "line": 639,
+              "text": "                    timeline.selectable(0) and not timeline.unavailable(0)))"
+            },
+            {
+              "line": 640,
+              "text": "                frost(attack*bb['atk_scale'],1 if available else 0,'零度爆发')"
+            },
+            {
+              "line": 641,
+              "text": "                if available:components[-1]['instant_event']=True"
+            },
+            {
+              "line": 642,
+              "text": "            else:"
+            },
+            {
+              "line": 643,
+              "text": "                events=attack_times();frost(attack,len(events),'失温症攻击',events)"
+            },
+            {
+              "line": 644,
+              "text": "                if self.s.get('frozen_at_skill_end',True) and (window is None or window>=self.skill['duration']):"
+            },
+            {
+              "line": 645,
+              "text": "                    disappears=timeline.options.get('target_disappears_seconds')"
+            },
+            {
+              "line": 646,
+              "text": "                    # A target absent before the nominal end cannot receive"
+            },
+            {
+              "line": 647,
+              "text": "                    # this conditional terminal source. Equal-frame order is"
+            },
+            {
+              "line": 648,
+              "text": "                    # unresolved; do not turn it into a known zero."
+            },
+            {
+              "line": 649,
+              "text": "                    alive=disappears is None or frame_time(disappears)>=frame_time(self.skill['duration'])"
+            },
+            {
+              "line": 650,
+              "text": "                    frost(attack*bb['atk_scale'],1 if alive else 0,'失温症终结')"
+            }
+          ]
+        },
+        {
+          "start": 853,
+          "end": 879,
+          "lines": [
+            {
+              "line": 853,
+              "text": "        elif op=='char_4182_oblvns':"
+            },
+            {
+              "line": 854,
+              "text": "            notes=self.option('note_count',0,maximum=self.talent('颂乐音符','max_cnt',10),integer=True)"
+            },
+            {
+              "line": 855,
+              "text": "            defense=self.enemy_def*(1-notes*self.talent('颂乐音符','def_penetrate_ratio'))"
+            },
+            {
+              "line": 856,
+              "text": "            resistance=self.enemy_res*(1-notes*self.talent('颂乐音符','magic_resist_penetrate_ratio'))"
+            },
+            {
+              "line": 857,
+              "text": "            ranged_scale=.8 if self.s.get('ranged_attack',True) else 1"
+            },
+            {
+              "line": 858,
+              "text": "            if self.s.get('module_id') and not normal and self.tv.get('颂乐音符',{}).get('max_cnt',10)>10:ranged_scale=1"
+            },
+            {
+              "line": 859,
+              "text": "            if normal:regular('physical',ranged_scale,defense=defense)"
+            },
+            {
+              "line": 860,
+              "text": "            elif self.n==1:"
+            },
+            {
+              "line": 861,
+              "text": "                mode='instant';duration=0 if window is None else window"
+            },
+            {
+              "line": 862,
+              "text": "                scales=[bb['atk_scale']]+[bb[f'atk_scale_{i}'] for i in range(2,9)]"
+            },
+            {
+              "line": 863,
+              "text": "                for i,scale in enumerate(scales):emit(f'新月音符{i+1}',attack*scale*ranged_scale,'magic',1,resistance=resistance)"
+            },
+            {
+              "line": 864,
+              "text": "                unbound_cast_reference={'kind':'xiangzi_notes',"
+            },
+            {
+              "line": 865,
+              "text": "                    'parameter_rows':[('音符数量参数',8,'个'),('可充能次数参数',self.skill['max_charges'],'次')],"
+            },
+            {
+              "line": 866,
+              "text": "                    'notes':['八音符倍率是条件来源参考；首个音符、后续间隔、独立碰撞与实际结束未绑定。']}"
+            },
+            {
+              "line": 867,
+              "text": "            elif self.n==2:"
+            },
+            {
+              "line": 868,
+              "text": "                mode='switch';duration=window if window is not None else 30"
+            },
+            {
+              "line": 869,
+              "text": "                organ=self.s.get('organ_mode',False)"
+            },
+            {
+              "line": 870,
+              "text": "                if organ:"
+            },
+            {
+              "line": 871,
+              "text": "                    speed_reference+=bb['attack@attack_speed'];speed=effective_attack_speed(speed_reference)"
+            },
+            {
+              "line": 872,
+              "text": "                    interval=self.a['interval']*100/speed"
+            },
+            {
+              "line": 873,
+              "text": "                else:attack+=self.base*bb['attack@atk']"
+            },
+            {
+              "line": 874,
+              "text": "                regular('magic' if organ else 'physical',ranged_scale,2 if self.s.get('fever') else 1,"
+            },
+            {
+              "line": 875,
+              "text": "                        defense=defense,resistance=resistance)"
+            },
+            {
+              "line": 876,
+              "text": "            else:"
+            },
+            {
+              "line": 877,
+              "text": "                regular('physical',bb['attack@atk_scale']*ranged_scale,2,name='钢琴音符',defense=defense)"
+            },
+            {
+              "line": 878,
+              "text": "                regular('magic',bb['attack@atk_scale']*ranged_scale,2,name='风琴音符',resistance=resistance)"
+            },
+            {
+              "line": 879,
+              "text": "            self.notes.append('祥子按指定音符数计算穿透，范围内持续供靶；Fever只改变有明确二连击描述的技能。音符飞行延迟和实际碰撞丢失未模拟。')"
+            }
+          ]
+        },
+        {
+          "start": 1025,
+          "end": 1050,
+          "lines": [
+            {
+              "line": 1025,
+              "text": "        elif op=='char_1048_orchd2':"
+            },
+            {
+              "line": 1026,
+              "text": "            bottle=self.talent('强击瓶专家','power_attack_scale',1) if self.s.get('power_coating',True) and not normal else 1"
+            },
+            {
+              "line": 1027,
+              "text": "            if normal:regular(times=3)"
+            },
+            {
+              "line": 1028,
+              "text": "            elif self.n==1:"
+            },
+            {
+              "line": 1029,
+              "text": "                mode='instant';duration=0 if window is None else window"
+            },
+            {
+              "line": 1030,
+              "text": "                emit('刚射',attack*bb['atk_scale_1']*bottle,'physical',4)"
+            },
+            {
+              "line": 1031,
+              "text": "                if self.s.get('double_charge',True):emit('刚连射',attack*bb['atk_scale_2']*bottle,'physical',5)"
+            },
+            {
+              "line": 1032,
+              "text": "                unbound_cast_reference={'kind':'orchid_arrows',"
+            },
+            {
+              "line": 1033,
+              "text": "                    'parameter_rows':[('首轮箭矢数量参数',4,'支'),"
+            },
+            {
+              "line": 1034,
+              "text": "                                      ('追加箭矢数量情景',5 if self.s.get('double_charge',True) else 0,'支'),"
+            },
+            {
+              "line": 1035,
+              "text": "                                      ('可充能次数参数',self.skill['max_charges'],'次')],"
+            },
+            {
+              "line": 1036,
+              "text": "                    'notes':['四箭及可选五箭保留条件量；额外充能消费、发射/飞行、强击瓶逐箭覆盖和实际结束未绑定。']}"
+            },
+            {
+              "line": 1037,
+              "text": "            elif self.n==2:"
+            },
+            {
+              "line": 1038,
+              "text": "                duration=self.skill['duration'] if window is None else window"
+            },
+            {
+              "line": 1039,
+              "text": "                emit('飞翔瞪射箭矢',attack*bb['attack@atk_scale_loop']*bottle,'physical',12)"
+            },
+            {
+              "line": 1040,
+              "text": "                emit('飞翔瞪射落地',attack*bb['attack@atk_scale_end']*bottle,'physical',1)"
+            },
+            {
+              "line": 1041,
+              "text": "                unbound_cast_reference={'kind':'orchid_arrows',"
+            },
+            {
+              "line": 1042,
+              "text": "                    'parameter_rows':[('三轮箭矢数量参数',12,'支'),"
+            },
+            {
+              "line": 1043,
+              "text": "                                      ('名义技能持续参数',self.skill['duration'],'秒'),"
+            },
+            {
+              "line": 1044,
+              "text": "                                      ('起飞参数',bb['attack@fly_duration'],'秒'),"
+            },
+            {
+              "line": 1045,
+              "text": "                                      ('落地参数',bb['attack@fly_end_duration'],'秒')],"
+            },
+            {
+              "line": 1046,
+              "text": "                    'notes':['三轮3/4/5箭和落地只列条件来源；4.2秒与起落参数不证明各箭、落地或结束的实际相位。']}"
+            },
+            {
+              "line": 1047,
+              "text": "            else:"
+            },
+            {
+              "line": 1048,
+              "text": "                mode='instant';duration=0 if window is None else window"
+            },
+            {
+              "line": 1049,
+              "text": "                count=self.option('dragon_arrow_hits',1,maximum=1000,integer=True)"
+            },
+            {
+              "line": 1050,
+              "text": "                emit('龙之箭物理',attack*bb['atk_scale']*bottle,'physical',count)"
+            }
+          ]
+        },
+        {
+          "start": 1297,
+          "end": 1316,
+          "lines": [
+            {
+              "line": 1297,
+              "text": "    def calculate(self):"
+            },
+            {
+              "line": 1298,
+              "text": "        self.ranged_attack_condition_consumed=False"
+            },
+            {
+              "line": 1299,
+              "text": "        if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:"
+            },
+            {
+              "line": 1300,
+              "text": "            raise ValueError('深度治疗本场已使用两次，不能再次开启。')"
+            },
+            {
+              "line": 1301,
+              "text": "        full=self.plan()"
+            },
+            {
+              "line": 1302,
+              "text": "        shown=self.plan(window=self.s['window_seconds']) if 'window_seconds' in self.s else full"
+            },
+            {
+              "line": 1303,
+              "text": "        if 'window_seconds' not in self.s and self.s.get('timing_mode','frames')=='frames' and full['duration']:"
+            },
+            {
+              "line": 1304,
+              "text": "            shown=self.plan(window=full['duration'])"
+            },
+            {
+              "line": 1305,
+              "text": "        sp=self.skill"
+            },
+            {
+              "line": 1306,
+              "text": "        from .relics import recharge_requirement"
+            },
+            {
+              "line": 1307,
+              "text": "        recharge_cost=recharge_requirement(self.s,sp['sp_cost'])"
+            },
+            {
+              "line": 1308,
+              "text": "        rate=self.a['sp_recovery']+self.total('sp_recovery')+self.sp_extra"
+            },
+            {
+              "line": 1309,
+              "text": "        initial=sp['initial_sp']+self.initial_bonus"
+            },
+            {
+              "line": 1310,
+              "text": "        mixed_recovery=None"
+            },
+            {
+              "line": 1311,
+              "text": "        if sp['sp_type']=='INCREASE_WITH_TIME':"
+            },
+            {
+              "line": 1312,
+              "text": "            recharge=recharge_cost/rate if rate>0 else None"
+            },
+            {
+              "line": 1313,
+              "text": "            first=max(0,sp['sp_cost']-initial)/rate if rate>0 else None"
+            },
+            {
+              "line": 1314,
+              "text": "            if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True):"
+            },
+            {
+              "line": 1315,
+              "text": "                recharge=recharge_requirement(self.s,2*sp['sp_cost'])/rate if rate>0 else None"
+            },
+            {
+              "line": 1316,
+              "text": "                first=max(0,2*sp['sp_cost']-initial)/rate if rate>0 else None"
+            }
+          ]
+        },
+        {
+          "start": 1389,
+          "end": 1399,
+          "lines": [
+            {
+              "line": 1389,
+              "text": "        if full['unbound_cast_reference'] is not None:"
+            },
+            {
+              "line": 1390,
+              "text": "            duration=None;recharge=None"
+            },
+            {
+              "line": 1391,
+              "text": "            self.notes.append('未绑定实际命中和结束时钟的多段来源只列条件参考，未用瞬时触发分类推导0秒结束或完整充能周期。')"
+            },
+            {
+              "line": 1392,
+              "text": "        if mode=='ammo' and duration is None:total_damage=total_healing=None"
+            },
+            {
+              "line": 1393,
+              "text": "        if mode in ('deployment','passive'):first=0;recharge=None"
+            },
+            {
+              "line": 1394,
+              "text": "        nonrepeat=mode in ('infinite','passive','switch','once','once_deploy','deployment','triggered_ammo')"
+            },
+            {
+              "line": 1395,
+              "text": "        if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=1:"
+            },
+            {
+              "line": 1396,
+              "text": "            nonrepeat=True"
+            },
+            {
+              "line": 1397,
+              "text": "        if mode in ('infinite','switch','passive'):"
+            },
+            {
+              "line": 1398,
+              "text": "            duration=None;total_damage=total_healing=None"
+            },
+            {
+              "line": 1399,
+              "text": "            self.notes.append('没有固定的完整技能持续/总量或可重复回转；显示指定观察窗口的伤害与平均输出，默认窗口30秒。')"
+            }
+          ]
+        },
+        {
+          "start": 1439,
+          "end": 1452,
+          "lines": [
+            {
+              "line": 1439,
+              "text": "        sp_events={}"
+            },
+            {
+              "line": 1440,
+              "text": "        if has_event_sp(self.s) and mode not in ('deployment','passive'):"
+            },
+            {
+              "line": 1441,
+              "text": "            cost=sp['sp_cost']*(2 if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True) else 1)"
+            },
+            {
+              "line": 1442,
+              "text": "            attack_sp=self.talent('情绪吸收','amiya_t_1[atk].sp') if self.s['operator']=='char_002_amiya' else 0"
+            },
+            {
+              "line": 1443,
+              "text": "            sp_events['initial']=event_charge(self.s,sp,max(0,cost-initial),rate,self.normal_interval,"
+            },
+            {
+              "line": 1444,
+              "text": "                self.base_speed,attribute_speed=self.base_speed_reference,initial=True,attack_sp=attack_sp,wait_next_attack=mode=='next_attack')"
+            },
+            {
+              "line": 1445,
+              "text": "            first=sp_events['initial']['seconds']"
+            },
+            {
+              "line": 1446,
+              "text": "            if not nonrepeat and duration is not None:"
+            },
+            {
+              "line": 1447,
+              "text": "                resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)"
+            },
+            {
+              "line": 1448,
+              "text": "                sp_events['cycle']=event_charge(self.s,sp,cost,rate,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,"
+            },
+            {
+              "line": 1449,
+              "text": "                    offset=duration,resume=resume,attack_sp=attack_sp,wait_next_attack=mode=='next_attack',"
+            },
+            {
+              "line": 1450,
+              "text": "                    stun=sp['values'].get('stun',0) if self.s['operator']=='char_002_amiya' and self.n==2 else 0)"
+            },
+            {
+              "line": 1451,
+              "text": "                recharge=sp_events['cycle']['seconds']"
+            },
+            {
+              "line": 1452,
+              "text": "            else:recharge=None"
+            }
+          ]
+        },
+        {
+          "start": 1462,
+          "end": 1483,
+          "lines": [
+            {
+              "line": 1462,
+              "text": "        cycle=duration+recharge if not nonrepeat and duration is not None and recharge is not None else None"
+            },
+            {
+              "line": 1463,
+              "text": "        self.s['_timeline_offset_seconds']=duration or 0"
+            },
+            {
+              "line": 1464,
+              "text": "        from .relic_events import DAMAGE"
+            },
+            {
+              "line": 1465,
+              "text": "        self.s['_first_damage_consumed_in_skill']=any(c['total']>0 and c['damage_type'] in DAMAGE and"
+            },
+            {
+              "line": 1466,
+              "text": "            c.get('source_unit','operator')=='operator' for c in full['components'])"
+            },
+            {
+              "line": 1467,
+              "text": "        resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)"
+            },
+            {
+              "line": 1468,
+              "text": "        self.s['timing']={**self.s.get('timing',{}),'_resume_frames':resume}"
+            },
+            {
+              "line": 1469,
+              "text": "        if self.s['operator']=='char_002_amiya' and self.n==2 and self.s.get('timing_mode','frames')=='frames':"
+            },
+            {
+              "line": 1470,
+              "text": "            self.s['timing']['interrupt_windows']=[*self.s['timing'].get('interrupt_windows',[]),[duration,duration+sp['values'].get('stun',0)]]"
+            },
+            {
+              "line": 1471,
+              "text": "        normal=self.plan(normal=True,window=recharge) if cycle is not None and not ("
+            },
+            {
+              "line": 1472,
+              "text": "            sp['sp_type']=='INCREASE_WHEN_ATTACK' and not self.s.get('continuous_attacks',True)) else None"
+            },
+            {
+              "line": 1473,
+              "text": "        if self.s['operator']=='char_4182_oblvns':"
+            },
+            {
+              "line": 1474,
+              "text": "            ranged_overridden=self.s.get('module_id') and self.tv.get('颂乐音符',{}).get('max_cnt',10)>10"
+            },
+            {
+              "line": 1475,
+              "text": "            self.ranged_attack_condition_consumed=not ranged_overridden or normal is not None"
+            },
+            {
+              "line": 1476,
+              "text": "        damage=full['damage']+(normal['damage'] if normal else 0)"
+            },
+            {
+              "line": 1477,
+              "text": "        healing=full['healing']+(normal['healing'] if normal else 0)"
+            },
+            {
+              "line": 1478,
+              "text": "        from .timing import phase_totals"
+            },
+            {
+              "line": 1479,
+              "text": "        phase_damage,phase_healing=phase_totals(full['components'],duration) if duration is not None else (None,None)"
+            },
+            {
+              "line": 1480,
+              "text": "        if cycle is not None and self.s.get('timing_mode','frames')=='frames':"
+            },
+            {
+              "line": 1481,
+              "text": "            inside_damage,inside_healing=phase_totals(full['components'],cycle)"
+            },
+            {
+              "line": 1482,
+              "text": "            damage=inside_damage+(normal['damage'] if normal else 0)"
+            },
+            {
+              "line": 1483,
+              "text": "            healing=inside_healing+(normal['healing'] if normal else 0)"
+            }
+          ]
+        },
+        {
+          "start": 1549,
+          "end": 1559,
+          "lines": [
+            {
+              "line": 1549,
+              "text": "        if self.s['operator']=='char_206_gnosis' and self.n==3 and self.s.get('frozen_at_skill_end',True):"
+            },
+            {
+              "line": 1550,
+              "text": "            cast=next((c for c in full['components'] if c['name']=='失温症终结'),None)"
+            },
+            {
+              "line": 1551,
+              "text": "            observed=next((c for c in shown['components'] if c['name']=='失温症终结'),None)"
+            },
+            {
+              "line": 1552,
+              "text": "            result['gnosis_terminal_reference']={"
+            },
+            {
+              "line": 1553,
+              "text": "                'nominal_skill_end_seconds':self.skill['duration'],"
+            },
+            {
+              "line": 1554,
+              "text": "                'terminal_clock_verified':False,'freeze_removal_order_verified':False,"
+            },
+            {
+              "line": 1555,
+              "text": "                'conditional_terminal_damage':cast['per_hit'] if cast else None,"
+            },
+            {
+              "line": 1556,
+              "text": "                'source_possible':{'cast':bool(cast and cast['hits']),"
+            },
+            {
+              "line": 1557,
+              "text": "                    'window':bool(observed and observed['hits'])},"
+            },
+            {
+              "line": 1558,
+              "text": "                'same_frame_disappearance_unresolved':bool(cast and 'actual_total' in cast),"
+            },
+            {
+              "line": 1559,
+              "text": "            }"
+            }
+          ]
+        },
+        {
+          "start": 1961,
+          "end": 1961,
+          "lines": [
+            {
+              "line": 1961,
+              "text": "def calculate_extended(scenario,attributes):return Combat(scenario,attributes).calculate()"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "rouge/reporting.py",
+      "sha256": "70ef12ed860c08ce4f471d2be0e9c5cbcec40a64ad7b91d6078c2d99d11254ae",
+      "ranges": [
+        {
+          "start": 146,
+          "end": 151,
+          "lines": [
+            {
+              "line": 146,
+              "text": "    if op=='char_4087_ines':"
+            },
+            {
+              "line": 147,
+              "text": "        notes.append('按当前单目标持续供靶的有效攻击/伤害事件估算；持续法术跳数不当作额外回费。其他敌人的影哨路径命中未默认加入。')"
+            },
+            {
+              "line": 148,
+              "text": "        if unplaced_shadow:notes.append('影哨路径碰撞尚未定位；每个伤害事件回费只列参数，未确认开启时回费或完整技能回费。')"
+            },
+            {
+              "line": 149,
+              "text": "        if number==3 and scenario.get('ines_first_deployment'):"
+            },
+            {
+              "line": 150,
+              "text": "            notes.append('首次部署只放影哨后离场，此次没有伤害回费；免部署费是费用免除，不是产生费用。')"
+            },
+            {
+              "line": 151,
+              "text": "    return section('dp','费用收益',rows,notes)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

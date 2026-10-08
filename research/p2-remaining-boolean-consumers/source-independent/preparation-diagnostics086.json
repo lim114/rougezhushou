@@ -1,0 +1,21 @@
+{
+  "product_API_helper_test_failures": 0,
+  "source_review_execution_failures": 0,
+  "initial_read_schema_preparation_failure": {
+    "exception": "AttributeError: 'list' object has no attribute 'items'",
+    "cause": "Initial inline inspection tried .items() on original-source-hash-receipt, which is a list.",
+    "correction": "Read actual schema; independent audit loops through the four receipt rows.",
+    "dependent_product_API_helper_mutation_started": false
+  },
+  "subreview_read_only_path_and_schema_preparation_preserved": [
+    {
+      "path": "public-artifacts-manifest.json",
+      "reason": "filename absent; corrected by reading directory to archivable-public-manifest.json; no dependent mutation"
+    },
+    {
+      "reason": "narrow display initially assumed direct candidates field; actual preserved extract uses original_group.candidates; corrected from inspected keys before any writes"
+    }
+  ],
+  "author_first_source_preparation_failure_kept": "Original named/hidden candidate comparator corrected to match frozen build_catalog name filtering; original raw hidden groups retained; no dependent API began during failure.",
+  "source_unknowns_reclassified_as_mechanism": false
+}

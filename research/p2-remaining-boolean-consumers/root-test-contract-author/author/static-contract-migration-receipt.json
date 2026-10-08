@@ -1,0 +1,273 @@
+{
+  "status": "PASS_STATIC_CONTRACT_MIGRATION",
+  "base_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+  "original_section86_manifest": {
+    "source_path": "/workspace/.continuation/p2-remaining-boolean-consumers-086-draft/archivable-public-manifest-final86.json",
+    "bytes": 41039,
+    "sha256": "4a2ca8dc22ddd13b0319bdb12544102b680d7a87722366806c9de728e12a7b58"
+  },
+  "root_proposal": {
+    "source_path": "/workspace/.continuation/p2-section086-root-test-contract-supplement/migration-proposal.json",
+    "bytes": 587,
+    "sha256": "b94adcd97ad9ff7d2d0490dc4fdcf97c7c637bcb5100591db9cbe6af6042f39d"
+  },
+  "original_test": {
+    "source_path": "/workspace/.continuation/p2-section086-root-test-contract-supplement/test_orchid_near_text_input-original085.py",
+    "bytes": 7076,
+    "sha256": "8fd8cdaf383ab54945404ad33c5f610c2fc2e4bb018800b1a8bed3193a0dce86"
+  },
+  "adapted_test": {
+    "source_path": "/workspace/.continuation/p2-section086-root-test-contract-supplement/test_orchid_near_text_input-adapted086.py",
+    "bytes": 7248,
+    "sha256": "62c74f4f094442e689e60d5e6306fbdd6cec357173ff7a295bb5c47cf93af901"
+  },
+  "original_test_exact_git_object": true,
+  "single_assertion_ast_node_replaced": true,
+  "all_other_test_ast_nodes_unchanged": true,
+  "only_text_change_is_replacement_and_comment": true,
+  "qualification": {
+    "owner": "char_1048_orchd2",
+    "skill": 1,
+    "late_guard": "reject str only after old calculation/finisher/report and earlier text guards",
+    "other_skills": "S2/S3 inactive for double_charge",
+    "default_and_nonstr": "original engine truthiness/default True untouched",
+    "source_get_lines": [
+      1031,
+      1034,
+      1314,
+      1441
+    ],
+    "consumers": "S1 optional five-arrow component/parameter; first/recharge time-SP and initial/cycle event-SP cost use existing expressions"
+  },
+  "approved_products_and_new_test_current_root_exact": [
+    {
+      "path": "rouge/damage.py",
+      "source_path": "/workspace/.continuation/p2-remaining-boolean-consumers-086-draft/draft/rouge/damage.py",
+      "bytes": 30982,
+      "sha256": "6cc15cf93eb52fc42120fff6b795e2cbbf2903cf0af8d7d293ffea9f73f121c6",
+      "current_root_exact": true
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "source_path": "/workspace/.continuation/p2-remaining-boolean-consumers-086-draft/draft/rouge/operator_engine.py",
+      "bytes": 156130,
+      "sha256": "c6a7b5e5cd444480f3579a8174246a31f891cb7a2b1c93bbf0826aa4a7765c68",
+      "current_root_exact": true
+    },
+    {
+      "path": "tests/test_remaining_boolean_condition_text_input.py",
+      "source_path": "/workspace/.continuation/p2-remaining-boolean-consumers-086-draft/draft/tests/test_remaining_boolean_condition_text_input.py",
+      "bytes": 7663,
+      "sha256": "3f65ea9bc16f62a9103f8ee83000e2b5aada668a0408910d70e1d54f5d0bb438",
+      "current_root_exact": true
+    }
+  ],
+  "current_registry": {
+    "source_path": "/workspace/rougezhushou/scripts/verify_cloud.py",
+    "bytes": 4749,
+    "sha256": "5cc41f11d7d91cd35ab6b9221ba7572baa9d6e8976618a35305626923e56c7de"
+  },
+  "registry_exact_original_single_insertion": true,
+  "saved_evidence_bindings": [
+    {
+      "source_path": "/workspace/.continuation/p2-remaining-boolean-consumers-086-draft/baseline-matrix.jsonl.gz",
+      "bytes": 1447557,
+      "sha256": "c2f03d57bd03ed44cbc6a23bf5df9902af68a33d2672b7206c7a5248d601a37e"
+    },
+    {
+      "source_path": "/workspace/.continuation/p2-remaining-boolean-consumers-086-draft/draft-matrix.jsonl.gz",
+      "bytes": 1099679,
+      "sha256": "a5bc9ae2e1e8c354235de47920130a66ee7b2db7215acb0032c16aad6c85085d"
+    }
+  ],
+  "saved_rows_read_only": [
+    {
+      "index": 137,
+      "label": "double_charge-text-'false'",
+      "input": {
+        "operator": "char_1048_orchd2",
+        "skill": 1,
+        "base_attack": 987,
+        "potential": 5,
+        "window_seconds": 11,
+        "timing_mode": "frames",
+        "double_charge": "false"
+      },
+      "baseline_outcome": "accepted",
+      "draft_outcome": "error",
+      "draft_error": "double_charge 不接受文本条件；请使用布尔值。",
+      "whole_native_json_and_three_texts_same": null
+    },
+    {
+      "index": 138,
+      "label": "double_charge-text-''",
+      "input": {
+        "operator": "char_1048_orchd2",
+        "skill": 1,
+        "base_attack": 987,
+        "potential": 5,
+        "window_seconds": 11,
+        "timing_mode": "frames",
+        "double_charge": ""
+      },
+      "baseline_outcome": "accepted",
+      "draft_outcome": "error",
+      "draft_error": "double_charge 不接受文本条件；请使用布尔值。",
+      "whole_native_json_and_three_texts_same": null
+    },
+    {
+      "index": 139,
+      "label": "double_charge-text-'0'",
+      "input": {
+        "operator": "char_1048_orchd2",
+        "skill": 1,
+        "base_attack": 987,
+        "potential": 5,
+        "window_seconds": 11,
+        "timing_mode": "frames",
+        "double_charge": "0"
+      },
+      "baseline_outcome": "accepted",
+      "draft_outcome": "error",
+      "draft_error": "double_charge 不接受文本条件；请使用布尔值。",
+      "whole_native_json_and_three_texts_same": null
+    },
+    {
+      "index": 140,
+      "label": "double_charge-text-'False'",
+      "input": {
+        "operator": "char_1048_orchd2",
+        "skill": 1,
+        "base_attack": 987,
+        "potential": 5,
+        "window_seconds": 11,
+        "timing_mode": "frames",
+        "double_charge": "False"
+      },
+      "baseline_outcome": "accepted",
+      "draft_outcome": "error",
+      "draft_error": "double_charge 不接受文本条件；请使用布尔值。",
+      "whole_native_json_and_three_texts_same": null
+    },
+    {
+      "index": 141,
+      "label": "double_charge-nonstr-0",
+      "input": {
+        "operator": "char_1048_orchd2",
+        "skill": 1,
+        "base_attack": 987,
+        "potential": 5,
+        "window_seconds": 11,
+        "timing_mode": "frames",
+        "double_charge": false
+      },
+      "baseline_outcome": "accepted",
+      "draft_outcome": "accepted",
+      "draft_error": null,
+      "whole_native_json_and_three_texts_same": true
+    },
+    {
+      "index": 142,
+      "label": "double_charge-nonstr-1",
+      "input": {
+        "operator": "char_1048_orchd2",
+        "skill": 1,
+        "base_attack": 987,
+        "potential": 5,
+        "window_seconds": 11,
+        "timing_mode": "continuous",
+        "double_charge": true
+      },
+      "baseline_outcome": "accepted",
+      "draft_outcome": "accepted",
+      "draft_error": null,
+      "whole_native_json_and_three_texts_same": true
+    },
+    {
+      "index": 209,
+      "label": "double_charge-inactive-2{}",
+      "input": {
+        "operator": "char_1048_orchd2",
+        "skill": 2,
+        "base_attack": 987,
+        "potential": 5,
+        "window_seconds": 11,
+        "timing_mode": "frames",
+        "double_charge": "false"
+      },
+      "baseline_outcome": "accepted",
+      "draft_outcome": "accepted",
+      "draft_error": null,
+      "whole_native_json_and_three_texts_same": true
+    },
+    {
+      "index": 259,
+      "label": "old-error-14",
+      "input": {
+        "operator": "char_1048_orchd2",
+        "skill": 1,
+        "base_attack": 987,
+        "potential": 5,
+        "window_seconds": 11,
+        "timing_mode": "frames",
+        "near_previous_deployment": "false",
+        "double_charge": "false"
+      },
+      "baseline_outcome": "error",
+      "draft_outcome": "error",
+      "draft_error": "near_previous_deployment 不接受文本条件；请使用布尔值。",
+      "whole_native_json_and_three_texts_same": null
+    },
+    {
+      "index": 267,
+      "label": "multicore-3rogue_6_relic_legacy_95",
+      "input": {
+        "operator": "char_1048_orchd2",
+        "skill": 1,
+        "base_attack": 987,
+        "potential": 5,
+        "window_seconds": 11,
+        "timing_mode": "frames",
+        "relic_ids": [
+          "rogue_6_relic_legacy_95"
+        ],
+        "double_charge": "false"
+      },
+      "baseline_outcome": "accepted",
+      "draft_outcome": "error",
+      "draft_error": "double_charge 不接受文本条件；请使用布尔值。",
+      "whole_native_json_and_three_texts_same": null
+    },
+    {
+      "index": 268,
+      "label": "multicore-3rogue_6_relic_legacy_105",
+      "input": {
+        "operator": "char_1048_orchd2",
+        "skill": 1,
+        "base_attack": 987,
+        "potential": 5,
+        "window_seconds": 11,
+        "timing_mode": "frames",
+        "relic_ids": [
+          "rogue_6_relic_legacy_105"
+        ],
+        "double_charge": "false"
+      },
+      "baseline_outcome": "accepted",
+      "draft_outcome": "error",
+      "draft_error": "double_charge 不接受文本条件；请使用布尔值。",
+      "whole_native_json_and_three_texts_same": null
+    }
+  ],
+  "old720_vs_migrated719": "Root reports sealed checker passed 720 before this old-test migration. After migration 719 old source files plus this one test require the separate root supplemental checker; this author audit does not repeat either whole audit or overwrite prior evidence.",
+  "source_and_saved_only": true,
+  "new_API_calls": 0,
+  "new_project_helper_calls": 0,
+  "tests": 0,
+  "Qt": 0,
+  "Wine": 0,
+  "tracked_edits": 0,
+  "original130_modified": false,
+  "fresh_targeted_selected": "No author execution. Root reports targeted1 PASS and selected attempt2 1027run/1026pass/1 historicalskip/0error; root owns the original logs and separate719+1 checker evidence.",
+  "limits": "No new clock, probability, native attachment, game validation or universal old-error precedence claim."
+}
