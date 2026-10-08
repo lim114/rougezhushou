@@ -1,0 +1,646 @@
+--- wine-ui-smoke-075.py
++++ wine-ui-smoke-080.py
+@@ -1,3 +1,6 @@
++if __name__ == '__main__' and False:
++    raise RuntimeError('UI080 final source/schema are pending; no Qt execution is permitted')
++
+ """Real Windows Qt widgets under Wine; isolated state; no capture/chat operations."""
+ import hashlib, importlib, importlib.metadata, json, os, platform, subprocess, sys, tempfile, time, traceback
+ from pathlib import Path
+@@ -291,6 +294,363 @@
+         for sid in ('ro6_n_3_6','ro6_e_3_6') for enemy in stages[sid]['enemies'] for technical in (False,True)]
+ 
+ 
++"""Public-output design only; assertions do not provide actual Qt proof."""
++from copy import deepcopy
++import json
++
++HARUKA_LOCKED_NOTE080='当前培养尚未解锁扶摇花火；浮泡破碎声明保留，但不产生该天赋治疗或二技能中依赖该治疗的派生伤害。'
++
++def canonical080(value):
++    return json.dumps(value,ensure_ascii=False,sort_keys=True,allow_nan=False)
++
++def normalized_locked_haruka080(result):
++    value=deepcopy(result)
++    for ref in (value['external_event_reference'],value['external_event_reference']['window_reference']):
++        ref['parameter_rows'][0]=('声明窗口内浮泡破碎次数',0.0,'次')
++        ref['notes']=[n for n in ref['notes']if n!=HARUKA_LOCKED_NOTE080]
++    for section in value['report']['sections']:
++        if section['id']=='external_events':
++            section['notes']=[n for n in section['notes']if n!=HARUKA_LOCKED_NOTE080]
++            next(m for m in section['metrics']if m['key']=='parameter_0')['value']=0.0
++    return value
++
++def require_haruka080(result,args,text,plain):
++    count=args['bubble_bursts'];qualified=args['elite']==2
++    ref=result['external_event_reference']
++    assert ref['kind']=='haruka_bubbles'
++    assert ref['parameter_rows'][0]==('声明窗口内浮泡破碎次数',float(count),'次')
++    assert ref['actual_event_times_seconds'] is None
++    if not qualified:
++        assert canonical080(normalized_locked_haruka080(result))==canonical080(plain)
++        if count>0:assert HARUKA_LOCKED_NOTE080 in ref['notes'] and HARUKA_LOCKED_NOTE080 in text
++        else:assert HARUKA_LOCKED_NOTE080 not in ref['notes']
++        for component in result['components']:
++            if component['name'] in ('扶摇花火','浮泡治疗衍生伤害'):
++                assert component['hits']==0 and component['total']==0
++                assert 'actual_total' not in component
++    else:
++        assert HARUKA_LOCKED_NOTE080 not in ref['notes']
++        healing=result['haruka_healing_reference']
++        assert healing['native_attachment_verified'] is False
++        assert healing['native_composition_verified'] is False
++        if count>0 and args['window_seconds']>0:
++            assert result['total_healing'] is None
++    if args['window_seconds']==0:
++        assert result['total_damage']==0 and result['total_healing']==0
++    if args.get('timing',{}).get('target_disappears_seconds')==0:
++        assert result['total_damage']==0
++    assert '独立条件来源 · 事件时钟待核验' in text
++
++def require_aglna080(result,args,text,controls):
++    name='飘浮大地之上'
++    component=next(c for c in result['components']if c['name']==name)
++    if args['elite']==0:
++        assert component['hits']==component['per_hit']==component['total']==0
++        assert component['times_seconds']==[]
++        assert result['estimate']['skill']['hit_counts'][name]==0
++        assert canonical080(result)==canonical080(controls['light'])
++    else:
++        weight=args['enemy_weight']
++        if weight<=3:
++            assert canonical080(result)==canonical080(controls['light'])
++        else:
++            assert canonical080(result)==canonical080(controls['heavy'])
++            light=next(c for c in controls['light']['components']if c['name']==name)
++            hi,lo={(1,1):(.2,.13),(1,3):(.3,.18),(2,1):(.35,.25),(2,3):(.45,.3)}[(args['elite'],args['potential'])]
++            assert abs(component['per_hit']*hi-light['per_hit']*lo)<1e-7
++    if args['skill']==2:
++        ref=result['aglna_liftoff_reference']
++        assert ref['actual_takeoff_seconds'] is None and ref['lifecycle_binding_verified'] is False
++        assert result['estimate']['skill']['duration_seconds'] is None
++        assert result['estimate']['skill']['cycle_seconds'] is None
++    if args['window_seconds']==0 or args.get('timing',{}).get('target_disappears_seconds')==0:
++        assert result['total_damage']==0
++
++def require_aglna_selected080(result,args,text,plain,mass):
++    target=args['target_enemy'];enemy=result['run_resolution']['enemy']
++    for key in ('stage_id','enemy_id','level'):
++        assert enemy[key]==target[key]
++    assert enemy['reference_stats']['massLevel']==mass
++    assert canonical080(result)==canonical080(plain)
++    component=next(c for c in result['components']if c['name']=='飘浮大地之上')
++    if args['elite']==0:
++        assert component['hits']==component['per_hit']==component['total']==0
++        assert component['times_seconds']==[]
++        assert result['estimate']['skill']['hit_counts']['飘浮大地之上']==0
++    else:
++        assert component['hits']>0 and component['per_hit']>0
++    assert enemy['name'] in text
++
++def normalized_locked_mantra080(result):
++    value=deepcopy(result)
++    for ref in (value['external_event_reference'],value['external_event_reference']['window_reference']):
++        ref['parameter_rows'][0]=('声明当前目标麻痹触发次数',0.0,'次')
++    for section in value['report']['sections']:
++        if section['id']=='external_events':
++            next(m for m in section['metrics']if m['key']=='parameter_0')['value']=0.0
++    return value
++
++def require_mantra080(result,args,text,plain):
++    count=args['palsy_triggers'];qualified=args['elite']>=1
++    ref=result['external_event_reference'];window=ref['window_reference']
++    assert ref['kind']=='mantra_events'
++    assert ref['parameter_rows'][0]==('声明当前目标麻痹触发次数',float(count),'次')
++    assert window['parameter_rows'][0]==ref['parameter_rows'][0]
++    assert ref['actual_event_times_seconds'] is None
++    assert ref['collision_clock_verified'] is False and window['collision_clock_verified'] is False
++    if not qualified:
++        assert canonical080(normalized_locked_mantra080(result))==canonical080(plain)
++        component=next(c for c in result['components']if c['name']=='麻痹触发天赋')
++        assert component['hits']==component['per_hit']==component['total']==0
++        assert 'actual_total'not in component
++    elif count>0 and args['window_seconds']>0 and args.get('timing',{}).get('target_disappears_seconds')!=0:
++        assert result['total_damage'] is None
++    if args['skill']==3:
++        assert ref['parameter_rows'][1]==('声明当前目标溢出跳跃命中次数',float(args['palsy_overflow_hits']),'次')
++        if args['palsy_overflow_hits']>0 and args['window_seconds']>0 and args.get('timing',{}).get('target_disappears_seconds')!=0:
++            assert result['total_damage'] is None
++    if args['window_seconds']==0 or args.get('timing',{}).get('target_disappears_seconds')==0:
++        assert result['total_damage']==0
++    assert '独立条件来源 · 事件时钟待核验' in text
++
++def require_medical_amiya080(result,args,text):
++    name='诚挚期许本体生命回复'
++    component=next(c for c in result['components']if c['name']==name)
++    assert component['damage_type']=='regeneration' and component['source_unit']=='operator'
++    assert type(component['hits'])is float and type(component['total'])is float
++    assert '阿米娅 · 医疗'in text
++    if args['elite']==0:
++        assert args['skill']==1
++        assert component['hits']==component['per_hit']==component['total']==0
++        assert type(result['estimate']['skill']['hit_counts'][name])is float
++        assert result['estimate']['skill']['hit_counts'][name]==0.0
++        assert 'actual_total'not in component
++        assert name not in result['timing'].get('unplaced_components',[])
++        assert not any('尚未统一排入时间轴' in note and name in note for note in result['estimate']['notes'])
++        assert '尚未统一排入时间轴的输出分项：'+name not in text
++        assert result['estimate']['skill']['duration_seconds']>0
++    else:
++        assert component['per_hit']>0
++        assert component['hits']==float(args['window_seconds'])
++        if args['skill']==1:
++            assert 'actual_total'not in component
++            assert result['estimate']['skill']['hit_counts'][name]>0
++            if args['timing_mode']=='frames' and args['window_seconds']>0:
++                assert name in result['timing']['unplaced_components']
++        else:
++            phase=result['amiya_phase_reference']
++            assert phase['actual_strengthening_start_seconds']is None
++            assert phase['actual_skill_end_seconds']is None
++            assert phase['phase_clock_verified']is False
++            assert phase['opening_buff_healing_order_verified']is False
++            assert result['estimate']['skill']['duration_seconds']is None
++            assert result['estimate']['skill']['cycle_seconds']is None
++            assert component['nominal_duration_reference_seconds']==float(args['window_seconds'])
++            if args['window_seconds']>0:assert component['actual_total']is None
++            else:assert 'actual_total'not in component
++    if args['window_seconds']==0:
++        assert result['total_damage']==0 and result['total_healing']==0
++    if args['skill']==2 and args['window_seconds']>0 and args.get('timing',{}).get('target_disappears_seconds')!=0:
++        assert result['total_damage']is None
++        if args['healing_targets']==0:assert result['total_healing']==0
++        else:assert result['total_healing']is None
++
++def require_medical_trait080(result,args,text,ratio):
++    require_medical_amiya080(result,args,text)
++    heal=next(c for c in result['components']if c['name']=='咒愈师伤害转治疗')
++    dependent=heal['damage_healing']
++    expected=ratio*min(1,args['healing_targets'])
++    assert dependent['ratio']==expected
++    assert dependent['sources']==([0]if args['skill']==1 else [0,1])
++    healing_factor=1.2 if args['relic_ids']==['rogue_6_relic_legacy_81']else 1.0
++    subtotal=sum(result['components'][i]['total']for i in dependent['sources'])
++    assert abs(heal['total']-subtotal*expected*healing_factor)<1e-7
++    if args['skill']==2:
++        phase=result['amiya_phase_reference']
++        assert abs(phase['opening_healing_reference']-phase['opening_damage_reference']*expected*healing_factor)<1e-7
++        if (args['window_seconds']>0 and args['healing_targets']>0 and
++                args.get('timing',{}).get('target_disappears_seconds')!=0):
++            assert heal['actual_total']is None
++            assert phase['actual_skill_end_seconds']is None
++        if args.get('timing',{}).get('target_disappears_seconds')==0:
++            assert heal['total']==0 and 'actual_total'not in heal
++    elif args['healing_targets']==2:
++        direct=next(c for c in result['components']if c['name']=='哀恸共情范围治疗')
++        assert direct['hits']>0 and direct['total']>0
++        assert dependent['ratio']==ratio
++
++
++"""Construct public design cases without API calls or private state reads."""
++def cases080():
++    rows=[]
++    def add(elite,level,rank,number,mode,scope,horizon,timing,**extra):
++        args={'operator':'char_4202_haruka','elite':elite,'level':level,'skill_rank':rank,
++              'skill':number,'timing_mode':mode,'potential':5,'trust':100,
++              'module_id':None,'module_level':0,'window_seconds':horizon,'healing_targets':1,
++              'enemy_defense':0,'enemy_resistance':0,'cooperative':False,'preexisting_fragile':False,'relic_ids':[]}
++        if timing:args['timing']=timing
++        args.update(extra);rows.append({'section':76,'context':scope,'input':args})
++    scopes=[('positive',10,{}),('zero_window',0,{}),
++            ('zero_lifetime',10,{'target_disappears_seconds':0}),
++            ('empty_target_windows',10,{'target_windows':[]})]
++    for elite,level,rank,numbers in ((0,50,4,(1,)),(1,80,7,(1,2)),(2,60,10,(1,2,3))):
++        for potential in (4,5):
++            for number in numbers:
++                for mode in ('frames','continuous'):
++                    for scope,horizon,timing in scopes:
++                        for repeat in ((False,True)if number==2 else (False,)):
++                            for count in (0,1,10000):
++                                opts={'bubble_bursts':count,'potential':potential}
++                                if number==2:opts['haruka_repeat']=repeat
++                                if number==3:opts['levitate_triggers']=0
++                                add(elite,level,rank,number,mode,scope,horizon,timing,**opts)
++    for stage in (1,2,3):
++        for level in (59,60):
++            for mode in ('frames','continuous'):
++                for count in (0,1):
++                    add(2,level,10,2,mode,'module_unlock_boundary',10,{},bubble_bursts=count,
++                        module_id='uniequip_002_haruka',module_level=stage,haruka_repeat=True)
++    for elite,level,rank,number in ((0,50,4,1),(1,80,7,2)):
++        for mode in ('frames','continuous'):
++            for count in (0,1):
++                opts={'haruka_repeat':False}if number==2 else {}
++                add(elite,level,rank,number,mode,'locked_module_does_not_grant_talent',10,{},bubble_bursts=count,
++                    module_id='uniequip_002_haruka',module_level=3,**opts)
++    for mode in ('frames','continuous'):
++        for trigger in (1,1000):
++            for count in (0,1):
++                add(2,60,10,3,mode,'independent_levitate_declaration',10,{},bubble_bursts=count,levitate_triggers=trigger)
++    for elite,rank in ((1,7),(2,10)):
++        for mode in ('frames','continuous'):
++            for count in (0,1):
++                add(elite,60,rank,2,mode,'zero_declared_friendly_targets',10,{},bubble_bursts=count,
++                    healing_targets=0,haruka_repeat=False)
++    def aglna(elite,level,rank,number,potential,mode,scope,horizon,timing,weight):
++        args={'operator':'char_1015_aglna2','elite':elite,'level':level,'skill_rank':rank,'skill':number,
++              'potential':potential,'trust':100,'module_id':None,'module_level':0,
++              'timing_mode':mode,'window_seconds':horizon,'enemy_defense':0,'enemy_resistance':0,
++              'preexisting_fragile':False,'cooperative':False,'healing_targets':1,'relic_ids':[],
++              'enemy_weight':weight}
++        if timing:args['timing']=timing
++        rows.append({'section':77,'context':scope,'input':args})
++    for elite,numbers in ((0,(1,)),(1,(1,2)),(2,(1,2,3))):
++        for number in numbers:
++            for potential in (1,3):
++                for mode in ('frames','continuous'):
++                    for scope,horizon,timing in scopes:
++                        for weight in (0,3,4,100):
++                            aglna(elite,1,1,number,potential,mode,scope,horizon,timing,weight)
++    for elite,level,rank,number in ((0,50,4,1),(1,80,7,2),(2,90,10,3)):
++        for mode in ('frames','continuous'):
++            for weight in (0,3,4,100):
++                aglna(elite,level,rank,number,3,mode,'readonly_max_cultivation',10,{},weight)
++    # Exact public NORMAL roster identities, massLevel3/4. Selection overrides
++    # the separate manual reference; declared weight remains genuine Qt input.
++    for elite,number in ((0,1),(2,3)):
++        for enemy_id,level,mass in (('enemy_10107_mjcdog_2',0,3),('enemy_2002_bearmi',1,4)):
++            for mode in ('frames','continuous'):
++                for weight in (0,100):
++                    aglna(elite,1,1,number,3,mode,'selected_enemy_overrides_manual_weight',10,{},weight)
++                    rows[-1]['input']['target_enemy']={'stage_id':'ro6_n_3_6','enemy_id':enemy_id,'level':level}
++                    rows[-1]['expected_reference_mass']=mass
++    #78 final source is committed; these designs still need final080 preflight.
++    def mantra(elite,level,rank,number,potential,mode,scope,horizon,timing,count,**extra):
++        args={'operator':'char_4204_mantra','elite':elite,'level':level,'skill_rank':rank,'skill':number,
++              'potential':potential,'trust':100,'module_id':None,'module_level':0,
++              'timing_mode':mode,'window_seconds':horizon,'enemy_defense':0,'enemy_resistance':0,
++              'preexisting_fragile':False,'cooperative':False,'healing_targets':1,'relic_ids':[],
++              'palsy_triggers':count}
++        if number==3:args['palsy_overflow_hits']=0
++        if timing:args['timing']=timing
++        args.update(extra)
++        rows.append({'section':78,'context':scope,'input':args})
++    for elite,level,rank,numbers in ((0,50,4,(1,)),(1,80,7,(1,2)),(2,90,10,(1,2,3))):
++        for number in numbers:
++            for potential in (4,5):
++                for mode in ('frames','continuous'):
++                    for scope,horizon,timing in scopes:
++                        for count in (0,1,10000):
++                            mantra(elite,level,rank,number,potential,mode,scope,horizon,timing,count)
++    for mode in ('frames','continuous'):
++        for scope,horizon,timing in scopes:
++            for overflow in (1,10000):
++                for count in (0,1):
++                    mantra(2,90,10,3,5,mode,'separate_overflow_'+scope,horizon,timing,count,palsy_overflow_hits=overflow)
++    for number in (1,2,3):
++        for mode in ('frames','continuous'):
++            for count in (0,1):
++                mantra(2,90,10,number,5,mode,'elemental_immunity_does_not_bind_clock',10,{},count,
++                    enemy_elemental_resistance=100.0)
++    for stage in (1,2,3):
++        for level in (59,60):
++            for mode in ('frames','continuous'):
++                for count in (0,1):
++                    mantra(2,level,10,2,5,mode,'readonly_module_boundary',10,{},count,
++                        module_id='uniequip_002_mantra',module_level=stage)
++    for mode in ('frames','continuous'):
++        for count in (0,1):
++            mantra(0,50,4,1,5,mode,'locked_module_does_not_grant_talent',10,{},count,
++                module_id='uniequip_002_mantra',module_level=3)
++    #79 medical form only. No assumed account form-unlock or unavailable HP0.
++    def medical(elite,level,rank,number,potential,mode,scope,horizon,timing,**extra):
++        args={'operator':'char_1037_amiya3','elite':elite,'level':level,'skill_rank':rank,
++              'skill':number,'potential':potential,'trust':100,'module_id':None,'module_level':0,
++              'timing_mode':mode,'window_seconds':horizon,'enemy_defense':0,'enemy_resistance':0,
++              'preexisting_fragile':False,'cooperative':False,'healing_targets':1,'relic_ids':[]}
++        if number==2:args['amiya_hit_targets']=1
++        if timing:args['timing']=timing
++        args.update(extra);rows.append({'section':79,'context':scope,'input':args})
++    for elite,level,rank,numbers in ((0,50,4,(1,)),(1,70,7,(1,2)),(2,80,10,(1,2))):
++        for number in numbers:
++            for potential in (1,6):
++                for mode in ('frames','continuous'):
++                    for scope,horizon,timing in scopes:
++                        for count in ((1,5,100)if number==2 else (None,)):
++                            opts={'amiya_hit_targets':count}if count is not None else {}
++                            medical(elite,level,rank,number,potential,mode,scope,horizon,timing,**opts)
++    for elite,level,rank,numbers in ((0,50,4,(1,)),(1,70,7,(1,2)),(2,49,10,(1,2)),(2,50,10,(1,2))):
++        for number in numbers:
++            for stage in (1,2,3):
++                for mode in ('frames','continuous'):
++                    medical(elite,level,rank,number,1,mode,'readonly_INC_X_boundary',10,{},
++                        module_id='uniequip_002_amiya3',module_level=stage)
++    for elite,numbers in ((0,(1,)),(1,(1,2)),(2,(1,2))):
++        for number in numbers:
++            for mode in ('frames','continuous'):
++                for targets in ((0,2)if number==1 else (0,1)):
++                    medical(elite,1,1,number,1,mode,'own_regeneration_independent_of_friendly_count',10,{},
++                        healing_targets=targets)
++        for mode in ('frames','continuous'):
++            medical(elite,1,1,1,1,mode,'readonly_talent_minimum_level',10,{})
++    #80 confirmed same medical trait replacement. Final patch remains pending.
++    def trait_case(elite,level,rank,number,stage,mode,scope,horizon,timing,**extra):
++        medical(elite,level,rank,number,1,mode,scope,horizon,timing,
++            module_id='uniequip_002_amiya3'if stage else None,module_level=stage,**extra)
++        rows[-1]['section']=80
++        rows[-1]['expected_trait_ratio']=.6 if elite==2 and level>=50 and stage else .5
++    for elite,level,rank,numbers in ((0,50,4,(1,)),(1,70,7,(1,2)),(2,49,10,(1,2)),(2,50,10,(1,2))):
++        for number in numbers:
++            for stage in (0,1,2,3):
++                for mode in ('frames','continuous'):
++                    for targets in (0,1):
++                        trait_case(elite,level,rank,number,stage,mode,'INC_X_same_trait_ratio_boundary',10,{},
++                            healing_targets=targets)
++    for stage in (1,2,3):
++        for number in (1,2):
++            for mode in ('frames','continuous'):
++                for scope,horizon,timing in scopes[1:]:
++                    trait_case(2,50,10,number,stage,mode,'qualified_trait_'+scope,horizon,timing)
++                trait_case(2,50,10,number,stage,mode,'accepted_healing_factor_preserves_trait_ratio',10,{},
++                    relic_ids=['rogue_6_relic_legacy_81'])
++                trait_case(2,50,10,number,stage,mode,'conversion_uses_dealt_enemy_damage',10,{},
++                    enemy_resistance=50)
++    for stage in (0,1,2,3):
++        for mode in ('frames','continuous'):
++            trait_case(2,50,10,1,stage,mode,'trait_one_recipient_and_separate_S1_range_healing',10,{},
++                healing_targets=2)
++    return rows
++
++
+ def source_hashes():
+     return {p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest()
+             for folder in (ROOT/'rouge',) for p in sorted(folder.rglob('*'))
+@@ -344,7 +704,7 @@
+                 result=window.damage_result['result']
+                 actual=window.damage_text.toPlainText();expected=format_report(result,technical=window.damage_technical.isChecked()).replace(chr(160),' ')
+                 if actual!=expected:
+-                    (OUT/'wine-ui-report-difference-075.json').write_text(json.dumps({'operator':op,'skill':skill,'actual':actual,'expected':expected},ensure_ascii=False,indent=2),encoding='utf-8')
++                    (OUT/'wine-ui-report-difference-080.json').write_text(json.dumps({'operator':op,'skill':skill,'actual':actual,'expected':expected},ensure_ascii=False,indent=2),encoding='utf-8')
+                     raise AssertionError(f'report text differs for {op} skill {skill}')
+                 skills+=1
+         assert skills==87,skills
+@@ -1615,8 +1975,8 @@
+                             if not tile:plain=deepcopy(result)
+                             require_sown(result,args,window.damage_text.toPlainText(),plain,scope_name,bb)
+                             if rank==10 and use_frames and not four and scope_name=='positive' and tile:
+-                                assert tile_widget.grab().save(str(OUT/'wine-sown-tile-control-075.png'))
+-                                receipt['section70_actual_checkbox_screenshot']='wine-sown-tile-control-075.png'
++                                assert tile_widget.grab().save(str(OUT/'wine-sown-tile-control-080.png'))
++                                receipt['section70_actual_checkbox_screenshot']='wine-sown-tile-control-080.png'
+                             checks.append({'scope':'actual_ground_enemy_presence_label_and_sown_checkbox',
+                                 'section':70,'operator':shu,'skill':3,'skill_rank':rank,
+                                 'mode':args['timing_mode'],'observation_scope':scope_name,
+@@ -1778,8 +2138,8 @@
+                     preview075.enemy_detail.moveCursor(QTextCursor.MoveOperation.Start)
+                     assert preview075.enemy_detail.find('关卡移速符文参数参考')
+                     preview075.enemy_detail.ensureCursorVisible();app.processEvents()
+-                    assert window.grab().save(str(OUT/'wine-movement-reference-075.png'))
+-                    receipt['section75_actual_technical_screenshot']='wine-movement-reference-075.png'
++                    assert window.grab().save(str(OUT/'wine-movement-reference-080.png'))
++                    receipt['section75_actual_technical_screenshot']='wine-movement-reference-080.png'
+         finally:
+             preview075.technical.setChecked(technical075)
+             assert window.target_stage_choices.select_value(stage075)
+@@ -1799,6 +2159,194 @@
+         receipt['section75_input_scope']='Actual battle-preview stage/enemy selectors and technical checkbox retain all12 enemy records in each normal/emergency stage. Exact emergency raw rune1.5 remains a source parameter; old base-times-stage subtotal is unchanged, effective speed and native writer/composition remain unknown. No capture, actual route or movement clock is certified.'
+         receipt['section75_final_checks_pending']=False
+         assert receipt['section75_final_checks_pending'] is False,'Final section75 source/independent review is not yet sealed'
++
++        #76-80 genuine Qt design. API textual/invalid values are separate.
++        next_start=len(checks);next_section_counts={};controls080={}
++        state080=deepcopy(window.run.state);account080=deepcopy(window.operator_observations)
++        run_training080=window.use_run_training.isChecked()
++        difficulty080=window.difficulty.currentIndex();summary080=window.run_summary.text()
++        target_stage080=window.target_stage.currentData();target_enemy080=deepcopy(window.target_enemy.currentData())
++        try:
++            window.run.state['operators']={};window.run.state['config']={}
++            window.use_run_training.setChecked(False);window.sync_run_config()
++            window.damage_technical.setChecked(False);relics([])
++            window.target_enemy.setCurrentIndex(0);window.defense.setValue(0);window.resistance.setValue(0)
++            window.cooperative.setChecked(False);window.fragile.setChecked(False)
++            window.limit_window.setChecked(True);window.deployment_elapsed.setValue(0)
++            for case080 in cases080():
++                requested080=case080['input'];owner080=requested080['operator'];number080=requested080['skill']
++                section080=case080['section']
++                fields080={k:requested080[k]for k in ('elite','level','potential','trust','module_id','module_level')}
++                train(owner080,fields080,ranks={str(n):requested080['skill_rank']for n in (1,2,3)})
++                reset_owner_options(owner080)
++                index080=window.skill.findData(number080);assert index080>=0
++                window.skill.setCurrentIndex(index080)
++                assert window.elite.text()==f'精英 {fields080["elite"]}'
++                assert window.potential.text()==str(fields080['potential'])
++                if fields080['module_id']:assert f'阶段 {fields080["module_level"]}'in window.module.text()
++                if fields080['elite']==0:assert window.skill.findData(2)==window.skill.findData(3)==-1
++                if fields080['elite']==1:assert window.skill.findData(3)==-1
++                window.frame_timing.setChecked(requested080['timing_mode']=='frames')
++                window.window_seconds.setValue(requested080['window_seconds'])
++                window.healing_targets.setValue(requested080['healing_targets'])
++                relics(requested080['relic_ids'])
++                window.defense.setValue(requested080['enemy_defense'])
++                window.resistance.setValue(requested080['enemy_resistance'])
++                window.timing_scenario.setPlainText(json.dumps(requested080['timing'])if requested080.get('timing')else '')
++                if requested080.get('target_enemy'):
++                    target080=requested080['target_enemy']
++                    assert window.target_stage_choices.select_value(target080['stage_id'])
++                    assert window.target_enemy_choices.select_value(target080)
++                    app.processEvents()
++                    assert window.target_enemy.currentData()==target080
++                else:
++                    window.target_enemy.setCurrentIndex(0)
++                if section080==76:
++                    bubble080=option_widgets[(owner080,'bubble_bursts')]
++                    repeat080=option_widgets[(owner080,'haruka_repeat')]
++                    levitate080=option_widgets[(owner080,'levitate_triggers')]
++                    assert isinstance(bubble080,QSpinBox) and bubble080.minimum()==0 and bubble080.maximum()==10000
++                    bubble080.setValue(requested080['bubble_bursts'])
++                    if number080==2:repeat080.setChecked(requested080['haruka_repeat'])
++                    if number080==3:levitate080.setValue(requested080['levitate_triggers'])
++                elif section080==77:
++                    weight080=option_widgets[(owner080,'enemy_weight')]
++                    assert isinstance(weight080,QSpinBox) and weight080.minimum()==0 and weight080.maximum()==100
++                    weight080.setValue(requested080['enemy_weight'])
++                elif section080==78:
++                    palsy080=option_widgets[(owner080,'palsy_triggers')]
++                    overflow080=option_widgets[(owner080,'palsy_overflow_hits')]
++                    assert isinstance(palsy080,QSpinBox) and palsy080.minimum()==0 and palsy080.maximum()==10000
++                    palsy080.setValue(requested080['palsy_triggers'])
++                    if number080==3:overflow080.setValue(requested080['palsy_overflow_hits'])
++                    if 'enemy_elemental_resistance'in requested080:
++                        elemental080=option_widgets[(owner080,'enemy_elemental_resistance')]
++                        assert isinstance(elemental080,QDoubleSpinBox) and elemental080.minimum()==0 and elemental080.maximum()==100
++                        elemental080.setValue(requested080['enemy_elemental_resistance'])
++                elif section080 in (79,80):
++                    medical_targets080=option_widgets[(owner080,'amiya_hit_targets')]
++                    assert isinstance(window.healing_targets,QSpinBox) and window.healing_targets.minimum()==0
++                    assert window.healing_targets.maximum()==(100 if number080==1 else 1)
++                    if number080==2:
++                        assert isinstance(medical_targets080,QSpinBox)
++                        assert medical_targets080.minimum()==1 and medical_targets080.maximum()==100
++                        medical_targets080.setValue(requested080['amiya_hit_targets'])
++                else:raise AssertionError('Unsealed section')
++                result080=click_result();args080=window.damage_result['scenario']
++                for key080 in ('operator','skill','elite','level','potential','trust','module_id','module_level',
++                               'skill_rank','timing_mode','window_seconds','healing_targets','relic_ids',
++                               'enemy_defense','enemy_resistance'):
++                    assert args080[key080]==requested080[key080],(case080,key080,args080[key080])
++                assert args080.get('timing',{})==requested080.get('timing',{})
++                if section080==76:
++                    require_real_int070(bubble080,args080,'bubble_bursts',requested080['bubble_bursts'])
++                    if number080==2:
++                        require_real_bool070(repeat080,args080,'haruka_repeat',requested080['haruka_repeat'])
++                    else:
++                        assert not repeat080.isVisible() and 'haruka_repeat'not in args080
++                    if number080==3:
++                        assert levitate080.minimum()==0 and levitate080.maximum()==1000
++                        require_real_int070(levitate080,args080,'levitate_triggers',requested080['levitate_triggers'])
++                    else:
++                        assert not levitate080.isVisible() and 'levitate_triggers'not in args080
++                    control_key080=canonical080({k:v for k,v in requested080.items()if k!='bubble_bursts'})
++                    if requested080['bubble_bursts']==0:controls080[control_key080]=deepcopy(result080)
++                    assert control_key080 in controls080
++                    require_haruka080(result080,args080,window.damage_text.toPlainText(),controls080[control_key080])
++                elif section080==77:
++                    require_real_int070(weight080,args080,'enemy_weight',requested080['enemy_weight'])
++                    control_key080=canonical080({k:v for k,v in requested080.items()if k!='enemy_weight'})
++                    if requested080.get('target_enemy'):
++                        assert args080['target_enemy']==requested080['target_enemy']
++                        if args080['enemy_weight']==0:controls080[control_key080]=deepcopy(result080)
++                        require_aglna_selected080(result080,args080,window.damage_text.toPlainText(),
++                            controls080[control_key080],case080['expected_reference_mass'])
++                    else:
++                        assert window.target_enemy.currentData() is None and 'target_enemy'not in args080
++                        control080=controls080.setdefault(control_key080,{})
++                        if args080['enemy_weight']==0:control080['light']=deepcopy(result080)
++                        if args080['enemy_weight']==4:control080['heavy']=deepcopy(result080)
++                        require_aglna080(result080,args080,window.damage_text.toPlainText(),control080)
++                elif section080==78:
++                    require_real_int070(palsy080,args080,'palsy_triggers',requested080['palsy_triggers'])
++                    if number080==3:
++                        assert overflow080.minimum()==0 and overflow080.maximum()==10000
++                        require_real_int070(overflow080,args080,'palsy_overflow_hits',requested080['palsy_overflow_hits'])
++                    else:
++                        assert not overflow080.isVisible() and 'palsy_overflow_hits'not in args080
++                    if 'enemy_elemental_resistance'in requested080:
++                        assert elemental080.isVisible() and elemental080.isEnabled()
++                        assert type(args080['enemy_elemental_resistance']) is float
++                        assert args080['enemy_elemental_resistance']==elemental080.value()==requested080['enemy_elemental_resistance']
++                    control_key080=canonical080({k:v for k,v in requested080.items()if k!='palsy_triggers'})
++                    if args080['palsy_triggers']==0:controls080[control_key080]=deepcopy(result080)
++                    require_mantra080(result080,args080,window.damage_text.toPlainText(),controls080[control_key080])
++                elif section080 in (79,80):
++                    if number080==2:
++                        require_real_int070(medical_targets080,args080,'amiya_hit_targets',requested080['amiya_hit_targets'])
++                    else:
++                        assert not medical_targets080.isVisible() and 'amiya_hit_targets'not in args080
++                    if section080==79:require_medical_amiya080(result080,args080,window.damage_text.toPlainText())
++                    else:require_medical_trait080(result080,args080,window.damage_text.toPlainText(),case080['expected_trait_ratio'])
++                    if (section080==80 and case080['context']=='INC_X_same_trait_ratio_boundary' and
++                            args080['elite']==2 and args080['level']==50 and args080['module_level']==3 and
++                            number080==1 and args080['timing_mode']=='frames' and args080['healing_targets']==1):
++                        from PySide6.QtGui import QTextCursor
++                        window.damage_text.moveCursor(QTextCursor.MoveOperation.Start)
++                        assert window.damage_text.find('【治疗输出】')
++                        window.damage_text.ensureCursorVisible();app.processEvents()
++                        assert window.isVisible() and window.module.isVisible()
++                        assert '带有灼痕的裙子'in window.module.text() and '阶段 3'in window.module.text()
++                        assert window.grab().save(str(OUT/'wine-medical-trait-080.png'))
++                        conversion080=next(c for c in result080['components']if c['name']=='咒愈师伤害转治疗')
++                        receipt['section80_actual_trait_screenshot']={'filename':'wine-medical-trait-080.png',
++                            'captured_during_existing_case':True,'extra_API_or_Qt_case':False,
++                            'readonly_elite_text':window.elite.text(),'readonly_module_text':window.module.text(),
++                            'ratio':conversion080['damage_healing']['ratio'],
++                            'damage_conversion_hits':conversion080['hits'],
++                            'damage_conversion_per_hit':conversion080['per_hit'],
++                            'damage_conversion_total':conversion080['total'],
++                            'visible_report_scrolled_to_healing_section':True,
++                            'native_clock_or_recipient_verified':False}
++                next_section_counts[section080]=next_section_counts.get(section080,0)+1
++                checks.append({'scope':{76:'actual_bubble_spin_and_readonly_talent_qualification_with_zero_control',
++                    77:'actual_manual_weight_spin_and_readonly_locked_talent_event_count',
++                    78:'actual_palsy_spin_and_readonly_talent_qualification_with_zero_control',
++                    79:'actual_medical_form_readonly_talent_qualification_and_opening_count_spin',
++                    80:'actual_medical_INC_X_same_trait_ratio_and_damage_dependent_healing'}[section080],
++                    'section':section080,'operator':owner080,'skill':number080,'mode':args080['timing_mode'],
++                    'context':case080['context'],'elite':args080['elite'],'potential':args080['potential'],
++                    'module_level':args080['module_level'],'bubble_bursts':args080.get('bubble_bursts'),
++                    'enemy_weight':args080.get('enemy_weight'),
++                    'selected_enemy':args080.get('target_enemy'),'reference_mass':case080.get('expected_reference_mass'),
++                    'haruka_repeat':args080.get('haruka_repeat'),'levitate_triggers':args080.get('levitate_triggers'),
++                    'palsy_triggers':args080.get('palsy_triggers'),'palsy_overflow_hits':args080.get('palsy_overflow_hits'),
++                    'enemy_elemental_resistance':args080.get('enemy_elemental_resistance'),
++                    'amiya_hit_targets':args080.get('amiya_hit_targets'),
++                    'expected_trait_ratio':case080.get('expected_trait_ratio'),
++                    'state_scope':'temporary public readonly cultivation observation; no editable module/elite selector',
++                    'native_clock_attachment_or_actual_recipient_verified':False,'passed':True})
++        finally:
++            window.run.state=state080;window.operator_observations=account080
++            window.use_run_training.setChecked(run_training080)
++            window.run_summary.setText(summary080);window.sync_run_config()
++            if not state080.get('config',{}).get('difficulty'):window.difficulty.setCurrentIndex(difficulty080)
++            assert window.target_stage_choices.select_value(target_stage080)
++            if target_enemy080 is None:window.target_enemy.setCurrentIndex(0)
++            else:assert window.target_enemy_choices.select_value(target_enemy080)
++            window.update_operator();relics([]);window.timing_scenario.clear()
++        next_end=len(checks)
++        assert next_section_counts=={76:432,77:424,78:360,79:212,80:180},next_section_counts
++        receipt['supplemental_sections_76_80']=[76,77,78,79,80]
++        receipt['supplemental_checks_by_section_76_80']=next_section_counts
++        receipt['supplemental_checks_76_80']=next_end-next_start
++        receipt['section76_input_scope']='Genuine bubble QSpinBox int0/1/10000 retains declarations at every elite. Read-only public cultivation/module previews do not invent selectors. BeforeE2 only declared-count row and source exclusion note differ from same-window/count0 complete result; original ordinary healing/derived damage and other unknowns stay. E2 event clock, native attachment/composition and recipient/adjacency remain unknown. S2 repeat is real bool, S3 levitate count is separate int; inactive keys are omitted.'
++        receipt['section77_input_scope']='Real manual enemy-weight QSpinBox0/3/4/100 and read-only E0/E1/E2/potential1/3 retain source threshold and coefficients. E0 S1 locked extra component has zero hits/timestamps/full-skill count without changing ordinary damage; selected E1/E2 conditional per-hit references remain. Separate genuine stage/enemy selections verify exact fixed roster identity massLevel3/4 overrides raw manual0/100 without claiming actual spawn/live weight/extra attack snapshot/native ordering/takeoff clock.'
++        receipt['section78_input_scope']='Genuine palsy QSpinBox0/1/10000 preserves declarations beforeE1; only three declared-count metadata values differ from complete same-condition/count0 output with zero effective locked-talent damage. Qualified positive declarations, elemental immunity and separate S3 overflow hits retain unknown actual times/snapshots. Read-only module/elite observations introduce no selectors or native qualification inference.'
++        receipt['section79_input_scope']='Readonly medical Amiya form/cultivation, actual S2 opening-count QSpinBox1/5/100, E0S1 zero effective own-regeneration events without an unplaced-source warning. Qualified S1 retains its existing regeneration reference; qualified S2 retains unknown actual strengthening/end/order/complete output even with zero friendly targets or empty hostile lifetime. INC-X49/50/stages remain genuine readonly previews. No HP0, account form unlock, or real-game recipient/clock proof is invented.'
++        receipt['section80_input_scope']='The same medical damage-conversion trait uses its original0.5 below INC-X qualification and explicit same-template0.6 override at E2L50/all3stages. Real readonly cultivation and existing friendly-count controls verify damage-dependent treatment after dealt damage, separate S1 range healing, accepted healing factor and S2 opening subtotal; zero recipient/window/lifetime retain mathematical exclusions. Actual S2 end/order/recipient and complete totals remain unverified; no new selector or trait stacking guess.'
++        receipt['sections77_80_final_checks_pending']=False
++        assert receipt['sections77_80_final_checks_pending'] is False,'Final77-80 source/schema are pending'
+ 
+         # Final visible screenshot scenario demonstrates the restored explanation.
+         train('char_298_susuro',{'elite':2,'level':60,'potential':1,'trust':100,'module_id':None,'module_level':0})
+@@ -1836,21 +2384,23 @@
+         assert window.damage_text.find('真实友方获取时钟未核验')
+         window.damage_text.ensureCursorVisible();app.processEvents()
+         checks.append({'scope':'actual_friendly_scope_text_scrolled_visible_for_screenshot','passed':True})
+-        screenshot=OUT/'wine-window-075.png'
++        screenshot=OUT/'wine-window-080.png'
+         assert window.grab().save(str(screenshot))
+-        receipt['window_screenshot']='wine-window-075.png'
++        receipt['window_screenshot']='wine-window-080.png'
+         assert not isolated.joinpath('chat').exists()
+         assert not window.auto.isChecked() and window.capture.target is None
+         assert not window.desktop.process
+         checks.append({'scope':'no_external_operations','game_captures':0,'chat_requests':0,'temporary_state':True})
+-        receipt['preserved_old_checks']=len(checks)-(supplemental_end-supplemental_start)-(new_end-new_start)-(latest_end-latest_start)-(current_end-current_start)
++        receipt['preserved_old_checks']=len(checks)-(supplemental_end-supplemental_start)-(new_end-new_start)-(latest_end-latest_start)-(current_end-current_start)-(next_end-next_start)
+         assert receipt['preserved_old_checks']==152,receipt['preserved_old_checks']
+-        receipt['preserved_full_060_checks']=len(checks)-(new_end-new_start)-(latest_end-latest_start)-(current_end-current_start)
++        receipt['preserved_full_060_checks']=len(checks)-(new_end-new_start)-(latest_end-latest_start)-(current_end-current_start)-(next_end-next_start)
+         assert receipt['preserved_full_060_checks']==231,receipt['preserved_full_060_checks']
+-        receipt['preserved_full_065_checks']=len(checks)-(latest_end-latest_start)-(current_end-current_start)
++        receipt['preserved_full_065_checks']=len(checks)-(latest_end-latest_start)-(current_end-current_start)-(next_end-next_start)
+         assert receipt['preserved_full_065_checks']==459,receipt['preserved_full_065_checks']
+-        receipt['preserved_full_070_checks']=len(checks)-(current_end-current_start)
++        receipt['preserved_full_070_checks']=len(checks)-(current_end-current_start)-(next_end-next_start)
+         assert receipt['preserved_full_070_checks']==841,receipt['preserved_full_070_checks']
++        receipt['preserved_full_075_checks']=len(checks)-(next_end-next_start)
++        assert receipt['preserved_full_075_checks']==1455,receipt['preserved_full_075_checks']
+         receipt['total_actual_checks']=len(checks)
+         window.close();app.processEvents();window=None
+     receipt['passed']=True
+@@ -1865,7 +2415,7 @@
+                 'skill':window.skill.currentData(),'visible_report_text':window.damage_text.toPlainText(),
+                 'technical_checkbox':window.damage_technical.isChecked(),
+                 'last_calculation':window.damage_result,'timing_text':window.timing_scenario.toPlainText()}
+-            failure_screenshot=OUT/'wine-ui-failure-075.png'
++            failure_screenshot=OUT/'wine-ui-failure-080.png'
+             if window.grab().save(str(failure_screenshot)):
+                 receipt['failure_screenshot']=failure_screenshot.name
+         except Exception as context_error:
+@@ -1878,6 +2428,6 @@
+     after=source_hashes();drift=[n for n in sorted(set(before)|set(after)) if before.get(n)!=after.get(n)]
+     receipt['source_sha256']=before;receipt['source_sha256_after']=after;receipt['source_drift']=drift
+     if drift:receipt['passed']=False;receipt['complete_ui_validation']=False
+-    (OUT/'wine-ui-075.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')
++    (OUT/'wine-ui-080.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')
+     print(json.dumps(receipt,ensure_ascii=False))
+     sys.exit(0 if receipt['passed'] else 1)

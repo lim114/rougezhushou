@@ -1,0 +1,31 @@
+{
+  "status": "read_only_control_design_reviewed_actual_080_execution_pending",
+  "existing_control_source_commit": "225cb66dc89143a3cd3a884bd6c62f47ed9d36bc",
+  "reviewer_new_public_api_calls": 0,
+  "gui_executed": false,
+  "wine_executed": false,
+  "tracked_edits": false,
+  "owner": "char_4202_haruka",
+  "controls": {
+    "bubble_bursts": {"type": "QSpinBox", "minimum": 0, "maximum": 10000, "default": 0, "active_skills": [1, 2, 3], "declared_at_lower_elite": true},
+    "haruka_repeat": {"type": "QCheckBox", "default": false, "active_skills": [2], "actual_cast_clock_verified": false},
+    "levitate_triggers": {"type": "QSpinBox", "minimum": 0, "maximum": 1000, "default": 0, "active_skills": [3], "actual_tick_or_refresh_clock_verified": false}
+  },
+  "skill_selector": {"E0": [1], "E1": [1, 2], "E2": [1, 2, 3]},
+  "cultivation_and_module": "Readonly QLabel public observation previews, not editable selectors",
+  "new_qualification_expectation": {
+    "pre_E2": "Retain declared positive bubble count. Absent 扶摇花火 creates zero talent and dependent S2 bubble-derived contribution, without making existing ordinary healing/body damage unknown.",
+    "E2": "Existing positive bubble conditional components/event clocks remain unknown; cultivation eligibility does not place events.",
+    "zero_window": "Actual output remains zero",
+    "enemy_lifetime_zero": "Does not cancel independent friendly healing"
+  },
+  "recommended_assertions": [
+    "Real widget types/ranges/visible active skills, typed value()/isChecked() and exact scenario serialization",
+    "Actual readonly cultivation labels and legal skill selector choices",
+    "Compare lower-elite positive bubble result with identical zero-count control, allowing declaration and exclusion note only",
+    "E2 conditional unknown clock fields remain None; no native attachment/composition assumption",
+    "S1/S3 omit haruka_repeat; S1/S2 omit levitate_triggers",
+    "Full temporary state/observations/options restoration in finally"
+  ],
+  "not_verified": ["080 runner", "actual Qt or Wine execution", "native Windows", "actual account cultivation", "burst/recipient/adjacency/levitation timing", "live game integration"]
+}

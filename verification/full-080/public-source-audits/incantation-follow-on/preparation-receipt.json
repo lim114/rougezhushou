@@ -1,0 +1,9 @@
+{
+  "status": "read_only_preparation_failure",
+  "attempt": 1,
+  "failure": "live root worktree engine changed while read-only Git HEAD inventory was prepared; equality assertion correctly rejected treating edited worktree as frozen HEAD",
+  "product_failure": false,
+  "api_calls": 0,
+  "resolution": "Inventory reads both catalog and engine only from the captured Git HEAD object. It does not claim live edited worktree identity.",
+  "original_script_sha256": "c51afca234a495798bedf851b5fdbfaba2a3255f15004415bc8c4a267f32de3b"
+}

@@ -1,0 +1,42 @@
+{
+  "status": "READONLY_DEFER_INSUFFICIENT_BINDING",
+  "repository_commit": "a52a4bf9217aee3c11617135b7fc9cc6c38fd0f2",
+  "supported_facts": [
+    "The six topics share exact first-recruitment elite-one ceiling wording.",
+    "The six original upgrade tables contain PHASE_1/common7/mastery0 and PHASE_2/common7/mastery3 rows.",
+    "Character common training, per-skill unlock and mastery training conditions are distinct static data; skill tables supply parameters for ten rank records.",
+    "The restored original gamedata_const matches its historic a550 receipt and does not add an account-to-run skill-rank binding."
+  ],
+  "not_proved": [
+    "How account-trained common rank 5..7 is used by an already-unlocked skill when the current run form is E0.",
+    "How the numeric upgrade table is applied with account rank, per-skill mastery and current run promotion state, including default, temporary, support and mode-specific recruitment.",
+    "Whether a skill-unlocked-in-run E1 character ever uses account mastery while unpromoted; no change is supported from the present sources."
+  ],
+  "missing_selectors_or_relations": [
+    {
+      "existing_selector": "roguelike_topic_table.details.<rogue_1..6>.detailConst.charUpgradeTable.<0|1>",
+      "missing_relation": "Version-bound consumer selecting this row and combining it with account common level/mastery and actual run elite/promotion state."
+    },
+    {
+      "existing_selector": "character_table.<char>.allSkillLvlup[*].unlockCond + skills[*].unlockCond/levelUpCostCond",
+      "missing_relation": "An explicit game/help contract relating account training availability to run skill use; ordinary training gates cannot provide this relation."
+    },
+    {
+      "existing_selector": "roguelike_topic_table.details.<topic>.battleLoadingTips[*].tip",
+      "missing_relation": "Exact official explanatory text naming retained common rank/mastery under the temporary run elite form; current wording gives only an elite ceiling."
+    }
+  ],
+  "restart_when": [
+    "An already available or separately authorized version-pinned official help excerpt explicitly states common-rank/mastery behavior for a restricted run form.",
+    "A readable public consumer with version provenance shows the precise row/account/run binding, including recruitment and promotion selection.",
+    "Separately authorized observational evidence records matching character/skill account common rank and mastery, current run phase and selected rank across E0/E1 and promotion; observations must distinguish ranks by actual display or parameter output."
+  ],
+  "recommendation": "Defer this mechanics item. Do not cancel, relax or add qualification gates from these source layers; no implementation section is justified now.",
+  "no_tracked_edits": true,
+  "no_network_download": true,
+  "no_private_state_or_native_reads": true,
+  "no_wine_or_gui": true,
+  "public_calculate_calls": 0,
+  "test_calls": 0,
+  "prior76_and74_sealed_untouched": true
+}
