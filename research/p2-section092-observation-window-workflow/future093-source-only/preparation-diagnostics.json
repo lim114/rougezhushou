@@ -1,0 +1,25 @@
+{
+  "kind": "read preparation only; no product failures or runtime validation",
+  "events": [
+    {
+      "problem": "Guessed nonexistent operator_observations.py in an initial bounded rg call",
+      "attempts": 1,
+      "exit_code": 2,
+      "recovery": "rg --files identified actual operator_summary.py; subsequent reads use that path."
+    },
+    {
+      "problem": "Guessed nonexistent config.py while locating OPERATOR_STATE literal",
+      "attempts": 1,
+      "exit_code": 2,
+      "recovery": "Used existing app.py literal only; no configuration/private files read."
+    },
+    {
+      "problem": "A sampling-script occurrence search and several combined reads exceeded output budgets",
+      "attempts": 1,
+      "recovery": "Stopped broad script scans, used exact named test files and AST ranges. Truncated output not treated as exhaustive evidence.",
+      "full_console_saved": false
+    }
+  ],
+  "same_unresolved_problem_three_attempts": false,
+  "earlier_negative093_packet_touched": false
+}

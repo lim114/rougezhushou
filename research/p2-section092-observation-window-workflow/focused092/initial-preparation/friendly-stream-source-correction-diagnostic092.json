@@ -1,0 +1,97 @@
+{
+  "format_version": 1,
+  "status": "SOURCE_ONLY_FRIENDLY_STREAM_ASSERTION_FRAMES_SCOPE_CORRECTED_RUNTIME_UNRUN",
+  "passed": true,
+  "original_pending": {
+    "source_path": "/workspace/.continuation/ui-092-focused-draft/wine-focused-window-092-before-friendly-stream-scope-correction.py",
+    "bytes": 23337,
+    "sha256": "54cec392f36e8bcb97b51dcc404ff8150f4c49a4011d3b3f63fc1fac72b2223b"
+  },
+  "corrected_pending": {
+    "source_path": "/workspace/.continuation/ui-092-focused-draft/wine-focused-window-092-pending.py",
+    "bytes": 23387,
+    "sha256": "87a0668c0f16171c4d4df7d0241b03065c27a989a977042740cafa22dc1da0d9"
+  },
+  "original_sealer": {
+    "source_path": "/workspace/.continuation/ui-092-focused-draft/seal_focused_window092-before-reviewer-role-metadata-correction.py",
+    "bytes": 9173,
+    "sha256": "ad5a120e5f5c3490add45774b800b5ac50ff3050d09ea0199fbb794729897cca"
+  },
+  "corrected_sealer": {
+    "source_path": "/workspace/.continuation/ui-092-focused-draft/seal_focused_window092.py",
+    "bytes": 9226,
+    "sha256": "cb48b8666d607080ec91c6ac63243401a6c9f2583b08b93b288e50e0c6ed9eaa"
+  },
+  "unchanged_plan": {
+    "source_path": "/workspace/.continuation/ui-092-focused-draft/focused-window-plan092.json",
+    "bytes": 6073,
+    "sha256": "8ea24df16b5deb781d06dc693d939ab0cc14271b500e1ab8dc743c09ad30aad9"
+  },
+  "source": {
+    "source_path": "/workspace/rougezhushou/rouge/timing.py",
+    "bytes": 27266,
+    "sha256": "ccbd40ab387c22e757f7c37ea04d311ee7f0a5b73565cab8c7bc92c923de5b7d"
+  },
+  "source_evidence": [
+    {
+      "boundary": "friendly child extends actual child.streams and returns actual stream",
+      "lines": [
+        210,
+        218
+      ],
+      "text": "if target_scope is not None and target_scope!=self.target_scope:\r\n            child=AttackTimeline(self.s,normal=self.normal,offset=self.offset/FPS,target_scope=target_scope)\r\n            stream=child.attacks(seconds,interval,speed,unit=unit,limit=limit,delay=delay,\r\n                start_delay=start_delay,ramp=ramp,attribute_speed=attribute_speed)\r\n            self.streams.extend(child.streams)\r\n            note='空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。'\r\n            if target_scope=='friendly' and note not in self.notes:\r\n                self.notes.append(note);self.target_scope_notes.append(note)\r\n            return stream"
+    },
+    {
+      "boundary": "continuous stream is returned; append only inside deployment_speed condition",
+      "lines": [
+        233,
+        260
+      ],
+      "text": "if self.mode=='continuous':\r\n            if deployment_speed:\r\n                times=[];starts=[];steps=[];now=ready\r\n                while now<duration and (limit is None or len(times)<limit):\r\n                    age=(self.offset+self.deployment_offset)/FPS+now\r\n                    bonus=sum(r['value'] for r in deployment_speed if age<r['duration'])\r\n                    current=effective_attack_speed(attribute_speed+bonus);step=interval*speed/current\r\n                    if now+step>duration+1e-9:break\r\n                    starts.append(now);steps.append(step);now+=step;times.append(now)\r\n            else:\r\n                count=max(0,math.floor((duration-ready)/interval+1e-9))\r\n                if limit is not None:count=min(count,limit)\r\n                times=[ready+(i+1)*interval for i in range(count)]\r\n                starts=[t-interval for t in times];steps=[interval]*len(times)\r\n            if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:\r\n                times=[];starts=[];steps=[]\r\n            stream={'start_frames':([frame_time(t) for t in starts] if deployment_speed else\r\n                [cadence(t)-cadence(interval) for t in times]),\r\n                'release_frames':[cadence(t) for t in times],'impact_frames':[cadence(t) for t in times],\r\n                'times_seconds':times,'interval_frames':cadence(interval),'interval_seconds':interval,\r\n                'known_animation':False,'resume_frame':frame_time(duration),'unit':unit or self.s['operator'],\r\n                'target_scope':self.target_scope}\r\n            if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:stream['resume_frame']=0\r\n            if deployment_speed:\r\n                stream.update(temporary_attack_speed=True,interval_frames_by_attack=[cadence(s) for s in steps],\r\n                    deployment_origin_seconds=(self.offset+self.deployment_offset)/FPS)\r\n                self.streams.append(stream)\r\n            return stream"
+    }
+  ],
+  "correction": {
+    "original_line": 253,
+    "old": "                    assert any(s['target_scope']=='friendly' for s in result['timing']['streams'])\n",
+    "new": "                    if row['mode']=='frames':\n                        assert any(s['target_scope']=='friendly' for s in result['timing']['streams'])\n",
+    "exact_reverse_recovers_original_body": true,
+    "AST_only_one_conditional_wrapper_changed": true,
+    "stream_presence_required_only_for_frames": true,
+    "positive_healing_total_damage_zero_and_unknown_friendly_clock_retained_in_both_modes": true,
+    "continuous_stream_not_fabricated": true,
+    "all_19_inputs_unchanged": true
+  },
+  "reviewer_role_metadata_correction": {
+    "authorization": "root explicitly approved preserving original sealer and correcting stale source080 formal attribution",
+    "replacement_count": 2,
+    "replacements": [
+      {
+        "old": "Sole independent source-only formal; root actual Wine once, then view actual two PNGs and archive receipt/native checkpoint. Preserve successful prefix if failure, same issue third failure deferred.",
+        "new": "Root-appointed final source-only reviewer pending; root actual Wine once after PASS, then view actual two PNGs and archive receipt/native checkpoint. Preserve successful prefix if failure, same issue third failure deferred."
+      },
+      {
+        "old": "source080 source-only,0project calls; root executes one Wine acceptance after PASS",
+        "new": "root-appointed final source-only reviewer pending,0project calls; root executes one Wine acceptance after PASS"
+      }
+    ],
+    "exact_reverse_recovers_original_sealer": true,
+    "no_runtime_or_source730_pendingstage_change": true,
+    "old_source080_preliminary_boundary_preserved": "Parent identifies old source080 as one preliminary source boundary only; no independent final review."
+  },
+  "previous_attempt": {
+    "provenance": "parent-carried continuation context; not a new observed product run",
+    "tool_boundary": "CreateProcess 409 environment_offline",
+    "process_created": false,
+    "correction_written": false,
+    "new_project_API_calls": 0,
+    "product_failure": false
+  },
+  "project_imports": 0,
+  "project_API_calls": 0,
+  "project_helper_calls": 0,
+  "formatter_calls": 0,
+  "test_calls": 0,
+  "Qt_calls": 0,
+  "Wine_calls": 0,
+  "runtime_validation": "root only, after actual source guard and independent final source review"
+}

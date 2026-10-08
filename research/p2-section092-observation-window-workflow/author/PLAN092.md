@@ -1,0 +1,15 @@
+第92节一个成组使用流程：观察窗口开关/长度与目标/时序声明改变后，计算刷新，伤害/治疗报告明确显示实际已计窗口长度（含0），并准确解释普通连续参考与逐帧区间范围。
+
+实际基线59961ec3d633ac91b01014fb06b357d45e5979f7 / p2-section-091，clean、730维护py/json哈希已核。实际app/report旧字节与已冻结prospective91完全一致。旧49/source33和四准备失败、第三次partial越界均保留原记录；本次重启来自root明确的新实际tag及已知路径/schema，不对旧猜测工具追加尝试。
+
+产品严格只有app.make_damage_tab的窗口两signal/文字和reporting.build_report既有观察输出的有效window_seconds行。默认40、原checkbox状态、原native读取、不重置隐藏值，calculate/update_operator/engine/estimate/timing/prepare/guards以及第91节其余改动保持。新report行使用已有模型时长，原positive平均guard不变；不得把0秒推成所有未知/未定位来源真实合计0，也不把超长窗口统一当截断或原生技能持续时间。
+
+运行前冻结4组有效source-qualified输入、两产品、patch、runner/codec及730inventory。最多baseline4+draft4=8 public entries，成功每result estimate/default/technical各一次，最多24external requests。实际format_estimate/format_report进入用同次profile记录，内部estimate委派不靠乘数估算；可能API内部准备/充能调用属于真实公开路径，不额外调helper。
+
+四组：银灰S3窗口0；古米S2有限治疗窗口0；凯尔希S3窗口6敌人生命周期0友方潜在治疗；古米S2窗口60超过原30。古米6秒在10秒准备段内，已在任何API前舍弃作为正治疗证明，并用合法凯尔希替换，不增加第五组。
+
+各成功保存完整typednative/input beforeafter/result及formatter后result、完整JSON、三文本和实际ledger，gzip保存decoded bytes/hash。缓存只由同次profile观察lru数据首次实际return，保存完整first/final树和每case相等；冷初始化明确记录，不声称没有缓存初始化或已测所有cache-hit调用。Caller和已有缓存内容不得改变。
+
+比较仅允许新增qualified报告damage/healing.window_seconds行；所有其它typednative树、数值/None/类型/时序/来源/旧行完全精确。三文本用已存报告的严格row去除与已存文本行配对核，不再次调用formatter；若无法无损闭合则保留失败并停止，不伪称文本精确。不重旧错误/83–89/commonrank/原49矩阵，不加镜像文本test。
+
+作者不执行Qt/Wine/app/真实.local。实际GUI/root额外验收由root负责，自动调用与explicit requests分开计；本包API不能冒充真实Qt。第三次同完整目标仍未完成即搁置，不按不同异常名重置尝试。Root sole tracked修改/独审/验收/存档。

@@ -1,0 +1,39 @@
+{
+  "format_version": 1,
+  "status": "BLIND_METADATA_LOOKUP_WORKFLOW_DEFERRED_AFTER_THREE_INCIDENTS; NO_PROJECT_CALLS_OR_TRACKED_WRITES",
+  "failures": [
+    {
+      "goal": "Inspect an agent's unfinished account-cache review output directory",
+      "command": "rg --files /workspace/.continuation/p2-account-cache-design093-independent-v1",
+      "exit_code": 2,
+      "reason": "Agent had not announced FINAL or created the proposed directory",
+      "failed_attempts": 1,
+      "continuation": "Wait for explicit FINAL and its actual paths; no repeated directory probe"
+    },
+    {
+      "goal": "Read the existing pending GUI plan",
+      "command": "sed -n '1,120p' /workspace/.continuation/ui-092-focused-draft/PLAN.json",
+      "exit_code": 2,
+      "reason": "Root guessed a filename instead of listing the existing files",
+      "failed_attempts": 1,
+      "resolution": "Listed actual draft files with rg --files, then read focused-window-plan092.json",
+      "actual_plan": "/workspace/.continuation/ui-092-focused-draft/focused-window-plan092.json"
+    },
+    {
+      "goal": "Inspect finalized account-cache review metadata",
+      "command": "cat guessed final-handoff.json and public-artifacts-manifest.json inside p2-account-cache-design093-independent-v1",
+      "exit_code": 1,
+      "reason": "Root again guessed metadata names instead of listing files",
+      "failed_attempts": 1,
+      "continuation": "Stopped all blind metadata-name lookup; enumerated actual files before any further metadata reads"
+    }
+  ],
+  "project_API_entries": 0,
+  "formatter_requests": 0,
+  "Qt_or_Wine_executions": 0,
+  "source_or_product_changes": 0,
+  "blind_metadata_lookup_incidents": 3,
+  "deferred_workflow": "Read agent artifacts using guessed conventional metadata filenames or probe proposed unfinished directories",
+  "restart_condition": "Explicit finalized handoff paths or rg --files actual enumeration must establish existing metadata names; only read those established paths",
+  "future_lookup_rule": "Read actual filenames from the explicit handoff or rg --files before reading; do not probe unfinished review artifacts"
+}

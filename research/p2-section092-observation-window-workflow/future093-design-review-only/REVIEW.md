@@ -1,0 +1,17 @@
+第93节账户观察缓存来源/设计独立审阅（仅资格）
+
+结论：SOURCE合格。冻结原design包含正确完整组目标，但若无额外规则，仍不能无歧义执行；DESIGN仅在本包 execution-contract.json 的具体约束下有条件合格，供根代理决定候选实现。尚无产品补丁或运行结果，22例全部保留为静态预测；本审阅不计第93节完成。
+
+核验：先列实际20个文件、读取manifest实际schema（schema_version/status/files；每项source_path/archive_path/bytes/sha256），随后逐项读取/hash。18件payload合计313840B均匹配；11件fixed-git与59961ec3d633ac91b01014fb06b357d45e5979f7实际Git blobs逐字节一致。manifest、handoff、design哈希在source-verification.json。仓库分支codex/p2-development、HEAD相符，本审阅0tracked writes；源包未修改。只运行标准库读取/hash/JSON/AST与只读Git，不执行collector，不导入/调用项目API、helper、formatter、tests、Qt、Wine、网络或私态。
+
+直接源码支持：app初始化112–113只处理读取/JSON异常，合法JSON的null/list/bool/number/text可进入operator_observations；769–778及807后的读取假定object。fields和ranks显式错类型并非缺失，与既有get(...,{})缺省不同。update_operator的phase索引/级别/时间、update_skill_options的rank索引、update_base_attack的属性调用和unsupported formatter都在calculate第一try1080之前。普通producer在operator_recognition348和visual_recognition126写id及scope=operator_profile；app868以新operator保留id，不能称正常producer漏id。test_ui_refresh233的scope=account是合法历史兼容输入。captured_at=None不能称time.localtime抛错：该API接受当前时间；后续863的数字比较会失败并可能误显新鲜时间。
+
+原设计需要闭合且本合同明确的风险：全盘保护不能仅懒校验当前行，否则另一个坏id未浏览时普通save就会重写原件；损坏全文件旗标本轮不能随某id恢复清掉。scope=run来自账户文件会触发run_confirmed_fields索引与char-buff/recruitment分支，formatter还无条件展示advanced/emergency身份，必须限制账户视图的运行事实来源。formatter读取invalid_fields/invalid_skill_ranks/missing_fields，若只验fields/ranks，早返回仍可抛错。非法数值不能等calculate try兜底。坏record以空safe底座隔离，后续真新观察仅重建其提供字段；原坏字段不参与合并，未重新读取部分持续使用未知/预览。
+
+最小改动：仅app账户cache边界和可选窄helper。先只读加载及全record筛查，保留可用记录；身份、活跃容器或叶值不合格按record隔离并给具体字段未知说明。timestamp缺失允许原0缺省，显式错误不以当前时间修复；数字范围依据实际平台显示能力，不造新epoch门槛。保留account/operator_profile、缺省fields/ranks/时间、未知ignored keys及source值；module_id=None及既有ignored falsy aliases下module_level原样忽略，不改公开APIaliases/order或数学。已被消费者忽略的值不因新全局schema而变错误。只检查活跃消费安全；不扩成账户/本局全域强制迁移。
+
+界面：在training_status各原分支最终赋值之后保留简洁来源说明或用稳定现有位置；overview/no-skill/unsupported也要可见。区分本id账户不可用、原文件保留与本轮新观察只在内存，不能把真实RunState已确认字段标成未知。不重建Qt、不清空本局，沿原选择/刷新/重算恢复。全盘损坏旗标下跳过mkdir/tmp/write/replace；普通clean/missing临时公开文件仍按旧次序正常保存。
+
+未运行的验收：来源22例并无PASS；未来必须用临时公开夹具完整核对坏root、坏record、身份/时间、坏活跃leaf和merge metadata，补混合好坏/未浏览坏id、formatter metadata与foreign-run控制。合法defaults/aliases、旧/等时/新观察完整输出、good记录、原盘字节以及RunState内存/文件均需前后保存。根代理独占真正MainWindow/Wine、相关回归与完整运行产物；timing/relic JSON是既有正确行为的兼容控制，不制造新解析缺陷。旧同目标三次仍不完整应保留defer及恢复条件，不以本SOURCE/DESIGN资格重记完成或盲重试。
+
+读取诊断：首次合并输出超过总体显示预算，随后按窄范围重读实际app/producer/summary/cases与相关控制，没有把截断输出当作完整证据。此为工具输出整理，不是产品运行失败或旧目标新增重试。对原source作者直接询问的回复摘要见author-clarifications.json；执行细节选择与新增控制是独审要求，不冒充原始机制证据。

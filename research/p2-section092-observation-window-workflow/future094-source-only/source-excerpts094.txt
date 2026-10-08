@@ -1,0 +1,562 @@
+FILE rouge/app.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 69-75
+69: def number(value=0, maximum=100000, decimals=2):
+70:     control = QDoubleSpinBox()
+71:     control.setRange(0, maximum)
+72:     control.setDecimals(decimals)
+73:     control.setValue(value)
+74:     return control
+75: 
+
+FILE rouge/app.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 559-594
+559:         # Kept as an internal compatibility value; the visible result includes effects.
+560:         self.attack.hide()
+561:         self.deployment_elapsed=number(0,3600,2)
+562:         form.addRow('预计在场时间（秒，影响银灰天赋）',self.deployment_elapsed)
+563:         self.healing_targets=QSpinBox()
+564:         self.healing_targets.setRange(0,100);self.healing_targets.setValue(1)
+565:         form.addRow('满额受疗目标数（当前技能）',self.healing_targets)
+566:         self.continuous_attacks=QCheckBox('持续进行普攻以回复技力')
+567:         self.continuous_attacks.setChecked(True)
+568:         self.continuous_attacks.setToolTip('声明估算时是否持续普攻；自然回复技能也可能通过适用的天赋或藏品使用此条件。显示此项不表示必有额外技力。未核验的技力来源仅作资料参考，未知回转保持未知。')
+569:         self.continuous_attacks.toggled.connect(lambda:self.calculate())
+570:         form.addRow('普攻回技力条件',self.continuous_attacks)
+571:         self.defense = number(0,100000,0)
+572:         self.target_stage=QComboBox()
+573:         self.target_stage_choices=BranchChoice(self.target_stage,
+574:             stage_groups({sid:s for sid,s in catalog()['stages'].items() if sid in stage_previews()}),
+575:             overview_label='总览（全部关卡）',placeholder='手动目标测试')
+576:         self.target_enemy=QComboBox();self.target_enemy.addItem('选择关卡候选敌人',None)
+577:         self.target_enemy_choices=BranchChoice(self.target_enemy,[],overview_label='总览（当前关卡）',
+578:             placeholder='选择关卡候选敌人')
+579:         form.addRow('层数 / 目标关卡',self.target_stage_choices)
+580:         form.addRow('档次 / 目标敌人',self.target_enemy_choices)
+581:         self.target_enemy_picture=SubjectPicture();form.addRow(self.target_enemy_picture)
+582:         form.setRowVisible(self.target_enemy_picture,False)
+583:         self.target_stage.currentIndexChanged.connect(self.update_target_enemies)
+584:         self.target_enemy.currentIndexChanged.connect(self.update_enemy_context)
+585:         self.orb_mode=QComboBox()
+586:         self.orb_mode.addItem('阶段/来源列未确认；仅显示未减伤参考','unknown')
+587:         self.orb_mode.addItem('全程行动模式；所有来源均在目标占据列内','active_same_column')
+588:         self.orb_mode.addItem('全程行动模式；所有来源均在目标占据列外','active_other_column')
+589:         form.addRow('源阶方情景（测试）',self.orb_mode)
+590:         form.setRowVisible(self.orb_mode,False)
+591:         self.orb_mode.currentIndexChanged.connect(lambda:self.calculate() if hasattr(self,'raw_damage') else None)
+592:         form.addRow('手动目标防御（测试）',self.defense)
+593:         self.resistance = number(0,100,1)
+594:         form.addRow('手动目标法抗 %（测试）',self.resistance)
+
+FILE rouge/app.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 634-681
+634:         self.target_buff_test.toggled.connect(lambda:self.calculate())
+635:         self.target_buff_list.itemChanged.connect(lambda:self.calculate())
+636:         self.cooperative = QCheckBox('协同攻击持续覆盖同一目标')
+637:         form.addRow('银灰 S3',self.cooperative)
+638:         self.fragile = QCheckBox('全程计该技能脆弱（不勾选则全程未计）')
+639:         self.fragile.setChecked(True)
+640:         form.addRow('银灰 S3',self.fragile)
+641:         self.charge_count = QSpinBox()
+642:         self.charge_count.setRange(0,100)
+643:         form.addRow('机械师 S3 命中冲锋次数',self.charge_count)
+644:         self.shield_breaks = QSpinBox()
+645:         self.shield_breaks.setRange(0,100)
+646:         form.addRow('机械师 S2 本次实际/预计总破屏次数',self.shield_breaks)
+647:         self.shield_breaks.setToolTip('本体与结构性原理的爆炸中，命中当前目标的总次数。用于条件估算，不自动推断弹药消耗。')
+648:         self.shield_duration_known=QCheckBox('指定本次技能结束时间（含手动停止）')
+649:         self.shield_duration=number(30,3600,2)
+650:         self.shield_duration.setMinimum(.01)
+651:         self.shield_duration.setEnabled(False)
+652:         self.shield_duration_known.toggled.connect(self.shield_duration.setEnabled)
+653:         form.addRow(self.shield_duration_known,self.shield_duration)
+654:         self.activation_count = QSpinBox()
+655:         self.activation_count.setRange(0,100)
+656:         self.activation_count.setValue(1)
+657:         form.addRow('银灰 S2 本体施放次数',self.activation_count)
+658:         self.companion_attack = number(1000,100000,0)
+659:         form.addRow('银灰 S2 受益者实际攻击',self.companion_attack)
+660:         self.stacks = QSpinBox()
+661:         self.stacks.setRange(0,2)
+662:         form.addRow('银灰 S2 部署触发叠层',self.stacks)
+663:         self.model_option_widgets=[]
+664:         for operator,entries in OPTIONS.items():
+665:             for key,label,default,maximum,skills in entries:
+666:                 if key=='healing_targets':continue
+667:                 if isinstance(default,bool):
+668:                     widget=QCheckBox(label);widget.setChecked(default)
+669:                     widget.toggled.connect(lambda:self.calculate())
+670:                 elif isinstance(default,int):
+671:                     widget=QSpinBox();widget.setRange(0,maximum);widget.setValue(default)
+672:                     if key=='amiya_hit_targets':widget.setMinimum(1)
+673:                     widget.valueChanged.connect(lambda:self.calculate())
+674:                 else:
+675:                     widget=number(default,maximum,2)
+676:                     widget.valueChanged.connect(lambda:self.calculate())
+677:                 form.addRow(label,widget)
+678:                 form.setRowVisible(widget,False)
+679:                 self.model_option_widgets.append((operator,key,skills,widget))
+680:         columns.addLayout(form,1)
+681:         relic_layout = QVBoxLayout()
+
+FILE rouge/app.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 709-721
+709:         calculate = QPushButton('计算属性与技能预估')
+710:         calculate.clicked.connect(self.calculate)
+711:         layout.addWidget(calculate)
+712:         self.damage_text = QPlainTextEdit()
+713:         self.damage_text.setReadOnly(True)
+714:         layout.addWidget(self.damage_text,1)
+715:         self.raw_damage=QCheckBox('显示结构化计算数据（调试）')
+716:         self.raw_damage.toggled.connect(self.render_damage)
+717:         layout.addWidget(self.raw_damage)
+718:         self.damage_technical=QCheckBox('显示技术资料（来源与原始字段说明）')
+719:         self.damage_technical.toggled.connect(self.render_damage);layout.addWidget(self.damage_technical)
+720:         label = QLabel('基础属性只读，只能调整等级进行模拟；精英、信赖、潜能、技能等级和模组来自读取。未确认时明确使用档案预览条件。回转和周期输出均为估计，模组条件机制/特训和部分藏品仍有缺失。')
+721:         label.setWordWrap(True)
+
+FILE rouge/app.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 755-769
+755:                     if e['id']==target.get('enemy_id') and e['level']==target.get('level')),None)
+756:         self.target_enemy_picture.set_subject('enemy',target.get('enemy_id'),
+757:             enemy['name']+' · '+ENEMY_TIERS.get(enemy['level_type'],'类别未确认') if enemy else '')
+758:         self.damage_form.setRowVisible(self.target_enemy_picture,bool(enemy))
+759:         if hasattr(self,'resistance'):
+760:             self.damage_form.setRowVisible(self.defense,not enemy)
+761:             self.damage_form.setRowVisible(self.resistance,not enemy)
+762:         key=(target.get('stage_id'),target.get('enemy_id'),target.get('level'))
+763:         if key!=self.displayed_enemy_context:
+764:             self.orb_mode.blockSignals(True);self.orb_mode.setCurrentIndex(0);self.orb_mode.blockSignals(False)
+765:             self.displayed_enemy_context=key
+766:         self.damage_form.setRowVisible(self.orb_mode,target.get('enemy_id')=='enemy_2148_shorbb')
+767:         if hasattr(self,'raw_damage'):self.calculate()
+768: 
+769:     def current_operator_state(self):
+
+FILE rouge/app.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 793-866
+793:     def update_operator(self,*,preserve_level=False):
+794:         if not hasattr(self,'attack'):
+795:             return
+796:         op = self.operator.currentData()
+797:         if op is None:
+798:             self.display_operator=None;self.skill_override=False;self.level_override=False
+799:             self.operator_picture.set_subject(None,None,'');self.level.setEnabled(False)
+800:             self.skill.blockSignals(True);self.skill.clear();self.skill.blockSignals(False)
+801:             for widget in (self.elite,self.trust,self.potential,self.module):widget.setText('未选择干员')
+802:             self.training_status.setText('总览只显示本局已确认招募的干员；可选职业分支进行局外预览。')
+803:             self.update_skill_options()
+804:             return
+805:         self.level.setEnabled(True)
+806:         state=self.current_operator_state()
+807:         fields=state.get('fields',{})
+808:         profile=operator_profiles()[op]
+809:         self.operator_picture.set_subject('operator',op,profile['name']+' · '+PROFESSIONS[profile['profession']])
+810:         elite=fields.get('elite',len(profile['phases'])-1)
+811:         maximum=profile['phases'][elite]['max_level']
+812:         if self.display_operator!=op:self.skill_override=False
+813:         self.display_operator=op
+814:         self.level.blockSignals(True)
+815:         self.level.setMaximum(maximum)
+816:         if not preserve_level:self.level.setValue(fields.get('level',maximum))
+817:         self.level.blockSignals(False)
+818:         self.level_override=preserve_level
+819:         previous=self.skill.currentData()
+820:         self.skill.blockSignals(True)
+821:         self.skill.clear()
+822:         choices=[i+1 for i,s in enumerate(profile['skills']) if s.get('unlock_elite',i)<=elite]
+823:         for skill in choices:
+824:             name = profile['skills'][skill-1]['levels'][-1]['name']
+825:             self.skill.addItem(skill_icon(profile['skills'][skill-1]['id']),f'S{skill} · {name}',skill)
+826:         preferred=fields.get('selected_skill',{'kaltsit':2,'silverash':3,'mechanist':1}.get(op,1))
+827:         if self.skill_override and previous in choices:preferred=previous
+828:         if preferred in choices:self.skill.setCurrentIndex(choices.index(preferred))
+829:         self.skill.blockSignals(False)
+830:         self.elite.setText(f'精英 {fields["elite"]}' if 'elite' in fields else f'未确认（档案预览：精英 {elite}）')
+831:         self.trust.setText(f'{fields.get("trust_display",fields.get("trust"))}%（读取）' if 'trust' in fields else '未确认（档案预览：满信赖加成）')
+832:         self.potential.setText(str(fields['potential']) if 'potential' in fields else '未确认（档案预览：潜能 1）')
+833:         if 'module_id' not in fields:self.module.setText('未确认（档案预览：未计模组）')
+834:         elif fields['module_id'] is None:self.module.setText('未装备模组' if profile['modules'] else '此数据档案无可装备模组')
+835:         else:
+836:             module=next((m for m in profile['modules'] if m['id']==fields['module_id']),None)
+837:             self.module.setText(f'{module["name"] if module else "未知模组"} · 阶段 {fields.get("module_level","未确认")}')
+838:         stamp=time.strftime('%H:%M:%S',time.localtime(state.get('captured_at',0))) if state else '尚未读取'
+839:         if state.get('scope')=='run':
+840:             confirmed=set(state['run_confirmed_fields'])
+841:             for key,widget in [('elite',self.elite),('trust',self.trust),('potential',self.potential),('module_id',self.module)]:
+842:                 if key in fields and key not in confirmed:widget.setText(widget.text()+'（账号档案参考，本局未确认）')
+843:             self.training_status.setText('使用本局已确认培养记录，最后读取：'+stamp+'；切页后保留。缺失项使用标注的账号参考/预览条件。')
+844:             if state.get('recruitment_kind')=='emergency_hire':
+845:                 self.training_status.setText(self.training_status.text()+' 来源：应急雇佣，仅一次作战。')
+846:         else:self.training_status.setText('档案最后读取：'+stamp+'；本局实际培养尚待核对。未确认字段使用明确标注的预览条件。')
+847:         self.update_base_attack()
+848:         self.update_skill_options()
+849:         if hasattr(self,'raw_damage'):self.calculate()
+850: 
+851:     def level_changed(self):
+852:         self.level_override=True
+853:         self.update_base_attack()
+854:         self.update_skill_options()
+855: 
+856:     def skill_changed(self):
+857:         self.skill_override=True
+858:         self.update_skill_options()
+859: 
+860:     def apply_operator_observation(self,operator,captured_at):
+861:         op=operator['id']
+862:         saved=self.operator_observations.get(op,{})
+863:         if captured_at<saved.get('captured_at',0):return
+864:         fields={**saved.get('fields',{}),**operator['fields']}
+865:         ranks={**{str(k):v for k,v in saved.get('skill_ranks',{}).items()},
+866:                **{str(k):v for k,v in operator.get('skill_ranks',{}).items()}}
+
+FILE rouge/app.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 952-1002
+952:         if not hasattr(self,'cooperative'):
+953:             return
+954:         op,skill = self.operator.currentData(), self.skill.currentData()
+955:         profile=operator_profiles().get(op) or {'skills':[]}
+956:         current=profile['skills'][skill-1]['levels'][self.skill_rank_value()-1] if skill else {}
+957:         self.skill_picture.set_subject('skill',profile['skills'][skill-1]['id'],current['name']) if skill else self.skill_picture.set_subject(None,None,'')
+958:         from .reporting import has_healing
+959:         implemented=op in catalog()['operators']
+960:         healer=implemented and has_healing(op,skill)
+961:         conditions=[(self.deployment_elapsed,op=='silverash' and self.training_conditions()['elite']==2),
+962:                     (self.healing_targets,healer),
+963:                     (self.continuous_attacks,implemented and current.get('sp_type') in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME')),
+964:                     (self.cooperative,op=='silverash' and skill==3),
+965:                     (self.fragile,op=='silverash' and skill==3),
+966:                     (self.charge_count,op=='mechanist' and skill==3),
+967:                     (self.shield_breaks,op=='mechanist' and skill==2),
+968:                     (self.shield_duration,op=='mechanist' and skill==2),
+969:                     *[(w,op=='silverash' and skill==2) for w in (self.activation_count,self.companion_attack,self.stacks)]]
+970:         for widget,visible in conditions:self.damage_form.setRowVisible(widget,visible)
+971:         for owner,key,skills,widget in self.model_option_widgets:
+972:             self.damage_form.setRowVisible(widget,owner==op and skill in skills)
+973:             if owner==op=='char_110_deepcl' and key=='summon_count':
+974:                 from .summons import token_concurrent_limit
+975:                 cap=token_concurrent_limit(profile,{'operator':op,**self.training_conditions()},'token_10001_deepcl_tentac')
+976:                 widget.blockSignals(True)
+977:                 widget.setMaximum(cap if cap is not None else 4)
+978:                 widget.blockSignals(False)
+979:                 widget.setToolTip(f'当前培养/模组的触手在场上限：{cap if cap is not None else "未核验"}；仅作局外数量假设，仍受关卡部署位和库存约束。')
+980:         self.healing_targets.blockSignals(True)
+981:         if op=='char_4202_haruka' and skill:
+982:             from .haruka_healing_reference import conditional_input_limit
+983:             limit=conditional_input_limit(profile,{'operator':op,**self.training_conditions(),
+984:                 'skill_rank':self.skill_rank_value()},current)
+985:             tooltip='按当前培养和原表特性/技能参数声明满额潜在受疗数；实际友方获取未核验。BLS-Y基础人数与当前S2增加人数的组合仅列条件参考，额外份额不计实际合计。'
+986:         else:
+987:             limit=100 if (op=='char_1037_amiya3' and skill==1) or (op=='kaltsit' and skill==2) else (
+988:                 2 if (op=='char_2025_shu' and skill==2) or (op=='kaltsit' and skill==3) else 1)
+989:             tooltip=''
+990:         self.healing_targets.setMaximum(limit)
+991:         self.healing_targets.setToolTip(tooltip)
+992:         self.healing_targets.blockSignals(False)
+993:         known=self.current_operator_state().get('skill_ranks',{})
+994:         if skill is None:
+995:             self.rank.setText('无可用技能')
+996:             if hasattr(self,'raw_damage'):self.calculate()
+997:             return
+998:         rank=self.skill_rank_value()
+999:         self.rank.setText((f'等级 {rank}' if rank<=7 else f'专精 {rank-7}')+
+1000:                          ('（读取）' if str(skill) in known or skill in known else '（未确认，档案预览）'))
+1001:         if hasattr(self,'raw_damage'):self.calculate()
+1002: 
+
+FILE rouge/app.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 1008-1043
+1008:     def calculate(self):
+1009:         self.damage_result=None
+1010:         if hasattr(self,'relic_context'):self.damage_form.setRowVisible(self.relic_context,False)
+1011:         op=self.operator.currentData()
+1012:         self.sync_animation_references(op,self.skill.currentData())
+1013:         if hasattr(self,'target_buff_list'):
+1014:             self.sync_target_buffs(op)
+1015:         if op is None:
+1016:             self.show_damage_text('本局总览暂无已确认招募干员。请选择职业分支进行局外预览。')
+1017:             return
+1018:         if op not in catalog()['operators']:
+1019:             state=self.current_operator_state() or {'id':op,'fields':{},'skill_ranks':{}}
+1020:             text=format_operator_observation(state,self.training_conditions())
+1021:             if not state.get('fields'):text+='\n未读取培养状态，以上为明确的档案预览条件。'
+1022:             self.show_damage_text(text+'\n\n此干员可读取培养档案；技能伤害规则尚未实现，不将未知伤害显示为零。')
+1023:             return
+1024:         if self.skill.currentData() is None:
+1025:             self.show_damage_text('该精英阶段尚无已实现的技能，请选择已开放的计算档案。')
+1026:             return
+1027:         ids = [self.relic_list.item(i).data(Qt.ItemDataRole.UserRole) for i in range(self.relic_list.count())
+1028:                if self.relic_list.item(i).checkState() == Qt.CheckState.Checked]
+1029:         scenario = {'operator':self.operator.currentData(),'skill':self.skill.currentData(),
+1030:             **self.training_conditions(),'deployment_elapsed_seconds':self.deployment_elapsed.value(),
+1031:             'healing_targets':self.healing_targets.value(),'continuous_attacks':self.continuous_attacks.isChecked(),
+1032:             'skill_rank':self.skill_rank_value(),
+1033:             'enemy_defense':self.defense.value(),'enemy_resistance':self.resistance.value(),
+1034:             'cooperative':self.cooperative.isChecked(),'preexisting_fragile':self.fragile.isChecked(),
+1035:             'charge_count':self.charge_count.value(),'shield_break_count':self.shield_breaks.value(),
+1036:             'activation_count':self.activation_count.value(),'companion_attack':self.companion_attack.value(),
+1037:             'deployment_stacks':self.stacks.value(),'relic_ids':ids}
+1038:         for owner,key,skills,widget in self.model_option_widgets:
+1039:             if owner==op and self.skill.currentData() in skills:
+1040:                 scenario[key]=widget.isChecked() if isinstance(widget,QCheckBox) else widget.value()
+1041:         state=self.current_operator_state()
+1042:         scenario['recruitment_kind']=state.get('recruitment_kind') if state.get('scope')=='run' else None
+1043:         scenario['char_buff_ids']=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []
+
+FILE rouge/app.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 1070-1080
+1070:         scenario['run_config']=self.run.state.get('config',{})
+1071:         target=self.target_enemy.currentData()
+1072:         self.defense.setEnabled(target is None);self.resistance.setEnabled(target is None)
+1073:         if target:
+1074:             scenario['target_enemy']=dict(target)
+1075:             if target['enemy_id']=='enemy_2148_shorbb':scenario['target_enemy']['orb_mode']=self.orb_mode.currentData()
+1076:         if self.limit_window.isChecked():
+1077:             scenario['window_seconds'] = self.window_seconds.value()
+1078:         if self.operator.currentData()=='mechanist' and self.skill.currentData()==2 and self.shield_duration_known.isChecked():
+1079:             scenario['skill_duration_seconds']=self.shield_duration.value()
+1080:         try:
+
+FILE rouge/app.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 1151-1160
+1151:                     if widget.currentData() is not None:
+1152:                         scenario.setdefault('timing',{})[field]=widget.currentData()
+1153:             result = calculate_damage(scenario)
+1154:             apply_relic_history_notice(scenario,result)
+1155:             if self.target_buff_test.isChecked():
+1156:                 result['estimate']['notes'].insert(0,'当前启用个人强化测试；测试选项不代表从本局画面读取到的强化，也不写入记忆。')
+1157:             self.damage_result = {'scenario':scenario,'result':result}
+1158:             self.render_damage()
+1159:         except Exception as error:
+1160:             self.damage_result=None
+
+FILE rouge/app.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 1209-1223
+1209:     def render_damage(self):
+1210:         if not self.damage_result:return
+1211:         if self.raw_damage.isChecked():
+1212:             self.show_damage_text(json.dumps(self.damage_result,ensure_ascii=False,indent=2))
+1213:         else:self.show_damage_text(format_report(self.damage_result['result'],technical=self.damage_technical.isChecked()))
+1214: 
+1215:     def show_damage_text(self,text):
+1216:         target=self.target_enemy.currentData() or {}
+1217:         key=(self.operator.currentData(),self.skill.currentData(),self.raw_damage.isChecked(),
+1218:              self.damage_technical.isChecked() if hasattr(self,'damage_technical') else False,
+1219:              self.target_stage.currentData(),target.get('enemy_id'),target.get('level'))
+1220:         replace_text(self.damage_text,text,preserve=self.damage_detail_key==key)
+1221:         self.damage_detail_key=key
+1222: 
+1223:     def make_chat_tab(self):
+
+FILE rouge/damage.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 38-49
+38:     for field in ('base_attack','enemy_defense','enemy_resistance','window_seconds','companion_attack'):
+39:         if field not in scenario:continue
+40:         value=float(scenario[field])
+41:         if not math.isfinite(value) or value<0 or (field=='enemy_resistance' and value>100):
+42:             raise ValueError(f'{field} 需要有限非负数；法抗范围为 0–100。')
+43:         scenario[field]=value
+44:     for field in ('skill_rank','activation_count','deployment_stacks','shield_break_count','charge_count'):
+45:         if field not in scenario:continue
+46:         value=float(scenario[field])
+47:         if not math.isfinite(value) or not value.is_integer() or value<0 or (field=='deployment_stacks' and value>2):
+48:             raise ValueError(f'{field} 需要非负整数；部署触发叠层最多为 2。')
+49:         scenario[field]=int(value)
+
+FILE rouge/damage.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 147-174
+147:         damage = max(raw - scenario.get('enemy_defense', 0), raw * .05) * taken('physical')
+148:         own_count = int(scenario.get('activation_count', 1))
+149:         components = [{'name': '本体技能触发', 'hits': 0 if empty_enemy else own_count, 'damage_type': 'physical', 'per_hit': damage, 'total': 0 if empty_enemy else damage * own_count}]
+150:         stacks = int(scenario.get('deployment_stacks', 0))
+151:         if stacks:
+152:             recipient = float(scenario['companion_attack']) * bb['atk_scale']
+153:             hit = max(recipient - scenario.get('enemy_defense', 0), recipient * .05) * taken('physical')
+154:             components.append({'name': '受益干员部署触发', 'hits': 0 if empty_enemy else stacks, 'damage_type': 'physical', 'per_hit': hit, 'total': 0 if empty_enemy else hit * stacks})
+155:         return {'attack': attack, 'total_damage': sum(c['total'] for c in components), 'components': components, 'inapplicable_relics': inapplicable, **status}
+156:     if shield:
+157:         count = int(scenario.get('shield_break_count', 0))
+158:         if empty_enemy:count=0
+159:         raw = attack * bb['atk_scale']
+160:         damage = max(raw * (1 - scenario.get('enemy_resistance', 0) / 100), raw * .05) * taken('magic')
+161:         return {'attack': attack, 'per_hit': damage, 'total_damage': damage * count,
+162:                 'hits': count, 'damage_type': 'magic', 'inapplicable_relics': inapplicable, **status}
+163:     if bombard:
+164:         events=attack_events(min(float(scenario.get('window_seconds', skill_profile['duration'])), skill_profile['duration']))
+165:         hits=len(events['times_seconds'])
+166:         per_hit = max(attack * bb['attack@atk_scale'] * (1 - scenario.get('enemy_resistance', 0) / 100), attack * bb['attack@atk_scale'] * .05)
+167:         charge = max(attack * bb['atk_scale'] - scenario.get('enemy_defense', 0), attack * bb['atk_scale'] * .05)
+168:         per_hit *= taken('magic')
+169:         charge *= taken('physical')
+170:         count = int(scenario.get('charge_count', 0))
+171:         if count and scenario.get('window_seconds') == 0:
+172:             raise ValueError('零长度观察窗口不能声明冲锋命中。')
+173:         components = [{'name': '轰击', 'damage_type': 'magic', 'hits': hits, 'per_hit': per_hit, 'total': hits * per_hit,'times_seconds':events['times_seconds']},
+174:                       {'name': '结构性原理冲锋', 'damage_type': 'physical', 'hits': count, 'per_hit': charge, 'total': count * charge}]
+
+FILE rouge/damage.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 181-197
+181:         return {'attack': attack, 'total_damage': sum(c['total'] for c in components), 'components': components, 'inapplicable_relics': inapplicable, **status}
+182:     if silver:
+183:         per_hit = max(attack * bb['bird_atk_scale'] - scenario.get('enemy_defense', 0), attack * bb['bird_atk_scale'] * .05)
+184:         per_hit *= taken('physical')
+185:         per_hit *= bb['damage_scale'] if scenario.get('preexisting_fragile', False) else 1
+186:         duration = min(float(scenario.get('window_seconds', skill_profile['duration'])), skill_profile['duration'])
+187:         stream=attack_events(duration);events=stream['times_seconds'];hits=len(events)
+188:         components = [{'name': '本体丹增', 'damage_type':'physical','hits': hits, 'per_hit': per_hit, 'total': hits * per_hit,'times_seconds':events}]
+189:         if any(r['kind']=='temporary_attack' for r in scenario.get('_relic_rules',[])):
+190:             amounts=timed_damage(attack*bb['bird_atk_scale'],bb['bird_atk_scale'],'physical',stream,
+191:                 bb['damage_scale'] if scenario.get('preexisting_fragile',False) else 1)
+192:             components[0].update(event_amounts=amounts,total=sum(amounts),per_hit=sum(amounts)/len(amounts) if amounts else per_hit)
+193:             status['timing']['notes'].append('短时攻击按出手帧取值后逐击减伤；实际丹增/协同触发取值模板仍需校准。')
+194:         if scenario.get('cooperative'):
+195:             components.append({**components[0],'name':'协同丹增'})
+196:         return {'attack': attack, 'per_hit': components[0]['per_hit'], 'total_damage': sum(c['total'] for c in components), 'damage_type': 'physical', 'components': components, 'inapplicable_relics': inapplicable, **status}
+197:     raw = attack * bb['attack@atk_scale']
+
+FILE rouge/damage.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 250-271
+250:     if profile['skills'][skill-1].get('unlock_elite',skill-1)>elite or (elite<2 and rank>7):
+251:         raise ValueError('当前精英阶段尚未开放所选技能或专精。')
+252:     if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('preexisting_fragile'),str):
+253:         raise ValueError('preexisting_fragile不接受字符串，请提供明确的布尔条件。')
+254:     if scenario['operator']=='silverash' and skill==3 and isinstance(scenario.get('cooperative'),str):
+255:         raise ValueError('cooperative不接受字符串，请提供明确的布尔条件。')
+256:     # Preserve raw count types before either engine converts them to numbers.
+257:     from .reporting import has_healing
+258:     active_counts=[]
+259:     if has_healing(scenario['operator'],skill):
+260:         active_counts.append(('healing_targets','治疗目标数需要为 0–100 的整数。'))
+261:     if scenario['operator']=='char_1037_amiya3' and skill==2:
+262:         active_counts.append(('amiya_hit_targets','amiya_hit_targets需要1到100之间的整数。'))
+263:     if scenario['operator']=='char_4087_ines':
+264:         active_counts.append(('stolen_enemy_count','stolen_enemy_count需要范围内的有限非负整数。'))
+265:     for field,error in active_counts:
+266:         if isinstance(scenario.get(field),bool):raise ValueError(error)
+267:     declared_counts={('mechanist',2):('shield_break_count',),
+268:                      ('mechanist',3):('charge_count',),
+269:                      ('silverash',2):('activation_count','deployment_stacks')}
+270:     for field in declared_counts.get((scenario['operator'],skill),()):
+271:         if isinstance(scenario.get(field),bool):
+
+FILE rouge/estimate.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 17-26
+17:     def total(kind):return sum(e['value'] for e in effects if e['kind']==kind)
+18:     def nonnegative(field,default):
+19:         value=float(scenario.get(field,default))
+20:         if not math.isfinite(value) or value<0:raise ValueError(f'{field} 需要有限非负数。')
+21:         return value
+22:     elapsed=nonnegative('deployment_elapsed_seconds',0)
+23:     extra_sp=nonnegative('initial_sp_bonus',0)
+24:     extra_rate=nonnegative('sp_recovery_bonus',0)
+25:     healing_targets=nonnegative('healing_targets',1)
+26:     if not healing_targets.is_integer() or healing_targets>100:
+
+FILE rouge/estimate.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 42-47
+42:             hp_bonus+=bb['max_hp'];defense_bonus+=bb['def'];block_bonus+=bb['block_cnt']
+43:             talent_notes.append(talent['name'])
+44:         if operator=='silverash' and talent['name']=='开放性开局':
+45:             talent_sp+=bb['sp'];redeploy_scale*=bb['respawn_time']
+46:             talent_notes.append('开放性开局：自身初始技力及下次再部署时间')
+47:         if operator=='silverash' and talent['name']=='雪境先驱':
+
+FILE rouge/estimate.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 117-140
+117:             duration=None
+118:             damage=None
+119:             if 'skill_duration_seconds' in scenario:
+120:                 duration=nonnegative('skill_duration_seconds',0)
+121:                 if duration<=0:raise ValueError('指定技能持续时间需要大于 0 秒。')
+122:                 raw=full['attack']
+123:                 hit=max(raw-float(scenario.get('enemy_defense',0)),raw*.05)
+124:                 hit*=1+sum(e['value'] for e in effects if e['kind']=='damage_taken' and e.get('damage_type')=='physical')
+125:                 hit*=damage_factor(scenario,'physical')
+126:                 damage=full['total_damage']+math.floor(duration/full['interval_seconds']+1e-9)*hit
+127:                 if (scenario.get('timing_mode','frames')=='frames' or
+128:                         scenario.get('timing',{}).get('target_disappears_seconds')==0):
+129:                     timeline=AttackTimeline(scenario,normal=True)
+130:                     stream=timeline.attacks(duration,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])
+131:                     events=stream.get('emitted_times_seconds',stream['times_seconds'])
+132:                     damage=full['total_damage']+len(events)*hit
+133:                     full['components']=[{'name':'指定破屏爆炸','damage_type':'magic','total':full['total_damage']},
+134:                         {'name':'协防术式期间普通攻击','damage_type':'physical','total':len(events)*hit,'times_seconds':events}]
+135:                     full['timing']=timeline.output()
+136:                     result['timing']=timeline.output()
+137:                 notes.append('协防术式按指定时间结束（可手动停止），计入本体普攻和给定总破屏次数；不据此推断弹药耗尽时刻。')
+138:             else:
+139:                 notes.append('协防术式依赖本体/结构性原理屏障破碎与弹药消耗，单次完整技能总伤和持续时间未知。可指定本次技能结束时间进行条件估算；情景爆炸伤害另列。')
+140:         else:duration=full.get('execution_seconds',full.get('ammo_rounds',skill['values']['attack@trigger_time'])*full['interval_seconds'])
+
+FILE rouge/enemy_environment.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 90-106
+90:     if record['level_type'] not in ('NORMAL','ELITE','BOSS'):enemy['pending'].append('敌人类别未确认。')
+91:     if record['id']=='enemy_2148_shorbb':
+92:         rule=difficulty_rules()['orb_active'];mode=target.get('orb_mode','unknown')
+93:         if mode in rule['modes']:
+94:             factor=rule['modes'][mode]
+95:             enemy['type_factors']={'physical':factor,'magic':factor}
+96:             scenario['_enemy_type_factors']=enemy['type_factors']
+97:             enemy['steps'].append({'label':'源阶方全程行动模式；所有伤害来源均'+('在目标占据列内' if mode=='active_same_column' else '在目标占据列外'),
+98:                 'type_factors':enemy['type_factors'],'evidence':{k:rule[k] for k in ('source_url','verification','source_note')}})
+99:             resolution['notes'].append('源阶方使用明确选择的固定行动模式与统一来源列情景；未自动读取站位，不模拟激活、无敌、模式切换或混合来源列。')
+100:         elif mode=='unknown':
+101:             enemy['pending'].append('源阶方阶段和来源列未确认；当前数值仅为未套用自身减伤的参考，不是实际承伤估计。')
+102:         else:raise ValueError('源阶方行动情景无效。')
+103:     # Identity-derived state wins over stale manual relic or operator options.
+104:     scenario['enemy_defense']=stats['def'];scenario['enemy_resistance']=stats['magicResistance']
+105:     weight=stats.get('massLevel')
+106:     if isinstance(weight,(int,float)) and not isinstance(weight,bool) and math.isfinite(weight):
+
+FILE rouge/run_state.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 72-75
+72:     def calculation_resources(self):
+73:         from .relic_counter_semantics import reusable_resources
+74:         return reusable_resources(self.state)
+75: 
+
+FILE rouge/run_state.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 520-550
+520:     def inventory_status(self):
+521:         count=self.state['relic_count'];known=len(self.held_relic_ids())
+522:         tools=len(self.held_tool_ids())
+523:         complete=self.state['inventory_verified'] and count is not None and known+tools==count
+524:         return {'source':'run_capture','complete':complete,
+525:                 'recognized':known,'recognized_tools':tools,'total_badge_count':count,
+526:                 'expected_count':count-tools if complete else None if tools else count,'run_id':self.state['id'],
+527:                 'confirmed_at':self.state.get('inventory_confirmed_at')}
+528: 
+529:     def held_tool_ids(self):
+530:         return sorted(tid for tid,record in self.state['tactical_tools'].items() if record.get('held',True))
+531: 
+532:     def held_relic_ids(self):
+533:         return sorted(rid for rid,record in self.state['relics'].items() if record.get('held',True))
+534: 
+535:     def relic_history_context(self):
+536:         """Derive retained-growth uncertainty from this run's positive evidence.
+537: 
+538:         Loss removes current possession, but not already gained Hydra stats.
+539:         Neither history length nor map depth establishes their amount. This
+540:         projection never writes a new state field or repairs missing evidence.
+541:         """
+542:         state=self.state;rid='rogue_6_start_4'
+543:         context={'run_id':state['id'],'persistent_growth_unknowns':[]}
+544:         record=state['relics'].get(rid)
+545:         start=state.get('started_at');last=state.get('last_read')
+546:         if (not isinstance(record,dict) or type(record.get('held')) is not bool
+547:                 or any(type(at) not in (int,float) or not math.isfinite(at) for at in (start,last))
+548:                 or last<start):return context
+549:         events=[event for event in state.get('history',[]) if isinstance(event,dict)
+550:             and event.get('id')==rid and type(event.get('at')) in (int,float)
+
+FILE tests/test_ui_refresh_045.py FIXED 59961ec3d633ac91b01014fb06b357d45e5979f7 LINES 278-308
+278:     def test_run_updates_keep_manual_operator_skill_level_relic_filter_and_reading(self):
+279:         w = self.window
+280:         self.run_observe(elite=2, level=80, selected_skill=1)
+281:         w.select_operator('silverash')
+282:         w.skill.setCurrentIndex(w.skill.findData(2)); w.level.setValue(61)
+283:         w.relic_filter.setText('书'); w.relic_list.setCurrentRow(11)
+284:         before = select_and_scroll(w.damage_text); run_id = w.run.state['id']
+285:         self.run_observe(elite=2, level=90, selected_skill=3)
+286:         self.assertEqual(w.operator.currentData(), 'silverash')
+287:         self.assertEqual(w.skill.currentData(), 2); self.assertEqual(w.level.value(), 61)
+288:         self.assertEqual(w.relic_filter.text(), '书'); self.assertEqual(w.relic_list.currentRow(), 11)
+289:         self.assertEqual(reading(w.damage_text), before)
+290:         self.assertEqual(w.run.state['id'], run_id)
+291:         self.assertEqual(w.run.state['operators']['mechanist']['fields']['level'], 90)
+292:         self.assertTrue(w.run.state['history'])
+293: 
+294:     def test_current_operator_receives_new_stats_but_keeps_simulation_choices(self):
+295:         w = self.window
+296:         self.account(elite=2, level=80, potential=1, trust=0)
+297:         w.level.setValue(70); w.skill.setCurrentIndex(w.skill.findData(3))
+298:         before = w.attack.text()
+299:         self.account(elite=2, level=90, potential=3, trust=100, selected_skill=1)
+300:         self.assertNotEqual(w.attack.text(), before)
+301:         self.assertEqual(w.level.value(), 70); self.assertEqual(w.skill.currentData(), 3)
+302:         self.assertEqual(w.damage_result['scenario']['potential'], 3)
+303:         self.account(elite=1, level=80, selected_skill=1)
+304:         self.assertLessEqual(w.level.value(), w.level.maximum())
+305:         self.assertIn(w.skill.currentData(), (1,2))
+306: 
+307:     def test_enemy_refresh_keeps_selection_and_special_option_only_for_that_enemy(self):
+308:         w = self.window
+

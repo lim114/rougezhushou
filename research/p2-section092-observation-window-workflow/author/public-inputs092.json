@@ -1,0 +1,185 @@
+{
+  "format_version": 1,
+  "status": "EXACT_FOUR_RISKS_FROZEN_BEFORE_API",
+  "cases": [
+    {
+      "id": "damage-zero",
+      "input": {
+        "operator": "silverash",
+        "skill": 3,
+        "skill_rank": 10,
+        "elite": 2,
+        "level": 60,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "relic_ids": [],
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "healing_targets": 1,
+        "continuous_attacks": true,
+        "timing_mode": "frames",
+        "window_seconds": 0.0,
+        "timing": {}
+      }
+    },
+    {
+      "id": "finite-healing-zero",
+      "input": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "skill_rank": 10,
+        "elite": 2,
+        "level": 60,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "relic_ids": [],
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "healing_targets": 1,
+        "continuous_attacks": true,
+        "timing_mode": "frames",
+        "window_seconds": 0.0,
+        "timing": {}
+      }
+    },
+    {
+      "id": "friendly-healing-enemy-zero",
+      "input": {
+        "operator": "kaltsit",
+        "skill": 3,
+        "skill_rank": 10,
+        "elite": 2,
+        "level": 60,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "relic_ids": [],
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "healing_targets": 1,
+        "continuous_attacks": true,
+        "timing_mode": "frames",
+        "window_seconds": 6.0,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      }
+    },
+    {
+      "id": "finite-healing-long",
+      "input": {
+        "operator": "char_196_sunbr",
+        "skill": 2,
+        "skill_rank": 10,
+        "elite": 2,
+        "level": 60,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0,
+        "relic_ids": [],
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "healing_targets": 1,
+        "continuous_attacks": true,
+        "timing_mode": "frames",
+        "window_seconds": 60.0,
+        "timing": {}
+      }
+    }
+  ],
+  "max_public_API_entries": 8,
+  "external_formatter_requests_per_successful_result": 3,
+  "max_external_formatter_requests": 24,
+  "internal_entries": "Measured by actual profiler, not derived from requests",
+  "GUI_API_error_cases_added": false,
+  "source_qualification": [
+    {
+      "owner": "silverash",
+      "skill": 3,
+      "E2_max_level": 90,
+      "unlock_elite": 2,
+      "actual_rank10_level": {
+        "name": "变革已至",
+        "duration": 48.0,
+        "description": "攻击范围<@ba.vup>扩大</>并使敌人<$ba.invisible>隐匿</>失效，攻击对直线范围造成攻击力<@ba.vup>{bird_atk_scale:0%}</>的物理伤害和<@ba.vup>{damage_scale_display:0%}</>的<$ba.fragile>脆弱</>；立即获得<@ba.vup>{svash2_s_3[start_cost].cost}</>点后持续获得<@ba.vup>24</>点部署费用\\n<@ba.rem>首次开启时交换待部署区中费用最高（优先选择近卫/术师/狙击干员）与最低干员的基础部署费用</>\\n<@ba.rem>技能期间“风雪之眼”变为可部署</>",
+        "duration_type": "NONE",
+        "sp_type": "INCREASE_WITH_TIME",
+        "sp_cost": 55,
+        "initial_sp": 46,
+        "sp_increment": 1.0,
+        "max_charges": 1,
+        "values": {
+          "svash2_s_3[start_cost].cost": 9.0,
+          "svash2_s_3[cost].cost": 1.0,
+          "svash2_s_3[cost].interval": 2.0,
+          "change_cnt": 1.0,
+          "bird_atk_scale": 2.0,
+          "damage_scale": 1.3,
+          "cnt": 1.0,
+          "weak[limit]": 2.0,
+          "range_id": 0.0,
+          "damage_scale_display": 0.3,
+          "cost_reduce_max": 0.0
+        }
+      },
+      "actual_E2_frame_interval": 1.2,
+      "source_catalog_sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    },
+    {
+      "owner": "char_196_sunbr",
+      "skill": 2,
+      "E2_max_level": 70,
+      "unlock_elite": 1,
+      "actual_rank10_level": {
+        "name": "食粮烹制",
+        "duration": 30.0,
+        "description": "开始烹饪，<@ba.vdown>{disarm}</>秒内停止攻击敌人，防御力<@ba.vup>+{def:0%}</>\\n烹饪完成后专注于治疗附近的友方角色，攻击力<@ba.vup>+{atk:0%}</>",
+        "duration_type": "NONE",
+        "sp_type": "INCREASE_WITH_TIME",
+        "sp_cost": 30,
+        "initial_sp": 20,
+        "sp_increment": 1.0,
+        "max_charges": 1,
+        "values": {
+          "atk": 0.8,
+          "base_attack_time": 1.3,
+          "disarm": 10.0,
+          "def": 0.8
+        }
+      },
+      "actual_E2_frame_interval": 1.2,
+      "source_catalog_sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    },
+    {
+      "owner": "kaltsit",
+      "skill": 3,
+      "E2_max_level": 90,
+      "unlock_elite": 2,
+      "actual_rank10_level": {
+        "name": "破梏重生",
+        "duration": 35.0,
+        "description": "立刻获得战术锚点，攻击力<@ba.vup>+{atk:0%}</>，攻击间隔<@ba.vup>大幅缩小</>，额外治疗<@ba.vup>1</>个目标，部署战术锚点后，自身<$ba.addash>移动</>至该位置，并使攻击范围内最多<@ba.vup>2</>名友方干员可以部署至自身攻击范围的另一位置",
+        "duration_type": "NONE",
+        "sp_type": "INCREASE_WITH_TIME",
+        "sp_cost": 50,
+        "initial_sp": 35,
+        "sp_increment": 1.0,
+        "max_charges": 1,
+        "values": {
+          "atk": 1.5,
+          "base_attack_time": -1.55
+        }
+      },
+      "actual_E2_frame_interval": 2.85,
+      "source_catalog_sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    }
+  ],
+  "friendly_case_owner_change": "GummyS2 disarm10 makes window6 unsuitable positive consumption evidence; source-confirmed KaltsitS3 friendly path chosen, no fifth case/no native clock assertion",
+  "public_case_scope": "Existing current models and qualified report.window_seconds projection only; no raw aliases/old error mirror tests"
+}

@@ -1,0 +1,105 @@
+{
+  "legacy_52_request_rows": 52,
+  "section88_visibility_source_line": 3011,
+  "saved089_run_states": {
+    "ast_source_line": 3074,
+    "records": 5,
+    "keys": [
+      "saved_sequence",
+      "label",
+      "observed",
+      "observed_native",
+      "state",
+      "state_native",
+      "record_original_json_sha256",
+      "crew_observed_type",
+      "crew_stored_type",
+      "crew_stored_value",
+      "members",
+      "producer_is_saved_synthetic_public_RunState_test_input_not_native_OCR"
+    ],
+    "only_roster_owners": [
+      "char_151_myrtle",
+      "mechanist"
+    ],
+    "contains_damage_result_report_or_formatter_text": false
+  },
+  "saved089_expected_consumer_contract": {
+    "ast_source_line": 3075,
+    "records": 10,
+    "keys": [
+      "saved_sequence",
+      "saved_label",
+      "use_run_training",
+      "owner_read_back",
+      "roster_expected",
+      "member_flags_native",
+      "stored_crew_native",
+      "summary_crew_line_expected",
+      "current_state_source_expected",
+      "current_fields_expected",
+      "current_skill_ranks_expected",
+      "run_confirmed_fields_expected_if_run",
+      "training_conditions_expected_after_update_operator",
+      "skill_choice_numbers_expected",
+      "selected_skill_expected",
+      "skill_rank_expected",
+      "rank_label_expected",
+      "elite_label_expected",
+      "trust_label_expected",
+      "potential_label_expected",
+      "module_label_expected",
+      "levels_widget_max_expected",
+      "no_current_runstate_constructor_apply_or_game_observation_executed"
+    ],
+    "contains_damage_result_report_or_formatter_text": false
+  },
+  "saved089_dependency_path": {
+    "source_lines": "3083..3127",
+    "fact": "Assign saved temporary RunState state; refresh roster/summary; switch training; select mechanist and update_operator using current app. Current calculations/rendering may run automatically, while native current_state/training/roster/labels/runstate and no-constructor/apply-replay are asserted. It is not old damage result replay."
+  },
+  "old_result_formatter_behavior": {
+    "app_render_damage_lines": "1209..1213",
+    "estimate_format_lines": "247..250",
+    "fact": "Both render existing result.report through current format_report. They do not call build_report or migrate old notes/metrics. Existing old result does not gain91/92 fields merely by formatting."
+  },
+  "legacy_original_numeric_projection": {
+    "lines": "1014..1020 +3015",
+    "excludes": [
+      "result.report",
+      "estimate.notes"
+    ],
+    "includes": [
+      "root numeric totals/components/timing/references",
+      "estimate.training",
+      "estimate.base_stats",
+      "estimate.skill"
+    ],
+    "future_rule": "Keep exact projection assertions unless93/94/95 actual evidence proves a narrower approved numerical change;91notes and92report rows alone do not justify relaxing projection."
+  },
+  "legacy_same_current_call_guards": {
+    "lines": "3021..3028",
+    "fact": "Estimate/default current formats agree; actual widget uses that same current result in default/technical; formatter preserves full native current result and scenario. No historical text golden equality is asserted here."
+  },
+  "legacy_same_head_inactive_pairs": {
+    "lines": [
+      1986,
+      2103,
+      2336,
+      2385,
+      3033
+    ],
+    "fact": "Whole JSON equality compares two freshly computed current-head outcomes for inactive flags, not old saved full JSON. Preserve rather than globally strip qualifications."
+  },
+  "existing_Deepcolor_counts": {
+    "lines": "2018..2054",
+    "fact": "Old section63 retains typed declared counts/caps and no-rose fixed S1 rates. It does not assert old4200/1400 note text. Add qualified91text scope in new95group; do not label its text unchanged."
+  },
+  "excerpts": {
+    "projection": "def projection090(result):\n    keys=['attack','total_damage','components','attack_speed','base_attack_speed','interval_seconds','timing']\n    if 'total_healing' in result:keys.append('total_healing')\n    keys.extend(k for k in result if k.endswith('_reference'))\n    out={key:result[key] for key in dict.fromkeys(keys)}\n    out['estimate']={key:result['estimate'][key] for key in ('training','base_stats','skill')}\n    return out",
+    "same_call_text_native": "                assert strict_json(projection090(result090))==strict_json(row090['expected_public_projection']),row090['pair_id']\n                full_native090=native090(result090)\n                from rouge.estimate import format_estimate as estimate090\n                reports090={'estimate':estimate090(result090),'default':format_report(result090),\n                    'technical':format_report(result090,technical=True)}\n                pending_state090['reports']=reports090\n                assert reports090['estimate']==reports090['default']\n                assert window.damage_text.toPlainText()==reports090['default'].replace(chr(160),' ')\n                window.damage_technical.setChecked(True);app.processEvents()\n                assert window.damage_text.toPlainText()==reports090['technical'].replace(chr(160),' ')\n                window.damage_technical.setChecked(False);app.processEvents()\n                assert window.damage_text.toPlainText()==reports090['default'].replace(chr(160),' ')\n                assert native090(result090)==full_native090\n                assert native090(window.damage_result['scenario'])==raw_native_before090\n                pair090=row090['pair_id']\n                if row090['section']==86:\n                    if not row090['widget_checked']:anchors090[pair090]=_copy090.deepcopy(result090)\n                    elif row090['kind']=='hidden' or pair090=='qualification:mizuki-E1':\n                        assert strict_json(result090)==strict_json(anchors090[pair090])",
+    "saved089_actions": "                    window.operator_observations['mechanist']=_copy090.deepcopy(fixture89_090)\n                    window.operator_observations['char_151_myrtle']=_copy090.deepcopy(fixture89_090)\n                    window.run.state=_copy090.deepcopy(saved89_090['state'])\n                    replay_before090=native090(window.run.state)\n                    expected89_row090=expected89_contract090[(saved89_090['saved_sequence'],use89_090)]\n                    window.refresh_operator_overview()\n                    window.run_summary.setText(window.run.summary())\n                    window.use_run_training.setChecked(use89_090)\n                    window.skill_override=False;window.level_override=False;window.display_operator=None\n                    window.select_operator('mechanist');window.update_operator(preserve_level=False)",
+    "saved089_native_guards": "                    assert native090(window.current_operator_state())==native090(expected_state89_090)\n                    conditions89_090=window.training_conditions()\n                    expected_conditions89_090={key:expected_state89_090['fields'][key] for key in\n                        ('elite','level','trust','potential','module_id','module_level')}\n                    assert native090(conditions89_090)==native090(expected_conditions89_090)\n                    expected_skills89_090=[1] if expected_run89_090 else [1,2,3]\n                    assert [window.skill.itemData(i) for i in range(window.skill.count())]==expected_skills89_090\n                    assert window.skill.currentData()==1\n                    assert window.skill_rank_value()==(7 if expected_run89_090 else 10)\n                    for key89_090 in ('elite','trust','potential','module','rank'):\n                        assert getattr(window,key89_090).text()==expected89_row090[key89_090+'_label_expected']\n                    assert window.level.maximum()==expected89_row090['levels_widget_max_expected']\n                    assert expected89_row090['summary_crew_line_expected'] in window.run_summary.text()\n                    expected_roster89_090=tuple(op for op,member in saved89_090['state']['operators'].items()\n                        if member['present'] and member['scope']!='account')\n                    assert window.recruited_operator_ids()==expected_roster89_090\n                    assert native090(window.run.state)==replay_before090\n                    assert type(window.run.state['crew_count']) is int\n                    row89_090={'saved_sequence':saved89_090['saved_sequence'],'use_run_training':use89_090,\n                        'training':conditions89_090,'skill':window.skill.currentData(),'rank':window.skill_rank_value(),\n                        'readonly_training_labels':{key:getattr(window,key).text() for key in ('elite','trust','potential','module')},\n                        'readonly_skill_rank_label':window.rank.text(),'actual_summary':window.run_summary.text(),\n                        'actual_roster':list(window.recruited_operator_ids()),'stored_crew_count':window.run.state['crew_count'],\n                        'complete_temporary_state_native_unchanged':True,'actual_native_OCR_or_departure_verified':False,\n                        'RunState_constructor_or_apply_pipeline_executed_for_replay':False,'passed':True}\n                    consumer_records090.append(row89_090)\n                    checks.append({'scope':'actual_saved_public_state_readonly_training_consumer089','section':89,**row89_090})",
+    "old_deepcolor_fixed_rates": "                        assert type(args['summon_count']) is int and args['summon_count']==value\n                        rates=report_metrics(result,'summons')\n                        assert type(rates['summon_count']) is int and rates['summon_count']==value\n                        assert rates['concurrent_limit']==cap\n                        if number==1:\n                            regeneration=report_metrics(result,'regeneration')\n                            bb=module.catalog()['operators'][deepcl]['skills'][0]['levels'][rank-1]['values']\n                            assert regeneration['per_token_rate']==bb['hp_recovery_per_sec']\n                            assert regeneration['all_tokens_rate']==bb['hp_recovery_per_sec']*value"
+  }
+}
