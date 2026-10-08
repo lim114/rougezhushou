@@ -1,6 +1,6 @@
 # 黑流树海助手 · 未完成事项
 
-更新：2026-10-07。后续改动统一在 `codex/p2-development` 分支。当前先推进P2，完成后转P3；同一问题连续三次未解决则搁置并保留恢复条件，P1保留断点；所有识别优化仍移至最后。本清单只列尚未完成的工作；部分完成的项目只保留剩余缺口。完成项与历史验收见 [PROJECT_COMPLETED.md](PROJECT_COMPLETED.md)。
+更新：2026-10-08。后续改动统一在 `codex/p2-development` 分支。当前先推进P2，完成后转P3；同一问题连续三次未解决则搁置并保留恢复条件，P1保留断点；所有识别优化仍移至最后。本清单只列尚未完成的工作；部分完成的项目只保留剩余缺口。完成项与历史验收见 [PROJECT_COMPLETED.md](PROJECT_COMPLETED.md)。
 
 后续从 [WORK_IN_PROGRESS.md](WORK_IN_PROGRESS.md) 衔接；历史暂停断点保留于 [PAUSE_CHECKPOINT.md](PAUSE_CHECKPOINT.md)，不用于覆盖当前本局记录。
 

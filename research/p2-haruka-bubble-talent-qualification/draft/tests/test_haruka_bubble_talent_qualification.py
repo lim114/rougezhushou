@@ -1,0 +1,143 @@
+"""Bubble declarations do not unlock Haruka's E2-only treatment talent."""
+import copy
+import json
+import re
+import unittest
+
+from rouge.catalog import catalog
+from rouge.damage import calculate_damage
+from rouge.operator_engine import selected_talents
+from rouge.reporting import format_report
+
+
+NOTE = '当前培养尚未解锁扶摇花火；浮泡破碎声明保留，但不产生该天赋治疗或二技能中依赖该治疗的派生伤害。'
+
+
+def scenario(**extra):
+    return {'operator': 'char_4202_haruka', 'skill': 1, 'skill_rank': 7,
+            'elite': 1, 'level': 1, 'base_attack': 1000,
+            'window_seconds': 10, 'bubble_bursts': 1, **extra}
+
+
+def without_declared_bursts_and_exclusion_note(result):
+    """Permit only the retained declaration and its new qualification note."""
+    result = copy.deepcopy(result)
+    for ref in (result['external_event_reference'], result['external_event_reference']['window_reference']):
+        ref['parameter_rows'][0] = ('声明窗口内浮泡破碎次数', 0.0, '次')
+        ref['notes'] = [note for note in ref['notes'] if note != NOTE]
+    for section in result['report']['sections']:
+        if section['id'] != 'external_events':
+            continue
+        section['notes'] = [note for note in section['notes'] if note != NOTE]
+        next(m for m in section['metrics'] if m['key'] == 'parameter_0')['value'] = 0.0
+    return result
+
+
+class HarukaBubbleTalentQualificationTests(unittest.TestCase):
+    def test_actual_selected_talent_is_e2_only_for_all_potentials(self):
+        profile = catalog()['operators']['char_4202_haruka']
+        for elite in (0, 1, 2):
+            for potential in range(1, 7):
+                talents, _ = selected_talents(profile, scenario(elite=elite, potential=potential))
+                names = {t['name'] for t in talents}
+                self.assertIn('浮光泡影', names)
+                self.assertEqual('扶摇花火' in names, elite == 2)
+
+    def test_e0_e1_s1_positive_bursts_preserve_ordinary_healing(self):
+        for elite in (0, 1):
+            for mode in ('frames', 'continuous'):
+                result = calculate_damage(scenario(elite=elite, timing_mode=mode, bubble_bursts=2))
+                self.assertEqual(result['total_healing'], 6750.0)
+                self.assertEqual(result['total_damage'], 0)
+                flower = next(c for c in result['components'] if c['name'] == '扶摇花火')
+                self.assertEqual((flower['per_hit'], flower['hits'], flower['total']), (0.0, 0, 0))
+                self.assertNotIn('actual_total', flower)
+                self.assertNotIn('known_healing_subtotals', result)
+
+    def test_e1_s2_restores_body_healing_and_its_existing_damage(self):
+        for mode in ('frames', 'continuous'):
+            result = calculate_damage(scenario(skill=2, timing_mode=mode))
+            self.assertEqual((result['total_healing'], result['total_damage']), (4500.0, 9000.0))
+            for name in ('扶摇花火', '浮泡治疗衍生伤害'):
+                component = next(c for c in result['components'] if c['name'] == name)
+                self.assertEqual((component['hits'], component['total']), (0, 0))
+                self.assertNotIn('actual_total', component)
+            self.assertNotIn('known_healing_subtotals', result)
+            self.assertNotIn('known_damage_subtotals', result)
+
+    def test_locked_results_match_full_zero_count_control_except_retained_declaration(self):
+        for elite, skill in ((0, 1), (1, 1), (1, 2)):
+            for mode in ('frames', 'continuous'):
+                for extra in ({}, {'window_seconds': 0}, {'timing': {'target_disappears_seconds': 0}},
+                              {'timing': {'target_windows': []}}, {'healing_targets': 0},
+                              {'haruka_repeat': True}, {'module_id': 'uniequip_002_haruka', 'module_level': 3}):
+                    with self.subTest(elite=elite, skill=skill, mode=mode, extra=extra):
+                        result = calculate_damage(scenario(elite=elite, skill=skill, timing_mode=mode, **extra))
+                        control = calculate_damage(scenario(elite=elite, skill=skill, timing_mode=mode,
+                                                            bubble_bursts=0, **extra))
+                        normalized = without_declared_bursts_and_exclusion_note(result)
+                        self.assertEqual(json.dumps(normalized, sort_keys=True, ensure_ascii=False),
+                                         json.dumps(control, sort_keys=True, ensure_ascii=False))
+                        self.assertEqual(result['external_event_reference']['parameter_rows'][0],
+                                         ('声明窗口内浮泡破碎次数', 1.0, '次'))
+
+    def test_e2_existing_bubble_and_dependent_damage_clocks_remain_unknown(self):
+        for skill in (1, 2, 3):
+            for potential in (1, 4, 5, 6):
+                for stage in (0, 1, 2, 3):
+                    args = scenario(elite=2, level=60, skill=skill, potential=potential,
+                                    module_id='uniequip_002_haruka' if stage else None, module_level=stage)
+                    result = calculate_damage(args)
+                    flower = next(c for c in result['components'] if c['name'] == '扶摇花火')
+                    self.assertGreater(flower['per_hit'], 0)
+                    self.assertEqual(flower['hits'], 1.0)
+                    self.assertIsNone(flower['actual_total'])
+                    self.assertIsNone(result['total_healing'])
+                    self.assertIsNone(result['external_event_reference']['actual_event_times_seconds'])
+                    self.assertNotIn(NOTE, result['external_event_reference']['notes'])
+                    self.assertFalse(result['haruka_healing_reference']['native_attachment_verified'])
+                    self.assertFalse(result['haruka_healing_reference']['native_composition_verified'])
+        zero_attack = calculate_damage(scenario(elite=2, base_attack=0))
+        self.assertIsNone(zero_attack['total_healing'])
+        self.assertIsNone(next(c for c in zero_attack['components'] if c['name'] == '扶摇花火')['actual_total'])
+
+    def test_raw_burst_validation_and_prior_qualification_error_order_are_preserved(self):
+        error = '^' + re.escape('bubble_bursts需要范围内的有限非负整数。') + '$'
+        for elite in (0, 1, 2):
+            for raw in (True, False, -1, .5, 10001, float('nan'), float('inf')):
+                with self.subTest(elite=elite, raw=raw), self.assertRaisesRegex(ValueError, error):
+                    calculate_damage(scenario(elite=elite, bubble_bursts=raw))
+        with self.assertRaisesRegex(ValueError, '^当前精英阶段尚未开放所选技能或专精。$'):
+            calculate_damage(scenario(elite=0, skill=2, bubble_bursts=True))
+        with self.assertRaisesRegex(ValueError, '^当前精英阶段尚未开放所选技能或专精。$'):
+            calculate_damage(scenario(elite=1, skill_rank=10, bubble_bursts=True))
+        other = calculate_damage({'operator': 'char_133_mm', 'skill': 2, 'bubble_bursts': True})
+        self.assertNotIn('external_event_reference', other)
+
+    def test_report_keeps_bubble_declaration_and_explains_talent_exclusion(self):
+        result = calculate_damage(scenario(skill=2, bubble_bursts='2.0'))
+        report = format_report(result)
+        self.assertIn('声明窗口内浮泡破碎次数：2', report)
+        self.assertIn(NOTE, report)
+        self.assertEqual(result['external_event_reference']['parameter_rows'][0][1], 2.0)
+        for c in result['external_event_reference']['conditional_components']:
+            self.assertEqual((c['hits'], c['total']), (0.0, 0.0))
+        self.assertFalse(result['complete'])
+        self.assertFalse(result['estimate']['complete'])
+
+    def test_inputs_catalog_and_zero_count_float_reference_are_preserved(self):
+        args = scenario(bubble_bursts=0)
+        original = copy.deepcopy(args)
+        cached = json.dumps(catalog(), sort_keys=True, ensure_ascii=False)
+        result = calculate_damage(args)
+        self.assertEqual(result, calculate_damage(args))
+        self.assertEqual(args, original)
+        self.assertEqual(json.dumps(catalog(), sort_keys=True, ensure_ascii=False), cached)
+        flower = next(c for c in result['external_event_reference']['conditional_components'] if c['name'] == '扶摇花火')
+        self.assertIs(type(flower['hits']), float)
+        self.assertEqual(flower['hits'], 0.0)
+        self.assertNotIn(NOTE, result['external_event_reference']['notes'])
+
+
+if __name__ == '__main__':
+    unittest.main()

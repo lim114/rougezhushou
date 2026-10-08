@@ -1,0 +1,102 @@
+{
+  "status": "PASS_SEALED",
+  "section": 76,
+  "baseline_commit": "153b5dbf15d6567746047cbdea7f8d00a6879f3a",
+  "patch": {
+    "path": "/workspace/.continuation/p2-haruka-bubble-qualification-076/changes.patch",
+    "sha256": "215d29de8b5488d8dc5f92f6791ae5e5f001e0e36db82dae1c52e724ea6ac540",
+    "bytes": 11598
+  },
+  "source_scope": {
+    "uses_actual_selected_talent": true,
+    "inactive_effective_count_is_float_0_0": true,
+    "raw_declared_count_and_validation_unchanged": true,
+    "only_two_dependent_emit_counts_modified": true,
+    "positive_locked_note_only": true,
+    "event_clock_or_native_attachment_added": false
+  },
+  "source_recheck": {
+    "sha256": "7d5458556a257cb42bd633aee72dd3ce0ea41b449e65c5ab07c232f70aab7714",
+    "bytes": 238296
+  },
+  "design_review": {
+    "sha256": "0cea7c42d8c335c3f292fa1a774004b2e834ba967faf9c868654830152bfcde0",
+    "bytes": 21998
+  },
+  "original_source_receipt": {
+    "sha256": "3550c1ee712dafbbbbf71cde97427d84317f93f136acc2e220c94b5b5a823dc2",
+    "bytes": 72438
+  },
+  "fresh": {
+    "status": "PASS",
+    "paired_fresh_cases": 58,
+    "actual_public_calls_both_sides": 148,
+    "counts": {
+      "whole_accepted_preserved": 34,
+      "locked_positive_corrected": 16,
+      "old_error_preserved": 8
+    },
+    "replayed_initial_whole_outcomes": 24,
+    "all_whole_JSON_errors_and_reports_checked": true,
+    "only_locked_declared_count_and_exact_exclusion_note_normalized_for_zero_comparison": true
+  },
+  "saved_author_evidence_independently_compared": {
+    "status": "PASS",
+    "baseline_commit": "153b5dbf15d6567746047cbdea7f8d00a6879f3a",
+    "paired_saved_case_records": 1788,
+    "counts": {
+      "whole_accepted_preserved": 1032,
+      "locked_positive_corrected": 588,
+      "old_error_preserved": 168
+    },
+    "saved_positive_zero_controls_per_side": 588,
+    "all_positive_control_full_outcomes_equal_between_sides": true,
+    "new_calculate_damage_calls": 0,
+    "comparison": "Canonical JSON serialization preserves numeric int/float types; only 3 exact declared-count values and 3 exact new-note entries are normalized for locked-positive comparisons to original zero controls.",
+    "archives": [
+      {
+        "source_path": "/workspace/.continuation/p2-haruka-bubble-qualification-076/public-baseline.json.gz",
+        "preserved_path": "/workspace/.continuation/p2-haruka-bubble-qualification-076-independent/final-saved-author-baseline.json.gz",
+        "gzip_sha256": "7310ffcd9b5068fda8f9475f334773ce9ebc76a3bb598e8501f666d11c377ef1",
+        "gzip_bytes": 780725,
+        "decompressed_sha256": "0783bd0e55b1e15b0f6fc4bbeacf96b159388cb9d922af18040aea2c5e445d08",
+        "decompressed_bytes": 31432231,
+        "case_records": 1788,
+        "decompression": "Python gzip.decompress; JSON parsed completely"
+      },
+      {
+        "source_path": "/workspace/.continuation/p2-haruka-bubble-qualification-076/public-draft.json.gz",
+        "preserved_path": "/workspace/.continuation/p2-haruka-bubble-qualification-076-independent/final-saved-author-draft.json.gz",
+        "gzip_sha256": "afa9ca71b2f527270310b17f35fb827f1e8c34acc5a86ae34cfdf351b92a4532",
+        "gzip_bytes": 689827,
+        "decompressed_sha256": "0c6d5e9e9d3d647c3c5c82533d23b4146c74f3ae6b80ab25f328ea3ee6494288",
+        "decompressed_bytes": 31238596,
+        "case_records": 1788,
+        "decompression": "Python gzip.decompress; JSON parsed completely"
+      }
+    ]
+  },
+  "tests": {
+    "status": "PASS",
+    "modules": [
+      "tests.test_haruka_bubble_talent_qualification",
+      "tests.test_haruka_event_reference",
+      "tests.test_haruka_healing_targets",
+      "tests.test_healing_subtotal_scaling"
+    ],
+    "methods_run": 37,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "source_tree": "/workspace/.continuation/p2-haruka-bubble-qualification-076-independent/draft",
+    "dont_write_bytecode": true
+  },
+  "limitations": [
+    "No actual game event timing, first tick, native attachment or composition proof is inferred.",
+    "E2 positive bursts, including zero attack, remain conditional unknown as before.",
+    "Other independent pending healing/damage sources remain unchanged.",
+    "This is external source/API review; no Wine, GUI, private/native binary or rolling root source execution."
+  ],
+  "harness_production_or_test_failures": 0,
+  "read_shape_correction_from_initial_readonly_audit": "Initial readonly record reader assumed every record accepted; all 20 accepted plus 4 error records subsequently classified and replayed exactly. This was a reader-shape correction, not a production failure."
+}
