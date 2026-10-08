@@ -1,0 +1,6 @@
+    if (scenario['operator']=='char_1048_orchd2' and
+            isinstance(scenario.get('near_previous_deployment'),str)):
+        from .operator_engine import selected_talents
+        talents,_=selected_talents(catalog()['operators'][scenario['operator']],scenario)
+        if any(t.get('name')=='翔虫机动' for t in talents):
+            raise ValueError('near_previous_deployment 不接受文本条件；请使用布尔值。')

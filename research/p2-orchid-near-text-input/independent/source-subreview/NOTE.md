@@ -1,0 +1,7 @@
+第85节独立来源/guard/传输子审通过，无blocker。固定基线b5a40f30683bfc0945decaabbd4db5914c28427f与作者freeze96fa448ec78f4021122520a96e6e580289a3e4f113ed3835af2f803204169026。22来源文件原件与作者copy、4原完整表、完整所选char/3skill30rank/模组三级parts、720baseline git blobs和719draft未改文件全部重新核对。
+
+late six-line str guard精确反删恢复完整damage字节，CRLF保留。资格调用真实selected_talents并检查已选翔虫机动；9个独立pure helper场景确认E0inactive、E1L1 .10、E2 .15、X1 .15、E2L60 X2/X3 .20及模组未解锁时沿用原具名天赋。Qt静态bool生产者与实际初始化消费者范围吻合；没有Qt执行。
+
+标准unified patch的独立numstat为damage6/0、新test137/0，外部精确baseline只读apply-check成功，没有实际apply。0calculate_damage、0测试、0tracked修改、0GUI/Wine。初次猜错draft.patch路径的只读准备错误已保留描述，实际section85.patch由rg定位，未构成产品失败。
+
+实际原生时钟/附着未知、JSON与原生返回类型、public培养错误、每core late位置及root surgical集成边界详见boundary085.md。父review079负责正式fresh与saved数值合同，本子审不重复作者197矩阵或旧2历史调用。

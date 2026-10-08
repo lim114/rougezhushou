@@ -1,0 +1,506 @@
+{
+  "case": "orchid-s3-near-false_bool",
+  "scenario": {
+    "operator": "char_1048_orchd2",
+    "skill": 3,
+    "skill_rank": 10,
+    "elite": 2,
+    "level": 90,
+    "base_attack": 1000,
+    "timing_mode": "frames",
+    "window_seconds": 10,
+    "near_previous_deployment": false
+  },
+  "result": {
+    "attack": 1000.0,
+    "total_damage": null,
+    "total_healing": 0,
+    "attack_speed": 100.0,
+    "base_attack_speed": 100.0,
+    "attack_speed_reference": 100.0,
+    "base_attack_speed_reference": 100.0,
+    "interval_seconds": 1.6,
+    "components": [
+      {
+        "name": "龙之箭物理",
+        "damage_type": "physical",
+        "hits": 1.0,
+        "per_hit": 4140.0,
+        "total": 4140.0,
+        "source_unit": "operator",
+        "timing_reference": "unplaced conditional source; actual collision clock unverified",
+        "actual_total": null
+      },
+      {
+        "name": "龙之箭法术",
+        "damage_type": "magic",
+        "hits": 1.0,
+        "per_hit": 690.0,
+        "total": 690.0,
+        "source_unit": "operator",
+        "timing_reference": "unplaced conditional source; actual collision clock unverified",
+        "actual_total": null
+      }
+    ],
+    "applied_effects": [],
+    "inapplicable_relics": [],
+    "complete": false,
+    "warnings": [],
+    "complete_definition": "complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。",
+    "scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。",
+    "timing": {
+      "mode": "frames",
+      "fps": 30,
+      "streams": [],
+      "window_convention": "[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消",
+      "scenario_provided": false,
+      "target_scope_notes": [],
+      "complete": false,
+      "notes": [
+        "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+      ],
+      "recharge_streams": [],
+      "phase_clock_unbound": true,
+      "unplaced_components": [
+        "龙之箭物理",
+        "龙之箭法术"
+      ],
+      "resource_and_damage_shared_clock": false,
+      "initial_seconds": 0.0,
+      "cycle_seconds": null
+    },
+    "estimate": {
+      "base_stats": {
+        "hp": 1788,
+        "attack": 1000.0,
+        "defense": 231,
+        "resistance": 0.0,
+        "redeploy_seconds": 55.0,
+        "attack_speed": 100.0,
+        "attack_speed_reference": 100.0,
+        "block_count": 1.0
+      },
+      "skill": {
+        "name": "龙之箭",
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": null,
+        "total_damage": null,
+        "total_healing": 0,
+        "phase_damage": null,
+        "phase_healing": null,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1000.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "sp_recovery_per_second": 1.0,
+        "mode": "instant",
+        "hit_counts": {
+          "龙之箭法术": null,
+          "龙之箭物理": null
+        },
+        "window_seconds": 10.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": 0.0,
+        "window_damage": null
+      },
+      "training": {
+        "elite": 2,
+        "level": 90,
+        "trust": 100,
+        "potential": 1,
+        "module_id": null,
+        "module_level": 0
+      },
+      "complete": false,
+      "warnings": [],
+      "notes": [
+        "强击瓶按本次命中仍在首次50次加成覆盖内估算；龙之箭次数取决于敌人体积与路径，使用指定命中次数。",
+        "未绑定实际命中和结束时钟的多段来源只列条件参考，未用瞬时触发分类推导0秒结束或完整充能周期。",
+        "单目标持续存活、供靶/满额受疗情景；难度、分队、特训和条件藏品尚未完整套用。",
+        "梓兰再部署为原始培养与同身份天赋的参数参考；实际撤退、倒下和再次部署的时刻及当前热更新未核验，未安排部署事件。",
+        "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "尚未统一排入时间轴的输出分项：龙之箭物理、龙之箭法术。"
+      ],
+      "scenario_scope": "单个持续命中目标的明确技能情景；多段逐段结算防御。"
+    },
+    "unbound_cast_reference": {
+      "kind": "orchid_arrows",
+      "parameter_rows": [
+        [
+          "描述蓄力时长参数",
+          3,
+          "秒"
+        ],
+        [
+          "原表等待参数",
+          1.5,
+          "秒"
+        ],
+        [
+          "声明龙之箭命中次数",
+          1.0,
+          "次"
+        ]
+      ],
+      "notes": [
+        "先蓄力后射箭有描述依据；3秒与wait_duration参数不证明当前观察时钟上的释放/命中或整箭结束。",
+        "贯穿路径和距离参数不转换为时间，不把指定次数放在开启或3秒时刻。"
+      ],
+      "conditional_components": [
+        {
+          "name": "龙之箭物理",
+          "damage_type": "physical",
+          "per_hit": 4140.0,
+          "hits": 1.0,
+          "total": 4140.0
+        },
+        {
+          "name": "龙之箭法术",
+          "damage_type": "magic",
+          "per_hit": 690.0,
+          "hits": 1.0,
+          "total": 690.0
+        }
+      ],
+      "source_possible": true,
+      "observation_seconds": null,
+      "collision_clock_verified": false,
+      "window_reference": {
+        "kind": "orchid_arrows",
+        "parameter_rows": [
+          [
+            "描述蓄力时长参数",
+            3,
+            "秒"
+          ],
+          [
+            "原表等待参数",
+            1.5,
+            "秒"
+          ],
+          [
+            "声明龙之箭命中次数",
+            1.0,
+            "次"
+          ]
+        ],
+        "notes": [
+          "先蓄力后射箭有描述依据；3秒与wait_duration参数不证明当前观察时钟上的释放/命中或整箭结束。",
+          "贯穿路径和距离参数不转换为时间，不把指定次数放在开启或3秒时刻。"
+        ],
+        "conditional_components": [
+          {
+            "name": "龙之箭物理",
+            "damage_type": "physical",
+            "per_hit": 4140.0,
+            "hits": 1.0,
+            "total": 4140.0
+          },
+          {
+            "name": "龙之箭法术",
+            "damage_type": "magic",
+            "per_hit": 690.0,
+            "hits": 1.0,
+            "total": 690.0
+          }
+        ],
+        "source_possible": true,
+        "observation_seconds": 10.0,
+        "collision_clock_verified": false
+      },
+      "actual_hit_times_seconds": null,
+      "actual_end_seconds": null
+    },
+    "known_damage_subtotals": {
+      "total_damage": 0,
+      "phase_damage": null,
+      "window_damage": 0,
+      "cycle_damage": null,
+      "cycle_dps": null,
+      "window_dps": 0.0
+    },
+    "orchid_redeploy_reference": {
+      "scope": "cultivated attribute and same-identity talent parameter reference",
+      "operator_id": "char_1048_orchd2",
+      "module_id": null,
+      "module_level": 0,
+      "module_unlocked": false,
+      "module_attribute_delta_seconds_parameter": 0,
+      "after_attribute_sources_seconds_reference": 70.0,
+      "talent_delta_seconds_parameter": -15,
+      "parameter_seconds": 55.0,
+      "original_talent_identity": {
+        "talent_index": 3,
+        "prefab_key": "3"
+      },
+      "actual_retreat_seconds": null,
+      "actual_defeat_seconds": null,
+      "actual_next_deployment_seconds": null,
+      "events_scheduled": false,
+      "native_attachment_verified": false,
+      "live_state_verified": false,
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "source_selectors": [
+        "character_table.char_1048_orchd2.phases[*].attributesKeyFrames[*].data.respawnTime",
+        "character_table.char_1048_orchd2.potentialRanks[1].buff.attributes.attributeModifiers",
+        "character_table.char_1048_orchd2.talents[1].candidates",
+        "character_table.char_1048_orchd2.talents[3].candidates",
+        "uniequip_table.equipDict.uniequip_002_orchd2",
+        "battle_equip_table.uniequip_002_orchd2.phases[*].attributeBlackboard",
+        "battle_equip_table.uniequip_002_orchd2.phases[*].parts[*].addOrOverrideTalentDataBundle.candidates"
+      ]
+    },
+    "relic_regeneration_multiplier": 1,
+    "relic_regeneration_rate": 0,
+    "relic_features": [],
+    "deployment_cost": 20.0,
+    "relic_token_stats": [],
+    "relic_protection": [],
+    "relic_resolution": {
+      "records": [],
+      "warnings": [],
+      "inapplicable": [],
+      "rules": [],
+      "calculation_scope": "offline_stable_effects",
+      "combat_effects_reference_only": true,
+      "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "complete": true,
+      "enemy_effects": {
+        "defense_factor": 1,
+        "hp_factors": [],
+        "resident_hp_applied": false,
+        "hp_composition_pending": [],
+        "spawn_hp_rules": [],
+        "atk_factors": [],
+        "weight_delta": 0
+      },
+      "token_effects": [],
+      "context": {},
+      "context_source": "明确提供的计算情景",
+      "timing_unresolved": false
+    },
+    "run_resolution": {
+      "source": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "squad": null,
+      "difficulty": null,
+      "applied": [],
+      "pending": [],
+      "notes": []
+    },
+    "report": {
+      "schema_version": 2,
+      "operator": {
+        "id": "char_1048_orchd2",
+        "name": "焰狐龙梓兰",
+        "profession": "sniper"
+      },
+      "skill_number": 3,
+      "skill_rank": 10,
+      "mode": "instant",
+      "sections": [
+        {
+          "id": "timing",
+          "title": "技能时序",
+          "metrics": [
+            {
+              "key": "initial",
+              "label": "预计初动",
+              "value": 0.0,
+              "unit": "秒"
+            },
+            {
+              "key": "duration",
+              "label": "持续时间",
+              "value": null,
+              "unit": "秒"
+            },
+            {
+              "key": "cycle",
+              "label": "预计回转",
+              "value": null,
+              "unit": "秒"
+            },
+            {
+              "key": "recharge",
+              "label": "结束后充能",
+              "value": null,
+              "unit": "秒"
+            }
+          ],
+          "notes": []
+        },
+        {
+          "id": "execution",
+          "title": "战斗时序参考",
+          "metrics": [
+            {
+              "key": "fps",
+              "label": "模拟逻辑频率",
+              "value": 30,
+              "unit": "帧/秒"
+            }
+          ],
+          "notes": [
+            "前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。",
+            "时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。",
+            "初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。"
+          ]
+        },
+        {
+          "id": "damage",
+          "title": "伤害输出",
+          "metrics": [
+            {
+              "key": "per_cast",
+              "label": "单次技能总伤",
+              "value": null,
+              "unit": ""
+            },
+            {
+              "key": "window_damage",
+              "label": "观察窗口总伤",
+              "value": null,
+              "unit": ""
+            },
+            {
+              "key": "window_seconds",
+              "label": "伤害观察窗口",
+              "value": 10.0,
+              "unit": "秒"
+            },
+            {
+              "key": "window_dps",
+              "label": "窗口平均 DPS",
+              "value": null,
+              "unit": "伤害/秒"
+            },
+            {
+              "key": "cycle_dps",
+              "label": "本轮周期 DPS",
+              "value": null,
+              "unit": "伤害/秒"
+            }
+          ],
+          "notes": []
+        },
+        {
+          "id": "unbound_cast",
+          "title": "多段技能 · 实际时钟待核验",
+          "metrics": [
+            {
+              "key": "source_0",
+              "label": "龙之箭物理条件总量",
+              "value": 4140.0,
+              "unit": "伤害"
+            },
+            {
+              "key": "source_1",
+              "label": "龙之箭法术条件总量",
+              "value": 690.0,
+              "unit": "伤害"
+            },
+            {
+              "key": "parameter_0",
+              "label": "描述蓄力时长参数",
+              "value": 3,
+              "unit": "秒"
+            },
+            {
+              "key": "parameter_1",
+              "label": "原表等待参数",
+              "value": 1.5,
+              "unit": "秒"
+            },
+            {
+              "key": "parameter_2",
+              "label": "声明龙之箭命中次数",
+              "value": 1.0,
+              "unit": "次"
+            },
+            {
+              "key": "hits",
+              "label": "实际命中时刻",
+              "value": null,
+              "unit": "秒"
+            }
+          ],
+          "notes": [
+            "先蓄力后射箭有描述依据；3秒与wait_duration参数不证明当前观察时钟上的释放/命中或整箭结束。",
+            "贯穿路径和距离参数不转换为时间，不把指定次数放在开启或3秒时刻。",
+            "条件总量保留当前培养和情景倍率；未排程来源不代表观察窗口、完整阶段或本轮周期输出。",
+            "本体供靶或打断区间不证明独立弹道/接触范围；零窗口或当前敌人0秒生命周期不产生对它的实际输出。"
+          ]
+        },
+        {
+          "id": "known_damage_subtotals",
+          "title": "已建模伤害小计",
+          "metrics": [
+            {
+              "key": "cast",
+              "label": "单次技能已计伤害小计",
+              "value": 0,
+              "unit": ""
+            },
+            {
+              "key": "window",
+              "label": "观察窗口已计伤害小计",
+              "value": 0,
+              "unit": ""
+            },
+            {
+              "key": "cycle",
+              "label": "本轮周期已计伤害小计",
+              "value": null,
+              "unit": ""
+            },
+            {
+              "key": "cycle_dps",
+              "label": "已计部分本轮周期 DPS",
+              "value": null,
+              "unit": "伤害/秒"
+            }
+          ],
+          "notes": [
+            "这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。"
+          ]
+        },
+        {
+          "id": "talents",
+          "title": "当前已解锁天赋资料",
+          "metrics": [],
+          "notes": [
+            "部署后首次开启技能时，接下来50次攻击的攻击力提升至115%",
+            "再部署时间-15秒且不提高部署费用；部署至上次部署位置周围时，30秒内攻击力+15%并且可以部署在近战位",
+            "仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。"
+          ]
+        },
+        {
+          "id": "mechanics",
+          "title": "技能机制（当前等级资料）",
+          "metrics": [],
+          "notes": [
+            "蓄力3秒后射出直线飞行的贯穿箭矢，箭矢以较大力度推动每个经过的敌人，每飞行一段距离都会对周围所有敌人造成攻击力360%的物理伤害和攻击力60%的法术伤害，箭矢射程无限\n可充能2次"
+          ]
+        }
+      ]
+    }
+  },
+  "report_text": "焰狐龙梓兰 · 狙击\n计算状态：不完整（见待确认与适用范围）\n\n【培养信息】\n精英 2 · 等级 90 · 潜能 1 · 信赖加成进度 100%\n\n【预计属性】\n含已支持的天赋和藏品；不是未修正基础值。\n生命值：1,788    攻击力：1,000\n防御：231    法抗：0\n再部署时间：55.00 秒    阻挡数：1\n攻速：100（游戏数值单位，基础 100）\n\n【当前技能】\n龙之箭 · 7级 · 专精3 · 瞬时触发\n\n【技能时序】\n预计初动：0.00 秒\n持续时间：未知（需要条件或尚未建模）\n预计回转：未知（需要条件或尚未建模）\n结束后充能：未知（需要条件或尚未建模）\n\n【战斗时序参考】\n模拟逻辑频率：30 帧/秒\n\n【伤害输出】\n单次技能总伤：未知（需要条件或尚未建模）\n观察窗口总伤：未知（需要条件或尚未建模）\n伤害观察窗口：10.00 秒\n窗口平均每秒伤害：未知（需要条件或尚未建模）\n本轮周期每秒伤害：未知（需要条件或尚未建模）\n\n【多段技能 · 实际时钟待核验】\n龙之箭物理条件总量：4,140 伤害\n龙之箭法术条件总量：690 伤害\n描述蓄力时长参数：3.00 秒\n原表等待参数：1.50 秒\n声明龙之箭命中次数：1 次\n实际命中时刻：未知（需要条件或尚未建模）\n\n【已建模伤害小计】\n单次技能已计伤害小计：0\n观察窗口已计伤害小计：0\n本轮周期已计伤害小计：未知（需要条件或尚未建模）\n已计部分本轮周期每秒伤害：未知（需要条件或尚未建模）\n\n【当前已解锁天赋资料】\n• 部署后首次开启技能时，接下来50次攻击的攻击力提升至115%\n• 再部署时间-15秒且不提高部署费用；部署至上次部署位置周围时，30秒内攻击力+15%并且可以部署在近战位\n• 仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。\n\n【技能机制（当前等级资料）】\n• 蓄力3秒后射出直线飞行的贯穿箭矢，箭矢以较大力度推动每个经过的敌人，每飞行一段距离都会对周围所有敌人造成攻击力360%的物理伤害和攻击力60%的法术伤害，箭矢射程无限\n可充能2次\n\n【计算说明】\n战斗时序参考：\n• 前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。\n• 时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。\n• 初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。\n多段技能 · 实际时钟待核验：\n• 先蓄力后射箭有描述依据；3秒与wait_duration参数不证明当前观察时钟上的释放/命中或整箭结束。\n• 贯穿路径和距离参数不转换为时间，不把指定次数放在开启或3秒时刻。\n• 条件总量保留当前培养和情景倍率；未排程来源不代表观察窗口、完整阶段或本轮周期输出。\n• 本体供靶或打断区间不证明独立弹道/接触范围；零窗口或当前敌人0秒生命周期不产生对它的实际输出。\n已建模伤害小计：\n• 这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。\n\n【待确认与适用范围】\n情景范围：单个持续命中目标的明确技能情景；多段逐段结算防御。\n• 强击瓶按本次命中仍在首次50次加成覆盖内估算；龙之箭次数取决于敌人体积与路径，使用指定命中次数。\n• 未绑定实际命中和结束时钟的多段来源只列条件参考，未用瞬时触发分类推导0秒结束或完整充能周期。\n• 单目标持续存活、供靶情景；难度、分队、特训和条件藏品尚未完整套用。\n• 梓兰再部署为原始培养与同身份天赋的参数参考；实际撤退、倒下和再次部署的时刻及当前热更新未核验，未安排部署事件。\n• 常规攻击按30帧/秒逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。\n• 只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。\n• 时序采用30帧/秒参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。\n• 动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。\n• 未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。\n• 攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。\n• 单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。\n• 尚未统一排入时间轴的输出分项：龙之箭物理、龙之箭法术。",
+  "technical_report_text": "焰狐龙梓兰 · 狙击\n计算状态：不完整（见待确认与适用范围）\n\n【培养信息】\n精英 2 · 等级 90 · 潜能 1 · 信赖加成进度 100%\n\n【预计属性】\n含已支持的天赋和藏品；不是未修正基础值。\n生命值：1,788    攻击力：1,000\n防御：231    法抗：0\n再部署时间：55.00 秒    阻挡数：1\n攻速：100（游戏数值单位，基础 100）\n\n【当前技能】\n龙之箭 · 7级 · 专精3 · 瞬时触发\n\n【技能时序】\n预计初动：0.00 秒\n持续时间：未知（需要条件或尚未建模）\n预计回转：未知（需要条件或尚未建模）\n结束后充能：未知（需要条件或尚未建模）\n\n【战斗时序参考】\n模拟逻辑频率：30 帧/秒\n\n【伤害输出】\n单次技能总伤：未知（需要条件或尚未建模）\n观察窗口总伤：未知（需要条件或尚未建模）\n伤害观察窗口：10.00 秒\n窗口平均每秒伤害：未知（需要条件或尚未建模）\n本轮周期每秒伤害：未知（需要条件或尚未建模）\n\n【多段技能 · 实际时钟待核验】\n龙之箭物理条件总量：4,140 伤害\n龙之箭法术条件总量：690 伤害\n描述蓄力时长参数：3.00 秒\n原表等待参数：1.50 秒\n声明龙之箭命中次数：1 次\n实际命中时刻：未知（需要条件或尚未建模）\n\n【已建模伤害小计】\n单次技能已计伤害小计：0\n观察窗口已计伤害小计：0\n本轮周期已计伤害小计：未知（需要条件或尚未建模）\n已计部分本轮周期每秒伤害：未知（需要条件或尚未建模）\n\n【当前已解锁天赋资料】\n• 部署后首次开启技能时，接下来50次攻击的攻击力提升至115%\n• 再部署时间-15秒且不提高部署费用；部署至上次部署位置周围时，30秒内攻击力+15%并且可以部署在近战位\n• 仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。\n\n【技能机制（当前等级资料）】\n• 蓄力3秒后射出直线飞行的贯穿箭矢，箭矢以较大力度推动每个经过的敌人，每飞行一段距离都会对周围所有敌人造成攻击力360%的物理伤害和攻击力60%的法术伤害，箭矢射程无限\n可充能2次\n\n【计算说明】\n战斗时序参考：\n• 前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。\n• 时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。\n• 初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。\n多段技能 · 实际时钟待核验：\n• 先蓄力后射箭有描述依据；3秒与wait_duration参数不证明当前观察时钟上的释放/命中或整箭结束。\n• 贯穿路径和距离参数不转换为时间，不把指定次数放在开启或3秒时刻。\n• 条件总量保留当前培养和情景倍率；未排程来源不代表观察窗口、完整阶段或本轮周期输出。\n• 本体供靶或打断区间不证明独立弹道/接触范围；零窗口或当前敌人0秒生命周期不产生对它的实际输出。\n已建模伤害小计：\n• 这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。\n\n【待确认与适用范围】\n情景范围：单个持续命中目标的明确技能情景；多段逐段结算防御。\n• 强击瓶按本次命中仍在首次50次加成覆盖内估算；龙之箭次数取决于敌人体积与路径，使用指定命中次数。\n• 未绑定实际命中和结束时钟的多段来源只列条件参考，未用瞬时触发分类推导0秒结束或完整充能周期。\n• 单目标持续存活、供靶情景；难度、分队、特训和条件藏品尚未完整套用。\n• 梓兰再部署为原始培养与同身份天赋的参数参考；实际撤退、倒下和再次部署的时刻及当前热更新未核验，未安排部署事件。\n• 常规攻击按30帧/秒逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。\n• 只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。\n• 时序采用30帧/秒参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。\n• 动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。\n• 未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。\n• 攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。\n• 单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。\n• 尚未统一排入时间轴的输出分项：龙之箭物理、龙之箭法术。\n\n【技术资料】\n干员标识：char_1048_orchd2\n技能序号：3；内部等级：10\n模式字段：instant\n显示用语：每秒伤害＝DPS；每秒治疗＝HPS；普通/精英/领袖＝NORMAL/ELITE/BOSS；紧急关卡＝FOUR_STAR。\n档案字段：弹道延迟＝projectile_delay_time；连击间隔＝attack@interval。字段存在不代表完成实机校准。\n完整计算输入和原始指标可在“结构化计算数据（调试）”查看。",
+  "estimate_text": "焰狐龙梓兰 · 狙击\n计算状态：不完整（见待确认与适用范围）\n\n【培养信息】\n精英 2 · 等级 90 · 潜能 1 · 信赖加成进度 100%\n\n【预计属性】\n含已支持的天赋和藏品；不是未修正基础值。\n生命值：1,788    攻击力：1,000\n防御：231    法抗：0\n再部署时间：55.00 秒    阻挡数：1\n攻速：100（游戏数值单位，基础 100）\n\n【当前技能】\n龙之箭 · 7级 · 专精3 · 瞬时触发\n\n【技能时序】\n预计初动：0.00 秒\n持续时间：未知（需要条件或尚未建模）\n预计回转：未知（需要条件或尚未建模）\n结束后充能：未知（需要条件或尚未建模）\n\n【战斗时序参考】\n模拟逻辑频率：30 帧/秒\n\n【伤害输出】\n单次技能总伤：未知（需要条件或尚未建模）\n观察窗口总伤：未知（需要条件或尚未建模）\n伤害观察窗口：10.00 秒\n窗口平均每秒伤害：未知（需要条件或尚未建模）\n本轮周期每秒伤害：未知（需要条件或尚未建模）\n\n【多段技能 · 实际时钟待核验】\n龙之箭物理条件总量：4,140 伤害\n龙之箭法术条件总量：690 伤害\n描述蓄力时长参数：3.00 秒\n原表等待参数：1.50 秒\n声明龙之箭命中次数：1 次\n实际命中时刻：未知（需要条件或尚未建模）\n\n【已建模伤害小计】\n单次技能已计伤害小计：0\n观察窗口已计伤害小计：0\n本轮周期已计伤害小计：未知（需要条件或尚未建模）\n已计部分本轮周期每秒伤害：未知（需要条件或尚未建模）\n\n【当前已解锁天赋资料】\n• 部署后首次开启技能时，接下来50次攻击的攻击力提升至115%\n• 再部署时间-15秒且不提高部署费用；部署至上次部署位置周围时，30秒内攻击力+15%并且可以部署在近战位\n• 仅列当前身份/培养/模组适用的资料；已量化范围与未覆盖项见估算状态。\n\n【技能机制（当前等级资料）】\n• 蓄力3秒后射出直线飞行的贯穿箭矢，箭矢以较大力度推动每个经过的敌人，每飞行一段距离都会对周围所有敌人造成攻击力360%的物理伤害和攻击力60%的法术伤害，箭矢射程无限\n可充能2次\n\n【计算说明】\n战斗时序参考：\n• 前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。\n• 时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。\n• 初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。\n多段技能 · 实际时钟待核验：\n• 先蓄力后射箭有描述依据；3秒与wait_duration参数不证明当前观察时钟上的释放/命中或整箭结束。\n• 贯穿路径和距离参数不转换为时间，不把指定次数放在开启或3秒时刻。\n• 条件总量保留当前培养和情景倍率；未排程来源不代表观察窗口、完整阶段或本轮周期输出。\n• 本体供靶或打断区间不证明独立弹道/接触范围；零窗口或当前敌人0秒生命周期不产生对它的实际输出。\n已建模伤害小计：\n• 这些数值只包含已保留的本体来源参考，不含未核验的次生事件，不能当作完整输出。\n\n【待确认与适用范围】\n情景范围：单个持续命中目标的明确技能情景；多段逐段结算防御。\n• 强击瓶按本次命中仍在首次50次加成覆盖内估算；龙之箭次数取决于敌人体积与路径，使用指定命中次数。\n• 未绑定实际命中和结束时钟的多段来源只列条件参考，未用瞬时触发分类推导0秒结束或完整充能周期。\n• 单目标持续存活、供靶情景；难度、分队、特训和条件藏品尚未完整套用。\n• 梓兰再部署为原始培养与同身份天赋的参数参考；实际撤退、倒下和再次部署的时刻及当前热更新未核验，未安排部署事件。\n• 常规攻击按30帧/秒逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。\n• 只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。\n• 时序采用30帧/秒参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。\n• 动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。\n• 未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。\n• 攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。\n• 单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。\n• 尚未统一排入时间轴的输出分项：龙之箭物理、龙之箭法术。",
+  "actual_calculate_damage_calls": 1,
+  "caller_input_preserved": true
+}

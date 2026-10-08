@@ -318,19 +318,6 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
     finish_duration_references(scenario,result)
     from .reporting import build_report
     result['report']=build_report(scenario,result)
-    # Validate the processed neural scenario after preserving legacy errors.
-    if scenario['operator'] in ('char_1042_phatm2','char_4204_mantra'):
-        for field in ('enemy_is_boss','enemy_in_neural_break'):
-            if isinstance(scenario.get(field),str):
-                raise ValueError(field+' 不接受文本条件；请使用布尔值。')
-    if scenario['operator']=='char_4202_haruka' and scenario['skill']==2 and isinstance(scenario.get('haruka_repeat'),str):
-        raise ValueError('haruka_repeat 不接受文本条件；请使用布尔值。')
-    if (scenario['operator']=='char_1048_orchd2' and
-            isinstance(scenario.get('near_previous_deployment'),str)):
-        from .operator_engine import selected_talents
-        talents,_=selected_talents(catalog()['operators'][scenario['operator']],scenario)
-        if any(t.get('name')=='翔虫机动' for t in talents):
-            raise ValueError('near_previous_deployment 不接受文本条件；请使用布尔值。')
     return result
 
 def _evaluate_damage(prepared,wine_phase=None) -> dict:
