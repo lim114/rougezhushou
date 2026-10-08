@@ -1,0 +1,11 @@
+第87节静态来源独审封存：PASS_STATIC_FINAL_FROZEN。
+
+绑定作者9ef冻结与实际root86 0f27027运输。三产品路径/字节/换行/patch headers一致，六相关consumer与原9ef一致。实际root86 damage/engine已变，必须保留根实现；注册提议只加一个MODULES条目，删除该49字节行后整个文件与固定root86源码逐字节相同。
+
+selection_derivation是历史048筛选来源；新Back5用source_additions另记固定资源、提取及官方reader来源。属于产品离线参考资料发布，没有运行时consumer代码、默认选择或原生时钟绑定改动。源eligible包含literal Skill，但现有choices必须Attack或匹配编号Skill；label的generic文字不能授权Skill选择。Attack也须显式identity才消费。未统计UI选项。
+
+原30Hz/1e-5仅浮点表示归一化合同。严格ceil及normalized值保留。manual preview先验证两个reference身份，再覆盖unit=None帧，并带override标记；后续default无referencemetadata。未据此外推客户端时钟、皮肤、生命周期、EOF、历史parser错误根因。
+
+仅静态读7个新测试和现有原动画模块10个test_方法；没有运行任何测试。作者related runner在缓存不存在时动态跳过原始64资源核验首方法，而非原test模块自带skip。作者及父独审的实际API/test结果由父审计绑定，本子审未重复。父负责旧923记录、新原始5、完整计数和实际测试。
+
+0应用导入/helper/API/formatter/test/JSON输入解析/source帧解析/network/Qt/Wine/tracked改动。仅封存外部可公开文本/哈希文件，不复制大JSON、64skel、作者整树或旧封存目录。readonly inventory一次输出截断已记receipt；无静态核验失败。

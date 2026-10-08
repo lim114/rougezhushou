@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "kind": "Independent static checker preparation",
+  "failed_attempts": 1,
+  "problem": "Saved JS metadata JSON encodes zero/integral duration as Python int, while the unchanged original frames(seconds) explicitly casts seconds and raw product to float. The sealed prepared facts preserved metadata JSON number types, so direct strict comparison was overbroad.",
+  "source_contract": "value = float(seconds) * FPS; seconds = float(seconds); normalized = round(value) near integer.",
+  "exact_type_binding": "Only duration/event seconds and raw_frames_30hz follow float(seconds)/float(seconds)*30; normalized integral values and ceil frames remain int per unchanged builder.",
+  "product_source_change_needed": false,
+  "prepared_sealed_files_changed": false,
+  "new_API_helper_formatter_tests_parser_network_Qt_Wine_calls": 0
+}

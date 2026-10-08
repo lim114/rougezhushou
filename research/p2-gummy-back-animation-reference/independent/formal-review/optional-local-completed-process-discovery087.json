@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "stage": "Optional local process-status discovery after the two successful collectors",
+  "command": "ps -o pid,etime,%cpu,rss,args -C python",
+  "exit_code": 1,
+  "actual_stdout": "    PID     ELAPSED %CPU   RSS COMMAND\n",
+  "finding": "No matching live Python process after collectors had exited 0",
+  "product_parser_or_API_failure": false,
+  "repeated_product_calls": 0
+}

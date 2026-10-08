@@ -601,3 +601,9 @@ S2斩击及原有孤立6秒强化阶段分别保留条件参考（基础1000默�
 根据固定原资料、实际selected_talents及normal plan，为八干员十二字段补齐有效条件文本校验；无效字段与合法/nontext原行为保持，旧错误先行。祥子range使用每次Combat重置的对象状态，不能从最终cycle推定normal实际消费，也不接受用户私有标记。作者268对/536公开调用：71有效文本拒绝、181完整编码前类型树/JSON/三文本同、16旧错误；8内部对另计24显式helper。独审12不同对/24公开调用：5拒绝、6完整同、1旧guard先行，8新测试首次全通过。根端122相关通过；精选首轮发现旧85的S1 double_charge文本期望过时，仅迁移这一断言并保留S2/S3无效字段、bool/default与未绑定clock检查，经独立源核后针对性验证并重跑精选。130作者/独审封存件保持原hash，补档准备复制诊断及根端合同迁移原件。 根端精选最终1027运行/1026通过/1历史跳过、零错误；单项合同迁移另1通过。
 
 验证 `verification/sections/086.json`。1299/42/51为作者矩阵/内部/独审显式三文本请求，未采集内部delegation或unittest API总数，不推总量。phase0/7仅内部core兼容，不作公开时钟或原生验证。保存了finalcycle150但normalNone反例，没有normalactive且finalcycleNone的保存案例。旧root-source720不变为测试迁移之前的真实收据，最终补证719不变加一断言精确逆向；不覆写封存证据。原生Windows、当前游戏热更新、命中/快照/结束及渲染机制仍未知。
+
+## 087 · 接入古米背面真实动画元资料并保留未绑定边界
+
+重新取得固定资源commit的古米Front/Back原件并用固定官方Spine3.8解析器各读一次；Front九条原记录一致，Back真实五动画接入，未从正面补Die/Skill2。全旧923条字面记录及数据整体可精确逆向还原；新增来源单独source_additions，旧selection_derivation不改。计928动画/162元资料筛选通过/766未核验或过渡/64资源/0缺失。只有Back Attack成为明确可选局外参考，泛称Skill不含技能编号、仍不能绑定S1/S2；30Hz浮点表示政策保持，不推原生帧率。作者35对：16完整strict decodedJSON及三文本同、9旧错误、10背面显式参考由旧拒绝变可用；新7与旧38相关（37通过、1未迁移原cache跳过）通过。独立首次风险核验另有编码前类型补证。根端在当前86产品上复验、存档后自动推进。 独审12对/24公开调用加新7实际11调用：6完整native/JSON/三文本同、2旧错误、4新增背面成功，caller及缓存隔离；48显式文本请求/64实测formatter entries。根端45相关（44通过、1历史cache跳过）和1034精选（1033通过、1历史跳过）通过，当前86产品保留、完整旧数据逆向字节相同。301公开件封存。
+
+验证 `verification/sections/087.json`。来源阶段精确两次readSkeletonData成功，原历史Back失败至少一次但旧总尝试、旧reader身份及根因未知，不宣称修复旧reader。官方AttachmentLoader使用默认TextureRegion占位，仅核事件/时长；贴图、几何、渲染、EOF及实际游戏动作绑定未验证。作者35矩阵只decodedJSON严格类型，不含编码前tuple/list树；原字段名保持且sidecar澄清。126仅42成功结果的显式三文本请求，内部estimate委托与overallentry未采集，不推168实测。S1友方获取/阈值与多充能、S2友方实际命中/生命周期、空转回转完整时钟仍未知。历史资源cache不重建、不把缺失记录计通过；Wine不代表原生Windows或游戏。

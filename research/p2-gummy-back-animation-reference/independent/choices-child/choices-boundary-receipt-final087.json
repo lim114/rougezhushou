@@ -1,0 +1,620 @@
+{
+  "status": "PASS_FINAL_FIXED_SOURCE_AND_SAVED_CHOICES_BOUNDARY_ONLY",
+  "planned_section": 87,
+  "fixed_product_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+  "resource_commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+  "source_bindings": [
+    {
+      "path": "rouge/animation_reference.py",
+      "fixed_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+      "sha256": "3e0c98edfec28e13db3263fc0240e872ed6aaaac53f02729f0e4d17e139b2f1f",
+      "bytes": 2354
+    },
+    {
+      "path": "scripts/build_original_animation_048.py",
+      "fixed_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+      "sha256": "b27c4d80010e721bc519748c17203780ebab7a98386d0e7b139f2268bffc8d5e",
+      "bytes": 6621
+    },
+    {
+      "path": "scripts/build_animation_selection_048.py",
+      "fixed_commit": "9ef5a469673502754db3be320a8eece9a7fd18d4",
+      "sha256": "86271f1e85332dc518e0c7ad9586e4969e0f2f12180d8e9aaa3a38021c8a2b45",
+      "bytes": 1592
+    }
+  ],
+  "saved_attachments": [
+    {
+      "source_path": "/workspace/.continuation/p2-gummy-back-parser-source087/parse-Back-result.json",
+      "bytes": 7837,
+      "sha256": "2b3785b65d526bf74329f249b90bf2034c02eb79708e25ec12bdebe73709dd77"
+    },
+    {
+      "source_path": "/workspace/.continuation/p2-gummy-back-parser-source087/parse-Back-operation.json",
+      "bytes": 3149,
+      "sha256": "324b57b1b567abc14c174dccffadb2ce184ca55a272ad317136fd11cf90dbf87"
+    },
+    {
+      "source_path": "/workspace/.continuation/p2-gummy-back-parser-source087/source-findings087.json",
+      "bytes": 4174,
+      "sha256": "22a886924e5822e3c14fb57c46660fac3906d20dde852390d7820be87bbe1ef8"
+    },
+    {
+      "source_path": "/workspace/.continuation/p2-gummy-back-parser-source087/public-artifacts-manifest087.json",
+      "bytes": 32415,
+      "sha256": "db2679793321d9d4a0f817757c53d93f88a16c4d4261f65f54223f69fb8b5265"
+    }
+  ],
+  "sealed102_package_entries_reaudited": false,
+  "raw_skeleton_files_read": 0,
+  "records_manual_static_interpretation": [
+    {
+      "animation": "Attack",
+      "saved_duration_seconds": 1.3333333730697632,
+      "saved_events": [
+        {
+          "name": "OnAttack",
+          "seconds": 0.5333333611488342
+        }
+      ],
+      "existing_builder_eligible_interpretation": true,
+      "why": "Exactly one event, OnAttack strictly inside positive duration; named Attack; no loop/transition/Deploy name.",
+      "existing_choice_interpretation": "Attack prefix can enter normal and non-normal branches only after publication and selectable gate; still requires explicit descriptor selection.",
+      "label_interpretation": "Back -> 背面; Attack -> 普通攻击; preview frame values come from published normalized reference.",
+      "native_binding_inferred": false
+    },
+    {
+      "animation": "Default",
+      "saved_duration_seconds": 0,
+      "saved_events": [],
+      "existing_builder_eligible_interpretation": false,
+      "why": "No OnAttack, no named Attack/Skill, absent named events.",
+      "existing_choice_interpretation": "Cannot pass selectable gate.",
+      "native_binding_inferred": false
+    },
+    {
+      "animation": "Idle",
+      "saved_duration_seconds": 1,
+      "saved_events": [],
+      "existing_builder_eligible_interpretation": false,
+      "why": "No OnAttack, no named Attack/Skill, absent named events.",
+      "existing_choice_interpretation": "Cannot pass selectable gate.",
+      "native_binding_inferred": false
+    },
+    {
+      "animation": "Skill",
+      "saved_duration_seconds": 1.3333333730697632,
+      "saved_events": [
+        {
+          "name": "OnAttack",
+          "seconds": 0.4333333373069763
+        }
+      ],
+      "existing_builder_eligible_interpretation": true,
+      "why": "Exactly one OnAttack strictly inside positive duration; starts Skill; no loop/transition/Deploy name.",
+      "existing_choice_interpretation": "Literal Skill has no numbered regex match and does not start Attack; neither normal nor skill choices accept it.",
+      "label_interpretation": "Generic fallback 攻击动作参考 does not grant choices eligibility or identify S1/S2.",
+      "native_binding_inferred": false
+    },
+    {
+      "animation": "Start",
+      "saved_duration_seconds": 1,
+      "saved_events": [
+        {
+          "name": "OnStart",
+          "seconds": 0.13333334028720856
+        }
+      ],
+      "existing_builder_eligible_interpretation": false,
+      "why": "Only OnStart, no OnAttack and not a named Attack/Skill. Start is not asserted to match the distinct Begin/End/Restart textual exclusions.",
+      "existing_choice_interpretation": "Cannot pass selectable gate.",
+      "native_binding_inferred": false
+    }
+  ],
+  "builder_policy": {
+    "FPS": 30,
+    "EPSILON_FRAMES": 1e-05,
+    "normalization": "Only if float(seconds)*30 is within 1e-5 frames of an integer; representation tolerance, no tick/gameplay tolerance.",
+    "raw_and_strict_ceil_retained": true,
+    "preview": "Windup/event and total/duration use normalized ceil; recovery=total-windup.",
+    "eligibility": "Exactly one OnAttack strictly within positive duration, named attack/Skill, no Loop/Begin/End/Restart, exactly one named event; post-selection excludes Deploy.",
+    "new_numeric_frame_conversion_executed": false
+  },
+  "descriptor_scope": {
+    "normal_field": "normal_animation_reference",
+    "skill_field": "animation_reference",
+    "identity_None_returns_None": true,
+    "identity_must_match_current_choices": true,
+    "missing_or_ineligible_identity_raises_existing_ValueError": true,
+    "runtime_binding_verified_stays_false": true,
+    "literal_Skill_assigned_skill_number": false,
+    "Attack_normal_native_binding_inferred": false
+  },
+  "actual_UI_option_count_measured": false,
+  "new_UI_option_count_claimed": false,
+  "author_product_data_publication_or_finalfreeze_verified_by_this_child": false,
+  "new_source_JSON_AST_or_binary_parse_calls": 0,
+  "new_production_imports_or_helper_calls": 0,
+  "new_application_API_calls": 0,
+  "new_formatter_calls": 0,
+  "tests_run": 0,
+  "network_calls": 0,
+  "Qt_calls": 0,
+  "Wine_calls": 0,
+  "tracked_edits": 0,
+  "known_unknowns": [
+    "actual published data and author final freeze are separate parent responsibilities",
+    "native skill/normal/skin binding, damage/healing phase, SP and first hit clocks",
+    "atlas/render/geometry and current hotupdate equivalence",
+    "actual UI selection/options and any parser historical root cause or total"
+  ],
+  "preparation_failures": [],
+  "source_excerpts": [
+    {
+      "path": "rouge/animation_reference.py",
+      "sha256": "3e0c98edfec28e13db3263fc0240e872ed6aaaac53f02729f0e4d17e139b2f1f",
+      "ranges": [
+        {
+          "start": 13,
+          "end": 23,
+          "lines": [
+            {
+              "line": 13,
+              "text": "def choices(operator,skill=None,*,normal=False):"
+            },
+            {
+              "line": 14,
+              "text": "    records=references()['operators'].get(operator,{}).get('records',[])"
+            },
+            {
+              "line": 15,
+              "text": "    selected=[]"
+            },
+            {
+              "line": 16,
+              "text": "    for record in records:"
+            },
+            {
+              "line": 17,
+              "text": "        if not record['selectable_as_conventional_reference']:continue"
+            },
+            {
+              "line": 18,
+              "text": "        name=record['animation']"
+            },
+            {
+              "line": 19,
+              "text": "        number=re.match(r'^Skill_?(\\d+)(?:_|$)',name)"
+            },
+            {
+              "line": 20,
+              "text": "        ordinary=name.startswith('Attack')"
+            },
+            {
+              "line": 21,
+              "text": "        if (normal and ordinary) or (not normal and (ordinary or number and int(number[1])==skill)):"
+            },
+            {
+              "line": 22,
+              "text": "            selected.append(record)"
+            },
+            {
+              "line": 23,
+              "text": "    return selected"
+            }
+          ]
+        },
+        {
+          "start": 26,
+          "end": 39,
+          "lines": [
+            {
+              "line": 26,
+              "text": "def label(record):"
+            },
+            {
+              "line": 27,
+              "text": "    face={'Front':'正面','Back':'背面'}[record['orientation']]"
+            },
+            {
+              "line": 28,
+              "text": "    motion=record['animation']"
+            },
+            {
+              "line": 29,
+              "text": "    number=re.match(r'^Skill_?(\\d+)(?:_|$)',motion)"
+            },
+            {
+              "line": 30,
+              "text": "    if motion.startswith('Attack'):"
+            },
+            {
+              "line": 31,
+              "text": "        suffix=motion.removeprefix('Attack').strip('_')"
+            },
+            {
+              "line": 32,
+              "text": "        suffix={'Down':'向下动作'}.get(suffix,suffix)"
+            },
+            {
+              "line": 33,
+              "text": "        action='普通攻击'+(' '+suffix if suffix else '')"
+            },
+            {
+              "line": 34,
+              "text": "    elif number:"
+            },
+            {
+              "line": 35,
+              "text": "        suffix=motion[number.end():]"
+            },
+            {
+              "line": 36,
+              "text": "        action=f'技能{number[1]}动作'+({'Attack':' · 攻击','Combat':' · 攻击'}.get(suffix,' · 动作变体' if suffix else ''))"
+            },
+            {
+              "line": 37,
+              "text": "    else:action='攻击动作参考'"
+            },
+            {
+              "line": 38,
+              "text": "    preview=record['preview']"
+            },
+            {
+              "line": 39,
+              "text": "    return f\"{face} · {action} · 出手{preview['windup_frames']}帧 / 动画{preview['animation_frames']}帧\""
+            }
+          ]
+        },
+        {
+          "start": 42,
+          "end": 51,
+          "lines": [
+            {
+              "line": 42,
+              "text": "def descriptor(operator,skill,options,*,normal=False):"
+            },
+            {
+              "line": 43,
+              "text": "    field='normal_animation_reference' if normal else 'animation_reference'"
+            },
+            {
+              "line": 44,
+              "text": "    identity=options.get(field)"
+            },
+            {
+              "line": 45,
+              "text": "    if identity is None:return None"
+            },
+            {
+              "line": 46,
+              "text": "    record=next((r for r in choices(operator,skill,normal=normal) if r['id']==identity),None)"
+            },
+            {
+              "line": 47,
+              "text": "    if record is None:raise ValueError('原版动画参考与当前干员/技能不符，或该动作不适合常规逐击参考。')"
+            },
+            {
+              "line": 48,
+              "text": "    return {**record['preview'],'animation':record['animation'],'source':record['source']['url'],"
+            },
+            {
+              "line": 49,
+              "text": "        'reference_id':identity,'reference_label':label(record),"
+            },
+            {
+              "line": 50,
+              "text": "        'original_orientation':record['orientation'],'skin':'original',"
+            },
+            {
+              "line": 51,
+              "text": "        'runtime_binding_verified':False,'source_sha256':record['source']['sha256']}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "scripts/build_original_animation_048.py",
+      "sha256": "b27c4d80010e721bc519748c17203780ebab7a98386d0e7b139f2268bffc8d5e",
+      "ranges": [
+        {
+          "start": 15,
+          "end": 29,
+          "lines": [
+            {
+              "line": 15,
+              "text": "FPS = 30"
+            },
+            {
+              "line": 16,
+              "text": "COMMIT = 'd0b5af0b004b044d322397ce5ae79632b6d9fcdd'"
+            },
+            {
+              "line": 17,
+              "text": "EPSILON_FRAMES = 1e-5  # representation tolerance, not a gameplay/tick tolerance"
+            },
+            {
+              "line": 18,
+              "text": ""
+            },
+            {
+              "line": 19,
+              "text": ""
+            },
+            {
+              "line": 20,
+              "text": "def frames(seconds):"
+            },
+            {
+              "line": 21,
+              "text": "    value = float(seconds) * FPS"
+            },
+            {
+              "line": 22,
+              "text": "    normalized = round(value) if abs(value - round(value)) <= EPSILON_FRAMES else value"
+            },
+            {
+              "line": 23,
+              "text": "    return {"
+            },
+            {
+              "line": 24,
+              "text": "        'seconds': float(seconds),"
+            },
+            {
+              "line": 25,
+              "text": "        'raw_frames_30hz': value,"
+            },
+            {
+              "line": 26,
+              "text": "        'strict_ceil_frames_30hz': math.ceil(value),"
+            },
+            {
+              "line": 27,
+              "text": "        'representation_normalized_frames_30hz': normalized,"
+            },
+            {
+              "line": 28,
+              "text": "        'ceil_frames_30hz': math.ceil(normalized),"
+            },
+            {
+              "line": 29,
+              "text": "    }"
+            }
+          ]
+        },
+        {
+          "start": 64,
+          "end": 100,
+          "lines": [
+            {
+              "line": 64,
+              "text": "                duration = frames(values['duration_seconds'])"
+            },
+            {
+              "line": 65,
+              "text": "                on_attack = [e for e in events if e['name'] == 'OnAttack']"
+            },
+            {
+              "line": 66,
+              "text": "                reasons = []"
+            },
+            {
+              "line": 67,
+              "text": "                if len(on_attack) != 1:"
+            },
+            {
+              "line": 68,
+              "text": "                    reasons.append('not exactly one OnAttack event')"
+            },
+            {
+              "line": 69,
+              "text": "                elif not 0 < on_attack[0]['seconds'] < duration['seconds']:"
+            },
+            {
+              "line": 70,
+              "text": "                    reasons.append('OnAttack must be strictly inside positive animation duration')"
+            },
+            {
+              "line": 71,
+              "text": "                if not ('Attack' in animation or animation.startswith('Skill')):"
+            },
+            {
+              "line": 72,
+              "text": "                    reasons.append('not a named attack or skill animation')"
+            },
+            {
+              "line": 73,
+              "text": "                if 'Loop' in animation:"
+            },
+            {
+              "line": 74,
+              "text": "                    reasons.append('loop named animation requires separate lifecycle binding')"
+            },
+            {
+              "line": 75,
+              "text": "                if 'Begin' in animation or 'End' in animation or 'Restart' in animation:"
+            },
+            {
+              "line": 76,
+              "text": "                    reasons.append('transition animation requires separate lifecycle binding')"
+            },
+            {
+              "line": 77,
+              "text": "                # Other events are retained, but their sequence can change the"
+            },
+            {
+              "line": 78,
+              "text": "                # effect lifecycle and must not be silently discarded."
+            },
+            {
+              "line": 79,
+              "text": "                if len(events) != 1:"
+            },
+            {
+              "line": 80,
+              "text": "                    reasons.append('multiple or absent named events require separate binding')"
+            },
+            {
+              "line": 81,
+              "text": "                eligible = not reasons"
+            },
+            {
+              "line": 82,
+              "text": "                record = {"
+            },
+            {
+              "line": 83,
+              "text": "                    'id': f'{cid}:{face}:{animation}', 'orientation': face,"
+            },
+            {
+              "line": 84,
+              "text": "                    'skin': 'original', 'animation': animation,"
+            },
+            {
+              "line": 85,
+              "text": "                    'spine_version': data['spine_version'],"
+            },
+            {
+              "line": 86,
+              "text": "                    'duration': duration, 'events': events,"
+            },
+            {
+              "line": 87,
+              "text": "                    'selectable_as_conventional_reference': eligible,"
+            },
+            {
+              "line": 88,
+              "text": "                    'unverified_reasons': reasons,"
+            },
+            {
+              "line": 89,
+              "text": "                    'runtime_binding_verified': False,"
+            },
+            {
+              "line": 90,
+              "text": "                    'source': {'url': item['url'], 'sha256': digest,"
+            },
+            {
+              "line": 91,
+              "text": "                               'git_blob': blob, 'bytes': len(binary)},"
+            },
+            {
+              "line": 92,
+              "text": "                }"
+            },
+            {
+              "line": 93,
+              "text": "                if eligible:"
+            },
+            {
+              "line": 94,
+              "text": "                    windup = on_attack[0]['ceil_frames_30hz']"
+            },
+            {
+              "line": 95,
+              "text": "                    total = duration['ceil_frames_30hz']"
+            },
+            {
+              "line": 96,
+              "text": "                    record['preview'] = {"
+            },
+            {
+              "line": 97,
+              "text": "                        'windup_frames': windup, 'recovery_frames': total - windup,"
+            },
+            {
+              "line": 98,
+              "text": "                        'animation_frames': total,"
+            },
+            {
+              "line": 99,
+              "text": "                    }"
+            },
+            {
+              "line": 100,
+              "text": "                records.append(record)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "scripts/build_animation_selection_048.py",
+      "sha256": "86271f1e85332dc518e0c7ad9586e4969e0f2f12180d8e9aaa3a38021c8a2b45",
+      "ranges": [
+        {
+          "start": 7,
+          "end": 22,
+          "lines": [
+            {
+              "line": 7,
+              "text": "def build(source):"
+            },
+            {
+              "line": 8,
+              "text": "    data=json.loads(source.read_text(encoding='utf-8'))"
+            },
+            {
+              "line": 9,
+              "text": "    excluded=[]"
+            },
+            {
+              "line": 10,
+              "text": "    for profile in data['operators'].values():"
+            },
+            {
+              "line": 11,
+              "text": "        for record in profile['records']:"
+            },
+            {
+              "line": 12,
+              "text": "            if 'Deploy' in record['animation'] and record['selectable_as_conventional_reference']:"
+            },
+            {
+              "line": 13,
+              "text": "                record['selectable_as_conventional_reference']=False"
+            },
+            {
+              "line": 14,
+              "text": "                record['unverified_reasons'].append('deployment animation requires separate lifecycle binding')"
+            },
+            {
+              "line": 15,
+              "text": "                record.pop('preview',None);excluded.append(record['id'])"
+            },
+            {
+              "line": 16,
+              "text": "    records=[r for p in data['operators'].values() for r in p['records']]"
+            },
+            {
+              "line": 17,
+              "text": "    data['counts']['selectable_references']=sum(r['selectable_as_conventional_reference'] for r in records)"
+            },
+            {
+              "line": 18,
+              "text": "    data['counts']['unverified_or_transition_references']=sum(not r['selectable_as_conventional_reference'] for r in records)"
+            },
+            {
+              "line": 19,
+              "text": "    data['selection_derivation']={'source_file':str(source.relative_to(ROOT)),"
+            },
+            {
+              "line": 20,
+              "text": "        'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),"
+            },
+            {
+              "line": 21,
+              "text": "        'excluded_deployment_motions':excluded,'runtime_binding_inferred':False}"
+            },
+            {
+              "line": 22,
+              "text": "    return data"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

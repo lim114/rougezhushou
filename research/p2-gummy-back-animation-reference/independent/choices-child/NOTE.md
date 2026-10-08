@@ -1,0 +1,11 @@
+# 087 choices静态边界
+
+固定9ef5a46的animation_reference及两份048 builder与已封Back5 saved字节绑定；只读文本，没有执行产品、JSON/AST/骨架parser或frame converter。父审负责新5数据发布、旧923/计数/来源hash与作者最终freeze，此附件不是那部分的执行证明。
+
+既有builder可将Back Attack与无编号Skill记录为selectable来源候选，因为各有一个正时长内OnAttack。Default/Idle没有OnAttack，Start只有OnStart，不能通过既有eligible gate。这里没有拿Start当Begin/End/Restart textual match，也没有借Front填补Back未有动作。
+
+choices先检查published record的selectable标记，再判Attack前缀或编号Skill regex。literal Skill缺编号且不是Attack，所以不能进入任何normal/skill choices。label fallback攻击动作参考没有授权选择资格。Attack在normal及非normal分支都满足ordinary命名条件，但还需要正式发布、selectable gate和descriptor显式identity；identity=None直接None，id必须匹配当前choices。没有测量或宣称新增UI选项数。
+
+30Hz与1e-5是已有浮点表示规则：raw frames/strict ceil保留，近整数才representation-normalize，preview使用normalized ceil及total-windup。它不是游戏tick宽容、实际出手/恢复/技能结束、伤害治疗或SP时钟，native binding继续False。本审不执行新增数值frame换算。
+
+所有结论是固定源码加保存结果的静态映射，没有调用choices/label/descriptor、应用API、formatter、tests、Qt、Wine或网络，没有tracked改动。不对作者尚未冻结草案的默认行为或完整发布作承诺；finalfreeze后也不自行补测试/API。
