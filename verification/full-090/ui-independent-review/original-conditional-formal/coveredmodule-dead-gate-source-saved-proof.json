@@ -1,0 +1,124 @@
+{
+  "format_version": 1,
+  "kind": "source_and_already_saved_receipts_only_no_new_calls",
+  "actual_root": "5e2ff697402d06e78b239e01f0b4307b50dd5633",
+  "old_saved44_gzip": {
+    "source_path": "/workspace/.continuation/ui-090-draft/api-ui090-section086.json.gz",
+    "sha256": "3b8dcf9afa046360e1fdbb7f7e004ee968dc7fe8b4fb15ee7b9dd1e6b1761db8",
+    "bytes": 319026,
+    "decoded_sha256": "65575339ba43ab32ff19ac3d76bb84f61e73e14fd609c55a7a217e4337da9a03",
+    "decoded_bytes": 3162814
+  },
+  "two_covered_rows": [
+    {
+      "row_index0": 26,
+      "case": {
+        "pair_id": "coveredmodule:oblvns-ranged-skill-vs-normal",
+        "kind": "qualification",
+        "field": "ranged_attack",
+        "widget_checked": false,
+        "field_serialized": true,
+        "input": {
+          "operator": "char_4182_oblvns",
+          "skill": 3,
+          "skill_rank": 10,
+          "elite": 2,
+          "level": 60,
+          "potential": 1,
+          "trust": 100,
+          "module_id": "uniequip_002_oblvns",
+          "module_level": 3,
+          "timing_mode": "frames",
+          "window_seconds": 30.0,
+          "healing_targets": 1,
+          "continuous_attacks": true,
+          "deployment_elapsed_seconds": 0.0,
+          "enemy_defense": 0.0,
+          "enemy_resistance": 0.0,
+          "relic_ids": [],
+          "note_count": 0,
+          "ranged_attack": false
+        }
+      },
+      "already_saved_same_call_trace": [
+        {
+          "operator": "char_4182_oblvns",
+          "skill": 3,
+          "module_id": "uniequip_002_oblvns",
+          "module_level": 3,
+          "continuous_attacks": true,
+          "normal_plan_calls_observed": 1,
+          "normal_local_exists": true,
+          "normal_local_is_not_None": true,
+          "actual_object_ranged_attack_condition_consumed": true,
+          "ranged_overridden_local": true,
+          "selected_note_max_cnt": 12.0
+        }
+      ]
+    },
+    {
+      "row_index0": 27,
+      "case": {
+        "pair_id": "coveredmodule:oblvns-ranged-skill-vs-normal",
+        "kind": "qualification",
+        "field": "ranged_attack",
+        "widget_checked": true,
+        "field_serialized": true,
+        "input": {
+          "operator": "char_4182_oblvns",
+          "skill": 3,
+          "skill_rank": 10,
+          "elite": 2,
+          "level": 60,
+          "potential": 1,
+          "trust": 100,
+          "module_id": "uniequip_002_oblvns",
+          "module_level": 3,
+          "timing_mode": "frames",
+          "window_seconds": 30.0,
+          "healing_targets": 1,
+          "continuous_attacks": true,
+          "deployment_elapsed_seconds": 0.0,
+          "enemy_defense": 0.0,
+          "enemy_resistance": 0.0,
+          "relic_ids": [],
+          "note_count": 0,
+          "ranged_attack": true
+        }
+      },
+      "already_saved_same_call_trace": [
+        {
+          "operator": "char_4182_oblvns",
+          "skill": 3,
+          "module_id": "uniequip_002_oblvns",
+          "module_level": 3,
+          "continuous_attacks": true,
+          "normal_plan_calls_observed": 1,
+          "normal_local_exists": true,
+          "normal_local_is_not_None": true,
+          "actual_object_ranged_attack_condition_consumed": true,
+          "ranged_overridden_local": true,
+          "selected_note_max_cnt": 12.0
+        }
+      ]
+    }
+  ],
+  "actual_engine_source": {
+    "source_path": "/workspace/rougezhushou/rouge/operator_engine.py",
+    "sha256": "d8091732fd0559c9ef49b45a8b0c906d61c2ab57469fc0afba4469e0ff977b7c",
+    "original_line_endings": "CRLF",
+    "selected_lines": {
+      "855": "            notes=self.option('note_count',0,maximum=self.talent('颂乐音符','max_cnt',10),integer=True)",
+      "856": "            defense=self.enemy_def*(1-notes*self.talent('颂乐音符','def_penetrate_ratio'))",
+      "857": "            resistance=self.enemy_res*(1-notes*self.talent('颂乐音符','magic_resist_penetrate_ratio'))",
+      "858": "            ranged_scale=.8 if self.s.get('ranged_attack',True) else 1",
+      "859": "            if self.s.get('module_id') and not normal and self.tv.get('颂乐音符',{}).get('max_cnt',10)>10:ranged_scale=1",
+      "1472": "        normal=self.plan(normal=True,window=recharge) if cycle is not None and not (",
+      "1473": "            sp['sp_type']=='INCREASE_WHEN_ATTACK' and not read_continuous_attacks(self.s)) else None",
+      "1474": "        if self.s['operator']=='char_4182_oblvns':",
+      "1475": "            ranged_overridden=self.s.get('module_id') and self.tv.get('颂乐音符',{}).get('max_cnt',10)>10",
+      "1476": "            self.ranged_attack_condition_consumed=not ranged_overridden or normal is not None"
+    }
+  },
+  "unchanged_expected_trace": "one actual normal-plan entry and calculate-return, normal not None, actual ranged consumer true, selected note max_cnt value12.0; no extra calculation, no native timing or attachment inferred"
+}

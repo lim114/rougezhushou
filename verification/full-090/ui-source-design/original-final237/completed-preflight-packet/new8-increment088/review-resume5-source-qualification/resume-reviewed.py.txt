@@ -1,0 +1,297 @@
+"""Exactly one bounded new8 pass against frozen actual root089, with lossless evidence."""
+import gzip
+import hashlib
+import json
+import math
+import sys
+import time
+import traceback
+from collections import Counter
+from copy import deepcopy
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+PACKAGE = HERE / 'public-schema-actual-root089'
+PROOF_PATH = HERE / 'actual-root089-ui090-source-proof.json'
+PLAN_PATH = HERE / 'original-approved-additional8-input-plan090.json'
+TARGET = HERE / 'api-ui090-section088-new8.json.gz'
+assert not TARGET.exists() and not (HERE / 'api-ui090-section088-new8-resume-failure.json.gz').exists()
+assert (HERE / 'new8-resume-execution-freeze090.json').exists(), 'Freeze adapter/source/contract first'
+for frozen_file in json.loads((HERE / 'new8-resume-execution-freeze090.json').read_bytes())['files']:
+    frozen_raw = Path(frozen_file['source_path']).read_bytes()
+    assert len(frozen_raw) == frozen_file['bytes']
+    assert hashlib.sha256(frozen_raw).hexdigest() == frozen_file['sha256']
+proof = json.loads(PROOF_PATH.read_bytes())
+assert proof['actual_root089_commit'] == '3a59aa0c3d09199caea14de3c5fe89781225a8d6'
+assert proof['maintenance_python_json_files'] == 728 and proof['public_files'] == 126
+assert hashlib.sha256(PLAN_PATH.read_bytes()).hexdigest() == '31beb7f95a256172591226127562324be6625317fd1ad406baa84851130dd521'
+
+def canonical(value):
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False)
+
+def typed(value):
+    if type(value) is dict:
+        return {'type': 'dict', 'items': [[typed(key), typed(item)] for key, item in value.items()]}
+    if type(value) in (list, tuple):
+        return {'type': type(value).__name__, 'items': [typed(item) for item in value]}
+    assert type(value) in (str, int, float, bool, type(None)), type(value)
+    return {'type': 'float', 'hex': value.hex()} if type(value) is float else {'type': type(value).__name__, 'value': value}
+
+def source_hashes():
+    return {path.relative_to(PACKAGE).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in sorted((PACKAGE / 'rouge').rglob('*')) if path.is_file() and path.suffix in ('.py', '.json')}
+
+before_source = source_hashes()
+assert before_source == proof['public_source_sha256']
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(PACKAGE))
+from rouge import damage as damage_module
+from rouge import reporting as reporting_module
+from rouge import estimate as estimate_module
+assert Path(damage_module.__file__).resolve().is_relative_to(PACKAGE)
+assert 'rouge.app' not in sys.modules and 'rouge.run_state' not in sys.modules
+first_segment = json.loads(gzip.decompress((HERE / 'api-ui090-section088-new8-failure.json.gz').read_bytes()))
+formatter_entries = Counter(first_segment['ledger']['formatter_function_entry_counts'])
+phase_entries = Counter()
+original_report = reporting_module.format_report
+original_estimate = estimate_module.format_estimate
+
+def format_report(result, *, technical=False):
+    formatter_entries['format_report_technical' if technical else 'format_report_default'] += 1
+    return original_report(result, technical=technical)
+
+def format_estimate(result):
+    formatter_entries['format_estimate'] += 1
+    return original_estimate(result)
+
+reporting_module.format_report = format_report
+estimate_module.format_estimate = format_estimate
+phase = 'preparation'
+processed_scenarios = []
+internal_resume_proofs = []
+observed_public_entries = Counter({'calculate_damage': first_segment['ledger']['profile_observed_calculate_damage_function_entries']})
+
+def observe_entries(frame, event, argument):
+    if (event == 'return' and frame.f_code.co_filename == str(PACKAGE / 'rouge/operator_engine.py')
+            and frame.f_code.co_name == 'calculate'):
+        local = frame.f_locals
+        self = local['self']
+        internal_resume_proofs.append({
+            'full_timing_streams': deepcopy(local['full']['timing']['streams']),
+            'full_timing_streams_native': typed(local['full']['timing']['streams']),
+            'calculated_internal_resume': local['resume'],
+            'actual_internal_prepared_timing': deepcopy(self.s['timing']),
+            'actual_rules_include_deployment_attack_speed': any(
+                rule['kind'] == 'deployment_attack_speed' for rule in self.s.get('_relic_rules', [])),
+            'private_reference_arithmetic_not_native_frame_proof': True,
+        })
+    if event != 'call':
+        return
+    filename = frame.f_code.co_filename
+    if not filename.startswith(str(PACKAGE / 'rouge') + '/'):
+        return
+    phase_entries[(phase, frame.f_code.co_name)] += 1
+    if filename == str(PACKAGE / 'rouge/damage.py') and frame.f_code.co_name == 'calculate_damage':
+        observed_public_entries['calculate_damage'] += 1
+    if filename == str(PACKAGE / 'rouge/reporting.py') and frame.f_code.co_name == 'build_report':
+        # Observe the actual scenario supplied to the existing report producer
+        # inside this same API call; it is not a invented returned report key.
+        scenario = deepcopy(frame.f_locals['scenario'])
+        processed_scenarios.append({'scenario': scenario, 'scenario_native': typed(scenario)})
+
+def require_result(case, result):
+    assert type(result) is dict
+    assert all(key in result for key in ('attack', 'total_damage', 'components', 'estimate', 'report', 'timing'))
+    assert type(result['components']) is list
+    expected_training = {key: case['input'][key] for key in
+        ('elite', 'level', 'trust', 'potential', 'module_id', 'module_level')}
+    assert typed(result['estimate']['training']) == typed(expected_training)
+    skill = result['estimate']['skill']
+    assert all(key in skill for key in ('initial_seconds', 'recharge_seconds', 'cycle_seconds',
+        'duration_seconds', 'total_damage', 'total_healing', 'phase_damage', 'phase_healing'))
+    assert result['report']['schema_version'] == 2
+    assert result['report']['operator']['id'] == case['input']['operator']
+    assert result['report']['skill_number'] == case['input']['skill']
+    checked = case['widget_checked']
+    assert type(checked) is bool and type(case['input']['continuous_attacks']) is bool
+    assert len(processed_scenarios) >= 1
+    for processed in processed_scenarios:
+        scenario = processed['scenario']
+        assert type(scenario['continuous_attacks']) is bool and scenario['continuous_attacks'] is checked
+        for key in case['input']:
+            if key == 'timing':
+                # Combat.calculate1469 preserves the declared timing and adds
+                # exactly its private resume frame. Continuous returned
+                # streams append only for deployment-speed rules, absent
+                # here; full streams=[] and the existing max defaults to0.
+                assert case['input']['operator'] == 'char_002_amiya'
+                assert case['input']['timing_mode'] == 'continuous'
+                expected = {**case['input']['timing'], '_resume_frames': 0}
+                assert typed(scenario['timing']) == typed(expected)
+            else:
+                assert typed(scenario[key]) == typed(case['input'][key]), key
+    if case['input']['operator'] == 'mechanist':
+        assert 'total_healing' not in result
+        assert skill['total_healing'] == 0 and skill['window_healing'] == 0
+        assert skill['sp_type'] == 'INCREASE_WHEN_ATTACK'
+        for key in ('initial_seconds', 'recharge_seconds', 'cycle_seconds'):
+            assert skill[key] is None if not checked else type(skill[key]) is float and math.isfinite(skill[key]) and skill[key] > 0
+    elif case['input']['operator'] == 'char_002_amiya':
+        reference = result['amiya_continuous_reference']
+        excluded = case['input']['elite'] == 0
+        assert reference['enemy_source_excluded'] is excluded
+        assert reference['attack_sp_enabled_in_reference'] is checked
+        assert reference['attack_sp_per_attack_parameter'] == (0 if excluded else 2)
+        assert reference['native_clock_binding_verified'] is False
+        for key in ('actual_acquisition_times_seconds', 'actual_impact_times_seconds',
+                    'actual_recharge_seconds', 'actual_cycle_seconds'):
+            assert reference[key] is None
+        for key in ('recharge_seconds', 'cycle_seconds', 'cycle_damage', 'cycle_dps', 'cycle_healing', 'cycle_hps'):
+            assert skill[key] is None
+        assert result['timing']['phase_clock_unbound'] is True
+        assert result['timing']['resource_and_damage_shared_clock'] is False
+        if excluded:
+            assert reference['declared_target_windows_seconds'] == []
+            assert reference['declared_target_lifetime_seconds'] is None
+            assert result['total_damage'] == 0
+            assert reference['cast_reference']['enemy_source_excluded'] is True
+        else:
+            assert reference['declared_target_lifetime_seconds'] == 5.75
+            assert reference['declared_target_windows_seconds'] is None
+    elif case['input']['operator'] == 'char_1050_chen3':
+        assert type(skill['initial_seconds']) is float and math.isfinite(skill['initial_seconds'])
+        assert any(rule['kind'] == 'attack_sp' and rule['relic_id'] == 'rogue_6_relic_legacy_67'
+                   for rule in result['relic_resolution']['rules'])
+    else:
+        raise AssertionError('Unplanned owner')
+
+cases = json.loads(PLAN_PATH.read_bytes())['cases']
+assert len(cases) == 8 and len({canonical(row['input']) for row in cases}) == 8
+records = first_segment['saved_records']
+starting_completed_records = len(records)
+assert starting_completed_records == 3
+assert (HERE / 'saved3-timing-contract-reassertion090.json').exists()
+API_calls = first_segment['ledger']['actual_public_calculation_requests']
+formatter_requests = first_segment['ledger']['formatter_text_requests']
+started = time.perf_counter()
+
+def save_gzip(path, value):
+    encoded = json.dumps(value, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()
+    with path.open('xb') as output:
+        output.write(gzip.compress(encoded, mtime=0))
+    return {'source_path': str(path), 'bytes': len(path.read_bytes()),
+        'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+        'decompressed_bytes': len(encoded), 'decompressed_sha256': hashlib.sha256(encoded).hexdigest()}
+
+def ledger():
+    return {'actual_public_calculation_requests': API_calls,
+        'profile_observed_calculate_damage_function_entries': observed_public_entries['calculate_damage'],
+        'unique_requested_calculation_inputs': len({canonical(r['input']) for r in records}),
+        'formatter_text_requests': formatter_requests,
+        'formatter_function_entry_counts': dict(formatter_entries),
+        'formatter_actual_entries': sum(formatter_entries.values()),
+        'internal_catalog_uncached_python_body_entries_by_phase': {name: first_segment['ledger']['internal_catalog_uncached_python_body_entries_by_phase'][name] + sum(count for (phase_name, func), count in phase_entries.items()
+            if phase_name == name and func == 'catalog') for name in ('API', 'formatter')},
+        'external_production_helper_calls': 0, 'RunState_constructor_apply_calls': 0,
+        'Qt_Wine_tests_network_calls': 0}
+
+def preserve_failure(error_type, error, stack):
+    failure = {'status': 'NEW8_PREFLIGHT_COUNTEREXAMPLE_OR_PREPARATION_FAILURE',
+        'actual_root089_commit': proof['actual_root089_commit'], 'ledger': ledger(),
+        'saved_records': records, 'current_case': globals().get('case'),
+        'current_input': globals().get('request'), 'current_result': globals().get('result'),
+        'current_result_native': globals().get('result_native'), 'current_reports': globals().get('reports'),
+        'current_same_call_processed_scenarios': processed_scenarios,
+        'source_hashes_before': before_source, 'source_hashes_after': source_hashes(),
+        'error_type': error_type.__name__, 'error': str(error),
+        'traceback': ''.join(traceback.format_exception(error_type, error, stack)),
+        'completed_requests_not_to_be_reexecuted': True}
+    save_gzip(HERE / 'api-ui090-section088-new8-resume-failure.json.gz', failure)
+    sys.__excepthook__(error_type, error, stack)
+
+sys.excepthook = preserve_failure
+old_profile = sys.getprofile()
+sys.setprofile(observe_entries)
+try:
+    for case in cases[starting_completed_records:]:
+        request = deepcopy(case['input'])
+        caller_before = typed(request)
+        result = result_native = reports = None
+        processed_scenarios.clear()
+        internal_resume_proofs.clear()
+        phase = 'API'
+        API_calls += 1
+        result = damage_module.calculate_damage(request)
+        result_native = typed(result)
+        result_projection = canonical(result)
+        assert typed(request) == caller_before
+        phase = 'formatter'
+        reports = {}
+        for name, function in (
+                ('estimate', estimate_module.format_estimate),
+                ('default', reporting_module.format_report),
+                ('technical', lambda value: reporting_module.format_report(value, technical=True))):
+            formatter_requests += 1
+            reports[name] = function(result)
+            assert type(reports[name]) is str
+        assert typed(result) == result_native and canonical(result) == result_projection
+        assert reports['estimate'] == reports['default']
+        record = {'sequence': len(records) + 1, 'pair_id': case['pair_id'],
+            'widget_checked': case['widget_checked'], 'input': case['input'],
+            'caller_native_before': caller_before, 'caller_native_after': typed(request),
+            'result': result, 'result_native': result_native,
+            'reports': reports, 'reports_sha256': {key: hashlib.sha256(value.encode()).hexdigest() for key, value in reports.items()},
+            'same_call_processed_report_scenarios': deepcopy(processed_scenarios),
+            'same_call_internal_resume_proof': deepcopy(internal_resume_proofs)}
+        records.append(record)
+        require_result(case, result)
+        assert len(internal_resume_proofs) == 1
+        resume_proof = internal_resume_proofs[0]
+        assert resume_proof['full_timing_streams'] == []
+        assert type(resume_proof['calculated_internal_resume']) is int
+        assert resume_proof['calculated_internal_resume'] == 0
+        assert resume_proof['actual_rules_include_deployment_attack_speed'] is False
+finally:
+    sys.setprofile(old_profile)
+
+pairs = {}
+for record in records:
+    pairs.setdefault(record['pair_id'], []).append(record)
+for pair_id, rows in pairs.items():
+    assert len(rows) == 2 and [r['widget_checked'] for r in rows] == [False, True]
+    if pair_id in ('088-native-checkbox-mechanist-S1', '088-hidden-checkbox-chen3-S3-active-warrior67'):
+        false, true = [r['result']['estimate']['skill']['initial_seconds'] for r in rows]
+        if 'mechanist' in pair_id:
+            assert false is None and type(true) is float
+        else:
+            assert false > true >= 0
+    assert rows[0]['result_native'] != rows[1]['result_native']
+assert API_calls == observed_public_entries['calculate_damage'] == 8
+assert formatter_requests == 24
+assert source_hashes() == before_source
+document = {'status': 'PASS_ACTUAL_ROOT089_NEW8_PUBLIC_API_NATIVE_JSON_THREE_TEXT_PREFLIGHT_ONLY',
+    'actual_root089_commit': proof['actual_root089_commit'],
+    'actual_root088_commit': proof['actual_root088_commit'],
+    'approved_original_plan_sha256': hashlib.sha256(PLAN_PATH.read_bytes()).hexdigest(),
+    'ledger': ledger(), 'records': records, 'record_count': len(records),
+    'source_hashes_before': before_source, 'source_hashes_after': source_hashes(),
+    'same_call_trace_not_invented_public_result_scenario': True,
+    'scope': 'New8 real-checkbox/read-only-cultivation inputs only; no Qt/native battle or text-input rejection claim.',
+    'old44_1154_4217_source16_author60_reexecuted': False,
+    'future_actual_root090_source_freeze_complete': False,
+    'remaining5_elapsed_seconds': time.perf_counter() - started,
+    'execution_segments': [{'actual_API_calls': 3, 'explicit_text_requests': 9, 'actual_formatter_entries': 12,
+        'harness_contract_counterexample': 'prepared timing adds source-derived integer _resume_frames0',
+        'whole_saved_prefix_reasserted_without_calls': True},
+        {'actual_API_calls': API_calls - 3, 'explicit_text_requests': formatter_requests - 9,
+         'actual_formatter_entries': sum(formatter_entries.values()) - 12}],
+    'same_harness_issue_failed_attempts': 1}
+compressed = save_gzip(TARGET, document)
+summary = {'status': document['status'], 'passed': True, 'root_source_commit': proof['actual_root089_commit'],
+    'record_count': len(records), 'pair_groups': len(pairs), 'ledger': ledger(),
+    'result_gzip': compressed, 'public_source_files': proof['public_files'],
+    'maintained_source_files': proof['maintenance_python_json_files'],
+    'source_zero_drift': True, 'Qt_Wine_actual_calls': 0,
+    'old_completed_matrices_reexecuted': False, 'pending_full090_GUI': True}
+(HERE / 'api-ui090-section088-new8-summary.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n')
+print(json.dumps(summary, ensure_ascii=False))

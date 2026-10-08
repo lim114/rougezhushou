@@ -1,0 +1,646 @@
+{
+  "status": "STATIC_KEY_INVENTORY_READY_PENDING_UNIQUE_NEW8_SAVED_RESULTS",
+  "named_calculation_source_commit": "66df88c3274e37ba0f176adcd862a439a6f99767",
+  "plan_sha256": "31beb7f95a256172591226127562324be6625317fd1ad406baa84851130dd521",
+  "source_blobs": [
+    {
+      "git_commit": "66df88c3274e37ba0f176adcd862a439a6f99767",
+      "git_path": "rouge/damage.py",
+      "snapshot": "actual088-damage.py",
+      "bytes": 31071,
+      "sha256": "b48c86b2f02c4ea76f9b6cbd1b32a57abd925b2d8d22e8527a0cd6cb8c61be09"
+    },
+    {
+      "git_commit": "66df88c3274e37ba0f176adcd862a439a6f99767",
+      "git_path": "rouge/operator_engine.py",
+      "snapshot": "actual088-operator_engine.py",
+      "bytes": 156230,
+      "sha256": "d8091732fd0559c9ef49b45a8b0c906d61c2ab57469fc0afba4469e0ff977b7c"
+    },
+    {
+      "git_commit": "66df88c3274e37ba0f176adcd862a439a6f99767",
+      "git_path": "rouge/amiya_continuous_reference.py",
+      "snapshot": "actual088-amiya_continuous_reference.py",
+      "bytes": 7385,
+      "sha256": "d8638b7c62c04575714eebe5a3fe9da46151ef3808da5518fc765c5cc4d506e7"
+    },
+    {
+      "git_commit": "66df88c3274e37ba0f176adcd862a439a6f99767",
+      "git_path": "rouge/estimate.py",
+      "snapshot": "actual088-estimate.py",
+      "bytes": 21980,
+      "sha256": "c1f73f1663454578f8b38b0caa2cba1dd99a082104e339dc4f3c8ff893c96a91"
+    },
+    {
+      "git_commit": "66df88c3274e37ba0f176adcd862a439a6f99767",
+      "git_path": "rouge/reporting.py",
+      "snapshot": "actual088-reporting.py",
+      "bytes": 97666,
+      "sha256": "70ef12ed860c08ce4f471d2be0e9c5cbcec40a64ad7b91d6078c2d99d11254ae"
+    }
+  ],
+  "plan_pair_ids": [
+    "088-native-checkbox-mechanist-S1",
+    "088-hidden-checkbox-amiya-E2-S1-bounded-reference",
+    "088-hidden-checkbox-chen3-S3-active-warrior67",
+    "088-hidden-checkbox-amiya-E0-S1-empty-target-reference"
+  ],
+  "public_common_paths": [
+    "attack",
+    "total_damage",
+    "components",
+    "estimate.training",
+    "estimate.skill",
+    "timing",
+    "report.schema_version",
+    "report.operator.id",
+    "report.skill_number",
+    "report.sections"
+  ],
+  "timing_report_metrics": {
+    "section_id": "timing",
+    "keys": [
+      "initial",
+      "duration",
+      "cycle",
+      "recharge"
+    ],
+    "source": "reporting.py:280; metric values consume estimate.skill clocks"
+  },
+  "mechanist_S1": {
+    "source": [
+      "damage.py:298",
+      "damage.py:232",
+      "estimate.py:62",
+      "estimate.py:96",
+      "estimate.py:184",
+      "estimate.py:229"
+    ],
+    "clock_paths": [
+      "estimate.skill.initial_seconds",
+      "estimate.skill.recharge_seconds",
+      "estimate.skill.cycle_seconds"
+    ],
+    "false_expected": "all three None without additional attack/periodic/event credit",
+    "true_expected": "finite positive actual frame-clock values; do not reuse historical numerics",
+    "top_total_healing": "absent for this legacy damage branch",
+    "estimate_skill_total_and_window_healing": "zero for this damage-only skill",
+    "sp_type": "estimate.skill.sp_type = INCREASE_WHEN_ATTACK; no generic sp_type requirement on extended Combat skill dicts"
+  },
+  "amiya_continuous_common": {
+    "source": [
+      "amiya_continuous_reference.py:52",
+      "operator_engine.py:1769"
+    ],
+    "reference_keys": [
+      "operator_id",
+      "skill_number",
+      "enemy_source_excluded",
+      "declared_target_lifetime_seconds",
+      "declared_target_windows_seconds",
+      "per_hit_damage_reference",
+      "parameter_clock_reference",
+      "cast_reference",
+      "window_reference",
+      "recharge_reference",
+      "natural_sp_rate_parameter",
+      "required_sp_parameter",
+      "natural_only_recharge_seconds_reference",
+      "attack_sp_per_attack_parameter",
+      "attack_sp_enabled_in_reference",
+      "actual_acquisition_times_seconds",
+      "actual_impact_times_seconds",
+      "actual_recharge_seconds",
+      "actual_cycle_seconds",
+      "native_clock_binding_verified",
+      "initial_scope",
+      "source_commit",
+      "source_selectors"
+    ],
+    "explicit_actual_None_paths": [
+      "amiya_continuous_reference.actual_acquisition_times_seconds",
+      "amiya_continuous_reference.actual_impact_times_seconds",
+      "amiya_continuous_reference.actual_recharge_seconds",
+      "amiya_continuous_reference.actual_cycle_seconds"
+    ],
+    "explicit_cycle_None_paths": [
+      "estimate.skill.recharge_seconds",
+      "estimate.skill.cycle_seconds",
+      "estimate.skill.cycle_damage",
+      "estimate.skill.cycle_dps",
+      "estimate.skill.cycle_healing",
+      "estimate.skill.cycle_hps"
+    ],
+    "flags": {
+      "native_clock_binding_verified": false,
+      "timing.phase_clock_unbound": true,
+      "timing.resource_and_damage_shared_clock": false,
+      "complete": false,
+      "estimate.complete": false
+    },
+    "parameter_fields": [
+      "attack_sp_per_attack_parameter",
+      "attack_sp_enabled_in_reference",
+      "natural_sp_rate_parameter",
+      "required_sp_parameter",
+      "natural_only_recharge_seconds_reference",
+      "parameter_clock_reference"
+    ],
+    "reference_enabled": "matches the native requested False/True; reference flag alone does not qualify a talent",
+    "initial_scope": "existing independent pre-cast reference unchanged",
+    "report_section": "amiya_continuous; actual_recharge metric None, other displayed numbers qualified references"
+  },
+  "amiya_E2_bounded": {
+    "declared_target_lifetime_seconds": 5.75,
+    "declared_target_windows_seconds": null,
+    "enemy_source_excluded": false,
+    "attack_sp_per_attack_parameter_expected_by_fixed_cultivation_contract": 2,
+    "source_data_leaf_numeric_rechecked_in_this_small_five_blob_review": false,
+    "actual_damage_boundary": "preserve_plan marks positive possible hostile components actual_total=None; attach_result calls mask_pending_damage; actual new8 unknown totals must be read from saved public outputs",
+    "do_not_assert": [
+      "bounded reference result absent because historical unbounded source16 projection was None",
+      "postcast lifetime uniformly scales the old reference damage",
+      "reference clock is verified native acquisition or impact"
+    ]
+  },
+  "chen3_S3_active_warrior67": {
+    "public_rule_path": "relic_resolution.rules",
+    "required_rule": {
+      "kind": "attack_sp",
+      "relic_id": "rogue_6_relic_legacy_67"
+    },
+    "initial_path": "estimate.skill.initial_seconds",
+    "pair_requirement": "False initial > True initial >= 0, both finite actual numbers",
+    "source": [
+      "operator_engine.py:1338",
+      "operator_engine.py:438",
+      "operator_engine.py:1625"
+    ],
+    "swordwave_reference_keys": [
+      "kind",
+      "declared_current_hp",
+      "hp_ratio_parameter",
+      "minimum_attack_scale_parameter",
+      "body_duration_parameter_seconds",
+      "actual_collision_times_seconds",
+      "collision_clock_verified"
+    ],
+    "actual_collision_times_seconds": null,
+    "collision_clock_verified": false,
+    "report_section": "chen_swordwave; collision metric None",
+    "do_not_require_pair_difference": [
+      "total_damage",
+      "estimate.skill.total_damage",
+      "estimate.skill.cycle_seconds",
+      "estimate.skill.cycle_damage",
+      "estimate.skill.cycle_dps"
+    ],
+    "historical_attribution": "baseline60 rows33/34 used different training/input; finite initial changed, recharge25 and cycle45 did not"
+  },
+  "amiya_E0_empty": {
+    "declared_target_windows_seconds": [],
+    "declared_target_lifetime_seconds": null,
+    "enemy_source_excluded": true,
+    "attack_sp_per_attack_parameter_expected": 0,
+    "qualification_source": "selected_talents eligibility; talent default0; historical E0 credit0, not a new8 execution",
+    "enemy_math": "current hostile components are zeroed; do not generalize to healing/regeneration/buildup",
+    "reference_flag": "False/True requested native bool remains serialized even with attack credit0",
+    "own_regeneration_numeric_contract": null,
+    "own_regeneration_not_invented": true
+  },
+  "same_call_scenario_boundary": {
+    "source": "damage.py:323 build_report(scenario,result)",
+    "adapter": "profile observes reporting.py build_report actual frame.f_locals[scenario] during the same API call",
+    "claimed_public_report_scenario_field": false,
+    "input_comparison": "compare every original requested key to each actual processed report scenario; auto derived base_attack is extra"
+  },
+  "historical_shapes": [
+    {
+      "set": "source16_rows",
+      "index": 1,
+      "label": "legacy attack-SP",
+      "input": {
+        "operator": "mechanist",
+        "skill": 1,
+        "elite": 2,
+        "level": 60,
+        "skill_rank": 10,
+        "potential": 6,
+        "base_attack": 1097,
+        "window_seconds": 17.25,
+        "timing_mode": "frames",
+        "continuous_attacks": false
+      },
+      "initial_recharge_cycle": {
+        "initial_seconds": null,
+        "recharge_seconds": null,
+        "cycle_seconds": null
+      },
+      "amiya_reference_keys": [],
+      "amiya_reference_parameters": null,
+      "relic_resolution_keys": [
+        "calculation_scope",
+        "combat_effects_reference_only",
+        "complete",
+        "context",
+        "context_source",
+        "enemy_effects",
+        "inapplicable",
+        "records",
+        "rules",
+        "source_commit",
+        "timing_unresolved",
+        "token_effects",
+        "warnings"
+      ],
+      "record_shapes": []
+    },
+    {
+      "set": "source16_rows",
+      "index": 2,
+      "label": "legacy attack-SP",
+      "input": {
+        "operator": "mechanist",
+        "skill": 1,
+        "elite": 2,
+        "level": 60,
+        "skill_rank": 10,
+        "potential": 6,
+        "base_attack": 1097,
+        "window_seconds": 17.25,
+        "timing_mode": "frames",
+        "continuous_attacks": true
+      },
+      "initial_recharge_cycle": {
+        "initial_seconds": 8.433333333333334,
+        "recharge_seconds": 8.433333333333334,
+        "cycle_seconds": 16.766666666666666
+      },
+      "amiya_reference_keys": [],
+      "amiya_reference_parameters": null,
+      "relic_resolution_keys": [
+        "calculation_scope",
+        "combat_effects_reference_only",
+        "complete",
+        "context",
+        "context_source",
+        "enemy_effects",
+        "inapplicable",
+        "records",
+        "rules",
+        "source_commit",
+        "timing_unresolved",
+        "token_effects",
+        "warnings"
+      ],
+      "record_shapes": []
+    },
+    {
+      "set": "source16_rows",
+      "index": 9,
+      "label": "natural Amiya hidden condition reference",
+      "input": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 60,
+        "skill_rank": 10,
+        "potential": 6,
+        "base_attack": 1097,
+        "window_seconds": 17.25,
+        "timing_mode": "continuous",
+        "continuous_attacks": false
+      },
+      "initial_recharge_cycle": {
+        "initial_seconds": 15.0,
+        "recharge_seconds": 30.0,
+        "cycle_seconds": 60.0
+      },
+      "amiya_reference_keys": [],
+      "amiya_reference_parameters": null,
+      "relic_resolution_keys": [
+        "calculation_scope",
+        "combat_effects_reference_only",
+        "complete",
+        "context",
+        "context_source",
+        "enemy_effects",
+        "inapplicable",
+        "records",
+        "rules",
+        "source_commit",
+        "timing_unresolved",
+        "token_effects",
+        "warnings"
+      ],
+      "record_shapes": []
+    },
+    {
+      "set": "source16_rows",
+      "index": 10,
+      "label": "natural Amiya hidden condition reference",
+      "input": {
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "elite": 2,
+        "level": 60,
+        "skill_rank": 10,
+        "potential": 6,
+        "base_attack": 1097,
+        "window_seconds": 17.25,
+        "timing_mode": "continuous",
+        "continuous_attacks": true
+      },
+      "initial_recharge_cycle": {
+        "initial_seconds": 6.000000000000002,
+        "recharge_seconds": 11.2,
+        "cycle_seconds": 41.2
+      },
+      "amiya_reference_keys": [],
+      "amiya_reference_parameters": null,
+      "relic_resolution_keys": [
+        "calculation_scope",
+        "combat_effects_reference_only",
+        "complete",
+        "context",
+        "context_source",
+        "enemy_effects",
+        "inapplicable",
+        "records",
+        "rules",
+        "source_commit",
+        "timing_unresolved",
+        "token_effects",
+        "warnings"
+      ],
+      "record_shapes": []
+    },
+    {
+      "set": "baseline60_rows",
+      "index": 15,
+      "label": "restricted Amiya reference E0",
+      "input": {
+        "elite": 0,
+        "level": 30,
+        "skill_rank": 4,
+        "potential": 4,
+        "base_attack": 1287,
+        "window_seconds": 12.5,
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "continuous_attacks": "false",
+        "timing_mode": "continuous",
+        "timing": {
+          "target_disappears_seconds": 0.75
+        }
+      },
+      "initial_recharge_cycle": {
+        "initial_seconds": 30.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null
+      },
+      "amiya_reference_keys": [
+        "actual_acquisition_times_seconds",
+        "actual_cycle_seconds",
+        "actual_impact_times_seconds",
+        "actual_recharge_seconds",
+        "attack_sp_enabled_in_reference",
+        "attack_sp_per_attack_parameter",
+        "cast_reference",
+        "declared_target_lifetime_seconds",
+        "declared_target_windows_seconds",
+        "enemy_source_excluded",
+        "initial_scope",
+        "native_clock_binding_verified",
+        "natural_only_recharge_seconds_reference",
+        "natural_sp_rate_parameter",
+        "operator_id",
+        "parameter_clock_reference",
+        "per_hit_damage_reference",
+        "recharge_reference",
+        "required_sp_parameter",
+        "skill_number",
+        "source_commit",
+        "source_selectors",
+        "window_reference"
+      ],
+      "amiya_reference_parameters": {
+        "attack_sp_per_attack_parameter": 0,
+        "attack_sp_enabled_in_reference": true,
+        "enemy_source_excluded": false
+      },
+      "relic_resolution_keys": [
+        "calculation_scope",
+        "combat_effects_reference_only",
+        "complete",
+        "context",
+        "context_source",
+        "enemy_effects",
+        "inapplicable",
+        "records",
+        "rules",
+        "source_commit",
+        "timing_unresolved",
+        "token_effects",
+        "warnings"
+      ],
+      "record_shapes": []
+    },
+    {
+      "set": "baseline60_rows",
+      "index": 16,
+      "label": "restricted Amiya reference E0",
+      "input": {
+        "elite": 0,
+        "level": 30,
+        "skill_rank": 4,
+        "potential": 4,
+        "base_attack": 1287,
+        "window_seconds": 12.5,
+        "operator": "char_002_amiya",
+        "skill": 1,
+        "continuous_attacks": "",
+        "timing_mode": "continuous",
+        "timing": {
+          "target_disappears_seconds": 0.75
+        }
+      },
+      "initial_recharge_cycle": {
+        "initial_seconds": 30.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null
+      },
+      "amiya_reference_keys": [
+        "actual_acquisition_times_seconds",
+        "actual_cycle_seconds",
+        "actual_impact_times_seconds",
+        "actual_recharge_seconds",
+        "attack_sp_enabled_in_reference",
+        "attack_sp_per_attack_parameter",
+        "cast_reference",
+        "declared_target_lifetime_seconds",
+        "declared_target_windows_seconds",
+        "enemy_source_excluded",
+        "initial_scope",
+        "native_clock_binding_verified",
+        "natural_only_recharge_seconds_reference",
+        "natural_sp_rate_parameter",
+        "operator_id",
+        "parameter_clock_reference",
+        "per_hit_damage_reference",
+        "recharge_reference",
+        "required_sp_parameter",
+        "skill_number",
+        "source_commit",
+        "source_selectors",
+        "window_reference"
+      ],
+      "amiya_reference_parameters": {
+        "attack_sp_per_attack_parameter": 0,
+        "attack_sp_enabled_in_reference": false,
+        "enemy_source_excluded": false
+      },
+      "relic_resolution_keys": [
+        "calculation_scope",
+        "combat_effects_reference_only",
+        "complete",
+        "context",
+        "context_source",
+        "enemy_effects",
+        "inapplicable",
+        "records",
+        "rules",
+        "source_commit",
+        "timing_unresolved",
+        "token_effects",
+        "warnings"
+      ],
+      "record_shapes": []
+    },
+    {
+      "set": "baseline60_rows",
+      "index": 33,
+      "label": "natural hidden real Attack-SP source continuous",
+      "input": {
+        "elite": 2,
+        "level": 60,
+        "skill_rank": 10,
+        "potential": 4,
+        "base_attack": 1287,
+        "window_seconds": 12.5,
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "continuous_attacks": false,
+        "timing_mode": "continuous",
+        "relic_ids": [
+          "rogue_6_relic_legacy_67"
+        ]
+      },
+      "initial_recharge_cycle": {
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0
+      },
+      "amiya_reference_keys": [],
+      "amiya_reference_parameters": null,
+      "relic_resolution_keys": [
+        "calculation_scope",
+        "combat_effects_reference_only",
+        "complete",
+        "context",
+        "context_source",
+        "enemy_effects",
+        "inapplicable",
+        "records",
+        "rules",
+        "source_commit",
+        "timing_unresolved",
+        "token_effects",
+        "warnings"
+      ],
+      "record_shapes": [
+        {
+          "id": "rogue_6_relic_legacy_67",
+          "status": "applied",
+          "applied_kinds": [
+            "attack_sp"
+          ]
+        }
+      ]
+    },
+    {
+      "set": "baseline60_rows",
+      "index": 34,
+      "label": "natural hidden real Attack-SP source continuous",
+      "input": {
+        "elite": 2,
+        "level": 60,
+        "skill_rank": 10,
+        "potential": 4,
+        "base_attack": 1287,
+        "window_seconds": 12.5,
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "continuous_attacks": true,
+        "timing_mode": "continuous",
+        "relic_ids": [
+          "rogue_6_relic_legacy_67"
+        ]
+      },
+      "initial_recharge_cycle": {
+        "initial_seconds": 2.9999999999999996,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0
+      },
+      "amiya_reference_keys": [],
+      "amiya_reference_parameters": null,
+      "relic_resolution_keys": [
+        "calculation_scope",
+        "combat_effects_reference_only",
+        "complete",
+        "context",
+        "context_source",
+        "enemy_effects",
+        "inapplicable",
+        "records",
+        "rules",
+        "source_commit",
+        "timing_unresolved",
+        "token_effects",
+        "warnings"
+      ],
+      "record_shapes": [
+        {
+          "id": "rogue_6_relic_legacy_67",
+          "status": "applied",
+          "applied_kinds": [
+            "attack_sp"
+          ]
+        }
+      ]
+    }
+  ],
+  "historical_sources": [
+    {
+      "path": "/workspace/.continuation/p2-continuous-attack-control-visibility091-source/existing-saved-output-projection091.json",
+      "sha256": "5164407e6448723d1d45c02de695591fa224a65aa8b4e9ab2bd77552a8abf936",
+      "bytes": 71642,
+      "role": "historical saved shape only, not new8 result evidence"
+    },
+    {
+      "path": "/workspace/.continuation/p2-continuous-attack-control-visibility091-source/saved-evidence-transport091.json",
+      "sha256": "0554c6391a3a4d489f3bd08db0db971f051721e99014d67657bf19e8addbb395",
+      "bytes": 4333,
+      "role": "historical saved shape only, not new8 result evidence"
+    }
+  ],
+  "reviewed_preflight_adapter": {
+    "path": "/workspace/.continuation/ui-090-runtime-increment088/preflight_ui090_section088.py",
+    "snapshot": "preflight-adapter-reviewed.py.txt",
+    "sha256": "bc26f9a89095e4e1fa9c027194d25c24b53cc8b3e76aae86fdfb7a36ee9470fc",
+    "bytes": 13829,
+    "executed": false
+  },
+  "new8_result_evidence_available_in_this_review": false,
+  "raw_historical_source16_or_baseline60_reloaded_or_recomputed": false
+}

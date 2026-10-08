@@ -1,0 +1,49 @@
+# BEGIN FINAL090 PURE HELPERS
+import copy as _copy090
+actual_states090=[]
+entry_counts090={}
+profile_case090=None
+profile_trace090=[]
+def profile090(frame,event,value):
+    global entry_counts090
+    path=frame.f_code.co_filename.replace('\\','/').lower()
+    name=frame.f_code.co_name
+    if event=='call':
+        key=None
+        if path.endswith('/rouge/damage.py') and name=='calculate_damage':key='calculate_damage'
+        elif path.endswith('/rouge/estimate.py') and name=='format_estimate':key='format_estimate'
+        elif path.endswith('/rouge/reporting.py') and name=='format_report':
+            key='format_report_technical' if frame.f_locals['technical'] else 'format_report_default'
+        elif path.endswith('/rouge/run_state.py') and name in ('__init__','apply','load'):
+            key='RunState.'+name
+        if key:entry_counts090[key]=entry_counts090.get(key,0)+1
+        if profile_case090 is not None and path.endswith('/rouge/operator_engine.py') and name=='plan' and frame.f_locals['normal'] is True:
+            profile_trace090.append({'event':'actual_same_call_normal_plan_entry','normal':True})
+    elif event=='return' and profile_case090 is not None and path.endswith('/rouge/operator_engine.py') and name=='calculate':
+        combat=frame.f_locals['self']
+        if combat.s['operator']=='char_4182_oblvns' and profile_case090['kind']=='coveredmodule':
+            profile_trace090.append({'event':'actual_same_call_Combat_calculate_return',
+                'normal_not_none':frame.f_locals['normal'] is not None,
+                'actual_ranged_condition_consumed':combat.ranged_attack_condition_consumed,
+                'actual_selected_note_max_cnt':combat.tv['颂乐音符']['max_cnt']})
+    return profile090
+
+def projection090(result):
+    keys=['attack','total_damage','components','attack_speed','base_attack_speed','interval_seconds','timing']
+    if 'total_healing' in result:keys.append('total_healing')
+    keys.extend(k for k in result if k.endswith('_reference'))
+    out={key:result[key] for key in dict.fromkeys(keys)}
+    out['estimate']={key:result['estimate'][key] for key in ('training','base_stats','skill')}
+    return out
+
+def entries_delta090(before,after):
+    return {key:after.get(key,0)-before.get(key,0) for key in sorted(set(before)|set(after))}
+
+def native090(value):
+    kind=type(value).__name__
+    if value is None or type(value) in (bool,int,str):return {'type':kind,'value':value}
+    if type(value) is float:return {'type':'float','hex':value.hex()}
+    if type(value) in (list,tuple):return {'type':kind,'items':[native090(v) for v in value]}
+    if type(value) is dict:return {'type':'dict','items':[[native090(k),native090(v)] for k,v in value.items()]}
+    raise AssertionError(('unhandled native value',kind))
+# END FINAL090 PURE HELPERS

@@ -1,0 +1,233 @@
+        # BEGIN FINAL090 ACTUAL SOURCE-BOUND ADDITIONS
+        group090_start=len(checks)
+        state090=_copy090.deepcopy(window.run.state)
+        account090=_copy090.deepcopy(window.operator_observations)
+        use090=window.use_run_training.isChecked()
+        summary090=window.run_summary.text()
+        animation090=_copy090.deepcopy(window.animation_previews)
+        animation_key090=window.animation_preview_key
+        technical090=window.damage_technical.isChecked()
+        continuous090=window.continuous_attacks.isChecked()
+        source090_before=source_hashes()
+        entries090_before=dict(entry_counts090)
+        previous090=sys.getprofile()
+        sys.setprofile(profile090)
+        new_counts090={86:0,87:0,88:0,89:0}
+        try:
+            rows090=CASE_LITERAL
+            window.run.state={**window.run.state,'operators':{},'config':{}}
+            window.use_run_training.setChecked(False);window.sync_run_config()
+            window.auto_relics.setChecked(False)
+            window.target_enemy.setCurrentIndex(0)
+            window.defense.setValue(0);window.resistance.setValue(0)
+            window.cooperative.setChecked(False);window.fragile.setChecked(False)
+            window.deployment_elapsed.setValue(0);window.healing_targets.setValue(1)
+            window.limit_window.setChecked(True)
+            window.target_buff_test.setChecked(False)
+            anchors090={}
+            for row090 in rows090:
+                requested090=row090['input'];owner090=requested090['operator'];skill090=requested090['skill']
+                reset_owner_options(owner090)
+                train(owner090,{key:requested090[key] for key in
+                    ('elite','level','potential','trust','module_id','module_level')},
+                    {str(skill090):requested090['skill_rank']})
+                assert window.skill.findData(skill090)>=0
+                window.skill.setCurrentIndex(window.skill.findData(skill090))
+                window.frame_timing.setChecked(requested090['timing_mode']=='frames')
+                window.window_seconds.setValue(requested090['window_seconds'])
+                window.continuous_attacks.setChecked(requested090['continuous_attacks'])
+                assert type(window.continuous_attacks.isChecked()) is bool
+                assert window.continuous_attacks.isChecked() is requested090['continuous_attacks']
+                window.damage_technical.setChecked(False)
+                window.normal_animation_reference.setCurrentIndex(0)
+                window.skill_animation_reference.setCurrentIndex(0)
+                relics(requested090['relic_ids'])
+                window.timing_scenario.setPlainText(json.dumps(requested090['timing']) if 'timing' in requested090 else '')
+                for key090,_label090,_default090,_maximum090,skills090 in OPTIONS.get(owner090,[]):
+                    widget090=option_widgets[(owner090,key090)]
+                    if key090 in requested090:
+                        value090=requested090[key090]
+                        widget090.setChecked(value090) if isinstance(widget090,QCheckBox) else widget090.setValue(value090)
+                    if row090['section']==86 and key090==row090['field']:
+                        assert isinstance(widget090,QCheckBox)
+                        widget090.setChecked(row090['widget_checked'])
+                        assert widget090.isChecked() is row090['widget_checked']
+                        assert (skill090 in skills090) is row090['field_serialized']
+                        assert widget090.isVisible() is row090['field_serialized']
+                assert window.training_conditions()=={key:requested090[key] for key in
+                    ('elite','level','trust','potential','module_id','module_level')}
+                assert window.skill_rank_value()==requested090['skill_rank']
+                assert window.normal_animation_reference.currentData() is None
+                assert window.skill_animation_reference.currentData() is None
+                assert '自动计算' in window.attack.text()
+                profile_case090=row090;profile_trace090=[]
+                before_click090=dict(entry_counts090)
+                result090=click_result()
+                after_click090=dict(entry_counts090)
+                assert entries_delta090(before_click090,after_click090).get('calculate_damage',0)==1
+                raw090=window.damage_result['scenario']
+                raw_native_before090=native090(raw090)
+                pending_state090={'section':row090['section'],'pair_id':row090['pair_id'],
+                    'widget_checked':row090['widget_checked'],'scenario':_copy090.deepcopy(raw090),
+                    'scenario_native':raw_native_before090,'result':_copy090.deepcopy(result090),
+                    'result_native':native090(result090),'reports':{},
+                    'actual_same_call_readonly_trace':_copy090.deepcopy(profile_trace090),'passed':False}
+                actual_states090.append(pending_state090)
+                for key090,value090 in requested090.items():
+                    assert native090(raw090[key090])==native090(value090),(row090['pair_id'],key090,raw090[key090],value090)
+                assert 'base_attack' not in raw090
+                if row090['section']==86:
+                    if row090['field_serialized']:
+                        assert type(raw090[row090['field']]) is bool
+                        assert raw090[row090['field']] is row090['widget_checked']
+                    else:assert row090['field'] not in raw090
+                else:
+                    from rouge.catalog import catalog as catalog090
+                    sp090=catalog090()['operators'][owner090]['skills'][skill090-1]['levels'][requested090['skill_rank']-1]['sp_type']
+                    assert window.continuous_attacks.isVisible() is (sp090=='INCREASE_WHEN_ATTACK')
+                    assert window.window_seconds.value()==12.75
+                    if 'timing' in requested090:
+                        assert json.loads(window.timing_scenario.toPlainText())==requested090['timing']
+                assert strict_json(projection090(result090))==strict_json(row090['expected_public_projection']),row090['pair_id']
+                full_native090=native090(result090)
+                from rouge.estimate import format_estimate as estimate090
+                reports090={'estimate':estimate090(result090),'default':format_report(result090),
+                    'technical':format_report(result090,technical=True)}
+                pending_state090['reports']=reports090
+                assert reports090['estimate']==reports090['default']
+                assert window.damage_text.toPlainText()==reports090['default'].replace(chr(160),' ')
+                window.damage_technical.setChecked(True);app.processEvents()
+                assert window.damage_text.toPlainText()==reports090['technical'].replace(chr(160),' ')
+                window.damage_technical.setChecked(False);app.processEvents()
+                assert window.damage_text.toPlainText()==reports090['default'].replace(chr(160),' ')
+                assert native090(result090)==full_native090
+                assert native090(window.damage_result['scenario'])==raw_native_before090
+                pair090=row090['pair_id']
+                if row090['section']==86:
+                    if not row090['widget_checked']:anchors090[pair090]=_copy090.deepcopy(result090)
+                    elif row090['kind']=='hidden' or pair090=='qualification:mizuki-E1':
+                        assert strict_json(result090)==strict_json(anchors090[pair090])
+                    if row090['kind']=='coveredmodule':
+                        normal_entries090=[event for event in profile_trace090 if event['event']=='actual_same_call_normal_plan_entry']
+                        returned090=[event for event in profile_trace090 if event['event']=='actual_same_call_Combat_calculate_return']
+                        assert len(normal_entries090)==1 and len(returned090)==1
+                        assert returned090[0]['normal_not_none'] is True
+                        assert returned090[0]['actual_ranged_condition_consumed'] is True
+                        assert returned090[0]['actual_selected_note_max_cnt']==12
+                pending_state090.update({
+                    'actual_entries':entries_delta090(before_click090,entry_counts090),
+                    'explicit_three_text_requests':3,'passed':True})
+                checks.append({'scope':'actual_boolean_checkbox_and_public_readonly_source090' if row090['section']==86 else
+                    'actual_continuous_checkbox_and_JSON_editor_source088','section':row090['section'],
+                    'pair_id':pair090,'operator':owner090,'skill':skill090,'checked':row090['widget_checked'],
+                    'three_texts_match_own_result':True,'native_game_clock_verified':False,'passed':True})
+                new_counts090[row090['section']]+=1
+                profile_case090=None
+
+            # Actual Back controls, no invented generic numbered Skill or additional damage call.
+            train('char_196_sunbr',{'elite':2,'level':60,'trust':100,'potential':1,'module_id':None,'module_level':0})
+            window.frame_timing.setChecked(True)
+            for number090 in (1,2):
+                window.skill.setCurrentIndex(window.skill.findData(number090))
+                window.sync_animation_references('char_196_sunbr',number090)
+                for role090,combo090 in (('normal',window.normal_animation_reference),('skill',window.skill_animation_reference)):
+                    assert combo090.findData('char_196_sunbr:Back:Skill')==-1
+                    found090=combo090.findData('char_196_sunbr:Back:Attack')
+                    assert found090>0
+                    combo090.setCurrentIndex(found090)
+                    assert combo090.currentData()=='char_196_sunbr:Back:Attack'
+                    assert combo090.isVisible()
+                    assert combo090.currentText()=='背面 · 普通攻击 · 出手16帧 / 动画40帧'
+                    checks.append({'scope':'actual_Back_Attack_combo_and_unnumbered_Skill_exclusion087',
+                        'section':87,'operator':'char_196_sunbr','skill':number090,'combo':role090,
+                        'selected_id':combo090.currentData(),'generic_Skill_absent':True,
+                        'native_animation_binding_verified':False,'explicit_damage_button_clicks':0,
+                        'real_combo_changes_may_trigger_automatic_calculations':True,'passed':True})
+                    new_counts090[87]+=1
+                    combo090.setCurrentIndex(0)
+
+            # Exact historical public saved-state copies consumed by the existing window only.
+            saved89_states090=STATES89_LITERAL
+            expected89_contract090={(row['saved_sequence'],row['use_run_training']):row for row in CONTRACT89_LITERAL}
+            fixture89_090={'fields':{'elite':2,'level':60,'trust':100,'potential':1,'module_id':None,'module_level':0},
+                'skill_ranks':{'1':10,'2':10,'3':10}}
+            from rouge.run_state import RunState as RunState090
+            ctor_apply_before090={key:entry_counts090.get(key,0) for key in ('RunState.__init__','RunState.apply','RunState.load')}
+            consumer_records090=[]
+            for saved89_090 in saved89_states090:
+                for use89_090 in (False,True):
+                    window.operator_observations['mechanist']=_copy090.deepcopy(fixture89_090)
+                    window.operator_observations['char_151_myrtle']=_copy090.deepcopy(fixture89_090)
+                    window.run.state=_copy090.deepcopy(saved89_090['state'])
+                    replay_before090=native090(window.run.state)
+                    expected89_row090=expected89_contract090[(saved89_090['saved_sequence'],use89_090)]
+                    window.refresh_operator_overview()
+                    window.run_summary.setText(window.run.summary())
+                    window.use_run_training.setChecked(use89_090)
+                    window.skill_override=False;window.level_override=False;window.display_operator=None
+                    window.select_operator('mechanist');window.update_operator(preserve_level=False)
+                    member89_090=saved89_090['state']['operators']['mechanist']
+                    expected_run89_090=use89_090 and member89_090['present']
+                    expected_state89_090=_copy090.deepcopy(fixture89_090)
+                    if expected_run89_090:
+                        expected_state89_090={**fixture89_090,**member89_090,
+                            'fields':{**fixture89_090['fields'],**member89_090['fields']},
+                            'skill_ranks':member89_090['skill_ranks'],
+                            'run_confirmed_fields':list(member89_090['fields'])}
+                    assert native090(window.current_operator_state())==native090(expected_state89_090)
+                    conditions89_090=window.training_conditions()
+                    expected_conditions89_090={key:expected_state89_090['fields'][key] for key in
+                        ('elite','level','trust','potential','module_id','module_level')}
+                    assert native090(conditions89_090)==native090(expected_conditions89_090)
+                    expected_skills89_090=[1] if expected_run89_090 else [1,2,3]
+                    assert [window.skill.itemData(i) for i in range(window.skill.count())]==expected_skills89_090
+                    assert window.skill.currentData()==1
+                    assert window.skill_rank_value()==(7 if expected_run89_090 else 10)
+                    for key89_090 in ('elite','trust','potential','module','rank'):
+                        assert getattr(window,key89_090).text()==expected89_row090[key89_090+'_label_expected']
+                    assert window.level.maximum()==expected89_row090['levels_widget_max_expected']
+                    assert expected89_row090['summary_crew_line_expected'] in window.run_summary.text()
+                    expected_roster89_090=tuple(op for op,member in saved89_090['state']['operators'].items()
+                        if member['present'] and member['scope']!='account')
+                    assert window.recruited_operator_ids()==expected_roster89_090
+                    assert native090(window.run.state)==replay_before090
+                    assert type(window.run.state['crew_count']) is int
+                    row89_090={'saved_sequence':saved89_090['saved_sequence'],'use_run_training':use89_090,
+                        'training':conditions89_090,'skill':window.skill.currentData(),'rank':window.skill_rank_value(),
+                        'readonly_training_labels':{key:getattr(window,key).text() for key in ('elite','trust','potential','module')},
+                        'readonly_skill_rank_label':window.rank.text(),'actual_summary':window.run_summary.text(),
+                        'actual_roster':list(window.recruited_operator_ids()),'stored_crew_count':window.run.state['crew_count'],
+                        'complete_temporary_state_native_unchanged':True,'actual_native_OCR_or_departure_verified':False,
+                        'RunState_constructor_or_apply_pipeline_executed_for_replay':False,'passed':True}
+                    consumer_records090.append(row89_090)
+                    checks.append({'scope':'actual_saved_public_state_readonly_training_consumer089','section':89,**row89_090})
+                    new_counts090[89]+=1
+            ctor_apply_after090={key:entry_counts090.get(key,0) for key in ctor_apply_before090}
+            assert ctor_apply_after090==ctor_apply_before090
+            receipt['saved89_actual_window_consumer_records090']=consumer_records090
+            receipt['saved89_replay_RunState_entries090']=entries_delta090(ctor_apply_before090,ctor_apply_after090)
+            assert new_counts090=={86:44,87:4,88:8,89:10},new_counts090
+            receipt['new_actual_main_thread_function_entries090']=entries_delta090(entries090_before,entry_counts090)
+            assert receipt['new_actual_main_thread_function_entries090']['calculate_damage']>=52
+            receipt['new_explicit_damage_button_requests090']=52
+            receipt['new_actual_automatic_damage_function_entries090']=receipt['new_actual_main_thread_function_entries090']['calculate_damage']-52
+            receipt['new_explicit_three_text_requests090']=156
+            assert len(actual_states090)==52
+            assert source_hashes()==source090_before
+        finally:
+            profile_case090=None;sys.setprofile(previous090)
+            window.run.state=state090;window.operator_observations=account090
+            window.use_run_training.setChecked(use090);window.run_summary.setText(summary090);window.sync_run_config()
+            window.animation_previews=animation090;window.animation_preview_key=None
+            window.continuous_attacks.setChecked(continuous090)
+            window.update_operator();window.timing_scenario.clear();relics([])
+            window.damage_technical.setChecked(technical090)
+        group090_end=len(checks)
+        assert group090_end-group090_start==66
+        receipt['actual_additional_checks_086_090']=new_counts090
+        receipt['actual_additional_rows090']=66
+        receipt['actual_source090_commit']='5e2ff697402d06e78b239e01f0b4307b50dd5633'
+        receipt['maintained_actual_source_files090']=730
+        receipt['section090_scope']='Portable provenance verification is a source/tool regression already completed outside Qt. Existing Back Attack combos are exercised; generic Skill remains unnumbered and native binding unknown. No invented provenance Qt control.'
+        receipt['section089_scope']='Five original saved synthetic public states replayed as temporary existing MainWindow consumers. Both training modes and present/account fallback are checked; replay is not constructor/apply pipeline, game departure or OCR observation. Startup constructor entries are measured separately.'
+        # END FINAL090 ACTUAL SOURCE-BOUND ADDITIONS

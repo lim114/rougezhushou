@@ -1,0 +1,268 @@
+5e2ff697402d06e78b239e01f0b4307b50dd5633:rouge/app.py:739-744 SHA256=6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2
+739:     def recruited_operator_ids(self):
+740:         return tuple(key for key,member in self.run.state['operators'].items()
+741:                      if key in operator_profiles() and member.get('present',True) and member.get('scope')!='account')
+742: 
+743:     def refresh_operator_overview(self):
+744:         return self.operator_choices.set_overview(self.recruited_operator_ids(),emit=False)
+
+5e2ff697402d06e78b239e01f0b4307b50dd5633:rouge/app.py:767-847 SHA256=6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2
+767:     def current_operator_state(self):
+768:         op=self.operator.currentData()
+769:         account=self.operator_observations.get(op,{})
+770:         member=self.run.state['operators'].get(op) if self.use_run_training.isChecked() else None
+771:         if member and not member.get('present',True):member=None
+772:         if not member:return account
+773:         current={key:value for key,value in member['fields'].items() if key not in member.get('invalid_fields',[])}
+774:         ranks={key:value for key,value in member.get('skill_ranks',{}).items() if key not in member.get('invalid_skill_ranks',[])}
+775:         return {**account,**member,'fields':{**account.get('fields',{}),**current},
+776:                 'skill_ranks':ranks,'run_confirmed_fields':list(current)}
+777: 
+778:     def training_conditions(self):
+779:         op=self.operator.currentData()
+780:         fields=self.current_operator_state().get('fields',{})
+781:         elite=fields.get('elite',len(operator_profiles()[op]['phases'])-1)
+782:         return {'elite':elite,'level':self.level.value(),'trust':fields.get('trust',100),
+783:                 'potential':fields.get('potential',1),'module_id':fields.get('module_id'),
+784:                 'module_level':fields.get('module_level',0)}
+785: 
+786:     def skill_rank_value(self):
+787:         known=self.current_operator_state().get('skill_ranks',{})
+788:         skill=self.skill.currentData()
+789:         return known.get(str(skill),known.get(skill,10 if self.training_conditions()['elite']==2 else 7))
+790: 
+791:     def update_operator(self,*,preserve_level=False):
+792:         if not hasattr(self,'attack'):
+793:             return
+794:         op = self.operator.currentData()
+795:         if op is None:
+796:             self.display_operator=None;self.skill_override=False;self.level_override=False
+797:             self.operator_picture.set_subject(None,None,'');self.level.setEnabled(False)
+798:             self.skill.blockSignals(True);self.skill.clear();self.skill.blockSignals(False)
+799:             for widget in (self.elite,self.trust,self.potential,self.module):widget.setText('未选择干员')
+800:             self.training_status.setText('总览只显示本局已确认招募的干员；可选职业分支进行局外预览。')
+801:             self.update_skill_options()
+802:             return
+803:         self.level.setEnabled(True)
+804:         state=self.current_operator_state()
+805:         fields=state.get('fields',{})
+806:         profile=operator_profiles()[op]
+807:         self.operator_picture.set_subject('operator',op,profile['name']+' · '+PROFESSIONS[profile['profession']])
+808:         elite=fields.get('elite',len(profile['phases'])-1)
+809:         maximum=profile['phases'][elite]['max_level']
+810:         if self.display_operator!=op:self.skill_override=False
+811:         self.display_operator=op
+812:         self.level.blockSignals(True)
+813:         self.level.setMaximum(maximum)
+814:         if not preserve_level:self.level.setValue(fields.get('level',maximum))
+815:         self.level.blockSignals(False)
+816:         self.level_override=preserve_level
+817:         previous=self.skill.currentData()
+818:         self.skill.blockSignals(True)
+819:         self.skill.clear()
+820:         choices=[i+1 for i,s in enumerate(profile['skills']) if s.get('unlock_elite',i)<=elite]
+821:         for skill in choices:
+822:             name = profile['skills'][skill-1]['levels'][-1]['name']
+823:             self.skill.addItem(skill_icon(profile['skills'][skill-1]['id']),f'S{skill} · {name}',skill)
+824:         preferred=fields.get('selected_skill',{'kaltsit':2,'silverash':3,'mechanist':1}.get(op,1))
+825:         if self.skill_override and previous in choices:preferred=previous
+826:         if preferred in choices:self.skill.setCurrentIndex(choices.index(preferred))
+827:         self.skill.blockSignals(False)
+828:         self.elite.setText(f'精英 {fields["elite"]}' if 'elite' in fields else f'未确认（档案预览：精英 {elite}）')
+829:         self.trust.setText(f'{fields.get("trust_display",fields.get("trust"))}%（读取）' if 'trust' in fields else '未确认（档案预览：满信赖加成）')
+830:         self.potential.setText(str(fields['potential']) if 'potential' in fields else '未确认（档案预览：潜能 1）')
+831:         if 'module_id' not in fields:self.module.setText('未确认（档案预览：未计模组）')
+832:         elif fields['module_id'] is None:self.module.setText('未装备模组' if profile['modules'] else '此数据档案无可装备模组')
+833:         else:
+834:             module=next((m for m in profile['modules'] if m['id']==fields['module_id']),None)
+835:             self.module.setText(f'{module["name"] if module else "未知模组"} · 阶段 {fields.get("module_level","未确认")}')
+836:         stamp=time.strftime('%H:%M:%S',time.localtime(state.get('captured_at',0))) if state else '尚未读取'
+837:         if state.get('scope')=='run':
+838:             confirmed=set(state['run_confirmed_fields'])
+839:             for key,widget in [('elite',self.elite),('trust',self.trust),('potential',self.potential),('module_id',self.module)]:
+840:                 if key in fields and key not in confirmed:widget.setText(widget.text()+'（账号档案参考，本局未确认）')
+841:             self.training_status.setText('使用本局已确认培养记录，最后读取：'+stamp+'；切页后保留。缺失项使用标注的账号参考/预览条件。')
+842:             if state.get('recruitment_kind')=='emergency_hire':
+843:                 self.training_status.setText(self.training_status.text()+' 来源：应急雇佣，仅一次作战。')
+844:         else:self.training_status.setText('档案最后读取：'+stamp+'；本局实际培养尚待核对。未确认字段使用明确标注的预览条件。')
+845:         self.update_base_attack()
+846:         self.update_skill_options()
+847:         if hasattr(self,'raw_damage'):self.calculate()
+
+5e2ff697402d06e78b239e01f0b4307b50dd5633:rouge/run_state.py:372-445 SHA256=20c6a00a72744017ebbc0fcb3b1009dddf8a6702aa01bf273b4b51c344692fd9
+372:         crew=observed.get('crew_count')
+373:         if isinstance(crew,bool):crew=None
+374:         promoted_ids=set()
+375:         if crew is not None:
+376:             state['crew_count']=crew
+377:         for member in observed.get('operators',[]):
+378:             previous=state['operators'].get(member['id'],{})
+379:             fields={**previous.get('fields',{}),**member['fields']}
+380:             ranks={**previous.get('skill_ranks',{}),**{str(k):v for k,v in member.get('skill_ranks',{}).items()}}
+381:             invalid=set(previous.get('invalid_fields',[]))
+382:             invalid_ranks=set(previous.get('invalid_skill_ranks',[]))
+383:             origin=member.get('recruitment_kind')
+384:             changed_origin=origin is not None and previous.get('recruitment_kind') is not None and origin!=previous['recruitment_kind']
+385:             returned=bool(previous) and not previous.get('present',True)
+386:             prior_elite=previous.get('fields',{}).get('elite')
+387:             current_elite=member['fields'].get('elite')
+388:             if ((type(prior_elite) is int and type(current_elite) is int and current_elite>prior_elite)
+389:                     or previous.get('advanced') is False and member.get('advanced') is True):
+390:                 promoted_ids.add(member['id'])
+391:             corrected=origin is not None and previous.get('sources',{}).get('recruitment_kind',{}).get('source')=='金色应急雇佣标记'
+392:             if corrected:
+393:                 state['history'].append({'at':captured_at,'kind':'classification_corrected','id':member['id'],
+394:                     'previous_kind':previous.get('recruitment_kind'),'kind_now':origin,
+395:                     'reason':'旧识别混淆已进阶金色标记与左侧应急人形/时钟标识；旧分类已作废'})
+396:                 changed_origin=False
+397:             if changed_origin or returned:
+398:                 state['history'].append({'at':captured_at,'kind':'recruitment_changed','id':member['id'],
+399:                     'previous_kind':previous.get('recruitment_kind'),'kind_now':origin,
+400:                     'previous_fields':previous.get('fields',{}),'previous_skill_ranks':previous.get('skill_ranks',{})})
+401:                 invalid.update(fields)
+402:                 invalid_ranks.update(ranks)
+403:             old_buffs=previous.get('char_buff_ids',[])
+404:             current_buffs=[] if changed_origin or returned else list(old_buffs)
+405:             if 'char_buff_ids' in member:
+406:                 current_buffs=list(dict.fromkeys(member['char_buff_ids'] if member.get('char_buffs_complete') is True
+407:                                                 else current_buffs+member['char_buff_ids']))
+408:             if current_buffs!=old_buffs:
+409:                 state['history'].append({'at':captured_at,'kind':'char_buffs_updated','id':member['id'],
+410:                     'previous_char_buff_ids':old_buffs,'char_buff_ids':current_buffs})
+411:             if 'elite' in member['fields'] and 'elite' in previous.get('fields',{}) and member['fields']['elite']!=previous['fields']['elite']:
+412:                 # Keep historical evidence, but promotion does not prove a module or mastery.
+413:                 invalid.update({'level','module_id','module_level','selected_skill'})
+414:                 invalid_ranks.update(ranks)
+415:             invalid.difference_update(member['fields'])
+416:             invalid_ranks.difference_update(str(k) for k in member.get('skill_ranks',{}))
+417:             advanced_changed='advanced' in member and member['advanced']!=previous.get('advanced')
+418:             if fields!=previous.get('fields') or ranks!=previous.get('skill_ranks') or not previous.get('present',True) or advanced_changed:
+419:                 state['history'].append({'at':captured_at,'kind':'operator_updated','id':member['id'],
+420:                     'fields':member['fields'],'skill_ranks':member.get('skill_ranks',{}),
+421:                     'advanced':member.get('advanced'),'recruitment_kind':origin})
+422:             state['operators'][member['id']]={**previous,**member,
+423:                 'fields':fields,'skill_ranks':ranks,
+424:                 'char_buff_ids':current_buffs,
+425:                 'char_buffs_complete':member.get('char_buffs_complete',False) if 'char_buff_ids' in member else
+426:                                       False if changed_origin or returned else previous.get('char_buffs_complete',False),
+427:                 'invalid_fields':sorted(invalid),'invalid_skill_ranks':sorted(invalid_ranks),
+428:                 'sources':{**previous.get('sources',{}),**member.get('sources',{})},
+429:                 'field_times':{**previous.get('field_times',{}),**{key:captured_at for key in member['fields']}},
+430:                 'skill_times':{**previous.get('skill_times',{}),**{str(key):captured_at for key in member.get('skill_ranks',{})}},
+431:                 'merged_from_pages':True,
+432:                 'captured_at':captured_at if member['fields'] or member.get('skill_ranks') else previous.get('captured_at',captured_at),
+433:                 'present':True}
+434:             from .recipient_state import merge_recipient_evidence
+435:             merge_recipient_evidence(previous,member,state['operators'][member['id']],
+436:                                      changed_origin or returned,captured_at)
+437:         members=observed.get('operators',[])
+438:         if observed.get('selected_operator') in {m['id'] for m in members}:
+439:             state['selected_operator']=observed['selected_operator']
+440:         if crew is not None and len({m['id'] for m in members})==crew:
+441:             current={m['id'] for m in members}
+442:             for key,member in state['operators'].items():
+443:                 if key not in current and member.get('present',True):
+444:                     member['present']=False
+445:                     state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})
+
+5e2ff697402d06e78b239e01f0b4307b50dd5633:rouge/run_state.py:564-592 SHA256=20c6a00a72744017ebbc0fcb3b1009dddf8a6702aa01bf273b4b51c344692fd9
+564:     def summary(self):
+565:         status=self.inventory_status();state=self.state
+566:         count='未确认' if state['relic_count'] is None else str(state['relic_count'])
+567:         crew='未确认' if state['crew_count'] is None else str(state['crew_count'])
+568:         names=[operator_profiles()[key]['name']+('（已离队，保留记录）' if not member.get('present',True) else '')
+569:                +('（已进阶）' if member.get('advanced') else '')
+570:                +('（应急雇佣，仅一次作战）' if member.get('recruitment_kind')=='emergency_hire' else '')
+571:                for key,member in state['operators'].items()]
+572:         from .relics import mechanics
+573:         labels={'numeric':'有数值规则','conditional':'需条件','partial':'部分机制','pending':'机制待接入','non_output':'无输出加成'}
+574:         relics=[catalog()['relics'][rid]['name']+('【'+state['relics'][rid]['icon_evidence']['tier_label']+'】'
+575:                 if state['relics'][rid].get('icon_evidence',{}).get('tier_label') else '')
+576:                 +'（'+labels[mechanics()['relics'][rid]['status']]+'）' for rid in self.held_relic_ids()]
+577:         conflicts=[catalog()['relics'][rid]['name'] for rid in self.held_relic_ids()
+578:                    if state['relics'][rid].get('icon_evidence',{}).get('difficulty_conflict')]
+579:         from .relic_counter_semantics import RESOURCE_LABELS
+580:         usable=self.calculation_resources()
+581:         resources='、'.join(RESOURCE_LABELS.get(key,key)+f' {record["value"]}（'+
+582:             time.strftime('%H:%M:%S',time.localtime(record['captured_at']))+
+583:             (' 最近确认）' if key in usable else ' 历史值，当前层数待确认）')
+584:             for key,record in state.get('resources',{}).items())
+585:         present=sum(member.get('present',True) for member in state['operators'].values())
+586:         config=state['config'];difficulty=config.get('difficulty',{}).get('value')
+587:         squad=config.get('squad',{})
+588:         info=('保密等级 '+str(difficulty) if difficulty is not None else '保密等级未确认')+' · '+squad.get('name','分队未确认')
+589:         if squad.get('level') is not None:info+='（强化）' if squad['level']==1 else '（基础）'
+590:         if config.get('zone'):info+=' · '+config['zone']['name']
+591:         return '\n'.join([info,f'本局队伍：当前已识别 {present} / {crew} 人', '、'.join(names) or '成员尚未确认',
+592:             f'本局持有：已识别 {status["recognized"]+status["recognized_tools"]} / {count} 件 · '+('持有清单已核对（本局记录）' if status['complete'] else '变更待核对或尚未读全'),
+
+5e2ff697402d06e78b239e01f0b4307b50dd5633:rouge/operator_summary.py:1-49 SHA256=d1a6c6c70265835bbe804e15bca1e17ee2d7705f543490e965fe794f8b5a29cf
+1: """Plain, field-by-field display of operator observations."""
+2: from .catalog import operator_profiles
+3: 
+4: LABELS={'level':'等级','elite':'精英阶段','potential':'潜能','trust':'信赖',
+5:         'module_id':'装备模组','module_level':'模组阶段','selected_skill':'所选技能'}
+6: 
+7: def format_operator_observation(operator,cultivation=None, *, technical=False):
+8:     profile=operator_profiles()[operator['id']]
+9:     invalid=set(operator.get('invalid_fields',[]))
+10:     fields={key:value for key,value in operator.get('fields',{}).items() if key not in invalid}
+11:     def value(key,fmt=str):return fmt(fields[key]) if key in fields else '未确认'
+12:     trust=value('trust_display',lambda n:f'{n}%') if 'trust_display' in fields else value('trust',lambda n:f'{n}%（加成进度）')
+13:     selected_number=fields.get('selected_skill')
+14:     if not profile['skills']:selected='无技能'
+15:     elif type(selected_number) is int and 1<=selected_number<=len(profile['skills']):
+16:         selected=f'第{selected_number}技能 · '+profile['skills'][selected_number-1]['levels'][-1]['name']
+17:     else:selected='未确认'
+18:     if 'module_id' not in fields:module_text='未确认'
+19:     elif fields['module_id'] is None:module_text='未装备' if profile['modules'] else '本档案无可装备模组'
+20:     else:
+21:         module=next((m for m in profile['modules'] if m['id']==fields['module_id']),None)
+22:         module_text=(module['name'] if module else '名称未确认的装备模组')+' · 阶段 '+value('module_level')
+23:     lines=[f"干员：{profile['name']}", '', '【培养信息】',
+24:            f"精英阶段：{value('elite')}    等级：{value('level')}    潜能：{value('potential')}",
+25:            f'信赖：{trust}',f'装备模组：{module_text}', '', '【技能信息】', f'所选技能：{selected}']
+26:     if operator.get('recruitment_kind')=='emergency_hire':lines.insert(1,'来源：应急雇佣（人形/时钟标识）；仅一次作战，离队后保留历史。')
+27:     if 'advanced' in operator:lines.insert(1,'本局进阶：'+('已进阶' if operator['advanced'] else '未进阶'))
+28:     ranks={key:value for key,value in operator.get('skill_ranks',{}).items() if str(key) not in operator.get('invalid_skill_ranks',[])}
+29:     for i,skill in enumerate(profile['skills'],1):
+30:         rank=ranks.get(str(i),ranks.get(i))
+31:         text='未确认' if rank is None else f'等级 {rank}' if rank<=7 else f'等级 7 · 专精 {rank-7}'
+32:         lines.append(f'第{i}技能 · {skill["levels"][-1]["name"]}：{text}')
+33:     missing=operator.get('missing_fields',[])
+34:     if missing:
+35:         labels=[('第'+key.rsplit('_',1)[-1]+'技能等级') if key.startswith('skill_rank_') else LABELS.get(key,'未确认的档案字段') for key in missing]
+36:         lines.extend(['', '【读取状态】'])
+37:         lines.append('本帧未读取：'+'、'.join(labels))
+38:         if operator.get('merged_from_pages'):lines.append('上述已显示的历史字段来自此前读取的同一干员档案。')
+39:     if operator.get('scope')=='run':
+40:         if not missing:lines.extend(['', '【读取状态】'])
+41:         lines.append('使用本局已确认记录；暂时不可见的字段继续保留。进阶后尚未重新确认的模组/技能信息不作为当前事实。')
+42:     if technical:
+43:         lines.extend(['', '【技术引用】', '干员引用：'+operator['id']])
+44:         if fields.get('module_id'):lines.append('模组引用：'+fields['module_id'])
+45:         if missing:lines.append('未读取字段引用：'+'、'.join(missing))
+46:     return '\n'.join(lines)
+
+5e2ff697402d06e78b239e01f0b4307b50dd5633:rouge/catalog.py:1-20 SHA256=92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2
+1: import json
+2: import math
+3: from functools import lru_cache
+4: from pathlib import Path
+5: 
+6: @lru_cache(maxsize=1)
+7: def catalog():
+8:     return json.loads((Path(__file__).parent / 'data' / 'catalog.json').read_text(encoding='utf-8'))
+9: 
+10: @lru_cache(maxsize=1)
+11: def tactical_tools():
+12:     return json.loads((Path(__file__).parent/'data/inventory-items.json').read_text(encoding='utf-8'))['active_tools']
+13: 
+14: @lru_cache(maxsize=1)
+15: def operator_profiles():
+16:     profiles=json.loads((Path(__file__).parent/'data/operator-profiles.json').read_text(encoding='utf-8'))['operators']
+17:     for key,profile in catalog()['operators'].items():
+18:         profiles[key]={**profiles[key],**profile}
+19:     return profiles
+20: 
+
