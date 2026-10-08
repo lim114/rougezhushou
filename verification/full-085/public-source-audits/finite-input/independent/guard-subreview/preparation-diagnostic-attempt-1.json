@@ -1,0 +1,11 @@
+{
+  "stage": "independent static excerpt comparator preparation",
+  "exit_code": 1,
+  "exception": "AssertionError: ('rouge/damage.py', '_prepare_damage')",
+  "reason": "Compared raw decoded CRLF source to author universal-newline AST excerpts. Byte hashes remain exact; use read_text for excerpt comparison only.",
+  "product_failure": false,
+  "API_calls": 0,
+  "project_helper_calls": 0,
+  "tests": 0,
+  "correction": "Read fixed source using universal-newline Path.read_text while retaining original bytes/hash."
+}

@@ -1,0 +1,186 @@
+        #81-85 actual-controls design; API strings are separate regressions.
+        group085_start=len(checks);group085_counts={};anchors085={};errors085=0
+        state085=deepcopy(window.run.state);account085=deepcopy(window.operator_observations)
+        run_training085=window.use_run_training.isChecked()
+        difficulty085=window.difficulty.currentIndex();summary085=window.run_summary.text()
+        stage085=window.target_stage.currentData();enemy085=deepcopy(window.target_enemy.currentData())
+        technical085=window.damage_technical.isChecked()
+        try:
+            window.run.state['operators']={};window.run.state['config']={}
+            window.use_run_training.setChecked(False);window.sync_run_config()
+            window.target_enemy.setCurrentIndex(0)
+            window.cooperative.setChecked(False);window.fragile.setChecked(False)
+            window.limit_window.setChecked(True);window.deployment_elapsed.setValue(0)
+            for case085 in cases085():
+                requested085=case085['input'];owner085=requested085['operator'];number085=requested085['skill']
+                section085=case085['section']
+                fields085={k:requested085[k]for k in ('elite','level','potential','trust','module_id','module_level')}
+                train(owner085,fields085,ranks={str(n):requested085['skill_rank']for n in (1,2,3)})
+                reset_owner_options(owner085)
+                index085=window.skill.findData(number085);assert index085>=0
+                window.skill.setCurrentIndex(index085)
+                assert window.elite.text()==f'精英 {fields085["elite"]}'
+                assert window.potential.text()==str(fields085['potential'])
+                if fields085['module_id']:assert f'阶段 {fields085["module_level"]}'in window.module.text()
+                if fields085['elite']==0:assert window.skill.findData(2)==window.skill.findData(3)==-1
+                if fields085['elite']==1:assert window.skill.findData(3)==-1
+                window.frame_timing.setChecked(requested085['timing_mode']=='frames')
+                window.window_seconds.setValue(requested085['window_seconds'])
+                window.healing_targets.setValue(requested085['healing_targets'])
+                window.defense.setValue(requested085['enemy_defense']);window.resistance.setValue(requested085['enemy_resistance'])
+                relics(requested085['relic_ids'])
+                window.damage_technical.setChecked(case085.get('technical',False))
+                window.timing_scenario.setPlainText(json.dumps(requested085['timing'])if requested085.get('timing')else '')
+                if requested085.get('target_enemy'):
+                    target085=requested085['target_enemy']
+                    assert window.target_stage_choices.select_value(target085['stage_id'])
+                    assert window.target_enemy_choices.select_value(target085)
+                    app.processEvents()
+                    assert window.target_enemy.currentData()==target085
+                else:window.target_enemy.setCurrentIndex(0)
+                if owner085=='mechanist' and number085==3:
+                    assert isinstance(window.charge_count,QSpinBox) and window.charge_count.minimum()==0 and window.charge_count.maximum()==100
+                    window.charge_count.setValue(requested085['charge_count'])
+                if section085==82:
+                    checkbox085=option_widgets[(owner085,'low_cost_healing_target')]
+                    casts085=option_widgets[(owner085,'casts_used')]
+                    assert isinstance(checkbox085,QCheckBox)
+                    checkbox085.setChecked(requested085['low_cost_healing_target'])
+                    if number085==2:
+                        assert isinstance(casts085,QSpinBox) and casts085.minimum()==0 and casts085.maximum()==2
+                        casts085.setValue(requested085['casts_used'])
+                if section085 in (83,84,85):
+                    for key085,_label085,default085,maximum085,numbers085 in OPTIONS[owner085]:
+                        widget085=option_widgets[(owner085,key085)]
+                        if key085 not in requested085:continue
+                        assert number085 in numbers085 and widget085.isVisible() and widget085.isEnabled()
+                        if type(default085)is bool:
+                            assert isinstance(widget085,QCheckBox)
+                            widget085.setChecked(requested085[key085]);assert widget085.isChecked()is requested085[key085]
+                        elif type(default085)is int:
+                            assert isinstance(widget085,QSpinBox) and widget085.minimum()==0 and widget085.maximum()==maximum085
+                            widget085.setValue(requested085[key085]);assert type(widget085.value())is int and widget085.value()==requested085[key085]
+                        else:
+                            assert type(default085)is float and isinstance(widget085,QDoubleSpinBox)
+                            assert widget085.minimum()==0 and widget085.maximum()==maximum085
+                            widget085.setValue(requested085[key085]);assert type(widget085.value())is float and widget085.value()==requested085[key085]
+                    if case085.get('hidden_neural_checkbox_state'):
+                        for key085 in ('enemy_is_boss','enemy_in_neural_break'):
+                            hidden085=option_widgets[(owner085,key085)]
+                            assert isinstance(hidden085,QCheckBox) and not hidden085.isVisible() and key085 not in requested085
+                            hidden085.setChecked(True)
+                    if case085.get('hidden_repeat_checkbox_state'):
+                        hidden085=option_widgets[(owner085,'haruka_repeat')]
+                        assert isinstance(hidden085,QCheckBox) and not hidden085.isVisible() and 'haruka_repeat'not in requested085
+                        hidden085.setChecked(True)
+                if case085.get('expected_error'):
+                    supplemental_button.click();app.processEvents()
+                    assert window.damage_result is None and window.damage_text.toPlainText()==case085['expected_error']
+                    assert option_widgets[(owner085,'initial_neural_buildup')].value()==1500
+                    assert window.target_enemy.currentData()==requested085.get('target_enemy')
+                    if requested085.get('target_enemy'):
+                        assert case085['processed_enemy_level_type']=='NORMAL'
+                    else:assert requested085['enemy_is_boss']is False
+                    errors085+=1;group085_counts[section085]=group085_counts.get(section085,0)+1
+                    checks.append({'scope':'actual_neural_spinbox_preserves_existing_threshold_error',
+                        'section':section085,'operator':owner085,'skill':number085,'context':case085['context'],
+                        'mode':requested085['timing_mode'],'initial_neural_buildup':1500,
+                        'manual_enemy_is_boss':option_widgets[(owner085,'enemy_is_boss')].isChecked(),
+                        'manual_enemy_in_neural_break':option_widgets[(owner085,'enemy_in_neural_break')].isChecked(),
+                        'actual_selected_target':window.target_enemy.currentData(),
+                        'expected_existing_error':case085['expected_error'],'new_text_error_emitted_by_checkbox':False,
+                        'native_identity_or_clock_verified':False,'passed':True})
+                    continue
+                result085=click_result();args085=window.damage_result['scenario']
+                for key085 in ('operator','skill','elite','level','potential','trust','module_id','module_level',
+                               'skill_rank','timing_mode','window_seconds','healing_targets','relic_ids',
+                               'enemy_defense','enemy_resistance'):
+                    assert args085[key085]==requested085[key085],(case085,key085,args085[key085])
+                assert args085.get('timing',{})==requested085.get('timing',{})
+                if requested085.get('target_enemy'):
+                    assert window.target_enemy.currentData()==requested085['target_enemy']==args085['target_enemy']
+                else:assert window.target_enemy.currentData()is None and 'target_enemy'not in args085
+                if section085 in (83,84,85):
+                    for key085,_label085,default085,_maximum085,numbers085 in OPTIONS[owner085]:
+                        widget085=option_widgets[(owner085,key085)]
+                        if number085 not in numbers085:
+                            assert not widget085.isVisible() and key085 not in args085
+                            continue
+                        if key085 not in requested085:continue
+                        if type(default085)is bool:require_real_bool070(widget085,args085,key085,requested085[key085])
+                        elif type(default085)is int:require_real_int070(widget085,args085,key085,requested085[key085])
+                        else:assert type(widget085.value())is float and type(args085[key085])is float and args085[key085]==requested085[key085]
+                if owner085=='mechanist' and number085==3:
+                    require_real_int070(window.charge_count,args085,'charge_count',requested085['charge_count'])
+                if section085==81:
+                    assert isinstance(window.damage_technical,QCheckBox)
+                    assert window.damage_technical.isChecked()is case085['technical']
+                    actual_ids085=[window.relic_list.item(i).data(Qt.ItemDataRole.UserRole)
+                        for i in range(window.relic_list.count())
+                        if window.relic_list.item(i).checkState()==Qt.CheckState.Checked]
+                    assert args085['relic_ids']==actual_ids085==requested085['relic_ids']
+                    require_warning_order085(result085,args085,window.damage_text.toPlainText(),case085['technical'])
+                elif section085==82:
+                    require_real_bool070(checkbox085,args085,'low_cost_healing_target',requested085['low_cost_healing_target'])
+                    if number085==2:require_real_int070(casts085,args085,'casts_used',requested085['casts_used'])
+                    else:assert not casts085.isVisible()and 'casts_used'not in args085
+                    anchor085=canonical085({k:v for k,v in requested085.items()if k!='low_cost_healing_target'})
+                    if not requested085['low_cost_healing_target']:anchors085[anchor085]=deepcopy(result085)
+                    talents085,_=selected_talents(module.catalog()['operators'][owner085],args085)
+                    factor085=next((t['values']['heal_scale']for t in talents085 if t['name']=='微创治疗'),1.0)
+                    require_susuro_checkbox085(result085,args085,window.damage_text.toPlainText(),anchors085[anchor085],factor085)
+                elif section085==83:
+                    require_neural_checkbox085(result085,args085,window.damage_text.toPlainText())
+                elif section085==84:
+                    bonus085=module.catalog()['operators'][owner085]['skills'][number085-1]['levels'][args085['skill_rank']-1]['values'].get('atk',0.0)
+                    if number085==2:
+                        anchor085=canonical085({k:v for k,v in requested085.items()if k!='haruka_repeat'})
+                        if not requested085['haruka_repeat']:anchors085[anchor085]=deepcopy(result085)
+                        plain085=anchors085[anchor085]
+                    else:plain085=result085
+                    require_repeat_checkbox085(result085,args085,window.damage_text.toPlainText(),plain085,bonus085)
+                elif section085==85:
+                    anchor085=canonical085({k:v for k,v in requested085.items()if k!='near_previous_deployment'})
+                    if not requested085['near_previous_deployment']:anchors085[anchor085]=deepcopy(result085)
+                    talents085,_=selected_talents(module.catalog()['operators'][owner085],args085)
+                    bonus085=next((t['values']['atk']for t in talents085 if t['name']=='翔虫机动'),0.0)
+                    require_nearby_checkbox085(result085,args085,window.damage_text.toPlainText(),anchors085[anchor085],bonus085)
+                else:raise AssertionError('085 section source not sealed')
+                group085_counts[section085]=group085_counts.get(section085,0)+1
+                checks.append({'scope':{81:'actual_relic_list_and_technical_checkbox_stable_unknown_warning_order',
+                    82:'actual_low_cost_checkbox_and_readonly_susuro_talent_reference',
+                    83:'actual_neural_checkboxes_spinbox_and_fixed_enemy_source_boundaries',
+                    84:'actual_S2_repeat_checkbox_and_readonly_Haruka_source_boundaries',
+                    85:'actual_nearby_checkbox_and_readonly_Orchid_talent_source_boundaries'}[section085],
+                    'section':section085,'operator':owner085,'skill':number085,'context':case085['context'],
+                    'mode':args085['timing_mode'],'elite':args085['elite'],'potential':args085['potential'],
+                    'module_level':args085['module_level'],'relic_ids':args085['relic_ids'],
+                    'technical':window.damage_technical.isChecked(),'low_cost_healing_target':args085.get('low_cost_healing_target'),
+                    'casts_used':args085.get('casts_used'),'enemy_is_boss':args085.get('enemy_is_boss'),
+                    'enemy_in_neural_break':args085.get('enemy_in_neural_break'),'initial_neural_buildup':args085.get('initial_neural_buildup'),
+                    'actual_selected_target':args085.get('target_enemy'),'haruka_repeat':args085.get('haruka_repeat'),
+                    'near_previous_deployment':args085.get('near_previous_deployment'),
+                    'native_stack_or_recipient_clock_verified':False,'passed':True})
+        finally:
+            window.run.state=state085;window.operator_observations=account085
+            window.use_run_training.setChecked(run_training085);window.run_summary.setText(summary085);window.sync_run_config()
+            if not state085.get('config',{}).get('difficulty'):window.difficulty.setCurrentIndex(difficulty085)
+            assert window.target_stage_choices.select_value(stage085)
+            if enemy085 is None:window.target_enemy.setCurrentIndex(0)
+            else:assert window.target_enemy_choices.select_value(enemy085)
+            window.update_operator();relics([]);window.timing_scenario.clear();window.damage_technical.setChecked(technical085)
+        group085_end=len(checks)
+        assert group085_counts=={81:136,82:216,83:450,84:88,85:264},group085_counts
+        assert errors085==24,errors085
+        receipt['supplemental_sections_81_85']=[81,82,83,84,85]
+        receipt['supplemental_checks_by_section_81_85']=group085_counts
+        receipt['supplemental_checks_81_85']=group085_end-group085_start
+        receipt['section81_input_scope']='Genuine Qt relic list emits selected IDs in its original catalog index order; no reverse/duplicate/unknown ID controls invented. Existing unknown-composition warnings and each source pending order stay stable; technical checkbox preserves raw group names, default text retains both opaque warnings. No unknown numeric stack is applied.'
+        receipt['section82_input_scope']='Genuine bool recipient checkbox and int prior-S2-use controls, with public readonly cultivation/module previews. Text validation is separate API coverage and cannot be emitted by this checkbox. Existing source-selected whole-cycle factor, missing-talent exclusions, zero-recipient arithmetic and friendly-clock unknown remain; no account ownership/actual recipient or native acquisition timing is invented.'
+        receipt['section83_input_scope']='Only existing neural True/False checkboxes, numeric buildup spinboxes and genuine fixed-enemy choices. Mantra S3 hides and omits these keys while its actual default API neural consumer remains; no synthetic S3 flag control. Public threshold1500 error remains for manual normal or identity-derived NORMAL targets; selected BOSS overrides raw manual bool. River periodic scheduling, S1 attachment and S3/incoming/bait clocks remain unknown.'
+        receipt['section83_expected_existing_threshold_errors']=errors085
+        receipt['section84_input_scope']='Genuine S2 repeat checkbox works at E1 without requiring E2 flower talent; inactive S1/S3 values are omitted. Source skill attack parameter and infinite-mode/cycle exclusions preserve their existing meaning. Readonly module eligibility, absent flower source and actual friendly/activation clocks remain distinct.'
+        receipt['section85_input_scope']='Genuine nearby checkbox across available Orchid skills and readonly E0/E1/E2 cultivation/module previews; absent E0 翔虫机动 is ignored, actual E1/E2 same-identity selected talent coefficients apply. Redeploy values and conditional arrow references do not establish actual movement, 30-second phase overlap, collision, retreat or redeployment events.'
+        receipt['sections83_85_final_checks_pending']=False
+        assert receipt['sections83_85_final_checks_pending']is False,'Final83-85 source/schema are pending'
+

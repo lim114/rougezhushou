@@ -1,0 +1,216 @@
+{
+  "scope": "Independent read-only preparation for UI085; no imports of application, calculate_damage/prepare/formatter calls, no suites, Qt, Wine, native Windows or game operation. JSON data and AST/source bytes only.",
+  "created_utc": "2026-10-08T01:10:01.391277+00:00",
+  "branch": "codex/p2-development",
+  "root_HEAD_at_read": "ea7866be6f2a8e89d382ec2982a45f1cb9231141",
+  "root_changes_at_read": [],
+  "observed_runtime": {
+    "running": true,
+    "connected": true,
+    "observations_current": true,
+    "network_policy_state": "unknown",
+    "new_network_requests": 0
+  },
+  "actual080_runner": {
+    "source_path": "/workspace/.compat/wine-ui-smoke-080.py",
+    "sha256": "c58ff7ac462e7a9aa457e4b59471a162cbf5c6daf58192f6b5a852901fcdcc98",
+    "bytes": 183037
+  },
+  "actual080_receipt": {
+    "evidence": {
+      "source_path": "/workspace/.compat/wine-ui-080.json",
+      "sha256": "f739fda29f5c980b937c289f855418cc3d6e50a01d6790c5e1cd9d3fb17d85bc",
+      "bytes": 2723906
+    },
+    "checks": 3063,
+    "passed": true,
+    "complete_ui_validation": true,
+    "attribution": "Root historical actual080 execution; reviewer only read receipt."
+  },
+  "old_body_requirement": "All 3063 old actual080 record-producing paths/body/semantics must remain; this reviewer has not inspected an085candidate yet.",
+  "sources": {
+    "rouge/app.py": {
+      "source_path": "/workspace/rougezhushou/rouge/app.py",
+      "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "bytes": 94976,
+      "head_git_blob_sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "matches_HEAD_git_blob": true
+    },
+    "rouge/operator_options.py": {
+      "source_path": "/workspace/rougezhushou/rouge/operator_options.py",
+      "sha256": "a9d7e474920ce4747b6216361a57c9874482a2a31cfa929280189443ea0eaa83",
+      "bytes": 5328,
+      "head_git_blob_sha256": "a9d7e474920ce4747b6216361a57c9874482a2a31cfa929280189443ea0eaa83",
+      "matches_HEAD_git_blob": true
+    },
+    "rouge/operator_engine.py": {
+      "source_path": "/workspace/rougezhushou/rouge/operator_engine.py",
+      "sha256": "166ec75dbf1afb45f3ad23ee28b43b8932a9a002c92d4a670cff3f108a5b3df7",
+      "bytes": 155562,
+      "head_git_blob_sha256": "166ec75dbf1afb45f3ad23ee28b43b8932a9a002c92d4a670cff3f108a5b3df7",
+      "matches_HEAD_git_blob": true
+    },
+    "rouge/reporting.py": {
+      "source_path": "/workspace/rougezhushou/rouge/reporting.py",
+      "sha256": "70ef12ed860c08ce4f471d2be0e9c5cbcec40a64ad7b91d6078c2d99d11254ae",
+      "bytes": 97666,
+      "head_git_blob_sha256": "70ef12ed860c08ce4f471d2be0e9c5cbcec40a64ad7b91d6078c2d99d11254ae",
+      "matches_HEAD_git_blob": true
+    },
+    "rouge/relics.py": {
+      "source_path": "/workspace/rougezhushou/rouge/relics.py",
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3",
+      "bytes": 40531,
+      "head_git_blob_sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3",
+      "matches_HEAD_git_blob": true
+    },
+    "rouge/catalog.py": {
+      "source_path": "/workspace/rougezhushou/rouge/catalog.py",
+      "sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2",
+      "bytes": 3404,
+      "head_git_blob_sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2",
+      "matches_HEAD_git_blob": true
+    },
+    "rouge/data/catalog.json": {
+      "source_path": "/workspace/rougezhushou/rouge/data/catalog.json",
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+      "bytes": 1624372,
+      "head_git_blob_sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+      "matches_HEAD_git_blob": true
+    },
+    "rouge/data/relic-mechanics.json": {
+      "source_path": "/workspace/rougezhushou/rouge/data/relic-mechanics.json",
+      "sha256": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47",
+      "bytes": 500847,
+      "head_git_blob_sha256": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47",
+      "matches_HEAD_git_blob": true
+    },
+    ".cache/p2-s1-binding/character_table.json": {
+      "source_path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251,
+      "head_git_blob_sha256": null,
+      "matches_HEAD_git_blob": false
+    },
+    ".cache/p2-s1-binding/skill_table.json": {
+      "source_path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "bytes": 11447929,
+      "head_git_blob_sha256": null,
+      "matches_HEAD_git_blob": false
+    }
+  },
+  "81_relic_list": {
+    "creation": "app.py 689 iterates catalog()[relics].items(); QListWidget.addItem appends; no sortItems or setSortingEnabled in MainWindow production source.",
+    "manual_mode": "auto_relics defaults True; manual click tests require setChecked(False), real sync_run_relics makes items checkable. Restore original mode/state afterwards.",
+    "serialization": "calculate app.py 1024-1025 scans count indices and includes every Checked item once. Hidden filtered items are still scanned.",
+    "filter": "filter_relics app.py 1000 changes only item.setHidden(text not in item.text()).",
+    "invalid_UI_assumptions": [
+      "click order determines relic_ids",
+      "search hiding removes selection",
+      "duplicate IDs",
+      "unlisted unknown ID",
+      "arbitrary reverse relic_ids array"
+    ],
+    "known_visual_order": [
+      [
+        119,
+        "rogue_6_relic_legacy_81",
+        "活玫瑰"
+      ],
+      [
+        120,
+        "rogue_6_relic_legacy_82",
+        "苍白花冠"
+      ],
+      [
+        121,
+        "rogue_6_relic_legacy_83",
+        "涌动之餐"
+      ]
+    ],
+    "resolution_order": "prepare current relics.py candidates=rules+effects+token_effects, dict.fromkeys of unverified group preserves first occurrence, without changing candidate construction/removal or game stacking.",
+    "literal_debug_and_technical_warnings": [
+      "组合 heal_scale 的叠加规则尚未核验，未套用该组合。",
+      "组合 received_regeneration 的叠加规则尚未核验，未套用该组合。"
+    ],
+    "default_report_replacement_derived_from_AST": {
+      "pattern": "\\b[A-Za-z][A-Za-z0-9_]*_[A-Za-z0-9_]+(?::[A-Za-z0-9_@\\[\\].-]+)?(?![A-Za-z0-9_])",
+      "replacement": "未核验配置（原文见技术资料）",
+      "lines": [
+        "组合 未核验配置（原文见技术资料） 的叠加规则尚未核验，未套用该组合。",
+        "组合 未核验配置（原文见技术资料） 的叠加规则尚未核验，未套用该组合。"
+      ],
+      "count": 2,
+      "explanation": "format_report deduplicates original warning strings before phrase, so identical translated lines remain twice. This is static derivation, not a formatter call or actual UI result."
+    },
+    "requirements": [
+      "Check exact submitted catalog-index ordered ids and matching resolution records.",
+      "Check raw structured warnings and record.pending exact first-candidate group order.",
+      "Compare whole actual QPlainTextEdit to formatter output with existing NBSP normalization when permitted later.",
+      "Technical display can assert heal_scale precedes received_regeneration.",
+      "Default display must retain two translated warning lines; do not require raw group names or silently collapse duplicate human lines.",
+      "No claim about actual game trigger/order/stacking; all related group exclusions and incomplete flags persist."
+    ]
+  },
+  "82_susuro_controls": {
+    "low_cost": {
+      "source": "operator_options.py 8, app.py 667-676, app.py 1035-1037",
+      "type": "QCheckBox",
+      "default": false,
+      "applicable_skills": [
+        1,
+        2
+      ],
+      "serialization": "widget.isChecked() produces bool"
+    },
+    "casts_used": {
+      "source": "operator_options.py 8, app.py 671-674, app.py 1035-1037",
+      "type": "QSpinBox",
+      "range": [
+        0,
+        2
+      ],
+      "default": 0,
+      "applicable_skills": [
+        2
+      ],
+      "serialization": "widget.value() produces int"
+    },
+    "casts_used_semantics": {
+      "2": "operator_engine.calculate checks >=2 before plans and raises exact ValueError 深度治疗本场已使用两次，不能再次开启。; app calculates catches and shows exception text, damage_result stays None.",
+      "1": "Existing model marks nonrepeat; cannot expect numeric cycle_healing/cycle_seconds for another full reuse.",
+      "0": "Existing normal repeat reference when remaining gates permit."
+    },
+    "healing_targets_UI_range_for_susuro": [
+      0,
+      1
+    ],
+    "raw_skill_evidence": "Original skchr_susuro_2 has skill_max_trigger_time2.0 and same-battle max2 description at all10ranks; no hidden clock or simulation rule is inferred.",
+    "raw_talent_evidence": "微创治疗 first E1L1, requiredPotentialRank4 maps to displayed potential5; E2 and current qualified PHY-X source remain original. E0 checked does not invent missing talent.",
+    "readonly_cultivation": "elite/trust/potential/module/rank are QLabel or read-only observations; level is a real QSpinBox bounded by phase max. Temporary train helper only injects public in-memory observation and updates real window. Explicit known skill_ranks required; otherwise fallback E0/E1 rank7/E2 rank10 is preview, not real account inheritance.",
+    "source_boundaries": [
+      "S1 unlocked E0L1; S2 unlocked E1L1.",
+      "Public cultivation phase max: E0 45, E1 60, E2 70.",
+      "PHY-X uniequip_002_susuro gate E2L40; levels39/40 meaningful, not49/50.",
+      "S1 scenario omits inactive casts_used regardless of hidden widget stored value.",
+      "Boolean false and true only in actualQt path; stringFalse, stringTrue, null, NaN, dict/list and numeric coercion belong API tests, never passed to Qt as fake types.",
+      "82 draft/source not frozen here; no repaired API behavior or final UI085 pass claimed.",
+      "No synthetic base_attack control: UI attack is readonly, derive ratios from actual same cultivation and chosen talent, do not hardcode1000-reference totals.",
+      "Saving public model state for preview does not verify OCR/current game cost/recipient presence/account unlock or native module attachment."
+    ],
+    "suggested_real_boundaries": [
+      "S1 E0/E1/E2 boolFalse/True and bothtiming modes.",
+      "S2 E1/E2 boolFalse/True with real casts_used0/1/2, check2 exact UI error separately.",
+      "Actual integer healing_targets0/1, zero/window/lifetime scope already supported by real controls.",
+      "Potential4/5 and module39/40 with stages2/3 only as read-only public observations, selected talent derives factor.",
+      "Natural initial/recharge/duration clocks remain same between boolFalse/True where bothsuccessful; casts1 cycleNone remains unknown/unavailable, casts2 is rejected."
+    ]
+  },
+  "pending_sections": [
+    83,
+    84,
+    85
+  ],
+  "final_status": "Preparation complete only. Await author candidate for static design review; await final root85 freeze for formal source/runner/API receipt verification. No new API/Qt/Wine call."
+}

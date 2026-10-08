@@ -1,0 +1,113 @@
+{
+  "status": "bounded_negative_source_audit_not_numbered",
+  "fixed_commit": "2dfd9fa2c9a62db0112bc0fb98cd23123dd3b48b",
+  "confirmed_missing_public_float_consumer_guards": [],
+  "actionable_candidates": [],
+  "maximum_candidates_requested": 2,
+  "traced_boundaries": [
+    {
+      "fields": [
+        "base_attack"
+      ],
+      "outcome": "Existing protection found.",
+      "paths": [
+        "Combat.__init__ -> Combat.value",
+        "_skill_damage_base finite scalar loop",
+        "prepare_attribute_runes -> apply_attribute_runes -> _fp/_single when a rune is present"
+      ],
+      "qualification": "Actual operator paths; no-rune path remains subject to the later engine guard."
+    },
+    {
+      "fields": [
+        "enemy_defense",
+        "enemy_resistance"
+      ],
+      "outcome": "Existing protection found.",
+      "paths": [
+        "Combat.option -> Combat.value",
+        "_skill_damage_base finite scalar loop"
+      ],
+      "qualification": "Fixed selected enemy identity replaces stale manual fields before engine checks; this is an existing precedence, not a missing manual-field guard."
+    },
+    {
+      "fields": [
+        "window_seconds",
+        "skill_duration_seconds",
+        "healing_targets"
+      ],
+      "outcome": "Existing finite checks at actual numeric consumers; capability/raw-bool distinction is historical and must stay scoped.",
+      "paths": [
+        "Combat.option",
+        "build_estimate.nonnegative",
+        "AttackTimeline.attacks/finite"
+      ]
+    },
+    {
+      "fields": [
+        "initial_sp_bonus",
+        "sp_recovery_bonus",
+        "deployment_elapsed_seconds"
+      ],
+      "outcome": "Existing finite checks on actual legacy estimate/selected elapsed/relic finisher paths; unused owner fields are not new candidates.",
+      "paths": [
+        "build_estimate.nonnegative",
+        "Combat.option for selected elapsed consumer",
+        "relics.finish -> timing.finite for finite deployment-speed rules"
+      ]
+    },
+    {
+      "fields": [
+        "effects[*].value",
+        "relic_context numeric conditions",
+        "timing numeric scalars and ranges"
+      ],
+      "outcome": "Finite checks already present before active numeric consumption.",
+      "paths": [
+        "Combat.__init__/value",
+        "_skill_damage_base effect loop",
+        "relics.context_value",
+        "AttackTimeline.__init__/ranges -> finite/frame_time",
+        "sp_events finite event times"
+      ]
+    }
+  ],
+  "existing_error_precedence": [
+    "Public skill/rank and cultivated attributes/module validation precede engine evaluation.",
+    "prepare_run/fixed enemy identity, relic resolution and attribute rune conversion precede both engines.",
+    "Extended constructor checks effect kinds/values, then enemy defense/resistance, explicit windows/duration, base attack, and active talents.",
+    "Legacy scalar checks precede legacy declared counts and later estimate nonnegative checks.",
+    "The existing report/finishers and scoped string conditions remain after the original numeric validations; no new validator or error is proposed."
+  ],
+  "historical_receipts_reused": [
+    {
+      "path": "research/p2-zero-lifetime-aliases/public-comparison-055.json",
+      "claim": "Historical saved preservation of nonzero invalid timing inputs, not current fresh API verification."
+    },
+    {
+      "path": "research/p2-integer-option-input-types/handoff-receipt.json",
+      "claim": "Historical integer raw-bool correction keeps noninteger controls and inactive fields unchanged."
+    },
+    {
+      "path": "research/p2-declared-count-input-types/handoff-receipt.json",
+      "claim": "Historical owner/capability-specific raw-bool boundary, not a global float-only type policy."
+    }
+  ],
+  "limits": [
+    "No new execution proves current behavior for NaN/inf; conclusions are source and existing receipt checks only.",
+    "No claim that every possible field or every derived arithmetic overflow is covered.",
+    "No new numerical bounds or boolean/number policy is inferred from UI ranges.",
+    "Inactive or identity-overwritten fields cannot be declared bugs merely because their raw value is nonfinite.",
+    "The separate 86 twelve boolean contract fields, module/talent qualification audits, native attachments and clocks are not reaudited."
+  ],
+  "counters": {
+    "API_calls": 0,
+    "project_helper_calls": 0,
+    "tests": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "product_patches": 0,
+    "matrices": 0,
+    "tracked_edits": 0
+  },
+  "restart": "Stop this negative audit. Only reopen for a named active float field, an exact absent finite gate, and qualified old public evidence supplied or separately authorized; do not repeat existing matrices or manufacture a section."
+}

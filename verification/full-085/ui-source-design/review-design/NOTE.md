@@ -1,0 +1,5 @@
+81–82当前pending设计固定SHA fcbd4225094d813bb5f68d52242c53753f98297d01f544b8b146de8d44c3d271，独立静态审通过。完整逆向逐字节恢复实际080旧3063项正文；352新设计行81=136/82=216，108个false先于true配对，计数不代表计算通过。
+
+13个estimate.skill契约字段均有实际生产AST证据；None周期、真实bool/int和隐藏非活跃键、空敌方保留友方时钟未知的说明链均正确。初稿mechanist依赖旧控件残留0的边界已用真实显式charge0及int断言完善，原稿理由保留，没有伪报API/Qt失败。
+
+82来源formal与83–85仍待完成；入口True保护在import前，因此绝不能执行本pendingrunner。此审查没有应用API、formatter、Qt、Wine或游戏调用。旧review-prep15附件未改动，新的两次只读错误路径诊断独立保留。

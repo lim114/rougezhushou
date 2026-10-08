@@ -1,0 +1,10 @@
+{
+  "operation": "First combined explicit-manifest sealing attempt",
+  "exit_code": 1,
+  "error": "AssertionError at unique archive-path check before any final manifest/handoff write",
+  "cause": "Alternate 13-file manifest already includes handoff.json; separately appending that same handoff duplicated alternate-source-review/handoff.json.",
+  "correction": "Inspected all13 exact archive_path rows; retain the existing verified handoff row and append only the missing alternate manifest metadata.",
+  "product_calls_repeated": 0,
+  "product_code_failure": false,
+  "raw_first_error": "Traceback (most recent call last):\n  File \"<stdin>\", line 24, in <module>\nAssertionError\n"
+}

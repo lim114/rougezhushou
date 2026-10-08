@@ -1,0 +1,620 @@
+--- wine-ui-smoke-080.py
++++ wine-ui-smoke-085.py
+@@ -1,3 +1,6 @@
++if __name__ == '__main__' and False:
++    raise RuntimeError('UI085 final source/schema are pending; no Qt execution is permitted')
++
+ if __name__ == '__main__' and False:
+     raise RuntimeError('UI080 final source/schema are pending; no Qt execution is permitted')
+ 
+@@ -651,6 +654,323 @@
+     return rows
+ 
+ 
++"""Current source-backed planned assertions; no actual Qt/Wine certification."""
++import json
++
++def canonical085(value):
++    return json.dumps(value,ensure_ascii=False,sort_keys=True,allow_nan=False)
++
++def require_warning_order085(result,args,text,technical):
++    groups=('heal_scale','received_regeneration')
++    selected=args['relic_ids']
++    conflicting=len(set(selected)&{'rogue_6_relic_legacy_81','rogue_6_relic_legacy_82','rogue_6_relic_legacy_83'})>=2
++    expected=['组合 '+group+' 的叠加规则尚未核验，未套用该组合。'for group in groups]if conflicting else []
++    actual=[w for w in result['warnings']if w.startswith('组合 ')]
++    assert actual==expected
++    records=result['relic_resolution']['records']
++    assert [r['id']for r in records]==selected
++    if conflicting:
++        assert not result['relic_resolution']['complete']
++        assert not any(r['kind']in ('healing_factor','regeneration_factor')for r in result['relic_resolution']['rules'])
++        for record in records:
++            if record['id']in ('rogue_6_relic_legacy_81','rogue_6_relic_legacy_82','rogue_6_relic_legacy_83'):
++                assert record['pending']==['组合叠加规则待核验:'+group for group in groups]
++                assert record['applied']==[] and record['status']=='incomplete'
++        if technical:
++            assert text.index(expected[0])<text.index(expected[1])
++        else:
++            rendered='组合 未核验配置（原文见技术资料） 的叠加规则尚未核验，未套用该组合。'
++            assert text.count(rendered)==2
++            assert '组合 heal_scale 'not in text and '组合 received_regeneration 'not in text
++    if 'rogue_6_relic_legacy_5'in selected:
++        other=next(r for r in records if r['id']=='rogue_6_relic_legacy_5')
++        assert other['status']=='applied' and other['applied']
++    # Unknown stacking is excluded irrespective of zero observation; this
++    # never establishes real target/recipient state or a composition formula.
++    if args['window_seconds']==0:
++        assert result['total_damage']==0
++        if args['operator']=='mechanist'and args['skill']==3:
++            # Legacy _skill_damage emits a damage-only dictionary; its estimate
++            # independently carries zero direct healing without adding a field.
++            assert 'total_healing'not in result
++            assert result['estimate']['skill']['window_healing']==0
++        else:assert result['total_healing']==0
++
++def require_susuro_checkbox085(result,args,text,plain,factor):
++    assert type(args['low_cost_healing_target'])is bool
++    assert result['total_damage']==0
++    assert result['timing']==plain['timing']
++    a,b=plain['estimate']['skill'],result['estimate']['skill']
++    for key in ('mode','initial_seconds','recharge_seconds','cycle_seconds','duration_seconds',
++                'sp_recovery_per_second','hit_counts'):
++        assert b[key]==a[key]
++    effective=factor if args['low_cost_healing_target']else 1.0
++    for key in ('total_healing','phase_healing','window_healing','window_hps','cycle_healing','cycle_hps'):
++        if a[key]is None:assert b[key]is None
++        else:assert abs(b[key]-a[key]*effective)<1e-7
++    assert abs(result['total_healing']-plain['total_healing']*effective)<1e-7
++    if args['healing_targets']==0 or args['window_seconds']==0:assert result['total_healing']==0
++    if args['skill']==2 and args['casts_used']==1:
++        assert b['cycle_seconds']is None and b['cycle_healing']is None
++    if args.get('timing',{}).get('target_disappears_seconds')==0 or args.get('timing',{}).get('target_windows')==[]:
++        assert '真实友方获取时钟未核验'in text
++
++"""Provisional sourced contracts; no API execution or native validation proof."""
++def require_neural_checkbox085(result,args,text):
++    hidden=args['operator']=='char_4204_mantra'and args['skill']==3
++    if hidden:
++        assert not {'enemy_is_boss','enemy_in_neural_break','initial_neural_buildup','enemy_buildup_resistance'}&args.keys()
++    else:
++        assert type(args['enemy_is_boss'])is bool and type(args['enemy_in_neural_break'])is bool
++        assert type(args['initial_neural_buildup'])is int
++    if 'rogue_6_relic_fight_22'in args['relic_ids']:
++        ref=result['neural_relic_reference']
++        assert ref['periodic_damage_scheduled']is False
++        assert ref['preexisting_break_assumed']is args.get('enemy_in_neural_break',False)
++        section=next(s for s in result['report']['sections']if s['id']=='river_neural')
++        assert next(m['value']for m in section['metrics']if m['key']=='first_tick')is None
++        assert '实际首跳时刻和每跳麻痹条件尚未确认'in text
++    else:assert 'neural_relic_reference'not in result
++    if args['operator']=='char_1042_phatm2':
++        assert 'neural_bait_reference'not in result and 'neural_incoming_reference'not in result
++    else:
++        ref=result['external_event_reference']
++        assert ref['kind']=='mantra_events' and ref['actual_event_times_seconds']is None
++    target=args.get('target_enemy')
++    if target:
++        enemy=result['run_resolution']['enemy']
++        # Processed enemy spreads target keys; catalog record uses id separately.
++        assert enemy['enemy_id']==target['enemy_id'] and enemy['level']==target['level']
++        assert enemy['stage_id']==target['stage_id']
++        assert enemy['level_type']=='BOSS'
++        assert args['initial_neural_buildup']==1500
++    if args['window_seconds']==0:
++        assert result['total_damage']==0 and result['total_healing']==0
++
++def require_repeat_checkbox085(result,args,text,plain,attack_bonus):
++    healing=result['haruka_healing_reference']
++    for ref in (healing,healing['window_reference']):
++        assert ref['actual_target_count']is None and ref['actual_acquisition_times_seconds']is None
++        assert ref['native_composition_verified']is False and ref['native_attachment_verified']is False
++    events=result['external_event_reference']
++    assert events['kind']=='haruka_bubbles' and events['actual_event_times_seconds']is None
++    if args['skill']==2:
++        assert type(args['haruka_repeat'])is bool
++        skill=result['estimate']['skill']
++        assert skill['mode']==('infinite'if args['haruka_repeat']else 'timed')
++        delta=plain['estimate']['base_stats']['attack']*attack_bonus if args['haruka_repeat']else 0.0
++        assert abs(result['attack']-plain['attack']-delta)<1e-7
++        assert abs(skill['skill_attack']-plain['estimate']['skill']['skill_attack']-delta)<1e-7
++        assert result['estimate']['base_stats']==plain['estimate']['base_stats']
++        if args['haruka_repeat']:
++            assert skill['duration_seconds']is None and skill['cycle_seconds']is None
++            assert skill['cycle_damage']is None and skill['cycle_healing']is None
++    else:assert 'haruka_repeat'not in args
++    if args['elite']<2:
++        for c in result['components']:
++            if c['name']in ('扶摇花火','浮泡治疗衍生伤害'):
++                assert c['hits']==0 and c['total']==0
++    if args['healing_targets']==0 or args['window_seconds']==0:assert result['total_healing']==0
++    assert '实际友方获取'in text
++
++def require_nearby_checkbox085(result,args,text,plain,talent_bonus):
++    assert type(args['near_previous_deployment'])is bool
++    factor=talent_bonus if args['near_previous_deployment']else 0.0
++    base=plain['estimate']['base_stats']['attack']
++    assert abs(result['estimate']['base_stats']['attack']-base*(1+factor))<1e-7
++    assert abs(result['attack']-plain['attack']-base*factor)<1e-7
++    assert abs(result['estimate']['skill']['skill_attack']-plain['estimate']['skill']['skill_attack']-base*factor)<1e-7
++    if args['elite']==0:
++        assert factor==0 and canonical085(result)==canonical085(plain)
++    assert result['orchid_redeploy_reference']==plain['orchid_redeploy_reference']
++    redeploy=result['orchid_redeploy_reference']
++    assert redeploy['events_scheduled']is False and redeploy['native_attachment_verified']is False
++    assert redeploy['actual_retreat_seconds']is None and redeploy['actual_next_deployment_seconds']is None
++    cast=result['unbound_cast_reference']
++    assert cast['kind']=='orchid_arrows' and cast['collision_clock_verified']is False
++    assert cast['actual_hit_times_seconds']is None and cast['actual_end_seconds']is None
++    assert result['estimate']['skill']['cycle_seconds']is None
++    if args['window_seconds']==0 or args.get('timing',{}).get('target_disappears_seconds')==0:
++        assert result['total_damage']==0
++    else:assert result['total_damage']is None
++    assert result['total_healing']==0
++    assert '实际撤退、倒下和再次部署的时刻'in text
++
++"""Pure future085 actual-control designs; no calculation or Qt execution."""
++def cases085():
++    rows=[]
++    scopes=(('positive',10,{}),('zero_window',0,{}),
++            ('zero_enemy_lifetime',10,{'target_disappears_seconds':0}),
++            ('empty_enemy_windows',10,{'target_windows':[]}))
++    def add(section,owner,skill,elite,level,rank,potential,mode,scope,horizon,timing,**extra):
++        args={'operator':owner,'skill':skill,'elite':elite,'level':level,'skill_rank':rank,
++              'potential':potential,'trust':100,'module_id':None,'module_level':0,
++              'timing_mode':mode,'window_seconds':horizon,'healing_targets':1,
++              'enemy_defense':0,'enemy_resistance':0,'preexisting_fragile':False,
++              'cooperative':False,'relic_ids':[]}
++        if timing:args['timing']=timing
++        if owner=='mechanist' and skill==3:args['charge_count']=0
++        args.update(extra);rows.append({'section':section,'context':scope,'input':args})
++    # Genuine Qt list preserves its catalog index order, never click order or
++    # synthetic reverse/duplicate/unknown relic arrays.
++    sets=((),('rogue_6_relic_legacy_81',),
++          ('rogue_6_relic_legacy_81','rogue_6_relic_legacy_82'),
++          ('rogue_6_relic_legacy_81','rogue_6_relic_legacy_82','rogue_6_relic_legacy_83'))
++    for owner,skill in (('char_1037_amiya3',1),('char_1037_amiya3',2),
++                        ('mechanist',3),('char_110_deepcl',2)):
++        for mode in ('frames','continuous'):
++            for technical in (False,True):
++                for scope,horizon,timing in scopes[:2]:
++                    for ids in sets:
++                        add(81,owner,skill,2,60,10,1,mode,scope,horizon,timing,relic_ids=list(ids))
++                        rows[-1]['technical']=technical
++    for mode in ('frames','continuous'):
++        for technical in (False,True):
++            for ids in (['rogue_6_relic_legacy_5'],
++                        ['rogue_6_relic_legacy_5','rogue_6_relic_legacy_81','rogue_6_relic_legacy_82']):
++                add(81,'char_110_deepcl',2,2,60,10,1,mode,'unrelated_attack_rule_keeps_order',10,{},relic_ids=ids)
++                rows[-1]['technical']=technical
++    #82 source formal root; only genuine bool checkbox and int controls.
++    for elite,level,rank,potential,numbers in ((0,1,1,1,(1,)),(1,1,7,1,(1,2)),
++            (1,1,7,5,(1,2)),(2,40,10,1,(1,2)),(2,40,10,5,(1,2))):
++        for skill in numbers:
++            for mode in ('frames','continuous'):
++                for scope,horizon,timing in scopes:
++                    for flag in (False,True):
++                        add(82,'char_298_susuro',skill,elite,level,rank,potential,mode,scope,horizon,timing,
++                            low_cost_healing_target=flag,**({'casts_used':0}if skill==2 else {}))
++    for level in (39,40):
++        for stage in (1,2,3):
++            for skill in (1,2):
++                for mode in ('frames','continuous'):
++                    for flag in (False,True):
++                        add(82,'char_298_susuro',skill,2,level,10,1,mode,'readonly_module_qualification',10,{},
++                            module_id='uniequip_002_susuro',module_level=stage,low_cost_healing_target=flag,
++                            **({'casts_used':0}if skill==2 else {}))
++    for elite,rank in ((1,7),(2,10)):
++        for mode in ('frames','continuous'):
++            for flag in (False,True):
++                add(82,'char_298_susuro',2,elite,40,rank,1,mode,'remaining_S2_use_keeps_unknown_cycle',10,{},
++                    low_cost_healing_target=flag,casts_used=1)
++        for skill in (1,2):
++            for mode in ('frames','continuous'):
++                for flag in (False,True):
++                    add(82,'char_298_susuro',skill,elite,40,rank,1,mode,'zero_friendly_recipients',10,{},
++                        low_cost_healing_target=flag,healing_targets=0,
++                        **({'casts_used':0}if skill==2 else {}))
++    rows.extend(pending_cases083085())
++    return rows
++
++"""Provisional genuine-control rows; source final guards remain pending."""
++def pending_cases083085():
++    rows=[]
++    scopes=(('positive',10,{}),('zero_window',0,{}),
++            ('zero_enemy_lifetime',10,{'target_disappears_seconds':0}),
++            ('empty_enemy_windows',10,{'target_windows':[]}))
++    def add(section,owner,skill,elite,level,rank,potential,mode,scope,horizon,timing,**extra):
++        args={'operator':owner,'skill':skill,'elite':elite,'level':level,'skill_rank':rank,
++            'potential':potential,'trust':100,'module_id':None,'module_level':0,
++            'timing_mode':mode,'window_seconds':horizon,'healing_targets':1,
++            'enemy_defense':0,'enemy_resistance':0,'preexisting_fragile':False,
++            'cooperative':False,'relic_ids':[]}
++        if timing:args['timing']=timing
++        args.update(extra)
++        rows.append({'section':section,'context':scope,'input':args})
++    def neural_options(owner,skill,boss=False,breaking=False,initial=0):
++        # The hidden S3 widgets are never emitted; its API consumer still exists.
++        if owner=='char_4204_mantra'and skill==3:
++            return {'enemy_elemental_resistance':0.0,'palsy_triggers':0,'palsy_overflow_hits':0}
++        args={'enemy_is_boss':boss,'enemy_in_neural_break':breaking,
++            'initial_neural_buildup':initial,'enemy_buildup_resistance':0.0,
++            'enemy_elemental_resistance':0.0}
++        if owner=='char_1042_phatm2':
++            args['enemy_attack_count']=0
++            if skill==2:args['bait_triggers']=0
++        else:args['palsy_triggers']=0
++        return args
++    qualifications=((0,1,1,(1,)),(1,1,7,(1,2)),(2,60,10,(1,2,3)))
++    for owner in ('char_1042_phatm2','char_4204_mantra'):
++        for elite,level,rank,numbers in qualifications:
++            for skill in numbers:
++                flags=((False,False),)if owner=='char_4204_mantra'and skill==3 else (
++                    (False,False),(False,True),(True,False),(True,True))
++                for mode in ('frames','continuous'):
++                    for scope,horizon,timing in scopes:
++                        for boss,breaking in flags:
++                            add(83,owner,skill,elite,level,rank,1,mode,scope,horizon,timing,
++                                **neural_options(owner,skill,boss,breaking))
++                            if owner=='char_4204_mantra'and skill==3:
++                                rows[-1]['hidden_neural_checkbox_state']=True
++        for mode in ('frames','continuous'):
++            for boss in (False,True):
++                for breaking in (False,True):
++                    add(83,owner,2,1,1,7,1,mode,'actual_spinbox1500_threshold',10,{},
++                        **neural_options(owner,2,boss,breaking,1500))
++                    if not boss:rows[-1]['expected_error']='initial_neural_buildup需要范围内的有限非负数。'
++        for skill in (1,2,3):
++            flags=((False,False),)if owner=='char_4204_mantra'and skill==3 else (
++                (False,False),(False,True),(True,False),(True,True))
++            for mode in ('frames','continuous'):
++                for boss,breaking in flags:
++                    add(83,owner,skill,2,60,10,1,mode,'actual_River_selected_reference',10,{},
++                        relic_ids=['rogue_6_relic_fight_22'],**neural_options(owner,skill,boss,breaking))
++                    if owner=='char_4204_mantra'and skill==3:rows[-1]['hidden_neural_checkbox_state']=True
++        targets=(('NORMAL',{'stage_id':'ro6_n_1_1','enemy_id':'enemy_2133_shdopl','level':0}),
++                 ('BOSS',{'stage_id':'ro6_n_2_3','enemy_id':'enemy_1501_demonk','level':0}))
++        for mode in ('frames','continuous'):
++            for level_type,target in targets:
++                for boss in (False,True):
++                    for breaking in (False,True):
++                        add(83,owner,2,1,1,7,1,mode,'actual_fixed_enemy_overrides_manual_threshold',10,{},
++                            target_enemy=target,**neural_options(owner,2,boss,breaking,1500))
++                        rows[-1]['processed_enemy_level_type']=level_type
++                        if level_type!='BOSS':rows[-1]['expected_error']='initial_neural_buildup需要范围内的有限非负数。'
++    for elite,level,rank,potential in ((1,1,7,1),(2,60,10,1),(2,60,10,5)):
++        for mode in ('frames','continuous'):
++            for scope,horizon,timing in scopes:
++                for repeat in (False,True):
++                    add(84,'char_4202_haruka',2,elite,level,rank,potential,mode,scope,horizon,timing,
++                        bubble_bursts=0,haruka_repeat=repeat)
++    for level in (59,60):
++        for stage in (1,2,3):
++            for mode in ('frames','continuous'):
++                for repeat in (False,True):
++                    add(84,'char_4202_haruka',2,2,level,10,1,mode,'readonly_repeat_module_qualification',10,{},
++                        module_id='uniequip_002_haruka',module_level=stage,bubble_bursts=0,haruka_repeat=repeat)
++    for elite,skill,rank in ((0,1,1),(1,1,7),(2,1,10),(2,3,10)):
++        for mode in ('frames','continuous'):
++            add(84,'char_4202_haruka',skill,elite,1 if elite<2 else 60,rank,1,mode,
++                'inactive_repeat_checkbox_omitted',10,{},bubble_bursts=0,
++                **({'levitate_triggers':0}if skill==3 else {}))
++            rows[-1]['hidden_repeat_checkbox_state']=True
++    for elite,level,rank in ((1,1,7),(2,60,10)):
++        for mode in ('frames','continuous'):
++            for repeat in (False,True):
++                add(84,'char_4202_haruka',2,elite,level,rank,1,mode,'zero_friendly_recipients',10,{},
++                    healing_targets=0,bubble_bursts=0,haruka_repeat=repeat)
++    for elite,level,rank,numbers in qualifications:
++        for potential in (1,5):
++            for skill in numbers:
++                for mode in ('frames','continuous'):
++                    for scope,horizon,timing in scopes:
++                        for nearby in (False,True):
++                            add(85,'char_1048_orchd2',skill,elite,level,rank,potential,mode,scope,horizon,timing,
++                                power_coating=True,near_previous_deployment=nearby,
++                                **({'double_charge':True}if skill==1 else {}),
++                                **({'dragon_arrow_hits':1}if skill==3 else {}))
++    for level in (59,60):
++        for stage in (1,2,3):
++            for skill in (1,2,3):
++                for mode in ('frames','continuous'):
++                    for nearby in (False,True):
++                        add(85,'char_1048_orchd2',skill,2,level,10,1,mode,'readonly_nearby_module_qualification',10,{},
++                            module_id='uniequip_002_orchd2',module_level=stage,
++                            power_coating=True,near_previous_deployment=nearby,
++                            **({'double_charge':True}if skill==1 else {}),
++                            **({'dragon_arrow_hits':1}if skill==3 else {}))
++    return rows
++
++
+ def source_hashes():
+     return {p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest()
+             for folder in (ROOT/'rouge',) for p in sorted(folder.rglob('*'))
+@@ -704,7 +1024,7 @@
+                 result=window.damage_result['result']
+                 actual=window.damage_text.toPlainText();expected=format_report(result,technical=window.damage_technical.isChecked()).replace(chr(160),' ')
+                 if actual!=expected:
+-                    (OUT/'wine-ui-report-difference-080.json').write_text(json.dumps({'operator':op,'skill':skill,'actual':actual,'expected':expected},ensure_ascii=False,indent=2),encoding='utf-8')
++                    (OUT/'wine-ui-report-difference-085.json').write_text(json.dumps({'operator':op,'skill':skill,'actual':actual,'expected':expected},ensure_ascii=False,indent=2),encoding='utf-8')
+                     raise AssertionError(f'report text differs for {op} skill {skill}')
+                 skills+=1
+         assert skills==87,skills
+@@ -1975,8 +2295,8 @@
+                             if not tile:plain=deepcopy(result)
+                             require_sown(result,args,window.damage_text.toPlainText(),plain,scope_name,bb)
+                             if rank==10 and use_frames and not four and scope_name=='positive' and tile:
+-                                assert tile_widget.grab().save(str(OUT/'wine-sown-tile-control-080.png'))
+-                                receipt['section70_actual_checkbox_screenshot']='wine-sown-tile-control-080.png'
++                                assert tile_widget.grab().save(str(OUT/'wine-sown-tile-control-085.png'))
++                                receipt['section70_actual_checkbox_screenshot']='wine-sown-tile-control-085.png'
+                             checks.append({'scope':'actual_ground_enemy_presence_label_and_sown_checkbox',
+                                 'section':70,'operator':shu,'skill':3,'skill_rank':rank,
+                                 'mode':args['timing_mode'],'observation_scope':scope_name,
+@@ -2138,8 +2458,8 @@
+                     preview075.enemy_detail.moveCursor(QTextCursor.MoveOperation.Start)
+                     assert preview075.enemy_detail.find('关卡移速符文参数参考')
+                     preview075.enemy_detail.ensureCursorVisible();app.processEvents()
+-                    assert window.grab().save(str(OUT/'wine-movement-reference-080.png'))
+-                    receipt['section75_actual_technical_screenshot']='wine-movement-reference-080.png'
++                    assert window.grab().save(str(OUT/'wine-movement-reference-085.png'))
++                    receipt['section75_actual_technical_screenshot']='wine-movement-reference-085.png'
+         finally:
+             preview075.technical.setChecked(technical075)
+             assert window.target_stage_choices.select_value(stage075)
+@@ -2297,9 +2617,9 @@
+                         window.damage_text.ensureCursorVisible();app.processEvents()
+                         assert window.isVisible() and window.module.isVisible()
+                         assert '带有灼痕的裙子'in window.module.text() and '阶段 3'in window.module.text()
+-                        assert window.grab().save(str(OUT/'wine-medical-trait-080.png'))
++                        assert window.grab().save(str(OUT/'wine-medical-trait-085.png'))
+                         conversion080=next(c for c in result080['components']if c['name']=='咒愈师伤害转治疗')
+-                        receipt['section80_actual_trait_screenshot']={'filename':'wine-medical-trait-080.png',
++                        receipt['section80_actual_trait_screenshot']={'filename':'wine-medical-trait-085.png',
+                             'captured_during_existing_case':True,'extra_API_or_Qt_case':False,
+                             'readonly_elite_text':window.elite.text(),'readonly_module_text':window.module.text(),
+                             'ratio':conversion080['damage_healing']['ratio'],
+@@ -2348,6 +2668,193 @@
+         receipt['sections77_80_final_checks_pending']=False
+         assert receipt['sections77_80_final_checks_pending'] is False,'Final77-80 source/schema are pending'
+ 
++        #81-85 actual-controls design; API strings are separate regressions.
++        group085_start=len(checks);group085_counts={};anchors085={};errors085=0
++        state085=deepcopy(window.run.state);account085=deepcopy(window.operator_observations)
++        run_training085=window.use_run_training.isChecked()
++        difficulty085=window.difficulty.currentIndex();summary085=window.run_summary.text()
++        stage085=window.target_stage.currentData();enemy085=deepcopy(window.target_enemy.currentData())
++        technical085=window.damage_technical.isChecked()
++        try:
++            window.run.state['operators']={};window.run.state['config']={}
++            window.use_run_training.setChecked(False);window.sync_run_config()
++            window.target_enemy.setCurrentIndex(0)
++            window.cooperative.setChecked(False);window.fragile.setChecked(False)
++            window.limit_window.setChecked(True);window.deployment_elapsed.setValue(0)
++            for case085 in cases085():
++                requested085=case085['input'];owner085=requested085['operator'];number085=requested085['skill']
++                section085=case085['section']
++                fields085={k:requested085[k]for k in ('elite','level','potential','trust','module_id','module_level')}
++                train(owner085,fields085,ranks={str(n):requested085['skill_rank']for n in (1,2,3)})
++                reset_owner_options(owner085)
++                index085=window.skill.findData(number085);assert index085>=0
++                window.skill.setCurrentIndex(index085)
++                assert window.elite.text()==f'精英 {fields085["elite"]}'
++                assert window.potential.text()==str(fields085['potential'])
++                if fields085['module_id']:assert f'阶段 {fields085["module_level"]}'in window.module.text()
++                if fields085['elite']==0:assert window.skill.findData(2)==window.skill.findData(3)==-1
++                if fields085['elite']==1:assert window.skill.findData(3)==-1
++                window.frame_timing.setChecked(requested085['timing_mode']=='frames')
++                window.window_seconds.setValue(requested085['window_seconds'])
++                window.healing_targets.setValue(requested085['healing_targets'])
++                window.defense.setValue(requested085['enemy_defense']);window.resistance.setValue(requested085['enemy_resistance'])
++                relics(requested085['relic_ids'])
++                window.damage_technical.setChecked(case085.get('technical',False))
++                window.timing_scenario.setPlainText(json.dumps(requested085['timing'])if requested085.get('timing')else '')
++                if requested085.get('target_enemy'):
++                    target085=requested085['target_enemy']
++                    assert window.target_stage_choices.select_value(target085['stage_id'])
++                    assert window.target_enemy_choices.select_value(target085)
++                    app.processEvents()
++                    assert window.target_enemy.currentData()==target085
++                else:window.target_enemy.setCurrentIndex(0)
++                if owner085=='mechanist' and number085==3:
++                    assert isinstance(window.charge_count,QSpinBox) and window.charge_count.minimum()==0 and window.charge_count.maximum()==100
++                    window.charge_count.setValue(requested085['charge_count'])
++                if section085==82:
++                    checkbox085=option_widgets[(owner085,'low_cost_healing_target')]
++                    casts085=option_widgets[(owner085,'casts_used')]
++                    assert isinstance(checkbox085,QCheckBox)
++                    checkbox085.setChecked(requested085['low_cost_healing_target'])
++                    if number085==2:
++                        assert isinstance(casts085,QSpinBox) and casts085.minimum()==0 and casts085.maximum()==2
++                        casts085.setValue(requested085['casts_used'])
++                if section085 in (83,84,85):
++                    for key085,_label085,default085,maximum085,numbers085 in OPTIONS[owner085]:
++                        widget085=option_widgets[(owner085,key085)]
++                        if key085 not in requested085:continue
++                        assert number085 in numbers085 and widget085.isVisible() and widget085.isEnabled()
++                        if type(default085)is bool:
++                            assert isinstance(widget085,QCheckBox)
++                            widget085.setChecked(requested085[key085]);assert widget085.isChecked()is requested085[key085]
++                        elif type(default085)is int:
++                            assert isinstance(widget085,QSpinBox) and widget085.minimum()==0 and widget085.maximum()==maximum085
++                            widget085.setValue(requested085[key085]);assert type(widget085.value())is int and widget085.value()==requested085[key085]
++                        else:
++                            assert type(default085)is float and isinstance(widget085,QDoubleSpinBox)
++                            assert widget085.minimum()==0 and widget085.maximum()==maximum085
++                            widget085.setValue(requested085[key085]);assert type(widget085.value())is float and widget085.value()==requested085[key085]
++                    if case085.get('hidden_neural_checkbox_state'):
++                        for key085 in ('enemy_is_boss','enemy_in_neural_break'):
++                            hidden085=option_widgets[(owner085,key085)]
++                            assert isinstance(hidden085,QCheckBox) and not hidden085.isVisible() and key085 not in requested085
++                            hidden085.setChecked(True)
++                    if case085.get('hidden_repeat_checkbox_state'):
++                        hidden085=option_widgets[(owner085,'haruka_repeat')]
++                        assert isinstance(hidden085,QCheckBox) and not hidden085.isVisible() and 'haruka_repeat'not in requested085
++                        hidden085.setChecked(True)
++                if case085.get('expected_error'):
++                    supplemental_button.click();app.processEvents()
++                    assert window.damage_result is None and window.damage_text.toPlainText()==case085['expected_error']
++                    assert option_widgets[(owner085,'initial_neural_buildup')].value()==1500
++                    assert window.target_enemy.currentData()==requested085.get('target_enemy')
++                    if requested085.get('target_enemy'):
++                        assert case085['processed_enemy_level_type']=='NORMAL'
++                    else:assert requested085['enemy_is_boss']is False
++                    errors085+=1;group085_counts[section085]=group085_counts.get(section085,0)+1
++                    checks.append({'scope':'actual_neural_spinbox_preserves_existing_threshold_error',
++                        'section':section085,'operator':owner085,'skill':number085,'context':case085['context'],
++                        'mode':requested085['timing_mode'],'initial_neural_buildup':1500,
++                        'manual_enemy_is_boss':option_widgets[(owner085,'enemy_is_boss')].isChecked(),
++                        'manual_enemy_in_neural_break':option_widgets[(owner085,'enemy_in_neural_break')].isChecked(),
++                        'actual_selected_target':window.target_enemy.currentData(),
++                        'expected_existing_error':case085['expected_error'],'new_text_error_emitted_by_checkbox':False,
++                        'native_identity_or_clock_verified':False,'passed':True})
++                    continue
++                result085=click_result();args085=window.damage_result['scenario']
++                for key085 in ('operator','skill','elite','level','potential','trust','module_id','module_level',
++                               'skill_rank','timing_mode','window_seconds','healing_targets','relic_ids',
++                               'enemy_defense','enemy_resistance'):
++                    assert args085[key085]==requested085[key085],(case085,key085,args085[key085])
++                assert args085.get('timing',{})==requested085.get('timing',{})
++                if requested085.get('target_enemy'):
++                    assert window.target_enemy.currentData()==requested085['target_enemy']==args085['target_enemy']
++                else:assert window.target_enemy.currentData()is None and 'target_enemy'not in args085
++                if section085 in (83,84,85):
++                    for key085,_label085,default085,_maximum085,numbers085 in OPTIONS[owner085]:
++                        widget085=option_widgets[(owner085,key085)]
++                        if number085 not in numbers085:
++                            assert not widget085.isVisible() and key085 not in args085
++                            continue
++                        if key085 not in requested085:continue
++                        if type(default085)is bool:require_real_bool070(widget085,args085,key085,requested085[key085])
++                        elif type(default085)is int:require_real_int070(widget085,args085,key085,requested085[key085])
++                        else:assert type(widget085.value())is float and type(args085[key085])is float and args085[key085]==requested085[key085]
++                if owner085=='mechanist' and number085==3:
++                    require_real_int070(window.charge_count,args085,'charge_count',requested085['charge_count'])
++                if section085==81:
++                    assert isinstance(window.damage_technical,QCheckBox)
++                    assert window.damage_technical.isChecked()is case085['technical']
++                    actual_ids085=[window.relic_list.item(i).data(Qt.ItemDataRole.UserRole)
++                        for i in range(window.relic_list.count())
++                        if window.relic_list.item(i).checkState()==Qt.CheckState.Checked]
++                    assert args085['relic_ids']==actual_ids085==requested085['relic_ids']
++                    require_warning_order085(result085,args085,window.damage_text.toPlainText(),case085['technical'])
++                elif section085==82:
++                    require_real_bool070(checkbox085,args085,'low_cost_healing_target',requested085['low_cost_healing_target'])
++                    if number085==2:require_real_int070(casts085,args085,'casts_used',requested085['casts_used'])
++                    else:assert not casts085.isVisible()and 'casts_used'not in args085
++                    anchor085=canonical085({k:v for k,v in requested085.items()if k!='low_cost_healing_target'})
++                    if not requested085['low_cost_healing_target']:anchors085[anchor085]=deepcopy(result085)
++                    talents085,_=selected_talents(module.catalog()['operators'][owner085],args085)
++                    factor085=next((t['values']['heal_scale']for t in talents085 if t['name']=='微创治疗'),1.0)
++                    require_susuro_checkbox085(result085,args085,window.damage_text.toPlainText(),anchors085[anchor085],factor085)
++                elif section085==83:
++                    require_neural_checkbox085(result085,args085,window.damage_text.toPlainText())
++                elif section085==84:
++                    bonus085=module.catalog()['operators'][owner085]['skills'][number085-1]['levels'][args085['skill_rank']-1]['values'].get('atk',0.0)
++                    if number085==2:
++                        anchor085=canonical085({k:v for k,v in requested085.items()if k!='haruka_repeat'})
++                        if not requested085['haruka_repeat']:anchors085[anchor085]=deepcopy(result085)
++                        plain085=anchors085[anchor085]
++                    else:plain085=result085
++                    require_repeat_checkbox085(result085,args085,window.damage_text.toPlainText(),plain085,bonus085)
++                elif section085==85:
++                    anchor085=canonical085({k:v for k,v in requested085.items()if k!='near_previous_deployment'})
++                    if not requested085['near_previous_deployment']:anchors085[anchor085]=deepcopy(result085)
++                    talents085,_=selected_talents(module.catalog()['operators'][owner085],args085)
++                    bonus085=next((t['values']['atk']for t in talents085 if t['name']=='翔虫机动'),0.0)
++                    require_nearby_checkbox085(result085,args085,window.damage_text.toPlainText(),anchors085[anchor085],bonus085)
++                else:raise AssertionError('085 section source not sealed')
++                group085_counts[section085]=group085_counts.get(section085,0)+1
++                checks.append({'scope':{81:'actual_relic_list_and_technical_checkbox_stable_unknown_warning_order',
++                    82:'actual_low_cost_checkbox_and_readonly_susuro_talent_reference',
++                    83:'actual_neural_checkboxes_spinbox_and_fixed_enemy_source_boundaries',
++                    84:'actual_S2_repeat_checkbox_and_readonly_Haruka_source_boundaries',
++                    85:'actual_nearby_checkbox_and_readonly_Orchid_talent_source_boundaries'}[section085],
++                    'section':section085,'operator':owner085,'skill':number085,'context':case085['context'],
++                    'mode':args085['timing_mode'],'elite':args085['elite'],'potential':args085['potential'],
++                    'module_level':args085['module_level'],'relic_ids':args085['relic_ids'],
++                    'technical':window.damage_technical.isChecked(),'low_cost_healing_target':args085.get('low_cost_healing_target'),
++                    'casts_used':args085.get('casts_used'),'enemy_is_boss':args085.get('enemy_is_boss'),
++                    'enemy_in_neural_break':args085.get('enemy_in_neural_break'),'initial_neural_buildup':args085.get('initial_neural_buildup'),
++                    'actual_selected_target':args085.get('target_enemy'),'haruka_repeat':args085.get('haruka_repeat'),
++                    'near_previous_deployment':args085.get('near_previous_deployment'),
++                    'native_stack_or_recipient_clock_verified':False,'passed':True})
++        finally:
++            window.run.state=state085;window.operator_observations=account085
++            window.use_run_training.setChecked(run_training085);window.run_summary.setText(summary085);window.sync_run_config()
++            if not state085.get('config',{}).get('difficulty'):window.difficulty.setCurrentIndex(difficulty085)
++            assert window.target_stage_choices.select_value(stage085)
++            if enemy085 is None:window.target_enemy.setCurrentIndex(0)
++            else:assert window.target_enemy_choices.select_value(enemy085)
++            window.update_operator();relics([]);window.timing_scenario.clear();window.damage_technical.setChecked(technical085)
++        group085_end=len(checks)
++        assert group085_counts=={81:136,82:216,83:450,84:88,85:264},group085_counts
++        assert errors085==24,errors085
++        receipt['supplemental_sections_81_85']=[81,82,83,84,85]
++        receipt['supplemental_checks_by_section_81_85']=group085_counts
++        receipt['supplemental_checks_81_85']=group085_end-group085_start
++        receipt['section81_input_scope']='Genuine Qt relic list emits selected IDs in its original catalog index order; no reverse/duplicate/unknown ID controls invented. Existing unknown-composition warnings and each source pending order stay stable; technical checkbox preserves raw group names, default text retains both opaque warnings. No unknown numeric stack is applied.'
++        receipt['section82_input_scope']='Genuine bool recipient checkbox and int prior-S2-use controls, with public readonly cultivation/module previews. Text validation is separate API coverage and cannot be emitted by this checkbox. Existing source-selected whole-cycle factor, missing-talent exclusions, zero-recipient arithmetic and friendly-clock unknown remain; no account ownership/actual recipient or native acquisition timing is invented.'
++        receipt['section83_input_scope']='Only existing neural True/False checkboxes, numeric buildup spinboxes and genuine fixed-enemy choices. Mantra S3 hides and omits these keys while its actual default API neural consumer remains; no synthetic S3 flag control. Public threshold1500 error remains for manual normal or identity-derived NORMAL targets; selected BOSS overrides raw manual bool. River periodic scheduling, S1 attachment and S3/incoming/bait clocks remain unknown.'
++        receipt['section83_expected_existing_threshold_errors']=errors085
++        receipt['section84_input_scope']='Genuine S2 repeat checkbox works at E1 without requiring E2 flower talent; inactive S1/S3 values are omitted. Source skill attack parameter and infinite-mode/cycle exclusions preserve their existing meaning. Readonly module eligibility, absent flower source and actual friendly/activation clocks remain distinct.'
++        receipt['section85_input_scope']='Genuine nearby checkbox across available Orchid skills and readonly E0/E1/E2 cultivation/module previews; absent E0 翔虫机动 is ignored, actual E1/E2 same-identity selected talent coefficients apply. Redeploy values and conditional arrow references do not establish actual movement, 30-second phase overlap, collision, retreat or redeployment events.'
++        receipt['sections83_85_final_checks_pending']=False
++        assert receipt['sections83_85_final_checks_pending']is False,'Final83-85 source/schema are pending'
++
++
+         # Final visible screenshot scenario demonstrates the restored explanation.
+         train('char_298_susuro',{'elite':2,'level':60,'potential':1,'trust':100,'module_id':None,'module_level':0})
+         window.skill.setCurrentIndex(window.skill.findData(1));window.healing_targets.setValue(1)
+@@ -2384,23 +2891,25 @@
+         assert window.damage_text.find('真实友方获取时钟未核验')
+         window.damage_text.ensureCursorVisible();app.processEvents()
+         checks.append({'scope':'actual_friendly_scope_text_scrolled_visible_for_screenshot','passed':True})
+-        screenshot=OUT/'wine-window-080.png'
++        screenshot=OUT/'wine-window-085.png'
+         assert window.grab().save(str(screenshot))
+-        receipt['window_screenshot']='wine-window-080.png'
++        receipt['window_screenshot']='wine-window-085.png'
+         assert not isolated.joinpath('chat').exists()
+         assert not window.auto.isChecked() and window.capture.target is None
+         assert not window.desktop.process
+         checks.append({'scope':'no_external_operations','game_captures':0,'chat_requests':0,'temporary_state':True})
+-        receipt['preserved_old_checks']=len(checks)-(supplemental_end-supplemental_start)-(new_end-new_start)-(latest_end-latest_start)-(current_end-current_start)-(next_end-next_start)
++        receipt['preserved_old_checks']=len(checks)-(supplemental_end-supplemental_start)-(new_end-new_start)-(latest_end-latest_start)-(current_end-current_start)-(next_end-next_start)-(group085_end-group085_start)
+         assert receipt['preserved_old_checks']==152,receipt['preserved_old_checks']
+-        receipt['preserved_full_060_checks']=len(checks)-(new_end-new_start)-(latest_end-latest_start)-(current_end-current_start)-(next_end-next_start)
++        receipt['preserved_full_060_checks']=len(checks)-(new_end-new_start)-(latest_end-latest_start)-(current_end-current_start)-(next_end-next_start)-(group085_end-group085_start)
+         assert receipt['preserved_full_060_checks']==231,receipt['preserved_full_060_checks']
+-        receipt['preserved_full_065_checks']=len(checks)-(latest_end-latest_start)-(current_end-current_start)-(next_end-next_start)
++        receipt['preserved_full_065_checks']=len(checks)-(latest_end-latest_start)-(current_end-current_start)-(next_end-next_start)-(group085_end-group085_start)
+         assert receipt['preserved_full_065_checks']==459,receipt['preserved_full_065_checks']
+-        receipt['preserved_full_070_checks']=len(checks)-(current_end-current_start)-(next_end-next_start)
++        receipt['preserved_full_070_checks']=len(checks)-(current_end-current_start)-(next_end-next_start)-(group085_end-group085_start)
+         assert receipt['preserved_full_070_checks']==841,receipt['preserved_full_070_checks']
+-        receipt['preserved_full_075_checks']=len(checks)-(next_end-next_start)
++        receipt['preserved_full_075_checks']=len(checks)-(next_end-next_start)-(group085_end-group085_start)
+         assert receipt['preserved_full_075_checks']==1455,receipt['preserved_full_075_checks']
++        receipt['preserved_full_080_checks']=len(checks)-(group085_end-group085_start)
++        assert receipt['preserved_full_080_checks']==3063,receipt['preserved_full_080_checks']
+         receipt['total_actual_checks']=len(checks)
+         window.close();app.processEvents();window=None
+     receipt['passed']=True
+@@ -2415,7 +2924,7 @@
+                 'skill':window.skill.currentData(),'visible_report_text':window.damage_text.toPlainText(),
+                 'technical_checkbox':window.damage_technical.isChecked(),
+                 'last_calculation':window.damage_result,'timing_text':window.timing_scenario.toPlainText()}
+-            failure_screenshot=OUT/'wine-ui-failure-080.png'
++            failure_screenshot=OUT/'wine-ui-failure-085.png'
+             if window.grab().save(str(failure_screenshot)):
+                 receipt['failure_screenshot']=failure_screenshot.name
+         except Exception as context_error:
+@@ -2428,6 +2937,6 @@
+     after=source_hashes();drift=[n for n in sorted(set(before)|set(after)) if before.get(n)!=after.get(n)]
+     receipt['source_sha256']=before;receipt['source_sha256_after']=after;receipt['source_drift']=drift
+     if drift:receipt['passed']=False;receipt['complete_ui_validation']=False
+-    (OUT/'wine-ui-080.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')
++    (OUT/'wine-ui-085.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')
+     print(json.dumps(receipt,ensure_ascii=False))
+     sys.exit(0 if receipt['passed'] else 1)

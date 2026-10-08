@@ -1,0 +1,90 @@
+        #81-85 actual-controls design; API strings are separate regressions.
+        group085_start=len(checks);group085_counts={};anchors085={}
+        state085=deepcopy(window.run.state);account085=deepcopy(window.operator_observations)
+        run_training085=window.use_run_training.isChecked()
+        difficulty085=window.difficulty.currentIndex();summary085=window.run_summary.text()
+        stage085=window.target_stage.currentData();enemy085=deepcopy(window.target_enemy.currentData())
+        technical085=window.damage_technical.isChecked()
+        try:
+            window.run.state['operators']={};window.run.state['config']={}
+            window.use_run_training.setChecked(False);window.sync_run_config()
+            window.target_enemy.setCurrentIndex(0)
+            window.cooperative.setChecked(False);window.fragile.setChecked(False)
+            window.limit_window.setChecked(True);window.deployment_elapsed.setValue(0)
+            for case085 in cases085():
+                requested085=case085['input'];owner085=requested085['operator'];number085=requested085['skill']
+                section085=case085['section']
+                fields085={k:requested085[k]for k in ('elite','level','potential','trust','module_id','module_level')}
+                train(owner085,fields085,ranks={str(n):requested085['skill_rank']for n in (1,2,3)})
+                reset_owner_options(owner085)
+                index085=window.skill.findData(number085);assert index085>=0
+                window.skill.setCurrentIndex(index085)
+                assert window.elite.text()==f'精英 {fields085["elite"]}'
+                assert window.potential.text()==str(fields085['potential'])
+                if fields085['module_id']:assert f'阶段 {fields085["module_level"]}'in window.module.text()
+                window.frame_timing.setChecked(requested085['timing_mode']=='frames')
+                window.window_seconds.setValue(requested085['window_seconds'])
+                window.healing_targets.setValue(requested085['healing_targets'])
+                window.defense.setValue(requested085['enemy_defense']);window.resistance.setValue(requested085['enemy_resistance'])
+                relics(requested085['relic_ids'])
+                window.damage_technical.setChecked(case085.get('technical',False))
+                window.timing_scenario.setPlainText(json.dumps(requested085['timing'])if requested085.get('timing')else '')
+                if section085==82:
+                    checkbox085=option_widgets[(owner085,'low_cost_healing_target')]
+                    casts085=option_widgets[(owner085,'casts_used')]
+                    assert isinstance(checkbox085,QCheckBox)
+                    checkbox085.setChecked(requested085['low_cost_healing_target'])
+                    if number085==2:
+                        assert isinstance(casts085,QSpinBox) and casts085.minimum()==0 and casts085.maximum()==2
+                        casts085.setValue(requested085['casts_used'])
+                result085=click_result();args085=window.damage_result['scenario']
+                for key085 in ('operator','skill','elite','level','potential','trust','module_id','module_level',
+                               'skill_rank','timing_mode','window_seconds','healing_targets','relic_ids',
+                               'enemy_defense','enemy_resistance'):
+                    assert args085[key085]==requested085[key085],(case085,key085,args085[key085])
+                assert args085.get('timing',{})==requested085.get('timing',{})
+                assert window.target_enemy.currentData()is None and 'target_enemy'not in args085
+                if section085==81:
+                    assert isinstance(window.damage_technical,QCheckBox)
+                    assert window.damage_technical.isChecked()is case085['technical']
+                    actual_ids085=[window.relic_list.item(i).data(Qt.ItemDataRole.UserRole)
+                        for i in range(window.relic_list.count())
+                        if window.relic_list.item(i).checkState()==Qt.CheckState.Checked]
+                    assert args085['relic_ids']==actual_ids085==requested085['relic_ids']
+                    require_warning_order085(result085,args085,window.damage_text.toPlainText(),case085['technical'])
+                elif section085==82:
+                    require_real_bool070(checkbox085,args085,'low_cost_healing_target',requested085['low_cost_healing_target'])
+                    if number085==2:require_real_int070(casts085,args085,'casts_used',requested085['casts_used'])
+                    else:assert not casts085.isVisible()and 'casts_used'not in args085
+                    anchor085=canonical085({k:v for k,v in requested085.items()if k!='low_cost_healing_target'})
+                    if not requested085['low_cost_healing_target']:anchors085[anchor085]=deepcopy(result085)
+                    talents085,_=selected_talents(module.catalog()['operators'][owner085],args085)
+                    factor085=next((t['values']['heal_scale']for t in talents085 if t['name']=='微创治疗'),1.0)
+                    require_susuro_checkbox085(result085,args085,window.damage_text.toPlainText(),anchors085[anchor085],factor085)
+                else:raise AssertionError('085 section source not sealed')
+                group085_counts[section085]=group085_counts.get(section085,0)+1
+                checks.append({'scope':{81:'actual_relic_list_and_technical_checkbox_stable_unknown_warning_order',
+                    82:'actual_low_cost_checkbox_and_readonly_susuro_talent_reference'}[section085],
+                    'section':section085,'operator':owner085,'skill':number085,'context':case085['context'],
+                    'mode':args085['timing_mode'],'elite':args085['elite'],'potential':args085['potential'],
+                    'module_level':args085['module_level'],'relic_ids':args085['relic_ids'],
+                    'technical':window.damage_technical.isChecked(),'low_cost_healing_target':args085.get('low_cost_healing_target'),
+                    'casts_used':args085.get('casts_used'),'native_stack_or_recipient_clock_verified':False,'passed':True})
+        finally:
+            window.run.state=state085;window.operator_observations=account085
+            window.use_run_training.setChecked(run_training085);window.run_summary.setText(summary085);window.sync_run_config()
+            if not state085.get('config',{}).get('difficulty'):window.difficulty.setCurrentIndex(difficulty085)
+            assert window.target_stage_choices.select_value(stage085)
+            if enemy085 is None:window.target_enemy.setCurrentIndex(0)
+            else:assert window.target_enemy_choices.select_value(enemy085)
+            window.update_operator();relics([]);window.timing_scenario.clear();window.damage_technical.setChecked(technical085)
+        group085_end=len(checks)
+        assert group085_counts=={81:136,82:216},group085_counts
+        receipt['supplemental_sections_81_85']=[81,82]
+        receipt['supplemental_checks_by_section_81_85']=group085_counts
+        receipt['supplemental_checks_81_85']=group085_end-group085_start
+        receipt['section81_input_scope']='Genuine Qt relic list emits selected IDs in its original catalog index order; no reverse/duplicate/unknown ID controls invented. Existing unknown-composition warnings and each source pending order stay stable; technical checkbox preserves raw group names, default text retains both opaque warnings. No unknown numeric stack is applied.'
+        receipt['section82_input_scope']='Genuine bool recipient checkbox and int prior-S2-use controls, with public readonly cultivation/module previews. Text validation is separate API coverage and cannot be emitted by this checkbox. Existing source-selected whole-cycle factor, missing-talent exclusions, zero-recipient arithmetic and friendly-clock unknown remain; no account ownership/actual recipient or native acquisition timing is invented.'
+        receipt['sections83_85_final_checks_pending']=True
+        assert receipt['sections83_85_final_checks_pending']is False,'Final83-85 source/schema are pending'
+
