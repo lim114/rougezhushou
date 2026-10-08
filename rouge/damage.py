@@ -323,6 +323,8 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
         for field in ('enemy_is_boss','enemy_in_neural_break'):
             if isinstance(scenario.get(field),str):
                 raise ValueError(field+' 不接受文本条件；请使用布尔值。')
+    if scenario['operator']=='char_4202_haruka' and scenario['skill']==2 and isinstance(scenario.get('haruka_repeat'),str):
+        raise ValueError('haruka_repeat 不接受文本条件；请使用布尔值。')
     return result
 
 def _evaluate_damage(prepared,wine_phase=None) -> dict:
