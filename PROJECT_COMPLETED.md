@@ -1,3 +1,9 @@
+# 第87节公开归档闭合
+
+第87节归档Git闭合补证：工作树310索引件均hash正确，其中官方spine-core.js与spine-core.d.ts被build/忽略，原提交仅308件；两公开原件已明确补入并验证310全部Git blob。原301源清单不改，725维护py/json字节不变，不计新节、不重已通过测试或解析。后续存档对每个公开索引路径显式stage并核Git blob。见verification/archive-closure-087.json、标签p2-archive-closure-087。
+
+---
+
 # 连续开发 087 · 接入古米背面真实动画元资料并保留未绑定边界
 
 重新取得固定资源commit的古米Front/Back原件并用固定官方Spine3.8解析器各读一次；Front九条原记录一致，Back真实五动画接入，未从正面补Die/Skill2。全旧923条字面记录及数据整体可精确逆向还原；新增来源单独source_additions，旧selection_derivation不改。计928动画/162元资料筛选通过/766未核验或过渡/64资源/0缺失。只有Back Attack成为明确可选局外参考，泛称Skill不含技能编号、仍不能绑定S1/S2；30Hz浮点表示政策保持，不推原生帧率。作者35对：16完整strict decodedJSON及三文本同、9旧错误、10背面显式参考由旧拒绝变可用；新7与旧38相关（37通过、1未迁移原cache跳过）通过。独立首次风险核验另有编码前类型补证。根端在当前86产品上复验、存档后自动推进。 独审12对/24公开调用加新7实际11调用：6完整native/JSON/三文本同、2旧错误、4新增背面成功，caller及缓存隔离；48显式文本请求/64实测formatter entries。根端45相关（44通过、1历史cache跳过）和1034精选（1033通过、1历史跳过）通过，当前86产品保留、完整旧数据逆向字节相同。301公开件封存。 见 `verification/sections/087.json`。
