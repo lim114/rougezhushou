@@ -1,0 +1,62 @@
+{
+  "project_functions_called": 0,
+  "anchors": {
+    "base_total_note_creation": {
+      "repository_path": "rouge/operator_engine.py",
+      "line": 352,
+      "function_scope_if_needed": null,
+      "excerpt": "            emit('触手',raw,'physical',hits,effects=token_effects,event_times=[t for t in token_events for _ in range(int(count))])\n            if not normal and self.n==1:\n                self.notes.append(f'触手数量 {count:g}；技能生命回复 {bb[\"hp_recovery_per_sec\"]*duration*count:g}，生命回复不计直接治疗。')\n            self.notes.append('触手不继承本体信赖/潜能及职业加成；已确认的所有我方单位藏品攻击/攻速及敌方易伤单独套用。')\n        elif op in ('char_196_sunbr','char_2025_shu','char_298_susuro'):\n            if (op=='char_298_susuro' and '微创治疗' in self.tv and"
+    },
+    "full_and_observed_plan_creation": {
+      "repository_path": "rouge/operator_engine.py",
+      "line": 1302,
+      "function_scope_if_needed": null,
+      "excerpt": "        if self.s['operator']=='char_298_susuro' and self.n==2 and self.option('casts_used',0,maximum=2,integer=True)>=2:\n            raise ValueError('深度治疗本场已使用两次，不能再次开启。')\n        full=self.plan()\n        shown=self.plan(window=self.s['window_seconds']) if 'window_seconds' in self.s else full\n        if 'window_seconds' not in self.s and self.s.get('timing_mode','frames')=='frames' and full['duration']:\n            shown=self.plan(window=full['duration'])"
+    },
+    "notes_merge": {
+      "repository_path": "rouge/operator_engine.py",
+      "line": 1543,
+      "function_scope_if_needed": null,
+      "excerpt": "                'trust':self.s.get('trust',100),'potential':self.s.get('potential',1),'module_id':self.s.get('module_id'),'module_level':self.s.get('module_level',0)},\n            'complete':complete,\n            'warnings':self.warnings,'notes':list(dict.fromkeys(self.notes))+['连续供靶、按完整攻击间隔估算；未模拟首击前后摇、帧取整及移动。'],\n            'scenario_scope':result['scope']}\n        from .mei_module_reference import reference as mei_module_reference\n        mei_reference=mei_module_reference(self.p,self.s,self.module_parts)"
+    },
+    "regeneration_factor_write": {
+      "repository_path": "rouge/relics.py",
+      "line": 421,
+      "function_scope_if_needed": null,
+      "excerpt": "    regeneration={r['relic_id']:r['value'] for r in rules if r['kind']=='regeneration_factor'}\n    factor=next(iter(regeneration.values())) if len(regeneration)==1 else 1\n    result['relic_regeneration_multiplier']=factor\n    for c in result.get('components',[]):\n        if c.get('damage_type')=='regeneration':c['total']*=factor;c['per_hit']*=factor\n    result['relic_regeneration_rate']=(sum(r['value'] for r in rules if r['kind']=='regeneration' and not r.get('token_only'))+"
+    },
+    "report_rate_uses_post_finish_factor": {
+      "repository_path": "rouge/reporting.py",
+      "line": 202,
+      "function_scope_if_needed": null,
+      "excerpt": "    if regeneration or (op=='char_110_deepcl' and number==1):\n        if op=='char_110_deepcl':\n            factor=result.get('relic_regeneration_multiplier',1)\n            rows=[metric('per_token_rate','每只触手生命回复速度',bb['hp_recovery_per_sec']*factor,'生命/秒'),\n                metric('all_tokens_rate','所选触手合计回复速度',bb['hp_recovery_per_sec']*factor*scenario.get('summon_count',1),'生命/秒')]\n        elif any('nominal_duration_reference_seconds' in c for c in regeneration):"
+    },
+    "formatter_retains_estimate_notes": {
+      "repository_path": "rouge/reporting.py",
+      "line": 1097,
+      "function_scope_if_needed": null,
+      "excerpt": "        for title,notes in explanations:lines.extend([title+'：',*['• '+note for note in notes]])\n    notes=[]\n    for note in estimate['notes']:\n        if note.startswith('周期 DPS/HPS 包含'):note='周期平均指标包含技能与结束后充能阶段；各指标仅在相应能力存在时显示。'\n        if not has_healing(report['operator']['id'],report['skill_number']):\n            note=note.replace('单目标持续存活、供靶/满额受疗情景','单目标持续存活、供靶情景')"
+    },
+    "finish_before_report": {
+      "repository_path": "rouge/damage.py",
+      "line": 311,
+      "function_scope_if_needed": null,
+      "excerpt": "    from .timing import annotate_result\n    annotate_result(scenario,result)\n    finish(result,resolution,attributes,scenario)\n    finish_run(result,run_resolution)\n    if scenario['operator']=='kaltsit' and scenario['skill'] in (1,3):\n        # The internal helper supplies healing per recipient to build_estimate."
+    },
+    "report_build_after_finish": {
+      "repository_path": "rouge/damage.py",
+      "line": 323,
+      "function_scope_if_needed": "_evaluate_damage_once",
+      "excerpt": "    finish_duration_references(scenario,result)\n    from .reporting import build_report\n    result['report']=build_report(scenario,result)\n    # Validate the processed neural scenario after preserving legacy errors.\n    if scenario['operator'] in ('char_1042_phatm2','char_4204_mantra'):\n        for field in ('enemy_is_boss','enemy_in_neural_break'):"
+    }
+  },
+  "data_flow": [
+    "S1 full nominal plan and optional observed plan append base-rate x duration x declared-count notes",
+    "calculate stores de-duplicated notes in result.estimate.notes",
+    "relics.finish resolves numeric regeneration factor without rewriting raw base total notes",
+    "build_report uses the resolved factor for Deepcolor S1 per-token/all-token conditional rates",
+    "format_report keeps estimate notes in its user-visible scope block"
+  ],
+  "supported_lead": "Existing raw arithmetic references lose their nominal/window and base-versus-adjusted qualification",
+  "native_tick_presence_lifetime_binding_or_hotupdate_verified": false
+}

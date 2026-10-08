@@ -1,0 +1,99 @@
+{
+  "status": "TWO_INDEPENDENT_RISK_PAIRS_AND_FORMATTER_SUPPLEMENT_PASS",
+  "checks": [
+    {
+      "id": "independent-default-frames-overlong-window-count3",
+      "entire_native_and_JSON_inverse_exact": true,
+      "three_real_report_modes_inverse_exact": true,
+      "original_ordered_note_dedup_required": true,
+      "clipped_observation_seconds": 30.0,
+      "per_token_and_all_token_rates": [
+        {
+          "key": "per_token_rate",
+          "label": "每只触手生命回复速度",
+          "value": 84.0,
+          "unit": "生命/秒"
+        },
+        {
+          "key": "all_tokens_rate",
+          "label": "所选触手合计回复速度",
+          "value": 252.0,
+          "unit": "生命/秒"
+        }
+      ],
+      "caller_preserved": true,
+      "cached_catalog_first_return_vs_after_unchanged": true,
+      "substitutions": [
+        {
+          "new": "触手数量 3（局外假设）；名义技能持续参数 30 秒下，按基础每只 70 生命/秒连续覆盖的回复参考 6300（未计生命回复效果倍率）；实际触手在场、技能回复覆盖及时钟未核验，实际回复总量未知，生命回复不计直接治疗。",
+          "old": "触手数量 3；技能生命回复 6300，生命回复不计直接治疗。",
+          "scope": "名义技能持续参数 30 秒",
+          "base_rate": "70",
+          "base_reference_total": "6300"
+        },
+        {
+          "new": "触手数量 3（局外假设）；观察窗口中 30 秒的名义技能覆盖假设下，按基础每只 70 生命/秒连续覆盖的回复参考 6300（未计生命回复效果倍率）；实际触手在场、技能回复覆盖及时钟未核验，实际回复总量未知，生命回复不计直接治疗。",
+          "old": "触手数量 3；技能生命回复 6300，生命回复不计直接治疗。",
+          "scope": "观察窗口中 30 秒的名义技能覆盖假设",
+          "base_rate": "70",
+          "base_reference_total": "6300"
+        }
+      ]
+    },
+    {
+      "id": "independent-continuous-zero-count-equal-window",
+      "entire_native_and_JSON_inverse_exact": true,
+      "three_real_report_modes_inverse_exact": true,
+      "original_ordered_note_dedup_required": true,
+      "clipped_observation_seconds": 30.0,
+      "per_token_and_all_token_rates": [
+        {
+          "key": "per_token_rate",
+          "label": "每只触手生命回复速度",
+          "value": 84.0,
+          "unit": "生命/秒"
+        },
+        {
+          "key": "all_tokens_rate",
+          "label": "所选触手合计回复速度",
+          "value": 0.0,
+          "unit": "生命/秒"
+        }
+      ],
+      "caller_preserved": true,
+      "cached_catalog_first_return_vs_after_unchanged": true,
+      "substitutions": [
+        {
+          "new": "触手数量 0（局外假设）；名义技能持续参数 30 秒下，按基础每只 70 生命/秒连续覆盖的回复参考 0（未计生命回复效果倍率）；实际触手在场、技能回复覆盖及时钟未核验，实际回复总量未知，生命回复不计直接治疗。",
+          "old": "触手数量 0；技能生命回复 0，生命回复不计直接治疗。",
+          "scope": "名义技能持续参数 30 秒",
+          "base_rate": "70",
+          "base_reference_total": "0"
+        },
+        {
+          "new": "触手数量 0（局外假设）；观察窗口中 30 秒的名义技能覆盖假设下，按基础每只 70 生命/秒连续覆盖的回复参考 0（未计生命回复效果倍率）；实际触手在场、技能回复覆盖及时钟未核验，实际回复总量未知，生命回复不计直接治疗。",
+          "old": "触手数量 0；技能生命回复 0，生命回复不计直接治疗。",
+          "scope": "观察窗口中 30 秒的名义技能覆盖假设",
+          "base_rate": "70",
+          "base_reference_total": "0"
+        }
+      ]
+    }
+  ],
+  "actual_independent_counts": {
+    "public_API_requests": 4,
+    "explicit_formatter_requests": 18,
+    "estimate_function_entries": 7,
+    "report_function_entries": 18,
+    "explicit_project_helper_requests": 0,
+    "tests": 0,
+    "Qt": 0,
+    "Wine": 0
+  },
+  "formatter_request_scope": "12 external three-mode requests for4 fresh results, plus6 estimate/technical requests for3 decoded saved draft results. Saved default3 texts read only; author3 default requests remain historical.",
+  "formatter_entry_scope": "Measured7 estimate entries and18 report entries; report includes7 internal estimate delegations. Total25 actual instrumented entries is distinct from18 external requests.",
+  "catalog_scope": "First original cached helper return versus after native hashes; internal observed entries stored. No explicit extra catalog/profile helper request and no separately archived raw catalog tree.",
+  "source_unchanged": true,
+  "author_six_API_or_old389_source23_full90_rerun": false,
+  "native_tick_lifetime_hotupdate_actual_regeneration_total_verified": false
+}

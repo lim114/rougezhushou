@@ -1,0 +1,75 @@
+{
+  "source_commit": "6264b020513de479056c3db41216037abaadde50",
+  "template_url": "https://raw.githubusercontent.com/Tim23333/Arknights_timer/6264b020513de479056c3db41216037abaadde50/Ark_emulator/ark_emulator/data_buff_templates.json",
+  "fixed_point_url": "https://prts.wiki/w/定点数与浮点数",
+  "fixed_point_observed_revision": 407254,
+  "checked_date": "2026-10-04",
+  "threshold_rounding": "floor",
+  "refill_rounding": "ceil",
+  "require_positive_remaining": true,
+  "one_refill_per_skill": true,
+  "trigger_interval_seconds": 0.10000000149011612,
+  "reference_polling_bound_frames": 4,
+  "multi_item_acquisition_order_required": true,
+  "multi_item_count_strategy": "enumerate_legal_orders_with_shared_counter_budget",
+  "multi_item_trigger_times_verified": false,
+  "first_batch_counter_proof": ".cache/research/p1-ammo-independent-055/first-batch-contract.json",
+  "first_batch_counter_proof_sha256": "77c1a5933fa5bb3818852aa7d53ee22a2482333843436d573e3f25e2798bcfb3",
+  "client_frame_calibration_verified": false,
+  "partial_packet_rules": [
+    {
+      "operator_id": "char_1041_angel2",
+      "skill": 3,
+      "skill_id": "skchr_angel2_3",
+      "attack_cost_reference": 5,
+      "packet_hits": 5,
+      "partial_last_packet": "full_attack",
+      "consume_event_count_per_attack": 5,
+      "source_url": "https://prts.wiki/w/新约能天使",
+      "source_observed_revision": "400972",
+      "fixed_revision_fetch_verified": false,
+      "source_sha256": "f4cd699793107a5fe6641da8ab541af59f4b9a155dd1a85197b26774f501dccf",
+      "skill_fact": "S3 even with remaining ammunition below 5 still consumes 5 for a complete attack; ends at empty.",
+      "talent_fact": "Multiple-ammo consumption counts are processed regardless of actual remaining ammunition.",
+      "source_file": ".cache/research/p1-ammo-cost-054/angel-page.html",
+      "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "pinned_data_crosschecks": [
+        {
+          "file": ".cache/game-data/character_table.json",
+          "json_pointer": "/char_1041_angel2/skills/2/skillId",
+          "value": "skchr_angel2_3",
+          "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697"
+        },
+        {
+          "file": ".cache/game-data/skill_table.json",
+          "json_pointer": "/skchr_angel2_3/levels",
+          "levels": 10,
+          "duration_type": "AMMO",
+          "attack@trigger_time": 50,
+          "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca"
+        }
+      ],
+      "runtime_client_frame_calibration_verified": false,
+      "not_included": [
+        "S2 dynamic maximum",
+        "real multi-book acquisition history",
+        "precise bomb timeline or projectile snapshots",
+        "unsupported operator ammo paths"
+      ]
+    }
+  ],
+  "parameter_arithmetic": "binary32_multiply_then_round",
+  "native_parameter_proof_sha256": "e8a0e083e8c50b2c6ca03e1d18e542cc85deac12e9b3cf7d71b88e9e0f2d96af",
+  "native_parameter_proof": ".cache/research/p1-native-runtime-054/binary32-book-proof.json",
+  "verified_ratios": [
+    0.3,
+    0.5
+  ],
+  "historical_q32_assumption": {
+    "fraction_bits": 32,
+    "verified_ratio_raw": {
+      "0.3": 1288490189,
+      "0.5": 2147483648
+    }
+  }
+}

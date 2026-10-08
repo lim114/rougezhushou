@@ -1,0 +1,46 @@
+{
+  "format_version": 1,
+  "status": "SOURCE_ONLY_GROUPED_WORKFLOW_CANDIDATE_NOT_COMPLETED_SECTION",
+  "fixed_root_commit": "2cbc45f03f99ed4f04b9c7e2612b58542f909168",
+  "new_calls": {"API": 0, "helper": 0, "formatter": 0, "tests": 0, "Qt": 0, "Wine": 0, "constructor": 0},
+  "workflow": "Select supported skill and cultivation; enable/change observation window; declare enemy presence and timing text; see estimate/report automatically refreshed with effective observed length and explicit mode boundaries.",
+  "positive_source_facts": [
+    {
+      "id": "window_input_refresh_missing",
+      "source": "app.py72-77/593-595/1073-1074; all6 window/limit AST references",
+      "facts": "Window QDoubleSpinBox is declared [0,3600],2 decimals,default40. Checkbox only decides whether scenario includes window_seconds. Neither window nor limit has a source-declared refresh connection; timing text and frame mode do have existing connections.",
+      "qualification": "Current implemented valid owner/skill may calculate using existing explicit button/other transitions; changing window alone has no same dedicated connection.",
+      "candidate": "Connect limit.toggled and seconds.valueChanged after original initialization using current OPTIONS bool/numeric calculate callback pattern. Preserve defaults and hidden/stored values; root actual UI verifies refresh and counts, not source-only runtime claims.",
+      "not_claimed": "No actual stale UI observed here, no one-API-per-action guarantee, no implicit Qt signal behavior inferred."
+    },
+    {
+      "id": "zero_and_healing_observation_length_omitted",
+      "source": "reporting.py390-395/769-772; engine.py1536-1539; estimate.py153-154/237-238",
+      "facts": "Window0 is accepted by current finite/nonnegative rules and preserved as effective0 in conventional timed observation. Existing outer report conditions still produce observation total when scenario supplies window. Nested truthiness hides damage length0; healing branch never appends observed length. Zero-denominator average is None/omitted by original guards.",
+      "qualification": "Only existing observation-output sections and their existing outer qualification; numeric model fields reused. Positive or None effective lengths remain current source values. Special skill modes can override duration, so use actual reported effective length rather than requested window assumption.",
+      "candidate": "Display existing effective window length when not None in damage/healing observation sections, including0. Keep existing strictly-positive average guard; do not compute a0 denominator or manufacture0/unknown clocks.",
+      "not_claimed": "No new numerical regression/public output/API result measured. No promise every skill mode returns requested0 or uniform clipping."
+    },
+    {
+      "id": "observation_and_timing_range_explanation",
+      "source": "engine.py291-292 plus later next_attack/infinite/instant/ammo/deployment branches; timing.py12-20/179-199/233-260/302-324; app.py609-610",
+      "facts": "Default timed plan first clips supplied window, while special modes later set their own duration. Frame range endpoints are converted before end>start validation. Continuous ordinary AttackTimeline reference generates interval events without frame selectable/unavailable range qualification, except existing zero enemy-lifetime special case; initial ranges are mapped separately at timing103-108. Existing report already discloses continuous targets/no movement.",
+      "candidate": "Explain requested vs actual model observation length,30Hz simulated interval validity, and precise normal continuous-reference range limitations at controls. Preserve JSON, backend clocks, target lifetime and friendly scope behavior.",
+      "not_claimed": "No new native30Hz clock established; no assertion all special skills/SP/relic phases ignore all timing fields; no recalc/new numeric scope inferred from filled JSON."
+    }
+  ],
+  "existing_or_historical_boundaries": [
+    "timing.finite rejects rawbool/negative/NaN/inf before frame conversion; range list length<=100, each pair2 and post-conversion end>start already guarded.",
+    "Numeric window Qt construction is bounded; API bool window aliases in noninteger engine.value/legacy float conversion are historical compatibility boundary, not demonstrated window UI input or a fresh candidate.",
+    "Initial ranges are consumed only by actual charging branches after remapping; inactive initial/custom-unit data must not be globally rejected based on unexecuted paths.",
+    "Finite timed window > skill length clipping is current behavior; infinite/next_attack/instant/passive/ammo/deployment branches differ. No blanket longer-window numerical bug was found.",
+    "target_disappears_seconds=0 and [] enemy supply have existing friendly/potential-healing exceptions and special owner cases. Do not confuse enemy absence with no friendly healing or infer SP from incoming events.",
+    "Source085 negative/zero aliases/derived overflow receipts remain historical. No 83-89 guards, commonrank20, native bindings or previous module negatives rerun."
+  ],
+  "safety_of_minimal_candidate": "App connections/text and report projection only; preserve engine/damage/prepare/guards and all original numerical/reference fields. Actual Qt and before/after public behavior still require root authorization and separate evidence after91.",
+  "unknowns": ["Native target acquisition/SP release/projectile/attachment/skill clocks", "Derived arithmetic overflow beyond existing source guards", "Actual Qt entry counts/initialization/render effects", "Special unbound source totals and cross-phase eligibility remain existing backend unknowns"],
+  "preparation_failures": [
+    {"id": "git_source_transport_wrong_filename", "attempts": 2, "failures": 1, "first_returncode": 128, "cause": "Selected nonexistent enemy_resolution.py; actual module is enemy_environment.py", "receipt": "preparation-primary-freeze-error.json", "dependent_operations_stopped": true, "project_calls": 0},
+    {"id": "static_excerpt_endline", "attempts": 2, "failures": 1, "cause": "Requested damage excerpt end459 but fixed file has457 lines", "failed_script_and_log": ["capture-source-contract-attempt1.py", "capture-source-contract-attempt1.log"], "corrected": "Only endline459->457; actual full source preserved", "project_calls": 0}
+  ]
+}

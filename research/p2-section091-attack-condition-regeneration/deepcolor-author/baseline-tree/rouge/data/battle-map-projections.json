@@ -1,0 +1,2024 @@
+{
+  "version": "0.51.0",
+  "method": "Offline manual landmarks on pinned original PNGs; four ground-plane intersections fit a homography. Independent bitmap landmarks validate it. Camera data is a coordinate-orientation lead only, not an assumed preview FOV.",
+  "scope": "Planar tile-center reference only, not elevated surfaces, hitboxes, actual pathfinding or live positions. Pixel readings are approximate and specific to the bound bitmap.",
+  "source": {
+    "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "resource_commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+    "landmarks_sha256": "0d566c93dd0ed3cdd9cf8e07e44e7fcdca28eac187387b03dcb915aae5b0d48e",
+    "camera_reference": [
+      {
+        "file": "resource-readme.md",
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/README_CN.md",
+        "bytes": 4212,
+        "sha256": "91d697eea7a70d007a80876663f95b7c30d7e804f1a36c1e66608d5d01016608",
+        "blob": "e41fcea1479d98b825ebe1d3f6636e1557f1c1eb"
+      },
+      {
+        "file": "resource-maps.json",
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/map_camera_views/maps.json",
+        "bytes": 478714,
+        "sha256": "9764a14831b79f17d703ec3a1b3baf643449d0248c5007ebbbce13f87a1c36b3",
+        "blob": "34d41a6dce5fa49efe85959f8080eba450d22fdf"
+      },
+      {
+        "file": "resource-summary.json",
+        "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/map_camera_views/summary.json",
+        "bytes": 1643781,
+        "sha256": "7458a76d7da3442b8b5c75b0c9bc4ede7ece116542aeff73eb702077e8222429",
+        "blob": "77aaa4a940ce2317654147c3c0e28de557f404bc"
+      }
+    ],
+    "added_landmarks_045": {
+      "file": ".cache\\research\\map-projection-045\\calibration-input.json",
+      "sha256": "c3f150007b454248134670a75d59ea9ad855179e5a542db085f653c14aef11b3",
+      "original_rejected_readings": ".cache/research/map-projection-044/calibration-input.json"
+    },
+    "added_landmarks_048": {
+      "file": ".cache\\research\\map-projection-048\\calibration-input.json",
+      "sha256": "52423463da6d936027b7eb9c04b062032c00d4eeeba65b7ce435ddb2a775c514",
+      "evidence": ".cache/research/map-projection-048/evidence.json"
+    },
+    "added_landmarks_049": {
+      "file": ".cache\\research\\map-projection-049\\calibration-input.json",
+      "sha256": "4cfee7a5c51241380dd26a345e4e8c636dc465bced8afd425d14716dda59f348",
+      "evidence": ".cache/research/map-projection-049/evidence.json"
+    },
+    "added_landmarks_051": {
+      "file": ".cache\\research\\map-projection-051\\calibration-input.json",
+      "sha256": "0b655839c5e5a1879e23204935901f92e7d06ba7eb5d635951ceecb15b2283a5",
+      "evidence": ".cache/research/map-projection-051/evidence.json"
+    }
+  },
+  "calibrations": {
+    "ro6_n_1_1": {
+      "anchors": [
+        [
+          0.5,
+          0.5,
+          96,
+          53
+        ],
+        [
+          0.5,
+          9.5,
+          415,
+          53
+        ],
+        [
+          5.5,
+          1.5,
+          100,
+          218
+        ],
+        [
+          5.5,
+          7.5,
+          367,
+          218
+        ]
+      ],
+      "checks": [
+        {
+          "row": 3,
+          "col": 0,
+          "observed_pixel": [
+            55,
+            128
+          ],
+          "projected_pixel": [
+            58.31410701876294,
+            126.15496872828349
+          ],
+          "error_px": 3.7930786605903144,
+          "cue": "blue protection floor center"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "observed_pixel": [
+            297,
+            162
+          ],
+          "projected_pixel": [
+            296.99461348085595,
+            160.27762410831266
+          ],
+          "error_px": 1.7223843145053985,
+          "cue": "middle red entrance floor center"
+        },
+        {
+          "row": 5,
+          "col": 10,
+          "observed_pixel": [
+            473,
+            200
+          ],
+          "projected_pixel": [
+            472.6764481124866,
+            197.8005502063273
+          ],
+          "error_px": 2.2231206037460884,
+          "cue": "lower right red entrance floor center"
+        },
+        {
+          "row": 2.5,
+          "col": 4.5,
+          "observed_pixel": [
+            237,
+            112
+          ],
+          "projected_pixel": [
+            236.29410165805916,
+            110.22750747485728
+          ],
+          "error_px": 1.9078842262678448,
+          "cue": "central walkway upper intersection"
+        },
+        {
+          "row": 3.5,
+          "col": 4.5,
+          "observed_pixel": [
+            236,
+            145
+          ],
+          "projected_pixel": [
+            235.44908987485772,
+            142.82081911262793
+          ],
+          "error_px": 2.247739154321961,
+          "cue": "central walkway lower intersection"
+        }
+      ],
+      "matrix": [
+        34.73755047106325,
+        -10.152208491374047,
+        81.79273216689093,
+        -2.1833948630830586e-15,
+        23.64639667196865,
+        40.11978465679681,
+        -1.568688989053761e-17,
+        -0.039887434234675195,
+        1.0
+      ],
+      "inverse": [
+        0.02878729174738474,
+        0.0078559259128806,
+        -2.669769299608509,
+        1.7719804520495184e-18,
+        0.03960918105242015,
+        -1.589111814255173,
+        5.222628296342616e-19,
+        0.0015799086043177515,
+        0.9366144070173513
+      ],
+      "tolerance_px": 4.0,
+      "bitmap_sha256": "3fb51baeac12eee197feb9a64e13626412eb1ed673776aaf1e59710c248f3409",
+      "grid_sha256": "86098a3f251c0fe29ce993cad370fd19ef2bae6adb57e203149899ebc7695f1a",
+      "width": 512,
+      "height": 286,
+      "rows": 7,
+      "cols": 11,
+      "base_stage_id": "ro6_n_1_1"
+    },
+    "ro6_n_1_2": {
+      "anchors": [
+        [
+          0.5,
+          0.5,
+          133,
+          52
+        ],
+        [
+          0.5,
+          8.5,
+          416,
+          52
+        ],
+        [
+          4.5,
+          0.5,
+          110,
+          182
+        ],
+        [
+          4.5,
+          7.5,
+          405,
+          182
+        ]
+      ],
+      "checks": [
+        {
+          "row": 3,
+          "col": 0,
+          "observed_pixel": [
+            98,
+            129
+          ],
+          "projected_pixel": [
+            99.92640565204587,
+            127.81100971445392
+          ],
+          "error_px": 2.263788116268225,
+          "cue": "blue protection floor center"
+        },
+        {
+          "row": 2,
+          "col": 7,
+          "observed_pixel": [
+            368,
+            94
+          ],
+          "projected_pixel": [
+            369.96843825734095,
+            95.54336921602886
+          ],
+          "error_px": 2.5013471790115474,
+          "cue": "near red entrance floor center"
+        },
+        {
+          "row": 1,
+          "col": 8,
+          "observed_pixel": [
+            400,
+            67
+          ],
+          "projected_pixel": [
+            401.284795416464,
+            65.9197881195611
+          ],
+          "error_px": 1.678558002813216,
+          "cue": "far red entrance floor center"
+        },
+        {
+          "row": 2.5,
+          "col": 1.5,
+          "observed_pixel": [
+            162,
+            112
+          ],
+          "projected_pixel": [
+            160.96751900483756,
+            111.32504031329188
+          ],
+          "error_px": 1.2335264829150432,
+          "cue": "left walkway upper intersection"
+        },
+        {
+          "row": 3.5,
+          "col": 1.5,
+          "observed_pixel": [
+            156,
+            145
+          ],
+          "projected_pixel": [
+            156.75659400216784,
+            145.0495001806576
+          ],
+          "error_px": 0.75821154831715,
+          "cue": "left walkway lower intersection"
+        }
+      ],
+      "matrix": [
+        34.67885144607716,
+        -9.96624954566697,
+        118.02637727815565,
+        -9.46177671790177e-16,
+        24.697232462744687,
+        38.628069993249916,
+        -7.831722782468009e-18,
+        -0.039358222129913314,
+        1.0
+      ],
+      "inverse": [
+        0.0288360184464275,
+        0.005852365007499546,
+        -3.629476357493647,
+        7.079375882950562e-19,
+        0.0381423680810266,
+        -1.473366063942197,
+        2.53698867476786e-19,
+        0.0015012157954939604,
+        0.942010931176687
+      ],
+      "tolerance_px": 4.0,
+      "bitmap_sha256": "8c43c63762eced24df4bdcf2c0571384963adc22b3e185a0fb266843bdffd05e",
+      "grid_sha256": "68c78adc561e120ca4b722c1a648ad8d0bce493010c99028d20f2f3e71145e07",
+      "width": 512,
+      "height": 286,
+      "rows": 7,
+      "cols": 9,
+      "base_stage_id": "ro6_n_1_2"
+    },
+    "ro6_n_1_4": {
+      "anchors": [
+        [
+          0.5,
+          -0.5,
+          47,
+          60
+        ],
+        [
+          0.5,
+          8.5,
+          421,
+          60
+        ],
+        [
+          4.5,
+          0.5,
+          51,
+          214
+        ],
+        [
+          4.5,
+          7.5,
+          407,
+          214
+        ]
+      ],
+      "checks": [
+        {
+          "row": 1,
+          "col": 0,
+          "observed_pixel": [
+            67,
+            76
+          ],
+          "projected_pixel": [
+            63.366046474486986,
+            76.09726103968703
+          ],
+          "error_px": 3.6352548652645345,
+          "cue": "upper red entrance floor center"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "observed_pixel": [
+            56,
+            112
+          ],
+          "projected_pixel": [
+            53.892854150959245,
+            110.66247800955018
+          ],
+          "error_px": 2.4958022165361022,
+          "cue": "lower red entrance floor center"
+        },
+        {
+          "row": 3,
+          "col": 7,
+          "observed_pixel": [
+            373,
+            151
+          ],
+          "projected_pixel": [
+            371.87357942031537,
+            148.79658179896046
+          ],
+          "error_px": 2.4746464577812706,
+          "cue": "blue protection floor center"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "observed_pixel": [
+            83,
+            193
+          ],
+          "projected_pixel": [
+            81.32531351602418,
+            191.08239665582906
+          ],
+          "error_px": 2.545933503685214,
+          "cue": "bottom walkway tile center"
+        },
+        {
+          "row": 3.5,
+          "col": 3.5,
+          "observed_pixel": [
+            209,
+            171
+          ],
+          "projected_pixel": [
+            206.36769759450175,
+            169.3792729245795
+          ],
+          "error_px": 3.0912412081545715,
+          "cue": "bottom walkway upper intersection"
+        }
+      ],
+      "matrix": [
+        40.62674498436189,
+        -11.458845068273714,
+        71.99229536959346,
+        3.1558958083504613e-15,
+        28.073232130597276,
+        44.62232054313838,
+        2.5267276533823506e-17,
+        -0.04470211305210162,
+        1.0
+      ],
+      "inverse": [
+        0.024614327344829656,
+        0.006745979840229039,
+        -2.0730631993410875,
+        -1.6605052668041132e-18,
+        0.033258010427063715,
+        -1.4840496019034755,
+        -6.961651098761523e-19,
+        0.0014867033419985768,
+        0.9336598469207845
+      ],
+      "tolerance_px": 4.0,
+      "bitmap_sha256": "0d2b7e66c274f9e92a76dc305606839de261c689714427ecfe532b8a8bcfc06f",
+      "grid_sha256": "71d9c9118aa2510866e5234272845e69b3bded9150402600fdc6f19c22627ce8",
+      "width": 512,
+      "height": 286,
+      "rows": 6,
+      "cols": 10,
+      "base_stage_id": "ro6_n_1_4"
+    },
+    "ro6_n_1_3": {
+      "anchors": [
+        [
+          0.5,
+          0.5,
+          118,
+          54
+        ],
+        [
+          0.5,
+          8.5,
+          397,
+          54
+        ],
+        [
+          2.5,
+          1.5,
+          142,
+          113
+        ],
+        [
+          2.5,
+          8.5,
+          410,
+          113
+        ],
+        [
+          5.5,
+          1.5,
+          121,
+          219
+        ],
+        [
+          5.5,
+          8.5,
+          433,
+          219
+        ]
+      ],
+      "checks": [
+        {
+          "row": 5,
+          "col": 0,
+          "observed_pixel": [
+            57,
+            200
+          ],
+          "projected_pixel": [
+            60.31929470608804,
+            199.0593203771272
+          ],
+          "error_px": 3.450013840371107,
+          "cue": "blue protection floor center"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "observed_pixel": [
+            135,
+            40
+          ],
+          "projected_pixel": [
+            137.9352905455134,
+            42.25207172323859
+          ],
+          "error_px": 3.6996969650487834,
+          "cue": "upper red entrance floor center"
+        },
+        {
+          "row": 5,
+          "col": 8,
+          "observed_pixel": [
+            409,
+            200
+          ],
+          "projected_pixel": [
+            406.74483847527637,
+            199.17498715595343
+          ],
+          "error_px": 2.401332899752891,
+          "cue": "lower right teleport floor center"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "observed_pixel": [
+            310,
+            68
+          ],
+          "projected_pixel": [
+            311.0219417899912,
+            68.18305645660679
+          ],
+          "error_px": 1.0382074399829195,
+          "cue": "upper teleport floor center"
+        },
+        {
+          "row": 2.5,
+          "col": 3.5,
+          "observed_pixel": [
+            217,
+            112
+          ],
+          "projected_pixel": [
+            218.39415760652716,
+            111.5436219971736
+          ],
+          "error_px": 1.4669547754792402,
+          "cue": "central walkway intersection"
+        }
+      ],
+      "matrix": [
+        34.24537226735621,
+        -11.192512433445977,
+        103.68498906802648,
+        0.004321265548580653,
+        23.04844731834684,
+        42.24624055156549,
+        -3.5735670771555714e-05,
+        -0.04176729143359838,
+        1.0
+      ],
+      "inverse": [
+        0.029196492068254896,
+        0.008074110609147759,
+        -3.3683387799557334,
+        -6.861079241210841e-06,
+        0.04029962512620239,
+        -1.7017962662933392,
+        7.567875320188294e-07,
+        0.0016834947210693605,
+        0.928800209539429
+      ],
+      "tolerance_px": 4,
+      "bitmap_sha256": "75c3c27106ac3093a7f256cc7b5ea0734d7779dd4e6092c39750b1964ad3be3e",
+      "grid_sha256": "f283b781139e589a85834a8fa5bd7ccf81fd63f8830d9c992b009a70473fb5d5",
+      "width": 512,
+      "height": 286,
+      "rows": 7,
+      "cols": 10,
+      "base_stage_id": "ro6_n_1_3",
+      "landmarks_sha256": "c3f150007b454248134670a75d59ea9ad855179e5a542db085f653c14aef11b3"
+    },
+    "ro6_n_3_4": {
+      "anchors": [
+        [
+          0.5,
+          2.5,
+          181,
+          61
+        ],
+        [
+          0.5,
+          9.5,
+          387,
+          61
+        ],
+        [
+          4.5,
+          6.5,
+          309,
+          159
+        ],
+        [
+          4.5,
+          7.5,
+          344,
+          159
+        ],
+        [
+          6.5,
+          6.5,
+          312,
+          219
+        ],
+        [
+          6.5,
+          7.5,
+          350,
+          219
+        ]
+      ],
+      "checks": [
+        {
+          "row": 1,
+          "col": 3,
+          "observed_pixel": [
+            195,
+            71
+          ],
+          "projected_pixel": [
+            195.35231723967001,
+            71.97797751011358
+          ],
+          "error_px": 1.0395034620705441,
+          "cue": "upper left metal tile center"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "observed_pixel": [
+            256,
+            71
+          ],
+          "projected_pixel": [
+            256.69302580998345,
+            71.96951025791348
+          ],
+          "error_px": 1.1917360922212148,
+          "cue": "upper middle metal tile center"
+        },
+        {
+          "row": 1,
+          "col": 8,
+          "observed_pixel": [
+            345,
+            71
+          ],
+          "projected_pixel": [
+            346.2945550077806,
+            71.9571419830286
+          ],
+          "error_px": 1.6099669076865535,
+          "cue": "upper right metal tile center"
+        },
+        {
+          "row": 4,
+          "col": 7,
+          "observed_pixel": [
+            325,
+            145
+          ],
+          "projected_pixel": [
+            324.1276437413306,
+            144.7681349430003
+          ],
+          "error_px": 0.9026443633553438,
+          "cue": "middle metal tile center"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "observed_pixel": [
+            329,
+            175
+          ],
+          "projected_pixel": [
+            326.9741993890475,
+            172.8287448625957
+          ],
+          "error_px": 2.9695482799644966,
+          "cue": "lower metal tile center"
+        },
+        {
+          "row": 6,
+          "col": 7,
+          "observed_pixel": [
+            332,
+            203
+          ],
+          "projected_pixel": [
+            330.052157680789,
+            203.17046224395716
+          ],
+          "error_px": 1.9552869551869556,
+          "cue": "bottom metal tile center"
+        }
+      ],
+      "matrix": [
+        31.472701136970873,
+        -8.513545221081502,
+        105.9233930294514,
+        0.375935375281613,
+        19.43835470411672,
+        50.11325651082659,
+        0.005281300662584976,
+        -0.03388497808138319,
+        1.0
+      ],
+      "inverse": [
+        0.03232144387978436,
+        0.00753019689476069,
+        -3.800959691921929,
+        -0.00017015533179308575,
+        0.047272011599225575,
+        -2.3509310129691854,
+        -0.00017646497266624747,
+        0.001562041843052956,
+        0.9404127650941013
+      ],
+      "tolerance_px": 4,
+      "bitmap_sha256": "fa6e652563f1e3ca3421ea1532ddcaf86a4ab4369523f35bd3324604ba6672f7",
+      "grid_sha256": "80e0152ba4d612d566626bc05ec34d172c069a1c984571ff98f56ae4b83b9e4f",
+      "width": 512,
+      "height": 286,
+      "rows": 8,
+      "cols": 11,
+      "base_stage_id": "ro6_n_3_4",
+      "landmarks_sha256": "52423463da6d936027b7eb9c04b062032c00d4eeeba65b7ce435ddb2a775c514",
+      "scope": "Nominal planar ground-grid reference only. Independent source-pixel errors apply to the recorded metal-ground landmarks only; they do not establish whole-map accuracy, elevated surfaces, actual spawn offsets, rendered portal-object centers, random ranges, hitboxes, pathfinding or in-game arrival time.",
+      "grid_correspondence": "Original map row 1 has seven LOWLAND tile_floor cells in columns 3..9, matching the seven visible upper metal squares. Three lower squares in column 7 match LOWLAND tile_floor rows 4..6. Six holdout centers use those cells; no portal object determines their row/column correspondence."
+    },
+    "ro6_n_3_6": {
+      "anchors": [
+        [
+          0.5,
+          0.5,
+          117,
+          55
+        ],
+        [
+          0.5,
+          2.5,
+          182,
+          55
+        ],
+        [
+          2.5,
+          0.5,
+          107,
+          103
+        ],
+        [
+          2.5,
+          2.5,
+          177,
+          103
+        ],
+        [
+          6.5,
+          7.5,
+          354,
+          231
+        ],
+        [
+          6.5,
+          9.5,
+          444,
+          231
+        ],
+        [
+          4.5,
+          7.5,
+          346,
+          160
+        ],
+        [
+          4.5,
+          9.5,
+          426,
+          160
+        ]
+      ],
+      "checks": [
+        {
+          "row": 1,
+          "col": 1,
+          "observed_pixel": [
+            131,
+            66
+          ],
+          "projected_pixel": [
+            132.46170275384242,
+            66.55806450350624
+          ],
+          "error_px": 1.564612070343373,
+          "cue": "upper left metal tile center"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "observed_pixel": [
+            164,
+            66
+          ],
+          "projected_pixel": [
+            163.26511305932704,
+            66.1203820578424
+          ],
+          "error_px": 0.7446815798863579,
+          "cue": "upper second metal tile center"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "observed_pixel": [
+            125,
+            90
+          ],
+          "projected_pixel": [
+            126.57360908069319,
+            90.41869536792017
+          ],
+          "error_px": 1.6283584832455855,
+          "cue": "second-row left metal tile center"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "observed_pixel": [
+            158,
+            90
+          ],
+          "projected_pixel": [
+            158.59693058755437,
+            90.09403766025098
+          ],
+          "error_px": 0.604292319911052,
+          "cue": "second-row second metal tile center"
+        },
+        {
+          "row": 5,
+          "col": 8,
+          "observed_pixel": [
+            369,
+            177
+          ],
+          "projected_pixel": [
+            369.94308906876336,
+            176.33421913561477
+          ],
+          "error_px": 1.1544181006041416,
+          "cue": "lower right first metal tile center"
+        },
+        {
+          "row": 5,
+          "col": 9,
+          "observed_pixel": [
+            410,
+            177
+          ],
+          "projected_pixel": [
+            409.6701870604655,
+            176.508547557203
+          ],
+          "error_px": 0.5918632262740586,
+          "cue": "lower right second metal tile center"
+        },
+        {
+          "row": 6,
+          "col": 8,
+          "observed_pixel": [
+            376,
+            212
+          ],
+          "projected_pixel": [
+            374.58386755751445,
+            211.70272318991036
+          ],
+          "error_px": 1.4469984783949001,
+          "cue": "bottom first metal tile center"
+        },
+        {
+          "row": 6,
+          "col": 9,
+          "observed_pixel": [
+            419,
+            212
+          ],
+          "projected_pixel": [
+            416.3639789447097,
+            212.12860562129842
+          ],
+          "error_px": 2.639156382210689,
+          "cue": "bottom second metal tile center"
+        }
+      ],
+      "matrix": [
+        28.682883033967705,
+        -10.350113932365131,
+        108.53420137522656,
+        -0.7510820740511174,
+        19.48770963928847,
+        45.01025042902331,
+        -0.005019418181023545,
+        -0.03721718425349408,
+        1.0
+      ],
+      "inverse": [
+        0.03439847102633898,
+        0.010257640949917626,
+        -4.195109569339368,
+        0.0008535985852566941,
+        0.04750712615547207,
+        -2.23095228616686,
+        0.00020442884669503783,
+        0.0018195688569606204,
+        0.8959132284612463
+      ],
+      "tolerance_px": 4,
+      "bitmap_sha256": "a538a4c2ea1613159983c15d477cff5ef9e297c3200b03b2caa5bdcd7bc9a06a",
+      "grid_sha256": "381cd5dda5f412dbf0b564b298b2c25fe62ff9dfa1f24bd6aa33a2c66227e319",
+      "width": 512,
+      "height": 286,
+      "rows": 8,
+      "cols": 11,
+      "base_stage_id": "ro6_n_3_6",
+      "landmarks_sha256": "52423463da6d936027b7eb9c04b062032c00d4eeeba65b7ce435ddb2a775c514",
+      "scope": "Nominal planar ground-grid reference only. Independent source-pixel errors apply to the recorded metal-ground landmarks only; they do not establish whole-map accuracy, elevated surfaces, actual spawn offsets, rendered portal-object centers, random ranges, hitboxes, pathfinding or in-game arrival time.",
+      "grid_correspondence": "Original LOWLAND tile_floor pattern has a 2x2 rectangle at rows 1..2 columns 1..2 and another at rows 5..6 columns 8..9. The two separated four-square metal rectangles are visible in the unchanged PNG. Eight independent centers use this pattern without deriving their columns from portal objects."
+    },
+    "ro6_n_4_5": {
+      "anchors": [
+        [
+          0.5,
+          1.5,
+          145,
+          59
+        ],
+        [
+          0.5,
+          8.5,
+          343,
+          59
+        ],
+        [
+          2.5,
+          1.5,
+          138,
+          104
+        ],
+        [
+          2.5,
+          8.5,
+          348,
+          104
+        ],
+        [
+          5.5,
+          1.5,
+          111,
+          187
+        ],
+        [
+          5.5,
+          8.5,
+          359,
+          187
+        ],
+        [
+          6.5,
+          1.5,
+          108,
+          218
+        ],
+        [
+          6.5,
+          8.5,
+          363,
+          218
+        ]
+      ],
+      "checks": [
+        {
+          "row": 1,
+          "col": 2,
+          "observed_pixel": [
+            156,
+            69
+          ],
+          "projected_pixel": [
+            157.81289165196895,
+            69.83471486907338
+          ],
+          "error_px": 1.995826909937561,
+          "cue": "upper left metal tile center"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "observed_pixel": [
+            242,
+            69
+          ],
+          "projected_pixel": [
+            243.91509280495615,
+            69.84768804924802
+          ],
+          "error_px": 2.094315038486978,
+          "cue": "upper middle metal tile center"
+        },
+        {
+          "row": 1,
+          "col": 8,
+          "observed_pixel": [
+            330,
+            69
+          ],
+          "projected_pixel": [
+            329.99107210870835,
+            69.86065727852741
+          ],
+          "error_px": 0.8607035833114253,
+          "cue": "upper right metal tile center"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "observed_pixel": [
+            151,
+            91
+          ],
+          "projected_pixel": [
+            152.89540735739382,
+            91.93496714894106
+          ],
+          "error_px": 2.1134646010902562,
+          "cue": "second-row left metal tile center"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "observed_pixel": [
+            240,
+            91
+          ],
+          "projected_pixel": [
+            242.53175358134447,
+            91.94496883337466
+          ],
+          "error_px": 2.702358653602449,
+          "cue": "second-row middle metal tile center"
+        },
+        {
+          "row": 2,
+          "col": 8,
+          "observed_pixel": [
+            332,
+            91
+          ],
+          "projected_pixel": [
+            332.1396816026052,
+            91.95496734688591
+          ],
+          "error_px": 0.9651287912629433,
+          "cue": "second-row right metal tile center"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "observed_pixel": [
+            131,
+            202
+          ],
+          "projected_pixel": [
+            128.39599407128634,
+            202.04070046648846
+          ],
+          "error_px": 2.6043239822933466,
+          "cue": "bottom left metal tile center"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "observed_pixel": [
+            239,
+            202
+          ],
+          "projected_pixel": [
+            235.64007277286873,
+            202.0317814532557
+          ],
+          "error_px": 3.360077533687138,
+          "cue": "bottom middle metal tile center"
+        },
+        {
+          "row": 6,
+          "col": 8,
+          "observed_pixel": [
+            345,
+            202
+          ],
+          "projected_pixel": [
+            342.84347506377827,
+            202.0228658228991
+          ],
+          "error_px": 2.1566461569768425,
+          "cue": "bottom right metal tile center"
+        }
+      ],
+      "matrix": [
+        27.626732768089543,
+        -10.531292920105548,
+        107.11973441828368,
+        0.007572951331283955,
+        17.776650674185756,
+        49.400662619107266,
+        4.885165317705176e-05,
+        -0.03793355153844776,
+        1.0
+      ],
+      "inverse": [
+        0.03620145639904181,
+        0.011915466534074545,
+        -4.466522337219515,
+        -9.505399869033977e-06,
+        0.05088592020529698,
+        -2.5127799602151795,
+        -2.1290745683357064e-06,
+        0.001929701586450408,
+        0.9048995288745242
+      ],
+      "tolerance_px": 4,
+      "bitmap_sha256": "ca3c47b1a1782a019822429c42b35f33edfbd976b4dd2f3de3a40fb7734f631c",
+      "grid_sha256": "0201512382d8d93a1edd9703730eb60b519bf54ba9d6459a08e81e1cba820b13",
+      "width": 512,
+      "height": 286,
+      "rows": 8,
+      "cols": 12,
+      "base_stage_id": "ro6_n_4_5",
+      "landmarks_sha256": "4cfee7a5c51241380dd26a345e4e8c636dc465bced8afd425d14716dda59f348",
+      "scope": "Nominal planar ground-grid reference only. Independent source-pixel errors apply to the recorded metal-ground landmarks only; they do not establish whole-map accuracy, elevated surfaces, actual spawn offsets, rendered portal-object centers, random ranges, hitboxes, pathfinding or in-game arrival time.",
+      "grid_correspondence": "Original LOWLAND tile_floor cells form three separated upper two-cell vertical strips at rows 1..2 columns 2,5,8 and three lower cells at row 6 columns 2,5,8. These match the nine visible purple metal ground squares. Raised gray wall tiles and rendered portal cubes are excluded from both fit and holdout inputs."
+    },
+    "ro6_n_4_3": {
+      "anchors": [
+        [
+          0.5,
+          4.5,
+          243,
+          54
+        ],
+        [
+          0.5,
+          5.5,
+          269,
+          54
+        ],
+        [
+          2.5,
+          4.5,
+          242,
+          100
+        ],
+        [
+          2.5,
+          5.5,
+          270,
+          100
+        ],
+        [
+          4.5,
+          4.5,
+          240,
+          158
+        ],
+        [
+          4.5,
+          5.5,
+          272,
+          158
+        ],
+        [
+          6.5,
+          4.5,
+          237,
+          229
+        ],
+        [
+          6.5,
+          5.5,
+          275,
+          229
+        ]
+      ],
+      "checks": [
+        {
+          "row": 1,
+          "col": 5,
+          "observed_pixel": [
+            256,
+            64
+          ],
+          "projected_pixel": [
+            256.0000000000013,
+            64.71837053290753
+          ],
+          "error_px": 0.7183705329075281,
+          "cue": "first-row middle metal tile center"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "observed_pixel": [
+            256,
+            88
+          ],
+          "projected_pixel": [
+            256.0000000000009,
+            87.90988537678119
+          ],
+          "error_px": 0.0901146232188097,
+          "cue": "second-row middle metal tile center"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "observed_pixel": [
+            256,
+            115
+          ],
+          "projected_pixel": [
+            256.00000000000045,
+            113.53781608145088
+          ],
+          "error_px": 1.4621839185491154,
+          "cue": "third-row middle metal tile center"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "observed_pixel": [
+            256,
+            146
+          ],
+          "projected_pixel": [
+            255.99999999999994,
+            142.00738992586778
+          ],
+          "error_px": 3.992610074132216,
+          "cue": "fourth-row middle metal tile center"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "observed_pixel": [
+            256,
+            177
+          ],
+          "projected_pixel": [
+            255.99999999999937,
+            173.8189724651696
+          ],
+          "error_px": 3.181027534830406,
+          "cue": "fifth-row middle metal tile center"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "observed_pixel": [
+            256,
+            211
+          ],
+          "projected_pixel": [
+            255.99999999999875,
+            209.59772890367506
+          ],
+          "error_px": 1.402271096324938,
+          "cue": "sixth-row middle metal tile center"
+        }
+      ],
+      "matrix": [
+        25.768988392597702,
+        -11.616614009976814,
+        127.15505803701632,
+        3.8179561159232436e-13,
+        18.15002233476749,
+        43.631596909719335,
+        2.463390518875073e-15,
+        -0.045377398476470245,
+        1.0
+      ],
+      "inverse": [
+        0.03880633514846338,
+        0.011271137554080867,
+        -5.426199528480423,
+        -5.288209778869289e-16,
+        0.04967731924925045,
+        -2.167500769038669,
+        -1.1959167831330502e-16,
+        0.0022542275108160354,
+        0.9016444539052899
+      ],
+      "tolerance_px": 4,
+      "bitmap_sha256": "11377555e43a5aeb8e43fab7026309944c3e8a88794499547c61967ed8a99bdb",
+      "grid_sha256": "702bacbc3c933ec1552f741ba7a0d0a45f37b9c18ffed8915a9f5ff280e997a3",
+      "width": 512,
+      "height": 286,
+      "rows": 8,
+      "cols": 11,
+      "base_stage_id": "ro6_n_4_3",
+      "landmarks_sha256": "4cfee7a5c51241380dd26a345e4e8c636dc465bced8afd425d14716dda59f348",
+      "scope": "Nominal planar ground-grid reference only. Independent source-pixel errors apply to the recorded metal-ground landmarks only; they do not establish whole-map accuracy, elevated surfaces, actual spawn offsets, rendered portal-object centers, random ranges, hitboxes, pathfinding or in-game arrival time.",
+      "grid_correspondence": "Original LOWLAND tile_floor cells occupy column 5 rows 1..6, matching the six visible purple metal ground squares of the central vertical strip. Fit corners use the visible ground metal square outline, not adjacent raised gray wall surfaces or red/blue portal objects. Holdouts confirm those six ground centers only; lateral extrapolation is not independently measured."
+    },
+    "ro6_n_5_2": {
+      "anchors": [
+        [
+          0.5,
+          3.5,
+          205,
+          65
+        ],
+        [
+          0.5,
+          6.5,
+          285,
+          65
+        ],
+        [
+          2.5,
+          3.5,
+          201,
+          106
+        ],
+        [
+          2.5,
+          6.5,
+          287,
+          106
+        ],
+        [
+          4.5,
+          5.5,
+          258,
+          158
+        ],
+        [
+          4.5,
+          9.5,
+          379,
+          158
+        ],
+        [
+          6.5,
+          3.5,
+          190,
+          212
+        ],
+        [
+          6.5,
+          9.5,
+          390,
+          212
+        ]
+      ],
+      "checks": [
+        {
+          "row": 1,
+          "col": 4,
+          "observed_pixel": [
+            217,
+            74
+          ],
+          "projected_pixel": [
+            217.6103603242546,
+            74.49413648735907
+          ],
+          "error_px": 0.7853092343553222,
+          "cue": "upper left outlined floor center"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "observed_pixel": [
+            244,
+            74
+          ],
+          "projected_pixel": [
+            244.89132195426916,
+            74.88695094212126
+          ],
+          "error_px": 1.2574326224064587,
+          "cue": "upper middle outlined floor center"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "observed_pixel": [
+            271,
+            74
+          ],
+          "projected_pixel": [
+            272.03898358989574,
+            75.27784603035502
+          ],
+          "error_px": 1.6469296819739203,
+          "cue": "upper right outlined floor center"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "observed_pixel": [
+            214,
+            95
+          ],
+          "projected_pixel": [
+            216.02115387650198,
+            95.6217156684066
+          ],
+          "error_px": 2.1146142354673714,
+          "cue": "second-row left outlined floor center"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "observed_pixel": [
+            272,
+            95
+          ],
+          "projected_pixel": [
+            272.36281553170426,
+            96.32600848078802
+          ],
+          "error_px": 1.3747485592527795,
+          "cue": "second-row right outlined floor center"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "observed_pixel": [
+            212,
+            119
+          ],
+          "projected_pixel": [
+            214.3160609095386,
+            118.28993899553339
+          ],
+          "error_px": 2.422462541868693,
+          "cue": "third-row left outlined floor center"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "observed_pixel": [
+            243,
+            119
+          ],
+          "projected_pixel": [
+            243.58980581992824,
+            118.59626232818917
+          ],
+          "error_px": 0.7147552118456071,
+          "cue": "third-row middle outlined floor center"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "observed_pixel": [
+            273,
+            119
+          ],
+          "projected_pixel": [
+            272.7101378686824,
+            118.90098033364161
+          ],
+          "error_px": 0.3063085854129829,
+          "cue": "third-row right outlined floor center"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "observed_pixel": [
+            273,
+            146
+          ],
+          "projected_pixel": [
+            273.08360274166347,
+            143.17514325943958
+          ],
+          "error_px": 2.8260935977251873,
+          "cue": "fourth-row outlined floor center"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "observed_pixel": [
+            273,
+            170
+          ],
+          "projected_pixel": [
+            273.4862771514087,
+            169.3478436534061
+          ],
+          "error_px": 0.8134945410909854,
+          "cue": "fifth-row first outlined floor center"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "observed_pixel": [
+            305,
+            170
+          ],
+          "projected_pixel": [
+            304.7114921790861,
+            169.53248648832303
+          ],
+          "error_px": 0.5493684067445146,
+          "cue": "fifth-row second outlined floor center"
+        },
+        {
+          "row": 5,
+          "col": 8,
+          "observed_pixel": [
+            335,
+            170
+          ],
+          "projected_pixel": [
+            335.76126013790395,
+            169.7160918589937
+          ],
+          "error_px": 0.8124782028406573,
+          "cue": "fifth-row third outlined floor center"
+        },
+        {
+          "row": 5,
+          "col": 9,
+          "observed_pixel": [
+            366,
+            170
+          ],
+          "projected_pixel": [
+            366.63705557841797,
+            169.89866848481995
+          ],
+          "error_px": 0.6450642494838331,
+          "cue": "fifth-row fourth outlined floor center"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "observed_pixel": [
+            208,
+            199
+          ],
+          "projected_pixel": [
+            208.36313662473532,
+            197.43061915311793
+          ],
+          "error_px": 1.6108458805188162,
+          "cue": "bottom first outlined floor center"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "observed_pixel": [
+            240,
+            199
+          ],
+          "projected_pixel": [
+            241.2390951117205,
+            197.54107416154122
+          ],
+          "error_px": 1.9141110986597158,
+          "cue": "bottom second outlined floor center"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "observed_pixel": [
+            272,
+            199
+          ],
+          "projected_pixel": [
+            273.9217273777595,
+            197.65087964215311
+          ],
+          "error_px": 2.348012319896842,
+          "cue": "bottom third outlined floor center"
+        },
+        {
+          "row": 6,
+          "col": 7,
+          "observed_pixel": [
+            305,
+            199
+          ],
+          "projected_pixel": [
+            306.4127336983792,
+            197.7600413074547
+          ],
+          "error_px": 1.8797111644491626,
+          "cue": "bottom fourth outlined floor center"
+        },
+        {
+          "row": 6,
+          "col": 8,
+          "observed_pixel": [
+            337,
+            199
+          ],
+          "projected_pixel": [
+            338.7137944691576,
+            197.86856480315535
+          ],
+          "error_px": 2.053591265849691,
+          "cue": "bottom fifth outlined floor center"
+        },
+        {
+          "row": 6,
+          "col": 9,
+          "observed_pixel": [
+            368,
+            199
+          ],
+          "projected_pixel": [
+            370.8265704954277,
+            197.9764557091462
+          ],
+          "error_px": 3.006184239357553,
+          "cue": "bottom sixth outlined floor center"
+        }
+      ],
+      "matrix": [
+        27.224393823955918,
+        -8.719457068830877,
+        112.29836470976872,
+        0.5630639757590803,
+        17.456336029288963,
+        53.028074174288086,
+        0.002397170965113657,
+        -0.03318074712363419,
+        1.0
+      ],
+      "inverse": [
+        0.03694334067049175,
+        0.009599872312604058,
+        -4.657739485268576,
+        -0.000838127209520745,
+        0.05182258999219664,
+        -2.6539318309619815,
+        -0.00011636919060615033,
+        0.0016964997186462798,
+        0.9231059568906362
+      ],
+      "tolerance_px": 4,
+      "bitmap_sha256": "f33383b7d75625a667ff80dc3bb590224c3e272bc629c1be353af281ac169b7c",
+      "grid_sha256": "91ebb3484d116b18d87de1a03d97fad3ab691e6519b1a7f0b533d0a1a2917c5c",
+      "width": 512,
+      "height": 286,
+      "rows": 8,
+      "cols": 12,
+      "base_stage_id": "ro6_n_5_2",
+      "landmarks_sha256": "0b655839c5e5a1879e23204935901f92e7d06ba7eb5d635951ceecb15b2283a5",
+      "scope": "Nominal planar ground-grid reference only. Independent source-pixel errors apply to recorded LOWLAND ground landmarks only; they do not establish whole-map accuracy, elevated surfaces, actual spawn offsets, rendered portal-object centers, random ranges, hitboxes, pathfinding or in-game arrival time.",
+      "grid_correspondence": "Pinned LOWLAND tile_floor cells form a three-column upper outlined patch at columns 4..6, with a gap at row 2 column 5; the column-6 strip joins lower row-5 cells 6..9 and row-6 cells 4..9. The original image has this same outlined-green floor pattern. Checks exclude the central road gap, ice-topped HIGHLAND walls, blue/red portal models and scenery. Independent holds span rows 1..6 and columns 4..9 only."
+    },
+    "ro6_n_5_7": {
+      "anchors": [
+        [
+          0.5,
+          3.5,
+          192,
+          65
+        ],
+        [
+          0.5,
+          6.5,
+          269,
+          65
+        ],
+        [
+          0.5,
+          7.5,
+          298,
+          65
+        ],
+        [
+          0.5,
+          9.5,
+          353,
+          65
+        ],
+        [
+          2.5,
+          3.5,
+          185,
+          106
+        ],
+        [
+          2.5,
+          5.5,
+          243,
+          106
+        ],
+        [
+          3.5,
+          3.5,
+          181,
+          130
+        ],
+        [
+          3.5,
+          5.5,
+          244,
+          130
+        ],
+        [
+          2.5,
+          7.5,
+          296,
+          106
+        ],
+        [
+          2.5,
+          9.5,
+          356,
+          106
+        ]
+      ],
+      "checks": [
+        {
+          "row": 1,
+          "col": 4,
+          "observed_pixel": [
+            205,
+            75
+          ],
+          "projected_pixel": [
+            203.16668898264373,
+            74.9590861468532
+          ],
+          "error_px": 1.8337674960962704,
+          "cue": "upper left-patch first outlined floor center"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "observed_pixel": [
+            230,
+            75
+          ],
+          "projected_pixel": [
+            230.20414917671147,
+            74.88707239350838
+          ],
+          "error_px": 0.2333013730347449,
+          "cue": "upper left-patch second outlined floor center"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "observed_pixel": [
+            256,
+            75
+          ],
+          "projected_pixel": [
+            257.2932681978633,
+            74.81492104787473
+          ],
+          "error_px": 1.3064443540099238,
+          "cue": "upper left-patch third outlined floor center"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "observed_pixel": [
+            202,
+            96
+          ],
+          "projected_pixel": [
+            200.8084706521731,
+            95.70497720853973
+          ],
+          "error_px": 1.2275099324297987,
+          "cue": "second-row left-patch outlined floor center"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "observed_pixel": [
+            199,
+            119
+          ],
+          "projected_pixel": [
+            198.2962464951809,
+            117.80569960988636
+          ],
+          "error_px": 1.3862259618730146,
+          "cue": "third-row left-patch first outlined floor center"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "observed_pixel": [
+            228,
+            119
+          ],
+          "projected_pixel": [
+            227.09625840418545,
+            117.77254456727783
+          ],
+          "error_px": 1.5242689104369325,
+          "cue": "third-row left-patch second outlined floor center"
+        },
+        {
+          "row": 1,
+          "col": 8,
+          "observed_pixel": [
+            310,
+            75
+          ],
+          "projected_pixel": [
+            311.6270760633131,
+            74.67020399938635
+          ],
+          "error_px": 1.6601632202368564,
+          "cue": "upper right-patch first outlined floor center"
+        },
+        {
+          "row": 1,
+          "col": 9,
+          "observed_pixel": [
+            338,
+            75
+          ],
+          "projected_pixel": [
+            338.8720629997087,
+            74.59763750256904
+          ],
+          "error_px": 0.9604110863582418,
+          "cue": "upper right-patch second outlined floor center"
+        },
+        {
+          "row": 2,
+          "col": 8,
+          "observed_pixel": [
+            310,
+            96
+          ],
+          "projected_pixel": [
+            312.70266138769637,
+            95.4888734171876
+          ],
+          "error_px": 2.750568843021808,
+          "cue": "second-row right-patch first outlined floor center"
+        },
+        {
+          "row": 2,
+          "col": 9,
+          "observed_pixel": [
+            339,
+            96
+          ],
+          "projected_pixel": [
+            340.8144696643537,
+            95.43458044352727
+          ],
+          "error_px": 1.9005260949804346,
+          "cue": "second-row right-patch second outlined floor center"
+        }
+      ],
+      "matrix": [
+        25.924467000468834,
+        -8.229620960010411,
+        100.92953697847523,
+        -0.13864013567166567,
+        17.21895387477231,
+        55.79728079939273,
+        -0.0009217300460211637,
+        -0.02963008171321861,
+        1.0
+      ],
+      "inverse": [
+        0.03847147206229428,
+        0.010679963930951464,
+        -4.478820808510393,
+        0.00017777977508833152,
+        0.05303725642952739,
+        -2.9772779202115403,
+        4.0727940977305316e-05,
+        0.001581342285497406,
+        0.9076547482312217
+      ],
+      "tolerance_px": 4,
+      "bitmap_sha256": "cf86e6f53c8cd16ddcda10ae4cccc200c4b83b7c0c8b1035f2fb66a2d43905aa",
+      "grid_sha256": "d5d4d112f37b0a7c8e421ace58a97b116ce3d1d335bab56fd961b2b455ae0d7e",
+      "width": 512,
+      "height": 286,
+      "rows": 8,
+      "cols": 13,
+      "base_stage_id": "ro6_n_5_7",
+      "landmarks_sha256": "0b655839c5e5a1879e23204935901f92e7d06ba7eb5d635951ceecb15b2283a5",
+      "scope": "Nominal planar ground-grid reference only. Independent source-pixel errors apply to recorded LOWLAND ground landmarks only; they do not establish whole-map accuracy, elevated surfaces, actual spawn offsets, rendered portal-object centers, random ranges, hitboxes, pathfinding or in-game arrival time.",
+      "grid_correspondence": "Pinned LOWLAND tile_floor cells form a left upper three-column outlined-green patch at row 1 columns 4..6, continuing at row 2 columns 4 and 6 and row 3 columns 4..5; an independent two-by-two patch occupies rows 1..2 columns 8..9. These patterns match the original PNG. The device-obscured row 2 column 6, ice wall surfaces, road gaps, right portal lane and scenery are excluded. Holdouts verify the recorded upper patch only: lower and far-right extrapolation is not independently measured."
+    }
+  },
+  "stages": {
+    "ro6_n_1_1": {
+      "calibration": "ro6_n_1_1",
+      "level_sha256": "b9b632f7cd1c73da5e6cd107eec81c5d45d44b8cb934e6989db73095ec44c0a8",
+      "image_file": "battle-maps/ro6_n_1_1.png"
+    },
+    "ro6_e_1_1": {
+      "calibration": "ro6_n_1_1",
+      "level_sha256": "b9b632f7cd1c73da5e6cd107eec81c5d45d44b8cb934e6989db73095ec44c0a8",
+      "image_file": "battle-maps/ro6_e_1_1.png"
+    },
+    "ro6_n_1_2": {
+      "calibration": "ro6_n_1_2",
+      "level_sha256": "515ce265270513ef0b0e1cfd3303f4234070b3b871e5b4a9640468d31b62d96d",
+      "image_file": "battle-maps/ro6_n_1_2.png"
+    },
+    "ro6_e_1_2": {
+      "calibration": "ro6_n_1_2",
+      "level_sha256": "515ce265270513ef0b0e1cfd3303f4234070b3b871e5b4a9640468d31b62d96d",
+      "image_file": "battle-maps/ro6_e_1_2.png"
+    },
+    "ro6_n_1_4": {
+      "calibration": "ro6_n_1_4",
+      "level_sha256": "750655b2222f6363ff18329c0b27411eeab30e22da57458d325baa03f695e3f1",
+      "image_file": "battle-maps/ro6_n_1_4.png"
+    },
+    "ro6_e_1_4": {
+      "calibration": "ro6_n_1_4",
+      "level_sha256": "750655b2222f6363ff18329c0b27411eeab30e22da57458d325baa03f695e3f1",
+      "image_file": "battle-maps/ro6_e_1_4.png"
+    },
+    "ro6_n_1_3": {
+      "calibration": "ro6_n_1_3",
+      "level_sha256": "87c4a4a7518a590715b1262ac354baa76b90bc96b1579dbda0e230a8b145a598",
+      "image_file": "battle-maps/ro6_n_1_3.png"
+    },
+    "ro6_e_1_3": {
+      "calibration": "ro6_n_1_3",
+      "level_sha256": "87c4a4a7518a590715b1262ac354baa76b90bc96b1579dbda0e230a8b145a598",
+      "image_file": "battle-maps/ro6_e_1_3.png"
+    },
+    "ro6_n_3_4": {
+      "calibration": "ro6_n_3_4",
+      "level_sha256": "a890d1b5061475e594844c9275510631256b00c97f852717f8750fdc696659c7",
+      "image_file": "battle-maps/ro6_n_3_4.png"
+    },
+    "ro6_e_3_4": {
+      "calibration": "ro6_n_3_4",
+      "level_sha256": "a890d1b5061475e594844c9275510631256b00c97f852717f8750fdc696659c7",
+      "image_file": "battle-maps/ro6_e_3_4.png"
+    },
+    "ro6_n_3_6": {
+      "calibration": "ro6_n_3_6",
+      "level_sha256": "2d2e89306c3d3c4a2a6c21f71b3828f66cb7a7996ab149faaad043d4867e8296",
+      "image_file": "battle-maps/ro6_n_3_6.png"
+    },
+    "ro6_e_3_6": {
+      "calibration": "ro6_n_3_6",
+      "level_sha256": "2d2e89306c3d3c4a2a6c21f71b3828f66cb7a7996ab149faaad043d4867e8296",
+      "image_file": "battle-maps/ro6_e_3_6.png"
+    },
+    "ro6_n_4_5": {
+      "calibration": "ro6_n_4_5",
+      "level_sha256": "3f9c1d1d3520c871a954baf17d2ebf8e68f615e7279c94a04d057ff33cdfd7f5",
+      "image_file": "battle-maps/ro6_n_4_5.png"
+    },
+    "ro6_e_4_5": {
+      "calibration": "ro6_n_4_5",
+      "level_sha256": "3f9c1d1d3520c871a954baf17d2ebf8e68f615e7279c94a04d057ff33cdfd7f5",
+      "image_file": "battle-maps/ro6_e_4_5.png"
+    },
+    "ro6_n_4_3": {
+      "calibration": "ro6_n_4_3",
+      "level_sha256": "f4d7e6e48b7e3985b8ef1831e4f5d45ccd4571c139a9661893fe6fea9f4ac711",
+      "image_file": "battle-maps/ro6_n_4_3.png"
+    },
+    "ro6_e_4_3": {
+      "calibration": "ro6_n_4_3",
+      "level_sha256": "f4d7e6e48b7e3985b8ef1831e4f5d45ccd4571c139a9661893fe6fea9f4ac711",
+      "image_file": "battle-maps/ro6_e_4_3.png"
+    },
+    "ro6_n_5_2": {
+      "calibration": "ro6_n_5_2",
+      "level_sha256": "65b0b5885f31aefd4acab5f45d59ac2e49828579db7b42f1868cce446692872f",
+      "image_file": "battle-maps/ro6_n_5_2.png"
+    },
+    "ro6_e_5_2": {
+      "calibration": "ro6_n_5_2",
+      "level_sha256": "65b0b5885f31aefd4acab5f45d59ac2e49828579db7b42f1868cce446692872f",
+      "image_file": "battle-maps/ro6_e_5_2.png"
+    },
+    "ro6_n_5_7": {
+      "calibration": "ro6_n_5_7",
+      "level_sha256": "5656c1e79803400732a8c7b4ade6701fc5a2b349e4ce7e529e6113e9f93b5d65",
+      "image_file": "battle-maps/ro6_n_5_7.png"
+    },
+    "ro6_e_5_7": {
+      "calibration": "ro6_n_5_7",
+      "level_sha256": "5656c1e79803400732a8c7b4ade6701fc5a2b349e4ce7e529e6113e9f93b5d65",
+      "image_file": "battle-maps/ro6_e_5_7.png"
+    }
+  }
+}

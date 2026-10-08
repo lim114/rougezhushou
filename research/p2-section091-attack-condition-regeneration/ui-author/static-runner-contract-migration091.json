@@ -1,0 +1,31 @@
+{
+  "status": "SOURCE_ONLY_SINGLE_ASSERTION_CONTRACT_MIGRATION_PASS_NOT_RUNNER_RUNTIME",
+  "baseline": {
+    "path": "/workspace/.continuation/p2-continuous-attack-controls-091-ui-candidate/baseline/scripts/verify_damage_ui.py",
+    "sha256": "3b8ff41400002ff8616cb99690e47dcea9793b32bcdaa3ceb2bea20150fa396b",
+    "bytes": 10688
+  },
+  "candidate": {
+    "path": "/workspace/.continuation/p2-continuous-attack-controls-091-ui-candidate/candidate/scripts/verify_damage_ui.py",
+    "sha256": "0b0dcbcade07f0ff11b2bdcba7c7598a696ff4ece3418bc296312ce97c2a2d54",
+    "bytes": 10738,
+    "LF_only": true
+  },
+  "before_expression": "app_module.catalog()['operators'][op]['skills'][skill-1]['levels'][-1]['sp_type']=='INCREASE_WHEN_ATTACK'",
+  "after_expression": "app_module.catalog()['operators'][op]['skills'][skill-1]['levels'][window.skill_rank_value()-1]['sp_type'] in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME')",
+  "single_expression_byte_inverse": true,
+  "AST_parse": "PASS",
+  "existing_implemented_owner_filter_unchanged": true,
+  "all_other_runner_bytes_unchanged": true,
+  "qualified_rank_source": "app.update_skill_options reads current selected skill level using skill_rank_value()-1. catalog.operator_profiles overlays implemented catalog profiles; runner already skips unimplemented owner. Expected SP type now uses the same selected rank rather than the former final-rank fixture assumption.",
+  "old_Attack_only_assertion_failure_classification": "Expected contract migration, no product failure was run or observed",
+  "no_mirror_text_test_added": true,
+  "calls": {
+    "project_api": 0,
+    "helper": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "tests": 0
+  },
+  "root_sole_actual_MainWindow_acceptance": true
+}

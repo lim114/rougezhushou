@@ -1,0 +1,11 @@
+# 召唤物模组第93功能组来源准备：有界负证
+
+固定产品来源为2cbc45f，第91节working改动另存并明确标记。本包只是来源准备，不是完成第93节；作者没有项目调用、测试、Qt/Wine、网络、私态读取或tracked修改。
+
+当前kaltsit alias是凯尔希·思衡托char_1052_kalts2和战术锚点。固定完整character与uniequip原件重核SHA后，原char.displayTokenDict和完整equipDict精确身份查询均支持这一映射；此版本该身份的模组原记录为0。原凯尔希/Mon3tr不能据名字套入此身份，这也不证明当前热更新没有新增模块。
+
+先前8模组24阶段的原始selector审计逐字复用，没有重跑全表。深海色已知费用/HP/在场参考、望固定费用与机械师持续参数都已有实现。剩余Wang数量、机械师屏障、Wisdel原生继承和Deepcolor当前版本仍缺各自明确绑定，参数不能制造新时钟、加法、倍率或实际存在。
+
+独立备用范围仅复用已完成071/077及有界负证088，核对当前共享token参数和manual/all_units报告管道。没有确认新的资格/报告/错误合同缺陷，不建立镜像测试或数值草案。窗口控制由其他功能组负责，避免重叠。
+
+source-read-receipt093.json逐项列出源SHA、fixed Git/实际working区别、已复用范围及恢复条件；selected-original-identity.json保留完整被选char原对象和真实空查询结果。完整原表仍在已有公开路径，本小包只保留有界原件/选择器，绝不称包含完整表。两项只读准备问题单独记录于preparation-read-diagnostics.json，均未延续到产品工作。

@@ -1,0 +1,26 @@
+{
+  "status": "source-only preparation diagnostics; no product execution",
+  "events": [
+    {
+      "kind": "oversized_read_output",
+      "attempt_count": 1,
+      "cause": "An initial broad research rg search reached saved result JSON and long lines; tool output was truncated.",
+      "source_before_interpretation_used": false,
+      "recovery": "Stopped broad result-content searches; used explicit known receipt paths, static keys and bounded source spans.",
+      "exact_full_console_saved": false,
+      "product_edits": 0
+    },
+    {
+      "kind": "missing_markdown_glob",
+      "attempt_count": 1,
+      "command": "rg on p2-summon-module-source-next-audit/*.md and *receipt*.json",
+      "exit_code": 2,
+      "cause": "The directory has no .md file; rg reported the nonexistent glob while receipt read succeeded.",
+      "recovery": "Used the enumerated source-inventory-receipt.json and original manifest without retrying the nonexistent glob.",
+      "product_edits": 0
+    }
+  ],
+  "same_problem_unresolved_after_three_attempts": false,
+  "numeric_prototype_created": false,
+  "tests_or_project_helpers_run": false
+}

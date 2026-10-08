@@ -1,0 +1,65 @@
+{
+  "format_version": 1,
+  "status": "FAILURE_SOURCE_PREPARATION_WAITING_AUTHOR_FINAL",
+  "new_project_calls": {
+    "API": 0,
+    "helper": 0,
+    "formatter": 0,
+    "constructor": 0,
+    "tests": 0,
+    "Qt": 0,
+    "Wine": 0
+  },
+  "parent_independent_final": {
+    "source_path": "/workspace/.continuation/p2-focused-mainwindow-091-independent/FINAL-focused-mainwindow-source-only091.json",
+    "bytes": 7442,
+    "sha256": "4612a687134cff736b4ebe39336e5ffa7e8087699e00800dab9c717a39516915"
+  },
+  "actual_failure_log": {
+    "source_path": "/workspace/.continuation/root-focused091-execution.log",
+    "bytes": 2682,
+    "sha256": "72b57661ec257cf53b7869332897e9aca118bbcf80104dc154da52c92af7fe53"
+  },
+  "actual_failed_execution_receipt": {
+    "source_path": "/workspace/.compat/wine-focused-mainwindow-091.json",
+    "bytes": 177845,
+    "sha256": "549a82bad4dca1938ccfcc7ee89c7e216001d64cf9d148425e9a352dcd07c847"
+  },
+  "actual_checkpoint_gzip": {
+    "source_path": "/workspace/.compat/wine-focused-mainwindow-091-records.json.gz",
+    "bytes": 97723,
+    "sha256": "b818640c119c187d0baab2380422ebfef321151e88f86a6bb34cf0768c58793c"
+  },
+  "actual_checkpoint_raw": {
+    "bytes": 1252383,
+    "sha256": "fe19005a7d5f50ab32b526bb2faaf733c747cacdf38ad8f2fd874e421d921e6d",
+    "lossless_receipt_matches": true,
+    "states": 17
+  },
+  "passed_v1_states": 16,
+  "actual_v1_explicit_buttons": 1,
+  "actual_v1_explicit_text_requests": 48,
+  "last_passed_warm_control_id": "amiya-natural-return-retains-false",
+  "warm_control_saved_field_names": [
+    "scenario_native_before",
+    "result_native_before",
+    "scenario",
+    "result"
+  ],
+  "failure": {
+    "type": "KeyError",
+    "message": "'id'",
+    "traceback": "Traceback (most recent call last):\n  File \"Z:\\workspace\\.compat\\wine-focused-mainwindow-091-final.py\", line 1152, in <module>\n    if row['kind'] in ('train','deep'):train(row)\n                                       ^^^^^^^^^^\n  File \"Z:\\workspace\\.compat\\wine-focused-mainwindow-091-final.py\", line 1137, in train\n    window.update_operator(preserve_level=False)\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 848, in update_operator\n    self.update_skill_options()\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 996, in update_skill_options\n    if hasattr(self,'raw_damage'):self.calculate()\n                                  ^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 1020, in calculate\n    text=format_operator_observation(state,self.training_conditions())\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\operator_summary.py\", line 8, in format_operator_observation\n    profile=operator_profiles()[operator['id']]\n                                ~~~~~~~~^^^^^^\nKeyError: 'id'\n",
+    "step": "unimplemented-Lancet-no-skills-hidden-false"
+  },
+  "source_contract": {
+    "app_apply_operator_observation": "rouge/app.py:861 requires operator[id], :868 preserves it with {**operator,...}.",
+    "failure_consumer": "rouge/operator_summary.py:8 reads operator[id] from the existing observation.",
+    "fix_scope": "External fixture direct insertion omitted id; no product source or eligibility rule modification required."
+  },
+  "attempt_ledger": {
+    "same_external_missing_id_fixture_problem_actual_failed_attempts": 1,
+    "prior_passed16_not_to_repeat": true
+  },
+  "pending_delta_scope": "Only explicit FINAL resume8 runner fixture identity, parent-body delta proof, lastpassed row16 warm control equality, remaining5 numeric+3early/4buttons/15texts, new output paths; no old23/730/API/helpers/tests/Qt/Wine repeat."
+}

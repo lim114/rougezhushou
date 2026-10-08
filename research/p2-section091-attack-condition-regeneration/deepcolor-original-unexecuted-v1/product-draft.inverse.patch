@@ -1,0 +1,27 @@
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -349,9 +349,7 @@
+             hits=len(token_events)*count
+             emit('触手',raw,'physical',hits,effects=token_effects,event_times=[t for t in token_events for _ in range(int(count))])
+             if not normal and self.n==1:
+-                scope=(f'名义技能持续参数 {duration:g} 秒' if window is None else
+-                    f'观察窗口中 {duration:g} 秒的名义技能覆盖假设')
+-                self.notes.append(f'触手数量 {count:g}（局外假设）；{scope}下，按基础每只 {bb["hp_recovery_per_sec"]:g} 生命/秒连续覆盖的回复参考 {bb["hp_recovery_per_sec"]*duration*count:g}（未计生命回复效果倍率）；实际触手在场、技能回复覆盖及时钟未核验，实际回复总量未知，生命回复不计直接治疗。')
++                self.notes.append(f'触手数量 {count:g}；技能生命回复 {bb["hp_recovery_per_sec"]*duration*count:g}，生命回复不计直接治疗。')
+             self.notes.append('触手不继承本体信赖/潜能及职业加成；已确认的所有我方单位藏品攻击/攻速及敌方易伤单独套用。')
+         elif op in ('char_196_sunbr','char_2025_shu','char_298_susuro'):
+             if (op=='char_298_susuro' and '微创治疗' in self.tv and
+--- a/rouge/reporting.py
++++ b/rouge/reporting.py
+@@ -207,10 +207,7 @@
+                 metric('window_regeneration','实际情景生命回复总量',
+                     None if any(c.get('actual_total',0) is None for c in regeneration) else sum(c['total'] for c in regeneration),'生命')]
+         else:rows=[metric('window_regeneration','当前情景生命回复总量',sum(c['total'] for c in regeneration),'生命')]
+-        notes=['生命回复独立于直接治疗 HPS，不扣当前生命已满导致的无效回复。']
+-        if op=='char_110_deepcl' and number==1:
+-            notes.append('以上为所选触手持续在场且技能回复持续覆盖时的速度参考，包含本次采用的生命回复效果倍率；实际在场、回复首跳和结束尚未核验，实际回复总量未知。')
+-        blocks.append(section('regeneration','生命回复',rows,notes))
++        blocks.append(section('regeneration','生命回复',rows,['生命回复独立于直接治疗 HPS，不扣当前生命已满导致的无效回复。']))
+     elementary=[c for c in components if c.get('damage_type') in ('elemental','buildup')]
+     if elementary:
+         buildup=op=='char_1042_phatm2' or (op=='char_4204_mantra' and number in (1,2))
