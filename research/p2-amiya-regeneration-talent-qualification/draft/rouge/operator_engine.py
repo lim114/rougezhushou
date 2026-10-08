@@ -878,7 +878,7 @@ class Combat:
             regular('magic' if not normal and self.n==2 else 'physical',bb.get('attack@atk_scale',1))
             weight=self.option('enemy_weight',3,maximum=100,integer=True)
             extra=self.talent('飘浮大地之上','atk_scale_hi' if weight<=self.talent('飘浮大地之上','mass_level',3) else 'atk_scale_lo')
-            regular('magic',extra,times=1 if '飘浮大地之上' in self.tv else 0,name='飘浮大地之上')
+            regular('magic',extra,name='飘浮大地之上')
             if not normal and self.n==2:
                 # Keep the existing isolated attack-phase parameter reference;
                 # its origin is not a proved absolute takeoff clock.
@@ -965,7 +965,7 @@ class Combat:
                 emit('无言为真溢出跳跃',attack*bb['atk_scale'],'elemental',overflow)
             if not normal:
                 triggers=self.option('palsy_triggers',0,maximum=10000,integer=True)
-                emit('麻痹触发天赋',attack*self.talent('噤声限域','atk_scale'),'elemental',triggers if '噤声限域' in self.tv else 0.0)
+                emit('麻痹触发天赋',attack*self.talent('噤声限域','atk_scale'),'elemental',triggers)
                 manual=[c for c in components if c['name'] in ('麻痹触发天赋','无言为真溢出跳跃')]
                 from .uncertain_sources import preserve_unplaced_sources
                 reference=preserve_unplaced_sources(manual,window=window,
