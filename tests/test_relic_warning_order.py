@@ -1,0 +1,103 @@
+"""Public warnings follow existing candidate order without applying unknown stacks."""
+import copy
+import json
+import os
+import subprocess
+import sys
+import unittest
+from pathlib import Path
+
+from rouge.catalog import catalog
+from rouge.damage import calculate_damage
+from rouge.relics import prepare
+
+ROSE = 'rogue_6_relic_legacy_81'
+CROWN = 'rogue_6_relic_legacy_82'
+MEAL = 'rogue_6_relic_legacy_83'
+GROUPS = ('heal_scale', 'received_regeneration')
+
+def warning(group):
+    return '组合 ' + group + ' 的叠加规则尚未核验，未套用该组合。'
+
+def scenario(**values):
+    return {'operator': 'char_1037_amiya3', 'skill': 1, 'base_attack': 1000,
+            'window_seconds': 10, **values}
+
+def combinations(result):
+    return [w for w in result['warnings'] if w.startswith('组合 ')]
+
+class RelicWarningOrderTests(unittest.TestCase):
+    def test_conflicts_follow_first_candidate_and_keep_pending_text(self):
+        result = calculate_damage(scenario(relic_ids=[ROSE, CROWN]))
+        expected = [warning(group) for group in GROUPS]
+        self.assertEqual(combinations(result), expected)
+        for record in result['relic_resolution']['records']:
+            self.assertEqual(record['pending'], ['组合叠加规则待核验:' + group for group in GROUPS])
+            self.assertEqual(record['applied'], [])
+            self.assertEqual(record['status'], 'incomplete')
+        self.assertFalse(result['relic_resolution']['complete'])
+
+    def test_duplicate_ids_do_not_duplicate_warnings_or_records(self):
+        plain = calculate_damage(scenario(relic_ids=[ROSE, CROWN]))
+        self.assertEqual(calculate_damage(scenario(relic_ids=[ROSE, CROWN, ROSE, CROWN])), plain)
+
+    def test_reversed_input_preserves_record_order_and_candidate_group_order(self):
+        result = calculate_damage(scenario(relic_ids=[CROWN, ROSE]))
+        self.assertEqual([r['id'] for r in result['relic_resolution']['records']], [CROWN, ROSE])
+        self.assertEqual(combinations(result), [warning(group) for group in GROUPS])
+
+    def test_three_original_sources_still_leave_stacking_unknown(self):
+        result = calculate_damage(scenario(relic_ids=[ROSE, CROWN, MEAL]))
+        self.assertEqual(combinations(result), [warning(group) for group in GROUPS])
+        self.assertEqual([r['id'] for r in result['relic_resolution']['records']], [ROSE, CROWN, MEAL])
+        self.assertFalse(result['complete'])
+        self.assertFalse(any(r['kind'] in ('healing_factor', 'regeneration_factor')
+                             for r in result['relic_resolution']['rules']))
+
+    def test_unrelated_warning_position_and_unknown_zero_scope_are_preserved(self):
+        args = scenario(relic_ids=['unknown_relic_for_order_test', ROSE, CROWN], window_seconds=0)
+        original = copy.deepcopy(args)
+        result = calculate_damage(args)
+        warnings = result['relic_resolution']['warnings']
+        self.assertEqual(warnings, ['未知藏品 unknown_relic_for_order_test，效果未计算。'] +
+                         [warning(group) for group in GROUPS])
+        self.assertFalse(result['complete'])
+        self.assertEqual(args, original)
+
+    def test_rules_effects_and_token_effects_keep_their_source_order(self):
+        args = scenario(operator='char_110_deepcl', skill=2,
+                        relic_ids=[ROSE, CROWN, 'rogue_6_relic_legacy_5'])
+        prepared, resolution = prepare(args, catalog()['operators'][args['operator']])
+        self.assertEqual(resolution['warnings'], [warning(group) for group in GROUPS])
+        self.assertEqual([e['relic_id'] for e in prepared['effects']], ['rogue_6_relic_legacy_5'])
+        self.assertEqual([e['relic_id'] for e in prepared['_token_relic_effects']], ['rogue_6_relic_legacy_5'])
+        self.assertEqual(prepared['_token_relic_effects'][0]['token_ids'], ['token_10001_deepcl_tentac'])
+        self.assertEqual(resolution['rules'], [])
+
+    def test_empty_single_and_inapplicable_groups_have_no_conflict_warning(self):
+        for args in (scenario(relic_ids=[]), scenario(relic_ids=[ROSE]),
+                     scenario(operator='char_110_deepcl', skill=2, relic_ids=['rogue_6_relic_legacy_80'])):
+            with self.subTest(args=args):
+                self.assertEqual(combinations(calculate_damage(args)), [])
+
+    def test_complete_public_result_and_three_texts_are_hash_seed_independent(self):
+        root = Path(__file__).resolve().parents[1]
+        code = '''import json
+from rouge.damage import calculate_damage
+from rouge.estimate import format_estimate
+from rouge.reporting import format_report
+args = json.loads(__import__('sys').argv[1])
+r = calculate_damage(args)
+print(json.dumps([r, format_estimate(r), format_report(r), format_report(r, technical=True)], ensure_ascii=False, sort_keys=True))
+'''
+        args = scenario(operator='mechanist', skill=3,
+                        relic_ids=['rogue_6_relic_legacy_61', 'rogue_6_relic_legacy_62', ROSE, CROWN])
+        outputs = []
+        for seed in ('0', '1', '42', '314159'):
+            env = {**os.environ, 'PYTHONHASHSEED': seed, 'PYTHONPATH': str(root)}
+            outputs.append(subprocess.check_output([sys.executable, '-c', code, json.dumps(args)],
+                                                   cwd=root, env=env, text=True))
+        self.assertEqual(len(set(outputs)), 1)
+
+if __name__ == '__main__':
+    unittest.main()
