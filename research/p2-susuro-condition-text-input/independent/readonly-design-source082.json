@@ -1,0 +1,178 @@
+{
+  "status": "READONLY_DESIGN_SUPPORTED_AUTHOR_FROZEN_PENDING",
+  "baseline_commit": "c950fbc800245f7f784d6070f7126890352ffcc9",
+  "hashes_checked_against_git_blobs": {
+    "rouge/operator_engine.py": {
+      "sha256": "166ec75dbf1afb45f3ad23ee28b43b8932a9a002c92d4a670cff3f108a5b3df7",
+      "bytes": 155562
+    },
+    "rouge/operator_options.py": {
+      "sha256": "a9d7e474920ce4747b6216361a57c9874482a2a31cfa929280189443ea0eaa83",
+      "bytes": 5328
+    },
+    "rouge/app.py": {
+      "sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "bytes": 94976
+    },
+    "rouge/data/catalog.json": {
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+      "bytes": 1624372
+    },
+    "tests/test_susuro_recipient_factor.py": {
+      "sha256": "a1dcc1946b307bd296ee70ec617ed56e301447cf8ec08590004739b10a91669e",
+      "bytes": 7213
+    },
+    "tests/test_target_count_input_types.py": {
+      "sha256": "abdc5fe49fcc3fec96df2b8075aa7a329c79b0b4c9e2372c1307a322ee0497f9",
+      "bytes": 10267
+    },
+    "tests/test_declared_count_input_types.py": {
+      "sha256": "ced8da7c35e99d978a8fe85d551f0882494fc502212450208209c837ee8168d8",
+      "bytes": 6485
+    },
+    "tests/test_shu_profession_text_input.py": {
+      "sha256": "1fa75afefbb50244351cffca3af369a317959cd13b7973be86e7b08ac096bd36",
+      "bytes": 7311
+    },
+    "tests/test_cooperative_input_types.py": {
+      "sha256": "9025de2395a7923cafbe303d8f564da1b0afe8ec28cdafa5e6eb7214fe891ddf",
+      "bytes": 6125
+    }
+  },
+  "original_character_table": {
+    "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+    "bytes": 14975251,
+    "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+    "complete_raw_hash_verified": true
+  },
+  "raw_four_talent_candidates": [
+    {
+      "unlockCondition": {
+        "phase": "PHASE_1",
+        "level": 1
+      },
+      "requiredPotentialRank": 0,
+      "prefabKey": "1",
+      "name": "微创治疗",
+      "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升10%",
+      "rangeId": null,
+      "blackboard": [
+        {
+          "key": "cost",
+          "value": 10.0,
+          "valueStr": null
+        },
+        {
+          "key": "heal_scale",
+          "value": 1.1,
+          "valueStr": null
+        }
+      ],
+      "tokenKey": null,
+      "isHideTalent": false
+    },
+    {
+      "unlockCondition": {
+        "phase": "PHASE_1",
+        "level": 1
+      },
+      "requiredPotentialRank": 4,
+      "prefabKey": "1",
+      "name": "微创治疗",
+      "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升13%<@ba.talpu>（+3%）</>",
+      "rangeId": null,
+      "blackboard": [
+        {
+          "key": "cost",
+          "value": 10.0,
+          "valueStr": null
+        },
+        {
+          "key": "heal_scale",
+          "value": 1.13,
+          "valueStr": null
+        }
+      ],
+      "tokenKey": null,
+      "isHideTalent": false
+    },
+    {
+      "unlockCondition": {
+        "phase": "PHASE_2",
+        "level": 1
+      },
+      "requiredPotentialRank": 0,
+      "prefabKey": "1",
+      "name": "微创治疗",
+      "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升20%",
+      "rangeId": null,
+      "blackboard": [
+        {
+          "key": "cost",
+          "value": 10.0,
+          "valueStr": null
+        },
+        {
+          "key": "heal_scale",
+          "value": 1.2,
+          "valueStr": null
+        }
+      ],
+      "tokenKey": null,
+      "isHideTalent": false
+    },
+    {
+      "unlockCondition": {
+        "phase": "PHASE_2",
+        "level": 1
+      },
+      "requiredPotentialRank": 4,
+      "prefabKey": "1",
+      "name": "微创治疗",
+      "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升23%<@ba.talpu>（+3%）</>",
+      "rangeId": null,
+      "blackboard": [
+        {
+          "key": "cost",
+          "value": 10.0,
+          "valueStr": null
+        },
+        {
+          "key": "heal_scale",
+          "value": 1.23,
+          "valueStr": null
+        }
+      ],
+      "tokenKey": null,
+      "isHideTalent": false
+    }
+  ],
+  "catalog_normalized_four_candidates_exact": true,
+  "boolean_UI_option": [
+    "low_cost_healing_target",
+    "受疗干员初始费用不超过10",
+    false,
+    1,
+    [
+      1,
+      2
+    ]
+  ],
+  "UI_static_path": "bool default -> QCheckBox -> isChecked; no GUI execution.",
+  "supported_guard": "Inside Susuro shared healing branch before recipient_factor, only char_298_susuro + selected 微创治疗 + isinstance(field,str).",
+  "acceptance_preserved": [
+    "E0 no selected talent continues ignoring text",
+    "other owners ignore text",
+    "bool/numeric/None/container truthiness aliases unchanged"
+  ],
+  "priority_required": [
+    "existing training/skill/module/base input/timing errors before plan branch",
+    "S2 casts_used earlier validation in calculate",
+    "healing_targets validation before guard",
+    "qualified text must not bypass on zero window / healing_targets0 / target-life0 / empty target",
+    "both skill and normal recharge plans share consumer guard"
+  ],
+  "native_scope": "Only validate a declared boolean field; do not derive actual recipient initial cost from operator or current deployment cost, fill friendly HP/timing, or infer native attachments.",
+  "new_API_test_GUI_Wine_calls": 0,
+  "tracked_mutations": false
+}
