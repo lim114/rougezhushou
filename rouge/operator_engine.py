@@ -877,7 +877,7 @@ class Combat:
             regular('magic' if not normal and self.n==2 else 'physical',bb.get('attack@atk_scale',1))
             weight=self.option('enemy_weight',3,maximum=100,integer=True)
             extra=self.talent('飘浮大地之上','atk_scale_hi' if weight<=self.talent('飘浮大地之上','mass_level',3) else 'atk_scale_lo')
-            regular('magic',extra,name='飘浮大地之上')
+            regular('magic',extra,times=1 if '飘浮大地之上' in self.tv else 0,name='飘浮大地之上')
             if not normal and self.n==2:
                 # Keep the existing isolated attack-phase parameter reference;
                 # its origin is not a proved absolute takeoff clock.
