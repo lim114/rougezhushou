@@ -1,0 +1,13 @@
+Fixed source 0f27027e7e1f49c08f298706b599e310e299238b:rouge/app.py
+Full source SHA256 6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2
+Full source bytes 94976
+
+Lines 888-895
+888:     def apply_run_observation(self,observed,captured_at):
+889:         if not self.run.apply(observed,captured_at):return False
+890:         self.refresh_operator_overview()
+891:         self.run_summary.setText(self.run.summary())
+892:         self.sync_run_config()
+893:         self.sync_run_relics()
+894:         selected=observed.get('selected_operator')
+895:         if not selected or not self.show_observed_operator(selected):

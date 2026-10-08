@@ -1,0 +1,87 @@
+{
+  "status": "PASS_FROZEN_DRAFT_STATIC_ONLY_FORMAL_RUNTIME_PENDING",
+  "freeze": {
+    "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-draft/draft-freeze089.json",
+    "bytes": 2583,
+    "sha256": "04c9567954f2b7bcd34c2abe1b2b616988400d4193943e94ec4e46e32a8cc248"
+  },
+  "root_commit_at_read": "1ce970fd30aa3b42d8ef787cde02513f05682b66",
+  "root_run_state_bytes_equal_baseline": true,
+  "product_change": {
+    "added_CRLF_lines": 1,
+    "removed_lines": 0,
+    "literal": "        if isinstance(crew,bool):crew=None",
+    "inverse_exact_bytes": true,
+    "AST_inverse_exact": true,
+    "standalone_guard_line": 373,
+    "raw_observed_unchanged": "Guard changes only local crew; previous known state count remains; other observation fields still merge.",
+    "prior_errors": "Stale/cross-run early return and personal buff validation precede local crew read; all original code otherwise byte-identical.",
+    "nonbool_scope": "None, int0/int1, float/string and other existing nonbool behavior unchanged; actual producer remains int/None."
+  },
+  "patch_exact_generated_transport": true,
+  "registry_single_literal_inverse_exact": true,
+  "tests": {
+    "methods": [
+      "test_false_empty_observation_preserves_known_count_members_and_reload",
+      "test_true_subset_keeps_other_member_and_merges_positive_observation",
+      "test_none_and_integer_zero_one_keep_existing_roster_contract",
+      "test_duplicate_ids_keep_unique_integer_count_semantics_and_bool_is_unread",
+      "test_valid_partial_roster_keeps_unseen_member_and_positive_fields",
+      "test_nonboolean_legacy_values_remain_compatible_without_producer_claim",
+      "test_stale_and_cross_run_observations_keep_old_early_ignored_contract"
+    ],
+    "scenario_groups_static": {
+      "test_false_empty_observation_preserves_known_count_members_and_reload": 1,
+      "test_true_subset_keeps_other_member_and_merges_positive_observation": 1,
+      "test_none_and_integer_zero_one_keep_existing_roster_contract": 3,
+      "test_duplicate_ids_keep_unique_integer_count_semantics_and_bool_is_unread": 2,
+      "test_valid_partial_roster_keeps_unseen_member_and_positive_fields": 1,
+      "test_nonboolean_legacy_values_remain_compatible_without_producer_claim": 2,
+      "test_stale_and_cross_run_observations_keep_old_early_ignored_contract": 2
+    },
+    "total_static_groups": 12,
+    "runtime_calls": 0,
+    "author_results_not_yet_formally_imported": true
+  },
+  "bindings": [
+    {
+      "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-draft/draft/rouge/run_state.py",
+      "bytes": 42446,
+      "sha256": "20c6a00a72744017ebbc0fcb3b1009dddf8a6702aa01bf273b4b51c344692fd9",
+      "archive_path": "frozen-draft-snapshots/draft/rouge/run_state.py"
+    },
+    {
+      "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-draft/draft/tests/test_run_crew_count_boolean_input.py",
+      "bytes": 6492,
+      "sha256": "cb76de22153bdb44a223252b5f0bd66c0a03d05eb6fc4daf1e22b0043e198671",
+      "archive_path": "frozen-draft-snapshots/draft/tests/test_run_crew_count_boolean_input.py"
+    },
+    {
+      "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-draft/section89.patch",
+      "bytes": 7155,
+      "sha256": "5f05fa36a07c07e9c1028e0beb2d739a3a98132180388e800f5602f5cd0efa00",
+      "archive_path": "frozen-draft-snapshots/section89.patch"
+    },
+    {
+      "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-draft/registry-proposal.json",
+      "bytes": 684,
+      "sha256": "5f693f0d39f4b33427a987d06350439d203d9c8d8f4ed4878e14dc33b6224073",
+      "archive_path": "frozen-draft-snapshots/registry-proposal.json"
+    }
+  ],
+  "scope": {
+    "RunState_constructor": 0,
+    "RunState_apply": 0,
+    "production_helper": 0,
+    "damage_app_API": 0,
+    "formatter": 0,
+    "tests_executed": 0,
+    "network": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "tracked_mutations": 0,
+    "real_local": 0
+  },
+  "no_cross_case_UUID_or_time_normalization": true,
+  "formal_remaining": "Wait final author handoff/manifest and agreed independent fresh/test budget; current static result is not final89 product verification."
+}

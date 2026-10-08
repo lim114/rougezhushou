@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "status": "STATIC_LEAD_PENDING_REPRO",
+  "fixed_commit": "0f27027e7e1f49c08f298706b599e310e299238b",
+  "scope": "crew_count only; separate from section088 repeated_attack. Readonly source text/hash inspection, no application or Python expression repro.",
+  "sources": [
+    {
+      "source_path": "0f27027e7e1f49c08f298706b599e310e299238b:rouge/run_state.py",
+      "source_sha256": "6d36bc955af40aff99ac9079706342b67e6df0bc8d1f93e55e2cc580cabcbdac",
+      "source_bytes": 42402,
+      "ranges": [
+        [
+          76,
+          99
+        ],
+        [
+          245,
+          265
+        ],
+        [
+          372,
+          376
+        ],
+        [
+          435,
+          450
+        ]
+      ],
+      "archive_path": "/workspace/.continuation/p2-section089-crew-count-source-lead/run-state-source-excerpts.txt",
+      "sha256": "8224a2a00b2607532e78580655cdb4d5299893d05ee32be9082a8a63efa6cdb8",
+      "bytes": 4969,
+      "archive_is_bounded_text_excerpt_not_full_source": true
+    },
+    {
+      "source_path": "0f27027e7e1f49c08f298706b599e310e299238b:rouge/run_recognition.py",
+      "source_sha256": "c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150",
+      "source_bytes": 23560,
+      "ranges": [
+        [
+          68,
+          97
+        ],
+        [
+          121,
+          128
+        ],
+        [
+          184,
+          191
+        ]
+      ],
+      "archive_path": "/workspace/.continuation/p2-section089-crew-count-source-lead/run-recognition-source-excerpts.txt",
+      "sha256": "45ea8b63ab67e3302e8171e64e20ec6d38901634c9418d58c7b148163c8cd8c9",
+      "bytes": 3231,
+      "archive_is_bounded_text_excerpt_not_full_source": true
+    },
+    {
+      "source_path": "0f27027e7e1f49c08f298706b599e310e299238b:rouge/app.py",
+      "source_sha256": "6a107fa37d2c21b9160131aa8c901fc2342ef7a422c3134dc0579ea24f4b56a2",
+      "source_bytes": 94976,
+      "ranges": [
+        [
+          888,
+          895
+        ]
+      ],
+      "archive_path": "/workspace/.continuation/p2-section089-crew-count-source-lead/app-forwarder-source-excerpts.txt",
+      "sha256": "541293172668643149c57ad32ebaea06fc4305d27d8af971898c93d8c29eb188",
+      "bytes": 630,
+      "archive_is_bounded_text_excerpt_not_full_source": true
+    },
+    {
+      "source_path": "0f27027e7e1f49c08f298706b599e310e299238b:rouge/visual_recognition.py",
+      "source_sha256": "14dc12ce491f606b16109cedf6270aadb3b8b53f185124b3b1f04174d99e4de1",
+      "source_bytes": 10583,
+      "ranges": [
+        [
+          134,
+          143
+        ]
+      ],
+      "archive_path": "/workspace/.continuation/p2-section089-crew-count-source-lead/visual-producer-source-excerpts.txt",
+      "sha256": "d956284139dfdb87756ee7c2e3702848fb124a04655544c3c121778646bc13dd",
+      "bytes": 1274,
+      "archive_is_bounded_text_excerpt_not_full_source": true
+    }
+  ],
+  "apply_crew_text_occurrences": [
+    {
+      "line": 372,
+      "text": "        crew=observed.get('crew_count')"
+    },
+    {
+      "line": 374,
+      "text": "        if crew is not None:"
+    },
+    {
+      "line": 375,
+      "text": "            state['crew_count']=crew"
+    },
+    {
+      "line": 439,
+      "text": "        if crew is not None and len({m['id'] for m in members})==crew:"
+    }
+  ],
+  "no_local_prior_crew_type_check": "Entire RunState.apply lines245-450 read. Existing initial timestamp/run-id and member-buff validations do not type-check crew_count. The four literal crew-name occurrences are get, None predicate, store, completeness predicate. App.apply_run_observation forwards the observation directly to RunState.apply.",
+  "static_lead": {
+    "quantity_overwrite": "Every observed crew value other than None is stored at375, including bool and float.",
+    "false_empty_boundary": "Python numeric equality lets len(empty_unique_ids)==False evaluate true. If the observation passes earlier apply branches and reaches439, an empty member list plus crew_count False satisfies completeness and marks previously present members absent at443 with history event444.",
+    "other_aliases": "True can equal unique count1 and integral float can equal a list count, so these invalid types can also establish completeness. They are static language/branch facts, not measured RunState results.",
+    "restoration_mismatch": "restore_origin_discovery_buffs87 already uses type(crew) is int; it excludes bool and float from its complete-list barrier. apply439 currently lacks that restriction.",
+    "confirmed_public_bug": false,
+    "runtime_repro_or_saved_state_read": false
+  },
+  "actual_producer": {
+    "near_number": "68-97 returns an element of an int-converted set, literal integer0 in two above-only verified-zero paths, or None. No Boolean/float crew output is emitted by this source.",
+    "crew_binding": "read_run124 and127 invoke near_number(side=right), then188 return crew_count unchanged. Crew right-side path does not use the above-only verified-zero helper branch.",
+    "visual_fallback": "visual_recognition137 explicitly emits crew_count None.",
+    "reachability_limit": "No evidence that genuine recognition produces False or float; this is an unchecked observed-input contract lead at RunState.apply. No claim of a real user observation, saved-state corruption or OCR misread."
+  },
+  "minimal_guard_suggestion_only": {
+    "position": "Normalize crew locally immediately after observed.get at372 and before store375; reuse the normalized local variable for complete-list439. Existing repair87 already excludes bool/float.",
+    "validity": "Use exact type int and nonnegative count; invalid bool/float/other input becomes unknown for this count rather than an integer alias. No upper bound, type coercion or global-validator change proposed.",
+    "valid_zero": "Integer0 plus empty unique incoming roster must retain the existing full-empty-list removal behavior.",
+    "valid_positive_partial": "Positive integer plus fewer unique observed ids must not establish a full list or erase absent unseen members.",
+    "unknown": "None remains unread: do not replace stored crew count or establish list completeness.",
+    "invalid": "Invalid bool or float must neither replace stored count nor authorize complete-list removal; unrelated valid page evidence can still follow existing behavior.",
+    "product_patch_created": false
+  },
+  "unknowns_and_restart": [
+    "Need root authorization for isolated temporary-state runtime reproduction and tests before any product-bug confirmation or numbered product section.",
+    "Future repro must satisfy existing timestamp/run-id and relic/member paths without hiding old errors, and assert full state/history/file preservation for invalid inputs.",
+    "Cover False/True/0.0/1.0, exact-int zero, positive complete/partial, None, unique-vs-duplicate member identities. Do not infer default relic or other state contracts from this source-only lead.",
+    "If fixed source changes or a prior crew validator is added, rebind in a new sidecar; do not change sealed packet."
+  ],
+  "counts": {
+    "product_imports": 0,
+    "RunState_constructions": 0,
+    "RunState_apply_calls": 0,
+    "application_API": 0,
+    "helpers": 0,
+    "tests": 0,
+    "private_state_reads": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "network": 0,
+    "tracked_mutations": 0,
+    "product_drafts": 0
+  },
+  "preparation_diagnostic_path": "/workspace/.continuation/p2-section089-crew-count-source-lead/preparation-diagnostic.txt"
+}

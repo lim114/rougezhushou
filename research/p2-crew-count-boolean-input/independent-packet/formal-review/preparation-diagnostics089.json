@@ -1,0 +1,138 @@
+{
+  "status": "PREPARATION_DIAGNOSTICS_RETAINED_NO_PRODUCT_RETRIES",
+  "problem_counts": {
+    "AST_nested_literal_count_reader": {
+      "failed_attempts": 1,
+      "next_attempt": "PASS",
+      "project_calls_before_failure": 0
+    },
+    "pyc_public_source_audit_import_gate": {
+      "failed_attempts": 1,
+      "next_attempt": "PASS fixed standardSourceFileLoader baseline",
+      "constructor_apply_before_failure": 0
+    },
+    "redundant_resume_loader_patch_context": {
+      "failed_attempts": 1,
+      "patch_applied": false,
+      "project_calls": 0
+    },
+    "resume_packaging_move_wrong_destination": {
+      "observed_misdestination": 1,
+      "restore_moves": 2,
+      "code_or_data_bytes_changed": false,
+      "product_calls": 0
+    }
+  },
+  "original_failed_cache_script_bytes_proven_retained": false,
+  "failed_cache_trace": {
+    "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-independent/formal-review/initial-cache-audit-baseline-execution089.log",
+    "archive_path": "initial-cache-audit-baseline-execution089.log",
+    "bytes": 963,
+    "sha256": "807733bbd5f6575881f181fc6a5a463d98d201d0797716de04bbc7667cdc8642",
+    "local_file_mtime_utc": "2026-10-08T04:05:48.847214+00:00",
+    "mtime_scope": "Actual local saved-file metadata, not request/server timestamp."
+  },
+  "fixed_loader_source": {
+    "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-independent/formal-review/run_independent089.py",
+    "archive_path": "run_independent089.py",
+    "bytes": 13810,
+    "sha256": "a6352b624be4b6b29ec73def882a976c60ba0855eb1b8da572010c40e7068d02",
+    "local_file_mtime_utc": "2026-10-08T04:06:38.750957+00:00",
+    "mtime_scope": "Actual local saved-file metadata, not request/server timestamp."
+  },
+  "copy_with_initial_filename_is_fixed_loader_not_failed_original": {
+    "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-independent/formal-review/initial-cache-audit-run_independent089.py",
+    "archive_path": "initial-cache-audit-run_independent089.py",
+    "bytes": 13810,
+    "sha256": "a6352b624be4b6b29ec73def882a976c60ba0855eb1b8da572010c40e7068d02",
+    "local_file_mtime_utc": "2026-10-08T04:29:16.803903+00:00",
+    "mtime_scope": "Actual local saved-file metadata, not request/server timestamp."
+  },
+  "original_failed_AST_script": {
+    "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-independent/formal-review/initial-review_frozen_draft089.py",
+    "archive_path": "initial-review_frozen_draft089.py",
+    "bytes": 7388,
+    "sha256": "3e8f0931cab528632f47fcc2d729518d9bfe620bfda10491c722840a8103249e",
+    "local_file_mtime_utc": "2026-10-08T03:58:50.005390+00:00",
+    "mtime_scope": "Actual local saved-file metadata, not request/server timestamp."
+  },
+  "original_failed_AST_trace": {
+    "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-independent/formal-review/initial-static-count-trace089.txt",
+    "archive_path": "initial-static-count-trace089.txt",
+    "bytes": 1972,
+    "sha256": "d08ae1625485ae110fd72b870f7dedf0ee2d9104af718a712397a8887a092308",
+    "local_file_mtime_utc": "2026-10-08T03:58:50.341430+00:00",
+    "mtime_scope": "Actual local saved-file metadata, not request/server timestamp."
+  },
+  "baseline_success_original_stdout_restored": {
+    "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-independent/formal-review/fresh-baseline-execution089.log",
+    "archive_path": "fresh-baseline-execution089.log",
+    "bytes": 183,
+    "sha256": "ef630938aa2b16f972e3b2cf809b4cea43d28c3c7e26542e28fc28f890f4c11e",
+    "local_file_mtime_utc": "2026-10-08T04:06:39.152981+00:00",
+    "mtime_scope": "Actual local saved-file metadata, not request/server timestamp."
+  },
+  "baseline_gzip_original_bytes_restored": {
+    "source_path": "/workspace/.continuation/p2-crew-count-boolean-089-independent/formal-review/fresh-baseline089/complete-native-records.json.gz",
+    "archive_path": "fresh-baseline089/complete-native-records.json.gz",
+    "bytes": 9239,
+    "sha256": "6841d9ae4ec5fdb298c4cc2f70d7df123a01b68b62386bb96a8b93c87b774c89",
+    "local_file_mtime_utc": "2026-10-08T04:06:39.152552+00:00",
+    "mtime_scope": "Actual local saved-file metadata, not request/server timestamp."
+  },
+  "no_baseline_reexecution": true,
+  "actual_resume_tools": [
+    {
+      "cmd": "cp run_independent089.py initial-cache-audit-run_independent089.py",
+      "exit": 0,
+      "scope": "fixed loader copy; not a raw failed-source receipt"
+    },
+    {
+      "cmd": "mv fresh-baseline089 initial-cache-audit-baseline089",
+      "exit": 0,
+      "effect": "existing destination caused nested successful folder; no bytes changed"
+    },
+    {
+      "cmd": "mv fresh-baseline-execution089.log initial-cache-audit-execution089.log",
+      "exit": 0
+    },
+    {
+      "tool": "apply_patch redundant loader",
+      "result": "verification failed: expected sys.addaudithook/audit/sys.path/import rouge context absent; loader already present",
+      "mutation": false
+    },
+    {
+      "cmd": "mv initial-cache-audit-baseline089/fresh-baseline089 fresh-baseline089",
+      "exit": 0,
+      "effect": "restored original path"
+    },
+    {
+      "cmd": "mv initial-cache-audit-execution089.log fresh-baseline-execution089.log",
+      "exit": 0,
+      "effect": "restored original success log path"
+    }
+  ],
+  "local_discovery_orchestration_only": [
+    {
+      "cmd": "rg --files --hidden rouge | rg '/__pycache__/'",
+      "exit": 1,
+      "application_failure": false
+    },
+    {
+      "tool": "collaboration.followup_task alternate_module_gaps",
+      "result": "agent thread limit reached",
+      "new_child_turn": false,
+      "product_calls": 0
+    }
+  ],
+  "preparation_project_failures": 0,
+  "actual_final_runtime_counts": {
+    "constructors": 20,
+    "apply": 30,
+    "tests": 7,
+    "skips": 0
+  },
+  "same_problem_three_fail_limit_exceeded": false,
+  "seal_observation_time_utc": "2026-10-08T04:34:33.500895+00:00",
+  "scope": "All measurements refer to this independent89 external stage; root UI/selected regression are separate."
+}

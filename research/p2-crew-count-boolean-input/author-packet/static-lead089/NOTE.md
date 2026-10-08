@@ -1,0 +1,9 @@
+第89节候选：STATIC_LEAD_PENDING_REPRO，未作公开运行时确认。
+
+固定root86 0f27027。RunState.apply372读取crew；374只排None，375覆盖保存数量；439只有非None与unique成员数==crew即可建立完整队伍，443标缺席并于444写历史。完整函数245-450没有crew类型前置校验。False与空unique计数的数值相等可触发此分支，但本审没有构造状态、运行apply或确认真实输入曾发生；所有推论以旧分支正常到达439为条件。
+
+同类restore_origin_discovery_buffs87已经type(crew)isint严格排bool/float。真实near_number读数是int或None（crew走side=right），视觉fallback明确None；不能把这一接口边界线索说成真实OCR失误。
+
+最小建议仅在372读取后局部接受exact-int且>=0的crew，其它值归未知；375数量写入和439完整性判断共用该值。保留合法整数0+空清单清除；正整数缺页、None不清；bool/float不能覆盖数量或建立完整清单。无产品补丁，没有改变其它记录合并或制定全局校验。
+
+0API/helper/test/Qt/Wine/私有state读取/tracked改动。保留一次rg猜测两个不存在test路径退出2的只读准备诊断及一次旧行号断言失败的准备脚本/traceback；按固定源真实行号修正。未执行任何测试或重试缺失路径。后续须授权临时状态最小复现与完整state/history/file断言才可确认bug或推进产品小节。此lead不混第88节连续攻击布尔flag。

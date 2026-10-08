@@ -1,0 +1,53 @@
+Fixed source 0f27027e7e1f49c08f298706b599e310e299238b:rouge/run_recognition.py
+Full source SHA256 c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150
+Full source bytes 23560
+
+Lines 68-97
+68: def near_number(image,texts,anchor,engine,*,side='above'):
+69:     x,y=center(anchor);ux,uy=units(image,anchor,38.3 if anchor['text']=='收藏品' else 35.2)
+70:     def valid(t):
+71:         dx,dy=center(t)[0]-x,center(t)[1]-y
+72:         return t['confidence']>=.9 and re.fullmatch(r'\d{1,3}',t['text']) and (
+73:             abs(dx)<.035*ux and -.065*uy<dy<-.012*uy if side=='above' else .02*ux<dx<.09*ux and abs(dy)<.045*uy)
+74:     values={int(t['text']) for t in texts if valid(t)}
+75:     if len(values)==1:return next(iter(values))
+76:     h,w=image.shape[:2]
+77:     bounds=(x-.035*ux,y-.065*uy,x+.035*ux,y-.012*uy) if side=='above' else (x+.025*ux,y-.04*uy,x+.074*ux,y+.015*uy)
+78:     x0,y0,x1,y1=bounds
+79:     x0=max(0,int(x0*w));x1=min(w,int(x1*w));y0=max(0,int(y0*h));y1=min(h,int(y1*h))
+80:     crop=image[y0:y1,x0:x1]
+81:     if not crop.size:return None
+82:     height=(max(p[1] for p in anchor['box'])-min(p[1] for p in anchor['box']))*h
+83:     if not values and side=='above' and verified_zero(crop,height,engine,recognizer_only=True):return 0
+84:     # Numeric controls are upright relative to their observed label. Applying
+85:     # the generic orientation classifier can rotate a real 6 into a confident 9.
+86:     raw,_=engine(cv2.resize(crop,None,fx=4,fy=4),use_cls=False)
+87:     values={int(text) for _,text,score in raw or [] if score>=.9 and re.fullmatch(r'\d{1,3}',text)}
+88:     if not values:
+89:         gray=cv2.cvtColor(crop,cv2.COLOR_BGR2GRAY)
+90:         normalized=cv2.normalize(gray,None,0,255,cv2.NORM_MINMAX)
+91:         raw,_=engine(cv2.resize(normalized,None,fx=4,fy=4),use_cls=False)
+92:         values={int(text) for _,text,score in raw or [] if score>=.9 and re.fullmatch(r'\d{1,3}',text)}
+93:     if len(values)==1:return next(iter(values))
+94:     if not values and side=='above':
+95:         if verified_zero(crop,height,engine):return 0
+96:     return None
+97: 
+Lines 121-128
+121:     if not is_map:cards=[]
+122:     count=near_number(image,texts,held,engine) if held['text']=='收藏品' else None
+123:     crew=anchors.get('干员')
+124:     crew_count=near_number(image,texts,crew,engine,side='right') if crew else None
+125:     if is_roster:
+126:         crew=next((t for t in texts if t['text']=='收起' and t['confidence']>=.9 and center(t)[0]>center(held)[0]),None)
+127:         if crew:crew_count=near_number(image,texts,crew,engine,side='right')
+128:     ids=[];tool_ids=[]
+Lines 184-191
+184:     return {'page':'run_roster' if is_roster else 'run_map','relics':{
+185:         'ids':ids,'count':count,'icons':icons,'cards':cards,'counters':counters,
+186:         'unbound_counters':unbound_counters,'source':'held_bar'},
+187:         'tactical_tools':{'ids':sorted(set(tool_ids)),'source':'held_bar_or_cards'},
+188:         'crew_count':crew_count,'operators':members,'selected_operator':selected['id'] if selected else None,
+189:         'resources':resources,
+190:         'config':config,
+191:         'config_reuse':{'run_id':(run_context or {}).get('run_id'),

@@ -617,3 +617,9 @@ S2斩击及原有孤立6秒强化阶段分别保留条件参考（基础1000默�
 固定来源复现continuous_attacks文本按truthiness被实际回技力或报告路径误确认；只在隔离core成功完成旧报告及83–86守卫后拒绝合资格文本。新增私有ContextVar只存不可变状态并finally恢复，十二处既有读取及实际ready/wait尾分支保持原数学和短路；无效字段、非文本旧兼容、旧错误优先与caller/catalog保留。作者60对120调用：23新拒、32完整编码前native/JSON/三文本全同、5旧错误精确同；首次新8通过并只定向补验第8个未就绪等待边界，累计19公共/32显式context-helper请求。独审8不同风险对16调用：5整份同、2新拒、1旧错误；最终新8一次通过，19公共/25显式helper，独审35公共。根端在当前87归档补证提交上整合：725旧维护py/json中718未改，六旧源精确逆变换、新leaf/test及单注册项核真；62相关全通过，1042精选1041通过/1历史cache跳过，0失败或错误；公开归档逐件强制纳Git并核实际blob后提交。
 
 验证 `verification/sections/088.json`。current received_sp/event_sp藏品保持reference-only；Gummy等公开控制不证明尾端事件激活。尾ready/wait资格只由真实scoped standalone charge合同验证，不补原生游戏时钟或重启退役战斗输入。旧错误优先只声明core，不外推所有outer聚合错误。独审catalog完整native哈希保留但未另存raw树；线程测试实际只到主线程和一个pool worker，不称双worker同时压力。helper显式请求与内部函数entries分列，不造全项目累计；原source16不重跑，准备错误及旧方案均保留。Wine仅兼容验证，原生Windows/游戏/聊天仍未验证。
+
+## 089 · 保护培养本局人数观察的布尔输入边界
+
+真实OCR人数生产者输出整数或None；RunState旧路径把False/True当作0/1写入人数，并可能据此把不完整观察当作完整阵容。只在原crew读取后排除bool为本次未读，不覆盖历史有效人数、不按该布尔输入标记离队；普通整数0/1、正向成员与资源合并、重复ID去重和实际局部观察、原过期或跨局忽略合同保留。原source38的5组复现不重跑；作者新7一次全通过、12组实测14构造/24apply并保存38完整native/caller/disk记录；独立3组同实际落盘初态对照与新7一次全通过，实测20构造/30apply、50完整记录，无UUID/time归一。两组仅人数类型/值变化、其余正向字段资源整树相同；一组前置旧ValueError/state/disk/caller精确保留。258公开件封存。根端基于实际88提交整合：727旧维护py/json中725全字节未改，RunState唯一CRLF行可精确逆回，新test及注册项核真并保留88注册；59相关全通过、1049精选1048通过/1历史cache跳过，0失败或错误；公开件全部强制纳Git并核blob，断点存档。
+
+验证 `verification/sections/089.json`。这里只保护P2培养来源输入真实性，不修复或迁移历史旧状态，不推进P1强化/离队原生机制，不修改OCR/recognition或数值计算。Float0.0/string0只保留旧非布尔兼容，不扩实际生产者资格；没有训练或伤害数值差实测。自然UUID/时间完整保存，重载只声明已核键范围。准备失败原trace保留，独立cache失败raw脚本原件不可得，initial命名文件明确是fixed-loader副本。其他内部project helper总调用未采集，不推整体累计；作者与独审计数分阶段。

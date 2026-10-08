@@ -1,0 +1,15 @@
+# 089 人数来源只读准备断点
+
+状态：源38件及5个已保存临时state案例全部独立核对通过；正式作者产品与新测试运行尚未交接，本阶段不是正式产品测试通过声明。
+
+完整原输入、原生类型树、initial/before/after state、两次persisted JSON字节及history全部保存并逐项核真。每个案例的自然UUID/started_at、实际seed/subject捕获时间原样保留；五UUID分别不同。没有跨案例统一UUID/时间，也没有把两案例整树比较伪称只差人数。原五组实际5constructors+10apply属于已封源证据；本代理没有新增RunState调用。
+
+识别器near_number只从int(text)唯一候选/整数zero或None产出人数；mapfallback为None。当前apply读取crew后允许bool写入记忆，并用len(unique operator IDs)==crew作为full-roster门槛，False==0和True==1可误标遗漏成员离队。已保存False空名单与True单成员案例分别产生mechanist/Myrtle离队，None保留成员，合法int0/int1保留原离队行为。
+
+授权修复边界仅为刚读crew后将bool视作None。此前已确认人数保留；incoming成员、relic/config/map及其它证据仍按原流程合并。不得早退整条observation、清空state人数、添加异常或扩大到所有nonbool类型。restore_origin_discovery_buffs本来已有type(crew)isint门槛，保持不变。stale/cross-run早期返回和个人强化旧errors保留先后。
+
+present字段经真实app源码影响当前成员总览及run/account培养、技能和个人来源选择；本阶段没有运行app、培养或伤害计算，所以不声称数值delta或P1强化/真实游戏离队机制已测。
+
+本代理RunState constructor/apply、production helper、应用API、formatter、tests、network、Qt、Wine、tracked改动及真实.local读取全部0。只复制root授权公开source38及四份当前公开源码，current源码与source0f27027一致；root87正在集成，未声称整个当前工作树clean。
+
+已收到作者冻结稿位置用于后续0调用静读，但正式临时state/tests预算及作者完成handoff尚待root协调。在新formal-review子目录做后续，不改本次封存准备件，不重原source五组或作者十二组，不访问真实.local。

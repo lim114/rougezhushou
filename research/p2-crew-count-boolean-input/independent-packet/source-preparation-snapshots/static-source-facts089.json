@@ -1,0 +1,494 @@
+{
+  "status": "SOURCE_CONFIRMED_REPRO_AUTHORIZED_NOT_EXECUTED",
+  "base_commit": "0f27027e7e1f49c08f298706b599e310e299238b",
+  "crew_semantics": "Observed decimal integer crew count orNone; no actual-game population upper bound inferred from OCR format.",
+  "storage_schema": "reset None; savedload only checks operators/relics dictionaries then update; apply stores any nonNone crew without type validation.",
+  "boolean_collision": "False andempty unique roster meet0==False;True andone unique roster meet1==True and may mark other present members departed.",
+  "same_class_strict_counter": "restore_origin_discovery_buffs requires type(crew) is int for complete crew qualification.",
+  "UI_producer": "run_recognition near_number converts decimal OCR toint orNone; app.apply_run_observation forwards observed toRunState.apply. No crew checkbox/spinbox manual producer found in actual app.",
+  "numeric_vs_display": "Count is not a direct numeric multiplier; corrupt present status affects actual roster choices/current_operator_state account fallback, cultivation/skill/buff scenario inputs. This is a static downstream path, not a measured damage/attribute delta.",
+  "fixed_squad_source": {
+    "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "source_url": "https://github.com/Kengxxiao/ArknightsGameData/blob/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+    "source_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86"
+  },
+  "squad_independence": "Fixedsquad identity/effect verification remains inrun_config/run_modifiers; crew does not derive squad or auto-add preset starting members.",
+  "load_boundary": "Existing saved corrupt presence cannot safely be repaired from count alone; no rejoin/receipt/real-game departure mechanics invented.",
+  "other_types_scope": "This lead isolates boolean aliases only; no broad new policy forfloat/string/negative/large counts proposed.",
+  "source_excerpts": [
+    {
+      "path": "rouge/run_state.py",
+      "ranges": [
+        {
+          "start": 13,
+          "end": 29,
+          "lines": [
+            "    def __init__(self,file):",
+            "        self.file=Path(file)",
+            "        self.preserve_unreadable=False",
+            "        self.reset(save=False)",
+            "        try:",
+            "            saved=json.loads(self.file.read_text(encoding='utf-8'))",
+            "            if not isinstance(saved,dict) or not isinstance(saved.get('operators'),dict) or not isinstance(saved.get('relics'),dict):",
+            "                raise ValueError('Invalid exploration record')",
+            "            self.state.update(saved)",
+            "            if 'relic_icon_memory' not in saved:self.restore_relic_icon_memory()",
+            "            self.restore_passed_node_types()",
+            "            self.state['notice']='已恢复同一局的记忆；切换另一局时请手动点击“开始新局”。'",
+            "            if self.restore_origin_discovery_buffs():self.save()",
+            "        except FileNotFoundError:pass",
+            "        except (OSError,ValueError):",
+            "            self.preserve_unreadable=True",
+            "            self.state['notice']='原本局记录无法读取，已保留原文件；手动重置前不会覆盖它。'"
+          ]
+        },
+        {
+          "start": 50,
+          "end": 65,
+          "lines": [
+            "    def reset(self,save=True):",
+            "        self.state={'id':str(uuid.uuid4()),'started_at':time.time(),'last_read':None,",
+            "            'operators':{},'crew_count':None,'selected_operator':None,'relics':{},'relic_count':None,'bar_signature':None,",
+            "            'inventory_verified':False,'inventory_confirmed_at':None,'relic_icon_memory':None,",
+            "            'history':[],'resources':{},'tactical_tools':{},'config':{},'maps':{},",
+            "            'last_node_content':None,'node_contents':[],",
+            "            'notice':'等待本局页面读取；同一局记忆仅在手动开始新局后清空。'}",
+            "        if save:",
+            "            self.preserve_unreadable=False",
+            "            self.save()",
+            "",
+            "    def save(self):",
+            "        if self.preserve_unreadable:return",
+            "        self.file.parent.mkdir(exist_ok=True)",
+            "        temporary=self.file.with_suffix('.tmp')",
+            "        temporary.write_text(json.dumps(self.state,ensure_ascii=False,indent=2),encoding='utf-8')"
+          ]
+        },
+        {
+          "start": 83,
+          "end": 88,
+          "lines": [
+            "        history=self.state.get('history',[])",
+            "        if not isinstance(history,list):return False",
+            "        incoming={m['id']:m for m in (observed or {}).get('operators',[])}",
+            "        crew=(observed or {}).get('crew_count')",
+            "        full_crew=type(crew) is int and len(incoming)==crew",
+            "        changed=False"
+          ]
+        },
+        {
+          "start": 245,
+          "end": 267,
+          "lines": [
+            "    def apply(self,observed,captured_at):",
+            "        if not observed or captured_at<max(self.state['started_at'],self.state.get('last_read') or 0):return False",
+            "        reused_run=observed.get('config_reuse',{}).get('run_id')",
+            "        if reused_run and reused_run!=self.state['id']:return False",
+            "        from .relics import mechanics",
+            "        for member in observed.get('operators',[]):",
+            "            if 'char_buffs_complete' in member:",
+            "                if type(member['char_buffs_complete']) is not bool:",
+            "                    raise ValueError('个人强化列表完整性必须为布尔值。')",
+            "                if 'char_buff_ids' not in member:",
+            "                    raise ValueError('个人强化列表完整性必须与明确的强化ID列表一起读取。')",
+            "            if 'char_buff_ids' not in member:continue",
+            "            ids=member['char_buff_ids'];profile=operator_profiles()[member['id']]",
+            "            if member.get('scope')!='run' or not isinstance(ids,list) or not all(isinstance(b,str) for b in ids):",
+            "                raise ValueError('强化绑定必须来自本局干员记录，且包含有效ID列表。')",
+            "            for bid in ids:",
+            "                buff=mechanics()['char_buffs'].get(bid)",
+            "                if buff is None or (buff['required_profession'] and profile['profession'] not in buff['required_profession'].split('|')):",
+            "                    raise ValueError('强化ID或领取干员职业不符。')",
+            "        self.restore_origin_discovery_buffs(observed,repaired_at=captured_at)",
+            "        state=self.state;relics=dict(observed.get('relics',{'ids':[],'icons':[],'count':None,'source':'unread'}));count=relics.get('count')",
+            "        from .run_config import config_data,difficulty_value",
+            "        for key,record in observed.get('config',{}).items():"
+          ]
+        },
+        {
+          "start": 372,
+          "end": 378,
+          "lines": [
+            "        crew=observed.get('crew_count')",
+            "        promoted_ids=set()",
+            "        if crew is not None:",
+            "            state['crew_count']=crew",
+            "        for member in observed.get('operators',[]):",
+            "            previous=state['operators'].get(member['id'],{})",
+            "            fields={**previous.get('fields',{}),**member['fields']}"
+          ]
+        },
+        {
+          "start": 435,
+          "end": 448,
+          "lines": [
+            "                                     changed_origin or returned,captured_at)",
+            "        members=observed.get('operators',[])",
+            "        if observed.get('selected_operator') in {m['id'] for m in members}:",
+            "            state['selected_operator']=observed['selected_operator']",
+            "        if crew is not None and len({m['id'] for m in members})==crew:",
+            "            current={m['id'] for m in members}",
+            "            for key,member in state['operators'].items():",
+            "                if key not in current and member.get('present',True):",
+            "                    member['present']=False",
+            "                    state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})",
+            "        from .recipient_state import invalidate_recipient_absence",
+            "        invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held,promoted_ids,captured_at)",
+            "        state['last_read']=captured_at",
+            "        if state['notice'].startswith('等待'):state['notice']='同一局信息持续累积并保存；开始另一局时请手动清空本局读取。'"
+          ]
+        },
+        {
+          "start": 563,
+          "end": 568,
+          "lines": [
+            "    def summary(self):",
+            "        status=self.inventory_status();state=self.state",
+            "        count='未确认' if state['relic_count'] is None else str(state['relic_count'])",
+            "        crew='未确认' if state['crew_count'] is None else str(state['crew_count'])",
+            "        names=[operator_profiles()[key]['name']+('（已离队，保留记录）' if not member.get('present',True) else '')",
+            "               +('（已进阶）' if member.get('advanced') else '')"
+          ]
+        },
+        {
+          "start": 582,
+          "end": 590,
+          "lines": [
+            "            (' 最近确认）' if key in usable else ' 历史值，当前层数待确认）')",
+            "            for key,record in state.get('resources',{}).items())",
+            "        present=sum(member.get('present',True) for member in state['operators'].values())",
+            "        config=state['config'];difficulty=config.get('difficulty',{}).get('value')",
+            "        squad=config.get('squad',{})",
+            "        info=('保密等级 '+str(difficulty) if difficulty is not None else '保密等级未确认')+' · '+squad.get('name','分队未确认')",
+            "        if squad.get('level') is not None:info+='（强化）' if squad['level']==1 else '（基础）'",
+            "        if config.get('zone'):info+=' · '+config['zone']['name']",
+            "        return '\\n'.join([info,f'本局队伍：当前已识别 {present} / {crew} 人', '、'.join(names) or '成员尚未确认',"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "rouge/run_recognition.py",
+      "ranges": [
+        {
+          "start": 68,
+          "end": 96,
+          "lines": [
+            "def near_number(image,texts,anchor,engine,*,side='above'):",
+            "    x,y=center(anchor);ux,uy=units(image,anchor,38.3 if anchor['text']=='收藏品' else 35.2)",
+            "    def valid(t):",
+            "        dx,dy=center(t)[0]-x,center(t)[1]-y",
+            "        return t['confidence']>=.9 and re.fullmatch(r'\\d{1,3}',t['text']) and (",
+            "            abs(dx)<.035*ux and -.065*uy<dy<-.012*uy if side=='above' else .02*ux<dx<.09*ux and abs(dy)<.045*uy)",
+            "    values={int(t['text']) for t in texts if valid(t)}",
+            "    if len(values)==1:return next(iter(values))",
+            "    h,w=image.shape[:2]",
+            "    bounds=(x-.035*ux,y-.065*uy,x+.035*ux,y-.012*uy) if side=='above' else (x+.025*ux,y-.04*uy,x+.074*ux,y+.015*uy)",
+            "    x0,y0,x1,y1=bounds",
+            "    x0=max(0,int(x0*w));x1=min(w,int(x1*w));y0=max(0,int(y0*h));y1=min(h,int(y1*h))",
+            "    crop=image[y0:y1,x0:x1]",
+            "    if not crop.size:return None",
+            "    height=(max(p[1] for p in anchor['box'])-min(p[1] for p in anchor['box']))*h",
+            "    if not values and side=='above' and verified_zero(crop,height,engine,recognizer_only=True):return 0",
+            "    # Numeric controls are upright relative to their observed label. Applying",
+            "    # the generic orientation classifier can rotate a real 6 into a confident 9.",
+            "    raw,_=engine(cv2.resize(crop,None,fx=4,fy=4),use_cls=False)",
+            "    values={int(text) for _,text,score in raw or [] if score>=.9 and re.fullmatch(r'\\d{1,3}',text)}",
+            "    if not values:",
+            "        gray=cv2.cvtColor(crop,cv2.COLOR_BGR2GRAY)",
+            "        normalized=cv2.normalize(gray,None,0,255,cv2.NORM_MINMAX)",
+            "        raw,_=engine(cv2.resize(normalized,None,fx=4,fy=4),use_cls=False)",
+            "        values={int(text) for _,text,score in raw or [] if score>=.9 and re.fullmatch(r'\\d{1,3}',text)}",
+            "    if len(values)==1:return next(iter(values))",
+            "    if not values and side=='above':",
+            "        if verified_zero(crop,height,engine):return 0",
+            "    return None"
+          ]
+        },
+        {
+          "start": 122,
+          "end": 128,
+          "lines": [
+            "    count=near_number(image,texts,held,engine) if held['text']=='收藏品' else None",
+            "    crew=anchors.get('干员')",
+            "    crew_count=near_number(image,texts,crew,engine,side='right') if crew else None",
+            "    if is_roster:",
+            "        crew=next((t for t in texts if t['text']=='收起' and t['confidence']>=.9 and center(t)[0]>center(held)[0]),None)",
+            "        if crew:crew_count=near_number(image,texts,crew,engine,side='right')",
+            "    ids=[];tool_ids=[]"
+          ]
+        },
+        {
+          "start": 184,
+          "end": 191,
+          "lines": [
+            "    return {'page':'run_roster' if is_roster else 'run_map','relics':{",
+            "        'ids':ids,'count':count,'icons':icons,'cards':cards,'counters':counters,",
+            "        'unbound_counters':unbound_counters,'source':'held_bar'},",
+            "        'tactical_tools':{'ids':sorted(set(tool_ids)),'source':'held_bar_or_cards'},",
+            "        'crew_count':crew_count,'operators':members,'selected_operator':selected['id'] if selected else None,",
+            "        'resources':resources,",
+            "        'config':config,",
+            "        'config_reuse':{'run_id':(run_context or {}).get('run_id'),"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "rouge/visual_recognition.py",
+      "ranges": [
+        {
+          "start": 132,
+          "end": 141,
+          "lines": [
+            "        if footer:",
+            "            anchor={'box':mapped(footer,footer['entry']['held_box'],w,h),'text':'收藏品'}",
+            "            from .run_config import confirmed_config",
+            "            config=confirmed_config(run_context)",
+            "            icons=resolve_difficulty_icons(match_held_icons(im,anchor,None,cache=icon_cache),config.get('difficulty'))",
+            "            run={'page':'run_map','operators':[],'crew_count':None,'config':config,'resources':{},",
+            "                'config_reuse':{'run_id':(run_context or {}).get('run_id'),'fields':sorted(config)},",
+            "                'relics':{'ids':sorted({r['id'] for r in icons if r['confirmed'] and r['id'] in catalog()['relics']}),",
+            "                         'icons':icons,'count':None,'source':'visual_held_bar'},",
+            "                'tactical_tools':{'ids':sorted({r['id'] for r in icons if r['confirmed'] and r['id'] in tactical_tools()}),'source':'visual_held_bar'},"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "rouge/app.py",
+      "ranges": [
+        {
+          "start": 739,
+          "end": 742,
+          "lines": [
+            "    def recruited_operator_ids(self):",
+            "        return tuple(key for key,member in self.run.state['operators'].items()",
+            "                     if key in operator_profiles() and member.get('present',True) and member.get('scope')!='account')",
+            ""
+          ]
+        },
+        {
+          "start": 767,
+          "end": 789,
+          "lines": [
+            "    def current_operator_state(self):",
+            "        op=self.operator.currentData()",
+            "        account=self.operator_observations.get(op,{})",
+            "        member=self.run.state['operators'].get(op) if self.use_run_training.isChecked() else None",
+            "        if member and not member.get('present',True):member=None",
+            "        if not member:return account",
+            "        current={key:value for key,value in member['fields'].items() if key not in member.get('invalid_fields',[])}",
+            "        ranks={key:value for key,value in member.get('skill_ranks',{}).items() if key not in member.get('invalid_skill_ranks',[])}",
+            "        return {**account,**member,'fields':{**account.get('fields',{}),**current},",
+            "                'skill_ranks':ranks,'run_confirmed_fields':list(current)}",
+            "",
+            "    def training_conditions(self):",
+            "        op=self.operator.currentData()",
+            "        fields=self.current_operator_state().get('fields',{})",
+            "        elite=fields.get('elite',len(operator_profiles()[op]['phases'])-1)",
+            "        return {'elite':elite,'level':self.level.value(),'trust':fields.get('trust',100),",
+            "                'potential':fields.get('potential',1),'module_id':fields.get('module_id'),",
+            "                'module_level':fields.get('module_level',0)}",
+            "",
+            "    def skill_rank_value(self):",
+            "        known=self.current_operator_state().get('skill_ranks',{})",
+            "        skill=self.skill.currentData()",
+            "        return known.get(str(skill),known.get(skill,10 if self.training_conditions()['elite']==2 else 7))"
+          ]
+        },
+        {
+          "start": 806,
+          "end": 822,
+          "lines": [
+            "        profile=operator_profiles()[op]",
+            "        self.operator_picture.set_subject('operator',op,profile['name']+' · '+PROFESSIONS[profile['profession']])",
+            "        elite=fields.get('elite',len(profile['phases'])-1)",
+            "        maximum=profile['phases'][elite]['max_level']",
+            "        if self.display_operator!=op:self.skill_override=False",
+            "        self.display_operator=op",
+            "        self.level.blockSignals(True)",
+            "        self.level.setMaximum(maximum)",
+            "        if not preserve_level:self.level.setValue(fields.get('level',maximum))",
+            "        self.level.blockSignals(False)",
+            "        self.level_override=preserve_level",
+            "        previous=self.skill.currentData()",
+            "        self.skill.blockSignals(True)",
+            "        self.skill.clear()",
+            "        choices=[i+1 for i,s in enumerate(profile['skills']) if s.get('unlock_elite',i)<=elite]",
+            "        for skill in choices:",
+            "            name = profile['skills'][skill-1]['levels'][-1]['name']"
+          ]
+        },
+        {
+          "start": 887,
+          "end": 897,
+          "lines": [
+            "",
+            "    def apply_run_observation(self,observed,captured_at):",
+            "        if not self.run.apply(observed,captured_at):return False",
+            "        self.refresh_operator_overview()",
+            "        self.run_summary.setText(self.run.summary())",
+            "        self.sync_run_config()",
+            "        self.sync_run_relics()",
+            "        selected=observed.get('selected_operator')",
+            "        if not selected or not self.show_observed_operator(selected):",
+            "            self.update_operator(preserve_level=self.level_override)",
+            "        return True"
+          ]
+        },
+        {
+          "start": 1038,
+          "end": 1067,
+          "lines": [
+            "        state=self.current_operator_state()",
+            "        scenario['recruitment_kind']=state.get('recruitment_kind') if state.get('scope')=='run' else None",
+            "        scenario['char_buff_ids']=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []",
+            "        scenario['char_buffs_complete']=state.get('char_buffs_complete') is True if state.get('scope')=='run' else False",
+            "        scenario['char_buff_absent_ids']=list(state.get('char_buff_absent_ids',[])) if state.get('scope')=='run' else []",
+            "        scenario['char_buff_pending_ids']=list(state.get('char_buff_pending_ids',[])) if state.get('scope')=='run' else []",
+            "        if self.target_buff_test.isChecked():",
+            "            scenario['char_buff_ids']=list(dict.fromkeys(scenario['char_buff_ids']+[",
+            "                self.target_buff_list.item(i).data(Qt.ItemDataRole.UserRole) for i in range(self.target_buff_list.count())",
+            "                if self.target_buff_list.item(i).checkState()==Qt.CheckState.Checked]))",
+            "            scenario['char_buff_absent_ids']=[bid for bid in scenario['char_buff_absent_ids'] if bid not in scenario['char_buff_ids']]",
+            "            scenario['char_buff_pending_ids']=[bid for bid in scenario['char_buff_pending_ids'] if bid not in scenario['char_buff_ids']]",
+            "        fields=state.get('fields',{})",
+            "        scenario['unconfirmed_training']=[label for key,label in [('elite','精英阶段'),('trust','信赖'),",
+            "            ('potential','潜能'),('module_id','模组'),('module_level','模组阶段')] if key not in fields]",
+            "        known_ranks=state.get('skill_ranks',{})",
+            "        if str(self.skill.currentData()) not in known_ranks and self.skill.currentData() not in known_ranks:",
+            "            scenario['unconfirmed_training'].append('所选技能等级')",
+            "        if 'level' not in fields and not self.level_override:scenario['unconfirmed_training'].append('当前等级')",
+            "        if fields and state.get('scope')!='run':",
+            "            scenario['unconfirmed_training'].append('本局实际培养（当前为干员详情档案）')",
+            "        if state.get('scope')=='run':",
+            "            confirmed=state['run_confirmed_fields']",
+            "            scenario['unconfirmed_training'] += [label+'（账号参考）' for key,label in",
+            "                [('level','本局等级'),('elite','本局精英阶段'),('trust','本局信赖'),('potential','本局潜能'),",
+            "                 ('module_id','本局模组'),('module_level','本局模组阶段')] if key in fields and key not in confirmed]",
+            "        scenario['inventory_status']=self.run.inventory_status() if self.auto_relics.isChecked() else {",
+            "            'source':'manual_test','complete':True,'recognized':len(ids),'expected_count':None}",
+            "        if self.auto_relics.isChecked():scenario['relic_history_context']=self.run.relic_history_context()",
+            "        scenario['run_config']=self.run.state.get('config',{})"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "rouge/catalog.py",
+      "ranges": [
+        {
+          "start": 28,
+          "end": 38,
+          "lines": [
+            "def operator_attributes(operator, elite=2, level=None, trust=100, potential=1,module_id=None,module_level=0):",
+            "    profile = operator_profiles()[operator]",
+            "    if not isinstance(elite,int) or isinstance(elite,bool) or not 0<=elite<len(profile['phases']):",
+            "        raise ValueError('精英阶段需要为 0、1 或 2。')",
+            "    phase = profile['phases'][elite]",
+            "    level = phase['max_level'] if level is None else level",
+            "    if not isinstance(level,int) or isinstance(level,bool) or not 1 <= level <= phase['max_level'] or not math.isfinite(trust) or not 0 <= trust <= 100:",
+            "        raise ValueError('等级或信赖超出范围（信赖按加成进度 0–100%）。')",
+            "    if not isinstance(potential,int) or isinstance(potential,bool) or not 1<=potential<=6:",
+            "        raise ValueError('潜能需要为 1–6。')",
+            "    first, last = phase['frames'][0], phase['frames'][-1]"
+          ]
+        },
+        {
+          "start": 49,
+          "end": 57,
+          "lines": [
+            "    if module_id:",
+            "        module=next((m for m in profile['modules'] if m['id']==module_id),None)",
+            "        if not module or not isinstance(module_level,int) or isinstance(module_level,bool) or not 1<=module_level<=len(module['levels']):",
+            "            raise ValueError('模组身份或等级尚无可用规则。')",
+            "        if elite>=module['unlock_elite'] and level>=module['unlock_level']:",
+            "            for attr,value in module['levels'][module_level-1]['attributes'].items():",
+            "                field={'atk':'attack','def':'defense','max_hp':'hp','magic_resistance':'resistance','attack_speed':'attack_speed',",
+            "                       'respawn_time':'redeploy_seconds'}.get(attr)",
+            "                if field:stats[field]+=value"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "rouge/run_modifiers.py",
+      "ranges": [
+        {
+          "start": 4,
+          "end": 42,
+          "lines": [
+            "def prepare_run(scenario):",
+            "    scenario=dict(scenario);config=scenario.get('run_config')",
+            "    if config is None:config={}",
+            "    if not isinstance(config,dict):raise ValueError('本局配置需要对象。')",
+            "    for field,label in (('squad','分队'),('difficulty','保密等级')):",
+            "        if config.get(field) is not None and not isinstance(config[field],dict):",
+            "            raise ValueError('本局'+label+'配置需要对象或空值。')",
+            "    resolution={'source':config_data()['source_url'],'squad':None,'difficulty':None,'applied':[],'pending':[],'notes':[]}",
+            "    squad=config.get('squad')",
+            "    if squad:",
+            "        if 'effect_verified' in squad and type(squad['effect_verified']) is not bool:",
+            "            raise ValueError('分队效果确认标记需要布尔值。')",
+            "        if not isinstance(squad.get('id'),str):raise ValueError('本局分队身份与固定档案不符。')",
+            "        record=config_data()['squads'].get(squad.get('id'))",
+            "        if not record or squad.get('name',record['name'])!=record['name']:raise ValueError('本局分队身份与固定档案不符。')",
+            "        resolution['squad']={**squad,'name':record['name']}",
+            "        from .squad_unlock_reference import squad_unlock_reference",
+            "        reference=squad_unlock_reference(record['id'])",
+            "        if reference is not None:resolution['squad_unlock_reference']=reference",
+            "        rules=[]",
+            "        for buff in record['buffs']:",
+            "            if buff['key']!='char_attribute_mul':continue",
+            "            kinds={'atk':'attack_pct','max_hp':'hp_pct','def':'defense_pct'}",
+            "            for value in buff['blackboard']:",
+            "                if value['key'] in kinds:",
+            "                    rules.append({'kind':kinds[value['key']],'value':value['value'],",
+            "                        'target_scope':'all_units','origin':'run_squad','squad_id':record['id'],",
+            "                        'attribute_layer':'relic_rune','formula_item':'MULTIPLIER','source_buff_key':buff['key']})",
+            "        if rules and not squad.get('effect_verified'):",
+            "            resolution['pending'].append(record['name']+'效果阶段尚未确认，未套用分队属性加成。')",
+            "        else:",
+            "            scenario['effects']=list(scenario.get('effects',[]))+rules",
+            "            resolution['applied']=rules",
+            "        resolution['notes'].append(record['name']+'：'+('生命/攻击/防御加成与同类藏品符文合并，再计算天赋和技能；作用于我方单位。' if resolution['applied']",
+            "            else '本档案没有已确认并接入的直接生命/攻击/防御加成。'))",
+            "        resolution['notes'].append('分队起始赠送物品与资源不自动加入当前持有清单，仍以本局实际读取为准。')",
+            "    difficulty=config.get('difficulty')",
+            "    if difficulty:",
+            "        for field in ('modeDifficulty','mode'):"
+          ]
+        },
+        {
+          "start": 43,
+          "end": 58,
+          "lines": [
+            "            if field in difficulty and difficulty[field]!='NORMAL':",
+            "                raise ValueError('当前保密等级数值计算仅支持NORMAL模式，其他模式不能套用常规难度修正。')",
+            "        value=difficulty.get('value')",
+            "        if isinstance(value,bool) or not isinstance(value,int) or str(value) not in config_data()['difficulties']:",
+            "            raise ValueError('本局保密等级需要0–15的整数。')",
+            "        record=config_data()['difficulties'][str(value)]",
+            "        resolution['difficulty']={**difficulty,'mode':record['modeDifficulty'],'rule':record['ruleDesc'],'extra':record['addDesc']}",
+            "        if not scenario.get('target_enemy'):",
+            "            resolution['pending'].append('已确认保密等级 '+str(value)+'；未选择关卡敌人，敌方难度/区域/关卡修正尚未自动计算，当前目标属性仍使用测试输入。')",
+            "    from .enemy_environment import resolve_enemy",
+            "    resolve_enemy(scenario,resolution)",
+            "    return scenario,resolution",
+            "",
+            "def finish_run(result,resolution):",
+            "    enemy=resolution.get('enemy')",
+            "    if enemy:"
+          ]
+        }
+      ]
+    }
+  ],
+  "new_API_calls": 0,
+  "project_calls": 0,
+  "tests": 0,
+  "Qt": 0,
+  "Wine": 0,
+  "tracked_edits": 0
+}
