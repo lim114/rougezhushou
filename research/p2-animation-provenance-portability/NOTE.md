@@ -1,0 +1,19 @@
+# 第90候选 · 可迁移的离线动画来源校核
+
+外部产品已冻结，root独占tracked接入。维护CLI和新6项回归只使用stdlib；默认由脚本位置定位公开输入，也可显式指定迁移后的根、references和evidence目录。从无关cwd、带Unicode与空格的路径成功校核，并保持输入字节不变。
+
+只核第87节source manifest里的6个必要叶子：Back提取结果、已有parse operation、真实Back skeleton、真实历史923数据gzip及固定官方reader的js/d.ts。读取只走安全relative archive_path；原source_path保留历史标签而不作为读取入口。CLI不运行reader/JS/d.ts、旧generator或任何应用入口，不下载、不读.local，不写输入。它不认证整301/102清单或64原资源。
+
+旧历史baseline确实已由真实gzip归档保留。缺的是历史generator所期待的baseline/rouge数据路径与外部PACKET路径的可迁移性，绝不称历史数据丢失或重新构造fixture。第87节两个公开build叶此前工作树匹配manifest但被build/忽略而不在Git；root已用独立6191cc76提交及p2-archive-closure-087标签修复。来源提案28件原有19Git+2worktree的事实保留，追加source-transport-619090.json证明21源现在全部match实际Git；本产品patch不重复添加两个叶子、不改.gitignore、不改旧manifest。
+
+五条Back数据严格typedJSON对照已封提取重新派生，保留原float秒数、strict/raw/normalized frame字段与preview/reasons。frames函数AST在替换既有FPS=30/EPSILON_FRAMES=1e-5常量后与现builder完全一致；这是表示政策，不是新客户端帧率或game tick规则。泛称Skill仍保守metadata eligible且无技能编号，不能据此绑定S1/S2；runtime_binding_verified/runtime_binding_inferred严格False。逆向删除确切新增内容并恢复counts/missing可精确还原真实历史923数据全部CRLF字节。
+
+支持快照计928/162/766/64/0。成功返回0，缺失或校核失败返回1；额外来源/资源版本/动画记录明确返回outside_supported_snapshot和退出2，不自动认证，也不把未来增量宣称损坏。原生产数据、动画选择、默认数值、UI、clock unknown及个人状态全部无改动。README只增加维护命令与准确范围。
+
+作者在首次执行之前封review-freeze090.json、静态patch apply-check及README/注册表inverse。之后正常CLI首轮1通过；新6methods首次6/6通过，0错误/失败/skip。新测试实际10CLI invocations产生10内部verify entries，另17direct verify entries；作者总CLI11、verify28，固定budget28用满。六个必需叶分别缺失/损坏、浮点帧/preview typed值/缺失或假动画、False绑定/泛称Skill、旧Front/其它档案inverse和outside快照均检查；输入修改仅限临时公开副本，每次核验前后hash保持。
+
+这些verify entries不是项目计算API/helper或formatter；应用API、project helper、formatter、source skeleton parse、network、Qt、Wine调用均0。第87节作者/独审矩阵与两次读源、root315archiveclosure未重跑。常规精选/root全量由root统一验收。
+
+当前产品作者基准6191cc76，最终登记/source运输等待root实际第89节tag，以逐字节运输证明接入，不能重复通过的28调用。注册表提案只增加一行MODULES，不包含在三文件product patch内。正式独立审与最终封存待root调度。原source28 manifest/handoff及初次freeze诊断保持immutable；draft准备有一条可选__init__发现非零，依赖read已停止后单独恢复，不是产品故障。
+
+原生技能/普攻/皮肤绑定、渲染/atlas/texture几何、EOF消费、历史解析器身份与rootcause、真实友方/skill lifecycle clocks全部未认证。

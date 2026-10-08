@@ -1,3 +1,11 @@
+# 连续开发断点 · 第 90 节完成
+
+`codex/p2-development`，标签 `p2-section-090`。新增纯stdlib维护命令，从仓库内六个真实公开原件校核第87节古米Back元资料、固定source-additions链、30Hz既有表示政策和五条派生记录，并逆向还原真实gzip内的旧923条完整CRLF数据；默认位置跟随脚本，可显式指定references/evidence且从其它工作目录运行。新增6测试覆盖Unicode/空格迁移、六叶缺失或损坏、严格类型派生/binding和旧整份数据逆向；超出固定快照明确exit2，不伪称新资料损坏或通过。作者首CLI及新6一次共11CLI/28verifier entries，独审4不同风险direct entries全预期拒绝，合计32entries，无解析/应用API/网络/Qt/Wine。原87缺失两个ignored公开build原件已在619补入Git，当前21来源均实际Git；新工具保留旧历史generator、生产JSON及其数学代码不改。109公开件已封，根端基于实际89提交应用、验源码和新鲜相关/精选后逐节存档，随后进行第86–90节全量。 根端实际89接入后728旧维护文件中727完整不变；3新增稿与单登记项字节保持，现730维护文件。首正常CLI一次/verifier一次通过（另help调用一次不入verifier），相关51项50通过1历史缓存跳过，精选1055项1054通过1历史跳过，均0fail/error；后验冻结字节与精选源码快照完整一致。
+
+下一步：立即执行86–90整组Linux/Wine/actualMainWindow全量并封存断点，然后自动进入91–95下一组，先修复已证持续攻击控件隐藏但实际被消费的问题；P2未知机制继续查原始依据，P2完成才转P3。每五节全量检验后自动继续下一组，不等用户消息。P2完成后转P3；同问题三次未解决则搁置；低于15%额度完成当前检验后收尾，目前无额度API。见 `verification/sections/090.json` 与 `DEVELOPMENT_CHECKPOINT.json`。
+
+---
+
 # 连续开发断点 · 第 89 节完成
 
 `codex/p2-development`，标签 `p2-section-089`。真实OCR人数生产者输出整数或None；RunState旧路径把False/True当作0/1写入人数，并可能据此把不完整观察当作完整阵容。只在原crew读取后排除bool为本次未读，不覆盖历史有效人数、不按该布尔输入标记离队；普通整数0/1、正向成员与资源合并、重复ID去重和实际局部观察、原过期或跨局忽略合同保留。原source38的5组复现不重跑；作者新7一次全通过、12组实测14构造/24apply并保存38完整native/caller/disk记录；独立3组同实际落盘初态对照与新7一次全通过，实测20构造/30apply、50完整记录，无UUID/time归一。两组仅人数类型/值变化、其余正向字段资源整树相同；一组前置旧ValueError/state/disk/caller精确保留。258公开件封存。根端基于实际88提交整合：727旧维护py/json中725全字节未改，RunState唯一CRLF行可精确逆回，新test及注册项核真并保留88注册；59相关全通过、1049精选1048通过/1历史cache跳过，0失败或错误；公开件全部强制纳Git并核blob，断点存档。

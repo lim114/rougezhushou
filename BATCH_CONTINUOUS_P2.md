@@ -623,3 +623,9 @@ S2斩击及原有孤立6秒强化阶段分别保留条件参考（基础1000默�
 真实OCR人数生产者输出整数或None；RunState旧路径把False/True当作0/1写入人数，并可能据此把不完整观察当作完整阵容。只在原crew读取后排除bool为本次未读，不覆盖历史有效人数、不按该布尔输入标记离队；普通整数0/1、正向成员与资源合并、重复ID去重和实际局部观察、原过期或跨局忽略合同保留。原source38的5组复现不重跑；作者新7一次全通过、12组实测14构造/24apply并保存38完整native/caller/disk记录；独立3组同实际落盘初态对照与新7一次全通过，实测20构造/30apply、50完整记录，无UUID/time归一。两组仅人数类型/值变化、其余正向字段资源整树相同；一组前置旧ValueError/state/disk/caller精确保留。258公开件封存。根端基于实际88提交整合：727旧维护py/json中725全字节未改，RunState唯一CRLF行可精确逆回，新test及注册项核真并保留88注册；59相关全通过、1049精选1048通过/1历史cache跳过，0失败或错误；公开件全部强制纳Git并核blob，断点存档。
 
 验证 `verification/sections/089.json`。这里只保护P2培养来源输入真实性，不修复或迁移历史旧状态，不推进P1强化/离队原生机制，不修改OCR/recognition或数值计算。Float0.0/string0只保留旧非布尔兼容，不扩实际生产者资格；没有训练或伤害数值差实测。自然UUID/时间完整保存，重载只声明已核键范围。准备失败原trace保留，独立cache失败raw脚本原件不可得，initial命名文件明确是fixed-loader副本。其他内部project helper总调用未采集，不推整体累计；作者与独审计数分阶段。
+
+## 090 · 提供可迁移的原始动画来源只读校核命令
+
+新增纯stdlib维护命令，从仓库内六个真实公开原件校核第87节古米Back元资料、固定source-additions链、30Hz既有表示政策和五条派生记录，并逆向还原真实gzip内的旧923条完整CRLF数据；默认位置跟随脚本，可显式指定references/evidence且从其它工作目录运行。新增6测试覆盖Unicode/空格迁移、六叶缺失或损坏、严格类型派生/binding和旧整份数据逆向；超出固定快照明确exit2，不伪称新资料损坏或通过。作者首CLI及新6一次共11CLI/28verifier entries，独审4不同风险direct entries全预期拒绝，合计32entries，无解析/应用API/网络/Qt/Wine。原87缺失两个ignored公开build原件已在619补入Git，当前21来源均实际Git；新工具保留旧历史generator、生产JSON及其数学代码不改。109公开件已封，根端基于实际89提交应用、验源码和新鲜相关/精选后逐节存档，随后进行第86–90节全量。 根端实际89接入后728旧维护文件中727完整不变；3新增稿与单登记项字节保持，现730维护文件。首正常CLI一次/verifier一次通过（另help调用一次不入verifier），相关51项50通过1历史缓存跳过，精选1055项1054通过1历史跳过，均0fail/error；后验冻结字节与精选源码快照完整一致。
+
+验证 `verification/sections/090.json`。只认证第87节固定元资料快照；不能证明原生技能/普通攻击/皮肤绑定、首跳、碰撞、结束和获取时钟，不推游戏帧率。官方reader当时使用默认TextureRegion占位，geometry/atlas/render/EOF及历史失败reader身份/根因仍未知；此次不执行reader/JS、不重下载、不恢复历史cache。21来源运输不是对full301/102/315每件的新认证。prepared source28冻结时两个build历史Git缺口的原事实保持，并以619之后actual89运输补证。作者28与独审4分列，saved-only派生审是0新增entries；root测试全项目API计数不外推。Wine只是Windows二进制兼容验证，真实Windows/游戏/私有回放/聊天仍待实际环境。
