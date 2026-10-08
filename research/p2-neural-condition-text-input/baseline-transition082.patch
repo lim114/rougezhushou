@@ -1,0 +1,14 @@
+diff --git a/rouge/operator_engine.py b/rouge/operator_engine.py
+index 0208381..c1905ad 100644
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -351,6 +351,9 @@ class Combat:
+                 self.notes.append(f'触手数量 {count:g}；技能生命回复 {bb["hp_recovery_per_sec"]*duration*count:g}，生命回复不计直接治疗。')
+             self.notes.append('触手不继承本体信赖/潜能及职业加成；已确认的所有我方单位藏品攻击/攻速及敌方易伤单独套用。')
+         elif op in ('char_196_sunbr','char_2025_shu','char_298_susuro'):
++            if (op=='char_298_susuro' and '微创治疗' in self.tv and
++                    isinstance(self.s.get('low_cost_healing_target'),str)):
++                raise ValueError('low_cost_healing_target 不接受文本条件；请使用布尔值。')
+             recipient_factor=self.talent('微创治疗','heal_scale',1) if (
+                 op=='char_298_susuro' and self.s.get('low_cost_healing_target')) else 1
+             if normal and op=='char_298_susuro':regular('healing',scale=recipient_factor,times=min(1,healing_targets),name='普通治疗')

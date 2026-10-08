@@ -1,0 +1,26 @@
+{
+  "case": "phatm-zero-life-boss-text",
+  "scenario": {
+    "operator": "char_1042_phatm2",
+    "skill": 2,
+    "skill_rank": 7,
+    "elite": 2,
+    "level": 1,
+    "potential": 6,
+    "base_attack": 997,
+    "timing_mode": "frames",
+    "window_seconds": 3.3,
+    "enemy_is_boss": "false",
+    "timing": {
+      "target_disappears_seconds": 0
+    }
+  },
+  "expectation": "reject",
+  "field": "enemy_is_boss",
+  "error": {
+    "type": "ValueError",
+    "message": "enemy_is_boss 不接受文本条件；请使用布尔值。"
+  },
+  "actual_public_calls": 1,
+  "caller_input_preserved": true
+}

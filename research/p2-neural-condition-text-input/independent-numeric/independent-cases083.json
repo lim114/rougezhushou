@@ -1,0 +1,798 @@
+[
+  {
+    "case": "phatm-e0-s1-boss-text",
+    "scenario": {
+      "operator": "char_1042_phatm2",
+      "skill": 1,
+      "skill_rank": 7,
+      "elite": 0,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false"
+    },
+    "expectation": "reject",
+    "field": "enemy_is_boss"
+  },
+  {
+    "case": "phatm-e1-s2-break-empty",
+    "scenario": {
+      "operator": "char_1042_phatm2",
+      "skill": 2,
+      "skill_rank": 7,
+      "elite": 1,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "continuous",
+      "window_seconds": 3.3,
+      "enemy_in_neural_break": ""
+    },
+    "expectation": "reject",
+    "field": "enemy_in_neural_break"
+  },
+  {
+    "case": "phatm-e2-s3-both-text",
+    "scenario": {
+      "operator": "char_1042_phatm2",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "unknown",
+      "enemy_in_neural_break": "false"
+    },
+    "expectation": "reject",
+    "field": "enemy_is_boss"
+  },
+  {
+    "case": "mantra-e0-s1-break-text",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 1,
+      "skill_rank": 7,
+      "elite": 0,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_in_neural_break": "false"
+    },
+    "expectation": "reject",
+    "field": "enemy_in_neural_break"
+  },
+  {
+    "case": "mantra-e1-s2-boss-text",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 2,
+      "skill_rank": 7,
+      "elite": 1,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "continuous",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "0"
+    },
+    "expectation": "reject",
+    "field": "enemy_is_boss"
+  },
+  {
+    "case": "mantra-e2-s3-break-text-river",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_in_neural_break": "false",
+      "relic_ids": [
+        "rogue_6_relic_fight_22"
+      ]
+    },
+    "expectation": "reject",
+    "field": "enemy_in_neural_break"
+  },
+  {
+    "case": "mantra-s3-boss-text-initial1500",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "initial_neural_buildup": 1500
+    },
+    "expectation": "reject",
+    "field": "enemy_is_boss"
+  },
+  {
+    "case": "mantra-s3-boss-false-initial1500",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": false,
+      "initial_neural_buildup": 1500
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "mantra-s3-boss-true-initial1500",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": true,
+      "initial_neural_buildup": 1500
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "mantra-s3-river-break-false",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_in_neural_break": false,
+      "relic_ids": [
+        "rogue_6_relic_fight_22"
+      ]
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "mantra-s3-river-break-true",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_in_neural_break": true,
+      "relic_ids": [
+        "rogue_6_relic_fight_22"
+      ]
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "char_1042_phatm2-selected-enemy0-overrides-boss-text",
+    "scenario": {
+      "operator": "char_1042_phatm2",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "target_enemy": {
+        "stage_id": "ro6_e_1_2",
+        "enemy_id": "enemy_1093_ccsbr",
+        "level": 0
+      },
+      "run_config": {
+        "difficulty": {
+          "value": 10
+        }
+      }
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "char_1042_phatm2-selected-enemy1-overrides-boss-text",
+    "scenario": {
+      "operator": "char_1042_phatm2",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "target_enemy": {
+        "stage_id": "ro6_b_3",
+        "enemy_id": "enemy_2143_shwksc",
+        "level": 0
+      },
+      "run_config": {
+        "difficulty": {
+          "value": 10
+        }
+      }
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "char_4204_mantra-selected-enemy0-overrides-boss-text",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "target_enemy": {
+        "stage_id": "ro6_e_1_2",
+        "enemy_id": "enemy_1093_ccsbr",
+        "level": 0
+      },
+      "run_config": {
+        "difficulty": {
+          "value": 10
+        }
+      }
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "char_4204_mantra-selected-enemy1-overrides-boss-text",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "target_enemy": {
+        "stage_id": "ro6_b_3",
+        "enemy_id": "enemy_2143_shwksc",
+        "level": 0
+      },
+      "run_config": {
+        "difficulty": {
+          "value": 10
+        }
+      }
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "selected-boss-overrides-boss-only-break-still-active",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false",
+      "target_enemy": {
+        "stage_id": "ro6_b_3",
+        "enemy_id": "enemy_2143_shwksc",
+        "level": 0
+      }
+    },
+    "expectation": "reject",
+    "field": "enemy_in_neural_break"
+  },
+  {
+    "case": "mantra-nontext-null-empty-list",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": null,
+      "enemy_in_neural_break": [],
+      "relic_ids": [
+        "rogue_6_relic_fight_22"
+      ]
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "phatm-nontext-float01",
+    "scenario": {
+      "operator": "char_1042_phatm2",
+      "skill": 2,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": 0.0,
+      "enemy_in_neural_break": 1.0,
+      "relic_ids": [
+        "rogue_6_relic_fight_22"
+      ]
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "mantra-nontext-legacy-containers",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 1,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": [
+        false
+      ],
+      "enemy_in_neural_break": {
+        "assumed": false
+      }
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "phatm-nontext-legacy-other-numbers",
+    "scenario": {
+      "operator": "char_1042_phatm2",
+      "skill": 1,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": -1,
+      "enemy_in_neural_break": 2
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "prior-invalid-rank",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": false,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false"
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "prior-unavailable-skill",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 2,
+      "skill_rank": 7,
+      "elite": 0,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false"
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "prior-initial-overrange",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false",
+      "initial_neural_buildup": 2501
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "prior-buildup-resistance",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false",
+      "enemy_buildup_resistance": 101
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "prior-element-resistance",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false",
+      "enemy_elemental_resistance": 101
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "prior-negative-window",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": -1,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false"
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "prior-negative-windup",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false",
+      "timing": {
+        "windup_frames": -2
+      }
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "prior-negative-SP-lockout",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false",
+      "timing": {
+        "sp_lockout_extra_seconds": -2
+      }
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "prior-phatm-bool-incoming-count",
+    "scenario": {
+      "operator": "char_1042_phatm2",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false",
+      "enemy_attack_count": true
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "prior-mantra-bool-palsy-count",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false",
+      "palsy_triggers": true
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "prior-invalid-module",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false",
+      "module_id": "unknown",
+      "module_level": 1
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "mantra-S2-nontext-integer01",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 2,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": 0,
+      "enemy_in_neural_break": 1
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "prior-invalid-run-difficulty",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false",
+      "run_config": {
+        "difficulty": {
+          "value": 16
+        }
+      }
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "prior-known-false-threshold-before-break-text",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": false,
+      "enemy_in_neural_break": "false",
+      "initial_neural_buildup": 1500
+    },
+    "expectation": "old_error",
+    "field": null
+  },
+  {
+    "case": "otherowner-char_1037_amiya3",
+    "scenario": {
+      "operator": "char_1037_amiya3",
+      "skill": 2,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "unknown"
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "otherowner-char_1048_orchd2",
+    "scenario": {
+      "operator": "char_1048_orchd2",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "unknown"
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "otherowner-mechanist",
+    "scenario": {
+      "operator": "mechanist",
+      "skill": 1,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "unknown"
+    },
+    "expectation": "same",
+    "field": null
+  },
+  {
+    "case": "mantra-zero-window-text",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 0,
+      "enemy_in_neural_break": "false"
+    },
+    "expectation": "reject",
+    "field": "enemy_in_neural_break"
+  },
+  {
+    "case": "phatm-zero-life-boss-text",
+    "scenario": {
+      "operator": "char_1042_phatm2",
+      "skill": 2,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "timing": {
+        "target_disappears_seconds": 0
+      }
+    },
+    "expectation": "reject",
+    "field": "enemy_is_boss"
+  },
+  {
+    "case": "mantra-empty-enemy-windows-both-text",
+    "scenario": {
+      "operator": "char_4204_mantra",
+      "skill": 3,
+      "skill_rank": 7,
+      "elite": 2,
+      "level": 1,
+      "potential": 6,
+      "base_attack": 997,
+      "timing_mode": "frames",
+      "window_seconds": 3.3,
+      "enemy_is_boss": "false",
+      "enemy_in_neural_break": "false",
+      "timing": {
+        "target_windows": []
+      }
+    },
+    "expectation": "reject",
+    "field": "enemy_is_boss"
+  }
+]

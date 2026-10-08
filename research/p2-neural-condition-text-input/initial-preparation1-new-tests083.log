@@ -1,0 +1,29 @@
+test_neural_condition_text_input (unittest.loader._FailedTest.test_neural_condition_text_input) ... ERROR
+
+======================================================================
+ERROR: test_neural_condition_text_input (unittest.loader._FailedTest.test_neural_condition_text_input)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_neural_condition_text_input
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/.continuation/p2-neural-condition-text-input-083/draft/tests/test_neural_condition_text_input.py", line 7, in <module>
+    from rouge.damage import calculate_damage
+  File "/workspace/.continuation/p2-neural-condition-text-input-083/draft/rouge/damage.py", line 6, in <module>
+    from .enemy_environment import damage_factor
+  File "/workspace/.continuation/p2-neural-condition-text-input-083/draft/rouge/enemy_environment.py", line 6, in <module>
+    from .run_config import config_data
+  File "/workspace/.continuation/p2-neural-condition-text-input-083/draft/rouge/run_config.py", line 6, in <module>
+    from .operator_recognition import center
+  File "/workspace/.continuation/p2-neural-condition-text-input-083/draft/rouge/operator_recognition.py", line 6, in <module>
+    import cv2
+ModuleNotFoundError: No module named 'cv2'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
