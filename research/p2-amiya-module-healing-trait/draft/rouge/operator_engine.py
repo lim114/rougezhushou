@@ -547,9 +547,8 @@ class Combat:
                     timeline.streams=[]
                     mode='once'
                 # Own regeneration is independent of the hostile target.
-                regeneration_seconds=duration if '诚挚期许' in self.tv else 0.0
                 emit('诚挚期许本体生命回复',self.stats['hp']*self.talent('诚挚期许','hp_recovery_per_sec_by_max_hp_ratio'),
-                     'regeneration',regeneration_seconds)
+                     'regeneration',duration)
                 if self.n==2:
                     components[-1]['nominal_duration_reference_seconds']=duration
                     if duration>0:components[-1]['actual_total']=None
@@ -974,7 +973,7 @@ class Combat:
                 emit('无言为真溢出跳跃',attack*bb['atk_scale'],'elemental',overflow)
             if not normal:
                 triggers=self.option('palsy_triggers',0,maximum=10000,integer=True)
-                emit('麻痹触发天赋',attack*self.talent('噤声限域','atk_scale'),'elemental',triggers if '噤声限域' in self.tv else 0.0)
+                emit('麻痹触发天赋',attack*self.talent('噤声限域','atk_scale'),'elemental',triggers)
                 manual=[c for c in components if c['name'] in ('麻痹触发天赋','无言为真溢出跳跃')]
                 from .uncertain_sources import preserve_unplaced_sources
                 reference=preserve_unplaced_sources(manual,window=window,

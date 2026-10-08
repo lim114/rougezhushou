@@ -448,21 +448,12 @@ class Combat:
                     if 'times_seconds' in c:c['times_seconds']=[]
                 timeline.streams=[]
         elif op in ('char_002_amiya','char_1001_amiya2','char_1037_amiya3'):
-            if op=='char_1037_amiya3':
-                # The reviewed INC-X data-only bundle replaces this same trait ratio.
-                healing_scale=next(b['value'] for b in self.p['trait']['candidates'][0]['blackboard'] if b['key']=='scale')
-                if self.s.get('module_id')=='uniequip_002_amiya3':
-                    for part in self.module_parts:
-                        if (part.get('target')=='TRAIT_DATA_ONLY' and not part.get('isToken') and
-                                part.get('validInGameTag') is None and part.get('validInMapTag') is None):
-                            candidate=part['overrideTraitDataBundle']['candidates'][0]
-                            healing_scale=next(b['value'] for b in candidate['blackboard'] if b['key']=='scale')
             if op=='char_1001_amiya2' and not normal:
                 attack+=self.base*self.talent('青色怒火','atk')*(bb.get('talent_scale',2)-1)
             if normal:
                 regular('magic')
                 if op=='char_1037_amiya3':
-                    damage_healing('咒愈师伤害转治疗',healing_scale*min(1,healing_targets))
+                    damage_healing('咒愈师伤害转治疗',.5*min(1,healing_targets))
             elif op=='char_002_amiya':
                 regular('true' if self.n==3 else 'magic',bb.get('attack@atk_scale',1),bb.get('attack@times',1))
                 if self.n==2:self.notes.append('精神爆发结束后10秒晕眩；仅单一目标情景中八发均命中该目标。')
@@ -506,7 +497,7 @@ class Combat:
             else:
                 if self.n==1:
                     regular('magic')
-                    damage_healing('咒愈师伤害转治疗',healing_scale*min(1,healing_targets))
+                    damage_healing('咒愈师伤害转治疗',.5*min(1,healing_targets))
                     # The skill grants this extra heal on each attack; it is
                     # not an independently acquired friendly treatment.
                     regular('healing',bb['heal_scale'],healing_targets,name='哀恸共情范围治疗',target_scope='enemy')
@@ -519,13 +510,13 @@ class Combat:
                     regular('true',seconds=self.skill['duration'])
                     strengthened=components[-1]
                     unbound_source_components=[strengthened]
-                    damage_healing('咒愈师伤害转治疗',healing_scale*min(1,healing_targets))
+                    damage_healing('咒愈师伤害转治疗',.5*min(1,healing_targets))
                     amiya_phase_reference={
                         'kind':'medical_opening',
                         'nominal_skill_duration_parameter_seconds':self.skill['duration'],
                         'opening_attack_scale_parameter':bb['atk_scale'],
                         'opening_damage_reference':components[0]['total'],
-                        'opening_healing_reference':components[0]['total']*healing_scale*min(1,healing_targets),
+                        'opening_healing_reference':components[0]['total']*.5*min(1,healing_targets),
                         'declared_opening_hit_targets':declared_hits,
                         'hit_attack_bonus_parameter':bb['atk'],
                         'hit_stack_cap_parameter':bb['max_stack_cnt'],
@@ -547,9 +538,8 @@ class Combat:
                     timeline.streams=[]
                     mode='once'
                 # Own regeneration is independent of the hostile target.
-                regeneration_seconds=duration if '诚挚期许' in self.tv else 0.0
                 emit('诚挚期许本体生命回复',self.stats['hp']*self.talent('诚挚期许','hp_recovery_per_sec_by_max_hp_ratio'),
-                     'regeneration',regeneration_seconds)
+                     'regeneration',duration)
                 if self.n==2:
                     components[-1]['nominal_duration_reference_seconds']=duration
                     if duration>0:components[-1]['actual_total']=None
@@ -974,7 +964,7 @@ class Combat:
                 emit('无言为真溢出跳跃',attack*bb['atk_scale'],'elemental',overflow)
             if not normal:
                 triggers=self.option('palsy_triggers',0,maximum=10000,integer=True)
-                emit('麻痹触发天赋',attack*self.talent('噤声限域','atk_scale'),'elemental',triggers if '噤声限域' in self.tv else 0.0)
+                emit('麻痹触发天赋',attack*self.talent('噤声限域','atk_scale'),'elemental',triggers)
                 manual=[c for c in components if c['name'] in ('麻痹触发天赋','无言为真溢出跳跃')]
                 from .uncertain_sources import preserve_unplaced_sources
                 reference=preserve_unplaced_sources(manual,window=window,

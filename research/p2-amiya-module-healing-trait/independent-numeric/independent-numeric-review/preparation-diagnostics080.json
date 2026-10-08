@@ -1,0 +1,32 @@
+{
+  "product_source_changed": false,
+  "public_matrices_rerun": false,
+  "passed_tests_rerun": false,
+  "actual_new_calculate_damage_calls": 237,
+  "comparison_attempts": 3,
+  "final_comparison_passed": true,
+  "issues": [
+    {
+      "kind": "guessed_new_test_filename",
+      "evidence": "freeze080.json",
+      "fixed_before_tests": true
+    },
+    {
+      "kind": "first_saved_comparison_warning_wording",
+      "script": "initial-compare-saved80.py",
+      "log": "strict-comparison-initial080.log",
+      "production_failure": false,
+      "correction": "Use the actual unchanged exact heal_scale and received_regeneration warnings."
+    },
+    {
+      "kind": "second_saved_comparison_existing_phase_boundary",
+      "script": "second-compare-saved80.py",
+      "log": "strict-comparison-final080.log",
+      "production_failure": false,
+      "diagnostic": "phase-boundary-diagnostic080.json",
+      "correction": "Preserve the unchanged AoE boundary term and assert normal-trait increment against the old normal damage."
+    }
+  ],
+  "final_script": "compare_saved80.py",
+  "final_log": "strict-comparison-third080.log"
+}
