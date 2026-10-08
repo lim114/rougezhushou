@@ -1,0 +1,93 @@
+Fixed source 0f27027e7e1f49c08f298706b599e310e299238b:rouge/damage.py
+Full source sha256 6cc15cf93eb52fc42120fff6b795e2cbbf2903cf0af8d7d293ffea9f73f121c6
+Full source bytes 30982
+
+Lines 235-245
+235: def _prepare_damage(scenario: dict):
+236:     from .catalog import operator_attributes
+237:     scenario=dict(scenario)
+238:     profile=catalog()['operators'][scenario['operator']]
+239:     skill=scenario.get('skill');rank=scenario.get('skill_rank',10)
+240:     if not isinstance(skill,int) or isinstance(skill,bool) or not 1<=skill<=len(profile['skills']):
+241:         raise ValueError('请选择该干员的有效技能。')
+242:     if not isinstance(rank,int) or isinstance(rank,bool) or not 1<=rank<=10:
+243:         raise ValueError('技能等级需要为1–10的整数。')
+244:     attributes=operator_attributes(scenario['operator'],scenario.get('elite',2),scenario.get('level'),
+245:                                    scenario.get('trust',100),scenario.get('potential',1),
+Lines 273-285
+273:     from .run_modifiers import prepare_run
+274:     scenario,run_resolution=prepare_run(scenario)
+275:     scenario,resolution=prepare(scenario,profile)
+276:     from .relic_attributes import prepare_attribute_runes
+277:     scenario,attributes=prepare_attribute_runes(scenario,attributes)
+278:     # Reuse the existing numeric-zero gates after validating the raw timing.
+279:     timing=scenario.get('timing',{})
+280:     if isinstance(timing,dict) and isinstance(timing.get('target_disappears_seconds'),str):
+281:         from .timing import finite
+282:         AttackTimeline(scenario)
+283:         if finite(timing['target_disappears_seconds'],'target_disappears_seconds',3600)==0:
+284:             scenario['timing']={**timing,'target_disappears_seconds':0}
+285:     return scenario,attributes,resolution,run_resolution
+Lines 288-303
+288: def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
+289:     """Consume one isolated preparation; finishers may annotate its resolutions."""
+290:     from .estimate import build_estimate
+291:     from .relics import finish
+292:     from .run_modifiers import finish_run
+293:     scenario,attributes,resolution,run_resolution=prepared
+294:     scenario.pop('_wine_phase_frame',None)
+295:     if wine_phase is not None:scenario['_wine_phase_frame']=wine_phase
+296:     if scenario['operator'] not in ('kaltsit','silverash','mechanist'):
+297:         from .operator_engine import Combat
+298:         combat=Combat(scenario,attributes)
+299:         result=combat.calculate()
+300:     else:
+301:         result=_skill_damage(scenario)
+302:         result['estimate']=build_estimate(scenario,result,attributes,_skill_damage)
+303:     from .charge_reference import finish_charge_reference
+Lines 307-326
+307:     from .timing import annotate_result
+308:     annotate_result(scenario,result)
+309:     finish(result,resolution,attributes,scenario)
+310:     finish_run(result,run_resolution)
+311:     if scenario['operator']=='kaltsit' and scenario['skill'] in (1,3):
+312:         # The internal helper supplies healing per recipient to build_estimate.
+313:         # Public totals use its capped recipient count and requested window,
+314:         # after the finishers have applied relic multipliers exactly once.
+315:         result['total_healing']=result['estimate']['skill']['window_healing']
+316:     from .attribute_limits import finalize_attack_speed_references
+317:     finalize_attack_speed_references(result)
+318:     from .summons import finish_duration_references
+319:     finish_duration_references(scenario,result)
+320:     from .reporting import build_report
+321:     result['report']=build_report(scenario,result)
+322:     # Validate the processed neural scenario after preserving legacy errors.
+323:     if scenario['operator'] in ('char_1042_phatm2','char_4204_mantra'):
+324:         for field in ('enemy_is_boss','enemy_in_neural_break'):
+325:             if isinstance(scenario.get(field),str):
+326:                 raise ValueError(field+' 不接受文本条件；请使用布尔值。')
+Lines 335-358
+335:     # Keep legacy calculation/finisher/report errors before text-only conditions.
+336:     op=scenario['operator'];number=scenario['skill']
+337:     conditions={
+338:         'char_4228_closur':('reinforcement_blocks_target',),
+339:         'char_206_gnosis':('frozen_at_skill_end',) if number==3 else (),
+340:         'char_4087_ines':('ines_first_deployment',) if number==3 else (),
+341:         'char_1041_angel2':('steal_success',) if number==2 else ('delivery_coordinate',) if number==3 else (),
+342:         'char_1035_wisdel':('overload',) if number==2 else (),
+343:     }.get(op,())
+344:     if op=='char_4182_oblvns':
+345:         conditions=(('ranged_attack',) if combat.ranged_attack_condition_consumed else ())
+346:         if number==2:conditions+=('organ_mode','fever')
+347:     if op in ('char_437_mizuki','char_1048_orchd2'):
+348:         field,talent=('enemy_below_half','反移情') if op=='char_437_mizuki' else ('power_coating','强击瓶专家')
+349:         if isinstance(scenario.get(field),str):
+350:             from .operator_engine import selected_talents
+351:             talents,_=selected_talents(catalog()['operators'][op],scenario)
+352:             if any(t.get('name')==talent for t in talents):conditions+=(field,)
+353:         if op=='char_1048_orchd2' and number==1:conditions+=('double_charge',)
+354:     for field in conditions:
+355:         if isinstance(scenario.get(field),str):
+356:             raise ValueError(field+' 不接受文本条件；请使用布尔值。')
+357:     return result
+358: 

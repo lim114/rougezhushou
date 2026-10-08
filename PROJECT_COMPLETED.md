@@ -1,3 +1,9 @@
+# 连续开发 088 · 拒绝实际持续攻击消费者的文本误确认
+
+固定来源复现continuous_attacks文本按truthiness被实际回技力或报告路径误确认；只在隔离core成功完成旧报告及83–86守卫后拒绝合资格文本。新增私有ContextVar只存不可变状态并finally恢复，十二处既有读取及实际ready/wait尾分支保持原数学和短路；无效字段、非文本旧兼容、旧错误优先与caller/catalog保留。作者60对120调用：23新拒、32完整编码前native/JSON/三文本全同、5旧错误精确同；首次新8通过并只定向补验第8个未就绪等待边界，累计19公共/32显式context-helper请求。独审8不同风险对16调用：5整份同、2新拒、1旧错误；最终新8一次通过，19公共/25显式helper，独审35公共。根端在当前87归档补证提交上整合：725旧维护py/json中718未改，六旧源精确逆变换、新leaf/test及单注册项核真；62相关全通过，1042精选1041通过/1历史cache跳过，0失败或错误；公开归档逐件强制纳Git并核实际blob后提交。 见 `verification/sections/088.json`。
+
+---
+
 # 第87节公开归档闭合
 
 第87节归档Git闭合补证：工作树310索引件均hash正确，其中官方spine-core.js与spine-core.d.ts被build/忽略，原提交仅308件；两公开原件已明确补入并验证310全部Git blob。原301源清单不改，725维护py/json字节不变，不计新节、不重已通过测试或解析。后续存档对每个公开索引路径显式stage并核Git blob。见verification/archive-closure-087.json、标签p2-archive-closure-087。

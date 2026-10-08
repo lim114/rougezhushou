@@ -1,0 +1,131 @@
+Fixed source 0f27027e7e1f49c08f298706b599e310e299238b:rouge/sp_events.py
+Full source sha256 b278c18d14e152f8c53320f98074b2823fe407b7c6b59ed918f77728ea3a1d9a
+Full source bytes 10077
+
+Lines 27-53
+27: def event_phases(scenario):
+28:     timing = scenario.get('timing', {})
+29:     if not isinstance(timing, dict):
+30:         raise ValueError('时序情景需要是对象。')
+31:     if 'sp_events' not in timing:
+32:         return {}
+33:     phases = timing['sp_events']
+34:     if not isinstance(phases, dict) or set(phases) - {'initial', 'cycle'}:
+35:         raise ValueError('sp_events需要包含initial/cycle事件表的对象。')
+36:     parsed = {}
+37:     for phase, events in phases.items():
+38:         if not isinstance(events, list) or len(events) > 1000:
+39:             raise ValueError('sp_events.' + phase + '需要最多1000个事件；空列表表示已确认没有事件。')
+40:         values = []
+41:         for event in events:
+42:             if not isinstance(event, dict) or set(event) != {'at_seconds', 'type'}:
+43:                 raise ValueError('技力事件需要且仅包含at_seconds和type。')
+44:             kind = event['type']
+45:             if not isinstance(kind, str) or kind not in EVENT_TYPES:
+46:                 raise ValueError('技力事件type需要为'+ '、'.join(EVENT_TYPES)+'。')
+47:             if not isinstance(event['at_seconds'], (int, float)):
+48:                 raise ValueError('技力事件秒数需要JSON数值。')
+49:             time = finite(event['at_seconds'], '技力事件秒数', 3600)
+50:             values.append((time, kind))
+51:         # Equal timestamps may be separate hits. Keep multiplicity, not a set.
+52:         parsed[phase] = sorted(values)
+53:     return parsed
+Lines 56-141
+56: def charge(scenario, skill, required, rate, interval, speed, *, initial=False,
+57:            offset=0, resume=0, stun=0, wait_next_attack=False, attack_sp=0, attribute_speed=None):
+58:     """Return elapsed seconds after deployment/skill end and a bounded receipt.
+59: 
+60:     Native attack recovery and explicit incoming-attack recovery share the
+61:     timeline with explicit incoming/outgoing SP modifiers. Natural SP accrues only outside the
+62:     block. Discrete credits become usable on the next reference logic tick.
+63:     Wine phases keep the existing public calculator's marginal envelope.
+64:     """
+65:     from .relics import recharge_requirement
+66:     phase = 'initial' if initial else 'cycle'
+67:     phases = event_phases(scenario)
+68:     mode = scenario.get('timing_mode', 'frames')
+69:     framed = mode == 'frames'
+70:     tick = 1 / FPS if framed else 0
+71:     align = (lambda t: frame_time(t) / FPS) if framed else (lambda t: t)
+72:     origin = align(offset)
+73:     blocked = 0 if initial else align(finite(
+74:         scenario.get('timing', {}).get('sp_lockout_extra_seconds', 0), '额外阻回秒数', 3600))
+75:     required = max(0, required if initial else recharge_requirement(scenario, required))
+76:     reference = {'phase': phase, 'status': 'known', 'events_supplied': len(phases[phase]) if phase in phases else None,
+77:                  'ignored_blocked': 0, 'credited_received_events': 0, 'credited_received_sp': 0,
+78:                  'credited_callback_events': 0, 'credited_callback_sp': 0, 'credited_by_type': {},
+79:                  'origin_seconds': origin, 'blocked_seconds': blocked, 'seconds': None}
+80:     if required > 0 and phase not in phases:
+81:         reference['status'] = 'missing'
+82:         return reference
+83:     if phase not in phases:
+84:         reference['status'] = 'not_needed'
+85:     sp_type = skill['sp_type']
+86:     if sp_type == 'INCREASE_WHEN_TAKEN_DAMAGE' and finite(
+87:             scenario.get('incoming_attack_interval', 0), '受击间隔', 3600) > 0:
+88:         raise ValueError('当前技力使用分类事件表，请将incoming_attack_interval留为0，避免重复计入同一攻击。')
+89:     rate = max(0, rate) if sp_type == 'INCREASE_WITH_TIME' else 0
+90:     native_attack = skill['sp_increment'] if sp_type == 'INCREASE_WHEN_ATTACK' else attack_sp
+91:     native_attack += sum(r['value'] for r in scenario.get('_relic_rules', []) if r['kind'] == 'attack_sp')
+92:     received = {kind: sum(r['value'] for r in scenario.get('_relic_rules', [])
+93:                          if r['kind'] in SP_RULE_KINDS and not r.get('token_only') and r['event_type'] == kind)
+94:                 for kind in EVENT_TYPES}
+95:     native_incoming = skill['sp_increment'] if sp_type == 'INCREASE_WHEN_TAKEN_DAMAGE' else 0
+96:     events = []
+97:     for time, kind in phases.get(phase, []):
+98:         time = align(time) - origin
+99:         if time < blocked - 1e-9:
+100:             reference['ignored_blocked'] += 1
+101:             continue
+102:         value = received[kind] + (native_incoming if kind == 'attack' else 0)
+103:         if value:
+104:             events.append((time + tick, value, kind, received[kind]))
+105:     horizon = max(0, 3600 - origin)
+106:     if rate > 0:
+107:         horizon = min(horizon, align(min(3600, blocked + required / rate)) + tick)
+108:     wines = [r for r in scenario.get('_relic_rules', []) if r['kind'] == 'periodic_sp']
+109:     if wines and required > 0:
+110:         from .timing import wine_events
+111:         wine_horizon=blocked+min(w['interval']*(math.ceil(required/w['value'])+1)+2/FPS for w in wines)
+112:         horizon=min(horizon,wine_horizon)
+113:         events.extend((blocked+f/FPS,value,'wine',0) for f,value in
+114:             wine_events(scenario,frame_time(max(0,horizon-blocked)),origin+blocked,initial))
+115:     elif rate <= 0 and native_attack <= 0:
+116:         horizon = min(horizon, max((event[0] for event in events), default=blocked))
+117:     config = dict(scenario.get('timing', {}))
+118:     if initial:
+119:         for key in ('target_windows', 'movement_windows', 'interrupt_windows'):
+120:             config.pop(key, None)
+121:             if 'initial_' + key in config:
+122:                 config[key] = config['initial_' + key]
+123:         config.pop('target_disappears_seconds', None)
+124:         config.pop('post_skill_lock_frames', None)
+125:     elif stun:
+126:         config['interrupt_windows'] = [*config.get('interrupt_windows', []), [origin, origin + stun]]
+127:     config['_resume_frames'] = resume
+128:     config['_deployment_initial'] = initial
+129:     timeline = AttackTimeline({**scenario, 'timing': config}, normal=True, offset=origin)
+130:     stream = None
+131:     attacks = scenario.get('continuous_attacks', True)
+132:     if (native_attack > 0 and attacks) or wait_next_attack:
+133:         step = cadence(interval) / FPS if framed else interval
+134:         limit = math.ceil(required / native_attack) + 2 if native_attack > 0 else math.ceil(horizon / step) + 2
+135:         stream = timeline.attacks(max(0, 3600 - origin) if wait_next_attack else horizon, interval, speed, attribute_speed=attribute_speed, limit=limit)
+136:         if attacks and native_attack > 0:
+137:             times = [f / FPS for f in stream['release_frames']] if framed else [t + stun for t in stream['times_seconds']]
+138:             events.extend((time + tick, native_attack, 'outgoing_attack', 0)
+139:                           for time in times if time >= blocked - 1e-9)
+140:     ready = blocked if required <= 0 else None
+141:     charge_value = 0
+Lines 174-184
+174:     if ready is not None and wait_next_attack:
+175:         # A next-attack skill requires another legal attack slot after SP credit.
+176:         starts = [f / FPS for f in stream['start_frames']] if framed else [
+177:             max(0, t - interval) for t in stream['times_seconds']]
+178:         ready = next((t for t in starts if t >= ready - 1e-9), None) if attacks else None
+179:     if ready is not None and not initial and framed:
+180:         ready = max(ready, math.ceil(finite(config.get('post_skill_lock_frames', 0), '技能结束硬直帧')) / FPS)
+181:     if ready is not None and ready > max(0, 3600 - origin):
+182:         ready = None
+183:     reference['seconds'] = ready
+184:     return reference

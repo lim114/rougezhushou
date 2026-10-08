@@ -611,3 +611,9 @@ S2斩击及原有孤立6秒强化阶段分别保留条件参考（基础1000默�
 ## 第87节归档补证（不计新节）
 
 第87节归档Git闭合补证：工作树310索引件均hash正确，其中官方spine-core.js与spine-core.d.ts被build/忽略，原提交仅308件；两公开原件已明确补入并验证310全部Git blob。原301源清单不改，725维护py/json字节不变，不计新节、不重已通过测试或解析。后续存档对每个公开索引路径显式stage并核Git blob。见verification/archive-closure-087.json、标签p2-archive-closure-087。
+
+## 088 · 拒绝实际持续攻击消费者的文本误确认
+
+固定来源复现continuous_attacks文本按truthiness被实际回技力或报告路径误确认；只在隔离core成功完成旧报告及83–86守卫后拒绝合资格文本。新增私有ContextVar只存不可变状态并finally恢复，十二处既有读取及实际ready/wait尾分支保持原数学和短路；无效字段、非文本旧兼容、旧错误优先与caller/catalog保留。作者60对120调用：23新拒、32完整编码前native/JSON/三文本全同、5旧错误精确同；首次新8通过并只定向补验第8个未就绪等待边界，累计19公共/32显式context-helper请求。独审8不同风险对16调用：5整份同、2新拒、1旧错误；最终新8一次通过，19公共/25显式helper，独审35公共。根端在当前87归档补证提交上整合：725旧维护py/json中718未改，六旧源精确逆变换、新leaf/test及单注册项核真；62相关全通过，1042精选1041通过/1历史cache跳过，0失败或错误；公开归档逐件强制纳Git并核实际blob后提交。
+
+验证 `verification/sections/088.json`。current received_sp/event_sp藏品保持reference-only；Gummy等公开控制不证明尾端事件激活。尾ready/wait资格只由真实scoped standalone charge合同验证，不补原生游戏时钟或重启退役战斗输入。旧错误优先只声明core，不外推所有outer聚合错误。独审catalog完整native哈希保留但未另存raw树；线程测试实际只到主线程和一个pool worker，不称双worker同时压力。helper显式请求与内部函数entries分列，不造全项目累计；原source16不重跑，准备错误及旧方案均保留。Wine仅兼容验证，原生Windows/游戏/聊天仍未验证。

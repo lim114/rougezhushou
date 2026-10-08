@@ -1,0 +1,331 @@
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -4,6 +4,7 @@
+ never inferred from a character's name or from another operator's controls.
+ """
+ import math
++from .condition_inputs import read_continuous_attacks
+ from .attribute_limits import effective_attack_speed
+ from .catalog import catalog
+ from .enemy_environment import damage_factor
+@@ -1314,7 +1315,7 @@
+             if self.s['operator']=='char_1048_orchd2' and self.n==1 and self.s.get('double_charge',True):
+                 recharge=recharge_requirement(self.s,2*sp['sp_cost'])/rate if rate>0 else None
+                 first=max(0,2*sp['sp_cost']-initial)/rate if rate>0 else None
+-            if self.s['operator']=='char_002_amiya' and self.s.get('continuous_attacks',True):
++            if self.s['operator']=='char_002_amiya' and read_continuous_attacks(self.s):
+                 attack_sp=self.talent('情绪吸收','amiya_t_1[atk].sp')
+                 def time_to_charge(required,stun=0):
+                     if required<=0:return 0
+@@ -1334,10 +1335,10 @@
+                     first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,attack_sp,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)
+                     mixed_recovery=(attack_sp,sp['values'].get('stun',0))
+                 self.notes.append('术师阿米娅自然充能与攻击额外技力按事件共同计算；精神爆发后晕眩期间停止攻击，技力自然回复继续。未额外假设击倒回技力。')
+-            elif self.s.get('continuous_attacks',True) and any(r['kind']=='attack_sp' for r in self.s.get('_relic_rules',[])):
++            elif read_continuous_attacks(self.s,active=lambda:any(r['kind']=='attack_sp' for r in self.s.get('_relic_rules',[]))) and any(r['kind']=='attack_sp' for r in self.s.get('_relic_rules',[])):
+                 first=mixed_charge_seconds(self.s,max(0,sp['sp_cost']-initial),rate,0,self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True)
+                 mixed_recovery=(0,0)
+-        elif sp['sp_type']=='INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks',True) or has_periodic_sp(self.s)):
++        elif sp['sp_type']=='INCREASE_WHEN_ATTACK' and (read_continuous_attacks(self.s) or has_periodic_sp(self.s)):
+             recharge=charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,wait_next_attack=full['mode']=='next_attack')
+             first=charge_seconds(self.s,max(0,sp['sp_cost']-initial),sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True,wait_next_attack=full['mode']=='next_attack')
+         elif sp['sp_type']=='INCREASE_WHEN_TAKEN_DAMAGE':
+@@ -1411,7 +1412,7 @@
+                 resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)
+                 recharge=mixed_charge_seconds(self.s,sp['sp_cost'],rate,mixed_recovery[0],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,
+                     offset=duration,stun=mixed_recovery[1],resume=resume,blocked_seconds=lockout)
+-            if duration is not None and sp['sp_type']=='INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks',True) or has_periodic_sp(self.s)):
++            if duration is not None and sp['sp_type']=='INCREASE_WHEN_ATTACK' and (read_continuous_attacks(self.s) or has_periodic_sp(self.s)):
+                 resume=max((s.get('resume_frame',0) for s in full['timing']['streams']),default=0)
+                 recharge=charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,
+                     offset=duration+lockout,resume=max(0,resume-frame_time(lockout)),wait_next_attack=full['mode']=='next_attack')
+@@ -1428,7 +1429,7 @@
+             if mixed_recovery is not None:
+                 recharge=mixed_charge_seconds(self.s,sp['sp_cost'],rate,mixed_recovery[0],self.normal_interval,
+                     self.base_speed,attribute_speed=self.base_speed_reference,offset=duration,stun=mixed_recovery[1],blocked_seconds=lockout)
+-            elif sp['sp_type']=='INCREASE_WHEN_ATTACK' and (self.s.get('continuous_attacks',True) or has_periodic_sp(self.s)):
++            elif sp['sp_type']=='INCREASE_WHEN_ATTACK' and (read_continuous_attacks(self.s) or has_periodic_sp(self.s)):
+                 recharge=charge_seconds(self.s,sp['sp_cost'],sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,
+                     offset=duration+lockout,wait_next_attack=full['mode']=='next_attack')
+                 if recharge is not None:recharge+=lockout
+@@ -1469,7 +1470,7 @@
+         if self.s['operator']=='char_002_amiya' and self.n==2 and self.s.get('timing_mode','frames')=='frames':
+             self.s['timing']['interrupt_windows']=[*self.s['timing'].get('interrupt_windows',[]),[duration,duration+sp['values'].get('stun',0)]]
+         normal=self.plan(normal=True,window=recharge) if cycle is not None and not (
+-            sp['sp_type']=='INCREASE_WHEN_ATTACK' and not self.s.get('continuous_attacks',True)) else None
++            sp['sp_type']=='INCREASE_WHEN_ATTACK' and not read_continuous_attacks(self.s)) else None
+         if self.s['operator']=='char_4182_oblvns':
+             ranged_overridden=self.s.get('module_id') and self.tv.get('颂乐音符',{}).get('max_cnt',10)>10
+             self.ranged_attack_condition_consumed=not ranged_overridden or normal is not None
+--- a/rouge/estimate.py
++++ b/rouge/estimate.py
+@@ -1,5 +1,6 @@
+ """Attribute and repeat-cycle estimates, with explicit conditions and unknowns."""
+ import math
++from .condition_inputs import read_continuous_attacks
+ from .catalog import catalog
+ from .enemy_environment import damage_factor
+ from .timing import AttackTimeline,charge_seconds,frame_time,FPS,finite,phase_totals,has_periodic_sp
+@@ -93,7 +94,7 @@
+         recharge=recharge_requirement(scenario,skill['sp_cost'])/sp_rate
+         initial=max(0,skill['sp_cost']-initial_sp)/sp_rate
+     elif skill['sp_type']=='INCREASE_WHEN_ATTACK':
+-        if scenario.get('continuous_attacks',True) or has_periodic_sp(scenario):
++        if read_continuous_attacks(scenario) or has_periodic_sp(scenario):
+             recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])
+             initial=charge_seconds(scenario,max(0,skill['sp_cost']-initial_sp),skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],initial=True)
+             notes.append('攻击回复按实际出手事件计入规定技力；适用酒类另按离散周期事件合并，自然回复速率不代替攻击回复。')
+@@ -156,7 +157,7 @@
+         if duration is not None:duration=frame_time(duration)/FPS
+         lockout=float(scenario.get('timing',{}).get('sp_lockout_extra_seconds',0))
+         if not math.isfinite(lockout) or not 0<=lockout<=3600:raise ValueError('额外阻回需要0–3600秒。')
+-        if duration is not None and skill['sp_type']=='INCREASE_WHEN_ATTACK' and (scenario.get('continuous_attacks',True) or has_periodic_sp(scenario)):
++        if duration is not None and skill['sp_type']=='INCREASE_WHEN_ATTACK' and (read_continuous_attacks(scenario) or has_periodic_sp(scenario)):
+             resume=max((s.get('resume_frame',0) for s in full.get('timing',{}).get('streams',[])),default=0)
+             recharge=charge_seconds(scenario,skill['sp_cost'],skill['sp_increment'],normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],offset=duration+lockout,resume=max(0,resume-frame_time(lockout)))
+         if recharge is not None:recharge=frame_time(recharge+lockout)/FPS
+@@ -200,7 +201,7 @@
+         normal=AttackTimeline({**scenario,'timing':{**scenario.get('timing',{}),'_resume_frames':resume}},normal=True,offset=duration)
+         normal_hits=len(normal.attacks(recharge,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'],
+             target_scope='friendly' if operator=='kaltsit' else 'enemy')['times_seconds'])
+-        if skill['sp_type']=='INCREASE_WHEN_ATTACK' and not scenario.get('continuous_attacks',True):
++        if skill['sp_type']=='INCREASE_WHEN_ATTACK' and not read_continuous_attacks(scenario):
+             normal_hits=0
+             normal.streams=[]
+         normal_damage=normal_healing=0
+--- a/rouge/timing.py
++++ b/rouge/timing.py
+@@ -2,6 +2,7 @@
+ from functools import lru_cache
+ import json
+ import math
++from .condition_inputs import read_continuous_attacks
+ from pathlib import Path
+ 
+ from .attribute_limits import effective_attack_speed
+@@ -66,7 +67,7 @@
+         if incoming_interval>0:
+             step=frame_time(incoming_interval)
+             events.extend((f+1,increment) for f in range(step,horizon,step))
+-    elif scenario.get('continuous_attacks',True):
++    elif read_continuous_attacks(scenario,active=lambda:increment+sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')>0):
+         increment+=sum(r['value'] for r in scenario.get('_relic_rules',[]) if r['kind']=='attack_sp')
+         events.extend((f+1,increment) for f in stream['release_frames'])
+     charge=0;ready=0 if required<=0 else None
+--- a/rouge/sp_events.py
++++ b/rouge/sp_events.py
+@@ -6,6 +6,7 @@
+ shield loss, a probability, an enemy's attack interval, or an on-screen pose.
+ """
+ import math
++from .condition_inputs import read_continuous_attacks, observe_continuous_attacks
+ from .timing import AttackTimeline, FPS, cadence, finite, frame_time
+ 
+ EVENT_TYPES = {'attack': '受到攻击', 'damage': '受到伤害', 'elemental_loss': '受到元素损伤',
+@@ -128,7 +129,7 @@
+     config['_deployment_initial'] = initial
+     timeline = AttackTimeline({**scenario, 'timing': config}, normal=True, offset=origin)
+     stream = None
+-    attacks = scenario.get('continuous_attacks', True)
++    attacks = read_continuous_attacks(scenario, active=native_attack > 0)
+     if (native_attack > 0 and attacks) or wait_next_attack:
+         step = cadence(interval) / FPS if framed else interval
+         limit = math.ceil(required / native_attack) + 2 if native_attack > 0 else math.ceil(horizon / step) + 2
+@@ -175,7 +176,7 @@
+         # A next-attack skill requires another legal attack slot after SP credit.
+         starts = [f / FPS for f in stream['start_frames']] if framed else [
+             max(0, t - interval) for t in stream['times_seconds']]
+-        ready = next((t for t in starts if t >= ready - 1e-9), None) if attacks else None
++        ready = next((t for t in starts if t >= ready - 1e-9), None) if observe_continuous_attacks(attacks) else None
+     if ready is not None and not initial and framed:
+         ready = max(ready, math.ceil(finite(config.get('post_skill_lock_frames', 0), '技能结束硬直帧')) / FPS)
+     if ready is not None and ready > max(0, 3600 - origin):
+--- a/rouge/amiya_continuous_reference.py
++++ b/rouge/amiya_continuous_reference.py
+@@ -1,5 +1,6 @@
+ """Restricted caster S1 interval references without an invented native clock."""
+ from copy import deepcopy
++from .condition_inputs import read_continuous_attacks
+ 
+ 
+ def source_state(scenario):
+@@ -77,7 +78,7 @@
+         'natural_sp_rate_parameter': rate, 'required_sp_parameter': cost,
+         'natural_only_recharge_seconds_reference': cost / rate if rate > 0 else None,
+         'attack_sp_per_attack_parameter': attack_credit,
+-        'attack_sp_enabled_in_reference': bool(scenario.get('continuous_attacks', True)),
++        'attack_sp_enabled_in_reference': bool(read_continuous_attacks(scenario)),
+         'actual_acquisition_times_seconds': None, 'actual_impact_times_seconds': None,
+         'actual_recharge_seconds': None, 'actual_cycle_seconds': None,
+         'native_clock_binding_verified': False,
+--- a/rouge/damage.py
++++ b/rouge/damage.py
+@@ -1,5 +1,6 @@
+ """Deterministic, inspectable damage calculations; no model-generated numbers."""
+ import math
++from .condition_inputs import validate_continuous_attacks
+ from .attribute_limits import effective_attack_speed
+ from .catalog import catalog
+ from .timing import AttackTimeline
+@@ -285,6 +286,7 @@
+     return scenario,attributes,resolution,run_resolution
+ 
+ 
++@validate_continuous_attacks
+ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
+     """Consume one isolated preparation; finishers may annotate its resolutions."""
+     from .estimate import build_estimate
+--- a/rouge/condition_inputs.py
++++ b/rouge/condition_inputs.py
+@@ -0,0 +1,31 @@
++"""Defer text-only condition errors until an isolated core has finished."""
++from contextvars import ContextVar
++from functools import wraps
++
++
++_pending = ContextVar('continuous_attacks_text_pending', default=None)
++
++
++def observe_continuous_attacks(value, *, active=True):
++    if isinstance(value, str) and _pending.get() is not None:
++        if active() if callable(active) else active:
++            _pending.set(True)
++    return value
++
++
++def read_continuous_attacks(scenario, *, active=True):
++    return observe_continuous_attacks(scenario.get('continuous_attacks', True), active=active)
++
++
++def validate_continuous_attacks(compute):
++    @wraps(compute)
++    def isolated(*args, **kwargs):
++        token = _pending.set(False)
++        try:
++            result = compute(*args, **kwargs)
++            if _pending.get():
++                raise ValueError('continuous_attacks 不接受文本条件；请使用布尔值。')
++            return result
++        finally:
++            _pending.reset(token)
++    return isolated
+--- a/tests/test_continuous_attacks_text_input.py
++++ b/tests/test_continuous_attacks_text_input.py
+@@ -0,0 +1,117 @@
++"""Actual continuous-attack consumers defer text errors and isolate private scope."""
++from concurrent.futures import ThreadPoolExecutor
++from copy import deepcopy
++import unittest
++
++from rouge.condition_inputs import read_continuous_attacks, validate_continuous_attacks
++from rouge.damage import calculate_damage
++from rouge.sp_events import charge
++
++ERROR = '^continuous_attacks 不接受文本条件；请使用布尔值。$'
++
++
++def scenario(op='mechanist', skill=1, **extra):
++    return {'operator': op, 'skill': skill, 'elite': 2, 'level': 60,
++            'base_attack': 1379, 'window_seconds': 9.75, **extra}
++
++
++class ContinuousAttacksTextInputTests(unittest.TestCase):
++    def test_actual_attack_consumer_rejects_both_nonempty_and_empty_text(self):
++        for value in ('false', ''):
++            with self.subTest(value=value), self.assertRaisesRegex(ValueError, ERROR):
++                calculate_damage(scenario(continuous_attacks=value))
++
++    def test_inactive_natural_skill_keeps_ignored_text(self):
++        expected = calculate_damage(scenario('silverash', 3))
++        for value in ('false', ''):
++            self.assertEqual(calculate_damage(scenario('silverash', 3, continuous_attacks=value)), expected)
++
++    def test_nonstring_truthiness_aliases_preserve_the_old_results(self):
++        yes = calculate_damage(scenario(continuous_attacks=True))
++        no = calculate_damage(scenario(continuous_attacks=False))
++        for value in (1, 0, None, [1], []):
++            with self.subTest(value=value):
++                self.assertEqual(calculate_damage(scenario(continuous_attacks=value)), yes if value else no)
++
++    def test_hidden_restricted_amiya_reference_keeps_native_clock_unknown(self):
++        for elite, level, rank in ((0, 30, 4), (1, 40, 7)):
++            with self.subTest(elite=elite), self.assertRaisesRegex(ValueError, ERROR):
++                calculate_damage(scenario('char_002_amiya', 1, elite=elite, level=level,
++                    skill_rank=rank, timing_mode='continuous', timing={'target_disappears_seconds': .75},
++                    continuous_attacks='false'))
++        accepted = calculate_damage(scenario('char_002_amiya', 1, elite=0, level=30,
++            skill_rank=4, timing_mode='continuous', timing={'target_disappears_seconds': .75},
++            continuous_attacks=True))
++        self.assertFalse(accepted['amiya_continuous_reference']['native_clock_binding_verified'])
++        self.assertIsNone(accepted['estimate']['skill']['cycle_seconds'])
++
++    def test_older_numeric_and_processed_neural_errors_stay_first(self):
++        with self.assertRaisesRegex(ValueError, '^base_attack 需要有限非负数；法抗范围为 0–100。$'):
++            calculate_damage(scenario(base_attack=-1, continuous_attacks='false'))
++        with self.assertRaisesRegex(ValueError, '^enemy_is_boss 不接受文本条件；请使用布尔值。$'):
++            calculate_damage(scenario('char_1042_phatm2', 1,
++                enemy_is_boss='false', continuous_attacks='false'))
++
++    def test_user_markers_cannot_control_scope_and_caller_is_unchanged(self):
++        args = scenario(continuous_attacks='false', _continuous_attacks_text_pending=False,
++                        continuous_attacks_text_pending=False)
++        saved = deepcopy(args)
++        with self.assertRaisesRegex(ValueError, ERROR):
++            calculate_damage(args)
++        self.assertEqual(args, saved)
++        inactive = scenario('silverash', 3, continuous_attacks='false',
++                            _continuous_attacks_text_pending=True)
++        saved = deepcopy(inactive)
++        calculate_damage(inactive)
++        self.assertEqual(inactive, saved)
++        self.assertEqual(read_continuous_attacks({'continuous_attacks': 'false'}), 'false')
++
++    def test_nested_failure_and_threads_reset_each_private_context(self):
++        @validate_continuous_attacks
++        def inner(value):
++            return read_continuous_attacks({'continuous_attacks': value})
++
++        @validate_continuous_attacks
++        def outer():
++            with self.assertRaisesRegex(ValueError, ERROR):
++                inner('false')
++            return read_continuous_attacks({'continuous_attacks': True})
++
++        @validate_continuous_attacks
++        def old_error():
++            read_continuous_attacks({'continuous_attacks': 'false'})
++            raise ValueError('older error')
++
++        self.assertIs(outer(), True)
++        with self.assertRaisesRegex(ValueError, '^older error$'):
++            old_error()
++        self.assertEqual(read_continuous_attacks({'continuous_attacks': ''}), '')
++
++        def thread_case(value):
++            try:
++                return inner(value)
++            except ValueError as exc:
++                return str(exc)
++        with ThreadPoolExecutor(max_workers=2) as pool:
++            values = list(pool.map(thread_case, ('false', True)))
++        self.assertEqual(values, ['continuous_attacks 不接受文本条件；请使用布尔值。', True])
++        self.assertIs(read_continuous_attacks({'continuous_attacks': False}), False)
++
++    def test_standalone_event_helper_and_actual_tail_qualification(self):
++        args = {'operator': 'mechanist', 'skill': 3, 'continuous_attacks': 'false',
++                'timing': {'sp_events': {'initial': []}}, '_relic_rules': []}
++        skill = {'sp_type': 'INCREASE_WITH_TIME', 'sp_increment': 1}
++        def event(value, wait=False, rate=1):
++            return charge({**args, 'continuous_attacks': value}, skill, 3, rate, 1, 100,
++                          initial=True, wait_next_attack=wait)
++        self.assertEqual(event('false'), event(True))
++        scoped = validate_continuous_attacks(event)
++        self.assertIsNotNone(scoped('false')['seconds'])
++        with self.assertRaisesRegex(ValueError, ERROR):
++            scoped('false', True)
++        # Waiting alone does not consume the condition if readiness stays unknown.
++        self.assertIsNone(scoped('false', True, 0)['seconds'])
++
++
++if __name__ == '__main__':
++    unittest.main()
