@@ -1,0 +1,19 @@
+{
+  "section": 78,
+  "product_failures": 0,
+  "dependent_checks_started_after_failures": false,
+  "preparation_errors": [
+    {
+      "attempt": 1,
+      "command": ".venv/bin/python /workspace/.continuation/apply_archive078.py",
+      "error": "AssertionError: expected clean worktree; exact already pending section78 found",
+      "resolution": "Verified all 58 original and archive byte hashes, exact current HEAD engine single-line replacement and new test/runner; preserved already pending edits"
+    },
+    {
+      "attempt": 2,
+      "command": ".venv/bin/python /workspace/.continuation/verify_resume078.py",
+      "error": "SyntaxError: unmatched closing parenthesis in expected runner construction",
+      "resolution": "Split source/expected/assert into separate statements; no product mutation; then verification passed"
+    }
+  ]
+}

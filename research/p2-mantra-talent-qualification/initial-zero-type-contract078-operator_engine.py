@@ -707,15 +707,14 @@ class Combat:
                     emit('护佑者额外目标治疗（组合待核验）',attack*scale,'healing',
                         len(body['times_seconds'])//int(targets)*extra_targets)
                 bursts=self.option('bubble_bursts',0,maximum=10000,integer=True)
-                flower_bursts=bursts if '扶摇花火' in self.tv else 0.0
-                emit('扶摇花火',attack*self.talent('扶摇花火','heal_scale'),'healing',flower_bursts)
+                emit('扶摇花火',attack*self.talent('扶摇花火','heal_scale'),'healing',bursts)
                 if self.n==2:
                     regular('magic',scale*bb['atk_scale_extra'],targets,name='治疗衍生伤害')
                     if extra_targets:
                         count=components[-1]['hits']/targets*extra_targets
                         emit('额外目标治疗衍生伤害（组合待核验）',
                             attack*scale*bb['atk_scale_extra'],'magic',count)
-                    emit('浮泡治疗衍生伤害',attack*self.talent('扶摇花火','heal_scale')*bb['atk_scale_extra'],'magic',flower_bursts)
+                    emit('浮泡治疗衍生伤害',attack*self.talent('扶摇花火','heal_scale')*bb['atk_scale_extra'],'magic',bursts)
                 triggers=0
                 if self.n==3:
                     triggers=self.option('levitate_triggers',0,maximum=1000,integer=True)
@@ -754,8 +753,6 @@ class Combat:
                 external_event_reference={'kind':'haruka_bubbles','conditional_components':references,'parameter_rows':rows,
                     'notes':['破裂次数只声明观察窗口内条件来源，未定位破裂/受疗及派生伤害时刻；不自动归完整施放、阶段或周期。',
                              '敌方0秒生命周期不取消独立友方受疗；派生伤害需当前敌人邻接覆盖。浮空持续参数不证明首跳、刷新或实际跳数。']}
-                if bursts>0 and '扶摇花火' not in self.tv:
-                    external_event_reference['notes'].append('当前培养尚未解锁扶摇花火；浮泡破碎声明保留，但不产生该天赋治疗或二技能中依赖该治疗的派生伤害。')
                 self.notes.append('遥的治疗衍生伤害保留邻近目标的条件参考；浮泡破碎/浮空计数不生成实际时钟或每次固定四跳。')
         elif op=='char_1046_sbell2':
             if not normal:
@@ -877,7 +874,7 @@ class Combat:
             regular('magic' if not normal and self.n==2 else 'physical',bb.get('attack@atk_scale',1))
             weight=self.option('enemy_weight',3,maximum=100,integer=True)
             extra=self.talent('飘浮大地之上','atk_scale_hi' if weight<=self.talent('飘浮大地之上','mass_level',3) else 'atk_scale_lo')
-            regular('magic',extra,times=1 if '飘浮大地之上' in self.tv else 0,name='飘浮大地之上')
+            regular('magic',extra,name='飘浮大地之上')
             if not normal and self.n==2:
                 # Keep the existing isolated attack-phase parameter reference;
                 # its origin is not a proved absolute takeoff clock.
@@ -964,7 +961,7 @@ class Combat:
                 emit('无言为真溢出跳跃',attack*bb['atk_scale'],'elemental',overflow)
             if not normal:
                 triggers=self.option('palsy_triggers',0,maximum=10000,integer=True)
-                emit('麻痹触发天赋',attack*self.talent('噤声限域','atk_scale'),'elemental',triggers if '噤声限域' in self.tv else 0.0)
+                emit('麻痹触发天赋',attack*self.talent('噤声限域','atk_scale'),'elemental',triggers if '噤声限域' in self.tv else 0)
                 manual=[c for c in components if c['name'] in ('麻痹触发天赋','无言为真溢出跳跃')]
                 from .uncertain_sources import preserve_unplaced_sources
                 reference=preserve_unplaced_sources(manual,window=window,
