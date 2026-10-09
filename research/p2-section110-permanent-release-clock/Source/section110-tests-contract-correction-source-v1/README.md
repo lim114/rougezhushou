@@ -1,0 +1,5 @@
+110首相关测试真实失败记录不可变保留；本包仅纠正新测试错误的公共入口/元数据预期，不修改产品或恢复退役战斗机制。
+
+三失败方法：S1continuous没有shared-clock字段但phase明确unbound；HORN callback已在offline_scope全局partition为reference-only，旧事件表不能恢复public sp_events，也不会令原攻击SP初动缺失。改为确切key缺席/资料记录/完整已有SP对照，保已有零命中和未知音符合同。SP比较helper改为显式presence与已有value；已通过direct条件API方法仅准确改名/说明，不改变原完整receipt和零callback信用断言。其余19测试方法AST不变；全module仍23方法。
+
+作者仅read/AST/hash/compile，未运行产品/测试/native/Git，未来实际guard/结果NULL。Root须真实应用testfile、fresh guard后重跑有关检验。此前candidate与Source窄审保留历史，源码审查没有证明publiccallback实际激活，本次actual失败是校准依据。

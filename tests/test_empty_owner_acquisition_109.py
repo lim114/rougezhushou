@@ -268,18 +268,26 @@ class EmptyOwnerAcquisition109Tests(unittest.TestCase):
                     result = evaluate('char_206_gnosis', 2, mode, **extra)
                     self.assertEqual(result['total_damage'], 0)
 
-    def test_permanent_attack_and_sp_reference_remain_excluded_from_ordinary_fix(self):
-        # Full original/candidate native replay covers all 40 permanent controls.
-        # This deliberately asserts the narrower existing continuous contract;
-        # release/impact separation belongs to a later independently proved fix.
+    def test_permanent_empty_supply_preserves_release_sp_and_independent_note_reference(self):
+        # Section110 separates known hostile impacts from permanent releases.
+        # It retains the original SP clock and unbound S1 note parameters;
+        # owner absence does not prove those independent note collisions.
         for skill in (1, 3):
             for relic_ids in ([], ['rogue_6_relic_legacy_67'], [FINITE_SPEED]):
                 with self.subTest(skill=skill, relic_ids=relic_ids):
                     baseline = evaluate('char_4182_oblvns', skill, relic_ids=relic_ids, window_seconds=10)
                     empty = evaluate('char_4182_oblvns', skill, relic_ids=relic_ids, window_seconds=10,
                                      timing={'target_windows': [], 'initial_target_windows': []})
-                    self.assertEqual(empty['components'], baseline['components'])
-                    self.assertEqual(empty['estimate']['skill'], baseline['estimate']['skill'])
+                    for key in ('initial_seconds', 'recharge_seconds', 'cycle_seconds', 'duration_seconds'):
+                        self.assertEqual(empty['estimate']['skill'][key], baseline['estimate']['skill'][key])
+                    if skill == 1:
+                        self.assertEqual(empty['components'], baseline['components'])
+                        self.assertIsNone(empty['total_damage'])
+                    else:
+                        self.assertGreater(baseline['total_damage'], 0)
+                        self.assertEqual(empty['total_damage'], 0)
+                        self.assertTrue(all(row['hits'] == 0 and row['times_seconds'] == []
+                                            for row in empty['components']))
 
     def test_public_callers_and_both_formatters_remain_read_only(self):
         for scenario in (request(timing={'target_windows': []}),

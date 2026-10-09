@@ -135,7 +135,7 @@ def charge(scenario, skill, required, rate, interval, speed, *, initial=False,
         limit = math.ceil(required / native_attack) + 2 if native_attack > 0 else math.ceil(horizon / step) + 2
         stream = timeline.attacks(max(0, 3600 - origin) if wait_next_attack else horizon, interval, speed, attribute_speed=attribute_speed, limit=limit)
         if attacks and native_attack > 0:
-            times = [f / FPS for f in stream['release_frames']] if framed else [t + stun for t in stream['times_seconds']]
+            times = [f / FPS for f in stream['release_frames']] if framed else [t + stun for t in stream.get('release_times_seconds', stream['times_seconds'])]
             events.extend((time + tick, native_attack, 'outgoing_attack', 0)
                           for time in times if time >= blocked - 1e-9)
     ready = blocked if required <= 0 else None
@@ -175,7 +175,7 @@ def charge(scenario, skill, required, rate, interval, speed, *, initial=False,
     if ready is not None and wait_next_attack:
         # A next-attack skill requires another legal attack slot after SP credit.
         starts = [f / FPS for f in stream['start_frames']] if framed else [
-            max(0, t - interval) for t in stream['times_seconds']]
+            max(0, t - interval) for t in stream.get('release_times_seconds', stream['times_seconds'])]
         ready = next((t for t in starts if t >= ready - 1e-9), None) if observe_continuous_attacks(attacks) else None
     if ready is not None and not initial and framed:
         ready = max(ready, math.ceil(finite(config.get('post_skill_lock_frames', 0), '技能结束硬直帧')) / FPS)

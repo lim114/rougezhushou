@@ -1,0 +1,106 @@
+--- a/tests/test_permanent_empty_target_110.py
++++ b/tests/test_permanent_empty_target_110.py
+@@ -54,7 +54,9 @@
+     def assertSameSP(self, empty, baseline):
+         for key in CLOCK_KEYS:
+             self.assertEqual(empty['estimate']['skill'][key], baseline['estimate']['skill'][key])
+-        self.assertEqual(empty['estimate'].get('sp_events'), baseline['estimate'].get('sp_events'))
++        self.assertEqual('sp_events' in empty['estimate'], 'sp_events' in baseline['estimate'])
++        if 'sp_events' in baseline['estimate']:
++            self.assertEqual(empty['estimate']['sp_events'], baseline['estimate']['sp_events'])
+         self.assertEqual(timing_report(empty), timing_report(baseline))
+ 
+     def test_continuous_empty_keeps_release_and_clears_only_impact(self):
+@@ -181,7 +183,10 @@
+                         self.assertGreater(baseline, 0)
+                         self.assertEqual(observed.hex(), baseline.hex())
+ 
+-    def test_classified_event_sp_consumes_release_clock_without_fabricating_callbacks(self):
++    def test_direct_event_charge_api_preserves_native_releases_without_public_callback_claim(self):
++        # HORN is reference-only after public prepare. This direct conditional
++        # API test checks native outgoing releases/next slots, not activation
++        # of the retired public callback effect or inferred in-game kills.
+         skill = catalog()['operators'][OP]['skills'][2]['levels'][9]
+         for mode in MODES:
+             for initial in (False, True):
+@@ -253,7 +258,14 @@
+                     self.assertIsNone(empty['unbound_cast_reference']['actual_hit_times_seconds'])
+                     self.assertIsNone(empty['unbound_cast_reference']['actual_end_seconds'])
+                     self.assertFalse(empty['complete'])
+-                    self.assertFalse(empty['timing']['resource_and_damage_shared_clock'])
++                    self.assertTrue(empty['timing']['phase_clock_unbound'])
++                    if mode == 'frames':
++                        self.assertFalse(empty['timing']['resource_and_damage_shared_clock'])
++                    else:
++                        # annotate_result preserves the legacy continuous shape;
++                        # key absence is not a fabricated False clock verdict.
++                        self.assertNotIn('resource_and_damage_shared_clock', empty['timing'])
++                        self.assertNotIn('resource_and_damage_shared_clock', baseline['timing'])
+ 
+     def test_s2_piano_and_organ_modes_clear_known_impacts_and_keep_initial_sp(self):
+         for mode in MODES:
+@@ -306,27 +318,45 @@
+                         else:
+                             self.assertIsNone(empty['total_damage'])
+ 
+-    def test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence(self):
++    def test_public_reference_only_callback_relic_cannot_restore_retired_event_credit(self):
+         for mode in MODES:
+             for skill in (1, 3):
+-                with self.subTest(mode=mode, skill=skill):
+-                    phases = {'initial': [{'at_seconds': 1, 'type': 'kill'}],
+-                              'cycle': [{'at_seconds': 26, 'type': 'kill'}]}
+-                    baseline = evaluate(skill, mode, relic_ids=[HORN, ATTACK_SP],
+-                                        window_seconds=10, timing={'sp_events': phases})
+-                    empty = evaluate(skill, mode, relic_ids=[HORN, ATTACK_SP], window_seconds=10,
+-                                     timing={'sp_events': phases, 'target_windows': [],
+-                                             'initial_target_windows': []})
+-                    self.assertSameSP(empty, baseline)
+-                    self.assertEqual(empty['estimate']['sp_events'], baseline['estimate']['sp_events'])
+-
+-    def test_missing_classified_callbacks_stay_unknown_without_synthetic_empty_events(self):
+-        for mode in MODES:
+-            with self.subTest(mode=mode):
+-                result = evaluate(mode=mode, relic_ids=[HORN], window_seconds=10,
+-                                  timing={'target_windows': []})
+-                self.assertIsNone(result['estimate']['skill']['initial_seconds'])
+-                self.assertEqual(result['estimate']['sp_events']['initial']['status'], 'missing')
++                for own_supply in ({}, {'target_windows': [], 'initial_target_windows': []}):
++                    with self.subTest(mode=mode, skill=skill, own_supply=own_supply):
++                        phases = {'initial': [{'at_seconds': 1, 'type': 'kill'}],
++                                  'cycle': [{'at_seconds': 26, 'type': 'kill'}]}
++                        baseline = evaluate(skill, mode, relic_ids=[ATTACK_SP],
++                                            window_seconds=10, timing=own_supply)
++                        reference = evaluate(skill, mode, relic_ids=[HORN, ATTACK_SP],
++                                             window_seconds=10, timing={**own_supply, 'sp_events': phases})
++                        self.assertSameSP(reference, baseline)
++                        self.assertEqual(reference['components'], baseline['components'])
++                        self.assertEqual(reference['total_damage'], baseline['total_damage'])
++                        self.assertNotIn('sp_events', reference['estimate'])
++                        self.assertNotIn('sp_events', baseline['estimate'])
++                        record = next(row for row in reference['relic_resolution']['records']
++                                      if row['id'] == HORN)
++                        self.assertEqual(record['status'], 'reference_only')
++                        self.assertEqual(record['applied'], [])
++                        self.assertTrue(any(rule['kind'] == 'event_sp'
++                                            for rule in record['reference_effects']))
++                        self.assertTrue(reference['relic_resolution']['combat_effects_reference_only'])
++                        self.assertTrue(any(section['id'] == 'relic_combat_reference'
++                                            for section in reference['report']['sections']))
++
++    def test_reference_only_callback_relic_keeps_existing_offline_attack_charge(self):
++        for mode in MODES:
++            with self.subTest(mode=mode):
++                timing = {'target_windows': []}
++                baseline = evaluate(mode=mode, window_seconds=10, timing=timing)
++                result = evaluate(mode=mode, relic_ids=[HORN], window_seconds=10, timing=timing)
++                self.assertSameSP(result, baseline)
++                self.assertGreater(baseline['estimate']['skill']['initial_seconds'], 0)
++                self.assertEqual(result['estimate']['skill'], baseline['estimate']['skill'])
++                self.assertNotIn('sp_events', result['estimate'])
++                record = next(row for row in result['relic_resolution']['records'] if row['id'] == HORN)
++                self.assertEqual(record['status'], 'reference_only')
++                self.assertEqual(record['applied'], [])
+                 self.assertEqual(result['total_damage'], 0)
+ 
+     def test_explicit_zero_observation_does_not_erase_independent_note_parameters(self):

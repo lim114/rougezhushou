@@ -121,7 +121,7 @@ def charge_seconds(scenario,required,increment,interval,speed,offset=0,initial=F
         return events['start_frames'][count]/FPS
     # SP credited on a release is usable on the following simulated logic tick.
     # This ordering keeps the charging hit within the prior cycle, once only.
-    return (frames[count-1]+1)/FPS if timeline.mode=='frames' else events['times_seconds'][count-1]
+    return (frames[count-1]+1)/FPS if timeline.mode=='frames' else events.get('release_times_seconds',events['times_seconds'])[count-1]
 
 
 def mixed_charge_seconds(scenario,required,rate,attack_sp,interval,speed,offset=0,initial=False,stun=0,resume=0,blocked_seconds=0,attribute_speed=None):
@@ -144,7 +144,7 @@ def mixed_charge_seconds(scenario,required,rate,attack_sp,interval,speed,offset=
     timeline=AttackTimeline({**scenario,'timing':config},normal=True,offset=offset)
     stream=timeline.attacks(max(0,3600-offset),interval,speed,attribute_speed=attribute_speed)
     charge=0;last=0
-    times=[frame/FPS for frame in stream['release_frames']] if timeline.mode=='frames' else stream['times_seconds']
+    times=[frame/FPS for frame in stream['release_frames']] if timeline.mode=='frames' else stream.get('release_times_seconds',stream['times_seconds'])
     for time in times:
         if time<blocked:continue
         last=max(last,blocked)
@@ -253,6 +253,13 @@ class AttackTimeline:
                 'known_animation':False,'resume_frame':frame_time(duration),'unit':unit or self.s['operator'],
                 'target_scope':self.target_scope}
             if self.target_scope=='enemy' and (self.options.get('target_disappears_seconds')==0 or (self.options.get('target_windows')==[] and self.s['operator']!='char_4182_oblvns')):stream['resume_frame']=0
+            if (self.target_scope=='enemy' and self.s['operator']=='char_4182_oblvns' and
+                    self.options.get('target_windows')==[] and self.options.get('target_disappears_seconds')!=0):
+                # Permanent releases may charge SP without a hostile impact.
+                # Keep the original continuous float clock, never frame-rounded.
+                stream['release_times_seconds']=times
+                stream['impact_frames']=[]
+                stream['times_seconds']=[]
             if deployment_speed:
                 stream.update(temporary_attack_speed=True,interval_frames_by_attack=[cadence(s) for s in steps],
                     deployment_origin_seconds=(self.offset+self.deployment_offset)/FPS)

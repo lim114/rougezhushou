@@ -1,0 +1,103 @@
+--- original/probe_empty_target109.py
++++ extra/probe_permanent_target109.py
+@@ -1,4 +1,4 @@
+-"""Root-only bounded original public observations of explicit empty owner supply.
++"""Root-only bounded original public observations of permanent release and enemy hits.
+ 
+ The Source author compiles this file without executing it or importing a project,
+ API, native helper or codec. No numerical PASS or new game-clock oracle is used.
+@@ -15,7 +15,7 @@
+ import traceback
+ 
+ NATIVE_SHA = 'f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a'
+-MANIFEST_SHA = 'faf9c914e0fd508929041aa8b05db157f48a942ce25974e4c8073f6ebf8e9193'
++MANIFEST_SHA = 'd16a6f29996304f9de3bbc570c004e38c153548512169ce93dad0be33fb95227'
+ 
+ 
+ def sha(value):
+@@ -43,7 +43,7 @@
+     parser.add_argument('--root', required=True)
+     parser.add_argument('--guard', required=True)
+     parser.add_argument('--out', required=True)
+-    parser.add_argument('--stage', choices=('focused', 'extended'), default='focused')
++    parser.add_argument('--stage', choices=('focused',), default='focused')
+     parser.add_argument('--start', type=int, default=0)
+     parser.add_argument('--limit', type=int)
+     options = parser.parse_args()
+@@ -76,8 +76,8 @@
+     assert manifest['required_future_whole_source_count'] is None
+     assert manifest['required_future_whole_guard_sha256'] is None
+     assert manifest['CORE_sha256'] == core
+-    assert manifest['stages']['focused']['case_count'] == 30
+-    assert manifest['stages']['extended']['case_count'] == 1044
++    assert set(manifest['stages']) == {'focused'}
++    assert manifest['stages']['focused']['case_count'] == 40
+     for name, pin in manifest['stable_original_source_sha256'].items():
+         assert expected[name] == pin and sha((root / name).read_bytes()) == pin
+     stage = manifest['stages'][options.stage]
+@@ -86,7 +86,7 @@
+     assert len({case['id'] for case in all_cases}) == len(all_cases)
+     assert 0 <= options.start < len(all_cases)
+     limit = stage['default_limit'] if options.limit is None else options.limit
+-    assert 1 <= limit <= 160
++    assert 1 <= limit <= 40
+     end = min(len(all_cases), options.start + limit)
+     cases = all_cases[options.start:end]
+     sys.dont_write_bytecode = True
+@@ -99,7 +99,7 @@
+     native_rows = []
+     active = {'case': 'preimport', 'phase': 'preimport'}
+     receipt = {
+-        'kind': 'ROOT_ACTUAL_ORIGINAL109_EMPTY_OWNER_SOURCE',
++        'kind': 'ROOT_ACTUAL_ORIGINAL109_PERMANENT_RELEASE_SOURCE',
+         'observation_only': True, 'product_pass': False, 'observation_complete': False,
+         'selected_window_complete': False, 'full_stage_complete': False,
+         'author_runtime_executed': False, 'native_windows_verified': False,
+@@ -117,7 +117,7 @@
+         'call_count_scope': manifest['explicit_call_count_scope'],
+         'rows': rows, 'calls': calls, 'native_records': native_rows,
+         'unknown_boundaries': manifest['unknown_boundaries'],
+-        'extended_is_optional_not_progress_requirement': True,
++        'parent_extended_inventory_is_not_required_here': True,
+     }
+     finished = threading.Event()
+     start = time.perf_counter()
+@@ -129,7 +129,7 @@
+                 'active': dict(active), 'elapsed_seconds': time.perf_counter() - start,
+                 'stage': options.stage, 'last_completed_next_case_index': receipt['next_case_index'],
+                 'actual_explicit_consumer_calls': len(calls), 'actual_native_records': len(native_rows),
+-                'reason': 'Root120sOriginalEmptyOwnerProbeBudget',
++                'reason': 'Root120sOriginalPermanentReleaseProbeBudget',
+                 'resume_rule': 'Retain this output/raw124. Use a fresh output and fresh actual unchanged guard; never append or backfill this receipt.'})
+             os._exit(124)
+ 
+@@ -146,21 +146,27 @@
+     def observe(case, phase, api, function, args):
+         active.update(case=case, phase=phase)
+         before = freeze(args)
++        kwargs = {}
++        before_kwargs = freeze(kwargs)
+         result = None
+         problem = None
+         try:
+-            result = function(*args)
++            result = function(*args, **kwargs)
+         except Exception as error:
+             problem = error_record(error)
+         native = save_native('original-public-consumer', case, phase,
+                              {'before': before, 'after': args,
++                              'kwargs_before': before_kwargs, 'kwargs_after': kwargs,
+                               'result': result, 'error': problem})
+         row = {'case': case, 'phase': phase, 'api': api, 'returned': problem is None,
+                'error': problem, 'native': native, 'caller_unchanged': False,
+-               'complete_returned_value_in_native': True}
++               'complete_returned_value_in_native': True, 'actual_kwargs_in_native': True,
++               'kwargs_unchanged': False}
+         calls.append(row)
+         assert_native_equal(args, before, case + ':' + phase + ':caller')
+         row['caller_unchanged'] = True
++        assert_native_equal(kwargs, before_kwargs, case + ':' + phase + ':kwargs')
++        row['kwargs_unchanged'] = True
+         if type(result) is dict:
+             row['returned_keys'] = list(result)
+         elif type(result) is str:

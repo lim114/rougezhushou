@@ -1,0 +1,9 @@
+110 small real MainWindow runner — Source-only STOPWRITE
+
+Root runs window110.py with required --root --guard --out --source-count. The fresh actual section110 guard is supplied dynamically, including whole maintained Source and CORE before/after. No prior109 Gold Source or receipt is reused. No future count/hash/result is invented.
+
+One original MainWindow with real calculator/account/RunState/Qt/backend at an exclusive public temporary folder visits S1/S2/S3 × frames/continuous × default/target[] =12 states. Six pairs preserve complete native SP clock fields and timing report while S1 independent notes and unknown actual totals stay unchanged; S2/S3 positive default impacts become zero empty hostile impacts. S2 remains default piano/no Fever. No callback relic/input is supplied. Full caller/native result/UI wrapper, three whole formatter texts, actual state/account/disks, each saved UI step and close/direct RunState reload are retained. Numeric calls delegate to the original calculation without fabricated results.
+
+Two actual S3 frames PNGs compare default positive and empty zero. The real damage heading is centered and its rectangle plus next three block cursor rectangles must be fully visible before capture; numbers cannot be inferred from a clipped anchor. Each native record and each completed-state checkpoint is fsynced. A450second watchdog includes final Source hashing and final exclusive receipt write. All terminal pass flags are initially false and are set only after Root real workflow completion with no Qt error/drift.
+
+Author only read standard-library JSON/AST/hash and compiled this runner/helper to code objects without executing them; no project/helper/codec/native/Qt/Wine/Git/tracked operation. Root solely reviews/runs. CONTRACT.json describes intended checks, not observed results. Prior original88 public API comparisons are separate Root evidence, not an original-window Gold gate.

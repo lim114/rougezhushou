@@ -616,7 +616,7 @@ class MainWindow(QMainWindow):
         self.timing_scenario=QPlainTextEdit()
         self.timing_scenario.setMaximumHeight(85)
         self.timing_scenario.setPlaceholderText('可留空。情景JSON示例：{"target_windows":[[0,5],[8,20]],"movement_windows":[[2,3]]}')
-        self.timing_scenario.setToolTip('秒数以技能开启为0；初动使用initial_target_windows等独立部署时间轴。此处为测试情景，当前尚未从战斗画面自动跟踪。动画参考值会自动加载；不要在这里填写培养属性。区间按30Hz模拟帧换算，换算后结束须晚于开始。关闭逐帧时，明确的空供靶列表（target_windows:[]）取消适用的敌方普通攻击与瞬时命中参考；独立单位仅消费各自的空供靶声明，友方潜在治疗另按受疗条件处理，独立或未定位来源仍保留各自条件。永久攻击仍沿用既有参考。非空供靶、移动和中断区间不在连续模式下逐帧调度；目标消失声明继续按原范围处理，未知时钟不补算。')
+        self.timing_scenario.setToolTip('秒数以技能开启为0；初动使用initial_target_windows等独立部署时间轴。此处为测试情景，当前尚未从战斗画面自动跟踪。动画参考值会自动加载；不要在这里填写培养属性。区间按30Hz模拟帧换算，换算后结束须晚于开始。关闭逐帧时，明确的空供靶列表（target_windows:[]）取消适用的敌方普通攻击与瞬时命中参考；独立单位仅消费各自的空供靶声明，友方潜在治疗另按受疗条件处理，独立或未定位来源仍保留各自条件。永久攻击在空供靶时保留出手与相应技力参考，但不产生已建模敌方命中；独立音符的实际碰撞仍按原说明保持未知。非空供靶、移动和中断区间不在连续模式下逐帧调度；目标消失声明继续按原范围处理，未知时钟不补算。')
         self.timing_preview_key=None;self.timing_previews={}
         form.addRow('战斗时序情景（测试，可留空）',self.timing_scenario)
         self.frame_timing.toggled.connect(lambda:self.calculate())

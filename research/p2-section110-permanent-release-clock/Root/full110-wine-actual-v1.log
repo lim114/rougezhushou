@@ -1,0 +1,43 @@
+...............................................................................s...........s.ss..s.....sss.s...sssss...............s.ss..s.s.s....E.s....s.s.s.ss.......................ssssssssssssssssssssssssssssssssssssssssssss........................................................................................................................................................U.........................................U.................U..U............U..U.......U..............................................U.....U.....................U................U........U....................U................U.UU.U.U..................UUU.U..................U.........................U.................................................U................ssssssssssssssUUUUUUUU.............UUUUUU...............................UU....................UUUUUUUUUUUUU.UU..UUUUUUUUU..............................................UUUU......UU.....U.U............E.............UUUUUUUUUUUUUUUU.U...............UUUUUUUUUUUUUUUUUUUUUUUUUUUU.............U.............................................................U....U..............................................................................................................................................................UUUUU....UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUEUUUUUUU........................................................................................................................................................................................................................s....................................................................................................s.......................s........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+======================================================================
+ERROR: test_pinned_raw_selectors_amounts_and_resident_whitelist (tests.test_deployment_relics_027.DeploymentRelics027Tests.test_pinned_raw_selectors_amounts_and_resident_whitelist)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_deployment_relics_027.py", line 34, in test_pinned_raw_selectors_amounts_and_resident_whitelist
+    raw = json.loads(Path('.cache/game-data/roguelike_topic_table.json').read_text(encoding='utf-8'))['details']['rogue_6']
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\.compat\python-windows\package\tools\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\.compat\python-windows\package\tools\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '.cache\\game-data\\roguelike_topic_table.json'
+
+======================================================================
+ERROR: setUpClass (tests.test_empty_bed_cost_057.EmptyBedCost057Tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_empty_bed_cost_057.py", line 28, in setUpClass
+    receipt = json.loads(Path('.cache/game-data/receipt.json').read_text('utf-8'))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\.compat\python-windows\package\tools\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\.compat\python-windows\package\tools\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '.cache\\game-data\\receipt.json'
+
+======================================================================
+ERROR: test_event_same_title_and_description_preserve_ambiguous_scene_ids (tests.test_node_content.NodeContentTests.test_event_same_title_and_description_preserve_ambiguous_scene_ids)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\tests\test_node_content.py", line 114, in test_event_same_title_and_description_preserve_ambiguous_scene_ids
+    raise RuntimeError('CJK font fixture unavailable: '+str(font_file)+
+RuntimeError: CJK font fixture unavailable: C:\windows\Fonts\msyh.ttc; set ROUGE_TEST_CJK_FONT to a real font file containing Noto Sans CJK SC.
+
+----------------------------------------------------------------------
+Ran 2403 tests in 406.027s
+
+FAILED (errors=3, skipped=87)

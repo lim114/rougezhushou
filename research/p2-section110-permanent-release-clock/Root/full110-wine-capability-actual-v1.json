@@ -1,0 +1,113 @@
+{
+  "format_version": 1,
+  "checked_at": "2026-10-09T16:49:11.083505+00:00",
+  "platform": "Windows",
+  "wine_compatibility": true,
+  "native_windows_integration_verified": false,
+  "identity": {
+    "wine_specific_export": "ntdll.wine_get_version",
+    "actual_version": "10.0",
+    "active_kernelbase": {
+      "path": "C:\\windows\\system32\\kernelbase.dll",
+      "bytes": 7262127,
+      "sha256": "30875e36572fff7b6eaee0798e807342fd99fff4a857799d11171e6617c116a5"
+    },
+    "active_ntdll": {
+      "path": "C:\\windows\\system32\\ntdll.dll",
+      "bytes": 4351742,
+      "sha256": "5e3846b0c3cdcb4009a5837719cbc02f2635892ed788bc2e592e344cced6b0c2"
+    },
+    "python": "3.12.10"
+  },
+  "default_temp": "C:\\users\\agent\\AppData\\Local\\Temp",
+  "observations": [
+    {
+      "target_present": false,
+      "link": "C:\\users\\agent\\AppData\\Local\\Temp\\public-symlink-capability-100-2w75_jwc\\absent-link.json",
+      "target": "C:\\users\\agent\\AppData\\Local\\Temp\\public-symlink-capability-100-2w75_jwc\\absent-target.json",
+      "creation": {
+        "returned_type": "NoneType",
+        "returned_repr": "None"
+      },
+      "is_symlink": false,
+      "exists": false,
+      "lstat": {
+        "error_type": "FileNotFoundError",
+        "error": "[WinError 2] File not found: 'C:\\\\users\\\\agent\\\\AppData\\\\Local\\\\Temp\\\\public-symlink-capability-100-2w75_jwc\\\\absent-link.json'",
+        "errno": 2,
+        "winerror": 2
+      },
+      "readlink": {
+        "error_type": "FileNotFoundError",
+        "error": "[WinError 2] File not found: 'C:\\\\users\\\\agent\\\\AppData\\\\Local\\\\Temp\\\\public-symlink-capability-100-2w75_jwc\\\\absent-link.json'",
+        "errno": 2,
+        "winerror": 2
+      },
+      "read_bytes": {
+        "error_type": "FileNotFoundError",
+        "error": "[Errno 2] No such file or directory: 'C:\\\\users\\\\agent\\\\AppData\\\\Local\\\\Temp\\\\public-symlink-capability-100-2w75_jwc\\\\absent-link.json'",
+        "errno": 2,
+        "winerror": null
+      },
+      "resolved_link_matches_target": false,
+      "actual_directory_entries": [],
+      "target_bytes_unchanged": true
+    },
+    {
+      "target_present": true,
+      "link": "C:\\users\\agent\\AppData\\Local\\Temp\\public-symlink-capability-100-2w75_jwc\\present-link.json",
+      "target": "C:\\users\\agent\\AppData\\Local\\Temp\\public-symlink-capability-100-2w75_jwc\\present-target.json",
+      "creation": {
+        "returned_type": "NoneType",
+        "returned_repr": "None"
+      },
+      "is_symlink": false,
+      "exists": false,
+      "lstat": {
+        "error_type": "FileNotFoundError",
+        "error": "[WinError 2] File not found: 'C:\\\\users\\\\agent\\\\AppData\\\\Local\\\\Temp\\\\public-symlink-capability-100-2w75_jwc\\\\present-link.json'",
+        "errno": 2,
+        "winerror": 2
+      },
+      "readlink": {
+        "error_type": "FileNotFoundError",
+        "error": "[WinError 2] File not found: 'C:\\\\users\\\\agent\\\\AppData\\\\Local\\\\Temp\\\\public-symlink-capability-100-2w75_jwc\\\\present-link.json'",
+        "errno": 2,
+        "winerror": 2
+      },
+      "read_bytes": {
+        "error_type": "FileNotFoundError",
+        "error": "[Errno 2] No such file or directory: 'C:\\\\users\\\\agent\\\\AppData\\\\Local\\\\Temp\\\\public-symlink-capability-100-2w75_jwc\\\\present-link.json'",
+        "errno": 2,
+        "winerror": null
+      },
+      "resolved_link_matches_target": false,
+      "actual_directory_entries": [
+        "present-target.json"
+      ],
+      "target_bytes_unchanged": true
+    }
+  ],
+  "admission_mode": "diagnosed_phantom_success",
+  "passed": true,
+  "project_imports": 0,
+  "project_calls": 0,
+  "private_state_access": false,
+  "source_sha256": {
+    "suite_common110.py": "d320d44e687b6883a0a1e15e151c70a72523e0c022ccc624e4bc00a26806671b",
+    "wine_capability_probe110.py": "bab12fb017a6a482488a808387604e979a540d7551440d614be7a21028c222fc",
+    "wine_full110.py": "8f56829f3a020f478cec160cbf767d1c7700b60ae4007d968465c2847a0a5b09",
+    "wine_selected110.py": "387f6d3d8df4ca9220585cc8c8dd0a39570b71cb48941b12625b6146d2ca088b",
+    "source-contract.json": "2bbf6dc87d12b3a108cdc75831d2f40f379da1140aed3a9ae6222ffeac432f81",
+    "README.md": "26746058cec2067eddedbb30fd33e61c8311267177f855676d19d8ecdccba9c5",
+    "manifest.json": "e6be626bf32ed5141a90765715efc06bb909d9febb86993fdb9856048016de24"
+  },
+  "source_drift": [],
+  "actual_python_argv": [
+    "Z:\\workspace\\.continuation\\full110-suite-adapters-source-v1\\wine_capability_probe110.py",
+    "--wine",
+    "--out",
+    "Z:\\workspace\\.continuation\\full110-wine-capability-actual-v1.json"
+  ],
+  "scope": "Public temporary filesystem capability only; no product assertion or suite PASS"
+}

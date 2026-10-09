@@ -1,0 +1,128 @@
+{
+  "kind": "SECTION110_TEST_ONLY_SOURCE_CONTRACT_CORRECTION_NO_PRODUCT_CHANGE",
+  "STOPWRITE": true,
+  "author_runtime_executed": false,
+  "project_helper_imported": false,
+  "native_decoded": false,
+  "tracked_edits": false,
+  "runtime_pending": true,
+  "product_pass": false,
+  "future_actual_guard": null,
+  "future_actual_results": null,
+  "path": "tests/test_permanent_empty_target_110.py",
+  "before_bytes": 21693,
+  "before_sha256": "8100060939608823b3df84dbfa3a0195f5d7e23e6145f3c44acb623a9a364f5c",
+  "after_bytes": 24021,
+  "after_sha256": "3c4413140bf8d5af928b972399b0f63ae8056817a29f45d61725b6ea3dbbac6f",
+  "blocks": [
+    {
+      "old": "    def assertSameSP(self, empty, baseline):\n        for key in CLOCK_KEYS:\n            self.assertEqual(empty['estimate']['skill'][key], baseline['estimate']['skill'][key])\n        self.assertEqual(empty['estimate'].get('sp_events'), baseline['estimate'].get('sp_events'))\n        self.assertEqual(timing_report(empty), timing_report(baseline))\n",
+      "new": "    def assertSameSP(self, empty, baseline):\n        for key in CLOCK_KEYS:\n            self.assertEqual(empty['estimate']['skill'][key], baseline['estimate']['skill'][key])\n        self.assertEqual('sp_events' in empty['estimate'], 'sp_events' in baseline['estimate'])\n        if 'sp_events' in baseline['estimate']:\n            self.assertEqual(empty['estimate']['sp_events'], baseline['estimate']['sp_events'])\n        self.assertEqual(timing_report(empty), timing_report(baseline))\n",
+      "occurrences": 1,
+      "purpose": "assertSameSP"
+    },
+    {
+      "old": "    def test_s1_independent_note_parameters_and_unknown_actual_clocks_survive(self):\n        for mode in MODES:\n            for relic_ids in ([], [ATTACK_SP], [FINITE_SPEED]):\n                with self.subTest(mode=mode, relic_ids=relic_ids):\n                    baseline = evaluate(1, mode, relic_ids=relic_ids, window_seconds=10)\n                    empty = evaluate(1, mode, relic_ids=relic_ids, window_seconds=10,\n                                     timing={'target_windows': [], 'initial_target_windows': []})\n                    self.assertSameSP(empty, baseline)\n                    self.assertEqual(empty['components'], baseline['components'])\n                    self.assertEqual(empty['unbound_cast_reference'], baseline['unbound_cast_reference'])\n                    self.assertIsNone(empty['total_damage'])\n                    self.assertIsNone(empty['unbound_cast_reference']['actual_hit_times_seconds'])\n                    self.assertIsNone(empty['unbound_cast_reference']['actual_end_seconds'])\n                    self.assertFalse(empty['complete'])\n                    self.assertFalse(empty['timing']['resource_and_damage_shared_clock'])\n",
+      "new": "    def test_s1_independent_note_parameters_and_unknown_actual_clocks_survive(self):\n        for mode in MODES:\n            for relic_ids in ([], [ATTACK_SP], [FINITE_SPEED]):\n                with self.subTest(mode=mode, relic_ids=relic_ids):\n                    baseline = evaluate(1, mode, relic_ids=relic_ids, window_seconds=10)\n                    empty = evaluate(1, mode, relic_ids=relic_ids, window_seconds=10,\n                                     timing={'target_windows': [], 'initial_target_windows': []})\n                    self.assertSameSP(empty, baseline)\n                    self.assertEqual(empty['components'], baseline['components'])\n                    self.assertEqual(empty['unbound_cast_reference'], baseline['unbound_cast_reference'])\n                    self.assertIsNone(empty['total_damage'])\n                    self.assertIsNone(empty['unbound_cast_reference']['actual_hit_times_seconds'])\n                    self.assertIsNone(empty['unbound_cast_reference']['actual_end_seconds'])\n                    self.assertFalse(empty['complete'])\n                    self.assertTrue(empty['timing']['phase_clock_unbound'])\n                    if mode == 'frames':\n                        self.assertFalse(empty['timing']['resource_and_damage_shared_clock'])\n                    else:\n                        # annotate_result preserves the legacy continuous shape;\n                        # key absence is not a fabricated False clock verdict.\n                        self.assertNotIn('resource_and_damage_shared_clock', empty['timing'])\n                        self.assertNotIn('resource_and_damage_shared_clock', baseline['timing'])\n",
+      "occurrences": 1,
+      "purpose": "Preserve actual S1 continuous missing shared-clock metadata and actual unbound phase; framed False remains explicit."
+    },
+    {
+      "old": "    def test_classified_event_sp_consumes_release_clock_without_fabricating_callbacks(self):\n        skill = catalog()['operators'][OP]['skills'][2]['levels'][9]\n        for mode in MODES:\n            for initial in (False, True):\n                for wait_next_attack in (False, True):\n                    with self.subTest(mode=mode, initial=initial, wait_next_attack=wait_next_attack):\n                        phases = {'initial': [], 'cycle': []}\n                        plain = prepared(mode=mode, relic_ids=[HORN, ATTACK_SP],\n                                         timing={'sp_events': phases})\n                        empty = prepared(mode=mode, relic_ids=[HORN, ATTACK_SP], timing={\n                            'sp_events': phases, 'target_windows': [], 'initial_target_windows': []})\n                        params = dict(initial=initial, wait_next_attack=wait_next_attack,\n                                      attribute_speed=100)\n                        baseline = event_charge(plain, skill, 13, 0, .73, 100, **params)\n                        observed = event_charge(empty, skill, 13, 0, .73, 100, **params)\n                        self.assertIsNotNone(baseline['seconds'])\n                        self.assertEqual(observed, baseline)\n                        self.assertEqual(observed['credited_callback_events'], 0)\n",
+      "new": "    def test_direct_event_charge_api_preserves_native_releases_without_public_callback_claim(self):\n        # HORN is reference-only after public prepare. This direct conditional\n        # API test checks native outgoing releases/next slots, not activation\n        # of the retired public callback effect or inferred in-game kills.\n        skill = catalog()['operators'][OP]['skills'][2]['levels'][9]\n        for mode in MODES:\n            for initial in (False, True):\n                for wait_next_attack in (False, True):\n                    with self.subTest(mode=mode, initial=initial, wait_next_attack=wait_next_attack):\n                        phases = {'initial': [], 'cycle': []}\n                        plain = prepared(mode=mode, relic_ids=[HORN, ATTACK_SP],\n                                         timing={'sp_events': phases})\n                        empty = prepared(mode=mode, relic_ids=[HORN, ATTACK_SP], timing={\n                            'sp_events': phases, 'target_windows': [], 'initial_target_windows': []})\n                        params = dict(initial=initial, wait_next_attack=wait_next_attack,\n                                      attribute_speed=100)\n                        baseline = event_charge(plain, skill, 13, 0, .73, 100, **params)\n                        observed = event_charge(empty, skill, 13, 0, .73, 100, **params)\n                        self.assertIsNotNone(baseline['seconds'])\n                        self.assertEqual(observed, baseline)\n                        self.assertEqual(observed['credited_callback_events'], 0)\n",
+      "occurrences": 1,
+      "purpose": "Correct passed direct helper label; preserve its full receipt and zero callback-credit assertions without injecting production rules."
+    },
+    {
+      "old": "    def test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence(self):\n        for mode in MODES:\n            for skill in (1, 3):\n                with self.subTest(mode=mode, skill=skill):\n                    phases = {'initial': [{'at_seconds': 1, 'type': 'kill'}],\n                              'cycle': [{'at_seconds': 26, 'type': 'kill'}]}\n                    baseline = evaluate(skill, mode, relic_ids=[HORN, ATTACK_SP],\n                                        window_seconds=10, timing={'sp_events': phases})\n                    empty = evaluate(skill, mode, relic_ids=[HORN, ATTACK_SP], window_seconds=10,\n                                     timing={'sp_events': phases, 'target_windows': [],\n                                             'initial_target_windows': []})\n                    self.assertSameSP(empty, baseline)\n                    self.assertEqual(empty['estimate']['sp_events'], baseline['estimate']['sp_events'])\n",
+      "new": "    def test_public_reference_only_callback_relic_cannot_restore_retired_event_credit(self):\n        for mode in MODES:\n            for skill in (1, 3):\n                for own_supply in ({}, {'target_windows': [], 'initial_target_windows': []}):\n                    with self.subTest(mode=mode, skill=skill, own_supply=own_supply):\n                        phases = {'initial': [{'at_seconds': 1, 'type': 'kill'}],\n                                  'cycle': [{'at_seconds': 26, 'type': 'kill'}]}\n                        baseline = evaluate(skill, mode, relic_ids=[ATTACK_SP],\n                                            window_seconds=10, timing=own_supply)\n                        reference = evaluate(skill, mode, relic_ids=[HORN, ATTACK_SP],\n                                             window_seconds=10, timing={**own_supply, 'sp_events': phases})\n                        self.assertSameSP(reference, baseline)\n                        self.assertEqual(reference['components'], baseline['components'])\n                        self.assertEqual(reference['total_damage'], baseline['total_damage'])\n                        self.assertNotIn('sp_events', reference['estimate'])\n                        self.assertNotIn('sp_events', baseline['estimate'])\n                        record = next(row for row in reference['relic_resolution']['records']\n                                      if row['id'] == HORN)\n                        self.assertEqual(record['status'], 'reference_only')\n                        self.assertEqual(record['applied'], [])\n                        self.assertTrue(any(rule['kind'] == 'event_sp'\n                                            for rule in record['reference_effects']))\n                        self.assertTrue(reference['relic_resolution']['combat_effects_reference_only'])\n                        self.assertTrue(any(section['id'] == 'relic_combat_reference'\n                                            for section in reference['report']['sections']))\n",
+      "occurrences": 1,
+      "purpose": "test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence"
+    },
+    {
+      "old": "    def test_missing_classified_callbacks_stay_unknown_without_synthetic_empty_events(self):\n        for mode in MODES:\n            with self.subTest(mode=mode):\n                result = evaluate(mode=mode, relic_ids=[HORN], window_seconds=10,\n                                  timing={'target_windows': []})\n                self.assertIsNone(result['estimate']['skill']['initial_seconds'])\n                self.assertEqual(result['estimate']['sp_events']['initial']['status'], 'missing')\n                self.assertEqual(result['total_damage'], 0)\n",
+      "new": "    def test_reference_only_callback_relic_keeps_existing_offline_attack_charge(self):\n        for mode in MODES:\n            with self.subTest(mode=mode):\n                timing = {'target_windows': []}\n                baseline = evaluate(mode=mode, window_seconds=10, timing=timing)\n                result = evaluate(mode=mode, relic_ids=[HORN], window_seconds=10, timing=timing)\n                self.assertSameSP(result, baseline)\n                self.assertGreater(baseline['estimate']['skill']['initial_seconds'], 0)\n                self.assertEqual(result['estimate']['skill'], baseline['estimate']['skill'])\n                self.assertNotIn('sp_events', result['estimate'])\n                record = next(row for row in result['relic_resolution']['records'] if row['id'] == HORN)\n                self.assertEqual(record['status'], 'reference_only')\n                self.assertEqual(record['applied'], [])\n                self.assertEqual(result['total_damage'], 0)\n",
+      "occurrences": 1,
+      "purpose": "test_missing_classified_callbacks_stay_unknown_without_synthetic_empty_events"
+    }
+  ],
+  "inverse_exact": true,
+  "compiled_noexec": true,
+  "test_methods_before": 23,
+  "test_methods_after": 23,
+  "unchanged_test_method_count": 19,
+  "unchanged_other_functions": [
+    "test_continuous_empty_keeps_release_and_clears_only_impact",
+    "test_release_float_clock_is_not_reconstructed_from_quantized_frames",
+    "test_finite_deployment_speed_preserves_exact_release_steps_and_origin",
+    "test_frames_keep_existing_permanent_releases_and_no_continuous_float_field",
+    "test_missing_and_positive_continuous_ranges_keep_original_stream_shape",
+    "test_global_zero_enemy_lifetime_keeps_original_no_release_contract",
+    "test_friendly_scope_is_not_filtered_as_a_hostile_permanent_impact",
+    "test_independent_unit_scope_does_not_inherit_owner_permanent_exemption",
+    "test_attack_charge_uses_original_releases_in_initial_and_post_skill_scopes",
+    "test_mixed_charge_preserves_original_release_precision_and_blocking",
+    "test_public_initial_post_and_both_empty_keep_all_sp_fields_and_report",
+    "test_initial_only_empty_keeps_skill_hits_and_complete_component_values",
+    "test_known_s3_skill_and_normal_cycle_damage_are_zero_without_hostile_impacts",
+    "test_s2_piano_and_organ_modes_clear_known_impacts_and_keep_initial_sp",
+    "test_s2_switch_end_and_repeatable_cycle_stay_unknown",
+    "test_declared_no_continuous_attacks_does_not_gain_attack_sp_from_preserved_releases",
+    "test_periodic_wine_keeps_public_sp_clock_with_plain_or_finite_speed",
+    "test_explicit_zero_observation_does_not_erase_independent_note_parameters",
+    "test_public_calculations_and_formatters_do_not_mutate_caller_or_returned_graph"
+  ],
+  "changed_functions": [
+    "assertSameSP",
+    "test_classified_event_sp_consumes_release_clock_without_fabricating_callbacks",
+    "test_missing_classified_callbacks_stay_unknown_without_synthetic_empty_events",
+    "test_public_classified_callback_receipts_keep_sp_values_and_complete_evidence",
+    "test_s1_independent_note_parameters_and_unknown_actual_clocks_survive"
+  ],
+  "assertion_call_count": 100,
+  "Source_refs": [
+    {
+      "path": "rouge/offline_scope.py",
+      "bytes": 3045,
+      "sha256": "060879b13c6bbe2e7433d06a9087e40cbde99e052b6ab6ef14f5aa9ab56302a9"
+    },
+    {
+      "path": "rouge/relics.py",
+      "bytes": 40531,
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3"
+    },
+    {
+      "path": "rouge/sp_events.py",
+      "bytes": 10281,
+      "sha256": "b80b4258b82cb6cbbd0f41e5b2ae301b18b92e96cd77aff05cb4ed8923af2ddf"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "bytes": 156894,
+      "sha256": "f6c0a17e114435c5d9b80cabc6a38444fffce1bf21260125eb8e5e58a062f7e3"
+    },
+    {
+      "path": "rouge/timing.py",
+      "bytes": 28025,
+      "sha256": "58862b8416e21fc4b85f4336add7bbe6dabf5f7c12329aa1af74098234a677d6"
+    },
+    {
+      "path": "tests/test_offline_scope_030.py",
+      "bytes": 8817,
+      "sha256": "a28644248ff63686be58f6db154b749c59d4ba34f9dcbae5006000693030f387"
+    },
+    {
+      "path": "tests/offline_scope_retirement.py",
+      "bytes": 437,
+      "sha256": "813951548dfd6a5362485c05b250eaaf4be9fc004668b076154cd4bd4bf4552f"
+    }
+  ],
+  "Root_actual_failed_evidence": [
+    {
+      "path": "/workspace/.continuation/resume110-related-linux-v1.log",
+      "bytes": 7702,
+      "sha256": "ffcb02d7034ae88b5fdd304ee71545e42eab3b71023e17ff62e40f4381818f3f"
+    }
+  ],
+  "scope_fact": "All received_sp/event_sp rules are reference-only after offline_scope.partition; no alternate supported public ID can restore them. Explicit public absence and reference record status are the contract; direct event_charge test only native outgoing release/nextslot reference, not live/public callback activation."
+}
