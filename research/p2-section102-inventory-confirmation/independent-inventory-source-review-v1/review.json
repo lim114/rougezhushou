@@ -1,0 +1,827 @@
+{
+  "format_version": 1,
+  "status": "INDEPENDENT_READONLY_SOURCE_REVIEW_NO_PRODUCT_BLOCKER_RUNTIME_AND_SCOPE_ADDENDUM_PENDING",
+  "at_UTC": "2026-10-09T08:42:01.867613+00:00",
+  "candidate_source_inputs": [
+    {
+      "path": "/workspace/.continuation/section102-inventory-flag-consumption-source-v1/CONTRACT.md",
+      "bytes": 4133,
+      "sha256": "2d585eeb493a16c408f3ca5736bc77e00947d729f87f0c35707d3f25b8081ce1"
+    },
+    {
+      "path": "/workspace/.continuation/section102-inventory-flag-consumption-source-v1/run_state.baseline.py",
+      "bytes": 53169,
+      "sha256": "1b6f66e7f864238880c5214f431da042e94c7fd7def8103352439609bbfd35d9"
+    },
+    {
+      "path": "/workspace/.continuation/section102-inventory-flag-consumption-source-v1/run_state.candidate.py",
+      "bytes": 53703,
+      "sha256": "267e02a3bdf513102f6ef29d854893f1c06d5b072b4422ac94b55a6f4e3cb8d0"
+    },
+    {
+      "path": "/workspace/.continuation/section102-inventory-flag-consumption-source-v1/run_state.source-only.patch",
+      "bytes": 2736,
+      "sha256": "aaa2cf8900452f3985a854ba4addd6b20d34882add577303792c78d63518afd4"
+    },
+    {
+      "path": "/workspace/.continuation/section102-inventory-flag-consumption-source-v1/test_inventory_confirmation_102.py",
+      "bytes": 15787,
+      "sha256": "cf1b8422e2aac2397eaaf121dbd57b0b1e08b711003c3e5f2929db0ffef91dd1"
+    },
+    {
+      "path": "/workspace/.continuation/section102-inventory-flag-consumption-source-v1/root-actual-original-flag-proof.json",
+      "bytes": 3248,
+      "sha256": "74d35827cb6c11a83fac1c7a0cca7750d3c867db34bd0730aed4e6395cabe9d5"
+    },
+    {
+      "path": "/workspace/.continuation/section102-inventory-flag-consumption-source-v1/historical-public-json-flags.json",
+      "bytes": 59335,
+      "sha256": "e0412f09c2f8bb0a35f6a5b6e9df089f6aa3fe58a5470836ece81aa1825b4017"
+    }
+  ],
+  "actual_tracked_run_state_Source": {
+    "path": "/workspace/rougezhushou/rouge/run_state.py",
+    "bytes": 53169,
+    "sha256": "1b6f66e7f864238880c5214f431da042e94c7fd7def8103352439609bbfd35d9"
+  },
+  "actual_tracked_baseline_bytes_exact": true,
+  "source_findings": {
+    "one_helper_only": {
+      "line": 164,
+      "end_line": 171,
+      "return_expression": "value if type(value) in (bool, int, float, type(None)) else False",
+      "policy": "Exact builtin bool/int/float/None pass through by identity/value/type; all other flags consume False. This is a consumer qualification only, not parsing, a saved schema, or a native/game truth claim."
+    },
+    "exact_three_consumers": [
+      {
+        "line": 509,
+        "source": "_inventory_confirmation_flag(state['inventory_verified'])"
+      },
+      {
+        "line": 722,
+        "source": "_inventory_confirmation_flag(self.state['inventory_verified'])"
+      },
+      {
+        "line": 536,
+        "source": "_inventory_confirmation_flag(state['inventory_verified'])"
+      }
+    ],
+    "inverse_all_remaining_AST_exact": true,
+    "inverse_all_remaining_bytes_exact": true,
+    "recovered_baseline_sha256": "1b6f66e7f864238880c5214f431da042e94c7fd7def8103352439609bbfd35d9",
+    "baseline_file_sha256": "1b6f66e7f864238880c5214f431da042e94c7fd7def8103352439609bbfd35d9",
+    "candidate_file_sha256": "267e02a3bdf513102f6ef29d854893f1c06d5b072b4422ac94b55a6f4e3cb8d0",
+    "no_new_loader_rejection_or_raw_flag_assignment": true,
+    "native_bool_producer_assignments_and_count_removal_predicates_byte_unchanged": true,
+    "saved_count_and_timestamp_rules_byte_unchanged": true,
+    "save_protection_and_constructor_persistence_byte_unchanged": true,
+    "current_helper_does_not_call_bool_on_anomalous_objects_or_write_raw_state": true,
+    "controlled_short_circuit_compatibility": "Preservation follows directly from original expressions plus helper identity for native bool/int/float/None. None, int0 and signed float zero retain original operand type; nonzero numeric operands reach the existing count-match boolean. Numeric flags are compatibility preservation, not observed producer facts."
+  },
+  "functions_considered": [
+    {
+      "function": "__init__",
+      "line": 175,
+      "end_line": 204,
+      "claims_READONLY_AST": true
+    },
+    {
+      "function": "reset",
+      "line": 225,
+      "end_line": 234,
+      "claims_READONLY_AST": true
+    },
+    {
+      "function": "save",
+      "line": 236,
+      "end_line": 258,
+      "claims_READONLY_AST": true
+    },
+    {
+      "function": "restore_relic_icon_memory",
+      "line": 356,
+      "end_line": 378,
+      "claims_READONLY_AST": true
+    },
+    {
+      "function": "reconcile_relic_icons",
+      "line": 380,
+      "end_line": 440,
+      "claims_READONLY_AST": true
+    },
+    {
+      "function": "apply",
+      "line": 442,
+      "end_line": 650,
+      "claims_READONLY_AST": true
+    },
+    {
+      "function": "inventory_status",
+      "line": 719,
+      "end_line": 726,
+      "claims_READONLY_AST": true
+    },
+    {
+      "function": "summary",
+      "line": 763,
+      "end_line": 798,
+      "claims_READONLY_AST": true
+    }
+  ],
+  "new_test_source": {
+    "AST_methods": 15,
+    "actual_methods_executed": 0,
+    "coverage": [
+      {
+        "method": "test_text_flags_cannot_claim_complete_and_keep_original_raw_evidence",
+        "line": 98,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertIs",
+          "self.assertNotIn",
+          "self.assertIn"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_container_flags_cannot_claim_complete_or_install_their_contents",
+        "line": 109,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_empty_invalid_flags_are_false_but_remain_saved_native_values",
+        "line": 120,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertIs"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_actual_legacy_bool_int_and_none_short_circuit_types_are_preserved",
+        "line": 129,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertIs",
+          "self.assertEqual"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_numeric_edge_controls_preserve_original_expression_without_new_schema",
+        "line": 140,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_confirmation_boundary_does_not_redefine_saved_count_values_or_types",
+        "line": 153,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertIs",
+          "self.assertEqual"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_old_integer_claim_still_requires_original_count_and_known_item_match",
+        "line": 168,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertIs"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_anomalous_flag_keeps_independent_known_relics_and_tools",
+        "line": 177,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertIsNone",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertEqual"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_restart_without_new_reading_preserves_raw_flag_and_incomplete_status",
+        "line": 188,
+        "assert_calls_AST": [
+          "self.assertEqual",
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_partial_or_unread_observation_cannot_upgrade_anomalous_flag",
+        "line": 200,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertIs"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_new_positive_record_does_not_pretend_prior_anomalous_claim_was_verified",
+        "line": 215,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertFalse",
+          "self.assertTrue"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_current_explicit_integer_zero_is_legitimate_new_proof_and_removal",
+        "line": 228,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertIs",
+          "self.assertIs",
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertTrue",
+          "self.assertTrue",
+          "self.assertIs",
+          "self.assertEqual"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_current_full_relic_and_tool_read_supplies_new_bool_proof_and_restart",
+        "line": 251,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertIs",
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_stale_and_cross_run_observation_remain_atomic_and_cannot_upgrade",
+        "line": 271,
+        "assert_calls_AST": [
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertFalse",
+          "self.assertIs"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      },
+      {
+        "method": "test_manual_reset_uses_original_false_producer_not_anomalous_record",
+        "line": 288,
+        "assert_calls_AST": [
+          "self.assertNotEqual",
+          "self.assertIs",
+          "self.assertIs",
+          "self.assertEqual",
+          "self.assertEqual",
+          "self.assertIsNone",
+          "self.assertIs",
+          "self.assertEqual"
+        ],
+        "actual_executed": false,
+        "actual_result": null
+      }
+    ],
+    "real_API_fixture": "RunState with exclusively owned TemporaryDirectory JSON; no mocks of product success. Original callers include public opaque tuples/bytes/shared containers/cycles checked by same-object type/float-bit/id graph before/after apply. Opaque caller data is not installed or serialized into run state by this proposal.",
+    "scope": "Flag qualification queries preserve native raw state and exact disk; partial fixture has no valid full historical bar. Count edge query uses malformed claim False; healthy float-count behavior still requires original/candidate runtime confirmation."
+  },
+  "original_Root_observation_payload": {
+    "source": {
+      "path": "/workspace/.continuation/section102-inventory-flag-consumption-source-v1/root-actual-original-flag-proof.json",
+      "bytes": 3248,
+      "sha256": "74d35827cb6c11a83fac1c7a0cca7750d3c867db34bd0730aed4e6395cabe9d5"
+    },
+    "case_count": 7,
+    "all_reported_saved_flags_accepted": true,
+    "reported_disk_unchanged_and_tmp_absent": true,
+    "payload_product_pass": false,
+    "Source_review_did_not_execute_original_probe": true,
+    "actual_primary_exit_metadata_embedded_in_payload": false,
+    "rule": "Preserve this defect observation and bind Root actual argv/log/raw completion separately; do not treat product_pass:false as successful validation."
+  },
+  "historical_public_archive_recheck": {
+    "files": 61,
+    "direct_keys": 122,
+    "native_type_counts": {
+      "bool": 122
+    },
+    "all_selected_original_bytes_sha256_reverified": true,
+    "skipped_files_in_declared_scope": [],
+    "scope": [
+      "research/**/*.json",
+      "verification/**/*.json"
+    ],
+    "schema_or_user_save_coverage_certificate": false,
+    "source_files": [
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/static-source-facts089.json",
+        "bytes": 30801,
+        "sha256": "e26f00f5540158f9cf23a7f2510f6ef92e90de6a4eb454c5875546653ef573ac",
+        "direct_key_occurrences_verified": 0
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/runtime/one-int1/seed-persisted.json",
+        "bytes": 1977,
+        "sha256": "aeb42fb0dc9451ccb456e03f5a0cdaca9ceaa3b1d53c264c4c752035200c11ac",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/runtime/one-int1/run.json",
+        "bytes": 2097,
+        "sha256": "af0becbcd244deea06f27505c24dac10c2ae0c08e2a3f57d3cd2eff50774fb5f",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/runtime/one-True/seed-persisted.json",
+        "bytes": 1977,
+        "sha256": "5282e34733dfdab53c5d3043c8a7a4983a81991f3ac7488329da173bf845845b",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/runtime/one-True/run.json",
+        "bytes": 2100,
+        "sha256": "3566394272445857ba864854c17b1a78ce3ecdf1a6f466899128872a2b4a5a92",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/runtime/empty-int0/seed-persisted.json",
+        "bytes": 1277,
+        "sha256": "3b5693f799f6e8856765f1bc6d204b0cdc841540f960095e972d6fabdb7cb22f",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/runtime/empty-int0/run.json",
+        "bytes": 1391,
+        "sha256": "0752728b09c88a125e63b8e7919a76c4efb601fef5fcab75b2f972daa3258d73",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/runtime/empty-None/seed-persisted.json",
+        "bytes": 1277,
+        "sha256": "e1ce0cec2c96ff0ddfc74b36df4f2d2fa573240ca17ec85d6b1acc14857db3dd",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/runtime/empty-None/run.json",
+        "bytes": 1277,
+        "sha256": "87fc07911e2cd34566eab3b9cf7ddb69ecf9c2bd8f15be9ff66d2bad741caf94",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/runtime/empty-False/seed-persisted.json",
+        "bytes": 1273,
+        "sha256": "dec0d09891c6eef96f4fe8f6908c5541bef947bc082088c3e1091286be224849",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/runtime/empty-False/run.json",
+        "bytes": 1390,
+        "sha256": "762f401522b451b0d7caed93e8470e177adcf7daf06818464bfe56c92017d6e9",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/case-5.json",
+        "bytes": 59344,
+        "sha256": "193ce03f6ebe886eede236f021194d30e3d4467e3a3fb1c3c0253dd896556beb",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/case-4.json",
+        "bytes": 59371,
+        "sha256": "b8219ef3313b1e7051758cd0a80ba3543352d742c991a7cdb047c5ed3d9dac5e",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/case-3.json",
+        "bytes": 37284,
+        "sha256": "70c0b19893e407376507cc86b0715cceb0cf2c6e7ced16d4c85950b3726474f1",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/case-2.json",
+        "bytes": 37298,
+        "sha256": "119375a20344a8d26b42516ad894c5778fd87d8c0ef665012dee282ce68290a6",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/source-preparation-snapshots/case-1.json",
+        "bytes": 35986,
+        "sha256": "88c5335005dfb04a769b4c60b1d53ffb7e5133c830af3532a604e52bb24a2c60",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-draft089/runtime/true-two-distinct-no-alias/run.json",
+        "bytes": 2670,
+        "sha256": "39d379d642404e54ce5304f07a8c03fadc0ab4d3e6571467ee0044f96fe8f342",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-draft089/runtime/true-two-distinct-no-alias/initial-persisted.json",
+        "bytes": 1977,
+        "sha256": "5282e34733dfdab53c5d3043c8a7a4983a81991f3ac7488329da173bf845845b",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-draft089/runtime/prior-personal-buff-typeerror/run.json",
+        "bytes": 1273,
+        "sha256": "dec0d09891c6eef96f4fe8f6908c5541bef947bc082088c3e1091286be224849",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-draft089/runtime/prior-personal-buff-typeerror/initial-persisted.json",
+        "bytes": 1273,
+        "sha256": "dec0d09891c6eef96f4fe8f6908c5541bef947bc082088c3e1091286be224849",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-draft089/runtime/false-positive-fields-resource/run.json",
+        "bytes": 1834,
+        "sha256": "4f96e5791219d3810fb2f95976c3e3737c4c8035ea732117dca8a6d7b3f27507",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-draft089/runtime/false-positive-fields-resource/initial-persisted.json",
+        "bytes": 1277,
+        "sha256": "e1ce0cec2c96ff0ddfc74b36df4f2d2fa573240ca17ec85d6b1acc14857db3dd",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-baseline089/runtime/true-two-distinct-no-alias/run.json",
+        "bytes": 2673,
+        "sha256": "cc1f51905bc0251de9f4ffa5f20099d1b5a7b7f2ea74be56d39721790d96bc32",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-baseline089/runtime/true-two-distinct-no-alias/initial-persisted.json",
+        "bytes": 1977,
+        "sha256": "5282e34733dfdab53c5d3043c8a7a4983a81991f3ac7488329da173bf845845b",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-baseline089/runtime/prior-personal-buff-typeerror/run.json",
+        "bytes": 1273,
+        "sha256": "dec0d09891c6eef96f4fe8f6908c5541bef947bc082088c3e1091286be224849",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-baseline089/runtime/prior-personal-buff-typeerror/initial-persisted.json",
+        "bytes": 1273,
+        "sha256": "dec0d09891c6eef96f4fe8f6908c5541bef947bc082088c3e1091286be224849",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-baseline089/runtime/false-positive-fields-resource/run.json",
+        "bytes": 1838,
+        "sha256": "680b37c7c799cd4d7ba480795e598720ee65fbdb7b53f99dc7479e7fed4ad428",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/fresh-baseline089/runtime/false-positive-fields-resource/initial-persisted.json",
+        "bytes": 1277,
+        "sha256": "e1ce0cec2c96ff0ddfc74b36df4f2d2fa573240ca17ec85d6b1acc14857db3dd",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/static-source-facts089.json",
+        "bytes": 30801,
+        "sha256": "e26f00f5540158f9cf23a7f2510f6ef92e90de6a4eb454c5875546653ef573ac",
+        "direct_key_occurrences_verified": 0
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/full-090/ui-source-design/original-final237/completed-preflight-packet/source-input-preparation090/saved89-five-state-UI-consumer-design090.json",
+        "bytes": 159893,
+        "sha256": "9ce63fce1de4d3d3e4016b36a4a43e8da8d5f1f33b069177400e18c682a8ce61",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/runtime/one-int1/seed-persisted.json",
+        "bytes": 1977,
+        "sha256": "aeb42fb0dc9451ccb456e03f5a0cdaca9ceaa3b1d53c264c4c752035200c11ac",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/runtime/one-int1/run.json",
+        "bytes": 2097,
+        "sha256": "af0becbcd244deea06f27505c24dac10c2ae0c08e2a3f57d3cd2eff50774fb5f",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/runtime/one-True/seed-persisted.json",
+        "bytes": 1977,
+        "sha256": "5282e34733dfdab53c5d3043c8a7a4983a81991f3ac7488329da173bf845845b",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/runtime/one-True/run.json",
+        "bytes": 2100,
+        "sha256": "3566394272445857ba864854c17b1a78ce3ecdf1a6f466899128872a2b4a5a92",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/runtime/empty-int0/seed-persisted.json",
+        "bytes": 1277,
+        "sha256": "3b5693f799f6e8856765f1bc6d204b0cdc841540f960095e972d6fabdb7cb22f",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/runtime/empty-int0/run.json",
+        "bytes": 1391,
+        "sha256": "0752728b09c88a125e63b8e7919a76c4efb601fef5fcab75b2f972daa3258d73",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/runtime/empty-None/seed-persisted.json",
+        "bytes": 1277,
+        "sha256": "e1ce0cec2c96ff0ddfc74b36df4f2d2fa573240ca17ec85d6b1acc14857db3dd",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/runtime/empty-None/run.json",
+        "bytes": 1277,
+        "sha256": "87fc07911e2cd34566eab3b9cf7ddb69ecf9c2bd8f15be9ff66d2bad741caf94",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/runtime/empty-False/seed-persisted.json",
+        "bytes": 1273,
+        "sha256": "dec0d09891c6eef96f4fe8f6908c5541bef947bc082088c3e1091286be224849",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/runtime/empty-False/run.json",
+        "bytes": 1390,
+        "sha256": "762f401522b451b0d7caed93e8470e177adcf7daf06818464bfe56c92017d6e9",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/case-5.json",
+        "bytes": 59344,
+        "sha256": "193ce03f6ebe886eede236f021194d30e3d4467e3a3fb1c3c0253dd896556beb",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/case-4.json",
+        "bytes": 59371,
+        "sha256": "b8219ef3313b1e7051758cd0a80ba3543352d742c991a7cdb047c5ed3d9dac5e",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/case-3.json",
+        "bytes": 37284,
+        "sha256": "70c0b19893e407376507cc86b0715cceb0cf2c6e7ced16d4c85950b3726474f1",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/case-2.json",
+        "bytes": 37298,
+        "sha256": "119375a20344a8d26b42516ad894c5778fd87d8c0ef665012dee282ce68290a6",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/independent-packet/formal-review/author-final71-snapshots/source089/case-1.json",
+        "bytes": 35986,
+        "sha256": "88c5335005dfb04a769b4c60b1d53ffb7e5133c830af3532a604e52bb24a2c60",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/static-source-facts089.json",
+        "bytes": 30801,
+        "sha256": "e26f00f5540158f9cf23a7f2510f6ef92e90de6a4eb454c5875546653ef573ac",
+        "direct_key_occurrences_verified": 0
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/runtime/one-int1/seed-persisted.json",
+        "bytes": 1977,
+        "sha256": "aeb42fb0dc9451ccb456e03f5a0cdaca9ceaa3b1d53c264c4c752035200c11ac",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/runtime/one-int1/run.json",
+        "bytes": 2097,
+        "sha256": "af0becbcd244deea06f27505c24dac10c2ae0c08e2a3f57d3cd2eff50774fb5f",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/runtime/one-True/seed-persisted.json",
+        "bytes": 1977,
+        "sha256": "5282e34733dfdab53c5d3043c8a7a4983a81991f3ac7488329da173bf845845b",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/runtime/one-True/run.json",
+        "bytes": 2100,
+        "sha256": "3566394272445857ba864854c17b1a78ce3ecdf1a6f466899128872a2b4a5a92",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/runtime/empty-int0/seed-persisted.json",
+        "bytes": 1277,
+        "sha256": "3b5693f799f6e8856765f1bc6d204b0cdc841540f960095e972d6fabdb7cb22f",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/runtime/empty-int0/run.json",
+        "bytes": 1391,
+        "sha256": "0752728b09c88a125e63b8e7919a76c4efb601fef5fcab75b2f972daa3258d73",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/runtime/empty-None/seed-persisted.json",
+        "bytes": 1277,
+        "sha256": "e1ce0cec2c96ff0ddfc74b36df4f2d2fa573240ca17ec85d6b1acc14857db3dd",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/runtime/empty-None/run.json",
+        "bytes": 1277,
+        "sha256": "87fc07911e2cd34566eab3b9cf7ddb69ecf9c2bd8f15be9ff66d2bad741caf94",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/runtime/empty-False/seed-persisted.json",
+        "bytes": 1273,
+        "sha256": "dec0d09891c6eef96f4fe8f6908c5541bef947bc082088c3e1091286be224849",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/runtime/empty-False/run.json",
+        "bytes": 1390,
+        "sha256": "762f401522b451b0d7caed93e8470e177adcf7daf06818464bfe56c92017d6e9",
+        "direct_key_occurrences_verified": 1
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/case-5.json",
+        "bytes": 59344,
+        "sha256": "193ce03f6ebe886eede236f021194d30e3d4467e3a3fb1c3c0253dd896556beb",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/case-4.json",
+        "bytes": 59371,
+        "sha256": "b8219ef3313b1e7051758cd0a80ba3543352d742c991a7cdb047c5ed3d9dac5e",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/case-3.json",
+        "bytes": 37284,
+        "sha256": "70c0b19893e407376507cc86b0715cceb0cf2c6e7ced16d4c85950b3726474f1",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/case-2.json",
+        "bytes": 37298,
+        "sha256": "119375a20344a8d26b42516ad894c5778fd87d8c0ef665012dee282ce68290a6",
+        "direct_key_occurrences_verified": 5
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-crew-count-boolean-input/author-packet/source089/case-1.json",
+        "bytes": 35986,
+        "sha256": "88c5335005dfb04a769b4c60b1d53ffb7e5133c830af3532a604e52bb24a2c60",
+        "direct_key_occurrences_verified": 5
+      }
+    ]
+  },
+  "blocking_product_Source_findings": [],
+  "documentation_scope_limit": {
+    "v1_CONTRACT_broad_statement": "Check stale/cross-run and partial evidence cannot upgrade.",
+    "required_qualification": "A partial/unread observation without valid complete current or historical evidence cannot upgrade an anomalous flag merely from that flag. Existing legitimately complete historical bar replay can still supply original bool True; candidate intentionally leaves this producer and proof criteria unchanged.",
+    "parent_author_acknowledged_and_preparing_independent_scope_addendum": true,
+    "rewrite_v1_candidate_or_original_tests_required": false,
+    "Root_should_hash_bind_scope_addendum_before_runtime_summary": true
+  },
+  "remaining_actual_validation_requirements": [
+    "Root must actually execute all 15 new methods plus old inventory snapshot/read/grade/tool, run reliability and persistence tests; Source parse is not test execution.",
+    "Run healthy original/candidate bool/int/float/None claim controls with all three text/numeric outputs and exact source guards; include healthy count float zero/signed zero and relic+tool count 3.0 to confirm old arithmetic/return type without coercion.",
+    "Run actual query/close/reopen before new reading and compare exact raw JSON bytes and absent tmp; no claim qualification write or sibling discard.",
+    "Run partial no-history/new-positive anomaly cases and stale/cross-run unchanged callers; preserve genuine errors without lowering assertions.",
+    "Run legal new integer-zero and full relic+tool producer upgrades, actual save/restart/timestamps, and a valid complete historical bar replay scenario; distinguish these real proof upgrades from raw anomalous truthiness.",
+    "Run the actual MainWindow with temporary public state and real calculate_damage/three formatters; Root views genuine images and records the source/actual primary outcome.",
+    "If actual completed101 run_state or admitted baseline hash drifts, rebase and independently review before applying this candidate."
+  ],
+  "tracked_changes_made_by_reviewer": 0,
+  "review_activity": {
+    "project_imports": 0,
+    "project_helpers": 0,
+    "project_tests": 0,
+    "git": 0,
+    "wine": 0,
+    "network": 0,
+    "actual_primary_test_executions": 0,
+    "actual_test_PASS_claims": 0,
+    "completed_section_increment": 0
+  },
+  "source_before_after_same": true,
+  "candidate_unapplied_by_reviewer": true,
+  "diff_lines_AST_only": [
+    "--- ",
+    "+++ ",
+    "@@ -161,6 +161,16 @@",
+    "             sequence(icon, 'candidates', str)",
+    " ",
+    " ",
+    "+def _inventory_confirmation_flag(value):",
+    "+    \"\"\"Qualify a saved confirmation claim without rewriting its raw evidence.",
+    "+",
+    "+    JSON text/containers cannot stand in for an observed inventory proof.",
+    "+    Preserve the old numeric/None short-circuit contract; this boundary does",
+    "+    not redefine inventory counts, resource timestamps or the saved schema.",
+    "+    \"\"\"",
+    "+    return value if type(value) in (bool, int, float, type(None)) else False",
+    "+",
+    "+",
+    " class RunState:",
+    "     def __init__(self,file):",
+    "         self.file=Path(file)",
+    "@@ -496,7 +506,7 @@",
+    "                 state['history'].append({'at':captured_at,'kind':'node_content_seen','title':content['title'],'location':location})",
+    "             state['last_node_content']=record",
+    "         prior_icons=state.get('relic_icon_memory')",
+    "-        prior_inventory_verified=state['inventory_verified']",
+    "+        prior_inventory_verified=_inventory_confirmation_flag(state['inventory_verified'])",
+    "         prior_held=set(self.held_relic_ids())",
+    "         relics=self.reconcile_relic_icons(relics,captured_at,",
+    "             observed_tool_ids=observed.get('tactical_tools',{}).get('ids',[]))",
+    "@@ -523,7 +533,7 @@",
+    "         # An unread or partially visible bar is absence of evidence, not a removal.",
+    "         changed=displaced_full_inventory or (full_bar and previous is not None and signature!=previous) or (",
+    "             count is not None and old_count is not None and count!=old_count) or (",
+    "-            state['inventory_verified'] and bool(incoming_items-set(self.held_relic_ids()+self.held_tool_ids())))",
+    "+            _inventory_confirmation_flag(state['inventory_verified']) and bool(incoming_items-set(self.held_relic_ids()+self.held_tool_ids())))",
+    "         if changed:",
+    "             state['inventory_verified']=False",
+    "             state['notice']='持有信息变化，保留本局历史并实时核对当前清单；不会因缺失一帧而遗忘。'",
+    "@@ -709,7 +719,7 @@",
+    "     def inventory_status(self):",
+    "         count=self.state['relic_count'];known=len(self.held_relic_ids())",
+    "         tools=len(self.held_tool_ids())",
+    "-        complete=self.state['inventory_verified'] and count is not None and known+tools==count",
+    "+        complete=_inventory_confirmation_flag(self.state['inventory_verified']) and count is not None and known+tools==count",
+    "         return {'source':'run_capture','complete':complete,",
+    "                 'recognized':known,'recognized_tools':tools,'total_badge_count':count,",
+    "                 'expected_count':count-tools if complete else None if tools else count,'run_id':self.state['id'],"
+  ]
+}

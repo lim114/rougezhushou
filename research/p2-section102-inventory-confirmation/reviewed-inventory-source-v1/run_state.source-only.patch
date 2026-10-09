@@ -1,0 +1,46 @@
+--- rouge/run_state.py (100 source baseline)
++++ rouge/run_state.py (future102 Source only)
+@@ -161,6 +161,16 @@
+             sequence(icon, 'candidates', str)
+ 
+ 
++def _inventory_confirmation_flag(value):
++    """Qualify a saved confirmation claim without rewriting its raw evidence.
++
++    JSON text/containers cannot stand in for an observed inventory proof.
++    Preserve the old numeric/None short-circuit contract; this boundary does
++    not redefine inventory counts, resource timestamps or the saved schema.
++    """
++    return value if type(value) in (bool, int, float, type(None)) else False
++
++
+ class RunState:
+     def __init__(self,file):
+         self.file=Path(file)
+@@ -496,7 +506,7 @@
+                 state['history'].append({'at':captured_at,'kind':'node_content_seen','title':content['title'],'location':location})
+             state['last_node_content']=record
+         prior_icons=state.get('relic_icon_memory')
+-        prior_inventory_verified=state['inventory_verified']
++        prior_inventory_verified=_inventory_confirmation_flag(state['inventory_verified'])
+         prior_held=set(self.held_relic_ids())
+         relics=self.reconcile_relic_icons(relics,captured_at,
+             observed_tool_ids=observed.get('tactical_tools',{}).get('ids',[]))
+@@ -523,7 +533,7 @@
+         # An unread or partially visible bar is absence of evidence, not a removal.
+         changed=displaced_full_inventory or (full_bar and previous is not None and signature!=previous) or (
+             count is not None and old_count is not None and count!=old_count) or (
+-            state['inventory_verified'] and bool(incoming_items-set(self.held_relic_ids()+self.held_tool_ids())))
++            _inventory_confirmation_flag(state['inventory_verified']) and bool(incoming_items-set(self.held_relic_ids()+self.held_tool_ids())))
+         if changed:
+             state['inventory_verified']=False
+             state['notice']='持有信息变化，保留本局历史并实时核对当前清单；不会因缺失一帧而遗忘。'
+@@ -709,7 +719,7 @@
+     def inventory_status(self):
+         count=self.state['relic_count'];known=len(self.held_relic_ids())
+         tools=len(self.held_tool_ids())
+-        complete=self.state['inventory_verified'] and count is not None and known+tools==count
++        complete=_inventory_confirmation_flag(self.state['inventory_verified']) and count is not None and known+tools==count
+         return {'source':'run_capture','complete':complete,
+                 'recognized':known,'recognized_tools':tools,'total_badge_count':count,
+                 'expected_count':count-tools if complete else None if tools else count,'run_id':self.state['id'],
