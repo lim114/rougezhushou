@@ -1,0 +1,25 @@
+--- a/tests/test_integer_option_input_types.py
++++ b/tests/test_integer_option_input_types.py
+@@ -127,9 +127,19 @@
+                                               mode=mode, value=value):
+                                 self.assertTrue(outcome(scenario(operator, skill, mode,
+                                                                 **{field: value}))['accepted'])
+-        for value in (False, True):
+-            self.assertTrue(outcome(scenario('char_1044_hsgma2', 1,
+-                                            current_hp_ratio=value))['accepted'])
++        # Numeric HP ratios remain numbers; actual checkbox controls above
++        # keep their existing bool contract. Section114 qualifies this scalar.
++        for mode in ('frames', 'continuous'):
++            for value in (0, 1, 0.0, 1.0):
++                with self.subTest(field='current_hp_ratio', mode=mode, value=value):
++                    self.assertTrue(outcome(scenario('char_1044_hsgma2', 1, mode,
++                                                    current_hp_ratio=value))['accepted'])
++            for value in (False, True):
++                with self.subTest(field='current_hp_ratio', mode=mode, value=value):
++                    with self.assertRaisesRegex(ValueError, '^' + re.escape(
++                            'current_hp_ratio需要范围内的有限非负数。') + '$'):
++                        calculate_damage(scenario('char_1044_hsgma2', 1, mode,
++                                                  current_hp_ratio=value))
+ 
+     def test_healing_capability_gate_preserves_prior_inactive_count_contract(self):
+         for mode in ('frames', 'continuous'):

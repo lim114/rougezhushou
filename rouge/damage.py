@@ -28,6 +28,7 @@ def _skill_damage(scenario: dict) -> dict:
 
 def _skill_damage_base(scenario: dict) -> dict:
     scenario=dict(scenario)
+    companion_is_bool=isinstance(scenario.get('companion_attack'),bool)
     profile=catalog()['operators'][scenario['operator']]
     skill=scenario.get('skill')
     rank=scenario.get('skill_rank',10)
@@ -150,6 +151,7 @@ def _skill_damage_base(scenario: dict) -> dict:
         components = [{'name': '本体技能触发', 'hits': 0 if empty_enemy else own_count, 'damage_type': 'physical', 'per_hit': damage, 'total': 0 if empty_enemy else damage * own_count}]
         stacks = int(scenario.get('deployment_stacks', 0))
         if stacks:
+            if companion_is_bool:raise ValueError('companion_attack 不接受布尔值；请使用数值。')
             recipient = float(scenario['companion_attack']) * bb['atk_scale']
             hit = max(recipient - scenario.get('enemy_defense', 0), recipient * .05) * taken('physical')
             components.append({'name': '受益干员部署触发', 'hits': 0 if empty_enemy else stacks, 'damage_type': 'physical', 'per_hit': hit, 'total': 0 if empty_enemy else hit * stacks})
@@ -274,9 +276,13 @@ def _prepare_damage(scenario: dict):
     from .relics import prepare
     from .run_modifiers import prepare_run
     scenario,run_resolution=prepare_run(scenario)
+    numeric_bool_fields=[field for field in ('base_attack','enemy_defense','enemy_resistance','window_seconds')
+                         if isinstance(scenario.get(field),bool)]
     scenario,resolution=prepare(scenario,profile)
     from .relic_attributes import prepare_attribute_runes
     scenario,attributes=prepare_attribute_runes(scenario,attributes)
+    if numeric_bool_fields:
+        raise ValueError(numeric_bool_fields[0]+' 不接受布尔值；请使用数值。')
     # Reuse the existing numeric-zero gates after validating the raw timing.
     timing=scenario.get('timing',{})
     if isinstance(timing,dict) and isinstance(timing.get('target_disappears_seconds'),str):

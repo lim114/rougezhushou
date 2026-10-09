@@ -144,8 +144,8 @@ class Combat:
     def option(self,key,default=0,maximum=None,integer=False):
         value=self.s.get(key,default)
         # Healing-target validation uses the public capability gate; inactive fields stay ignored.
-        if integer and key!='healing_targets' and isinstance(value,bool):
-            raise ValueError(key+'需要范围内的有限非负整数。')
+        if key!='healing_targets' and isinstance(value,bool):
+            raise ValueError(key+'需要范围内的有限非负'+('整数。' if integer else '数。'))
         return self.value(value,key,maximum,integer)
 
     def total(self,kind):return sum(float(e['value']) for e in self.effects if e['kind']==kind)

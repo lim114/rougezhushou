@@ -1,0 +1,41 @@
+{
+  "kind": "SECTION114_ONE_EXISTING_TEST_POLICY_NARROW_SOURCE_CHECK",
+  "author_runtime_executed": false,
+  "tracked_edits": false,
+  "before": {
+    "bytes": 8638,
+    "sha256": "aac985f115bc7a1dead2caad7681a6c1615609ec5ca995db1c08ab630ffdef0c"
+  },
+  "after": {
+    "bytes": 9400,
+    "sha256": "90146b74621fff8886a3153d1fb9bdd47a576c20fff226d694f3df9283504552"
+  },
+  "all_bytes_outside_one_local_block_preserved": true,
+  "inverse_exact": true,
+  "compiled_without_execute": 2,
+  "one_changed_method": "test_real_checkbox_controls_and_noninteger_options_keep_acceptance",
+  "all_other_methods_AST_identical": true,
+  "genuine_checkbox_for_loop_AST_identical": true,
+  "existing_bool_cases_preserved_as_exact_ValueError": true,
+  "bool_modes_source": [
+    "frames",
+    "continuous"
+  ],
+  "healthy_numeric_forms_source": [
+    0,
+    1,
+    0.0,
+    1.0
+  ],
+  "future_PASS": null,
+  "scan_scope": "rg bool/scalar mentions in maintained tests/*.py plus stdlib AST function-source filtering for test_ methods containing False,True and accepted/acceptance for the9 scalar names; this is a Source search, not full execution or proof of no other conflict.",
+  "scan_definite_old_acceptance_conflicts": [
+    {
+      "path": "tests/test_integer_option_input_types.py",
+      "line": 117,
+      "method": "test_real_checkbox_controls_and_noninteger_options_keep_acceptance",
+      "field": "current_hp_ratio"
+    }
+  ],
+  "no_other_definite_conflict_in_filtered_search": true
+}

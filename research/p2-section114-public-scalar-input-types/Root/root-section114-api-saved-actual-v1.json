@@ -1,0 +1,1747 @@
+{
+  "kind": "ROOT_ACTUAL_114_COMPLETE_SAVED_API_AUDIT",
+  "passed": true,
+  "workflow_complete": true,
+  "source_drift": [],
+  "source_guard_sha256": "18659e130d7a1b59b7d8a73fc8d9992bddeb43fb72a70914ebc04c69c8f6dbfa",
+  "source_count": 757,
+  "CORE_unchanged": true,
+  "actual_cases": 133,
+  "actual_native_records_decoded": 1030,
+  "observations": [
+    {
+      "phase": "original",
+      "part": 1,
+      "receipt": {
+        "path": "/workspace/.continuation/section114-original-api-part1-actual-v1/observations.json",
+        "bytes": 481741,
+        "sha256": "411b9b97c2e00c77370b4856ee52ce6481ce335d997f5c532312e62d3b2fb7b9"
+      },
+      "raw_primary": {
+        "path": "/workspace/.continuation/section114-original-api-part1-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "actual_cases": 67,
+      "actual_numeric_successes": 53,
+      "actual_numeric_errors": 14,
+      "actual_public_calls": 226,
+      "actual_native_records": 293
+    },
+    {
+      "phase": "original",
+      "part": 2,
+      "receipt": {
+        "path": "/workspace/.continuation/section114-original-api-part2-actual-v1/observations.json",
+        "bytes": 472340,
+        "sha256": "0c8a5acb2be09905f06c79e20d40a37d905cf53dd93dd6bc6679720d729013fa"
+      },
+      "raw_primary": {
+        "path": "/workspace/.continuation/section114-original-api-part2-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "actual_cases": 66,
+      "actual_numeric_successes": 46,
+      "actual_numeric_errors": 20,
+      "actual_public_calls": 204,
+      "actual_native_records": 270
+    },
+    {
+      "phase": "candidate",
+      "part": 1,
+      "receipt": {
+        "path": "/workspace/.continuation/section114-candidate-api-part1-actual-v1/observations.json",
+        "bytes": 456076,
+        "sha256": "1f4301762078cc71f0688860afc6290bcc96b73209155064c3f7c588f041c55a"
+      },
+      "raw_primary": {
+        "path": "/workspace/.continuation/section114-candidate-api-part1-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "actual_cases": 67,
+      "actual_numeric_successes": 35,
+      "actual_numeric_errors": 32,
+      "actual_public_calls": 172,
+      "actual_native_records": 239
+    },
+    {
+      "phase": "candidate",
+      "part": 2,
+      "receipt": {
+        "path": "/workspace/.continuation/section114-candidate-api-part2-actual-v1/observations.json",
+        "bytes": 470210,
+        "sha256": "cfbca4b836135c3c3dc9ddea4a0f77c8df5818781e82a5d5cd30889bd85910a5"
+      },
+      "raw_primary": {
+        "path": "/workspace/.continuation/section114-candidate-api-part2-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "actual_cases": 66,
+      "actual_numeric_successes": 32,
+      "actual_numeric_errors": 34,
+      "actual_public_calls": 162,
+      "actual_native_records": 228
+    }
+  ],
+  "case_checks": [
+    {
+      "id": "legacy-base_attack-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "base_attack 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-base_attack-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "base_attack 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-base_attack-numeric_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-base_attack-numeric_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-base_attack-zero_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-base_attack-fraction_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-base_attack-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "legacy-enemy_defense-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_defense 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-enemy_defense-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_defense 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-enemy_defense-numeric_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-enemy_defense-numeric_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-enemy_defense-zero_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-enemy_defense-fraction_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-enemy_defense-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "legacy-enemy_resistance-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_resistance 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-enemy_resistance-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_resistance 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-enemy_resistance-numeric_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-enemy_resistance-numeric_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-enemy_resistance-zero_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-enemy_resistance-fraction_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-enemy_resistance-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "legacy-window_seconds-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "window_seconds 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-window_seconds-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "window_seconds 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-window_seconds-numeric_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-window_seconds-numeric_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-window_seconds-zero_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-window_seconds-fraction_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-window_seconds-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "legacy-base_attack-existing-invalid",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "base_attack 需要有限非负数；法抗范围为 0–100。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "base_attack 需要有限非负数；法抗范围为 0–100。"
+      }
+    },
+    {
+      "id": "legacy-enemy_resistance-existing-invalid",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "enemy_resistance 需要有限非负数；法抗范围为 0–100。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_resistance 需要有限非负数；法抗范围为 0–100。"
+      }
+    },
+    {
+      "id": "legacy-window_seconds-existing-invalid",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "window_seconds 需要有限非负数；法抗范围为 0–100。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "window_seconds 需要有限非负数；法抗范围为 0–100。"
+      }
+    },
+    {
+      "id": "generic-base_attack-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "base_attack 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "generic-base_attack-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "base_attack 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "generic-base_attack-numeric_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-base_attack-numeric_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-base_attack-zero_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-base_attack-fraction_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-base_attack-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "generic-enemy_defense-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_defense 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "generic-enemy_defense-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_defense 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "generic-enemy_defense-numeric_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-enemy_defense-numeric_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-enemy_defense-zero_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-enemy_defense-fraction_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-enemy_defense-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "generic-enemy_resistance-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_resistance 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "generic-enemy_resistance-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_resistance 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "generic-enemy_resistance-numeric_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-enemy_resistance-numeric_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-enemy_resistance-zero_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-enemy_resistance-fraction_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-enemy_resistance-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "generic-window_seconds-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "window_seconds 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "generic-window_seconds-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "window_seconds 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "generic-window_seconds-numeric_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-window_seconds-numeric_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-window_seconds-zero_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-window_seconds-fraction_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-window_seconds-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "generic-base_attack-existing-invalid",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "基础攻击需要范围内的有限非负数。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "基础攻击需要范围内的有限非负数。"
+      }
+    },
+    {
+      "id": "generic-enemy_resistance-existing-invalid",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "enemy_resistance需要范围内的有限非负数。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_resistance需要范围内的有限非负数。"
+      }
+    },
+    {
+      "id": "generic-window_seconds-existing-invalid",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "window_seconds需要范围内的有限非负数。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "window_seconds需要范围内的有限非负数。"
+      }
+    },
+    {
+      "id": "legacy-active-companion-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "legacy damage._skill_damage_base Silverash S2 nonzero deployment_stacks recipient calculation",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "companion_attack 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-active-companion-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "legacy damage._skill_damage_base Silverash S2 nonzero deployment_stacks recipient calculation",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "companion_attack 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-active-companion-numeric_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-active-companion-numeric_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-active-companion-zero_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-active-companion-fraction_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-active-companion-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "legacy-inactive-companion-bool_true",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-inactive-companion-bool_false",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-inactive-companion-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "legacy-base_attack-bool_true-existing-rule",
+      "mode": "preserve_observed_earlier_error",
+      "consumer": "original attack-rune native _single before new common bool gate",
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "费用计算参数需要有限数值。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "费用计算参数需要有限数值。"
+      }
+    },
+    {
+      "id": "legacy-base_attack-bool_false-existing-rule",
+      "mode": "preserve_observed_earlier_error",
+      "consumer": "original attack-rune native _single before new common bool gate",
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "费用计算参数需要有限数值。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "费用计算参数需要有限数值。"
+      }
+    },
+    {
+      "id": "legacy-enemy_defense-bool_true-existing-rule",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_defense 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-enemy_defense-bool_false-existing-rule",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_defense 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-target-overrides-bool_true",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-target-overrides-bool_false",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-bool-and-earlier-training",
+      "mode": "preserve_observed_earlier_error",
+      "consumer": "original cultivation/target/character-buff preparation gate before new scalar check",
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "精英阶段需要为 0、1 或 2。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "精英阶段需要为 0、1 或 2。"
+      }
+    },
+    {
+      "id": "legacy-bool-and-earlier-target",
+      "mode": "preserve_observed_earlier_error",
+      "consumer": "original cultivation/target/character-buff preparation gate before new scalar check",
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "目标关卡没有固定敌人档案。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "目标关卡没有固定敌人档案。"
+      }
+    },
+    {
+      "id": "legacy-bool-and-earlier-relic-input",
+      "mode": "preserve_observed_earlier_error",
+      "consumer": "original cultivation/target/character-buff preparation gate before new scalar check",
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "干员定向强化需要已确认的ID列表。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "干员定向强化需要已确认的ID列表。"
+      }
+    },
+    {
+      "id": "generic-inactive-companion-bool_true",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-inactive-companion-bool_false",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-inactive-companion-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-base_attack-bool_true-existing-rule",
+      "mode": "preserve_observed_earlier_error",
+      "consumer": "original attack-rune native _single before new common bool gate",
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "费用计算参数需要有限数值。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "费用计算参数需要有限数值。"
+      }
+    },
+    {
+      "id": "generic-base_attack-bool_false-existing-rule",
+      "mode": "preserve_observed_earlier_error",
+      "consumer": "original attack-rune native _single before new common bool gate",
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "费用计算参数需要有限数值。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "费用计算参数需要有限数值。"
+      }
+    },
+    {
+      "id": "generic-enemy_defense-bool_true-existing-rule",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_defense 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "generic-enemy_defense-bool_false-existing-rule",
+      "mode": "qualified_bool_rejection",
+      "consumer": "damage._prepare_damage captures raw common scalar after fixed-target override, rejects after original preparation/native-rune gates",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "enemy_defense 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "generic-target-overrides-bool_true",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-target-overrides-bool_false",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-bool-and-earlier-training",
+      "mode": "preserve_observed_earlier_error",
+      "consumer": "original cultivation/target/character-buff preparation gate before new scalar check",
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "精英阶段需要为 0、1 或 2。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "精英阶段需要为 0、1 或 2。"
+      }
+    },
+    {
+      "id": "generic-bool-and-earlier-target",
+      "mode": "preserve_observed_earlier_error",
+      "consumer": "original cultivation/target/character-buff preparation gate before new scalar check",
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "目标关卡没有固定敌人档案。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "目标关卡没有固定敌人档案。"
+      }
+    },
+    {
+      "id": "generic-bool-and-earlier-relic-input",
+      "mode": "preserve_observed_earlier_error",
+      "consumer": "original cultivation/target/character-buff preparation gate before new scalar check",
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "干员定向强化需要已确认的ID列表。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "干员定向强化需要已确认的ID列表。"
+      }
+    },
+    {
+      "id": "generic-consumed-ratio-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "OperatorEngine.apply_self_talents current_hp_ratio numeric option with maximum1",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "current_hp_ratio需要范围内的有限非负数。"
+      }
+    },
+    {
+      "id": "generic-consumed-ratio-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "OperatorEngine.apply_self_talents current_hp_ratio numeric option with maximum1",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "current_hp_ratio需要范围内的有限非负数。"
+      }
+    },
+    {
+      "id": "generic-consumed-ratio-numeric_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-consumed-ratio-numeric_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "current_hp_ratio需要范围内的有限非负数。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "current_hp_ratio需要范围内的有限非负数。"
+      }
+    },
+    {
+      "id": "generic-consumed-ratio-zero_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-consumed-ratio-fraction_text",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "ValueError",
+        "message": "current_hp_ratio需要范围内的有限非负数。"
+      },
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "current_hp_ratio需要范围内的有限非负数。"
+      }
+    },
+    {
+      "id": "generic-consumed-ratio-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "legacy-consumed-initial_sp_bonus-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "legacy estimate.build_estimate original nonnegative SP reader",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "initial_sp_bonus 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-consumed-initial_sp_bonus-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "legacy estimate.build_estimate original nonnegative SP reader",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "initial_sp_bonus 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-consumed-initial_sp_bonus-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "legacy-consumed-sp_recovery_bonus-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "legacy estimate.build_estimate original nonnegative SP reader",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "sp_recovery_bonus 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-consumed-sp_recovery_bonus-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "legacy estimate.build_estimate original nonnegative SP reader",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "sp_recovery_bonus 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy-consumed-sp_recovery_bonus-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "legacy-inactive-healing-bool_true",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy-inactive-healing-bool_false",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-inactive-healing-bool_true",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic-inactive-healing-bool_false",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy_active_elapsed-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "legacy estimate selected Silverash 雪境先驱 talent defense calculation",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "deployment_elapsed_seconds 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy_active_elapsed-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "legacy estimate selected Silverash 雪境先驱 talent defense calculation",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "deployment_elapsed_seconds 不接受布尔值；请使用数值。"
+      }
+    },
+    {
+      "id": "legacy_active_elapsed-zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy_active_elapsed-fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy_active_elapsed-text_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy_active_elapsed-text_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy_active_elapsed-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "legacy_inactive_elapsed-bool_true",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy_inactive_elapsed-bool_false",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy_inactive_elapsed-zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy_inactive_elapsed-fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy_inactive_elapsed-text_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy_inactive_elapsed-text_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "legacy_inactive_elapsed-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "generic_active_elapsed-bool_true",
+      "mode": "qualified_bool_rejection",
+      "consumer": "OperatorEngine.plan drone branch deployment_elapsed_seconds numeric option",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "deployment_elapsed_seconds需要范围内的有限非负数。"
+      }
+    },
+    {
+      "id": "generic_active_elapsed-bool_false",
+      "mode": "qualified_bool_rejection",
+      "consumer": "OperatorEngine.plan drone branch deployment_elapsed_seconds numeric option",
+      "scope": "Source-qualified consumer now rejects actual previously accepted bool with exact field/type/message",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": {
+        "type": "ValueError",
+        "message": "deployment_elapsed_seconds需要范围内的有限非负数。"
+      }
+    },
+    {
+      "id": "generic_active_elapsed-zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic_active_elapsed-fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic_active_elapsed-text_zero",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic_active_elapsed-text_fraction",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": true,
+      "ignored18": false,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic_active_elapsed-null",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "actual original numeric exception stage/type/message and blocked formatters preserved; traceback retained, line numbers not compared",
+      "healthy50": false,
+      "ignored18": false,
+      "original_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      },
+      "candidate_error": {
+        "type": "TypeError",
+        "message": "float() argument must be a string or a real number, not 'NoneType'"
+      }
+    },
+    {
+      "id": "generic_inactive_elapsed-bool_true",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    },
+    {
+      "id": "generic_inactive_elapsed-bool_false",
+      "mode": "preserve_observed_outcome",
+      "consumer": null,
+      "scope": "whole successful result and all three complete texts exactly preserved",
+      "healthy50": false,
+      "ignored18": true,
+      "original_error": null,
+      "candidate_error": null
+    }
+  ],
+  "healthy50_complete_native_and_three_texts_equal": true,
+  "ignored18_actual_outcomes_preserved": true,
+  "actual_original_successes": 99,
+  "actual_original_numeric_errors": 34,
+  "actual_candidate_successes": 67,
+  "actual_candidate_numeric_errors": 66,
+  "actual_new_qualified_bool_rejections": 32,
+  "source_qualification_plan": {
+    "path": "/workspace/.continuation/section114-api-saved-source-v1/qualification-plan.json",
+    "bytes": 55187,
+    "sha256": "39f5d6ad5426324fb981915a063fc8467f15c68463c1dc6d129e97e8219320f2"
+  },
+  "Root_original_plain_export": {
+    "path": "/workspace/.continuation/root-section114-original-plain-export-v1.json",
+    "bytes": 2436302,
+    "sha256": "abb9b1acc14df22c621b6871eeccffa2511a85d7f488bf7cf5d1eb2a19dc5b05"
+  },
+  "whole_alias_scope": "Each saved graph and whole comparison retains internal alias checks; no shared identity claim across independent observations.",
+  "all133_product_success_claimed": false,
+  "native_windows_game_chat_verified": false,
+  "private_state_access": false,
+  "runner": {
+    "path": "/workspace/.continuation/section114-api-saved-source-v1/audit114.py",
+    "bytes": 13110,
+    "sha256": "dd0ef5424111200dab8ee96d320bf1530025de4cadf7edbeb2127fa2e2f3242d"
+  }
+}

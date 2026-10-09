@@ -16,7 +16,9 @@ def build_estimate(scenario,result,attributes,compute_skill):
     effects=result['applied_effects']
     def total(kind):return sum(e['value'] for e in effects if e['kind']==kind)
     def nonnegative(field,default):
-        value=float(scenario.get(field,default))
+        value=scenario.get(field,default)
+        if field not in ('healing_targets','deployment_elapsed_seconds') and isinstance(value,bool):raise ValueError(field+' 不接受布尔值；请使用数值。')
+        value=float(value)
         if not math.isfinite(value) or value<0:raise ValueError(f'{field} 需要有限非负数。')
         return value
     elapsed=nonnegative('deployment_elapsed_seconds',0)
@@ -45,6 +47,7 @@ def build_estimate(scenario,result,attributes,compute_skill):
             talent_sp+=bb['sp'];redeploy_scale*=bb['respawn_time']
             talent_notes.append('开放性开局：自身初始技力及下次再部署时间')
         if operator=='silverash' and talent['name']=='雪境先驱':
+            if isinstance(scenario.get('deployment_elapsed_seconds'),bool):raise ValueError('deployment_elapsed_seconds 不接受布尔值；请使用数值。')
             defense_flat+=bb['def']*(2 if elapsed>=bb['interval'] else 1)
             talent_notes.append('雪境先驱：自身防御按在场时间计算；被动生命回复不混入技能治疗量')
     stats={

@@ -1,0 +1,21 @@
+--- audit_saved-v2.py
++++ audit_saved-114.py
+@@ -11,7 +11,8 @@
+ 
+ HELPER_SHA = 'f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a'
+ RUNNERS = {112: 'c1f9c1dd06943c3099a36b4475db27cf72e18a28a27d30237544619c0ce93ea1',
+-           113: '5020397e44e59a791decadde41aba8d2560b735eb43b8bb8aa4a66dc59a26a09'}
++           113: '5020397e44e59a791decadde41aba8d2560b735eb43b8bb8aa4a66dc59a26a09',
++           114: '97731c090d7f7b4445be9a8f65b67cb777bef60e2566e6f6e21f41c44db8ecda'}
+ CLOCK_KEYS = ('initial_seconds', 'recharge_seconds', 'cycle_seconds', 'duration_seconds',
+               'sp_recovery_per_second', 'mode')
+ VIEW_KEYS = ('subject', 'operator_summary', 'preview', 'observed_text', 'capture_status', 'stage_tooltip')
+@@ -270,7 +271,7 @@
+ 
+ def main():
+     parser = argparse.ArgumentParser()
+-    parser.add_argument('--section', type=int, choices=(112, 113), required=True)
++    parser.add_argument('--section', type=int, choices=(112, 113, 114), required=True)
+     for name in ('guard', 'window', 'out'):
+         parser.add_argument('--' + name, required=True)
+     parser.add_argument('--root', default='/workspace/rougezhushou')

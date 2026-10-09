@@ -1,0 +1,41 @@
+{
+  "kind": "SECTION114_EXISTING_REGRESSION_PUBLIC_SCALAR_POLICY_SOURCE",
+  "section": 114,
+  "STOPWRITE": true,
+  "source_frozen": true,
+  "author_project_API_helper_native_tests_Qt_Wine_Git_execution": false,
+  "tracked_edits": false,
+  "future_runtime_PASS": null,
+  "future_guard_sha256": null,
+  "future_source_count": null,
+  "apply_ready": false,
+  "ready_for_root_exact_binding": true,
+  "existing_changed_files": [
+    {
+      "path": "tests/test_integer_option_input_types.py",
+      "before_bytes": 8638,
+      "before_sha256": "aac985f115bc7a1dead2caad7681a6c1615609ec5ca995db1c08ab630ffdef0c",
+      "after_bytes": 9400,
+      "after_sha256": "90146b74621fff8886a3153d1fb9bdd47a576c20fff226d694f3df9283504552",
+      "blocks": [
+        {
+          "old": "        for value in (False, True):\n            self.assertTrue(outcome(scenario('char_1044_hsgma2', 1,\n                                            current_hp_ratio=value))['accepted'])\n",
+          "new": "        # Numeric HP ratios remain numbers; actual checkbox controls above\n        # keep their existing bool contract. Section114 qualifies this scalar.\n        for mode in ('frames', 'continuous'):\n            for value in (0, 1, 0.0, 1.0):\n                with self.subTest(field='current_hp_ratio', mode=mode, value=value):\n                    self.assertTrue(outcome(scenario('char_1044_hsgma2', 1, mode,\n                                                    current_hp_ratio=value))['accepted'])\n            for value in (False, True):\n                with self.subTest(field='current_hp_ratio', mode=mode, value=value):\n                    with self.assertRaisesRegex(ValueError, '^' + re.escape(\n                            'current_hp_ratio需要范围内的有限非负数。') + '$'):\n                        calculate_damage(scenario('char_1044_hsgma2', 1, mode,\n                                                  current_hp_ratio=value))\n",
+          "occurrences": 1,
+          "purpose": "Preserve actual checkbox bool traversal; keep numeric HP ratios0/1 accepted and preserve both bool cases as exact new scalar rejection in both modes."
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    }
+  ],
+  "new_files": [],
+  "original_error_provenance": {
+    "Root_plain_export_sha256": "abb9b1acc14df22c621b6871eeccffa2511a85d7f488bf7cf5d1eb2a19dc5b05",
+    "observed_case": "generic-consumed-ratio-numeric_fraction",
+    "observed_error_type": "ValueError",
+    "observed_error_message": "current_hp_ratio需要范围内的有限非负数。"
+  },
+  "scope_boundary": "Only this existing test policy changes. Bool rejection is the intentional114 functional gate; existing numeric bound message is observed. Full Root actual errors/native qualification remain separately recorded; no new mechanism or changed product formula.",
+  "root_required_order": "Preserve Root actual original-policy related-test failure first, then bind this exact one-block test Source correction, freeze new guard and run actual relevant tests."
+}

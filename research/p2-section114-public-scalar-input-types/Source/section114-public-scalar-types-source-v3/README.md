@@ -1,0 +1,15 @@
+# 第114节：公共标量情景输入Source准备
+
+候选只拒绝实际numeric consumer读到的bool，保留float政策、合法数字字符串、0、缺省和None旧错误，不修改公式/上下限或游戏机制。Root必须110–113完成后绑定实际完整Source+CORE取得原观察；本包未项目/API/helper/codec/native/测试/Qt/Wine/Git执行，不改tracked，不计PASS。
+
+共同4数值在prepare_run后记录仍为bool的原字段名，固定target覆写的旧手动DEF/RES不拦；先运行原prepare/nativeRune失败，再拒绝原bool，避免减防乘法洗数字。攻击符文_single原本拒bool，为回归而非新成果；当前表没有final_attack_factor可达效果，不伪造该probe。
+
+companion保现float parser与None旧错误，仅实际silverashS2部署触发consumer拒原bool，unused/generic bool不新增资格。generic option扩已有非healing数值bool门，integer旧文案同，healing_targets保public能力门及非治疗例外；legacy SP标量在原调用处拒bool；elapsed仅在原银灰天赋消费分支拒bool。
+
+原110输入覆盖双路4字段、健康0/小数/文本/None、companion active/inactive、符文原失败/减防洗数、target覆盖、早期错误优先、实际HP ratio与legacySP、inactive healing。全部只列输入与待观测域，不填数字/成功值。其他非bool路径不改；不承诺‘新增非法bool+后续另一个非法numeric’所有双错误仍旧优先。manual effect.value、flags/ID/count和真正时钟均非本节scope。
+
+3文件7局部块可精确重基future110–113，不wholefile覆盖。Source compile6、reverse精确；meaningful测试待Root真实原结果后封，原probe状态与futureguard/count仍pending。
+
+V2自查修正仅legacy nonnegative的healing_targets资格例外：active bool已有public has_healing门，inactive旧值不能被新数值门误拒。原110案例JSON全字节同，其他产品块与非boolean政策同；v1原件含未运行Source错误资格保留。
+
+V3进一步按真实消费资格收窄deployment_elapsed_seconds：legacy原解析始终存在，但仅已选银灰雪境先驱天赋用它计算防御。未用该值的legacy/generic字段不新增资格；active分支才拒rawbool，原None/parser错误保留。原110案例记录保持，加23个active/inactive elapsed输入，共133案例，均待Root实际。v2与其独审原件保留，新Source仍不能算完成。

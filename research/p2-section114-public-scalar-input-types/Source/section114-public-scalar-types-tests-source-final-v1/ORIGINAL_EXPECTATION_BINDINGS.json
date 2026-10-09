@@ -1,0 +1,238 @@
+{
+  "kind": "SECTION114_TEST_EXPECTATIONS_BOUND_TO_ROOT_ACTUAL_ORDINARY_JSON",
+  "runtime_executed_by_source_author": false,
+  "original_plain_export": {
+    "path": "/workspace/.continuation/root-section114-original-plain-export-v1.json",
+    "bytes": 2436302,
+    "sha256": "abb9b1acc14df22c621b6871eeccffa2511a85d7f488bf7cf5d1eb2a19dc5b05"
+  },
+  "original_observation_contract": {
+    "path": "/workspace/.continuation/section114-original-observation-contract-source-v1/contract.json",
+    "bytes": 6714,
+    "sha256": "c9c4a4dd5540d3f0ce42f9ab22d3d99508f1f5f6293876c857f42db542682fd8"
+  },
+  "original_receipts_hashes_verified": [
+    {
+      "path": "/workspace/.continuation/section114-original-api-part1-actual-v1/observations.json",
+      "sha256": "411b9b97c2e00c77370b4856ee52ce6481ce335d997f5c532312e62d3b2fb7b9"
+    },
+    {
+      "path": "/workspace/.continuation/section114-original-api-part2-actual-v1/observations.json",
+      "sha256": "0c8a5acb2be09905f06c79e20d40a37d905cf53dd93dd6bc6679720d729013fa"
+    }
+  ],
+  "original133_source_inputs": {
+    "path": "/workspace/.continuation/section114-public-scalar-types-source-v3/original-probe-inputs.json",
+    "bytes": 94391,
+    "sha256": "df338b17c9e4054338fc8c2b283d4f9842bc024f311c8665717b1b15230ecdef"
+  },
+  "original_count": 133,
+  "success_count": 99,
+  "actual_error_count": 34,
+  "healthy50_ids_and_projections_verified_exact": [
+    "legacy-base_attack-numeric_zero",
+    "legacy-base_attack-numeric_fraction",
+    "legacy-base_attack-zero_text",
+    "legacy-base_attack-fraction_text",
+    "legacy-enemy_defense-numeric_zero",
+    "legacy-enemy_defense-numeric_fraction",
+    "legacy-enemy_defense-zero_text",
+    "legacy-enemy_defense-fraction_text",
+    "legacy-enemy_resistance-numeric_zero",
+    "legacy-enemy_resistance-numeric_fraction",
+    "legacy-enemy_resistance-zero_text",
+    "legacy-enemy_resistance-fraction_text",
+    "legacy-window_seconds-numeric_zero",
+    "legacy-window_seconds-numeric_fraction",
+    "legacy-window_seconds-zero_text",
+    "legacy-window_seconds-fraction_text",
+    "generic-base_attack-numeric_zero",
+    "generic-base_attack-numeric_fraction",
+    "generic-base_attack-zero_text",
+    "generic-base_attack-fraction_text",
+    "generic-enemy_defense-numeric_zero",
+    "generic-enemy_defense-numeric_fraction",
+    "generic-enemy_defense-zero_text",
+    "generic-enemy_defense-fraction_text",
+    "generic-enemy_resistance-numeric_zero",
+    "generic-enemy_resistance-numeric_fraction",
+    "generic-enemy_resistance-zero_text",
+    "generic-enemy_resistance-fraction_text",
+    "generic-window_seconds-numeric_zero",
+    "generic-window_seconds-numeric_fraction",
+    "generic-window_seconds-zero_text",
+    "generic-window_seconds-fraction_text",
+    "legacy-active-companion-numeric_zero",
+    "legacy-active-companion-numeric_fraction",
+    "legacy-active-companion-zero_text",
+    "legacy-active-companion-fraction_text",
+    "generic-consumed-ratio-numeric_zero",
+    "generic-consumed-ratio-zero_text",
+    "legacy_active_elapsed-zero",
+    "legacy_active_elapsed-fraction",
+    "legacy_active_elapsed-text_zero",
+    "legacy_active_elapsed-text_fraction",
+    "legacy_inactive_elapsed-zero",
+    "legacy_inactive_elapsed-fraction",
+    "legacy_inactive_elapsed-text_zero",
+    "legacy_inactive_elapsed-text_fraction",
+    "generic_active_elapsed-zero",
+    "generic_active_elapsed-fraction",
+    "generic_active_elapsed-text_zero",
+    "generic_active_elapsed-text_fraction"
+  ],
+  "scalar_projection_fields": [
+    "attack",
+    "total_damage",
+    "component_hits",
+    "window_seconds",
+    "initial_seconds",
+    "recharge_seconds",
+    "duration_seconds",
+    "phase_damage",
+    "cycle_damage"
+  ],
+  "actual_original_errors": {
+    "legacy-base_attack-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "legacy-enemy_defense-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "legacy-enemy_resistance-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "legacy-window_seconds-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "legacy-base_attack-existing-invalid": {
+      "type": "ValueError",
+      "message": "base_attack 需要有限非负数；法抗范围为 0–100。"
+    },
+    "legacy-enemy_resistance-existing-invalid": {
+      "type": "ValueError",
+      "message": "enemy_resistance 需要有限非负数；法抗范围为 0–100。"
+    },
+    "legacy-window_seconds-existing-invalid": {
+      "type": "ValueError",
+      "message": "window_seconds 需要有限非负数；法抗范围为 0–100。"
+    },
+    "generic-base_attack-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "generic-enemy_defense-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "generic-enemy_resistance-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "generic-window_seconds-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "generic-base_attack-existing-invalid": {
+      "type": "ValueError",
+      "message": "基础攻击需要范围内的有限非负数。"
+    },
+    "generic-enemy_resistance-existing-invalid": {
+      "type": "ValueError",
+      "message": "enemy_resistance需要范围内的有限非负数。"
+    },
+    "generic-window_seconds-existing-invalid": {
+      "type": "ValueError",
+      "message": "window_seconds需要范围内的有限非负数。"
+    },
+    "legacy-active-companion-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "legacy-inactive-companion-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "legacy-base_attack-bool_true-existing-rule": {
+      "type": "ValueError",
+      "message": "费用计算参数需要有限数值。"
+    },
+    "legacy-base_attack-bool_false-existing-rule": {
+      "type": "ValueError",
+      "message": "费用计算参数需要有限数值。"
+    },
+    "legacy-bool-and-earlier-training": {
+      "type": "ValueError",
+      "message": "精英阶段需要为 0、1 或 2。"
+    },
+    "legacy-bool-and-earlier-target": {
+      "type": "ValueError",
+      "message": "目标关卡没有固定敌人档案。"
+    },
+    "legacy-bool-and-earlier-relic-input": {
+      "type": "ValueError",
+      "message": "干员定向强化需要已确认的ID列表。"
+    },
+    "generic-base_attack-bool_true-existing-rule": {
+      "type": "ValueError",
+      "message": "费用计算参数需要有限数值。"
+    },
+    "generic-base_attack-bool_false-existing-rule": {
+      "type": "ValueError",
+      "message": "费用计算参数需要有限数值。"
+    },
+    "generic-bool-and-earlier-training": {
+      "type": "ValueError",
+      "message": "精英阶段需要为 0、1 或 2。"
+    },
+    "generic-bool-and-earlier-target": {
+      "type": "ValueError",
+      "message": "目标关卡没有固定敌人档案。"
+    },
+    "generic-bool-and-earlier-relic-input": {
+      "type": "ValueError",
+      "message": "干员定向强化需要已确认的ID列表。"
+    },
+    "generic-consumed-ratio-numeric_fraction": {
+      "type": "ValueError",
+      "message": "current_hp_ratio需要范围内的有限非负数。"
+    },
+    "generic-consumed-ratio-fraction_text": {
+      "type": "ValueError",
+      "message": "current_hp_ratio需要范围内的有限非负数。"
+    },
+    "generic-consumed-ratio-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "legacy-consumed-initial_sp_bonus-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "legacy-consumed-sp_recovery_bonus-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "legacy_active_elapsed-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "legacy_inactive_elapsed-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    },
+    "generic_active_elapsed-null": {
+      "type": "TypeError",
+      "message": "float() argument must be a string or a real number, not 'NoneType'"
+    }
+  },
+  "draft_source_preserved": true,
+  "new_method_count": 18,
+  "not_native_proof": "Ordinary JSON is only the parent-provided read-only numeric/error export. Native types, aliases, caller graphs and three formatter text comparisons belong to Root retained native Saved auditor, not this Source check.",
+  "extra_source_properties": "Common bool field order, empty observation qualification and target attack/window bool qualification are new candidate contracts read from the applied7 Source blocks, not original-success claims.",
+  "unchanged_expectations": "Original None/parser, ratio upper-bound, native attack-rune and early training/target/relic error classes/messages are recorded in this export and frozen in the18 tests. No observed unknown is converted to zero and no tolerance is widened."
+}

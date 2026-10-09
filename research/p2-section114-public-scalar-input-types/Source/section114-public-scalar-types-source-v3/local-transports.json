@@ -1,0 +1,173 @@
+{
+  "kind": "SECTION114_PUBLIC_SCALAR_INPUT_LOCAL_SOURCE_CANDIDATE",
+  "section": 114,
+  "STOPWRITE": true,
+  "author_runtime_executed": false,
+  "project_or_helper_imported": false,
+  "native_decoded": false,
+  "tracked_edits": false,
+  "candidate_product_pass": false,
+  "runtime_pending": true,
+  "original_probe_pending": true,
+  "independent_source_review_pending": true,
+  "apply_ready": false,
+  "future_guard_sha256": null,
+  "future_source_count": null,
+  "current_snapshot_pins": {
+    "rouge/damage.py": {
+      "bytes": 31182,
+      "sha256": "fec509c5d40d6e9be6f3d60efce41e2b22dcc5c814db0591fd65b657e8fe263d"
+    },
+    "rouge/operator_engine.py": {
+      "bytes": 156894,
+      "sha256": "f6c0a17e114435c5d9b80cabc6a38444fffce1bf21260125eb8e5e58a062f7e3"
+    },
+    "rouge/estimate.py": {
+      "bytes": 22060,
+      "sha256": "d8b8c6412878eebdc8b65955dec03f273a96b0f33e8d7adcee3856c966247ca6"
+    },
+    "rouge/relic_attributes.py": {
+      "bytes": 3444,
+      "sha256": "bc658e44c3924565ebd331b8a88df5db69131069b9fa94aeb0c101f155c3ebd1"
+    },
+    "rouge/deployment.py": {
+      "bytes": 11688,
+      "sha256": "222440c9253f8cc120c877816858496b74296306390d04e601312532eefab659"
+    },
+    "rouge/enemy_environment.py": {
+      "bytes": 8495,
+      "sha256": "046d43949e4a76dd73dc99cf44be29054587bf9e4954110d7f28401a90d36ac7"
+    },
+    "rouge/run_modifiers.py": {
+      "bytes": 6678,
+      "sha256": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e"
+    },
+    "rouge/condition_inputs.py": {
+      "bytes": 1007,
+      "sha256": "b485ad286f4d6157a1e31b72b474b674ceb585bb905ce319d75f90354599a808"
+    },
+    "rouge/catalog.py": {
+      "bytes": 3404,
+      "sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2"
+    },
+    "rouge/data/catalog.json": {
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    },
+    "rouge/data/relic-mechanics.json": {
+      "bytes": 500847,
+      "sha256": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47"
+    },
+    "rouge/data/previews.json": {
+      "bytes": 2601977,
+      "sha256": "b21f014629f5df464a165ae106f669da5a8a4b391deed1bbab38d021316d9586"
+    }
+  },
+  "existing_changed_files": [
+    {
+      "path": "rouge/damage.py",
+      "before_bytes": 31182,
+      "before_sha256": "fec509c5d40d6e9be6f3d60efce41e2b22dcc5c814db0591fd65b657e8fe263d",
+      "after_bytes": 31668,
+      "after_sha256": "70a7a8847849c9f2e01f956dc1df68a61ef34b8aec516e7f4ad64ae0c2ec7e86",
+      "blocks": [
+        {
+          "old": "def _skill_damage_base(scenario: dict) -> dict:\r\n    scenario=dict(scenario)\r\n",
+          "new": "def _skill_damage_base(scenario: dict) -> dict:\r\n    scenario=dict(scenario)\r\n    companion_is_bool=isinstance(scenario.get('companion_attack'),bool)\r\n",
+          "purpose": "remember companion raw type only in its original legacy function",
+          "occurrences": 1
+        },
+        {
+          "old": "        if stacks:\r\n            recipient = float(scenario['companion_attack']) * bb['atk_scale']\r\n",
+          "new": "        if stacks:\r\n            if companion_is_bool:raise ValueError('companion_attack 不接受布尔值；请使用数值。')\r\n            recipient = float(scenario['companion_attack']) * bb['atk_scale']\r\n",
+          "purpose": "reject numeric boolean only at actual companion consumer",
+          "occurrences": 1
+        },
+        {
+          "old": "    scenario,run_resolution=prepare_run(scenario)\r\n    scenario,resolution=prepare(scenario,profile)\r\n",
+          "new": "    scenario,run_resolution=prepare_run(scenario)\r\n    numeric_bool_fields=[field for field in ('base_attack','enemy_defense','enemy_resistance','window_seconds')\r\n                         if isinstance(scenario.get(field),bool)]\r\n    scenario,resolution=prepare(scenario,profile)\r\n",
+          "purpose": "capture raw bool after identity-derived DEF/RES override",
+          "occurrences": 1
+        },
+        {
+          "old": "    scenario,attributes=prepare_attribute_runes(scenario,attributes)\r\n    # Reuse the existing numeric-zero gates after validating the raw timing.\r\n",
+          "new": "    scenario,attributes=prepare_attribute_runes(scenario,attributes)\r\n    if numeric_bool_fields:\r\n        raise ValueError(numeric_bool_fields[0]+' 不接受布尔值；请使用数值。')\r\n    # Reuse the existing numeric-zero gates after validating the raw timing.\r\n",
+          "purpose": "keep original preparation/native-rune errors before new boolean rejection",
+          "occurrences": 1
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "before_bytes": 156894,
+      "before_sha256": "f6c0a17e114435c5d9b80cabc6a38444fffce1bf21260125eb8e5e58a062f7e3",
+      "after_bytes": 156912,
+      "after_sha256": "fb23bf130be5fa52f911d6798589faea649635ede3cb79ac2bcaec42914cbea0",
+      "blocks": [
+        {
+          "old": "        if integer and key!='healing_targets' and isinstance(value,bool):\r\n            raise ValueError(key+'需要范围内的有限非负整数。')\r\n",
+          "new": "        if key!='healing_targets' and isinstance(value,bool):\r\n            raise ValueError(key+'需要范围内的有限非负'+('整数。' if integer else '数。'))\r\n",
+          "purpose": "consumed numeric options; preserve healing capability and integer message",
+          "occurrences": 1
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    },
+    {
+      "path": "rouge/estimate.py",
+      "before_bytes": 22060,
+      "before_sha256": "d8b8c6412878eebdc8b65955dec03f273a96b0f33e8d7adcee3856c966247ca6",
+      "after_bytes": 22412,
+      "after_sha256": "838591816bc0000c47ede7a427c9c6e6d1d02d3327b7ac4e04aee46ed62a1556",
+      "blocks": [
+        {
+          "old": "    def nonnegative(field,default):\r\n        value=float(scenario.get(field,default))\r\n",
+          "new": "    def nonnegative(field,default):\r\n        value=scenario.get(field,default)\r\n        if field not in ('healing_targets','deployment_elapsed_seconds') and isinstance(value,bool):raise ValueError(field+' 不接受布尔值；请使用数值。')\r\n        value=float(value)\r\n",
+          "purpose": "Keep inactive healing and elapsed legacy values; reject consumed SP scalars only at old reader.",
+          "occurrences": 1
+        },
+        {
+          "old": "        if operator=='silverash' and talent['name']=='雪境先驱':\r\n            defense_flat+=bb['def']*(2 if elapsed>=bb['interval'] else 1)\r\n",
+          "new": "        if operator=='silverash' and talent['name']=='雪境先驱':\r\n            if isinstance(scenario.get('deployment_elapsed_seconds'),bool):raise ValueError('deployment_elapsed_seconds 不接受布尔值；请使用数值。')\r\n            defense_flat+=bb['def']*(2 if elapsed>=bb['interval'] else 1)\r\n",
+          "purpose": "Reject elapsed boolean only at the qualified talent consumer; raw float/None parser remains unchanged.",
+          "occurrences": 1
+        }
+      ],
+      "inverse_exact": true,
+      "compiled_noexec": true
+    }
+  ],
+  "test_source_status": "Wait for Root actual original-probe contract before freezing meaningful tests; no guessed runtime outcomes.",
+  "registry_plan": "Append one future new test selector to then-current cloud; fullavailable existing cloud union unchanged. Do not replace110-113 increments.",
+  "scope_notes": [
+    "No runtime or numeric result has been supplied. Root must bind actual whole Source+CORE after110-113 and observe each case through original public API/native preservation.",
+    "Four common scalar fields captured after fixed-target override and before relic transformation; rejection occurs after original prepare/nativeRune errors.",
+    "Companion check belongs at actual silverashS2 stacks consumer. Generic/unused companion bool does not gain new qualification.",
+    "Consumed generic float options reject bool; healing_targets keeps existing public capability gate and inactive-helper exemption. Legacy SP scalars reject at the original reader; elapsed bool rejection is gated by its exact selected talent consumer.",
+    "Every non-boolean float conversion, numeric string,0,missing default and null error keeps its original path. No extra numeric bounds or formulas.",
+    "Attack-rune _single already rejects bool: regression, not a new fix. Current fixed relic/char-buff tables contain no reachable final_attack_factor; do not fake that probe.",
+    "Combined newly invalid bool plus later invalid numeric may have a new boolean error order; no claim that every multi-error legacy pair stays identical. Earlier cultivation/target/relic/native-rune gates are preserved.",
+    "Manual effect.value validation, flags/IDs/counts and game timing are excluded.",
+    "V2 corrects self-found Source blocker: legacy nonnegative always reads healing_targets; exempt that key because active healing bool already fails the public has_healing gate, preserving inactive nonhealer values.",
+    "V3 self-review: legacy elapsed is parsed but mathematically used only by the qualified Silverash talent. Keep other operators elapsed bool unchanged; reject raw bool only inside that talent branch. No game mechanic or formula added."
+  ],
+  "source_only_history": {
+    "v1_dir": "/workspace/.continuation/section114-public-scalar-types-source-v1",
+    "v1_manifest_sha256": "81c36f1844a9e2c9ca7ac56e082007ba503619d6cc5832c5a48c463d8b2da9ff",
+    "v1_original_inputs_unchanged": true,
+    "v1_status": "Unexecuted Source draft with inactive-healing qualification blocker; preserved immutable.",
+    "v2_dir": "/workspace/.continuation/section114-public-scalar-types-source-v2",
+    "v2_manifest_sha256": "db21cdb773c5f73d93d59859ce4c9681f4a8583b99ae3988096e126c622aa14c",
+    "v2_status": "Unexecuted Source draft and independent narrow review preserved; later self-audit identified inactive legacy elapsed qualification.",
+    "v2_first_110_cases_preserved": true,
+    "v2_independent_review": {
+      "path": "/workspace/.continuation/section114-public-scalar-types-independent-source-v2/review.json",
+      "bytes": 11090,
+      "sha256": "84dc9df6c576e385795c7451546d60dc922b58126a43ee2cdce25b5009927730",
+      "qualification": "Prior narrow independent Source conclusion retained; later author continuation found inactive elapsed boundary, corrected only in v3."
+    }
+  }
+}
