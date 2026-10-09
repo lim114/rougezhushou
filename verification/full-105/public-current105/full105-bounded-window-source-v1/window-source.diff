@@ -1,0 +1,66 @@
+--- actual-full100-final-visibility-v3/window.py
++++ future-full105-v1/window.py
+@@ -1,4 +1,4 @@
+-"""Fresh bounded actual full100 Wine Qt validation; no runtime result yet."""
++"""Fresh bounded actual full105 Wine Qt validation; Source prepared only."""
+ import argparse, functools, hashlib, json, os, sys, threading, time
+ from pathlib import Path
+ 
+@@ -15,10 +15,10 @@
+ _guard100 = json.loads(_guard_bytes100)
+ _expected100 = _guard100['source_sha256']
+ _additional100 = _guard100['source_additional_sha256']
+-if not isinstance(_expected100, dict) or not _expected100:
+-    raise ValueError('A real completed100 maintained Source map is required')
++if not isinstance(_expected100, dict) or len(_expected100)!=748:
++    raise ValueError('A real completed104/final105 maintained Source map of748 files is required')
+ if not isinstance(_additional100, dict) or 'CORE_0.70_VERIFICATION.json' not in _additional100:
+-    raise ValueError('Completed100 additional Source map must include CORE registration')
++    raise ValueError('Completed104/final105 additional Source map must include CORE registration')
+ 
+ def maintained_source100():
+     result = {}
+@@ -48,9 +48,9 @@
+     return dict(sorted(result.items()))
+ 
+ if maintained_source100() != _expected100:
+-    raise AssertionError('Completed100 maintained Source drift before project imports')
++    raise AssertionError('Completed104/final105 maintained Source drift before project imports')
+ if additional_source100() != _additional100:
+-    raise AssertionError('Completed100 supplemental Source drift before project imports')
++    raise AssertionError('Completed104/final105 supplemental Source drift before project imports')
+ OUT.mkdir(parents=True, exist_ok=False)
+ (OUT / 'source100-guard-input.json').write_bytes(_guard_bytes100)
+ _started100 = time.perf_counter()
+@@ -60,10 +60,10 @@
+ 
+ def _deadline_check100():
+     if time.perf_counter() >= _deadline100:
+-        raise TimeoutError('Fresh full100 deadline of600 seconds reached')
++        raise TimeoutError('Fresh full105 deadline of600 seconds reached')
+ 
+ def _hard_timeout100():
+-    record = {'passed': False, 'scope': 'actual full100 hard deadline',
++    record = {'passed': False, 'scope': 'actual full105 hard deadline', 'after_section': 105,
+               'deadline_seconds': 600, 'elapsed_seconds': time.perf_counter()-_started100,
+               'guard_sha256': hashlib.sha256(_guard_bytes100).hexdigest(),
+               'full_function_vector_measured': False}
+@@ -1142,6 +1142,9 @@
+     return maintained_source100()
+ checks=[];started=time.perf_counter();window=None;app=None;before=source_hashes()
+ receipt={'scope':'Wine Windows binary compatibility; no native Windows or game integration',
++         'after_section':105,'current_maintained_source_count_expected':748,
++         'inherited_full100_runner_sha256':'e7a185ea5eba2d1d4905bbbe8f8cdfff1978c1a25e39b865d5018c00a6ac93f3',
++         'legacy_output_names_preserved':True,'specialist101_104_validation_in_this_runner':False,
+          'native_windows_verified':False,'game_captures':0,'chat_requests':0,
+          'private_state_isolated':True,'platform':platform.platform(),'python':sys.version,
+          'checks':checks,'passed':False,'complete_ui_validation':False,'plain_text_normalization':'QPlainTextEdit converts non-breaking spaces to ordinary spaces',
+@@ -1152,7 +1155,7 @@
+          'old090_frame_local_normal_observed':False,
+          'normal_plan_original_return_observed_instead':True,
+          'specialist96_100_validation_in_this_runner':False,
+-         'scope_note100':'Healthy maintained full090 functional suite transported to actual100. Separate96-100 receipts required. No old095 complete invocation vector, native Windows, capture or chat certification.'}
++         'scope_note100':'Inherited healthy maintained full090/full100 functional suite transported to actual105 Source748. Separate96-104 specialist receipts required. Legacy comparison/producer limitations remain unchanged. No old095 complete invocation vector, native Windows, capture or chat certification.'}
+ try:
+     for name in ('PySide6.QtWidgets','numpy','cv2','win32gui','win32process','win32api','httpx','rapidocr_onnxruntime','windows_capture'):
+         importlib.import_module(name)

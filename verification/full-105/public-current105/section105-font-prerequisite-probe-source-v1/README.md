@@ -1,0 +1,1 @@
+Source-only original Qt font prerequisite probe, compiled and never executed. Original missing msyh is honest prerequisite failure. The optional genuine Noto font keeps its own true path and family; no renamed or fabricated font. Probe output does not count a project test. STOPWRITE.

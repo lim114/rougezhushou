@@ -1,0 +1,2356 @@
+{
+  "status": "Source-only independent audit; no project import or test execution",
+  "created_utc": "2026-10-09T09:56:22.798577+00:00",
+  "scope": [
+    "tests/test_capture_queue.py",
+    "tests/test_dynamic_resolution.py",
+    "tests/test_adaptive_recognition.py"
+  ],
+  "method": [
+    "Read source with standard library only",
+    "AST local import closure conservatively includes imports inside methods that are not necessarily reached",
+    "Compile each source in memory without executing its code",
+    "Distinguish module/class definition evaluation from method-body execution; guarded unittest.main does not run under selector imports",
+    "No dependency probes or sample-image contents inspected"
+  ],
+  "union_source_file_count": 45,
+  "findings": [
+    {
+      "id": "capture_module_import",
+      "paths": [
+        "tests/test_capture_queue.py:7",
+        "rouge/capture.py:4",
+        "rouge/capture.py:5",
+        "rouge/capture.py:6",
+        "rouge/capture.py:7",
+        "rouge/capture.py:10"
+      ],
+      "fact": "The test imports real rouge.capture before setUp. This requires real win32gui/win32process/win32api/win32con plus local FrameBuffer and its cv2/numpy imports. No GameCapture constructor or local native window enumeration is called at module import."
+    },
+    {
+      "id": "capture_fixture_patch_order",
+      "paths": [
+        "tests/test_capture_queue.py:24",
+        "tests/test_capture_queue.py:27",
+        "tests/test_capture_queue.py:28",
+        "tests/test_capture_queue.py:29",
+        "tests/test_capture_queue.py:30",
+        "tests/test_capture_queue.py:31",
+        "tests/test_capture_queue.py:32",
+        "tests/test_capture_queue.py:33"
+      ],
+      "fact": "Every patch is started and cleanup registered before real GameCapture is constructed and connect is called. Patches replace list_game_windows, windows_capture.WindowsCapture, frame_client_rect, win32gui.IsWindow and IsIconic. This is an explicit fake boundary, not a native capture test."
+    },
+    {
+      "id": "capture_fake_native_boundary",
+      "paths": [
+        "tests/test_capture_queue.py:10",
+        "tests/test_capture_queue.py:13",
+        "tests/test_capture_queue.py:15",
+        "tests/test_capture_queue.py:16",
+        "tests/test_capture_queue.py:17",
+        "tests/test_capture_queue.py:20",
+        "rouge/capture.py:91",
+        "rouge/capture.py:93",
+        "rouge/capture.py:96",
+        "rouge/capture.py:101",
+        "rouge/capture.py:103",
+        "rouge/capture.py:112",
+        "rouge/capture.py:116"
+      ],
+      "fact": "connect uses the fake window list and creates FakeWGC. Event decorators register functions in a dict; FakeWGC.start_free_threaded returns Mock without starting a capture thread. Synthetic arrays are fed directly into callbacks and local FrameBuffer. Real process_names/EnumWindows/frame_client_rect ctypes native calls are bypassed by patches."
+    },
+    {
+      "id": "capture_constructor_cleanup",
+      "paths": [
+        "rouge/capture.py:80",
+        "rouge/capture.py:82",
+        "rouge/capture.py:83",
+        "rouge/frame_buffer.py:16",
+        "rouge/frame_buffer.py:24",
+        "tests/test_capture_queue.py:34",
+        "rouge/capture.py:160",
+        "rouge/capture.py:166"
+      ],
+      "fact": "The invoked local constructors create locks and in-memory buffer state. Cleanup closes the fake session, clears memory and calls the fake Mock.stop; no output files or private paths appear in these methods."
+    },
+    {
+      "id": "capture_external_import_unknown",
+      "paths": [
+        "tests/test_capture_queue.py:28",
+        "tests/test_capture_queue.py:32",
+        "rouge/capture.py:96"
+      ],
+      "fact": "patch(\"windows_capture.WindowsCapture\", FakeWGC) must import the actual external windows_capture package to resolve the attribute before replacing it. The installed external package import/startup behavior was not audited or executed. Real Windows dependency import is therefore a prerequisite, and local Source cannot certify external import side effects."
+    },
+    {
+      "id": "offline_test_startup",
+      "paths": [
+        "tests/test_dynamic_resolution.py:5",
+        "tests/test_dynamic_resolution.py:7",
+        "tests/test_adaptive_recognition.py:6",
+        "tests/test_adaptive_recognition.py:8",
+        "tests/test_capture_queue.py:71"
+      ],
+      "fact": "The image-replay modules define ROOT via Path.resolve and test classes; they do not load images or instantiate ScreenReader at import. Capture unittest.main is under __name__ == \"__main__\" and does not run during selector imports. No test class decorators or custom metaclasses are present."
+    },
+    {
+      "id": "offline_replay_inputs",
+      "paths": [
+        "tests/test_dynamic_resolution.py:11",
+        "tests/test_dynamic_resolution.py:18",
+        "tests/test_dynamic_resolution.py:32",
+        "tests/test_dynamic_resolution.py:44",
+        "tests/test_adaptive_recognition.py:10",
+        "tests/test_adaptive_recognition.py:11"
+      ],
+      "fact": "Bodies read samples/native-client PNGs using np.fromfile/cv2.imdecode, resize or relocate arrays and call the actual ScreenReader. No fake OCR is installed and no temp path redirection is used. The samples are replay prerequisites; they are not live game/desktop captures."
+    },
+    {
+      "id": "offline_replay_sample_names",
+      "samples": [
+        "run-info-trade.png",
+        "run-relic-multicard-closed.png",
+        "operator-mechanist.png",
+        "operator-silverash.png",
+        "map-template-node-detail.png",
+        "module-mechanist.png",
+        "run-mechanist-selected.png",
+        "run-map-closed.png"
+      ],
+      "fact": "These names are literal Source requirements. File availability and image validity were not tested in this Source-only audit."
+    },
+    {
+      "id": "screen_reader_actual_constructor",
+      "paths": [
+        "rouge/recognition.py:46",
+        "rouge/recognition.py:47",
+        "rouge/recognition.py:58",
+        "rouge/recognition.py:99",
+        "rouge/recognition.py:107",
+        "rouge/recognition.py:108",
+        "rouge/recognition.py:109",
+        "rouge/recognition.py:121",
+        "rouge/recognition.py:123",
+        "rouge/recognition.py:138",
+        "rouge/recognition.py:140"
+      ],
+      "fact": "ScreenReader construction initializes memory/cache. First valid read imports and constructs real RapidOCR, with two intra/inter-op threads, then may construct the actual page router/OCR wrappers. External OCR/model initialization behavior remains outside this local Source audit."
+    },
+    {
+      "id": "local_import_and_class_evaluation",
+      "paths": [
+        "rouge/__init__.py:1",
+        "rouge/catalog.py:6",
+        "rouge/relic_recognition.py:170",
+        "rouge/relic_recognition.py:180",
+        "rouge/condition_inputs.py:6",
+        "rouge/counter_badges.py:17",
+        "rouge/run_badges.py:10",
+        "rouge/offline_scope.py:16",
+        "rouge/river_effects.py:51"
+      ],
+      "fact": "The package __init__ is empty. Local startup evaluation consists of function/class creation, standard-library lru_cache/staticmethod decorators, memory ContextVar, Path value construction, literal comprehension work and class-level np.sqrt arithmetic. No local top-level catalog/data reads, GameCapture/ScreenReader instantiation or desktop/chat backend construction was found."
+    },
+    {
+      "id": "public_data_reads",
+      "paths": [
+        "rouge/catalog.py:8",
+        "rouge/catalog.py:12",
+        "rouge/catalog.py:16",
+        "rouge/catalog.py:23",
+        "rouge/operator_recognition.py:128",
+        "rouge/operator_recognition.py:188",
+        "rouge/map_recognition.py:13",
+        "rouge/map_recognition.py:18",
+        "rouge/node_events.py:13",
+        "rouge/page_features.py:51",
+        "rouge/page_features.py:52",
+        "rouge/page_features.py:53",
+        "rouge/page_features.py:60",
+        "rouge/page_features.py:62",
+        "rouge/page_features.py:67"
+      ],
+      "fact": "Read-time helper paths point to packaged rouge/data JSON/icon/feature assets. PageFeatureRouter default directory is rouge/data/page-features and np.load explicitly sets allow_pickle=False. This closure contains no settings/run/account/chat-state reader or writer, and no desktop/chat/project-GUI import. Asset prerequisites and external OCR models are still required."
+    },
+    {
+      "id": "offline_local_concurrency",
+      "paths": [
+        "rouge/relic_recognition.py:278",
+        "rouge/relic_recognition.py:300",
+        "rouge/relic_recognition.py:301"
+      ],
+      "fact": "Offline held-item matching can create a bounded ThreadPoolExecutor during a method call. It runs local OpenCV reference matching inside a with block; this is not native capture and does not occur at local module import. Actual execution/cleanup was not measured."
+    },
+    {
+      "id": "skip_semantics",
+      "paths": [
+        "tests/test_capture_queue.py:23",
+        "tests/test_dynamic_resolution.py:9",
+        "tests/test_adaptive_recognition.py:20",
+        "scripts/verify_full_available.py:69",
+        "scripts/verify_full_available.py:72",
+        "scripts/verify_full_available.py:81",
+        "scripts/verify_full_available.py:93"
+      ],
+      "fact": "The three original test classes declare no skip decorators, skipTest or environment guards. Missing dependencies/fixtures are errors with the plain unittest runner. verify_full_available separately records missing native-client fixtures as unavailable, also supports selected dependency names; unavailable is not PASS. numpy, cv2 and win32con are not names in that wrapper dependency allow-list, so their absence is an ordinary error under the current wrapper."
+    }
+  ],
+  "unknowns": [
+    "Installed external numpy/cv2/pywin32/windows_capture/RapidOCR imports and constructors were not inspected or executed",
+    "Native Windows capture and real game/desktop/chat integration remain unverified; fake callback tests cannot certify them",
+    "Samples/native-client existence and replay correctness remain unverified",
+    "Conservative static closure is not a proven dynamic call graph; dormant imports are included",
+    "No Linux/Wine test result, PASS receipt or aggregate check count was produced"
+  ],
+  "local_source": {
+    "rouge/__init__.py": {
+      "bytes": 37,
+      "sha256": "3f046774f9500f00b34d7ff71cd765410aeebcc4e7df7a665cc384d9c68e12c8",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/ammo_reference.py": {
+      "bytes": 2966,
+      "sha256": "d6bad7b385300dbdc69fb909691cc627e88b27efd71bfb6ad068dfa12b1f2772",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import json, math, struct",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 8,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/anchors.py": {
+      "bytes": 1852,
+      "sha256": "6c5e05f431d7218dd5335af562b831f5a32ff79e69ba5ccc344252ba81a0cdad",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 6,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 7,
+          "source": "import cv2",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/animation_reference.py": {
+      "bytes": 2354,
+      "sha256": "3e0c98edfec28e13db3263fc0240e872ed6aaaac53f02729f0e4d17e139b2f1f",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import json",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "import re",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 8,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/attribute_limits.py": {
+      "bytes": 1046,
+      "sha256": "94e9ee16e4fe978a12d8e4c16f45ee3612d2ae0a48f9027dfe1d46b47ce5c29a",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/capture.py": {
+      "bytes": 7368,
+      "sha256": "d30eca793fd030ea5489a69212bbd9bef2bc4c875b9010113f875291beec008a",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import threading",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import time",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import win32gui",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "import win32process",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "import win32api",
+          "local_paths": []
+        },
+        {
+          "line": 7,
+          "source": "import win32con",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "import ctypes",
+          "local_paths": []
+        },
+        {
+          "line": 9,
+          "source": "from ctypes import wintypes",
+          "local_paths": []
+        },
+        {
+          "line": 10,
+          "source": "from .frame_buffer import FrameBuffer",
+          "local_paths": [
+            "rouge/frame_buffer.py"
+          ]
+        },
+        {
+          "line": 96,
+          "source": "from windows_capture import WindowsCapture",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/catalog.py": {
+      "bytes": 3404,
+      "sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 1,
+          "source": "import json",
+          "local_paths": []
+        },
+        {
+          "line": 2,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 6,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 10,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 14,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 21,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/condition_inputs.py": {
+      "bytes": 1007,
+      "sha256": "b485ad286f4d6157a1e31b72b474b674ceb585bb905ce319d75f90354599a808",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "from contextvars import ContextVar",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from functools import wraps",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 6,
+          "source": "ContextVar('continuous_attacks_text_pending', default=None)"
+        }
+      ]
+    },
+    "rouge/counter_badges.py": {
+      "bytes": 8023,
+      "sha256": "88d1dce51a13cbf0ba50516de18b59d9c8eb61ee8402c9c582a074ee5460ddac",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 8,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 9,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 10,
+          "source": "import json",
+          "local_paths": []
+        },
+        {
+          "line": 11,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 12,
+          "source": "import re",
+          "local_paths": []
+        },
+        {
+          "line": 14,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 15,
+          "source": "import numpy as np",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 17,
+          "source": "Path(__file__).with_name('data')"
+        },
+        {
+          "line": 17,
+          "source": "Path(__file__)"
+        },
+        {
+          "line": 20,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/deployment.py": {
+      "bytes": 11688,
+      "sha256": "222440c9253f8cc120c877816858496b74296306390d04e601312532eefab659",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import struct",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "from .relics import mechanics, matches",
+          "local_paths": [
+            "rouge/relics.py"
+          ]
+        },
+        {
+          "line": 6,
+          "source": "from .offline_scope import active_effects",
+          "local_paths": [
+            "rouge/offline_scope.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/digit_counters.py": {
+      "bytes": 5906,
+      "sha256": "9419bdf18577297b73af599b3b54a2de682cad1950320cdeb70c79dc612ac90d",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import re",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "from .counter_badges import _polygon, _reference, _shape_score, _white",
+          "local_paths": [
+            "rouge/counter_badges.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/dynamic_ocr.py": {
+      "bytes": 8413,
+      "sha256": "0b2fbb9046540f3676ceb165efde007688099309cd649f223b858cef03ba28cc",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 7,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 9,
+          "source": "import numpy as np",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/elemental_relics.py": {
+      "bytes": 7719,
+      "sha256": "f451450d9a8fc4e203e14cadce44f8cf8d7cec8f2935968501ab0c0775f418ed",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 91,
+          "source": "from .river_effects import RELIC_ID, reference as river_reference",
+          "local_paths": [
+            "rouge/river_effects.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/elite_recognition.py": {
+      "bytes": 1837,
+      "sha256": "f11d43410ba7fcc47f4c3c0e1eb1b59966350b520e5d7b388ef340aa09c90172",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "import numpy as np",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 7,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/frame_buffer.py": {
+      "bytes": 12525,
+      "sha256": "25faa0919885af3313290aff8760033cc57f2d0cfa9f00c39a930b47dd8afd4a",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 8,
+          "source": "from collections import deque",
+          "local_paths": []
+        },
+        {
+          "line": 9,
+          "source": "import threading",
+          "local_paths": []
+        },
+        {
+          "line": 10,
+          "source": "import time",
+          "local_paths": []
+        },
+        {
+          "line": 12,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 13,
+          "source": "import numpy as np",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/held_cards.py": {
+      "bytes": 8487,
+      "sha256": "6cad75006dfa05cb6464cbaa12eb240d65d38f74968c406065d4b9bf42c106bb",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 11,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 12,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 13,
+          "source": "import re",
+          "local_paths": []
+        },
+        {
+          "line": 14,
+          "source": "from statistics import median",
+          "local_paths": []
+        },
+        {
+          "line": 16,
+          "source": "from .catalog import catalog, tactical_tools",
+          "local_paths": [
+            "rouge/catalog.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 39,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/held_footer.py": {
+      "bytes": 5661,
+      "sha256": "babe9deb8c93ff5e309c8b0b9d3e716639f94f81f6e255f454bd4515429bcc5b",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 9,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 10,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 11,
+          "source": "import time",
+          "local_paths": []
+        },
+        {
+          "line": 13,
+          "source": "import cv2",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/local_counters.py": {
+      "bytes": 10586,
+      "sha256": "5052b49dd613c7e7b3ab03054faf99873045f40d97c5b3de90c07bb83a2ef0c7",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 7,
+          "source": "from collections import defaultdict",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 9,
+          "source": "import re",
+          "local_paths": []
+        },
+        {
+          "line": 10,
+          "source": "from statistics import median",
+          "local_paths": []
+        },
+        {
+          "line": 12,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 13,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 15,
+          "source": "from .counter_badges import _polygon, _reference, _shape_score, _white as _frozen_white, read_counter_badges",
+          "local_paths": [
+            "rouge/counter_badges.py"
+          ]
+        },
+        {
+          "line": 17,
+          "source": "from .held_cards import held_card_regions",
+          "local_paths": [
+            "rouge/held_cards.py"
+          ]
+        },
+        {
+          "line": 18,
+          "source": "from .digit_counters import read_gray_glyph_number",
+          "local_paths": [
+            "rouge/digit_counters.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/map_recognition.py": {
+      "bytes": 16561,
+      "sha256": "05f03c77867be3d9bec62057847de13461003d3e3af9240bfe3a05f25d6dcfeb",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import json",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from collections import Counter",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "from itertools import combinations",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 7,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 262,
+          "source": "from .node_events import mark_selected_node",
+          "local_paths": [
+            "rouge/node_events.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 11,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 16,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/node_events.py": {
+      "bytes": 7687,
+      "sha256": "fa075a9856467ef1640752070348178d2df25dd3e0c1af7cf0b58db77b871df8",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import copy",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import json",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import re",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 7,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "import numpy as np",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 11,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/offline_scope.py": {
+      "bytes": 3045,
+      "sha256": "060879b13c6bbe2e7433d06a9087e40cbde99e052b6ab6ef14f5aa9ab56302a9",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 16,
+          "source": "str(n)"
+        },
+        {
+          "line": 18,
+          "source": "str(n)"
+        },
+        {
+          "line": 20,
+          "source": "str(n)"
+        },
+        {
+          "line": 21,
+          "source": "str(n)"
+        },
+        {
+          "line": 22,
+          "source": "str(n)"
+        }
+      ]
+    },
+    "rouge/operator_name_recheck.py": {
+      "bytes": 3532,
+      "sha256": "24e9fc6405d65d8876c47985291bccd0ee1632999173173f10600b2398177bac",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "from .operator_recognition import identity_index, normalized_name, center",
+          "local_paths": [
+            "rouge/operator_recognition.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/operator_recognition.py": {
+      "bytes": 20793,
+      "sha256": "1e79d32a69d6bbbf0e42ba8cdcb88c33a0ff3bc9932adbc6b0c19ef553705fb0",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import re",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import unicodedata",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 7,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "from .catalog import operator_profiles",
+          "local_paths": [
+            "rouge/catalog.py"
+          ]
+        },
+        {
+          "line": 9,
+          "source": "from .anchors import units, crop as anchor_crop",
+          "local_paths": [
+            "rouge/anchors.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 26,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 185,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/page_features.py": {
+      "bytes": 13123,
+      "sha256": "ab4cda4da8272ed35ad72269ad829ffb6ccb1ae711d82f24f6e6f530ca838c6e",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 10,
+          "source": "from __future__ import annotations",
+          "local_paths": []
+        },
+        {
+          "line": 12,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 13,
+          "source": "import hashlib",
+          "local_paths": []
+        },
+        {
+          "line": 14,
+          "source": "import json",
+          "local_paths": []
+        },
+        {
+          "line": 15,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 16,
+          "source": "import time",
+          "local_paths": []
+        },
+        {
+          "line": 18,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 19,
+          "source": "import numpy as np",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/page_ocr.py": {
+      "bytes": 8584,
+      "sha256": "56ff0129e6c1f6848b4bb94b92545577d545525433d76c49ab2e2e951785e87e",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 9,
+          "source": "from __future__ import annotations",
+          "local_paths": []
+        },
+        {
+          "line": 11,
+          "source": "from collections import OrderedDict",
+          "local_paths": []
+        },
+        {
+          "line": 12,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 13,
+          "source": "import hashlib",
+          "local_paths": []
+        },
+        {
+          "line": 14,
+          "source": "from importlib.metadata import PackageNotFoundError, version",
+          "local_paths": []
+        },
+        {
+          "line": 15,
+          "source": "import time",
+          "local_paths": []
+        },
+        {
+          "line": 17,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 19,
+          "source": "from .dynamic_ocr import bounds, normalize_regions, positive_overlap",
+          "local_paths": [
+            "rouge/dynamic_ocr.py"
+          ]
+        },
+        {
+          "line": 20,
+          "source": "from .recognition_cache import CachedOCR",
+          "local_paths": [
+            "rouge/recognition_cache.py"
+          ]
+        },
+        {
+          "line": 51,
+          "source": "from rapidocr_onnxruntime import RapidOCR",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/recipient_recognition.py": {
+      "bytes": 23677,
+      "sha256": "6d8610bd68b9662e0ddc250e47fb1e64ce5e37b531a893b0584a837634daa8a5",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 7,
+          "source": "import re",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "import unicodedata",
+          "local_paths": []
+        },
+        {
+          "line": 9,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 10,
+          "source": "import time",
+          "local_paths": []
+        },
+        {
+          "line": 11,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 12,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 14,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 15,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 17,
+          "source": "from .catalog import operator_profiles",
+          "local_paths": [
+            "rouge/catalog.py"
+          ]
+        },
+        {
+          "line": 18,
+          "source": "from .relics import mechanics",
+          "local_paths": [
+            "rouge/relics.py"
+          ]
+        },
+        {
+          "line": 19,
+          "source": "from .relic_recognition import _reference_image",
+          "local_paths": [
+            "rouge/relic_recognition.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 42,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/recognition.py": {
+      "bytes": 22259,
+      "sha256": "7f96fe7bf2f93cd6f954136d3d9b2e6cd58741f672ac1989303422ef9a9cb53b",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import time, json",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "from .catalog import catalog, stage_previews, operator_profiles",
+          "local_paths": [
+            "rouge/catalog.py"
+          ]
+        },
+        {
+          "line": 7,
+          "source": "from .operator_recognition import read_operator, read_skill_crops, refine_training_texts, read_module_page",
+          "local_paths": [
+            "rouge/operator_recognition.py"
+          ]
+        },
+        {
+          "line": 8,
+          "source": "from .run_recognition import read_run",
+          "local_paths": [
+            "rouge/run_recognition.py"
+          ]
+        },
+        {
+          "line": 9,
+          "source": "from .viewport import prepare_frame, map_evidence",
+          "local_paths": [
+            "rouge/viewport.py"
+          ]
+        },
+        {
+          "line": 10,
+          "source": "from .map_recognition import read_map",
+          "local_paths": [
+            "rouge/map_recognition.py"
+          ]
+        },
+        {
+          "line": 11,
+          "source": "from .recognition_cache import ExactImageCache, CachedOCR",
+          "local_paths": [
+            "rouge/recognition_cache.py"
+          ]
+        },
+        {
+          "line": 12,
+          "source": "from .node_events import read_node_content, annotate_map_content",
+          "local_paths": [
+            "rouge/node_events.py"
+          ]
+        },
+        {
+          "line": 13,
+          "source": "from .dynamic_ocr import DynamicOCR, normalize_regions",
+          "local_paths": [
+            "rouge/dynamic_ocr.py"
+          ]
+        },
+        {
+          "line": 14,
+          "source": "from .anchors import units",
+          "local_paths": [
+            "rouge/anchors.py"
+          ]
+        },
+        {
+          "line": 67,
+          "source": "from .run_config import confirmed_config",
+          "local_paths": [
+            "rouge/run_config.py"
+          ]
+        },
+        {
+          "line": 108,
+          "source": "from rapidocr_onnxruntime import RapidOCR",
+          "local_paths": []
+        },
+        {
+          "line": 121,
+          "source": "from .page_features import PageFeatureRouter",
+          "local_paths": [
+            "rouge/page_features.py"
+          ]
+        },
+        {
+          "line": 138,
+          "source": "from .page_ocr import PageOCR",
+          "local_paths": [
+            "rouge/page_ocr.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/recognition_cache.py": {
+      "bytes": 1996,
+      "sha256": "4a63a19e76e66d1eed2a0c09b80be264655bd2d3a6e05a155afc0b22f473ec03",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "from collections import OrderedDict",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import hashlib",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "import numpy as np",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/recruitment_recognition.py": {
+      "bytes": 3028,
+      "sha256": "b445e4307c91388d6ecf0a742db2b73707e2d5c58e6d80d2095e3537744ff47c",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "import numpy as np",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 7,
+          "source": "lru_cache(maxsize=2)"
+        }
+      ]
+    },
+    "rouge/relic_attributes.py": {
+      "bytes": 3444,
+      "sha256": "bc658e44c3924565ebd331b8a88df5db69131069b9fa94aeb0c101f155c3ebd1",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 27,
+          "source": "from .deployment import _fp, _fp_product, _single, _Q32",
+          "local_paths": [
+            "rouge/deployment.py"
+          ]
+        },
+        {
+          "line": 46,
+          "source": "from .attribute_limits import attack_speed_attribute",
+          "local_paths": [
+            "rouge/attribute_limits.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/relic_counter_semantics.py": {
+      "bytes": 4867,
+      "sha256": "60ceda0596102e893240ac149a751868cd5a9ef61fe4e1a20ed2ebb907fa0cbd",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "from .relics import mechanics",
+          "local_paths": [
+            "rouge/relics.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 24,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/relic_recognition.py": {
+      "bytes": 18803,
+      "sha256": "8f2087341b1d99e1bd442775bef367b5f7a1352cfc27e617bff77bd42ceb1256",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import json",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from collections import OrderedDict",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 7,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "from .catalog import catalog, tactical_tools",
+          "local_paths": [
+            "rouge/catalog.py"
+          ]
+        },
+        {
+          "line": 9,
+          "source": "from .operator_recognition import center",
+          "local_paths": [
+            "rouge/operator_recognition.py"
+          ]
+        },
+        {
+          "line": 10,
+          "source": "from .anchors import units",
+          "local_paths": [
+            "rouge/anchors.py"
+          ]
+        },
+        {
+          "line": 23,
+          "source": "from .run_config import config_data",
+          "local_paths": [
+            "rouge/run_config.py"
+          ]
+        },
+        {
+          "line": 32,
+          "source": "from .run_config import config_data, difficulty_value",
+          "local_paths": [
+            "rouge/run_config.py"
+          ]
+        },
+        {
+          "line": 300,
+          "source": "from concurrent.futures import ThreadPoolExecutor",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 12,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 20,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 85,
+          "source": "lru_cache(maxsize=3)"
+        },
+        {
+          "line": 103,
+          "source": "lru_cache(maxsize=3)"
+        },
+        {
+          "line": 120,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 127,
+          "source": "lru_cache(maxsize=256)"
+        },
+        {
+          "line": 136,
+          "source": "lru_cache(maxsize=32)"
+        },
+        {
+          "line": 142,
+          "source": "lru_cache(maxsize=256)"
+        },
+        {
+          "line": 180,
+          "source": "np.sqrt(2.14 ** 2 - 4)"
+        }
+      ]
+    },
+    "rouge/relics.py": {
+      "bytes": 40531,
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import json",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "from .attribute_limits import effective_attack_speed",
+          "local_paths": [
+            "rouge/attribute_limits.py"
+          ]
+        },
+        {
+          "line": 6,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 394,
+          "source": "from .relic_attributes import is_attribute_rune",
+          "local_paths": [
+            "rouge/relic_attributes.py"
+          ]
+        },
+        {
+          "line": 432,
+          "source": "from .catalog import catalog",
+          "local_paths": [
+            "rouge/catalog.py"
+          ]
+        },
+        {
+          "line": 435,
+          "source": "from .summons import module_reference, token_attributes, token_cost_reference",
+          "local_paths": [
+            "rouge/summons.py"
+          ]
+        },
+        {
+          "line": 470,
+          "source": "from .deployment import finish_deployment",
+          "local_paths": [
+            "rouge/deployment.py"
+          ]
+        },
+        {
+          "line": 472,
+          "source": "from .elemental_relics import finish_neural_reference",
+          "local_paths": [
+            "rouge/elemental_relics.py"
+          ]
+        },
+        {
+          "line": 90,
+          "source": "from .offline_scope import partition",
+          "local_paths": [
+            "rouge/offline_scope.py"
+          ]
+        },
+        {
+          "line": 363,
+          "source": "from .sp_events import EVENT_TYPES",
+          "local_paths": [
+            "rouge/sp_events.py"
+          ]
+        },
+        {
+          "line": 445,
+          "source": "from .summons import manual_token_stat_effects",
+          "local_paths": [
+            "rouge/summons.py"
+          ]
+        },
+        {
+          "line": 451,
+          "source": "from .relic_attributes import is_attribute_rune",
+          "local_paths": [
+            "rouge/relic_attributes.py"
+          ]
+        },
+        {
+          "line": 501,
+          "source": "from .timing import finite",
+          "local_paths": [
+            "rouge/timing.py"
+          ]
+        },
+        {
+          "line": 164,
+          "source": "from .sp_events import event_phases",
+          "local_paths": [
+            "rouge/sp_events.py"
+          ]
+        },
+        {
+          "line": 181,
+          "source": "from .ammo_reference import refill_parameters, partial_packet_reference",
+          "local_paths": [
+            "rouge/ammo_reference.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 14,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/resource_recognition.py": {
+      "bytes": 2682,
+      "sha256": "4fe78a6e5cdc9e0f6a1d5d8937224c4f5c9d7fa9da5a1dc0573f455f8ba2ae34",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import re",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 7,
+          "source": "from .operator_recognition import center",
+          "local_paths": [
+            "rouge/operator_recognition.py"
+          ]
+        },
+        {
+          "line": 8,
+          "source": "from .anchors import units",
+          "local_paths": [
+            "rouge/anchors.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 10,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/river_effects.py": {
+      "bytes": 8743,
+      "sha256": "054acea609cd3554fff80684df5559c69e842efc485e9f7ab2c197095acff43a",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 7,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "from fractions import Fraction",
+          "local_paths": []
+        },
+        {
+          "line": 9,
+          "source": "import math",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 51,
+          "source": "_BRANCHES.items()"
+        }
+      ]
+    },
+    "rouge/run_badges.py": {
+      "bytes": 5923,
+      "sha256": "2524fe3db16276c6872fcb57102b9006a324b05024cd40b894c215f9a5538abd",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import json",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "import re",
+          "local_paths": []
+        },
+        {
+          "line": 7,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "import numpy as np",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 10,
+          "source": "Path(__file__).with_name('data')"
+        },
+        {
+          "line": 10,
+          "source": "Path(__file__)"
+        },
+        {
+          "line": 13,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 29,
+          "source": "lru_cache(maxsize=512)"
+        }
+      ]
+    },
+    "rouge/run_config.py": {
+      "bytes": 5738,
+      "sha256": "e35262ce5fc74db31ea80704f5689bb05619fd9dc9798a334f8cac3455b4ac99",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import json, re",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "from .operator_recognition import center",
+          "local_paths": [
+            "rouge/operator_recognition.py"
+          ]
+        },
+        {
+          "line": 7,
+          "source": "from .anchors import units",
+          "local_paths": [
+            "rouge/anchors.py"
+          ]
+        },
+        {
+          "line": 84,
+          "source": "from .run_badges import find_squad_badge, read_badge_grade",
+          "local_paths": [
+            "rouge/run_badges.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 9,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/run_recognition.py": {
+      "bytes": 23560,
+      "sha256": "c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import re",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 7,
+          "source": "from .catalog import catalog, operator_profiles, tactical_tools",
+          "local_paths": [
+            "rouge/catalog.py"
+          ]
+        },
+        {
+          "line": 8,
+          "source": "from .operator_recognition import center, identity_index, normalized_name",
+          "local_paths": [
+            "rouge/operator_recognition.py"
+          ]
+        },
+        {
+          "line": 9,
+          "source": "from .relic_recognition import match_held_icons, resolve_owned_icons, resolve_difficulty_icons",
+          "local_paths": [
+            "rouge/relic_recognition.py"
+          ]
+        },
+        {
+          "line": 10,
+          "source": "from .elite_recognition import card_elite",
+          "local_paths": [
+            "rouge/elite_recognition.py"
+          ]
+        },
+        {
+          "line": 11,
+          "source": "from .recruitment_recognition import recruitment_marker, promotion_marker",
+          "local_paths": [
+            "rouge/recruitment_recognition.py"
+          ]
+        },
+        {
+          "line": 12,
+          "source": "from .resource_recognition import read_resources",
+          "local_paths": [
+            "rouge/resource_recognition.py"
+          ]
+        },
+        {
+          "line": 13,
+          "source": "from .run_config import read_config",
+          "local_paths": [
+            "rouge/run_config.py"
+          ]
+        },
+        {
+          "line": 14,
+          "source": "from .anchors import units",
+          "local_paths": [
+            "rouge/anchors.py"
+          ]
+        },
+        {
+          "line": 15,
+          "source": "from .held_cards import read_held_cards, held_card_regions",
+          "local_paths": [
+            "rouge/held_cards.py"
+          ]
+        },
+        {
+          "line": 16,
+          "source": "from .counter_badges import read_counter_badges",
+          "local_paths": [
+            "rouge/counter_badges.py"
+          ]
+        },
+        {
+          "line": 17,
+          "source": "from .local_counters import read_local_counter_badges",
+          "local_paths": [
+            "rouge/local_counters.py"
+          ]
+        },
+        {
+          "line": 18,
+          "source": "from .recipient_recognition import read_recipient_buffs, read_owned_popup_member, reconfirm_owned_popup_footer",
+          "local_paths": [
+            "rouge/recipient_recognition.py"
+          ]
+        },
+        {
+          "line": 19,
+          "source": "from .relic_counter_semantics import counter_resources",
+          "local_paths": [
+            "rouge/relic_counter_semantics.py"
+          ]
+        },
+        {
+          "line": 20,
+          "source": "from .operator_name_recheck import recheck_run_names",
+          "local_paths": [
+            "rouge/operator_name_recheck.py"
+          ]
+        },
+        {
+          "line": 133,
+          "source": "from .run_config import confirmed_config",
+          "local_paths": [
+            "rouge/run_config.py"
+          ]
+        },
+        {
+          "line": 107,
+          "source": "from .held_footer import reconfirm_held_footer",
+          "local_paths": [
+            "rouge/held_footer.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 22,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/sp_events.py": {
+      "bytes": 10207,
+      "sha256": "0a878cf0adf384c29db41cd0918354a6f4a0887d67ff51e634d52d371e63822f",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 8,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 9,
+          "source": "from .condition_inputs import read_continuous_attacks, observe_continuous_attacks",
+          "local_paths": [
+            "rouge/condition_inputs.py"
+          ]
+        },
+        {
+          "line": 10,
+          "source": "from .timing import AttackTimeline, FPS, cadence, finite, frame_time",
+          "local_paths": [
+            "rouge/timing.py"
+          ]
+        },
+        {
+          "line": 66,
+          "source": "from .relics import recharge_requirement",
+          "local_paths": [
+            "rouge/relics.py"
+          ]
+        },
+        {
+          "line": 111,
+          "source": "from .timing import wine_events",
+          "local_paths": [
+            "rouge/timing.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "rouge/summons.py": {
+      "bytes": 10761,
+      "sha256": "b4ee04fa18638c7a8c09dc5ecd54e83951620e841db0fdb6c607bf3099236451",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 6,
+          "source": "import json",
+          "local_paths": []
+        },
+        {
+          "line": 7,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 9,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 18,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 27,
+          "source": "from .relic_attributes import is_attribute_rune",
+          "local_paths": [
+            "rouge/relic_attributes.py"
+          ]
+        },
+        {
+          "line": 45,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 85,
+          "source": "from .catalog import catalog",
+          "local_paths": [
+            "rouge/catalog.py"
+          ]
+        },
+        {
+          "line": 123,
+          "source": "from copy import deepcopy",
+          "local_paths": []
+        },
+        {
+          "line": 167,
+          "source": "from .relic_attributes import apply_attribute_runes",
+          "local_paths": [
+            "rouge/relic_attributes.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 33,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 92,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 112,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/timing.py": {
+      "bytes": 27266,
+      "sha256": "ccbd40ab387c22e757f7c37ea04d311ee7f0a5b73565cab8c7bc92c923de5b7d",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "from functools import lru_cache",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import json",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import math",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "from .condition_inputs import read_continuous_attacks",
+          "local_paths": [
+            "rouge/condition_inputs.py"
+          ]
+        },
+        {
+          "line": 6,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 8,
+          "source": "from .attribute_limits import effective_attack_speed",
+          "local_paths": [
+            "rouge/attribute_limits.py"
+          ]
+        },
+        {
+          "line": 45,
+          "source": "from .relics import recharge_requirement",
+          "local_paths": [
+            "rouge/relics.py"
+          ]
+        },
+        {
+          "line": 98,
+          "source": "from .relics import recharge_requirement",
+          "local_paths": [
+            "rouge/relics.py"
+          ]
+        },
+        {
+          "line": 128,
+          "source": "from .relics import recharge_requirement",
+          "local_paths": [
+            "rouge/relics.py"
+          ]
+        },
+        {
+          "line": 170,
+          "source": "from .animation_reference import descriptor",
+          "local_paths": [
+            "rouge/animation_reference.py"
+          ]
+        },
+        {
+          "line": 203,
+          "source": "from .animation_reference import descriptor",
+          "local_paths": [
+            "rouge/animation_reference.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 84,
+          "source": "lru_cache(maxsize=1)"
+        },
+        {
+          "line": 89,
+          "source": "lru_cache(maxsize=1)"
+        }
+      ]
+    },
+    "rouge/viewport.py": {
+      "bytes": 2481,
+      "sha256": "8fae7433d737c5d3db92b74da1f09773b9f8eca11fe799ce359a4d9c6d48f222",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import numpy as np",
+          "local_paths": []
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": []
+    },
+    "tests/test_adaptive_recognition.py": {
+      "bytes": 3516,
+      "sha256": "188ecc89418b02d656f6807b2ecf6b0b6b139fdcdc8961331c9bdf935467fe4a",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import unittest",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import cv2",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "from rouge.recognition import ScreenReader",
+          "local_paths": [
+            "rouge/recognition.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 8,
+          "source": "Path(__file__).resolve()"
+        },
+        {
+          "line": 8,
+          "source": "Path(__file__)"
+        }
+      ]
+    },
+    "tests/test_capture_queue.py": {
+      "bytes": 3364,
+      "sha256": "591ebc443d5199c34280560d461f7b131fc8cf0d302ba15cb3981fd96c4e5cb0",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import time",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "import unittest",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "from types import SimpleNamespace",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "from unittest.mock import patch, Mock",
+          "local_paths": []
+        },
+        {
+          "line": 6,
+          "source": "import numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 7,
+          "source": "from rouge.capture import GameCapture",
+          "local_paths": [
+            "rouge/capture.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 71,
+          "source": "unittest.main()"
+        }
+      ]
+    },
+    "tests/test_dynamic_resolution.py": {
+      "bytes": 3866,
+      "sha256": "8db4481e574189779b96311358bd4e1d794622a5c2cf30b4e21ff895d85cfe80",
+      "semantic_compile_without_execution": "passed",
+      "imports_conservative_all_scopes": [
+        {
+          "line": 2,
+          "source": "import unittest",
+          "local_paths": []
+        },
+        {
+          "line": 3,
+          "source": "from pathlib import Path",
+          "local_paths": []
+        },
+        {
+          "line": 4,
+          "source": "import cv2, numpy as np",
+          "local_paths": []
+        },
+        {
+          "line": 5,
+          "source": "from rouge.recognition import ScreenReader",
+          "local_paths": [
+            "rouge/recognition.py"
+          ]
+        }
+      ],
+      "startup_calls_conservative_including_guarded_main": [
+        {
+          "line": 7,
+          "source": "Path(__file__).resolve()"
+        },
+        {
+          "line": 7,
+          "source": "Path(__file__)"
+        }
+      ]
+    }
+  }
+}

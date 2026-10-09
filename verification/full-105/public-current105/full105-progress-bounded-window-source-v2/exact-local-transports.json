@@ -1,0 +1,68 @@
+{
+  "kind": "SOURCE_ONLY_FULL105_ATTEMPT2_BUDGET_AND_PARTIAL_PROGRESS",
+  "product_pass": false,
+  "author_Runtime_executed": false,
+  "window_baseline_sha256": "98e6cef848ffea73d36f330edb071e28cc884e676838a876a76995d28ea821a5",
+  "window_sha256": "0004f90b316ec6bc576ac893ce67f52e09e9db4508edd8708f431676b36695a1",
+  "supervisor_baseline_sha256": "d8db890b33aad0531779aa0a1892b281cb826286193c4c5ac548b3e8210f45ab",
+  "supervisor_sha256": "477cf622f56e77a87850790f99c37dbdef3d6466b74697e9783417e83cf3efc3",
+  "window_changes": [
+    {
+      "label": "child deadline",
+      "before": "_deadline100 = _started100 + 600\n",
+      "after": "_deadline100 = _started100 + 1200\n"
+    },
+    {
+      "label": "soft deadline label",
+      "before": "raise TimeoutError('Fresh full105 deadline of600 seconds reached')",
+      "after": "raise TimeoutError('Fresh full105 attempt2 deadline of1200 seconds reached')"
+    },
+    {
+      "label": "hard deadline receipt",
+      "before": "record = {'passed': False, 'scope': 'actual full105 hard deadline', 'after_section': 105,\n              'deadline_seconds': 600,",
+      "after": "record = {'passed': False, 'scope': 'actual full105 attempt2 hard deadline', 'after_section': 105,\n              'attempt': 2, 'deadline_seconds': 1200,"
+    },
+    {
+      "label": "hard deadline stdout",
+      "before": "print(json.dumps({'passed': False, 'hard_deadline': 600}), flush=True)",
+      "after": "print(json.dumps({'passed': False, 'attempt': 2, 'hard_deadline': 1200}), flush=True)"
+    },
+    {
+      "label": "hard watchdog budget",
+      "before": "threading.Timer(600, _hard_timeout100)",
+      "after": "threading.Timer(1200, _hard_timeout100)"
+    },
+    {
+      "label": "outside-functional-Try progress observer",
+      "before": "def _replace_binding100(owner, name, replacement):\n",
+      "after": "def _write_progress105(count, last_check):\n    # Only completed append count and public scalar labels; never dump checks,\n    # window, caller, state, function vectors or repeat a full Source hash scan.\n    record = {'kind': 'FULL105_ATTEMPT2_APPENDED_CHECK_PROGRESS',\n              'after_section': 105, 'attempt': 2, 'passed': False,\n              'workflow_complete': False, 'appended_checks': count,\n              'last_check': last_check,\n              'elapsed_seconds': round(time.perf_counter()-_started100, 3),\n              'checkpoint_every_appended_checks': 32,\n              'complete_function_vector_measured': False}\n    temporary = OUT / 'full105-progress.json.tmp'\n    with temporary.open('w', encoding='utf-8') as stream:\n        stream.write(json.dumps(record, ensure_ascii=False, allow_nan=False) + '\\n')\n        stream.flush()\n        os.fsync(stream.fileno())\n    os.replace(temporary, OUT / 'full105-progress.json')\n\n\nclass _ProgressChecks105(list):\n    def __init__(self):\n        super().__init__()\n        _write_progress105(0, {})\n\n    def append(self, item):\n        # Real list.append first. Its original None return is preserved; an\n        # observer IO error propagates to the unchanged outer failure handler.\n        super().append(item)\n        count = len(self)\n        if count % 32 == 0:\n            labels = {}\n            if type(item) is dict:\n                for key in ('scope', 'section', 'operator', 'skill', 'pair_id'):\n                    value = item.get(key)\n                    if key in item and (value is None or type(value) in (str, int, bool)):\n                        labels[key] = value\n            _write_progress105(count, labels)\n\n\ndef _replace_binding100(owner, name, replacement):\n"
+    },
+    {
+      "label": "outside-functional-Try checks initialization",
+      "before": "checks=[];started=time.perf_counter();window=None;app=None;before=source_hashes()\n",
+      "after": "checks=_ProgressChecks105();started=time.perf_counter();window=None;app=None;before=source_hashes()\n"
+    },
+    {
+      "label": "receipt attempt and progress metadata",
+      "before": "         'deadline_seconds':600,'global_profile_or_trace_used':False,\n",
+      "after": "         'deadline_seconds':1200,'global_profile_or_trace_used':False,\n         'full105_attempt':2,'progress_checkpoint_file':'full105-progress.json',\n         'progress_every_appended_checks':32,'progress_is_partial_observation_only':True,\n         'full105_v1_source_sha256':'98e6cef848ffea73d36f330edb071e28cc884e676838a876a76995d28ea821a5',\n"
+    }
+  ],
+  "supervisor_changes": [
+    {
+      "label": "supervisor description",
+      "before": "Linux-only fresh full100 launcher with an independent600-second deadline.",
+      "after": "Linux-only fresh full105 attempt2 launcher with an independent1200-second deadline."
+    },
+    {
+      "label": "independent supervisor budget and attempt metadata",
+      "before": "              'deadline_seconds': 600, 'native_windows_verified': False,\n",
+      "after": "              'deadline_seconds': 1200, 'native_windows_verified': False,\n              'after_section': 105, 'full105_attempt': 2,\n"
+    },
+    {
+      "label": "actual independent process wait budget",
+      "before": "process.wait(timeout=max(0, 600-(time.monotonic()-started)))",
+      "after": "process.wait(timeout=max(0, 1200-(time.monotonic()-started)))"
+    }
+  ]
+}

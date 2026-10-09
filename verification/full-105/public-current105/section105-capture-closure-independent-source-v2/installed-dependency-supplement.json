@@ -1,0 +1,100 @@
+{
+  "status": "Source-only supplemental installed-dependency audit; no import or project/test execution",
+  "created_utc": "2026-10-09T09:57:45.171780+00:00",
+  "previous_report": {
+    "path": "/workspace/.continuation/section105-capture-closure-independent-source-v1/report.json",
+    "bytes": 67255,
+    "sha256": "31b4606b7927382b2ecacee70f21564743592b691368cd932f0b217ed2db8a3e"
+  },
+  "installed_source": {
+    "path": "/workspace/.compat/python-windows/package/tools/Lib/site-packages/windows_capture/__init__.py",
+    "bytes": 13294,
+    "sha256": "a9e3bf0f2e510aa4e9e1950b12e510a669600078ec4b5630f7ffbd23622fc5fa",
+    "semantic_compile_without_execution": "passed"
+  },
+  "installed_metadata": [
+    {
+      "path": "/workspace/.compat/python-windows/package/tools/Lib/site-packages/windows_capture-2.0.1.dist-info/METADATA",
+      "bytes": 4899,
+      "sha256": "72e2f9fd8156102b08848e2794a0bc989b481a42b4a5c821e68eeeab88788bea",
+      "headers": [
+        "Name: windows-capture",
+        "Version: 2.0.1",
+        "Requires-Dist: numpy",
+        "Requires-Dist: opencv-python"
+      ]
+    }
+  ],
+  "native_extension": {
+    "path": "/workspace/.compat/python-windows/package/tools/Lib/site-packages/windows_capture/windows_capture.pyd",
+    "bytes": 534016,
+    "sha256": "9464e5a6a05e980418eeab6b3a774441b4c737ba6bd596ff0d1eead3e48bf7aa",
+    "inspection": "Hash binding only; binary implementation and module-initialization side effects not audited or executed"
+  },
+  "findings": [
+    {
+      "lines": [
+        5,
+        7,
+        8,
+        10,
+        16
+      ],
+      "fact": "Module imports types/cv2/numpy and native classes from the real windows_capture.pyd. Function annotations are postponed by __future__ annotations. Python module/class-definition Source has no native class instance construction or capture start call."
+    },
+    {
+      "lines": [
+        178,
+        221,
+        234,
+        241,
+        243,
+        250
+      ],
+      "fact": "The real WindowsCapture constructor calls NativeWindowsCapture at line 221; real start/start_free_threaded call the native object at lines 241 and 250. Native construction internals cannot be inferred from the Python wrapper, even though explicit Python start methods are separate."
+    },
+    {
+      "lines": [
+        295,
+        297,
+        299,
+        303
+      ],
+      "fact": "The real event decorator only sets the selected callback and returns the handler. The test does not call this implementation: its replacement FakeWGC.event stores callbacks directly."
+    },
+    {
+      "lines": [
+        388,
+        393,
+        394,
+        401,
+        405
+      ],
+      "fact": "The package also defines a real desktop DXGI session class, whose constructor invokes NativeDxgiDuplication and acquire_frame calls acquire_next_frame. These are definitions at import; the reviewed test does not instantiate this class or invoke these methods."
+    },
+    {
+      "lines": [
+        59,
+        61,
+        377,
+        380
+      ],
+      "fact": "The package contains image-writing methods; no module-level invocation exists and the reviewed test uses SimpleNamespace frames rather than these real Frame/DxgiDuplicationFrame objects."
+    },
+    {
+      "test_path": "/workspace/rougezhushou/tests/test_capture_queue.py",
+      "lines": [
+        28,
+        32,
+        33
+      ],
+      "fact": "patch resolution still imports this external package and its pyd first. The class replacement happens before GameCapture.connect imports the WindowsCapture attribute; consequently the real Python constructor/start implementations are bypassed for the reviewed tests. This is a source-supported fake capture boundary, not evidence of native capture validation."
+    }
+  ],
+  "unknowns": [
+    "Native extension module initialization and NativeWindowsCapture constructor implementation are unavailable as Python Source in this installed package",
+    "Dependencies cv2/numpy/pywin32 imported native binaries were not executed or audited",
+    "No native/game/desktop/chat runtime verification or PASS was produced"
+  ],
+  "supersedes_previous_unknown": "The Python layer of windows_capture import and constructor has now been inspected; the prior broad external-import unknown narrows to imported dependencies and native pyd initialization/implementation. All prior local test findings remain unchanged."
+}

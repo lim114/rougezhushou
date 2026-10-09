@@ -1,0 +1,50 @@
+{
+  "status": "SOURCE_ONLY_NOT_APPLIED_NOT_EXECUTED",
+  "source_refs": [
+    {
+      "path": "/workspace/rougezhushou/tests/test_node_content.py",
+      "bytes": 11741,
+      "sha256": "e85f5e4081802ac7e5112509e9143a53b4dcc979e3dc27893588ae488a3b45ae"
+    },
+    {
+      "path": "/workspace/.continuation/section105-original-font-actual-wine-v1.json",
+      "bytes": 1307,
+      "sha256": "bb1c30e1d16032cef53e3611eb9cc2aa5f346c4193e5ed4770a3c0ca8e1f92ad"
+    },
+    {
+      "path": "/workspace/.continuation/section105-original-node-font-actual-wine-v1.log",
+      "bytes": 991,
+      "sha256": "22d981664eecd0e394afd23f41de34014eda61f40ae4220169d24c5ec7f03a0c"
+    },
+    {
+      "path": "/workspace/.continuation/section105-original-node-font-actual-wine-v1.exit-code",
+      "bytes": 2,
+      "sha256": "2e6d31a5983a91251bfae5aefa1c0a19d8ba3cf601d0e8a706b4cfa9661a6b8a"
+    },
+    {
+      "path": "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
+      "bytes": 19484784,
+      "sha256": "b76b0433203017ca80401b2ee0dd69350349871c4b19d504c34dbdd80541690a"
+    },
+    {
+      "path": "/workspace/.continuation/section105-font-file-provenance-source-v1/report.json",
+      "bytes": 3636,
+      "sha256": "4d410d6431261680ceae73271c7eab4c6777605dfd15280a6df8919db8b109b8"
+    }
+  ],
+  "target_file": "tests/test_node_content.py",
+  "base_source_sha256": "e85f5e4081802ac7e5112509e9143a53b4dcc979e3dc27893588ae488a3b45ae",
+  "target_method": "test_event_same_title_and_description_preserve_ambiguous_scene_ids",
+  "replacements": [
+    {
+      "old": "        font_file=Path(os.environ.get('WINDIR','C:/Windows'))/'Fonts/msyh.ttc'\n        font_id=QFontDatabase.addApplicationFont(str(font_file));families=QFontDatabase.applicationFontFamilies(font_id)\n",
+      "new": "        font_file=Path(os.environ.get('WINDIR','C:/Windows'))/'Fonts/msyh.ttc'\n        font_id=QFontDatabase.addApplicationFont(str(font_file));families=QFontDatabase.applicationFontFamilies(font_id)\n        if families:\n            font_family=families[0]\n        else:\n            # This synthetic OCR fixture needs a real CJK font. Keep the native\n            # font first; an explicit portable font never impersonates msyh.\n            configured_font=os.environ.get('ROUGE_TEST_CJK_FONT')\n            if not configured_font:\n                raise RuntimeError('CJK font fixture unavailable: '+str(font_file)+\n                    '; set ROUGE_TEST_CJK_FONT to a real font file containing Noto Sans CJK SC.')\n            fallback_file=Path(configured_font)\n            if not fallback_file.is_file():\n                raise RuntimeError('Configured CJK font fixture file is unavailable: '+str(fallback_file))\n            fallback_id=QFontDatabase.addApplicationFont(str(fallback_file))\n            fallback_families=QFontDatabase.applicationFontFamilies(fallback_id)\n            if 'Noto Sans CJK SC' not in fallback_families:\n                raise RuntimeError('Configured CJK font fixture has no usable Noto Sans CJK SC family: '+str(fallback_file))\n            font_family='Noto Sans CJK SC'\n"
+    },
+    {
+      "old": "        painter=QPainter(image);painter.setPen(QColor('white'));painter.setFont(QFont(families[0],24))\n",
+      "new": "        painter=QPainter(image);painter.setPen(QColor('white'));painter.setFont(QFont(font_family,24))\n"
+    }
+  ],
+  "expected_composed_source_sha256_for_this_base_only": "8978ddc563ede13bfa7290aac1d20ac463265195a46b04dc051a31dd4c629fbc",
+  "transport_rule": "After Root checks actual source guard and each unique local old block, replace only the two font setup/use blocks. Never replace the whole test file or alter assertions. Rebase unrelated edits without dropping them. No source file is applied/executed by author."
+}
