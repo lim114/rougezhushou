@@ -1,0 +1,27 @@
+--- audit_saved-v1.py
++++ audit_saved-v2.py
+@@ -10,7 +10,7 @@
+ from native_evidence import assert_native_equal as same, freeze, read_record, source_map
+ 
+ HELPER_SHA = 'f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a'
+-RUNNERS = {112: '8fd02c35a6056f5291810a76c4ceac4016053edad1469f83a7a6060c059cff48',
++RUNNERS = {112: 'c1f9c1dd06943c3099a36b4475db27cf72e18a28a27d30237544619c0ce93ea1',
+            113: '5020397e44e59a791decadde41aba8d2560b735eb43b8bb8aa4a66dc59a26a09'}
+ CLOCK_KEYS = ('initial_seconds', 'recharge_seconds', 'cycle_seconds', 'duration_seconds',
+               'sp_recovery_per_second', 'mode')
+@@ -145,7 +145,14 @@
+         assert '待识别0帧' in snapshots[1]['sampling_status']
+     close = get(receipt['close_reload'], 'actual_close_direct_reload')
+     same(close['live'], fresh, 'actual close graph')
+-    same(close['restart_state'], fresh['run'], 'direct original RunState reload')
++    expected_notice = '已恢复同一局的记忆；切换另一局时请手动点击“开始新局”。'
++    same(close['restart_state']['notice'], expected_notice, 'exact original constructor recovery notice')
++    expected_transition = {'key': 'notice', 'live': fresh['run']['notice'], 'restart': close['restart_state']['notice'],
++        'expected_restart_literal': expected_notice, 'constructor_source_path': 'rouge/run_state.py',
++        'constructor_source_sha256': bundle['guard']['source_sha256']['rouge/run_state.py']}
++    same(close['notice_transition'], expected_transition, 'whole saved notice transition and constructor Source binding')
++    normalized_restart = freeze(close['restart_state']); normalized_restart['notice'] = fresh['run']['notice']
++    same(normalized_restart, fresh['run'], 'whole direct RunState reload except qualified constructor notice transition')
+     same(close['restart_account'], account, 'direct original AccountCache reload')
+     same(close['disks_after'], fresh['disks'], 'direct close/reload disks')
+     assert len(receipt['pngs']) == 2

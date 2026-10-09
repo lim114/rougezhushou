@@ -1,0 +1,33 @@
+{
+  "kind": "SECTION112_SOURCE_LOCAL_TRANSPORTS",
+  "STOPWRITE": true,
+  "replacements": [
+    {
+      "path": "rouge/app.py",
+      "before_lf": "        self.observation=None\n        self.map_frame=None\n        self.map_frames.clear()\n        self.last_observed_operator=None;self.last_observed_stage=None\n",
+      "after_lf": "        self.observation=None\n        self.capture_operator_picture.set_subject(None,None,'')\n        replace_text(self.operator_summary,'本局已重置，等待新的干员页面读取；账号档案仍保留。',preserve=False)\n        self.preview.clear();self.preview.setText('本局尚未采样')\n        replace_text(self.observed_text,'',preserve=False)\n        self.capture_status.setText('已开始新局，等待新的页面采样；账号档案已保留。')\n        self.update_sampling_status()\n        self.target_stage.setToolTip('本局节点详情尚未确认；可手动选择关卡进行局外预览。')\n        self.map_frame=None\n        self.map_frames.clear()\n        self.last_observed_operator=None;self.last_observed_stage=None\n",
+      "occurrences": 1,
+      "current_source_sha256": "69e9096e30bb2d7f70cd65ccf20de756001b97a5cea536b0db77adc12105a657",
+      "projected_current_base_after_sha256": "7127a5a4ccb7d1d441d532194249390a84a6ef31e9294abfd016dc4e9afceaf7",
+      "newline_policy": "Root maps only snippet LF to the actual uniform LF or CRLF; no whole-file replacement",
+      "full_byte_inverse_current_base": true
+    },
+    {
+      "path": "scripts/verify_full_available.py",
+      "before_lf": "NEW_MODULES = (\n",
+      "after_lf": "NEW_MODULES = (\n    'tests.test_new_run_capture_view_112',\n",
+      "occurrences": 1,
+      "current_source_sha256": "ccb75fedbb97a601fb496457ad5655f9e389c2ff3d66453b23d4ada01ca2c63f",
+      "projected_current_base_after_sha256": "a4c395803e06b34c6e4af2a2e3871eb96d2038b2a57f4a9aa06fc8777c513871",
+      "newline_policy": "Root maps only snippet LF to the actual uniform LF or CRLF; no whole-file replacement",
+      "full_byte_inverse_current_base": true
+    }
+  ],
+  "new_files": [
+    "tests/test_new_run_capture_view_112.py"
+  ],
+  "product_scope": "one reset_run UI block only; one full suite GUI selector; new real Qt lifecycle test",
+  "future110_tooltip_rebase": "Source app whole hash here describes current109 only. Preserve every future110 other method/tooltip and apply exact local snippet on Root actual validated current base.",
+  "no_wholefile_payload": true,
+  "runtime_executed": false
+}
