@@ -1,7 +1,7 @@
 {
   "branch": "codex/p2-development",
   "policy": {
-    "commit_after_each_section": false,
+    "commit_after_each_section": true,
     "full_validation_interval": 5,
     "continuous_work_authorized": true,
     "windows_compatibility": "Wine authorized; distinct from native Windows verification",
@@ -14,15 +14,16 @@
     "wrap_up_below_usage_percent": 15,
     "usage_percent_available": false,
     "usage_monitoring": "No enabled tool exposes account usage; do not invent a percentage. Honor any subsequent user-provided low-usage signal.",
-    "automatic_next_batch": false,
-    "commit_interval": 5,
-    "commit_after_full_validation_pass": true,
-    "cloud_save_destination": "GitHub origin codex/p2-development; explicit user authorization after each5 sections full checks pass",
+    "automatic_next_batch": true,
+    "commit_interval": 1,
+    "commit_after_full_validation_pass": false,
+    "cloud_save_destination": "Every completed section: commit and push origin codex/p2-development; every five sections full available validation and progress summary",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": true
+    "development_paused_by_latest_user_request": false,
+    "summary_interval": 5
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 95,
+  "completed_sections": 96,
   "sections": [
     {
       "number": 1,
@@ -600,10 +601,16 @@
       "verification": "verification/sections/095.json",
       "commit_status": "pending_batch_full_PASS",
       "completion_ref_is_Git_tag": false
+    },
+    {
+      "number": 96,
+      "topic": "培养资格、条件声明与原件来源说明",
+      "verification": "verification/sections/096.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
     }
   ],
-  "next_section": 96,
-  "next_action": "用户要求本次恢复检验与报告后将已有成果一次commit并推送GitHub当前开发分支，随后暂停；第95节全量窗口问题三次未完成已搁置，不自动第四次重试或开展96。以后收到恢复指令且取得新的明确诊断/有界验证方案再决定恢复。",
+  "next_section": 97,
+  "next_action": "96实际commit并push，随后应用97账号保存异常处理；第100节后新全量检验及总结，full095不自动第四次重跑",
   "full_validation_due": true,
   "last_full_validation": {
     "after_section": 90,
@@ -688,30 +695,26 @@
     }
   ],
   "current_batch_commit_policy": {
-    "user_instruction": "每5个小节检测通过后就进行一次commit，用于保存至云端",
-    "effective_after_completed_section": 92,
-    "next_commit_after_full_validation_section": 95,
-    "sections93_94_source_binding": "actual verified working-tree snapshot, not nonexistent per-section Git commit/tag",
-    "per_section_archive_and_checkpoint": true,
-    "cloud_save_destination": "commit and push GitHub current development branch after full095 PASS"
+    "user_instruction": "每完成一个小节进行一次保存，5个小节的测试后进行一次当前进度总结",
+    "effective_after_completed_section": 95,
+    "commit_interval": 1,
+    "push_after_each_section": true,
+    "full_validation_interval": 5,
+    "next_full_validation_after": 100
   },
-  "pending_batch_sections": [
-    93,
-    94,
-    95
-  ],
+  "pending_batch_sections": [],
   "pending_batch_save": {
-    "next_full_validation_after": 95,
+    "next_full_validation_after": 100,
     "commit_and_push_after_full_PASS": true,
     "destination": "origin codex/p2-development",
-    "last_committed_section": 92,
+    "last_committed_section": 95,
     "section_source_snapshots_are_archived": true,
-    "status": "manual_recovery_checkpoint_READY_NOT_COMMITTED_OR_PUSHED",
+    "status": "ACTUAL_RECOVERY_SAVE_COMMITTED_PUSHED_VERIFIED",
     "manual_checkpoint_save_authorized_by_latest_user": true,
     "full_PASS_claimed": false,
-    "committed": false,
-    "pushed": false,
-    "actual_commit_sha": null,
+    "committed": true,
+    "pushed": true,
+    "actual_commit_sha": "5e4f67c59b8a21c8169fe770c6fb18424a7f0b23",
     "remote_head_before_save": "c69b9a9a5456b8cdd099fe172780f5637218c0c9",
     "external_publication_receipt": "/workspace/.continuation/batch095-deferred-committed-pushed-closure.json",
     "remote_main_is_ancestor_of_local_HEAD": false,
@@ -725,5 +728,22 @@
     "source_guard_sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab",
     "completed_section_increment": 0,
     "future_development_paused": true
+  },
+  "development_resumption": {
+    "at": "2026-10-09T14:27:58.743908+08:00",
+    "actual_start_HEAD": "5e4f67c59b8a21c8169fe770c6fb18424a7f0b23",
+    "next_section": 96,
+    "next_full_validation_after": 100,
+    "per_section_commit_and_push": true,
+    "source_guard": "/workspace/.continuation/resume096-baseline-v1.json",
+    "full095_deferred_preserved": true
+  },
+  "current_section_save": {
+    "section": 96,
+    "prepared_at_Beijing": "2026-10-09T15:07:33.842213+08:00",
+    "status": "READY_FOR_REAL_COMMIT_AND_PUSH",
+    "prior_actual_HEAD": "5e4f67c59b8a21c8169fe770c6fb18424a7f0b23",
+    "archive_manifest": "research/p2-section096-condition-cultivation/manifest.json",
+    "full_validation_due": true
   }
 }

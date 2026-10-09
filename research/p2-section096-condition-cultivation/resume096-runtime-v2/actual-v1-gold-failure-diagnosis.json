@@ -1,0 +1,112 @@
+{
+  "status": "ACTUAL_GOLD_FAILURE_DIAGNOSED_TEST_ACTION_PRECONDITION_NOT_PRODUCT_CHANGE",
+  "failure_step": "module/uniequip_002_shu/stage2/at-P4",
+  "original_attempts_incomplete": 1,
+  "actual_primary_status_raw": "1\n",
+  "receipt_passed": false,
+  "completed_original_steps": 60,
+  "main_manual_buttons_completed": 59,
+  "actual_root_source_drift": [],
+  "actual_tools_reading_saved_native": [
+    "9a8e99",
+    "77881b",
+    "77d3a3"
+  ],
+  "failure_artifacts": [
+    {
+      "path": "/workspace/.continuation/resume096-ui-gold-v1/receipt.json",
+      "bytes": 51457,
+      "sha256": "8f932ee808433e19f6abcc80940afeb841830db33e7494cd20c707e5ceeeba4e"
+    },
+    {
+      "path": "/workspace/.continuation/resume096-ui-gold-v1/progress.json",
+      "bytes": 976,
+      "sha256": "c372ab3c23912a058d0633a0bb9d25c9e4b5f8a408e600379b8e11e43c48f614"
+    },
+    {
+      "path": "/workspace/.continuation/resume096-ui-gold-v1/000001.pickle.gz",
+      "bytes": 284706,
+      "sha256": "f4a8d141429b7986d0852b82c42a00c3ea1ba2ba8a8c608e98657e1a72f5e6a5"
+    },
+    {
+      "path": "/workspace/.continuation/resume096-ui-gold-v1.log",
+      "bytes": 730,
+      "sha256": "c3e1f4bbe59622757ce6585589f535833c5c144ba141d373cd19185959d11cba"
+    },
+    {
+      "path": "/workspace/.continuation/resume096-ui-gold-v1.exit-code",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    }
+  ],
+  "four_real_last_records": [
+    {
+      "record": "module/uniequip_002_shu/stage1/below-P4",
+      "file": "000057.pickle.gz",
+      "compressed_sha256": "d454b42f1ae8293294675e5f7b97480161cdab43b2f35c0a74c2f82871fafc3d",
+      "decoded_sha256": "6f0caa88befd3c69e28f61e9c7a116af009836a654354bcad47e6f76915a3ff9",
+      "account_level": 59,
+      "UI_level": 59,
+      "level_override": false,
+      "actual_level_signals": 0,
+      "actual_level_signal_rows": [],
+      "actual_automatic_scenario_level": 59
+    },
+    {
+      "record": "module/uniequip_002_shu/stage1/at-P4",
+      "file": "000058.pickle.gz",
+      "compressed_sha256": "5e898157006042109469c3034cf8ba95447b4ae61101225f17cfcf6e83afdf60",
+      "decoded_sha256": "5ce4f7b0001e02b0503a7c217384754230e4b1bd263aaab9a857f88655142068",
+      "account_level": 59,
+      "UI_level": 60,
+      "level_override": true,
+      "actual_level_signals": 1,
+      "actual_level_signal_rows": [
+        {
+          "window": "public-condition096-window-1",
+          "step": "module/uniequip_002_shu/stage1/at-P4",
+          "phase": "automatic_action",
+          "binding": {
+            "kind": "common",
+            "widget": "level",
+            "signal": "valueChanged"
+          },
+          "widget_class": "QSpinBox",
+          "emitted_value": 60,
+          "current_widget_value": 60
+        }
+      ],
+      "actual_automatic_scenario_level": 60
+    },
+    {
+      "record": "module/uniequip_002_shu/stage1/at-P5",
+      "file": "000059.pickle.gz",
+      "compressed_sha256": "5bcc7af857eb7a531c5bd78f7a621127615c2c5c7f90fc73a5dc10d22421762b",
+      "decoded_sha256": "618a2c80defc42be3cc9cba34ff6aa09aa60bacf0778541e781857560ad64914",
+      "account_level": 60,
+      "UI_level": 60,
+      "level_override": true,
+      "actual_level_signals": 0,
+      "actual_level_signal_rows": [],
+      "actual_automatic_scenario_level": 60
+    },
+    {
+      "record": "module/uniequip_002_shu/stage2/below-P4",
+      "file": "000060.pickle.gz",
+      "compressed_sha256": "26be8c225708c6cff7aa4365f12e811732c7eaf4b2ad9becb75d04511ee49311",
+      "decoded_sha256": "364d7b8557547071cead5b789ed59bc38e9d0d04ff1abeb1d0dd64f87e1635ee",
+      "account_level": 59,
+      "UI_level": 60,
+      "level_override": true,
+      "actual_level_signals": 0,
+      "actual_level_signal_rows": [],
+      "actual_automatic_scenario_level": 60
+    }
+  ],
+  "source_root_cause": "MainWindow.show_observed_operator intentionally preserves an existing manual level for same-owner account observations. Account level59 therefore does not change current GUI60 or override=True. Original runner incorrectly assumed below-gate fixture had restored the read level.",
+  "v2_fix": "Retain every account observation and its actual preserved-preview capture. For each of 24 module below-P4 fixtures, click the existing real Use read level button, assert exact read level/override=False, genuine calculate callback, blocked level signal, and unchanged account/run/files. Then 26 level actions must genuinely change once; separately repeat the same value to observe zero signal/calculate/state changes. Both sides run identical Source.",
+  "actual_product_edits_by_author": 0,
+  "actual_runtime_v2_executions_by_author": 0,
+  "old_v1_source_manifest_unchanged": true,
+  "observations_derived_by_stdlib_native_reads": true
+}
