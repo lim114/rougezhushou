@@ -14,12 +14,12 @@
     "wrap_up_below_usage_percent": 15,
     "usage_percent_available": false,
     "usage_monitoring": "No enabled tool exposes account usage; do not invent a percentage. Honor any subsequent user-provided low-usage signal.",
-    "automatic_next_batch": true,
+    "automatic_next_batch": false,
     "commit_interval": 1,
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section: commit and push origin codex/p2-development; every five sections full available validation and progress summary",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": false,
+    "development_paused_by_latest_user_request": true,
     "summary_interval": 5,
     "stop_after_section": 115,
     "each_section_requires_functional_progress": true,
@@ -28,7 +28,7 @@
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS."
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 114,
+  "completed_sections": 115,
   "sections": [
     {
       "number": 1,
@@ -720,67 +720,266 @@
       "topic": "公共数值输入类型边界",
       "verification": "verification/sections/114.json",
       "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 115,
+      "topic": "当前输出分项",
+      "verification": "verification/sections/115.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
     }
   ],
-  "next_section": 115,
-  "next_action": "第115节实现当前输出分项；完成公开网上4算例核对及五节全量可用测试后结束本批，不启动116。",
+  "next_section": 116,
+  "next_action": "本批111–115结束；停在115，不启动116。后续收到继续开发指令后从116恢复，并保留P2剩余项目及95/109原流程搁置记录。",
   "full_validation_due": false,
   "last_full_validation": {
-    "kind": "ROOT_ACTUAL_FULL110_AVAILABLE_SCOPE_CLOSURE",
+    "kind": "ROOT_ACTUAL_FULL115_AVAILABLE_SCOPE_CLOSURE",
+    "recorded_at_UTC": "2026-10-09T19:52:13.512845+00:00",
     "passed": true,
     "workflow_complete": true,
     "source_drift": [],
-    "after_section": 110,
-    "source_files": 753,
+    "after_section": 115,
+    "section_group": [
+      111,
+      112,
+      113,
+      114,
+      115
+    ],
+    "source_files": 758,
+    "CORE_unchanged": true,
     "complete_repository_validation": false,
     "native_windows_game_chat_verified": false,
     "linux": {
-      "tests_run": 2336,
-      "tests_passed": 2114,
+      "tests_run": 2394,
+      "tests_passed": 2171,
       "historical_or_declared_skips": 84,
-      "unavailable_records": 191,
-      "unavailable_parent_count": 150,
+      "unavailable_records": 192,
+      "unavailable_parent_count": 151,
       "failures": 0,
       "errors": 0
     },
     "wine": {
-      "tests_run": 2403,
-      "tests_passed": 2190,
+      "tests_run": 2464,
+      "tests_passed": 2251,
       "historical_or_declared_skips": 87,
       "unavailable_records": 186,
       "unavailable_parent_count": 145,
       "failures": 0,
       "errors": 0
     },
-    "wine_selected_run": 1402,
+    "wine_environment_capability_skips": 3,
+    "wine_capability_skips_included_in_declared_skips_not_added_again": true,
+    "selected": {
+      "tests_run": 1459,
+      "skipped": 4,
+      "failures": 0,
+      "errors": 0
+    },
+    "selected_passed_count_derived": false,
+    "dependency_checks_raw_exit": {
+      "linux": 0,
+      "wine": 0
+    },
     "legacy_gui_checks": 4283,
     "legacy_saved_states": 52,
-    "specialist_gui_states": 12,
-    "specialist_current_SP_pairs": 6,
-    "specialist_native_records": 116,
-    "specialist_three_full_texts": 36,
-    "actual_PNGs_viewed": 6,
-    "deferred095_and109_preserved": true,
-    "scope": "Current maintained available selectors + unchanged bounded legacy functional matrix + specialized permanent-skill 12states. Missing migration evidence, historical skips and3 diagnosed Wine capability bodies are not PASS. Original88 APIs compare1numeric+2formatters; specialist Window separately has3wholeformattertexts. No old095 complete vector or original full GUI Gold claim.",
-    "section_group": [
-      106,
-      107,
-      108,
-      109,
-      110
+    "legacy_projection_scope": {
+      "unchanged_original_projections": 42,
+      "actual113_proved_window_metric_admissions": 10
+    },
+    "legacy_alias_or_cycle_identity_verified": false,
+    "old_full_result_GUI_Gold_equality_verified": false,
+    "specialist_states": 4,
+    "specialist_native_decoded": 66,
+    "specialist_SP_pairs": 2,
+    "API_original_candidate_cases_each": 19,
+    "API_native_decoded": 190,
+    "API_actual_numeric_and_three_formatter_calls_verified": 152,
+    "actual_external_examples_matched": 4,
+    "external_source_leaves_verified": 66,
+    "external_actual_values": [
+      25.0,
+      250.0,
+      400.0,
+      1.0
     ],
-    "status": "PASSED_AVAILABLE_MAINTAINED_AND_BOUNDED_GUI_SCOPE",
-    "batch_validation_closed": true,
-    "archive": "verification/full-110",
-    "research_archive": "research/p2-section110-permanent-release-clock",
-    "owned_session_no_live_execution": true,
+    "external_fifth_conditions_not_matched_deferred": true,
+    "actual_PNGs_Root_viewed": 6,
+    "owned_no_live_execution": true,
     "owned_session_absence_verified": false,
-    "deferred109_complete_candidate_UI_pass": false,
-    "legacy_saved_codec_aliases_verified": false,
-    "old_full_result_GUI_Gold_equality_verified": false
+    "retained_zombies_reaped": false,
+    "deferred095_and109_preserved": true,
+    "prior_actual_publications": [
+      {
+        "section": 111,
+        "commit": "b5946fd912eccd179a192781304b4969a0720479"
+      },
+      {
+        "section": 112,
+        "commit": "9c963a49d952fbc62cf870148e79abea8270ea9e"
+      },
+      {
+        "section": 113,
+        "commit": "a67e1dc1e842cbf257e908b933a1bff9f845eeda"
+      },
+      {
+        "section": 114,
+        "commit": "f7d18324b3589299984d68379cd5b92cca9883c8"
+      }
+    ],
+    "raw_exits": [
+      {
+        "path": "full115-linux-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "full115-wine-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "full115-selected-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "full115-capability-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "full115-linux-pip-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "full115-wine-pip-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "full115-window-owned-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "root-full115-saved-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "section115-original-api-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "section115-candidate-api-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "root-section115-api-accuracy-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "section115-window-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "root-section115-window-saved-actual-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "resume115-related-linux-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      {
+        "path": "resume115-related-wine-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      }
+    ],
+    "actual_receipt_pins": [
+      {
+        "path": "resume115-final-source-v1.json",
+        "bytes": 93701,
+        "sha256": "9ee50ae4aed69d3bd901f5925b24af00fea6ac60a2dc79fa9aed2b50d2625ba4"
+      },
+      {
+        "path": "full115-linux-actual-v1.json",
+        "bytes": 139012,
+        "sha256": "15c0efe3e249b47ac5e5f2c762ccb4678b31277745fb25c1df23a679d4bc943f"
+      },
+      {
+        "path": "full115-wine-actual-v1.json",
+        "bytes": 288737,
+        "sha256": "88f657ab1f158d97ada4faaf72e7bfdd054533e4454bac8517f505b335c33a9e"
+      },
+      {
+        "path": "full115-selected-actual-v1.json",
+        "bytes": 183881,
+        "sha256": "78e10208e3eb66ddd623e32e1d5b0a4dee0c774f81d4b9a0058e410c5f766f3b"
+      },
+      {
+        "path": "full115-capability-actual-v1.json",
+        "bytes": 4861,
+        "sha256": "0eb5e573cac333845f64e91f98f1f9fe18532ad99407255bf2588f0bc12d7c78"
+      },
+      {
+        "path": "full115-window-owned-actual-v1.json",
+        "bytes": 2219,
+        "sha256": "6f62221b9a96dd898d61c2036bbeb5284489f8c5a7dd46dee570f411e373eada"
+      },
+      {
+        "path": "root-full115-saved-actual-v1.json",
+        "bytes": 42304,
+        "sha256": "5bca354e86770e2ca1d18073b83462c04eeeac94b85ab8145b7a2d845831e5b8"
+      },
+      {
+        "path": "root-full115-visual-actual-v1.json",
+        "bytes": 1732,
+        "sha256": "1570e62440a4ef0e845039340b6d2a3ed5638bd2b59f05356e5a28fd631c2d0f"
+      },
+      {
+        "path": "root-section115-api-accuracy-actual-v1/receipt.json",
+        "bytes": 101985,
+        "sha256": "0dbd1c8d5e01b8a05910ecbc3a2dc8d11cb0b4cc4a7abaf58d7f905748fce658"
+      },
+      {
+        "path": "root-section115-window-saved-actual-v1/receipt.json",
+        "bytes": 242891,
+        "sha256": "cf05363a8b98f953555adb15a255ca95fceddd0658222ffbc548ac939280470c"
+      },
+      {
+        "path": "root-window115-specialized-visual-actual-v1.json",
+        "bytes": 1850,
+        "sha256": "f69c5c2100fb74f6eda454f41b60cfcbbaf2c80bcae23899a045e72f1b4a06d4"
+      },
+      {
+        "path": "full115-linux-pip-actual-v1.log",
+        "bytes": 30,
+        "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+      },
+      {
+        "path": "full115-wine-pip-actual-v1.log",
+        "bytes": 161,
+        "sha256": "874ecc551f20e9d41593f25530e82f391ef16a706f94e5b33d14bce8ceaa6dfb"
+      }
+    ],
+    "batch_validation_closed": true,
+    "stop_after_section115": true,
+    "section116_started": false,
+    "scope": "Current maintained available full/selected tests plus actual bounded52-state legacy GUI and four-state115 GUI, saved audits and public worked-example comparisons. Missing migration evidence, historical/capability skips and native Windows/game/chat remain unverified.",
+    "archive": "verification/full-115",
+    "research_archive": "research/p2-section115-current-output-breakdown",
+    "status": "PASSED_AVAILABLE_MAINTAINED_AND_BOUNDED_GUI_SCOPE"
   },
   "windows_native_validation": "unavailable: attached environment is Linux",
-  "wine_validation": "第93–95节功能专项已验收；本轮六项Linux/Wine full/selected/pip原始退出0保留。第95节全量窗口三次未完成搁置：前两次NULL，第三次Root30分钟预算取消，原始退出143。Saved/四图/严格全量finish未执行，不宣称全量PASS或原生Windows认证。公开证据已按原始字节和SHA完整归档。",
+  "wine_validation": "第115节当前可用Wine全量/精选/依赖、4283检查52状态窗口、专项4状态及公开算例核对实际退出0。兼容验证不等同原生Windows。第95/109原流程仍搁置。",
   "deferred_problems": [
     {
       "id": "friendly_clock_ui_explanation",
@@ -871,7 +1070,7 @@
     "commit_interval": 1,
     "push_after_each_section": true,
     "full_validation_interval": 5,
-    "next_full_validation_after": 110
+    "next_full_validation_after": 120
   },
   "pending_batch_sections": [],
   "pending_batch_save": {
@@ -910,18 +1109,21 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 114,
-    "prepared_at_Beijing": "2026-10-10T03:00:13.389806+08:00",
+    "section": 115,
+    "prepared_at_Beijing": "2026-10-10T03:53:43.281937+08:00",
     "status": "READY_FOR_REAL_COMMIT_AND_PUSH",
-    "prior_actual_HEAD": "a67e1dc1e842cbf257e908b933a1bff9f845eeda",
-    "archive_manifest": "research/p2-section114-public-scalar-input-types/manifest.json",
-    "full_validation_due": false
+    "prior_actual_HEAD": "f7d18324b3589299984d68379cd5b92cca9883c8",
+    "archive_manifest": "research/p2-section115-current-output-breakdown/manifest.json",
+    "full_validation_due": false,
+    "batch_validation_closed": true,
+    "report": "BATCH_111_115_REPORT.md",
+    "publication_identity_lookup": "Containing section115 Git commit. Root verifies ordinary push and remote HEAD equality after this snapshot is committed."
   },
   "last_verified_cloud_save": {
-    "section": 113,
-    "commit": "a67e1dc1e842cbf257e908b933a1bff9f845eeda",
+    "section": 114,
+    "commit": "f7d18324b3589299984d68379cd5b92cca9883c8",
     "remote": "origin codex/p2-development",
-    "proof": "research/p2-section114-public-scalar-input-types/prior-publication.json"
+    "proof": "research/p2-section115-current-output-breakdown/prior-publication.json"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -1112,16 +1314,14 @@
     "full095_deferred_preserved": true,
     "scope": "Current239 maintained available selector union plus inherited bounded healthy functional MainWindow suite. Specialist101–104 receipts separately archived. Missing evidence, original skips and3 actual Wine capability bodies are not PASS."
   },
-  "next_full_validation_after": 115,
+  "next_full_validation_after": 120,
   "user_requested_wrap": {
-    "status": "SUPERSEDED_BY_USER_RESUME_2026_10_09",
-    "completed_section": 108,
-    "next_section": 109,
+    "status": "BATCH111_115_CLOSED_AFTER_ACTUAL_FULL_VALIDATION",
+    "completed_section": 115,
+    "next_section": 116,
     "next_section_started": false,
-    "last_full_validation": 105,
-    "next_full_validation_after": 110,
-    "reason": "User requested wrap and progress report after finishing the work already in progress.",
-    "prepared_at_UTC": "2026-10-09T15:38:17.613373+00:00"
+    "reason": "User instructed end this batch after115 full checks and online worked-example accuracy comparison.",
+    "recorded_UTC": "2026-10-09T19:54:34.302188+00:00"
   },
   "current_full110_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -1133,5 +1333,25 @@
     "specialist_states": 12,
     "specialist_native_decoded": 116,
     "next_section": 111
+  },
+  "current_full115_checkpoint": {
+    "status": "ACTUAL_AVAILABLE_VALIDATION_CLOSED_BATCH_STOPPED",
+    "after_section": 115,
+    "section_group": [
+      111,
+      112,
+      113,
+      114,
+      115
+    ],
+    "source_files": 758,
+    "CORE_verified": true,
+    "summary": "verification/full-115/summary.json",
+    "batch_report": "BATCH_111_115_REPORT.md",
+    "actual_legacy_GUI_checks": 4283,
+    "actual_legacy_saved_states": 52,
+    "public_examples_matched": 4,
+    "native_windows_game_chat_verified": false,
+    "stop_before_section116": true
   }
 }

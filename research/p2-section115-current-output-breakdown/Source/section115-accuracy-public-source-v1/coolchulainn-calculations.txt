@@ -1,0 +1,439 @@
+
+
+  
+	
+	
+	
+	
+	
+	
+	
+	
+    
+	
+	
+	
+	
+Arknights Calculations | Coolchulainn
+
+
+
+
+
+
+
+
+
+
+
+
+	
+  
+
+  
+  	
+
+		
+
+
+
+
+
+
+
+	open menu
+	close menu
+
+		
+		
+
+			
+
+
+
+	
+	
+Skip to content 
+		
+Site
+	
+					
+About
+				
+					
+Blog
+				
+							
+Tags list
+						
+					
+Webmastery
+				
+							
+Site template
+						
+							
+Carousel gallery
+						
+					
+Guestbook
+				 
+		
+My Art
+	
+					
+Gallery
+				
+					
+Accounts
+				 
+		
+Type-Moon
+	
+					
+Resources
+				
+					
+Analysis
+				
+							
+Cú Chulainn
+						
+							
+Scáthach
+						
+							
+Holmes/EXTRA
+						 
+		
+Arknights
+	
+					
+Resources
+				
+					
+Gameplay
+				
+							
+Calculations
+						
+							
+Snakeknights
+						
+					
+Analysis
+				
+							
+Castle Shalem theory
+						
+
+			
+Arknights Calculations
+
+
+Here I collect information about how to calculate various things related to Arknights combat. When I find the time I'll also cook up a simple calculator to do this kind of math with.
+
+
+
+
+
+Damage calculation
+
+	
+Base stats
+	
+External modifiers
+	
+Internal modifiers
+	
+Outgoing damage
+	
+Defensive stats
+	
+Incoming damage
+
+
+
+Attack interval
+
+Elemental injury
+
+
+
+
+Damage calculation
+
+
+The Damage Formula(TM) can be overwhelming when shown as just a formula, so I prefer to break it down into the order in which particular modifiers are applied. Values are rounded when displayed in-game, but internal calculations don't round any numbers.
+
+
+Base stats
+
+
+These are the stats as internally defined before any modifers. For operators, these are the stats when you look at the operator info screen. For enemies, these are the values you'll find listed on your wiki of choice. Some talents that unconditionally alter an operator's stats are already incorporated into the stats on the info screen and do not need to be manually applied in any further calculations, but others only take effect once you're in an operation. The distinction seems to be whether the operator has this talent from E0 already: Rose Salt's -5% atk is incorporated in the status screen, but Beagle's +10% def isn't. 
+
+
+External modifiers
+
+
+The external modifiers are stat changes that are applied by the stage itself at the start of the operation, and which cannot change during the operation. This covers things such as challenge mode conditions, Integrated Strategies difficulty scaling, and various collectibles. These will not be reflected on the squad screen, but when you start the operation and select an undeployed operator, these modifiers will be reflected in the undeployed operator's stats. 
+
+
+In Integrated Strategies, stat changes from collectibles and the skill tree are calculated separately from stat changes caused by difficulty levels, and the order in which certain modifiers are applied and whether they stack additively or multiplicatively will also differ per Integrated Strategies theme. When calculating operator stats, all external modifiers from collectibles and the skill tree stack additively (x * (1 + a% + b% ...)). When calculating enemy stats, all collectibles stack multiplicatively (x * a% * b% ...).
+
+
+Flat stat changes are generally applied before percent based stat changes in the same modifier.
+
+
+Internal modifiers
+
+
+The internal modifiers are all changes that are applied while the operation is ongoing, which covers every stat change caused by operator or enemy skills or talents. Operator squad buffs such as the Abyssal Hunter talents and passive skills such as Hoshiguma s2 are internal modifiers, even though they are also represented on undeployed operators within the stage. Internal modifiers can be further divided into initial modifiers and final modifiers depending on the order in which they are calculated, and these stack differently.
+
+
+Initial and final modifiers are easy to distinguish when it comes to operators' atk buffs, because initial modifiers will always be phrased as increasing atk by a certain percentage, while final modifiers will say they increase atk to a certain percentage. For things like debuffs to enemies, what modifier they're on can often only be discovered through either experimenting in-game or datamining it. The Tomimi.dev recruitment filter allows you to filter operators by what modifier their debuffs are on.
+
+
+Outgoing damage
+
+
+Outgoing damage is the amount of damage an operator or enemy does after all offensive modifiers are applied and before any defensive stats are applied. Atk modifiers are applied in the following order:
+
+
+
+Take the unit's base atk Y
+
+Apply the external modifiers however they apply on this stage: Y1 = Y * (1 + a1%) * ... 
+
+Multiply by the sum of the initial percent modifiers: Y2 = Y1 * (1 + b1% + b2% + ...)
+
+Add the sum of the final flat modifiers: Y3 = Y2 + c1 + c2 + ...
+
+Multiply by each of the percent atk debuffs: Y4 = Y3 * (1 - d1%) * (1 - d2%) * ...
+
+Multiply by each of the final percent modifiers:  Yfinal = Y4 * d1% * d2% * ...
+
+
+
+Y4 is the atk value that is displayed for your operator in combat, but there is actually a trick here: debuffs from enemies are also final percent modifiers! In terms of math, step 5 and 6 are functionally one step, and separating them is only relevant because of how the game determines what atk value to display.
+
+
+All percent debuffs inflicted on operators are final modifier, but percent atk debuffs inflicted by operators can be initial or final modifier.
+
+
+Current flat atk modifiers from operators cover Inspiration and Steal, which are both final modifier, but initial flat atk modifiers for operators might be added in the future. Inspiration buffs are calculated using a final percent modifier over the source operator's displayed atk, so any other changes to the operator that gives out the buff will be calculated before determining the size of the inspiration buff.
+
+
+Let's take Ray as an example. She is e2 level 90, skill mastery 3, module X level 3, potential 1, max trust, and her second talent has reached full stacks. Pretty normal Ray use conditions.
+
+
+
+Ray as described has 1262 atk on the info screen, so Y = 1262
+
+We're playing on a stage with no external modifiers, so Y1 = Y = 1262
+
+Ray's second talent at max stacks gives +24% atk, so Y2 = Y1 * (1 + 0.24) = 1564.88
+
+No flat modifiers or debuffs apply. Y4 = Y3 = Y2 = 1564.88
+
+Ray has two final modifiers, 330% on her skill and 120% on her trait. Yfinal =  1564.88 * 3.3 * 1.2 =  6196.9248
+
+
+
+After rounding for display, Ray's outgoing damage is 6197 per hit. That's a lot!
+
+
+Now let's complicate the situation. I am buffing Ray with Warfarin s2m3 and a max level/trust no module s2m3 Sora, and I also have Schwarz mod X level 3 in the squad. I'm using them on a stage where the challenge mode condition lowers my operators' atk by 10%. Finally, there's a Blade Helmet Knightclub Elite on the stage who debuffed Ray.
+
+
+
+Ray's base stats are unchanged, so Y = 1262
+
+
+The stage's external modifier is -10%, so we get Y1 = 1262 * (1 - 0.1) = 1135.8
+
+
+Warfarin s2 (+90% atk) and Schwarz's talent (+13% atk) are initial modifiers and stack additively with Ray's own talent. Y2 = 1135.8 * (1 + 0.9 + 0.13 + 0.24) = 2578.266
+
+
+Sora's inspiration buff is 100% of her own atk, which at max level and no module is 385. However, she is also affected by the challenge mode condition, so our flat modifier buff is 385 * (1 - 0.1) = 346.5 and we get Y3 = 2578.266 + 346.5 = 2924.766
+
+
+The Blade Helmet's debuff is -50% atk. Y4 = 2924.766 * (1 - 0.5) = 1462.383
+
+
+Ray's final modifiers remain unchanged: Yfinal = 1462.383 * 3.3 * 1.2 = 5791.03668
+
+
+
+After rounding for display, Ray's outgoing damage is 5791 per hit in this situation. Although the buffs add up to +127% and the debuffs add up to -60%, the order in which they are calculated means Ray still comes out with lower damage per hit than before.
+
+
+Defensive stats
+
+
+Outgoing damage is reduced by the enemy's respective defensive stat. Defense reduces physical damage by a flat amount, while Resistance, Elemental Resistance, and Effect Resistance are percent reductions of arts damage, elemental damage, and elemental injury respectively. Defensive stats cannot be reduced below 0, but resistances can go above 100 (some enemies in waves 18 IS3 have over 100 res).
+
+
+Def and res modifiers are calculated the same way.
+
+
+
+Take the base value X
+
+Apply the relevant external modifiers: X1 = X * (1 + a1%) * ...
+
+Add the sum of the intitial flat modifiers: X2 = X1 + b1 + b2 + ...
+
+Multiply by the sum of the initial percent modifiers: X3 = X2 * (1 + c1% + c2% + ...)
+
+Add the sum of the final flat modifiers: X4 = X3 + d1 + d2 + ...
+
+Multiply by each of the final percent modifiers: X5 = X4 * e1% * e2% * ...
+
+Deduct the sum of flat ignore values: X6 = X5 - f1 - f2 - ...
+
+Multiply by each of the percent ignore values: Xfinal = X6 * (1 - f1%) * (1 - f2%) * ...
+
+
+
+All percent defensive buffs from operators are initial modifiers, and all percent debuffs inflicted on operators are final modifier. However, defensive debuffs inflicted by operators can be initial or final.
+
+
+X5 is what is displayed when selecting the operator in combat, and Xfinal is what the outgoing damage will be tested against. Calculating these works the same as for atk, just identify what modifier each stat change falls on and go down the list. Again, you can use the Tomimi.dev recruitment filter to check what modifier an operator's buffs or debuffs are on.
+
+
+Incoming damage
+
+
+To finally calculate our incoming damage Z, we reduce Yfinal by Xfinal in the appropriate way. Z will always be at least 5% of Yfinal. For physical damage you take 
+
+
+Z = Yfinal - Xfinal 
+
+
+and for the others you take 
+
+
+Z = Yfinal * (1 - Xfinal)
+
+
+There are various kinds of damage amplifications and reductions that apply after the outgoing damage is reduced by the target's defenses. All of these are multiplicative all the way down, although several of them, like fragile and sanctuary, will only have the highest value apply if multiple instances are active.
+
+
+Zfinal = Z * damage amplification 1 * damage amplification 2 * (1 - damage reduction 1) * (1 - damage reduction 2) ...
+
+
+Circling back to Ray, in the regular example she had 6197 outgoing damage. Let's say we calculated the enemy def to be 3200. Ray deals +20% physical damage to enemies in her Sandbeast's range, so our final incoming damage is (6197 - 3200) * 1.20 = 3596 damage per hit. If this enemy also had a 20% damage reduction, it'd be (6197 - 3200) * 1.20 * (1 - 0.2) = 2877 damage per hit.
+
+
+Attack interval
+
+a = 100 ÷ (100 + x/b + y)
+
+
+a = final attack interval.
+   b = base attack interval.
+   x = sum of all base aspd modifiers.
+   y = flat attack interval modifier.
+   
+
+All aspd buffs and debuffs are additive. Flat interval modifiers are only found in operators' personal skills and cannot be stacked.
+
+
+Elemental injury
+
+
+Normal and elite enemies and friendly units need 1000 elemental injury to trigger burst, and bosses need 2000. Take note of whether your source of elemental injury deals it as a percentage of the operator's attack, or as a percentage of their damage done.
+
+
+Elemental injury is reduced by a percentage based on the target's Effect Resistance. Elemental Damage is a damage type that can only be inflicted on targets under elemental injury burst, and is reduced by a percentage based on Elemental RES.
+
+
+
+
+
+TargetEffectDuration
+
+Nervous Impairment
+FriendlyTakes 1000 True damage and is Stunned.
+10 sec.
+
+EnemyTakes 6000 Elemental damage and gains 3 stacks of Paralysis.
+
+
+Corrosion Damage
+FriendlyTakes 800 Physical damage and has -100 DEF (stacks indefinitely).
+10 sec.
+
+EnemyTakes 5000 Elemental damage and has -120 DEF (stacks indefinitely).
+8 sec.
+
+
+Burn Damage
+FriendlyTakes 1200 Arts damage and has -20 RES.
+10 sec.
+
+EnemyTakes 7000 Elemental damage and has -20 RES.
+
+
+Necrosis Damage
+Friendly Takes 100 Arts damage every second, loses 1 SP per second, and cannot use skills.
+15 sec.
+
+ EnemyTakes 800 Elemental damage per second and has 50% enfeeble that decays over the duration.
+
+
+			
+			
+
+
+
+
+
+			 
+			
+Friends of the channel
+
+			 
+			
+			 
+			
+			 
+			
+Play Proverbs of Hell
+
+			 
+			
+Visual Novel
+
+			 
+			
+			 
+			
+			 
+			
+			 
+			
+Cool site
+
+			 
+			
+			 
+			
+			 
+			
+		
+		
+		
+
+
+
+	
+	
+This page was created on 08/10/2025 and last modified on 23/05/2026.
+	
+	
+
+	
+  

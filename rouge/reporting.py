@@ -248,6 +248,79 @@ def mechanism_sections(scenario,result,source,profile):
     return blocks
 
 
+def current_output_breakdown_sections(result):
+    """Show existing observation fields without rebuilding totals or clocks."""
+    components=result.get('components')
+    legacy='components' not in result
+    if legacy:
+        components=[]
+        if 'hits' in result and 'per_hit' in result and 'total_damage' in result:
+            components.append({'name':'既有技能伤害字段',
+                'damage_type':result.get('damage_type','damage_reference'),
+                'hits':result['hits'],'per_hit':result['per_hit'],'total':result['total_damage']})
+        if 'hits' in result and 'per_heal' in result and 'total_healing' in result:
+            components.append({'name':'既有技能治疗字段','damage_type':'healing',
+                'hits':result['hits'],'per_hit':result['per_heal'],'total':result['total_healing']})
+    if not components:return []
+    categories={'damage':('伤害','伤害'), 'healing':('潜在治疗','治疗'),
+        'regeneration':('独立生命回复','生命'), 'buildup':('潜在损伤积累','损伤积累'),
+        'other':('其他输出字段','')}
+    labels={'physical':'物理伤害','magic':'法术伤害','true':'真实伤害',
+        'elemental':'元素伤害','weakness':'择优伤害（物理/法术）',
+        'damage_reference':'伤害（原结果未单列类型）',
+        'healing':'潜在治疗','regeneration':'独立生命回复','buildup':'潜在损伤积累'}
+    grouped={key:[] for key in categories}
+    group_notes={key:[] for key in categories}
+    for index,component in enumerate(components):
+        dtype=component.get('damage_type')
+        group=(dtype if dtype in ('healing','regeneration','buildup') else
+               'damage' if dtype in ('physical','magic','true','elemental','weakness','damage_reference') else 'other')
+        rows=grouped[group];notes=group_notes[group];unit=categories[group][1]
+        name=component.get('name') or '未命名分项'
+        prefix='component_'+str(index)+'_'
+        rows.append(metric(prefix+'type',name+' · 类型',labels.get(dtype,dtype if dtype is not None else None)))
+        count_label='期望次数/份额' if '期望' in name else '模型次数/份额'
+        rows.append(metric(prefix+'count',name+' · '+count_label,component.get('hits')))
+        amounts=component.get('event_amounts')
+        complete_amounts=(isinstance(amounts,list) and bool(amounts) and all(
+            isinstance(value,(int,float)) and not isinstance(value,bool) and math.isfinite(value)
+            for value in amounts))
+        variable_amounts=complete_amounts and min(amounts)!=max(amounts)
+        per_label='单次量字段（事件量可变）' if variable_amounts else '单次量字段'
+        rows.append(metric(prefix+'per_hit',name+' · '+per_label,component.get('per_hit'),unit))
+        if variable_amounts:
+            rows.extend([metric(prefix+'event_mean',name+' · 已给逐事件量均值',sum(amounts)/len(amounts),unit),
+                metric(prefix+'event_min',name+' · 已给逐事件量下限',min(amounts),unit),
+                metric(prefix+'event_max',name+' · 已给逐事件量上限',max(amounts),unit)])
+            notes.append(name+'：均值和范围仅取自已有逐事件量；单次量字段照原值保留，不代表每次相同。')
+        elif isinstance(amounts,list) and any(value is None or not isinstance(value,(int,float))
+                or isinstance(value,bool) or not math.isfinite(value) for value in amounts):
+            notes.append(name+'：逐事件量含未知或不可用值，未生成均值和范围。')
+        pending='actual_total' in component and component['actual_total'] is None
+        rows.append(metric(prefix+'total',name+' · '+('条件总量参考' if pending else '分项模型总量'),
+            component.get('total'),unit))
+        if 'actual_total' in component:
+            rows.append(metric(prefix+'actual_total',name+' · 实际总量字段',component['actual_total'],unit))
+            if pending:notes.append(name+'：实际总量未知，条件总量不能补成已确认输出。')
+    blocks=[]
+    for key,(title,unit) in categories.items():
+        rows=grouped[key]
+        if not rows:continue
+        notes=['这里列当前情景返回的分项；有观察窗口时是该窗口字段，不是完整施放或本轮周期。',
+            '模型次数可表示命中、持续量或期望份额，不证明实际攻击次数；总量照原字段，不用单次量乘次数重算。',
+            '召唤、回复及元素专项表可能已汇总这些来源；本表只展开，不再相加。']
+        if legacy:notes.append('原结果未提供分项列表；这里只列已有技能字段，不生成事件、额外目标次数或类型。')
+        if key=='damage' and result.get('total_damage') is None:
+            notes.append('整体伤害仍未知；以下已有分项字段和条件参考不构成完整伤害总量。')
+        if key=='healing':
+            notes.append('潜在治疗不等于有效受疗；不反推受疗人数，也不包含独立生命回复。')
+            if result.get('total_healing') is None:notes.append('整体治疗仍未知；以下已有分项字段和条件参考不构成完整治疗总量。')
+        if key=='regeneration':notes.append('独立生命回复不并入伤害或直接治疗；是否实际生效继续按原情景和来源限制。')
+        if key=='buildup':notes.append('损伤积累不是敌人生命伤害，也不自动等于爆发次数或爆发伤害。')
+        blocks.append(section('output_breakdown_'+key,'当前情景输出分项 · '+title,rows,notes+group_notes[key]))
+    return blocks
+
+
 def build_report(scenario,result):
     op=scenario['operator'];number=scenario['skill'];p=catalog()['operators'][op]
     if op=='char_110_deepcl' and type(scenario.get('summon_count')) is str:
@@ -1027,6 +1100,7 @@ def build_report(scenario,result):
         sections.append(section('squad_unlock_reference','强化分队 · 条件资料',[
             metric('account_unlock','账户解锁状态',None),
             metric('activation','解锁条件实际激活',None)],notes))
+    sections.extend(current_output_breakdown_sections(result))
     report={'schema_version':2,'operator':{'id':op,'name':p['name'],'profession':p['profession']},
         'skill_number':number,'skill_rank':scenario.get('skill_rank',10),'mode':mode,'sections':sections}
     from .module_source_reference import selected_module_reference, module_source_notes, REFERENCE_KEY, SECTION_ID

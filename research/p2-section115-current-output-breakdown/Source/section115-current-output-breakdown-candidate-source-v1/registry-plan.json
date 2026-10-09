@@ -1,0 +1,23 @@
+{
+  "kind": "SECTION115_ONE_CLOUD_SELECTOR_APPEND_SOURCE_PLAN",
+  "selector": "tests.test_current_output_breakdown_115",
+  "cloud_snapshot": {
+    "path": "/workspace/rougezhushou/scripts/verify_cloud.py",
+    "bytes": 5602,
+    "sha256": "483e4f4b34b7983dc41f6ec71f51354ce1cf599601e9f27c78071eca4cd2e978"
+  },
+  "local_anchor": {
+    "old": "MODULES = (\n",
+    "new": "MODULES = (\n    \"tests.test_current_output_breakdown_115\",\n"
+  },
+  "expected_existing_order_preserved": true,
+  "full_helper_snapshot": {
+    "path": "/workspace/rougezhushou/scripts/verify_full_available.py",
+    "bytes": 9360,
+    "sha256": "ccb75fedbb97a601fb496457ad5655f9e389c2ff3d66453b23d4ada01ca2c63f"
+  },
+  "full_helper_changes": null,
+  "existing_union_rule": "verify_full_available.py:135-136 uses historical + NEW_MODULES + verify_cloud.MODULES through dict.fromkeys. Do not add redundant selector or change classifier/admission/skip rules.",
+  "future_guard": null,
+  "future_source_counts": null
+}

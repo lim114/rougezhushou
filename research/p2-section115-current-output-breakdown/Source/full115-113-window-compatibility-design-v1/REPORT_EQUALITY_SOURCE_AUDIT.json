@@ -1,0 +1,66 @@
+{
+  "kind": "SOURCE_ONLY_115_52_STATE_REPORT_EQUALITY_AUDIT",
+  "runner_sha256": "9b1e8d59986f92b76c222b0af8cdd834d4eb23852aedccde8bae3d05f6b5a07e",
+  "complete_current_text_requests_per_row": 3,
+  "source_declared_total_text_requests": 156,
+  "old_complete_text_Gold_compared": false,
+  "historical_full_result_digest_field_consumed": false,
+  "source_assertions": [
+    {
+      "line": 3186,
+      "source": "assert reports090['estimate']==reports090['default']",
+      "kind": "current_same_condition_or_formatter_invariance_not_historical_text"
+    },
+    {
+      "line": 3187,
+      "source": "assert window.damage_text.toPlainText()==reports090['default'].replace(chr(160),' ')",
+      "kind": "current_same_condition_or_formatter_invariance_not_historical_text"
+    },
+    {
+      "line": 3189,
+      "source": "assert window.damage_text.toPlainText()==reports090['technical'].replace(chr(160),' ')",
+      "kind": "current_same_condition_or_formatter_invariance_not_historical_text"
+    },
+    {
+      "line": 3191,
+      "source": "assert window.damage_text.toPlainText()==reports090['default'].replace(chr(160),' ')",
+      "kind": "current_same_condition_or_formatter_invariance_not_historical_text"
+    },
+    {
+      "line": 3192,
+      "source": "assert native090(result090)==full_native090",
+      "kind": "current_same_condition_or_formatter_invariance_not_historical_text"
+    },
+    {
+      "line": 3193,
+      "source": "assert native090(window.damage_result['scenario'])==raw_native_before090",
+      "kind": "current_same_condition_or_formatter_invariance_not_historical_text"
+    },
+    {
+      "line": 3198,
+      "source": "assert strict_json(result090)==strict_json(anchors090[pair090])",
+      "kind": "current_same_condition_or_formatter_invariance_not_historical_text"
+    }
+  ],
+  "other_protected_text_gates": {
+    "current_widget_formatter": [
+      1444,
+      1697
+    ],
+    "training_rank_and_crew": [
+      3276,
+      3278
+    ],
+    "actual_errors": [
+      2385,
+      2980
+    ],
+    "warning_order_and_exact_count": [
+      865,
+      868
+    ]
+  },
+  "future115_formatter_Source_sha256": null,
+  "runtime_executed": false,
+  "future115_outcome": null
+}
