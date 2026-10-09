@@ -1,0 +1,302 @@
+{
+  "format_version": 1,
+  "status": "STATIC_SOURCE_CONTRACT_NOT_RUNTIME_ACCEPTANCE",
+  "base_app": {
+    "path": "base/rouge/app.py",
+    "sha256": "3dd6810e3398471ddb6dbe9545824c7b92ba4d141fc23f889287a8044670a48f",
+    "CRLF": true
+  },
+  "candidate_app": {
+    "path": "candidate/rouge/app.py",
+    "sha256": "589b9ac2b846206581c394d037baec0d9e43a165a7bdd5becc0982ab0e09c0fd",
+    "CRLF": true
+  },
+  "allowed_changed_maintained_files": [
+    "rouge/app.py"
+  ],
+  "added_signal_bindings": [
+    {
+      "widget": "deployment_elapsed",
+      "signal": "valueChanged",
+      "added_source": "self.deployment_elapsed.valueChanged.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 729,
+          "source": "self.deployment_elapsed.valueChanged.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "healing_targets",
+      "signal": "valueChanged",
+      "added_source": "self.healing_targets.valueChanged.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 730,
+          "source": "self.healing_targets.valueChanged.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "defense",
+      "signal": "valueChanged",
+      "added_source": "self.defense.valueChanged.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 731,
+          "source": "self.defense.valueChanged.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "resistance",
+      "signal": "valueChanged",
+      "added_source": "self.resistance.valueChanged.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 732,
+          "source": "self.resistance.valueChanged.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "charge_count",
+      "signal": "valueChanged",
+      "added_source": "self.charge_count.valueChanged.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 733,
+          "source": "self.charge_count.valueChanged.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "shield_breaks",
+      "signal": "valueChanged",
+      "added_source": "self.shield_breaks.valueChanged.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 734,
+          "source": "self.shield_breaks.valueChanged.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "shield_duration",
+      "signal": "valueChanged",
+      "added_source": "self.shield_duration.valueChanged.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 735,
+          "source": "self.shield_duration.valueChanged.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "activation_count",
+      "signal": "valueChanged",
+      "added_source": "self.activation_count.valueChanged.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 736,
+          "source": "self.activation_count.valueChanged.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "companion_attack",
+      "signal": "valueChanged",
+      "added_source": "self.companion_attack.valueChanged.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 737,
+          "source": "self.companion_attack.valueChanged.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "stacks",
+      "signal": "valueChanged",
+      "added_source": "self.stacks.valueChanged.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 738,
+          "source": "self.stacks.valueChanged.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "cooperative",
+      "signal": "toggled",
+      "added_source": "self.cooperative.toggled.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 739,
+          "source": "self.cooperative.toggled.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "fragile",
+      "signal": "toggled",
+      "added_source": "self.fragile.toggled.connect(lambda:self.calculate())",
+      "original_direct_connections": [],
+      "candidate_direct_connections": [
+        {
+          "line": 740,
+          "source": "self.fragile.toggled.connect(lambda:self.calculate())"
+        }
+      ]
+    },
+    {
+      "widget": "shield_duration_known",
+      "signal": "toggled",
+      "added_source": "self.shield_duration_known.toggled.connect(lambda:self.calculate())",
+      "original_direct_connections": [
+        {
+          "line": 658,
+          "source": "self.shield_duration_known.toggled.connect(self.shield_duration.setEnabled)"
+        }
+      ],
+      "candidate_direct_connections": [
+        {
+          "line": 658,
+          "source": "self.shield_duration_known.toggled.connect(self.shield_duration.setEnabled)"
+        },
+        {
+          "line": 741,
+          "source": "self.shield_duration_known.toggled.connect(lambda:self.calculate())"
+        }
+      ]
+    }
+  ],
+  "added_bindings": 13,
+  "numeric_bindings": 10,
+  "boolean_bindings": 3,
+  "placement": {
+    "existing_method": "make_damage_tab",
+    "baseline_method_lines": [
+      514,
+      729
+    ],
+    "candidate_method_lines": [
+      514,
+      742
+    ],
+    "candidate_added_line_numbers": [
+      729,
+      730,
+      731,
+      732,
+      733,
+      734,
+      735,
+      736,
+      737,
+      738,
+      739,
+      740,
+      741
+    ],
+    "before_return_tab_line": 742,
+    "after_all_control_defaults_and_output_widget_construction": true,
+    "before_outer_final_update_operator": true
+  },
+  "preserved_contracts": {
+    "all_original_app_bytes_after_exact_inverse": true,
+    "calculate_AST_unchanged": true,
+    "update_skill_options_AST_unchanged": true,
+    "all_other_function_AST_unchanged": true,
+    "original_widget_instances_defaults_bounds_visibility_disabled_states_and_producers_unchanged": true,
+    "no_added_default_setter_reset_persistence_or_new_consumer": true,
+    "healing_clamp_original_blockSignals_True_maximum_False_and_final_calculate_unchanged": true,
+    "new_signals_not_blocked_by_author_test": true,
+    "known_existing_setEnabled_connection_installed_before_new_calculate": true,
+    "hidden_OPTIONS_owner_field_override_unchanged": true,
+    "original_early_status_and_exception_paths_unchanged": true,
+    "existing_window_and_continuous_callbacks_unchanged": true,
+    "mathematical_rules_and_reference_unknowns_unchanged": true
+  },
+  "runtime_limits": [
+    "Static13 deferred connections do not establish GUI event delivery or numerical freshness; root must measure.",
+    "No assertion that one UI operation equals one numerical API entry; existing switch paths may call repeatedly.",
+    "calculate includes existing animation/target synchronization and preview cache updates; no global purity or startup no-write claim.",
+    "AccountCache source and all93 work stay unchanged; sourceguard applies all732 files, not just app."
+  ],
+  "unchanged_function_names": [
+    "apply_relic_history_notice",
+    "number",
+    "main",
+    "__init__",
+    "make_capture_tab",
+    "make_map_tab",
+    "map_node_selected",
+    "render_map",
+    "refresh_windows",
+    "connect_game",
+    "toggle_auto",
+    "update_sampling_status",
+    "change_recognition_mode",
+    "sample_now",
+    "finish_sample",
+    "sample_failed",
+    "sample_received",
+    "update_target_enemies",
+    "select_battle_stage",
+    "recruited_operator_ids",
+    "refresh_operator_overview",
+    "select_operator",
+    "update_enemy_context",
+    "current_operator_state",
+    "account_training_status",
+    "training_conditions",
+    "skill_rank_value",
+    "update_operator",
+    "level_changed",
+    "skill_changed",
+    "apply_operator_observation",
+    "show_observed_operator",
+    "apply_run_observation",
+    "sync_run_config",
+    "sync_run_relics",
+    "reset_run",
+    "update_base_attack",
+    "update_skill_options",
+    "filter_relics",
+    "calculate",
+    "sync_animation_references",
+    "sync_target_buffs",
+    "render_damage",
+    "show_damage_text",
+    "make_chat_tab",
+    "chat_mode_changed",
+    "desktop_request",
+    "bind_desktop",
+    "desktop_state_received",
+    "desktop_context",
+    "save_settings",
+    "load_settings",
+    "send_chat",
+    "chat_chunk",
+    "chat_finished",
+    "cancel_chat",
+    "clear_chat",
+    "show_error",
+    "closeEvent",
+    "work"
+  ],
+  "unchanged_function_definition_node_count": 62,
+  "unchanged_unique_function_name_count": 60,
+  "unchanged_all62_definition_node_AST_equal": true
+}

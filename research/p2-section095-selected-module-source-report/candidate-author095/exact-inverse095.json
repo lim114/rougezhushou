@@ -1,0 +1,31 @@
+{
+  "format_version": 1,
+  "changed_files": [
+    {
+      "path": "rouge/reporting.py",
+      "before_sha256": "f71da63bd1e5cea78cda21139d01b206519cec82029c73937443aceb19512ba7",
+      "after_sha256": "41772b664163626682f22aa93c364ed6e9f5a1cbf3e72b4823969c3b1ee79d5f",
+      "edits": [
+        {
+          "old": "    return {'schema_version':2,'operator':{'id':op,'name':p['name'],'profession':p['profession']},\n        'skill_number':number,'skill_rank':scenario.get('skill_rank',10),'mode':mode,'sections':sections}",
+          "new": "    report={'schema_version':2,'operator':{'id':op,'name':p['name'],'profession':p['profession']},\n        'skill_number':number,'skill_rank':scenario.get('skill_rank',10),'mode':mode,'sections':sections}\n    from .module_source_reference import selected_module_reference, module_source_notes, REFERENCE_KEY, SECTION_ID\n    reference=selected_module_reference(p,scenario,result,sections)\n    if reference:\n        report[REFERENCE_KEY]=reference\n        sections.append(section(SECTION_ID,'所选模组 · 原件资料与覆盖边界',\n            notes=module_source_notes(reference,sections,readable_description)))\n    return report"
+        },
+        {
+          "old": "    return '\\n'.join(lines)",
+          "new": "    if technical and report.get('selected_module_source_reference'):\n        from .module_source_reference import technical_source_trace\n        lines.extend(['',technical_source_trace(report['selected_module_source_reference'])])\n    return '\\n'.join(lines)"
+        }
+      ]
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "before_sha256": "9d0a6fa9f7b2a609348ced5aa4ece0fbda8d548125a328d8d574acc31c0292c8",
+      "after_sha256": "8f5f0fd958c29e1f863651d671bf2c63a003a3604fa0eae488d9636b9adde223",
+      "edits": [
+        {
+          "old": "MODULES = (\n",
+          "new": "MODULES = (\n    \"tests.test_selected_module_source_reference\",\n"
+        }
+      ]
+    }
+  ]
+}

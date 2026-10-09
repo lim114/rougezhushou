@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "status": "PRESERVED_ORIGINAL_V1_STATIC_BLOCKERS_V2_ATTEMPT2_SOURCE_FIX_UNRUN",
+  "same_target_attempt": 2,
+  "target": "Account-cache read/use boundary, safe recovery and damaged-original preservation",
+  "original_v1_packet": {
+    "path": "/workspace/.continuation/p2-account-cache-candidate093-v1",
+    "manifest_sha256": "5c5fb72cc746e0a8673594928017e62b3a5935989f7be69d588e785bf229317b",
+    "handoff_sha256": "d920ddb249c91a7ccad21250dd0c6cb119543d2311fd8c5121ddcec107bc72a5",
+    "sealed_payload_files": 11,
+    "sealed_payload_bytes": 168738,
+    "test_methods": 37,
+    "test_status": "UNRUN",
+    "project_runtime_PASS": 0,
+    "unchanged": true
+  },
+  "formal_v1_review": {
+    "path": "/workspace/.continuation/p2-account-cache-candidate093-independent-v1",
+    "status": "FINAL_STATIC_CONTRACT_REVIEW_BLOCKED_B1_B2_STOPWRITE",
+    "review_sha256": "ee0581b352cd9f9b64f5033c0fa8726b4b5e033cf8481281938bb006799cf099",
+    "manifest_sha256": "6cf905c62d82aa25198c288659ed18196fa4314629f0fdd1b0c3038e83dbbaa6",
+    "handoff_sha256": "395322fbf8fddc20ea6020ce50d2620a78cd5486a3bf14992216a895c53704ee",
+    "payload_files": 4,
+    "payload_bytes": 28438,
+    "qualification": "BLOCKED_FOR_PRODUCT_INTEGRATION",
+    "project_runtime_PASS": 0,
+    "stdlib_operation_probe_only": true,
+    "unchanged": true
+  },
+  "failure_records": [
+    {
+      "id": "B1",
+      "record_type": "CONFIRMED_STDLIB_OPERATION_DIFFERENCE_AND_STATIC_UNGUARDED_PATH_NOT_PROJECT_RUNTIME",
+      "condition": "Usable legal JSON ignored extra contains500 nested arrays at recursionlimit1000; JSON read succeeds but v1 unconditional recursive deepcopy fails.",
+      "original_source": "v1 account_cache.py:169,207-214; app.py:473,777",
+      "v2_source_action": "Remove all recursive copies; preserve opaque nested values via top-level filtered view, shallow consumed mappings and original producer unions.",
+      "runtime_status": "UNRUN"
+    },
+    {
+      "id": "B2",
+      "record_type": "STATIC_VALID_NEW_FACT_RECOVERY_GAP_WITH_ROOT_EXPLICIT_CLOSURE_REQUIREMENT_NOT_PROJECT_RUNTIME",
+      "condition": "Usable old E0 locked S3=99, or masked S3=bad; independently valid elite2/ranks-empty input at200 activates old bad rank in union. v1 returnsTrue but empty view loses new facts.",
+      "original_source": "v1 account_cache.py:191-221",
+      "v2_source_action": "Keep oldgood timestamp ordering first, validate normal union; unsafe union protects disk and rebuilds from only validated incoming facts with actual supplied time. Truly good unions stay exact.",
+      "runtime_status": "UNRUN"
+    }
+  ],
+  "root_authorization_scope": "Single new external v2 source-only fix of B1+B2, actual92 Git-bound base; no project execution or tracked writes; root owns final formal review/transport/fresh tests/Qt/Wine.",
+  "restart_conditions": [
+    "Formal review of v2 exact immutable payload closes B1/B2 without further contract regressions.",
+    "Root exact actual92 transport, meaningful fresh boundary/related checks and before-after public native outputs complete.",
+    "Actual temporary-public MainWindow/Wine recovery/visible notice/sample summary/genuine RunState and corrupt-original bytes/path controls complete."
+  ],
+  "three_attempt_defer_rule": "If the same target remains unresolved after three attempts, defer with all original failures/evidence and explicit restart conditions; no static source milestone count.",
+  "old_negative_target_status": "No older negative-only target rerun/completed/cleared.",
+  "source_22_cases": "STATIC_PREDICTIONS_UNRUN",
+  "runtime_PASS": 0,
+  "section093_completed": false
+}

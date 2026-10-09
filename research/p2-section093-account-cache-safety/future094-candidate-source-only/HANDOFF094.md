@@ -1,0 +1,23 @@
+# 94 外部候选：13 个既有离线输入刷新
+
+这是 root 授权提前并行准备的 source-only 候选，不是93或94完成。实际HEAD仍为第92节 `f509d186e501bfcfd042e45b46e398ec756840ec`；93的Linux结果由root报告已通过，真实Wine仍在运行，完成回执尚待root提供。本包不产生Git93/tag，不应用到仓库，不执行项目import/API、Qt、Wine、tests或network。
+
+原件 `/workspace/.continuation/root-source-093.json` 已按root指定SHA `0fbfe28e2528ae9987f9f260bfed0068b1e16edf02274ea3349cd6d988aa2180` 读取，其实际schema是 `source_sha256_after` 字典732项；当前全部732文件匹配。当前app为 `3dd6810e3398471ddb6dbe9545824c7b92ba4d141fc23f889287a8044670a48f`。原件字节与app已分别复制到本包guard/base路径，仅小范围源证，没有完整项目副本。
+
+候选仅在make_damage_tab全部控件、默认值、damage_text/raw_damage/damage_technical及最后说明构造完成、return tab前新增13条原生信号→deferred lambda calculate连接。10个数值：deployment_elapsed、healing_targets、defense、resistance、charge_count、shield_breaks、shield_duration、activation_count、companion_attack、stacks；3个布尔：cooperative、fragile、shield_duration_known。CRLF保留，候选app SHA `589b9ac2b846206581c394d037baec0d9e43a165a7bdd5becc0982ab0e09c0fd`。
+
+inverse094.json保存唯一13行插入的原始内容；精确删除后恢复完整原app字节和SHA。其他所有方法AST，包括calculate/update_skill_options/current_operator_state及93 AccountCache供应链完全相同，所有旧信号、消费者、默认/范围/可见性/disabled与hidden值保持。指定时长known原setEnabled连接在新calculate连接之前；受疗上限原blockSignals True→setMaximum→False→末尾calculate原样保留。未来driver不得阻断新信号来掩盖重算。新连接不增数学、事件绑定、状态推进、存储或后台动作。
+
+第一个纯静态准备尝试有一个多余错误断言：把class method AST col_offset当作0。该断言在候选生成前失败；初始失败记录保留。第二次依据实际方法lineno/end_lineno与唯一末尾anchor成功生成。失败属于准备脚本，不是93产品或API失败。API、Qt、Wine、tests和tracked写入均0；不可用前提和未运行验收不记PASS。
+
+root应用前必须同时满足：
+
+1. root独立核验93真实Wine/所需检验和每节验收归档完成，并提供实际完成回执的明确路径、schema和SHA。此处字段保持null，不能猜常规文件名、把guard.passed当作完成，或把正在运行的93计完成。
+2. 原guard SHA正确，马上重读全部732文件逐字节哈希与其字典匹配。任何一字漂移都要重新资格，不得忽略或只检app。
+3. 独立静态审查通过，root为唯一tracked writer，应用本包冻结candidate app（或经exact inverse验证的同一patch）。原source094 STOPWRITE封包不修改。
+
+最新用户政策覆盖旧source094包的“完成93 Git”前提：每节保留验收归档与断点，每五节完整检测通过后统一commit；因此93完成工作树guard/实际closure是合法父基线，HEAD92保持合理。root在95 fullPASS后统一commit，不单独commit93/94，不造93tag。
+
+94实际验收由root完成，建议同一focused窗口完成以下整组：13输入的有效变更无需显式计算按钮即可更新当前原生scenario/报告；Silverash S2 recipient攻击在已有部署触发情景里验证，S3两个bool和E2 elapsed按实际既有消费者；治疗0/正人数与技能cap切换；manual↔固定敌人的禁用、值保留和现有override；mechanist S2破屏及指定时长开关/保留数值/未知自然结束；S3正声明计数、零窗口原错误→输入修正恢复。再保护hidden值返回、overview/未实现/无技能早返回、93合法AccountCache参考与临时RunState不写入、默认/technical同实际输入文本。真实信号次数与数值API入口分项测量，不按动作数推算，不调用正式main自动采样。
+
+13回调是一个完整功能组，不将每个字段或常规归档拆成完成节数。本包0新测试、0登记更改；root实施后的相关现有检查、精选回归和窗口验收仍待执行。Full95继续每五节计划；未知原生时钟和P2未完成范围不因本UI刷新销项。

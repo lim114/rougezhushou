@@ -1,0 +1,90 @@
+{
+  "format_version": 1,
+  "section": 95,
+  "runtime_pass": false,
+  "whole_source_inverse_equal": true,
+  "wine_full": {
+    "original": {
+      "path": "/workspace/.continuation/full095-wine-capability-retry-pending-v1/originals/verify_full_available095.py",
+      "bytes": 6555,
+      "sha256": "ea4481c9cd95fb9438f673b76c14c9386263469e12b2855fa04e9a47d7c63dcc"
+    },
+    "candidate": {
+      "path": "/workspace/.continuation/full095-wine-capability-retry-pending-v1/wine_full095_capability_retry.py",
+      "bytes": 8147,
+      "sha256": "fb33a4ffd7971e05efc3dd2ffc6d25f12a8f2570c231b2cfff4bb5f2fa056731"
+    },
+    "operations": [
+      {
+        "old": "ROOT = Path(__file__).resolve().parents[1]\nsys.path.insert(0, str(ROOT))\n",
+        "new": "ROOT = Path(__file__).resolve().parents[2] / 'rougezhushou'\nsys.path.insert(0, str(ROOT))\nsys.path.insert(0, str(ROOT / 'scripts'))\nfrom wine_symlink_capability095 import (admit_installed_wine, admit_suite,\n    adapter_sources, validate_result_capability_skips)\n"
+      },
+      {
+        "old": "*ROOT.glob('tests/test_*.py'), Path(__file__)]",
+        "new": "*ROOT.glob('tests/test_*.py'), ROOT / 'scripts/verify_full_available.py']"
+      },
+      {
+        "old": "    args = parser.parse_args()\n    before = source_hashes()\n",
+        "new": "    args = parser.parse_args()\n    capability_probe = admit_installed_wine(args.wine)\n    adapter_before = adapter_sources()\n    before = source_hashes()\n    if before != capability_probe['prior_failed_source_sha256']:\n        raise RuntimeError('Original maintained classifier map changed since actual failed full095')\n"
+      },
+      {
+        "old": "    args.output.parent.mkdir(parents=True, exist_ok=True)\n",
+        "new": "    admitted, capability_records = admit_suite(\n        unittest.defaultTestLoader.loadTestsFromNames(selectors), capability_probe)\n    args.output.parent.mkdir(parents=True, exist_ok=True)\n"
+      },
+      {
+        "old": "resultclass=AvailableResult).run(unittest.defaultTestLoader.loadTestsFromNames(selectors))",
+        "new": "resultclass=AvailableResult).run(admitted)"
+      },
+      {
+        "old": "    with args.output.open('x', encoding='utf-8') as out:\n",
+        "new": "    validate_result_capability_skips(result, capability_records)\n    adapter_after = adapter_sources()\n    adapter_drift = [name for name in adapter_before if adapter_before[name] != adapter_after[name]]\n    receipt.update({\n        'capability_records': capability_records, 'capability_probe': capability_probe,\n        'environment_capability_skips': len(capability_records),\n        'capability_skips_counted_passed': 0,\n        'adapter_sources_before': adapter_before, 'adapter_sources_after': adapter_after,\n        'adapter_source_drift': adapter_drift, 'actual_python_argv': list(sys.argv),\n        'original_classifier': capability_probe['runtime_evidence_references']['original_full_classifier'],\n        'original_failed_full095_not_overwritten': True,\n    })\n    receipt['available_checks_passed'] = receipt['available_checks_passed'] and not adapter_drift\n    receipt['complete_repository_validation'] = receipt['complete_repository_validation'] and not capability_records and not adapter_drift\n    with args.output.open('x', encoding='utf-8') as out:\n"
+      },
+      {
+        "old": "    return 1 if not receipt['available_checks_passed'] else (2 if args.require_complete and result.unavailable else 0)\n",
+        "new": "    return 1 if not receipt['available_checks_passed'] else (2 if args.require_complete and (result.unavailable or capability_records) else 0)\n"
+      }
+    ]
+  },
+  "wine_selected": {
+    "original": {
+      "path": "/workspace/.continuation/full095-wine-capability-retry-pending-v1/originals/verify_cloud095.py",
+      "bytes": 5028,
+      "sha256": "8f5f0fd958c29e1f863651d671bf2c63a003a3604fa0eae488d9636b9adde223"
+    },
+    "candidate": {
+      "path": "/workspace/.continuation/full095-wine-capability-retry-pending-v1/wine_selected095_capability.py",
+      "bytes": 6445,
+      "sha256": "6e1892db605ec9de26c45b302998a2110b431c5583638f86abff292d5a98945f"
+    },
+    "operations": [
+      {
+        "old": "import json\n",
+        "new": "import argparse\nimport json\n"
+      },
+      {
+        "old": "ROOT = Path(__file__).resolve().parents[1]\nsys.path.insert(0, str(ROOT))\n",
+        "new": "ROOT = Path(__file__).resolve().parents[2] / 'rougezhushou'\nsys.path.insert(0, str(ROOT))\nfrom wine_symlink_capability095 import (admit_installed_wine, admit_suite,\n    adapter_sources, validate_result_capability_skips)\n"
+      },
+      {
+        "old": "if __name__ == \"__main__\":\n",
+        "new": "if __name__ == \"__main__\":\n    parser = argparse.ArgumentParser(description=__doc__)\n    parser.add_argument(\"--wine\", action=\"store_true\")\n    args = parser.parse_args()\n    capability_probe = admit_installed_wine(args.wine)\n    adapter_before = adapter_sources()\n    admitted, capability_records = admit_suite(\n        unittest.defaultTestLoader.loadTestsFromNames(MODULES), capability_probe)\n"
+      },
+      {
+        "old": "        unittest.defaultTestLoader.loadTestsFromNames(MODULES)\n",
+        "new": "        admitted\n"
+      },
+      {
+        "old": "    print(json.dumps({\n",
+        "new": "    receipt = {\n"
+      },
+      {
+        "old": "    }, ensure_ascii=False))\n",
+        "new": "    }\n    validate_result_capability_skips(result, capability_records)\n    adapter_after = adapter_sources()\n    adapter_drift = [name for name in adapter_before if adapter_before[name] != adapter_after[name]]\n    receipt.update({\n        \"capability_records\": capability_records, \"capability_probe\": capability_probe,\n        \"environment_capability_skips\": len(capability_records),\n        \"capability_skips_counted_passed\": 0,\n        \"adapter_sources_before\": adapter_before, \"adapter_sources_after\": adapter_after,\n        \"adapter_source_drift\": adapter_drift, \"actual_python_argv\": list(sys.argv),\n        \"skips\": [{\"test\": test.id(), \"reason\": why} for test, why in result.skipped],\n        \"wine_compatibility\": True, \"native_windows_integration_verified\": False,\n        \"complete_repository_validation\": False,\n    })\n    receipt[\"passed\"] = receipt[\"passed\"] and not adapter_drift\n    print(json.dumps(receipt, ensure_ascii=False))\n"
+      },
+      {
+        "old": "    sys.exit(0 if result.wasSuccessful() else 1)\n",
+        "new": "    sys.exit(0 if result.wasSuccessful() and not adapter_drift else 1)\n"
+      }
+    ]
+  }
+}

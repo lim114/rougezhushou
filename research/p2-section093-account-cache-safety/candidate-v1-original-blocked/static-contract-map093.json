@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "status": "STATIC_SOURCE_CONTRACT_MAPPING_NOT_RUNTIME",
+  "contract_sha256": "23ed5246868452987183c901cb85574c5b5e5208f95a58f7933b721913338cde",
+  "constraints": [
+    {
+      "id": "load-and-preserve",
+      "candidate": "rouge/account_cache.py:116-149",
+      "static_behavior": "Read only; genuinely absent requires read FileNotFoundError plus lstat FileNotFoundError. Generic OSError, existing path/symlink and malformed JSON/root enable permanent preservation."
+    },
+    {
+      "id": "all-records-before-first-save",
+      "candidate": "rouge/account_cache.py:144,151-156,218-224",
+      "static_behavior": "Full initial screen and full pre-save screen. Known invalid ids stay raw and isolated; unknown unused ids stay opaque."
+    },
+    {
+      "id": "identity-and-containers",
+      "candidate": "rouge/account_cache.py:36-51",
+      "static_behavior": "Known supplied record requires observed matching string id and present mapping containers. Absent containers keep defaults; no id repair."
+    },
+    {
+      "id": "timestamp",
+      "candidate": "rouge/account_cache.py:23-34,52-53",
+      "static_behavior": "Absent remains omitted/default0; explicit int/float finite nonbool uses actual localtime/strftime without invented epoch bounds."
+    },
+    {
+      "id": "consumed-cultivation-leaves",
+      "candidate": "rouge/account_cache.py:69-109",
+      "static_behavior": "GUI/catalog phase/level/trust/potential/module guards; only operative module stage, unlocked rank index/type/range and implemented mastery guard. Ignored selected preference and formatter-only safe locked ranks retain old behavior."
+    },
+    {
+      "id": "ignored-aliases-and-defaults",
+      "candidate": "rouge/account_cache.py:36-109",
+      "static_behavior": "operator_profile/account valid; absent containers/time valid; trust bool and falsy module aliases preserve actual values; ignored leaves/extras not normalized."
+    },
+    {
+      "id": "formatter-consumed-metadata",
+      "candidate": "rouge/account_cache.py:56-67",
+      "static_behavior": "set-safe invalid_fields; iterable invalid_skill_ranks preserving safe nested values; missing_fields iterable string entries. Public formatter unchanged."
+    },
+    {
+      "id": "account-run-separation",
+      "candidate": "rouge/account_cache.py:17-20,54-55,158-169; rouge/app.py:775-784",
+      "static_behavior": "Account scope=run isolated; known operative run metadata excluded from account view only. Raw preserved; genuine RunState merge remains AST identical beyond account-view lookup."
+    },
+    {
+      "id": "stable-visible-recovery",
+      "candidate": "rouge/app.py:470-480,775-791,806-863",
+      "static_behavior": "Same view serves existing consumers and sample account summary; overview and ordinary training status append account issue/global protection separately. Genuine member phrasing retains confirmed cultivation."
+    },
+    {
+      "id": "overlay-merge-and-issue-lifetime",
+      "candidate": "rouge/account_cache.py:185-221",
+      "static_behavior": "Good original less/equal ordering, unions, string rank keys, source/time merge and changed/save decision retained; sticky bad old excluded. Only valid observation clears per-id issue; global flag remains."
+    },
+    {
+      "id": "disk-write-guard",
+      "candidate": "rouge/account_cache.py:223-231",
+      "static_behavior": "Protected save returns before mkdir/temp write/replace; ordinary missing/clean path keeps original saving operations."
+    },
+    {
+      "id": "no-numerical-or-mechanism-changes",
+      "candidate": "static-candidate-scope093.json; candidate-transport-plan093.json",
+      "static_behavior": "Only app/helper plus genuinely new pure test and selected registry entry. No RunState/recognizer/math/formatter/API edits; calculate and original run methods AST unchanged."
+    }
+  ],
+  "required_root_runtime_checks_unrun": [
+    "Run the 37 pure boundary/file-preservation methods and appropriate related selected regression; report actual executed/pass/fail/skip counts.",
+    "Bind actual committed section092 app bytes exactly to prospective base before applying four candidate leaves; reporting.py is not a candidate target.",
+    "Save complete public native before/after outputs for good records, cultivation, aliases/errors and representative timing/relic contexts; inputs and numerical outputs remain unchanged.",
+    "Open actual MainWindow/Wine on public temporary cache/run/settings paths: startup and browse all quarantine families/good/overview/no-skill/unimplemented; stable visible issue/global notices and recovery.",
+    "Verify account sample_received summary cannot bypass safe view; real RunState summary and valid member precedence remain original. Snapshot genuine temporary RunState memory/files before and after account previews/overlays.",
+    "Hash corrupted original bytes/path before/after startup, browse, failed calculation and valid overlay; normal clean/missing save succeeds; no private state read.",
+    "Exercise timing/relic whitespace, {}, syntax/null/false/0/list, empty and valid target windows, needed/inactive stale context and return to valid text with fresh GUI outcomes."
+  ],
+  "source_22_cases_status": "STATIC_PREDICTIONS_UNRUN",
+  "runtime_PASS": 0,
+  "section093_completed": false
+}

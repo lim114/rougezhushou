@@ -1,7 +1,7 @@
 {
   "branch": "codex/p2-development",
   "policy": {
-    "commit_after_each_section": true,
+    "commit_after_each_section": false,
     "full_validation_interval": 5,
     "continuous_work_authorized": true,
     "windows_compatibility": "Wine authorized; distinct from native Windows verification",
@@ -14,10 +14,15 @@
     "wrap_up_below_usage_percent": 15,
     "usage_percent_available": false,
     "usage_monitoring": "No enabled tool exposes account usage; do not invent a percentage. Honor any subsequent user-provided low-usage signal.",
-    "automatic_next_batch": true
+    "automatic_next_batch": false,
+    "commit_interval": 5,
+    "commit_after_full_validation_pass": true,
+    "cloud_save_destination": "GitHub origin codex/p2-development; explicit user authorization after each5 sections full checks pass",
+    "push_after_batch_commit": true,
+    "development_paused_by_latest_user_request": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 92,
+  "completed_sections": 95,
   "sections": [
     {
       "number": 1,
@@ -571,11 +576,35 @@
       "completion_ref": "p2-section-092",
       "topic": "观察窗口刷新、零秒与治疗报告及供靶时序使用流程",
       "verification": "verification/sections/092.json"
+    },
+    {
+      "number": 93,
+      "completion_ref": "working-tree-section-093",
+      "topic": "账户缓存安全读取、原件保护与合法新观察恢复完整流程",
+      "verification": "verification/sections/093.json",
+      "commit_status": "pending_batch_full_PASS",
+      "completion_ref_is_Git_tag": false
+    },
+    {
+      "number": 94,
+      "completion_ref": "working-tree-section-094",
+      "topic": "十三项局外情景输入自动刷新与状态边界完整流程",
+      "verification": "verification/sections/094.json",
+      "commit_status": "pending_batch_full_PASS",
+      "completion_ref_is_Git_tag": false
+    },
+    {
+      "number": 95,
+      "completion_ref": "working-tree-section-095",
+      "topic": "所选模组原件追溯、覆盖边界与完整状态隔离",
+      "verification": "verification/sections/095.json",
+      "commit_status": "pending_batch_full_PASS",
+      "completion_ref_is_Git_tag": false
     }
   ],
-  "next_section": 93,
-  "next_action": "自动进入第93节账户缓存安全使用完整功能组：修复正式独审发现的深层ignoredJSON复制崩溃与合法partial观察恢复边界；基于实际92Git运输，完成合同重审、fresh回归、原盘保护和真实窗口再存档。94既有输入刷新随后推进，95后全量可用Linux/Wine/window并自动继续；P2真正完成才转P3",
-  "full_validation_due": false,
+  "next_section": 96,
+  "next_action": "用户要求本次恢复检验与报告后将已有成果一次commit并推送GitHub当前开发分支，随后暂停；第95节全量窗口问题三次未完成已搁置，不自动第四次重试或开展96。以后收到恢复指令且取得新的明确诊断/有界验证方案再决定恢复。",
+  "full_validation_due": true,
   "last_full_validation": {
     "after_section": 90,
     "completed_at": "2026-10-08T06:07:38.595830+00:00",
@@ -590,7 +619,7 @@
     "limits": "Unknown native clock/attachment/composition remain unknown. Missing/private fixtures are not reconstructed. UI visible PNG evidence is bounded by root inspection; assertions and measured call ledgers retain their own scope."
   },
   "windows_native_validation": "unavailable: attached environment is Linux",
-  "wine_validation": "第90节后全量可用检验：Linux 1875运行/1715通过/84历史跳过/126缺失记录；Wine 1939运行/1789通过/84历史跳过/123缺失记录。均无失败/错误/源码漂移，实际窗口4283条检查通过并保留旧4217；730源码与5e2ff697一致。Linux精选仅按全源码字节复用，Wine精选和两侧依赖检查通过。缺失记录不计通过，可能含子测试、不与运行数一一互斥；Wine不代表原生Windows/game/desktop验收。",
+  "wine_validation": "第93–95节功能专项已验收；本轮六项Linux/Wine full/selected/pip原始退出0保留。第95节全量窗口三次未完成搁置：前两次NULL，第三次Root30分钟预算取消，原始退出143。Saved/四图/严格全量finish未执行，不宣称全量PASS或原生Windows认证。公开证据已按原始字节和SHA完整归档。",
   "deferred_problems": [
     {
       "id": "friendly_clock_ui_explanation",
@@ -623,6 +652,25 @@
       "status": "author harness deferred; independent strict whole-output comparison completed successfully",
       "evidence": "research/p2-headwolf-talent-qualification/author/HANDOFF.md",
       "restart_condition": "A new verified plan/result schema gap not covered by completed independent comparison; do not retry unchanged assumptions"
+    },
+    {
+      "id": "full095_ui_full_evidence_completion",
+      "status": "deferred_after_three_incomplete_attempts",
+      "incomplete_attempts": 3,
+      "product_assertion_failure_claimed": false,
+      "original_two_primary_exits": [
+        null,
+        null
+      ],
+      "third_primary_exit": 143,
+      "third_cancelled_by_root": true,
+      "runtime_budget_seconds": 1800,
+      "third_records_saved": 63075,
+      "third_closed_chunks": 1322,
+      "complete_ui_validation": false,
+      "available_full095_passed": false,
+      "evidence": "verification/full-095-deferred/archive-manifest.json",
+      "restart_conditions": "New concrete diagnosis and bounded evidence-collection plan, independent Source review, newly bound real HEAD/CP and explicit resumption of this deferred issue; no automatic fourth identical attempt."
     }
   ],
   "problem_attempts": {
@@ -638,5 +686,44 @@
       "ref": "p2-archive-closure-087",
       "verification": "verification/archive-closure-087.json"
     }
-  ]
+  ],
+  "current_batch_commit_policy": {
+    "user_instruction": "每5个小节检测通过后就进行一次commit，用于保存至云端",
+    "effective_after_completed_section": 92,
+    "next_commit_after_full_validation_section": 95,
+    "sections93_94_source_binding": "actual verified working-tree snapshot, not nonexistent per-section Git commit/tag",
+    "per_section_archive_and_checkpoint": true,
+    "cloud_save_destination": "commit and push GitHub current development branch after full095 PASS"
+  },
+  "pending_batch_sections": [
+    93,
+    94,
+    95
+  ],
+  "pending_batch_save": {
+    "next_full_validation_after": 95,
+    "commit_and_push_after_full_PASS": true,
+    "destination": "origin codex/p2-development",
+    "last_committed_section": 92,
+    "section_source_snapshots_are_archived": true,
+    "status": "manual_recovery_checkpoint_READY_NOT_COMMITTED_OR_PUSHED",
+    "manual_checkpoint_save_authorized_by_latest_user": true,
+    "full_PASS_claimed": false,
+    "committed": false,
+    "pushed": false,
+    "actual_commit_sha": null,
+    "remote_head_before_save": "c69b9a9a5456b8cdd099fe172780f5637218c0c9",
+    "external_publication_receipt": "/workspace/.continuation/batch095-deferred-committed-pushed-closure.json",
+    "remote_main_is_ancestor_of_local_HEAD": false,
+    "local_commits_not_reachable_from_current_remote_main": 120
+  },
+  "current_full095_checkpoint": {
+    "recorded_at": "2026-10-09T13:41:52.507035+08:00",
+    "status": "DEFERRED_NOT_FULLPASS",
+    "archive": "verification/full-095-deferred",
+    "payload_files": 4667,
+    "source_guard_sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab",
+    "completed_section_increment": 0,
+    "future_development_paused": true
+  }
 }

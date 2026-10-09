@@ -1,0 +1,17 @@
+{
+  "format_version": 1,
+  "recorded_at": "2026-10-08T18:46:32.577286+00:00",
+  "root_Wine_session": 67075,
+  "poll_tool_result": "write_stdin failed: Unknown process id 67075",
+  "actual_shell_primary_exit_code": null,
+  "actual_shell_primary_exit_code_captured": false,
+  "sole_process_completed_and_absent": true,
+  "actual_runtime_receipt_complete_PASS": true,
+  "runtime_states": 132,
+  "stdout_final_pass_line_matches_receipt": true,
+  "runtime_log_sha256": "07fd4def21927ef81a8ecc6eb3523a01e368a2ff4edbebd8ac980d19857ee15f",
+  "actual_receipt_sha256": "dc96a6f44eb14e7809169887a10fd5599d51b4a98fd2ecdedd12fc660eeb1d76",
+  "runtime_source_intended_exit": "Exact executed runner calls sys.exit(0 if receipt[passed] else1) after complete receipt and final print; intended code is source-bound and is not the unobserved shell status",
+  "no_successful_prefix_replayed": true,
+  "future_requirement": "Capture shell result to separate fresh status artifact before exit for every subsequent long run; full095 fresh available verification still required before commit/push"
+}

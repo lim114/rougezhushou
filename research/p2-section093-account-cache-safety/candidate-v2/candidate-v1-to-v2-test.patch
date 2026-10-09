@@ -1,0 +1,217 @@
+--- v1/tests/test_account_cache_093.py
++++ v2/tests/test_account_cache_093.py
+@@ -1,4 +1,4 @@
+-"""Draft public account-cache validation and preservation regression.
++"""V2 draft public account-cache validation and preservation regression.
+ 
+ Not executed by its author. Root must review, integrate and run this module.
+ No Qt, Wine, private fixtures, formatter calls or numerical API calls are used.
+@@ -45,6 +45,15 @@
+     return value
+ 
+ 
++def nested_ignored_arrays(depth=500):
++    # Exact B1 stdlib-probe structure: 500 nested arrays containing numeric 0.
++    # Construction is iterative, with no deepcopy or recursion-limit changes.
++    value = 0
++    for _ in range(depth):
++        value = [value]
++    return value
++
++
+ class AccountCache093Tests(unittest.TestCase):
+     @classmethod
+     def setUpClass(cls):
+@@ -75,6 +84,15 @@
+         self.assertTrue(cache.issues[op])
+         self.assertEqual(cache.view(op), {})
+         self.assertTrue(cache.preserve_original)
++
++    def assert_nested_ignored_arrays(self, value, depth=500):
++        # Check each layer, never compare/clone the whole recursive structure.
++        for _ in range(depth):
++            self.assertIs(type(value), list)
++            self.assertEqual(len(value), 1)
++            value = value[0]
++        self.assertIs(type(value), int)
++        self.assertEqual(value, 0)
+ 
+     def assert_save_skipped_completely(self, cache, fresh=None, *, at=200.0):
+         # Patching the three actual filesystem side effects proves that the guard
+@@ -478,10 +496,174 @@
+         self.assertEqual(cache.view(OP), before)
+         self.assertEqual(raw, before)
+         view = cache.view(OP)
+-        view['fields']['public_ignored_leaf']['opaque'].append('changed only in view')
+-        view['extra_metadata']['opaque'].clear()
++        # View isolation stops at its own top-level record and the five copied
++        # consumed mappings. Opaque nested leaves retain original shallow rules.
++        view['extra_metadata'] = {'view_only': True}
++        view['fields']['level'] = 1
++        view['skill_ranks']['1'] = 1
++        view['sources']['level'] = 'view only'
++        view['field_times']['level'] = 0
++        view['skill_times']['1'] = 0
+         self.assertEqual(cache.records[OP], before)
+         self.assertEqual(cache.view(OP), before)
++
++    def test_legal_depth500_ignored_arrays_load_view_observe_and_save_without_recursive_copy(self):
++        # Build directly: the ordinary small-fixture observation() constructor
++        # deliberately still uses deepcopy(overrides), and is not used here.
++        old_deep = nested_ignored_arrays()
++        raw = {
++            'id': OP, 'scope': 'operator_profile', 'captured_at': 100,
++            'fields': {'elite': 2, 'level': 80, 'trust': 50,
++                       'ignored_old': old_deep},
++            'skill_ranks': {'1': 7, 'future_old': old_deep},
++            'sources': {'level': 'old public', 'ignored_old': old_deep},
++            'field_times': {'level': 100, 'ignored_old': old_deep},
++            'skill_times': {'1': 100, 'ignored_old': old_deep},
++            'extra_metadata': old_deep,
++            'old_extra': {'producer_used_to_drop': True},
++        }
++        cache, path = self.make_cache({OP: raw})
++        original_bytes = path.read_bytes()
++        self.assert_usable(cache)
++        self.assertFalse(cache.preserve_original)
++        for data in (raw, cache.records[OP], cache.view(OP)):
++            self.assert_nested_ignored_arrays(data['extra_metadata'])
++            self.assert_nested_ignored_arrays(data['fields']['ignored_old'])
++            self.assert_nested_ignored_arrays(data['skill_ranks']['future_old'])
++            for key in ('sources', 'field_times', 'skill_times'):
++                self.assert_nested_ignored_arrays(data[key]['ignored_old'])
++        self.assertEqual(path.read_bytes(), original_bytes)
++
++        fresh_deep = nested_ignored_arrays()
++        fresh = {
++            'id': OP, 'scope': 'operator_profile',
++            'fields': {'level': 70, 'ignored_new': fresh_deep},
++            'skill_ranks': {'1': 8, 'future_new': fresh_deep},
++            'sources': {'level': 'new public', 'ignored_new': fresh_deep},
++            'extra_metadata': fresh_deep,
++        }
++        fresh_keys = set(fresh)
++        fields_keys = set(fresh['fields'])
++        ranks_keys = set(fresh['skill_ranks'])
++        sources_keys = set(fresh['sources'])
++        with patch.object(cache, 'save', wraps=cache.save) as save:
++            self.assertTrue(cache.observe(fresh, 200))
++            save.assert_called_once_with()
++        self.assert_usable(cache)
++        self.assertFalse(cache.preserve_original)
++        self.assertEqual(set(fresh), fresh_keys)
++        self.assertEqual(set(fresh['fields']), fields_keys)
++        self.assertEqual(set(fresh['skill_ranks']), ranks_keys)
++        self.assertEqual(set(fresh['sources']), sources_keys)
++        self.assertEqual(fresh['fields']['level'], 70)
++        self.assertEqual(fresh['skill_ranks']['1'], 8)
++        self.assertEqual(fresh['sources']['level'], 'new public')
++        self.assertNotIn('captured_at', fresh)
++        self.assertNotIn('field_times', fresh)
++        self.assertNotIn('skill_times', fresh)
++        self.assert_nested_ignored_arrays(fresh['extra_metadata'])
++        self.assert_nested_ignored_arrays(fresh['fields']['ignored_new'])
++        self.assert_nested_ignored_arrays(fresh['skill_ranks']['future_new'])
++        self.assert_nested_ignored_arrays(fresh['sources']['ignored_new'])
++        for data in (cache.records[OP], cache.view(OP),
++                     json.loads(path.read_text(encoding='utf-8'))[OP]):
++            self.assertEqual(data['captured_at'], 200)
++            self.assertEqual(data['fields']['elite'], 2)
++            self.assertEqual(data['fields']['level'], 70)
++            self.assertEqual(data['fields']['trust'], 50)
++            self.assertEqual(data['skill_ranks']['1'], 8)
++            self.assertEqual(data['sources']['level'], 'new public')
++            self.assertEqual(data['field_times']['level'], 200)
++            self.assertEqual(data['field_times']['ignored_new'], 200)
++            self.assertEqual(data['skill_times']['1'], 200)
++            self.assertEqual(data['skill_times']['future_new'], 200)
++            self.assertNotIn('old_extra', data)
++            self.assert_nested_ignored_arrays(data['extra_metadata'])
++            self.assert_nested_ignored_arrays(data['fields']['ignored_old'])
++            self.assert_nested_ignored_arrays(data['fields']['ignored_new'])
++            self.assert_nested_ignored_arrays(data['skill_ranks']['future_old'])
++            self.assert_nested_ignored_arrays(data['skill_ranks']['future_new'])
++            self.assert_nested_ignored_arrays(data['sources']['ignored_old'])
++            self.assert_nested_ignored_arrays(data['sources']['ignored_new'])
++            for key in ('field_times', 'skill_times'):
++                self.assert_nested_ignored_arrays(data[key]['ignored_old'])
++        self.assertNotEqual(path.read_bytes(), original_bytes)
++        self.assertFalse(path.with_suffix('.tmp').exists())
++
++    def test_unusable_old_union_recovers_only_incoming_facts_and_preserves_original_order(self):
++        variants = (
++            ('unmasked_numeric', 99, []),
++            ('masked_string', 'bad rank', ['3']),
++        )
++        for name, old_rank, invalid_ranks in variants:
++            with self.subTest(variant=name):
++                old = observation(fields={'elite': 0, 'level': 30, 'trust': 25},
++                                  skill_ranks={'3': old_rank},
++                                  invalid_skill_ranks=invalid_ranks,
++                                  sources={'level': 'old public'},
++                                  field_times={'elite': 100, 'level': 100},
++                                  skill_times={'3': 100})
++                cache, path = self.make_cache({OP: old})
++                original_bytes = path.read_bytes()
++                self.assert_usable(cache)
++                self.assertFalse(cache.preserve_original)
++                self.assertEqual(cache.view(OP)['skill_ranks']['3'], old_rank)
++                fresh = {'id': OP, 'scope': 'operator_profile',
++                         'fields': {'elite': 2}, 'skill_ranks': {}}
++                before = copy.deepcopy(fresh)
++                with patch.object(cache, 'save', wraps=cache.save) as save:
++                    self.assertFalse(cache.observe(fresh, 99))
++                    save.assert_not_called()
++                self.assertFalse(cache.preserve_original)
++                self.assertEqual(cache.records[OP], old)
++                self.assertEqual(cache.view(OP)['skill_ranks']['3'], old_rank)
++                self.assertEqual(path.read_bytes(), original_bytes)
++                self.assertEqual(fresh, before)
++
++                self.assert_save_skipped_completely(cache, fresh, at=200)
++                self.assert_usable(cache)
++                self.assertTrue(cache.preserve_original)
++                view = cache.view(OP)
++                self.assertEqual(view['fields'], {'elite': 2})
++                self.assertEqual(view['skill_ranks'], {})
++                self.assertEqual(view['sources'], {})
++                self.assertEqual(view['field_times'], {'elite': 200})
++                self.assertEqual(view['skill_times'], {})
++                self.assertEqual(view['captured_at'], 200)
++                self.assertNotIn('invalid_skill_ranks', view)
++                self.assertEqual(fresh, before)
++                self.assertEqual(path.read_bytes(), original_bytes)
++                later = {'id': OP, 'scope': 'operator_profile',
++                         'fields': {'level': 60}, 'skill_ranks': {'3': 7}}
++                later_before = copy.deepcopy(later)
++                self.assert_save_skipped_completely(cache, later, at=300)
++                self.assert_usable(cache)
++                self.assertEqual(cache.view(OP)['fields'], {'elite': 2, 'level': 60})
++                self.assertEqual(cache.view(OP)['skill_ranks'], {'3': 7})
++                self.assertEqual(cache.view(OP)['captured_at'], 300)
++                self.assertTrue(cache.preserve_original)
++                self.assertEqual(later, later_before)
++                self.assertEqual(path.read_bytes(), original_bytes)
++
++        good_old = observation(fields={'elite': 0, 'level': 30, 'trust': 25},
++                               skill_ranks={'3': 10}, sources={'level': 'old public'},
++                               field_times={'elite': 100, 'level': 100}, skill_times={'3': 100})
++        cache, path = self.make_cache({OP: good_old})
++        fresh = {'id': OP, 'scope': 'operator_profile', 'fields': {'elite': 2}, 'skill_ranks': {}}
++        before = copy.deepcopy(fresh)
++        with patch.object(cache, 'save', wraps=cache.save) as save:
++            self.assertTrue(cache.observe(fresh, 200))
++            save.assert_called_once_with()
++        self.assert_usable(cache)
++        self.assertFalse(cache.preserve_original)
++        self.assertEqual(cache.view(OP)['fields'], {'elite': 2, 'level': 30, 'trust': 25})
++        self.assertEqual(cache.view(OP)['skill_ranks'], {'3': 10})
++        self.assertEqual(cache.view(OP)['sources'], {'level': 'old public'})
++        self.assertEqual(cache.view(OP)['field_times'], {'elite': 200, 'level': 100})
++        self.assertEqual(cache.view(OP)['skill_times'], {'3': 100})
++        self.assertEqual(cache.view(OP)['captured_at'], 200)
++        self.assertEqual(json.loads(path.read_text(encoding='utf-8'))[OP], cache.records[OP])
++        self.assertEqual(fresh, before)
+ 
+     def test_unknown_catalog_id_is_preserved_opaque_during_clean_save(self):
+         unknown = {'id': UNKNOWN_OP, 'fields': [None, False],

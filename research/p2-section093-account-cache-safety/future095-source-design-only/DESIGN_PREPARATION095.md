@@ -1,0 +1,15 @@
+# 095 selected-module report design preparation
+
+SOURCE_ONLY_DESIGN_PREPARATION_NOT_IMPLEMENTED_NOT_COMPLETED; completed increment 0.
+
+The qualified group adds selected-module original-source details inside the report. The shared entry is `rouge/reporting.py:251`; both legacy and extended calculations converge there, including deployment and phase-envelope rebuilds. Preserve every existing root, estimate, component, completion flag, unknown, specialized reference and old report section exactly. No-module output remains exact.
+
+Use one optional report-only source object and a notes-only normal source block. Show name/type/requested stage, raw gate and supplied cultivation qualification. Readable source conditions remain labeled original data. Link existing Mei/drone/Gnosis/Mizuki/Haruka/Deepcolor/Wang/Mechanist coverage without duplicate metrics. Technical and structured output retain exact ordered raw parts, candidates, parameters, nulls/empty strings and selectors. Exact technical trace must avoid `phrase`, which still replaces some strings before its technical early return.
+
+Reuse the catalog's exact parts with deep copies. A future small source-bound report supplement may retain missing raw metadata/ownership/gates, raw attributeBlackboards and the six original tokenAttributeBlackboards. The latter are six stages, distinct from five token parts. Qualification annotations live separately by candidate selector; preserve every raw candidate. Amiya patch ownership follows tmplId/charEquip rather than shared charId equality. Cultivation qualification never certifies mission unlock, equipment, mode applicability or native attachment. The new reference adds no arithmetic; existing known module arithmetic remains authoritative.
+
+Read-only stdlib reread verified 32 profiles, 29 module-owner identities, 34 modules, 102 stages and 217 parts, with zero metadata/parts/attribute differences. These are source inspections, not product tests. Detailed design and acceptance cases are in `design-preparation095.json`; exact original selectors and observed file guards are in `source-reread095.json`.
+
+Meaningful acceptance must compare complete frozen actual94 versus candidate native results, exempting only the specified new report content. Existing numeric_result subset comparisons are insufficient. Cover all stages, no/invalid module inputs and existing errors, gates 40/50/60, potential transitions, patch ownership, ordinary/hidden/token/null records, specialized dedup, nested mutation isolation, normal/technical/raw window refresh and actual available full095 validation. All remain UNRUN.
+
+Root-completed actual94 source guard and archived receipt including actual93 chain are required before code; HEAD may remain92 under the five-section batch policy. No individual93/94 commit/tag prerequisite is invented. Root alone writes tracked files and performs Wine/window work, archival, checkpoints and the fifth-section unified commit/push. This preparation changes no repository files or original packets and removes no unknown P2 mathematics todo.

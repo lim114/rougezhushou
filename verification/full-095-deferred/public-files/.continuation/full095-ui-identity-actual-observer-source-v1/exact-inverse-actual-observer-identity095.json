@@ -1,0 +1,63 @@
+{
+  "scope": "SOURCE_ONLY_NO_OBSERVER_MAIN_OR_RUNTIME_EXECUTION",
+  "baseline_reference": {
+    "path": "/workspace/.continuation/root-capture-full095-ui-cache-actual-observation-v1.py",
+    "bytes": 4422,
+    "sha256": "dadca3fb94c087a9ab9d2b1872b80f5d5f9d48c09f0fe92fe53dc3fbd7a42361"
+  },
+  "candidate_reference": {
+    "path": "/workspace/.continuation/full095-ui-identity-actual-observer-source-v1/capture_actual_observation095_identity.py",
+    "bytes": 4944,
+    "sha256": "e0ac6b189f6cfdb7cd2cd75e5c0fc454754e6cc404769f9ec8e1afc12171dc43"
+  },
+  "whole_inverse_exact": true,
+  "changes": [
+    {
+      "before": "name, job_path = sys.argv[1], Path(sys.argv[2])",
+      "after": "assert len(sys.argv) == 5 and sys.argv[3] == '--binding-sha256'\nexpected_binding_sha256 = sys.argv[4]\nassert len(expected_binding_sha256) == 64 and all(c in '0123456789abcdef' for c in expected_binding_sha256)\nname, job_path = sys.argv[1], Path(sys.argv[2])",
+      "count": 1
+    },
+    {
+      "before": "binding_path = BASE / 'full095-regression-ui-cache-resume-final-v1/actual-full095-source-binding.json'",
+      "after": "binding_path = BASE / 'full095-regression-ui-identity-resume-final-v1/actual-full095-source-binding.json'",
+      "count": 1
+    },
+    {
+      "before": "assert ref(binding_path)['sha256'] == 'b83ab67ca978d1b1b9e393c6d4e2cfb6c77e3bf9600af9d7ae87fe40975dbb84'",
+      "after": "assert ref(binding_path)['sha256'] == expected_binding_sha256",
+      "count": 1
+    },
+    {
+      "before": "binding = json.loads(binding_path.read_bytes())\n",
+      "after": "binding = json.loads(binding_path.read_bytes())\nassert binding['status'] == 'SEALED_REAL95_SOURCE_NOT_RUNTIME_PASS'\nassert binding.get('actual_original_epoch_recovery') is True and binding.get('actual_ui_retry') is True\nassert binding.get('root_spec_projection_from_ui_retry') is True and binding.get('actual_ui_identity_retry') is True\n",
+      "count": 1
+    },
+    {
+      "before": "context['ui_retry_started_at']",
+      "after": "context['ui_identity_retry_started_at']",
+      "count": 1
+    },
+    {
+      "before": "alias_path = BASE / 'root-full095-wine_ui-cache-retry-v1-observation.json'",
+      "after": "alias_path = BASE / 'root-full095-wine_ui-identity-retry-v1-observation.json'",
+      "count": 1
+    },
+    {
+      "before": "alias_path = BASE / 'root-full095-saved_review-ui-cache-retry-v1-observation.json'",
+      "after": "alias_path = BASE / 'root-full095-saved_review-ui-identity-retry-v1-observation.json'",
+      "count": 1
+    },
+    {
+      "before": "alias_receipt_path = BASE / ('root-full095-' + name + '-ui-cache-retry-v1-metadata-alias.json')",
+      "after": "alias_receipt_path = BASE / ('root-full095-' + name + '-ui-identity-retry-v1-metadata-alias.json')",
+      "count": 1
+    },
+    {
+      "before": "assert len(current) == 735 and current == guard",
+      "after": "assert len(current) == 735 and current == guard == binding['actual_inputs']['source_sha256']",
+      "count": 1
+    }
+  ],
+  "explicit_actual_binding_SHA_argument": "--binding-sha256",
+  "future_binding_SHA": null
+}

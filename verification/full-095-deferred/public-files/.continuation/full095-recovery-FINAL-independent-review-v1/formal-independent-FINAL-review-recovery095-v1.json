@@ -1,0 +1,415 @@
+{
+  "format_version": 1,
+  "section": 95,
+  "checked_at": "2026-10-08T23:35:15.096732+00:00",
+  "status": "PASS_INDEPENDENT_ACTUAL_FINAL_RECOVERY_SOURCE_REVIEW_RUNTIME_PENDING",
+  "source_gate_passed": true,
+  "runtime_pass": false,
+  "final_manifest_sha256": "14805d5946187155431676d48303daf06f983865027240cc91531d9febb71ce7",
+  "final_binding_sha256": "af943d5f3b0c5996c83fb5d1ee82f793c96a7937e7ed493604fa126a4bbf73f3",
+  "runner_sha256": "9e341441992d616bea7d91f22f4b14745d58799bde9f2e738f5b2d9434315403",
+  "recovery_spec_sha256": "1e2479c3a0079b1cc96f746f7b74fd37ff8fc7b0746f3bc0c298ffa808a78254",
+  "final_manifest": {
+    "path": "/workspace/.continuation/full095-regression-capability-resume-final-v1/public-artifacts-manifest-sealed-recovery095.json",
+    "bytes": 1818,
+    "sha256": "14805d5946187155431676d48303daf06f983865027240cc91531d9febb71ce7"
+  },
+  "final_binding": {
+    "path": "/workspace/.continuation/full095-regression-capability-resume-final-v1/actual-full095-source-binding.json",
+    "bytes": 383874,
+    "sha256": "af943d5f3b0c5996c83fb5d1ee82f793c96a7937e7ed493604fa126a4bbf73f3"
+  },
+  "final_runner": {
+    "path": "/workspace/.continuation/full095-regression-capability-resume-final-v1/full095_context_recovery.py",
+    "bytes": 32395,
+    "sha256": "9e341441992d616bea7d91f22f4b14745d58799bde9f2e738f5b2d9434315403"
+  },
+  "actual_root_spec": {
+    "path": "/workspace/.continuation/root-full095-recovery-input-spec-v1.json",
+    "bytes": 11837,
+    "sha256": "1e2479c3a0079b1cc96f746f7b74fd37ff8fc7b0746f3bc0c298ffa808a78254"
+  },
+  "actual_spec_source_review": {
+    "path": "/workspace/.continuation/full095-recovery-actual-spec-independent-review-v1/formal-independent-actual-spec-review-recovery095-v1.json",
+    "bytes": 26062,
+    "sha256": "52fbac3aed66d8a239b76bf25404e5413b50987ecd3016fd62c0935688c5780d"
+  },
+  "source_manifest_sha256": "ddd25b0b953e56a76e756974b634d83322eca75d8ea5710cfc92d00d7f64e970",
+  "pending_context_sha256": "c6cc559284470739ccaff71305448788fc4c95315537df78d1f5791f3c6ef3c7",
+  "recovery_helper_sha256": "ad1b5a9c9c4979ccd736f9571e9705e3d5a946beaeb80f868ed56800ac9a9afa",
+  "binding_validator_sha256": "b7a6c9b9517e3c93fb598d42b1a45ffe9969d8fb871cce04aee34d56594aa5ce",
+  "sealer_sha256": "6c33286b57b184489c86ecf279b2ba9416bab6791a7c261e99dbf5f301ed7ef0",
+  "original_context_started_at": "2026-10-08T22:54:16.947394+00:00",
+  "execution_argv": {
+    "resume": [
+      "/workspace/rougezhushou/.venv/bin/python",
+      "/workspace/.continuation/full095-regression-capability-resume-final-v1/full095_context_recovery.py",
+      "resume"
+    ],
+    "finish": [
+      "/workspace/rougezhushou/.venv/bin/python",
+      "/workspace/.continuation/full095-regression-capability-resume-final-v1/full095_context_recovery.py",
+      "finish",
+      "--executions",
+      "/workspace/.continuation/root-full095-primary-exits.json",
+      "--ui-acceptance",
+      "/workspace/.continuation/root-full095-ui-extra-acceptance.json"
+    ]
+  },
+  "actual_projected_execution_contracts": {
+    "linux_full": {
+      "argv": [
+        "/workspace/rougezhushou/.venv/bin/python",
+        "/workspace/rougezhushou/scripts/verify_full_available.py",
+        "--output",
+        "/workspace/.continuation/linux-full-095.json"
+      ],
+      "cwd": "/workspace/rougezhushou",
+      "runner": {
+        "path": "/workspace/rougezhushou/scripts/verify_full_available.py",
+        "bytes": 6555,
+        "sha256": "ea4481c9cd95fb9438f673b76c14c9386263469e12b2855fa04e9a47d7c63dcc"
+      },
+      "entry_kind": "python-script",
+      "script_arg_index": 1,
+      "stdout_key": "linux_full_console",
+      "exit_code_path": "/workspace/.continuation/root-full095-linux_full.exit-code"
+    },
+    "wine_full": {
+      "argv": [
+        "/workspace/.compat/run-wine-python.sh",
+        "Z:\\workspace\\.continuation\\full095-wine-capability-retry-pending-v1\\wine_full095_capability_retry.py",
+        "--wine",
+        "--output",
+        "Z:\\workspace\\.compat\\wine-full095-capability-retry-v1\\wine-available-full095.json"
+      ],
+      "cwd": "/workspace/rougezhushou",
+      "runner": {
+        "path": "/workspace/.continuation/full095-wine-capability-retry-pending-v1/wine_full095_capability_retry.py",
+        "bytes": 8147,
+        "sha256": "fb33a4ffd7971e05efc3dd2ffc6d25f12a8f2570c231b2cfff4bb5f2fa056731"
+      },
+      "entry_kind": "python-script",
+      "script_arg_index": 1,
+      "stdout_key": "wine_full_console",
+      "exit_code_path": "/workspace/.continuation/root-full095-wine_full-capability-retry-v1.exit-code"
+    },
+    "linux_selected": {
+      "argv": [
+        "/workspace/rougezhushou/.venv/bin/python",
+        "/workspace/rougezhushou/scripts/verify_cloud.py"
+      ],
+      "cwd": "/workspace/rougezhushou",
+      "runner": {
+        "path": "/workspace/rougezhushou/scripts/verify_cloud.py",
+        "bytes": 5028,
+        "sha256": "8f5f0fd958c29e1f863651d671bf2c63a003a3604fa0eae488d9636b9adde223"
+      },
+      "entry_kind": "python-script",
+      "script_arg_index": 1,
+      "stdout_key": "linux_selected",
+      "exit_code_path": "/workspace/.continuation/root-full095-linux_selected.exit-code"
+    },
+    "wine_selected": {
+      "argv": [
+        "/workspace/.compat/run-wine-python.sh",
+        "Z:\\workspace\\.continuation\\full095-wine-capability-retry-pending-v1\\wine_selected095_capability.py",
+        "--wine"
+      ],
+      "cwd": "/workspace/rougezhushou",
+      "runner": {
+        "path": "/workspace/.continuation/full095-wine-capability-retry-pending-v1/wine_selected095_capability.py",
+        "bytes": 6445,
+        "sha256": "6e1892db605ec9de26c45b302998a2110b431c5583638f86abff292d5a98945f"
+      },
+      "entry_kind": "python-script",
+      "script_arg_index": 1,
+      "stdout_key": "wine_selected",
+      "exit_code_path": "/workspace/.continuation/root-full095-wine_selected.exit-code"
+    },
+    "linux_pip": {
+      "argv": [
+        "/workspace/rougezhushou/.venv/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/rougezhushou",
+      "runner": null,
+      "entry_kind": "python-module",
+      "script_arg_index": null,
+      "stdout_key": "linux_pip",
+      "exit_code_path": "/workspace/.continuation/root-full095-linux_pip.exit-code"
+    },
+    "wine_pip": {
+      "argv": [
+        "/workspace/.compat/run-wine-python.sh",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "cwd": "/workspace/rougezhushou",
+      "runner": null,
+      "entry_kind": "python-module",
+      "script_arg_index": null,
+      "stdout_key": "wine_pip",
+      "exit_code_path": "/workspace/.continuation/root-full095-wine_pip.exit-code"
+    },
+    "wine_ui": {
+      "argv": [
+        "/workspace/.compat/run-wine-python.sh",
+        "Z:\\workspace\\.continuation\\full095-ui-final-v1\\wine-full-ui-095-final.py"
+      ],
+      "cwd": "/workspace/rougezhushou",
+      "runner": {
+        "path": "/workspace/.continuation/full095-ui-final-v1/wine-full-ui-095-final.py",
+        "bytes": 1184276,
+        "sha256": "83c412ce7e456109dc32a6415f7a61526955d48b01d25dbb72198870e6cf18ee"
+      },
+      "entry_kind": "python-script",
+      "script_arg_index": 1,
+      "stdout_key": "wine_ui_console",
+      "exit_code_path": "/workspace/.continuation/root-full095-wine_ui.exit-code"
+    },
+    "saved_review": {
+      "argv": [
+        "/workspace/rougezhushou/.venv/bin/python",
+        "/workspace/.continuation/full095-saved-validator-pending-v3/saved.py",
+        "--spec",
+        "/workspace/.continuation/root-full095-saved-input-spec.json",
+        "--output",
+        "/workspace/.continuation/root-saved-full095-review.json"
+      ],
+      "cwd": "/workspace/rougezhushou",
+      "runner": {
+        "path": "/workspace/.continuation/full095-saved-validator-pending-v3/saved.py",
+        "bytes": 90632,
+        "sha256": "331d8b1a9de95b477cce9e1a95b0e7e3db6414749c8aba74eaa3e2bf8337e55d"
+      },
+      "entry_kind": "python-script",
+      "script_arg_index": 1,
+      "stdout_key": "saved_review_stdout",
+      "exit_code_path": "/workspace/.continuation/root-full095-saved_review.exit-code"
+    }
+  },
+  "actual_projected_output_paths": {
+    "context_start": "/workspace/.compat/wine-validation-095-context-recovery-v1.json",
+    "context_final": "/workspace/.compat/wine-validation-095-context-final.json",
+    "linux_full": "/workspace/.continuation/linux-full-095.json",
+    "wine_full": "/workspace/.compat/wine-full095-capability-retry-v1/wine-available-full095.json",
+    "linux_full_log": "/workspace/.continuation/linux-full-095.log",
+    "wine_full_log": "/workspace/.compat/wine-full095-capability-retry-v1/wine-available-full095.log",
+    "linux_full_console": "/workspace/.continuation/linux-full-095-console.log",
+    "wine_full_console": "/workspace/.compat/wine-full095-capability-retry-v1/wine-available-full095-console.log",
+    "linux_selected": "/workspace/.continuation/selected-095.log",
+    "wine_selected": "/workspace/.compat/wine-cloud-095.log",
+    "linux_pip": "/workspace/.continuation/linux-pipcheck-095.log",
+    "wine_pip": "/workspace/.compat/wine-pipcheck-095.log",
+    "execution_witness": "/workspace/.continuation/root-full095-primary-exits.json",
+    "wine_ui": "/workspace/.compat/wine-ui-095.json",
+    "wine_ui_console": "/workspace/.continuation/root-full095-ui-console.log",
+    "saved_review_receipt": "/workspace/.continuation/root-saved-full095-review.json",
+    "saved_review_stdout": "/workspace/.continuation/root-full095-saved-console.log",
+    "visual_review": "/workspace/.continuation/root-full095-visual-review.json",
+    "ui_extra_acceptance": "/workspace/.continuation/root-full095-ui-extra-acceptance.json",
+    "linux_full_exit_code": "/workspace/.continuation/root-full095-linux_full.exit-code",
+    "wine_full_exit_code": "/workspace/.continuation/root-full095-wine_full-capability-retry-v1.exit-code",
+    "linux_selected_exit_code": "/workspace/.continuation/root-full095-linux_selected.exit-code",
+    "wine_selected_exit_code": "/workspace/.continuation/root-full095-wine_selected.exit-code",
+    "linux_pip_exit_code": "/workspace/.continuation/root-full095-linux_pip.exit-code",
+    "wine_pip_exit_code": "/workspace/.continuation/root-full095-wine_pip.exit-code",
+    "wine_ui_exit_code": "/workspace/.continuation/root-full095-wine_ui.exit-code",
+    "saved_review_exit_code": "/workspace/.continuation/root-full095-saved_review.exit-code",
+    "ui_saved_output_0": "/workspace/.compat/wine-ui-new-states-095.json.gz",
+    "ui_saved_output_1": "/workspace/.compat/full095-ui-native-v3/wine-ui-full-native-index-095.json",
+    "ui_saved_output_2": "/workspace/.compat/wine-window-095.png",
+    "ui_saved_output_3": "/workspace/.compat/wine-movement-reference-095.png",
+    "ui_saved_output_4": "/workspace/.compat/wine-sown-tile-control-095.png",
+    "ui_saved_output_5": "/workspace/.compat/wine-medical-trait-095.png"
+  },
+  "source_checks": 24,
+  "checks": [
+    {
+      "id": "F01",
+      "check": "Actual FINAL exactly eight regular files and six unique SHA-bound payload files",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F02",
+      "check": "Actual FINAL MF and STOPWRITE handoff declare SOURCE bound runtime pending without pass claims",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F03",
+      "check": "Actual root-reported FINAL MF/binding/runner fullrefs match independently inspected bytes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F04",
+      "check": "All seven actual-spec SOURCE approval fields and formal report current physical SHA satisfy exact sealer gate",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F05",
+      "check": "Original frozen source packet and all current payload bytes remain unchanged",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F06",
+      "check": "Actual FINAL three support files are exact original/source-approved whole files with bound refs",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F07",
+      "check": "Actual pending to FINAL whole source differs only by two exact binding literals",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F08",
+      "check": "Independent actual FINAL two-literal inverse equals complete frozen pending bytes",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F09",
+      "check": "Actual FINAL then original fifteen-delta inverse preserves entire actual original context",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F10",
+      "check": "Actual FINAL parses, disables pending guard only after binding and seals the actual binding SHA",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F11",
+      "check": "Own independent metadata projection equals entire actual FINAL actual_inputs without calling helpers",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F12",
+      "check": "Projection retains complete source735/classifier342/selectors/UI own129/saved/archives/dependency maps",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F13",
+      "check": "Actual binding exactly retains original root spec/reference and current immutable source/recovery spec/review refs",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F14",
+      "check": "SOURCE binding metadata never claims actual full pass, execution, commit or push",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F15",
+      "check": "Exactly two Wine contracts change; all other six original execution contracts remain whole exact",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F16",
+      "check": "Exactly five fixed planned output changes; all33 unique UI/native/PNG/saved/selected/pip output names retain their source-approved paths",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F17",
+      "check": "Four immutable actual success observations and original failure refs remain exact; no UI/future outcome was newly bound",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F18",
+      "check": "Actual sealer receipt preserves original epoch, original failure and real prior successes without runtime claims",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F19",
+      "check": "Before actual resume all five new recovery/retry sinks and original final context sink remain unoccupied",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F20",
+      "check": "No actual new adapter witness can exist before resume at new raw/full sinks",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F21",
+      "check": "Actual maintained source735 remains exactly original source epoch and current actual binding map",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F22",
+      "check": "Actual root SOURCE sealer physical primary zero and stdout identify final packet without pretending runtime pass",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F23",
+      "check": "Final runner exact-source inverse retains all original eight/UI/saved/PNG/native/source assertions and adds adapter recovery timestamp gate",
+      "passed": true,
+      "evidence": null
+    },
+    {
+      "id": "F24",
+      "check": "Actual FINAL MF/hand/source spec/current review and every payload remain unchanged at review end",
+      "passed": true,
+      "evidence": null
+    }
+  ],
+  "blocking_checks": [],
+  "root_actual_source_sealer": {
+    "console": {
+      "path": "/workspace/.continuation/root-seal-full095-recovery.log",
+      "bytes": 426,
+      "sha256": "14ea9023dacd9e3fefbcc058ce7ce23b6b6d3437e8853e62163e291c6969876e"
+    },
+    "physical_exit": {
+      "path": "/workspace/.continuation/root-seal-full095-recovery.exit-code",
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "trusted_root_tool_observation": {
+      "session_id": 85247,
+      "completion_tool_chunk": "637a71",
+      "primary_exit_code": 0
+    }
+  },
+  "agent_target_executions": 0,
+  "agent_helper_executions": 0,
+  "agent_project_imports": 0,
+  "agent_codec_executions": 0,
+  "agent_tests_run": 0,
+  "agent_wine_executions": 0,
+  "agent_git_executions": 0,
+  "tracked_edits": 0,
+  "section_completion_increment": 0,
+  "native_windows_verified": false,
+  "running_UI_output_files_read": false,
+  "future_actual_resume": null,
+  "future_actual_adapter_outcomes": null,
+  "qualification": "Only independent stdlib file/AST/SHA/JSON metadata reconstruction and source reading. Root executed original actual HEAD/index/source/archive validator inside SOURCE sealer; reviewer did not call it or Git. Original strict validator remains exact and will run during root resume/finish.",
+  "required_root_next_actions": [
+    "Run exact actual FINAL resume and capture its real new recovery_started_at/primary status.",
+    "Wait for currently running Wine UI actual completion; never overlap Wine.",
+    "Launch two reviewed adapters after actual recovery epoch with fresh raw/log/receipt evidence and unchanged source735.",
+    "Preserve original start, four passed proofs and original failed Wine full1; finish only original strict eight/UI/saved/native/PNG gates."
+  ]
+}

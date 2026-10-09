@@ -1,0 +1,21 @@
+{
+  "format_version": 1,
+  "destination_repo_path": "tests/test_token_duration_reference.py",
+  "before_bytes": 9319,
+  "before_sha256": "cea16b4243c949fd1749c1cab4f323b2f5ea7267ad69928e715ea570ab27e199",
+  "after_bytes": 11193,
+  "after_sha256": "ad4a6381e6ec6f1a6db08cb1df0339b614883c960a1db3865d019ac08b12b554",
+  "changed_method": "test_all_public_numeric_stats_damage_and_clocks_are_unchanged",
+  "new_test_methods": 0,
+  "edits": [
+    {
+      "old": "                actual = calculate_damage(args)\n                actual.pop('token_duration_references')",
+      "new": "                actual = calculate_damage(args)\n                source = actual['report']['selected_module_source_reference']\n                duration_links = [link for link in source['existing_coverage']['report_sections']\n                                  if link['section_id'] == 'token_duration_' + TOKEN]\n                self.assertEqual(len(duration_links), 1)\n                duration_index = int(duration_links[0]['path'].rsplit('/', 1)[1])\n                self.assertEqual(actual['report']['sections'][duration_index]['id'], 'token_duration_' + TOKEN)\n                self.assertIn('/token_duration_references', source['existing_coverage']['native_paths'])\n                actual.pop('token_duration_references')"
+    },
+    {
+      "old": "                with patch('rouge.summons.duration_reference', return_value=None):\n                    baseline = calculate_damage(args)\n                self.assertEqual(actual, baseline)",
+      "new": "                with patch('rouge.summons.duration_reference', return_value=None):\n                    baseline = calculate_damage(args)\n                source = baseline['report']['selected_module_source_reference']\n                self.assertFalse(any(link['section_id'] == 'token_duration_' + TOKEN\n                                     for link in source['existing_coverage']['report_sections']))\n                self.assertNotIn('/token_duration_references', source['existing_coverage']['native_paths'])\n                # The new report-only source links reflect reference presence.\n                # Remove only its exact object and unique final notes-only block;\n                # every old public numeric, estimate and report field stays compared.\n                for result in (actual, baseline):\n                    report = result['report']\n                    self.assertEqual(report['selected_module_source_reference']['module_id'], MODULE)\n                    self.assertEqual(sum(block['id'] == 'selected_module_source'\n                                         for block in report['sections']), 1)\n                    self.assertEqual(report['sections'][-1]['id'], 'selected_module_source')\n                    self.assertEqual(report['sections'][-1]['metrics'], [])\n                    report.pop('selected_module_source_reference')\n                    report['sections'].pop()\n                self.assertEqual(actual, baseline)"
+    }
+  ],
+  "whole_file_exact_inverse": true
+}

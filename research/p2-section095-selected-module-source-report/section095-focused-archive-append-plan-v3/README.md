@@ -1,0 +1,3 @@
+第95节 focused 归档追加候选 v3（SOURCE/DATA ONLY）
+
+显式271行包括已归档105项精确跳过与166项新源资料。第二次窗口、保存验证v4和3张root实际查看的PNG均已结束后才读取、哈希并纳入；首次primary1及两项root metadata before-write纠正的原文保持。这里只检查源文件与现有归档bytes/SHA，不执行helper/codec/项目/Qt/Wine，也不复制到仓库。Root可独立检查后exclusive append；fresh full095证据仍为空槽，不凭focused PASS声称full完成。manifest四payload及其真实MF/handoff六文件的追加规则见计划root_archiver_resume。中文scope/remaining仅为receipt文字候选，明确资料追溯不代表未实现原生机制已完成。

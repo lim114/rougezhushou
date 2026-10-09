@@ -1,0 +1,778 @@
+{
+  "format_version": 1,
+  "section": 95,
+  "status": "STOPWRITE_INDEPENDENT_SAVED_IDENTITY_SOURCE_REVIEW_PASSED_RUNTIME_UNRUN",
+  "source_gate_passed": true,
+  "runtime_pass": false,
+  "execution_ready": false,
+  "runner_sha256": "6d94c3effb6c56987ece108af152b885ce35485f6220533596ed888d259f41ff",
+  "runner": {
+    "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/saved.py",
+    "bytes": 98186,
+    "sha256": "6d94c3effb6c56987ece108af152b885ce35485f6220533596ed888d259f41ff"
+  },
+  "manifest_sha256": "47251cbe499c14253bf5c6f0636fdf43d951c6624f47c05f7ef9edea05e7f81b",
+  "sourcepack": {
+    "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/public-artifacts-manifest-source-preparation095.json",
+    "bytes": 2303,
+    "sha256": "47251cbe499c14253bf5c6f0636fdf43d951c6624f47c05f7ef9edea05e7f81b"
+  },
+  "source_guard_sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab",
+  "execution_argv": [
+    "/workspace/rougezhushou/.venv/bin/python",
+    "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/saved.py",
+    "--spec",
+    "/workspace/.continuation/root-full095-ui-identity-retry-v1-saved-input-spec.json",
+    "--output",
+    "/workspace/.continuation/root-full095-ui-identity-retry-v1-saved-review.json"
+  ],
+  "execution_cwd": "/workspace/rougezhushou",
+  "script_arg_index": 1,
+  "formal_pointers": {
+    "source_gate": "/source_gate_passed",
+    "runtime": "/runtime_pass",
+    "runner_sha256": "/runner_sha256",
+    "argv": "/execution_argv",
+    "guard_sha256": "/source_guard_sha256"
+  },
+  "review_completed_at_UTC": "2026-10-09T04:49:38.937965+00:00",
+  "reviewer_role": "Independent Source reviewer; neither Saved nor producer author",
+  "review_scope": "Standard library metadata, full physical bytes, AST, in-memory exact source inverses, and unexecuted compilation only. No reviewed helper, graph codec, target code object, project, tests, Wine, Qt, DLL, Git, child subprocess, or process-control calls.",
+  "independent_standard_library_review": {
+    "checks": 14,
+    "passed": 14,
+    "blocked": 0,
+    "results": [
+      {
+        "name": "Saved manifest all eight payloads physically exact and STOPWRITE",
+        "passed": true,
+        "evidence": {
+          "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/public-artifacts-manifest-source-preparation095.json",
+          "bytes": 2303,
+          "sha256": "47251cbe499c14253bf5c6f0636fdf43d951c6624f47c05f7ef9edea05e7f81b"
+        }
+      },
+      {
+        "name": "Saved nine-operation whole-byte inverse restores original v4 and compile has no execution",
+        "passed": true,
+        "evidence": {
+          "candidate": {
+            "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/saved.py",
+            "bytes": 98186,
+            "sha256": "6d94c3effb6c56987ece108af152b885ce35485f6220533596ed888d259f41ff"
+          },
+          "original": {
+            "path": "/workspace/.continuation/full095-saved-validator-ui-cache-pending-v4/saved.py",
+            "bytes": 97726,
+            "sha256": "34aee7208c81f155715acf444cf967e234dd4a7cb84182051068223b052b3b96"
+          },
+          "ledger": {
+            "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/exact-inverse-saved-ui-identity095.json",
+            "bytes": 6034,
+            "sha256": "ac70b9d751348483d85936aa93422dd680801b28f83da1939a7ca11177eba0de"
+          },
+          "target_code_object_executions": 0
+        }
+      },
+      {
+        "name": "Independent 43 of 44 complete function spans including final newline unchanged",
+        "passed": true,
+        "evidence": {
+          "whole": [
+            {
+              "first_line": 35,
+              "last_line": 37,
+              "bytes": 87,
+              "sha256": "c6adb0d012959550c1269fc18638cf6a0afdec4ad7115fc35cf573e35d62a6c6",
+              "name": "check"
+            },
+            {
+              "first_line": 40,
+              "last_line": 41,
+              "bytes": 59,
+              "sha256": "4e627faf4b903521e935f7c6f3ae93545856f821d0e2565ba7ea6cf97d3d0e6c",
+              "name": "sha"
+            },
+            {
+              "first_line": 44,
+              "last_line": 45,
+              "bytes": 102,
+              "sha256": "37bb03c788f7ffc2174a7a1ccc91bf3b4f7ab78819991ab773d2426a9627d5f7",
+              "name": "is_sha"
+            },
+            {
+              "first_line": 48,
+              "last_line": 49,
+              "bytes": 82,
+              "sha256": "e3a7f2e6fb12f63a47d70dacd38b280ae0e73d89ee4872e931a02795ba3bae8d",
+              "name": "integer"
+            },
+            {
+              "first_line": 52,
+              "last_line": 57,
+              "bytes": 339,
+              "sha256": "af23038bb12fe2e531198ff83121d4a530e15313b4569ba257c800cd56bc0b70",
+              "name": "canonical"
+            },
+            {
+              "first_line": 60,
+              "last_line": 63,
+              "bytes": 159,
+              "sha256": "66e893cb675e50f8b02489b244ba66b1fa5275c84bbe40f0a2e243fbb10a45a0",
+              "name": "metadata"
+            },
+            {
+              "first_line": 66,
+              "last_line": 79,
+              "bytes": 849,
+              "sha256": "bbd74d7235a5278f2dbff234afa3009527f9d204c95e4bac73f743295870203a",
+              "name": "read_ref"
+            },
+            {
+              "first_line": 82,
+              "last_line": 88,
+              "bytes": 397,
+              "sha256": "343b9fbdb02472c7c2162397327f9411fecf5199ab3a55dac118444c34c30550",
+              "name": "registered"
+            },
+            {
+              "first_line": 91,
+              "last_line": 98,
+              "bytes": 399,
+              "sha256": "b8066486933de953e4ae87591807e996f8a715213c26751884b4d60ff3c30df7",
+              "name": "pointer"
+            },
+            {
+              "first_line": 101,
+              "last_line": 106,
+              "bytes": 313,
+              "sha256": "a236c6c7e2f098998a5026174720fae78d45bb65be3dda1495ce9cc38c4454b2",
+              "name": "literal"
+            },
+            {
+              "first_line": 109,
+              "last_line": 124,
+              "bytes": 967,
+              "sha256": "630d3c97d1bc8bde24ce17a153ef986445bab9962d7487cbb692023fe9891171",
+              "name": "actual_wine_mapping"
+            },
+            {
+              "first_line": 127,
+              "last_line": 136,
+              "bytes": 598,
+              "sha256": "803f3f55a951da5dfe3fd38b96eb0a7d42cb475a2ab4e4ddba39c9e92f34bd4c",
+              "name": "linux_path"
+            },
+            {
+              "first_line": 139,
+              "last_line": 142,
+              "bytes": 114,
+              "sha256": "5c37f8b9d6184d131a86deabc400449e7a5ad27e3945335464b42a2d739f73df",
+              "name": "normalized_record"
+            },
+            {
+              "first_line": 145,
+              "last_line": 156,
+              "bytes": 713,
+              "sha256": "3c43663130865000a8dc515a130dfe013fefc8f6b8eb1bb04f1555572ef5addc",
+              "name": "normalized_binding"
+            },
+            {
+              "first_line": 159,
+              "last_line": 162,
+              "bytes": 294,
+              "sha256": "e9348741a1c8f2c2c45accb28f743e110814949d30c19913431de8d9b252ada3",
+              "name": "maintained"
+            },
+            {
+              "first_line": 165,
+              "last_line": 170,
+              "bytes": 353,
+              "sha256": "682fdae832f66d3cfbd41d949d765698edb82caa8fe0a9dd013915184e2ab9cd",
+              "name": "source_map"
+            },
+            {
+              "first_line": 172,
+              "last_line": 204,
+              "bytes": 1248,
+              "sha256": "268529c072e161f728bef02e765642c12ab2c284101a7b1cc07ddb6ffc031eb6",
+              "name": "graph"
+            },
+            {
+              "first_line": 206,
+              "last_line": 249,
+              "bytes": 2098,
+              "sha256": "9b4768427a44de1f3a3e9df01373c4768c8c4a46c6b059886291e97326d7877d",
+              "name": "decode"
+            },
+            {
+              "first_line": 251,
+              "last_line": 253,
+              "bytes": 136,
+              "sha256": "d62de61494c4781412f30a77dbbe1097459b217ba1505e72e1b07c464b8d8037",
+              "name": "encoded_json"
+            },
+            {
+              "first_line": 256,
+              "last_line": 293,
+              "bytes": 2737,
+              "sha256": "9fda79ac6776265e17ebffa34020d477d797ac50c338b97ad9cd41231974b392",
+              "name": "snapshot_value"
+            },
+            {
+              "first_line": 296,
+              "last_line": 302,
+              "bytes": 459,
+              "sha256": "4bbcb9b3158625e0e5e016548470c5d3319a7fe023a84126a9452f27ed1f60ae",
+              "name": "source_counter"
+            },
+            {
+              "first_line": 305,
+              "last_line": 348,
+              "bytes": 3512,
+              "sha256": "e62a730d47c71ac5a12d661cba36f333b8236675e6b664ef97039322bdc8ab4f",
+              "name": "ui_capture"
+            },
+            {
+              "first_line": 351,
+              "last_line": 396,
+              "bytes": 3193,
+              "sha256": "3b1f952b4d337bacf3df8b6141e5f7f768622c7e194b80852a8ebef1a37821fe",
+              "name": "source_state_record"
+            },
+            {
+              "first_line": 399,
+              "last_line": 422,
+              "bytes": 1579,
+              "sha256": "0faebfd21db3d98484d2a517e557d2624e703a14b35afda2759accdf627e07b7",
+              "name": "scan_snapshots"
+            },
+            {
+              "first_line": 425,
+              "last_line": 459,
+              "bytes": 2107,
+              "sha256": "a16a300244513e01ca6fd0e24f8b42da1b7be39557d36586568bbfa8880e728a",
+              "name": "filesystem_rows"
+            },
+            {
+              "first_line": 462,
+              "last_line": 480,
+              "bytes": 1487,
+              "sha256": "a1d03e601845c253b3f16b89e140b422b11823c756bd5cd626d6615eaebe73ec",
+              "name": "durable"
+            },
+            {
+              "first_line": 483,
+              "last_line": 493,
+              "bytes": 650,
+              "sha256": "0aae1435bd4abd6029573a44817e0c0b820360996627808140fdc26906d8f6b9",
+              "name": "manifest_payloads"
+            },
+            {
+              "first_line": 595,
+              "last_line": 681,
+              "bytes": 7434,
+              "sha256": "38193431a9e2692acb0b4034ec73c3362126fed7794240bddb7ad7dbc2f805e2",
+              "name": "source_and_binding"
+            },
+            {
+              "first_line": 684,
+              "last_line": 715,
+              "bytes": 2527,
+              "sha256": "36849aa552c5641e0cb8bd1be81ecdbfbc49f8421c24fad733717453f582f39d",
+              "name": "primary_launch"
+            },
+            {
+              "first_line": 718,
+              "last_line": 737,
+              "bytes": 1008,
+              "sha256": "229a4c0b4bd1b0192deae444b4a5331c79a626618e4e6ffe2ee093e3d9555fea",
+              "name": "png"
+            },
+            {
+              "first_line": 740,
+              "last_line": 774,
+              "bytes": 2812,
+              "sha256": "6637e0e67121323fddd6eeb8543989fe88b54652f620b372b52666806c730e99",
+              "name": "ui_receipt"
+            },
+            {
+              "first_line": 777,
+              "last_line": 862,
+              "bytes": 6541,
+              "sha256": "f0e25d0c689b15447ba09e23148d8f94b6de809752d0dcda3692bfb97063a82a",
+              "name": "baseline_documents"
+            },
+            {
+              "first_line": 865,
+              "last_line": 866,
+              "bytes": 129,
+              "sha256": "d2d7550c8608824d11cb51465586bd6f83e1e59a510a40363540683db6f55d02",
+              "name": "graph_sha"
+            },
+            {
+              "first_line": 869,
+              "last_line": 948,
+              "bytes": 6681,
+              "sha256": "36261ba09604e579a7c82dd4f50d7639074b65ee067b7e1fcd80dbbc5d89b12b",
+              "name": "entry_summary"
+            },
+            {
+              "first_line": 951,
+              "last_line": 1047,
+              "bytes": 7648,
+              "sha256": "b486bfe7802e276b1773dfb360abaa8987a3055963471aade528f16c3d94feff",
+              "name": "native_archive"
+            },
+            {
+              "first_line": 1050,
+              "last_line": 1092,
+              "bytes": 3742,
+              "sha256": "f2a3028fd635a5c2fee3d9b27c7ad2eb556b374515595b925089ed2c1cd9517f",
+              "name": "strict_baseline"
+            },
+            {
+              "first_line": 1094,
+              "last_line": 1100,
+              "bytes": 476,
+              "sha256": "b5a7b9a8d0b46c626dab27c5b2e82bac806b282e4b6046ed0853c16ec62fce04",
+              "name": "native090"
+            },
+            {
+              "first_line": 1102,
+              "last_line": 1108,
+              "bytes": 430,
+              "sha256": "2d462ae902af9801948e9b6b12717240e9b6e9ac656a30cb7a3958bd5d288be0",
+              "name": "projection090"
+            },
+            {
+              "first_line": 1111,
+              "last_line": 1127,
+              "bytes": 927,
+              "sha256": "143faa00ea813a48c08eba4373bebf92a669cbbe1d5902cfd724931eda85494b",
+              "name": "legacy_inverse"
+            },
+            {
+              "first_line": 1130,
+              "last_line": 1158,
+              "bytes": 2647,
+              "sha256": "c961594036ae6ce118d1ba89ba5bc9d3a972028a6ce616c137609f861df0abd7",
+              "name": "original52_archive"
+            },
+            {
+              "first_line": 1161,
+              "last_line": 1326,
+              "bytes": 14242,
+              "sha256": "30e16cb36d5a60da267998651f2f425604398357c652cf70e93c11bd5e1d29f3",
+              "name": "new_subgroup"
+            },
+            {
+              "first_line": 1329,
+              "last_line": 1390,
+              "bytes": 5224,
+              "sha256": "bac3c5b033aac04c371dc290dca470dd962056a7a04ed61115ee779d1551860e",
+              "name": "validate"
+            },
+            {
+              "first_line": 1393,
+              "last_line": 1422,
+              "bytes": 2096,
+              "sha256": "3524690055cbcd34818dc27e31a9e089d7051b8d82b8fe9b4de05d99a9c90719",
+              "name": "main"
+            }
+          ],
+          "changed": [
+            "recover_original_final095"
+          ],
+          "span_definition": "def through AST end_lineno, including complete final physical line and LF"
+        }
+      },
+      {
+        "name": "All five Saved graph and inverse codec bodies unchanged without invoking a codec",
+        "passed": true,
+        "evidence": [
+          "graph",
+          "decode",
+          "native090",
+          "projection090",
+          "legacy_inverse"
+        ]
+      },
+      {
+        "name": "Whole old v4 to 90632-byte v3 Saved inverse independently exact",
+        "passed": true,
+        "evidence": {
+          "path": "/workspace/.continuation/full095-saved-validator-pending-v3/saved.py",
+          "bytes": 90632,
+          "sha256": "331d8b1a9de95b477cce9e1a95b0e7e3db6414749c8aba74eaa3e2bf8337e55d"
+        }
+      },
+      {
+        "name": "Concrete third producer packet all six payloads exact and no runtime evidence claimed",
+        "passed": true,
+        "evidence": {
+          "manifest": {
+            "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/public-artifacts-manifest-identity-retry095.json",
+            "bytes": 2290,
+            "sha256": "6ca4fd70d8acf5a9eb6b58927874c881e2196c8ccf0ab0de1e90d096983542c8"
+          },
+          "contract": {
+            "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/source-contract-identity-retry095.json",
+            "bytes": 20635,
+            "sha256": "05ca7f22bdcb531368985ff71c3613b519167afd5f38c6dee119fc3718f4934f"
+          },
+          "runner": {
+            "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/wine-full-ui-095-identity-retry.py",
+            "bytes": 1185253,
+            "sha256": "0e8a0bc1ed4e890cd6a0cf762c7437ced1080dba6ac82e48c680e8d6dc226b0d"
+          }
+        }
+      },
+      {
+        "name": "Concrete producer full 31 then 27 then 3 sequential-operation inverses exact at every physical stage",
+        "passed": true,
+        "evidence": {
+          "inverse": {
+            "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/exact-inverse-identity-retry095.json",
+            "bytes": 32862,
+            "sha256": "b2a67945573dfa23ed84afbc0e8842e8ce98fb86f5efcc15dfda07d41f41d5b4"
+          },
+          "operation_counts": [
+            31,
+            27,
+            3
+          ],
+          "stages": [
+            {
+              "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/wine-full-ui-095-identity-retry.py",
+              "bytes": 1185253,
+              "sha256": "0e8a0bc1ed4e890cd6a0cf762c7437ced1080dba6ac82e48c680e8d6dc226b0d"
+            },
+            {
+              "path": "/workspace/.continuation/full095-ui-cache-retry-source-v1/wine-full-ui-095-cache-retry.py",
+              "bytes": 1184954,
+              "sha256": "e5dec2d704cecbde56762cf7c2f92016f5123b592633fae12840a892869e6bc5"
+            },
+            {
+              "path": "/workspace/.continuation/full095-ui-lineno-cache-source-pending-v1/wine-full-ui-095-lineno-cache-pending.py",
+              "bytes": 1184561,
+              "sha256": "1a6ac7f0db3096de170a9e0d035148bfbad372cc58f704bb7ad39da6cb7cfb6d"
+            },
+            {
+              "path": "/workspace/.continuation/full095-ui-final-v1/wine-full-ui-095-final.py",
+              "bytes": 1184276,
+              "sha256": "83c412ce7e456109dc32a6415f7a61526955d48b01d25dbb72198870e6cf18ee"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Changed recovery function strictly binds contract manifest argv all stages physical bytes and original binding",
+        "passed": true,
+        "evidence": [
+          "contract_name == 'source-contract-identity-retry095.json'",
+          "inverse_contract['schema'] == 'full-ui095-identity-retry-exact-inverse-v1'",
+          "ledger_name == 'exact-inverse-identity-retry095.json'",
+          "len(stages) == 3",
+          "[len(stage['operations']) for stage in stages] == [31, 27, 3]",
+          "stages[0]['from'] == retry['runner'] and stages[0]['to'] == prior",
+          "stages[1]['from'] == prior and stages[1]['to'] == cache",
+          "stages[2]['from'] == cache and stages[2]['to'] == original",
+          "recovered == read_ref(stage['from'])",
+          "recovered == read_ref(stage['to'])",
+          "sha(recovered[start:end]) == operation['pending_sha256']",
+          "base64.b64decode(operation['before_base64'], validate=True)",
+          "contract['runner'] == retry['runner']",
+          "contract['source_guard'] == spec['actual_source_guard']",
+          "final_files[contract_name] == contract_bytes",
+          "final_files[ledger_name] == ledger_bytes",
+          "graph(literal(runner_data.decode('utf-8'), 'BINDING095'))",
+          "ui['execution_contract']['argv'] == contract['exact_argv']",
+          "contract['exact_argv'] == spec['actual_UI_primary']['argv']",
+          "contract['cwd'] == str(REPO)",
+          "REPORT['UI_identity_retry_three_stage_inverse_exact'] = True"
+        ]
+      },
+      {
+        "name": "Identity native and all four PNG namespace constants match actual concrete producer and entire original binding bytes",
+        "passed": true,
+        "evidence": {
+          "PNGs": [
+            "/workspace/.compat/wine-window-095-identity-retry-v1.png",
+            "/workspace/.compat/wine-movement-reference-095-identity-retry-v1.png",
+            "/workspace/.compat/wine-sown-tile-control-095-identity-retry-v1.png",
+            "/workspace/.compat/wine-medical-trait-095-identity-retry-v1.png"
+          ],
+          "native_directory": "/workspace/.compat/full095-ui-native-identity-retry-v1",
+          "binding": {
+            "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/root-bound-input095.json",
+            "bytes": 893387,
+            "sha256": "8bbfa6d7217c44848cca1a5934776184d6870de7db8aded9243fa4fb2c431a34"
+          }
+        }
+      },
+      {
+        "name": "Inherited complete two-binding and pending-operation inverse still reaches exact original 729181 bytes",
+        "passed": true,
+        "evidence": {
+          "pending": {
+            "path": "/workspace/.continuation/full095-ui-migration-pending-v3/wine-full-ui-095-pending.py",
+            "bytes": 769607,
+            "sha256": "8b2bf2bad7b0fe0b9467fe8616847ce7f751ad6b9e5d400787ceb86eaad19bf8"
+          },
+          "pending_inverse": {
+            "path": "/workspace/.continuation/full095-ui-migration-pending-v3/exact-inverse-ledger095.json",
+            "bytes": 36962,
+            "sha256": "d50f905c217b8bc3f82d8b2665c180081e8bc51028d074eb9c0cf551cfd478ee"
+          },
+          "original_bytes": 729181,
+          "original_sha256": "9f7f2d192496f01a4e542cdbbfc1be9932381a6373eb3b46c8fefb2a965e62d9",
+          "original_assertions": 826,
+          "pending_operation_count": 79
+        }
+      },
+      {
+        "name": "907 producer assertions conserved with only three declared screenshot literal changes",
+        "passed": true,
+        "evidence": {
+          "count": 907,
+          "byte_exact": 904,
+          "all_exact_after_output_inverse": true
+        }
+      },
+      {
+        "name": "All strict Saved runtime and native evidence logic unchanged in complete preserved function bodies",
+        "passed": true,
+        "evidence": {
+          "typed_order_alias_graph_and_saved_raw_files": [
+            "graph",
+            "decode",
+            "snapshot_value",
+            "filesystem_rows",
+            "durable"
+          ],
+          "actual_root_prelaunch_UI_primary_raw_integer_zero": [
+            "primary_launch"
+          ],
+          "actual_full_735_source_guard_and_original_binding": [
+            "source_and_binding",
+            "maintained",
+            "source_map"
+          ],
+          "actual_receipt_native_API_phase_ledger": [
+            "ui_receipt",
+            "native_archive",
+            "new_subgroup"
+          ],
+          "old_native_baseline_and_source_qualified_delta": [
+            "baseline_documents",
+            "strict_baseline",
+            "original52_archive"
+          ],
+          "exact_four_PNG_framing_CRC_and_source_refs": [
+            "png",
+            "validate"
+          ],
+          "own_independent_source_gate_exact_real_input_spec_and_future_argv": [
+            "validate",
+            "main"
+          ]
+        }
+      },
+      {
+        "name": "Planning spec remains PENDING with actual primary receipt and execution argv null",
+        "passed": true,
+        "evidence": {
+          "template": {
+            "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/root-input-template095.json",
+            "bytes": 3917,
+            "sha256": "8213ce9ec95ef5fbc2b990f5c4f22ce437c9912fdd5491e7e370775e5a68ecd8"
+          },
+          "actual_runtime_input_spec": null
+        }
+      },
+      {
+        "name": "All reviewed physical inputs reread without changed bytes",
+        "passed": true,
+        "evidence": {
+          "file_count": 28
+        }
+      }
+    ]
+  },
+  "checked_file_refs": {
+    "/workspace/.continuation/full095-saved-validator-pending-v3/saved.py": {
+      "path": "/workspace/.continuation/full095-saved-validator-pending-v3/saved.py",
+      "bytes": 90632,
+      "sha256": "331d8b1a9de95b477cce9e1a95b0e7e3db6414749c8aba74eaa3e2bf8337e55d"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-cache-pending-v4/exact-inverse-saved-ui-cache095-v4.json": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-cache-pending-v4/exact-inverse-saved-ui-cache095-v4.json",
+      "bytes": 4739,
+      "sha256": "74f4096a6f4ab20bc43ee5664d80689a9df584ae339b608bb7519ddd43d1562a"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-cache-pending-v4/root-input-template095.json": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-cache-pending-v4/root-input-template095.json",
+      "bytes": 3917,
+      "sha256": "8213ce9ec95ef5fbc2b990f5c4f22ce437c9912fdd5491e7e370775e5a68ecd8"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-cache-pending-v4/saved.py": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-cache-pending-v4/saved.py",
+      "bytes": 97726,
+      "sha256": "34aee7208c81f155715acf444cf967e234dd4a7cb84182051068223b052b3b96"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/README095.md": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/README095.md",
+      "bytes": 457,
+      "sha256": "2b71794531163b489be3458bb6bb7196cc17a88b9ee0b0ea4f4d1902187d9c7e"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/author-fast-source-checks095.json": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/author-fast-source-checks095.json",
+      "bytes": 7253,
+      "sha256": "27f22469c8840fc19a1cbba802e82a92677717e4abca4c9652b993d8ce8493c7"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/author-static-source-checks095.json": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/author-static-source-checks095.json",
+      "bytes": 14053,
+      "sha256": "d03676149f9634b996902777c6cb887eba09f34956424af9edff2de3873b50f1"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/exact-inverse-saved-ui-identity095.json": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/exact-inverse-saved-ui-identity095.json",
+      "bytes": 6034,
+      "sha256": "ac70b9d751348483d85936aa93422dd680801b28f83da1939a7ca11177eba0de"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/exact-inverse-saved095.json": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/exact-inverse-saved095.json",
+      "bytes": 11944,
+      "sha256": "82dce660d4c629aae59579f6521569a8e2958d88b5c944c9ba0bbe287a4fdd02"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/public-artifacts-manifest-source-preparation095.json": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/public-artifacts-manifest-source-preparation095.json",
+      "bytes": 2303,
+      "sha256": "47251cbe499c14253bf5c6f0636fdf43d951c6624f47c05f7ef9edea05e7f81b"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/root-input-template095.json": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/root-input-template095.json",
+      "bytes": 3917,
+      "sha256": "8213ce9ec95ef5fbc2b990f5c4f22ce437c9912fdd5491e7e370775e5a68ecd8"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/saved.py": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/saved.py",
+      "bytes": 98186,
+      "sha256": "6d94c3effb6c56987ece108af152b885ce35485f6220533596ed888d259f41ff"
+    },
+    "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/source-findings095.json": {
+      "path": "/workspace/.continuation/full095-saved-validator-ui-identity-source-v1/source-findings095.json",
+      "bytes": 7253,
+      "sha256": "27f22469c8840fc19a1cbba802e82a92677717e4abca4c9652b993d8ce8493c7"
+    },
+    "/workspace/.continuation/full095-ui-cache-retry-source-v1/wine-full-ui-095-cache-retry.py": {
+      "path": "/workspace/.continuation/full095-ui-cache-retry-source-v1/wine-full-ui-095-cache-retry.py",
+      "bytes": 1184954,
+      "sha256": "e5dec2d704cecbde56762cf7c2f92016f5123b592633fae12840a892869e6bc5"
+    },
+    "/workspace/.continuation/full095-ui-final-v1/root-bound-input095.json": {
+      "path": "/workspace/.continuation/full095-ui-final-v1/root-bound-input095.json",
+      "bytes": 893387,
+      "sha256": "8bbfa6d7217c44848cca1a5934776184d6870de7db8aded9243fa4fb2c431a34"
+    },
+    "/workspace/.continuation/full095-ui-final-v1/wine-full-ui-095-final.py": {
+      "path": "/workspace/.continuation/full095-ui-final-v1/wine-full-ui-095-final.py",
+      "bytes": 1184276,
+      "sha256": "83c412ce7e456109dc32a6415f7a61526955d48b01d25dbb72198870e6cf18ee"
+    },
+    "/workspace/.continuation/full095-ui-identity-retry-source-v1/exact-inverse-identity-retry095.json": {
+      "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/exact-inverse-identity-retry095.json",
+      "bytes": 32862,
+      "sha256": "b2a67945573dfa23ed84afbc0e8842e8ce98fb86f5efcc15dfda07d41f41d5b4"
+    },
+    "/workspace/.continuation/full095-ui-identity-retry-source-v1/exact-launch-contract-identity-retry095.json": {
+      "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/exact-launch-contract-identity-retry095.json",
+      "bytes": 1422,
+      "sha256": "eec81238fab2c59273800bbbe942901a51aa1c5e96927c7a429f610f97728662"
+    },
+    "/workspace/.continuation/full095-ui-identity-retry-source-v1/public-artifacts-manifest-identity-retry095.json": {
+      "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/public-artifacts-manifest-identity-retry095.json",
+      "bytes": 2290,
+      "sha256": "6ca4fd70d8acf5a9eb6b58927874c881e2196c8ccf0ab0de1e90d096983542c8"
+    },
+    "/workspace/.continuation/full095-ui-identity-retry-source-v1/root-bound-input095.json": {
+      "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/root-bound-input095.json",
+      "bytes": 893387,
+      "sha256": "8bbfa6d7217c44848cca1a5934776184d6870de7db8aded9243fa4fb2c431a34"
+    },
+    "/workspace/.continuation/full095-ui-identity-retry-source-v1/root-prelaunch-template-identity-retry095.json": {
+      "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/root-prelaunch-template-identity-retry095.json",
+      "bytes": 2930,
+      "sha256": "b129dcbf95023a61a8e7b81efc9abb7a570888126fd2543260656bdd490028ac"
+    },
+    "/workspace/.continuation/full095-ui-identity-retry-source-v1/source-contract-identity-retry095.json": {
+      "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/source-contract-identity-retry095.json",
+      "bytes": 20635,
+      "sha256": "05ca7f22bdcb531368985ff71c3613b519167afd5f38c6dee119fc3718f4934f"
+    },
+    "/workspace/.continuation/full095-ui-identity-retry-source-v1/wine-full-ui-095-identity-retry.py": {
+      "path": "/workspace/.continuation/full095-ui-identity-retry-source-v1/wine-full-ui-095-identity-retry.py",
+      "bytes": 1185253,
+      "sha256": "0e8a0bc1ed4e890cd6a0cf762c7437ced1080dba6ac82e48c680e8d6dc226b0d"
+    },
+    "/workspace/.continuation/full095-ui-lineno-cache-source-pending-v1/wine-full-ui-095-lineno-cache-pending.py": {
+      "path": "/workspace/.continuation/full095-ui-lineno-cache-source-pending-v1/wine-full-ui-095-lineno-cache-pending.py",
+      "bytes": 1184561,
+      "sha256": "1a6ac7f0db3096de170a9e0d035148bfbad372cc58f704bb7ad39da6cb7cfb6d"
+    },
+    "/workspace/.continuation/full095-ui-migration-pending-v3/exact-inverse-ledger095.json": {
+      "path": "/workspace/.continuation/full095-ui-migration-pending-v3/exact-inverse-ledger095.json",
+      "bytes": 36962,
+      "sha256": "d50f905c217b8bc3f82d8b2665c180081e8bc51028d074eb9c0cf551cfd478ee"
+    },
+    "/workspace/.continuation/full095-ui-migration-pending-v3/original-assertion-and-delta-classification095.json": {
+      "path": "/workspace/.continuation/full095-ui-migration-pending-v3/original-assertion-and-delta-classification095.json",
+      "bytes": 229838,
+      "sha256": "1ace5d8618df14bd7f8f7aa853a9637a7c3285940eea92a8ee81908d5b4a80da"
+    },
+    "/workspace/.continuation/full095-ui-migration-pending-v3/pending-binding095.json": {
+      "path": "/workspace/.continuation/full095-ui-migration-pending-v3/pending-binding095.json",
+      "bytes": 2049,
+      "sha256": "d0cc2304b79c971b23f54601e5f2e26a47a8baf00167ff5a30c60214b59664da"
+    },
+    "/workspace/.continuation/full095-ui-migration-pending-v3/wine-full-ui-095-pending.py": {
+      "path": "/workspace/.continuation/full095-ui-migration-pending-v3/wine-full-ui-095-pending.py",
+      "bytes": 769607,
+      "sha256": "8b2bf2bad7b0fe0b9467fe8616847ce7f751ad6b9e5d400787ceb86eaad19bf8"
+    }
+  },
+  "qualification": [
+    "This is a concrete source gate only; Root must still bind actual prelaunch, input spec, UI primary, complete UI receipt and Saved primary.",
+    "The historical UI_retry_two_stage_inverse_exact report key is retained for compatibility; its current implementation validates exactly three stages and adds UI_identity_retry_three_stage_inverse_exact. No assertion that the current chain has only two stages is made.",
+    "Existing complete graph, order, alias, float-hex, raw-byte and old API comparison limits remain unchanged. No cross-time Qt or Python runtime identity is reconstructed from JSON.",
+    "Saved checks four complete PNG byte files; actual Root visual inspection is a separate required action.",
+    "735 maintained file maps are verified by the preserved Saved source when Root runs it. This Source review reads the guard binding and pinned source, not all 735 maintained repository files.",
+    "Third producer Source inverse includes 4 identity-cache source edits and 27 fresh output literal edits. No performance improvement or successful third execution is claimed.",
+    "Source gate approval does not authorize restarting or creating a fourth same-issue UI attempt; user requires deferral after three unsuccessful attempts."
+  ],
+  "actual_saved_input_spec": null,
+  "actual_UI_log": null,
+  "actual_UI_receipt": null,
+  "actual_UI_primary_exit_code": null,
+  "actual_UI_raw_exit_file": null,
+  "actual_Saved_runtime": null,
+  "actual_Saved_primary_exit_code": null,
+  "actual_runtime_PASS": null,
+  "actual_finished_archive_spec": null,
+  "completed_section_increment": 0,
+  "execution_counts": {
+    "Saved": 0,
+    "codecs": 0,
+    "project": 0,
+    "tests": 0,
+    "Wine": 0,
+    "Qt": 0,
+    "DLL": 0,
+    "Git": 0,
+    "target_code_object": 0,
+    "process_control": 0,
+    "tracked_mutations": 0
+  },
+  "STOPWRITE": true
+}

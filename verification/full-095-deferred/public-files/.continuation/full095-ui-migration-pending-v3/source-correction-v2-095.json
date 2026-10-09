@@ -1,0 +1,42 @@
+{
+  "status": "SOURCE_ONLY_V2_NARROW_DETERMINISTIC_HARNESS_CORRECTION_RUNTIME_UNRUN",
+  "v1_sourcefailed_manifest": {
+    "path": "/workspace/.continuation/full095-ui-migration-pending/public-artifacts-manifest-sourcefailed095.json",
+    "bytes": 1983,
+    "sha256": "d06ebec3e1761330f6a4bfa5493d37409966fc20b872ff6f651d48b761eb2faa"
+  },
+  "v1_pending_runner": {
+    "path": "/workspace/.continuation/full095-ui-migration-pending/wine-full-ui-095-pending.py",
+    "bytes": 768529,
+    "sha256": "57f404f1efff7bdbe72db893fe5f05e281cc92c0000402d2b9ceca0bf8354ae4"
+  },
+  "v2_pending_runner": {
+    "path": "/workspace/.continuation/full095-ui-migration-pending-v2/wine-full-ui-095-pending.py",
+    "bytes": 768837,
+    "sha256": "d65e0d13fb8c58168efbd10c2b9f7d64f0768ae800bf5ac1d40ddd57c4ce3a0d"
+  },
+  "findings": [
+    {
+      "original": "Re-read rebound _prepare_damage local scenario as caller_after.",
+      "source": "rouge/damage.py236-278: scenario=dict(scenario), setdefault(base_attack), thenprepared replacements.",
+      "correction": "Keep original caller argument wrapper in separateframe-ID table at entry; snapshot that same originalobject at return; remove table reference afterreturn. Preparedlocal/returnedtuple remain independently saved.",
+      "runtime_attempts": 0
+    },
+    {
+      "original": "Known-key-only maintained hash function omitted newly added maintainedpaths.",
+      "source": "verification/full-090/full_context.py19-23 canonicalrouge/tests/scripts .py/.json selector excluding__pycache__. Actual735guard map prefixes129/213/393.",
+      "correction": "Enumerate complete canonicalselector before imports andaftercleanup; sealer independentlyenumerates same selector. Fullactualmap equality detectsadd/delete/modify;optionalformaltestadaptationverified withoutchanged-countwhitelist.",
+      "runtime_attempts": 0
+    }
+  ],
+  "only_product_harness_body_changes_v1_to_v2": [
+    "caller_object_retention",
+    "full_maintained_selector_guard"
+  ],
+  "all21plannedstates_original826asserts_4literals_14helpers_inverse_79operations_preserved": true,
+  "approved8codecplusbyteevidence_definitions_sourcebyteexact": true,
+  "unusedPNGfields_explicitly_provenance_no_runtimeclaim": true,
+  "source_review_kind": "Independent narrow development review ofv1; v2 correctedrawtext/AST locally,rootappointsformalreviewlater",
+  "project_codec_Qt_Wine_test_runtime": 0,
+  "section_completed_increment": 0
+}

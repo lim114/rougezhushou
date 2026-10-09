@@ -1,0 +1,1622 @@
+{
+  "format_version": 1,
+  "status": "HISTORICAL_FULL090_CLASSIFICATIONS_NOT_FULL095_RESULTS",
+  "original_classifier_sha256": "ea4481c9cd95fb9438f673b76c14c9386263469e12b2855fa04e9a47d7c63dcc",
+  "unmigrated_path_roots": [
+    ".cache",
+    "samples/native-client"
+  ],
+  "dependency_module_whitelist": [
+    "PySide6",
+    "PIL",
+    "rapidocr_onnxruntime",
+    "win32gui",
+    "win32process",
+    "win32api",
+    "windows_capture"
+  ],
+  "recognized_missing_only": "FileNotFoundError with nonempty filename resolved inside one of the two roots; dependency ModuleNotFoundError or _FailedTest wrapping a whitelisted missing module. Subtest missing parent remains unavailable. All other errors/failures remain errors/failures.",
+  "retired_or_declared_skips": [
+    {
+      "test": "tests.test_relics.RelicMechanismTests.test_hp_curve_and_unverified_stacking_remain_explicit",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_extension.RelicExtensionTests.test_castle_resident_waits_eighty_deployed_seconds_and_adds_flat_defense",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_extension.RelicExtensionTests.test_city_wall_condition_does_not_buff_tokens_or_increase_damage",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_extension.RelicExtensionTests.test_crown_boosts_one_damage_event_and_does_not_repeat_during_recharge",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_extension.RelicExtensionTests.test_glory_uses_actual_blocked_count_and_independent_summon_conditions",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_conditions_022.RelicConditionsTests.test_deployment_barriers_use_own_hp_and_keep_tokens_separate_from_high_tile_operators",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_conditions_022.RelicConditionsTests.test_dodge_relics_report_per_source_and_type_without_adding_probabilities_or_dps",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_conditions_022.RelicConditionsTests.test_dog_aura_needs_active_other_sources_and_never_inherits_to_tokens",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_conditions_022.RelicConditionsTests.test_medicine_seeds_are_two_shield_layers_not_hp_barrier_or_healing",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_events_022.RelicEventTests.test_first_damage_also_updates_incantation_medic_damage_based_healing",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_events_022.RelicEventTests.test_first_damage_healing_respects_projectile_window_boundary",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_events_022.RelicEventTests.test_simultaneous_distinct_damage_sources_do_not_invent_first_hit_order",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_events_022.RelicEventTests.test_source_free_neural_burst_cannot_consume_operator_first_damage",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_relic_events_022.RelicEventTests.test_summon_damage_does_not_consume_owners_first_hit_in_recharge",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_already_consumed_deployment_and_new_deployment_are_distinct",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_damage_and_low_hp_buffs_are_not_inferred_from_deployment_loss",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_deployment_does_not_change_maximum_hp_skill_damage_or_recovery",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_hp_reference_follows_cultivation_and_confirmed_max_hp_bonus",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_loss_ratio_and_flag_are_strictly_validated",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_missing_current_hp_or_deployment_state_is_never_guessed",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_report_marks_fractional_cost_and_lifecycle_limits",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_zero_and_full_hp_are_valid_but_not_defaults",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_mantra_events_024.MantraEventTests.test_s1_same_hit_order_stays_explicitly_unverified",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_mantra_events_024.MantraEventTests.test_s2_buildup_events_follow_each_final_damage_amount",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_mantra_events_024.MantraEventTests.test_s2_first_damage_changes_buildup_before_burst_without_reusing_bonus",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_mantra_events_024.MantraEventTests.test_s2_full_skill_and_cycle_do_not_depend_on_display_window",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_already_full_initial_sp_needs_no_extra_event_table",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_amiya_stun_stops_attack_sp_but_not_natural_recovery",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_attack_damage_and_elemental_loss_are_separate_callback_types",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_attack_recovery_can_charge_from_incoming_events_without_outgoing_attacks",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_display_window_does_not_change_full_cycle_or_event_origin",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_empty_event_wine_stays_on_existing_discrete_clock_in_both_modes",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_end_sp_refund_and_extra_lockout_are_counted_once",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_invalid_tables_are_rejected_instead_of_ignored",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_missing_phase_is_unknown_and_empty_phase_is_confirmed_no_hits",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_native_defensive_recovery_adds_once_and_does_not_require_unused_cycle",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_natural_sp_cookie_and_talent_attack_sp_are_not_lost",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_next_attack_waits_for_legal_slot_and_empty_targets_cannot_cast",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_no_natural_recovery_uses_finite_events_without_inventing_future_hits",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_only_applicable_actors_get_the_incoming_sp_report",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_passive_and_deployment_skills_have_no_event_fields_or_missing_conditions",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_possession_does_not_bind_and_duplicates_do_not_double_grant",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_received_callback_and_native_attack_sp_use_independent_axes",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_same_frame_separate_hits_are_not_deduplicated",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_skill_and_extra_lockout_discard_events_and_never_bank_sp",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_tank_training_merges_attack_events_with_natural_sp",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_received_sp_026.ReceivedSP026Tests.test_wine_phase_still_uses_discrete_envelope",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_caster_end_refund_remains_independent_and_wave_attack_stack_is_unknown",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_continuous_mode_keeps_exact_callback_time_and_frame_mode_next_tick",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_display_window_preserves_full_cycle_and_origin",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_duplicate_relic_ids_do_not_grant_extra_callback_sp",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_horn_callbacks_can_share_existing_wine_phase_envelope",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_horn_kill_updates_initial_recharge_and_cycle_not_per_cast_damage",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_incoming_and_outgoing_receipts_remain_separate",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_invalid_outgoing_table_not_silently_converted_to_success",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_kill_is_not_attack_dealt_damage_or_received_damage",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_missing_phase_unknown_and_explicit_empty_table_preserves_native_clock",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_native_attack_recovery_uses_own_attack_clock_beside_kill_callbacks",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_native_defensive_attack_and_kill_are_each_counted_once",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_no_token_callback_inheritance_and_report_only_applicable_types",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_passive_deployment_skills_have_no_event_panel_or_requirements",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_raw_selectors_and_partial_status_preserved",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_same_frame_events_preserve_multiplicity_and_cap_usable_sp",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_skill_and_extra_lockout_drop_kills_without_banking",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_skills_without_repeat_do_not_require_unused_cycle_phase",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_wave_and_horn_distinct_callbacks_on_same_timestamp_share_one_clock",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_wave_damage_callback_applies_to_both_supported_funnel_operators_all_skills",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_wave_received_damage_and_kills_do_not_trigger_outgoing_damage_sp",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_wave_selector_does_not_apply_to_other_casters_or_other_professions",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_event_sp_028.EventSP028Tests.test_wave_synergy_warning_hidden_for_other_subclasses_even_when_book_held",
+      "reason": "0.30用户缩减计算范围：旧战斗藏品数值断言留作历史；当前行为由test_offline_scope_030及全技能对照验证。"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_actual_numeric_marker_is_inside_sad_icon_search_envelope",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_closed_panel_does_not_read_owned_cards",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_derived_affine_layouts_reuse_same_image_and_still_match",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_geometry_result_does_not_claim_inventory_completeness",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_incomplete_usage_is_not_owned",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_low_confidence_name_is_not_owned",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_low_confidence_usage_is_not_owned",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_merged_background_suffix_does_not_destroy_complete_usage",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_missing_name_prevents_counter_identity_binding",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_one_independent_three_card_holdout",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_one_original_multirow_training_image_confirms_eleven_cards",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_same_column_cards_keep_their_own_complete_usage",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_shuffled_ocr_lines_are_equivalent",
+      "reason": "frozen original-image OCR fixture unavailable"
+    },
+    {
+      "test": "tests.test_held_cards_054.OriginalHeldCardTests.test_two_misread_names_are_not_guessed",
+      "reason": "frozen original-image OCR fixture unavailable"
+    }
+  ],
+  "linux_unavailable_original": [
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_pinned_raw_selectors_amounts_and_resident_whitelist",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '.cache/game-data/roguelike_topic_table.json'"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_sampling_flow",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_sampling_flow\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_sampling_flow.py\", line 11, in <module>\n    from PySide6.QtWidgets import QApplication\nModuleNotFoundError: No module named 'PySide6'\n"
+    },
+    {
+      "test": "tests.test_battle_preview_039.BattlePreviewTests.test_all_images_match_pinned_receipt",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/battle-039/image-receipt.json'"
+    },
+    {
+      "test": "tests.test_spawn_reference_040.MovementReferenceTests.test_all_options_and_extra_routes_match_pinned_levels",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/game-data/levels/obt/roguelike/ro6/level_rogue6_1-1.json'"
+    },
+    {
+      "test": "tests.test_ammo_refill_041.AmmoRefillReferenceTests.test_native_binary32_parameters_supersede_the_prior_q32_product_assumption",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-native-runtime-054/binary32-book-proof.json'"
+    },
+    {
+      "test": "tests.test_ammo_refill_041.AmmoRefillReferenceTests.test_pinned_extracted_template_has_positive_gate_floor_ceil_and_lifecycle",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/ammo-041/ammo-template-excerpt.json'"
+    },
+    {
+      "test": "tests.test_enemy_skills_042.EnemySkillReferenceTests.test_bundle_and_primary_enemy_database_hashes_match_receipts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/enemy-skills-042/data-receipt.json'"
+    },
+    {
+      "test": "tests.test_enemy_skills_042.EnemySkillReferenceTests.test_every_raw_definition_field_is_exact_and_unmerged",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/game-data/levels/enemydata/enemy_database.json'"
+    },
+    {
+      "test": "tests.test_enemy_skills_042.EnemySkillReferenceTests.test_remaining_work_file_contains_no_completed_batches_or_receipts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/batch-042-before/PROJECT_PROGRESS.md'"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_ui_refresh_045",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_ui_refresh_045\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_ui_refresh_045.py\", line 13, in <module>\n    from PySide6.QtCore import Qt\nModuleNotFoundError: No module named 'PySide6'\n"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_view_catalog_045",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_view_catalog_045\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_view_catalog_045.py\", line 6, in <module>\n    from PySide6.QtCore import Qt\nModuleNotFoundError: No module named 'PySide6'\n"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_branch_choices_046",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_branch_choices_046\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_branch_choices_046.py\", line 8, in <module>\n    from PIL import Image\nModuleNotFoundError: No module named 'PIL'\n"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_readability_047",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_readability_047\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_readability_047.py\", line 6, in <module>\n    from PIL import Image\nModuleNotFoundError: No module named 'PIL'\n"
+    },
+    {
+      "test": "tests.test_readable_battle_047.ReadableBattleTests.test_numerical_and_reference_functions_are_identical_to_public_backup",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/batch-047-before/rouge/battle_preview.py'"
+    },
+    {
+      "test": "tests.test_readable_battle_047.ReadableBattleTests.test_term_receipt_lists_pinned_sources_and_no_new_numerical_model",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/readable-047/battle-terms.json'"
+    },
+    {
+      "test": "tests.test_original_animation_048.OriginalAnimation048Tests.test_all_sources_match_pinned_skeleton_bytes_and_git_blob",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/timing-048/skeleton-downloads.json'"
+    },
+    {
+      "test": "tests.test_map_projection_048.GroundLandmarkTests.test_actual_pinned_images_levels_and_grids_match_every_new_binding",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/game-data/levels/obt/roguelike/ro6/level_rogue6_3-4.json'"
+    },
+    {
+      "test": "tests.test_map_projection_048.GroundLandmarkTests.test_new_check_readings_are_the_original_holdouts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/map-projection-048/ro6_n_3_4-fit.json'"
+    },
+    {
+      "test": "tests.test_map_projection_048.GroundLandmarkTests.test_new_holdouts_are_ground_metal_centers_never_fit_inputs",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/map-projection-048/calibration-input.json'"
+    },
+    {
+      "test": "tests.test_map_projection_048.GroundLandmarkTests.test_prior_four_calibrations_eight_bindings_twenty_checks_unchanged",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/batch-048-before/rouge/data/battle-map-projections.json'"
+    },
+    {
+      "test": "tests.test_map_projection_048.GroundLandmarkTests.test_unaccepted_wood_decorations_and_portal_probes_are_retained",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/map-projection-048/ro6_n_2_3-fit.json'"
+    },
+    {
+      "test": "tests.test_map_projection_049.GroundReferenceTests.test_actual_pinned_images_levels_and_grids_match_every_new_binding",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/game-data/levels/obt/roguelike/ro6/level_rogue6_4-5.json'"
+    },
+    {
+      "test": "tests.test_map_projection_049.GroundReferenceTests.test_failed_readings_retained_without_relaxed_pixel_gate",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/map-projection-049/calibration-input.json'"
+    },
+    {
+      "test": "tests.test_map_projection_049.GroundReferenceTests.test_independent_checks_are_original_ground_centers_and_never_fit_inputs",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/map-projection-049/calibration-input.json'"
+    },
+    {
+      "test": "tests.test_map_projection_049.GroundReferenceTests.test_prior_six_calibrations_twelve_bindings_thirty_four_checks_unchanged",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/batch-049-before/rouge/data/battle-map-projections.json'"
+    },
+    {
+      "test": "tests.test_recipient_binding_050.RecipientBinding050Tests.test_exact_seven_parent_bindings_and_recipient_effects_preserved",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/batch-050-before/manifest.json'"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_map_projection_051",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_map_projection_051\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_map_projection_051.py\", line 15, in <module>\n    from scripts.build_map_projections_051 import build, fit\n  File \"/workspace/rougezhushou/scripts/build_map_projections_051.py\", line 16, in <module>\n    from PIL import Image, ImageDraw\nModuleNotFoundError: No module named 'PIL'\n"
+    },
+    {
+      "test": "tests.test_p1_ammo_cost_054.PartialLastAmmoPacket054Tests.test_cached_primary_skill_notes_prove_partial_packet_and_consumption_callback",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-ammo-cost-054/angel-page.html'"
+    },
+    {
+      "test": "setUpClass (tests.test_counter_badges_054.CounterBadgeContractTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-counter-images-054/source/taptap-hydra-100.jpg'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_actual_full_ocr_miss_retains_unknown",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-counter-training-054/independent-positive-ocr.json'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_calibration_negatives_have_no_badges (image='run-relic-open.png')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-relic-open-ocr.json'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_calibration_negatives_have_no_badges (image='run-map-closed.png')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-map-closed-ocr.json'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_frozen_parameters_precede_independent_ocr",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-counter-training-054/frozen-before-holdout.json'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_independent_glyph_generalizes_with_manual_numeric_anchor",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-counter-training-054/independent-positive-ocr.json'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_independent_native_held_page_is_negative",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-counter-training-054/independent-negative-ocr.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_held_integration_054.HeldIntegrationTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-held-cards-054/fixtures.json'"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_local_counters_054",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_local_counters_054\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_local_counters_054.py\", line 14, in <module>\n    from rapidocr_onnxruntime import RapidOCR\nModuleNotFoundError: No module named 'rapidocr_onnxruntime'\n"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_held_footer_054",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_held_footer_054\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_held_footer_054.py\", line 10, in <module>\n    from rapidocr_onnxruntime import RapidOCR\nModuleNotFoundError: No module named 'rapidocr_onnxruntime'\n"
+    },
+    {
+      "test": "setUpClass (tests.test_recipient_integration_054.RecipientIntegrationTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-recipient-training-054/novell-ocr-fixture.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_recipient_recognition_054.RecipientRecognitionTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-recipient-training-054/novell-ocr-fixture.json'"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_gray_counters_055",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_gray_counters_055\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_gray_counters_055.py\", line 13, in <module>\n    from rapidocr_onnxruntime import RapidOCR\nModuleNotFoundError: No module named 'rapidocr_onnxruntime'\n"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_recipient_live_055",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_recipient_live_055\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_recipient_live_055.py\", line 12, in <module>\n    from rapidocr_onnxruntime import RapidOCR\nModuleNotFoundError: No module named 'rapidocr_onnxruntime'\n"
+    },
+    {
+      "test": "setUpClass (tests.test_recognition_crop_cache_055.CropCacheTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-live-recipient-055/cached-pair-1791128222941309200-0.png'"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_owned_popup_context_055",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_owned_popup_context_055\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_owned_popup_context_055.py\", line 11, in <module>\n    from rapidocr_onnxruntime import RapidOCR\nModuleNotFoundError: No module named 'rapidocr_onnxruntime'\n"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_changed_numbers_are_never_facts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-kaltsit', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-kaltsit', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-kaltsit', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-mechanist', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-mechanist', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-mechanist', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-silverash', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-silverash.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-silverash', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-silverash.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-silverash', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-silverash.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='module-mechanist', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/module-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='module-mechanist', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/module-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='module-mechanist', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/module-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_dimmed_overlay_cropped_and_low_resolution_fallback",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_each_missing_control_falls_back",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_no_previous_page_values_or_mutable_result_reused",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_original_module_and_animation",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/module-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_original_three_operator_pages (name='operator-kaltsit')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_original_three_operator_pages (name='operator-mechanist')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_original_three_operator_pages (name='operator-silverash')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-silverash.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_page_conflict_retains_multiple_candidates_and_falls_back",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_rois_include_all_original_non_title_ocr",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_single_texture_never_confirms_page",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_translation_maps_current_regions",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition.VisualRecognitionTests.test_image_only_identity_and_potential_survive_panel_relocation (operator='mechanist')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition.VisualRecognitionTests.test_image_only_identity_and_potential_survive_panel_relocation (operator='silverash')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-silverash.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition.VisualRecognitionTests.test_image_only_identity_and_potential_survive_panel_relocation (operator='kaltsit')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition.VisualRecognitionTests.test_unsupported_page_and_empty_frame_never_supply_reference_values",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/module-mechanist.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition_057.VisualExactCacheTests.test_exact_public_operator_reuses_only_equal_source_and_is_immutable",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition_057.VisualExactCacheTests.test_feature_reuse_never_reuses_current_icon_fields",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition_057.VisualExactCacheTests.test_run_context_change_recomputes_matching_against_current_exact_features",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition_057.VisualExactCacheTests.test_transition_to_unrelated_public_page_clears_old_operator_facts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/operator-mechanist.png'"
+    },
+    {
+      "test": "setUpClass (tests.test_empty_bed_cost_057.EmptyBedCost057Tests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '.cache/game-data/receipt.json'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_all_current_original_ocr_fields_inside_domain",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_current_translation_and_aspect_padding",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dimmed_clipped_low_resolution_discovery",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-roster', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-roster', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-roster', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-mechanist-selected', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-mechanist-selected.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-mechanist-selected', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-mechanist-selected.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-mechanist-selected', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-mechanist-selected.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-emergency-mechanist', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-emergency-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-emergency-mechanist', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-emergency-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-emergency-mechanist', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-emergency-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_each_control_missing_requires_discovery",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_originals_and_untrained_emergency_capture (name='run-roster')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_originals_and_untrained_emergency_capture (name='run-mechanist-selected')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-mechanist-selected.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_originals_and_untrained_emergency_capture (name='run-emergency-mechanist')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-emergency-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_values_and_names_never_become_visual_facts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/samples/native-client/run-emergency-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_changed_body_preserves_scheduling_only",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='kaltsit_owned', factor=0.5)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='kaltsit_owned', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='kaltsit_owned', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='kaltsit_owned', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='myrtle_owned', factor=0.5)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='myrtle_owned', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='myrtle_owned', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='myrtle_owned', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_dim_crop_and_too_small_keep_full_discovery",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_each_missing_current_core_rejects_other_identity",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_existing_map_relic_and_node_pages_never_claim_popup (name='exploration-map')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_existing_map_relic_and_node_pages_never_claim_popup (name='run-relic-multicard')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_existing_map_relic_and_node_pages_never_claim_popup (name='map-template-node-detail')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_four_original_identities_and_actual_second_myrtle_frame (name='kaltsit_owned')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_four_original_identities_and_actual_second_myrtle_frame (name='chen_owned')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_four_original_identities_and_actual_second_myrtle_frame (name='leizi_owned')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_four_original_identities_and_actual_second_myrtle_frame (name='myrtle_owned')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_four_original_identities_and_actual_second_myrtle_frame",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_old_binary_assets_and_reference_scope_unchanged",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/batch-059-before/manifest.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_translation_maps_regions_and_control_transform",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_varying_count_digits_do_not_supply_page_facts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/page-routing-056/epoch-1791136902879484600/inventory.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_recognition_059.CurrentDescriptionLineTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/hybrid-059/epoch3-current/existing-description-reconfirm-1791186974924856300/receipt.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_recognition_059.OwnedPopupFooterTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/hybrid-059/epoch2-current/footer-current-rec-probe-1791183933046002600/receipt.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_recognition_059.OwnedPopupSemanticTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/hybrid-058/epoch-current/paired-1791174143445624800/rows/operator-kaltsit-animation.json'"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_counter_reading_060",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_counter_reading_060\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_counter_reading_060.py\", line 14, in <module>\n    from rapidocr_onnxruntime import RapidOCR\nModuleNotFoundError: No module named 'rapidocr_onnxruntime'\n"
+    },
+    {
+      "test": "setUpClass (tests.test_river_effects_060.RiverEffectsTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/p1-native-runtime-054/river-contract-055.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_river_reporting_060.RiverReportingTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/river-effects-060/integration-before.json'"
+    },
+    {
+      "test": "unittest.loader._FailedTest.test_hydra_history_060",
+      "kind": "environment_dependency",
+      "reason": "Failed to import test module: test_hydra_history_060\nTraceback (most recent call last):\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/rougezhushou/tests/test_hydra_history_060.py\", line 19, in <module>\n    import rouge.app as app_module\n  File \"/workspace/rougezhushou/rouge/app.py\", line 6, in <module>\n    import win32gui\nModuleNotFoundError: No module named 'win32gui'\n"
+    },
+    {
+      "test": "tests.test_refined_matching_061.RefinedMatching061Tests.test_two_actual_bars_keep_every_frozen_score_center_and_candidate",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/held-performance-061/baseline-profile.json'"
+    },
+    {
+      "test": "tests.test_sp_sources_066.NaturalSpSources.test_generator_preserves_the_prefab_medical_selector",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/game-data/roguelike_topic_table.json'"
+    },
+    {
+      "test": "tests.test_sp_sources_066.NaturalSpSources.test_regeneration_preserves_completed_river_reference_descriptions",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/game-data/roguelike_topic_table.json'"
+    }
+  ],
+  "wine_unavailable_original": [
+    {
+      "test": "tests.test_deployment_relics_027.DeploymentRelics027Tests.test_pinned_raw_selectors_amounts_and_resident_whitelist",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '.cache\\\\game-data\\\\roguelike_topic_table.json'"
+    },
+    {
+      "test": "tests.test_battle_preview_039.BattlePreviewTests.test_all_images_match_pinned_receipt",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\battle-039\\\\image-receipt.json'"
+    },
+    {
+      "test": "tests.test_spawn_reference_040.MovementReferenceTests.test_all_options_and_extra_routes_match_pinned_levels",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\game-data\\\\levels\\\\obt\\\\roguelike\\\\ro6\\\\level_rogue6_1-1.json'"
+    },
+    {
+      "test": "tests.test_ammo_refill_041.AmmoRefillReferenceTests.test_native_binary32_parameters_supersede_the_prior_q32_product_assumption",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-native-runtime-054\\\\binary32-book-proof.json'"
+    },
+    {
+      "test": "tests.test_ammo_refill_041.AmmoRefillReferenceTests.test_pinned_extracted_template_has_positive_gate_floor_ceil_and_lifecycle",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\ammo-041\\\\ammo-template-excerpt.json'"
+    },
+    {
+      "test": "tests.test_enemy_skills_042.EnemySkillReferenceTests.test_bundle_and_primary_enemy_database_hashes_match_receipts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\enemy-skills-042\\\\data-receipt.json'"
+    },
+    {
+      "test": "tests.test_enemy_skills_042.EnemySkillReferenceTests.test_every_raw_definition_field_is_exact_and_unmerged",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\game-data\\\\levels\\\\enemydata\\\\enemy_database.json'"
+    },
+    {
+      "test": "tests.test_enemy_skills_042.EnemySkillReferenceTests.test_remaining_work_file_contains_no_completed_batches_or_receipts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\batch-042-before\\\\PROJECT_PROGRESS.md'"
+    },
+    {
+      "test": "tests.test_view_catalog_045.ViewCatalogTests.test_alias_gallery_uses_explicit_pinned_prefab_reference",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\visual-catalog-045\\\\portrait-download-receipt.json'"
+    },
+    {
+      "test": "tests.test_view_catalog_045.ViewCatalogTests.test_floor_source_is_bound_and_special_ids_do_not_imply_floor_number",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\visual-catalog-045\\\\stage-floor-input.json'"
+    },
+    {
+      "test": "tests.test_branch_choices_046.SkillOriginalTests.test_source_icon_overrides_are_not_replaced_by_similar_skill_names",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\game-data\\\\skill_table.json'"
+    },
+    {
+      "test": "tests.test_readable_battle_047.ReadableBattleTests.test_numerical_and_reference_functions_are_identical_to_public_backup",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\batch-047-before\\\\rouge\\\\battle_preview.py'"
+    },
+    {
+      "test": "tests.test_readable_battle_047.ReadableBattleTests.test_term_receipt_lists_pinned_sources_and_no_new_numerical_model",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\readable-047\\\\battle-terms.json'"
+    },
+    {
+      "test": "tests.test_original_animation_048.OriginalAnimation048Tests.test_all_sources_match_pinned_skeleton_bytes_and_git_blob",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\timing-048\\\\skeleton-downloads.json'"
+    },
+    {
+      "test": "tests.test_map_projection_048.GroundLandmarkTests.test_actual_pinned_images_levels_and_grids_match_every_new_binding",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\game-data\\\\levels\\\\obt\\\\roguelike\\\\ro6\\\\level_rogue6_3-4.json'"
+    },
+    {
+      "test": "tests.test_map_projection_048.GroundLandmarkTests.test_new_check_readings_are_the_original_holdouts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\map-projection-048\\\\ro6_n_3_4-fit.json'"
+    },
+    {
+      "test": "tests.test_map_projection_048.GroundLandmarkTests.test_new_holdouts_are_ground_metal_centers_never_fit_inputs",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\map-projection-048\\\\calibration-input.json'"
+    },
+    {
+      "test": "tests.test_map_projection_048.GroundLandmarkTests.test_prior_four_calibrations_eight_bindings_twenty_checks_unchanged",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\batch-048-before\\\\rouge\\\\data\\\\battle-map-projections.json'"
+    },
+    {
+      "test": "tests.test_map_projection_048.GroundLandmarkTests.test_unaccepted_wood_decorations_and_portal_probes_are_retained",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\map-projection-048\\\\ro6_n_2_3-fit.json'"
+    },
+    {
+      "test": "tests.test_map_projection_049.GroundReferenceTests.test_actual_pinned_images_levels_and_grids_match_every_new_binding",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\game-data\\\\levels\\\\obt\\\\roguelike\\\\ro6\\\\level_rogue6_4-5.json'"
+    },
+    {
+      "test": "tests.test_map_projection_049.GroundReferenceTests.test_failed_readings_retained_without_relaxed_pixel_gate",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\map-projection-049\\\\calibration-input.json'"
+    },
+    {
+      "test": "tests.test_map_projection_049.GroundReferenceTests.test_independent_checks_are_original_ground_centers_and_never_fit_inputs",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\map-projection-049\\\\calibration-input.json'"
+    },
+    {
+      "test": "tests.test_map_projection_049.GroundReferenceTests.test_prior_six_calibrations_twelve_bindings_thirty_four_checks_unchanged",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\batch-049-before\\\\rouge\\\\data\\\\battle-map-projections.json'"
+    },
+    {
+      "test": "tests.test_recipient_binding_050.RecipientBinding050Tests.test_exact_seven_parent_bindings_and_recipient_effects_preserved",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\batch-050-before\\\\manifest.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_map_projection_051.FixedGroundCandidateTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\map-projection-051\\\\battle-map-projections-candidate.json'"
+    },
+    {
+      "test": "tests.test_p1_ammo_cost_054.PartialLastAmmoPacket054Tests.test_cached_primary_skill_notes_prove_partial_packet_and_consumption_callback",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-ammo-cost-054\\\\angel-page.html'"
+    },
+    {
+      "test": "setUpClass (tests.test_counter_badges_054.CounterBadgeContractTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-counter-images-054\\\\source\\\\taptap-hydra-100.jpg'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_actual_full_ocr_miss_retains_unknown",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-counter-training-054\\\\independent-positive-ocr.json'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_calibration_negatives_have_no_badges (image='run-relic-open.png')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-relic-open-ocr.json'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_calibration_negatives_have_no_badges (image='run-map-closed.png')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-map-closed-ocr.json'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_frozen_parameters_precede_independent_ocr",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-counter-training-054\\\\frozen-before-holdout.json'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_independent_glyph_generalizes_with_manual_numeric_anchor",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-counter-training-054\\\\independent-positive-ocr.json'"
+    },
+    {
+      "test": "tests.test_counter_badges_054.CounterBadgeIndependentValidationTests.test_independent_native_held_page_is_negative",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-counter-training-054\\\\independent-negative-ocr.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_held_integration_054.HeldIntegrationTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-held-cards-054\\\\fixtures.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_local_counters_054.LocalCounterProductionTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-held-cards-054\\\\fixtures.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_held_footer_054.HeldFooterReconfirmTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-recipient-training-054\\\\source\\\\BV14aK26bEuP-curl-first.jpg'"
+    },
+    {
+      "test": "setUpClass (tests.test_recipient_integration_054.RecipientIntegrationTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-recipient-training-054\\\\novell-ocr-fixture.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_recipient_recognition_054.RecipientRecognitionTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-recipient-training-054\\\\novell-ocr-fixture.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_gray_counters_055.GrayCounterTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-recipient-training-054\\\\source\\\\BV14aK26bEuP-curl-first.jpg'"
+    },
+    {
+      "test": "setUpClass (tests.test_recipient_live_055.LiveRecipientReconfirmTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-live-recipient-055\\\\current-game-1791126165174762500.png'"
+    },
+    {
+      "test": "setUpClass (tests.test_recognition_crop_cache_055.CropCacheTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-live-recipient-055\\\\cached-pair-1791128222941309200-0.png'"
+    },
+    {
+      "test": "setUpClass (tests.test_owned_popup_context_055.OwnedPopupContextTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-live-recipient-055\\\\cached-pair-1791131176463664300-0.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_changed_numbers_are_never_facts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-kaltsit', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-kaltsit', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-kaltsit', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-mechanist', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-mechanist', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-mechanist', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-silverash', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-silverash.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-silverash', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-silverash.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='operator-silverash', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-silverash.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='module-mechanist', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\module-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='module-mechanist', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\module-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_continuous_scales (name='module-mechanist', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\module-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_dimmed_overlay_cropped_and_low_resolution_fallback",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_each_missing_control_falls_back",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_no_previous_page_values_or_mutable_result_reused",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_original_module_and_animation",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\module-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_original_three_operator_pages (name='operator-kaltsit')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_original_three_operator_pages (name='operator-mechanist')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_original_three_operator_pages (name='operator-silverash')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-silverash.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_page_conflict_retains_multiple_candidates_and_falls_back",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_rois_include_all_original_non_title_ocr",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_single_texture_never_confirms_page",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_page_features_056.PageFeatureTests.test_translation_maps_current_regions",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition.VisualRecognitionTests.test_image_only_identity_and_potential_survive_panel_relocation (operator='mechanist')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition.VisualRecognitionTests.test_image_only_identity_and_potential_survive_panel_relocation (operator='silverash')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-silverash.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition.VisualRecognitionTests.test_image_only_identity_and_potential_survive_panel_relocation (operator='kaltsit')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-kaltsit.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition.VisualRecognitionTests.test_unsupported_page_and_empty_frame_never_supply_reference_values",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\module-mechanist.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition_057.VisualExactCacheTests.test_exact_public_operator_reuses_only_equal_source_and_is_immutable",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition_057.VisualExactCacheTests.test_feature_reuse_never_reuses_current_icon_fields",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition_057.VisualExactCacheTests.test_run_context_change_recomputes_matching_against_current_exact_features",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-mechanist.png'"
+    },
+    {
+      "test": "tests.test_visual_recognition_057.VisualExactCacheTests.test_transition_to_unrelated_public_page_clears_old_operator_facts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\operator-mechanist.png'"
+    },
+    {
+      "test": "setUpClass (tests.test_empty_bed_cost_057.EmptyBedCost057Tests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '.cache\\\\game-data\\\\receipt.json'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_all_current_original_ocr_fields_inside_domain",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_current_translation_and_aspect_padding",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dimmed_clipped_low_resolution_discovery",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-roster', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-roster', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-roster', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-mechanist-selected', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-mechanist-selected.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-mechanist-selected', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-mechanist-selected.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-mechanist-selected', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-mechanist-selected.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-emergency-mechanist', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-emergency-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-emergency-mechanist', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-emergency-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_dynamic_scale_regions (name='run-emergency-mechanist', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-emergency-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_each_control_missing_requires_discovery",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_originals_and_untrained_emergency_capture (name='run-roster')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-roster.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_originals_and_untrained_emergency_capture (name='run-mechanist-selected')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-mechanist-selected.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_originals_and_untrained_emergency_capture (name='run-emergency-mechanist')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-emergency-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_058.RosterPageFeatureTests.test_values_and_names_never_become_visual_facts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\samples\\\\native-client\\\\run-emergency-mechanist.png'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_changed_body_preserves_scheduling_only",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='kaltsit_owned', factor=0.5)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='kaltsit_owned', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='kaltsit_owned', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='kaltsit_owned', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='myrtle_owned', factor=0.5)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='myrtle_owned', factor=0.65)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='myrtle_owned', factor=0.8)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_continuous_scales_use_current_geometry (name='myrtle_owned', factor=1.25)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_dim_crop_and_too_small_keep_full_discovery",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_each_missing_current_core_rejects_other_identity",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_existing_map_relic_and_node_pages_never_claim_popup (name='exploration-map')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_existing_map_relic_and_node_pages_never_claim_popup (name='run-relic-multicard')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_existing_map_relic_and_node_pages_never_claim_popup (name='map-template-node-detail')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_four_original_identities_and_actual_second_myrtle_frame (name='kaltsit_owned')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_four_original_identities_and_actual_second_myrtle_frame (name='chen_owned')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_four_original_identities_and_actual_second_myrtle_frame (name='leizi_owned')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_four_original_identities_and_actual_second_myrtle_frame (name='myrtle_owned')",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_four_original_identities_and_actual_second_myrtle_frame",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_old_binary_assets_and_reference_scope_unchanged",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\batch-059-before\\\\manifest.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_translation_maps_regions_and_control_transform",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "tests.test_page_features_059.OwnedPopupFeatureTests.test_varying_count_digits_do_not_supply_page_facts",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\page-routing-056\\\\epoch-1791136902879484600\\\\inventory.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_recognition_059.CurrentDescriptionLineTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\hybrid-059\\\\epoch3-current\\\\existing-description-reconfirm-1791186974924856300\\\\receipt.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_recognition_059.OwnedPopupFooterTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\hybrid-059\\\\epoch2-current\\\\footer-current-rec-probe-1791183933046002600\\\\receipt.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_recognition_059.OwnedPopupSemanticTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\hybrid-058\\\\epoch-current\\\\paired-1791174143445624800\\\\rows\\\\operator-kaltsit-animation.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_counter_reading_060.CounterReading060Tests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-recipient-training-054\\\\source\\\\BV14aK26bEuP-curl-first.jpg'"
+    },
+    {
+      "test": "setUpClass (tests.test_river_effects_060.RiverEffectsTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\p1-native-runtime-054\\\\river-contract-055.json'"
+    },
+    {
+      "test": "setUpClass (tests.test_river_reporting_060.RiverReportingTests)",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\river-effects-060\\\\integration-before.json'"
+    },
+    {
+      "test": "tests.test_refined_matching_061.RefinedMatching061Tests.test_two_actual_bars_keep_every_frozen_score_center_and_candidate",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\research\\\\held-performance-061\\\\baseline-profile.json'"
+    },
+    {
+      "test": "tests.test_sp_sources_066.NaturalSpSources.test_generator_preserves_the_prefab_medical_selector",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\game-data\\\\roguelike_topic_table.json'"
+    },
+    {
+      "test": "tests.test_sp_sources_066.NaturalSpSources.test_regeneration_preserves_completed_river_reference_descriptions",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: 'Z:\\\\workspace\\\\rougezhushou\\\\.cache\\\\game-data\\\\roguelike_topic_table.json'"
+    }
+  ],
+  "original_linux_counts": {
+    "tests_run": 1875,
+    "tests_passed": 1715,
+    "historical_or_declared_skips": 84,
+    "unavailable_records": 126,
+    "unavailable_parent_count": 87
+  },
+  "original_wine_counts": {
+    "tests_run": 1939,
+    "tests_passed": 1789,
+    "historical_or_declared_skips": 84,
+    "unavailable_records": 123,
+    "unavailable_parent_count": 84
+  },
+  "count_rule": "Historical totals are not expected 095 totals; unavailable_records counts rows/subtests and can overlap parent totals. Never subtract unavailable_records from tests_run as a disjoint partition.",
+  "fresh095_status": "NOT_RUN"
+}

@@ -1,0 +1,42 @@
+{
+  "format_version": 1,
+  "status": "SOURCE_DECLARED_CONTROLS_UNRUN",
+  "actual_control_execution": null,
+  "actual_PRIMARY_argv_cwd_log_exit_tool_completion": null,
+  "actual_lossless_evidence_ready": false,
+  "run_by": "Root after actual95save/actual96 and independent concrete FINAL source admission, before trusting any097 durable evidence",
+  "whole_historical_functions": ["flat_native", "native_inverse", "clone", "snapshot", "byte_evidence"],
+  "new_source_functions": ["_graph_header", "_whole_nonstring_node", "envelope_native_strings", "inverse_native_strings"],
+  "valid_string_ordinal_vectors": [
+    [], [0], [1114111], [55296], [56319], [56320], [57343],
+    [55296,56320], [56319,57343], [56320,55296], [55296,120,56320],
+    [55357,56898], [128578], [20013,25991,128578],
+    [92,117,100,56,48,48,92,117,100,99,48,48]
+  ],
+  "accepted_codepoint_scope": "Integers0..0x10ffff are Python str ordinals, including surrogate ranges and noncharacters. Do not call all of them interoperable Unicode scalars.",
+  "invalid_decode_codepoint_vectors": [[-1], [1114112], [true], [1.0], ["55296"], [null]],
+  "structural_invalid_controls": [
+    "missing/extra graph key",
+    "wrong schema",
+    "empty nodes with root0",
+    "root bool/outofrange/negative",
+    "string node missing/extra key or wrongvalue/codepoints type",
+    "nonstring node primitive native type mismatch",
+    "nonstring node extra fields",
+    "float/bytes hex nonASCII",
+    "dict items not listofexacttwo-reference lists",
+    "reference bool/negative/outofrange/typeinvalid"
+  ],
+  "full_graph_value_controls": [
+    "All declared vectors in both dictkey and dictvalue/stringlist/tuple positions, including complete original three report strings and errorargs.",
+    "Shared nested dict referenced twice retains identical aliasindexes and nativeinverse alias identity; dict insertionorder and string/nonstring key types remain exact.",
+    "List/tuple/None/bool/int/bytes nodes remain whole and unchanged; float.hex preserves signedzero, finitevalues and nonfinite native metadata without JSONfloat reinterpretation.",
+    "Rawbyte evidence stays byteexact, absenttarget remains explicitNone, and graph ord envelope doesnot reencode product savedbytes.",
+    "Wrapper and inverse do not mutate caller graph/node/items arrays; copy comparisons use whole originalgraph beforeafter.",
+    "Direct ensure_ascii=True nativepair transport is separately observed as lossy; scalar128578 and literalbackslash-u controls stay distinct. This diagnostic is not an app/runtimePASS."
+  ],
+  "required_roundtrip": "original_whole_graph -> envelope -> evidenceJSONUTF8/gzip -> reload -> inverse_envelope -> entire_historical_graph -> historical_native_inverse -> full_flat_native -> envelope equals original_envelope exactly, including everystringcodepoint/type/order/alias/reference. Check concrete control primary before using output.",
+  "JSON_projection_limits": "JSON_projection is supplementary and separately labeled. Retain it in a complete native envelope and optional originalASCIIJSONtext; do not certify native adjacentpairs, tuple/bytes/nonstringkey/aliases or nonfinitevalues using rawdecodedJSON equivalence.",
+  "fail_closed": "Any unexpected acceptedinvalidcontrol, mismatchedwholegraph, codec_source_drift, missingprimary or lossydurable reload blocks097 receipt admission; retain failedattempt and source-qualified correction. No project calls in transport controls.",
+  "source_author_calls": {"codec": 0, "helper": 0, "project": 0, "tests": 0, "Wine": 0, "Git": 0}
+}

@@ -1,0 +1,11 @@
+# 第95节静态归档映射
+
+本包只整理已存在的公开源证据：5个封版包的73个payload、10个manifest/handoff，以及18个root源文件，共101条唯一映射。每条都给出真实source_path、archive_relative_path、bytes和sha256，逐项流式SHA256核对原MF和真实handoff；未复制任何payload、写入项目、stage、执行测试或Git。
+
+原包使用其真实MF schema：candidate/old-test/paired/code-review读取files；old-test正式审核读取payload_files的path/name，由本计划明确分配report095/formal-token-duration-test-adaptation相对命名空间。已有archive_path均原样保留，所有manifest与handoff独立纳入映射。root证据使用root095相对命名空间。未来仓库归档根目录由root唯一archiver选择，本包repository_archive_base_path保持null。
+
+首次selected 1107项中的52个失败和primary exit 1完整保留。已保存的v2 Linux证据为related 169项通过、selected 1107项执行（1106通过、1历史skip、0失败错误）、primary exit 0；两个735源guard分别保持其历史原样，当前v2为41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab。旧包的历史pending字段不覆盖，后续Linux状态来自独立root当前工作receipt。
+
+focused FINAL、真实window及PNG审核、saved-only、full095 Linux/Wine、full095最终selected、完成receipt/archive closure和batch commit/push均为null pending。不猜未来文件名/hash，不认定95已完成，不追加93/94归档。root合并实际最终证据前须再核全部源大小/hash；本包只提供静态映射，不能代替后续运行验收。
+
+本包payload仅static-archive-plan095.json与README.md；public-artifacts-manifest-static-archive-plan095.json和handoff-static-archive-plan095.json在其外单独封版。全部4文件交接后STOPWRITE。

@@ -1,0 +1,342 @@
+{
+  "status": "STOPWRITE_SOURCE_ONLY_DEFERRED_MANUAL_SELECTION_PLAN_NOT_EXECUTED",
+  "section": 95,
+  "purpose": "Preserve existing public results and truthful breakpoints after the third same UI problem is deferred; Root writes reports/checkpoint and commits/pushes separately.",
+  "destination_root": "/workspace/rougezhushou/verification/full-095-deferred",
+  "call_fullPASS_only_d93_or_finish_pipeline": false,
+  "source_selector_inputs": {
+    "actual_FINAL_evidence_source_config": {
+      "path": "/workspace/.continuation/full095-ui-identity-evidence-final-v1/source-inputs095.json",
+      "bytes": 739623,
+      "sha256": "275eaad202e9b198db20f6affe93487c2292167a2b06ffa81fb8d84c8cdea8e7"
+    },
+    "Root_public_selection_v4": {
+      "path": "/workspace/.continuation/root-full095-public-continuation-supplements-v4.json",
+      "bytes": 285541,
+      "sha256": "8e120bf1cd1054547a465fff64639fdbf08506674c9fac392964772c1c0bdf0d"
+    },
+    "actual_FINAL_identity_binding": {
+      "path": "/workspace/.continuation/full095-regression-ui-identity-resume-final-v1/actual-full095-source-binding.json",
+      "bytes": 693455,
+      "sha256": "e818ba9aefa4d8cd739da561540ef2e49cbf38c70311346cd10c7b2d86be1bf6"
+    }
+  },
+  "exact_expansion_recipes": [
+    {
+      "source": "actual_FINAL_evidence_source_config",
+      "pointer": "/pinned_source_inputs",
+      "action": "Include every value full_ref plus config selector itself. Do not call any referenced helper."
+    },
+    {
+      "source": "actual_FINAL_evidence_source_config",
+      "pointer": "/public_packets",
+      "actual_packets": 22,
+      "action": "Include each exact manifest (manifest_path/SHA); expand only declared payload rows using the style table below. Include payload full refs. Explicit handoff/readme rows in selection/supplement lists remain independent selections."
+    },
+    {
+      "source": "actual_FINAL_evidence_source_config",
+      "pointer": "/supplemental_public_inputs",
+      "actual_full_refs": 2694,
+      "action": "Include each value full_ref; retains old failed1/lostNULL Source history and all2310 second closed compressed refs."
+    },
+    {
+      "source": "Root_public_selection_v4",
+      "pointer": "/rows",
+      "actual_rows": 447,
+      "action": "Include row.file full_ref and retain row.archive_path/qualification in provenance; Source preparation is not a completed section."
+    }
+  ],
+  "packet_style_table": {
+    "local_artifact_dict": "manifest.artifacts mapping name->{bytes,sha256}: source manifest_parent/name; direct filename only",
+    "payload_file_rows": "manifest.payload_files: path,name,bytes,sha256 rows; declared names must be safe relative paths",
+    "payload_ref_rows": "manifest.payload_files: full path/bytes/sha256 rows; basename is only provenance, globally unique source path controls archive destination"
+  },
+  "six_actual_passed_jobs": [
+    {
+      "job": "linux_full",
+      "observation": {
+        "path": "/workspace/.continuation/root-full095-linux_full-observation.json",
+        "bytes": 1263,
+        "sha256": "612508f25ba5cab917be86c23bfb2883803410a4cab40310ffb0095cc53cd45a"
+      },
+      "raw_primary": {
+        "path": "/workspace/.continuation/root-full095-linux_full.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "console": {
+        "path": "/workspace/.continuation/linux-full-095-console.log",
+        "bytes": 228,
+        "sha256": "abcfbd604c4a8faf610bf5ab9258bdf1f3f8c24629b581e9a9f601079894b65f"
+      },
+      "receipt_or_receipt_log": {
+        "path": "/workspace/.continuation/linux-full-095.json",
+        "bytes": 112287,
+        "sha256": "1d993f4722cd384dbee34bbc98c477c35e0bc96c0e76b7f71aac8aabc6c4d2a3"
+      },
+      "producer_source": {
+        "path": "/workspace/rougezhushou/scripts/verify_full_available.py",
+        "bytes": 6555,
+        "sha256": "ea4481c9cd95fb9438f673b76c14c9386263469e12b2855fa04e9a47d7c63dcc"
+      },
+      "qualification": "Only this actual completed primary-zero job; no full095/UI/Saved/native-Windows certification.",
+      "runner_detail_log": {
+        "path": "/workspace/.continuation/linux-full-095.log",
+        "bytes": 2092,
+        "sha256": "b1fc12b0e019e81b7fd1e223b2a593a7aabf4d07fa6375aea190b609007c9560"
+      }
+    },
+    {
+      "job": "wine_full",
+      "observation": {
+        "path": "/workspace/.continuation/root-full095-wine_full-observation.json",
+        "bytes": 1458,
+        "sha256": "073849e9a69741ab939d56f428960ee8adc2ae23280d95d9192684ed0c17e6cb"
+      },
+      "raw_primary": {
+        "path": "/workspace/.continuation/root-full095-wine_full-capability-retry-v1.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "console": {
+        "path": "/workspace/.compat/wine-full095-capability-retry-v1/wine-available-full095-console.log",
+        "bytes": 294,
+        "sha256": "aaf46c5d2130dfb228db387b77af3651e04878900101a2a6308dcc108b9d3344"
+      },
+      "receipt_or_receipt_log": {
+        "path": "/workspace/.compat/wine-full095-capability-retry-v1/wine-available-full095.json",
+        "bytes": 163976,
+        "sha256": "5f20d758333be0414478ce69369b70de925e4e9da065a433e1fb73d31ab6027c"
+      },
+      "producer_source": {
+        "path": "/workspace/.continuation/full095-wine-capability-retry-pending-v1/wine_full095_capability_retry.py",
+        "bytes": 8147,
+        "sha256": "fb33a4ffd7971e05efc3dd2ffc6d25f12a8f2570c231b2cfff4bb5f2fa056731"
+      },
+      "qualification": "Only this actual completed primary-zero job; no full095/UI/Saved/native-Windows certification.",
+      "runner_detail_log": {
+        "path": "/workspace/.compat/wine-full095-capability-retry-v1/wine-available-full095.log",
+        "bytes": 2169,
+        "sha256": "20f3e76b2369658c368775aae5f4ed8e7c1fc4544a8020fd77fbc2975cffc4ba"
+      }
+    },
+    {
+      "job": "linux_selected",
+      "observation": {
+        "path": "/workspace/.continuation/root-full095-linux_selected-observation.json",
+        "bytes": 1172,
+        "sha256": "2683b9c380f5f6fe748de9cb7cbfb4eabf6e07ee29c0381f1ba1f3a7c5a5378d"
+      },
+      "raw_primary": {
+        "path": "/workspace/.continuation/root-full095-linux_selected.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "console": {
+        "path": "/workspace/.continuation/selected-095.log",
+        "bytes": 1404,
+        "sha256": "60399a77b2f3051da88632ee2acee86e50c9c2e01142f24b3f729c536b2eb69b"
+      },
+      "receipt_or_receipt_log": {
+        "path": "/workspace/.continuation/selected-095.log",
+        "bytes": 1404,
+        "sha256": "60399a77b2f3051da88632ee2acee86e50c9c2e01142f24b3f729c536b2eb69b"
+      },
+      "producer_source": {
+        "path": "/workspace/rougezhushou/scripts/verify_cloud.py",
+        "bytes": 5028,
+        "sha256": "8f5f0fd958c29e1f863651d671bf2c63a003a3604fa0eae488d9636b9adde223"
+      },
+      "qualification": "Only this actual completed primary-zero job; no full095/UI/Saved/native-Windows certification."
+    },
+    {
+      "job": "wine_selected",
+      "observation": {
+        "path": "/workspace/.continuation/root-full095-wine_selected-observation.json",
+        "bytes": 1323,
+        "sha256": "afc3f24ee6121d348d0bd724cd4c5c422743c18b761e7c5af3466eabef1be84c"
+      },
+      "raw_primary": {
+        "path": "/workspace/.continuation/root-full095-wine_selected-capability-retry-v2.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "console": {
+        "path": "/workspace/.compat/wine-cloud-095-capability-retry-v2.log",
+        "bytes": 50063,
+        "sha256": "9d277db096c741897807bc34e6b00d8160d49e81e00dfe8f47bc0007bb755899"
+      },
+      "receipt_or_receipt_log": {
+        "path": "/workspace/.compat/wine-cloud-095-capability-retry-v2.log",
+        "bytes": 50063,
+        "sha256": "9d277db096c741897807bc34e6b00d8160d49e81e00dfe8f47bc0007bb755899"
+      },
+      "producer_source": {
+        "path": "/workspace/.continuation/full095-wine-capability-retry-pending-v1/wine_selected095_capability.py",
+        "bytes": 6445,
+        "sha256": "6e1892db605ec9de26c45b302998a2110b431c5583638f86abff292d5a98945f"
+      },
+      "qualification": "Only this actual completed primary-zero job; no full095/UI/Saved/native-Windows certification."
+    },
+    {
+      "job": "linux_pip",
+      "observation": {
+        "path": "/workspace/.continuation/root-full095-linux_pip-observation.json",
+        "bytes": 989,
+        "sha256": "7aa303303e03997493faa140d0f4cffb71ca5b4d65e8ef6599ded4c6e15d2197"
+      },
+      "raw_primary": {
+        "path": "/workspace/.continuation/root-full095-linux_pip.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "console": {
+        "path": "/workspace/.continuation/linux-pipcheck-095.log",
+        "bytes": 30,
+        "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+      },
+      "receipt_or_receipt_log": {
+        "path": "/workspace/.continuation/linux-pipcheck-095.log",
+        "bytes": 30,
+        "sha256": "9261363b733079a641c2e4cc9bc46ffa1d8336945a87f807b6cf68847dbc9b09"
+      },
+      "producer_source": null,
+      "qualification": "Only this actual completed primary-zero job; no full095/UI/Saved/native-Windows certification."
+    },
+    {
+      "job": "wine_pip",
+      "observation": {
+        "path": "/workspace/.continuation/root-full095-wine_pip-observation.json",
+        "bytes": 978,
+        "sha256": "95d6956ab2ee7fb6517e59bdb974c48ff429280cbdf0f81eb4f11dfc73d39899"
+      },
+      "raw_primary": {
+        "path": "/workspace/.continuation/root-full095-wine_pip.exit-code",
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "console": {
+        "path": "/workspace/.compat/wine-pipcheck-095.log",
+        "bytes": 95,
+        "sha256": "3a235cd2072a5f3c719aa648bcb794fd59508aa5c198ae9839d383a8ad963fde"
+      },
+      "receipt_or_receipt_log": {
+        "path": "/workspace/.compat/wine-pipcheck-095.log",
+        "bytes": 95,
+        "sha256": "3a235cd2072a5f3c719aa648bcb794fd59508aa5c198ae9839d383a8ad963fde"
+      },
+      "producer_source": null,
+      "qualification": "Only this actual completed primary-zero job; no full095/UI/Saved/native-Windows certification."
+    }
+  ],
+  "lost_UI_history": [
+    {
+      "attempt": 1,
+      "capsule": {
+        "path": "/workspace/.continuation/ROOT_CURRENT_WORK_095_UI_SESSION_LOST_PRIMARY_UNAVAILABLE.json",
+        "bytes": 5556,
+        "sha256": "ec0dead7b1ca4d6551828af6d8105ec6ef9f917445624f15281b82faf1b5dcc5"
+      },
+      "native_index": {
+        "path": "/workspace/.compat/full095-ui-native-v3/wine-ui-full-native-index-095.json",
+        "bytes": 175337,
+        "sha256": "e2a2e0ff3281b2d6d5cb926f1efc6b8a6e801cdec14e355f989c958d44daa756"
+      },
+      "closed_chunks": 275,
+      "chunk_selection_recipe": "Read only capsule native_index full_ref; expand index.chunks file/bytes/sha256 under /workspace/.compat/full095-ui-native-v3. Preserve original primary NULL/raw absent/receipt absent. Include referenced public diagnostics if already in explicit selectors; never classify as PASS.",
+      "primary_exit_code": null,
+      "primary_exit_code_captured": false
+    },
+    {
+      "attempt": 2,
+      "capsule": {
+        "path": "/workspace/.continuation/ROOT_CURRENT_WORK_095_UI_CACHE_SESSION_LOST_PRIMARY_UNAVAILABLE.json",
+        "bytes": 530488,
+        "sha256": "bcbf9e5e3f9aeff1745387221cd0b293aca149d52cbf566750cb0afea3d80eb6"
+      },
+      "native_index": {
+        "path": "/workspace/.compat/full095-ui-native-cache-retry-v1/wine-ui-full-native-index-095.json",
+        "bytes": 1972221,
+        "sha256": "601972564fb6f3914489f37253e966e1b6d72c1858bebd67270675d1f2aff84a"
+      },
+      "preserved_native_index_snapshot": {
+        "path": "/workspace/.continuation/root-full095-ui-cache-session-lost-v1-native-index.json",
+        "bytes": 1972221,
+        "sha256": "601972564fb6f3914489f37253e966e1b6d72c1858bebd67270675d1f2aff84a"
+      },
+      "closed_chunks": 2310,
+      "chunk_selection_recipe": "capsule /all_closed_compressed_chunk_refs_verified holds exact full refs; same refs already in source config supplemental list, deduplicate by source full_ref. Preserve NULL/raw absent/receipt absent.",
+      "primary_exit_code": null,
+      "primary_exit_code_captured": false
+    }
+  ],
+  "third_attempt_stable_launch_inputs": {
+    "actual_launch": {
+      "path": "/workspace/.continuation/root-full095-wine_ui-identity-retry-v1-actual-launch.json",
+      "bytes": 958,
+      "sha256": "b4d73d8ce6d176218c216ed978d1938bc5b04da2ffb5f78cf237cd1057aa167c"
+    },
+    "actual_prelaunch": {
+      "path": "/workspace/.continuation/root-full095-ui-identity-retry-v1-prelaunch.json",
+      "bytes": 4859,
+      "sha256": "f4d21b549be1ae9faaa01603e740d4de3eedf87bee723d1e125bd9d57b4ca0c8"
+    },
+    "actual_resume_context_path": "/workspace/.compat/wine-validation-095-context-ui-identity-retry-v1.json",
+    "qualifier": "Launch/prelaunch/resume are not completion or PASS."
+  },
+  "third_attempt_Root_late_binding_required": {
+    "only_exact_public_native_directory": "/workspace/.compat/full095-ui-native-identity-retry-v1",
+    "fixed_output_paths": [
+      {
+        "kind": "native-evidence",
+        "path": "/workspace/.compat/wine-ui-new-states-095-identity-retry-v1.json.gz"
+      },
+      {
+        "kind": "native-evidence",
+        "path": "/workspace/.compat/full095-ui-native-identity-retry-v1/wine-ui-full-native-index-095.json"
+      },
+      {
+        "kind": "screenshot",
+        "path": "/workspace/.compat/wine-window-095-identity-retry-v1.png"
+      },
+      {
+        "kind": "screenshot",
+        "path": "/workspace/.compat/wine-movement-reference-095-identity-retry-v1.png"
+      },
+      {
+        "kind": "screenshot",
+        "path": "/workspace/.compat/wine-sown-tile-control-095-identity-retry-v1.png"
+      },
+      {
+        "kind": "screenshot",
+        "path": "/workspace/.compat/wine-medical-trait-095-identity-retry-v1.png"
+      }
+    ],
+    "stdout_path": "/workspace/.continuation/root-full095-ui-identity-retry-v1-console.log",
+    "raw_primary_path": "/workspace/.continuation/root-full095-wine_ui-identity-retry-v1.exit-code",
+    "actual_completion_file_ref": null,
+    "actual_Root_budget_cancellation_capsule_ref": null,
+    "actual_primary_exit_code": null,
+    "primary_exit_code_captured": false,
+    "actual_UI_receipt_ref": null,
+    "steps": "After Root alone actually stops/observes the third job and verifies no writer remains, bind its genuine tool completion/raw status if captured; otherwise preserve NULL. Capture only the exact native namespace whole physical regular-file set, index and every closed gzip ref without decoding/codecs; include any fixed output actually present with incomplete/failed/cancelled qualification. Snapshot the actual console and budget-cancellation evidence. No fresh UI/Saved/fullPASS evidence may be invented."
+  },
+  "copy_rules": [
+    "Never scan all .compat, private state, home, credentials, installed Python/DLL binaries, or unrelated runtime directories. Only explicit selected refs and the one stopped third native directory may be read/copied.",
+    "Require canonical regular non-symlink source files, no symlink ancestry or path traversal, safe approved public roots and relative destination paths; reject nonregular native entries instead of following them.",
+    "Require every file byte size strictly below 104857600 (100 MiB), verify declared bytes/SHA before read and again before exclusive write. If oversized, record and report explicitly; do not silently drop evidence.",
+    "Deduplicate by canonical source path with identical bytes/SHA; conflicting refs block the copy. Copy raw bytes without text/JSON/gzip transformation.",
+    "Use unique destination public-files/<source path relative to /workspace>; ignore prior archive_path as a destination when collisions are possible but retain it in manifest provenance.",
+    "For source packets retain manifest + exact raw payloads and each qualification. No target import, helper invocation, codec/project/test/Wine/Git call occurs during evidence collection.",
+    "Create a fresh destination exclusively; archive manifest records original source full_ref, destination relative path, copied full_ref, provenance categories and honest outcome. Rehash every copied file and require exact selected/copied path sets before Root explicit staging.",
+    "Do not rewrite original two lost capsules, failed1 proof, earlier raw statuses, completed section93–95 receipts or frozen Source packets. This manual destination is a deferred full095 checkpoint, not a fullPASS archive."
+  ],
+  "Root_report_and_Git_scope": "Root independently writes full report and four metadata docs with full_validation_due=True, full095 deferred, future development paused; explicitly stage only agreed products/archives/receipts/docs/deferred files, validate hashes/whitespace/index and do one normal commit/push. No future commit SHA or remote result exists in this plan.",
+  "runtime_pass": false,
+  "actual_full095_completed_PASS": null,
+  "actual_Saved_primary": null,
+  "archive_execution": false,
+  "commit_or_push_execution": false,
+  "numbered_section_completion_increment": 0,
+  "no_fourth_automatic_UI_retry": true
+}

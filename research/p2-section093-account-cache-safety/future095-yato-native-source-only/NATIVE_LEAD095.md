@@ -1,0 +1,11 @@
+# 夜刀EXE-Y精确原件lead：现有native证据资格
+
+SOURCE_ONLY_EXACT_NATIVE_LEAD_DEFERRED_NOT_COMPLETED；完成节数0。
+
+现有固定原表绑定003模组stage2/3的两个resKey与index=-1/prefab2_1_root；只证明字段与文字。保存的同版本equips回执虽记录9220对象历史解析，但实际仅5个Deepcolor选中资源图，不能授权Yato consumer。现有Phatm2生命周期、Deepcolor模组、TokenCard数量原生证据均与immutable92原件hash相同，却不适用于本问题。当前所查公开保存件没有精确Yato附着/增长/首次撤退/reset writer。
+
+保持数值工作deferred；目标EXE-Y可归属既有失败记录找到0条，历史总次数未知，不能宣称已三次。旧082是EXE-X002，6次accepted公共计算不是EXE-Y失败次数；准备时filename/schema错误也不是机制尝试。不得换名绕过任何后来查实的cap。
+
+恢复需要新匹配版本equips原件/完整选图及两个resKey实际typed attachment，再核事件owner/计数单位/触发击顺序/算术层、首次撤退初始化与消耗/reset和再部署writer；当前hotfix等价性另核。参数和邻近consumer不够，不重复无新原件的同一搜索。网络本轮未使用。
+
+STOPWRITE的原95十二件source包保持；0项目导入/调用/helper/验证/Qt/Wine/private/network/代码修改。所有原件refs、hash、已查schema、检索适用范围和精确恢复条件见source receipt。

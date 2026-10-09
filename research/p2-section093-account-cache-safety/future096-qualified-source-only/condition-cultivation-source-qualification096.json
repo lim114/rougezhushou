@@ -1,0 +1,1491 @@
+{
+  "format_version": 1,
+  "status": "FINAL_SOURCE_QUALIFIED_UI_CONDITION_CULTIVATION_REFERENCE_ONLY_NOT_COMPLETED096",
+  "completed_section_increment": 0,
+  "qualified_functional_group": "Current-cultivation source explanations for existing offline scenario conditions, grouped across nine fields and six named consumers.",
+  "benefit": "The ordinary calculator currently presents these controls by operator and skill alone. Show which selected talent supports each condition under the effective cultivation, and distinguish source-backed preview eligibility from unconfirmed account/run state. Avoid suggesting that an unavailable talent modifier is active while retaining independently useful condition inputs.",
+  "qualification_counts": {
+    "operators": 6,
+    "scenario_fields": 9,
+    "named_talents": 7,
+    "original_base_talent_candidates": 20,
+    "modules_checked": 8,
+    "module_stages_checked": 24
+  },
+  "actual_schemas": {
+    "catalog": "source,selection,operators,relics,node_types,difficulties,endings,stages; operators is the 32 complete-model dictionary",
+    "operator_profiles": "source,operators; operators contains 431 roster profiles with a different skill schema",
+    "character_talent": "talents[].candidates[] with unlockCondition,requiredPotentialRank,prefabKey,name,description,rangeId,blackboard,tokenKey,isHideTalent",
+    "uniequip": "equipDict[module] with charId,tmplId,unlockEvolvePhase,unlockLevel",
+    "battle_equip": "[module].phases[] with equipLevel,parts,attributeBlackboard,tokenAttributeBlackboard",
+    "OPTIONS": "dict[operator] -> (key,label,default,upper_bound,skill_numbers) literal entries"
+  },
+  "fixed_originals": [
+    {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "bytes": 14975251,
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "table": "character_table",
+      "pinned_url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "bytes": 11447929,
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "table": "skill_table",
+      "pinned_url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    {
+      "path": "/workspace/.continuation/p2-after-070-source-audit/originals/uniequip_table.json",
+      "bytes": 3365012,
+      "sha256": "b508483cc87c03d8313f4dd8dfc1b9195bc50385a8dfec51d17e657cb26ffad9",
+      "table": "uniequip_table",
+      "pinned_url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/uniequip_table.json",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    {
+      "path": "/workspace/.continuation/p2-after-070-source-audit/originals/battle_equip_table.json",
+      "bytes": 5710707,
+      "sha256": "006687f201a823abf31c6a1c57b2269099bd3ea375c2ec3ae5595cc98a1ec460",
+      "table": "battle_equip_table",
+      "pinned_url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/battle_equip_table.json",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    }
+  ],
+  "current_observed_source_references": [
+    {
+      "path": "/workspace/rougezhushou/rouge/app.py",
+      "bytes": 95780,
+      "sha256": "3dd6810e3398471ddb6dbe9545824c7b92ba4d141fc23f889287a8044670a48f"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/operator_engine.py",
+      "bytes": 156626,
+      "sha256": "f50e6b992525da0cb3daedb16a3cd4cd45f80052b063007224bd63ac8de93f50"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/operator_options.py",
+      "bytes": 5328,
+      "sha256": "a9d7e474920ce4747b6216361a57c9874482a2a31cfa929280189443ea0eaa83"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/damage.py",
+      "bytes": 31071,
+      "sha256": "b48c86b2f02c4ea76f9b6cbd1b32a57abd925b2d8d22e8527a0cd6cb8c61be09"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/catalog.py",
+      "bytes": 3404,
+      "sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/relics.py",
+      "bytes": 40531,
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/offline_scope.py",
+      "bytes": 3045,
+      "sha256": "060879b13c6bbe2e7433d06a9087e40cbde99e052b6ab6ef14f5aa9ab56302a9"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/data/catalog.json",
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/data/operator-profiles.json",
+      "bytes": 1592209,
+      "sha256": "82b870fa4a780d626f57a18aa12f8a5bf6626c5a350b4a83499fd12518f8c957"
+    },
+    {
+      "path": "/workspace/rougezhushou/PROJECT_PROGRESS.md",
+      "bytes": 8488,
+      "sha256": "85979acbfd41b7de256c3c75d855875d40d9881027f1cf569b0403c04106b58b"
+    },
+    {
+      "path": "/workspace/rougezhushou/PROJECT_COMPLETED.md",
+      "bytes": 168169,
+      "sha256": "70e0baf123938ab69b3c3ff9fc7c21aa76eb3fcd6356ad04d2d7508a2d2129ed"
+    },
+    {
+      "path": "/workspace/rougezhushou/AGENTS.md",
+      "bytes": 6631,
+      "sha256": "91f0b2e3940efdcd217d18ae7c8c4622262d9a60478ab1ba12fd3330281578c1"
+    }
+  ],
+  "source_observation_limit": "These hashes describe source-only observation during root93/94 work. They are not a completed95 source guard, a new Git commit/tag, or authority to apply code before the prerequisite. Rebind changed callsites to root completed actual95 guard before implementation.",
+  "actual_callsite_facts": [
+    {
+      "path": "rouge/app.py",
+      "anchor": "MainWindow.update_skill_options model_option_widgets loop",
+      "fact": "Row visibility only tests owner==op and skill in skills; no per-condition selected-talent explanation is set by this loop."
+    },
+    {
+      "path": "rouge/app.py",
+      "anchor": "MainWindow.calculate model_option_widgets loop",
+      "fact": "All matching owner/skill values are read into scenario independently of row visibility or enabled state. Preserve this exact raw caller contract."
+    },
+    {
+      "path": "rouge/app.py",
+      "anchor": "current_operator_state/training_conditions/skill_rank_value/unconfirmed_training construction",
+      "fact": "Valid current run fields overlay account fields; rank precedence and effective preview defaults remain existing behaviour. Missing elite uses highest profile phase and missing level uses the current preview level. Keep run-confirmed, account-reference, simulated-level and unconfirmed labels."
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "anchor": "selected_talents/Combat.__init__/apply_self_talents/plan",
+      "fact": "Use actual selected named talent and the actual field/skill pathway; do not replace this with a global raw unlock-phase predicate or infer support solely from a nonzero value."
+    },
+    {
+      "path": "rouge/relics.py",
+      "anchor": "context_value",
+      "fact": "current_hp_ratio may fall back to scenario for an independent relic condition; offline_scope keeps combat-dependent relic effects as reference. This does not authorize new numerical relic effects."
+    }
+  ],
+  "field_consumer_qualification": [
+    {
+      "operator": "char_2025_shu",
+      "operator_name": "黍",
+      "field": "three_professions",
+      "current_label": "三种不同职业在场",
+      "default": false,
+      "upper_bound": 1,
+      "skill_numbers": [
+        1,
+        2,
+        3
+      ],
+      "actual_named_consumer": "天有四时",
+      "first_original_gate": {
+        "elite": 2,
+        "level": 1,
+        "potential_one_based": 1
+      },
+      "consumer_scope_and_boundaries": "Self-talent setup on all available skills; four-sui pulse timing remains unknown."
+    },
+    {
+      "operator": "char_2025_shu",
+      "operator_name": "黍",
+      "field": "three_same_profession",
+      "current_label": "三名相同职业在场",
+      "default": false,
+      "upper_bound": 1,
+      "skill_numbers": [
+        1,
+        2,
+        3
+      ],
+      "actual_named_consumer": "天有四时",
+      "first_original_gate": {
+        "elite": 2,
+        "level": 1,
+        "potential_one_based": 1
+      },
+      "consumer_scope_and_boundaries": "Self-talent setup on all available skills; four-sui pulse timing remains unknown."
+    },
+    {
+      "operator": "char_2025_shu",
+      "operator_name": "黍",
+      "field": "four_sui",
+      "current_label": "编队中四名岁干员",
+      "default": false,
+      "upper_bound": 1,
+      "skill_numbers": [
+        1,
+        2,
+        3
+      ],
+      "actual_named_consumer": "天有四时",
+      "first_original_gate": {
+        "elite": 2,
+        "level": 1,
+        "potential_one_based": 1
+      },
+      "consumer_scope_and_boundaries": "Self-talent setup on all available skills; four-sui pulse timing remains unknown."
+    },
+    {
+      "operator": "char_298_susuro",
+      "operator_name": "苏苏洛",
+      "field": "low_cost_healing_target",
+      "current_label": "受疗干员初始费用不超过10",
+      "default": false,
+      "upper_bound": 1,
+      "skill_numbers": [
+        1,
+        2
+      ],
+      "actual_named_consumer": "微创治疗",
+      "first_original_gate": {
+        "elite": 1,
+        "level": 1,
+        "potential_one_based": 1
+      },
+      "consumer_scope_and_boundaries": "Recipient factor in ordinary healing and skill healing; retains actual recipient-acquisition uncertainty."
+    },
+    {
+      "operator": "char_1048_orchd2",
+      "operator_name": "焰狐龙梓兰",
+      "field": "near_previous_deployment",
+      "current_label": "部署至上次位置附近（30秒加攻）",
+      "default": false,
+      "upper_bound": 1,
+      "skill_numbers": [
+        1,
+        2,
+        3
+      ],
+      "actual_named_consumer": "翔虫机动",
+      "first_original_gate": {
+        "elite": 1,
+        "level": 1,
+        "potential_one_based": 1
+      },
+      "consumer_scope_and_boundaries": "Self-talent attack bonus on all available skills; actual previous-location/deployment clock remains unknown."
+    },
+    {
+      "operator": "char_1048_orchd2",
+      "operator_name": "焰狐龙梓兰",
+      "field": "power_coating",
+      "current_label": "本次攻击仍在首轮50次强击瓶覆盖内",
+      "default": true,
+      "upper_bound": 1,
+      "skill_numbers": [
+        1,
+        2,
+        3
+      ],
+      "actual_named_consumer": "强击瓶专家",
+      "first_original_gate": {
+        "elite": 0,
+        "level": 1,
+        "potential_one_based": 1
+      },
+      "consumer_scope_and_boundaries": "Non-normal skill arrow factor; normal/charging attacks do not receive this factor. Base talent is already available at E0."
+    },
+    {
+      "operator": "char_4087_ines",
+      "operator_name": "伊内丝",
+      "field": "stolen_enemy_count",
+      "current_label": "存活且已偷取攻击的敌人数",
+      "default": 1,
+      "upper_bound": 100,
+      "skill_numbers": [
+        1,
+        2,
+        3
+      ],
+      "actual_named_consumer": "影织",
+      "first_original_gate": {
+        "elite": 1,
+        "level": 1,
+        "potential_one_based": 1
+      },
+      "consumer_scope_and_boundaries": "Setup flat attack parameter. Count is parsed and validated even without the selected talent; do not describe the API field as ignored."
+    },
+    {
+      "operator": "char_437_mizuki",
+      "operator_name": "水月",
+      "field": "enemy_below_half",
+      "current_label": "存在生命低于一半的敌人",
+      "default": false,
+      "upper_bound": 1,
+      "skill_numbers": [
+        1,
+        2,
+        3
+      ],
+      "actual_named_consumer": "反移情",
+      "first_original_gate": {
+        "elite": 2,
+        "level": 1,
+        "potential_one_based": 1
+      },
+      "consumer_scope_and_boundaries": "Setup attack bonus from the second named talent. Distinct from unresolved first-talent AMB-Y attachment."
+    },
+    {
+      "operator": "char_1044_hsgma2",
+      "operator_name": "斩业星熊",
+      "field": "current_hp_ratio",
+      "current_label": "当前生命比例（0–1）",
+      "default": 1.0,
+      "upper_bound": 1,
+      "skill_numbers": [
+        1,
+        2,
+        3
+      ],
+      "actual_named_consumer": "鬼之架势",
+      "first_original_gate": {
+        "elite": 2,
+        "level": 1,
+        "potential_one_based": 1
+      },
+      "consumer_scope_and_boundaries": "Own talent attack/resistance curve. Ratio remains parsed without this talent and has an independent relic-condition/reference consumer; keep the control available."
+    }
+  ],
+  "base_talent_original_refs": [
+    {
+      "operator": "char_2025_shu",
+      "operator_name": "黍",
+      "talent_name": "天有四时",
+      "raw_candidate_refs": [
+        {
+          "original_path": "char_2025_shu.talents[1].candidates[0]",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "2",
+          "description": "场上有三名不同职业干员时所有干员生命上限+12%、三名相同职业干员时所有干员攻击速度+12，编队中有四名【岁】干员时所有干员攻击力+12%且4秒获得1点技力",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "max_hp": 0.12,
+            "attack_speed": 12.0,
+            "atk": 0.12,
+            "interval": 4.0,
+            "sp": 1.0
+          }
+        }
+      ],
+      "raw_catalog_candidate_projection_exact": true
+    },
+    {
+      "operator": "char_298_susuro",
+      "operator_name": "苏苏洛",
+      "talent_name": "微创治疗",
+      "raw_candidate_refs": [
+        {
+          "original_path": "char_298_susuro.talents[0].candidates[0]",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "1",
+          "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升10%",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "cost": 10.0,
+            "heal_scale": 1.1
+          }
+        },
+        {
+          "original_path": "char_298_susuro.talents[0].candidates[1]",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "requiredPotentialRank": 4,
+          "potential_one_based_minimum": 5,
+          "prefabKey": "1",
+          "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升13%<@ba.talpu>（+3%）</>",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "cost": 10.0,
+            "heal_scale": 1.13
+          }
+        },
+        {
+          "original_path": "char_298_susuro.talents[0].candidates[2]",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "1",
+          "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升20%",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "cost": 10.0,
+            "heal_scale": 1.2
+          }
+        },
+        {
+          "original_path": "char_298_susuro.talents[0].candidates[3]",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 4,
+          "potential_one_based_minimum": 5,
+          "prefabKey": "1",
+          "description": "编入队伍时，所有初始费用不超过10的干员受到的治疗效果提升23%<@ba.talpu>（+3%）</>",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "cost": 10.0,
+            "heal_scale": 1.23
+          }
+        }
+      ],
+      "raw_catalog_candidate_projection_exact": true
+    },
+    {
+      "operator": "char_1048_orchd2",
+      "operator_name": "焰狐龙梓兰",
+      "talent_name": "翔虫机动",
+      "raw_candidate_refs": [
+        {
+          "original_path": "char_1048_orchd2.talents[1].candidates[0]",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "1",
+          "description": "再部署时间-15秒；部署至上次部署位置周围时，30秒内攻击力+10%并且可以部署在近战位",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "atk": 0.1,
+            "atk_duration": 30.0
+          }
+        },
+        {
+          "original_path": "char_1048_orchd2.talents[1].candidates[1]",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "1",
+          "description": "再部署时间-15秒且不提高部署费用；部署至上次部署位置周围时，30秒内攻击力+15%并且可以部署在近战位",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "atk": 0.15,
+            "atk_duration": 30.0
+          }
+        }
+      ],
+      "raw_catalog_candidate_projection_exact": true
+    },
+    {
+      "operator": "char_1048_orchd2",
+      "operator_name": "焰狐龙梓兰",
+      "talent_name": "强击瓶专家",
+      "raw_candidate_refs": [
+        {
+          "original_path": "char_1048_orchd2.talents[0].candidates[0]",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "2",
+          "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至105%",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "power_attack_count": 50.0,
+            "power_attack_scale": 1.05
+          }
+        },
+        {
+          "original_path": "char_1048_orchd2.talents[0].candidates[1]",
+          "unlockCondition": {
+            "phase": "PHASE_0",
+            "level": 1
+          },
+          "requiredPotentialRank": 4,
+          "potential_one_based_minimum": 5,
+          "prefabKey": "2",
+          "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至110%<@ba.talpu>（+5%）</>",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "power_attack_count": 50.0,
+            "power_attack_scale": 1.1
+          }
+        },
+        {
+          "original_path": "char_1048_orchd2.talents[0].candidates[2]",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "2",
+          "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至110%",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "power_attack_count": 50.0,
+            "power_attack_scale": 1.1
+          }
+        },
+        {
+          "original_path": "char_1048_orchd2.talents[0].candidates[3]",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "requiredPotentialRank": 4,
+          "potential_one_based_minimum": 5,
+          "prefabKey": "2",
+          "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至115%<@ba.talpu>（+5%）</>",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "power_attack_count": 50.0,
+            "power_attack_scale": 1.15
+          }
+        },
+        {
+          "original_path": "char_1048_orchd2.talents[0].candidates[4]",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "2",
+          "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至115%",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "power_attack_count": 50.0,
+            "power_attack_scale": 1.15
+          }
+        },
+        {
+          "original_path": "char_1048_orchd2.talents[0].candidates[5]",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 4,
+          "potential_one_based_minimum": 5,
+          "prefabKey": "2",
+          "description": "部署后首次开启技能时，接下来50次攻击的攻击力提升至120%<@ba.talpu>（+5%）</>",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "power_attack_count": 50.0,
+            "power_attack_scale": 1.2
+          }
+        }
+      ],
+      "raw_catalog_candidate_projection_exact": true
+    },
+    {
+      "operator": "char_4087_ines",
+      "operator_name": "伊内丝",
+      "talent_name": "影织",
+      "raw_candidate_refs": [
+        {
+          "original_path": "char_4087_ines.talents[0].candidates[0]",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "1",
+          "description": "对每个敌人首次造成伤害后，使目标<$ba.root>束缚</>3秒并<$ba.steal>偷取</>其50点攻击力（持续至目标被击倒或伊内丝离场）",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "steal_atk": 50.0
+          }
+        },
+        {
+          "original_path": "char_4087_ines.talents[0].candidates[1]",
+          "unlockCondition": {
+            "phase": "PHASE_1",
+            "level": 1
+          },
+          "requiredPotentialRank": 4,
+          "potential_one_based_minimum": 5,
+          "prefabKey": "1",
+          "description": "对每个敌人首次造成伤害后，使目标<$ba.root>束缚</>3秒并<$ba.steal>偷取</>其60<@ba.talpu>（+10）</>点攻击力（持续至目标被击倒或伊内丝离场）",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "steal_atk": 60.0
+          }
+        },
+        {
+          "original_path": "char_4087_ines.talents[0].candidates[2]",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "1",
+          "description": "对每个敌人首次造成伤害后，使目标<$ba.root>束缚</>5秒并<$ba.steal>偷取</>其90点攻击力（持续至目标被击倒或伊内丝离场）",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "steal_atk": 90.0
+          }
+        },
+        {
+          "original_path": "char_4087_ines.talents[0].candidates[3]",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 4,
+          "potential_one_based_minimum": 5,
+          "prefabKey": "1",
+          "description": "对每个敌人首次造成伤害后，使目标<$ba.root>束缚</>5秒并<$ba.steal>偷取</>其100<@ba.talpu>（+10）</>点攻击力（持续至目标被击倒或伊内丝离场）",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "steal_atk": 100.0
+          }
+        }
+      ],
+      "raw_catalog_candidate_projection_exact": true
+    },
+    {
+      "operator": "char_437_mizuki",
+      "operator_name": "水月",
+      "talent_name": "反移情",
+      "raw_candidate_refs": [
+        {
+          "original_path": "char_437_mizuki.talents[1].candidates[0]",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "2",
+          "description": "攻击范围内存在生命值低于一半的敌人时，攻击力+10%",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "hp_ratio": 0.5,
+            "atk": 0.1
+          }
+        },
+        {
+          "original_path": "char_437_mizuki.talents[1].candidates[1]",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 4,
+          "potential_one_based_minimum": 5,
+          "prefabKey": "2",
+          "description": "攻击范围内存在生命值低于一半的敌人时，攻击力+12%<@ba.talpu>（+2%）</>",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "hp_ratio": 0.5,
+            "atk": 0.12
+          }
+        }
+      ],
+      "raw_catalog_candidate_projection_exact": true
+    },
+    {
+      "operator": "char_1044_hsgma2",
+      "operator_name": "斩业星熊",
+      "talent_name": "鬼之架势",
+      "raw_candidate_refs": [
+        {
+          "original_path": "char_1044_hsgma2.talents[1].candidates[0]",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "requiredPotentialRank": 0,
+          "potential_one_based_minimum": 1,
+          "prefabKey": "2",
+          "description": "在场时，自身获得最高+50法术抗性和35%攻击力的<$ba.berserk>坚忍</>（损失70%生命值时达到最大加成）",
+          "blackboard_fields_read_by_or_describing_this_consumer": {
+            "min_hp_ratio": 0.3,
+            "max_hp_ratio": 1.0,
+            "min_atk": 0.35,
+            "max_atk": 0.0,
+            "min_magic_resistance": 50.0,
+            "max_magic_resistance": 0.0
+          }
+        }
+      ],
+      "raw_catalog_candidate_projection_exact": true
+    }
+  ],
+  "relevant_module_overlays": [
+    {
+      "operator": "char_2025_shu",
+      "module_id": "uniequip_002_shu",
+      "module_name": "“钦天司时”",
+      "existing_calculator_module_selection_gate": [
+        2,
+        60
+      ],
+      "all_three_catalog_part_stages_exact_original": true,
+      "related_named_candidate_refs": [],
+      "qualification_limit": "Existing calculator source selection only; not actual account unlock, missions/favour completion, equipment attachment or lifecycle proof."
+    },
+    {
+      "operator": "char_298_susuro",
+      "module_id": "uniequip_002_susuro",
+      "module_name": "医不自治",
+      "existing_calculator_module_selection_gate": [
+        2,
+        40
+      ],
+      "all_three_catalog_part_stages_exact_original": true,
+      "related_named_candidate_refs": [
+        {
+          "original_path": "uniequip_002_susuro.phases[1].parts[1].addOrOverrideTalentDataBundle.candidates[0]",
+          "stage": 2,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 0,
+          "name": "微创治疗",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 40
+          },
+          "requiredPotentialRank": 0,
+          "blackboard": [
+            {
+              "key": "cost",
+              "value": 10.0,
+              "valueStr": null
+            },
+            {
+              "key": "heal_scale",
+              "value": 1.23,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "original_path": "uniequip_002_susuro.phases[1].parts[1].addOrOverrideTalentDataBundle.candidates[1]",
+          "stage": 2,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 0,
+          "name": "微创治疗",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 40
+          },
+          "requiredPotentialRank": 4,
+          "blackboard": [
+            {
+              "key": "cost",
+              "value": 10.0,
+              "valueStr": null
+            },
+            {
+              "key": "heal_scale",
+              "value": 1.26,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "original_path": "uniequip_002_susuro.phases[2].parts[1].addOrOverrideTalentDataBundle.candidates[0]",
+          "stage": 3,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 0,
+          "name": "微创治疗",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 40
+          },
+          "requiredPotentialRank": 0,
+          "blackboard": [
+            {
+              "key": "cost",
+              "value": 10.0,
+              "valueStr": null
+            },
+            {
+              "key": "heal_scale",
+              "value": 1.25,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "original_path": "uniequip_002_susuro.phases[2].parts[1].addOrOverrideTalentDataBundle.candidates[1]",
+          "stage": 3,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 0,
+          "name": "微创治疗",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 40
+          },
+          "requiredPotentialRank": 4,
+          "blackboard": [
+            {
+              "key": "cost",
+              "value": 10.0,
+              "valueStr": null
+            },
+            {
+              "key": "heal_scale",
+              "value": 1.28,
+              "valueStr": null
+            }
+          ]
+        }
+      ],
+      "qualification_limit": "Existing calculator source selection only; not actual account unlock, missions/favour completion, equipment attachment or lifecycle proof."
+    },
+    {
+      "operator": "char_1048_orchd2",
+      "module_id": "uniequip_002_orchd2",
+      "module_name": "梓兰特制箭靶",
+      "existing_calculator_module_selection_gate": [
+        2,
+        60
+      ],
+      "all_three_catalog_part_stages_exact_original": true,
+      "related_named_candidate_refs": [
+        {
+          "original_path": "uniequip_002_orchd2.phases[1].parts[1].addOrOverrideTalentDataBundle.candidates[0]",
+          "stage": 2,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 1,
+          "name": "翔虫机动",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 0,
+          "blackboard": [
+            {
+              "key": "atk",
+              "value": 0.2,
+              "valueStr": null
+            },
+            {
+              "key": "atk_duration",
+              "value": 30.0,
+              "valueStr": null
+            },
+            {
+              "key": "projectile",
+              "value": 0.0,
+              "valueStr": "projectile_chr_orchd2_t"
+            },
+            {
+              "key": "ignore_build_type_target_range",
+              "value": 0.0,
+              "valueStr": "x-1"
+            },
+            {
+              "key": "ignore_build_type_target",
+              "value": 1.0,
+              "valueStr": null
+            },
+            {
+              "key": "ignore_build_type_target_dir",
+              "value": 0.0,
+              "valueStr": null
+            },
+            {
+              "key": "not_add_respawn_cost_cnt",
+              "value": 1.0,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "original_path": "uniequip_002_orchd2.phases[2].parts[1].addOrOverrideTalentDataBundle.candidates[0]",
+          "stage": 3,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 1,
+          "name": "翔虫机动",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 0,
+          "blackboard": [
+            {
+              "key": "atk",
+              "value": 0.2,
+              "valueStr": null
+            },
+            {
+              "key": "ignore_build_type_target_range",
+              "value": 0.0,
+              "valueStr": "x-2"
+            },
+            {
+              "key": "atk_duration",
+              "value": 30.0,
+              "valueStr": null
+            },
+            {
+              "key": "projectile",
+              "value": 0.0,
+              "valueStr": "projectile_chr_orchd2_t"
+            },
+            {
+              "key": "ignore_build_type_target",
+              "value": 1.0,
+              "valueStr": null
+            },
+            {
+              "key": "ignore_build_type_target_dir",
+              "value": 0.0,
+              "valueStr": null
+            },
+            {
+              "key": "not_add_respawn_cost_cnt",
+              "value": 1.0,
+              "valueStr": null
+            }
+          ]
+        }
+      ],
+      "qualification_limit": "Existing calculator source selection only; not actual account unlock, missions/favour completion, equipment attachment or lifecycle proof."
+    },
+    {
+      "operator": "char_4087_ines",
+      "module_id": "uniequip_002_ines",
+      "module_name": "角部“护理”套组",
+      "existing_calculator_module_selection_gate": [
+        2,
+        60
+      ],
+      "all_three_catalog_part_stages_exact_original": true,
+      "related_named_candidate_refs": [
+        {
+          "original_path": "uniequip_002_ines.phases[1].parts[1].addOrOverrideTalentDataBundle.candidates[0]",
+          "stage": 2,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 0,
+          "name": "影织",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 0,
+          "blackboard": [
+            {
+              "key": "steal_atk",
+              "value": 100.0,
+              "valueStr": null
+            },
+            {
+              "key": "steal_atk_max",
+              "value": 20000.0,
+              "valueStr": null
+            },
+            {
+              "key": "duration",
+              "value": 5.0,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "original_path": "uniequip_002_ines.phases[1].parts[1].addOrOverrideTalentDataBundle.candidates[1]",
+          "stage": 2,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 0,
+          "name": "影织",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 4,
+          "blackboard": [
+            {
+              "key": "steal_atk",
+              "value": 110.0,
+              "valueStr": null
+            },
+            {
+              "key": "steal_atk_max",
+              "value": 20000.0,
+              "valueStr": null
+            },
+            {
+              "key": "duration",
+              "value": 5.0,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "original_path": "uniequip_002_ines.phases[2].parts[1].addOrOverrideTalentDataBundle.candidates[0]",
+          "stage": 3,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 0,
+          "name": "影织",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 0,
+          "blackboard": [
+            {
+              "key": "steal_atk",
+              "value": 110.0,
+              "valueStr": null
+            },
+            {
+              "key": "steal_atk_max",
+              "value": 20000.0,
+              "valueStr": null
+            },
+            {
+              "key": "duration",
+              "value": 5.0,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "original_path": "uniequip_002_ines.phases[2].parts[1].addOrOverrideTalentDataBundle.candidates[1]",
+          "stage": 3,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 0,
+          "name": "影织",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 4,
+          "blackboard": [
+            {
+              "key": "steal_atk",
+              "value": 120.0,
+              "valueStr": null
+            },
+            {
+              "key": "steal_atk_max",
+              "value": 20000.0,
+              "valueStr": null
+            },
+            {
+              "key": "duration",
+              "value": 5.0,
+              "valueStr": null
+            }
+          ]
+        }
+      ],
+      "qualification_limit": "Existing calculator source selection only; not actual account unlock, missions/favour completion, equipment attachment or lifecycle proof."
+    },
+    {
+      "operator": "char_437_mizuki",
+      "module_id": "uniequip_002_mizuki",
+      "module_name": "使者之约",
+      "existing_calculator_module_selection_gate": [
+        2,
+        60
+      ],
+      "all_three_catalog_part_stages_exact_original": true,
+      "related_named_candidate_refs": [],
+      "qualification_limit": "Existing calculator source selection only; not actual account unlock, missions/favour completion, equipment attachment or lifecycle proof."
+    },
+    {
+      "operator": "char_437_mizuki",
+      "module_id": "uniequip_003_mizuki",
+      "module_name": "深蓝之籽",
+      "existing_calculator_module_selection_gate": [
+        2,
+        60
+      ],
+      "all_three_catalog_part_stages_exact_original": true,
+      "related_named_candidate_refs": [
+        {
+          "original_path": "uniequip_003_mizuki.phases[1].parts[1].addOrOverrideTalentDataBundle.candidates[0]",
+          "stage": 2,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 1,
+          "name": "反移情",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 0,
+          "blackboard": [
+            {
+              "key": "hp_ratio",
+              "value": 0.5,
+              "valueStr": null
+            },
+            {
+              "key": "atk",
+              "value": 0.15,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "original_path": "uniequip_003_mizuki.phases[1].parts[1].addOrOverrideTalentDataBundle.candidates[1]",
+          "stage": 2,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 1,
+          "name": "反移情",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 4,
+          "blackboard": [
+            {
+              "key": "hp_ratio",
+              "value": 0.5,
+              "valueStr": null
+            },
+            {
+              "key": "atk",
+              "value": 0.17,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "original_path": "uniequip_003_mizuki.phases[2].parts[1].addOrOverrideTalentDataBundle.candidates[0]",
+          "stage": 3,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 1,
+          "name": "反移情",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 0,
+          "blackboard": [
+            {
+              "key": "hp_ratio",
+              "value": 0.5,
+              "valueStr": null
+            },
+            {
+              "key": "atk",
+              "value": 0.2,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "original_path": "uniequip_003_mizuki.phases[2].parts[1].addOrOverrideTalentDataBundle.candidates[1]",
+          "stage": 3,
+          "target": "TALENT_DATA_ONLY",
+          "resKey": null,
+          "talentIndex": 1,
+          "name": "反移情",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 4,
+          "blackboard": [
+            {
+              "key": "hp_ratio",
+              "value": 0.5,
+              "valueStr": null
+            },
+            {
+              "key": "atk",
+              "value": 0.22,
+              "valueStr": null
+            }
+          ]
+        }
+      ],
+      "qualification_limit": "Existing calculator source selection only; not actual account unlock, missions/favour completion, equipment attachment or lifecycle proof."
+    },
+    {
+      "operator": "char_437_mizuki",
+      "module_id": "uniequip_004_mizuki",
+      "module_name": "水月特限证章",
+      "existing_calculator_module_selection_gate": [
+        2,
+        60
+      ],
+      "all_three_catalog_part_stages_exact_original": true,
+      "related_named_candidate_refs": [],
+      "qualification_limit": "Existing calculator source selection only; not actual account unlock, missions/favour completion, equipment attachment or lifecycle proof."
+    },
+    {
+      "operator": "char_1044_hsgma2",
+      "module_id": "uniequip_002_hsgma2",
+      "module_name": "无迹",
+      "existing_calculator_module_selection_gate": [
+        2,
+        60
+      ],
+      "all_three_catalog_part_stages_exact_original": true,
+      "related_named_candidate_refs": [
+        {
+          "original_path": "uniequip_002_hsgma2.phases[1].parts[1].addOrOverrideTalentDataBundle.candidates[0]",
+          "stage": 2,
+          "target": "TALENT",
+          "resKey": "hsgma2_equip_1_2_p2",
+          "talentIndex": 1,
+          "name": "鬼之架势",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 0,
+          "blackboard": [
+            {
+              "key": "max_hp_ratio",
+              "value": 1.0,
+              "valueStr": null
+            },
+            {
+              "key": "min_hp_ratio",
+              "value": 0.4,
+              "valueStr": null
+            },
+            {
+              "key": "min_atk",
+              "value": 0.35,
+              "valueStr": null
+            },
+            {
+              "key": "max_atk",
+              "value": 0.0,
+              "valueStr": null
+            },
+            {
+              "key": "min_magic_resistance",
+              "value": 50.0,
+              "valueStr": null
+            },
+            {
+              "key": "max_magic_resistance",
+              "value": 0.0,
+              "valueStr": null
+            },
+            {
+              "key": "atk",
+              "value": 0.1,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "original_path": "uniequip_002_hsgma2.phases[2].parts[1].addOrOverrideTalentDataBundle.candidates[0]",
+          "stage": 3,
+          "target": "TALENT",
+          "resKey": "hsgma2_equip_1_3_p2",
+          "talentIndex": 1,
+          "name": "鬼之架势",
+          "unlockCondition": {
+            "phase": "PHASE_2",
+            "level": 60
+          },
+          "requiredPotentialRank": 0,
+          "blackboard": [
+            {
+              "key": "max_hp_ratio",
+              "value": 1.0,
+              "valueStr": null
+            },
+            {
+              "key": "min_hp_ratio",
+              "value": 0.5,
+              "valueStr": null
+            },
+            {
+              "key": "min_atk",
+              "value": 0.35,
+              "valueStr": null
+            },
+            {
+              "key": "max_atk",
+              "value": 0.0,
+              "valueStr": null
+            },
+            {
+              "key": "min_magic_resistance",
+              "value": 50.0,
+              "valueStr": null
+            },
+            {
+              "key": "max_magic_resistance",
+              "value": 0.0,
+              "valueStr": null
+            },
+            {
+              "key": "atk",
+              "value": 0.15,
+              "valueStr": null
+            }
+          ]
+        }
+      ],
+      "qualification_limit": "Existing calculator source selection only; not actual account unlock, missions/favour completion, equipment attachment or lifecycle proof."
+    }
+  ],
+  "product_contract": {
+    "allowed": "Add explicit per-field current-cultivation source explanations beside or on the existing condition controls. Reflect selected named talent, actual skill pathway, potential/module candidate and effective-preview provenance. A grouped visible explanation is acceptable if it clearly names each affected field.",
+    "primary_preservation": "Keep all existing option ownership/skill visibility, enabled behaviour, defaults, values, bounds, signals, scenario keys, raw caller values, validation/error precedence, existing numeric roots/components/estimate/report outputs and mathematics. Prefer explanation-only changes; no blanket hide/disable.",
+    "special_cases": [
+      "Orchd power_coating is available at E0 and applies only to the modeled non-normal skill path; near_previous_deployment needs selected 翔虫机动 from E1.",
+      "Ines count and Hsgma ratio retain current parsing/validation even without the corresponding selected talent.",
+      "Hsgma ratio stays available for independent condition/reference use; only its own selected-talent modifier eligibility is explained.",
+      "Module below its own gate must not suppress an already selected base talent. Orchd E2 Lv59 retains its base nearby-deployment bonus.",
+      "A selected candidate with zero supported value remains a selected source; zero does not imply unavailable.",
+      "Hidden/negative-index or nameless neighboring module ability does not prove the named consumer or native attachment.",
+      "None/missing cultivation uses the existing effective preview policy and remains unconfirmed; no operator/skill placeholder must not call a selector."
+    ]
+  },
+  "overlap_exclusions": {
+    "completed_receipts": [
+      {
+        "path": "/workspace/rougezhushou/verification/sections/062.json",
+        "bytes": 759,
+        "sha256": "51d442802f65cb9244b1a014cc4d148c8f2030c5292bdbe4efb9b3a2d60ad7ef"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/sections/068.json",
+        "bytes": 839,
+        "sha256": "84b0f5fe3dd93840ac10ef7276dcb44f9d085c484d3bb213fddb13935187526c"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/sections/076.json",
+        "bytes": 856,
+        "sha256": "6cb740ed061f2136e53e8a645b097ade45912062a6a00857b1787280b1f13317"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/sections/077.json",
+        "bytes": 913,
+        "sha256": "aa5ef6223bf851b06f17f3ef6a8b2c32731ee3537abf7ad94eba1f6f702a7f61"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/sections/078.json",
+        "bytes": 1019,
+        "sha256": "62657dad59980833a7df2c09981de5e6eae1e1c82c2d39291cc095219faae016"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/sections/079.json",
+        "bytes": 1032,
+        "sha256": "abc93fd617caf8ec83b9c664db61167398c8e8fbd4b04a7c9c4db6a4213c7b0e"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/sections/080.json",
+        "bytes": 1100,
+        "sha256": "ee10cc74708c860c3ecc2e39a8b1fabad361a16dcd36a5527251c6081bd2c666"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/sections/082.json",
+        "bytes": 1084,
+        "sha256": "1392878cc2e536909cdb3c8013c5b22d5bcbfe2c1dffd44125d3e82d67483981"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/sections/085.json",
+        "bytes": 1405,
+        "sha256": "863c794061ccca253827e21083a1c61f74d3b83543fc258229a312f4a57a06d1"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/sections/086.json",
+        "bytes": 3270,
+        "sha256": "1a82be38a4d8400633c213236cb32e4a4a728d9d507580d1573efb5cbdb9db68"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/sections/091.json",
+        "bytes": 2445,
+        "sha256": "40f73b5828b67533e28df4df442bd765414db870050c7fac8e36725f7d6948cb"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/sections/092.json",
+        "bytes": 2630,
+        "sha256": "911cab7baa9552f53b1f998a63104043651e58bca0275a44ee442fcb424a8b85"
+      }
+    ],
+    "facts": [
+      "062/068/082/085/086 already cover input/numeric/type guards; this group does not repeat them.",
+      "076/077/078/079/080 already fix particular unavailable-talent numerical consequences; exclude those owners/fields from this new group.",
+      "091 covers the continuous_attacks SP-condition row and Deepcolor regeneration wording; do not change or recount those behaviours.",
+      "092 window flow,093 cache safety,094 refresh callbacks and095 generic module report reference are separate completed/planned groups; preserve their contracts and do not count them in096."
+    ]
+  },
+  "independent_static_skill_audit": {
+    "method": "Read pinned JSON with stdlib only; compare current catalog complete models to original skill table. Compare name,duration,durationType,five SP data fields and full blackboard values. Match ordered raw character skill IDs only for the thirty non-patch identities; two Amiya patch role bindings are excluded from the character binding comparison.",
+    "models": 32,
+    "skills": 87,
+    "levels": 870,
+    "field_groups": 7830,
+    "mismatches": 0,
+    "patch_skill_levels_included_in_skill_table_comparison": 40,
+    "limit": "No description-format normalization, numerical execution, native consumer proof or current hotfix equivalence included. No new coherent numerical defect qualified."
+  },
+  "acceptance_plan": [
+    {
+      "case": "Each of nine fields under valid E0/E1/E2 skill choices",
+      "expect": "Exact selected-source eligibility explanation; no broad same-phase assumption; legal available skills only."
+    },
+    {
+      "case": "Orchd E0 S1 and E1 S1",
+      "expect": "Power source explained as available at E0; nearby-deployment source unavailable then available at E1; preserve saved booleans."
+    },
+    {
+      "case": "Susuro E1/E2 P4 vs P5 and applicable module stages",
+      "expect": "Explain actual selected potential/module candidate; do not recompute or change existing recipient factor."
+    },
+    {
+      "case": "Ines E0/E1/E2 count0/1/100 and P4/P5",
+      "expect": "Explain absent/present own talent contribution while preserving current count validation and caller value."
+    },
+    {
+      "case": "Mizuki E1/E2 P4/P5 across all three modules and stages",
+      "expect": "Explain second talent 反移情 only; preserve unresolved AMB-Y first-talent/hidden-ability boundaries."
+    },
+    {
+      "case": "Hsgma E0/E1/E2 ratio0/.3/1 with relic condition/reference present",
+      "expect": "Ratio remains usable; clarify only selected own-talent modifier qualification; preserve independent source/reference inputs."
+    },
+    {
+      "case": "Each module before/at its exact level gate and levels1/2/3",
+      "expect": "Use effective selected base or module candidate; never disable a valid base source when module selection fails."
+    },
+    {
+      "case": "Confirmed run cultivation conflicts with account-only cultivation; missing fields; simulated level override",
+      "expect": "Existing RunState precedence and uncertainty/provenance labels retained; effective preview applicability never becomes actual account/run confirmation."
+    },
+    {
+      "case": "No operator, no skill, unimplemented roster preview, unrelated option rows",
+      "expect": "Safe placeholders, unchanged unrelated visibility and no invented source qualification."
+    },
+    {
+      "case": "Switch owner/skill/cultivation then return to original",
+      "expect": "All existing hidden/disabled values, defaults, signal behaviour and raw scenario keys retained; new explanations refresh through existing update flow."
+    },
+    {
+      "case": "Root95 frozen baseline paired API outputs/errors and three existing texts",
+      "expect": "Complete pre-encoding native trees, JSON, numeric roots/components/estimate/reports and existing errors/texts identical; only new UI explanations differ."
+    },
+    {
+      "case": "Relevant existing regression plus actual project MainWindow under root sole executor",
+      "expect": "Verify explanation text, values and state changes together, preserve genuine Windows/game limits. No validation executed in this source task."
+    }
+  ],
+  "remaining_blockers": {
+    "existing_source_negative_refs": [
+      {
+        "path": "/workspace/rougezhushou/research/p2-mei-airborne-module-reference/prior-readonly-audit/NOTE.md",
+        "bytes": 1076,
+        "sha256": "229901097e6569960f1a457121dc5071b12608a89aa8e5574e2a42cf1ccb98d1"
+      },
+      {
+        "path": "/workspace/rougezhushou/research/p2-mei-airborne-module-reference/prior-readonly-audit/common-skill-public-contract.json",
+        "bytes": 252754,
+        "sha256": "9c3806b54f283e1908fcdf3d36f079a8c2c910c92d2412378c16a734821aec73"
+      },
+      {
+        "path": "/workspace/rougezhushou/verification/full-090/public-source-audits/future092-negative/source-lead092.json",
+        "bytes": 29274,
+        "sha256": "d6c2fe54a4f2336290222114e28daa2880b259d2247699b013cb5e487c423e8f"
+      }
+    ],
+    "unknowns": [
+      "Restricted-elite common-skill trained account-to-run inheritance; existing raw caps do not prove availability.",
+      "Actual counts, target acquisition, activation/attachment, first tick, reset/lifecycle and native numeric layers for deferred special abilities.",
+      "Shu four-sui pulse start/reset/blocked-credit clock remains unknown.",
+      "Existing Yato EXE-Y bundle URL/consumer/lifecycle goal stays deferred and was not repeated.",
+      "Current native hotfix equivalence and game/live panel confirmation."
+    ],
+    "restart": "Only reopen a mechanism with a concrete new original/typed source proving its missing binding or lifecycle. This UI group removes no unknown-mathematics todo."
+  },
+  "implementation_prerequisite": "Root completed actual95 source guard plus completed93/94/95 archived chain and due full available validation receipt; this task has not received that guard. Apply only after root rebinds the candidate to that exact tree. User latest policy is commit and push after each five-section fullPASS group, with no individual096 commit requirement.",
+  "execution": {
+    "project_imports_helpers_APIs_tests": 0,
+    "Qt_Wine_game_chat_private_calls": 0,
+    "target_network_requests": 0,
+    "own_repository_edits": [],
+    "writes": "Only this new external minimal source packet."
+  },
+  "stopwrite": true
+}

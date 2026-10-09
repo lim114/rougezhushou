@@ -1,0 +1,197 @@
+{
+  "format_version": 1,
+  "status": "SOURCE_ONLY_DETERMINISTIC_HARNESS_BYTE_JSON_CORRECTION_NO_RUNTIME_ATTEMPT",
+  "superseded_pending_v1": {
+    "runner": {
+      "path": "/workspace/.continuation/ui-094-offline-input-refresh-draft/wine-focused-inputs-094-pending.py",
+      "bytes": 43415,
+      "sha256": "a2317948f58b2010aee4c9fa11a3b7f94e98afb121026681df2fc63750199567"
+    },
+    "manifest": {
+      "path": "/workspace/.continuation/ui-094-offline-input-refresh-draft/public-artifacts-manifest-pending094.json",
+      "bytes": 1209,
+      "sha256": "93706bdcdaae60823ebe59bcd933ac44ef49cc269468fe4ae689cb6bd13c8789"
+    },
+    "handoff": {
+      "path": "/workspace/.continuation/ui-094-offline-input-refresh-draft/handoff-pending094.json",
+      "bytes": 2551,
+      "sha256": "89d9fd941b0a3d8061545714fa5c8fc3d1f368090f326b259f31d8b54782baaa"
+    },
+    "preflight": {
+      "path": "/workspace/.continuation/ui-094-offline-input-refresh-draft/source-preflight094.json",
+      "bytes": 7027,
+      "sha256": "d3b25f5f4defb98eddbff3a46ca43ad941e6003b5fec877841f0c650db5e7ae5"
+    },
+    "STOPWRITE_preserved": true
+  },
+  "finding": {
+    "reporter": "Root independent source reviewer, root confirmed",
+    "original_source_line": 217,
+    "original_source": "'account_bytes':snapshot(file_bytes(account_path))",
+    "chain": "file_bytes returns bytes for the public existing account.json; original snapshot JSON_projection is native_inverse bytes; checkpoint json.dumps has no bytes handler. First startup durable evidence therefore cannot be persisted.",
+    "kind": "Deterministic source-contract harness blocker, no runtime process attempted",
+    "project_product_failure": false,
+    "actual_runtime_exception_observed": false,
+    "previous_development_preflight_missed_JSON_boundary": true,
+    "original_final093_affected": false
+  },
+  "correction": {
+    "new_runner": {
+      "path": "/workspace/.continuation/ui-094-offline-input-refresh-draft-v2/wine-focused-inputs-094-pending.py",
+      "bytes": 44107,
+      "sha256": "0b2a41da79fb3e158c8dc933d92f046b4260cf6146068012ba6ed2cda4feb908"
+    },
+    "added_function": {
+      "name": "byte_evidence",
+      "lines": [
+        215,
+        221
+      ],
+      "source": "def byte_evidence(data):\n    assert data is None or type(data) is bytes,'Only an existing raw file byte string or explicit absent file'\n    graph=flat_native(data);restored=native_inverse(graph)\n    assert type(restored) is type(data) and restored==data and flat_native(restored)==graph,'Lossless raw-byte native inverse must preserve exact original value'\n    return {'schema':'raw-file-bytes-evidence-v1','native':graph,'native_inverse_verified':True,\n        'JSON_safe_raw_bytes':{'file_exists':data is not None,'raw_hex':data.hex() if data is not None else None,\n            'byte_count':len(data) if data is not None else None,'sha256':digest(data) if data is not None else None}}"
+    },
+    "one_existing_caller_change": {
+      "before": "'account_bytes':snapshot(file_bytes(account_path))",
+      "after": "'account_bytes':byte_evidence(file_bytes(account_path))"
+    },
+    "delta_body_components": 2,
+    "inverse_restores_entire_sealed_v1_runner_byteexact": true,
+    "all_original8_codec_evidence_helpers_source_byteexact": true,
+    "no_general_snapshot_or_codec_change": true,
+    "no_default_str_or_lossy_hash_only_encoding": true
+  },
+  "saved_evidence_schema": {
+    "where": "states[*].durable_before.account_bytes / durable_after.account_bytes when the real window exists",
+    "schema": "raw-file-bytes-evidence-v1",
+    "native": "Original flat-typed-graph-v1 encoding of bytes or None; byte type and complete raw value retained; original iterative inverse checked for exact type/value and graph equality",
+    "JSON_projection_field": "ABSENT; bytes do not have a JSON_projection",
+    "JSON_safe_raw_bytes": {
+      "file_exists": "bool",
+      "raw_hex": "lower-case exact raw bytes hex string when present; null when absent",
+      "byte_count": "int including0 when present; null when absent",
+      "sha256": "SHA256 of the same original raw bytes when present; null when absent"
+    },
+    "absent_case": "file_exists false; native root NoneType value null; raw_hex/byte_count/sha256 null",
+    "empty_existing_case": "file_exists true; native root bytes hex empty string; raw_hex empty string; byte_count0; SHA of empty bytes",
+    "root_saved_validator_rule": "Decode the existing flat graph with the independently reviewed inverse; compare exact native byte type/value to bytes.fromhex(JSON_safe_raw_bytes.raw_hex), length, SHA and filesystem raw_hex. For absent native None require false/null fields. Do not compare byte evidence with ordinary JSON_projection."
+  },
+  "other_snapshot_input_source_inventory": [
+    {
+      "line": 423,
+      "input_source": "old"
+    },
+    {
+      "line": 423,
+      "input_source": "value"
+    },
+    {
+      "line": 208,
+      "input_source": "window.current_operator_state()"
+    },
+    {
+      "line": 208,
+      "input_source": "window.account_cache.records"
+    },
+    {
+      "line": 209,
+      "input_source": "window.account_cache.issues"
+    },
+    {
+      "line": 210,
+      "input_source": "window.run.state"
+    },
+    {
+      "line": 210,
+      "input_source": "window.damage_result"
+    },
+    {
+      "line": 211,
+      "input_source": "window.target_enemy.currentData()"
+    },
+    {
+      "line": 224,
+      "input_source": "window.run.state"
+    },
+    {
+      "line": 224,
+      "input_source": "window.account_cache.records"
+    },
+    {
+      "line": 287,
+      "input_source": "window.damage_result"
+    },
+    {
+      "line": 292,
+      "input_source": "{key: value for key, value in step.items() if not key.startswith('_')}"
+    },
+    {
+      "line": 87,
+      "input_source": "json.loads(data.decode('utf-8'))"
+    },
+    {
+      "line": 196,
+      "input_source": "widget_value(widget)"
+    },
+    {
+      "line": 233,
+      "input_source": "value"
+    },
+    {
+      "line": 116,
+      "input_source": "arg[1].args"
+    },
+    {
+      "line": 145,
+      "input_source": "inputs"
+    },
+    {
+      "line": 154,
+      "input_source": "inputs"
+    },
+    {
+      "line": 162,
+      "input_source": "frame.f_locals.get('scenario')"
+    },
+    {
+      "line": 198,
+      "input_source": "widget.minimum()"
+    },
+    {
+      "line": 198,
+      "input_source": "widget.maximum()"
+    },
+    {
+      "line": 490,
+      "input_source": "{'observed': observed, 'captured_at': captured}"
+    },
+    {
+      "line": 165,
+      "input_source": "arg"
+    },
+    {
+      "line": 157,
+      "input_source": "arg"
+    }
+  ],
+  "other_snapshot_source_qualification": "Filesystem snapshots consume json.loads public UTF8 fixture maps; planned steps are parsed JSON; controls/signals/currentData expose source-qualified bool/int/float/str or exact target dict; account/RunState are public JSON fixtures and JSON-persisted state; API scenario/result have the existing JSON-shaped contract; tracked apply returns are bool; specified JSON/charge exceptions carry string/empty-tuple args. No other direct file_bytes/read_bytes snapshot caller remains. Arbitrary external opaque byte-bearing scenarios are not supplied.",
+  "unchanged_workflow": {
+    "controls": 13,
+    "workflow_groups": 8,
+    "planned_state_rows": 90,
+    "affected_changes": 62,
+    "actual_manual_buttons_planned": 62,
+    "fresh_real_MainWindows_planned": 2,
+    "success_PNGs_planned": 2,
+    "error_PNGs_planned": 1,
+    "three_final_bindings_only": true
+  },
+  "source_only_attempt_counts": {
+    "runtime_attempts": 0,
+    "codec_executions": 0,
+    "project_imports_API_helpers_formatter_tests_Qt_Wine": 0,
+    "tracked_writes": 0,
+    "private_reads": 0
+  },
+  "development_review": "Fresh v2 narrow source-only review; formal root-appointed final review still pending after actual root source binding",
+  "sole_execution": "root",
+  "STOPWRITE_after_manifest_handoff": true
+}

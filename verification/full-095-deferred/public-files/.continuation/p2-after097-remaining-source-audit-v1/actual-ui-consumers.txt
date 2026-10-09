@@ -1,0 +1,27 @@
+100:         self.desktop_request_busy = False
+101:         self.last_chat_mode = 0
+102:         self.account_cache=AccountCache(OPERATOR_STATE,operator_profiles(),catalog()['operators'])
+103:         self.operator_observations=self.account_cache.records
+104:         self.run=RunState(RUN_STATE)
+105:         self.level_override=False
+106:         self.skill_override=False
+107:         self.display_operator=None
+195:         layout.addLayout(presets)
+196:         self.capture_status = QLabel('请连接游戏。截图只在内存中处理。')
+197:         self.capture_status.setWordWrap(True)
+198:         layout.addWidget(self.capture_status)
+199:         self.run_summary=QLabel(self.run.summary())
+200:         self.run_summary.setWordWrap(True)
+201:         layout.addWidget(self.run_summary)
+901:     def apply_run_observation(self,observed,captured_at):
+902:         if not self.run.apply(observed,captured_at):return False
+903:         self.refresh_operator_overview()
+904:         self.run_summary.setText(self.run.summary())
+905:         self.sync_run_config()
+906:         self.sync_run_relics()
+907:         selected=observed.get('selected_operator')
+908:         if not selected or not self.show_observed_operator(selected):
+909:             self.update_operator(preserve_level=self.level_override)
+910:         return True
+911: 
+912:     def sync_run_config(self):

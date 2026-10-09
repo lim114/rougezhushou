@@ -1,0 +1,15 @@
+第93节候选v1独立静态代码审阅
+
+结论：v1被B1确定的新增崩溃边界及B2未闭合恢复合同阻断，尚不能运输为合格产品。其他边界的SOURCE_STATIC_PASS只代表源码与合同一致，不代表fresh tests、MainWindow、Wine或第93节完成。
+
+已先枚举13个实际文件并读取manifest真实schema，再逐项hash：11 payload/168738B全部匹配，manifest与handoff seal匹配。冻结的12constraint SHA23ed524...相符。当前root app字节与prospective92基底32818adf...精确相等；实际92提交绑定仍由root处理。只改五个既有app方法并加account_training_status；calculate、培训/rank/base、真实RunState和浏览逻辑AST未变，app保持CRLF。registry只增新纯边界测试模块。37测试草稿全部未运行，原22case仍为static。
+
+B1：helper169对record全部值递归deepcopy，207–214又对incoming整record及opaque源/时间值递归拷贝。合法JSON的ignored extra_metadata嵌套500层array，stdlib json.loads可成功而deepcopy抛RecursionError；此记录会通过浅消费校验，却在new current_operator_state或sample summary的view于calculate try前抛错。旧raw view/shallow producer union没有这项新依赖。本审阅仅运行stdlib操作差异probe，没有导入/调用候选或项目。最小fix是顶层过滤和实际组装mapping的浅copy，不递归opaque values；无需制造深度schema或调整递归上限。候选新增任意nested view mutation隔离保证并非旧合同必需，不能为保留它扩大修复。
+
+B2：旧mechanist E0的locked S3=99按候选/test刻意保持inert；新合法partial仅提供elite2和实际time200，独立校验通过。union后该旧rank变active-invalid；当前实现会给整id issue、锁全盘、返回True，但view为空，新elite/time也被summary标成未确认。隔离阻止了坏值进入math，不能据此声称恢复合同闭合。子独审认可该消费安全并不将其视为产品blocker；来源作者指出新事实不能一起丢，root明确要求恢复义务闭合。最小路线：merged union若因旧贡献在新context下不可用，保护原盘，排除旧不安全贡献，只用validated incoming事实及真实supplied time重建usable memory；未提供rank继续unknown/既有明确preview，真正good union保持原样。需要fresh针对性控制，不能伪称原37method已覆盖该转变。
+
+通过的源码规则：load只读，read/lstat双缺失才算genuine absence；dangling/uncertain OSError都保留。load及save前全map筛known consumable records，opaque unknown ids保留不送UI；identity/mappings缺省区分，actual平台timestamp display检查，trust bool/falsy module aliases和ignored defaults保持。formatter消费metadata防错；scope=run账户隔离、known run-only operative metadata仅从safeview剔除，raw不改；真正RunState及普通good producer旧/等时/新时顺序、union和changed保存决定源码保持。globalguard无自动清除，save在mkdir/tmp/write/replace之前返回。每项具体source/status见static-contract-review.json。
+
+历史GUI fixture整mapping重新赋值会断开新records alias，旧fixture缺id也会被有意隔离；已找到full090 runner具体行。当前真实产品没有构造后整map重绑路径，因此这是95验证运输适配，不列产品blocker。root应做新的可复核fixture transport，保持单一records/id-bearing observation，不改sealed历史、不放宽identity、不清global保护，更不能声称旧脚本原样PASS。
+
+0项目imports/API/helpers/formatter/tests/Qt/Wine/private/network/tracked writes。唯一运行演示是stdlib JSON/deepcopy操作；并非候选执行或产品测试。root已有app/reporting改动不归本审阅。source、design、candidatev1包皆只读，独审仅写本外部最小包，不copy树。旧同目标三次未解保留defer，当前静态findings不重记旧attempt或完成。未来新fix再审，root独占真实运输、测试及窗口后才可归档93。

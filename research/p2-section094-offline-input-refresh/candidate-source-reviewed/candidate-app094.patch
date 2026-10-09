@@ -1,0 +1,24 @@
+--- a/rouge/app.py
++++ b/rouge/app.py
+@@ -725,8 +725,21 @@
+         self.damage_technical.toggled.connect(self.render_damage);layout.addWidget(self.damage_technical)
+         label = QLabel('基础属性只读，只能调整等级进行模拟；精英、信赖、潜能、技能等级和模组来自读取。未确认时明确使用档案预览条件。回转和周期输出均为估计，模组条件机制/特训和部分藏品仍有缺失。')
+         label.setWordWrap(True)
+         layout.addWidget(label)
++        self.deployment_elapsed.valueChanged.connect(lambda:self.calculate())
++        self.healing_targets.valueChanged.connect(lambda:self.calculate())
++        self.defense.valueChanged.connect(lambda:self.calculate())
++        self.resistance.valueChanged.connect(lambda:self.calculate())
++        self.charge_count.valueChanged.connect(lambda:self.calculate())
++        self.shield_breaks.valueChanged.connect(lambda:self.calculate())
++        self.shield_duration.valueChanged.connect(lambda:self.calculate())
++        self.activation_count.valueChanged.connect(lambda:self.calculate())
++        self.companion_attack.valueChanged.connect(lambda:self.calculate())
++        self.stacks.valueChanged.connect(lambda:self.calculate())
++        self.cooperative.toggled.connect(lambda:self.calculate())
++        self.fragile.toggled.connect(lambda:self.calculate())
++        self.shield_duration_known.toggled.connect(lambda:self.calculate())
+         return tab
+ 
+     def update_target_enemies(self):
+         sid=self.target_stage.currentData()

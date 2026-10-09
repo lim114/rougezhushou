@@ -1,0 +1,15 @@
+第93节候选v2：独立SOURCE合同审阅通过，root运行验证待执行
+
+状态：FINAL_SOURCE_CONTRACT_PASS_ROOT_RUNTIME_PENDING_ATTEMPT2_STOPWRITE。本次未发现未闭合源码blocker，允许root进入精确运输与fresh验证；PASS仅指源码合同。39方法全部UNRUN，原22预测和旧37方法保持原状态，不计第93节完成。
+
+先列实际16文件/manifest实际schema，随后14 payload逐项bytes/SHA复核，合计202876B全部匹配。actual92 commit f509d186e501bfcfd042e45b46e398ec756840ec/tag p2-section-092的app/reporting/registry Git blobs与工作树相同。v2 app与registry精确等于v1；helper只改view/observe、添加浅union builder并删除deepcopy；validation/load/full-map screen/notice/globalguard/save等AST保持。原source、design、v1candidate与v1BLOCKEDreview逐hash不变。
+
+B1源码闭合：view仅顶层过滤本局metadata并浅copy五个消费mapping；builder保持原mapping union，不递归opaque叶与unknown extras。没有新深度schema或递归上限修改。新版草稿用迭代方式构建/核验500层合法数组，不通过fixture的deepcopy或整个deep equality自造失败；普通保存和输入保持也有草稿控制。本审阅未运行这些控制。
+
+B2源码闭合：incoming独立合法检查后，good-old timestamp先拒旧；只有正常union在新context下不可消费，才永久保护原盘并用空saved重建incoming-only合法事实与真实supplied time。新字段现在保持可用，逐id隔离可清，原盘globalguard持续；未提供rank/培养不编造，沿原明确preview/未确认标注。真正good union及changed保存决定原样保持。两个坏旧rankvariant、拒旧、合法rank10 union及后续恢复控制均已出现于UNRUN草稿。子审独立确认同一源路径闭合。
+
+其余12合同保持：只读load/genuine missing vs dangling/OSError；全record首save筛查；identity/mapping与omitted defaults区分；actual目标time转换；active leaf与ignored aliases、trust bool、module falsy stage兼容；formatter metadata消费安全；account run事实分源且真实RunState不改；共享safeview服务启动/浏览/summary/计算与notice；原顺序/合并；永久writeguard在全部副作用前；无数学/APIalias/errororder/recognizer/formatter变更。具体source静态结论见static-contract-review.json，不把它们换算测试PASS。
+
+root后续必须fresh执行相关纯边界/回归、完整公开native输出比较、真实MainWindow/Wine的notice及恢复、RunState优先级与内存/文件快照、坏原盘byte/path保护和GUI timing/relic兼容控制。历史full095整map alias/id夹具适配仍是root外部运输，不是产品blocker或已通过窗口。没有新rebind产品API。
+
+这是原同目标attempt2；原v1两项BLOCKED证据及当时不同安全判断完整保留，不追溯标PASS。同问题attempt3仍未闭合则按原规则defer并记录恢复条件。0项目imports/API/helpers/formatter/tests/Qt/Wine/private/network/tracked写入；本轮亦0新stdlib运行probe。只写本最小外部审阅包，不copy大树。

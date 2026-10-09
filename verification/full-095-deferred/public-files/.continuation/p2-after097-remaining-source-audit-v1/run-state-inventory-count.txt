@@ -1,0 +1,100 @@
+183:     def reconcile_relic_icons(self,relics,captured_at,*,observed_tool_ids=()):
+184:         """Keep bounded held-bar evidence and resolve it when grade arrives later."""
+185:         state=self.state;icons=copy.deepcopy(relics.get('icons',[]));count=relics.get('count')
+186:         expected=count if count is not None else state['relic_count']
+187:         memory=copy.deepcopy(state.get('relic_icon_memory'))
+188:         if count is not None and (count==0 or count!=state['relic_count']):memory=None
+189:         # Exact owned tool cards are positive inventory evidence even when
+190:         # their small icons are outside the current crop. A contradicted bar
+191:         # must not reappear when a difficulty label is read on a later page.
+192:         tools=set(observed_tool_ids)&set(tactical_tools())
+193:         if memory and tools and not tools<=set(rid for icon in memory['icons'] for rid in icon['candidates']):
+194:             memory=None
+195:         original_derived={i['id'] for i in icons if i.get('source')=='held_icon_and_run_difficulty'}
+196:         current_ids=set(relics.get('ids',[]))-original_derived
+197:         cards=relics.get('cards',[])
+198:         if icons:
+199:             for icon in icons:icon['observed_at']=captured_at
+200:             signature=lambda rows:sorted(tuple(sorted(i['candidates'])) for i in rows)
+201:             previous=memory['icons'] if memory else []
+202:             # A current partial bar can strengthen matching slots. New artwork
+203:             # invalidates a full historical bar; it cannot prove removals.
+204:             covered=bool(previous) and Counter(signature(icons))<=Counter(signature(previous))
+205:             carried=[]
+206:             if covered:
+207:                 carried=[{'id':i['id'],'candidates':[i['id']],'confirmed':True,'source':'held_name_and_usage'}
+244: 
+245:     def apply(self,observed,captured_at):
+246:         if not observed or captured_at<max(self.state['started_at'],self.state.get('last_read') or 0):return False
+247:         reused_run=observed.get('config_reuse',{}).get('run_id')
+248:         if reused_run and reused_run!=self.state['id']:return False
+249:         from .relics import mechanics
+250:         for member in observed.get('operators',[]):
+251:             if 'char_buffs_complete' in member:
+252:                 if type(member['char_buffs_complete']) is not bool:
+253:                     raise ValueError('个人强化列表完整性必须为布尔值。')
+254:                 if 'char_buff_ids' not in member:
+255:                     raise ValueError('个人强化列表完整性必须与明确的强化ID列表一起读取。')
+256:             if 'char_buff_ids' not in member:continue
+257:             ids=member['char_buff_ids'];profile=operator_profiles()[member['id']]
+258:             if member.get('scope')!='run' or not isinstance(ids,list) or not all(isinstance(b,str) for b in ids):
+259:                 raise ValueError('强化绑定必须来自本局干员记录，且包含有效ID列表。')
+260:             for bid in ids:
+261:                 buff=mechanics()['char_buffs'].get(bid)
+262:                 if buff is None or (buff['required_profession'] and profile['profession'] not in buff['required_profession'].split('|')):
+263:                     raise ValueError('强化ID或领取干员职业不符。')
+264:         self.restore_origin_discovery_buffs(observed,repaired_at=captured_at)
+265:         state=self.state;relics=dict(observed.get('relics',{'ids':[],'icons':[],'count':None,'source':'unread'}));count=relics.get('count')
+322:                 state['history'].append({'at':captured_at,'kind':'resource_updated','resource':key,'value':record['value']})
+323:             state['resources'][key]={**record,'captured_at':captured_at}
+324:         signature=sorted([sorted(icon['candidates']) for icon in relics.get('icons',[])])
+325:         previous=state['bar_signature']
+326:         old_count=state['relic_count']
+327:         incoming=set(relics.get('ids',[]))
+328:         incoming_tools=set(observed.get('tactical_tools',{}).get('ids',[])) & set(tactical_tools())
+329:         incoming.update(i['id'] for i in relics['icons'] if i.get('confirmed') and i['id'] in catalog()['relics'])
+330:         incoming_tools.update(i['id'] for i in relics['icons'] if i.get('confirmed') and i['id'] in tactical_tools())
+331:         incoming_items=incoming|incoming_tools
+332:         expected=count if count is not None else old_count
+333:         full_bar=expected is not None and len(signature)==expected
+334:         # An unread or partially visible bar is absence of evidence, not a removal.
+335:         changed=displaced_full_inventory or (full_bar and previous is not None and signature!=previous) or (
+336:             count is not None and old_count is not None and count!=old_count) or (
+337:             state['inventory_verified'] and bool(incoming_items-set(self.held_relic_ids()+self.held_tool_ids())))
+338:         if changed:
+339:             state['inventory_verified']=False
+340:             state['notice']='持有信息变化，保留本局历史并实时核对当前清单；不会因缺失一帧而遗忘。'
+341:             state['history'].append({'at':captured_at,'kind':'inventory_changed','previous_count':old_count,'count':count})
+342:         if full_bar:state['bar_signature']=signature
+343:         if count is not None:state['relic_count']=count
+344:         for rid in incoming:
+345:             if rid not in state['relics'] or not state['relics'][rid].get('held',True):
+346:                 state['history'].append({'at':captured_at,'kind':'relic_confirmed','id':rid})
+347:             evidence=next((i for i in relics['icons'] if i.get('confirmed') and i['id']==rid),{})
+348:             state['relics'][rid]={**state['relics'].get(rid,{}),
+349:                 'captured_at':evidence.get('observed_at',captured_at),'resolved_at':captured_at,
+350:                 'source':evidence.get('source',relics['source']),'held':True,
+351:                 'icon_evidence':{k:v for k,v in evidence.items() if k in ('candidates','score','difficulty','difficulty_group',
+352:                     'difficulty_tier','tier_label','difficulty_source','name_usage_confirmed','difficulty_conflict')}}
+353:         for tid in incoming_tools:
+354:             if tid not in state['tactical_tools'] or not state['tactical_tools'][tid].get('held',True):
+355:                 state['history'].append({'at':captured_at,'kind':'tool_confirmed','id':tid})
+356:             state['tactical_tools'][tid]={**state['tactical_tools'].get(tid,{}),
+357:                 'captured_at':captured_at,'source':observed.get('tactical_tools',{}).get('source',relics['source']),'held':True}
+358:         # Fully identified current/valid historical slots (or explicit zero)
+359:         # prove removals. A partial observation cannot erase unrelated records.
+360:         if (count==0 and not incoming_items and not relics['icons']) or (expected is not None and expected>0 and len(incoming_items)==expected and
+361:                 len(relics['icons'])==expected and all(i.get('confirmed') for i in relics['icons'])):
+362:             for rid,record in state['relics'].items():
+363:                 if rid not in incoming and record.get('held',True):
+364:                     record['held']=False
+365:                     state['history'].append({'at':captured_at,'kind':'relic_no_longer_held','id':rid})
+366:             for tid,record in state['tactical_tools'].items():
+367:                 if tid not in incoming_tools and record.get('held',True):
+368:                     record['held']=False
+369:                     state['history'].append({'at':captured_at,'kind':'tool_no_longer_held','id':tid})
+370:             state['inventory_verified']=True
+371:             state['inventory_confirmed_at']=(state['relic_icon_memory'] or {}).get('captured_at') if relics.get('memory_replay') else captured_at
+372:         crew=observed.get('crew_count')
+373:         if isinstance(crew,bool):crew=None
+374:         promoted_ids=set()

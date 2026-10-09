@@ -1,0 +1,43 @@
+{
+  "status": "READ_ONLY_NATIVE_LOCATION_DIAGNOSTIC",
+  "observed_at": "2026-10-09T01:11:19.759481+00:00",
+  "pid": 50470,
+  "project_calls": 0,
+  "new_wine_executions": 0,
+  "memory_or_register_writes": 0,
+  "UI_primary_exit_observed": false,
+  "UI_PASS_claimed": false,
+  "samples": [
+    {
+      "sample": 1,
+      "instruction_pointer": "0x6ffffae3eeeb",
+      "interruption_seconds": 0.01028518200473627,
+      "matching_mapping": "6ffffad31000-6ffffafb6000 r-xp 00000000 00:00 0 ",
+      "matching_PE_images": [
+        {
+          "path": "/workspace/.compat/python-windows/package/tools/python312.dll",
+          "image_base": "0x6ffffad30000",
+          "relative_virtual_address": "0x10eeeb",
+          "bytes": 6945272,
+          "sha256": "9a0e3435aaa680d868150f87ab3e388ad2eebc22f87e036155c7b4eda8cd2120"
+        }
+      ]
+    },
+    {
+      "sample": 2,
+      "instruction_pointer": "0x6ffffed68520",
+      "interruption_seconds": 0.037757995996798854,
+      "matching_mapping": "6ffffed01000-6ffffedf8000 r-xp 00001000 00:1b 9223372036855949173        /workspace/.compat/wine-prefix/drive_c/windows/system32/ucrtbase.dll",
+      "matching_PE_images": [
+        {
+          "path": "/workspace/.compat/wine-prefix/drive_c/windows/system32/ucrtbase.dll",
+          "image_base": "0x6ffffed00000",
+          "relative_virtual_address": "0x68520",
+          "bytes": 1362264,
+          "sha256": "3239227d27667ba20d10a880751924e5719de0078f9fce232d149d383f7681f6"
+        }
+      ]
+    }
+  ],
+  "process_not_left_traced": true
+}

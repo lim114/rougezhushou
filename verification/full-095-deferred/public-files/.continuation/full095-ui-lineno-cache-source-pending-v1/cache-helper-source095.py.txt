@@ -1,0 +1,10 @@
+_runner_line_cache095={}
+
+def _runner_line095(cursor):
+    code=cursor.f_code;key=(id(code),cursor.f_lasti)
+    cached=_runner_line_cache095.get(key)
+    if cached is not None:return cached[1]
+    line=cursor.f_lineno
+    _runner_line_cache095[key]=(code,line)
+    return line
+

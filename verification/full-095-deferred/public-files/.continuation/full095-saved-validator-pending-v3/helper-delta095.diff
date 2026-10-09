@@ -1,0 +1,450 @@
+--- /workspace/.continuation/full095-saved-validator-pending-v2/saved.py
++++ /workspace/.continuation/full095-saved-validator-pending-v3/saved.py
+@@ -253,79 +253,231 @@
+                       separators=(',', ':'))
+ 
+ 
+-def scan_snapshots(value, native_only_paths=()):
+-    allowed = set(native_only_paths)
+-    verified_native_only = set()
+-    queue = [((), value)]
++def snapshot_value(value, role='ordinary'):
++    check(type(value) is dict and value.get('native_inverse_verified') is True,
++          'Source-role snapshot is a complete wrapper with inverse flag True')
++    if role == 'ordinary':
++        check(list(value) == ['native', 'JSON_projection', 'native_inverse_verified'],
++              'Ordinary snapshot has exactly the producer three keys; ordinary None cannot self-select raw')
++        restored = decode(value['native'])
++        check(encoded_json(restored) == encoded_json(value['JSON_projection']),
++              'Complete ordinary ordered JSON projection equals full native inverse without scalar coercion')
++    elif role == 'exception-args':
++        check(list(value) == ['native', 'native_inverse_verified', 'JSON_projection_applicable']
++              and value['JSON_projection_applicable'] is False,
++              'Exact producer native-only exception args wrapper')
++        restored = decode(value['native'])
++        check(type(restored) is tuple, 'Actual exception args are a complete native tuple')
++    elif role == 'account-file-bytes':
++        check(list(value) == ['schema', 'native', 'native_inverse_verified', 'JSON_safe_raw_bytes']
++              and value['schema'] == 'raw-file-bytes-evidence-v1', 'Exact producer raw account-file byte wrapper')
++        restored = decode(value['native'])
++        check(restored is None or type(restored) is bytes, 'Actual raw file bytes or explicit file absence')
++        projection = value['JSON_safe_raw_bytes']
++        check(type(projection) is dict and list(projection) == ['file_exists', 'raw_hex', 'byte_count', 'sha256']
++              and type(projection['file_exists']) is bool, 'Complete raw projection has source order and exact bool')
++        expected = {'file_exists': restored is not None, 'raw_hex': restored.hex() if restored is not None else None,
++                    'byte_count': len(restored) if restored is not None else None,
++                    'sha256': sha(restored) if restored is not None else None}
++        if restored is None:
++            check(all(projection[name] is None for name in ('raw_hex', 'byte_count', 'sha256')),
++                  'Absent account file keeps exact None raw metadata')
++        else:
++            check(type(projection['raw_hex']) is str and integer(projection['byte_count'])
++                  and is_sha(projection['sha256']), 'Existing raw file uses exact string/int/string metadata types')
++        check(encoded_json(projection) == encoded_json(expected),
++              'Exact ordered raw projection values reject bool/int/float coercion')
++    else:
++        raise ValueError('Unsupported source snapshot role: ' + str(role))
++    REPORT['snapshots_verified'] += 1
++    return restored
++
++
++def source_counter(value, maintained_map):
++    check(type(value) is dict, 'Actual source delta is a complete dictionary')
++    for key, count in value.items():
++        check(type(key) is str and key.startswith('rouge/') and ':' in key
++              and key.partition(':')[0] in maintained_map and key.partition(':')[2]
++              and integer(count), 'Actual source delta has true maintained function keys and exact nonnegative int counts')
++    return value
++
++
++def ui_capture(value, maintained_map, action_fields=False):
++    required = {'damage_result', 'visible_status', 'UI', 'three_texts'}
++    extra = {'actual_entries', 'API_sequences'} if action_fields else set()
++    check(type(value) is dict and required <= set(value) and type(value['visible_status']) is str,
++          'Complete source-defined UI capture base fields and exact status string')
++    result = snapshot_value(value['damage_result'])
++    check(result is None or (type(result) is dict and list(result) == ['scenario', 'result']
++                            and type(result['scenario']) is dict and type(result['result']) is dict),
++          'Ordinary UI damage_result is None or complete original scenario/result wrapper')
++    ui = value['UI']
++    check(type(ui) is dict and list(ui) == ['owner', 'skill', 'level', 'level_override', 'use_run_training',
++                                         'raw_damage', 'technical', 'training_status', 'current_operator_state'],
++          'All nine source-defined UI controls/state fields retained in order')
++    check(ui['owner'] is None or type(ui['owner']) is str, 'Owner currentData is source string or actual empty None')
++    check(ui['skill'] is None or type(ui['skill']) is int, 'Skill addItem userData is source integer or empty None')
++    check(type(ui['level']) is int and all(type(ui[name]) is bool for name in
++          ('level_override', 'use_run_training', 'raw_damage', 'technical'))
++          and type(ui['training_status']) is str, 'Exact Qt source control/status scalar types')
++    check(type(snapshot_value(ui['current_operator_state'])) is dict, 'Complete ordinary current operator state')
++    texts = value['three_texts']
++    if result is None:
++        check(set(value) == required | extra and type(texts) is dict
++              and list(texts) == ['applicable', 'reason', 'visible_status'] and texts['applicable'] is False
++              and texts['reason'] == 'Existing error or natural early return'
++              and type(texts['visible_status']) is str and texts['visible_status'] == value['visible_status'],
++              'Actual None/error capture retains complete source reason/status and no fabricated formatter delta')
++    else:
++        check(set(value) == required | extra | {'actual_explicit_formatter_entries'}
++              and type(texts) is dict and list(texts) == ['applicable', 'strings'] and texts['applicable'] is True,
++              'Actual numerical capture retains its full three texts and formatter-entry delta')
++        strings = texts['strings']
++        check(type(strings) is dict and list(strings) == ['estimate', 'default', 'technical']
++              and all(type(text) is str for text in strings.values()) and strings['estimate'] == strings['default'],
++              'Exact complete numerical formatter strings with producer order')
++        entries = source_counter(value['actual_explicit_formatter_entries'], maintained_map)
++        check(entries.get('rouge/estimate.py:format_estimate') == 1
++              and entries.get('rouge/reporting.py:format_report') == (3 if 'report' in result['result'] else 2),
++              'Actual explicit three formatter calls and source format_estimate report delegation')
++    if action_fields:
++        source_counter(value['actual_entries'], maintained_map)
++        ids = value['API_sequences']
++        check(type(ids) is list and all(integer(sequence, 1) for sequence in ids) and ids == sorted(set(ids)),
++              'Complete actual action API entry-ID slice')
++    return result
++
++
++def source_state_record(wrapper, case, stage, maintained_map):
++    check(type(wrapper) is dict and list(wrapper) == ['id', 'record'] and type(wrapper['id']) is str,
++          'Exact native state wrapper')
++    row = wrapper['record']; step = case['step']
++    base = {'id', 'planned', 'baseline_source', 'baseline_pointer', 'passed'}
++    check(type(row) is dict and base <= set(row) and row['id'] == case['id']
++          and type(row['passed']) is bool and snapshot_value(row['planned']) == step
++          and row['planned']['native'] == graph(step), 'Complete source-plan state base fields and native exact step')
++    check(row['baseline_source'] == case.get('baseline_file') and row['baseline_pointer'] == case.get('baseline_pointer')
++          and (row['baseline_source'] is None or type(row['baseline_source']) is str)
++          and (row['baseline_pointer'] is None or type(row['baseline_pointer']) is str),
++          'Actual state retains exact baseline source/pointer metadata')
++    callback = {'before_callback_damage_result'} if step['action'] == 'numeric_callback' else set()
++    if callback:
++        previous = snapshot_value(row['before_callback_damage_result'])
++        check(previous is None or (type(previous) is dict and list(previous) == ['scenario', 'result']
++              and type(previous['scenario']) is dict and type(previous['result']) is dict),
++              'Source callback retains complete ordinary before-callback UI graph')
++    if step['action'] == 'fresh_window':
++        check(stage == 'final' and set(row) == base | {'automatic', 'durable_after',
++              'all_actual_entries_including_probes', 'all_API_sequences'} and row['passed'] is True,
++              'Exact complete source fresh-window final state fields')
++        ui_capture(row['automatic'], maintained_map)
++        durable(row['durable_after'])
++    else:
++        required = base | callback | {'durable_before'}
++        durable(row['durable_before'])
++        if stage in ('automatic', 'final'):
++            required |= {'automatic', 'durable_after_automatic'}
++            ui_capture(row['automatic'], maintained_map, True)
++            durable(row['durable_after_automatic'])
++        if stage == 'final':
++            required |= {'manual', 'full_native_JSON_three_texts_auto_manual_equal',
++                         'all_actual_entries_including_probes', 'all_API_sequences'}
++            ui_capture(row['manual'], maintained_map, True)
++            check(row['passed'] is True and row['full_native_JSON_three_texts_auto_manual_equal'] is True,
++                  'Source final action retains actual full manual equality witness')
++        else:
++            check(row['passed'] is False and stage in ('before', 'automatic'), 'Actual intermediate state source stage')
++        check(set(row) == required, 'Exact complete source-defined intermediate/final action fields')
++    if stage == 'final':
++        source_counter(row['all_actual_entries_including_probes'], maintained_map)
++        ids = row['all_API_sequences']
++        check(type(ids) is list and all(integer(sequence, 1) for sequence in ids) and ids == sorted(set(ids)),
++              'Complete all-action API source entry-ID slice')
++    return row
++
++
++def scan_snapshots(value, native_only_paths=(), raw_byte_paths=()):
++    exception_roles = set(native_only_paths); raw_roles = set(raw_byte_paths)
++    check(not exception_roles & raw_roles, 'Snapshot source roles are disjoint')
++    seen_exception = set(); seen_raw = set(); queue = [((), value)]
+     while queue:
+         path, item = queue.pop()
+         if type(item) is dict:
+-            native_marker = (type(item.get('native')) is dict
+-                             and item['native'].get('schema') == 'flat-typed-graph-v1')
+-            if (native_marker or 'native_inverse_verified' in item
+-                    or 'JSON_projection_applicable' in item
++            marker = (type(item.get('native')) is dict and item['native'].get('schema') == 'flat-typed-graph-v1')
++            if (marker or 'native_inverse_verified' in item or 'JSON_projection_applicable' in item
+                     or item.get('schema') == 'raw-file-bytes-evidence-v1'):
+-                check('native' in item and item.get('native_inverse_verified') is True,
+-                      'Every actual native graph wrapper requires its True inverse flag')
+-                restored = decode(item['native'])
+-                if item.get('schema') == 'raw-file-bytes-evidence-v1':
+-                    check(path not in allowed and 'JSON_projection_applicable' not in item,
+-                          'Raw bytes use their independent source-defined projection schema')
+-                    check('JSON_projection' not in item and (restored is None or type(restored) is bytes), 'Raw bytes snapshot')
+-                    expected = {'file_exists': restored is not None, 'raw_hex': restored.hex() if restored is not None else None,
+-                                'byte_count': len(restored) if restored is not None else None,
+-                                'sha256': sha(restored) if restored is not None else None}
+-                    check(item['JSON_safe_raw_bytes'] == expected, 'Actual complete raw bytes projection')
+-                elif item.get('JSON_projection_applicable') is False:
+-                    check(path in allowed
+-                          and set(item) == {'native', 'native_inverse_verified', 'JSON_projection_applicable'}
+-                          and type(restored) is tuple,
+-                          'Native-only evidence is solely the source-qualified entry exception_events[N].args tuple')
+-                    verified_native_only.add(path)
++                if path in exception_roles:
++                    snapshot_value(item, 'exception-args'); seen_exception.add(path)
++                elif path in raw_roles:
++                    snapshot_value(item, 'account-file-bytes'); seen_raw.add(path)
+                 else:
+-                    check(path not in allowed, 'Actual exception args must use their source-defined native-only wrapper')
+-                    check('JSON_projection' in item and encoded_json(restored) == encoded_json(item['JSON_projection']),
+-                          'Complete ordered JSON projection equals native inverse')
+-                    queue.append((path + ('JSON_projection',), item['JSON_projection']))
+-                REPORT['snapshots_verified'] += 1
++                    snapshot_value(item)
++                # The full native inverse/projection covers the entire stored value.
++                # Re-entering projection dictionaries would misclassify actual data keys as capture wrappers.
+             else:
+                 queue.extend((path + (key,), child) for key, child in item.items())
+         elif type(item) in (list, tuple):
+             queue.extend((path + (index,), child) for index, child in enumerate(item))
+-    check(verified_native_only == allowed, 'Every source-qualified exception args wrapper is actually present and verified')
++    check(seen_exception == exception_roles and seen_raw == raw_roles,
++          'Every source-qualified exception/raw role is physically present and completely verified')
+ 
+ 
+ def filesystem_rows(rows):
+     check(type(rows) is list, 'Saved filesystem rows')
+-    seen = set()
++    seen = set(); files = {}
+     for row in rows:
++        check(type(row) is dict and type(row['path']) is str, 'Complete source filesystem row')
+         name = row['path']
+-        check(type(name) is str and name and not Path(name).is_absolute() and '..' not in Path(name).parts
++        check(name and not Path(name).is_absolute() and '..' not in Path(name).parts
++              and not PureWindowsPath(name).anchor and '\\' not in name
+               and Path(name).as_posix() == name and name not in seen, 'Unique safe saved relative file path')
+         seen.add(name)
+-        check(row['kind'] in ('directory', 'file'), 'Saved filesystem entry kind')
++        check(type(row['kind']) is str and row['kind'] in ('directory', 'file'), 'Saved filesystem entry kind')
+         if row['kind'] == 'directory':
++            check(list(row) == ['path', 'kind'], 'Exact source directory row fields')
+             continue
++        base = ['path', 'kind', 'bytes', 'sha256', 'raw_hex']
++        check(list(row) in (base + ['decoded'], base + ['decode_error'])
++              and type(row['raw_hex']) is str and integer(row['bytes']) and is_sha(row['sha256']),
++              'Exact source file row fields/types and one parse branch')
+         raw = bytes.fromhex(row['raw_hex'])
+-        check(raw.hex() == row['raw_hex'] and integer(row['bytes']) and row['bytes'] == len(raw)
+-              and is_sha(row['sha256']) and row['sha256'] == sha(raw), 'Exact saved raw file bytes')
++        check(raw.hex() == row['raw_hex'] and row['bytes'] == len(raw) and row['sha256'] == sha(raw),
++              'Exact saved raw file bytes')
+         try:
+             decoded = json.loads(raw.decode('utf-8'))
+         except (UnicodeDecodeError, ValueError) as error:
+-            check('decoded' not in row and row['decode_error'] == {'type': type(error).__name__, 'message': str(error)},
+-                  'Actual raw-file decode error is explicit, never unavailable/PASS substitution')
++            captured = row['decode_error']
++            check(type(captured) is dict and list(captured) == ['type', 'message']
++                  and type(captured['type']) is str and type(captured['message']) is str
++                  and encoded_json(captured) == encoded_json({'type': type(error).__name__, 'message': str(error)}),
++                  'Actual original raw-file decode error, never unavailable substitution')
+         else:
+-            check('decode_error' not in row and row['decoded']['native'] == graph(decoded), 'Saved raw bytes exact decoded graph')
++            actual = snapshot_value(row['decoded'])
++            check(graph(actual) == graph(decoded), 'Saved raw bytes exact complete ordinary decoded graph')
++        files[name] = raw
+         REPORT['raw_files_verified'] += 1
+-
+-
+-def durable(value):
+-    check(type(value) is dict and value['alias_is_records'] is True and type(value['preserve_original']) is bool,
+-          'Source-qualified account-cache alias and preserve flag')
+-    scan_snapshots(value)
+-    check(type(decode(value['run']['native'])) is dict and type(decode(value['account']['native'])) is dict,
+-          'Complete persisted RunState/account dictionaries')
+-    filesystem_rows(value['files'])
++    return files
++
++
++def durable(value, historical=False):
++    keys = (['run', 'account_records', 'account_issues', 'preserve_original', 'account_bytes', 'files',
++             'operator_observations_alias_is_records'] if historical else
++            ['run', 'account', 'issues', 'preserve_original', 'alias_is_records', 'account_bytes', 'files'])
++    check(type(value) is dict and list(value) == keys, 'All seven exact source-defined durable fields/order')
++    alias = 'operator_observations_alias_is_records' if historical else 'alias_is_records'
++    account = 'account_records' if historical else 'account'; issues = 'account_issues' if historical else 'issues'
++    check(value[alias] is True and type(value['preserve_original']) is bool,
++          'Source-qualified account-cache alias and exact preserve flag')
++    for name in ('run', account, issues):
++        check(type(snapshot_value(value[name])) is dict, 'Complete ordinary persisted run/account/issues dictionaries')
++    raw = snapshot_value(value['account_bytes'], 'account-file-bytes')
++    files = filesystem_rows(value['files'])
++    if raw is None:
++        check('account.json' not in files and not any(row['path'] == 'account.json' for row in value['files']),
++              'Explicit absent account-file bytes agrees with same source filesystem')
++    else:
++        check('account.json' in files and files['account.json'] == raw,
++              'Source account bytes equal same filesystem account.json raw bytes; no memory/disk equality assumed')
+ 
+ 
+ def manifest_payloads(reference):
+@@ -540,6 +692,7 @@
+     check(physical_exit in (b'0\n', b'0\r\n'), 'Actual94 baseline physical primary0')
+     check(receipt['game_capture_requests'] == receipt['chat_requests'] == 0 and receipt['private_state_isolated'] is True,
+           'Actual94 public isolated source-compatible runtime')
++    read_ref({'path': '/workspace/.continuation/ui-095-module-report-pending/baseline094-v2/wine-module-report-baseline-094-for095.py', 'bytes': 28235, 'sha256': '4740c8b9f6386a32cd78929f98c8265201ba5b891d1e6eddbbb812faebebd829'})
+     documents = {}
+     for row in binding['baseline_files']:
+         check(row['encoding'] in ('json', 'gzip_json') and row['name'] not in documents, 'Actual unique baseline document encoding')
+@@ -551,7 +704,17 @@
+                   and sha(compressed) == meta['sha256'] and len(raw) == meta['decoded_bytes']
+                   and sha(raw) == meta['decoded_sha256'], 'Complete actual94 compressed and decoded records binding')
+         document = json.loads(raw)
+-        scan_snapshots(document)
++        raw_paths = []
++        if row['name'] == 'actual94_baseline_records':
++            check(type(document) is dict and document['schema'] == 'focused-module-report-baseline-v1'
++                  and type(document['states']) is list, 'Actual historical baseline producer state envelope')
++            for index, state in enumerate(document['states']):
++                check(type(state) is dict, 'Actual historical baseline state')
++                for field in ('durable_before', 'durable_after_automatic', 'durable_after'):
++                    if field in state and state[field] is not None:
++                        durable(state[field], historical=True)
++                        raw_paths.append(('states', index, field, 'account_bytes'))
++        scan_snapshots(document, raw_byte_paths=raw_paths)
+         documents[row['name']] = document
+     data = documents['actual94_baseline_records']
+     check(data['schema'] == 'focused-module-report-baseline-v1' and data['passed'] is True and data['Qt_slot_exceptions'] == [],
+@@ -603,57 +766,84 @@
+ 
+ 
+ def entry_summary(row, source_lines, maintained_map):
+-    check(integer(row['sequence'], 1) and type(row['entry']) is str and type(row['phase']) is str
+-          and type(row['scope']) is str, 'Actual entry scalar types')
++    base = {'sequence', 'entry', 'scope', 'phase', 'case', 'origin', 'outcome'}
++    check(type(row) is dict and base <= set(row) and integer(row['sequence'], 1)
++          and all(type(row[name]) is str and row[name] for name in ('entry', 'scope', 'phase', 'outcome'))
++          and (row['case'] is None or type(row['case']) is str and row['case']), 'Complete actual entry metadata types')
+     key = row['entry']; source_path, _, function = key.partition(':')
+     check(source_path.startswith('rouge/') and source_path in maintained_map and function,
+           'Actual entry source key is a true whole maintained-map member')
++    check(key in ('rouge/damage.py:calculate_damage', 'rouge/damage.py:_prepare_damage')
++          or key.startswith(('rouge/app.py:MainWindow.calculate', 'rouge/run_state.py:RunState.',
++                             'rouge/account_cache.py:AccountCache.')), 'Exact frozen targeted source selector')
+     origin = row['origin']
+     if origin is not None:
+-        check(integer(origin['runner_line'], 1) and origin['runner_line'] <= len(source_lines)
+-              and origin['source'] == source_lines[origin['runner_line'] - 1], 'Exact source-qualified live origin line')
++        check(type(origin) is dict and list(origin) == ['runner_line', 'function', 'source']
++              and integer(origin['runner_line'], 1) and origin['runner_line'] <= len(source_lines)
++              and type(origin['function']) is str and origin['function'] and type(origin['source']) is str
++              and origin['source'] == source_lines[origin['runner_line'] - 1], 'Complete source-qualified live origin')
+     events = row.get('exception_events', [])
+-    check(type(events) is list, 'Actual entry exception-events list')
+-    native_only_paths = []
++    check(type(events) is list and ('exception_events' not in row or events), 'Actual absent-or-nonempty exception-events list')
++    allowed = []
+     for index, event in enumerate(events):
+-        check(type(event) is dict and set(event) == {'type', 'message', 'args'}
+-              and type(event['type']) is str and event['type']
+-              and type(event['message']) is str and type(event['args']) is dict,
++        check(type(event) is dict and list(event) == ['type', 'message', 'args']
++              and type(event['type']) is str and event['type'] and type(event['message']) is str,
+               'Exact source-qualified _trace_local095 exception event shape')
+-        native_only_paths.append(('exception_events', index, 'args'))
+-    scan_snapshots(row, native_only_paths)
+-    summary = {key: row[key] for key in ('sequence', 'entry', 'scope', 'phase', 'case', 'outcome')}
+-    inputs = row.get('caller_before')
+-    if inputs is not None:
+-        before = decode(inputs['native']); after = decode(row['caller_after']['native'])
+-        check(type(before) is dict and type(after) is dict
+-              and row['caller_unchanged'] is (inputs['native'] == row['caller_after']['native']), 'Actual caller before/entry/after typed evidence')
+-        summary['caller_native_sha256'] = graph_sha(inputs['native'])
++        allowed.append(('exception_events', index, 'args'))
++    scan_snapshots(row, allowed)
++    emitted = base | ({'exception_events'} if events else set())
++    summary = {name: row[name] for name in ('sequence', 'entry', 'scope', 'phase', 'case', 'outcome')}
++    rules = {'rouge/damage.py:calculate_damage': ['scenario'], 'rouge/damage.py:_prepare_damage': ['scenario'],
++             'rouge/run_state.py:RunState.apply': ['observed', 'captured_at'],
++             'rouge/account_cache.py:AccountCache.observe': ['operator', 'captured_at'],
++             'rouge/account_cache.py:AccountCache.view': ['op']}
++    caller_fields = {'caller_before', 'caller_after', 'caller_unchanged'}
++    if key in rules:
++        check(caller_fields <= set(row) and type(row['caller_unchanged']) is bool,
++              'All five real _inputs095 selectors require complete caller before/after/unchanged')
++        before = snapshot_value(row['caller_before']); after = snapshot_value(row['caller_after'])
++        check(type(before) is dict and type(after) is dict and list(before) == rules[key] and list(after) == rules[key]
++              and row['caller_unchanged'] is (row['caller_before']['native'] == row['caller_after']['native']),
++              'Actual caller key order/value equality and exact bool; no invented immutability for cache/run calls')
++        emitted |= caller_fields
++        summary['caller_native_sha256'] = graph_sha(row['caller_before']['native'])
++    else:
++        check(not caller_fields & set(row), 'Real _inputs095 None branch emits no invented caller fields')
+     if key in ('rouge/damage.py:calculate_damage', 'rouge/damage.py:_prepare_damage'):
+-        check(inputs is not None and row['caller_unchanged'] is True
+-              and list(before) == ['scenario'] and type(before['scenario']) is dict, 'Actual original numerical caller preserved')
+-        returned = decode(row['returned']['native'])
+-        events = row.get('exception_events', [])
++        check(row['caller_unchanged'] is True and type(before['scenario']) is dict, 'Actual original numerical caller preserved')
++        returned = snapshot_value(row['returned']); emitted.add('returned')
+         expected_outcome = 'raised_exception' if returned is None and events else 'returned_' + type(returned).__name__
+-        check(row['outcome'] == expected_outcome, 'Explicit actual dict/None/exception return outcome')
++        check(row['outcome'] == expected_outcome, 'Explicit source numerical API dict/None/exception return outcome')
+         if key.endswith(':_prepare_damage') and returned is not None:
+             check(type(returned) is tuple and len(returned) == 4 and type(returned[0]) is dict,
+-                  'Complete source-qualified four-part prepared tuple, not raw caller replacement')
++                  'Complete source-qualified four-part prepared tuple')
+         if key.endswith(':calculate_damage') and returned is not None:
+             check(type(returned) is dict, 'Actual numerical API full returned dictionary')
+         summary['returned_native_sha256'] = graph_sha(row['returned']['native'])
+         summary['scenario_native_sha256'] = graph_sha(graph(before['scenario']))
+     elif key == 'rouge/app.py:MainWindow.calculate':
+-        result = decode(row['returned_damage_result']['native'])
+-        check(row['outcome'] == ('numerical_result_available' if result is not None else 'no_numerical_result'),
+-              'Actual MainWindow numerical/None branch')
++        result = snapshot_value(row['returned_damage_result']); emitted |= {'returned_damage_result', 'visible_status'}
++        check(result is None or (type(result) is dict and list(result) == ['scenario', 'result']
++                                and type(result['scenario']) is dict and type(result['result']) is dict),
++              'Actual MainWindow return is None or complete ordinary numerical wrapper')
++        check(type(row['visible_status']) is str
++              and row['outcome'] == ('numerical_result_available' if result is not None else 'no_numerical_result'),
++              'Actual MainWindow source branch full visible status and numerical/None outcome')
+         summary['UI_damage_result_native_sha256'] = graph_sha(row['returned_damage_result']['native'])
+         summary['visible_status'] = row['visible_status']
+-    elif key.startswith(('rouge/run_state.py:RunState.', 'rouge/account_cache.py:AccountCache.',
+-                         'rouge/app.py:MainWindow.calculate')):
+-        check(row['outcome'] != 'pending', 'Actual real RunState/account-cache entry completed')
++    elif row['outcome'] == 'returned_non_evidence_object':
++        check(type(row.get('returned_type')) is str and row['returned_type']
++              and row['returned_type'] not in ('dict', 'list', 'tuple', 'bool', 'int', 'float', 'str', 'NoneType')
++              and 'returned' not in row, 'Actual unsupported-value type-only fallback has nonempty real type and no invented snapshot')
++        emitted.add('returned_type')
+     else:
+-        raise ValueError('Unexpected targeted entry outside frozen source selector: ' + key)
++        returned = snapshot_value(row['returned']); emitted.add('returned')
++        check(type(returned) in (dict, list, tuple, bool, int, float, str) or returned is None,
++              'Actual generic targeted native-return source branch supports only literal producer types')
++        expected_outcome = 'returned_none_with_exception_events' if returned is None and events else 'returned_' + type(returned).__name__
++        check(row['outcome'] == expected_outcome, 'Actual generic None+events classification distinct from API raised_exception')
++        summary['returned_native_sha256'] = graph_sha(row['returned']['native'])
++    check(set(row) == emitted, 'Exact complete source-emitted entry fields for its caller and return branches')
+     return summary
+ 
+ 
+@@ -726,7 +916,7 @@
+             summaries[sequence] = summary
+             target_counts[summary['entry']] += 1
+             phase_counts[(summary['scope'] + '|' + summary['phase'], summary['entry'])] += 1
+-        scan_snapshots(chunk_states)
++        # All state snapshots are validated by exact source roles in new_subgroup, including every intermediate record.
+         states.extend(chunk_states)
+     check(set(declared) == chunk_paths | {str(NATIVE_INDEX)}, 'Native physical files consist of exact index and all indexed chunks; no tmp/unlisted file')
+     check(sorted(summaries) == list(range(1, len(summaries) + 1)) and index['records_completed'] == meta['targeted_call_records'] == len(summaries),
+@@ -918,6 +1108,15 @@
+         expected_ids.append(case['id'])
+     check([row['id'] for row in states] == expected_ids and len(set(expected_ids)) == len(expected_ids),
+           'Complete ordered before/automatic-before-manual/final state sequence; no failure rows')
++    state_cases = {}
++    for case in binding['cases']:
++        if case['step']['action'] != 'fresh_window':
++            state_cases[case['id'] + '/before-action'] = (case, 'before')
++            state_cases[case['id'] + '/automatic-before-manual'] = (case, 'automatic')
++        state_cases[case['id']] = (case, 'final')
++    for wrapper in states:
++        case, stage = state_cases[wrapper['id']]
++        source_state_record(wrapper, case, stage, receipt['source_guard095']['before'])
+     final_rows = {row['id']: row['record'] for row in states if row['id'] in {case['id'] for case in binding['cases']}}
+     state_records = {row['id']: row['record'] for row in states}
+     actual_behavior = receipt['actual095_behavior_rows']

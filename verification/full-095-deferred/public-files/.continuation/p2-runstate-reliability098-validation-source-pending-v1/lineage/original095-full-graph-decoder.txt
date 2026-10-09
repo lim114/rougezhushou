@@ -1,0 +1,50 @@
+def decode(encoded):
+    require(type(encoded) is dict and set(encoded) == {'schema', 'root', 'nodes'}
+            and encoded['schema'] == 'flat-typed-graph-v1', 'Exact native graph schema')
+    nodes = encoded['nodes']
+    require(type(nodes) is list and nodes, 'Nonempty native graph')
+    values, visiting = {}, set()
+    stack = [(encoded['root'], False)]
+    while stack:
+        index, finish = stack.pop()
+        require(type(index) is int and 0 <= index < len(nodes), 'Native node reference')
+        if index in values:
+            continue
+        node = nodes[index]
+        require(type(node) is dict, 'Native node')
+        kind = node['type']
+        if kind in ('NoneType', 'bool', 'int', 'str'):
+            expected = {'NoneType': type(None), 'bool': bool, 'int': int, 'str': str}[kind]
+            require(set(node) == {'type', 'value'} and type(node['value']) is expected,
+                    'Exact native scalar type')
+            values[index] = node['value']
+        elif kind in ('float', 'bytes'):
+            require(set(node) == {'type', 'hex'} and type(node['hex']) is str,
+                    'Native hex schema')
+            value = float.fromhex(node['hex']) if kind == 'float' else bytes.fromhex(node['hex'])
+            require(value.hex() == node['hex'] and (kind != 'float' or math.isfinite(value)),
+                    'Canonical finite float / bytes hex')
+            values[index] = value
+        else:
+            require(kind in ('dict', 'list', 'tuple') and set(node) == {'type', 'items'}
+                    and type(node['items']) is list, 'Native container schema')
+            if kind == 'dict':
+                require(all(type(pair) is list and len(pair) == 2 for pair in node['items']),
+                        'Native dict pairs')
+            if not finish:
+                require(index not in visiting, 'Acyclic saved native graph required')
+                visiting.add(index)
+                stack.append((index, True))
+                children = ([v for pair in node['items'] for v in pair]
+                            if kind == 'dict' else node['items'])
+                stack.extend((v, False) for v in reversed(children))
+            else:
+                visiting.remove(index)
+                if kind == 'dict':
+                    values[index] = {values[k]: values[v] for k, v in node['items']}
+                else:
+                    items = [values[v] for v in node['items']]
+                    values[index] = tuple(items) if kind == 'tuple' else items
+    restored = values[encoded['root']]
+    require(graph(restored) == encoded, 'Complete native type/order/alias/hex roundtrip')
+    return restored

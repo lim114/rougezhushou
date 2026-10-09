@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "kind": "STANDARD_LIBRARY_OPERATION_PROBE_ONLY_NOT_CANDIDATE_OR_PROJECT_EXECUTION",
+  "project_calls": 0,
+  "python_recursionlimit": 1000,
+  "record_template": "Legal JSON object: id=mechanist, fields={}, extra_metadata = depth nested arrays containing numeric 0. Generation uses prefix of depth [ characters, literal 0, and depth ] characters.",
+  "operation_evidence": [
+    {
+      "depth": 100,
+      "stdlib_json_loads": "RETURNED",
+      "stdlib_deepcopy_extra": "RETURNED"
+    },
+    {
+      "depth": 200,
+      "stdlib_json_loads": "RETURNED",
+      "stdlib_deepcopy_extra": "RETURNED"
+    },
+    {
+      "depth": 300,
+      "stdlib_json_loads": "RETURNED",
+      "stdlib_deepcopy_extra": "RETURNED"
+    },
+    {
+      "depth": 400,
+      "stdlib_json_loads": "RETURNED",
+      "stdlib_deepcopy_extra": "RETURNED"
+    },
+    {
+      "depth": 450,
+      "stdlib_json_loads": "RETURNED",
+      "stdlib_deepcopy_extra": "RETURNED"
+    },
+    {
+      "depth": 500,
+      "stdlib_json_loads": "RETURNED",
+      "stdlib_deepcopy_extra": "RecursionError"
+    },
+    {
+      "depth": 600,
+      "stdlib_json_loads": "RETURNED",
+      "stdlib_deepcopy_extra": "RecursionError"
+    },
+    {
+      "depth": 800,
+      "stdlib_json_loads": "RETURNED",
+      "stdlib_deepcopy_extra": "RecursionError"
+    }
+  ],
+  "candidate_source_condition": [
+    "account_cache.py:36-112 does not inspect ignored extra_metadata, so this record is otherwise usable.",
+    "account_cache.py:169 recursively deep-copies every retained record value without a RecursionError guard.",
+    "app.py:777 calls that view in current_operator_state before update/calculate try, and app.py:473 also calls it in sample summary.",
+    "account_cache.py:207-214 recursively copies incoming whole operator, fields/ranks and opaque source/time-map values."
+  ],
+  "baseline_difference": "Original current_operator_state returned the raw cached mapping and original observe built shallow dictionaries; no recursive copy of ignored metadata was added there.",
+  "predicted_candidate_failure": "RecursionError at the added deepcopy operation before safe browse/recovery. This is source-derived, not a project-runtime test result.",
+  "minimal_fix": "Remove unneeded recursive copying of opaque ignored values. Use a top-level safe-view dict excluding RUN_METADATA and shallow copies of mappings actually assembled, and original shallow producer union semantics. Do not invent a nesting limit or call ignored values corrupt. A stronger independent nested-view-mutation guarantee is not part of the frozen original contract."
+}

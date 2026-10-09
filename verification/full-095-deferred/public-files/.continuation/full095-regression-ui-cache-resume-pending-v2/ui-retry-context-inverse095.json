@@ -1,0 +1,129 @@
+{
+  "format_version": 1,
+  "scope": "SOURCE_ONLY_NO_CONTEXT_OR_PROJECT_EXECUTION",
+  "baseline_context_reference": {
+    "path": "/workspace/.continuation/full095-regression-capability-resume-final-v1/full095_context_recovery.py",
+    "bytes": 32395,
+    "sha256": "9e341441992d616bea7d91f22f4b14745d58799bde9f2e738f5b2d9434315403"
+  },
+  "pending_context_reference": {
+    "path": "/workspace/.continuation/full095-regression-ui-cache-resume-pending-v2/full095_context_ui_retry_pending.py",
+    "bytes": 35007,
+    "sha256": "e0c5ba2dea659ef8fc218ca4f2edfe21eb75e364d97faf17a7a352ea1f81226c"
+  },
+  "changes": [
+    {
+      "before": "PENDING = False\n",
+      "after": "PENDING = True\n"
+    },
+    {
+      "before": "raise SystemExit('PENDING SOURCE-only full095 recovery: actual original epoch, primary outcomes and reviewed adapter contracts are not bound.')",
+      "after": "raise SystemExit('PENDING SOURCE-only full095 UI cache retry: actual prior recovery, new reviewed UI/saved source and paths are not bound.')"
+    },
+    {
+      "before": "BOUND_BINDING_SHA256 = 'af943d5f3b0c5996c83fb5d1ee82f793c96a7937e7ed493604fa126a4bbf73f3'",
+      "after": "BOUND_BINDING_SHA256 = '__ACTUAL_UI_RETRY_BINDING_SHA256_PENDING__'"
+    },
+    {
+      "before": "path = OUT / 'wine-validation-095-context-recovery-v1.json'",
+      "after": "path = OUT / 'wine-validation-095-context-ui-cache-retry-v1.json'"
+    },
+    {
+      "before": "and binding.get('actual_original_epoch_recovery') is True,",
+      "after": "and binding.get('actual_original_epoch_recovery') is True\n            and binding.get('actual_ui_retry') is True,"
+    },
+    {
+      "before": "        require(entry['cwd'] == contract['cwd'] and entry['argv'] == contract['argv']",
+      "after": "        if name in ('wine_ui', 'saved_review'):\n            require(began >= datetime.fromisoformat(context['ui_retry_started_at']),\n                    f'{name} execution must be fresh after the actual UI retry resume')\n        require(entry['cwd'] == contract['cwd'] and entry['argv'] == contract['argv']"
+    },
+    {
+      "before": "    original_context = bound_json(recovery_spec['original']['context'])\n    new_paths = recovery_spec['replacement_output_paths']",
+      "after": "    original_context = bound_json(recovery_spec['original']['context'])\n    prior_recovery_context = bound_json(recovery_spec['prior_recovery']['context'])\n    new_paths = recovery_spec['ui_retry_output_paths']"
+    },
+    {
+      "before": "            and not Path(actual['global_output_plan']['paths']['context_final']).exists(),\n            'A new recovery/retry/final sink already exists; preserve it and diagnose')",
+      "after": "            and all(not Path(name).exists() for name in actual['global_output_plan']['fresh_evidence_directories']),\n            'A new UI retry/control/final sink or native namespace already exists; preserve it and diagnose')"
+    },
+    {
+      "before": "    ctx = deepcopy(original_context)\n",
+      "after": "    ctx = deepcopy(prior_recovery_context)\n"
+    },
+    {
+      "before": "               recovery_started_at=now(),\n",
+      "after": "               actual_ui_retry=True,\n               ui_retry_started_at=now(),\n               prior_recovery=recovery_spec['prior_recovery'],\n               prior_incomplete_ui=recovery_spec['prior_incomplete_ui'],\n               ui_retry_source=recovery_spec['ui_retry'],\n               recovery_started_at=prior_recovery_context['recovery_started_at'],\n"
+    },
+    {
+      "before": "    require(datetime.fromisoformat(ctx['started_at']) <= datetime.fromisoformat(ctx['recovery_started_at']),\n            'Recovery timestamp precedes the actual original full095 start')",
+      "after": "    require(ctx['started_at'] == original_context['started_at']\n            and ctx['recovery_started_at'] == prior_recovery_context['recovery_started_at']\n            and datetime.fromisoformat(ctx['started_at']) <= datetime.fromisoformat(ctx['recovery_started_at'])\n            <= datetime.fromisoformat(ctx['ui_retry_started_at']),\n            'UI retry must retain both actual earlier epoch boundaries and add only its new real boundary')"
+    },
+    {
+      "before": "                      'actual_original_epoch_recovery': True,\n                      'preserved_passed_executions':",
+      "after": "                      'actual_original_epoch_recovery': True, 'actual_ui_retry': True,\n                      'recovery_started_at': ctx['recovery_started_at'],\n                      'ui_retry_started_at': ctx['ui_retry_started_at'],\n                      'preserved_passed_executions':"
+    },
+    {
+      "before": "            and ctx.get('actual_original_epoch_recovery') is True,\n            'Actual recovery context missing')",
+      "after": "            and ctx.get('actual_original_epoch_recovery') is True and ctx.get('actual_ui_retry') is True,\n            'Actual UI retry recovery context missing')"
+    },
+    {
+      "before": "            and ctx['planned_fresh_sinks'] == recovery_spec['replacement_output_paths']",
+      "after": "            and ctx['planned_fresh_sinks'] == recovery_spec['ui_retry_output_paths']\n            and ctx['prior_recovery'] == recovery_spec['prior_recovery']\n            and ctx['prior_incomplete_ui'] == recovery_spec['prior_incomplete_ui']\n            and ctx['ui_retry_source'] == recovery_spec['ui_retry']\n            and ctx['recovery_started_at'] == bound_json(recovery_spec['prior_recovery']['context'])['recovery_started_at']"
+    },
+    {
+      "before": "            <= datetime.now(timezone.utc),\n            'Actual recovery altered original epoch, passed outcomes, prior failure or reviewed planned sinks')",
+      "after": "            <= datetime.fromisoformat(ctx['ui_retry_started_at']) <= datetime.now(timezone.utc),\n            'Actual UI retry altered an earlier epoch, passed outcome, prior failure/incomplete UI or reviewed planned sink')"
+    },
+    {
+      "before": "prior_failed_wine_full_preserved=True,",
+      "after": "prior_failed_wine_full_preserved=True, prior_incomplete_ui_preserved=True,\n               prior_recovery_started_at_preserved=True, ui_retry_contract_projection_verified=True,"
+    },
+    {
+      "before": "    final_path = Path(OUTPUT_NAMES['context_final'])",
+      "after": "    final_path = Path(actual['global_output_plan']['paths']['context_final'])"
+    },
+    {
+      "before": "        if name in ('wine_full', 'wine_selected'):\n            require(began >=",
+      "after": "        if name in ('wine_full', 'wine_selected'):\n            require(entry == bound_json(binding['recovery_spec']['preserved_recovery_passed_executions'][name]['observation']),\n                    f'{name} actual earlier recovery pass was substituted or replayed')\n            require(began >="
+    },
+    {
+      "before": "               prior_incomplete_ui=recovery_spec['prior_incomplete_ui'],",
+      "after": "               prior_incomplete_ui=recovery_spec['prior_incomplete_ui'],\n               preserved_recovery_passed_executions=recovery_spec['preserved_recovery_passed_executions'],"
+    },
+    {
+      "before": "            and ctx['prior_incomplete_ui'] == recovery_spec['prior_incomplete_ui']",
+      "after": "            and ctx['prior_incomplete_ui'] == recovery_spec['prior_incomplete_ui']\n            and ctx['preserved_recovery_passed_executions'] == recovery_spec['preserved_recovery_passed_executions']"
+    },
+    {
+      "before": "               prior_recovery_started_at_preserved=True, ui_retry_contract_projection_verified=True,",
+      "after": "               prior_recovery_started_at_preserved=True, ui_retry_contract_projection_verified=True,\n               reused_passed_recovery_executions=sorted(recovery_spec['preserved_recovery_passed_executions']),"
+    },
+    {
+      "before": "def selected_receipt(name):\n    path = Path(OUTPUT_NAMES[name])",
+      "after": "def selected_receipt(name):\n    path = Path(binding['actual_inputs']['global_output_plan']['paths'][name])"
+    },
+    {
+      "before": "               prior_incomplete_ui=recovery_spec['prior_incomplete_ui'],",
+      "after": "               prior_incomplete_ui=recovery_spec['prior_incomplete_ui'],\n               prior_selected_failed_execution=recovery_spec['prior_selected_failed_execution'],"
+    },
+    {
+      "before": "            and ctx['prior_incomplete_ui'] == recovery_spec['prior_incomplete_ui']",
+      "after": "            and ctx['prior_incomplete_ui'] == recovery_spec['prior_incomplete_ui']\n            and ctx['prior_selected_failed_execution'] == recovery_spec['prior_selected_failed_execution']"
+    },
+    {
+      "before": "               prior_recovery_started_at_preserved=True, ui_retry_contract_projection_verified=True,",
+      "after": "               prior_recovery_started_at_preserved=True, ui_retry_contract_projection_verified=True,\n               prior_failed_wine_selected_preserved=True,"
+    }
+  ],
+  "whole_actual_recovery_context_inverse_exact": true,
+  "unchanged_original_binding_validator": {
+    "path": "/workspace/.continuation/full095-regression-ui-cache-resume-pending-v1/binding_validation095.py",
+    "bytes": 27489,
+    "sha256": "b7a6c9b9517e3c93fb598d42b1a45ffe9969d8fb871cce04aee34d56594aa5ce"
+  },
+  "unchanged_capability_binding": {
+    "path": "/workspace/.continuation/full095-regression-ui-cache-resume-pending-v1/capability_binding095.py",
+    "bytes": 27595,
+    "sha256": "ad1b5a9c9c4979ccd736f9571e9705e3d5a946beaeb80f868ed56800ac9a9afa"
+  },
+  "project_calls": 0,
+  "runtime_pass": false
+}

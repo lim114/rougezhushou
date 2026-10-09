@@ -1,0 +1,15 @@
+def native090(value):
+    kind=type(value).__name__
+    if value is None or type(value) in (bool,int,str):return {'type':kind,'value':value}
+    if type(value) is float:return {'type':'float','hex':value.hex()}
+    if type(value) in (list,tuple):return {'type':kind,'items':[native090(v) for v in value]}
+    if type(value) is dict:return {'type':'dict','items':[[native090(k),native090(v)] for k,v in value.items()]}
+    raise AssertionError(('unhandled native value',kind))
+
+def projection090(result):
+    keys=['attack','total_damage','components','attack_speed','base_attack_speed','interval_seconds','timing']
+    if 'total_healing' in result:keys.append('total_healing')
+    keys.extend(k for k in result if k.endswith('_reference'))
+    out={key:result[key] for key in dict.fromkeys(keys)}
+    out['estimate']={key:result['estimate'][key] for key in ('training','base_stats','skill')}
+    return out

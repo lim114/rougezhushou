@@ -1,0 +1,105 @@
+{
+  "format_version": 2,
+  "section": 95,
+  "status": "PASS_SOURCE_RECOVERY_SEAL_ONLY_RUNTIME_PENDING",
+  "source_binding_passed": true,
+  "available_checks_passed": false,
+  "original_context": {
+    "path": "/workspace/.compat/wine-validation-095-context.json",
+    "bytes": 122371,
+    "sha256": "cbc2f082e0da50c680a683ebf832ade37d8ae8b1793893998b8537d817e8d3f3"
+  },
+  "original_context_epoch_started_at": "2026-10-08T22:54:16.947394+00:00",
+  "original_source_binding": {
+    "path": "/workspace/.continuation/full095-regression-final-v1/actual-full095-source-binding.json",
+    "bytes": 416844,
+    "sha256": "8b11354e50fe7a3cd291df2a86c765b65285434c44ba8bd119ab01aa29e09245"
+  },
+  "preserved_passed_executions": {
+    "linux_full": {
+      "observation": {
+        "path": "/workspace/.continuation/root-full095-linux_full-observation.json",
+        "bytes": 1263,
+        "sha256": "612508f25ba5cab917be86c23bfb2883803410a4cab40310ffb0095cc53cd45a"
+      },
+      "receipt": {
+        "path": "/workspace/.continuation/linux-full-095.json",
+        "bytes": 112287,
+        "sha256": "1d993f4722cd384dbee34bbc98c477c35e0bc96c0e76b7f71aac8aabc6c4d2a3"
+      }
+    },
+    "linux_selected": {
+      "observation": {
+        "path": "/workspace/.continuation/root-full095-linux_selected-observation.json",
+        "bytes": 1172,
+        "sha256": "2683b9c380f5f6fe748de9cb7cbfb4eabf6e07ee29c0381f1ba1f3a7c5a5378d"
+      },
+      "receipt": null
+    },
+    "linux_pip": {
+      "observation": {
+        "path": "/workspace/.continuation/root-full095-linux_pip-observation.json",
+        "bytes": 989,
+        "sha256": "7aa303303e03997493faa140d0f4cffb71ca5b4d65e8ef6599ded4c6e15d2197"
+      },
+      "receipt": null
+    },
+    "wine_pip": {
+      "observation": {
+        "path": "/workspace/.continuation/root-full095-wine_pip-observation.json",
+        "bytes": 978,
+        "sha256": "95d6956ab2ee7fb6517e59bdb974c48ff429280cbdf0f81eb4f11dfc73d39899"
+      },
+      "receipt": null
+    }
+  },
+  "prior_failed_execution": {
+    "execution_name": "wine_full",
+    "observation": {
+      "path": "/workspace/.continuation/root-full095-wine_full-failed-observation.json",
+      "bytes": 1468,
+      "sha256": "65c336a8edb22496914b469437775197a7ead27aa7b65c023de6e2372ac8404b"
+    },
+    "receipt": {
+      "path": "/workspace/.compat/wine-available-full-095.json",
+      "bytes": 111183,
+      "sha256": "c25f4105e41c3dad0eba94046a161f726efa13d26fe7967807aff80a35fcbd0c"
+    },
+    "runner_log": {
+      "path": "/workspace/.compat/wine-available-full-095.log",
+      "bytes": 3674,
+      "sha256": "f6363d74b249dab9744b58e6b93c8c28537ba63fe6c018a34080d0802ce243e6"
+    }
+  },
+  "changed_execution_contracts": [
+    "wine_full",
+    "wine_selected"
+  ],
+  "changed_output_paths": {
+    "context_start": "/workspace/.compat/wine-validation-095-context-recovery-v1.json",
+    "wine_full": "/workspace/.compat/wine-full095-capability-retry-v1/wine-available-full095.json",
+    "wine_full_log": "/workspace/.compat/wine-full095-capability-retry-v1/wine-available-full095.log",
+    "wine_full_console": "/workspace/.compat/wine-full095-capability-retry-v1/wine-available-full095-console.log",
+    "wine_full_exit_code": "/workspace/.continuation/root-full095-wine_full-capability-retry-v1.exit-code"
+  },
+  "unchanged_original_binding_validator": {
+    "path": "/workspace/.continuation/full095-regression-capability-resume-pending-v1/binding_validation095.py",
+    "bytes": 27489,
+    "sha256": "b7a6c9b9517e3c93fb598d42b1a45ffe9969d8fb871cce04aee34d56594aa5ce"
+  },
+  "pending_to_final_changes": [
+    {
+      "before": "PENDING = True\n",
+      "after": "PENDING = False\n"
+    },
+    {
+      "before": "BOUND_BINDING_SHA256 = '__ACTUAL_RECOVERY_BINDING_SHA256_PENDING__'",
+      "after": "BOUND_BINDING_SHA256 = 'af943d5f3b0c5996c83fb5d1ee82f793c96a7937e7ed493604fa126a4bbf73f3'"
+    }
+  ],
+  "whole_original_context_inverse_exact": true,
+  "original_classifier_byte_changes": 0,
+  "runtime_executions": 0,
+  "project_calls": 0,
+  "commit_or_push_performed": false
+}

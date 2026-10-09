@@ -1,0 +1,93 @@
+{
+  "format_version": 2,
+  "status": "PENDING_TRUE_V2_EXPLICIT_RAW_BYTE_EVIDENCE_SOURCE_CORRECTION_FINAL_BINDING_REVIEW_RUNTIME_PENDING",
+  "manifest": {
+    "path": "public-artifacts-manifest-pending094.json",
+    "bytes": 1739,
+    "sha256": "99552d99f179be50e72d3f943b40f6c10bad00b981e34512c798fc7f02f2449f"
+  },
+  "runner": {
+    "path": "wine-focused-inputs-094-pending.py",
+    "bytes": 44107,
+    "sha256": "0b2a41da79fb3e158c8dc933d92f046b4260cf6146068012ba6ed2cda4feb908"
+  },
+  "sealer": {
+    "path": "seal_focused_inputs094.py",
+    "bytes": 8181,
+    "sha256": "6e394a356ec885f568a1d0e46a40da67c61658230c667dd823be6048f5bd9a14",
+    "default_final_directory": "/workspace/.continuation/ui-094-offline-input-refresh-final-v2"
+  },
+  "plan": {
+    "path": "wine-focused-inputs-094-plan.json",
+    "bytes": 37842,
+    "sha256": "a61c11b82d35536c0fe9f31e5481aac9ac09cff803b945641763426a73ea5f5b"
+  },
+  "predicted_source": {
+    "path": "wine-focused-inputs-094-pending-source.json",
+    "bytes": 79221,
+    "sha256": "d329fe1fb9a08b611b45646067956acc07883d611f548ac312d02a48dda4b21f",
+    "actual": false,
+    "passed": false
+  },
+  "source_correction": {
+    "path": "source-correction-byte-evidence094.json",
+    "bytes": 7981,
+    "sha256": "9fe3cc7ceb3b64c74a6ca5b861e65f9d2e90df2bc52f5d2836f18e474c1e6400",
+    "source_only_not_runtime_failure": true
+  },
+  "byte_evidence_schema": {
+    "where": "states[*].durable_before.account_bytes / durable_after.account_bytes when the real window exists",
+    "schema": "raw-file-bytes-evidence-v1",
+    "native": "Original flat-typed-graph-v1 encoding of bytes or None; byte type and complete raw value retained; original iterative inverse checked for exact type/value and graph equality",
+    "JSON_projection_field": "ABSENT; bytes do not have a JSON_projection",
+    "JSON_safe_raw_bytes": {
+      "file_exists": "bool",
+      "raw_hex": "lower-case exact raw bytes hex string when present; null when absent",
+      "byte_count": "int including0 when present; null when absent",
+      "sha256": "SHA256 of the same original raw bytes when present; null when absent"
+    },
+    "absent_case": "file_exists false; native root NoneType value null; raw_hex/byte_count/sha256 null",
+    "empty_existing_case": "file_exists true; native root bytes hex empty string; raw_hex empty string; byte_count0; SHA of empty bytes",
+    "root_saved_validator_rule": "Decode the existing flat graph with the independently reviewed inverse; compare exact native byte type/value to bytes.fromhex(JSON_safe_raw_bytes.raw_hex), length, SHA and filesystem raw_hex. For absent native None require false/null fields. Do not compare byte evidence with ordinary JSON_projection."
+  },
+  "planned_counts": {
+    "affected_controls": 13,
+    "numeric_controls": 10,
+    "boolean_controls": 3,
+    "workflow_groups": 8,
+    "planned_state_rows": 90,
+    "affected_value_change_requests": 62,
+    "planned_real_manual_button_requests": 62,
+    "planned_fresh_MainWindows": 2,
+    "planned_success_PNGs": 2,
+    "planned_error_PNGs": 1,
+    "runtime_passes": 0,
+    "section094_complete": false
+  },
+  "source_preparation_calls": {
+    "project_imports": 0,
+    "project_API_calls": 0,
+    "project_helper_calls": 0,
+    "project_formatter_calls": 0,
+    "codec_executions": 0,
+    "Qt_calls": 0,
+    "Wine_calls": 0,
+    "tests_executed": 0,
+    "private_state_reads": 0,
+    "network_calls": 0,
+    "tracked_writes": 0
+  },
+  "completed093_receipt": null,
+  "actual094_sourceguard": null,
+  "final_review_role": "root-appointed fresh final reviewer pending; v2 development preflight not formal approval",
+  "required_next": [
+    "Root actual093 completed receipt path/schema/SHA; exact success/workflow JSON pointers must be supplied, not guessed",
+    "Root applied094 actual732 source guard path/SHA and exact predicted mapping",
+    "Sealer performs only three binding substitutions then STOPWRITE",
+    "Root-appointed fresh final source-only review PASS",
+    "Root alone executes Wine; independently validates saved native/JSON/3texts and views actual three PNGs"
+  ],
+  "commit_policy": "After each five sections full validation PASS, commit and push origin codex/p2-development; no per-section93 Git/tag prerequisite",
+  "superseded_v1_packet_STOPWRITE": true,
+  "STOPWRITE_after_seal": true
+}

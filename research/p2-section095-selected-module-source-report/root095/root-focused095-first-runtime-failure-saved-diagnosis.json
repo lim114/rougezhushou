@@ -1,0 +1,36 @@
+{
+  "format_version": 1,
+  "status": "SAVED_ONLY_CONFIRMED_FOCUSED095_STARTUP_HARNESS_CLONE_BREAKS_EXISTING_CROSS_ROOT_ALIAS",
+  "actual_first_Wine_primary_exit": 1,
+  "captured": true,
+  "actual_step": "window1/startup",
+  "actual_before_reduction_full_native_exact_baseline": true,
+  "actual_JSON_projection_exact_baseline": true,
+  "actual_three_text_strings_exact_baseline": true,
+  "actual_live_reference_applicable": false,
+  "entire_actual_and_baseline_native_nodes": 545,
+  "result_only_clone_plain_values_equal_old": true,
+  "result_only_clone_complete_native_graph_not_equal_old": true,
+  "existing_caller_result_shared_container_paths": [
+    [
+      "/scenario/relic_context",
+      "/result/relic_resolution/context"
+    ]
+  ],
+  "product_API_UI_replay": 0,
+  "diagnosis": "remove_only_additions clones result independently then recombines with separately retained original scenario in compare_capture. This destroys an existing caller/result shared container even with no selected module and unchanged complete actual native graph. Fix comparison to preserve whole decoded graph and validate new reference before removing only precise additions; do not weaken type/order/alias equality.",
+  "failed_output_files": [
+    {
+      "path": "/workspace/.compat/wine-module-report-window-095.json",
+      "bytes": 301770,
+      "sha256": "23844eac3056fc212fc618abf1c88f53e40bd35674ffb74217638f837d5a84e8"
+    },
+    {
+      "path": "/workspace/.compat/wine-module-report-window-095-records.json.gz",
+      "bytes": 161799,
+      "sha256": "f3b5e0f5b2ce0d80f1bc4ecdc87158b6bb1a11b57bc24a0dc9381e58b7d4c9db"
+    }
+  ],
+  "section095_completed": false,
+  "full095_runtime_PASS": false
+}

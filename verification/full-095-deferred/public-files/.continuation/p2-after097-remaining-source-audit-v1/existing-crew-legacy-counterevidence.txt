@@ -1,0 +1,9 @@
+103:     def test_nonboolean_legacy_values_remain_compatible_without_producer_claim(self):
+104:         # This protects legacy behavior; recognition's actual producer uses int/None.
+105:         for count, expected in ((0.0, ()), ('0', (OWNER,))):
+106:             with self.subTest(count=count):
+107:                 run = self.seed_run()
+108:                 self.observe(run, {'operators': [], 'crew_count': count})
+109:                 self.assert_members(run, expected)
+110:                 self.assertEqual(run.state['crew_count'], count)
+111:                 self.assertIs(type(run.state['crew_count']), type(count))

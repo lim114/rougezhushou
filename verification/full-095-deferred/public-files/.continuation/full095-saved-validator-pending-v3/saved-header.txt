@@ -1,0 +1,170 @@
+"""Independently verify saved full095 UI evidence; import no project code.
+
+CLI: saved.py --spec ACTUAL_ROOT_SPEC.json --output FRESH_OUTPUT.json
+The author does not execute this file. Null planning specs cannot validate.
+"""
+import argparse
+import ast
+import base64
+import collections
+import gzip
+import hashlib
+import json
+import math
+import re
+import stat
+import struct
+import zlib
+from pathlib import Path, PureWindowsPath
+
+REPO = Path('/workspace/rougezhushou')
+COMPAT = Path('/workspace/.compat')
+EXPECTED_GUARD_SHA = '41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab'
+EXPECTED_UI_PENDING_MF_SHA = '20e2bcbe81232d7fac8082575b16a98c7219035948942f0cd297c8bf3316ac60'
+EXPECTED_ORIGINAL_UI_SHA = '9f7f2d192496f01a4e542cdbbfc1be9932381a6373eb3b46c8fefb2a965e62d9'
+EXPECTED_CODE_MF_SHA = '216d5c31a9bc89dbc51f0b875db073a4fe8ea8b85fb5c9b624f5d9d6f56a461a'
+NATIVE_DIRECTORY = COMPAT / 'full095-ui-native-v3'
+NATIVE_INDEX = NATIVE_DIRECTORY / 'wine-ui-full-native-index-095.json'
+PNG_NAMES = ('wine-window-095.png', 'wine-movement-reference-095.png',
+             'wine-sown-tile-control-095.png', 'wine-medical-trait-095.png')
+REPORT = None
+REGISTRY = {}
+MAPPING = None
+
+
+def check(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def is_sha(value):
+    return type(value) is str and re.fullmatch(r'[0-9a-f]{64}', value) is not None
+
+
+def integer(value, minimum=0):
+    return type(value) is int and value >= minimum
+
+
+def canonical(path):
+    check(type(path) is str and Path(path).is_absolute() and '..' not in Path(path).parts,
+          'Explicit absolute Linux path required')
+    resolved = Path(path).resolve(strict=False)
+    check(resolved.is_relative_to(Path('/workspace')), 'Only explicit public workspace files allowed')
+    return str(resolved)
+
+
+def metadata(path):
+    path = Path(canonical(str(path)))
+    data = path.read_bytes()
+    return {'path': str(path), 'bytes': len(data), 'sha256': sha(data)}
+
+
+def read_ref(reference):
+    check(type(reference) is dict and {'path', 'bytes', 'sha256'} <= set(reference),
+          'Actual full file reference required')
+    check(integer(reference['bytes']) and is_sha(reference['sha256']), 'Actual bytes/digest types')
+    path = Path(reference['path'])
+    check(path.is_absolute() and not path.is_symlink() and path.is_file(), 'Actual regular file absent/symlinked')
+    key = canonical(str(path))
+    data = path.read_bytes()
+    check(len(data) == reference['bytes'] and sha(data) == reference['sha256'], 'Exact input bytes/SHA: ' + key)
+    full = {'path': key, 'bytes': len(data), 'sha256': sha(data)}
+    prior = REPORT['checked_file_refs'].get(key)
+    check(prior is None or prior == full, 'Same canonical input changed during validation')
+    REPORT['checked_file_refs'][key] = full
+    return data
+
+
+def registered(reference):
+    key = canonical(reference['path'])
+    check(key in REGISTRY, 'UI binding input was not explicitly supplied by root: ' + key)
+    full = REGISTRY[key]
+    check(reference['sha256'] == full['sha256'] and ('bytes' not in reference or reference['bytes'] == full['bytes']),
+          'Actual UI binding does not equal explicit root input ref')
+    return read_ref(full)
+
+
+def pointer(value, expression):
+    check(type(expression) is str and (expression == '' or expression.startswith('/')), 'Explicit real JSON pointer required')
+    if not expression:
+        return value
+    for token in expression[1:].split('/'):
+        token = token.replace('~1', '/').replace('~0', '~')
+        value = value[int(token)] if type(value) is list else value[token]
+    return value
+
+
+def literal(source, name):
+    tree = ast.parse(source)
+    found = [n for n in tree.body if isinstance(n, ast.Assign)
+             and any(isinstance(t, ast.Name) and t.id == name for t in n.targets)]
+    check(len(found) == 1, 'Unique actual FINAL literal: ' + name)
+    return ast.literal_eval(found[0].value)
+
+
+def actual_wine_mapping(spec):
+    row = spec['wine_path_mapping']
+    check(row['drive'] == 'Z:' and row['drive_link'] == '/workspace/.compat/wine-prefix/dosdevices/z:',
+          'Actual configured Wine mapping source binding required')
+    link = Path(row['drive_link'])
+    check(link.is_symlink(), 'Actual Wine drive link absent')
+    actual = str(link.resolve(strict=True))
+    check(Path(actual).is_absolute() and '..' not in Path(actual).parts and actual == row['linux_root'],
+          'Actual Wine mapping target differs from root declared target')
+    proof = json.loads(read_ref(row['proof']))
+    p = row['pointers']
+    check(pointer(proof, p['drive_link']) == row['drive_link']
+          and pointer(proof, p['linux_root']) == actual
+          and pointer(proof, p['wrapper_sha256']) == spec['wine_wrapper']['sha256'],
+          'Actual mapping proof does not bind real drive target and wrapper bytes')
+    return {'drive': 'Z:', 'linux_root': actual}
+
+
+def linux_path(value):
+    if type(value) is str and value.startswith('/'):
+        return canonical(value)
+    check(type(value) is str, 'Actual path must be a string')
+    win = PureWindowsPath(value)
+    check(win.drive == MAPPING['drive'] and win.root == '\\' and '..' not in win.parts,
+          'Only actual configured absolute Z drive paths accepted; UNC/other drive/traversal rejected')
+    # PureWindowsPath collapses repeated separators. Never test a guessed Z:\\workspace string prefix.
+    target = Path(MAPPING['linux_root']).joinpath(*win.parts[1:])
+    return canonical(str(target))
+
+
+def normalized_record(row):
+    result = dict(row)
+    result['path'] = linux_path(row['path'])
+    return result
+
+
+def normalized_binding(binding):
+    result = dict(binding)
+    for key in ('source_guard', 'candidate_manifest', 'implementation_freeze',
+                'technical_tail_correction_artifact', 'actual94_receipt', 'actual94_guard',
+                'baseline_receipt', 'baseline_saved_verifier'):
+        result[key] = normalized_record(binding[key])
+    for key in ('baseline_files', 'qualified_reference_provenance'):
+        result[key] = [normalized_record(row) for row in binding[key]]
+    result['additional_formal_artifacts'] = [
+        {**normalized_record(row), 'formal_review': normalized_record(row['formal_review'])}
+        for row in binding.get('additional_formal_artifacts', [])]
+    return result
+
+
+def maintained():
+    return {path.relative_to(REPO).as_posix(): sha(path.read_bytes())
+            for folder in ('rouge', 'tests', 'scripts') for path in sorted((REPO / folder).rglob('*'))
+            if path.is_file() and path.suffix in ('.py', '.json') and '__pycache__' not in path.parts}
+
+
+def source_map(value):
+    check(type(value) is dict and value, 'Nonempty actual maintained map required')
+    for name, digest in value.items():
+        check(type(name) is str and name and not Path(name).is_absolute() and '..' not in Path(name).parts
+              and is_sha(digest), 'Actual safe string source key/digest required')
+    return value

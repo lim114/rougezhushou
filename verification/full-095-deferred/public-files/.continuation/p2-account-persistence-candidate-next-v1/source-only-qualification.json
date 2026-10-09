@@ -1,0 +1,262 @@
+{
+  "format_version": 1,
+  "status": "SOURCE_ONLY_IMPLEMENTATION_QUALIFIED_FORMAL_AND_PROJECT_RUNTIME_PENDING",
+  "source_qualification_passed": true,
+  "runtime_pass": false,
+  "section097_completed": false,
+  "completed_increment": 0,
+  "code_manifest": {
+    "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/public-code-artifacts-manifest.json",
+    "bytes": 2356,
+    "sha256": "6e2e8f2de8ea234f31bfc10a4c1c1473bf1a76d66c1fc28634ec3dbfca5abbfa"
+  },
+  "inverse": {
+    "path": "/workspace/.continuation/p2-account-persistence-candidate-next-v1/exact-source-inverse.json",
+    "bytes": 9111,
+    "sha256": "6204805e1187cc53bed93a40066d5ec9392087c41a0544a143b93b6e04c02e8f"
+  },
+  "source_guard": {
+    "path": "/workspace/.continuation/root-source-095-v2.json",
+    "bytes": 84227,
+    "sha256": "41b9f4662a31b0c8ade2cf51c019bda0a04f6569e92770249bcf2e7ebabe9eab"
+  },
+  "source_checks": [
+    {
+      "id": "whole-source-inverse-rouge/account_cache.py",
+      "source_passed": true,
+      "facts": {
+        "inverse_operations": 3,
+        "restored_bytes": 10398,
+        "restored_sha256": "17250d93fa3932fc6233bc5b8dd8d1a17d76a283feee5fe694ffebe530ecb5d5"
+      }
+    },
+    {
+      "id": "whole-source-inverse-scripts/verify_cloud.py",
+      "source_passed": true,
+      "facts": {
+        "inverse_operations": 1,
+        "restored_bytes": 5068,
+        "restored_sha256": "1854092840e1ed94244179f2f86960301a59b8153eb8c174d3c2fccc1826c1a1"
+      }
+    },
+    {
+      "id": "complete-function-set-and-eight-whole-functions-exact",
+      "source_passed": true,
+      "facts": {
+        "functions": 11,
+        "unchanged_whole_source": [
+          "_integer",
+          "_timestamp",
+          "_record_issue",
+          "_merged_record",
+          "AccountCache._protect",
+          "AccountCache._screen_all",
+          "AccountCache.view",
+          "AccountCache.observe"
+        ],
+        "changed_only": [
+          "AccountCache.__init__",
+          "AccountCache.notice",
+          "AccountCache.save"
+        ]
+      }
+    },
+    {
+      "id": "module-imports-and-docstring-exact",
+      "source_passed": true,
+      "facts": {}
+    },
+    {
+      "id": "existing-screen-and-permanent-protection-before-new-preflight",
+      "source_passed": true,
+      "facts": {
+        "first_two_statements_AST_exact": true
+      }
+    },
+    {
+      "id": "original-json-serializer-policy-no-global-roundtrip",
+      "source_passed": true,
+      "facts": {
+        "new_save_json_calls": [
+          "json.dumps"
+        ],
+        "ensure_ascii": false,
+        "indent": 2,
+        "json_loads_in_save": 0
+      }
+    },
+    {
+      "id": "only-oserror-IO-try-handler",
+      "source_passed": true,
+      "facts": {
+        "handler": "OSError",
+        "scope": "mkdir / temp path / write_text / replace; serialization before this try; non-IO failures are not broadly swallowed."
+      }
+    },
+    {
+      "id": "single-original-IO-chain-no-delete-write-bytes-or-file-replay",
+      "source_passed": true,
+      "facts": {
+        "IO_sequence": [
+          "mkdir",
+          "write_text",
+          "replace"
+        ]
+      }
+    },
+    {
+      "id": "native-pair-range-and-escaped-text-policy",
+      "source_passed": true,
+      "facts": {
+        "ranges": [
+          "0xd800",
+          "0xdbff",
+          "0xdc00",
+          "0xdfff"
+        ],
+        "encoding": "utf-8/backslashreplace",
+        "qualified_string_scope": "serialized JSON text, not raw user value or global encoder"
+      }
+    },
+    {
+      "id": "old-invalidity-load-prefix-and-no-failure-protected-text-preserved",
+      "source_passed": true,
+      "facts": {
+        "save_notice_does_not_hide_per_id_issue": true,
+        "save_issue_distinct_from_load_issue": true
+      }
+    },
+    {
+      "id": "eighteen-source-only-methods-no-deep500-redesign",
+      "source_passed": true,
+      "facts": {
+        "planned_test_methods": [
+          "test_ordinary_unicode_json_keeps_original_platform_write_bytes",
+          "test_ascii_loaded_lone_surrogate_key_and_value_preserve_decoded_points",
+          "test_same_operator_unconsumed_mapping_leaves_survive_lossless_save",
+          "test_native_incoming_lone_points_and_low_high_order_are_not_replaced",
+          "test_ascii_escaped_pair_already_decodes_to_normal_emoji",
+          "test_literal_backslash_u_stays_distinct_from_surrogate_and_emoji",
+          "test_adjacent_native_pair_refuses_without_changing_accepted_memory",
+          "test_lossy_refusal_preserves_existing_temporary_and_original_files",
+          "test_lossy_refusal_of_missing_file_does_not_create_parent_or_claim_original",
+          "test_each_oserror_write_stage_preserves_memory_and_target",
+          "test_partial_temporary_write_failure_is_not_deleted_or_published",
+          "test_replace_failure_keeps_complete_temporary_as_separate_evidence",
+          "test_save_failure_of_absent_original_is_reported_without_invented_file",
+          "test_failed_session_keeps_changed_unchanged_and_other_valid_reads_without_more_io",
+          "test_save_notice_keeps_later_per_operator_invalidity_visible",
+          "test_metadata_only_native_pair_follows_existing_no_save_decision",
+          "test_non_io_errors_are_not_silently_converted_to_failed_save",
+          "test_new_independent_session_reads_original_without_resetting_failed_object"
+        ],
+        "test_module_executions": 0
+      }
+    },
+    {
+      "id": "single-future096-selected-module-registration",
+      "source_passed": true,
+      "facts": {
+        "SOURCE_baseline_selected_modules": 108,
+        "SOURCE_candidate_selected_modules": 109,
+        "all_existing_module_names_order_exact": true,
+        "actual_current735_registry_not_claimed_as_baseline": true
+      }
+    },
+    {
+      "id": "live735-source-bytes-unchanged-by-candidate",
+      "source_passed": true,
+      "facts": {
+        "maintained_paths_checked": 735,
+        "source_drift": [],
+        "Git_calls": 0
+      }
+    },
+    {
+      "id": "separate-author-authorized-stdlib-control",
+      "source_passed": true,
+      "facts": {
+        "actual_tool_chunk": "a5f44e",
+        "primary_exit_code": 0,
+        "declared_rows": 22,
+        "unsafe_literal_pair_rows": 4,
+        "project_candidate_calls": 0,
+        "not_a_project_runtime_PASS": true,
+        "files": [
+          {
+            "path": "/workspace/.continuation/p2-account-persistence-native-string-stdlib-probe-v1.py",
+            "bytes": 2542,
+            "sha256": "8b22149094d2c320d2cba343c9a635d5aea1a4e6e98fb5b5cb673b00a34fb461"
+          },
+          {
+            "path": "/workspace/.continuation/p2-account-persistence-native-string-stdlib-probe-v1.log",
+            "bytes": 8832,
+            "sha256": "7ad599d82504c8768eb125218ce5308e3cc140a7e7f1c23fa5adc7c336a21a6e"
+          },
+          {
+            "path": "/workspace/.continuation/p2-account-persistence-native-string-stdlib-probe-v1.exit-code",
+            "bytes": 2,
+            "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+          }
+        ]
+      }
+    }
+  ],
+  "counts": {
+    "SOURCE_checks": 14,
+    "existing_functions": 11,
+    "unchanged_whole_functions": 8,
+    "changed_functions": 3,
+    "planned_test_methods": 18,
+    "new_test_module_executions": 0,
+    "target_helper_calls": 0,
+    "project_imports": 0,
+    "project_API": 0,
+    "Qt": 0,
+    "Wine": 0,
+    "Git": 0,
+    "private_reads": 0,
+    "tracked_writes": 0,
+    "independent_author_stdlib_probe_executions": 1,
+    "independent_author_stdlib_probe_declared_rows": 22
+  },
+  "survey_docs_and_separate_root_stdlib_evidence": [
+    {
+      "path": "/workspace/.continuation/p2-after096-account-metadata-source-survey-v1/source-survey-account-metadata.json",
+      "bytes": 22104,
+      "sha256": "b0cf0432d60940de92e170bf9bf4b9692b4cfdb694303c15d7b1ec9bf861e506"
+    },
+    {
+      "path": "/workspace/.continuation/p2-after096-account-metadata-source-survey-v1/public-artifacts-manifest-source-survey.json",
+      "bytes": 3370,
+      "sha256": "c6c05538e8fa394115601b742179763740167480e4e2cd925cdbf0639d76157b"
+    },
+    {
+      "path": "/workspace/.continuation/p2-after096-account-metadata-source-survey-v1/final-handoff-source-survey.json",
+      "bytes": 1608,
+      "sha256": "265a371eb86096d58685eb01465e4b8caf980aaea6522fd8d535514416322b8a"
+    }
+  ],
+  "independent_SOURCE_peer_notes": {
+    "agent": "/root/p2_after096_source_supported_gap_survey/metadata_consumer_crosscheck",
+    "source_only_completed": true,
+    "core_reviewed_sha256": "29bf05d1c7fc111b2e74977be6ca413bb0a25c50cead69fe3a04237ef5a2768e",
+    "tests_reviewed_sha256": "f4194a4cdec9ec88a3fac1c21d1bb45546ee91ec7dc860d57cdd3799a646b08d",
+    "blocking_findings": [],
+    "formal_sealed_report_exists": false,
+    "scope": "Peer messages read core and tests; this author-owned qualification is not an independent sealed formal report."
+  },
+  "future_prerequisites": {
+    "actual_full095_validation_receipt": null,
+    "actual_post_full095_commit_push": null,
+    "actual_completed096_source_guard": null,
+    "actual_completed096_receipt": null
+  },
+  "limitations": [
+    "No project reproduction, candidate/tests invocation, actual UI, numeric/caller/RunState/durable compatibility verification or publication.",
+    "Stdlib observations cover declared public controls only; IOError methods in new tests are planned injection controls, not executed permissions tests.",
+    "No generic JSON/native roundtrip assertion in production; JSON NaN/deep500/typed values are not reinterpreted.",
+    "Serialization preflight precedes mkdir for safe refusal; unsupported serialization/non-IO failures propagate without broad error masking.",
+    "Only declared source packets and public runtime probes read; no private original files."
+  ]
+}
