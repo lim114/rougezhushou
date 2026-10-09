@@ -28,6 +28,8 @@ def resolve_enemy(scenario,resolution):
     if not isinstance(target,dict):raise ValueError('目标敌人需要关卡、敌人ID及引用等级。')
     sid=target.get('stage_id');stage=catalog()['stages'].get(sid);preview=stage_previews().get(sid)
     if not stage or not preview:raise ValueError('目标关卡没有固定敌人档案。')
+    if isinstance(target.get('level'),bool):
+        raise ValueError('目标敌人身份/等级必须与关卡引用唯一匹配。')
     candidates=[e for e in preview['possible_enemies'] if e['id']==target.get('enemy_id') and e['level']==target.get('level')]
     if len(candidates)!=1:raise ValueError('目标敌人身份/等级必须与关卡引用唯一匹配。')
     record=candidates[0];stats=dict(record['reference_stats'])

@@ -932,10 +932,14 @@ class MainWindow(QMainWindow):
     def sync_run_config(self):
         if hasattr(self,'battle_preview'):self.battle_preview.set_context(self.run.state.get('config',{}))
         difficulty=self.run.state.get('config',{}).get('difficulty')
-        self.difficulty.setEnabled(difficulty is None)
-        self.difficulty.setToolTip('自动读取本局保密等级；切换页面后保留最近确认值。' if difficulty else '尚未自动确认；此处仅为分析预设。')
-        if difficulty:
-            index=self.difficulty.findData(difficulty['value'])
+        from .run_config import difficulty_value
+        grade=difficulty_value(difficulty)
+        self.difficulty.setEnabled(grade is None)
+        self.difficulty.setToolTip('自动读取本局保密等级；切换页面后保留最近确认值。' if grade is not None else
+            '缓存中的保密等级尚未满足当前常规模式资格；原记录保留，此处仅为分析预设。' if difficulty else
+            '尚未自动确认；此处仅为分析预设。')
+        if grade is not None:
+            index=self.difficulty.findData(grade)
             if index>=0:self.difficulty.setCurrentIndex(index)
 
     def sync_run_relics(self):

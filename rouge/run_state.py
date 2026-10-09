@@ -794,9 +794,15 @@ class RunState:
             (' 最近确认）' if key in usable else ' 历史值，当前层数待确认）')
             for key,record in state.get('resources',{}).items())
         present=sum(bool(member.get('present',True)) for member in state['operators'].values())
-        config=state['config'];difficulty=config.get('difficulty',{}).get('value')
+        config=state['config']
+        from .run_config import difficulty_value
+        difficulty_record=config.get('difficulty',{})
+        difficulty=difficulty_value(difficulty_record)
         squad=config.get('squad',{})
-        info=('保密等级 '+str(difficulty) if difficulty is not None else '保密等级未确认')+' · '+squad.get('name','分队未确认')
+        difficulty_text=('保密等级 '+str(difficulty) if difficulty is not None else
+            '保密等级未确认（缓存记录尚未满足当前常规模式资格，原记录保留）' if difficulty_record else
+            '保密等级未确认')
+        info=difficulty_text+' · '+squad.get('name','分队未确认')
         if squad.get('level') is not None:info+='（强化）' if squad['level']==1 else '（基础）'
         if config.get('zone'):info+=' · '+config['zone']['name']
         return '\n'.join([info,f'本局队伍：当前已识别 {present} / {crew} 人', '、'.join(names) or '成员尚未确认',

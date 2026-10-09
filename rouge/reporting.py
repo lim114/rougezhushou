@@ -1008,7 +1008,10 @@ def build_report(scenario,result):
     if environment.get('squad') or environment.get('difficulty'):
         notes=list(environment.get('notes',[]))+list(environment.get('pending',[]))
         difficulty=environment.get('difficulty')
-        if difficulty:notes.insert(0,'本局保密等级：'+str(difficulty['value'])+'；来源：'+difficulty.get('source','明确提供的计算情景'))
+        if difficulty:
+            source=difficulty.get('source','明确提供的计算情景')
+            if not isinstance(source,str):source='未确认（来源字段不是文本）'
+            notes.insert(0,'本局保密等级：'+str(difficulty['value'])+'；来源：'+source)
         labels={'attack_pct':'分队攻击加成','hp_pct':'分队生命加成','defense_pct':'分队防御加成'}
         rows=[metric(r['kind'],labels[r['kind']],r['value']*100,'%') for r in environment.get('applied',[]) if r['kind'] in labels]
         sections.append(section('run_environment','本局配置与修正',rows,notes))

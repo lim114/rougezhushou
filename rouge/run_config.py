@@ -11,7 +11,8 @@ def config_data():
     return json.loads((Path(__file__).with_name('data')/'run-config.json').read_text(encoding='utf-8'))
 
 def difficulty_value(record):
-    if not isinstance(record,dict) or record.get('modeDifficulty','NORMAL')!='NORMAL':return None
+    if not isinstance(record,dict) or any(record.get(field,'NORMAL')!='NORMAL'
+            for field in ('modeDifficulty','mode')):return None
     grade=record.get('value')
     return grade if type(grade) is int and str(grade) in config_data()['difficulties'] else None
 

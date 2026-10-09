@@ -1,0 +1,90 @@
+{
+  "kind": "PROVISIONAL_SOURCE_ONLY106_ENVIRONMENT_LOCAL_TRANSPORTS",
+  "product_pass": false,
+  "author_Runtime_executed": false,
+  "original_Runtime_pending": true,
+  "baseline_full105_completed_guard": null,
+  "scope": [
+    "mode-alias qualification",
+    "active-bool enemy reference identity",
+    "non-text difficulty-source report display",
+    "UI and summary qualification views",
+    "legal fresh observation recovery"
+  ],
+  "preserved": [
+    "numeric prepare_run mode ValueError",
+    "raw accepted-cache records",
+    "existing enemy_preview bool/nonint ValueError",
+    "numeric float enemy-level compatibility",
+    "squad verified/raw flag contracts",
+    "all timing and numerical factors"
+  ],
+  "changes": [
+    {
+      "path": "rouge/run_config.py",
+      "before": "    if not isinstance(record,dict) or record.get('modeDifficulty','NORMAL')!='NORMAL':return None\n",
+      "after": "    if not isinstance(record,dict) or any(record.get(field,'NORMAL')!='NORMAL'\n            for field in ('modeDifficulty','mode')):return None\n",
+      "before_source_sha256": "1b2d5287d6b6ec273e5d0b236a200906b96e27d87ed28fe067dc6d9fb3e4042d",
+      "after_source_sha256": "3c96897dd6b5c692489b9e55ac57f570adb352f1589038b7a52b3e9a8a891b70",
+      "newline": "\r\n",
+      "changed_methods": [
+        "difficulty_value"
+      ],
+      "unchanged_method_count": 4,
+      "scope": "Shared existing NORMAL qualification checks both aliases already used by numeric prepare_run."
+    },
+    {
+      "path": "rouge/enemy_environment.py",
+      "before": "    candidates=[e for e in preview['possible_enemies'] if e['id']==target.get('enemy_id') and e['level']==target.get('level')]\n",
+      "after": "    if isinstance(target.get('level'),bool):\n        raise ValueError('目标敌人身份/等级必须与关卡引用唯一匹配。')\n    candidates=[e for e in preview['possible_enemies'] if e['id']==target.get('enemy_id') and e['level']==target.get('level')]\n",
+      "before_source_sha256": "49a8937d46718ca5ba35a4e41244441a49afb746a4b93f52dc840609163b8439",
+      "after_source_sha256": "d55a1ad900b4dd33b030114de5f5ee5bb6f2ca2f48ddea67e686dadc7f83dd4a",
+      "newline": "\n",
+      "changed_methods": [
+        "resolve_enemy"
+      ],
+      "unchanged_method_count": 3,
+      "scope": "Active bool level does not become an integer enemy identity; historical numeric float matching retained."
+    },
+    {
+      "path": "rouge/reporting.py",
+      "before": "        if difficulty:notes.insert(0,'本局保密等级：'+str(difficulty['value'])+'；来源：'+difficulty.get('source','明确提供的计算情景'))\n",
+      "after": "        if difficulty:\n            source=difficulty.get('source','明确提供的计算情景')\n            if not isinstance(source,str):source='未确认（来源字段不是文本）'\n            notes.insert(0,'本局保密等级：'+str(difficulty['value'])+'；来源：'+source)\n",
+      "before_source_sha256": "41772b664163626682f22aa93c364ed6e9f5a1cbf3e72b4823969c3b1ee79d5f",
+      "after_source_sha256": "0f77990bfed4d962080da5876f79de5da1a1663d57e52890823d07c1ee5d6bc1",
+      "newline": "\n",
+      "changed_methods": [
+        "build_report"
+      ],
+      "unchanged_method_count": 14,
+      "scope": "Only presentation consumes safe text; missing/empty/text and raw source metadata retained."
+    },
+    {
+      "path": "rouge/app.py",
+      "before": "        difficulty=self.run.state.get('config',{}).get('difficulty')\n        self.difficulty.setEnabled(difficulty is None)\n        self.difficulty.setToolTip('自动读取本局保密等级；切换页面后保留最近确认值。' if difficulty else '尚未自动确认；此处仅为分析预设。')\n        if difficulty:\n            index=self.difficulty.findData(difficulty['value'])\n",
+      "after": "        difficulty=self.run.state.get('config',{}).get('difficulty')\n        from .run_config import difficulty_value\n        grade=difficulty_value(difficulty)\n        self.difficulty.setEnabled(grade is None)\n        self.difficulty.setToolTip('自动读取本局保密等级；切换页面后保留最近确认值。' if grade is not None else\n            '缓存中的保密等级尚未满足当前常规模式资格；原记录保留，此处仅为分析预设。' if difficulty else\n            '尚未自动确认；此处仅为分析预设。')\n        if grade is not None:\n            index=self.difficulty.findData(grade)\n",
+      "before_source_sha256": "f4f80b2cbc4f0865cd880b757cf991801577ea49e2b2d7cbf68dff81680d2a9d",
+      "after_source_sha256": "f3577a3e1e40d19b4d302e2c8e5abe498fbec635497df40f81603f0dcd7dfebf",
+      "newline": "\r\n",
+      "changed_methods": [
+        "sync_run_config"
+      ],
+      "unchanged_method_count": 62,
+      "scope": "Safe UI eligibility view retains raw battle-preview/current-run input; preset never replaces run config."
+    },
+    {
+      "path": "rouge/run_state.py",
+      "before": "        config=state['config'];difficulty=config.get('difficulty',{}).get('value')\n        squad=config.get('squad',{})\n        info=('保密等级 '+str(difficulty) if difficulty is not None else '保密等级未确认')+' · '+squad.get('name','分队未确认')\n",
+      "after": "        config=state['config']\n        from .run_config import difficulty_value\n        difficulty_record=config.get('difficulty',{})\n        difficulty=difficulty_value(difficulty_record)\n        squad=config.get('squad',{})\n        difficulty_text=('保密等级 '+str(difficulty) if difficulty is not None else\n            '保密等级未确认（缓存记录尚未满足当前常规模式资格，原记录保留）' if difficulty_record else\n            '保密等级未确认')\n        info=difficulty_text+' · '+squad.get('name','分队未确认')\n",
+      "before_source_sha256": "6571da263737f14fa7e07c086771f3374691f1c7af56ce7d17580988a952b2fa",
+      "after_source_sha256": "ee46af93155e210a47a3cd8dcbb4dfcecd0c7b2596c2e0f32e2bd9d4c5f6a9a9",
+      "newline": "\r\n",
+      "changed_methods": [
+        "summary"
+      ],
+      "unchanged_method_count": 24,
+      "scope": "Invalid cached environment is not labelled current confirmed grade; normal/missing healthy labels retain existing values."
+    }
+  ],
+  "registry_transport_after_actual105_pending": true
+}
