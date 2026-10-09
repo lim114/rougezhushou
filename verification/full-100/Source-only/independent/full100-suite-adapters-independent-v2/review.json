@@ -1,0 +1,208 @@
+{
+  "format_version": 1,
+  "status": "Independent Source-only errno correction review; no current-scope blockers; no runtime outcome",
+  "created_at": "2026-10-09T08:06:25.767616+00:00",
+  "reviewed_sources": {
+    "README.md": {
+      "path": "/workspace/.continuation/full100-suite-adapters-source-v2/README.md",
+      "bytes": 6758,
+      "sha256": "717a3911c7befd34ddc92e047b93a0d5da5f5f04bf950564d9708d7e835e9dc7"
+    },
+    "manifest.json": {
+      "path": "/workspace/.continuation/full100-suite-adapters-source-v2/manifest.json",
+      "bytes": 1115,
+      "sha256": "7858abeec7cd139609a802b9bd26ba46b999043e13e65a1c7e47260ca1a6c41a"
+    },
+    "source-contract.json": {
+      "path": "/workspace/.continuation/full100-suite-adapters-source-v2/source-contract.json",
+      "bytes": 9632,
+      "sha256": "cffb4a7eafdd43795104615c03d4578e386f508f98630f42cc3a75a256242c52"
+    },
+    "suite_common100.py": {
+      "path": "/workspace/.continuation/full100-suite-adapters-source-v2/suite_common100.py",
+      "bytes": 24577,
+      "sha256": "66af28c0888e83c78265d0cad76b1ef320a2e7d5c33c55a2f8b2ad555c0ac695"
+    },
+    "wine_capability_probe100.py": {
+      "path": "/workspace/.continuation/full100-suite-adapters-source-v2/wine_capability_probe100.py",
+      "bytes": 945,
+      "sha256": "e36beafc87cfcb7bccc9c33aa6aa182aeea9ea6a0d1aa7e3c0d08926cdf41bf0"
+    },
+    "wine_full100.py": {
+      "path": "/workspace/.continuation/full100-suite-adapters-source-v2/wine_full100.py",
+      "bytes": 3364,
+      "sha256": "29de1fad26036c9a8eb87e12474b211db2c5274afdcc2d86881416d441546213"
+    },
+    "wine_selected100.py": {
+      "path": "/workspace/.continuation/full100-suite-adapters-source-v2/wine_selected100.py",
+      "bytes": 2096,
+      "sha256": "1dc34d26f7da922ed745b4c145143a82f0d4533a456dd1a8050254622d26aec6"
+    }
+  },
+  "blockers": [],
+  "Source_semantic_compile_and_minimality": {
+    "tool": "9bc4aa",
+    "actual_primary_exit": 0,
+    "code_object_executed": false,
+    "target_imported": false,
+    "changed_AST_functions": [
+      "observe_operation",
+      "missing_operation"
+    ],
+    "all_other_module_AST_equal": true,
+    "three_entrypoints_byte_identical": true,
+    "all_original_contract_fields_equal": true,
+    "all_manifest_payload_bytes_and_sha_match": true,
+    "v1_payload_manifest_and_failed_receipt_intact": true
+  },
+  "checks": [
+    {
+      "name": "Actual v1 failure preserved",
+      "result": "Source check complete",
+      "detail": "Read physical v1 receipt: mode unrecognized, passed false, both read_bytes errors are FileNotFoundError with winerror null and displayed Errno 2; lstat/readlink have winerror 2. No errno field was recorded. Original byte SHA remains d4fed761cf3318f1ff40a9d3c18ffa66676c0f5a58188e0ddda8f7f5e775e971. No old observations were reclassified or supplied fabricated errno."
+    },
+    {
+      "name": "Exact new recorded errno",
+      "result": "Source check complete",
+      "detail": "observe_operation only adds real getattr(exc, errno, None) to OSError observations, retaining actual error type/text and winerror. It does not derive error attributes from text or a previous receipt."
+    },
+    {
+      "name": "Per-operation missing shape",
+      "result": "Source check complete",
+      "detail": "All three known operations require FileNotFoundError and exact int errno == 2. read_bytes additionally requires explicitly present winerror and value None. Only lstat/readlink additionally require exact int winerror == 2. Unknown operation returns false; missing fields, strings, booleans and wider error classes cannot grant admission."
+    },
+    {
+      "name": "Authoritative CPython error path",
+      "result": "Source check complete",
+      "detail": "Independently read installed pathlib open/read_bytes, official v3.12.10 FileIO/error/OSError/PC errmap Sources and old posixmodule.c. FileIO _wopen failure constructs errno-based three-argument OSError; Windows path queries use Windows error constructor; ERROR_FILE_NOT_FOUND maps to ENOENT. Source diagnosis downloads match saved bytes/SHA."
+    },
+    {
+      "name": "Strict control and identity scope retained",
+      "result": "Source check complete",
+      "detail": "All unchanged AST includes Wine-specific export, actual Windows Python3.12.10, pinned active binary hashes, two fresh absent/present controls, target bytes, physical entries, no link/exists, same default Temp and ordered independent/fresh probe bindings. Unknown/mixed controls continue to reject."
+    },
+    {
+      "name": "Exact fixture admission and honest outcomes retained",
+      "result": "Source check complete",
+      "detail": "Only the existing two exact allowlisted leaf IDs may be pre-product capability skips for diagnosed phantom shape. Genuine/creation-exception controls retain original bodies. Body/assertions not executed fields, capability countedpassed0, skip overlap and current AvailableResult/selected wasSuccessful logic are unchanged."
+    },
+    {
+      "name": "New packet and primary binding required",
+      "result": "Source check complete",
+      "detail": "Exact sealed seven-file packet map changed with v2 Source/docs/manifest. Suite binding requires independently collected passed probe with identical new packet Source and genuine retained primary b0newline, then another fresh matching probe. Original v1 receipt lacks required errno attributes and new packet map; it cannot become v2 evidence."
+    },
+    {
+      "name": "Minimality and semantic compilation",
+      "result": "Source check complete",
+      "detail": "Whole module AST comparison differs only in the two stated functions. Three entrypoint bytes match v1. All four Python Sources compiled semantically on host Python3.12.14 without exec/import. This establishes Source syntax/semantics only, not behavior on actual Windows Python3.12.10."
+    }
+  ],
+  "source_basis": [
+    {
+      "source": {
+        "path": "/workspace/.compat/python-windows/package/tools/Lib/pathlib.py",
+        "bytes": 52487,
+        "sha256": "cd1557dedcaa1be0459cd59760c5ebac83a3e412e0e1b5bc0b1a82a19563a090"
+      },
+      "lines": [
+        1005,
+        1013,
+        1015,
+        1019,
+        1020
+      ]
+    },
+    {
+      "source": {
+        "path": "/workspace/.continuation/full100-cpython-fileio-source-diagnosis-v1/cpython-3.12.10-Modules-io-fileio.c",
+        "bytes": 31814,
+        "sha256": "b2266a58fd78f856f0b8b47ff34b3b166bd4cf4ca80adaaacaa271417fbe9f23"
+      },
+      "lines": [
+        387,
+        399
+      ]
+    },
+    {
+      "source": {
+        "path": "/workspace/.continuation/full100-cpython-fileio-source-diagnosis-v1/cpython-3.12.10-Python-errors.c",
+        "bytes": 55402,
+        "sha256": "d38cf667e13fb9f298a278759daf6117167f45a08d2c5bae7f279d9ba86a2454"
+      },
+      "lines": [
+        833,
+        905
+      ]
+    },
+    {
+      "source": {
+        "path": "/workspace/.continuation/full100-cpython-fileio-source-diagnosis-v1/cpython-3.12.10-Objects-exceptions.c",
+        "bytes": 110638,
+        "sha256": "623128614c3b2ada233875e3e0f0627b75653bc9042013d1e1cf242f3139e839"
+      },
+      "lines": [
+        1692,
+        1735,
+        1748,
+        1811,
+        1814
+      ]
+    },
+    {
+      "source": {
+        "path": "/workspace/.continuation/full100-cpython-fileio-source-diagnosis-v1/cpython-3.12.10-PC-errmap.h",
+        "bytes": 5055,
+        "sha256": "1419fa1f4a38aa40f33efc63d58410a15ff308414593988ba8163fa594330e61"
+      },
+      "lines": [
+        26,
+        34
+      ]
+    },
+    {
+      "source": {
+        "path": "/workspace/.continuation/full095-wine-symlink-source-diagnosis-v1/cpython-3.12.10-posixmodule.c",
+        "bytes": 460829,
+        "sha256": "a8f1410ad95326648a473672ee3bf8158a5f744b7c032c0142327fb252688ab4"
+      },
+      "lines": [
+        1723,
+        1726,
+        1727,
+        2687,
+        2717,
+        3088,
+        3092,
+        9722,
+        9745
+      ]
+    },
+    {
+      "source": {
+        "path": "/workspace/.continuation/full095-wine-symlink-source-diagnosis-v1/wine-debian-10.0-repack-6-kernelbase-file.c",
+        "bytes": 152948,
+        "sha256": "a98d40ce91a3e394eb0e8db22da6223d1eb8d176f97c9d20fb2e5749bd34fe93"
+      },
+      "lines": [
+        981,
+        984
+      ]
+    }
+  ],
+  "execution_requirements": [
+    "Root performs a fresh actual v2 independent capability probe and retains its real argv/source/launch/completion/primary; this review neither runs the classifier nor predicts its outcome.",
+    "Only an actually successful new probe may be bound into the fresh actual completed100 guard; no old v1 receipt or old Source-compilation primary may substitute.",
+    "Each full/selected adapter still performs fresh matching controls before actual test import/admission; unresolved/unknown controls remain failures.",
+    "Root preserves any declared skips/unavailable/failed cases separately, binds unchanged production Source and verifies all other actual full100 requirements; native Windows remains unverified."
+  ],
+  "target_functions_called": 0,
+  "classify_observations_called": 0,
+  "target_modules_imported": false,
+  "project_calls": 0,
+  "tests_run": null,
+  "wine_executions": 0,
+  "git_operations": 0,
+  "tracked_edits": 0,
+  "runtime_results": null,
+  "stopwrite": true
+}

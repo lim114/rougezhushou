@@ -1,0 +1,734 @@
+{
+  "status": "Source-only; independent review and actual Root validation pending",
+  "runtime_executed": false,
+  "baseline_source_sha256": "c2ebf6fe94233fed27fde6abda1d8a27ace1378529c94673d7a271432d195c31",
+  "candidate_source_sha256": "b558ca3403ff4e2ec3ef8a8d37b585baf88666e36eaaaa8d486954e9eb2b5f59",
+  "semantic_compile_without_execution": true,
+  "exact_changes": [
+    {
+      "baseline_line": 1375,
+      "before": "window.operator_observations[op]={'fields':{'elite':2,'level':60,'potential':1,'trust':100,'module_id':'uniequip_003_mizuki','module_level':2},'skill_ranks':{'1':10,'2':10,'3':10}}",
+      "after": "window.operator_observations[op]={'id':op,'fields':{'elite':2,'level':60,'potential':1,'trust':100,'module_id':'uniequip_003_mizuki','module_level':2},'skill_ranks':{'1':10,'2':10,'3':10}}"
+    },
+    {
+      "baseline_line": 1386,
+      "before": "window.operator_observations[op]={'fields':fields,'skill_ranks':ranks or {'1':10,'2':10,'3':10}}",
+      "after": "window.operator_observations[op]={'id':op,'fields':fields,'skill_ranks':ranks or {'1':10,'2':10,'3':10}}"
+    },
+    {
+      "baseline_line": 1828,
+      "before": "window.operator_observations=account_snapshot",
+      "after": "window.operator_observations.clear();window.operator_observations.update(_copy090.deepcopy(account_snapshot));assert window.operator_observations is window.account_cache.records"
+    },
+    {
+      "baseline_line": 2598,
+      "before": "window.operator_observations=account075",
+      "after": "window.operator_observations.clear();window.operator_observations.update(_copy090.deepcopy(account075));assert window.operator_observations is window.account_cache.records"
+    },
+    {
+      "baseline_line": 2831,
+      "before": "window.operator_observations=account080",
+      "after": "window.operator_observations.clear();window.operator_observations.update(_copy090.deepcopy(account080));assert window.operator_observations is window.account_cache.records"
+    },
+    {
+      "baseline_line": 3016,
+      "before": "window.operator_observations=account085",
+      "after": "window.operator_observations.clear();window.operator_observations.update(_copy090.deepcopy(account085));assert window.operator_observations is window.account_cache.records"
+    },
+    {
+      "baseline_line": 3257,
+      "before": "window.operator_observations=account090",
+      "after": "window.operator_observations.clear();window.operator_observations.update(_copy090.deepcopy(account090));assert window.operator_observations is window.account_cache.records"
+    },
+    {
+      "baseline_line": 3197,
+      "before": "window.operator_observations['mechanist']=_copy090.deepcopy(fixture89_090)",
+      "after": "window.operator_observations['mechanist']={**_copy090.deepcopy(fixture89_090),'id':'mechanist'}"
+    },
+    {
+      "baseline_line": 3198,
+      "before": "window.operator_observations['char_151_myrtle']=_copy090.deepcopy(fixture89_090)",
+      "after": "window.operator_observations['char_151_myrtle']={**_copy090.deepcopy(fixture89_090),'id':'char_151_myrtle'}"
+    },
+    {
+      "baseline_line": 3209,
+      "before": "expected_state89_090=_copy090.deepcopy(fixture89_090)",
+      "after": "expected_state89_090={**_copy090.deepcopy(fixture89_090),'id':'mechanist'}"
+    }
+  ],
+  "original_assertion_AST_count": 826,
+  "candidate_assertion_AST_count": 831,
+  "all_original_assertion_ASTs_unchanged_in_original_order": true,
+  "additional_assertion_scope": "Five account-record alias identity checks copied from the existing095 fixture bridge",
+  "checks_count_assertion_4283_unchanged": true,
+  "four_PNG_plan_unchanged": true,
+  "deadline_600_seconds_unchanged": true,
+  "global_profile_or_trace_addition": false,
+  "product_source_modified": false,
+  "fixture_value_normalization_added": false,
+  "AccountCache_view_bypass_added": false,
+  "issues_or_preserve_flags_cleared": false,
+  "train_call_count": 38,
+  "train_calls": [
+    {
+      "line": 1402,
+      "expression": "train('char_1048_orchd2', {'elite': 2, 'level': 60, 'potential': 1, 'trust': 100, 'module_id': 'uniequip_002_orchd2', 'module_level': stage})"
+    },
+    {
+      "line": 1408,
+      "expression": "train('char_2027_wang', {'elite': 2, 'level': 60, 'potential': 1, 'trust': 100, 'module_id': 'uniequip_002_wang', 'module_level': 2})"
+    },
+    {
+      "line": 1456,
+      "expression": "train('char_206_gnosis', {'elite': 2, 'level': 60, 'potential': 1, 'trust': 100, 'module_id': 'uniequip_004_gnosis', 'module_level': stage})"
+    },
+    {
+      "line": 1503,
+      "expression": "train('char_4202_haruka', {'elite': 2, 'level': 60, 'potential': 1, 'trust': 100, 'module_id': 'uniequip_002_haruka', 'module_level': stage})"
+    },
+    {
+      "line": 1531,
+      "expression": "train('char_4202_haruka', {'elite': 2, 'level': 60, 'potential': 1, 'trust': 100, 'module_id': module_id, 'module_level': module_level}, ranks={'1': 4, '2': 4, '3': 4})"
+    },
+    {
+      "line": 1547,
+      "expression": "train('char_298_susuro', {'elite': 2, 'level': 60, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 1577,
+      "expression": "train('char_002_amiya', {'elite': 2, 'level': 80, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 1591,
+      "expression": "train('mechanist', {'elite': 2, 'level': 90, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 1608,
+      "expression": "train(op, {'elite': 2, 'level': 60, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 1619,
+      "expression": "train(op, fields, {'1': 7, '2': 7, '3': 7})"
+    },
+    {
+      "line": 1628,
+      "expression": "train(op, plain, {'1': 7, '2': 7, '3': 7})"
+    },
+    {
+      "line": 1664,
+      "expression": "train(op, {'elite': 2, 'level': level, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 1701,
+      "expression": "train(op, {'elite': 2, 'level': 90, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 1837,
+      "expression": "train('char_1042_phatm2', {'elite': 2, 'level': 60, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 1896,
+      "expression": "train('mechanist', {'elite': 2, 'level': 90, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 1931,
+      "expression": "train('char_2025_shu', {'elite': 2, 'level': 90, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 1998,
+      "expression": "train('char_2025_shu', {'elite': 1, 'level': 80, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0}, ranks={'1': 7, '2': 7})"
+    },
+    {
+      "line": 2058,
+      "expression": "train(owner, {'elite': 2, 'level': profile['phases'][2]['max_level'], 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 2086,
+      "expression": "train('char_2025_shu', {'elite': elite, 'level': 90 if elite == 2 else 80, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0}, ranks={'1': rank, '2': rank, '3': rank})"
+    },
+    {
+      "line": 2133,
+      "expression": "train(deepcl, {**fields, 'potential': 1, 'trust': 100}, ranks={'1': rank, '2': rank})"
+    },
+    {
+      "line": 2172,
+      "expression": "train('silverash', {'elite': 2, 'level': 90, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 2178,
+      "expression": "train('silverash', {'elite': 2, 'level': 90, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0}, ranks={'1': rank, '2': rank, '3': rank})"
+    },
+    {
+      "line": 2205,
+      "expression": "train('silverash', {'elite': 1, 'level': 80, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0}, ranks={'1': 7, '2': 7})"
+    },
+    {
+      "line": 2229,
+      "expression": "train(phatm, {'elite': 2, 'level': 60, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 2316,
+      "expression": "train(wisdel, {'elite': 2, 'level': 90, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 2353,
+      "expression": "train(phatm, {'elite': 2, 'level': 60, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 2377,
+      "expression": "train(phatm, {'elite': 1, 'level': 80, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0}, ranks={'1': 7, '2': 7})"
+    },
+    {
+      "line": 2394,
+      "expression": "train(shu, {'elite': elite, 'level': level, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0}, ranks={'1': rank, '2': rank, '3': rank})"
+    },
+    {
+      "line": 2421,
+      "expression": "train('silverash', {'elite': 2, 'level': 90, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0}, ranks={'1': 4, '2': 4, '3': 4})"
+    },
+    {
+      "line": 2441,
+      "expression": "train('silverash', {'elite': 0, 'level': 50, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0}, ranks={'1': 1})"
+    },
+    {
+      "line": 2461,
+      "expression": "train(shu, {'elite': 2, 'level': 90, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0}, ranks={'1': rank, '2': rank, '3': rank})"
+    },
+    {
+      "line": 2488,
+      "expression": "train(shu, {'elite': 1, 'level': 80, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0}, ranks={'1': 7, '2': 7})"
+    },
+    {
+      "line": 2538,
+      "expression": "train(owner075, fields075, ranks={str(n): requested075['skill_rank'] for n in (1, 2, 3)})"
+    },
+    {
+      "line": 2681,
+      "expression": "train(owner080, fields080, ranks={str(n): requested080['skill_rank'] for n in (1, 2, 3)})"
+    },
+    {
+      "line": 2869,
+      "expression": "train(owner085, fields085, ranks={str(n): requested085['skill_rank'] for n in (1, 2, 3)})"
+    },
+    {
+      "line": 3069,
+      "expression": "train(owner090, {key: requested090[key] for key in ('elite', 'level', 'potential', 'trust', 'module_id', 'module_level')}, {str(skill090): requested090['skill_rank']})"
+    },
+    {
+      "line": 3166,
+      "expression": "train('char_196_sunbr', {'elite': 2, 'level': 60, 'trust': 100, 'potential': 1, 'module_id': None, 'module_level': 0})"
+    },
+    {
+      "line": 3274,
+      "expression": "train('char_298_susuro', {'elite': 2, 'level': 60, 'potential': 1, 'trust': 100, 'module_id': None, 'module_level': 0})"
+    }
+  ],
+  "literal_rows090_count": 52,
+  "literal_rows090_all_phase_level_and_unlocked_mastery_bounds_qualified_from_current_JSON": true,
+  "literal_rows090_qualification": [
+    {
+      "pair_id": "active:char_4228_closur:reinforcement_blocks_target",
+      "operator": "char_4228_closur",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_4228_closur:reinforcement_blocks_target",
+      "operator": "char_4228_closur",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_437_mizuki:enemy_below_half",
+      "operator": "char_437_mizuki",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_437_mizuki:enemy_below_half",
+      "operator": "char_437_mizuki",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_206_gnosis:frozen_at_skill_end",
+      "operator": "char_206_gnosis",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 3,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_206_gnosis:frozen_at_skill_end",
+      "operator": "char_206_gnosis",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 3,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_4087_ines:ines_first_deployment",
+      "operator": "char_4087_ines",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 3,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_4087_ines:ines_first_deployment",
+      "operator": "char_4087_ines",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 3,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_4182_oblvns:ranged_attack",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_4182_oblvns:ranged_attack",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_4182_oblvns:organ_mode",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_4182_oblvns:organ_mode",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_4182_oblvns:fever",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_4182_oblvns:fever",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_1048_orchd2:power_coating",
+      "operator": "char_1048_orchd2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_1048_orchd2:power_coating",
+      "operator": "char_1048_orchd2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_1048_orchd2:double_charge",
+      "operator": "char_1048_orchd2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_1048_orchd2:double_charge",
+      "operator": "char_1048_orchd2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_1041_angel2:steal_success",
+      "operator": "char_1041_angel2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_1041_angel2:steal_success",
+      "operator": "char_1041_angel2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_1041_angel2:delivery_coordinate",
+      "operator": "char_1041_angel2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 3,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_1041_angel2:delivery_coordinate",
+      "operator": "char_1041_angel2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 3,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_1035_wisdel:overload",
+      "operator": "char_1035_wisdel",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "active:char_1035_wisdel:overload",
+      "operator": "char_1035_wisdel",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "qualification:mizuki-E1",
+      "operator": "char_437_mizuki",
+      "elite": 1,
+      "level": 1,
+      "phase_max_level": 80,
+      "skill": 2,
+      "rank": 7
+    },
+    {
+      "pair_id": "qualification:mizuki-E1",
+      "operator": "char_437_mizuki",
+      "elite": 1,
+      "level": 1,
+      "phase_max_level": 80,
+      "skill": 2,
+      "rank": 7
+    },
+    {
+      "pair_id": "coveredmodule:oblvns-ranged-skill-vs-normal",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 60,
+      "phase_max_level": 90,
+      "skill": 3,
+      "rank": 10
+    },
+    {
+      "pair_id": "coveredmodule:oblvns-ranged-skill-vs-normal",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 60,
+      "phase_max_level": 90,
+      "skill": 3,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_206_gnosis:frozen_at_skill_end",
+      "operator": "char_206_gnosis",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_206_gnosis:frozen_at_skill_end",
+      "operator": "char_206_gnosis",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_4087_ines:ines_first_deployment",
+      "operator": "char_4087_ines",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_4087_ines:ines_first_deployment",
+      "operator": "char_4087_ines",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_4182_oblvns:organ_mode",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_4182_oblvns:organ_mode",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_4182_oblvns:fever",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_4182_oblvns:fever",
+      "operator": "char_4182_oblvns",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_1048_orchd2:double_charge",
+      "operator": "char_1048_orchd2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_1048_orchd2:double_charge",
+      "operator": "char_1048_orchd2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 2,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_1041_angel2:steal_success",
+      "operator": "char_1041_angel2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_1041_angel2:steal_success",
+      "operator": "char_1041_angel2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_1041_angel2:delivery_coordinate",
+      "operator": "char_1041_angel2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_1041_angel2:delivery_coordinate",
+      "operator": "char_1041_angel2",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_1035_wisdel:overload",
+      "operator": "char_1035_wisdel",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "hidden:char_1035_wisdel:overload",
+      "operator": "char_1035_wisdel",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "088-native-checkbox-mechanist-S1",
+      "operator": "mechanist",
+      "elite": 2,
+      "level": 60,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "088-native-checkbox-mechanist-S1",
+      "operator": "mechanist",
+      "elite": 2,
+      "level": 60,
+      "phase_max_level": 90,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "088-hidden-checkbox-amiya-E2-S1-bounded-reference",
+      "operator": "char_002_amiya",
+      "elite": 2,
+      "level": 80,
+      "phase_max_level": 80,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "088-hidden-checkbox-amiya-E2-S1-bounded-reference",
+      "operator": "char_002_amiya",
+      "elite": 2,
+      "level": 80,
+      "phase_max_level": 80,
+      "skill": 1,
+      "rank": 10
+    },
+    {
+      "pair_id": "088-hidden-checkbox-chen3-S3-active-warrior67",
+      "operator": "char_1050_chen3",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 3,
+      "rank": 10
+    },
+    {
+      "pair_id": "088-hidden-checkbox-chen3-S3-active-warrior67",
+      "operator": "char_1050_chen3",
+      "elite": 2,
+      "level": 90,
+      "phase_max_level": 90,
+      "skill": 3,
+      "rank": 10
+    },
+    {
+      "pair_id": "088-hidden-checkbox-amiya-E0-S1-empty-target-reference",
+      "operator": "char_002_amiya",
+      "elite": 0,
+      "level": 50,
+      "phase_max_level": 50,
+      "skill": 1,
+      "rank": 7
+    },
+    {
+      "pair_id": "088-hidden-checkbox-amiya-E0-S1-empty-target-reference",
+      "operator": "char_002_amiya",
+      "elite": 0,
+      "level": 50,
+      "phase_max_level": 50,
+      "skill": 1,
+      "rank": 7
+    }
+  ],
+  "source_references": {
+    "/workspace/rougezhushou/rouge/account_cache.py": {
+      "bytes": 11551,
+      "sha256": "29bf05d1c7fc111b2e74977be6ca413bb0a25c50cead69fe3a04237ef5a2768e"
+    },
+    "/workspace/rougezhushou/rouge/app.py": {
+      "bytes": 99596,
+      "sha256": "34f0c92061460b239fd0af80ec263673765a16753826f6151fde87a88b89a35b"
+    },
+    "/workspace/rougezhushou/rouge/training_view.py": {
+      "bytes": 6050,
+      "sha256": "5bef7b6f03592a5df615711568d116a0ffd9170f9be99832ca75d9eee78fcdb4"
+    },
+    "/workspace/rougezhushou/rouge/data/operator-profiles.json": {
+      "bytes": 1592209,
+      "sha256": "82b870fa4a780d626f57a18aa12f8a5bf6626c5a350b4a83499fd12518f8c957"
+    },
+    "/workspace/rougezhushou/rouge/data/catalog.json": {
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    }
+  },
+  "historical_rank_clamp_claim": "No old min7 was found in inspected archived app Source. No prior low-elite supplied rank10 clamp is claimed, and no rank transport is applied. Low-elite fixture calls already explicitly supply 1/4/7.",
+  "scope_account_existing_producer": "inject_origin already overrides scope to account at v1 line1759 and remains byte-identical",
+  "future_runtime_conclusion": "Actual second attempt may still fail; neither4283 checks nor equivalence is prefilled as PASS.",
+  "supersedes_source_draft": {
+    "directory": "/workspace/.continuation/full100-bounded-window-fixture-source-v2",
+    "window_sha256": "d75d6dd525ccd4e1518d507b3a8bd86cf7d5939f753789b0d629d841b655e136",
+    "reason": "Initial author packet omitted the corresponding section89 account-only expected fixture id. The fresh correction keeps the actual assertion unchanged; the prior Source draft remains intact and has never been executed."
+  },
+  "expected_fixture_identity_transport": "The account-only section89 expected_state89_090 receives id mechanist, matching its newly qualified producer. Run-branch member literals already contain this id and remain untouched.",
+  "independent_training_inventory": {
+    "path": "/workspace/.continuation/full100-fixture-training-inventory-source-v1/inventory.json",
+    "sha256": "ebb61922d7f3cf7381afa5e11317f7c143775c9259900570b4201edcd007ddfb",
+    "runtime_executed": false
+  }
+}

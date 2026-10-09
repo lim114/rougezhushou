@@ -1,0 +1,93 @@
+{
+  "status": "Source-only independent review passed; fresh actual v3 probe/full/selected pending Root",
+  "reviewed_packet": "/workspace/.continuation/full100-suite-adapters-source-v3",
+  "reviewed_manifest": {
+    "path": "/workspace/.continuation/full100-suite-adapters-source-v3/manifest.json",
+    "bytes": 1148,
+    "sha256": "1126e1a72e2e8f0f6cacb13d8c80d2cf9b87cbae15cd6142fca3eae8799a0f46"
+  },
+  "reviewed_common": {
+    "path": "/workspace/.continuation/full100-suite-adapters-source-v3/suite_common100.py",
+    "bytes": 24726,
+    "sha256": "348fbe9c3294d12efb4f32babf26660eab9fdf96a15c72514c2be4e18e158186"
+  },
+  "source_check_tool": "7d8acd primary0; compile codeobjects without execution",
+  "exact_byte_reconstruction": {
+    "baseline_packet": "/workspace/.continuation/full100-suite-adapters-source-v2",
+    "exact_source_replacements": 4,
+    "reconstructed_bytes_equal_candidate": true,
+    "changed_functions": [
+      "admit_suite",
+      "validate_skips"
+    ],
+    "unchanged_function_and_class_ASTs": 27,
+    "three_entrypoint_bytes_identical": true,
+    "four_python_sources_compile_without_execution": true,
+    "physical_packet_exactly_seven_files_and_manifest_payloads_verified": true
+  },
+  "added_only_exact_leaf": "tests.test_run_persistence_099.RunPersistenceTests.test_actual_dangling_symlink_is_not_missing_until_explicit_manual_reset",
+  "original_test_source_review": {
+    "path": "/workspace/rougezhushou/tests/test_run_persistence_099.py",
+    "sha256": "e1d3d192811bb5317c5d31ff06466c6a21634e4d25a5494d1dfd7a2b97120eb0",
+    "default_temp_directory": true,
+    "symlink_producer": "Path.symlink_to(target), implemented through os.symlink; missing target in the same physical temporary folder",
+    "failure_line": 480,
+    "failure_statement": "self.assertTrue(path.is_symlink())",
+    "first_RunState_construction_line": 483,
+    "actual_failed_body_never_reached_RunState": true
+  },
+  "fresh_admission_guards_unchanged": [
+    "strict actual Windows+Wine identity and pinned active kernelbase/ntdll SHA",
+    "fresh independent and same-default-Temp two controls: absent target and damaged target",
+    "errno2 exact distinction: read_bytes explicit winerrorNone, lstat/readlink exact WinError2",
+    "physical entries, target preservation and nonraising creation shape",
+    "primary exact rouge/tests/scripts Source map plus additional CORE source and all seven adapter files",
+    "original AvailableResult and unavailable count rules",
+    "source drift and strict capability-mode checks"
+  ],
+  "suite_policy_review": {
+    "declared_exact_ids": [
+      "tests.test_account_cache_093.AccountCache093Tests.test_dangling_symlink_file_not_found_is_not_genuinely_absent",
+      "tests.test_account_cache_093.AccountCache093Tests.test_symlink_to_damaged_file_retains_link_and_target_bytes",
+      "tests.test_run_persistence_099.RunPersistenceTests.test_actual_dangling_symlink_is_not_missing_until_explicit_manual_reset"
+    ],
+    "all_three_must_exist_once_before_execution": true,
+    "genuine_links_or_original_creation_exception_modes_leave_original_test_bodies": true,
+    "diagnosed_phantom_success_replaces_only_three_exact_leaf_ids": true,
+    "skip_result_validates_exact_ordinary_skips": true,
+    "skips_counted_passed": false,
+    "fixture_body_run_for_replacements": false,
+    "no_generic_windows_or_native_skip": true,
+    "product_and_original_tests_unchanged": true
+  },
+  "retained_failed_actual_full_v2": {
+    "receipt": {
+      "path": "/workspace/.continuation/full100-wine-full-v2.json",
+      "bytes": 256633,
+      "sha256": "9cd8b4ac0b909b0dc7b0f64b8960c3cb94c0bb45e02c7357c980052f657e9b3e"
+    },
+    "log": {
+      "path": "/workspace/.continuation/full100-wine-full-v2.log",
+      "bytes": 2911,
+      "sha256": "ebc6a7f96afe8724a9b5b692f4ec2efbaa3f1d90e9b9f1ee2bedc178b0291ad0"
+    },
+    "tests_run": 2100,
+    "tests_passed": 1947,
+    "historical_or_declared_skips": 86,
+    "unavailable_records": 123,
+    "unavailable_parent_count": 84,
+    "failures": 1,
+    "errors": 0,
+    "source_drift": [],
+    "source_additional_drift": [],
+    "adapter_source_drift": [],
+    "available_checks_passed": false
+  },
+  "original_Linux_test": "Root reports actual related99 Linux pass d7d4b7; independent reviewer did not execute it.",
+  "runtime_executions_by_reviewer": 0,
+  "project_imports_tests_helpers_git_wine_executed": false,
+  "source_blockers_found": [],
+  "runtime_required": "New actual v3 capability JSON and real raw zero receipt with freshly bound seven-file v3 packet map; Root actual second full and selected on same completed100 product Source. Prior v2 full failure remains failure. Do not count third skipped original body as PASS or native Windows coverage.",
+  "native_windows_validation_remains_required": true,
+  "historical_full095_retry_authorized": false
+}

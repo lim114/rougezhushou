@@ -1,0 +1,134 @@
+{
+  "format_version": 1,
+  "status": "Source-only errno/WinError operation-path diagnosis; fresh v2 runtime required",
+  "official_downloads": [
+    {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Modules/_io/fileio.c",
+      "path": "/workspace/.continuation/full100-cpython-fileio-source-diagnosis-v1/cpython-3.12.10-Modules-io-fileio.c",
+      "bytes": 31814,
+      "sha256": "b2266a58fd78f856f0b8b47ff34b3b166bd4cf4ca80adaaacaa271417fbe9f23",
+      "transport": "curl --fail --location, default TLS verification, inherited proxy",
+      "actual_download_tool": "ef4d35",
+      "actual_primary_exit": 0
+    },
+    {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Python/errors.c",
+      "path": "/workspace/.continuation/full100-cpython-fileio-source-diagnosis-v1/cpython-3.12.10-Python-errors.c",
+      "bytes": 55402,
+      "sha256": "d38cf667e13fb9f298a278759daf6117167f45a08d2c5bae7f279d9ba86a2454",
+      "transport": "curl --fail --location, default TLS verification, inherited proxy",
+      "actual_download_tool": "224bb1",
+      "actual_primary_exit": 0
+    },
+    {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Objects/exceptions.c",
+      "path": "/workspace/.continuation/full100-cpython-fileio-source-diagnosis-v1/cpython-3.12.10-Objects-exceptions.c",
+      "bytes": 110638,
+      "sha256": "623128614c3b2ada233875e3e0f0627b75653bc9042013d1e1cf242f3139e839",
+      "transport": "curl --fail --location, default TLS verification, inherited proxy",
+      "actual_download_tool": "6b712f",
+      "actual_primary_exit": 0
+    },
+    {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/PC/errmap.h",
+      "path": "/workspace/.continuation/full100-cpython-fileio-source-diagnosis-v1/cpython-3.12.10-PC-errmap.h",
+      "bytes": 5055,
+      "sha256": "1419fa1f4a38aa40f33efc63d58410a15ff308414593988ba8163fa594330e61",
+      "transport": "curl --fail --location, default TLS verification, inherited proxy",
+      "actual_download_tool": "f68084",
+      "actual_primary_exit": 0
+    }
+  ],
+  "actual_root_failed_v1_probe": {
+    "path": "/workspace/.continuation/full100-wine-capability-v1.json",
+    "bytes": 4721,
+    "sha256": "d4fed761cf3318f1ff40a9d3c18ffa66676c0f5a58188e0ddda8f7f5e775e971",
+    "tool": "525825",
+    "passed": false,
+    "admission_mode": "unrecognized"
+  },
+  "prior_v1_errno_field_collected": false,
+  "v1_errno_not_fabricated": true,
+  "Source_facts": [
+    {
+      "source": "/workspace/.compat/python-windows/package/tools/Lib/pathlib.py",
+      "lines": [
+        1005,
+        1013,
+        1015,
+        1019,
+        1020
+      ],
+      "fact": "read_bytes opens rb through io.open then reads; error can occur during FileIO construction."
+    },
+    {
+      "source": "cpython-3.12.10-Modules-io-fileio.c",
+      "lines": [
+        387,
+        399
+      ],
+      "fact": "MS_WINDOWS open calls _wopen; failed descriptor uses PyErr_SetFromErrnoWithFilenameObject."
+    },
+    {
+      "source": "cpython-3.12.10-Python-errors.c",
+      "lines": [
+        833,
+        905
+      ],
+      "fact": "errno captured and a three-argument OSError construction used for one filename, without explicit Windows error argument."
+    },
+    {
+      "source": "cpython-3.12.10-Objects-exceptions.c",
+      "lines": [
+        1735,
+        1748,
+        1811,
+        1814
+      ],
+      "fact": "OSError preserves optional Windows error; when supplied, errno is translated via winerror_to_errno."
+    },
+    {
+      "source": "cpython-3.12.10-PC-errmap.h",
+      "lines": [
+        26,
+        34
+      ],
+      "fact": "ERROR_FILE_NOT_FOUND(2) maps to ENOENT; no generic accept-all errors is justified."
+    },
+    {
+      "source": "/workspace/.continuation/full095-wine-symlink-source-diagnosis-v1/cpython-3.12.10-posixmodule.c",
+      "lines": [
+        1723,
+        1726,
+        1727,
+        2687,
+        2717,
+        9722,
+        9745
+      ],
+      "fact": "Windows lstat/readlink failures follow Windows path_error constructor retaining WinError."
+    },
+    {
+      "source": "/workspace/.continuation/full095-wine-symlink-source-diagnosis-v1/wine-debian-10.0-repack-6-kernelbase-file.c",
+      "lines": [
+        981,
+        984
+      ],
+      "fact": "Previously pinned installed Wine CreateSymbolicLinkW success stub source; binary identity gates remain unchanged."
+    }
+  ],
+  "proposed_exact_new_error_schema": {
+    "all_three": "error_type FileNotFoundError and exact int errno2 collected from real exception",
+    "read_bytes": "winerror field explicitly present and null; errno FileIO path only",
+    "lstat_and_readlink": "exact int winerror2 as well as errno2",
+    "other_operation": "not accepted"
+  },
+  "helper_or_probe_executed": false,
+  "target_imported": false,
+  "tests_run": null,
+  "project_calls": 0,
+  "Wine_calls": 0,
+  "git_operations": 0,
+  "repo_writes": 0,
+  "v2_runtime": null
+}

@@ -1,0 +1,11 @@
+--- sealed-v2-complete/window.py
++++ fresh-v3/window.py
+@@ -3122,7 +3122,7 @@
+                 else:
+                     from rouge.catalog import catalog as catalog090
+                     sp090=catalog090()['operators'][owner090]['skills'][skill090-1]['levels'][requested090['skill_rank']-1]['sp_type']
+-                    assert window.continuous_attacks.isVisible() is (sp090=='INCREASE_WHEN_ATTACK')
++                    assert window.continuous_attacks.isVisible() is (owner090 in catalog090()['operators'] and sp090 in ('INCREASE_WHEN_ATTACK','INCREASE_WITH_TIME'))
+                     assert window.window_seconds.value()==12.75
+                     if 'timing' in requested090:
+                         assert json.loads(window.timing_scenario.toPlainText())==requested090['timing']

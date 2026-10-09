@@ -1,0 +1,68 @@
+--- supervisor-source-v2.py
++++ supervisor-source-v3.py
+@@ -24,20 +24,23 @@
+             # comm may contain spaces and parentheses; the final ')' ends it.
+             tail = (folder / 'stat').read_text().rpartition(')')[2].split()
+             if int(tail[3]) == session_id:  # state, ppid, pgrp, session
+-                members.append(int(folder.name))
++                members.append({'pid': int(folder.name), 'state': tail[0]})
+         except FileNotFoundError:
+             pass
+         except (OSError, ValueError, IndexError) as error:
+             unreadable.append({'pid': int(folder.name), 'error': type(error).__name__})
+-    return sorted(members), unreadable
++    return sorted(members, key=lambda member: member['pid']), unreadable
+ 
+ 
+ def finish_owned_session(session_id):
+     """Clean this launch's group even if its original leader already exited."""
+     members, unreadable = session_members(session_id)
+-    receipt = {'members_before_cleanup': members,
++    receipt = {'members_before_cleanup': [member['pid'] for member in members],
++               'owned_session_members_before_cleanup': members,
+                'proc_entries_unreadable_before_cleanup': unreadable}
+-    if members:
++    # Linux proc_pid_stat(5): exactly Z denotes an already terminated zombie.
++    # Every other or unknown state remains potentially live and is not excused.
++    if any(member['state'] != 'Z' for member in members):
+         receipt['termination_signal'] = 'SIGKILL'
+         receipt['termination_scope'] = 'This launched OS process group only'
+         try:
+@@ -48,12 +51,22 @@
+         closure_deadline = time.monotonic() + 5
+         while time.monotonic() < closure_deadline:
+             members, unreadable = session_members(session_id)
+-            if not members:
++            if not any(member['state'] != 'Z' for member in members):
+                 break
+             time.sleep(0.05)
+-    receipt['owned_session_pids_after_completion'] = members
++    receipt['owned_session_pids_after_completion'] = [member['pid'] for member in members]
++    receipt['owned_session_members_after_completion'] = members
+     receipt['proc_entries_unreadable'] = unreadable
+     receipt['owned_session_absence_verified'] = not members and not unreadable
++    possibly_live = [member['pid'] for member in members if member['state'] != 'Z']
++    receipt['potentially_live_owned_session_pids_after_completion'] = possibly_live
++    receipt['zombie_owned_session_pids_after_completion'] = [
++        member['pid'] for member in members if member['state'] == 'Z']
++    receipt['no_live_owned_execution_verified'] = not possibly_live and not unreadable
++    receipt['retained_zombies_reaped_by_supervisor'] = False
++    receipt['zombie_scope'] = (
++        'Z denotes terminated but not necessarily reaped; no-live execution '
++        'does not imply owned-session absence or reaping of retained entries.')
+     return receipt
+ 
+ 
+@@ -111,8 +124,11 @@
+                 closure = finish_owned_session(process.pid)
+                 record['owned_session_closure'] = closure
+                 if not closure['owned_session_absence_verified']:
++                    record['owned_session_absence_unverified'] = True
++                if not closure['no_live_owned_execution_verified']:
+                     record['owned_session_completion_unverified'] = True
+-                    exit_code = 1
++                    if exit_code == 0:
++                        exit_code = 1
+             except BaseException as error:
+                 record['launch_or_supervision_error'] = {
+                     'type': type(error).__name__, 'message': str(error)}
