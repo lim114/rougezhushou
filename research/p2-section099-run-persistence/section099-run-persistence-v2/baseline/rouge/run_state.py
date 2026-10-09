@@ -165,9 +165,7 @@ class RunState:
     def __init__(self,file):
         self.file=Path(file)
         self.preserve_unreadable=False
-        self.save_issue=None
         self.reset(save=False)
-        repair_needs_save=False
         try:
             saved=json.loads(self.file.read_text(encoding='utf-8'))
             if not isinstance(saved,dict) or not isinstance(saved.get('operators'),dict) or not isinstance(saved.get('relics'),dict):
@@ -177,21 +175,11 @@ class RunState:
             if 'relic_icon_memory' not in saved:self.restore_relic_icon_memory()
             self.restore_passed_node_types()
             self.state['notice']='已恢复同一局的记忆；切换另一局时请手动点击“开始新局”。'
-            repair_needs_save=self.restore_origin_discovery_buffs()
-        except FileNotFoundError:
-            # A dangling link or unknown lstat is not a confirmed absent entry.
-            confirmed_absent=False
-            try:self.file.lstat()
-            except FileNotFoundError:confirmed_absent=True
-            except OSError:pass
-            if not confirmed_absent:
-                self.preserve_unreadable=True
-                self.state['notice']='原本局记录无法读取；手动重置前不会覆盖原路径。'
+            if self.restore_origin_discovery_buffs():self.save()
+        except FileNotFoundError:pass
         except (OSError,ValueError):
             self.preserve_unreadable=True
             self.state['notice']='原本局记录无法读取，已保留原文件；手动重置前不会覆盖它。'
-        # Saving accepted repairs is separate from reading/qualifying the file.
-        if repair_needs_save:self.save()
 
     def restore_passed_node_types(self):
         """Repair old clearing overwrites using this layout's recorded evidence only."""
@@ -224,33 +212,11 @@ class RunState:
             self.save()
 
     def save(self):
-        # A failed session must not retry, including after a manual new run.
-        # The explicit reset still clears memory; it cannot make failed IO safe.
-        if self.preserve_unreadable or self.save_issue:return False
-        text=json.dumps(self.state,ensure_ascii=False,indent=2)
-        # Decoding an escaped native high/low pair would fold two Python points.
-        # Refuse that lossy write before any directory or temporary-file IO.
-        if any(0xd800<=ord(a)<=0xdbff and 0xdc00<=ord(b)<=0xdfff
-               for a,b in zip(text,text[1:])):
-            self.save_issue='本局记录含暂时无法无损保存的文字，保存未完成'
-            return False
-        # Escape lone code units after JSON quoting, retaining ordinary Unicode
-        # and write_text's original platform newline policy.
-        text=text.encode('utf-8',errors='backslashreplace').decode('utf-8')
-        try:
-            self.file.parent.mkdir(exist_ok=True)
-            temporary=self.file.with_suffix('.tmp')
-            temporary.write_text(text,encoding='utf-8')
-            temporary.replace(self.file)
-        except OSError:
-            self.save_issue='本局记录保存未完成'
-            return False
-        return True
-
-    def persistence_notice(self):
-        if not self.save_issue:return ''
-        return (self.save_issue+'；新的读取及“开始新局”的结果仅在当前运行有效。'
-            '重新启动可能恢复磁盘中较早的记录；当前运行不会再次写入或覆盖本局记录。')
+        if self.preserve_unreadable:return
+        self.file.parent.mkdir(exist_ok=True)
+        temporary=self.file.with_suffix('.tmp')
+        temporary.write_text(json.dumps(self.state,ensure_ascii=False,indent=2),encoding='utf-8')
+        temporary.replace(self.file)
 
     def recognition_context(self):
         return {'run_id':self.state['id'],'config':copy.deepcopy({key:value
@@ -752,9 +718,6 @@ class RunState:
 
     def summary(self):
         status=self.inventory_status();state=self.state
-        notice=state['notice']
-        if self.save_issue:
-            notice=notice.replace('持续累积并保存','持续累积')+'\n'+self.persistence_notice()
         count='未确认' if state['relic_count'] is None else str(state['relic_count'])
         crew='未确认' if state['crew_count'] is None else str(state['crew_count'])
         names=[operator_profiles()[key]['name']+('（已离队，保留记录）' if not member.get('present',True) else '')
@@ -785,4 +748,4 @@ class RunState:
             '藏品：'+('、'.join(relics) or '身份尚未确认'),
             '战术道具：'+('、'.join(tactical_tools()[tid]['name'] for tid in self.held_tool_ids()) or '未读取到'),
             resources or '源石锭/零件数尚未确认',
-            *(['变体依据冲突：'+ '、'.join(conflicts)+'；按已读到的完整持有效果保留，请核对保密等级。'] if conflicts else []),notice])
+            *(['变体依据冲突：'+ '、'.join(conflicts)+'；按已读到的完整持有效果保留，请核对保密等级。'] if conflicts else []),state['notice']])

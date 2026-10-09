@@ -32,21 +32,6 @@ def _validate_saved_containers(saved):
     def optional_mapping(record, key):
         if key in record and record[key] is not None and not isinstance(record[key], dict):reject()
 
-    def content(record, key):
-        optional_mapping(record, key)
-        value = record.get(key)
-        if not value:return
-        if not isinstance(value.get('title'), str):reject()
-        sequence(value, 'scene_candidates', str)
-        for option in sequence(value, 'visible_options'):
-            if not isinstance(option.get('title'), str):reject()
-
-    def text_sequence(value):
-        # The original formatter also handles a string (characters) or JSON
-        # object (its string keys). Do not replace those safe old semantics.
-        if not isinstance(value, (str, list, dict)):reject()
-        if any(not isinstance(item, str) for item in value):reject()
-
     for key in ('operators', 'relics', 'maps', 'resources', 'tactical_tools'):
         records = mapping(saved, key)
         if any(not isinstance(record, dict) for record in records.values()):reject()
@@ -54,7 +39,13 @@ def _validate_saved_containers(saved):
     for key in ('difficulty', 'squad', 'zone'):mapping(config, key)
     history = sequence(saved, 'history')
     sequence(saved, 'node_contents')
-    content(saved, 'last_node_content')
+    optional_mapping(saved, 'last_node_content')
+    content = saved.get('last_node_content')
+    if content:
+        if not isinstance(content.get('title'), str):reject()
+        sequence(content, 'scene_candidates', str)
+        for option in sequence(content, 'visible_options'):
+            if not isinstance(option.get('title'), str):reject()
     profiles = operator_profiles()
     for oid, member in saved['operators'].items():
         if oid not in profiles:reject()
@@ -78,12 +69,11 @@ def _validate_saved_containers(saved):
     for record in saved.get('resources', {}).values():
         if 'value' not in record or 'captured_at' not in record:reject()
         at = record['captured_at']
+        if type(at) not in (int, float):reject()
         try:
-            # Keep the formatter's existing accepted timestamp values,
-            # including bool. Inventory counts have a separate permission
-            # boundary; that policy does not redefine resource timestamps.
+            if not math.isfinite(at):reject()
             time.strftime('%H:%M:%S', time.localtime(at))
-        except (OverflowError, OSError, TypeError, ValueError):reject()
+        except (OverflowError, OSError, TypeError):reject()
     difficulty = config.get('difficulty', {})
     if difficulty and 'value' not in difficulty:reject()
     squad = config.get('squad', {})
@@ -97,15 +87,11 @@ def _validate_saved_containers(saved):
         for node in nodes:
             for key in ('remembered_type', 'observed_type', 'template_type'):
                 if key in node and node[key] is not None and not isinstance(node[key], str):reject()
-            for key in ('content', 'remembered_content'):content(node, key)
-            optional_mapping(node, 'prediction')
+            for key in ('content', 'remembered_content', 'prediction'):
+                optional_mapping(node, key)
             sequence(node, 'content_history')
             prediction = node.get('prediction')
-            if prediction is not None:
-                if prediction and 'candidates' not in prediction:reject()
-                sequence(prediction, 'candidates', str)
-                for key in ('reason', 'notice'):
-                    if prediction.get(key) and not isinstance(prediction[key], str):reject()
+            if prediction is not None:sequence(prediction, 'candidates', str)
             if node.get('remembered_type') == '林间空地' and not isinstance(node.get('id'), str):reject()
         # A partial opaque graph remains acceptable while it has no visible
         # consumer. Matched or selected graphs need the fields the real window
@@ -117,31 +103,11 @@ def _validate_saved_containers(saved):
             for node in nodes:
                 if not isinstance(node.get('id'), str):reject()
                 if any(type(node.get(key)) is not int for key in ('row', 'col')):reject()
-                if not 0 <= node['row'] < grid['rows'] or not 0 <= node['col'] < grid['cols']:reject()
                 if 'distance' not in node:reject()
             if 'edges' not in graph:reject()
             for edge in sequence(graph, 'edges', list):
                 if len(edge) != 2 or any(not isinstance(identity, str) for identity in edge):reject()
             if not isinstance(mapping(graph, 'source').get('url'), str):reject()
-            text_sequence(graph.get('limitations', []))
-            candidates = {name for node in nodes for name in
-                          (node.get('prediction') or {}).get('candidates', [])}
-            budget = graph.get('generation_budget', {})
-            if budget:
-                if not isinstance(budget, dict):reject()
-                for name, record in budget.items():
-                    if not isinstance(record, dict) or 'known_total' not in record:reject()
-                    required = set()
-                    if record['known_total']:required.update(('fixed', 'source_max', 'random_eligible'))
-                    if name in candidates:required.update(('fixed', 'source_max', 'revealed_additional'))
-                    if not required <= record.keys():reject()
-                text_sequence(graph.get('generation_limitations', []))
-            elif candidates:
-                # format_node tests each candidate's membership even in an
-                # empty budget. Preserve empty dict/list/string when safe.
-                if not isinstance(budget, (dict, list, str)):reject()
-                if isinstance(budget, str) and '' in candidates:reject()
-            if graph.get('constraint_conflicts'):text_sequence(graph['constraint_conflicts'])
     for event in history:
         if event.get('kind') == 'map_node_revealed':
             for key in ('previous', 'type'):
@@ -165,9 +131,7 @@ class RunState:
     def __init__(self,file):
         self.file=Path(file)
         self.preserve_unreadable=False
-        self.save_issue=None
         self.reset(save=False)
-        repair_needs_save=False
         try:
             saved=json.loads(self.file.read_text(encoding='utf-8'))
             if not isinstance(saved,dict) or not isinstance(saved.get('operators'),dict) or not isinstance(saved.get('relics'),dict):
@@ -177,21 +141,11 @@ class RunState:
             if 'relic_icon_memory' not in saved:self.restore_relic_icon_memory()
             self.restore_passed_node_types()
             self.state['notice']='已恢复同一局的记忆；切换另一局时请手动点击“开始新局”。'
-            repair_needs_save=self.restore_origin_discovery_buffs()
-        except FileNotFoundError:
-            # A dangling link or unknown lstat is not a confirmed absent entry.
-            confirmed_absent=False
-            try:self.file.lstat()
-            except FileNotFoundError:confirmed_absent=True
-            except OSError:pass
-            if not confirmed_absent:
-                self.preserve_unreadable=True
-                self.state['notice']='原本局记录无法读取；手动重置前不会覆盖原路径。'
+            if self.restore_origin_discovery_buffs():self.save()
+        except FileNotFoundError:pass
         except (OSError,ValueError):
             self.preserve_unreadable=True
             self.state['notice']='原本局记录无法读取，已保留原文件；手动重置前不会覆盖它。'
-        # Saving accepted repairs is separate from reading/qualifying the file.
-        if repair_needs_save:self.save()
 
     def restore_passed_node_types(self):
         """Repair old clearing overwrites using this layout's recorded evidence only."""
@@ -224,33 +178,11 @@ class RunState:
             self.save()
 
     def save(self):
-        # A failed session must not retry, including after a manual new run.
-        # The explicit reset still clears memory; it cannot make failed IO safe.
-        if self.preserve_unreadable or self.save_issue:return False
-        text=json.dumps(self.state,ensure_ascii=False,indent=2)
-        # Decoding an escaped native high/low pair would fold two Python points.
-        # Refuse that lossy write before any directory or temporary-file IO.
-        if any(0xd800<=ord(a)<=0xdbff and 0xdc00<=ord(b)<=0xdfff
-               for a,b in zip(text,text[1:])):
-            self.save_issue='本局记录含暂时无法无损保存的文字，保存未完成'
-            return False
-        # Escape lone code units after JSON quoting, retaining ordinary Unicode
-        # and write_text's original platform newline policy.
-        text=text.encode('utf-8',errors='backslashreplace').decode('utf-8')
-        try:
-            self.file.parent.mkdir(exist_ok=True)
-            temporary=self.file.with_suffix('.tmp')
-            temporary.write_text(text,encoding='utf-8')
-            temporary.replace(self.file)
-        except OSError:
-            self.save_issue='本局记录保存未完成'
-            return False
-        return True
-
-    def persistence_notice(self):
-        if not self.save_issue:return ''
-        return (self.save_issue+'；新的读取及“开始新局”的结果仅在当前运行有效。'
-            '重新启动可能恢复磁盘中较早的记录；当前运行不会再次写入或覆盖本局记录。')
+        if self.preserve_unreadable:return
+        self.file.parent.mkdir(exist_ok=True)
+        temporary=self.file.with_suffix('.tmp')
+        temporary.write_text(json.dumps(self.state,ensure_ascii=False,indent=2),encoding='utf-8')
+        temporary.replace(self.file)
 
     def recognition_context(self):
         return {'run_id':self.state['id'],'config':copy.deepcopy({key:value
@@ -752,9 +684,6 @@ class RunState:
 
     def summary(self):
         status=self.inventory_status();state=self.state
-        notice=state['notice']
-        if self.save_issue:
-            notice=notice.replace('持续累积并保存','持续累积')+'\n'+self.persistence_notice()
         count='未确认' if state['relic_count'] is None else str(state['relic_count'])
         crew='未确认' if state['crew_count'] is None else str(state['crew_count'])
         names=[operator_profiles()[key]['name']+('（已离队，保留记录）' if not member.get('present',True) else '')
@@ -785,4 +714,4 @@ class RunState:
             '藏品：'+('、'.join(relics) or '身份尚未确认'),
             '战术道具：'+('、'.join(tactical_tools()[tid]['name'] for tid in self.held_tool_ids()) or '未读取到'),
             resources or '源石锭/零件数尚未确认',
-            *(['变体依据冲突：'+ '、'.join(conflicts)+'；按已读到的完整持有效果保留，请核对保密等级。'] if conflicts else []),notice])
+            *(['变体依据冲突：'+ '、'.join(conflicts)+'；按已读到的完整持有效果保留，请核对保密等级。'] if conflicts else []),state['notice']])
