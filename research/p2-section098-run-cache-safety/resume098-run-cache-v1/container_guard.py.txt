@@ -1,0 +1,118 @@
+def _validate_saved_containers(saved):
+    """Qualify the shapes consumed by restart and views before installing data.
+
+    Unknown extra fields remain opaque. A rejected file is never repaired or
+    replaced: the existing unreadable-file guard owns the fallback state.
+    This is a consumer boundary, not a complete game-state schema.
+    """
+    def reject():
+        raise ValueError('Invalid exploration record')
+
+    def mapping(record, key):
+        value = record.get(key, {})
+        if not isinstance(value, dict):reject()
+        return value
+
+    def sequence(record, key, item_type=dict):
+        value = record.get(key, [])
+        if not isinstance(value, list) or any(not isinstance(item, item_type) for item in value):reject()
+        return value
+
+    def optional_mapping(record, key):
+        if key in record and record[key] is not None and not isinstance(record[key], dict):reject()
+
+    for key in ('operators', 'relics', 'maps', 'resources', 'tactical_tools'):
+        records = mapping(saved, key)
+        if any(not isinstance(record, dict) for record in records.values()):reject()
+    config = mapping(saved, 'config')
+    for key in ('difficulty', 'squad', 'zone'):mapping(config, key)
+    history = sequence(saved, 'history')
+    sequence(saved, 'node_contents')
+    optional_mapping(saved, 'last_node_content')
+    content = saved.get('last_node_content')
+    if content:
+        if not isinstance(content.get('title'), str):reject()
+        sequence(content, 'scene_candidates', str)
+        for option in sequence(content, 'visible_options'):
+            if not isinstance(option.get('title'), str):reject()
+    profiles = operator_profiles()
+    for oid, member in saved['operators'].items():
+        if oid not in profiles:reject()
+        for key in ('fields', 'skill_ranks', 'sources', 'field_times', 'skill_times'):
+            mapping(member, key)
+        for key in ('char_buff_ids', 'char_buff_absent_ids', 'char_buff_pending_ids', 'missing_fields'):
+            sequence(member, key, str)
+        for key in ('invalid_fields', 'invalid_skill_ranks'):
+            sequence(member, key, (str, int))
+        optional_mapping(member, 'recipient_buffs')
+        popup = member.get('recipient_buffs')
+        if popup is not None:sequence(popup, 'ids', str)
+    known_relics = catalog()['relics']
+    known_tools = tactical_tools()
+    for key, known in (('relics', known_relics), ('tactical_tools', known_tools)):
+        for identity, record in saved.get(key, {}).items():
+            if record.get('held', True) and identity not in known:reject()
+            mapping(record, 'icon_evidence')
+            label = record.get('icon_evidence', {}).get('tier_label')
+            if label is not None and not isinstance(label, str):reject()
+    for record in saved.get('resources', {}).values():
+        if 'value' not in record or 'captured_at' not in record:reject()
+        at = record['captured_at']
+        if type(at) not in (int, float):reject()
+        try:
+            if not math.isfinite(at):reject()
+            time.strftime('%H:%M:%S', time.localtime(at))
+        except (OverflowError, OSError, TypeError):reject()
+    difficulty = config.get('difficulty', {})
+    if difficulty and 'value' not in difficulty:reject()
+    squad = config.get('squad', {})
+    if 'name' in squad and not isinstance(squad['name'], str):reject()
+    zone = config.get('zone', {})
+    if zone and not isinstance(zone.get('name'), str):reject()
+    if zone.get('id') is not None and not isinstance(zone['id'], str):reject()
+    for zid, graph in saved.get('maps', {}).items():
+        nodes = sequence(graph, 'nodes')
+        if 'grid' in graph:mapping(graph, 'grid')
+        for node in nodes:
+            for key in ('remembered_type', 'observed_type', 'template_type'):
+                if key in node and node[key] is not None and not isinstance(node[key], str):reject()
+            for key in ('content', 'remembered_content', 'prediction'):
+                optional_mapping(node, key)
+            sequence(node, 'content_history')
+            prediction = node.get('prediction')
+            if prediction is not None:sequence(prediction, 'candidates', str)
+            if node.get('remembered_type') == '林间空地' and not isinstance(node.get('id'), str):reject()
+        # A partial opaque graph remains acceptable while it has no visible
+        # consumer. Matched or selected graphs need the fields the real window
+        # indexes, before that graph can reach rendering or route consumers.
+        if graph and (graph.get('status') == 'matched' or zid == zone.get('id')):
+            if not isinstance(graph.get('template_id'), str):reject()
+            grid = mapping(graph, 'grid')
+            if any(type(grid.get(key)) is not int or grid[key] < 1 for key in ('rows', 'cols')):reject()
+            for node in nodes:
+                if not isinstance(node.get('id'), str):reject()
+                if any(type(node.get(key)) is not int for key in ('row', 'col')):reject()
+                if 'distance' not in node:reject()
+            if 'edges' not in graph:reject()
+            for edge in sequence(graph, 'edges', list):
+                if len(edge) != 2 or any(not isinstance(identity, str) for identity in edge):reject()
+            if not isinstance(mapping(graph, 'source').get('url'), str):reject()
+    for event in history:
+        if event.get('kind') == 'map_node_revealed':
+            for key in ('previous', 'type'):
+                if key in event and event[key] is not None and not isinstance(event[key], str):reject()
+    signature = saved.get('bar_signature')
+    if signature is not None:
+        if not isinstance(signature, list):reject()
+        for candidates in signature:
+            if not isinstance(candidates, list) or any(not isinstance(identity, str) for identity in candidates):reject()
+    memory = saved.get('relic_icon_memory')
+    if memory is not None:
+        if not isinstance(memory, dict):reject()
+        if memory and 'icons' not in memory:reject()
+        for icon in sequence(memory, 'icons'):
+            if not isinstance(icon.get('id'), str):reject()
+            if 'candidates' not in icon:reject()
+            sequence(icon, 'candidates', str)
+
+

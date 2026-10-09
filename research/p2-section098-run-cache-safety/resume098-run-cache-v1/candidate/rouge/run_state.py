@@ -32,21 +32,6 @@ def _validate_saved_containers(saved):
     def optional_mapping(record, key):
         if key in record and record[key] is not None and not isinstance(record[key], dict):reject()
 
-    def content(record, key):
-        optional_mapping(record, key)
-        value = record.get(key)
-        if not value:return
-        if not isinstance(value.get('title'), str):reject()
-        sequence(value, 'scene_candidates', str)
-        for option in sequence(value, 'visible_options'):
-            if not isinstance(option.get('title'), str):reject()
-
-    def text_sequence(value):
-        # The original formatter also handles a string (characters) or JSON
-        # object (its string keys). Do not replace those safe old semantics.
-        if not isinstance(value, (str, list, dict)):reject()
-        if any(not isinstance(item, str) for item in value):reject()
-
     for key in ('operators', 'relics', 'maps', 'resources', 'tactical_tools'):
         records = mapping(saved, key)
         if any(not isinstance(record, dict) for record in records.values()):reject()
@@ -54,7 +39,13 @@ def _validate_saved_containers(saved):
     for key in ('difficulty', 'squad', 'zone'):mapping(config, key)
     history = sequence(saved, 'history')
     sequence(saved, 'node_contents')
-    content(saved, 'last_node_content')
+    optional_mapping(saved, 'last_node_content')
+    content = saved.get('last_node_content')
+    if content:
+        if not isinstance(content.get('title'), str):reject()
+        sequence(content, 'scene_candidates', str)
+        for option in sequence(content, 'visible_options'):
+            if not isinstance(option.get('title'), str):reject()
     profiles = operator_profiles()
     for oid, member in saved['operators'].items():
         if oid not in profiles:reject()
@@ -78,12 +69,11 @@ def _validate_saved_containers(saved):
     for record in saved.get('resources', {}).values():
         if 'value' not in record or 'captured_at' not in record:reject()
         at = record['captured_at']
+        if type(at) not in (int, float):reject()
         try:
-            # Keep the formatter's existing accepted timestamp values,
-            # including bool. Inventory counts have a separate permission
-            # boundary; that policy does not redefine resource timestamps.
+            if not math.isfinite(at):reject()
             time.strftime('%H:%M:%S', time.localtime(at))
-        except (OverflowError, OSError, TypeError, ValueError):reject()
+        except (OverflowError, OSError, TypeError):reject()
     difficulty = config.get('difficulty', {})
     if difficulty and 'value' not in difficulty:reject()
     squad = config.get('squad', {})
@@ -97,15 +87,11 @@ def _validate_saved_containers(saved):
         for node in nodes:
             for key in ('remembered_type', 'observed_type', 'template_type'):
                 if key in node and node[key] is not None and not isinstance(node[key], str):reject()
-            for key in ('content', 'remembered_content'):content(node, key)
-            optional_mapping(node, 'prediction')
+            for key in ('content', 'remembered_content', 'prediction'):
+                optional_mapping(node, key)
             sequence(node, 'content_history')
             prediction = node.get('prediction')
-            if prediction is not None:
-                if prediction and 'candidates' not in prediction:reject()
-                sequence(prediction, 'candidates', str)
-                for key in ('reason', 'notice'):
-                    if prediction.get(key) and not isinstance(prediction[key], str):reject()
+            if prediction is not None:sequence(prediction, 'candidates', str)
             if node.get('remembered_type') == '林间空地' and not isinstance(node.get('id'), str):reject()
         # A partial opaque graph remains acceptable while it has no visible
         # consumer. Matched or selected graphs need the fields the real window
@@ -117,31 +103,11 @@ def _validate_saved_containers(saved):
             for node in nodes:
                 if not isinstance(node.get('id'), str):reject()
                 if any(type(node.get(key)) is not int for key in ('row', 'col')):reject()
-                if not 0 <= node['row'] < grid['rows'] or not 0 <= node['col'] < grid['cols']:reject()
                 if 'distance' not in node:reject()
             if 'edges' not in graph:reject()
             for edge in sequence(graph, 'edges', list):
                 if len(edge) != 2 or any(not isinstance(identity, str) for identity in edge):reject()
             if not isinstance(mapping(graph, 'source').get('url'), str):reject()
-            text_sequence(graph.get('limitations', []))
-            candidates = {name for node in nodes for name in
-                          (node.get('prediction') or {}).get('candidates', [])}
-            budget = graph.get('generation_budget', {})
-            if budget:
-                if not isinstance(budget, dict):reject()
-                for name, record in budget.items():
-                    if not isinstance(record, dict) or 'known_total' not in record:reject()
-                    required = set()
-                    if record['known_total']:required.update(('fixed', 'source_max', 'random_eligible'))
-                    if name in candidates:required.update(('fixed', 'source_max', 'revealed_additional'))
-                    if not required <= record.keys():reject()
-                text_sequence(graph.get('generation_limitations', []))
-            elif candidates:
-                # format_node tests each candidate's membership even in an
-                # empty budget. Preserve empty dict/list/string when safe.
-                if not isinstance(budget, (dict, list, str)):reject()
-                if isinstance(budget, str) and '' in candidates:reject()
-            if graph.get('constraint_conflicts'):text_sequence(graph['constraint_conflicts'])
     for event in history:
         if event.get('kind') == 'map_node_revealed':
             for key in ('previous', 'type'):

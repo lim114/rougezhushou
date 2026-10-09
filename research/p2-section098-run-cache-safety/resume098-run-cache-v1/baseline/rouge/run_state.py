@@ -9,158 +9,6 @@ from pathlib import Path
 from .catalog import catalog,operator_profiles,tactical_tools
 from .relic_recognition import resolve_owned_icons,resolve_difficulty_icons,difficulty_families
 
-def _validate_saved_containers(saved):
-    """Qualify the shapes consumed by restart and views before installing data.
-
-    Unknown extra fields remain opaque. A rejected file is never repaired or
-    replaced: the existing unreadable-file guard owns the fallback state.
-    This is a consumer boundary, not a complete game-state schema.
-    """
-    def reject():
-        raise ValueError('Invalid exploration record')
-
-    def mapping(record, key):
-        value = record.get(key, {})
-        if not isinstance(value, dict):reject()
-        return value
-
-    def sequence(record, key, item_type=dict):
-        value = record.get(key, [])
-        if not isinstance(value, list) or any(not isinstance(item, item_type) for item in value):reject()
-        return value
-
-    def optional_mapping(record, key):
-        if key in record and record[key] is not None and not isinstance(record[key], dict):reject()
-
-    def content(record, key):
-        optional_mapping(record, key)
-        value = record.get(key)
-        if not value:return
-        if not isinstance(value.get('title'), str):reject()
-        sequence(value, 'scene_candidates', str)
-        for option in sequence(value, 'visible_options'):
-            if not isinstance(option.get('title'), str):reject()
-
-    def text_sequence(value):
-        # The original formatter also handles a string (characters) or JSON
-        # object (its string keys). Do not replace those safe old semantics.
-        if not isinstance(value, (str, list, dict)):reject()
-        if any(not isinstance(item, str) for item in value):reject()
-
-    for key in ('operators', 'relics', 'maps', 'resources', 'tactical_tools'):
-        records = mapping(saved, key)
-        if any(not isinstance(record, dict) for record in records.values()):reject()
-    config = mapping(saved, 'config')
-    for key in ('difficulty', 'squad', 'zone'):mapping(config, key)
-    history = sequence(saved, 'history')
-    sequence(saved, 'node_contents')
-    content(saved, 'last_node_content')
-    profiles = operator_profiles()
-    for oid, member in saved['operators'].items():
-        if oid not in profiles:reject()
-        for key in ('fields', 'skill_ranks', 'sources', 'field_times', 'skill_times'):
-            mapping(member, key)
-        for key in ('char_buff_ids', 'char_buff_absent_ids', 'char_buff_pending_ids', 'missing_fields'):
-            sequence(member, key, str)
-        for key in ('invalid_fields', 'invalid_skill_ranks'):
-            sequence(member, key, (str, int))
-        optional_mapping(member, 'recipient_buffs')
-        popup = member.get('recipient_buffs')
-        if popup is not None:sequence(popup, 'ids', str)
-    known_relics = catalog()['relics']
-    known_tools = tactical_tools()
-    for key, known in (('relics', known_relics), ('tactical_tools', known_tools)):
-        for identity, record in saved.get(key, {}).items():
-            if record.get('held', True) and identity not in known:reject()
-            mapping(record, 'icon_evidence')
-            label = record.get('icon_evidence', {}).get('tier_label')
-            if label is not None and not isinstance(label, str):reject()
-    for record in saved.get('resources', {}).values():
-        if 'value' not in record or 'captured_at' not in record:reject()
-        at = record['captured_at']
-        try:
-            # Keep the formatter's existing accepted timestamp values,
-            # including bool. Inventory counts have a separate permission
-            # boundary; that policy does not redefine resource timestamps.
-            time.strftime('%H:%M:%S', time.localtime(at))
-        except (OverflowError, OSError, TypeError, ValueError):reject()
-    difficulty = config.get('difficulty', {})
-    if difficulty and 'value' not in difficulty:reject()
-    squad = config.get('squad', {})
-    if 'name' in squad and not isinstance(squad['name'], str):reject()
-    zone = config.get('zone', {})
-    if zone and not isinstance(zone.get('name'), str):reject()
-    if zone.get('id') is not None and not isinstance(zone['id'], str):reject()
-    for zid, graph in saved.get('maps', {}).items():
-        nodes = sequence(graph, 'nodes')
-        if 'grid' in graph:mapping(graph, 'grid')
-        for node in nodes:
-            for key in ('remembered_type', 'observed_type', 'template_type'):
-                if key in node and node[key] is not None and not isinstance(node[key], str):reject()
-            for key in ('content', 'remembered_content'):content(node, key)
-            optional_mapping(node, 'prediction')
-            sequence(node, 'content_history')
-            prediction = node.get('prediction')
-            if prediction is not None:
-                if prediction and 'candidates' not in prediction:reject()
-                sequence(prediction, 'candidates', str)
-                for key in ('reason', 'notice'):
-                    if prediction.get(key) and not isinstance(prediction[key], str):reject()
-            if node.get('remembered_type') == '林间空地' and not isinstance(node.get('id'), str):reject()
-        # A partial opaque graph remains acceptable while it has no visible
-        # consumer. Matched or selected graphs need the fields the real window
-        # indexes, before that graph can reach rendering or route consumers.
-        if graph and (graph.get('status') == 'matched' or zid == zone.get('id')):
-            if not isinstance(graph.get('template_id'), str):reject()
-            grid = mapping(graph, 'grid')
-            if any(type(grid.get(key)) is not int or grid[key] < 1 for key in ('rows', 'cols')):reject()
-            for node in nodes:
-                if not isinstance(node.get('id'), str):reject()
-                if any(type(node.get(key)) is not int for key in ('row', 'col')):reject()
-                if not 0 <= node['row'] < grid['rows'] or not 0 <= node['col'] < grid['cols']:reject()
-                if 'distance' not in node:reject()
-            if 'edges' not in graph:reject()
-            for edge in sequence(graph, 'edges', list):
-                if len(edge) != 2 or any(not isinstance(identity, str) for identity in edge):reject()
-            if not isinstance(mapping(graph, 'source').get('url'), str):reject()
-            text_sequence(graph.get('limitations', []))
-            candidates = {name for node in nodes for name in
-                          (node.get('prediction') or {}).get('candidates', [])}
-            budget = graph.get('generation_budget', {})
-            if budget:
-                if not isinstance(budget, dict):reject()
-                for name, record in budget.items():
-                    if not isinstance(record, dict) or 'known_total' not in record:reject()
-                    required = set()
-                    if record['known_total']:required.update(('fixed', 'source_max', 'random_eligible'))
-                    if name in candidates:required.update(('fixed', 'source_max', 'revealed_additional'))
-                    if not required <= record.keys():reject()
-                text_sequence(graph.get('generation_limitations', []))
-            elif candidates:
-                # format_node tests each candidate's membership even in an
-                # empty budget. Preserve empty dict/list/string when safe.
-                if not isinstance(budget, (dict, list, str)):reject()
-                if isinstance(budget, str) and '' in candidates:reject()
-            if graph.get('constraint_conflicts'):text_sequence(graph['constraint_conflicts'])
-    for event in history:
-        if event.get('kind') == 'map_node_revealed':
-            for key in ('previous', 'type'):
-                if key in event and event[key] is not None and not isinstance(event[key], str):reject()
-    signature = saved.get('bar_signature')
-    if signature is not None:
-        if not isinstance(signature, list):reject()
-        for candidates in signature:
-            if not isinstance(candidates, list) or any(not isinstance(identity, str) for identity in candidates):reject()
-    memory = saved.get('relic_icon_memory')
-    if memory is not None:
-        if not isinstance(memory, dict):reject()
-        if memory and 'icons' not in memory:reject()
-        for icon in sequence(memory, 'icons'):
-            if not isinstance(icon.get('id'), str):reject()
-            if 'candidates' not in icon:reject()
-            sequence(icon, 'candidates', str)
-
-
 class RunState:
     def __init__(self,file):
         self.file=Path(file)
@@ -170,7 +18,6 @@ class RunState:
             saved=json.loads(self.file.read_text(encoding='utf-8'))
             if not isinstance(saved,dict) or not isinstance(saved.get('operators'),dict) or not isinstance(saved.get('relics'),dict):
                 raise ValueError('Invalid exploration record')
-            _validate_saved_containers(saved)
             self.state.update(saved)
             if 'relic_icon_memory' not in saved:self.restore_relic_icon_memory()
             self.restore_passed_node_types()
@@ -191,8 +38,8 @@ class RunState:
                 node.pop('remembered_type',None);node['visited']=True;changed=True
                 for event in reversed(self.state['history']):
                     if event.get('zone_id')!=zid:continue
-                    if event.get('kind') in ('map_layout_changed','map_confirmed'):break
-                    if event.get('kind')!='map_node_revealed' or event.get('node_id')!=node['id']:continue
+                    if event['kind'] in ('map_layout_changed','map_confirmed'):break
+                    if event['kind']!='map_node_revealed' or event.get('node_id')!=node['id']:continue
                     original=event.get('previous') if event.get('type')=='林间空地' else event.get('type')
                     if original and original!='林间空地' and not original.startswith('未知'):
                         node['remembered_type']=original
@@ -416,8 +263,6 @@ class RunState:
                     raise ValueError('强化ID或领取干员职业不符。')
         self.restore_origin_discovery_buffs(observed,repaired_at=captured_at)
         state=self.state;relics=dict(observed.get('relics',{'ids':[],'icons':[],'count':None,'source':'unread'}));count=relics.get('count')
-        if isinstance(count,bool):
-            count=None;relics['count']=None
         from .run_config import config_data,difficulty_value
         for key,record in observed.get('config',{}).items():
             # Reused records retain their original timestamp and never replace

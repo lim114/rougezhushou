@@ -1,0 +1,168 @@
+class RunStateNestedCacheBoundaryTests(TemporaryRunTests):
+    def assert_protected(self, change):
+        saved = {'id': 'public-nested-rejected-run', 'operators': {}, 'relics': {},
+                 'public_sibling_must_not_install': {'nested': [None, {}]}, **change}
+        raw = (json.dumps(saved, ensure_ascii=False) + '\n').encode('utf-8')
+        path = self.path()
+        path.write_bytes(raw)
+        temporary = path.with_suffix('.tmp')
+        temporary.write_bytes(b'public preexisting temporary sentinel\n')
+        run = RunState(path)
+        self.assertTrue(run.preserve_unreadable)
+        self.assertNotEqual(run.state['id'], saved['id'])
+        self.assertNotIn('public_sibling_must_not_install', run.state)
+        self.visible(run)
+        self.assertEqual(run.recognition_context()['run_id'], run.state['id'])
+        self.assertEqual(run.calculation_resources(), {})
+        self.assertEqual(run.relic_history_context()['persistent_growth_unknowns'], [])
+        self.assertEqual(path.read_bytes(), raw)
+        run.save()
+        self.assertEqual(path.read_bytes(), raw)
+        self.assertEqual(temporary.read_bytes(), b'public preexisting temporary sentinel\n')
+        return run
+
+    def test_history_nonlist_and_deep_consumed_container_damage_are_protected(self):
+        changes = (
+            {'history': None}, {'history': {}}, {'history': 'public'},
+            {'maps': {'zone_2': {'nodes': None}}},
+            {'maps': {'zone_2': {'nodes': [None]}}},
+            {'maps': {'zone_2': {'nodes': [{'remembered_type': []}]}}},
+            {'maps': {'zone_2': {'nodes': [{'prediction': {'candidates': None}}]}}},
+            {'maps': {'zone_2': {'nodes': [{'content_history': [None]}]}}},
+            {'resources': None}, {'resources': {'gold': None}},
+            {'resources': {'gold': {'value': 8}}},
+            {'resources': {'gold': {'value': 8, 'captured_at': float('inf')}}},
+            {'config': []}, {'config': {'difficulty': None}},
+            {'config': {'difficulty': {'source': 'public'}}},
+            {'config': {'squad': {'name': None}}},
+            {'config': {'zone': {'id': 'zone_2'}}},
+            {'config': {'zone': {'id': [], 'name': 'public'}}},
+            {'maps': {'zone_2': {'nodes': [{}]}},
+             'config': {'zone': {'id': 'zone_2', 'name': 'public'}}},
+            {'maps': {'zone_2': {'status': 'matched', 'nodes': []}}},
+            {'tactical_tools': {TOOL: None}},
+            {'relics': {RELICS[0]: {'icon_evidence': None}}},
+            {'relics': {RELICS[0]: {'icon_evidence': {'tier_label': 1}}}},
+            {'bar_signature': {}}, {'bar_signature': [None]},
+            {'relic_icon_memory': []}, {'relic_icon_memory': {'icons': [None]}},
+            {'relic_icon_memory': {'public_extra': None}},
+            {'relic_icon_memory': {'icons': [{'id': RELICS[0]}]}},
+            {'relic_icon_memory': {'icons': [{'id': RELICS[0], 'candidates': None}]}},
+            {'node_contents': [None]}, {'last_node_content': []},
+            {'last_node_content': {'kind': 'event'}},
+            {'last_node_content': {'title': 'public', 'scene_candidates': None}},
+            {'last_node_content': {'title': 'public', 'visible_options': [None]}},
+        )
+        for change in changes:
+            with self.subTest(change=change):self.assert_protected(change)
+
+    def test_member_nested_containers_and_unknown_consumed_identities_are_protected(self):
+        for key in ('fields', 'skill_ranks', 'sources', 'field_times', 'skill_times',
+                    'char_buff_ids', 'char_buff_absent_ids', 'char_buff_pending_ids',
+                    'missing_fields', 'invalid_fields', 'invalid_skill_ranks'):
+            with self.subTest(field=key):
+                self.assert_protected({'operators': {'mechanist': {key: None}}})
+        for change in (
+            {'operators': {'mechanist': {'recipient_buffs': []}}},
+            {'operators': {'mechanist': {'recipient_buffs': {'ids': [None]}}}},
+            {'operators': {'public-unknown-member': {}}},
+            {'relics': {'public-unknown-held-relic': {}}},
+            {'tactical_tools': {'public-unknown-held-tool': {}}},
+        ):
+            with self.subTest(change=change):self.assert_protected(change)
+
+    def test_deep_valid_opaque_data_stays_original_until_an_explicit_observation(self):
+        seed = self.seed()
+        saved = json.loads(seed.file.read_text(encoding='utf-8'))
+        saved['operators']['mechanist'] = {'id': 'mechanist', 'scope': 'run',
+            'present': True, 'fields': {}, 'skill_ranks': {}, 'recipient_buffs': None,
+            'sources': {'public_opaque': [None, {'leaf': None}]},
+            'public_nested': {'nullable': None}}
+        saved['maps'] = {'public_unused_zone': {'nodes': [{'current_node': None,
+            'prediction': None, 'content': None, 'remembered_content': None,
+            'public_nullable': None}], 'public_opaque': [None, {}]}}
+        saved['config']['public_opaque_record'] = {'anything': [None, {}]}
+        saved['config']['public_nullable_extra'] = None
+        saved['relics']['public-unknown-not-held'] = {'held': False, 'public': None}
+        saved['resources'] = {'gold': {'value': 8, 'captured_at': saved['last_read'],
+                                      'public': {'nullable': None}}}
+        raw = json.dumps(saved, ensure_ascii=False, indent=2).encode('utf-8')
+        run = self.load_raw(raw)
+        self.assertFalse(run.preserve_unreadable)
+        self.assertEqual(run.state['id'], saved['id'])
+        for key in saved:
+            if key != 'notice':self.assertEqual(run.state[key], saved[key], key)
+        self.visible(run)
+        self.assertEqual(run.file.read_bytes(), raw)
+        self.assertIs(run.apply(bar(False), run.state['last_read'] + 1), True)
+        self.assertEqual(run.state['operators']['mechanist']['public_nested'], {'nullable': None})
+        self.assertEqual(run.state['maps'], saved['maps'])
+        restored = RunState(run.file)
+        self.assertFalse(restored.preserve_unreadable)
+        self.assertEqual(restored.state['id'], saved['id'])
+        self.visible(restored)
+
+    def test_clearing_restore_ignores_history_without_kind_and_preserves_history(self):
+        saved = {'operators': {}, 'relics': {}, 'maps': {'public_zone': {
+            'nodes': [{'id': 'public_node', 'remembered_type': '林间空地'}]}},
+            'history': [{'zone_id': 'public_zone', 'public_opaque': None}]}
+        run, raw = self.load_saved(saved)
+        self.assertFalse(run.preserve_unreadable)
+        node = run.state['maps']['public_zone']['nodes'][0]
+        self.assertTrue(node['visited'])
+        self.assertNotIn('remembered_type', node)
+        self.assertEqual(run.state['history'], saved['history'])
+        self.assertEqual(run.file.read_bytes(), raw)
+        self.visible(run)
+
+    def test_valid_selected_map_and_real_report_consumers_survive_saved_restart(self):
+        from rouge.map_recognition import map_data
+        from rouge.map_reporting import format_map, format_node
+        from rouge.run_config import config_data
+        data = map_data()
+        template = next(t for t in data['templates'] if t['id'] == '2a')
+        graph = {'status': 'matched', 'zone_id': template['zone_id'],
+            'template_id': template['id'], 'edges': deepcopy(template['edges']),
+            'current_node': None, 'difficulty_value': None,
+            'grid': {'rows': template['rows'], 'cols': template['cols']},
+            'source': deepcopy(data['source']),
+            'nodes': [{**deepcopy(node), 'template_type': node['fixed_type'],
+                'observed_type': None, 'visible': False, 'prediction': None}
+                for node in template['nodes']]}
+        run = RunState(self.path())
+        zone = template['zone_id']
+        observed = {'map': graph, 'config': {'zone': {'id': zone,
+            'name': config_data()['zones'][zone]['name'], 'source': 'public-visible-zone'}}}
+        self.assertTrue(run.apply(observed, run.state['started_at'] + 1))
+        expected_map = deepcopy(run.state['maps'][zone])
+        raw = run.file.read_bytes()
+        restored = RunState(run.file)
+        self.assertFalse(restored.preserve_unreadable)
+        self.assertEqual(restored.state['maps'][zone], expected_map)
+        self.assertEqual(restored.file.read_bytes(), raw)
+        self.visible(restored)
+        self.assertIn('历史参考', format_map(None, restored.state['maps'][zone], technical=True))
+        first = expected_map['nodes'][0]['id']
+        self.assertIn('节点状态', format_node(restored.state['maps'][zone], first,
+                                         historical=True, technical=True))
+
+    def test_protected_nested_fault_can_accept_memory_updates_and_only_manual_reset_replaces_file(self):
+        run = self.assert_protected({'operators': {'mechanist': {'fields': None}}})
+        original = run.file.read_bytes()
+        isolated_other = self.seed()
+        other_raw = isolated_other.file.read_bytes()
+        observed = {'operators': [{'id': 'mechanist', 'scope': 'run',
+            'fields': {'elite': 0}, 'skill_ranks': {}}],
+            'selected_operator': 'mechanist', 'crew_count': 1}
+        self.assertTrue(run.apply(observed, run.state['started_at'] + 1))
+        self.assertEqual(run.state['operators']['mechanist']['fields'], {'elite': 0})
+        self.assertTrue(run.preserve_unreadable)
+        self.assertEqual(run.file.read_bytes(), original)
+        self.visible(run)
+        run.reset()
+        self.assertFalse(run.preserve_unreadable)
+        self.assertEqual(run.state['operators'], {})
+        self.assertNotEqual(run.file.read_bytes(), original)
+        self.assertEqual(isolated_other.file.read_bytes(), other_raw)
+
+

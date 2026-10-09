@@ -802,7 +802,7 @@ class MainWindow(QMainWindow):
         member=self.run.state['operators'].get(op) if self.use_run_training.isChecked() else None
         if member and not member.get('present',True):member=None
         if not member:return account
-        current={key:value for key,value in member.get('fields',{}).items() if key not in member.get('invalid_fields',[])}
+        current={key:value for key,value in member['fields'].items() if key not in member.get('invalid_fields',[])}
         ranks={key:value for key,value in member.get('skill_ranks',{}).items() if key not in member.get('invalid_skill_ranks',[])}
         return {**account,**member,'fields':{**account.get('fields',{}),**current},
                 'skill_ranks':ranks,'run_confirmed_fields':list(current)}

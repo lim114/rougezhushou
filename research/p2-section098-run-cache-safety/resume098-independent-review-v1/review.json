@@ -1,0 +1,72 @@
+{
+  "status": "SOURCE_ONLY_BLOCKER_FOUND_FRESH_CORRECTION_REQUIRED",
+  "runtime_pass": false,
+  "project_tests_Wine_Git_executions": 0,
+  "tracked_writes": 0,
+  "author": "/root/resume097_account_io",
+  "candidate_pins": [
+    {
+      "path": "/workspace/.continuation/resume098-run-cache-v1/source-manifest.json",
+      "bytes": 3954,
+      "sha256": "41b2a367fad08d095033fcefd9c732cffa93977ab7439c2362bd049cdb3cb7f6"
+    },
+    {
+      "path": "/workspace/.continuation/resume098-run-cache-v1/candidate/rouge/run_state.py",
+      "bytes": 48937,
+      "sha256": "799b5ce95e679d5c4e1c6c620ca8fa40c44f56073877e0e228ddb69cea7f21da"
+    },
+    {
+      "path": "/workspace/.continuation/resume098-run-cache-v1/candidate/rouge/app.py",
+      "bytes": 99166,
+      "sha256": "d1a9fe6aa89b8a24a38fd51dc72b010ed93e793c46f0d293b104c0f90b6bdcbc"
+    },
+    {
+      "path": "/workspace/.continuation/resume098-run-cache-v1/candidate/tests/test_run_state_reliability.py",
+      "bytes": 31083,
+      "sha256": "3b998ce5c487a59763eefb8d3f33756a39367fbff0fe41ec9a3b8a7e91c11049"
+    }
+  ],
+  "actual_run_baseline_match": true,
+  "actual_app_baseline_match_at_review": true,
+  "changed_RunState_methods_only": [
+    "__init__",
+    "restore_passed_node_types",
+    "apply"
+  ],
+  "app_single_line_exact": true,
+  "original_test_methods_preserved": 17,
+  "new_source_test_methods": 6,
+  "total_source_test_methods": 23,
+  "source_findings_passed": [
+    "readonly guard runs before state.update, any restore/migration/save",
+    "guard has no assignment to saved/record or filesystem writes; existing catalog/profile readers may perform public reads",
+    "bool count changes only local relics dict after stale/cross-run/member validation; nonbool apply AST remainder original",
+    "history getter patch skips missing/unknown kind and preserves normal recovery conditions/history",
+    "unknown operators even departed are consumed by summary; rejecting identity has actual lookup basis",
+    "app only gets missing fields default, preserves actual96 full app"
+  ],
+  "blockers": [
+    {
+      "id": "node-content-unqualified-inner-consumers",
+      "source_candidate": "container_guard.py.txt optional_mapping(node, content/remembered_content)",
+      "accepted_bad_example": "A complete matched/selected map node content={public_opaque: None}, or visible_options=[None] with title present",
+      "actual_consumers": [
+        "rouge/map_view.py paintEvent: content[title]",
+        "rouge/map_reporting.py format_node: content[title], scene_candidates and visible_options title iteration"
+      ],
+      "why": "Only last_node_content receives full inner content qualification; node content dictionaries can pass guard and still crash real views. No project execution was done to manufacture a result.",
+      "recommended_fix": "Reuse readonly content validation across last_node_content and consumed node.content/remembered_content, keeping empty/None optional values accepted and unknown extras opaque; add invalid and valid source tests."
+    }
+  ],
+  "range_notes": [
+    {
+      "id": "resource-bool-timestamp-existing-acceptance",
+      "fact": "type(at) in(int,float) rejects bool even though old time.localtime(bool) is a formatable existing input; keep old behavior or explicitly qualify separate change. No numeric mechanism assumption supplied."
+    }
+  ],
+  "remaining": [
+    "fresh correction packet v2",
+    "independent correction review",
+    "actual Root 23 methods/related/selected/realWindow acceptance"
+  ]
+}
