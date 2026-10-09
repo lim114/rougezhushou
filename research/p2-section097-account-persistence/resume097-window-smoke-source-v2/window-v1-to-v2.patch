@@ -1,0 +1,10 @@
+--- v1/window.py
++++ v2/window.py
+@@ -84,6 +84,7 @@
+     application = None
+     module = None
+     window = None
++    active_folder = account_path = run_path = None
+ 
+     def persist_progress(status):
+         with lock:
