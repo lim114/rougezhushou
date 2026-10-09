@@ -1,0 +1,29 @@
+{
+  "kind": "SOURCE_ONLY_EXACT108_INDEPENDENT_API_IDENTITY_PREFIX_BOUNDARY",
+  "Runtime_executed": false,
+  "before_bytes": 41223,
+  "before_sha256": "83e8dd9dcbb2627ca9d6ad19db47881d70e4fd19d3a6d11c47ce3c532099cbc4",
+  "after_bytes": 43662,
+  "after_sha256": "c4404868fec6c81d09eea18a33603b0ed1ca3c2dcabcab6f183f039494a08bc5",
+  "before": "                            elif window.damage_result:\n                                assert_native_equal(preview['environment'],window.damage_result['result']['run_resolution']['enemy'],\n                                                    'Actual no-relic preview and numerical environment agree')\n",
+  "after": "                            elif window.damage_result:\n                                numeric_environment=window.damage_result['result']['run_resolution']['enemy']\n                                preview_environment=preview['environment']\n                                boundary_before=freeze({'numeric_environment':numeric_environment,\n                                    'preview_environment':preview_environment,'damage_result':window.damage_result,\n                                    'durable':durable(),'disks':disks()})\n                                assert type(numeric_environment) is type(preview_environment) is dict\n                                numeric_keys=list(numeric_environment);preview_keys=list(preview_environment)\n                                assert numeric_keys[:3]==['enemy_id','level','stage_id']\n                                assert preview_keys[:3]==['stage_id','enemy_id','level']\n                                assert numeric_keys[3:]==preview_keys[3:]\n                                # The two public APIs declare different identity insertion\n                                # order. Compare separate shallow copies in the actual\n                                # numerical key order; retain every original value/alias.\n                                numeric_comparison={key:numeric_environment[key] for key in numeric_keys}\n                                preview_comparison={key:preview_environment[key] for key in numeric_keys}\n                                assert_native_equal(preview_comparison,numeric_comparison,\n                                                    'Independent API explicit identity-prefix projection; complete remainder native unchanged')\n                                boundary_after=freeze({'numeric_environment':numeric_environment,\n                                    'preview_environment':preview_environment,'damage_result':window.damage_result,\n                                    'durable':durable(),'disks':disks()})\n                                save('actual_cross_API_identity_order_boundary',{'before':boundary_before,\n                                    'after':boundary_after,'numeric_keys':numeric_keys,'preview_keys':preview_keys,\n                                    'numeric_comparison':numeric_comparison,'preview_comparison':preview_comparison,\n                                    'scope':'Only declared three scalar identity keys reordered in separate comparison copies; original results/callers/text/raw cache never normalized'})\n                                assert_native_equal(boundary_after,boundary_before,\n                                                    'Explicit independent API comparison preserves original complete joint graphs')\n",
+  "occurrences": 1,
+  "full_inverse_byte_exact": true,
+  "existing87AssertAST_order_unchanged": true,
+  "new_Assert_gates": 4,
+  "final_Assert_count": 91,
+  "numeric_prefix": [
+    "enemy_id",
+    "level",
+    "stage_id"
+  ],
+  "preview_prefix": [
+    "stage_id",
+    "enemy_id",
+    "level"
+  ],
+  "remaining_key_order_preserved": true,
+  "original_graphs_and_helper_not_normalized": true,
+  "strict_native_complete_copies_compared": true,
+  "actual_Root_diagnostic_sha256": "0e73f55f5775b619501cc9c9d0129a01148b345431e417c98d1edebc767dddcd"
+}

@@ -1,0 +1,19 @@
+# 第108节本局区域consumer输入资格
+
+2026-10-09T23:36:43.458494+08:00（北京时间）。本报告只有全部实际raw0、完整Source、两份独立Saved、实际四图绑定齐备后才生成；本脚本不执行产品、测试、Qt、Wine或Git，也不填写未来commit。
+
+本局区域consumer输入资格收口；原falsey/inactive、knownID优先、portal已有深度继承、grade0/4与未知pending保持。16个新增API测试方法；Linux相关217/210PASS/skip1/U6父项；Wine相关217/210PASS/skip1/U6父项；精选119登记、1357实际运行/skip1，均0失败0错误。第三次Gold实际成功（前两raw1保留），Gold/候选各43快照、2窗口；33完整健康Gold同输入点、10明确错误/pending变化点；主Saved解码1043原件，另独立API配对解码450原件/178消费者；四图实际查看，Source751+CORE守恒。
+
+原API caadc仍是observation-only/product_passFalse：47计算case+8preview、178显式消费者、225native、22原异常、10实际阻断。候选API同样是观察原件：178消费者、225native、20明确异常、10实际阻断。异常输入的20个数值消费明确ValueError保留，两个preview按原pending合同返回；不要求错误观察数为0，不把运行raw0冒称产品全部机制正确。独立API配对Saved核验原/候选完整健康输出、三formatter/control与既有全部caller；20明确错误改变、2preview pending改变，其余156完整消费者保原，原异常、blocked与全部native都保留。主Saved读回只消费原API与两个窗口，绝不将它误称候选API配对证明。两份Saved合计1493次解码，其中225个原API原件在两份审计重复读回；唯一公开native原件为1268件，不把总解码次数称作独立原件数。
+
+变更只在原confirmed target+grade消费分支，为truthy非dict区域和不可hash的区域ID提供明确ValueError；未放宽Savedname/ID/schema，未清洗原caller、缓存或未确认区域，不补zone深度、mode或游戏公式。已知zone1..6/4_1仍优先于陈旧main；falsey、未启用/无target、grade0/4的原路径、portal未知与原Boolean资格保持。合法fresh公开观察先main4_1建立4，随后portal输入6按既有RunState保持已知4并实际save/reload；旧合法缓存main[6]原typed值和原文件/tmp bytes保留，消费者只用knownID。
+
+Gold1实际raw1：0完成窗口/0快照、17native、10实际numeric、24.0418508秒；Gold2实际raw1：0窗口/0快照、23native、11实际numeric、51.0915963秒。两次均原测试工具的identity insertion-order预期问题，两个Root纯Saved诊断证明真实原callers/结果未改，v4仅按两个独立API各自声明顺序对三scalar身份前缀作单独比较拷贝，保所有余下键顺序、类型、floatbits、值、alias和各自完整Gold原件。第三次Gold完成43快照/2窗口/395native/71实际numeric/214.07981180000934秒；候选完成43快照/2窗口/423native/71实际numeric/108.06278109998675秒。候选与第三Gold使用同一c440完整runner，不将Source版本数计额外运行。
+
+43快照为40个明确公开内存consumer输入、1个真实合法原缓存、2个真实合法fresh保存；仅两个健康constructor。坏内存输入在健康构造之后明确赋入config，不走Saved/OCR资格、不写盘；恢复原合法图后才close。Saved的86快照/80内存admission/4合法观察/4直接RunState重载及实际共同UI/三formatter组逐条读回；33健康完整图相等，10原错误转明确错误/pending仍完整保原caller/durable/disks。共同UI步207、共同三formatter组66、独立API身份比较边界64均来自实际ledger。主Saved的preview_checks统计桶实际为空（reader未append该桶）；真实独立preview输入/输出/formatter由完整native遍历及43snapshot逐点核验，不把空桶伪写成执行次数。
+
+Saved reader v1→v2仅QRect.center整数公式校正，公开Qt官方v6.9.3 qrect.h和精确局部逆向证据一并归档。C++整数除法向零，不能用Python负数floor替代；这是reader Source取证修正，本次没有报告实际负坐标故障，c440窗口未改，没有额外Gold或产品修复计数。历史v1模板保留；封存v2模板仍readyFalse、10个actual项为NULL，Root freshbindings精确绑定真正执行的v2/f46 reader，不借模板的未来空项作为验证。
+
+四图由Root实际查看，绑定真实候选PNG bytes/hash、当前文本、anchor、viewport或QLabel；不把runner的Root_visual_verifiedFalse改作看图证明。窗口共同step及共同三formatter组纯度已验证；逐formatter独立prepost、跨分freeze原内存alias、JSON保alias、第二MainWindow重开、自然OCR、非法Saved缓存准入、原生Windows硬件、游戏/聊天均没有验证。unknown portal/pending、动态地图buff/召唤物/绝对时钟与其他未实现P2/P3仍按资料保留未知。
+
+新增cloud119只prepend108；full NEW41和原helper字节不变，原union自动变242。相关Linux/Wine原AvailableResult的skip/U父项分别保留，不计PASS；本节没有冒称完整全量。精选日志自身无完整Source-map，最终Source751+CORE在真实pipeline完成后及最终receipt检查前后守恒，不能伪称精选自身前后带map。last full105和旧95三次deferred原封保留；下一五节节点110全量与总结。本节归档与实际commit/push由独立Root saver/publisher完成，之后按用户要求收束。断点next109、nextfull110保留；109还要原focused/permanent实际证据，此次不启动、不预计完成。已封存的109 focused/permanent原probe、风险限定draft与Source独审，以及110 adapter/完整窗口草稿/独审，均单列prepared-unapplied-next逐叶归档，Runtime/actual guard/结果仍NULL、未编入和未执行，不计完成小节。

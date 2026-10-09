@@ -1,0 +1,57 @@
+--- root-section-save-v3.py
++++ root-section108-save-v1.py
+@@ -32,8 +32,35 @@
+         assert pathlib.Path(check).read_text().strip() == "0", check
+     for path in spec["pass_receipts"]:
+         receipt = json.loads(pathlib.Path(path).read_text())
+-        assert receipt["passed"] is True and receipt["workflow_complete"] is True, path
++        assert receipt["passed"] is True, path
++        if receipt.get("kind") == "ROOT_ACTUAL_108_PURE_SAVED_API_PAIR_AUDIT":
++            assert receipt["workflow_checks_passed"] is True and receipt["source_and_CORE_unchanged"] is True, path
++        else:
++            assert receipt["workflow_complete"] is True, path
+         assert receipt.get("source_drift", []) == [], path
++    # Final 108 evidence uses only explicit regular public leaves with Source pins.
++    assert n == 108 and len(expected) == 751
++    actual = {p.relative_to(repo).as_posix(): digest(p)["sha256"]
++              for folder in ("rouge", "tests", "scripts")
++              for p in sorted((repo / folder).rglob("*"))
++              if p.is_file() and p.suffix in (".py", ".json") and "__pycache__" not in p.parts}
++    assert actual == expected
++    seen = set()
++    for entry in spec["public_evidence"]:
++        original_path = pathlib.Path(entry["source"])
++        assert not original_path.is_symlink() and all(not q.is_symlink() for q in original_path.parents)
++        source = original_path.resolve()
++        assert source.is_file() and pathlib.Path("/workspace/.continuation") in source.parents
++        assert repo not in source.parents
++        assert all(part not in (".local", ".venv", ".git", "__pycache__", "private", "credentials") for part in source.parts)
++        evidence_pin = entry["source_pin"]
++        assert set(evidence_pin) == {"path", "bytes", "sha256"}
++        assert evidence_pin["path"] == str(source)
++        assert digest(source) == {key: evidence_pin[key] for key in ("bytes", "sha256")}
++        destination = pathlib.Path(entry["destination"])
++        assert not destination.is_absolute() and ".." not in destination.parts
++        assert destination.as_posix() not in seen
++        seen.add(destination.as_posix())
+     stamp = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).isoformat()
+     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=repo, text=True).strip()
+     archive = repo / spec["archive"]
+@@ -43,7 +70,7 @@
+     entries = list(spec["public_evidence"])
+     entries.extend([
+         {"source": str(spec_path), "destination": "root-save-spec.json"},
+-        {"source": str(pathlib.Path(__file__).resolve()), "destination": "root-section-save-v3.py"},
++        {"source": str(pathlib.Path(__file__).resolve()), "destination": "root-section108-save-v1.py"},
+     ])
+     for entry in entries:
+         src = pathlib.Path(entry["source"]).resolve()
+@@ -58,6 +85,8 @@
+             target.parent.mkdir(parents=True, exist_ok=True)
+             assert not target.exists(), relative
+             original = digest(leaf)
++            if "source_pin" in entry:
++                assert original == {key: entry["source_pin"][key] for key in ("bytes", "sha256")}
+             shutil.copyfile(leaf, target)
+             copied = digest(target)
+             assert original == copied, relative

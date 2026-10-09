@@ -1,0 +1,34 @@
+{
+  "kind": "PUBLIC_QT6_9_3_QRECT_CENTER_SOURCE_EVIDENCE_ONLY",
+  "retrieved_at_UTC": "2026-10-09T14:50:36.030055+00:00",
+  "URL": "https://raw.githubusercontent.com/qt/qtbase/v6.9.3/src/corelib/tools/qrect.h",
+  "upstream": "Qt official qt/qtbase repository exact release v6.9.3",
+  "file": "qrect.h",
+  "bytes": 29574,
+  "sha256": "0417e3398d546f9e7f3d9fb79b2f5353941eaead3d84362483030b7309019b4c",
+  "lines233_234": [
+    "constexpr inline QPoint QRect::center() const noexcept",
+    "{ return QPoint(int((qint64(x1)+x2)/2), int((qint64(y1)+y2)/2)); } // cast avoids overflow on addition"
+  ],
+  "Source_semantics": "Signed integral division truncates toward zero. Actual QRect right=x+width-1, therefore center trunc_zero((2*x+width-1)/2). Python // alone floors, differing for negative odd numerator.",
+  "exact_integer_projection": {
+    "sx": "2*x+width-1",
+    "cx": "sx//2 if sx>=0 else -((-sx)//2)",
+    "sy": "2*y+height-1",
+    "cy": "sy//2 if sy>=0 else -((-sy)//2)"
+  },
+  "Source_counterexample": {
+    "x": -1,
+    "width": 2,
+    "right": 0,
+    "sum": -1,
+    "Qt_CPP_center": 0,
+    "old_Python_x_plus_floor_half": -1,
+    "viewport_left0_accepts_Qt_center_but_rejects_old_formula": true
+  },
+  "actual_PNG_negative_coordinates_observed": false,
+  "Qt_executed": false,
+  "project_API_helper_codec_tests_Wine_Git_executed": false,
+  "Window_c440_changed": false,
+  "Root_runtime_action": "No new/repeated actual Window run; only fresh Saved reader exact Source formula correction."
+}

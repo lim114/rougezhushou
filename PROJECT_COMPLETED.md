@@ -1,3 +1,11 @@
+## 当前连续开发进度 · 第108节
+
+2026-10-09T23:37:53.495483+08:00（北京时间）。本局区域consumer输入资格收口；原falsey/inactive、knownID优先、portal已有深度继承、grade0/4与未知pending保持。16个新增API测试方法；Linux相关217/210PASS/skip1/U6父项；Wine相关217/210PASS/skip1/U6父项；精选119登记、1357实际运行/skip1，均0失败0错误。第三次Gold实际成功（前两raw1保留），Gold/候选各43快照、2窗口；33完整健康Gold同输入点、10明确错误/pending变化点；主Saved解码1043原件，另独立API配对解码450原件/178消费者；四图实际查看，Source751+CORE守恒。
+
+以下记录为历史断点，当前以上述安排为准。
+
+---
+
 ## 当前连续开发进度 · 第107节
 
 2026-10-09T21:55:57.319333+08:00（北京时间）。既有重力减重派生值与安洁重量天赋共同消费；保留原base校验、signed参考、固定身份、培养、低重和报告边界。12个新增API测试方法（初版11方法中的1个边界预期按真实旧连续行为局部修正并新增独立控制）；Linux相关223/221PASS/skip1/U1父项；Wine相关223/221PASS/skip1/U1父项；精选118登记1341运行/skip1，均0失败0错误。两次Gold尝试（首次fixture失败原raw1保留），最终13Gold/13候选×6完整快照；62同输入完整Gold点、16有意变化按原manual完整components/estimate.skill及旧fixedmetadata核对；1876Saved原件、26实际close后JSON加载、四图已看；Source750+CORE不漂移。S1/S2无实际normal调用，仅S3实际原plan；未验证新floor/stacking/绝对gamephase、逐formatter独立prepost、跨分freeze alias、二次MainWindow、自然OCR或原生Windows/游戏/聊天。

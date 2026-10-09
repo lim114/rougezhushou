@@ -1,0 +1,42 @@
+{
+  "kind": "EXACT_LOCAL_SECTION108_ACTIVE_ZONE_CONSUMER_FAMILY",
+  "STOPWRITE": true,
+  "Runtime_executed": false,
+  "product_pass": false,
+  "source_count_before": null,
+  "source_count_after": null,
+  "count_note": "Actual original receipt Source750; after107 correction actual750 guard must be refreshed. One new test module projects751 only; Root actual snapshot required.",
+  "replacements": [
+    {
+      "path": "rouge/enemy_environment.py",
+      "before_bytes": 8213,
+      "before_sha256": "d55a1ad900b4dd33b030114de5f5ee5bb6f2ca2f48ddea67e686dadc7f83dd4a",
+      "after_bytes": 8495,
+      "after_sha256": "046d43949e4a76dd73dc99cf44be29054587bf9e4954110d7f28401a90d36ac7",
+      "exact_occurrences": 1,
+      "before": "        zone=(scenario.get('run_config') or {}).get('zone')\n        main=(zone or {}).get('main_zone_index')\n        if zone and zone.get('id') in config_data()['zones'] and zone['id'].split('_')[1].isdigit():\n",
+      "after": "        zone=(scenario.get('run_config') or {}).get('zone')\n        if zone and not isinstance(zone,dict):\n            raise ValueError('本局区域配置需要对象。')\n        main=(zone or {}).get('main_zone_index')\n        try:\n            known_zone=bool(zone) and zone.get('id') in config_data()['zones']\n        except TypeError:\n            raise ValueError('本局区域ID不能用于固定区域查询。') from None\n        if known_zone and zone['id'].split('_')[1].isdigit():\n"
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "before_bytes": 5466,
+      "before_sha256": "1a324efeb3c0d924e3ecc4a9d1ff1769dc9479f0586066d064aecb15e65f2534",
+      "after_bytes": 5511,
+      "after_sha256": "51514b9229fe9d7e7a816fecfbd55003ef1ba4f82e4a295d6a7edb41ecdfa665",
+      "exact_occurrences": 1,
+      "before": "MODULES = (\n",
+      "after": "MODULES = (\n    \"tests.test_zone_environment_input_108\",\n"
+    }
+  ],
+  "add_files": [
+    {
+      "path": "tests/test_zone_environment_input_108.py",
+      "packet_file": "test_zone_environment_input_108.py",
+      "Root_must_require_absent": true
+    }
+  ],
+  "untouched": [
+    "All other product code, fixed game data, Root107 test correction, verify_full_available helper/classifier/order/skip/error contracts."
+  ],
+  "registry_note": "verify_full_available.main unions cloudMODULES with NEW_MODULES; no fullhelper append required."
+}

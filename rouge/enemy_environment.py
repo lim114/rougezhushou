@@ -82,8 +82,14 @@ def resolve_enemy(scenario,resolution):
                 enemy['pending'].append(rule['pending'])
         rate=config_data()['difficulties'][str(grade)]['bossValue']/100
         zone=(scenario.get('run_config') or {}).get('zone')
+        if zone and not isinstance(zone,dict):
+            raise ValueError('本局区域配置需要对象。')
         main=(zone or {}).get('main_zone_index')
-        if zone and zone.get('id') in config_data()['zones'] and zone['id'].split('_')[1].isdigit():
+        try:
+            known_zone=bool(zone) and zone.get('id') in config_data()['zones']
+        except TypeError:
+            raise ValueError('本局区域ID不能用于固定区域查询。') from None
+        if known_zone and zone['id'].split('_')[1].isdigit():
             # zone_4 and zone_4_1 are the same main-region depth.
             main=int(zone['id'].split('_')[1])
         if rate and isinstance(main,int) and not isinstance(main,bool) and main in range(1,7):multiply('区域增长（主区域含第1层，黑潭不新增层数）',{'maxHp':(1+rate)**main,'atk':(1+rate)**main})

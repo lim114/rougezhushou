@@ -1,0 +1,58 @@
+{
+  "kind": "EXACT_SOURCE_ONLY_108_CANDIDATE_PROBE_METADATA_TRANSPORT",
+  "STOPWRITE": true,
+  "Runtime_executed": false,
+  "product_pass": false,
+  "original_runner": {
+    "path": "/workspace/.continuation/section108-zone-original-probe-source-v1/probe_zone108.py",
+    "bytes": 11237,
+    "sha256": "16396e96ad48b151932977eaa5fe95d3414c058aa1b0cde3a90648ecb9611ad2"
+  },
+  "candidate_runner": {
+    "path": "/workspace/.continuation/section108-zone-candidate-probe-source-v1/probe_zone108.py",
+    "bytes": 11302,
+    "sha256": "30e8832e6febe1d15ab15ce66be2b14973da001799c24b50ca4b1f365d2b6c5a"
+  },
+  "source_replacements": [
+    {
+      "before": "Root-only original public zone-consumer observations for section 108.",
+      "after": "Root-only candidate public zone-consumer observations for section 108.",
+      "occurrences": 1
+    },
+    {
+      "before": "MANIFEST_SHA = 'cc7140da9b2c3828281a612285be43898942a3879f1c4a2a0c8c8cea6d58e165'",
+      "after": "MANIFEST_SHA = '1fd63e55b00b1f2744c0eef7e33a24540a37c68842ead85f6fdf9b04badef6b5'",
+      "occurrences": 1
+    },
+    {
+      "before": "assert type(expected) is dict and len(expected) in (749, 750)",
+      "after": "assert type(expected) is dict and len(expected) == 751\n    assert guard['section'] == 108 and guard['source_count'] == 751",
+      "occurrences": 1
+    },
+    {
+      "before": "assert len(expected) in manifest['accepted_original_source_counts']",
+      "after": "assert len(expected) in manifest['accepted_candidate_source_counts']",
+      "occurrences": 1
+    },
+    {
+      "before": "'kind': 'ROOT_ACTUAL_ORIGINAL108_ZONE_CONSUMERS'",
+      "after": "'kind': 'ROOT_ACTUAL_CANDIDATE108_ZONE_CONSUMERS'",
+      "occurrences": 1
+    },
+    {
+      "before": "'reason': 'Root120sOriginalZoneProbeBudget'",
+      "after": "'reason': 'Root120sCandidateZoneProbeBudget'",
+      "occurrences": 1
+    }
+  ],
+  "runner_complete_inverse": true,
+  "manifest_changes_only": [
+    "kind",
+    "accepted_original_source_counts to accepted_candidate_source_counts751",
+    "source_phase_scope",
+    "target_source_sha256.rouge/enemy_environment.py d55 to046"
+  ],
+  "cases47_previews8_every_byte_value_preserved": true,
+  "stable_other16_leaf_pins_preserved": true,
+  "helper_byte_exact": true
+}
