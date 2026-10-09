@@ -1,0 +1,12 @@
+--- a/rouge/operator_engine.py
++++ b/rouge/operator_engine.py
+@@ -345,7 +345,8 @@
+             raw=token['attack']*(1+sum(e['value'] for e in token_effects if e['kind']=='attack_pct')+
+                 (0 if normal or self.n!=1 else bb['atk']))
+             token_speed=effective_attack_speed(token['attack_speed']+sum(e['value'] for e in token_effects if e['kind']=='attack_speed'))
+-            token_events=timeline.attacks(duration,token['interval']*100/token_speed,token_speed,unit=next(iter(self.p['tokens'])))['times_seconds']
++            token_stream=timeline.attacks(duration,token['interval']*100/token_speed,token_speed,unit=next(iter(self.p['tokens'])))
++            token_events=token_stream['emitted_times_seconds'] if timeline.mode=='frames' and window is None and not normal else token_stream['times_seconds']
+             hits=len(token_events)*count
+             emit('触手',raw,'physical',hits,effects=token_effects,event_times=[t for t in token_events for _ in range(int(count))])
+             if not normal and self.n==1:
