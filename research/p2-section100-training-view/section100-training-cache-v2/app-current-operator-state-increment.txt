@@ -1,0 +1,51 @@
+    def current_operator_state(self,*,preserve_level=None):
+        from .training_view import select_training_view
+        op=self.operator.currentData()
+        account=self.account_cache.view(op)
+        member=self.run.state['operators'].get(op) if self.use_run_training.isChecked() else None
+        preserve=self.level_override if preserve_level is None else preserve_level
+        result=select_training_view(op,account,member,operator_profiles(),catalog()['operators'],
+                                   use_record_level=not preserve)
+        self.training_view_notice=result['notice']
+        return result['state']
+
+    def current_run_operator_state(self):
+        from .training_view import run_operator_metadata
+        op=self.operator.currentData()
+        member=self.run.state['operators'].get(op)
+        return run_operator_metadata(member,enabled=self.use_run_training.isChecked())
+
+    def account_training_status(self,text):
+        op=self.operator.currentData()
+        state=self.current_operator_state()
+        confirmed=bool(state and state.get('scope')=='run')
+        notice=self.account_cache.notice(op,run_confirmed=confirmed)
+        view_notice=self.training_view_notice
+        if view_notice:notice += ('\n' if notice else '')+view_notice
+        self.training_status.setText(text+('\n'+notice if notice else ''))
+
+# Additional exact update_operator-local increment, required together with the
+# preceding method replacement (not a blanket replacement in app.py):
+# BEFORE:        state=self.current_operator_state()
+# AFTER:         state=self.current_operator_state(preserve_level=preserve_level)
+
+# Additional exact calculate-local formatter increment for the existing
+# op-not-in-catalog['operators'] branch; never rewrite raw stored identity:
+# BEFORE:        text=format_operator_observation(state,self.training_conditions())
+# AFTER:         text=format_operator_observation({**state,'id':op},self.training_conditions())
+
+# Additional exact sample_received-local raw-run summary increment:
+# BEFORE:        replace_text(self.operator_summary,format_operator_observation(self.run.state['operators'][selected]))
+# AFTER:         from .training_view import format_run_training_observation
+#                replace_text(self.operator_summary,format_run_training_observation(selected,self.run.state['operators'][selected]))
+
+# Additional exact calculate-local metadata block increment:
+# Retain state=self.current_operator_state() for later fields/unconfirmed labels.
+# Immediately before recruitment_kind/char_buff_ids/complete/absence/pending:
+# ADD:           run_state=self.current_run_operator_state()
+# Replace ONLY those five scenario assignments' state references with run_state.
+# All target-test unions, field/source labels and later state references remain.
+
+# Additional exact sync_target_buffs-local metadata source increment:
+# BEFORE:        state=self.current_operator_state();ids=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []
+# AFTER:         state=self.current_run_operator_state();ids=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []

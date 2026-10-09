@@ -482,7 +482,8 @@ class MainWindow(QMainWindow):
             selected=observation['run']['selected_operator']
             profile=operator_profiles()[selected]
             self.capture_operator_picture.set_subject('operator',selected,profile['name']+' · '+PROFESSIONS[profile['profession']])
-            replace_text(self.operator_summary,format_operator_observation(self.run.state['operators'][selected]))
+            from .training_view import format_run_training_observation
+            replace_text(self.operator_summary,format_run_training_observation(selected,self.run.state['operators'][selected]))
         else:
             self.capture_operator_picture.set_subject(None,None,'')
             replace_text(self.operator_summary,'本帧未确认新的干员培养信息；本局已确认记录继续保留，见本局状态与计算页。')
@@ -796,22 +797,30 @@ class MainWindow(QMainWindow):
         self.damage_form.setRowVisible(self.orb_mode,target.get('enemy_id')=='enemy_2148_shorbb')
         if hasattr(self,'raw_damage'):self.calculate()
 
-    def current_operator_state(self):
+    def current_operator_state(self,*,preserve_level=None):
+        from .training_view import select_training_view
         op=self.operator.currentData()
         account=self.account_cache.view(op)
         member=self.run.state['operators'].get(op) if self.use_run_training.isChecked() else None
-        if member and not member.get('present',True):member=None
-        if not member:return account
-        current={key:value for key,value in member.get('fields',{}).items() if key not in member.get('invalid_fields',[])}
-        ranks={key:value for key,value in member.get('skill_ranks',{}).items() if key not in member.get('invalid_skill_ranks',[])}
-        return {**account,**member,'fields':{**account.get('fields',{}),**current},
-                'skill_ranks':ranks,'run_confirmed_fields':list(current)}
+        preserve=self.level_override if preserve_level is None else preserve_level
+        result=select_training_view(op,account,member,operator_profiles(),catalog()['operators'],
+                                   use_record_level=not preserve)
+        self.training_view_notice=result['notice']
+        return result['state']
+
+    def current_run_operator_state(self):
+        from .training_view import run_operator_metadata
+        op=self.operator.currentData()
+        member=self.run.state['operators'].get(op)
+        return run_operator_metadata(member,enabled=self.use_run_training.isChecked())
 
     def account_training_status(self,text):
         op=self.operator.currentData()
-        member=self.run.state['operators'].get(op) if self.use_run_training.isChecked() else None
-        confirmed=bool(member and member.get('present',True) and member.get('scope')=='run')
+        state=self.current_operator_state()
+        confirmed=bool(state and state.get('scope')=='run')
         notice=self.account_cache.notice(op,run_confirmed=confirmed)
+        view_notice=self.training_view_notice
+        if view_notice:notice += ('\n' if notice else '')+view_notice
         self.training_status.setText(text+('\n'+notice if notice else ''))
 
     def training_conditions(self):
@@ -840,7 +849,7 @@ class MainWindow(QMainWindow):
             self.update_skill_options()
             return
         self.level.setEnabled(True)
-        state=self.current_operator_state()
+        state=self.current_operator_state(preserve_level=preserve_level)
         fields=state.get('fields',{})
         profile=operator_profiles()[op]
         self.operator_picture.set_subject('operator',op,profile['name']+' · '+PROFESSIONS[profile['profession']])
@@ -1062,7 +1071,7 @@ class MainWindow(QMainWindow):
             return
         if op not in catalog()['operators']:
             state=self.current_operator_state() or {'id':op,'fields':{},'skill_ranks':{}}
-            text=format_operator_observation(state,self.training_conditions())
+            text=format_operator_observation({**state,'id':op},self.training_conditions())
             if not state.get('fields'):text+='\n未读取培养状态，以上为明确的档案预览条件。'
             self.show_damage_text(text+'\n\n此干员可读取培养档案；技能伤害规则尚未实现，不将未知伤害显示为零。')
             return
@@ -1084,11 +1093,12 @@ class MainWindow(QMainWindow):
             if owner==op and self.skill.currentData() in skills:
                 scenario[key]=widget.isChecked() if isinstance(widget,QCheckBox) else widget.value()
         state=self.current_operator_state()
-        scenario['recruitment_kind']=state.get('recruitment_kind') if state.get('scope')=='run' else None
-        scenario['char_buff_ids']=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []
-        scenario['char_buffs_complete']=state.get('char_buffs_complete') is True if state.get('scope')=='run' else False
-        scenario['char_buff_absent_ids']=list(state.get('char_buff_absent_ids',[])) if state.get('scope')=='run' else []
-        scenario['char_buff_pending_ids']=list(state.get('char_buff_pending_ids',[])) if state.get('scope')=='run' else []
+        run_state=self.current_run_operator_state()
+        scenario['recruitment_kind']=run_state.get('recruitment_kind') if run_state.get('scope')=='run' else None
+        scenario['char_buff_ids']=run_state.get('char_buff_ids',[]) if run_state.get('scope')=='run' else []
+        scenario['char_buffs_complete']=run_state.get('char_buffs_complete') is True if run_state.get('scope')=='run' else False
+        scenario['char_buff_absent_ids']=list(run_state.get('char_buff_absent_ids',[])) if run_state.get('scope')=='run' else []
+        scenario['char_buff_pending_ids']=list(run_state.get('char_buff_pending_ids',[])) if run_state.get('scope')=='run' else []
         if self.target_buff_test.isChecked():
             scenario['char_buff_ids']=list(dict.fromkeys(scenario['char_buff_ids']+[
                 self.target_buff_list.item(i).data(Qt.ItemDataRole.UserRole) for i in range(self.target_buff_list.count())
@@ -1242,7 +1252,7 @@ class MainWindow(QMainWindow):
                 self.target_buff_list.addItem(item)
             self.target_buff_list.blockSignals(False);self.target_preview_operator=op
         self.damage_form.setRowVisible(self.target_buff_list,self.target_buff_test.isChecked() and self.target_buff_list.count()>0)
-        state=self.current_operator_state();ids=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []
+        state=self.current_run_operator_state();ids=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []
         self.target_buff_status.setText('、'.join(mechanics()['char_buffs'][bid]['name'] for bid in ids) if ids else
             '已核对：无个人强化' if state.get('scope')=='run' and state.get('char_buffs_complete') is True else '个人强化归属尚未确认；不会根据持有藏品推断')
         pending=state.get('char_buff_pending_ids',[]) if state.get('scope')=='run' else []

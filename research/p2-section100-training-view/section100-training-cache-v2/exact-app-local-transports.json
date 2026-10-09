@@ -1,0 +1,36 @@
+{
+  "status": "SOURCE_ONLY_EXACT_LOCAL_TRANSPORT_NOT_APPLIED",
+  "app_transport_at_completed_098_099_requires_new_AST_binding": true,
+  "replacements": [
+    {
+      "method": "update_operator",
+      "before": "        state=self.current_operator_state()\n",
+      "after": "        state=self.current_operator_state(preserve_level=preserve_level)\n",
+      "expected_occurrences": 1
+    },
+    {
+      "method": "calculate",
+      "before": "        state=self.current_operator_state()\n        scenario['recruitment_kind']=state.get('recruitment_kind') if state.get('scope')=='run' else None\n        scenario['char_buff_ids']=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []\n        scenario['char_buffs_complete']=state.get('char_buffs_complete') is True if state.get('scope')=='run' else False\n        scenario['char_buff_absent_ids']=list(state.get('char_buff_absent_ids',[])) if state.get('scope')=='run' else []\n        scenario['char_buff_pending_ids']=list(state.get('char_buff_pending_ids',[])) if state.get('scope')=='run' else []\n",
+      "after": "        state=self.current_operator_state()\n        run_state=self.current_run_operator_state()\n        scenario['recruitment_kind']=run_state.get('recruitment_kind') if run_state.get('scope')=='run' else None\n        scenario['char_buff_ids']=run_state.get('char_buff_ids',[]) if run_state.get('scope')=='run' else []\n        scenario['char_buffs_complete']=run_state.get('char_buffs_complete') is True if run_state.get('scope')=='run' else False\n        scenario['char_buff_absent_ids']=list(run_state.get('char_buff_absent_ids',[])) if run_state.get('scope')=='run' else []\n        scenario['char_buff_pending_ids']=list(run_state.get('char_buff_pending_ids',[])) if run_state.get('scope')=='run' else []\n",
+      "expected_occurrences": 1
+    },
+    {
+      "method": "calculate",
+      "before": "            text=format_operator_observation(state,self.training_conditions())\n",
+      "after": "            text=format_operator_observation({**state,'id':op},self.training_conditions())\n",
+      "expected_occurrences": 1
+    },
+    {
+      "method": "sample_received",
+      "before": "            replace_text(self.operator_summary,format_operator_observation(self.run.state['operators'][selected]))\n",
+      "after": "            from .training_view import format_run_training_observation\n            replace_text(self.operator_summary,format_run_training_observation(selected,self.run.state['operators'][selected]))\n",
+      "expected_occurrences": 1
+    },
+    {
+      "method": "sync_target_buffs",
+      "before": "        state=self.current_operator_state();ids=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []\n",
+      "after": "        state=self.current_run_operator_state();ids=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []\n",
+      "expected_occurrences": 1
+    }
+  ]
+}
