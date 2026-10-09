@@ -1,0 +1,9 @@
+# 第104节资源读取准入与保存边界
+
+已编入资源读取准入：无效容器、无效记录或缺少value的字段按未读处理，保留旧事实和原时间；完整零值与原有float/None/bool/text保存语义、合法同页字段及配置更新、未知计数器资格和原IO失败策略不变。15个新增真实API方法，相关221运行/220PASS/1既有skip/0失败0错误；精选1306运行/1既有skip/0失败0错误。Wine九个健康Gold及十八候选实际窗口均raw0，355份native记录、273个原计算成功；九健康组初始与观察后完整原生结果、三全文、原状态和磁盘均与实际Gold一致。四图已实际查看；27次关闭后直接RunState重载，真实非空.tmp目录写盘失败保留内存提示并恢复较早磁盘，窗口未测手动reset，不宣称全部MainWindow重新打开。
+
+44组实际原API观察基于已完成102的746+CORE源码；观察workflow0但productFalse，保留原异常、磁盘和native证据。现在修复基于已实际push103的747到748，仅run_state.apply局部、15方法测试及精选登记，保留101–103全部改动。旧完整资源metadata循环仍按原JSON政策产生ValueError；未进行全局schema清洗/回滚，也不拒绝此前已接纳完整值。坏读数是公开构造API输入，不声称自然OCR曾产生这些问题。
+
+Root apply-v1仅Source；v2补齐原件manifest7文件pin及断点不存在前置，Root实际运行一次0。v2非作者Source复核晚于Root实际执行，原件按真实时间保留。JSON重载使用实际磁盘完整JSON oracle；live native另存类型/浮点位/顺序/双向alias，JSON不保内存alias。
+
+P2机制、旧095三次未完成及原生Windows/游戏/客户端聊天边界继续保留，18未完成项目组不因这节销项。每节commit/push，105后五节全量和进度总结，再依序继续。

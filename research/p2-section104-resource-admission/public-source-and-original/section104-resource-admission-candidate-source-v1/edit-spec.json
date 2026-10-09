@@ -1,0 +1,20 @@
+{
+  "kind": "SOURCE_ONLY_LOCAL_REPLACEMENT",
+  "target": "rouge/run_state.py",
+  "binding": "102 original actual API baseline; rebase the exact local snippet against Root actual 103 before apply",
+  "base_bytes": 53721,
+  "base_sha256": "98b3b6ea4ad36b36d031064d900bc445c80e5ac50ae2c6eceb16861a68e3a3c7",
+  "newline": "CRLF; preserve all other bytes",
+  "old_utf8_lf": "        for key,record in observed.get('resources',{}).items():\n            if key not in ('gold','parts_count'):\n                from .relic_counter_semantics import valid_counter_resource\n                if not valid_counter_resource(key,record):continue\n            if record.get('value')!=state['resources'].get(key,{}).get('value'):\n                state['history'].append({'at':captured_at,'kind':'resource_updated','resource':key,'value':record['value']})\n            state['resources'][key]={**record,'captured_at':captured_at}\n",
+  "new_utf8_lf": "        resource_reads=observed.get('resources',{})\n        if not isinstance(resource_reads,dict):resource_reads={}\n        for key,record in resource_reads.items():\n            # An incomplete field is unread; keep its previous fact and time.\n            if not isinstance(record,dict) or 'value' not in record:continue\n            if key not in ('gold','parts_count'):\n                from .relic_counter_semantics import valid_counter_resource\n                if not valid_counter_resource(key,record):continue\n            if record.get('value')!=state['resources'].get(key,{}).get('value'):\n                state['history'].append({'at':captured_at,'kind':'resource_updated','resource':key,'value':record['value']})\n            state['resources'][key]={**record,'captured_at':captured_at}\n",
+  "old_matches": 1,
+  "hypothetical_102_candidate_bytes": 53983,
+  "hypothetical_102_candidate_sha256": "c3879c506a4b585b6afd7f8349ee8a066ad0166b094bcb1fd9ebae45d088e1cf",
+  "inverse_exact": true,
+  "wholefile_product_candidate_written": false,
+  "methods_changed": [
+    "RunState.apply"
+  ],
+  "tracked_files_written": false,
+  "root_must_preserve_101_102_103_and_register_test_module": true
+}

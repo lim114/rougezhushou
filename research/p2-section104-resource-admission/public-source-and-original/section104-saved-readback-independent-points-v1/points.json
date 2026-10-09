@@ -1,0 +1,1559 @@
+{
+  "kind": "INDEPENDENT_SOURCE_ONLY_104_SAVED_READBACK_PREPARATION",
+  "reviewer": "/root/resume097_account_io/resource104_candidate_independent",
+  "reviewed_at_UTC": "2026-10-09T10:43:51.241254+00:00",
+  "runtime_pass": false,
+  "Gold_receipt": {
+    "path": "/workspace/.continuation/resume104-window-gold-v1/receipt.json",
+    "bytes": 227455,
+    "sha256": "86e88039636ec70a366917fb5a1ce8d6d426dc71b176242424a85dec0e6da3eb"
+  },
+  "Gold_raw_exit_file": {
+    "path": "/workspace/.continuation/resume104-window-gold-v1.exit-code",
+    "raw": "0"
+  },
+  "compressed_closure_checks": {
+    "records": 117,
+    "kind_counts": {
+      "actual_calculate_result": 90,
+      "actual_initial_snapshot": 9,
+      "actual_post_snapshot": 9,
+      "actual_restart": 9
+    },
+    "sum_compressed_bytes": 866142,
+    "all_lengths_and_SHA_verified": true,
+    "all_names_single_relative_sequential_1_to_117": true,
+    "no_symlinks": true,
+    "directory_has_no_extra_entries": true,
+    "all_9_row_before_after_restart_references_match_top_metadata": true,
+    "native_payloads_decoded": false,
+    "decoded_lengths_hashes_types_aliases_not_yet_verified": true
+  },
+  "snapshot_prior_real_calculation_links": [
+    {
+      "case": "healthy-zero",
+      "snapshot_kind": "actual_initial_snapshot",
+      "snapshot_path": "000007.pickle.gz",
+      "nearest_prior_original_calculation_path": "000006.pickle.gz"
+    },
+    {
+      "case": "healthy-zero",
+      "snapshot_kind": "actual_post_snapshot",
+      "snapshot_path": "000012.pickle.gz",
+      "nearest_prior_original_calculation_path": "000011.pickle.gz"
+    },
+    {
+      "case": "healthy-positive-update",
+      "snapshot_kind": "actual_initial_snapshot",
+      "snapshot_path": "000020.pickle.gz",
+      "nearest_prior_original_calculation_path": "000019.pickle.gz"
+    },
+    {
+      "case": "healthy-positive-update",
+      "snapshot_kind": "actual_post_snapshot",
+      "snapshot_path": "000025.pickle.gz",
+      "nearest_prior_original_calculation_path": "000024.pickle.gz"
+    },
+    {
+      "case": "healthy-unread-positive",
+      "snapshot_kind": "actual_initial_snapshot",
+      "snapshot_path": "000033.pickle.gz",
+      "nearest_prior_original_calculation_path": "000032.pickle.gz"
+    },
+    {
+      "case": "healthy-unread-positive",
+      "snapshot_kind": "actual_post_snapshot",
+      "snapshot_path": "000038.pickle.gz",
+      "nearest_prior_original_calculation_path": "000037.pickle.gz"
+    },
+    {
+      "case": "healthy-float-unconsumed",
+      "snapshot_kind": "actual_initial_snapshot",
+      "snapshot_path": "000046.pickle.gz",
+      "nearest_prior_original_calculation_path": "000045.pickle.gz"
+    },
+    {
+      "case": "healthy-float-unconsumed",
+      "snapshot_kind": "actual_post_snapshot",
+      "snapshot_path": "000051.pickle.gz",
+      "nearest_prior_original_calculation_path": "000050.pickle.gz"
+    },
+    {
+      "case": "healthy-null-unconsumed",
+      "snapshot_kind": "actual_initial_snapshot",
+      "snapshot_path": "000059.pickle.gz",
+      "nearest_prior_original_calculation_path": "000058.pickle.gz"
+    },
+    {
+      "case": "healthy-null-unconsumed",
+      "snapshot_kind": "actual_post_snapshot",
+      "snapshot_path": "000064.pickle.gz",
+      "nearest_prior_original_calculation_path": "000063.pickle.gz"
+    },
+    {
+      "case": "healthy-bool-unconsumed",
+      "snapshot_kind": "actual_initial_snapshot",
+      "snapshot_path": "000072.pickle.gz",
+      "nearest_prior_original_calculation_path": "000071.pickle.gz"
+    },
+    {
+      "case": "healthy-bool-unconsumed",
+      "snapshot_kind": "actual_post_snapshot",
+      "snapshot_path": "000077.pickle.gz",
+      "nearest_prior_original_calculation_path": "000076.pickle.gz"
+    },
+    {
+      "case": "healthy-text-unconsumed",
+      "snapshot_kind": "actual_initial_snapshot",
+      "snapshot_path": "000085.pickle.gz",
+      "nearest_prior_original_calculation_path": "000084.pickle.gz"
+    },
+    {
+      "case": "healthy-text-unconsumed",
+      "snapshot_kind": "actual_post_snapshot",
+      "snapshot_path": "000090.pickle.gz",
+      "nearest_prior_original_calculation_path": "000089.pickle.gz"
+    },
+    {
+      "case": "healthy-unused-opaque-alias",
+      "snapshot_kind": "actual_initial_snapshot",
+      "snapshot_path": "000098.pickle.gz",
+      "nearest_prior_original_calculation_path": "000097.pickle.gz"
+    },
+    {
+      "case": "healthy-unused-opaque-alias",
+      "snapshot_kind": "actual_post_snapshot",
+      "snapshot_path": "000103.pickle.gz",
+      "nearest_prior_original_calculation_path": "000102.pickle.gz"
+    },
+    {
+      "case": "healthy-actual-IO-memory",
+      "snapshot_kind": "actual_initial_snapshot",
+      "snapshot_path": "000111.pickle.gz",
+      "nearest_prior_original_calculation_path": "000110.pickle.gz"
+    },
+    {
+      "case": "healthy-actual-IO-memory",
+      "snapshot_kind": "actual_post_snapshot",
+      "snapshot_path": "000116.pickle.gz",
+      "nearest_prior_original_calculation_path": "000115.pickle.gz"
+    }
+  ],
+  "critical_Source_points": [
+    "Compare complete native snapshot.view.damage_result.result to the nearest prior original_calculate_result.result, and complete native snapshot.view.calculation_caller to that record.before, as separate whole graphs.",
+    "Do not assemble a pair from frozen caller-before and real returned result and demand its cross-domain alias map equal snapshot.damage_result. The wrapper intentionally freezes before into an independent graph. Product _prepare_damage only shallow-copies the scenario and relic resolution can retain caller relic_context aliases; joining independently frozen domains would invent a different alias contract.",
+    "Actual app postprocessing only adds retained-Hydra notices when same-run persistent_growth_unknowns contains rogue_6_start_4 with the exact source/status, and adds target buff preview note if that checkbox is enabled. This104 fixture holds only legacy_60 or no relic, has no Hydra history and never toggles target buff preview. Therefore separately saved complete result equality can be required rather than discarding fields.",
+    "Normal persisted JSON intentionally loses live shared-container identities. Audit restart against actual saved JSON; require full native persisted graph and unchanged disk, not native alias identity to the live pre-save record.",
+    "The actual window runner performs27 close/direct-RunState reloads if9Gold+18candidate pass. It does not create second MainWindows or invoke manual reset. Set reset_unmeasured_by_window_saved=true; related099 reset coverage requires the actual related receipt/selector and must not be inferred from Source method names.",
+    "Pure saved audit should not import project/formatter or rerun calculation. Each saved three-text graph must be complete strings, estimate/default equal and displayed default equal after the actual NBSP conversion. All healthy initial/post native graphs and all three texts are matched against actual Gold; the pinned actual24f6 runner establishes original formatter calls, not an independent recomputation by audit.",
+    "Require Root actual four-PNG view ledger with its real provided schema and file/hash closure; do not synthesize viewed=true or assume unknown ledger fields."
+  ],
+  "closed_Gold_compressed_records": [
+    {
+      "path": "000001.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 6707,
+      "compressed_sha256_verified": "ee447166b958cb7a19949131067c351a984087b4af743aaf6fa53d0c5e997fa8",
+      "decoded_metadata_only": {
+        "bytes": 15124,
+        "sha256": "aa99c5bc8470cc8e79c171df4660e340a61ecdc80cb6eedcd0d0604e28cc6562",
+        "verified": false
+      }
+    },
+    {
+      "path": "000002.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 6707,
+      "compressed_sha256_verified": "ee447166b958cb7a19949131067c351a984087b4af743aaf6fa53d0c5e997fa8",
+      "decoded_metadata_only": {
+        "bytes": 15124,
+        "sha256": "aa99c5bc8470cc8e79c171df4660e340a61ecdc80cb6eedcd0d0604e28cc6562",
+        "verified": false
+      }
+    },
+    {
+      "path": "000003.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 6707,
+      "compressed_sha256_verified": "ee447166b958cb7a19949131067c351a984087b4af743aaf6fa53d0c5e997fa8",
+      "decoded_metadata_only": {
+        "bytes": 15124,
+        "sha256": "aa99c5bc8470cc8e79c171df4660e340a61ecdc80cb6eedcd0d0604e28cc6562",
+        "verified": false
+      }
+    },
+    {
+      "path": "000004.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 6707,
+      "compressed_sha256_verified": "ee447166b958cb7a19949131067c351a984087b4af743aaf6fa53d0c5e997fa8",
+      "decoded_metadata_only": {
+        "bytes": 15124,
+        "sha256": "aa99c5bc8470cc8e79c171df4660e340a61ecdc80cb6eedcd0d0604e28cc6562",
+        "verified": false
+      }
+    },
+    {
+      "path": "000005.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 7845,
+      "compressed_sha256_verified": "bbc203171a920541c06d013920bd8fe8c7d8f4a0f88fcd34c26dbdd07d8376f9",
+      "decoded_metadata_only": {
+        "bytes": 17806,
+        "sha256": "1e7e50676c58b1c0b1d7481ffd8b7f5ff65ef278665b176a58bbfc6c3b2cf323",
+        "verified": false
+      }
+    },
+    {
+      "path": "000006.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 7854,
+      "compressed_sha256_verified": "5f3ccaa906e1d561502986ea64bf069a5f16a11e44c32cf013e88ff8724b8966",
+      "decoded_metadata_only": {
+        "bytes": 17814,
+        "sha256": "ca596a1216f005867237b43c7ac90b493b7c95a678727ae2623feaffb5a0d2b4",
+        "verified": false
+      }
+    },
+    {
+      "path": "000007.pickle.gz",
+      "kind": "actual_initial_snapshot",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 12049,
+      "compressed_sha256_verified": "8f6e221dd63ac5641ac32bb1206836c33e5ae4884da109db42dac548ac1195cc",
+      "decoded_metadata_only": {
+        "bytes": 48973,
+        "sha256": "0290763621274c7023a82448436e54ded91e5408d338094d320fc3f17de4328c",
+        "verified": false
+      }
+    },
+    {
+      "path": "000008.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 7851,
+      "compressed_sha256_verified": "6ff58de55643b24a55308806b08eb047f5601534cdf93e3cf4846c6d3e88fd3f",
+      "decoded_metadata_only": {
+        "bytes": 17818,
+        "sha256": "91aaefaeffac89e0a380db645e12d75d1b1ea19c32c19e4712e8f3790419399c",
+        "verified": false
+      }
+    },
+    {
+      "path": "000009.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 7851,
+      "compressed_sha256_verified": "6ff58de55643b24a55308806b08eb047f5601534cdf93e3cf4846c6d3e88fd3f",
+      "decoded_metadata_only": {
+        "bytes": 17818,
+        "sha256": "91aaefaeffac89e0a380db645e12d75d1b1ea19c32c19e4712e8f3790419399c",
+        "verified": false
+      }
+    },
+    {
+      "path": "000010.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 7851,
+      "compressed_sha256_verified": "6ff58de55643b24a55308806b08eb047f5601534cdf93e3cf4846c6d3e88fd3f",
+      "decoded_metadata_only": {
+        "bytes": 17818,
+        "sha256": "91aaefaeffac89e0a380db645e12d75d1b1ea19c32c19e4712e8f3790419399c",
+        "verified": false
+      }
+    },
+    {
+      "path": "000011.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 7851,
+      "compressed_sha256_verified": "6ff58de55643b24a55308806b08eb047f5601534cdf93e3cf4846c6d3e88fd3f",
+      "decoded_metadata_only": {
+        "bytes": 17818,
+        "sha256": "91aaefaeffac89e0a380db645e12d75d1b1ea19c32c19e4712e8f3790419399c",
+        "verified": false
+      }
+    },
+    {
+      "path": "000012.pickle.gz",
+      "kind": "actual_post_snapshot",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 12108,
+      "compressed_sha256_verified": "66c9c741fa24da9dcc0b9f160bdac9adcc6b1dea579d17f44729645422ead388",
+      "decoded_metadata_only": {
+        "bytes": 49160,
+        "sha256": "f7a0764595c6064eda22a429c440029ac9471ff896dd3d036700152c4848367e",
+        "verified": false
+      }
+    },
+    {
+      "path": "000013.pickle.gz",
+      "kind": "actual_restart",
+      "case": "healthy-zero",
+      "compressed_bytes_verified": 2136,
+      "compressed_sha256_verified": "6e052b0d5e2198d4fc6b1fc6582803cad3d673c28c398a448bf8f321a160d305",
+      "decoded_metadata_only": {
+        "bytes": 6443,
+        "sha256": "3ed8b05b8c8fa9d9cc1ebf42bae3112c5e6e03d69390d4921b0104173ef53d6f",
+        "verified": false
+      }
+    },
+    {
+      "path": "000014.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 6714,
+      "compressed_sha256_verified": "c7cb8abea031a842aed56dae94265966e73a7b0f118abc4152c9b945ce8776d9",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "ea1a499d8785daf49e7f1eecc1782351cfbcf6262e7286fdccb80e480a2973d4",
+        "verified": false
+      }
+    },
+    {
+      "path": "000015.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 6714,
+      "compressed_sha256_verified": "c7cb8abea031a842aed56dae94265966e73a7b0f118abc4152c9b945ce8776d9",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "ea1a499d8785daf49e7f1eecc1782351cfbcf6262e7286fdccb80e480a2973d4",
+        "verified": false
+      }
+    },
+    {
+      "path": "000016.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 6714,
+      "compressed_sha256_verified": "c7cb8abea031a842aed56dae94265966e73a7b0f118abc4152c9b945ce8776d9",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "ea1a499d8785daf49e7f1eecc1782351cfbcf6262e7286fdccb80e480a2973d4",
+        "verified": false
+      }
+    },
+    {
+      "path": "000017.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 6714,
+      "compressed_sha256_verified": "c7cb8abea031a842aed56dae94265966e73a7b0f118abc4152c9b945ce8776d9",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "ea1a499d8785daf49e7f1eecc1782351cfbcf6262e7286fdccb80e480a2973d4",
+        "verified": false
+      }
+    },
+    {
+      "path": "000018.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 7928,
+      "compressed_sha256_verified": "ee2fc9d7761959ed0bcf2bfcd80b4c3823a16c4b3d0f2dd7153e82763079394f",
+      "decoded_metadata_only": {
+        "bytes": 18093,
+        "sha256": "8b846f10a8c25255bde662f875e99a020b1f8861aa34f20ab0a6eaa2aad2dd0a",
+        "verified": false
+      }
+    },
+    {
+      "path": "000019.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 7939,
+      "compressed_sha256_verified": "5686b5302bfb0b5ce792f043c84dda798f7d968108426511adbaab57e843f757",
+      "decoded_metadata_only": {
+        "bytes": 18101,
+        "sha256": "b395928ff486d184a7865f8e6a97d83cac2caa4c927d678f239c27478c9e70ad",
+        "verified": false
+      }
+    },
+    {
+      "path": "000020.pickle.gz",
+      "kind": "actual_initial_snapshot",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 12208,
+      "compressed_sha256_verified": "a512dcb06de74e3613e578c836c47074e28c0c531b646abdaf32cf53365032e0",
+      "decoded_metadata_only": {
+        "bytes": 48850,
+        "sha256": "40230ead64b6ceffffee70fbd3a3c010e7aa50427362da36fefdaa9639aeec1d",
+        "verified": false
+      }
+    },
+    {
+      "path": "000021.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 7936,
+      "compressed_sha256_verified": "149e677edf52e35d79c367ce8f256914ab63b0321306f34a19292740601e60b1",
+      "decoded_metadata_only": {
+        "bytes": 18105,
+        "sha256": "aba45d71a2c46b969f5038075b0e3beecc27b15d56e6ea4b5152c4b4c1c73fc8",
+        "verified": false
+      }
+    },
+    {
+      "path": "000022.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 7936,
+      "compressed_sha256_verified": "149e677edf52e35d79c367ce8f256914ab63b0321306f34a19292740601e60b1",
+      "decoded_metadata_only": {
+        "bytes": 18105,
+        "sha256": "aba45d71a2c46b969f5038075b0e3beecc27b15d56e6ea4b5152c4b4c1c73fc8",
+        "verified": false
+      }
+    },
+    {
+      "path": "000023.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 7936,
+      "compressed_sha256_verified": "149e677edf52e35d79c367ce8f256914ab63b0321306f34a19292740601e60b1",
+      "decoded_metadata_only": {
+        "bytes": 18105,
+        "sha256": "aba45d71a2c46b969f5038075b0e3beecc27b15d56e6ea4b5152c4b4c1c73fc8",
+        "verified": false
+      }
+    },
+    {
+      "path": "000024.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 7936,
+      "compressed_sha256_verified": "149e677edf52e35d79c367ce8f256914ab63b0321306f34a19292740601e60b1",
+      "decoded_metadata_only": {
+        "bytes": 18105,
+        "sha256": "aba45d71a2c46b969f5038075b0e3beecc27b15d56e6ea4b5152c4b4c1c73fc8",
+        "verified": false
+      }
+    },
+    {
+      "path": "000025.pickle.gz",
+      "kind": "actual_post_snapshot",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 12371,
+      "compressed_sha256_verified": "c029b7e10454d232229955798187595717e89bffa3f2991c6a2fdc432b5a4a5d",
+      "decoded_metadata_only": {
+        "bytes": 49401,
+        "sha256": "def4f0370217a4752a6a80626c5ff5fcf684d63ff9fbc588a983dbffef8d2d5d",
+        "verified": false
+      }
+    },
+    {
+      "path": "000026.pickle.gz",
+      "kind": "actual_restart",
+      "case": "healthy-positive-update",
+      "compressed_bytes_verified": 2400,
+      "compressed_sha256_verified": "227f9fdbe297bd1facde55d7b9bac23002a5f14742ccce42f105545b018859a6",
+      "decoded_metadata_only": {
+        "bytes": 7364,
+        "sha256": "2269bb7f7cf0d44db20d46e3cc839f35c287ec37e87f044528ac0e00c4be8e22",
+        "verified": false
+      }
+    },
+    {
+      "path": "000027.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 6713,
+      "compressed_sha256_verified": "d9db5f528cc8061edaced9a5c35f4d2fe8f0486d2bc6d8b02c1cc7cd39279721",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "c9c56c53701b60db3885caeaa1f296da93006f6874a02c4894961c247434d22b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000028.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 6713,
+      "compressed_sha256_verified": "d9db5f528cc8061edaced9a5c35f4d2fe8f0486d2bc6d8b02c1cc7cd39279721",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "c9c56c53701b60db3885caeaa1f296da93006f6874a02c4894961c247434d22b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000029.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 6713,
+      "compressed_sha256_verified": "d9db5f528cc8061edaced9a5c35f4d2fe8f0486d2bc6d8b02c1cc7cd39279721",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "c9c56c53701b60db3885caeaa1f296da93006f6874a02c4894961c247434d22b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000030.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 6713,
+      "compressed_sha256_verified": "d9db5f528cc8061edaced9a5c35f4d2fe8f0486d2bc6d8b02c1cc7cd39279721",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "c9c56c53701b60db3885caeaa1f296da93006f6874a02c4894961c247434d22b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000031.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 7928,
+      "compressed_sha256_verified": "33f6d23dc19057cfaa9e84f3d4012c302e8129da58631b5b970513e272b5d06c",
+      "decoded_metadata_only": {
+        "bytes": 18093,
+        "sha256": "b35ca7c27de8fb4882d67bb3c38059fbcd33370e9e1fc6d1b4ff4f9cb472d125",
+        "verified": false
+      }
+    },
+    {
+      "path": "000032.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 7939,
+      "compressed_sha256_verified": "17f41228ee44cf8c0fab83c011935d9d66e5cd33ad3611ca836cea08b7b1f43b",
+      "decoded_metadata_only": {
+        "bytes": 18101,
+        "sha256": "32de5c980a72f4be31f345177182e1cb4a52a0e1ef223eefb62945487b6a1f38",
+        "verified": false
+      }
+    },
+    {
+      "path": "000033.pickle.gz",
+      "kind": "actual_initial_snapshot",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 12206,
+      "compressed_sha256_verified": "44aada4ec2254737f69300b5aeaa540705087e0a27712d358c993fa140e040fe",
+      "decoded_metadata_only": {
+        "bytes": 48850,
+        "sha256": "6aea76a8a74c042e7be969e2b25f3a891663d1d915bd24ab448f44f7d2e91efe",
+        "verified": false
+      }
+    },
+    {
+      "path": "000034.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 7935,
+      "compressed_sha256_verified": "dc7fc7afb193d373a28e91262ec26150c99532693a1ee948da90411c62452fbb",
+      "decoded_metadata_only": {
+        "bytes": 18105,
+        "sha256": "b1296030ef733fa09281a0190f659cc5484b09add388e30938741cd039eff9ef",
+        "verified": false
+      }
+    },
+    {
+      "path": "000035.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 7935,
+      "compressed_sha256_verified": "dc7fc7afb193d373a28e91262ec26150c99532693a1ee948da90411c62452fbb",
+      "decoded_metadata_only": {
+        "bytes": 18105,
+        "sha256": "b1296030ef733fa09281a0190f659cc5484b09add388e30938741cd039eff9ef",
+        "verified": false
+      }
+    },
+    {
+      "path": "000036.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 7935,
+      "compressed_sha256_verified": "dc7fc7afb193d373a28e91262ec26150c99532693a1ee948da90411c62452fbb",
+      "decoded_metadata_only": {
+        "bytes": 18105,
+        "sha256": "b1296030ef733fa09281a0190f659cc5484b09add388e30938741cd039eff9ef",
+        "verified": false
+      }
+    },
+    {
+      "path": "000037.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 7935,
+      "compressed_sha256_verified": "dc7fc7afb193d373a28e91262ec26150c99532693a1ee948da90411c62452fbb",
+      "decoded_metadata_only": {
+        "bytes": 18105,
+        "sha256": "b1296030ef733fa09281a0190f659cc5484b09add388e30938741cd039eff9ef",
+        "verified": false
+      }
+    },
+    {
+      "path": "000038.pickle.gz",
+      "kind": "actual_post_snapshot",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 12260,
+      "compressed_sha256_verified": "e5872f34a8b33e7f1169324d3508dd3f5d6518aba0e3906443be46807142ada3",
+      "decoded_metadata_only": {
+        "bytes": 49037,
+        "sha256": "5a1054b967a80545dac01f4273630c2cdf21fc1a4911cdbd6019f361f78c4667",
+        "verified": false
+      }
+    },
+    {
+      "path": "000039.pickle.gz",
+      "kind": "actual_restart",
+      "case": "healthy-unread-positive",
+      "compressed_bytes_verified": 2157,
+      "compressed_sha256_verified": "c70d138f481a5068bcbed0151d2e7afc0fd6f882ca4942e8e1c292c6780c8e0f",
+      "decoded_metadata_only": {
+        "bytes": 6489,
+        "sha256": "bf19e690bc4ed02a54e98d0204a8751dc963d16f461b98d04adabbe5782d071e",
+        "verified": false
+      }
+    },
+    {
+      "path": "000040.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 6712,
+      "compressed_sha256_verified": "6f1ba65632eacee1c5500f7311ff23feda98afaecf05cec7a9906cab6c7ce971",
+      "decoded_metadata_only": {
+        "bytes": 15160,
+        "sha256": "909015e963c9e8ab9b49323d974179675e111c18659dc5d9f0a7cea19c78772b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000041.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 6712,
+      "compressed_sha256_verified": "6f1ba65632eacee1c5500f7311ff23feda98afaecf05cec7a9906cab6c7ce971",
+      "decoded_metadata_only": {
+        "bytes": 15160,
+        "sha256": "909015e963c9e8ab9b49323d974179675e111c18659dc5d9f0a7cea19c78772b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000042.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 6712,
+      "compressed_sha256_verified": "6f1ba65632eacee1c5500f7311ff23feda98afaecf05cec7a9906cab6c7ce971",
+      "decoded_metadata_only": {
+        "bytes": 15160,
+        "sha256": "909015e963c9e8ab9b49323d974179675e111c18659dc5d9f0a7cea19c78772b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000043.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 6712,
+      "compressed_sha256_verified": "6f1ba65632eacee1c5500f7311ff23feda98afaecf05cec7a9906cab6c7ce971",
+      "decoded_metadata_only": {
+        "bytes": 15160,
+        "sha256": "909015e963c9e8ab9b49323d974179675e111c18659dc5d9f0a7cea19c78772b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000044.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 6712,
+      "compressed_sha256_verified": "6f1ba65632eacee1c5500f7311ff23feda98afaecf05cec7a9906cab6c7ce971",
+      "decoded_metadata_only": {
+        "bytes": 15160,
+        "sha256": "909015e963c9e8ab9b49323d974179675e111c18659dc5d9f0a7cea19c78772b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000045.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 6721,
+      "compressed_sha256_verified": "046dc7cc504ec4737680003e8f5e86b4f70c10f20b5df96476632ec8551350a3",
+      "decoded_metadata_only": {
+        "bytes": 15168,
+        "sha256": "17d2467127616062f8f5d05663a4294c63e5b69f3dde7ce2011f1f7f63dc4a89",
+        "verified": false
+      }
+    },
+    {
+      "path": "000046.pickle.gz",
+      "kind": "actual_initial_snapshot",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 10469,
+      "compressed_sha256_verified": "9ea75fdf2e525356765ff9d30ff11d1e28f669039109faaf5d0d948c67cd2873",
+      "decoded_metadata_only": {
+        "bytes": 43167,
+        "sha256": "40ed9aa41addd780d2c81f8b1f11b0afe091263d2c96d58a732556324ce4bf61",
+        "verified": false
+      }
+    },
+    {
+      "path": "000047.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 6717,
+      "compressed_sha256_verified": "1be699c6eb138204e8312b986067ef2f8f35136820b1957a1adf5d99c6e496aa",
+      "decoded_metadata_only": {
+        "bytes": 15172,
+        "sha256": "8481686e6a3d9b6703d270edb1c8576f704a7e9ca0468ee89986e2206cb61fe2",
+        "verified": false
+      }
+    },
+    {
+      "path": "000048.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 6717,
+      "compressed_sha256_verified": "1be699c6eb138204e8312b986067ef2f8f35136820b1957a1adf5d99c6e496aa",
+      "decoded_metadata_only": {
+        "bytes": 15172,
+        "sha256": "8481686e6a3d9b6703d270edb1c8576f704a7e9ca0468ee89986e2206cb61fe2",
+        "verified": false
+      }
+    },
+    {
+      "path": "000049.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 6717,
+      "compressed_sha256_verified": "1be699c6eb138204e8312b986067ef2f8f35136820b1957a1adf5d99c6e496aa",
+      "decoded_metadata_only": {
+        "bytes": 15172,
+        "sha256": "8481686e6a3d9b6703d270edb1c8576f704a7e9ca0468ee89986e2206cb61fe2",
+        "verified": false
+      }
+    },
+    {
+      "path": "000050.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 6717,
+      "compressed_sha256_verified": "1be699c6eb138204e8312b986067ef2f8f35136820b1957a1adf5d99c6e496aa",
+      "decoded_metadata_only": {
+        "bytes": 15172,
+        "sha256": "8481686e6a3d9b6703d270edb1c8576f704a7e9ca0468ee89986e2206cb61fe2",
+        "verified": false
+      }
+    },
+    {
+      "path": "000051.pickle.gz",
+      "kind": "actual_post_snapshot",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 10526,
+      "compressed_sha256_verified": "f4d9c60538f2461faa8aaedd855517d1a2604e112d36498123e43b9b3d108ec6",
+      "decoded_metadata_only": {
+        "bytes": 43360,
+        "sha256": "55b64cf1bcfea9f29ed5e6600c3ae8507f2101e6910e777d71db5b6322c1def2",
+        "verified": false
+      }
+    },
+    {
+      "path": "000052.pickle.gz",
+      "kind": "actual_restart",
+      "case": "healthy-float-unconsumed",
+      "compressed_bytes_verified": 1960,
+      "compressed_sha256_verified": "738f2d647fad854392a7315ca73a4eb77040b94e1c81dfd2be66323019302624",
+      "decoded_metadata_only": {
+        "bytes": 5767,
+        "sha256": "3725acc8100ba46092cc972071f5c4608abb87596bdf38c13c08b10143152d20",
+        "verified": false
+      }
+    },
+    {
+      "path": "000053.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "a53c9cc83f04cc2a93205a11efee50559abce77928865df9f0347e7fc70638a4",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "b4e43f4c0ceac744c1ff9247d37442d3cd42c363c2bc8fc999e4d0ee766d4197",
+        "verified": false
+      }
+    },
+    {
+      "path": "000054.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "a53c9cc83f04cc2a93205a11efee50559abce77928865df9f0347e7fc70638a4",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "b4e43f4c0ceac744c1ff9247d37442d3cd42c363c2bc8fc999e4d0ee766d4197",
+        "verified": false
+      }
+    },
+    {
+      "path": "000055.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "a53c9cc83f04cc2a93205a11efee50559abce77928865df9f0347e7fc70638a4",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "b4e43f4c0ceac744c1ff9247d37442d3cd42c363c2bc8fc999e4d0ee766d4197",
+        "verified": false
+      }
+    },
+    {
+      "path": "000056.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "a53c9cc83f04cc2a93205a11efee50559abce77928865df9f0347e7fc70638a4",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "b4e43f4c0ceac744c1ff9247d37442d3cd42c363c2bc8fc999e4d0ee766d4197",
+        "verified": false
+      }
+    },
+    {
+      "path": "000057.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "a53c9cc83f04cc2a93205a11efee50559abce77928865df9f0347e7fc70638a4",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "b4e43f4c0ceac744c1ff9247d37442d3cd42c363c2bc8fc999e4d0ee766d4197",
+        "verified": false
+      }
+    },
+    {
+      "path": "000058.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 6720,
+      "compressed_sha256_verified": "e8552b9ed8c6c7dacef175831bdaf6f5c90b8c3b20bc2f6cbf55cc86f6fe6bb1",
+      "decoded_metadata_only": {
+        "bytes": 15165,
+        "sha256": "871d9fbbdcb31810374c38504f9d4f48dc4aa3ec8e6d9e91cf6f06dd560f2a96",
+        "verified": false
+      }
+    },
+    {
+      "path": "000059.pickle.gz",
+      "kind": "actual_initial_snapshot",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 10457,
+      "compressed_sha256_verified": "1b00b9e1f1285a18031e37b6e89e277383a3ccb2d41d85ab42a9e3e6cf7354e7",
+      "decoded_metadata_only": {
+        "bytes": 43148,
+        "sha256": "02b72efaa28126c9bcb1fb88bc12f9ae510764431ebc79b05601959ced754a74",
+        "verified": false
+      }
+    },
+    {
+      "path": "000060.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "37f54ccc0bd0f87a4a3564941607ac44ac08f80fcdee9c0ca4c775fbf1c3fea5",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "407b213321a8d15dc9afb3eaf2184a752a2ed6467c4fc2049cca5a641e9ae05b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000061.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "37f54ccc0bd0f87a4a3564941607ac44ac08f80fcdee9c0ca4c775fbf1c3fea5",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "407b213321a8d15dc9afb3eaf2184a752a2ed6467c4fc2049cca5a641e9ae05b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000062.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "37f54ccc0bd0f87a4a3564941607ac44ac08f80fcdee9c0ca4c775fbf1c3fea5",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "407b213321a8d15dc9afb3eaf2184a752a2ed6467c4fc2049cca5a641e9ae05b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000063.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "37f54ccc0bd0f87a4a3564941607ac44ac08f80fcdee9c0ca4c775fbf1c3fea5",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "407b213321a8d15dc9afb3eaf2184a752a2ed6467c4fc2049cca5a641e9ae05b",
+        "verified": false
+      }
+    },
+    {
+      "path": "000064.pickle.gz",
+      "kind": "actual_post_snapshot",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 10509,
+      "compressed_sha256_verified": "a3a1064dc1028e262170720bbd3db00e2fd27bc3c380660debf080b39d3c52c6",
+      "decoded_metadata_only": {
+        "bytes": 43341,
+        "sha256": "577ad84967c092f3113ccf92690112be18aca4ea5a73d7c31166aa013ab618fa",
+        "verified": false
+      }
+    },
+    {
+      "path": "000065.pickle.gz",
+      "kind": "actual_restart",
+      "case": "healthy-null-unconsumed",
+      "compressed_bytes_verified": 1942,
+      "compressed_sha256_verified": "590b90f8c7239549e1d89323399dced348f37d78c23a0adb2d6bab2fd9bc65c0",
+      "decoded_metadata_only": {
+        "bytes": 5725,
+        "sha256": "417e7a7fcd7e61820a7c5a5fecf09d0b80e475f91ef706864c3077dd57cdb8d3",
+        "verified": false
+      }
+    },
+    {
+      "path": "000066.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "476d4007762d1b5be83b2f29523823c85612587acfc14a132b5308d9e536129a",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "4a2f5fcafae2731b2f57681e670b3e90d46a18567733c3663c16b19ba5078069",
+        "verified": false
+      }
+    },
+    {
+      "path": "000067.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "476d4007762d1b5be83b2f29523823c85612587acfc14a132b5308d9e536129a",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "4a2f5fcafae2731b2f57681e670b3e90d46a18567733c3663c16b19ba5078069",
+        "verified": false
+      }
+    },
+    {
+      "path": "000068.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "476d4007762d1b5be83b2f29523823c85612587acfc14a132b5308d9e536129a",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "4a2f5fcafae2731b2f57681e670b3e90d46a18567733c3663c16b19ba5078069",
+        "verified": false
+      }
+    },
+    {
+      "path": "000069.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "476d4007762d1b5be83b2f29523823c85612587acfc14a132b5308d9e536129a",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "4a2f5fcafae2731b2f57681e670b3e90d46a18567733c3663c16b19ba5078069",
+        "verified": false
+      }
+    },
+    {
+      "path": "000070.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "476d4007762d1b5be83b2f29523823c85612587acfc14a132b5308d9e536129a",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "4a2f5fcafae2731b2f57681e670b3e90d46a18567733c3663c16b19ba5078069",
+        "verified": false
+      }
+    },
+    {
+      "path": "000071.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 6719,
+      "compressed_sha256_verified": "abb9b1e4508498e62a7f6bad66c68358ad893e24cff9f4ad56c0bcb7f408e4b9",
+      "decoded_metadata_only": {
+        "bytes": 15165,
+        "sha256": "42bd6ab8c061d3cbbee1b3607f289bb2e73e0d908506851324fbbdcd5905de31",
+        "verified": false
+      }
+    },
+    {
+      "path": "000072.pickle.gz",
+      "kind": "actual_initial_snapshot",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 10461,
+      "compressed_sha256_verified": "3294a7c6e3c24955d71e635721bfe11a4f7c27e7e164bf999f86230918a98d33",
+      "decoded_metadata_only": {
+        "bytes": 43148,
+        "sha256": "9ed5172057ea97881abeff5cbca411be89d9934925f0cfa9929a87b2344f3115",
+        "verified": false
+      }
+    },
+    {
+      "path": "000073.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "ade205256d2ab8e48f13129983ee64283e30a6ba2d2da8b6f6bdaa9e58768080",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "0dbf3057e5875b6e9cb471061469e0713a15348c7337fac40348884ab1d2a84c",
+        "verified": false
+      }
+    },
+    {
+      "path": "000074.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "ade205256d2ab8e48f13129983ee64283e30a6ba2d2da8b6f6bdaa9e58768080",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "0dbf3057e5875b6e9cb471061469e0713a15348c7337fac40348884ab1d2a84c",
+        "verified": false
+      }
+    },
+    {
+      "path": "000075.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "ade205256d2ab8e48f13129983ee64283e30a6ba2d2da8b6f6bdaa9e58768080",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "0dbf3057e5875b6e9cb471061469e0713a15348c7337fac40348884ab1d2a84c",
+        "verified": false
+      }
+    },
+    {
+      "path": "000076.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "ade205256d2ab8e48f13129983ee64283e30a6ba2d2da8b6f6bdaa9e58768080",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "0dbf3057e5875b6e9cb471061469e0713a15348c7337fac40348884ab1d2a84c",
+        "verified": false
+      }
+    },
+    {
+      "path": "000077.pickle.gz",
+      "kind": "actual_post_snapshot",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 10592,
+      "compressed_sha256_verified": "3acfb38684f27b8cc7330536aad3a3ebcdaca6443a431ffdd04d84b253037cb8",
+      "decoded_metadata_only": {
+        "bytes": 43535,
+        "sha256": "9cae1b78b79d9d6b24a1ea8e1f5d27221b0764a37862ef55f8c2f9cc8ef05ca7",
+        "verified": false
+      }
+    },
+    {
+      "path": "000078.pickle.gz",
+      "kind": "actual_restart",
+      "case": "healthy-bool-unconsumed",
+      "compressed_bytes_verified": 2042,
+      "compressed_sha256_verified": "b29d6de7e815e640039c6f75fc1260342a39d6ac4bce76c9888f5b93560e9446",
+      "decoded_metadata_only": {
+        "bytes": 5988,
+        "sha256": "3e85d5611569e715542b0aefc2ddff5d4b609a2ad83e02d0837fe4e1303f44c3",
+        "verified": false
+      }
+    },
+    {
+      "path": "000079.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "f97d6e2cb507055393243ebcaaaa2e69e81ad333114246e716ffd4ef85315662",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "5adca2e62090ce938137991a3f676e8e70f447f74f835c7b402c210531ebea34",
+        "verified": false
+      }
+    },
+    {
+      "path": "000080.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "f97d6e2cb507055393243ebcaaaa2e69e81ad333114246e716ffd4ef85315662",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "5adca2e62090ce938137991a3f676e8e70f447f74f835c7b402c210531ebea34",
+        "verified": false
+      }
+    },
+    {
+      "path": "000081.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "f97d6e2cb507055393243ebcaaaa2e69e81ad333114246e716ffd4ef85315662",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "5adca2e62090ce938137991a3f676e8e70f447f74f835c7b402c210531ebea34",
+        "verified": false
+      }
+    },
+    {
+      "path": "000082.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "f97d6e2cb507055393243ebcaaaa2e69e81ad333114246e716ffd4ef85315662",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "5adca2e62090ce938137991a3f676e8e70f447f74f835c7b402c210531ebea34",
+        "verified": false
+      }
+    },
+    {
+      "path": "000083.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 6709,
+      "compressed_sha256_verified": "f97d6e2cb507055393243ebcaaaa2e69e81ad333114246e716ffd4ef85315662",
+      "decoded_metadata_only": {
+        "bytes": 15157,
+        "sha256": "5adca2e62090ce938137991a3f676e8e70f447f74f835c7b402c210531ebea34",
+        "verified": false
+      }
+    },
+    {
+      "path": "000084.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 6719,
+      "compressed_sha256_verified": "0a9a35a7fdb461707a3d78d6a221a670522a1e512983ec213502b7639880b7c9",
+      "decoded_metadata_only": {
+        "bytes": 15165,
+        "sha256": "aa784d9608268b6ed7f498b8e0e6d0b4586527b98ca508bc0a6605de398c7656",
+        "verified": false
+      }
+    },
+    {
+      "path": "000085.pickle.gz",
+      "kind": "actual_initial_snapshot",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 10467,
+      "compressed_sha256_verified": "5f075bb231579260e4a20710e68b9008d19b21e7421a5c3fcfb32c92c2df28a2",
+      "decoded_metadata_only": {
+        "bytes": 43151,
+        "sha256": "e1021469facfaae15d1171cbb4043d7669b13ba14d675d695d426c1be39116b4",
+        "verified": false
+      }
+    },
+    {
+      "path": "000086.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "687eabc5dd43dfee9494b75f22e99d0a46b4140ea6b608c110cc1e49401a5a34",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "17709290cbc3e9b2cb15a24e459caea0b85dbcaad037cd5e102e261f0a4f4e01",
+        "verified": false
+      }
+    },
+    {
+      "path": "000087.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "687eabc5dd43dfee9494b75f22e99d0a46b4140ea6b608c110cc1e49401a5a34",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "17709290cbc3e9b2cb15a24e459caea0b85dbcaad037cd5e102e261f0a4f4e01",
+        "verified": false
+      }
+    },
+    {
+      "path": "000088.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "687eabc5dd43dfee9494b75f22e99d0a46b4140ea6b608c110cc1e49401a5a34",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "17709290cbc3e9b2cb15a24e459caea0b85dbcaad037cd5e102e261f0a4f4e01",
+        "verified": false
+      }
+    },
+    {
+      "path": "000089.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "687eabc5dd43dfee9494b75f22e99d0a46b4140ea6b608c110cc1e49401a5a34",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "17709290cbc3e9b2cb15a24e459caea0b85dbcaad037cd5e102e261f0a4f4e01",
+        "verified": false
+      }
+    },
+    {
+      "path": "000090.pickle.gz",
+      "kind": "actual_post_snapshot",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 10596,
+      "compressed_sha256_verified": "1ba9bdbf3bd913c7be0f5f8f86607dbe5983934de4a5d7e8a469b431457e6325",
+      "decoded_metadata_only": {
+        "bytes": 43538,
+        "sha256": "e7268515edfe9b682690ad9d4a2fb4b30579d795a28da383fb96f88a513a46fd",
+        "verified": false
+      }
+    },
+    {
+      "path": "000091.pickle.gz",
+      "kind": "actual_restart",
+      "case": "healthy-text-unconsumed",
+      "compressed_bytes_verified": 2051,
+      "compressed_sha256_verified": "f70111c38b53832fbd7649cfaeec4c154025c888dfd26879dbac65348731339f",
+      "decoded_metadata_only": {
+        "bytes": 5989,
+        "sha256": "8f575befd4d0ba06b9e7b8e41c7eff50cbce49fd72db0f6204b9bfd9b9ad53e0",
+        "verified": false
+      }
+    },
+    {
+      "path": "000092.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 6722,
+      "compressed_sha256_verified": "dbe1da64386bd3637b168baacb33860de6dd1ae03cc460d5d14df588813faccb",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "59ff205a4122aceb3cd080dab17af48dd1bc19122dc5b440c54a43f528bcde17",
+        "verified": false
+      }
+    },
+    {
+      "path": "000093.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 6722,
+      "compressed_sha256_verified": "dbe1da64386bd3637b168baacb33860de6dd1ae03cc460d5d14df588813faccb",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "59ff205a4122aceb3cd080dab17af48dd1bc19122dc5b440c54a43f528bcde17",
+        "verified": false
+      }
+    },
+    {
+      "path": "000094.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 6722,
+      "compressed_sha256_verified": "dbe1da64386bd3637b168baacb33860de6dd1ae03cc460d5d14df588813faccb",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "59ff205a4122aceb3cd080dab17af48dd1bc19122dc5b440c54a43f528bcde17",
+        "verified": false
+      }
+    },
+    {
+      "path": "000095.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 6722,
+      "compressed_sha256_verified": "dbe1da64386bd3637b168baacb33860de6dd1ae03cc460d5d14df588813faccb",
+      "decoded_metadata_only": {
+        "bytes": 15169,
+        "sha256": "59ff205a4122aceb3cd080dab17af48dd1bc19122dc5b440c54a43f528bcde17",
+        "verified": false
+      }
+    },
+    {
+      "path": "000096.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 7938,
+      "compressed_sha256_verified": "fc82e37366036387ac47c339484dddf0f8e7c3b08953cb3431edcbf11eebbc9b",
+      "decoded_metadata_only": {
+        "bytes": 18105,
+        "sha256": "0257f2b157d1fd671b1a4f4f811e8f6511b2aa3136b75b82d09b07685f2b775d",
+        "verified": false
+      }
+    },
+    {
+      "path": "000097.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 7946,
+      "compressed_sha256_verified": "96558d448d73f519606fa15c9d4a02c6b1db877d609727529480e3f645db8396",
+      "decoded_metadata_only": {
+        "bytes": 18113,
+        "sha256": "adc783204cae6611714b8d3c5cae428b2fd4c019db154856fcf4f9ab5e5aa79f",
+        "verified": false
+      }
+    },
+    {
+      "path": "000098.pickle.gz",
+      "kind": "actual_initial_snapshot",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 12220,
+      "compressed_sha256_verified": "82bc3b609e1ce2cb087164cd5e0c04eb5743fed74e7634384dc74738b36c9971",
+      "decoded_metadata_only": {
+        "bytes": 48870,
+        "sha256": "4d7476eba501d5a10dce998248c1ef1323c60b86741d8abc76fe42eba3b91ac5",
+        "verified": false
+      }
+    },
+    {
+      "path": "000099.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 7943,
+      "compressed_sha256_verified": "7e1b71e9a8dad02a187215865b9d8beaf9b998aa0628874cbae7e66652f155ec",
+      "decoded_metadata_only": {
+        "bytes": 18117,
+        "sha256": "65f8fbf91a2c8b4c9656e7db5f9aa475a577f0908747a86967ae27390d0c6b57",
+        "verified": false
+      }
+    },
+    {
+      "path": "000100.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 7943,
+      "compressed_sha256_verified": "7e1b71e9a8dad02a187215865b9d8beaf9b998aa0628874cbae7e66652f155ec",
+      "decoded_metadata_only": {
+        "bytes": 18117,
+        "sha256": "65f8fbf91a2c8b4c9656e7db5f9aa475a577f0908747a86967ae27390d0c6b57",
+        "verified": false
+      }
+    },
+    {
+      "path": "000101.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 7943,
+      "compressed_sha256_verified": "7e1b71e9a8dad02a187215865b9d8beaf9b998aa0628874cbae7e66652f155ec",
+      "decoded_metadata_only": {
+        "bytes": 18117,
+        "sha256": "65f8fbf91a2c8b4c9656e7db5f9aa475a577f0908747a86967ae27390d0c6b57",
+        "verified": false
+      }
+    },
+    {
+      "path": "000102.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 7943,
+      "compressed_sha256_verified": "7e1b71e9a8dad02a187215865b9d8beaf9b998aa0628874cbae7e66652f155ec",
+      "decoded_metadata_only": {
+        "bytes": 18117,
+        "sha256": "65f8fbf91a2c8b4c9656e7db5f9aa475a577f0908747a86967ae27390d0c6b57",
+        "verified": false
+      }
+    },
+    {
+      "path": "000103.pickle.gz",
+      "kind": "actual_post_snapshot",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 12343,
+      "compressed_sha256_verified": "0a058c54545d71e2f120cd8911c890b19f80f2e0a0ead2627a88cb3830495913",
+      "decoded_metadata_only": {
+        "bytes": 49454,
+        "sha256": "b71feb28e3e309caa453875f976f97ac6d7043da90b98d74b1773377b45ae6ac",
+        "verified": false
+      }
+    },
+    {
+      "path": "000104.pickle.gz",
+      "kind": "actual_restart",
+      "case": "healthy-unused-opaque-alias",
+      "compressed_bytes_verified": 2357,
+      "compressed_sha256_verified": "30f580fa99ef222b0cc21bd0131a1e5f2a382268df277693d643b4d3efe49171",
+      "decoded_metadata_only": {
+        "bytes": 7381,
+        "sha256": "ba2472aade051e847be26f72dc1ee273b84597a41901ccbdd298e3eee6ad60b8",
+        "verified": false
+      }
+    },
+    {
+      "path": "000105.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "004ec2337058aec48270fbebc85087a48ee9cfca1ec030f2c4eb69e3036df60c",
+      "decoded_metadata_only": {
+        "bytes": 15160,
+        "sha256": "16d78bfc7124aff7c3e8ee705ae88e0b93c7b751984c77109d8e838137da7922",
+        "verified": false
+      }
+    },
+    {
+      "path": "000106.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "004ec2337058aec48270fbebc85087a48ee9cfca1ec030f2c4eb69e3036df60c",
+      "decoded_metadata_only": {
+        "bytes": 15160,
+        "sha256": "16d78bfc7124aff7c3e8ee705ae88e0b93c7b751984c77109d8e838137da7922",
+        "verified": false
+      }
+    },
+    {
+      "path": "000107.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "004ec2337058aec48270fbebc85087a48ee9cfca1ec030f2c4eb69e3036df60c",
+      "decoded_metadata_only": {
+        "bytes": 15160,
+        "sha256": "16d78bfc7124aff7c3e8ee705ae88e0b93c7b751984c77109d8e838137da7922",
+        "verified": false
+      }
+    },
+    {
+      "path": "000108.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 6715,
+      "compressed_sha256_verified": "004ec2337058aec48270fbebc85087a48ee9cfca1ec030f2c4eb69e3036df60c",
+      "decoded_metadata_only": {
+        "bytes": 15160,
+        "sha256": "16d78bfc7124aff7c3e8ee705ae88e0b93c7b751984c77109d8e838137da7922",
+        "verified": false
+      }
+    },
+    {
+      "path": "000109.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 7929,
+      "compressed_sha256_verified": "4c3770fbedf0ffe08344579e49385f1f3c10099c39b6a49c317af5d7637ae535",
+      "decoded_metadata_only": {
+        "bytes": 18096,
+        "sha256": "1f2d89bb9ac31fcd1fcdc9597c51434236809d1566898c0dc260642893e65034",
+        "verified": false
+      }
+    },
+    {
+      "path": "000110.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 7938,
+      "compressed_sha256_verified": "7b8b48887b7ecd35fba9ad816796d879b3db58ecef235ff509b45ab96fcbecb8",
+      "decoded_metadata_only": {
+        "bytes": 18104,
+        "sha256": "eef46d544716e7e5574570acec3e96dd686073dce0e4a7e44f358eca556065ef",
+        "verified": false
+      }
+    },
+    {
+      "path": "000111.pickle.gz",
+      "kind": "actual_initial_snapshot",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 12209,
+      "compressed_sha256_verified": "3b6c02bbd9fe2131a579d2df25c547a485226601186b04812fa8b510cbb6ddd9",
+      "decoded_metadata_only": {
+        "bytes": 48855,
+        "sha256": "0083a1d8ef909785241ad4e9c6edeb0118d4d1ee4517784b7578c148b2c6de51",
+        "verified": false
+      }
+    },
+    {
+      "path": "000112.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 7936,
+      "compressed_sha256_verified": "8876ad7354cd6ea1f67860e4215672c249770e5081c0549b4dc221d8f1e064ee",
+      "decoded_metadata_only": {
+        "bytes": 18108,
+        "sha256": "c0e7891df4a1bcd6f0c3dd33704a56171a7c92a03f1526f5887596049e840703",
+        "verified": false
+      }
+    },
+    {
+      "path": "000113.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 7936,
+      "compressed_sha256_verified": "8876ad7354cd6ea1f67860e4215672c249770e5081c0549b4dc221d8f1e064ee",
+      "decoded_metadata_only": {
+        "bytes": 18108,
+        "sha256": "c0e7891df4a1bcd6f0c3dd33704a56171a7c92a03f1526f5887596049e840703",
+        "verified": false
+      }
+    },
+    {
+      "path": "000114.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 7936,
+      "compressed_sha256_verified": "8876ad7354cd6ea1f67860e4215672c249770e5081c0549b4dc221d8f1e064ee",
+      "decoded_metadata_only": {
+        "bytes": 18108,
+        "sha256": "c0e7891df4a1bcd6f0c3dd33704a56171a7c92a03f1526f5887596049e840703",
+        "verified": false
+      }
+    },
+    {
+      "path": "000115.pickle.gz",
+      "kind": "actual_calculate_result",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 7936,
+      "compressed_sha256_verified": "8876ad7354cd6ea1f67860e4215672c249770e5081c0549b4dc221d8f1e064ee",
+      "decoded_metadata_only": {
+        "bytes": 18108,
+        "sha256": "c0e7891df4a1bcd6f0c3dd33704a56171a7c92a03f1526f5887596049e840703",
+        "verified": false
+      }
+    },
+    {
+      "path": "000116.pickle.gz",
+      "kind": "actual_post_snapshot",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 12394,
+      "compressed_sha256_verified": "dd839a6ee2904f3547ce1b1c8846f19c5fc031be3779b277691d007a635f8380",
+      "decoded_metadata_only": {
+        "bytes": 49322,
+        "sha256": "d8c5a7e99f7f35f06b7335164ec373da617eff7d6ec6c7ad1c006b2cdcdd7dd6",
+        "verified": false
+      }
+    },
+    {
+      "path": "000117.pickle.gz",
+      "kind": "actual_restart",
+      "case": "healthy-actual-IO-memory",
+      "compressed_bytes_verified": 2258,
+      "compressed_sha256_verified": "11d204e12d2d008e175be3d8c1e6b46203aceb500c1c968b9950f156e07b7845",
+      "decoded_metadata_only": {
+        "bytes": 6757,
+        "sha256": "56741838efaac0e338c8eb58ea521a6cb706f03191f0c44e76ef92288438fed6",
+        "verified": false
+      }
+    }
+  ],
+  "restrictions_observed": "Only standard-library file reads/hash/JSON and Source/AST inspections. No decompress, pickle, helper/codec/project/test/Qt/Wine/Git execution and no tracked write.",
+  "next": "Independently read/AST/compile the final frozen audit Source and verify exact manifest before Root alone executes native saved readback."
+}

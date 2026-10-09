@@ -516,7 +516,11 @@ class RunState:
         current_icons=state.get('relic_icon_memory')
         displaced_full_inventory=bool(prior_inventory_verified and prior_icons and prior_icons.get('complete_bar')
             and (not current_icons or not current_icons.get('complete_bar')))
-        for key,record in observed.get('resources',{}).items():
+        resource_reads=observed.get('resources',{})
+        if not isinstance(resource_reads,dict):resource_reads={}
+        for key,record in resource_reads.items():
+            # An incomplete field is unread; keep its previous fact and time.
+            if not isinstance(record,dict) or 'value' not in record:continue
             if key not in ('gold','parts_count'):
                 from .relic_counter_semantics import valid_counter_resource
                 if not valid_counter_resource(key,record):continue

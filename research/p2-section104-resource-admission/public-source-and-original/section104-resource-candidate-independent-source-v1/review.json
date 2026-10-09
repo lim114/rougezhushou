@@ -1,0 +1,202 @@
+{
+  "kind": "INDEPENDENT_SOURCE_ONLY_REVIEW_RESOURCE_ADMISSION_104",
+  "reviewed_at_UTC": "2026-10-09T10:07:45.393960+00:00",
+  "reviewer": "/root/resume097_account_io/resource104_candidate_independent",
+  "status": "SOURCE_REVIEW_ACCEPTED_PENDING_ROOT_RUNTIME_AND_103_REBASE",
+  "runtime_pass": false,
+  "product_applied_by_reviewer": false,
+  "section_completed_by_reviewer": false,
+  "method": "Only standard-library file reads, SHA-256, JSON projection checks, AST inspection and compile(source,path,exec) with unexecuted code objects. No project/helper/codec/test import or execution, Git, Qt, Wine or native payload decoding.",
+  "packet_manifest": {
+    "path": "/workspace/.continuation/section104-resource-admission-candidate-source-v1/manifest.json",
+    "bytes": 1287,
+    "sha256": "6091a8d589938fe65790daece38f0c39559701cfc0a02d7bbd82733084a1285e"
+  },
+  "packet_payload_files_verified": [
+    {
+      "path": "README.md",
+      "bytes": 2323,
+      "sha256": "54ce319abbbceaed97afbd61b2251c1a0fef8acf36a9aaed52622c4ea1856dfb"
+    },
+    {
+      "path": "candidate/tests/test_resource_observation_104.py",
+      "bytes": 15331,
+      "sha256": "3d1aa8cd3b6865d8f567010f17f44841058b7f06620bd16c8cbaab457fbe6f8e"
+    },
+    {
+      "path": "contract.json",
+      "bytes": 3303,
+      "sha256": "ecbe9cfb6b784928a99205cc138be88f016b2d07aae4420ced14b8ccf3c4f370"
+    },
+    {
+      "path": "edit-spec.json",
+      "bytes": 2138,
+      "sha256": "44db92e8e1a0c8459fbf87e3cd5b81dbc6c2ec91e55e5ae240294863c9cb1352"
+    },
+    {
+      "path": "original-observation-summary.json",
+      "bytes": 59106,
+      "sha256": "699c1926b3b436bb4bde92b361b790a772372cf31e7891aca3ee589b0ed7c4e0"
+    },
+    {
+      "path": "run_state-resource-admission.patch",
+      "bytes": 908,
+      "sha256": "1f8be2f7c4787843fc3540fa0c06294c1765b9108821713e39d2d36ed5d9bc0f"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 3289,
+      "sha256": "7ddf7d8a7dd00be5f96befdacc497fb35976a8e3a72f38dc0a62a7b6ee0a189f"
+    }
+  ],
+  "physical_file_count_convention": {
+    "listed_payload_files": 7,
+    "total_including_manifest": 8,
+    "manifest_excludes_itself": true
+  },
+  "root_original_receipt": {
+    "path": "/workspace/.continuation/section104-original-resource-actual-linux-v1/observations.json",
+    "bytes": 399768,
+    "sha256": "6cc40a282005aec7d201bc6aeec4608f83e1b96954055bdd7cc75059e7c0cb7f"
+  },
+  "source_baseline": {
+    "path": "/workspace/rougezhushou/rouge/run_state.py",
+    "bytes": 53721,
+    "sha256": "98b3b6ea4ad36b36d031064d900bc445c80e5ac50ae2c6eceb16861a68e3a3c7"
+  },
+  "local_patch_checks": {
+    "exact_old_CRLF_snippet_matches": 1,
+    "inverse_exact": true,
+    "hypothetical_candidate_bytes": 53983,
+    "hypothetical_candidate_sha256": "c3879c506a4b585b6afd7f8349ee8a066ad0166b094bcb1fd9ebae45d088e1cf",
+    "base_and_memory_candidate_compile_only": true,
+    "wholefile_product_candidate_written": false,
+    "only_changed_AST_function": "RunState.apply",
+    "readable_patch_matches_independent_difflib_reconstruction": true,
+    "effect": "Non-dict resource container becomes an unread empty mapping. Non-dict or missing-value record is skipped; complete records use the original counter guard, comparison, history event, shallow metadata and timestamp assignment."
+  },
+  "original_receipt_checks": {
+    "case_count": 44,
+    "source_guard_files": 746,
+    "CORE_sha256": "a75d9497ce34f68de787e3ba99704741f2c873c2c5fa9b5de01e6620b1f00f89",
+    "original_product_pass": false,
+    "original_observation_complete": true,
+    "source_drift": [],
+    "CORE_drift": false,
+    "actual_apply_outcomes": {
+      "none": 24,
+      "KeyError": 3,
+      "AttributeError": 16,
+      "ValueError": 1
+    },
+    "summary_after_errors": 5,
+    "restart_loader_rejections": 5,
+    "saved_invalid_cases": [
+      "gold-missing-value-no-old",
+      "gold-missing-value-old-null",
+      "parts_count-missing-value-no-old",
+      "parts_count-missing-value-old-null",
+      "missing-gold-with-wellformed-parts-peer"
+    ],
+    "all_44_summary_projection_rows_match_actual_JSON": true,
+    "projection_error_tracebacks_intentionally_omitted": true,
+    "native_record_references_match_actual_apply_and_restart_rows": true,
+    "native_payloads_decoded": false,
+    "distinction": "Missing value with an absent or previous None fact saves an incomplete record and is rejected on restart. Previous 8 raises before resource replacement/save; earlier valid configuration or peer branches may have changed memory. The candidate does not claim original all-or-nothing rollback or disk corruption in every malformed case."
+  },
+  "test_source_checks": {
+    "file": {
+      "path": "/workspace/.continuation/section104-resource-admission-candidate-source-v1/candidate/tests/test_resource_observation_104.py",
+      "bytes": 15331,
+      "sha256": "3d1aa8cd3b6865d8f567010f17f44841058b7f06620bd16c8cbaab457fbe6f8e"
+    },
+    "compile_only": true,
+    "test_method_count": 15,
+    "test_methods": [
+      "test_missing_value_without_previous_fact_never_installs_unrestartable_record",
+      "test_missing_value_keeps_previous_null_or_positive_fact_and_original_time",
+      "test_malformed_records_preserve_old_fact_without_erasing_or_synthesizing_zero",
+      "test_malformed_resource_containers_mean_unread_field_and_keep_both_old_times",
+      "test_wellformed_peer_and_configuration_are_saved_while_bad_record_is_unread",
+      "test_zero_remains_confirmed_and_unread_or_missing_pages_keep_exact_zero_timestamp",
+      "test_complete_legacy_value_types_keep_existing_format_and_restart_contract",
+      "test_saved_boolean_resource_times_are_not_redefined_by_fresh_admission",
+      "test_unknown_keys_do_not_bypass_existing_counter_provenance",
+      "test_existing_held_counter_proof_survives_unread_record_with_original_time",
+      "test_missing_resource_preserves_existing_real_numeric_result_and_all_three_reports",
+      "test_complete_record_metadata_aliases_keep_original_memory_and_json_policy",
+      "test_unused_opaque_caller_aliases_and_cycles_are_not_washed_or_mutated",
+      "test_complete_resource_opaque_cycle_keeps_original_save_exception_and_old_bytes",
+      "test_actual_failed_io_keeps_memory_scope_and_does_not_clear_save_issue_on_bad_read"
+    ],
+    "real_API_use": [
+      "RunState load/apply/save/summary/restart/calculation_resources",
+      "counter_resources with existing verified public held-card fixture",
+      "calculate_damage",
+      "format_estimate",
+      "format_report normal and technical"
+    ],
+    "no_new_numerical_rule": "Gold 25 / mechanist S3 / legacy_60 speed 135 is the existing tests/test_relics.py test_gold_threshold_missing_condition_and_duplicate_relic oracle. Complete legacy None/float/bool/text/list/dict remain accepted at state admission; numerical eligibility stays with the original consumers.",
+    "fresh_boundary_and_restart": [
+      "missing value absent/old None/old 8",
+      "non-dict resource records and containers",
+      "wellformed peer plus legal difficulty config",
+      "explicit zero and unchanged original captured time",
+      "saved boolean timestamp compatibility",
+      "unknown counter source qualification and real held-counter original time",
+      "full numeric result and all three reports before/after/restart"
+    ],
+    "opaque_and_save_policy": [
+      "unused caller aliases and cycles checked with existing type/order/float/alias native function",
+      "complete metadata retains shallow memory alias; JSON restart retains values but not object alias",
+      "complete cyclic metadata still raises original JSON ValueError before filesystem writes and preserves old file/temporary sentinel",
+      "actual nonempty .tmp directory causes real OSError; save_issue remains terminal, memory fact/time retained, disk restart sees old state"
+    ],
+    "fixture_collection": "Only one new TestCase class. Imported native function and counter fixture module do not introduce imported TestCase classes into this module for unittest collection.",
+    "mocking_or_skipping_added": false
+  },
+  "evidence_sources": [
+    {
+      "path": "/workspace/rougezhushou/rouge/resource_recognition.py",
+      "bytes": 2682,
+      "sha256": "4fe78a6e5cdc9e0f6a1d5d8937224c4f5c9d7fa9da5a1dc0573f455f8ba2ae34"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/run_recognition.py",
+      "bytes": 23560,
+      "sha256": "c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150"
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/relic_counter_semantics.py",
+      "bytes": 4867,
+      "sha256": "60ceda0596102e893240ac149a751868cd5a9ef61fe4e1a20ed2ebb907fa0cbd"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_relics.py",
+      "bytes": 14607,
+      "sha256": "a8ae18a6a8b5e0c5f19e179722618edce3a5b297071490e8e9e2e6fea7994a6e"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_counter_semantics_054.py",
+      "bytes": 4631,
+      "sha256": "c477844562222da27fb4921357b85f07274792b17893d935ceb0d44bbbc11f65"
+    },
+    {
+      "path": "/workspace/rougezhushou/tests/test_cache_consumers_101.py",
+      "bytes": 16712,
+      "sha256": "cf8654a622f8c09d4ec41cbd1a857c9e1733c500c3fc9c93ecb495f9f36f18b8"
+    }
+  ],
+  "issues": [],
+  "required_before_runtime_acceptance": [
+    "Root must locally rebase the exact single resource snippet against actual 103, check inverse restoration to actual pre-104 bytes and preserve 101/102/103; do not write the hypothetical full 102 file.",
+    "Root must apply the single new test file and add its maintained selector to the actual current verification script without replacing other selectors.",
+    "Root must execute the real tests, relevant related Linux/Wine consumers and actual public-state Qt resource/config/restart checks, binding raw return codes and before/after Source plus CORE. No PASS is inferred here."
+  ],
+  "limitations": [
+    "The original probes are deliberately constructed public API boundary inputs; producers emit integer value or omit gold/parts. No natural OCR malformed-event failure is proven.",
+    "No global transaction, saved-loader expansion, timestamp/value-int rule, alias sanitization, error swallowing, combat mechanism, counter-loss/reacquisition assumption or OCR optimization is introduced.",
+    "Source review is not runtime success, full-repository coverage, native Windows validation, completion, commit or push.",
+    "An initial reviewer projection comparison expected tracebacks to remain and stopped at an AssertionError; the corrected standard-library check intentionally strips tracebacks and verifies all 44 projection rows. This was a review-script assertion, not execution of product code."
+  ]
+}
