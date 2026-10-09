@@ -1,0 +1,54 @@
+--- original/tests/test_aglna_gravity_weight_107.py
++++ candidate/tests/test_aglna_gravity_weight_107.py
+@@ -183,12 +183,45 @@
+                                       level=1, skill_rank=1, relic_ids=[GRAVITY]))
+             self.assertEqual((talent(locked)['hits'], talent(locked)['total']), (0, 0))
+             self.assertEqual(talent(locked)['times_seconds'], [])
+-            for empty in ({'window_seconds': 0}, {'timing': {'target_disappears_seconds': 0}},
+-                          {'timing': {'target_windows': []}}):
+-                result = calculate_damage(request(TARGETS[4], timing_mode=mode,
+-                                                  relic_ids=[GRAVITY], **empty))
+-                self.assertEqual((talent(result)['hits'], talent(result)['total']), (0, 0))
+-                self.assertEqual(talent(result)['times_seconds'], [])
++            empty_cases = [{'window_seconds': 0}, {'timing': {'target_disappears_seconds': 0}}]
++            if mode == 'frames':
++                empty_cases.append({'timing': {'target_windows': []}})
++            for empty in empty_cases:
++                with self.subTest(mode=mode, boundary=empty):
++                    result = calculate_damage(request(TARGETS[4], timing_mode=mode,
++                                                      relic_ids=[GRAVITY], **empty))
++                    self.assertEqual((talent(result)['hits'], talent(result)['total']), (0, 0))
++                    self.assertEqual(talent(result)['times_seconds'], [])
++
++    def test_continuous_empty_ranges_preserve_existing_reference_without_weight_hit_changes(self):
++        # Root's actual twelve-call diagnosis confirms that the legacy
++        # continuous reference does not consume target_windows. The timing
++        # family gap remains pending section109; gravity changes only per-hit
++        # weight qualification here, without adding acquisition/game timing.
++        references = []
++        for relic_ids in ([], [GRAVITY]):
++            with self.subTest(mode='continuous', relic_ids=relic_ids):
++                caller = request(TARGETS[4], timing_mode='continuous', relic_ids=relic_ids)
++                caller_before = deepcopy(caller)
++                baseline = calculate_damage(caller)
++                self.assertEqual(caller, caller_before)
++                empty_caller = {**caller, 'timing': {'target_windows': []}}
++                empty_caller_before = deepcopy(empty_caller)
++                empty = calculate_damage(empty_caller)
++                self.assertEqual(empty_caller, empty_caller_before)
++                self.assertGreater(talent(baseline)['hits'], 0)
++                self.assertEqual(talent(empty), talent(baseline))
++                # This exact flag records whether timing input was provided
++                # (timing.py output); every other returned leaf is compared.
++                self.assertIs(baseline['timing']['scenario_provided'], False)
++                self.assertIs(empty['timing']['scenario_provided'], True)
++                baseline_comparable = deepcopy(baseline)
++                empty_comparable = deepcopy(empty)
++                empty_comparable['timing']['scenario_provided'] = baseline_comparable['timing']['scenario_provided']
++                self.assertEqual(empty_comparable, baseline_comparable)
++                references.append(talent(empty))
++        self.assertEqual(references[0]['hits'], references[1]['hits'])
++        self.assertEqual(references[0]['times_seconds'], references[1]['times_seconds'])
+ 
+     def test_original_training_and_target_identity_errors_still_precede_consumer(self):
+         for options in ({'skill': 0}, {'skill': 4}, {'skill_rank': 11}, {'level': 0},

@@ -892,6 +892,8 @@ class Combat:
                     duration=max(0,duration-bb['chant_duration'])
             regular('magic' if not normal and self.n==2 else 'physical',bb.get('attack@atk_scale',1))
             weight=self.option('enemy_weight',3,maximum=100,integer=True)
+            # Base declarations stay validated; prepared signed deltas also feed the talent.
+            weight+=self.s.get('_relic_enemy_effects',{}).get('weight_delta',0)
             extra=self.talent('飘浮大地之上','atk_scale_hi' if weight<=self.talent('飘浮大地之上','mass_level',3) else 'atk_scale_lo')
             regular('magic',extra,times=1 if '飘浮大地之上' in self.tv else 0,name='飘浮大地之上')
             if not normal and self.n==2:

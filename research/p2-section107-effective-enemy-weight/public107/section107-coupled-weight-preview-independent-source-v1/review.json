@@ -1,0 +1,97 @@
+{
+  "kind": "SECTION107_INDEPENDENT_PREVIEW_ENTRYPOINT_SOURCE_SUPPLEMENT",
+  "status": "NO_SOURCE_BLOCKER_RUNTIME_PENDING",
+  "main_review": {
+    "path": "/workspace/.continuation/section107-coupled-weight-consumer-independent-source-v1/review.json",
+    "bytes": 22388,
+    "sha256": "6365cd6375c7008fe225448cd7c837492c9bf80a7be318addc74841144143e6b"
+  },
+  "scope": {
+    "stdlib_read_JSON_hash_AST_only": true,
+    "target_import_or_execution": false,
+    "native_decode": false,
+    "tracked_or_sealed_writes": false,
+    "product_pass": false
+  },
+  "source_ref": {
+    "path": "/workspace/rougezhushou/rouge/battle_preview.py",
+    "bytes": 15499,
+    "sha256": "316af4334fb33c0657dc79f2e6433bab76b900e3f4d7ca3a8149de431e172fdb",
+    "battle_data_line": 11,
+    "enemy_preview_line": 83
+  },
+  "data_ref": {
+    "path": "/workspace/rougezhushou/rouge/data/battle-previews.json",
+    "bytes": 9920110,
+    "sha256": "f0155647af8766eb2f01e84295f85b7300264fc49b40ffc82e89800837d274f3"
+  },
+  "checks": [
+    {
+      "weight": 0,
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2133_shdopl",
+        "level": 0
+      },
+      "selected_count": 1,
+      "name": "空值体",
+      "all_fixture_reference_stat_fields_equal": true
+    },
+    {
+      "weight": 1,
+      "target": {
+        "stage_id": "ro6_n_1_2",
+        "enemy_id": "enemy_1093_ccsbr",
+        "level": 0
+      },
+      "selected_count": 1,
+      "name": "提亚卡乌战士",
+      "all_fixture_reference_stat_fields_equal": true
+    },
+    {
+      "weight": 2,
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2034_sythef",
+        "level": 0
+      },
+      "selected_count": 1,
+      "name": "流泪小子",
+      "all_fixture_reference_stat_fields_equal": true
+    },
+    {
+      "weight": 3,
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2001_duckmi",
+        "level": 0
+      },
+      "selected_count": 1,
+      "name": "鸭爵",
+      "all_fixture_reference_stat_fields_equal": true
+    },
+    {
+      "weight": 4,
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2002_bearmi",
+        "level": 0
+      },
+      "selected_count": 1,
+      "name": "高普尼克",
+      "all_fixture_reference_stat_fields_equal": true
+    },
+    {
+      "weight": 5,
+      "target": {
+        "stage_id": "ro6_n_1_1",
+        "enemy_id": "enemy_2085_skzjxd",
+        "level": 0
+      },
+      "selected_count": 1,
+      "name": "圆仔",
+      "all_fixture_reference_stat_fields_equal": true
+    }
+  ],
+  "contract": "Actual enemy_preview selects its unique identity from battle-previews.json, then original prepare_run resolves the fixed environment from previews.json. All six candidate identities exist exactly once in both lists, and corresponding fixture fields agree. Original no-relic preview scope is explicit at battle_preview.py:98-100. No actual API return or execution PASS is inferred."
+}

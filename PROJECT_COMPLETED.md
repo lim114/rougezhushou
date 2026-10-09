@@ -1,3 +1,11 @@
+## 当前连续开发进度 · 第107节
+
+2026-10-09T21:55:57.319333+08:00（北京时间）。既有重力减重派生值与安洁重量天赋共同消费；保留原base校验、signed参考、固定身份、培养、低重和报告边界。12个新增API测试方法（初版11方法中的1个边界预期按真实旧连续行为局部修正并新增独立控制）；Linux相关223/221PASS/skip1/U1父项；Wine相关223/221PASS/skip1/U1父项；精选118登记1341运行/skip1，均0失败0错误。两次Gold尝试（首次fixture失败原raw1保留），最终13Gold/13候选×6完整快照；62同输入完整Gold点、16有意变化按原manual完整components/estimate.skill及旧fixedmetadata核对；1876Saved原件、26实际close后JSON加载、四图已看；Source750+CORE不漂移。S1/S2无实际normal调用，仅S3实际原plan；未验证新floor/stacking/绝对gamephase、逐formatter独立prepost、跨分freeze alias、二次MainWindow、自然OCR或原生Windows/游戏/聊天。
+
+以下记录为历史断点，当前以上述安排为准。
+
+---
+
 ## 当前连续开发进度 · 第106节
 
 2026-10-09T20:19:20.106787+08:00（北京时间）。模式两字段统一确认资格、active敌人bool引用拒绝、非文本来源安全报告及原信息保留/合法新观察恢复共同完成。23新方法；相关338/336PASS/1skip/U1父项、精选1329/skip1，0失败0错误。真实9Gold/23候选窗口，836Saved/73快照/18完整Gold点/32close后JSON加载及四图通过。未存逐UI/formatter共同prepost与跨分freeze alias仍未验证；无原生Windows/游戏/聊天。107仅原证据，待本节推送后修复。

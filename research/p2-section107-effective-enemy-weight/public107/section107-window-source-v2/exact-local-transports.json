@@ -1,0 +1,22 @@
+{
+  "kind": "SECTION107_EXACT_SINGLE_CONSUMER_LOCAL_TRANSPORT",
+  "runtime_executed": false,
+  "product_pass": false,
+  "section_complete": false,
+  "Root_actual_source_guard_required": true,
+  "expected_before_source_count": null,
+  "expected_after_source_count": null,
+  "changes": [
+    {
+      "path": "rouge/operator_engine.py",
+      "bytes_before": 156626,
+      "sha256_before": "f50e6b992525da0cb3daedb16a3cd4cd45f80052b063007224bd63ac8de93f50",
+      "old": "            weight=self.option('enemy_weight',3,maximum=100,integer=True)\r\n",
+      "new": "            weight=self.option('enemy_weight',3,maximum=100,integer=True)\r\n            # Base declarations stay validated; prepared signed deltas also feed the talent.\r\n            weight+=self.s.get('_relic_enemy_effects',{}).get('weight_delta',0)\r\n",
+      "old_count": 1,
+      "bytes_after_source_composition": 156801,
+      "sha256_after_source_composition": "ff2f1ef07a2df415edb688f6db28916100d912eb79b51faa9d531068f72bff04",
+      "effect": "Keep original base option validation, consume the same prepared signed weight_delta used by finish_run exactly once before the qualified talent threshold. No scenario rewrite, report change, floor, clamp, or displacement modeling."
+    }
+  ]
+}

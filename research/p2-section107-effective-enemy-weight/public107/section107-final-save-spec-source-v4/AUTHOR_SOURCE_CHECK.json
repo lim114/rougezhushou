@@ -1,0 +1,82 @@
+{
+  "kind": "AUTHOR_SOURCE_ONLY_107_FINAL_SAVE_SPEC_DYNAMIC_SELECTED_V4",
+  "STOPWRITE": true,
+  "Source_only": true,
+  "Runtime_executed": false,
+  "product_pass": false,
+  "project_helper_codec_API_Qt_tests_Wine_Git_executed": false,
+  "tracked_writes": [],
+  "checked_at_UTC": "2026-10-09T13:35:17.509508+00:00",
+  "old_frozen_source": {
+    "path": "/workspace/.continuation/section107-final-save-spec-source-v3/root-section107-spec-builder-v2.py",
+    "bytes": 37198,
+    "sha256": "6dd423ecb00bd838f61183a519688e94e0401f1138dac2f1c083aee998589bc9"
+  },
+  "new_source": {
+    "path": "/workspace/.continuation/section107-final-save-spec-source-v4/root-section107-spec-builder-v2.py",
+    "bytes": 38124,
+    "sha256": "ec3c83317eedd7d86951fd5c395d25b585de668d2b8c06bef18df9ca8f65a77c"
+  },
+  "exact_replacements": [
+    [
+      "'test-repair-exit','source-guard','related-linux','related-linux-exit',",
+      "'test-repair-exit','source-guard','selected-log','selected-exit','related-linux','related-linux-exit',"
+    ],
+    [
+      "    repair_exit = Path(args.test_repair_exit).resolve()\n",
+      "    repair_exit = Path(args.test_repair_exit).resolve()\n    selected_log = Path(args.selected_log).resolve()\n    selected_exit = Path(args.selected_exit).resolve()\n"
+    ],
+    [
+      "repair_exit,guard_path,candidate_API_exit]+list(related_paths.values())",
+      "repair_exit,guard_path,candidate_API_exit,selected_log,selected_exit]+list(related_paths.values())"
+    ],
+    [
+      "    guard_raw = guard_path.read_bytes()\n",
+      "    assert selected_log.parent == BASE and selected_log.name.startswith('resume107-selected-')\n    assert selected_log.suffix == '.log' and selected_exit == selected_log.with_suffix('.exit-code')\n    guard_raw = guard_path.read_bytes()\n"
+    ],
+    [
+      "    names = ('resume107-selected-v1.exit-code','resume107-window-gold-v2.exit-code',",
+      "    names = ('resume107-window-gold-v2.exit-code',"
+    ],
+    [
+      "[apply_exit,repair_exit,candidate_API_exit]+list(related_exits.values())",
+      "[apply_exit,repair_exit,candidate_API_exit,selected_exit]+list(related_exits.values())"
+    ],
+    [
+      "    lines = (BASE/'resume107-selected-v1.log').read_text().splitlines()",
+      "    lines = selected_log.read_text().splitlines()"
+    ],
+    [
+      "产品timing/计算/registry没有改动；修正独审",
+      "该测试修正没有改产品timing/计算/registry；它只保留旧连续参考，不解决连续空范围族，该未完成问题另列pending109。修正独审"
+    ],
+    [
+      "        {'source':str(repair_exit),'destination':'actual-root-evidence/actual-testrepair.exit-code'},",
+      "        {'source':str(repair_exit),'destination':'actual-root-evidence/actual-testrepair.exit-code'},\n        {'source':str(selected_log),'destination':'actual-root-evidence/final-selected.log'},\n        {'source':str(selected_exit),'destination':'actual-root-evidence/final-selected.exit-code'},"
+    ],
+    [
+      "        'test_repair_product_or_timing_changed':False,",
+      "        'test_repair_product_or_timing_changed':False,\n        'pending_continuous_empty_range_family109':True,\n        'actual_selected_log':pin(selected_log),'actual_selected_primary':pin(selected_exit),\n        'selected_receipt_has_its_own_fullSource_map':False,\n        'current750_test2c5_CORE_guard_verified_before_and_after_terminal_pipeline':True,"
+    ]
+  ],
+  "complete_inverse_to6dd": true,
+  "compile_only_passed": true,
+  "codeobject_executed": false,
+  "selected_actual_reference_read_only": {
+    "log": "/workspace/.continuation/resume107-selected-v2.log",
+    "sha256": "def82ac6c20e0b425b5d8f4376c58e3e9fda424170a5821ec396cb7513999a20",
+    "raw_primary": "0\n",
+    "last_JSON": {
+      "passed": true,
+      "platform": "Linux",
+      "tests_run": 1341,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0,
+      "scope": "portable calculation regression; no Windows UI/capture or private state"
+    },
+    "has_fullSource_fields": false
+  },
+  "remaining_scope_unchanged": "Root only after every future actual terminal/Source7502c5/CORE/Saved/visual gate. Dynamicselected must match BASE prefix/stem and raw0; old hardv1 never aliased. Current fullguard checked before/after final pipeline. No assertion invented in selected JSON. Related/API/window/Saved/oldfailed gates unchanged; explicit continuous-empty-range family109 remains pending, testrepair did not fix product timing. Outputs stay spec-v2/report-v2.",
+  "actual_candidateWindow_Saved_visual_not_claimed_pass": true
+}

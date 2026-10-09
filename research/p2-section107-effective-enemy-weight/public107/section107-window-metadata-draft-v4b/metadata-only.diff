@@ -1,0 +1,93 @@
+--- sealed-v3/window107.py
++++ inactive-v4/window107.py
+@@ -22,7 +22,59 @@
+ HELPER_SHA='f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a'
+ ORIGINAL_SHA='0a38276dda0ee3e6640f203cc61397686b6e83c365656578b6896dc461563d00'
+ TRANSPORT_SHA='6066dce8003d68a58ad71fc4210a9beb9495225b05b392f2d9ae57eeb9624522'
+-TEST_SHA='62766f1d8cae2b4ef4618ae4f90dddb0c1e9ce8d165f272f1d0fc9caa3b87e8c'
++TEST_SHA='0000000000000000000000000000000000000000000000000000000000000000'
++# BEGIN107_META_01
++GOLD_RUNNER_SHA='9762693bc8088837122758f4c3893ac17b47414ced0c484942cb0754e31472e8'
++GOLD_RECEIPT_SHA='f543d873cbc9ab3c629e8d0815df3438a82c15fe459e463870f757bef9396634'
++GOLD_GUARD_SHA='0eea8377cec0b48efa72b9885e5668b6e518e1802c49f8d57de12b962ad0a442'
++OLD_TEST_SHA='62766f1d8cae2b4ef4618ae4f90dddb0c1e9ce8d165f272f1d0fc9caa3b87e8c'
++
++
++def admit_legacy_gold(artifact,gold_raw,gold_exit_raw,current_source):
++    """Read-only bootstrap: original Gold evidence is never rewritten."""
++    assert TEST_SHA!='0'*64
++    assert gold_exit_raw==b'0\n' and len(gold_raw)==571058 and sha(gold_raw)==GOLD_RECEIPT_SHA
++    legacy_path=artifact/'legacy-gold-window107.py'
++    guard_path=artifact/'legacy-gold-guard.json'
++    assert not legacy_path.is_symlink() and not guard_path.is_symlink()
++    legacy_source=legacy_path.read_bytes();legacy_guard_raw=guard_path.read_bytes()
++    assert len(legacy_source)==39470 and sha(legacy_source)==GOLD_RUNNER_SHA
++    assert len(legacy_guard_raw)==82361 and sha(legacy_guard_raw)==GOLD_GUARD_SHA
++    legacy_guard=json.loads(legacy_guard_raw);legacy_gold=json.loads(gold_raw)
++    assert legacy_gold['source_guard_sha256']==GOLD_GUARD_SHA
++    assert legacy_gold['source_before']==legacy_gold['source_after']==legacy_guard['source_sha256']
++    assert len(legacy_guard['source_sha256'])==749 and len(current_source)==750
++    assert 'tests/test_aglna_gravity_weight_107.py' not in legacy_guard['source_sha256']
++    assert current_source['tests/test_aglna_gravity_weight_107.py']==TEST_SHA
++    # Removing only declared metadata blocks and two exact replacements must
++    # recover all actual old runner bytes, including every fixture and loop.
++    recovered=Path(__file__).read_bytes()
++    candidate_runner_sha=sha(recovered)
++    for tag,indent in (('01',''),('02','    '),('03','        '),('04','    ')):
++        begin=(indent+'# BEGIN107_META_'+tag+'\n').encode()
++        end=(indent+'# END107_META_'+tag+'\n').encode()
++        assert recovered.count(begin)==recovered.count(end)==1
++        first=recovered.index(begin);last=recovered.index(end,first)+len(end)
++        recovered=recovered[:first]+recovered[last:]
++    newer=("TEST_SHA='"+TEST_SHA+"'\n").encode()
++    older=("TEST_SHA='"+OLD_TEST_SHA+"'\n").encode()
++    assert recovered.count(newer)==1;recovered=recovered.replace(newer,older)
++    newer=b"gold['runner_sha256']==GOLD_RUNNER_SHA and gold['original_receipt_sha256']==ORIGINAL_SHA"
++    older=b"gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['original_receipt_sha256']==ORIGINAL_SHA"
++    assert recovered.count(newer)==1;recovered=recovered.replace(newer,older)
++    assert recovered==legacy_source and sha(recovered)==GOLD_RUNNER_SHA
++    return {'kind':'ROOT107_METADATA_ONLY_GOLD_ADMISSION_V1',
++            'Gold_runner_sha256':GOLD_RUNNER_SHA,'candidate_runner_sha256':candidate_runner_sha,
++            'legacy_Gold_receipt_sha256':GOLD_RECEIPT_SHA,
++            'legacy_Gold_source_guard_sha256':GOLD_GUARD_SHA,
++            'legacy_Gold_primary_sha256':sha(gold_exit_raw),
++            'functional_source_inverse_sha256':sha(recovered),'candidate_test_sha256':TEST_SHA,
++            'legacy_Gold_source_count':749,'candidate_source_count':750,
++            'legacy_Gold_contains_107_test':False,'Window_imports_107_test':False,
++            'old_and_new_runners_are_identical':False,'legacy_Gold_values_rewritten':False}
++
++
++# END107_META_01
+ FACT_SHA='c65213bc16625fed8f404e8cd1024d09c0b3e89d3c16443579a0b0f529f2090b'
+ BATTLE_PREVIEW_SHA='f0155647af8766eb2f01e84295f85b7300264fc49b40ffc82e89800837d274f3'
+ OP='char_1015_aglna2'
+@@ -143,12 +195,18 @@
+     assert expected['rouge/data/battle-previews.json']==BATTLE_PREVIEW_SHA
+     assert expected['rouge/data/catalog.json']==next(row['sha256'] for row in facts['source_refs']
+                                                   if row['path'].endswith('/rouge/data/catalog.json'))
++    # BEGIN107_META_02
++    assert args.phase=='candidate' and TEST_SHA!='0'*64
++    # END107_META_02
+     gold=None;gold_dir=None
+     if args.phase=='candidate':
+         assert args.gold and args.gold_exit and Path(args.gold_exit).read_text().strip()=='0'
+         gold_dir=Path(args.gold);gold_raw=(gold_dir/'receipt.json').read_bytes();gold=json.loads(gold_raw)
++        # BEGIN107_META_03
++        compatibility=admit_legacy_gold(artifact,gold_raw,Path(args.gold_exit).read_bytes(),expected)
++        # END107_META_03
+         assert gold['passed'] is True and gold['workflow_complete'] is True and gold['phase']=='gold'
+-        assert gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['original_receipt_sha256']==ORIGINAL_SHA
++        assert gold['runner_sha256']==GOLD_RUNNER_SHA and gold['original_receipt_sha256']==ORIGINAL_SHA
+         assert len(gold['rows'])==COUNT and len(gold['source_before'])==749
+         assert gold['source_before']==gold['source_after'] and not gold['source_drift']
+         assert gold['source_additional_before']==gold['source_additional_after']==extra
+@@ -180,6 +238,9 @@
+              'restart_scope':'Actual observation save/close/direct RunState JSON reload; no second MainWindow',
+              'disk_scope':'Actual run/account JSON and their .tmp; isolated UI settings saves permitted',
+              'negative_scope':'Existing signed report metadata and already-light damage only; no gameplay floor/clamp/displacement inference'}
++    # BEGIN107_META_04
++    receipt['Gold_runner_compatibility']=compatibility
++    # END107_META_04
+     def save(kind,value):
+         row=write_record(out/'records',len(records)+1,{'kind':kind,'case':active['case'],
+                                                     'phase':active['phase'],**value})
