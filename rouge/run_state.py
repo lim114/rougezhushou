@@ -475,7 +475,10 @@ class RunState:
                 if not squad or squad['name']!=record.get('name'):continue
                 identity='id'
                 previous=state['config'].get(key,{})
-                if previous.get('name')==record['name'] and previous.get('effect_verified') and not record.get('effect_verified'):continue
+                previous_id=previous.get('id')
+                previous_squad=config_data()['squads'].get(previous_id) if isinstance(previous_id,str) else None
+                if (previous_squad and previous_squad['name']==previous.get('name')==record['name']
+                        and previous.get('effect_verified') is True and not record.get('effect_verified')):continue
             elif key=='zone':
                 zone=config_data()['zones'].get(record.get('id'))
                 portal=record.get('id') is None and record.get('hidden') and record.get('candidates') and all(
@@ -587,7 +590,9 @@ class RunState:
             if ((type(prior_elite) is int and type(current_elite) is int and current_elite>prior_elite)
                     or previous.get('advanced') is False and member.get('advanced') is True):
                 promoted_ids.add(member['id'])
-            corrected=origin is not None and previous.get('sources',{}).get('recruitment_kind',{}).get('source')=='金色应急雇佣标记'
+            origin_source=previous.get('sources',{}).get('recruitment_kind',{})
+            corrected=(origin is not None and isinstance(origin_source,dict)
+                       and origin_source.get('source')=='金色应急雇佣标记')
             if corrected:
                 state['history'].append({'at':captured_at,'kind':'classification_corrected','id':member['id'],
                     'previous_kind':previous.get('recruitment_kind'),'kind_now':origin,

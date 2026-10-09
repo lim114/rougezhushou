@@ -25,7 +25,8 @@ def confirmed_config(run_context):
     if difficulty_value(difficulty) is not None and difficulty.get('captured_at') is not None:
         result['difficulty']=deepcopy(difficulty)
     squad=records.get('squad')
-    if isinstance(squad,dict) and squad.get('captured_at') is not None:
+    if (isinstance(squad,dict) and squad.get('captured_at') is not None
+            and isinstance(squad.get('id'),str)):
         known=config_data()['squads'].get(squad.get('id'))
         if known and known['name']==squad.get('name'):result['squad']=deepcopy(squad)
     for record in result.values():

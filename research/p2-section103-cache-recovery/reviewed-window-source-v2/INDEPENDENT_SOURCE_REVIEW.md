@@ -1,0 +1,69 @@
+# Independent Source review: section 103 real-window runner v2
+
+Conclusion: **no remaining Source blocker found in this frozen runner and its bounded workflow**. The v1 reload assertion blocker is fixed in fresh v2. This is a Source review only; it does not certify execution, a product test result, completion of section 103, or native Windows. Root owns runtime and must first finish and archive section 102, then run actual Gold on its completed 746-source baseline and candidate on the exact approved 747-source local transport.
+
+Reviewer: `/root/section099_run_persistence/io_semantics_source_review`. Reviewed on 2026-10-09. No project, tests, helper, codec, Qt, Wine or Git was imported or executed. No maintained file was written. The only executable checks were independent standard-library reads, JSON parsing, hashes, AST inspection and `compile(source, filename, 'exec')` without execution of the compiled objects. This report is the only review write, outside the repository.
+
+## Frozen inputs and independent checks
+
+| Input | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `window103.py` | 30353 | `c2eafe3f0aec05d2378b23d9f52160b243e3ee7ed0788a504bef2eaaa49f0074` |
+| `native_evidence.py` | 6468 | `f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a` |
+| `README.md` | 9716 | `47d78c13d54d0ac941e7ba3ff1384a7e7bc7b6d5bd260077676f74067d7e841a` |
+| `MANIFEST.json` | 1275 | `e614c8ada7128812c028e4fe5286e3c605b3243e26546e3450a5b37fcc6feaee` |
+| Original origin observation JSON | 203103 | `9100d4cf424e46951faa8b6312964a3409b25d65486d2344350ed37b95c876cd` |
+| Original squad observation JSON | 287168 | `9eaada838fa8d2d98f8314965cea865395f0978d27bd0fef18ba23b79a5c9472` |
+| Original public 743-source Git-blob proof JSON | 80441 | `c24b86863aa73ae0c47a85b38312ac848a6c9969138413804fdbd28f24b925be` |
+
+Independent tool `08e3e4`, exit 0, read and hashed both runner versions, parsed and compiled each without executing it, and printed the complete v1-to-v2 unified diff. Frozen v1 remains 28256 bytes / `10da77e952aa97c9a5bb2f30aa007ec62e46ca237e2dfb08a52a9255d7299f80`.
+
+Independent tool `2067a0`, exit 0, checked all six manifest payloads against their actual byte counts/hashes and rejected symlink payloads. It parsed and compiled runner/helper Source without executing either. The two original observation JSONs have the expected 14 and 17 rows, `observation_complete=True`, `observation_only=True`, and `product_pass=False`; their source maps agree exactly with the copied 743-source proof. Tool `f850ff`, exit 0, independently checked the proof's exact source commit `e839c3489fe3f0bff445db2ab5771ed1388c51b4` and the v1/v2 top-level AST relationship: eight functions and all 26 nonfunction top-level nodes are unchanged; only `main` changes. The unified diff has five hunks containing the author's seven local replacements. Fixture-producing functions and constants are unchanged.
+
+Complete runner Source was read in `f2d67f/0` and `484c3f/0`; README/manifest in `c3f5b2/0`; native helper Source in `0d6ed9/0`; actual RunState/load/save/apply and config consumer Source in `a4bb45/0`; actual MainWindow/calculator/close and numerical config consumer Source in `0c5938/0`. These are reads, not execution of the described APIs. Public JSON leaf inspection in `701a8b` succeeded before an unrelated guessed file-path search returned 2; the successful JSON checks and source pins were separately retained and the guessed missing files were not used as evidence.
+
+## The v1 blocker and the v2 fix
+
+V1 compared the entire reloaded RunState against the pre-close live native state, including bidirectional container alias relationships. The original RunState `apply` places the same `current_buffs` list in a `char_buffs_updated` history event and the current operator member. A real origin change produces this alias even in the healthy control. Saving and reloading JSON duplicates such repeated containers. A correct value-preserving JSON reload therefore does not satisfy v1's live-alias equality assertion. That was a runner Source assertion defect, not a demonstrated product defect; Root was told not to execute the inactive v1.
+
+V2 branches on the actual boolean returned by `window.apply_run_observation`. The nested `snapshot`/`reuse` local variables named `result` do not overwrite that outer observation result.
+
+For a successful observation, the runner reads the actual saved UTF-8 file and parses its complete JSON graph, then compares the actual restarted RunState to that persisted graph with the existing strict native comparator. The pre-close live native graph, actual persisted JSON and restarted state are all retained separately. The loaded notice already equals the actual constructor's restored notice and the fixture's successful observations do not replace it with a different inventory notice; saved state includes the constructor defaults. The full persisted-graph oracle is consequently consistent with this bounded successful branch.
+
+For the stale observation, `apply` returns false before mutation or saving. The original partial fixture omits loader defaults/notice, so raw parsed JSON would be the wrong full-state oracle. V2 instead compares the restarted graph to the unchanged complete initially loaded native RunState. It still retains the actual parsed disk JSON. This branch creates no new history aliases. Both branches also compare the actual reopened disk phase against the pre-close bytes and temporary-file state, and separately compare confirmed-config reuse eligibility.
+
+The fix does not weaken mathematical result, formatter caller, observation caller, raw state, or healthy Gold comparisons. Their exact types, float bits, key order and native container-reference relationships still use the unchanged f040 comparator. JSON is not advertised as preserving live aliases.
+
+## Source gates and real API reachability
+
+Before project import, runtime checks the unchanged trusted native helper hash, the three prior evidence hashes/metadata, the real original proof source commit, and the supplied source/CORE guards. The helper is imported as the known standalone f040 packet helper; its standard-library Source was read but never executed by this reviewer.
+
+Gold requires 746 maintained sources. Candidate requires 747, actual Gold external raw exit `0`, true Gold workflow/pass flags, nine complete Gold rows, no Qt errors, unchanged Gold source/CORE, and the identical runner hash. Candidate checks that only `rouge/run_state.py`, `rouge/run_config.py`, and `scripts/verify_cloud.py` differ and that `tests/test_cache_recovery_103.py` is the sole added maintained path. Root must supply the guard for the actual independently approved product transport; the runner does not fabricate future product hashes. Each matched Gold native record now also checks exact case, snapshot kind and phase before comparison.
+
+Actual project Source read during review was post-102 local application: RunState 53721 bytes / `98b3b6ea4ad36b36d031064d900bc445c80e5ac50ae2c6eceb16861a68e3a3c7`; MainWindow app 98887 / `f4f80b2cbc4f0865cd880b757cf991801577ea49e2b2d7cbf68dff81680d2a9d`; run_config 5738 / `e35262ce5fc74db31ea80704f5689bb05619fd9dc9798a334f8cac3455b4ac99`; training_view 6050 / `5bef7b6f03592a5df615711568d116a0ffd9170f9be99832ca75d9eee78fcdb4`; run_modifiers 6678 / `c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e`. Seeing these bytes is not a runtime approval or proof that section 102 has completed. Candidate103 changes are the separately reviewed coherent local transports, not assumed changes to the public numerical API.
+
+The actual MainWindow constructor and real DesktopBackend are used. Public temporary paths replace run/account/settings/chat locations; the backend path is redirected, not replaced with a fake success. Each window checks visibility, disabled sampling, inactive timer, idle busy flags, and no desktop process/pending request or Qt callback errors. The calculator wrapper calls the original calculator, records the actual success or exception, checks native caller equality, and rethrows original errors. `closeEvent` closes capture/desktop and stops the timer; it does not save RunState.
+
+The selected public profile really contains mechanist, elite stage 2, level 80 and skill 3. The original profile's S3 rank-10 SP cost is 35; the fixed SNACK record has an unrestricted 0.8 cost factor and an automatic-skill effect. This audit does not invent additional game numbers. Fixed squad data really contains squad 6 `矛头分队`, trade 19 level 0 and trade 20 level 1 with the same `多边贸易分队` name. Both initial and post-observation S3 selection check `findData(3) >= 0`; successful and error caller snapshots now assert the actual owner and S3.
+
+## Bounded case coverage and preservation checks
+
+The nine Gold fixtures are missing/empty/valid origin proof first discovery, a genuine emergency-to-normal change, the explicit old gold-marker correction, a healthy known verified squad protected from the same-name unverified badge, protected trade 20 versus trade 19, unused null origin, and stale null origin. Candidate repeats those exact nine fixtures and adds ten damaged/repair cases: four bad origin leaves, null origin proof during a real change, list/dict squad identities with true/false old flags, a valid fresh verified-true repair, and an unused invalid squad with null timestamp.
+
+The original Linux defect receipts used a different public operator at the same consumer seams. The new GUI fixtures reuse the earlier mechanist/S3 public window fixture. README states the distinction; neither this report nor the runner calls those original observation payloads byte-identical GUI inputs or natural OCR outputs.
+
+Initial accepted source leaves/config and run ID are now directly compared with the saved fixture, in addition to actual original run/account bytes and absence of temp files. Pure UI selection, calculation, snapshot formatting, confirmed-config projection, screenshot selection and close each preserve the current native state and disk phase. Valid fresh observations use the real MainWindow `apply_run_observation`, real RunState merge/save, unchanged observation caller, and explicitly separate the newly saved disk phase from the original read-only phase.
+
+For invalid cached squad IDs, initial numeric calculation is deliberately required to retain the original raw config and exact existing `ValueError('本局分队身份与固定档案不符。')`, with `damage_result=None` and the actual displayed error. Source `run_modifiers.prepare_run` has that explicit string-ID rejection; MainWindow catches the original exception. No initial successful numeric result is fabricated. Real `recognition_context` plus `confirmed_config` is invoked separately, checking caller/state/disks. Candidate103's qualified lookup can omit unusable cached squad reuse while the original numeric API retains its rejection contract. A normal fresh valid badge must then repair the cached fact and allow full numerical/report/reuse checks. Null-timestamp short circuit and healthy stronger-fact protection remain explicit controls.
+
+The genuine origin change requires one `recruitment_changed`, cleared owned buff list and the old cultivation invalidation lifecycle, with only newly observed level/rank exceptions removed from masks. Legacy correction requires its distinct classification history and preserves buffs/masks. Unused null and stale controls retain their raw leaves and avoid falsely classifying a real change. The bad-identity old-true/fresh-false cases check that a corrupt old identity no longer blocks normal fresh recovery; healthy known true and the stronger trade variant retain their old facts.
+
+Successful snapshots use the actual complete result/scenario, all three original report formats, actual displayed text, summary, inventory, recognition/reuse context, full durable state and disk bytes. Healthy candidate initial and post-observation snapshots compare the complete combined native view/state/disk structure with their actual saved Gold records. These formatter calls are bracketed collectively by exact caller/result/state/disk checks; this is not a separate per-formatter state checkpoint. Initial invalid-squad snapshots retain the actual pending error instead of claiming three successful reports.
+
+Rows are appended only after the real window closes and direct RunState reload completes. This is a RunState restart check, not a second MainWindow construction. Four candidate screenshots are actual window captures with phase/tab/hash metadata; visual content still requires Root's actual inspection. There is no seeded old temp file in these GUI fixtures, so this workflow does not test GUI preservation of a pre-existing temp file. Separate product controls cover that case.
+
+## Remaining runtime requirements
+
+The daemon hard deadline exits 124 after 450 seconds per phase. Runtime evidence must include actual stdout/stderr/external raw exit, receipt, native records and four candidate PNGs. Exceptions keep workflow/pass false. Source/CORE and exact guard bytes are checked before success and again in finalization; unexpected drift resets success. Neither this reviewer nor the author executed the workflow.
+
+Root must finish actual section 102 admission, supply its genuine 746-source/CORE guard, run fresh Gold with this c2eafe runner, then run the exact approved 747-source candidate with the same runner and actual Gold receipt/raw-zero file. Old v1 cannot supply these receipts. Root must audit the actual native records and images, finish the appropriate section103 and five-section checks, and publish under the user's existing instructions. Source review does not count any of those steps as passed. No new Source blocker remains in the reviewed v2 packet; all runtime results are still pending.
