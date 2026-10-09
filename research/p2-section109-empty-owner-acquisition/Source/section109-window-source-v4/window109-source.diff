@@ -1,0 +1,44 @@
+--- immutable-v3/window109.py
++++ v4/window109.py
+@@ -100,7 +100,10 @@
+         name='慈悲愿景开启伤害' if kind=='opening-medical' else '施放伤害'
+         component=next(c for c in result['components'] if c['name']==name)
+         assert component['total']==0 and component['hits']==0
+-        assert result['total_damage'] is None  # Later independent clocks remain unbound.
++        if kind=='opening-medical':assert result['total_damage'] is None
++        else:
++            assert result['total_damage']==0 and skill['total_damage']==0
++            for key in ('phase_damage','cycle_damage','recharge_seconds','cycle_seconds'):assert skill[key] is None
+ 
+ def main():
+     parser=argparse.ArgumentParser()
+@@ -130,11 +133,16 @@
+         assert current_source.count(start_marker)==current_source.count(end_marker)==1
+         first=current_source.index(start_marker);last=current_source.index(end_marker)+len(end_marker)
+         without_binding=current_source[:first]+current_source[last:]
+-        anchor_before="anchor='技能情况：'".encode();anchor_after="anchor='【伤害输出】'".encode()
+-        old_assert=b"assert gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['native_helper_sha256']==HELPER_SHA"
+-        new_assert=b"assert gold['runner_sha256']==sha(gold_source) and gold['native_helper_sha256']==HELPER_SHA"
+-        assert gold_source.count(anchor_before)==gold_source.count(old_assert)==1
+-        assert gold_source.replace(anchor_before,anchor_after,1).replace(old_assert,new_assert,1)==without_binding
++        before=b"anchor='\xe6\x8a\x80\xe8\x83\xbd\xe6\x83\x85\xe5\x86\xb5\xef\xbc\x9a'";after=b"anchor='\xe3\x80\x90\xe4\xbc\xa4\xe5\xae\xb3\xe8\xbe\x93\xe5\x87\xba\xe3\x80\x91'"
++        assert gold_source.count(before)==1;gold_source=gold_source.replace(before,after,1)
++        before=b"assert gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['native_helper_sha256']==HELPER_SHA";after=b"assert gold['runner_sha256']==sha(gold_source) and gold['native_helper_sha256']==HELPER_SHA"
++        assert gold_source.count(before)==1;gold_source=gold_source.replace(before,after,1)
++        before=b"        assert result['total_damage'] is None  # Later independent clocks remain unbound.\n";after=b"        if kind=='opening-medical':assert result['total_damage'] is None\n        else:\n            assert result['total_damage']==0 and skill['total_damage']==0\n            for key in ('phase_damage','cycle_damage','recharge_seconds','cycle_seconds'):assert skill[key] is None\n"
++        assert gold_source.count(before)==1;gold_source=gold_source.replace(before,after,1)
++        before=b"                assert caller['elite']==2 and caller['level']==LEVELS[item['op']] and caller['skill_rank']==10\n";after=b"                assert caller['elite']==2 and caller['level']==LEVELS[item['op']] and caller['skill_rank']==10\n                if item['kind']=='opening-snow':assert type(caller['snow_entries']) is int and caller['snow_entries']==0\n"
++        assert gold_source.count(before)==1;gold_source=gold_source.replace(before,after,1)
++        assert gold_source==without_binding
++        gold_source=(artifact/'window109-gold-source-v2.py').read_bytes()
+         # END_STRICT_OLD_GOLD_SOURCE
+         gold_dir=Path(args.gold).resolve();gold_raw=(gold_dir/'receipt.json').read_bytes();gold=json.loads(gold_raw)
+         assert gold['kind']=='ROOT_ACTUAL_109_REAL_MAINWINDOW' and gold['phase']=='gold'
+@@ -230,6 +238,7 @@
+                 caller=call['caller']['args'][0];result=window.damage_result['result']
+                 assert caller['operator']==item['op'] and caller['skill']==item['skill'] and caller['timing_mode']==item['mode']
+                 assert caller['elite']==2 and caller['level']==LEVELS[item['op']] and caller['skill_rank']==10
++                if item['kind']=='opening-snow':assert type(caller['snow_entries']) is int and caller['snow_entries']==0
+                 assert_native_equal(caller.get('timing'),item['timing'],'actual timing control input')
+                 assert ('window_seconds' in caller)==(item['window'] is not None)
+                 assert_native_equal(window.damage_result['scenario'],caller,'actual UI caller match')

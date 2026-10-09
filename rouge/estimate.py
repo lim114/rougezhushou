@@ -125,7 +125,8 @@ def build_estimate(scenario,result,attributes,compute_skill):
                 hit*=damage_factor(scenario,'physical')
                 damage=full['total_damage']+math.floor(duration/full['interval_seconds']+1e-9)*hit
                 if (scenario.get('timing_mode','frames')=='frames' or
-                        scenario.get('timing',{}).get('target_disappears_seconds')==0):
+                        scenario.get('timing',{}).get('target_disappears_seconds')==0 or
+                        scenario.get('timing',{}).get('target_windows')==[]):
                     timeline=AttackTimeline(scenario,normal=True)
                     stream=timeline.attacks(duration,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])
                     events=stream.get('emitted_times_seconds',stream['times_seconds'])

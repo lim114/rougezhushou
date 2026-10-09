@@ -193,11 +193,11 @@ class AglnaGravityWeight107Tests(unittest.TestCase):
                     self.assertEqual((talent(result)['hits'], talent(result)['total']), (0, 0))
                     self.assertEqual(talent(result)['times_seconds'], [])
 
-    def test_continuous_empty_ranges_preserve_existing_reference_without_weight_hit_changes(self):
-        # Root's actual twelve-call diagnosis confirms that the legacy
-        # continuous reference does not consume target_windows. The timing
-        # family gap remains pending section109; gravity changes only per-hit
-        # weight qualification here, without adding acquisition/game timing.
+    def test_continuous_empty_ranges_remove_own_hits_without_changing_gravity_per_hit(self):
+        # Section109 closes the ordinary continuous acquisition gap recorded
+        # by the original twelve-call diagnosis. Empty owner supply cancels
+        # hits; the already qualified gravity per-hit amount stays unchanged.
+        baselines = []
         references = []
         for relic_ids in ([], [GRAVITY]):
             with self.subTest(mode='continuous', relic_ids=relic_ids):
@@ -210,16 +210,18 @@ class AglnaGravityWeight107Tests(unittest.TestCase):
                 empty = calculate_damage(empty_caller)
                 self.assertEqual(empty_caller, empty_caller_before)
                 self.assertGreater(talent(baseline)['hits'], 0)
-                self.assertEqual(talent(empty), talent(baseline))
-                # This exact flag records whether timing input was provided
-                # (timing.py output); every other returned leaf is compared.
+                self.assertEqual((talent(empty)['hits'], talent(empty)['total']), (0, 0))
+                self.assertEqual(talent(empty)['times_seconds'], [])
+                self.assertEqual(talent(empty)['per_hit'], talent(baseline)['per_hit'])
+                self.assertEqual(empty['total_damage'], 0)
+                self.assertEqual(empty['estimate']['skill']['total_damage'], 0)
                 self.assertIs(baseline['timing']['scenario_provided'], False)
                 self.assertIs(empty['timing']['scenario_provided'], True)
-                baseline_comparable = deepcopy(baseline)
-                empty_comparable = deepcopy(empty)
-                empty_comparable['timing']['scenario_provided'] = baseline_comparable['timing']['scenario_provided']
-                self.assertEqual(empty_comparable, baseline_comparable)
+                baselines.append(talent(baseline))
                 references.append(talent(empty))
+        self.assertEqual(baselines[0]['hits'], baselines[1]['hits'])
+        self.assertEqual(baselines[0]['times_seconds'], baselines[1]['times_seconds'])
+        self.assertGreater(baselines[1]['per_hit'], baselines[0]['per_hit'])
         self.assertEqual(references[0]['hits'], references[1]['hits'])
         self.assertEqual(references[0]['times_seconds'], references[1]['times_seconds'])
 

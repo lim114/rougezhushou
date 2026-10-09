@@ -19,11 +19,16 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section: commit and push origin codex/p2-development; every five sections full available validation and progress summary",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": true,
-    "summary_interval": 5
+    "development_paused_by_latest_user_request": false,
+    "summary_interval": 5,
+    "stop_after_section": 115,
+    "each_section_requires_functional_progress": true,
+    "validation_is_additional_to_functional_progress": true,
+    "accuracy_validation_after_section": 115,
+    "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS."
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 108,
+  "completed_sections": 109,
   "sections": [
     {
       "number": 1,
@@ -679,10 +684,16 @@
       "topic": "本局区域consumer输入资格",
       "verification": "verification/sections/108.json",
       "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 109,
+      "topic": "敌方空供靶与独立来源归属修复",
+      "verification": "verification/sections/109.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
     }
   ],
-  "next_section": 109,
-  "next_action": "108实际commit/push后按用户要求收束；恢复断点next109，先真实focused/permanent原API再推进owner空供靶族，nextfull110全量和总结；lastfull105及95deferred保留，未知游戏机制不编造。",
+  "next_section": 110,
+  "next_action": "继续第110节永久技能连续释放/SP与敌方命中分离实际功能，完成本组全量Linux/Wine/window和进度总结。此批至115功能＋全量及外部算例核对后结束。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 105,
@@ -887,6 +898,23 @@
       "checks": 3,
       "failed_checks": 2,
       "status": "resolved; third check passed; failures were new fixture/indentation, not an unknown mechanism"
+    },
+    "section109_bounded_candidate_window": {
+      "attempts": 3,
+      "status": "DEFERRED_AFTER_THREE_ATTEMPTS",
+      "attempt1_primary": 1,
+      "attempt2_primary": 1,
+      "attempt3_primary": null,
+      "candidate_complete": false,
+      "completed_prefix_cases": 15,
+      "saved_numeric_snow_zero_entry_verified": true,
+      "missing": [
+        "last gnosis/token window snapshots",
+        "close/direct reload",
+        "fourth visual"
+      ],
+      "restart_conditions": "Only after new diagnosis and a reliable owned display/terminal transport; no fourth unchanged workflow retry",
+      "evidence": "research/p2-section109-empty-owner-acquisition/root/root-section109-window-saved-audit-v1.json"
     }
   },
   "archive_supplements": [
@@ -941,18 +969,18 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 108,
-    "prepared_at_Beijing": "2026-10-09T23:37:53.495483+08:00",
+    "section": 109,
+    "prepared_at_Beijing": "2026-10-10T00:40:46.842318+08:00",
     "status": "READY_FOR_REAL_COMMIT_AND_PUSH",
-    "prior_actual_HEAD": "3964c38f47dedada4695479b1360216e90c202a0",
-    "archive_manifest": "research/p2-section108-active-zone-consumer/manifest.json",
+    "prior_actual_HEAD": "f6fafd5cd81a0cbb485a5b724be7eca9acefdae4",
+    "archive_manifest": "research/p2-section109-empty-owner-acquisition/manifest.json",
     "full_validation_due": false
   },
   "last_verified_cloud_save": {
-    "section": 107,
-    "commit": "3964c38f47dedada4695479b1360216e90c202a0",
+    "section": 108,
+    "commit": "f6fafd5cd81a0cbb485a5b724be7eca9acefdae4",
     "remote": "origin codex/p2-development",
-    "proof": "research/p2-section108-active-zone-consumer/prior-publication.json"
+    "proof": "research/p2-section109-empty-owner-acquisition/prior-publication.json"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -1145,7 +1173,7 @@
   },
   "next_full_validation_after": 110,
   "user_requested_wrap": {
-    "status": "CURRENT_SECTION_VALIDATED_AND_ARCHIVED_READY_FOR_REAL_COMMIT_PUSH",
+    "status": "SUPERSEDED_BY_USER_RESUME_2026_10_09",
     "completed_section": 108,
     "next_section": 109,
     "next_section_started": false,

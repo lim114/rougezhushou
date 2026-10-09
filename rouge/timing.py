@@ -244,7 +244,7 @@ class AttackTimeline:
                 if limit is not None:count=min(count,limit)
                 times=[ready+(i+1)*interval for i in range(count)]
                 starts=[t-interval for t in times];steps=[interval]*len(times)
-            if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:
+            if self.target_scope=='enemy' and (self.options.get('target_disappears_seconds')==0 or (self.options.get('target_windows')==[] and self.s['operator']!='char_4182_oblvns')):
                 times=[];starts=[];steps=[]
             stream={'start_frames':([frame_time(t) for t in starts] if deployment_speed else
                 [cadence(t)-cadence(interval) for t in times]),
@@ -252,7 +252,7 @@ class AttackTimeline:
                 'times_seconds':times,'interval_frames':cadence(interval),'interval_seconds':interval,
                 'known_animation':False,'resume_frame':frame_time(duration),'unit':unit or self.s['operator'],
                 'target_scope':self.target_scope}
-            if self.target_scope=='enemy' and self.options.get('target_disappears_seconds')==0:stream['resume_frame']=0
+            if self.target_scope=='enemy' and (self.options.get('target_disappears_seconds')==0 or (self.options.get('target_windows')==[] and self.s['operator']!='char_4182_oblvns')):stream['resume_frame']=0
             if deployment_speed:
                 stream.update(temporary_attack_speed=True,interval_frames_by_attack=[cadence(s) for s in steps],
                     deployment_origin_seconds=(self.offset+self.deployment_offset)/FPS)

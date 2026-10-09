@@ -1,0 +1,19 @@
+{
+  "kind": "SECTION109_WINDOW_V2_EXACT_SOURCE_TRANSPORT",
+  "old_script_sha256": "eb19d20cfb670dde8a6036bdb5d7a2b80a2af7283c9af7f24fe9553193df1f63",
+  "new_script_sha256": "383bafe8e4a22155b57318001c297c94b068ac768181cc7da51636390099eca9",
+  "replacements": [
+    {
+      "before": "    assert result['total_damage']==0\n    if kind in ('zero','ammo','medical','manual'):assert skill['total_damage']==0\n",
+      "after": "    if kind in ('zero','ammo','medical','manual'):\n        assert result['total_damage']==0 and skill['total_damage']==0\n"
+    },
+    {
+      "before": "        assert component['total']==0 and component['hits']==0\n",
+      "after": "        assert component['total']==0 and component['hits']==0\n        assert result['total_damage'] is None  # Later independent clocks remain unbound.\n"
+    }
+  ],
+  "all_byte_inverse": true,
+  "outside_exact_two_replacements_unchanged": true,
+  "Root_original_unknown_scope_message_received": true,
+  "target_executed": false
+}

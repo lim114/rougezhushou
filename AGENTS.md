@@ -1,5 +1,8 @@
 # Project working rules
 
+用户最新要求（2026-10-09）：本批次持续至第115节的全量测试和网上公开算例准确性检验完成后结束。每节必须有实际功能推进成果，测试/资料整理/存档仅作附加，110和115也不例外。外部算例记录URL、原输入/结果、版本与适用条件；缺失依据或条件不符不计通过。
+
+
 ## Cloud continuation
 
 This independent project is named rougezhushou and starts from local version 0.70.0. Read CLOUD_HANDOFF.md before resuming. Linux checks use scripts/verify_cloud.py; Windows UI, game sampling and desktop chat verification require the original Windows machine. Report those unavailable checks explicitly, never simulate successful native validation. Private state and personal screenshots were not migrated. Keep them excluded. Preserve the local original project and its current run. Historical receipts describe their original machine and batch, not this cloud snapshot.

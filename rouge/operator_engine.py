@@ -318,7 +318,7 @@ class Combat:
             emit(name,attack*scale,dtype,len(events)*times,defense,resistance,
                 event_times=[t for t in events for _ in range(int(times))] if float(times).is_integer() else events)
         def instant(dtype='physical',scale=1,times=1,name='施放伤害'):
-            if (window==0 or timeline.options.get('target_disappears_seconds')==0 or
+            if (window==0 or timeline.options.get('target_disappears_seconds')==0 or timeline.options.get('target_windows')==[] or
                     timeline.mode=='frames' and (not timeline.selectable(0) or timeline.unavailable(0) or not timeline.selectable_lifetime(0))):
                 times=0
             emit(name,attack*scale,dtype,times)
@@ -638,7 +638,7 @@ class Combat:
                 frost(attack*bb['atk_scale'],2 if events else 0,'高速思考')
             elif self.n==2:
                 mode='instant';duration=0
-                available=timeline.options.get('target_disappears_seconds')!=0 and (window is None or window>0) and (timeline.mode!='frames' or (
+                available=timeline.options.get('target_disappears_seconds')!=0 and timeline.options.get('target_windows')!=[] and (window is None or window>0) and (timeline.mode!='frames' or (
                     timeline.selectable(0) and not timeline.unavailable(0)))
                 frost(attack*bb['atk_scale'],1 if available else 0,'零度爆发')
                 if available:components[-1]['instant_event']=True

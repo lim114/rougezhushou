@@ -1,0 +1,11 @@
+109 real MainWindow Source packet — STOPWRITE
+
+Root alone executes the target/Wine/native helper. Author only read Source/JSON, parsed AST, copied exact helper bytes and created compile codeobjects without execution.
+
+CLI: --root --guard --source-count --out --phase gold|candidate; candidate additionally --gold (directory) --gold-exit (real raw exit file). Gold requires actual 751 complete source map plus CORE; candidate dynamically admits the actual complete guard and exactly one added 109 test and seven changed existing paths (four calculation files, app tooltip, cloud registration, corrected107 test). No future guard SHA or candidate count is invented.
+
+One accepted original public run/account fixture; real backend gets the actual public temporary chat path. No mock calculator: observer delegates every real call and records before, actual after/result joint graph preserving aliases, purity, result or original failure. UI control changes can cause additional real calculations; explicit snapshots require precisely one. Eighteen rows: five healthy whole Gold controls including frame owner-empty independent token and non-empty permanent continuous control; thirteen candidate contract rows covering ordinary, full legacy ammo, full medical recipients1/0 in both modes, manual20s/zero shield declarations both modes, both generic continuous callers, Gnosis continuous empty and independent token continuous empty. Changed rows preserve complete caller/state/disks from Gold; candidate output contracts intentionally do not require every row differ from Gold.
+
+Three complete formatters jointly preserve graph/state/disks; UI uses the original default report with established NBSP display conversion. Four candidate actual window PNGs anchor visible skill section, retain source text/Qt cursor geometry. Root must inspect the PNGs. Close and direct RunState reload preserves the accepted original loaded graph/disk; no second window, reset/API/OCR/native Windows claim. Every saved native record fsyncs; row checkpoint fsyncs; exclusive receipt and 450s watchdog include final source/CORE/guard recheck and fsynced receipt.
+
+Unknown clocks remain unknown; no natural summon deployment/acquisition, permanent [] or SP repair claim. This is prepared Source, zero runtime results.

@@ -1,0 +1,18 @@
+{
+  "kind": "SECTION109_WINDOW_VISUAL_V3_TRANSPORT_ONLY",
+  "old_SHA256": "383bafe8e4a22155b57318001c297c94b068ac768181cc7da51636390099eca9",
+  "new_SHA256": "d2ada08dd3d1b8025fa5221499aec761be99bbd916c8feb5903b1d5a3815b719",
+  "visual": {
+    "before": "anchor='技能情况：'",
+    "after": "anchor='【伤害输出】'"
+  },
+  "strict_Gold_assertion": {
+    "before": "assert gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['native_helper_sha256']==HELPER_SHA",
+    "after": "assert gold['runner_sha256']==sha(gold_source) and gold['native_helper_sha256']==HELPER_SHA"
+  },
+  "strict_binding_addition_before": "        gold_dir=Path(args.gold).resolve();gold_raw=(gold_dir/'receipt.json').read_bytes();gold=json.loads(gold_raw)\n",
+  "strict_binding_addition": "        # BEGIN_STRICT_OLD_GOLD_SOURCE\n        gold_source=(artifact/'window109-gold-source-v2.py').read_bytes()\n        assert sha(gold_source)=='383bafe8e4a22155b57318001c297c94b068ac768181cc7da51636390099eca9'\n        current_source=Path(__file__).read_bytes()\n        start_marker=b'        # BEGIN_STRICT_OLD_GOLD_SOURCE'+b'\\n'\n        end_marker=b'        # END_STRICT_OLD_GOLD_SOURCE'+b'\\n'\n        assert current_source.count(start_marker)==current_source.count(end_marker)==1\n        first=current_source.index(start_marker);last=current_source.index(end_marker)+len(end_marker)\n        without_binding=current_source[:first]+current_source[last:]\n        anchor_before=\"anchor='技能情况：'\".encode();anchor_after=\"anchor='【伤害输出】'\".encode()\n        old_assert=b\"assert gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['native_helper_sha256']==HELPER_SHA\"\n        new_assert=b\"assert gold['runner_sha256']==sha(gold_source) and gold['native_helper_sha256']==HELPER_SHA\"\n        assert gold_source.count(anchor_before)==gold_source.count(old_assert)==1\n        assert gold_source.replace(anchor_before,anchor_after,1).replace(old_assert,new_assert,1)==without_binding\n        # END_STRICT_OLD_GOLD_SOURCE\n",
+  "whole_byte_inverse": true,
+  "all_other_bytes_unchanged": true,
+  "numeric_or_purity_gates_relaxed": false
+}

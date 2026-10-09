@@ -124,7 +124,8 @@ def _skill_damage_base(scenario: dict) -> dict:
         interval_seconds=interval,applied_effects=effects)
     timeline=AttackTimeline(scenario)
     empty_enemy=timeline.options.get('target_disappears_seconds')==0
-    medical_fallback=not healing and scenario['operator']=='kaltsit' and empty_enemy and float(scenario.get('healing_targets',1))>0
+    empty_ammo_target=empty_enemy or timeline.options.get('target_windows')==[]
+    medical_fallback=not healing and scenario['operator']=='kaltsit' and empty_ammo_target and float(scenario.get('healing_targets',1))>0
     def attack_events(duration,limit=None):
         stream=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,limit=limit,
             target_scope='friendly' if healing or medical_fallback else 'enemy')
@@ -203,7 +204,7 @@ def _skill_damage_base(scenario: dict) -> dict:
     if scenario.get('_ammo_refill_reference'):
         status['ammo_refill_reference']=scenario['_ammo_refill_reference']
     events=attack_events(scenario.get('window_seconds',3600),limit=shots)
-    if timeline.mode=='continuous' and 'window_seconds' not in scenario and not empty_enemy:
+    if timeline.mode=='continuous' and 'window_seconds' not in scenario and not empty_ammo_target:
         hits=shots*int(bb.get('attack@times',1))
     else:hits=len(events['times_seconds'])*int(bb.get('attack@times',1))
     if timeline.mode=='frames':
@@ -223,12 +224,12 @@ def _skill_damage_base(scenario: dict) -> dict:
         if mechanist:status['timing']['notes'].append('机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。')
     elif any(r['kind']=='deployment_attack_speed' for r in scenario.get('_relic_rules',[])) and 'window_seconds' not in scenario:
         status['execution_seconds']=events['times_seconds'][-1] if len(events['times_seconds'])>=shots else None
-    if empty_enemy and not medical_fallback:status['execution_seconds']=None
+    if empty_ammo_target and not medical_fallback:status['execution_seconds']=None
     if medical_fallback:
         status['healing_hits']=hits
-    damage_hits=0 if empty_enemy else hits
+    damage_hits=0 if empty_ammo_target else hits
     components=[{'name':'五连击' if mechanist else '弹药攻击','damage_type':'physical' if mechanist else 'true',
-        'hits':damage_hits,'per_hit':damage,'total':damage*damage_hits,'times_seconds':[] if empty_enemy else events['times_seconds']}]
+        'hits':damage_hits,'per_hit':damage,'total':damage*damage_hits,'times_seconds':[] if empty_ammo_target else events['times_seconds']}]
     return {'attack': attack, 'per_hit': damage, 'total_damage': damage * damage_hits, 'hits': damage_hits,'components':components,
         'interval_seconds': interval, 'damage_type': 'physical' if mechanist else 'true', 'inapplicable_relics': inapplicable, **status}
 

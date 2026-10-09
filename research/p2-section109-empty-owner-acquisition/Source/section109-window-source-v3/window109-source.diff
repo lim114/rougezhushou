@@ -1,0 +1,38 @@
+--- immutable-v2/window109.py
++++ v3/window109.py
+@@ -121,10 +121,25 @@
+     if args.phase=='gold':assert args.source_count==751
+     else:
+         assert args.gold and args.gold_exit and Path(args.gold_exit).read_bytes()==b'0\n'
++        # BEGIN_STRICT_OLD_GOLD_SOURCE
++        gold_source=(artifact/'window109-gold-source-v2.py').read_bytes()
++        assert sha(gold_source)=='383bafe8e4a22155b57318001c297c94b068ac768181cc7da51636390099eca9'
++        current_source=Path(__file__).read_bytes()
++        start_marker=b'        # BEGIN_STRICT_OLD_GOLD_SOURCE'+b'\n'
++        end_marker=b'        # END_STRICT_OLD_GOLD_SOURCE'+b'\n'
++        assert current_source.count(start_marker)==current_source.count(end_marker)==1
++        first=current_source.index(start_marker);last=current_source.index(end_marker)+len(end_marker)
++        without_binding=current_source[:first]+current_source[last:]
++        anchor_before="anchor='技能情况：'".encode();anchor_after="anchor='【伤害输出】'".encode()
++        old_assert=b"assert gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['native_helper_sha256']==HELPER_SHA"
++        new_assert=b"assert gold['runner_sha256']==sha(gold_source) and gold['native_helper_sha256']==HELPER_SHA"
++        assert gold_source.count(anchor_before)==gold_source.count(old_assert)==1
++        assert gold_source.replace(anchor_before,anchor_after,1).replace(old_assert,new_assert,1)==without_binding
++        # END_STRICT_OLD_GOLD_SOURCE
+         gold_dir=Path(args.gold).resolve();gold_raw=(gold_dir/'receipt.json').read_bytes();gold=json.loads(gold_raw)
+         assert gold['kind']=='ROOT_ACTUAL_109_REAL_MAINWINDOW' and gold['phase']=='gold'
+         assert gold['passed'] is True and gold['workflow_complete'] is True and gold['Qt_errors']==[]
+-        assert gold['runner_sha256']==sha(Path(__file__).read_bytes()) and gold['native_helper_sha256']==HELPER_SHA
++        assert gold['runner_sha256']==sha(gold_source) and gold['native_helper_sha256']==HELPER_SHA
+         assert gold['source_before']==gold['source_after'] and len(gold['source_before'])==751
+         assert gold['source_additional_before']==gold['source_additional_after']==extra
+         assert not gold['source_drift'] and len(gold['rows'])==18 and len(gold['windows'])==1
+@@ -240,7 +255,7 @@
+                     stream.write(json.dumps({'completed_case_ids':[r['id'] for r in rows],
+                         'next_case_index':len(rows),'active':active,'source_guard_sha256':sha(guard_raw)}));stream.flush();os.fsync(stream.fileno())
+                 if args.phase=='candidate' and item['id'] in ('empty-ordinary-continuous','empty-medical-continuous-1','empty-manual-duration-continuous','empty-token-own-scope'):
+-                    anchor='技能情况：';cursor=window.damage_text.document().find(anchor);assert not cursor.isNull()
++                    anchor='【伤害输出】';cursor=window.damage_text.document().find(anchor);assert not cursor.isNull()
+                     pure('visible report anchor',lambda:(window.damage_text.setTextCursor(cursor),window.damage_text.ensureCursorVisible()))
+                     rectangle=window.damage_text.cursorRect();viewport=window.damage_text.viewport().rect()
+                     assert window.damage_text.isVisible() and viewport.contains(rectangle.center()) and window.damage_text.textCursor().selectedText()==anchor
