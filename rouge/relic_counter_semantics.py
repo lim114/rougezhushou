@@ -64,6 +64,7 @@ def valid_counter_resource(key,record):
     if not isinstance(record,dict) or record.get('source')!='held_card_counter':return False
     proof=record.get('counter_evidence')
     if not isinstance(proof,dict):return False
+    if not isinstance(proof.get('id'),str) or not isinstance(proof.get('source',''),str):return False
     return counter_resources([proof]).get(key)==record
 
 

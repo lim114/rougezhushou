@@ -1,0 +1,34 @@
+{"observed_case": "healthy-snack", "constructor_returned": true, "Qt_exceptions": 0, "direct_exception": null}
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 895, in update_operator
+    self.update_skill_options()
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 1033, in update_skill_options
+    if hasattr(self,'raw_damage'):self.calculate()
+                                  ^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 1068, in calculate
+    self.sync_target_buffs(op)
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 1256, in sync_target_buffs
+    self.target_buff_status.setText('、'.join(mechanics()['char_buffs'][bid]['name'] for bid in ids) if ids else
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 1256, in <genexpr>
+    self.target_buff_status.setText('、'.join(mechanics()['char_buffs'][bid]['name'] for bid in ids) if ids else
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+KeyError: 'public-unknown-char-buff-101'
+{"observed_case": "unknown-bound", "constructor_returned": false, "Qt_exceptions": 1, "direct_exception": {"type": "KeyError", "message": "'public-unknown-char-buff-101'", "traceback": "Traceback (most recent call last):\n  File \"Z:\\workspace\\.continuation\\section101-original-charbuff-qt-probe-source-v1\\probe101.py\", line 149, in main\n    window = module.MainWindow();row['constructor_returned'] = True\n             ^^^^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 143, in __init__\n    self.update_operator()\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 895, in update_operator\n    self.update_skill_options()\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 1033, in update_skill_options\n    if hasattr(self,'raw_damage'):self.calculate()\n                                  ^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 1068, in calculate\n    self.sync_target_buffs(op)\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 1256, in sync_target_buffs\n    self.target_buff_status.setText('、'.join(mechanics()['char_buffs'][bid]['name'] for bid in ids) if ids else\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 1256, in <genexpr>\n    self.target_buff_status.setText('、'.join(mechanics()['char_buffs'][bid]['name'] for bid in ids) if ids else\n                                              ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\nKeyError: 'public-unknown-char-buff-101'\n"}}
+Traceback (most recent call last):
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 895, in update_operator
+    self.update_skill_options()
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 1033, in update_skill_options
+    if hasattr(self,'raw_damage'):self.calculate()
+                                  ^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 1068, in calculate
+    self.sync_target_buffs(op)
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 1260, in sync_target_buffs
+    names='、'.join(mechanics()['char_buffs'][bid]['name'] for bid in pending)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "Z:\workspace\rougezhushou\rouge\app.py", line 1260, in <genexpr>
+    names='、'.join(mechanics()['char_buffs'][bid]['name'] for bid in pending)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+KeyError: 'public-unknown-pending-buff-101'
+{"observed_case": "unknown-pending", "constructor_returned": false, "Qt_exceptions": 1, "direct_exception": {"type": "KeyError", "message": "'public-unknown-pending-buff-101'", "traceback": "Traceback (most recent call last):\n  File \"Z:\\workspace\\.continuation\\section101-original-charbuff-qt-probe-source-v1\\probe101.py\", line 149, in main\n    window = module.MainWindow();row['constructor_returned'] = True\n             ^^^^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 143, in __init__\n    self.update_operator()\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 895, in update_operator\n    self.update_skill_options()\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 1033, in update_skill_options\n    if hasattr(self,'raw_damage'):self.calculate()\n                                  ^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 1068, in calculate\n    self.sync_target_buffs(op)\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 1260, in sync_target_buffs\n    names='、'.join(mechanics()['char_buffs'][bid]['name'] for bid in pending)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"Z:\\workspace\\rougezhushou\\rouge\\app.py\", line 1260, in <genexpr>\n    names='、'.join(mechanics()['char_buffs'][bid]['name'] for bid in pending)\n                    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\nKeyError: 'public-unknown-pending-buff-101'\n"}}
+X connection to :101 broken (explicit kill or server shutdown).

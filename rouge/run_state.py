@@ -546,7 +546,7 @@ class RunState:
                 'captured_at':captured_at,'source':observed.get('tactical_tools',{}).get('source',relics['source']),'held':True}
         # Fully identified current/valid historical slots (or explicit zero)
         # prove removals. A partial observation cannot erase unrelated records.
-        if (count==0 and not incoming_items and not relics['icons']) or (expected is not None and expected>0 and len(incoming_items)==expected and
+        if (count==0 and not incoming_items and not relics['icons']) or (isinstance(expected,(int,float)) and expected>0 and len(incoming_items)==expected and
                 len(relics['icons'])==expected and all(i.get('confirmed') for i in relics['icons'])):
             for rid,record in state['relics'].items():
                 if rid not in incoming and record.get('held',True):
@@ -774,7 +774,7 @@ class RunState:
             time.strftime('%H:%M:%S',time.localtime(record['captured_at']))+
             (' 最近确认）' if key in usable else ' 历史值，当前层数待确认）')
             for key,record in state.get('resources',{}).items())
-        present=sum(member.get('present',True) for member in state['operators'].values())
+        present=sum(bool(member.get('present',True)) for member in state['operators'].values())
         config=state['config'];difficulty=config.get('difficulty',{}).get('value')
         squad=config.get('squad',{})
         info=('保密等级 '+str(difficulty) if difficulty is not None else '保密等级未确认')+' · '+squad.get('name','分队未确认')

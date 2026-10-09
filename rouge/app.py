@@ -1252,14 +1252,8 @@ class MainWindow(QMainWindow):
                 self.target_buff_list.addItem(item)
             self.target_buff_list.blockSignals(False);self.target_preview_operator=op
         self.damage_form.setRowVisible(self.target_buff_list,self.target_buff_test.isChecked() and self.target_buff_list.count()>0)
-        state=self.current_run_operator_state();ids=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []
-        self.target_buff_status.setText('、'.join(mechanics()['char_buffs'][bid]['name'] for bid in ids) if ids else
-            '已核对：无个人强化' if state.get('scope')=='run' and state.get('char_buffs_complete') is True else '个人强化归属尚未确认；不会根据持有藏品推断')
-        pending=state.get('char_buff_pending_ids',[]) if state.get('scope')=='run' else []
-        if pending:
-            names='、'.join(mechanics()['char_buffs'][bid]['name'] for bid in pending)
-            self.target_buff_status.setText(('已确认：'+ '、'.join(mechanics()['char_buffs'][bid]['name'] for bid in ids)+'；' if ids else '')+
-                names+'归属待更新：本局藏品或进阶情况已变化，旧的未领取结论已失效。')
+        from .run_metadata_view import format_run_buff_status
+        self.target_buff_status.setText(format_run_buff_status(self.current_run_operator_state(),mechanics()['char_buffs']))
 
     def render_damage(self):
         if not self.damage_result:return

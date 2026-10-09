@@ -1,0 +1,41 @@
+{
+  "status": "UNAPPLIED_SOURCE_ONLY_CANDIDATE",
+  "entries": [
+    {
+      "path": "rouge/run_state.py",
+      "before": "(expected is not None and expected>0 and len(incoming_items)==expected and\n",
+      "after": "(isinstance(expected,(int,float)) and expected>0 and len(incoming_items)==expected and\n",
+      "reason": "Only numeric capability before the existing positive comparison; keep saved legacy raw count and bool/float historical behavior. No new count schema or write."
+    },
+    {
+      "path": "rouge/run_state.py",
+      "before": "        present=sum(member.get('present',True) for member in state['operators'].values())\n",
+      "after": "        present=sum(bool(member.get('present',True)) for member in state['operators'].values())\n",
+      "reason": "Count members by the same truthiness already used for names/overview/current-run gate. Do not normalize or reject persisted presence."
+    },
+    {
+      "path": "rouge/relic_counter_semantics.py",
+      "before": "    if not isinstance(proof,dict):return False\n    return counter_resources([proof]).get(key)==record\n",
+      "after": "    if not isinstance(proof,dict):return False\n    if not isinstance(proof.get('id'),str) or not isinstance(proof.get('source',''),str):return False\n    return counter_resources([proof]).get(key)==record\n",
+      "reason": "Persisted proof ID and provenance must safely enter the unchanged string-ID binding and startswith consumers; unsupported proof leaves remain unavailable historical evidence. Converter/math APIs unchanged."
+    },
+    {
+      "path": "rouge/app.py",
+      "before": "        state=self.current_run_operator_state();ids=state.get('char_buff_ids',[]) if state.get('scope')=='run' else []\n        self.target_buff_status.setText('、'.join(mechanics()['char_buffs'][bid]['name'] for bid in ids) if ids else\n            '已核对：无个人强化' if state.get('scope')=='run' and state.get('char_buffs_complete') is True else '个人强化归属尚未确认；不会根据持有藏品推断')\n        pending=state.get('char_buff_pending_ids',[]) if state.get('scope')=='run' else []\n        if pending:\n            names='、'.join(mechanics()['char_buffs'][bid]['name'] for bid in pending)\n            self.target_buff_status.setText(('已确认：'+ '、'.join(mechanics()['char_buffs'][bid]['name'] for bid in ids)+'；' if ids else '')+\n                names+'归属待更新：本局藏品或进阶情况已变化，旧的未领取结论已失效。')\n",
+      "after": "        from .run_metadata_view import format_run_buff_status\n        self.target_buff_status.setText(format_run_buff_status(self.current_run_operator_state(),mechanics()['char_buffs']))\n",
+      "reason": "Replace only unsafe names projection; keep current_run_operator_state original raw reference and all scenario metadata/numerical validation unchanged."
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "before": "MODULES = (\n    \"tests.test_training_view_100\",\n",
+      "after": "MODULES = (\n    \"tests.test_cache_consumers_101\",\n    \"tests.test_training_view_100\",\n",
+      "reason": "Register actual new regression module; current frozen743 must not be changed before Root completes100full."
+    }
+  ],
+  "root_completed100_commit_reported": "8436f90",
+  "Root_real101_original_reproduction": "/workspace/.continuation/section101-original-json-actual-linux-v2/observations.json",
+  "unknown_buff_original_Qt_runtime": null,
+  "no_full_file_overwrite": true,
+  "version": "freshv2;v1 frozen/unapplied",
+  "Root_real_original_counter_source_reproduction": "/workspace/.continuation/section101-original-counter-source-actual-linux-v1.json"
+}
