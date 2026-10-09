@@ -1355,6 +1355,7 @@ class Combat:
                 first=periodic_charge_seconds(self.s,max(0,sp['sp_cost']-initial),sp['sp_increment'],self.normal_interval,self.base_speed,attribute_speed=self.base_speed_reference,initial=True,incoming_interval=incoming)
         else:recharge=first=None
         mode=full['mode']
+        observation_seconds=self.s['window_seconds'] if mode=='ammo' and 'window_seconds' in self.s else shown['duration']
         total_damage=full['damage'];total_healing=full['healing'];duration=full['duration']
         wine_s1_unresolved=self.s['operator']=='char_1042_phatm2' and self.n==1
         gnosis_s1_unresolved=self.s['operator']=='char_206_gnosis' and self.n==1
@@ -1538,10 +1539,10 @@ class Combat:
             'sp_recovery_per_second':rate if sp['sp_type']=='INCREASE_WITH_TIME' else None,'mode':mode,
             'hit_counts':{name:sum(c['hits'] for c in full['components'] if c['name']==name)
                 for name in sorted({c['name'] for c in full['components']})},
-            'window_seconds':shown['duration'],
+            'window_seconds':observation_seconds,
             'window_healing':shown['healing'],
-            'window_dps':shown['damage']/shown['duration'] if shown['duration'] else None,
-            'window_hps':shown['healing']/shown['duration'] if shown['duration'] else None},
+            'window_dps':shown['damage']/observation_seconds if observation_seconds else None,
+            'window_hps':shown['healing']/observation_seconds if observation_seconds else None},
             'training':{'elite':self.s.get('elite',2),'level':self.s.get('level') or self.p['phases'][self.s.get('elite',2)]['max_level'],
                 'trust':self.s.get('trust',100),'potential':self.s.get('potential',1),'module_id':self.s.get('module_id'),'module_level':self.s.get('module_level',0)},
             'complete':complete,

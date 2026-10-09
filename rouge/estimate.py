@@ -152,7 +152,8 @@ def build_estimate(scenario,result,attributes,compute_skill):
             window_healing=result['attack']*skill['values']['attack@heal_scale']*result.get('healing_hits',result['hits'])*healing_targets
         else:window_healing=result['total_healing']*min(2 if skill_index==3 else 1,healing_targets)
     window_seconds=nonnegative('window_seconds',duration or 0)
-    if duration is not None:window_seconds=min(window_seconds,duration)
+    finite_ammo_window='window_seconds' in scenario and (operator,skill_index) in (('mechanist',1),('kaltsit',2))
+    if duration is not None and not finite_ammo_window:window_seconds=min(window_seconds,duration)
     if scenario.get('timing_mode','frames')=='frames':
         if initial is not None:initial=frame_time(initial)/FPS
         if duration is not None:duration=frame_time(duration)/FPS

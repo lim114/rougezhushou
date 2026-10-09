@@ -1,0 +1,83 @@
+{
+  "kind": "INACTIVE_113_SOURCE_ONLY_LOCAL_PROPOSAL",
+  "apply_ready": false,
+  "future_actual110_guard_sha256": null,
+  "future_actual113_original_receipt_sha256": null,
+  "product_paths": [
+    "rouge/operator_engine.py",
+    "rouge/estimate.py",
+    "rouge/uncertain_sources.py"
+  ],
+  "local_transports": [
+    {
+      "path": "rouge/operator_engine.py",
+      "before": "        mode=full['mode']\n        total_damage=full['damage'];total_healing=full['healing'];duration=full['duration']\n",
+      "after": "        mode=full['mode']\n        observation_seconds=self.s['window_seconds'] if mode=='ammo' and 'window_seconds' in self.s else shown['duration']\n        total_damage=full['damage'];total_healing=full['healing'];duration=full['duration']\n"
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "before": "            'window_seconds':shown['duration'],\n            'window_healing':shown['healing'],\n            'window_dps':shown['damage']/shown['duration'] if shown['duration'] else None,\n            'window_hps':shown['healing']/shown['duration'] if shown['duration'] else None},\n",
+      "after": "            'window_seconds':observation_seconds,\n            'window_healing':shown['healing'],\n            'window_dps':shown['damage']/observation_seconds if observation_seconds else None,\n            'window_hps':shown['healing']/observation_seconds if observation_seconds else None},\n"
+    },
+    {
+      "path": "rouge/estimate.py",
+      "before": "    if duration is not None:window_seconds=min(window_seconds,duration)\n",
+      "after": "    finite_ammo_window='window_seconds' in scenario and (operator,skill_index) in (('mechanist',1),('kaltsit',2))\n    if duration is not None and not finite_ammo_window:window_seconds=min(window_seconds,duration)\n"
+    },
+    {
+      "path": "rouge/uncertain_sources.py",
+      "before": "    subtotal['window_dps'] = subtotal['window_damage'] / shown['duration'] if shown['duration'] else None\n",
+      "after": "    observation_seconds = skill['window_seconds']\n    subtotal['window_dps'] = subtotal['window_damage'] / observation_seconds if observation_seconds else None\n"
+    },
+    {
+      "path": "rouge/uncertain_sources.py",
+      "before": "    subtotal['window_hps']=subtotal['window_healing']/shown['duration'] if shown['duration'] else None\n",
+      "after": "    observation_seconds=skill['window_seconds']\n    subtotal['window_hps']=subtotal['window_healing']/observation_seconds if observation_seconds else None\n"
+    }
+  ],
+  "author_checks": [
+    {
+      "path": "rouge/operator_engine.py",
+      "original_sha256": "f6c0a17e114435c5d9b80cabc6a38444fffce1bf21260125eb8e5e58a062f7e3",
+      "candidate_source_sha256": "2741c9301dc1b3caab16dc7d19227ea94d828dbb399617b26fee9e46da085d67",
+      "original_bytes": 156894,
+      "candidate_bytes": 157028,
+      "newline": "'\\r\\n'",
+      "local_transport_count": 2,
+      "inverse_byte_exact": true,
+      "compile_only": true,
+      "changed_functions": [
+        "calculate"
+      ]
+    },
+    {
+      "path": "rouge/estimate.py",
+      "original_sha256": "d8b8c6412878eebdc8b65955dec03f273a96b0f33e8d7adcee3856c966247ca6",
+      "candidate_source_sha256": "6291aae1128c08f5e186f56ec1e52b278d5adc61189ba3e5d3c3be5e08cc4c1e",
+      "original_bytes": 22060,
+      "candidate_bytes": 22202,
+      "newline": "'\\r\\n'",
+      "local_transport_count": 1,
+      "inverse_byte_exact": true,
+      "compile_only": true,
+      "changed_functions": [
+        "build_estimate"
+      ]
+    },
+    {
+      "path": "rouge/uncertain_sources.py",
+      "original_sha256": "d93bb347968d8264259047477f12003f9f23c933ad56dd5db971670e4c8cb4e7",
+      "candidate_source_sha256": "8d84907eed233dec92a1e6367daedcc3c17945a2a5027fec9654f480d6d0e00e",
+      "original_bytes": 4881,
+      "candidate_bytes": 4987,
+      "newline": "'\\n'",
+      "local_transport_count": 2,
+      "inverse_byte_exact": true,
+      "compile_only": true,
+      "changed_functions": [
+        "mask_pending_damage",
+        "mask_pending_healing"
+      ]
+    }
+  ]
+}

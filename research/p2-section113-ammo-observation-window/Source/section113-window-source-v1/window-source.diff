@@ -1,0 +1,290 @@
+--- frozen111/window111.py
++++ proposal113/window113.py
+@@ -1,4 +1,4 @@
+-"""Source preparation only; Root runs one real Deepcolor full-cast-tail MainWindow."""
++"""Source preparation only; Root runs one real Angel2 finite-ammo observation window."""
+ import argparse
+ import hashlib
+ import json
+@@ -13,8 +13,7 @@
+ 
+ from native_evidence import freeze, assert_native_equal, write_record, source_map
+ 
+-OP = 'char_110_deepcl'
+-TOKEN = 'token_10001_deepcl_tentac'
++OP = 'char_1041_angel2'
+ HELPER_SHA = 'f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a'
+ DEADLINE = 450
+ CLOCK_KEYS = ('initial_seconds','recharge_seconds','cycle_seconds','duration_seconds',
+@@ -27,25 +26,28 @@
+             'traceback':''.join(traceback.format_exception(type(error),error,error.__traceback__))}
+ 
+ def profile():
+-    return {'id':OP,'scope':'operator_profile','fields':{'elite':2,'level':70,
+-        'trust':100,'potential':1,'module_id':None,'module_level':0,'selected_skill':1},
+-        'skill_ranks':{'1':10,'2':10},'captured_at':1000.0,
++    return {'id':OP,'scope':'operator_profile','fields':{'elite':2,'level':1,
++        'trust':0,'potential':1,'module_id':None,'module_level':0,'selected_skill':1},
++        'skill_ranks':{'1':7,'2':7,'3':7},'captured_at':1000.0,
+         'sources':{},'field_times':{},'skill_times':{}}
+ 
+ def fixture():
+     member=profile();member.update(scope='run',present=True,recruitment_kind='non_emergency',
+         char_buff_ids=[],char_buffs_complete=True,char_buff_absent_ids=[],char_buff_pending_ids=[],
+         invalid_fields=[],invalid_skill_ranks=[],missing_fields=[])
+-    return {'id':'public111-window','started_at':0.0,'last_read':1000.0,'operators':{OP:member},
++    return {'id':'public113-window','started_at':0.0,'last_read':1000.0,'operators':{OP:member},
+         'crew_count':1,'selected_operator':OP,'relics':{},'tactical_tools':{},'relic_count':0,
+         'inventory_verified':True,'inventory_confirmed_at':1000.0,'bar_signature':[],
+         'relic_icon_memory':None,'history':[],'resources':{},'config':{},'maps':{},
+         'last_node_content':None,'node_contents':[],
+         'public_opaque':{'signed_zero':-0.0,'nullable':None}}
+ 
+-def sp_fields(result):
++def cast_fields(result):
+     skill=result['estimate']['skill']
+-    return {'skill':{key:skill[key] for key in CLOCK_KEYS},
++    keys=(*CLOCK_KEYS,'total_damage','total_healing','phase_damage','phase_healing',
++          'cycle_damage','cycle_healing','cycle_dps','cycle_hps','hit_counts',
++          'skill_attack','skill_attack_speed','skill_attack_speed_reference')
++    return {'skill':{key:skill[key] for key in keys},
+         'estimate_fields':{key:value for key,value in result['estimate'].items() if key=='sp_events'},
+         'timing_report':next(section for section in result['report']['sections'] if section['id']=='timing')}
+ 
+@@ -60,24 +62,24 @@
+     assert sha((artifact/'native_evidence.py').read_bytes())==HELPER_SHA
+     guard_raw=guard_path.read_bytes();guard=json.loads(guard_raw)
+     expected=guard['source_sha256'];extra=guard['source_additional_sha256']
+-    assert guard['section']==111 and len(expected)==args.source_count and source_map(root)==expected
++    assert guard['section']==113 and len(expected)==args.source_count and source_map(root)==expected
+     assert set(extra)=={'CORE_0.70_VERIFICATION.json'}
+     for name,want in extra.items():assert sha((root/name).read_bytes())==want
+     out.mkdir();(out/'records').mkdir();(out/'public-state').mkdir()
+     rows=[];records=[];pngs=[];calls=[];errors=[];pairs=[];active={'case':'bootstrap','phase':'constructor'}
+     started=time.perf_counter();done=threading.Event();window=None;module=None;backend=None;calculator=None
+-    receipt={'kind':'ROOT_ACTUAL_111_REAL_MAINWINDOW','phase':'candidate','passed':False,
++    receipt={'kind':'ROOT_ACTUAL_113_REAL_MAINWINDOW','phase':'candidate','passed':False,
+         'workflow_complete':False,'runner_sha256':sha(Path(__file__).read_bytes()),
+         'native_helper_sha256':HELPER_SHA,'source_guard_sha256':sha(guard_raw),
+         'source_before':expected,'source_additional_before':extra,'source_count':args.source_count,
+         'rows':rows,'pairs':pairs,'records':records,'pngs':pngs,'Qt_errors':errors,
+         'deadline_seconds':DEADLINE,'private_state_access':False,'native_windows_verified':False,
+         'game_chat_sampling_executed':False,
+-        'comparison_scope':'Within current real window: two skills with explicit zero/ten-second token travel pairs. Prior original API evidence is separate; no original GUI Gold claim.',
++        'comparison_scope':'One current real window: requested 5/60 seconds crossed with manual 0/20-second projectile delay. No original GUI Gold or base_attack1000 equivalence claim.',
+         'restart_scope':'One real close then direct RunState reload; no second MainWindow or live JSON alias claim.',
+         'formatter_scope':'Three complete formatter joint purity; no per-formatter isolated-purity claim.',
+-        'projectile_scope':'Manual token timing reference; does not prove actual game projectile or token animation.',
+-        'PNG_scope':'Actual damage header and following full-cast/phase/window report lines; hit counts are proved by saved native results, not claimed visually.'}
++        'projectile_scope':'Manual owner timing reference through the actual advanced JSON control; does not prove an actual game projectile or animation.',
++        'PNG_scope':'Actual damage header through the current observation-window average row, with each block start/end cursor rectangle inside the viewport. Root separately views two real PNGs.'}
+     def save(kind,**value):
+         ref=write_record(out/'records',len(records)+1,{'kind':kind,**active,**value})
+         ref.update(kind=kind,**active);records.append(ref);return ref
+@@ -101,19 +103,20 @@
+         backend=module.DesktopBackend;calculator=module.calculate_damage
+         receipt.update(python=sys.version,qt=qVersion())
+         def observed(*positional,**keywords):
+-            before=freeze({'args':positional,'kwargs':keywords})
++            before=freeze({'args':positional,'kwargs':keywords,**({'joint':joint()} if window is not None else {})})
+             try:value=calculator(*positional,**keywords)
+             except Exception as error:
+-                details=error_record(error);after=freeze({'args':positional,'kwargs':keywords})
++                details=error_record(error);after=freeze({'args':positional,'kwargs':keywords,**({'joint':joint()} if window is not None else {})})
+                 ref=save('actual_calculate_exception',before=before,after=after,error=details)
+                 calls.append({'caller':before,'error':details,'native':ref})
+                 assert_native_equal(after,before,'exception caller purity');raise
+-            after=freeze({'args':positional,'kwargs':keywords})
+-            ref=save('actual_calculate_result',before=before,after={'args':positional,'kwargs':keywords},result=value)
+-            calls.append({'caller':before,'error':None,'native':ref})
++            after_context={'args':positional,'kwargs':keywords,**({'joint':joint()} if window is not None else {})}
++            after=freeze(after_context)
++            ref=save('actual_calculate_result',before=before,after=after_context,result=value)
++            calls.append({'caller':before,'error':None,'native':ref,'return_value':value})
+             assert_native_equal(after,before,'numeric caller purity');return value
+         module.calculate_damage=observed
+-        with tempfile.TemporaryDirectory(prefix='public111-',dir=out/'public-state') as directory:
++        with tempfile.TemporaryDirectory(prefix='public113-',dir=out/'public-state') as directory:
+             folder=Path(directory);run_path=folder/'run.json';account_path=folder/'account.json'
+             run_raw=(json.dumps(fixture(),ensure_ascii=False,indent=2)+'\n').encode()
+             account_raw=(json.dumps({OP:profile()},ensure_ascii=False,indent=2)+'\n').encode()
+@@ -130,100 +133,112 @@
+                 return {'run':window.run.state,'account':window.account_cache.records,'disks':{
+                     p.relative_to(folder).as_posix():p.read_bytes() for p in sorted(folder.rglob('*')) if p.is_file()}}
+             def pure(label,callback):
+-                before=freeze(joint());value=callback();idle();after=freeze(joint())
++                before=freeze({'joint':joint(),'damage_result':window.damage_result})
++                value=callback();idle();after=freeze({'joint':joint(),'damage_result':window.damage_result})
+                 save('actual_UI_step',label=label,before=before,after=after)
+-                assert_native_equal(after,before,label+' state/disk purity');return value
++                assert_native_equal(after['joint'],before['joint'],label+' state/account/disk purity');return value
+             def screenshot(identity):
+-                anchor='【伤害输出】';head=window.damage_text.document().find(anchor);assert not head.isNull()
+-                pure('center actual damage header',lambda:(window.damage_text.setTextCursor(head),window.damage_text.centerCursor()))
+-                cursors=[QTextCursor(head)]
+-                for _ in range(3):
+-                    tail=QTextCursor(cursors[-1]);assert tail.movePosition(QTextCursor.MoveOperation.NextBlock)
+-                    cursors.append(tail)
++                # Exact labels come from current reporting.format_report's existing
++                # damage section and its DPS -> 每秒伤害 phrase replacement.
++                anchors=('【伤害输出】','伤害观察窗口：','窗口平均每秒伤害：')
++                cursors=[window.damage_text.document().find(text) for text in anchors]
++                assert all(not cursor.isNull() for cursor in cursors)
++                assert cursors[0].blockNumber()<cursors[1].blockNumber()<cursors[2].blockNumber()
++                pure('center actual observation-window report row',lambda:(
++                    window.damage_text.setTextCursor(cursors[1]),window.damage_text.centerCursor()))
++                head=QTextCursor(cursors[0]);head.movePosition(QTextCursor.MoveOperation.StartOfBlock)
++                visible=[];rectangles=[]
++                while head.blockNumber()<=cursors[2].blockNumber():
++                    assert len(visible)<12
++                    end=QTextCursor(head);end.movePosition(QTextCursor.MoveOperation.EndOfBlock)
++                    visible.append(head.block().text())
++                    rectangles.extend((window.damage_text.cursorRect(head),window.damage_text.cursorRect(end)))
++                    if head.blockNumber()==cursors[2].blockNumber():break
++                    assert head.movePosition(QTextCursor.MoveOperation.NextBlock)
+                 viewport=window.damage_text.viewport().rect()
+-                rectangles=[window.damage_text.cursorRect(cursor) for cursor in cursors]
+                 assert window.damage_text.isVisible() and all(viewport.contains(rect) for rect in rectangles)
+-                assert window.damage_text.textCursor().selectedText()==anchor
+-                visual=save('actual_PNG_visible_damage_rows',anchor=anchor,
+-                    displayed_text=window.damage_text.toPlainText(),visible_blocks=[cursor.block().text() for cursor in cursors],
++                assert window.damage_text.textCursor().selectedText()==anchors[1]
++                visual=save('actual_PNG_visible_damage_rows',anchors=anchors,
++                    displayed_text=window.damage_text.toPlainText(),visible_blocks=visible,
+                     cursor_rects=[(r.x(),r.y(),r.width(),r.height()) for r in rectangles],
+                     viewport_rect=(viewport.x(),viewport.y(),viewport.width(),viewport.height()))
+                 path=out/(identity+'.png');assert window.grab().save(str(path),'PNG')
+                 pngs.append({'path':path.name,'bytes':path.stat().st_size,'sha256':sha(path.read_bytes()),'visual':visual})
+             idle();assert not window.run.preserve_unreadable and window.run.save_issue is None
+             initial=freeze(joint());assert run_path.read_bytes()==run_raw and account_path.read_bytes()==account_raw
++            receipt['initial']=save('actual_public_fixture_loaded',run_bytes=run_raw,account_bytes=account_raw,value=initial)
+             pure('manual no-relic inventory',lambda:window.auto_relics.setChecked(False))
+-            pure('Deepcolor operator',lambda:window.operator_choices.select_value(OP))
+-            pure('default skill-duration observation',lambda:window.limit_window.setChecked(False))
++            pure('Angel2 operator',lambda:window.operator_choices.select_value(OP))
++            index=window.skill.findData(1);assert index>=0
++            pure('first skill',lambda:window.skill.setCurrentIndex(index))
++            pure('read actual run training',lambda:window.use_run_training.setChecked(True))
++            pure('use requested observation interval',lambda:window.limit_window.setChecked(True))
+             pure('framed timing',lambda:window.frame_timing.setChecked(True))
+-            pure('zero enemy defense',lambda:window.defense.setValue(0))
+-            pure('zero enemy resistance',lambda:window.resistance.setValue(0))
++            pure('zero manual enemy defense',lambda:window.defense.setValue(0))
++            pure('zero manual enemy resistance',lambda:window.resistance.setValue(0))
+             pure('declared continuous attacks',lambda:window.continuous_attacks.setChecked(True))
+-            count_widget=next(widget for owner,key,skills,widget in window.model_option_widgets if owner==OP and key=='summon_count')
+-            pure('one explicitly declared tentacle',lambda:count_widget.setValue(1))
+-            for skill,duration,cast_hits,delayed_hits in ((1,30,24,16),(2,55,44,36)):
+-                index=window.skill.findData(skill);assert index>=0
+-                pure('skill selection',lambda:window.skill.setCurrentIndex(index))
+-                pure('unbound normal animation',lambda:window.normal_animation_reference.setCurrentIndex(0))
+-                pure('unbound skill animation',lambda:window.skill_animation_reference.setCurrentIndex(0))
++            pure('unbound normal animation',lambda:window.normal_animation_reference.setCurrentIndex(0))
++            pure('unbound skill animation',lambda:window.skill_animation_reference.setCurrentIndex(0))
++            pure('default report presentation',lambda:window.raw_damage.setChecked(False))
++            pure('default report without technical expansion',lambda:window.damage_technical.setChecked(False))
++            assert window.target_enemy.currentData() is None and not window.target_buff_test.isChecked()
++            for travel in (0,20):
+                 baseline=None
+-                for travel in (0,10):
+-                    identity=f's{skill}-travel{travel}'
++                for seconds in (5,60):
++                    identity=f'window{seconds}-travel{travel}'
+                     active.update(case=identity,phase='configure_actual_timing')
+-                    timing={'windup_frames':1,'recovery_frames':0,'units':{TOKEN:{
+-                        'windup_frames':1,'recovery_frames':0,'projectile_travel_seconds':travel}}}
+-                    pure('public timing JSON',lambda:window.timing_scenario.setPlainText(json.dumps(timing)))
++                    timing={'windup_frames':0,'recovery_frames':0,'projectile_travel_seconds':travel}
++                    pure('requested observation seconds',lambda:window.window_seconds.setValue(seconds))
++                    pure('public owner timing JSON',lambda:window.timing_scenario.setPlainText(json.dumps(timing)))
+                     active['phase']='explicit_snapshot';start=len(calls);pure('MainWindow.calculate',window.calculate)
+                     assert len(calls)==start+1 and calls[-1]['error'] is None and window.damage_result is not None
+                     call=calls[-1];caller=call['caller']['args'][0];result=window.damage_result['result']
+-                    assert caller['operator']==OP and caller['skill']==skill and caller['timing_mode']=='frames'
+-                    assert caller['elite']==2 and caller['level']==70 and caller['skill_rank']==10
+-                    assert caller['module_id'] is None and caller['module_level']==0 and caller['summon_count']==1
++                    assert result is call['return_value']
++                    assert caller['operator']==OP and caller['skill']==1 and caller['timing_mode']=='frames'
++                    assert caller['elite']==2 and caller['level']==1 and caller['skill_rank']==7
++                    assert caller['trust']==0 and caller['potential']==1
++                    assert caller['module_id'] is None and caller['module_level']==0
+                     assert caller['continuous_attacks'] is True and caller['relic_ids']==[]
+-                    assert caller['enemy_defense']==0 and caller['enemy_resistance']==0 and 'window_seconds' not in caller
+-                    assert_native_equal(caller['timing'],timing,'complete actual manual child/owner timing input')
++                    assert caller['enemy_defense']==0 and caller['enemy_resistance']==0
++                    assert 'base_attack' not in caller and 'target_enemy' not in caller
++                    assert_native_equal(caller['window_seconds'],window.window_seconds.value(),'actual window widget to numeric caller')
++                    assert caller['window_seconds']==seconds
++                    assert_native_equal(caller['timing'],timing,'complete actual manual owner timing input')
+                     assert_native_equal(window.damage_result['scenario'],caller,'actual UI/native caller match')
+-                    cast=result['estimate']['skill'];token=next(c for c in result['components'] if c['name']=='触手')
+-                    stream=next(s for s in result['timing']['streams'] if s['unit']==TOKEN)
+-                    normal=next(s for s in result['timing']['recharge_streams'] if s['unit']==TOKEN)
+-                    assert cast['duration_seconds']==duration and cast['window_seconds']==duration
+-                    assert cast['hit_counts']['触手']==cast_hits and len(stream['emitted_times_seconds'])==cast_hits
+-                    assert token['hits']==(delayed_hits if travel else cast_hits)
+-                    assert len(stream['times_seconds'])==token['hits']
+-                    assert_native_equal(token['times_seconds'],stream['times_seconds'],'shown token stream attribution')
+-                    assert all(t<duration for t in stream['times_seconds'])
+-                    assert math.isclose(cast['phase_damage'],result['total_damage'],rel_tol=1e-12,abs_tol=1e-7)
+-                    assert cast['recharge_seconds'] is not None and cast['recharge_seconds']>0
+-                    assert all(t<cast['recharge_seconds'] for t in normal['times_seconds'])
+-                    assert len(normal['times_seconds'])<=len(normal['emitted_times_seconds'])
+-                    if travel:
+-                        assert stream['emitted_times_seconds'][-1]>duration
+-                        assert cast['total_damage']>cast['phase_damage']
+-                        assert len(normal['times_seconds'])<len(normal['emitted_times_seconds'])
+-                    before=freeze({'result':result,'joint':joint()})
++                    cast=result['estimate']['skill'];assert cast['mode']=='ammo' and cast['window_seconds']==seconds
++                    assert_native_equal(cast['window_dps'],result['total_damage']/seconds,'current damage numerator/requested window')
++                    assert_native_equal(cast['window_hps'],result['total_healing']/seconds,'current healing numerator/requested window')
++                    assert_native_equal(cast['window_healing'],result['total_healing'],'current window healing numerator')
++                    damage=next(section for section in result['report']['sections'] if section['id']=='damage')
++                    metrics={row['key']:row for row in damage['metrics']}
++                    assert metrics['window_seconds']['value']==seconds
++                    assert_native_equal(metrics['window_damage']['value'],result['total_damage'],'actual report observation damage numerator')
++                    assert_native_equal(metrics['window_dps']['value'],cast['window_dps'],'actual report window average')
++                    events=[t for component in result['components'] for t in component.get('times_seconds',[])]
++                    assert all(0<=t<seconds for t in events)
++                    if travel and seconds==5:assert result['total_damage']==0 and not events
++                    else:assert result['total_damage']>0 and events
++                    before=freeze({'damage_result':window.damage_result,'joint':joint()})
+                     texts={'estimate':estimate.format_estimate(result),'default':reporting.format_report(result),
+                            'technical':reporting.format_report(result,technical=True)}
+-                    after=freeze({'result':result,'joint':joint()})
++                    after=freeze({'damage_result':window.damage_result,'joint':joint()})
+                     save('actual_three_formatter_group',before=before,after=after,texts=texts)
+                     assert_native_equal(after,before,'three formatter joint purity')
+                     assert texts['estimate']==texts['default'] and window.damage_text.toPlainText()==texts['default'].replace(chr(160),' ')
+-                    snapshot=freeze({'caller':caller,'damage_result':window.damage_result,'texts':texts,
++                    snapshot=freeze({'caller':window.damage_result['scenario'],'damage_result':window.damage_result,'texts':texts,
+                         'displayed_damage':window.damage_text.toPlainText(),'state_and_disks':joint()})
+-                    ref=save('actual_window_snapshot',value=snapshot,sp=sp_fields(result))
+-                    if not travel:baseline=snapshot;baseline_ref=ref
++                    ref=save('actual_window_snapshot',value=snapshot,cast=cast_fields(result))
++                    if seconds==5:baseline=snapshot;baseline_ref=ref
+                     else:
+-                        old=baseline['damage_result']['result']
+-                        same_caller=freeze(caller);same_caller['timing']['units'][TOKEN]['projectile_travel_seconds']=0
+-                        assert_native_equal(same_caller,baseline['caller'],'same complete input except declared token travel')
+-                        assert_native_equal(sp_fields(result),sp_fields(old),'same complete public SPclock/report fields')
+-                        assert_native_equal(cast['total_damage'],old['estimate']['skill']['total_damage'],'same complete-cast damage after delayed attribution')
+-                        assert_native_equal(cast['hit_counts'],old['estimate']['skill']['hit_counts'],'same complete-cast hit counts')
+-                        assert_native_equal(next(c for c in result['components'] if c['name']=='本体普攻'),
+-                            next(c for c in old['components'] if c['name']=='本体普攻'),'unchanged independent owner output')
+-                        assert_native_equal(snapshot['state_and_disks'],baseline['state_and_disks'],'paired state/account/disk')
+-                        pairs.append({'skill':skill,'baseline_snapshot':baseline_ref,'delayed_snapshot':ref,
+-                                      'complete_cast_preserved':True,'phase_and_normal_stay_bounded':True})
+-                    rows.append({'id':identity,'skill':skill,'travel_seconds':travel,'snapshot':ref,'numeric':call['native']})
++                        same_caller=freeze(caller);same_caller['window_seconds']=baseline['caller']['window_seconds']
++                        assert_native_equal(same_caller,baseline['caller'],'same complete caller except actual window widget')
++                        assert_native_equal(cast_fields(result),cast_fields(baseline['damage_result']['result']),
++                            'complete cast/phase/cycle/SP fields and timing report stay independent of observation window')
++                        assert_native_equal(snapshot['state_and_disks'],baseline['state_and_disks'],'paired state/account/all disks')
++                        pairs.append({'travel_seconds':travel,'short_snapshot':baseline_ref,'long_snapshot':ref,
++                            'cast_and_SP_preserved':True,'observation_domain_checked':True})
++                    rows.append({'id':identity,'window_seconds':seconds,'travel_seconds':travel,
++                        'snapshot':ref,'numeric':call['native'],'denominator_from_actual_UI':True})
+                     with (out/'checkpoint.json').open('w',encoding='utf-8') as stream:
+                         stream.write(json.dumps({'completed_case_ids':[r['id'] for r in rows],'next_case_index':len(rows),
+                             'active':active,'source_guard_sha256':sha(guard_raw)}));stream.flush();os.fsync(stream.fileno())

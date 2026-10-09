@@ -25,7 +25,8 @@ def mask_pending_damage(result, full, shown, normal, duration, cycle):
                         if cycle is not None else None,
     }
     subtotal['cycle_dps'] = subtotal['cycle_damage'] / cycle if cycle else None
-    subtotal['window_dps'] = subtotal['window_damage'] / shown['duration'] if shown['duration'] else None
+    observation_seconds = skill['window_seconds']
+    subtotal['window_dps'] = subtotal['window_damage'] / observation_seconds if observation_seconds else None
     result['known_damage_subtotals'] = subtotal
     if pending(full):
         skill['total_damage'] = skill['phase_damage'] = None
@@ -59,7 +60,8 @@ def mask_pending_healing(result, full, shown, normal, duration, cycle):
         'window_healing':known(shown),
         'cycle_healing':known(full,cycle)+(known(normal) if normal else 0) if cycle is not None else None}
     subtotal['cycle_hps']=subtotal['cycle_healing']/cycle if cycle else None
-    subtotal['window_hps']=subtotal['window_healing']/shown['duration'] if shown['duration'] else None
+    observation_seconds=skill['window_seconds']
+    subtotal['window_hps']=subtotal['window_healing']/observation_seconds if observation_seconds else None
     result['known_healing_subtotals']=subtotal
     if pending(full):skill['total_healing']=skill['phase_healing']=None
     if cycle is not None and (pending(full) or pending(normal)):skill['cycle_healing']=skill['cycle_hps']=None
