@@ -1,0 +1,53 @@
+{
+  "kind": "SOURCE_ONLY_UNEXECUTED_LOCAL_TRANSPORT",
+  "target": "rouge/app.py",
+  "baseline_sha256": "fa77caff7b133a42d651f25166327982f37487a57ddb84f3461fc13bed1e03c8",
+  "baseline_bytes": 100115,
+  "candidate_sha256": "b078043af01c8265d79736640b532ad13e3f31c490259ff0de40f85b71a8868b",
+  "baseline_CRLF_preserved": true,
+  "blocks": [
+    {
+      "id": 1,
+      "old_lf": "        self.rank=QLabel('未确认')\n        form.addRow('技能等级（自动读取）',self.rank)\n",
+      "new_lf": "        self.rank=QLabel('未确认')\n        form.addRow('技能等级（自动读取）',self.rank)\n        self.account_skill_reference_key=None\n        self.account_skill_reference=QCheckBox('选择账号已读技能等级作局外模拟参考（仅当前技能）')\n        self.account_skill_reference.toggled.connect(lambda:self.update_skill_options())\n        form.addRow(self.account_skill_reference)\n        self.skill_cultivation_row=None\n        self.skill_cultivation_explanation=QLabel('')\n        self.skill_cultivation_explanation.setWordWrap(True)\n        form.addRow('技能培养来源与资格',self.skill_cultivation_explanation)\n        form.setRowVisible(self.skill_cultivation_explanation,False)\n",
+      "old_lf_sha256": "004f7420ef61c58a6364f135e670843d85d8c39a5f11e787e02669780619cbbc",
+      "new_lf_sha256": "b316b74efeb8d05aece7575b15d12c28fc8feb06e58a63e6ace7e7c8f405be85"
+    },
+    {
+      "id": 2,
+      "old_lf": "    def skill_rank_value(self):\n        known=self.current_operator_state().get('skill_ranks',{})\n        skill=self.skill.currentData()\n        return known.get(str(skill),known.get(skill,10 if self.training_conditions()['elite']==2 else 7))\n",
+      "new_lf": "    def skill_rank_selection(self):\n        from .skill_cultivation import select_rank\n        op=self.operator.currentData()\n        profile=operator_profiles().get(op)\n        state=self.current_operator_state()\n        elite=state.get('fields',{}).get('elite',len(profile['phases'])-1 if profile else 2)\n        return select_rank(profile,self.skill.currentData(),elite,state=state,\n            account=self.account_cache.view(op),\n            account_reference=(hasattr(self,'account_skill_reference') and self.account_skill_reference.isChecked()))\n\n    def skill_rank_value(self):\n        return self.skill_rank_selection()['rank']\n\n    def clear_skill_rank_reference(self):\n        self.account_skill_reference_key=None\n        if hasattr(self,'account_skill_reference'):\n            self.account_skill_reference.blockSignals(True)\n            self.account_skill_reference.setChecked(False)\n            self.account_skill_reference.blockSignals(False)\n\n    def update_skill_rank_source(self):\n        if not hasattr(self,'skill_cultivation_explanation'):return\n        from .skill_cultivation import explanation,format_explanation\n        op,skill=self.operator.currentData(),self.skill.currentData()\n        key=(op,skill)\n        if key!=self.account_skill_reference_key:\n            self.clear_skill_rank_reference()\n            self.account_skill_reference_key=key\n        selection=self.skill_rank_selection()\n        self.account_skill_reference.setEnabled(selection['account_usable'])\n        if not selection['account_usable'] and self.account_skill_reference.isChecked():\n            self.account_skill_reference.blockSignals(True)\n            self.account_skill_reference.setChecked(False)\n            self.account_skill_reference.blockSignals(False)\n            selection=self.skill_rank_selection()\n        self.account_skill_reference.setToolTip(selection['account_reason'] or\n            '明确选择该技能已读账号等级作局外模拟；不会标作本局读取，不改写账号或本局记录。')\n        profile=operator_profiles().get(op)\n        state=self.current_operator_state()\n        elite=state.get('fields',{}).get('elite',len(profile['phases'])-1 if profile else 2)\n        row=explanation(op,profile,skill,elite,selection)\n        self.skill_cultivation_row=row\n        self.skill_cultivation_explanation.setText(format_explanation(row))\n        self.damage_form.setRowVisible(self.skill_cultivation_explanation,row is not None)\n",
+      "old_lf_sha256": "b17dceb1f9fccb1e3d7635dc1138135b44cbf742cf0e89964b5dc8483b4e5993",
+      "new_lf_sha256": "545d136d0b97e6dea443398aad9d798654defb5a0337410dafd51db2502184db"
+    },
+    {
+      "id": 3,
+      "old_lf": "        op,skill = self.operator.currentData(), self.skill.currentData()\n        profile=operator_profiles().get(op) or {'skills':[]}\n",
+      "new_lf": "        op,skill = self.operator.currentData(), self.skill.currentData()\n        profile=operator_profiles().get(op) or {'skills':[]}\n        self.update_skill_rank_source()\n",
+      "old_lf_sha256": "082347081a44a5803128c9af1195a0bfc720f51f6ea7eea68d63598862ff5f26",
+      "new_lf_sha256": "9703335893dbfe747c92f92f3cf04cd5d71b4c270fd6c5bc074f5e27f27d6e23"
+    },
+    {
+      "id": 4,
+      "old_lf": "        rank=self.skill_rank_value()\n        self.rank.setText((f'等级 {rank}' if rank<=7 else f'专精 {rank-7}')+\n                         ('（读取）' if str(skill) in known or skill in known else '（未确认，档案预览）'))\n",
+      "new_lf": "        from .skill_cultivation import rank_label\n        self.rank.setText(rank_label(self.skill_rank_selection()))\n",
+      "old_lf_sha256": "a19d623c5fb714efc81d049325220cbece8be6c33ff28ab6cbf86b7680be4f8c",
+      "new_lf_sha256": "ca07691a842810156878aaa517efd947de4caaeccdc45d6ca025e563a3c70170"
+    },
+    {
+      "id": 5,
+      "old_lf": "        known_ranks=state.get('skill_ranks',{})\n        if str(self.skill.currentData()) not in known_ranks and self.skill.currentData() not in known_ranks:\n            scenario['unconfirmed_training'].append('所选技能等级')\n",
+      "new_lf": "        known_ranks=state.get('skill_ranks',{})\n        if self.skill_rank_selection()['manual_reference_applied']:\n            scenario['unconfirmed_training'].append('所选技能等级（已选账号参考，局外模拟）')\n        elif str(self.skill.currentData()) not in known_ranks and self.skill.currentData() not in known_ranks:\n            scenario['unconfirmed_training'].append('所选技能等级')\n",
+      "old_lf_sha256": "ed2618a45cf1902afdb99621c59771762586c0ce5542b02b20bf07789583aa1a",
+      "new_lf_sha256": "1d9f40d55614b4748e1d8b82809670583808ed6b174bd27b3600bb0cd635dd01"
+    },
+    {
+      "id": 6,
+      "old_lf": "        self.run.reset()\n        self.refresh_operator_overview()\n",
+      "new_lf": "        self.run.reset()\n        self.clear_skill_rank_reference()\n        self.refresh_operator_overview()\n",
+      "old_lf_sha256": "f2cbf8115b7a6082a03a72824bc6be4ebb7dd7d5787e450988f80c9e51893d5e",
+      "new_lf_sha256": "b796648373bae7d3d7ca7f468f8af6b289f1df1f75f885b01eff1b2e5a20af82"
+    }
+  ],
+  "root_application_rule": "Rebind against actual section117 source. Exactly one match per old_lf block; preserve CRLF and all other bytes. Do not replace a future full app snapshot."
+}

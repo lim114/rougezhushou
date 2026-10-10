@@ -558,6 +558,15 @@ class MainWindow(QMainWindow):
         self.skill_picture=SubjectPicture(edge=48);form.addRow(self.skill_picture)
         self.rank=QLabel('未确认')
         form.addRow('技能等级（自动读取）',self.rank)
+        self.account_skill_reference_key=None
+        self.account_skill_reference=QCheckBox('选择账号已读技能等级作局外模拟参考（仅当前技能）')
+        self.account_skill_reference.toggled.connect(lambda:self.update_skill_options())
+        form.addRow(self.account_skill_reference)
+        self.skill_cultivation_row=None
+        self.skill_cultivation_explanation=QLabel('')
+        self.skill_cultivation_explanation.setWordWrap(True)
+        form.addRow('技能培养来源与资格',self.skill_cultivation_explanation)
+        form.setRowVisible(self.skill_cultivation_explanation,False)
         self.attack=QLabel('由培养档案计算')
         # Kept as an internal compatibility value; the visible result includes effects.
         self.attack.hide()
@@ -841,10 +850,50 @@ class MainWindow(QMainWindow):
                 'potential':fields.get('potential',1),'module_id':fields.get('module_id'),
                 'module_level':fields.get('module_level',0)}
 
+    def skill_rank_selection(self):
+        from .skill_cultivation import select_rank
+        op=self.operator.currentData()
+        profile=operator_profiles().get(op)
+        state=self.current_operator_state()
+        elite=state.get('fields',{}).get('elite',len(profile['phases'])-1 if profile else 2)
+        return select_rank(profile,self.skill.currentData(),elite,state=state,
+            account=self.account_cache.view(op),
+            account_reference=(hasattr(self,'account_skill_reference') and self.account_skill_reference.isChecked()))
+
     def skill_rank_value(self):
-        known=self.current_operator_state().get('skill_ranks',{})
-        skill=self.skill.currentData()
-        return known.get(str(skill),known.get(skill,10 if self.training_conditions()['elite']==2 else 7))
+        return self.skill_rank_selection()['rank']
+
+    def clear_skill_rank_reference(self):
+        self.account_skill_reference_key=None
+        if hasattr(self,'account_skill_reference'):
+            self.account_skill_reference.blockSignals(True)
+            self.account_skill_reference.setChecked(False)
+            self.account_skill_reference.blockSignals(False)
+
+    def update_skill_rank_source(self):
+        if not hasattr(self,'skill_cultivation_explanation'):return
+        from .skill_cultivation import explanation,format_explanation
+        op,skill=self.operator.currentData(),self.skill.currentData()
+        key=(op,skill)
+        if key!=self.account_skill_reference_key:
+            self.clear_skill_rank_reference()
+            self.account_skill_reference_key=key
+        selection=self.skill_rank_selection()
+        self.account_skill_reference.setEnabled(selection['account_usable'])
+        if not selection['account_usable'] and self.account_skill_reference.isChecked():
+            self.account_skill_reference.blockSignals(True)
+            self.account_skill_reference.setChecked(False)
+            self.account_skill_reference.blockSignals(False)
+            selection=self.skill_rank_selection()
+        self.account_skill_reference.setToolTip(selection['account_reason'] or
+            '明确选择该技能已读账号等级作局外模拟；不会标作本局读取，不改写账号或本局记录。')
+        profile=operator_profiles().get(op)
+        state=self.current_operator_state()
+        elite=state.get('fields',{}).get('elite',len(profile['phases'])-1 if profile else 2)
+        row=explanation(op,profile,skill,elite,selection)
+        self.skill_cultivation_row=row
+        self.skill_cultivation_explanation.setText(format_explanation(row))
+        self.damage_form.setRowVisible(self.skill_cultivation_explanation,row is not None)
 
     def update_operator(self,*,preserve_level=False):
         if not hasattr(self,'attack'):
@@ -969,6 +1018,7 @@ class MainWindow(QMainWindow):
         self.sample_epoch += 1
         self.capture.discard_pending()
         self.run.reset()
+        self.clear_skill_rank_reference()
         self.refresh_operator_overview()
         self.observation=None
         self.capture_operator_picture.set_subject(None,None,'')
@@ -1005,6 +1055,7 @@ class MainWindow(QMainWindow):
             return
         op,skill = self.operator.currentData(), self.skill.currentData()
         profile=operator_profiles().get(op) or {'skills':[]}
+        self.update_skill_rank_source()
         current=profile['skills'][skill-1]['levels'][self.skill_rank_value()-1] if skill else {}
         self.skill_picture.set_subject('skill',profile['skills'][skill-1]['id'],current['name']) if skill else self.skill_picture.set_subject(None,None,'')
         from .reporting import has_healing
@@ -1048,9 +1099,8 @@ class MainWindow(QMainWindow):
             self.rank.setText('无可用技能')
             if hasattr(self,'raw_damage'):self.calculate()
             return
-        rank=self.skill_rank_value()
-        self.rank.setText((f'等级 {rank}' if rank<=7 else f'专精 {rank-7}')+
-                         ('（读取）' if str(skill) in known or skill in known else '（未确认，档案预览）'))
+        from .skill_cultivation import rank_label
+        self.rank.setText(rank_label(self.skill_rank_selection()))
         if hasattr(self,'raw_damage'):self.calculate()
 
     def update_condition_cultivation_explanations(self,op,skill):
@@ -1130,7 +1180,9 @@ class MainWindow(QMainWindow):
         scenario['unconfirmed_training']=[label for key,label in [('elite','精英阶段'),('trust','信赖'),
             ('potential','潜能'),('module_id','模组'),('module_level','模组阶段')] if key not in fields]
         known_ranks=state.get('skill_ranks',{})
-        if str(self.skill.currentData()) not in known_ranks and self.skill.currentData() not in known_ranks:
+        if self.skill_rank_selection()['manual_reference_applied']:
+            scenario['unconfirmed_training'].append('所选技能等级（已选账号参考，局外模拟）')
+        elif str(self.skill.currentData()) not in known_ranks and self.skill.currentData() not in known_ranks:
             scenario['unconfirmed_training'].append('所选技能等级')
         if 'level' not in fields and not self.level_override:scenario['unconfirmed_training'].append('当前等级')
         if fields and state.get('scope')!='run':

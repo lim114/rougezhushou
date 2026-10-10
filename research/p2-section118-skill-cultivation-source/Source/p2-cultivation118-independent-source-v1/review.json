@@ -1,0 +1,275 @@
+{
+  "kind": "INDEPENDENT_SOURCE_REVIEW_ONLY_NOT_RUNTIME_PASS",
+  "planned_section": 118,
+  "reviewer": "/root/p2_cultivation116_source/cultivation118_source_peer",
+  "reviewed_at_utc": "2026-10-10T04:24:57.730429+00:00",
+  "candidate_directory": "/workspace/.continuation/p2-cultivation116-source-v1",
+  "candidate_manifest": {
+    "bytes": 3834,
+    "sha256": "9cf1a93cb452c0c600e51b0f2a720755815096d7dcf2939da71e7e9c5bb6607c"
+  },
+  "verified_payload_count": 21,
+  "source_review_passed": true,
+  "passed": false,
+  "runtime_passed": false,
+  "root_runtime_still_required": true,
+  "blockers": [],
+  "operations": {
+    "stdlib_read_AST_hash_compile_noexec_only": true,
+    "project_imports": 0,
+    "project_function_executions": 0,
+    "API_executions": 0,
+    "tests_executions": 0,
+    "Qt_Wine_executions": 0,
+    "native_helper_gzip_executions": 0,
+    "Git_executions": 0,
+    "tracked_mutations": 0,
+    "private_state_reads": 0,
+    "private_state_writes": 0
+  },
+  "checked_product_behavior": [
+    {
+      "id": "default_rank_compatibility",
+      "source_finding": "_rank保留str技能键优先于int键；known原等级优先，缺少本局等级时只沿用原elite==2→10否则7。账号等级只有明确account_reference且可用时替换，不通过此分支补本局事实。",
+      "qualification": "仅Source控制流；现有training_view本就允许账号-only或无效本局后的账号回退，此旧行为保持。"
+    },
+    {
+      "id": "default_labels",
+      "source_finding": "rank_label的默认等级/专精文本及（读取）/（未确认，档案预览）与原app拼接逐字一致。只有明确选择生效时改为账号等级参考/局外模拟后缀。"
+    },
+    {
+      "id": "actual_request_path",
+      "source_finding": "checkbox toggled经update_skill_options调用update_skill_rank_source，之后skill_rank_value和calculate场景skill_rank都读取同一select_rank。不是只更新标签；仅当前技能的有效账号参考能驱动现有计算请求。",
+      "runtime_required": "Root真实checkbox/combobox信号、前后完整请求/结果/三种格式器与取消恢复仍必须实际验证。"
+    },
+    {
+      "id": "context_reset",
+      "source_finding": "update_skill_rank_source以(op,skill)为键，键改变先blockSignals清checkbox再设新键；reset_run在run.reset之后refresh之前显式clear。不可用来源也blockSignals取消并重读选择。不记录偏好入account/run持久态。",
+      "runtime_required": "Qt实际构造、技能/干员切换、新局、可用性变化、训练开关和离队视图须逐组验证。"
+    },
+    {
+      "id": "account_qualification",
+      "source_finding": "新分支拒绝missing、masked（int/str两种标记）、非精确int/布尔/非1–min(10,levels长度)、锁定技能；精0/1账号专精>7禁用，原baseline保留而非把10截成7。",
+      "default_policy_scope": "新校验仅用于新账号参考分支，不扩展为旧本局/账号schema或新damage门。"
+    },
+    {
+      "id": "masked_run_boundary",
+      "source_finding": "已编入training_view.select_training_view先从member.skill_ranks过滤invalid_skill_ranks，组合视图skill_ranks仅来自该filtered run ranks，而非账号。新helper消费此qualified视图，默认masked本局不被账号自动补足。新account分支自己检查masked账号标记。",
+      "qualification": "原training_view采用key直接匹配的现有语义未修改；不能宣称本节修复其所有跨类型mask语义。"
+    },
+    {
+      "id": "source_and_unconfirmed",
+      "source_finding": "新来源行区分本局读取、账号档案参考/本局未确认、未确认预览、已选账号作局外模拟/本局未确认；calculate生效参考分支增加对应unconfirmed_training。默认旧标签可仍显示读取，但详细行不将账号冒充run确认。"
+    },
+    {
+      "id": "no_state_or_arithmetic_invention",
+      "source_finding": "6局部app运输逐字组合正好得到candidate；所有其他字节保留。无account_cache/RunState/engine/damage变更。训练/招募说明函数只构造展示数据、复制原子门，不增加参数或改结果；训练门明确不作为现形态使用新资格。"
+    },
+    {
+      "id": "E0_unknown_and_patch_missing",
+      "source_finding": "精0公共5–7的e0_common_use_verified保持None并呈现未核验，不新增对原API的拒绝；两个patch形态original_source_status为missing且原训练门None，不借caster数据。actual_activation_verified/account_training_verified始终None。"
+    }
+  ],
+  "local_transport": {
+    "blocks": 6,
+    "each_old_block_exactly_one_match": true,
+    "block_hashes_verified": true,
+    "CRLF_preserved": true,
+    "candidate_equals_exact_composition": true,
+    "all_other_baseline_bytes_unchanged": true,
+    "changed_existing_AST_functions": [
+      "make_damage_tab",
+      "skill_rank_value",
+      "reset_run",
+      "update_skill_options",
+      "calculate"
+    ],
+    "new_AST_functions": [
+      "skill_rank_selection",
+      "clear_skill_rank_reference",
+      "update_skill_rank_source"
+    ],
+    "future_application": "不得全app覆盖116/117。Root须实际源码重绑定6个单匹配块；cloud只新增118 selector且保持已有顺序。"
+  },
+  "original_source": {
+    "files": {
+      "character_source": {
+        "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+        "bytes": 14975251,
+        "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697"
+      },
+      "topic_source": {
+        "path": "/workspace/.continuation/p2-after-055-audit/relic-scope/roguelike_topic_table.json",
+        "bytes": 17943244,
+        "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86"
+      }
+    },
+    "actual_bytes_hash_verified": true,
+    "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "forms": 30,
+    "skills": 83,
+    "common_training_coordinates": 180,
+    "mastery_training_coordinates": 249,
+    "raw_scalar_types_dict_field_order_and_list_order_exact": true,
+    "profile_native_ids_skill_ids_and_unlocks_match": true,
+    "all_bound_skill_levels_count": 10,
+    "missing_original_forms": [
+      "char_1001_amiya2",
+      "char_1037_amiya3"
+    ],
+    "missing_forms_absent_in_original_and_candidate_bindings": true,
+    "recruit_topics": 6,
+    "recruit_upper_bound_fields_match_raw_originals": true,
+    "scope": "原件仅训练要求/招募参数，不证明精0技能使用规则、未知临时或应急事件、原生附着。"
+  },
+  "online_source_qualification": {
+    "download_ledgers_v1_v2_v3_read": true,
+    "four_DDG_pages_hash_verified_and_all_result_snippets_read": true,
+    "BWIKI_full_text_read_and_oldid_345768_located": true,
+    "search_snippets_not_article_body": true,
+    "HTTP403_402_and_one_URL_encoding_failure_preserved": true,
+    "unknown_E0_rule_not_resolved_by_general_max_advance_or_forum_snippets": true
+  },
+  "authored_tests": {
+    "methods": 18,
+    "AST_and_compile_noexec": true,
+    "executed": false,
+    "coverage_source": [
+      "默认不继承与原rank标签",
+      "明确选择高低等级及取消",
+      "账号-only provenance",
+      "专精门/技能锁定/坏原型/masked/双类型键",
+      "精0未知说明与原API口径",
+      "30/83训练坐标和原件identity漂移",
+      "2patch缺失",
+      "招募上限不填事实",
+      "frames/continuous真实治疗差异与取消完整结果"
+    ],
+    "limitations": "单元Source只证明意图；其中格式器调用是普通/technical两种，Root窗口三种完整formatter/purity/native/saved/PNG要求另行执行。"
+  },
+  "Root_remaining_acceptance": [
+    "实际117后源码重绑定并审核局部块、Source guard/CORE",
+    "Root实际18tests及相关回归Linux/Wine",
+    "WINDOW_ACCEPTANCE A–O真实窗口信号与两时序A–D/I–J完整请求/图/三报告",
+    "本局/账号包含强化招募元数据时保持原记录和盘字节，关闭独立reload",
+    "Root实际PNG像素查看并限定长文裁切覆盖",
+    "逐节真实保存commit/push及第120/125全量，125后停"
+  ],
+  "scope_limitations": [
+    "本审阅不算Runtime通过、不算原生Windows/游戏/聊天实机验证",
+    "E0公共5–7肉鸽真实可用性仍未核验，不销项",
+    "未观测招募/临时/应急/热更新机制仍留待后续，不依据训练原件臆造"
+  ],
+  "additional_public_source_pins": {
+    "/workspace/rougezhushou/rouge/training_view.py": {
+      "bytes": 6050,
+      "sha256": "5bef7b6f03592a5df615711568d116a0ffd9170f9be99832ca75d9eee78fcdb4"
+    },
+    "/workspace/rougezhushou/rouge/account_cache.py": {
+      "bytes": 11551,
+      "sha256": "29bf05d1c7fc111b2e74977be6ca413bb0a25c50cead69fe3a04237ef5a2768e"
+    },
+    "/workspace/rougezhushou/rouge/operator_summary.py": {
+      "bytes": 3541,
+      "sha256": "d1a6c6c70265835bbe804e15bca1e17ee2d7705f543490e965fe794f8b5a29cf"
+    },
+    "/workspace/rougezhushou/rouge/catalog.py": {
+      "bytes": 3404,
+      "sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2"
+    },
+    "/workspace/rougezhushou/rouge/data/catalog.json": {
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    },
+    "/workspace/rougezhushou/rouge/data/operator-profiles.json": {
+      "bytes": 1592209,
+      "sha256": "82b870fa4a780d626f57a18aa12f8a5bf6626c5a350b4a83499fd12518f8c957"
+    }
+  },
+  "candidate_payload_pins": {
+    "README_ZH.md": {
+      "bytes": 7002,
+      "sha256": "13cb2be34cff9a92f15e65ca4b53e35b0943d018688c94c655f29a5be9b08862"
+    },
+    "WINDOW_ACCEPTANCE.md": {
+      "bytes": 3522,
+      "sha256": "28fdecf0832ee50a70f320d6079800796f143423665edc2fbea88e7b5e7bd202"
+    },
+    "app-local-transport.json": {
+      "bytes": 7129,
+      "sha256": "2c104eae609fa6e218aa9e014997233858ba8bfa6be88abc21efe3f9899463c0"
+    },
+    "app-source-diff.patch": {
+      "bytes": 6452,
+      "sha256": "b44f1fdcce55165c8dc9fcb7fbf57218730b5817a0950f0c1fd8ba622d182f03"
+    },
+    "baseline/rouge/app.py": {
+      "bytes": 100115,
+      "sha256": "fa77caff7b133a42d651f25166327982f37487a57ddb84f3461fc13bed1e03c8"
+    },
+    "bwiki-text.txt": {
+      "bytes": 7175,
+      "sha256": "04e3fe3e4948d48320a8f9eb378896075816601b2d2cf720e33f8a6d0581af66"
+    },
+    "bwiki.html": {
+      "bytes": 128920,
+      "sha256": "c74d6a6bcf9c7ddb70ca09864a17cea381c7f3ad13600353796220788d9ecf23"
+    },
+    "candidate/rouge/app.py": {
+      "bytes": 103158,
+      "sha256": "b078043af01c8265d79736640b532ad13e3f31c490259ff0de40f85b71a8868b"
+    },
+    "candidate/rouge/data/skill-cultivation-reference.json": {
+      "bytes": 77491,
+      "sha256": "368524f0c5eab8f543e0973453e655c6e5d9a64e6e962f2b845154cd907207d7"
+    },
+    "candidate/rouge/skill_cultivation.py": {
+      "bytes": 8612,
+      "sha256": "6a7c49aa3cf0971cfe3cdf338cc3c2765a66071669ab6f10fa794a1ca1e9b2f3"
+    },
+    "candidate/tests/test_skill_cultivation_118.py": {
+      "bytes": 12738,
+      "sha256": "9833b9480d1298e4de2c91b39bf3aaa5799a5b5e7facfecae88c35d01de01f0a"
+    },
+    "cloud-selector-local-transport.json": {
+      "bytes": 495,
+      "sha256": "3f7096c2e5e29602899da8e88883f46c85ed3df109f43d8415f13784c96eb426"
+    },
+    "ddg-account.html": {
+      "bytes": 34621,
+      "sha256": "084db59ac1ce452b1e5bcdb7d4e6a45c47227a43c6caed06037545ffff6c98e6"
+    },
+    "ddg-e0.html": {
+      "bytes": 29733,
+      "sha256": "836585fe871f81eb4b911177940856b270176a3a378e58517861b92b48125230"
+    },
+    "ddg-rank.html": {
+      "bytes": 33104,
+      "sha256": "535e30634fcebe09d2066127eb9d78d7285c6efa19c7d48cb07e4b81280caaaf"
+    },
+    "ddg.html": {
+      "bytes": 33423,
+      "sha256": "f45a1db4077cd22d1f8991ed22002adf8bfb673fd6e11c7640e18bc5255b8bcc"
+    },
+    "download-ledger-v1.json": {
+      "bytes": 1149,
+      "sha256": "6b5d7db1a4c74087adad05ff3ef6f4c1ec2b007bedbfeb2b260c67891333efe7"
+    },
+    "download-ledger-v2.json": {
+      "bytes": 2274,
+      "sha256": "0ffd288710b38bbde5b3b21add789697eccd7a234a803a9538b2c5d03efc32ba"
+    },
+    "download-ledger-v3.json": {
+      "bytes": 660,
+      "sha256": "18179f59dbbdcff90a2c70f70c3068ea3bd6c5a778c01c82aaa8997bded24145"
+    },
+    "original-source-binding.json": {
+      "bytes": 1171,
+      "sha256": "6d6eaeb328af882120601baa70e78cb0c9d937a5f06802f9ce0a58a5bb7817db"
+    },
+    "source-compile-noexec.json": {
+      "bytes": 2169,
+      "sha256": "693a7a05a766aa0e33545b3fa41a58c5ed90a81dd0e8bb485cbd9c070fb49233"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "kind": "ROOT_SOURCE_ONLY_SNAPSHOT_DIRECT_CALCULATE_INTERVAL_CORRECTION",
+  "before": "                assert not any(value['case'] == identity for value in numeric)\n",
+  "after": "                # Active case labels persist during later owner selection.\n                # Bound the no-call claim to this direct calculate interval.\n                assert index >= 2\n                preceding = decoded[names[index-2]]\n                assert preceding['kind'] == 'actual_UI_step'\n                assert preceding['label'] == ('actual timing checkbox' if identity == 'O-unimplemented-no-skill' else 'empty actual run overview')\n                assert preceding['after']['damage_result'] is None\n",
+  "basis_sha256": "ebe181dc6f336bf2ef0604fd3827e733d3689f9d3e8de5e2da9a0b80f9ae5653",
+  "current_auditor_sha256": "73aa004ddffc03c0f88b3e52c60d1da8e151ae8a0ddc2d117bdb343c9f35477b",
+  "project_Source_changed": false,
+  "future_runtime_pass": false
+}
