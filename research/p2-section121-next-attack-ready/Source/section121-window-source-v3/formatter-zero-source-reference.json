@@ -1,0 +1,16 @@
+{
+  "kind": "READONLY_ACTUAL_FORMATTER_SOURCE_QUOTE",
+  "source_only": true,
+  "runtime_pass": false,
+  "source": {
+    "path": "/workspace/rougezhushou/rouge/reporting.py",
+    "bytes": 120414,
+    "sha256": "868e2c3f18f0d5198bdf7e734d6c3619846e6122ebee528e9d300c2ab95b32fc"
+  },
+  "function": "format_report.render",
+  "first_line": 1350,
+  "last_line": 1357,
+  "complete_nested_function_source": "def render(row):\n        value=row['value'];unit=row['unit']\n        if row.get('range'):\n            bounds=row['range']\n            return phrase(row['label'])+f'：{bounds[\"lower\"]:.2f}–{bounds[\"upper\"]:.2f} '+unit+'（相位范围）'\n        if row.get('reason'):return phrase(row['label']+'：'+row['reason'])\n        shown=f'{value:.2f}' if value is not None and unit=='秒' else number(value)\n        return phrase(row['label']+'：'+shown+(' '+unit if value is not None and unit else ''))",
+  "known_zero_seconds_rendered_literal": "预计初动：0.00 秒",
+  "scope": "Actual maintained Source requires exactly2 decimals for unit秒; default and technical share the same render() scalar policy. Product numerical0 and game-clock claims do not change."
+}
