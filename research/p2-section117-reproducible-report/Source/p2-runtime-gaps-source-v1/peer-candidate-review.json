@@ -1,0 +1,306 @@
+{
+  "kind": "SOURCE_ONLY_INDEPENDENT_117_THREE_DISPLAY_HELPERS_REVIEW",
+  "generated_at_utc": "2026-10-10T04:15:31.120152+00:00",
+  "candidate": {
+    "path": "/workspace/.continuation/p2-runtime-gaps-source-v1/helpers117.py.txt",
+    "bytes": 11459,
+    "sha256": "e1870e08187007355f2b39ec3072778097b97ec2de669e5551a1cf203bd9b8fe",
+    "function_names": [
+      "reproducible_context_sections",
+      "event_clock_reference_sections",
+      "output_domain_comparison_sections"
+    ],
+    "compile_noexec_passed": true,
+    "runtime_executed": false
+  },
+  "source_pins": {
+    "rouge/reporting.py": {
+      "bytes": 104731,
+      "sha256": "4231daf2170bed34002b4f70ef54a5bcc350bff21e3e124f7e9acb76ebfc317f"
+    },
+    "rouge/damage.py": {
+      "bytes": 31668,
+      "sha256": "70a7a8847849c9f2e01f956dc1df68a61ef34b8aec516e7f4ad64ae0c2ec7e86"
+    },
+    "rouge/timing.py": {
+      "bytes": 28025,
+      "sha256": "58862b8416e21fc4b85f4336add7bbe6dabf5f7c12329aa1af74098234a677d6"
+    },
+    "rouge/operator_engine.py": {
+      "bytes": 157189,
+      "sha256": "fcfb33e162b33707523af4784331728fe603650404499ebf5570ac0a9eaae62b"
+    },
+    "rouge/catalog.py": {
+      "bytes": 3404,
+      "sha256": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2"
+    },
+    "rouge/data/catalog.json": {
+      "bytes": 1624372,
+      "sha256": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b"
+    },
+    "rouge/run_modifiers.py": {
+      "bytes": 6678,
+      "sha256": "c0f5de967ff160ad4ad3ad4a4823a7da158386c537297c7d032248823fe4586e"
+    },
+    "rouge/relics.py": {
+      "bytes": 40531,
+      "sha256": "79f5f607a247fbe366651c63ee951215a518e6a597868cd65e4212d16564e5d3"
+    },
+    "rouge/uncertain_sources.py": {
+      "bytes": 4987,
+      "sha256": "8d84907eed233dec92a1e6367daedcc3c17945a2a5027fec9654f480d6d0e00e"
+    },
+    "tests/test_friendly_scope_report.py": {
+      "bytes": 2594,
+      "sha256": "c27cb8dc12b0adf2fde5b4bc36dfd87773f3b1893441fb56fb5bec16f5e1fa96"
+    },
+    "tests/test_shield_break_reference.py": {
+      "bytes": 11303,
+      "sha256": "b44a456ad3f2a1750d44e626630388ff68974c28b70ea60ebb25ae5318f01cd6"
+    },
+    "tests/test_phase_flow_036.py": {
+      "bytes": 5897,
+      "sha256": "d322915898dfe3ee95aee9c7fd518b19786d1f6e710937a8f563088560df8077"
+    }
+  },
+  "fixed_after_initial_read": [
+    {
+      "id": "RAW_NUMERIC_STRING_WINDOW_RENDER",
+      "initial_problem": "Raw declaration with unit 秒 would reach existing formatter numeric .2f on a valid numeric string.",
+      "current_source_resolution": "Line9 now stores str(scenario[window_seconds])+ 秒 with no numeric metric unit. This is a text echo, does not parse or mutate, and cannot enter the seconds numeric formatter."
+    },
+    {
+      "id": "TOKEN_CATALOG_NAMESPACE",
+      "initial_problem": "catalog top-level has no tokens key, so Deepcolor always became 独立单位.",
+      "current_source_resolution": "Lines58 and74 now use catalog()[operators][scenario[operator]].get(tokens,{}). Source catalog provides Deepcolor token name 触手 there; no catalog mutation or unknown-name invention."
+    }
+  ],
+  "confirmed_safe": [
+    {
+      "topic": "read_only_and_aliases",
+      "finding": "All assignments target local names; AST has no Subscript/Attribute Store on source objects. row and note list mutations concern newly created containers. Stream arrays are inspected and scalar lengths/first/last used; neither input nor list contents nor ordering is rewritten. No deepcopy/recalculation helper is called; source aliases can remain intact without mutation.",
+      "ast_store_nodes": []
+    },
+    {
+      "topic": "multiple_streams",
+      "finding": "enumerate preserves every stream and the section id includes list key+index, so same-unit enemy and friendly streams retain separate identities. No summation/coalescing by unit or time. The context active_units set only gates which user declarations are shown; it does not deduplicate or alter event streams."
+    },
+    {
+      "topic": "empty_missing_invalid_sequences",
+      "finding": "sequence returns None for absent/None/non-list/nonfinite/bool-containing arrays and exact supplied list for valid arrays. Empty valid list count becomes0 with first/last None; repeated timestamp multiplicity remains in length. First/last are sequence positions, correctly labelled 首项/末项, not min/max or inferred time."
+    },
+    {
+      "topic": "legacy_times_emitted",
+      "finding": "impact_frames and times_seconds are shown separately, as are emitted frame and second arrays. No length/paired-time alignment claim, frame-second division, clipping or union. Notes explicitly retain alias full-cast tails and the relative current/recharge phase scope."
+    },
+    {
+      "topic": "unbound_clock_flags",
+      "finding": "phase_clock_unbound / parameter_clock_only / resource_and_damage_shared_clock is False trigger qualified reference notes. The helper does not overwrite any flag or unknown estimate. All streams are restricted to timing.mode frames; continuous streams are not reconstructed."
+    },
+    {
+      "topic": "output_domains_and_masked_subtotals",
+      "finding": "C only reads existing skill totals or the same window-damage fallback already used by the established report. Present None never invokes fallback. Known damage/healing subtotals retain exact scalar/None values and separate labels, no replacement of total, subtraction, ratio recalculation, source addition, or regeneration/EP/barrier mixing. Existing capability predicates gate which aggregate domains are added."
+    },
+    {
+      "topic": "declared_conditions",
+      "finding": "A labels timing descriptions as declaration/preview and explicitly warns continuous modes do not turn positive ranges into frame events. Zero/empty conditions do not automatically cancel friendly scope. Names from real current-operator token profile and active stream gating are appropriate with the provenance clarification above."
+    }
+  ],
+  "nonblocking_recommendations": [
+    {
+      "id": "UNKNOWN_TIMING_MODE",
+      "lines": [
+        5,
+        6
+      ],
+      "recommendation": "Use explicit frames/continuous mapping with unknown fallback instead of defaulting all absent/nonframes values to 连续供靶参数参考. Valid producer paths always provide known modes, but a direct presentation-only missing-mode fixture should not invent a mode."
+    },
+    {
+      "id": "NO_SCOPE_EXPANSION_FROM_SUBTOTAL",
+      "recommendation": "Mizuki AMB-Y can publish known_healing_subtotals while has_healing returns False. Existing known-healing report remains intact; this new comparison omits that domain. Treat this as current comparison scope, or add a separately qualified existing-subtotal comparison if desired, never invent known healing ability or totals."
+    },
+    {
+      "id": "DRAFT_IS_NOT_INTEGRATION",
+      "recommendation": "Pure helper code does not yet call these functions from build_report. Root must review exact insertion points, whether old sections/index0 policy relies on order, and whether module-reference section selection examines newly appended keys. Prefer additive append near the established section tail, preserving every old section byte/value/order."
+    },
+    {
+      "id": "PHASE_ENVELOPE_METRIC_RANGE",
+      "recommendation": "Root test should cover any currently supported genuine marginal wine envelope, if available; its final rebuild receives raw scenario and applies metric ranges by block id+row key. If no actual nondeployment wine is supported, do not invent one or count a synthetic mode as real producer coverage."
+    }
+  ],
+  "root_validation_supplements": [
+    "Valid numeric-string window both alias and generic paths; all three full formatters; caller/result purity.",
+    "Deepcolor zero and multiple summon_count, owner vs real named 触手, window/tail/recharge; preserve current source stream counts even count0.",
+    "Shu S3 duplicated same-unit enemy/friendly streams retain both keyed indices without deduplication.",
+    "Mechanist S3 manual boundary and alias times_seconds emitted-tail override; independent array row values verify exact existing source fields.",
+    "Susuro enemy lifetime0/empty enemy ranges leave friendly potential healing and actual-friendly-clock warning unchanged.",
+    "Gnosis S1 and shield-break manual-end preserve actual/phase/cycle unknowns while showing only existing parameter/acquisition stream samples.",
+    "Real masked damage and healing fixtures verify None total and exact known subtotal with no numerical recomputation.",
+    "Manual relic defense reduction and selected enemy defense reduction show provenance wording consistently and never imply raw declaration=prepared consumer value.",
+    "Presentation-only missing animation/mode, missing array vs empty vs duplicate timestamps should be explicitly marked synthetic adjunct coverage."
+  ],
+  "ast_call_targets": [
+    "'；'.join",
+    "all",
+    "any",
+    "blocks.append",
+    "catalog",
+    "catalog()['operators'][scenario['operator']].get",
+    "condition_lines",
+    "enemy.get",
+    "enumerate",
+    "found.append",
+    "has_damage",
+    "has_healing",
+    "isinstance",
+    "len",
+    "math.isfinite",
+    "metric",
+    "notes.append",
+    "notes.extend",
+    "result.get",
+    "result.get('run_resolution', {}).get",
+    "result.get('timing', {}).get",
+    "rows.append",
+    "rows.extend",
+    "scenario.get",
+    "section",
+    "sequence",
+    "shown",
+    "skill.get",
+    "stats.get",
+    "str",
+    "stream.get",
+    "timing.get",
+    "tokens.get",
+    "tokens.get(identity, {}).get",
+    "units.items",
+    "{'enemy': '敌方获取参考', 'friendly': '友方获取参考'}.get"
+  ],
+  "scope_limit": {
+    "runtime_pass": false,
+    "tests_executed": false,
+    "project_imports": false,
+    "tracked_mutations": false,
+    "native_helper_or_gzip": false,
+    "git_executed": false,
+    "review_is_final_approval": false,
+    "reason": "The read helper, seventeen-method test, exact source transport and AST/byte composition pass independent Source-only review with no current blocker. Root must rebind after116, review exact integrated current file and execute actual validations; no native/client/runtime pass."
+  },
+  "review_updated_at_utc": "2026-10-10T04:18:34.664488+00:00",
+  "previous_review_sha256": "debd6f9542a338fcf737cc14ec24a2f2f91e9fa14a238d08f62c4e906c39348d",
+  "resolved_findings": [
+    {
+      "id": "REPORT_SCENARIO_FIELD_PROVENANCE",
+      "status": "RESOLVED_IN_CURRENT_REVIEWED_BYTES",
+      "lines": [
+        16,
+        19,
+        20
+      ],
+      "problem": "reproducible_context_sections calls the target values 声明目标防御 / 声明目标法抗, but build_report receives a prepared/mutated scenario on normal/deployment-clock paths and receives original raw scenario in final phase-envelope reconstruction. Scenario enemy_defense is changed by a single relic reduction and Combat normalizes some numeric values. Thus this new display cannot consistently prove original declaration or the value consumed by the calculation.",
+      "evidence": [
+        "damage.py:239–241 copy input; 278–293 prepare_run then prepare relics",
+        "relics.py:308–309 replaces scenario enemy_defense",
+        "operator_engine.py:112–117 reads/scalar-normalizes scenario fields",
+        "damage.py:330 prepared/current evaluator call; 387 prepared retry; 395 isolated prepared call; 455 final phase-envelope raw original call",
+        "run_modifiers.py:66–94 finishes selected enemy stats by existing relic effects, so returned enemy stats branch is an appropriate returned reference"
+      ],
+      "recommendation": "Use neutral provenance wording e.g. 报告情景目标防御字段参考 / 报告情景目标法抗字段参考; source label 报告调用时的情景字段. Add explicit note that report-call scenario may be preprocessed and does not prove original caller values or all actually consumed values. Keep selected enemy values labelled 已返回目标属性参考. Do not add result or preparation rewrites/arithmetic to force a claimed consumed-value provenance.",
+      "resolution": "Current helper labels manual values 当前情景防御参考 / 当前情景法抗参考 and explicitly says fields may already be preprocessed, no original pre-correction-input or complete actually-consumed-record claim."
+    },
+    {
+      "id": "UNKNOWN_ANIMATION_FLAG_ASSERTION",
+      "status": "RESOLVED_IN_CURRENT_REVIEWED_BYTES",
+      "lines": [
+        106,
+        107
+      ],
+      "problem": "if not stream.get(known_animation) treats absent or None as confirmed False and asserts missing animation data plus preserved delayed-first-hit behavior. The helper promises missing fields stay unknown; a missing flag alone cannot prove that scheduling choice.",
+      "recommendation": "Only stream.get(known_animation) is False gets the existing explicit delayed-first-hit note; missing/None/nonbool gets a neutral 动作参数资格未确认 note. True may retain the general existing reference qualification. exact_binding must never be inferred from known_animation.",
+      "resolution": "Explicit False gets existing delayed-first-hit note; any flag other than exact True gets neutral unknown-qualification note. Unknown no longer equals confirmed False."
+    }
+  ],
+  "blocking": [],
+  "source_review_passed": true,
+  "test_source": {
+    "path": "/workspace/.continuation/p2-runtime-gaps-source-v1/test_reproducible_report_117.py",
+    "bytes": 12892,
+    "sha256": "9a4f195d28ae3cf588a8f44fbd7674cf0276a8a41883fbee3a17336f2e9c2299",
+    "compile_noexec_passed": true,
+    "methods": 17,
+    "real_producer_methods": 16,
+    "synthetic_only_methods": 1,
+    "runtime_executed": false,
+    "source_expected_inputs_valid": true,
+    "notes": "Source derivation matches current maintained timing/impact/token/friendly/masked-neural/masked-Shu-healing/target/ammo producers. No actual result claimed."
+  },
+  "verified_transport": {
+    "payload_pins": {
+      "helpers117.py.txt": {
+        "bytes": 11459,
+        "sha256": "e1870e08187007355f2b39ec3072778097b97ec2de669e5551a1cf203bd9b8fe"
+      },
+      "test_reproducible_report_117.py": {
+        "bytes": 12892,
+        "sha256": "9a4f195d28ae3cf588a8f44fbd7674cf0276a8a41883fbee3a17336f2e9c2299"
+      },
+      "transport.json": {
+        "bytes": 14086,
+        "sha256": "dea5e07e93024462ac7ec128e9d0940650f03a8dffc0ed2c10d9c21568463aff"
+      },
+      "source-checks.json": {
+        "bytes": 2430,
+        "sha256": "a99a114a6405c551446dc6abe674f210e26805ac82e3705779b7a19ea89a755c"
+      },
+      "reporting.before.py": {
+        "bytes": 104731,
+        "sha256": "4231daf2170bed34002b4f70ef54a5bcc350bff21e3e124f7e9acb76ebfc317f"
+      },
+      "reporting.candidate.py": {
+        "bytes": 116399,
+        "sha256": "5d46910c3bf9eae9a9d4fcd3fc08e3609033345d762d2f5d10ebcf4723556488"
+      },
+      "verify_cloud.before.py": {
+        "bytes": 5780,
+        "sha256": "81f1154516b10880e760a7331fc6daed069e8ffd4de31b260c1a12979544235d"
+      },
+      "verify_cloud.candidate.py": {
+        "bytes": 5822,
+        "sha256": "20566a834e440961d00c7aea544b4b765c3e3f8877cfcdc931db5ee3f0152b97"
+      },
+      "prepare_source117.py": {
+        "bytes": 5724,
+        "sha256": "1c165ada5cf9db8d962d2a79fdc44b8824955737c103b9455711816cb665602c"
+      }
+    },
+    "literal_blocks_compose_exact_bytes": true,
+    "all_other_AST_definitions_unchanged": [
+      "metric",
+      "section",
+      "relic_protection_section",
+      "river_reference_sections",
+      "has_damage",
+      "has_healing",
+      "fee_section",
+      "readable_description",
+      "mechanism_sections",
+      "current_output_breakdown_sections",
+      "format_report"
+    ],
+    "build_report_exactly_three_additive_extend_calls": true,
+    "new_helper_definitions": [
+      "event_clock_reference_sections",
+      "output_domain_comparison_sections",
+      "reproducible_context_sections"
+    ],
+    "current116_rebind_required": true,
+    "root_rebind_requirement": "Do not overwrite actual reporting/cloud using these before116 whole snapshots. Root rereads current originals, verifies each exact old anchor unique, composes only literal intended blocks, and independently rechecks all actual existing AST definitions/build_report order plus real current Source guard."
+  },
+  "additional_current_source_observation": {
+    "strict_scalar_qualification": "Current helper only displays exact built-in int/float/str for manual values; bool/object maps to unknown. timing declaration shown() handles int text conversion ValueError/OverflowError; user/input arrays are not changed.",
+    "masked_healing_fixture_added": "New Shu S1 window5 healing_targets1 method reads real next_attack_healing_reference with actual_acquisition_times_seconds=None; unknown complete/window healing and all four known subtotal leaves are copied, matching mask_pending_healing producer Source.",
+    "module_reference_insertion": "_existing_coverage only links fixed prior section ids and token duration/relic token prefixes. Appending new117 sections after every original section and before module selection does not shift the prior linked section paths. Do not insert new117 sections before original linked sections.",
+    "preparation_test_metadata": "17 methods consists of16 real producer methods and1 explicitly formatter-only synthetic method. Numeric-string producer method has an additional explicit formatter-only raw-context rebuild; do not count that as an extra real producer call."
+  }
+}

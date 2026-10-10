@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 MODULES = (
     "tests.test_chen_motion_reference",
+    "tests.test_reproducible_report_117",
     "tests.test_current_output_breakdown_115",
     "tests.test_public_scalar_types_114",
     "tests.test_ammo_observation_window_113",
