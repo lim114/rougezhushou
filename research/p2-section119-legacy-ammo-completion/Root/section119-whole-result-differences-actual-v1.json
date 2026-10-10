@@ -1,0 +1,2762 @@
+{
+  "kind": "ROOT_ACTUAL_STORED_WHOLE_RESULT_LEAF_DIFFERENCES",
+  "cases": {
+    "mechanist-limited_windows": [
+      {
+        "path": "$/timing/streams/0/resume_frame",
+        "original": 50,
+        "candidate": 0
+      },
+      {
+        "path": "$/execution_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/duration_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/total_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 11000.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/phase_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 5500.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/notes",
+        "original_len": 14,
+        "candidate_len": 15
+      },
+      {
+        "path": "$/estimate/notes/6",
+        "original": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "candidate": "供靶情景未耗尽本次弹药；已排程观察输出保留，完整施放持续、非零总量及完整周期保持未知。"
+      },
+      {
+        "path": "$/estimate/notes/7",
+        "original": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "candidate": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。"
+      },
+      {
+        "path": "$/estimate/notes/8",
+        "original": "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。",
+        "candidate": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+      },
+      {
+        "path": "$/estimate/notes/9",
+        "original": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "candidate": "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。"
+      },
+      {
+        "path": "$/estimate/notes/10",
+        "original": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "candidate": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。"
+      },
+      {
+        "path": "$/estimate/notes/11",
+        "original": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "candidate": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。"
+      },
+      {
+        "path": "$/estimate/notes/12",
+        "original": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "candidate": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。"
+      },
+      {
+        "path": "$/estimate/notes/13",
+        "original": "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "candidate": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。"
+      },
+      {
+        "path": "$/report/sections/1/metrics/1/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics",
+        "original_len": 6,
+        "candidate_len": 5
+      },
+      {
+        "path": "$/report/sections/3/metrics/0/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 11000.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/key",
+        "original": "active_dps",
+        "candidate": "window_damage"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/label",
+        "original": "技能阶段平均 DPS",
+        "candidate": "观察窗口总伤"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/value",
+        "original": 1650.0,
+        "candidate": 11000.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/unit",
+        "original": "伤害/秒",
+        "candidate": ""
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/key",
+        "original": "window_damage",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/label",
+        "original": "观察窗口总伤",
+        "candidate": "伤害观察窗口"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/value",
+        "original": 11000.0,
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/key",
+        "original": "window_seconds",
+        "candidate": "window_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/label",
+        "original": "伤害观察窗口",
+        "candidate": "窗口平均 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/value",
+        "original": 10.0,
+        "candidate": 1100.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/unit",
+        "original": "秒",
+        "candidate": "伤害/秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/key",
+        "original": "window_dps",
+        "candidate": "cycle_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/label",
+        "original": "窗口平均 DPS",
+        "candidate": "本轮周期 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 1100.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/11/metrics/2/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 11000.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/11/metrics/3/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/11/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 5500.0,
+        "candidate": null
+      }
+    ],
+    "mechanist-positive_lifetime": [
+      {
+        "path": "$/timing/streams/0/resume_frame",
+        "original": 50,
+        "candidate": 0
+      },
+      {
+        "path": "$/execution_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/duration_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/total_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 5500.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/phase_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 5500.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/notes",
+        "original_len": 14,
+        "candidate_len": 15
+      },
+      {
+        "path": "$/estimate/notes/6",
+        "original": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "candidate": "供靶情景未耗尽本次弹药；已排程观察输出保留，完整施放持续、非零总量及完整周期保持未知。"
+      },
+      {
+        "path": "$/estimate/notes/7",
+        "original": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "candidate": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。"
+      },
+      {
+        "path": "$/estimate/notes/8",
+        "original": "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。",
+        "candidate": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+      },
+      {
+        "path": "$/estimate/notes/9",
+        "original": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "candidate": "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。"
+      },
+      {
+        "path": "$/estimate/notes/10",
+        "original": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "candidate": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。"
+      },
+      {
+        "path": "$/estimate/notes/11",
+        "original": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "candidate": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。"
+      },
+      {
+        "path": "$/estimate/notes/12",
+        "original": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "candidate": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。"
+      },
+      {
+        "path": "$/estimate/notes/13",
+        "original": "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "candidate": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。"
+      },
+      {
+        "path": "$/report/sections/1/metrics/1/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics",
+        "original_len": 6,
+        "candidate_len": 5
+      },
+      {
+        "path": "$/report/sections/3/metrics/0/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 5500.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/key",
+        "original": "active_dps",
+        "candidate": "window_damage"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/label",
+        "original": "技能阶段平均 DPS",
+        "candidate": "观察窗口总伤"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/value",
+        "original": 1650.0,
+        "candidate": 5500.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/unit",
+        "original": "伤害/秒",
+        "candidate": ""
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/key",
+        "original": "window_damage",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/label",
+        "original": "观察窗口总伤",
+        "candidate": "伤害观察窗口"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/value",
+        "original": 5500.0,
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/key",
+        "original": "window_seconds",
+        "candidate": "window_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/label",
+        "original": "伤害观察窗口",
+        "candidate": "窗口平均 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/value",
+        "original": 10.0,
+        "candidate": 550.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/unit",
+        "original": "秒",
+        "candidate": "伤害/秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/key",
+        "original": "window_dps",
+        "candidate": "cycle_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/label",
+        "original": "窗口平均 DPS",
+        "candidate": "本轮周期 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 550.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/11/metrics/2/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 5500.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/11/metrics/3/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/11/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 5500.0,
+        "candidate": null
+      }
+    ],
+    "mechanist-interrupted_tail": [
+      {
+        "path": "$/timing/streams/0/resume_frame",
+        "original": 50,
+        "candidate": 0
+      },
+      {
+        "path": "$/execution_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/duration_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/total_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 11000.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/phase_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 5500.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/notes",
+        "original_len": 14,
+        "candidate_len": 15
+      },
+      {
+        "path": "$/estimate/notes/6",
+        "original": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "candidate": "供靶情景未耗尽本次弹药；已排程观察输出保留，完整施放持续、非零总量及完整周期保持未知。"
+      },
+      {
+        "path": "$/estimate/notes/7",
+        "original": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "candidate": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。"
+      },
+      {
+        "path": "$/estimate/notes/8",
+        "original": "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。",
+        "candidate": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+      },
+      {
+        "path": "$/estimate/notes/9",
+        "original": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "candidate": "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。"
+      },
+      {
+        "path": "$/estimate/notes/10",
+        "original": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "candidate": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。"
+      },
+      {
+        "path": "$/estimate/notes/11",
+        "original": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "candidate": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。"
+      },
+      {
+        "path": "$/estimate/notes/12",
+        "original": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "candidate": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。"
+      },
+      {
+        "path": "$/estimate/notes/13",
+        "original": "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "candidate": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。"
+      },
+      {
+        "path": "$/report/sections/1/metrics/1/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics",
+        "original_len": 6,
+        "candidate_len": 5
+      },
+      {
+        "path": "$/report/sections/3/metrics/0/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 11000.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/key",
+        "original": "active_dps",
+        "candidate": "window_damage"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/label",
+        "original": "技能阶段平均 DPS",
+        "candidate": "观察窗口总伤"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/value",
+        "original": 1650.0,
+        "candidate": 11000.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/unit",
+        "original": "伤害/秒",
+        "candidate": ""
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/key",
+        "original": "window_damage",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/label",
+        "original": "观察窗口总伤",
+        "candidate": "伤害观察窗口"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/value",
+        "original": 11000.0,
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/key",
+        "original": "window_seconds",
+        "candidate": "window_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/label",
+        "original": "伤害观察窗口",
+        "candidate": "窗口平均 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/value",
+        "original": 10.0,
+        "candidate": 1100.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/unit",
+        "original": "秒",
+        "candidate": "伤害/秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/key",
+        "original": "window_dps",
+        "candidate": "cycle_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/label",
+        "original": "窗口平均 DPS",
+        "candidate": "本轮周期 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 1100.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/11/metrics/2/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 11000.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/11/metrics/3/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 3.3333333333333335,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/11/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 5500.0,
+        "candidate": null
+      }
+    ],
+    "mechanist-complete_control": [],
+    "mechanist-empty_control": [
+      {
+        "path": "$/estimate/notes",
+        "original_len": 14,
+        "candidate_len": 15
+      },
+      {
+        "path": "$/estimate/notes/6",
+        "original": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "candidate": "供靶情景未耗尽本次弹药；已排程观察输出保留，完整施放持续、非零总量及完整周期保持未知。"
+      },
+      {
+        "path": "$/estimate/notes/7",
+        "original": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "candidate": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。"
+      },
+      {
+        "path": "$/estimate/notes/8",
+        "original": "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。",
+        "candidate": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+      },
+      {
+        "path": "$/estimate/notes/9",
+        "original": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "candidate": "机械师S1按档案projectile_delay_time和attack@interval分配五连击；字段与客户端落地/发射行为的绑定仍待录屏校准。"
+      },
+      {
+        "path": "$/estimate/notes/10",
+        "original": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "candidate": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。"
+      },
+      {
+        "path": "$/estimate/notes/11",
+        "original": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "candidate": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。"
+      },
+      {
+        "path": "$/estimate/notes/12",
+        "original": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "candidate": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。"
+      },
+      {
+        "path": "$/estimate/notes/13",
+        "original": "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "candidate": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。"
+      }
+    ],
+    "kaltsit-limited_windows": [
+      {
+        "path": "$/timing",
+        "original_keys": [
+          "mode",
+          "fps",
+          "streams",
+          "window_convention",
+          "scenario_provided",
+          "target_scope_notes",
+          "complete",
+          "notes",
+          "recharge_streams",
+          "unplaced_components",
+          "resource_and_damage_shared_clock",
+          "initial_seconds",
+          "cycle_seconds"
+        ],
+        "candidate_keys": [
+          "mode",
+          "fps",
+          "streams",
+          "window_convention",
+          "scenario_provided",
+          "target_scope_notes",
+          "complete",
+          "notes",
+          "unplaced_components",
+          "resource_and_damage_shared_clock",
+          "initial_seconds",
+          "cycle_seconds"
+        ]
+      },
+      {
+        "path": "$/timing/streams/0/resume_frame",
+        "original": 85,
+        "candidate": 0
+      },
+      {
+        "path": "$/timing/cycle_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/execution_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/duration_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/total_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/total_healing",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/phase_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/phase_healing",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_dps",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 415.56728232189977,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_hps",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 403.6939313984169,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_healing",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/notes",
+        "original_len": 14,
+        "candidate_len": 15
+      },
+      {
+        "path": "$/estimate/notes/7",
+        "original": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "candidate": "供靶情景未耗尽本次弹药；已排程观察输出保留，完整施放持续、非零总量及完整周期保持未知。"
+      },
+      {
+        "path": "$/estimate/notes/8",
+        "original": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "candidate": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。"
+      },
+      {
+        "path": "$/estimate/notes/9",
+        "original": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "candidate": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+      },
+      {
+        "path": "$/estimate/notes/10",
+        "original": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "candidate": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。"
+      },
+      {
+        "path": "$/estimate/notes/11",
+        "original": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "candidate": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。"
+      },
+      {
+        "path": "$/estimate/notes/12",
+        "original": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "candidate": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。"
+      },
+      {
+        "path": "$/estimate/notes/13",
+        "original": "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "candidate": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。"
+      },
+      {
+        "path": "$/report/sections",
+        "original_len": 15,
+        "candidate_len": 14
+      },
+      {
+        "path": "$/report/sections/0/metrics/1/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/0/metrics/2/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics",
+        "original_len": 6,
+        "candidate_len": 5
+      },
+      {
+        "path": "$/report/sections/3/metrics/0/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/key",
+        "original": "active_dps",
+        "candidate": "window_damage"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/label",
+        "original": "技能阶段平均 DPS",
+        "candidate": "观察窗口总伤"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/value",
+        "original": 5431.0344827586205,
+        "candidate": 15750.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/unit",
+        "original": "伤害/秒",
+        "candidate": ""
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/key",
+        "original": "window_damage",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/label",
+        "original": "观察窗口总伤",
+        "candidate": "伤害观察窗口"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/value",
+        "original": 15750.0,
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/key",
+        "original": "window_seconds",
+        "candidate": "window_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/label",
+        "original": "伤害观察窗口",
+        "candidate": "窗口平均 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/value",
+        "original": 10.0,
+        "candidate": 1575.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/unit",
+        "original": "秒",
+        "candidate": "伤害/秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/key",
+        "original": "window_dps",
+        "candidate": "cycle_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/label",
+        "original": "窗口平均 DPS",
+        "candidate": "本轮周期 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 1575.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/4/metrics",
+        "original_len": 6,
+        "candidate_len": 5
+      },
+      {
+        "path": "$/report/sections/4/metrics/0/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/key",
+        "original": "active_hps",
+        "candidate": "window_healing"
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/label",
+        "original": "技能阶段平均 HPS",
+        "candidate": "观察窗口治疗"
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/value",
+        "original": 5275.862068965517,
+        "candidate": 15300.0
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/unit",
+        "original": "治疗/秒",
+        "candidate": ""
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/key",
+        "original": "window_healing",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/label",
+        "original": "观察窗口治疗",
+        "candidate": "治疗观察窗口"
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/value",
+        "original": 15300.0,
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/key",
+        "original": "window_seconds",
+        "candidate": "window_hps"
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/label",
+        "original": "治疗观察窗口",
+        "candidate": "窗口平均 HPS"
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/value",
+        "original": 10.0,
+        "candidate": 1530.0
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/unit",
+        "original": "秒",
+        "candidate": "治疗/秒"
+      },
+      {
+        "path": "$/report/sections/4/metrics/4/key",
+        "original": "window_hps",
+        "candidate": "hps"
+      },
+      {
+        "path": "$/report/sections/4/metrics/4/label",
+        "original": "窗口平均 HPS",
+        "candidate": "本轮周期 HPS"
+      },
+      {
+        "path": "$/report/sections/4/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 1530.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/12/id",
+        "original": "event_clock_recharge_streams_0",
+        "candidate": "output_domain_damage"
+      },
+      {
+        "path": "$/report/sections/12/title",
+        "original": "本轮充能期 · 凯尔希·思衡托本体 · 时序记录 1",
+        "candidate": "伤害口径对照"
+      },
+      {
+        "path": "$/report/sections/12/metrics",
+        "original_len": 19,
+        "candidate_len": 9
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/key",
+        "original": "target_scope",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/label",
+        "original": "获取来源",
+        "candidate": "观察窗口长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/value",
+        "original_type": "str",
+        "candidate_type": "float",
+        "original": "友方获取参考",
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/key",
+        "original": "start_frames_count",
+        "candidate": "window_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/label",
+        "original": "攻击起始记录数",
+        "candidate": "观察窗口伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/value",
+        "original_type": "int",
+        "candidate_type": "float",
+        "original": 0,
+        "candidate": 15750.0
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/unit",
+        "original": "条",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/2/key",
+        "original": "start_frames_first",
+        "candidate": "cast_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/2/label",
+        "original": "攻击起始记录首项",
+        "candidate": "完整本次施放伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/2/unit",
+        "original": "帧",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/3/key",
+        "original": "start_frames_last",
+        "candidate": "duration_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/3/label",
+        "original": "攻击起始记录末项",
+        "candidate": "技能阶段长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/3/unit",
+        "original": "帧",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/key",
+        "original": "release_frames_count",
+        "candidate": "phase_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/label",
+        "original": "出手记录数",
+        "candidate": "技能阶段伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/value",
+        "original_type": "int",
+        "candidate_type": "NoneType",
+        "original": 0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/unit",
+        "original": "条",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/key",
+        "original": "release_frames_first",
+        "candidate": "recharge_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/label",
+        "original": "出手记录首项",
+        "candidate": "本轮结束后充能长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/value",
+        "original_type": "NoneType",
+        "candidate_type": "float",
+        "original": null,
+        "candidate": 35.0
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/unit",
+        "original": "帧",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/6/key",
+        "original": "release_frames_last",
+        "candidate": "cycle_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/6/label",
+        "original": "出手记录末项",
+        "candidate": "本轮周期长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/6/unit",
+        "original": "帧",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/key",
+        "original": "impact_frames_count",
+        "candidate": "cycle_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/label",
+        "original": "窗口内命中帧记录数",
+        "candidate": "本轮周期伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/value",
+        "original_type": "int",
+        "candidate_type": "NoneType",
+        "original": 0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/unit",
+        "original": "条",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/8/key",
+        "original": "impact_frames_first",
+        "candidate": "cycle_average"
+      },
+      {
+        "path": "$/report/sections/12/metrics/8/label",
+        "original": "窗口内命中帧记录首项",
+        "candidate": "本轮周期平均伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/8/unit",
+        "original": "帧",
+        "candidate": "伤害/秒"
+      },
+      {
+        "path": "$/report/sections/12/notes",
+        "original_len": 6,
+        "candidate_len": 4
+      },
+      {
+        "path": "$/report/sections/12/notes/0",
+        "original": "各条记录照既有序列保留；同单位的多条流和同帧多事件不合并、不去重，也不换算成实际攻击次数。",
+        "candidate": "各项直接读取既有结果，未知仍未知；本表不重新结算、相加或由差值反推充能期输出。"
+      },
+      {
+        "path": "$/report/sections/12/notes/1",
+        "original": "一条召唤物时序可供多只或零只单位的条件计算使用；记录数不证明真实在场数量或分项命中次数。",
+        "candidate": "完整施放按本次施放归属；技能阶段、观察窗口和本轮周期各有自己的截止边界。已释放尾段可使它们不同。"
+      },
+      {
+        "path": "$/report/sections/12/notes/2",
+        "original": "已释放的潜在命中记录可晚于观察窗口；不自动加入窗口、技能阶段或本轮周期输出。",
+        "candidate": "本轮周期使用当前技能与结束后充能的既有计算；跨多轮稳态、残留和未绑定事件没有因此得到确认。"
+      },
+      {
+        "path": "$/report/sections/12/notes/3",
+        "original": "输出时间与窗口内命中帧分别取自现有字段；部分完整施放路径的输出时间含尾段，不能据此改写窗口边界。",
+        "candidate": "已计部分只是受支持来源的小计，不能补成完整总量；独立生命回复、损伤积累和屏障仍采用各自口径。"
+      },
+      {
+        "path": "$/report/sections/13/id",
+        "original": "output_domain_damage",
+        "candidate": "output_domain_healing"
+      },
+      {
+        "path": "$/report/sections/13/title",
+        "original": "伤害口径对照",
+        "candidate": "潜在治疗口径对照"
+      },
+      {
+        "path": "$/report/sections/13/metrics/1/label",
+        "original": "观察窗口伤害",
+        "candidate": "观察窗口潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/1/value",
+        "original": 15750.0,
+        "candidate": 15300.0
+      },
+      {
+        "path": "$/report/sections/13/metrics/1/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/2/label",
+        "original": "完整本次施放伤害",
+        "candidate": "完整本次施放潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/2/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/2/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/3/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/4/label",
+        "original": "技能阶段伤害",
+        "candidate": "技能阶段潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/4/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/6/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/7/label",
+        "original": "本轮周期伤害",
+        "candidate": "本轮周期潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/7/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/7/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/8/label",
+        "original": "本轮周期平均伤害",
+        "candidate": "本轮周期平均潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/8/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 415.56728232189977,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/8/unit",
+        "original": "伤害/秒",
+        "candidate": "治疗/秒"
+      },
+      {
+        "path": "$/report/sections/13/notes",
+        "original_len": 4,
+        "candidate_len": 5
+      }
+    ],
+    "kaltsit-positive_lifetime": [
+      {
+        "path": "$/timing",
+        "original_keys": [
+          "mode",
+          "fps",
+          "streams",
+          "window_convention",
+          "scenario_provided",
+          "target_scope_notes",
+          "complete",
+          "notes",
+          "recharge_streams",
+          "unplaced_components",
+          "resource_and_damage_shared_clock",
+          "initial_seconds",
+          "cycle_seconds"
+        ],
+        "candidate_keys": [
+          "mode",
+          "fps",
+          "streams",
+          "window_convention",
+          "scenario_provided",
+          "target_scope_notes",
+          "complete",
+          "notes",
+          "unplaced_components",
+          "resource_and_damage_shared_clock",
+          "initial_seconds",
+          "cycle_seconds"
+        ]
+      },
+      {
+        "path": "$/timing/streams/0/resume_frame",
+        "original": 85,
+        "candidate": 0
+      },
+      {
+        "path": "$/timing/cycle_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/execution_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/duration_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/total_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/total_healing",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/phase_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/phase_healing",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_dps",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 415.56728232189977,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_hps",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 403.6939313984169,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_healing",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/notes",
+        "original_len": 14,
+        "candidate_len": 15
+      },
+      {
+        "path": "$/estimate/notes/7",
+        "original": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "candidate": "供靶情景未耗尽本次弹药；已排程观察输出保留，完整施放持续、非零总量及完整周期保持未知。"
+      },
+      {
+        "path": "$/estimate/notes/8",
+        "original": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "candidate": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。"
+      },
+      {
+        "path": "$/estimate/notes/9",
+        "original": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "candidate": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+      },
+      {
+        "path": "$/estimate/notes/10",
+        "original": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "candidate": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。"
+      },
+      {
+        "path": "$/estimate/notes/11",
+        "original": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "candidate": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。"
+      },
+      {
+        "path": "$/estimate/notes/12",
+        "original": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "candidate": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。"
+      },
+      {
+        "path": "$/estimate/notes/13",
+        "original": "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "candidate": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。"
+      },
+      {
+        "path": "$/report/sections",
+        "original_len": 15,
+        "candidate_len": 14
+      },
+      {
+        "path": "$/report/sections/0/metrics/1/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/0/metrics/2/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics",
+        "original_len": 6,
+        "candidate_len": 5
+      },
+      {
+        "path": "$/report/sections/3/metrics/0/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/key",
+        "original": "active_dps",
+        "candidate": "window_damage"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/label",
+        "original": "技能阶段平均 DPS",
+        "candidate": "观察窗口总伤"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/value",
+        "original": 5431.0344827586205,
+        "candidate": 15750.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/unit",
+        "original": "伤害/秒",
+        "candidate": ""
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/key",
+        "original": "window_damage",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/label",
+        "original": "观察窗口总伤",
+        "candidate": "伤害观察窗口"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/value",
+        "original": 15750.0,
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/key",
+        "original": "window_seconds",
+        "candidate": "window_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/label",
+        "original": "伤害观察窗口",
+        "candidate": "窗口平均 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/value",
+        "original": 10.0,
+        "candidate": 1575.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/unit",
+        "original": "秒",
+        "candidate": "伤害/秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/key",
+        "original": "window_dps",
+        "candidate": "cycle_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/label",
+        "original": "窗口平均 DPS",
+        "candidate": "本轮周期 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 1575.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/4/metrics",
+        "original_len": 6,
+        "candidate_len": 5
+      },
+      {
+        "path": "$/report/sections/4/metrics/0/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/key",
+        "original": "active_hps",
+        "candidate": "window_healing"
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/label",
+        "original": "技能阶段平均 HPS",
+        "candidate": "观察窗口治疗"
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/value",
+        "original": 5275.862068965517,
+        "candidate": 15300.0
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/unit",
+        "original": "治疗/秒",
+        "candidate": ""
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/key",
+        "original": "window_healing",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/label",
+        "original": "观察窗口治疗",
+        "candidate": "治疗观察窗口"
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/value",
+        "original": 15300.0,
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/key",
+        "original": "window_seconds",
+        "candidate": "window_hps"
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/label",
+        "original": "治疗观察窗口",
+        "candidate": "窗口平均 HPS"
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/value",
+        "original": 10.0,
+        "candidate": 1530.0
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/unit",
+        "original": "秒",
+        "candidate": "治疗/秒"
+      },
+      {
+        "path": "$/report/sections/4/metrics/4/key",
+        "original": "window_hps",
+        "candidate": "hps"
+      },
+      {
+        "path": "$/report/sections/4/metrics/4/label",
+        "original": "窗口平均 HPS",
+        "candidate": "本轮周期 HPS"
+      },
+      {
+        "path": "$/report/sections/4/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 1530.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/12/id",
+        "original": "event_clock_recharge_streams_0",
+        "candidate": "output_domain_damage"
+      },
+      {
+        "path": "$/report/sections/12/title",
+        "original": "本轮充能期 · 凯尔希·思衡托本体 · 时序记录 1",
+        "candidate": "伤害口径对照"
+      },
+      {
+        "path": "$/report/sections/12/metrics",
+        "original_len": 19,
+        "candidate_len": 9
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/key",
+        "original": "target_scope",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/label",
+        "original": "获取来源",
+        "candidate": "观察窗口长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/value",
+        "original_type": "str",
+        "candidate_type": "float",
+        "original": "友方获取参考",
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/key",
+        "original": "start_frames_count",
+        "candidate": "window_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/label",
+        "original": "攻击起始记录数",
+        "candidate": "观察窗口伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/value",
+        "original_type": "int",
+        "candidate_type": "float",
+        "original": 0,
+        "candidate": 15750.0
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/unit",
+        "original": "条",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/2/key",
+        "original": "start_frames_first",
+        "candidate": "cast_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/2/label",
+        "original": "攻击起始记录首项",
+        "candidate": "完整本次施放伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/2/unit",
+        "original": "帧",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/3/key",
+        "original": "start_frames_last",
+        "candidate": "duration_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/3/label",
+        "original": "攻击起始记录末项",
+        "candidate": "技能阶段长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/3/unit",
+        "original": "帧",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/key",
+        "original": "release_frames_count",
+        "candidate": "phase_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/label",
+        "original": "出手记录数",
+        "candidate": "技能阶段伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/value",
+        "original_type": "int",
+        "candidate_type": "NoneType",
+        "original": 0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/unit",
+        "original": "条",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/key",
+        "original": "release_frames_first",
+        "candidate": "recharge_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/label",
+        "original": "出手记录首项",
+        "candidate": "本轮结束后充能长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/value",
+        "original_type": "NoneType",
+        "candidate_type": "float",
+        "original": null,
+        "candidate": 35.0
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/unit",
+        "original": "帧",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/6/key",
+        "original": "release_frames_last",
+        "candidate": "cycle_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/6/label",
+        "original": "出手记录末项",
+        "candidate": "本轮周期长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/6/unit",
+        "original": "帧",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/key",
+        "original": "impact_frames_count",
+        "candidate": "cycle_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/label",
+        "original": "窗口内命中帧记录数",
+        "candidate": "本轮周期伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/value",
+        "original_type": "int",
+        "candidate_type": "NoneType",
+        "original": 0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/unit",
+        "original": "条",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/8/key",
+        "original": "impact_frames_first",
+        "candidate": "cycle_average"
+      },
+      {
+        "path": "$/report/sections/12/metrics/8/label",
+        "original": "窗口内命中帧记录首项",
+        "candidate": "本轮周期平均伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/8/unit",
+        "original": "帧",
+        "candidate": "伤害/秒"
+      },
+      {
+        "path": "$/report/sections/12/notes",
+        "original_len": 6,
+        "candidate_len": 4
+      },
+      {
+        "path": "$/report/sections/12/notes/0",
+        "original": "各条记录照既有序列保留；同单位的多条流和同帧多事件不合并、不去重，也不换算成实际攻击次数。",
+        "candidate": "各项直接读取既有结果，未知仍未知；本表不重新结算、相加或由差值反推充能期输出。"
+      },
+      {
+        "path": "$/report/sections/12/notes/1",
+        "original": "一条召唤物时序可供多只或零只单位的条件计算使用；记录数不证明真实在场数量或分项命中次数。",
+        "candidate": "完整施放按本次施放归属；技能阶段、观察窗口和本轮周期各有自己的截止边界。已释放尾段可使它们不同。"
+      },
+      {
+        "path": "$/report/sections/12/notes/2",
+        "original": "已释放的潜在命中记录可晚于观察窗口；不自动加入窗口、技能阶段或本轮周期输出。",
+        "candidate": "本轮周期使用当前技能与结束后充能的既有计算；跨多轮稳态、残留和未绑定事件没有因此得到确认。"
+      },
+      {
+        "path": "$/report/sections/12/notes/3",
+        "original": "输出时间与窗口内命中帧分别取自现有字段；部分完整施放路径的输出时间含尾段，不能据此改写窗口边界。",
+        "candidate": "已计部分只是受支持来源的小计，不能补成完整总量；独立生命回复、损伤积累和屏障仍采用各自口径。"
+      },
+      {
+        "path": "$/report/sections/13/id",
+        "original": "output_domain_damage",
+        "candidate": "output_domain_healing"
+      },
+      {
+        "path": "$/report/sections/13/title",
+        "original": "伤害口径对照",
+        "candidate": "潜在治疗口径对照"
+      },
+      {
+        "path": "$/report/sections/13/metrics/1/label",
+        "original": "观察窗口伤害",
+        "candidate": "观察窗口潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/1/value",
+        "original": 15750.0,
+        "candidate": 15300.0
+      },
+      {
+        "path": "$/report/sections/13/metrics/1/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/2/label",
+        "original": "完整本次施放伤害",
+        "candidate": "完整本次施放潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/2/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/2/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/3/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/4/label",
+        "original": "技能阶段伤害",
+        "candidate": "技能阶段潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/4/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/6/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/7/label",
+        "original": "本轮周期伤害",
+        "candidate": "本轮周期潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/7/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/7/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/8/label",
+        "original": "本轮周期平均伤害",
+        "candidate": "本轮周期平均潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/8/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 415.56728232189977,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/8/unit",
+        "original": "伤害/秒",
+        "candidate": "治疗/秒"
+      },
+      {
+        "path": "$/report/sections/13/notes",
+        "original_len": 4,
+        "candidate_len": 5
+      }
+    ],
+    "kaltsit-interrupted_tail": [
+      {
+        "path": "$/timing",
+        "original_keys": [
+          "mode",
+          "fps",
+          "streams",
+          "window_convention",
+          "scenario_provided",
+          "target_scope_notes",
+          "complete",
+          "notes",
+          "recharge_streams",
+          "unplaced_components",
+          "resource_and_damage_shared_clock",
+          "initial_seconds",
+          "cycle_seconds"
+        ],
+        "candidate_keys": [
+          "mode",
+          "fps",
+          "streams",
+          "window_convention",
+          "scenario_provided",
+          "target_scope_notes",
+          "complete",
+          "notes",
+          "unplaced_components",
+          "resource_and_damage_shared_clock",
+          "initial_seconds",
+          "cycle_seconds"
+        ]
+      },
+      {
+        "path": "$/timing/streams/0/resume_frame",
+        "original": 85,
+        "candidate": 0
+      },
+      {
+        "path": "$/timing/cycle_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/execution_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/duration_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/total_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/total_healing",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/phase_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/phase_healing",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_dps",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 415.56728232189977,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_hps",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 403.6939313984169,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_damage",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/skill/cycle_healing",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/estimate/notes",
+        "original_len": 14,
+        "candidate_len": 15
+      },
+      {
+        "path": "$/estimate/notes/7",
+        "original": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "candidate": "供靶情景未耗尽本次弹药；已排程观察输出保留，完整施放持续、非零总量及完整周期保持未知。"
+      },
+      {
+        "path": "$/estimate/notes/8",
+        "original": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "candidate": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。"
+      },
+      {
+        "path": "$/estimate/notes/9",
+        "original": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "candidate": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+      },
+      {
+        "path": "$/estimate/notes/10",
+        "original": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "candidate": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。"
+      },
+      {
+        "path": "$/estimate/notes/11",
+        "original": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "candidate": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。"
+      },
+      {
+        "path": "$/estimate/notes/12",
+        "original": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "candidate": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。"
+      },
+      {
+        "path": "$/estimate/notes/13",
+        "original": "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "candidate": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。"
+      },
+      {
+        "path": "$/report/sections",
+        "original_len": 15,
+        "candidate_len": 14
+      },
+      {
+        "path": "$/report/sections/0/metrics/1/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/0/metrics/2/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics",
+        "original_len": 6,
+        "candidate_len": 5
+      },
+      {
+        "path": "$/report/sections/3/metrics/0/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/key",
+        "original": "active_dps",
+        "candidate": "window_damage"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/label",
+        "original": "技能阶段平均 DPS",
+        "candidate": "观察窗口总伤"
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/value",
+        "original": 5431.0344827586205,
+        "candidate": 15750.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/1/unit",
+        "original": "伤害/秒",
+        "candidate": ""
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/key",
+        "original": "window_damage",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/label",
+        "original": "观察窗口总伤",
+        "candidate": "伤害观察窗口"
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/value",
+        "original": 15750.0,
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/2/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/key",
+        "original": "window_seconds",
+        "candidate": "window_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/label",
+        "original": "伤害观察窗口",
+        "candidate": "窗口平均 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/value",
+        "original": 10.0,
+        "candidate": 1575.0
+      },
+      {
+        "path": "$/report/sections/3/metrics/3/unit",
+        "original": "秒",
+        "candidate": "伤害/秒"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/key",
+        "original": "window_dps",
+        "candidate": "cycle_dps"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/label",
+        "original": "窗口平均 DPS",
+        "candidate": "本轮周期 DPS"
+      },
+      {
+        "path": "$/report/sections/3/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 1575.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/4/metrics",
+        "original_len": 6,
+        "candidate_len": 5
+      },
+      {
+        "path": "$/report/sections/4/metrics/0/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15300.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/key",
+        "original": "active_hps",
+        "candidate": "window_healing"
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/label",
+        "original": "技能阶段平均 HPS",
+        "candidate": "观察窗口治疗"
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/value",
+        "original": 5275.862068965517,
+        "candidate": 15300.0
+      },
+      {
+        "path": "$/report/sections/4/metrics/1/unit",
+        "original": "治疗/秒",
+        "candidate": ""
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/key",
+        "original": "window_healing",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/label",
+        "original": "观察窗口治疗",
+        "candidate": "治疗观察窗口"
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/value",
+        "original": 15300.0,
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/4/metrics/2/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/key",
+        "original": "window_seconds",
+        "candidate": "window_hps"
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/label",
+        "original": "治疗观察窗口",
+        "candidate": "窗口平均 HPS"
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/value",
+        "original": 10.0,
+        "candidate": 1530.0
+      },
+      {
+        "path": "$/report/sections/4/metrics/3/unit",
+        "original": "秒",
+        "candidate": "治疗/秒"
+      },
+      {
+        "path": "$/report/sections/4/metrics/4/key",
+        "original": "window_hps",
+        "candidate": "hps"
+      },
+      {
+        "path": "$/report/sections/4/metrics/4/label",
+        "original": "窗口平均 HPS",
+        "candidate": "本轮周期 HPS"
+      },
+      {
+        "path": "$/report/sections/4/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 1530.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/12/id",
+        "original": "event_clock_recharge_streams_0",
+        "candidate": "output_domain_damage"
+      },
+      {
+        "path": "$/report/sections/12/title",
+        "original": "本轮充能期 · 凯尔希·思衡托本体 · 时序记录 1",
+        "candidate": "伤害口径对照"
+      },
+      {
+        "path": "$/report/sections/12/metrics",
+        "original_len": 19,
+        "candidate_len": 9
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/key",
+        "original": "target_scope",
+        "candidate": "window_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/label",
+        "original": "获取来源",
+        "candidate": "观察窗口长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/value",
+        "original_type": "str",
+        "candidate_type": "float",
+        "original": "友方获取参考",
+        "candidate": 10.0
+      },
+      {
+        "path": "$/report/sections/12/metrics/0/unit",
+        "original": "",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/key",
+        "original": "start_frames_count",
+        "candidate": "window_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/label",
+        "original": "攻击起始记录数",
+        "candidate": "观察窗口伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/value",
+        "original_type": "int",
+        "candidate_type": "float",
+        "original": 0,
+        "candidate": 15750.0
+      },
+      {
+        "path": "$/report/sections/12/metrics/1/unit",
+        "original": "条",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/2/key",
+        "original": "start_frames_first",
+        "candidate": "cast_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/2/label",
+        "original": "攻击起始记录首项",
+        "candidate": "完整本次施放伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/2/unit",
+        "original": "帧",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/3/key",
+        "original": "start_frames_last",
+        "candidate": "duration_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/3/label",
+        "original": "攻击起始记录末项",
+        "candidate": "技能阶段长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/3/unit",
+        "original": "帧",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/key",
+        "original": "release_frames_count",
+        "candidate": "phase_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/label",
+        "original": "出手记录数",
+        "candidate": "技能阶段伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/value",
+        "original_type": "int",
+        "candidate_type": "NoneType",
+        "original": 0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/12/metrics/4/unit",
+        "original": "条",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/key",
+        "original": "release_frames_first",
+        "candidate": "recharge_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/label",
+        "original": "出手记录首项",
+        "candidate": "本轮结束后充能长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/value",
+        "original_type": "NoneType",
+        "candidate_type": "float",
+        "original": null,
+        "candidate": 35.0
+      },
+      {
+        "path": "$/report/sections/12/metrics/5/unit",
+        "original": "帧",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/6/key",
+        "original": "release_frames_last",
+        "candidate": "cycle_seconds"
+      },
+      {
+        "path": "$/report/sections/12/metrics/6/label",
+        "original": "出手记录末项",
+        "candidate": "本轮周期长度"
+      },
+      {
+        "path": "$/report/sections/12/metrics/6/unit",
+        "original": "帧",
+        "candidate": "秒"
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/key",
+        "original": "impact_frames_count",
+        "candidate": "cycle_total"
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/label",
+        "original": "窗口内命中帧记录数",
+        "candidate": "本轮周期伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/value",
+        "original_type": "int",
+        "candidate_type": "NoneType",
+        "original": 0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/12/metrics/7/unit",
+        "original": "条",
+        "candidate": "伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/8/key",
+        "original": "impact_frames_first",
+        "candidate": "cycle_average"
+      },
+      {
+        "path": "$/report/sections/12/metrics/8/label",
+        "original": "窗口内命中帧记录首项",
+        "candidate": "本轮周期平均伤害"
+      },
+      {
+        "path": "$/report/sections/12/metrics/8/unit",
+        "original": "帧",
+        "candidate": "伤害/秒"
+      },
+      {
+        "path": "$/report/sections/12/notes",
+        "original_len": 6,
+        "candidate_len": 4
+      },
+      {
+        "path": "$/report/sections/12/notes/0",
+        "original": "各条记录照既有序列保留；同单位的多条流和同帧多事件不合并、不去重，也不换算成实际攻击次数。",
+        "candidate": "各项直接读取既有结果，未知仍未知；本表不重新结算、相加或由差值反推充能期输出。"
+      },
+      {
+        "path": "$/report/sections/12/notes/1",
+        "original": "一条召唤物时序可供多只或零只单位的条件计算使用；记录数不证明真实在场数量或分项命中次数。",
+        "candidate": "完整施放按本次施放归属；技能阶段、观察窗口和本轮周期各有自己的截止边界。已释放尾段可使它们不同。"
+      },
+      {
+        "path": "$/report/sections/12/notes/2",
+        "original": "已释放的潜在命中记录可晚于观察窗口；不自动加入窗口、技能阶段或本轮周期输出。",
+        "candidate": "本轮周期使用当前技能与结束后充能的既有计算；跨多轮稳态、残留和未绑定事件没有因此得到确认。"
+      },
+      {
+        "path": "$/report/sections/12/notes/3",
+        "original": "输出时间与窗口内命中帧分别取自现有字段；部分完整施放路径的输出时间含尾段，不能据此改写窗口边界。",
+        "candidate": "已计部分只是受支持来源的小计，不能补成完整总量；独立生命回复、损伤积累和屏障仍采用各自口径。"
+      },
+      {
+        "path": "$/report/sections/13/id",
+        "original": "output_domain_damage",
+        "candidate": "output_domain_healing"
+      },
+      {
+        "path": "$/report/sections/13/title",
+        "original": "伤害口径对照",
+        "candidate": "潜在治疗口径对照"
+      },
+      {
+        "path": "$/report/sections/13/metrics/1/label",
+        "original": "观察窗口伤害",
+        "candidate": "观察窗口潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/1/value",
+        "original": 15750.0,
+        "candidate": 15300.0
+      },
+      {
+        "path": "$/report/sections/13/metrics/1/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/2/label",
+        "original": "完整本次施放伤害",
+        "candidate": "完整本次施放潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/2/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/2/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/3/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 2.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/4/label",
+        "original": "技能阶段伤害",
+        "candidate": "技能阶段潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/4/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/4/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/6/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 37.9,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/7/label",
+        "original": "本轮周期伤害",
+        "candidate": "本轮周期潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/7/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 15750.0,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/7/unit",
+        "original": "伤害",
+        "candidate": "治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/8/label",
+        "original": "本轮周期平均伤害",
+        "candidate": "本轮周期平均潜在治疗"
+      },
+      {
+        "path": "$/report/sections/13/metrics/8/value",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 415.56728232189977,
+        "candidate": null
+      },
+      {
+        "path": "$/report/sections/13/metrics/8/unit",
+        "original": "伤害/秒",
+        "candidate": "治疗/秒"
+      },
+      {
+        "path": "$/report/sections/13/notes",
+        "original_len": 4,
+        "candidate_len": 5
+      }
+    ],
+    "kaltsit-complete_control": [
+      {
+        "path": "$/timing/streams/0/resume_frame",
+        "original": 85,
+        "candidate": 44
+      },
+      {
+        "path": "$/execution_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 8.633333333333333,
+        "candidate": null
+      }
+    ],
+    "kaltsit-empty_control": [
+      {
+        "path": "$/estimate/notes",
+        "original_len": 14,
+        "candidate_len": 15
+      },
+      {
+        "path": "$/estimate/notes/7",
+        "original": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。",
+        "candidate": "供靶情景未耗尽本次弹药；已排程观察输出保留，完整施放持续、非零总量及完整周期保持未知。"
+      },
+      {
+        "path": "$/estimate/notes/8",
+        "original": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。",
+        "candidate": "常规攻击按30Hz逐帧调度；动画事件参考值不等于已核实的客户端攻击模板。"
+      },
+      {
+        "path": "$/estimate/notes/9",
+        "original": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。",
+        "candidate": "只在缩短到小于动画长度时压缩常规动画；特殊循环动画、多段事件、弹道脚本仍需单独校准。"
+      },
+      {
+        "path": "$/estimate/notes/10",
+        "original": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。",
+        "candidate": "时序采用30Hz参考事件模型：首击、攻击间隔帧对齐、供靶区间、移动/打断和指定弹道延迟参与已接入的攻击路径。"
+      },
+      {
+        "path": "$/estimate/notes/11",
+        "original": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。",
+        "candidate": "动画帧为提取资料；攻击模板绑定、皮肤、多段/持续判定、部分施放/结束硬直尚未逐项校准，不是完整实战模拟。"
+      },
+      {
+        "path": "$/estimate/notes/12",
+        "original": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。",
+        "candidate": "未提供战斗时序情景时使用连续供靶；当前尚不能从战斗画面自动跟踪移动路径、目标消失和弹体位置。"
+      },
+      {
+        "path": "$/estimate/notes/13",
+        "original": "单次总量按本次施放归属计算；技能阶段、观察窗口及本轮周期只统计其结束前的已排程命中。跨上轮遗留弹体的稳态周期尚未接入。",
+        "candidate": "攻击回复以出手事件计入技力、下一模拟帧可用；强化下次攻击还等待下一攻击槽。该先后顺序需对应客户端校准。"
+      }
+    ],
+    "kaltsit-empty-enemy-friendly-complete-control": [
+      {
+        "path": "$/timing/streams/0/resume_frame",
+        "original": 85,
+        "candidate": 44
+      },
+      {
+        "path": "$/execution_seconds",
+        "original_type": "float",
+        "candidate_type": "NoneType",
+        "original": 8.633333333333333,
+        "candidate": null
+      }
+    ]
+  },
+  "project_calls_reexecuted": false,
+  "alias_equality_claimed_by_diff": false
+}

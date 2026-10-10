@@ -1,0 +1,50 @@
+--- section119-window-source-v1/window119.py
++++ section119-window-source-v2/window119.py
+@@ -4,6 +4,7 @@
+ import json
+ import os
+ from pathlib import Path
++import re
+ import sys
+ import tempfile
+ import threading
+@@ -17,6 +18,13 @@
+ HELPER_SHA = 'f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a'
+ DEADLINE = 900
+ def sha(raw):return hashlib.sha256(raw).hexdigest()
++
++def visible_metric_label(label):
++    """Verified ordinary-report label wording, not an output-mechanism change."""
++    assert type(label) is str
++    for raw,shown in (('DPS/HPS','每秒伤害 / 每秒治疗'),('DPS','每秒伤害'),('HPS','每秒治疗')):
++        label=label.replace(raw,shown)
++    return re.sub(r' (?=每秒伤害|每秒治疗)','',label).strip()
+ 
+ def error_record(error):
+     return {'type':type(error).__name__,'message':str(error),
+@@ -198,10 +206,21 @@
+                 assert_native_equal(after['joint'],before['joint'],label+' state/account/disk purity');return value
+             def screenshot(identity,block):
+                 title='【'+block['title']+'】'
+-                first=window.damage_text.document().find(title)
+-                last=window.damage_text.document().find(block['metrics'][-1]['label']+'：')
+-                middle=window.damage_text.document().find(block['metrics'][len(block['metrics'])//2]['label']+'：')
+-                assert all(not cursor.isNull() for cursor in (first,last,middle))
++                document=window.damage_text.document();first=document.find(title)
++                assert not first.isNull() and block['metrics']
++                search=QTextCursor(first);search.movePosition(QTextCursor.MoveOperation.EndOfBlock)
++                metric_cursors=[]
++                # Source format_report emits each metric in the next document block.
++                # Start after the title and reject any forward match outside that bounded block.
++                for index,metric in enumerate(block['metrics']):
++                    prefix=visible_metric_label(metric['label'])+'：'
++                    found=document.find(prefix,search)
++                    assert not found.isNull()
++                    assert found.blockNumber()==first.blockNumber()+index+1
++                    assert found.block().text().startswith(prefix)
++                    metric_cursors.append(found)
++                    search=QTextCursor(found);search.movePosition(QTextCursor.MoveOperation.EndOfBlock)
++                last=metric_cursors[-1];middle=metric_cursors[len(metric_cursors)//2]
+                 assert first.blockNumber()<middle.blockNumber()<=last.blockNumber()
+                 pure('center complete current breakdown metrics',lambda:(
+                     window.damage_text.setTextCursor(middle),window.damage_text.centerCursor()))

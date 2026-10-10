@@ -1,0 +1,318 @@
+{
+  "kind": "SOURCE_ONLY_MANUAL_CASES",
+  "cases": [
+    {
+      "id": "mechanist-limited_windows",
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "skill_rank": 7,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0,
+          "target_windows": [
+            [
+              0,
+              3
+            ]
+          ]
+        },
+        "operator": "mechanist",
+        "skill": 1
+      },
+      "expected_complete_cast": false,
+      "expected_nonzero_complete_totals_unknown": true,
+      "expected_window_damage": 11000,
+      "note": "SOURCE hand expectations require Root actual API comparison; no runtime has occurred."
+    },
+    {
+      "id": "mechanist-positive_lifetime",
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "skill_rank": 7,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0,
+          "target_disappears_seconds": 3
+        },
+        "operator": "mechanist",
+        "skill": 1
+      },
+      "expected_complete_cast": false,
+      "expected_nonzero_complete_totals_unknown": true,
+      "expected_window_damage": 5500,
+      "note": "SOURCE hand expectations require Root actual API comparison; no runtime has occurred."
+    },
+    {
+      "id": "mechanist-interrupted_tail",
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "skill_rank": 7,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0,
+          "interrupt_windows": [
+            [
+              3,
+              3600
+            ]
+          ]
+        },
+        "operator": "mechanist",
+        "skill": 1
+      },
+      "expected_complete_cast": false,
+      "expected_nonzero_complete_totals_unknown": true,
+      "expected_window_damage": 11000,
+      "note": "SOURCE hand expectations require Root actual API comparison; no runtime has occurred."
+    },
+    {
+      "id": "mechanist-complete_control",
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "skill_rank": 7,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "operator": "mechanist",
+        "skill": 1
+      },
+      "expected_complete_cast": true,
+      "expected_nonzero_complete_totals_unknown": false,
+      "expected_window_damage": 16500,
+      "note": "SOURCE hand expectations require Root actual API comparison; no runtime has occurred."
+    },
+    {
+      "id": "mechanist-empty_control",
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "skill_rank": 7,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0,
+          "target_windows": []
+        },
+        "operator": "mechanist",
+        "skill": 1
+      },
+      "expected_complete_cast": false,
+      "expected_nonzero_complete_totals_unknown": false,
+      "expected_window_damage": 0,
+      "note": "SOURCE hand expectations require Root actual API comparison; no runtime has occurred."
+    },
+    {
+      "id": "kaltsit-limited_windows",
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "skill_rank": 7,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0,
+          "target_windows": [
+            [
+              0,
+              3
+            ]
+          ]
+        },
+        "operator": "kaltsit",
+        "skill": 2,
+        "healing_targets": 2
+      },
+      "expected_complete_cast": false,
+      "expected_nonzero_complete_totals_unknown": true,
+      "expected_window_damage": 15750,
+      "note": "SOURCE hand expectations require Root actual API comparison; no runtime has occurred."
+    },
+    {
+      "id": "kaltsit-positive_lifetime",
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "skill_rank": 7,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0,
+          "target_disappears_seconds": 3
+        },
+        "operator": "kaltsit",
+        "skill": 2,
+        "healing_targets": 2
+      },
+      "expected_complete_cast": false,
+      "expected_nonzero_complete_totals_unknown": true,
+      "expected_window_damage": 15750,
+      "note": "SOURCE hand expectations require Root actual API comparison; no runtime has occurred."
+    },
+    {
+      "id": "kaltsit-interrupted_tail",
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "skill_rank": 7,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0,
+          "interrupt_windows": [
+            [
+              3,
+              3600
+            ]
+          ]
+        },
+        "operator": "kaltsit",
+        "skill": 2,
+        "healing_targets": 2
+      },
+      "expected_complete_cast": false,
+      "expected_nonzero_complete_totals_unknown": true,
+      "expected_window_damage": 15750,
+      "note": "SOURCE hand expectations require Root actual API comparison; no runtime has occurred."
+    },
+    {
+      "id": "kaltsit-complete_control",
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "skill_rank": 7,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0
+        },
+        "operator": "kaltsit",
+        "skill": 2,
+        "healing_targets": 2
+      },
+      "expected_complete_cast": true,
+      "expected_nonzero_complete_totals_unknown": false,
+      "expected_window_damage": 31500,
+      "note": "SOURCE hand expectations require Root actual API comparison; no runtime has occurred."
+    },
+    {
+      "id": "kaltsit-empty_control",
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "skill_rank": 7,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0,
+          "target_windows": []
+        },
+        "operator": "kaltsit",
+        "skill": 2,
+        "healing_targets": 0
+      },
+      "expected_complete_cast": false,
+      "expected_nonzero_complete_totals_unknown": false,
+      "expected_window_damage": 0,
+      "note": "SOURCE hand expectations require Root actual API comparison; no runtime has occurred."
+    },
+    {
+      "id": "kaltsit-empty-enemy-friendly-complete-control",
+      "scenario": {
+        "elite": 2,
+        "level": 1,
+        "skill_rank": 7,
+        "trust": 0,
+        "potential": 1,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "windup_frames": 0,
+          "recovery_frames": 0,
+          "target_windows": []
+        },
+        "operator": "kaltsit",
+        "skill": 2,
+        "healing_targets": 2
+      },
+      "expected_complete_cast": true,
+      "expected_nonzero_complete_totals_unknown": false,
+      "expected_window_damage": 0,
+      "expected_window_healing": 30600,
+      "expected_total_healing": 76500,
+      "expected_duration_seconds": 25.833333333333332,
+      "note": "SOURCE manual knownfriendlyfallback control; Root actual pass is not inferred."
+    }
+  ]
+}

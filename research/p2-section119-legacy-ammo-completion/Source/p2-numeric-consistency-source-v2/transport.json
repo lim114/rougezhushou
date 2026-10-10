@@ -1,0 +1,39 @@
+{
+  "kind": "SOURCE_ONLY_NOT_APPLIED",
+  "replacements": [
+    {
+      "target": "rouge/damage.py",
+      "baseline": {
+        "bytes": 31668,
+        "sha256": "70a7a8847849c9f2e01f956dc1df68a61ef34b8aec516e7f4ad64ae0c2ec7e86"
+      },
+      "candidate": {
+        "bytes": 31680,
+        "sha256": "74c3619258c946ca0c57016a8283136ec4e4321bfa71f35886664aecfd582194"
+      },
+      "blocks": [
+        {
+          "before": "status['execution_seconds']=(events['release_frames'][-1]+(pellet_count-1)*spacing+1)/30 if events['release_frames'] else None",
+          "after": "status['execution_seconds']=(events['release_frames'][-1]+(pellet_count-1)*spacing+1)/30 if len(events['release_frames'])>=shots else None"
+        }
+      ]
+    },
+    {
+      "target": "rouge/estimate.py",
+      "baseline": {
+        "bytes": 22554,
+        "sha256": "92e165ebbcc97003cc07bb6559f2240e3b4e624af5af5177cd1940f77b4cc571"
+      },
+      "candidate": {
+        "bytes": 23031,
+        "sha256": "01a749b99bbbfcf3a7b565b8964981f515bc420ad681aa790dd90a26761dd9dc"
+      },
+      "blocks": [
+        {
+          "before": "    window_healing=0\r\n",
+          "after": "    if skill['duration_type']=='AMMO' and not (operator=='mechanist' and skill_index==2) and duration is None:\r\n        # A finite target supply can leave ammunition unused. Its placed\r\n        # observation remains valid, but is not a complete cast total.\r\n        if damage:damage=None\r\n        if healing:healing=None\r\n        notes.append('供靶情景未耗尽本次弹药；已排程观察输出保留，完整施放持续、非零总量及完整周期保持未知。')\r\n    window_healing=0\r\n"
+        }
+      ]
+    }
+  ]
+}

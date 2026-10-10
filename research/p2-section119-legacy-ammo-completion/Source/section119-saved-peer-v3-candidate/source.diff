@@ -1,0 +1,157 @@
+--- section119-saved-source-v2/audit_saved119.py
++++ section119-saved-peer-v3-candidate/audit_saved119.py
+@@ -167,6 +167,102 @@
+ 
+ EMPTY_NOTE='供靶情景未耗尽本次弹药；已排程观察输出保留，完整施放持续、非零总量及完整周期保持未知。'
+ 
++# Exactly the original/candidate differences in the sealed public 119 fixtures.
++# op, target_scope, ammo rounds, interval, observed starts/releases, pellets,
++# pellet spacing, original resume, candidate observation-horizon resume.
++RESUME_CASES={
++    'mechanist-limited_windows':('mechanist','enemy',3,75,(0,75),5,6,50,0),
++    'mechanist-positive_lifetime':('mechanist','enemy',3,75,(0,75),5,6,50,0),
++    'mechanist-interrupted_tail':('mechanist','enemy',3,75,(0,75),5,6,50,0),
++    'kaltsit-limited_windows':('kaltsit','enemy',10,86,(0,86),1,0,85,0),
++    'kaltsit-positive_lifetime':('kaltsit','enemy',10,86,(0,86),1,0,85,0),
++    'kaltsit-interrupted_tail':('kaltsit','enemy',10,86,(0,86),1,0,85,0),
++    'kaltsit-complete_control':('kaltsit','enemy',10,86,(0,86,172,258),1,0,85,44),
++    'kaltsit-empty-enemy-friendly-complete-control':('kaltsit','friendly',10,86,(0,86,172,258),1,0,85,44),
++}
++FULL_OBSERVATION_CONTROLS=('kaltsit-complete_control','kaltsit-empty-enemy-friendly-complete-control')
++
++
++def checked_observed_resume(identity,scenario,original,candidate):
++    """Positive frame formula proof for one fixed case; no project-clock execution."""
++    assert identity in RESUME_CASES
++    op,scope,ammo,interval,starts,pellets,spacing,old_resume,new_resume=RESUME_CASES[identity]
++    assert scenario['operator']==op and scenario['timing_mode']=='frames'
++    assert scenario['skill']==(1 if op=='mechanist' else 2)
++    same(scenario['window_seconds'],10,'fixed explicit API observation horizon')
++    assert scenario['timing']['windup_frames']==scenario['timing']['recovery_frames']==0
++    original_streams=original['timing']['streams'];candidate_streams=candidate['timing']['streams']
++    assert type(original_streams) is list and type(candidate_streams) is list
++    assert len(original_streams)==len(candidate_streams)==1
++    expected_frames=list(starts)
++    for result,streams in ((original,original_streams),(candidate,candidate_streams)):
++        same(result['ammo_rounds'],ammo,'fixed actual ammunition limit')
++        stream=streams[0]
++        assert stream['unit']==op and stream['target_scope']==scope
++        assert stream['known_animation'] is True and stream['temporary_attack_speed'] is False
++        same(stream['windup_frames'],0,'fixed manual windup frames')
++        same(stream['recovery_frames'],0,'fixed manual recovery frames')
++        same(stream['start_frames'],expected_frames,'whole actual fixed observed attack starts')
++        same(stream['release_frames'],expected_frames,'whole actual fixed observed attack releases')
++        same(stream['interval_frames'],interval,'fixed actual cadence frames')
++        same(stream['interval_seconds'],interval/30,'fixed actual cadence seconds')
++        same(stream['interval_frames_by_attack'],[interval]*len(starts),'whole actual per-attack cadence')
++        assert len(stream['release_frames'])<result['ammo_rounds']
++    horizon_frames=math.ceil(scenario['window_seconds']*30-1e-9)
++    assert horizon_frames==300
++    old_end_frames=original_streams[0]['release_frames'][-1]+(pellets-1)*spacing+1
++    old_execution=old_end_frames/30
++    same(original['execution_seconds'],old_execution,'exact original placed-release end scalar')
++    assert math.ceil(original['execution_seconds']*30-1e-9)==old_end_frames
++    assert candidate['execution_seconds'] is None
++    derived_old=max(0,original_streams[0]['start_frames'][-1]+interval-old_end_frames)
++    derived_new=max(0,candidate_streams[0]['start_frames'][-1]+interval-horizon_frames)
++    same(derived_old,old_resume,'independent original post-execution resume formula')
++    same(derived_new,new_resume,'independent retained observation-horizon resume formula')
++    same(original_streams[0]['resume_frame'],derived_old,'exact actual original resume')
++    same(candidate_streams[0]['resume_frame'],derived_new,'exact actual candidate resume')
++    reconstructed=freeze(candidate_streams)
++    reconstructed[0]['resume_frame']=derived_old
++    same(reconstructed,original_streams,'every other whole stream field/order/type/float/alias exactly preserved')
++    if identity in FULL_OBSERVATION_CONTROLS:
++        full_starts=[index*interval for index in range(ammo)]
++        full_end=full_starts[-1]+(pellets-1)*spacing+1
++        assert full_starts==[0,86,172,258,344,430,516,602,688,774] and full_end==775
++        for result in (original,candidate):
++            same(result['estimate']['skill']['duration_seconds'],full_end/30,
++                'independent complete-cast duration remains distinct from four-release observation')
++        same(candidate['estimate']['skill'],original['estimate']['skill'],'entire full-control lifecycle exact')
++    return {'case':identity,'old_execution_seconds':old_execution,'old_derived_end_frames':old_end_frames,
++        'observation_horizon_frames':horizon_frames,'actual_start_release_frames':expected_frames,
++        'interval_frames':interval,'ammo_rounds':ammo,'actual_observed_release_count':len(starts),
++        'original_resume_frame':derived_old,'candidate_resume_frame':derived_new,
++        'admitted_stream_leaf':'timing.streams[0].resume_frame',
++        'scope':'Only this fixed positive-validated resume leaf differs; every other complete observed-stream field including impact/emitted event arrays is exact.'}
++
++
++def reconstruct_full_observation_consumer(identity,scenario,phase,original_consumer,candidate_consumer):
++    """Rebuild only two proven raw leaves, then require complete consumer equality."""
++    assert identity in FULL_OBSERVATION_CONTROLS and phase in PHASES
++    if phase=='calculate_damage':
++        old_roots=[original_consumer['result']];new_roots=[candidate_consumer['result']]
++    else:
++        assert type(candidate_consumer['result']) is str
++        same(candidate_consumer['result'],original_consumer['result'],identity+' '+phase+' complete text remains exactly identical')
++        old_roots=[original_consumer['before'][0],original_consumer['after'][0]]
++        new_roots=[candidate_consumer['before'][0],candidate_consumer['after'][0]]
++    proofs=[checked_observed_resume(identity,scenario,old_root,new_root) for old_root,new_root in zip(old_roots,new_roots)]
++    normalized=freeze(candidate_consumer)
++    roots=([normalized['result']] if phase=='calculate_damage' else [normalized['before'][0],normalized['after'][0]])
++    seen=set()
++    for root,proof in zip(roots,proofs):
++        if id(root) in seen:continue
++        seen.add(id(root))
++        assert root['execution_seconds'] is None
++        same(root['timing']['streams'][0]['resume_frame'],44,'fixed full-control raw observation resume before reconstruction')
++        root['execution_seconds']=proof['old_execution_seconds']
++        root['timing']['streams'][0]['resume_frame']=proof['original_resume_frame']
++    return normalized
++
+ def zero_note_only(consumer):
+     normalized=freeze(consumer);seen=set();count=0
+     def remove(graph):
+@@ -190,7 +286,7 @@
+ 
+ 
+ def audit_api(old,new,cases):
+-    changes=[];negative=[]
++    changes=[];negative=[];resume_admissions=[];full_observation_admissions=[]
+     for case in cases:
+         identity=case['id'];scenario=case['scenario'];op=scenario['operator']
+         shape='friendly_complete_control' if identity=='kaltsit-empty-enemy-friendly-complete-control' else identity.split('-',1)[1]
+@@ -208,7 +304,10 @@
+         same(new['calls'][identity,'calculate_damage']['before'],old['calls'][identity,'calculate_damage']['before'],'old/new whole API caller')
+         for field in ('total_damage','components'):
+             same(result[field],prior[field],identity+' complete unchanged observed '+field)
+-        same(result['timing']['streams'],prior['timing']['streams'],identity+' observed start/release/impact graph unchanged')
++        if identity in RESUME_CASES:
++            resume_admissions.append(checked_observed_resume(identity,scenario,prior,result))
++        else:
++            same(result['timing']['streams'],prior['timing']['streams'],identity+' entire observed stream graph unchanged')
+         same(result['estimate']['base_stats'],prior['estimate']['base_stats'],identity+' base attributes unchanged')
+         if not case['expected_nonzero_complete_totals_unknown']:
+             for phase in PHASES:
+@@ -216,7 +315,15 @@
+                 # Zero-total empty streams retain every old value, but the new
+                 # exact retained-ammunition explanation applies there as well.
+                 if shape=='empty_control':actual=zero_note_only(actual)
++                elif identity in FULL_OBSERVATION_CONTROLS:
++                    actual=reconstruct_full_observation_consumer(identity,scenario,phase,old['calls'][identity,phase],actual)
+                 same(actual,old['calls'][identity,phase],identity+' whole negative control consumer '+phase)
++            if identity in FULL_OBSERVATION_CONTROLS:
++                full_observation_admissions.append({'case':identity,
++                    'only_reconstructed_raw_result_leaves':['execution_seconds','timing.streams[0].resume_frame'],
++                    'all_three_complete_formatter_strings_exact':True,
++                    'whole_consumer_graph_except_two_proven_raw_leaves_exact':True,
++                    'full_cast_lifecycle_remains_exact':True})
+             negative.append(identity)
+         else:
+             assert prior['estimate']['skill']['duration_seconds'] is not None
+@@ -228,9 +335,13 @@
+                 if op=='kaltsit':assert '单次技能总治疗：未知' in text
+             changes.append(identity)
+     assert len(changes)==6 and len(negative)==5
++    assert [row['case'] for row in resume_admissions]==list(RESUME_CASES)
++    assert [row['case'] for row in full_observation_admissions]==list(FULL_OBSERVATION_CONTROLS)
+     return {'cases':len(cases),'changed_partial_case_ids':changes,'negative_case_ids':negative,'empty_zero_controls_exact_added_note_removed_only':True,
++        'fixed_eight_observed_resume_admissions':resume_admissions,
++        'two_full_observation_raw_leaf_admissions':full_observation_admissions,
+         'native_records_decoded':len(old['values'])+len(new['values']),
+-        'scope':'Six partial lifecycles change only as intended; whole caller/components/observed streams/base attributes preserved. Three complete/friendly controls compare entire consumers including all three strings. Two zero-empty controls compare the entire consumer after removing only the exact newly-added retained-ammunition note from estimate.notes and its single rendered bullet; no numerical or other text mask. Partial entire graph/text identity is not claimed.'}
++        'scope':'Six partial lifecycles retain whole caller/components/base attributes; only their fixed positively proven resume leaf changes within observed streams. Mechanical complete control compares the entire consumer exactly. Two Kaltsit complete/friendly controls independently retain full-cast lifecycle and all three complete strings; only fixed raw observation execution_seconds and streams[0].resume_frame are reconstructed to the original proven values before whole consumer comparison, preserving every other field and alias. Two zero-empty controls allow only the exact single added estimate note and its rendered bullet removal. Raw whole identity and partial entire graph/text identity are not claimed.'}
+ 
+ def load_window(folder,guard,guard_raw,cases):
+     folder=Path(folder).resolve();r,raw=load_json(folder/'receipt.json')

@@ -1,0 +1,168 @@
+{
+  "kind": "INDEPENDENT_SOURCE_ONLY_SECTION119_V2_REVIEW",
+  "runtime_executed": false,
+  "project_imports_or_tests_executed": false,
+  "tracked_mutations": false,
+  "manifest": {
+    "bytes": 1697,
+    "sha256": "4f7c4f9eb1654b5f646eb6b1c495df6ff174101ef99918e8f35972bf4d48bc6d"
+  },
+  "verified_payloads": {
+    "README_ZH.md": {
+      "bytes": 5216,
+      "sha256": "f0855240ff725532c794880076524453874682029e1a91196536114aa82949a0"
+    },
+    "baseline/rouge/damage.py": {
+      "bytes": 31668,
+      "sha256": "70a7a8847849c9f2e01f956dc1df68a61ef34b8aec516e7f4ad64ae0c2ec7e86"
+    },
+    "baseline/rouge/estimate.py": {
+      "bytes": 22554,
+      "sha256": "92e165ebbcc97003cc07bb6559f2240e3b4e624af5af5177cd1940f77b4cc571"
+    },
+    "candidate/rouge/damage.py": {
+      "bytes": 31680,
+      "sha256": "74c3619258c946ca0c57016a8283136ec4e4321bfa71f35886664aecfd582194"
+    },
+    "candidate/rouge/estimate.py": {
+      "bytes": 23031,
+      "sha256": "01a749b99bbbfcf3a7b565b8964981f515bc420ad681aa790dd90a26761dd9dc"
+    },
+    "candidate/tests/test_legacy_ammo_completion.py": {
+      "bytes": 7051,
+      "sha256": "09a750c2c9d27facbfe7b9c136bee19ff78178daed2eef7a0b3840c7679633ba"
+    },
+    "prior-source-v1-manifest.json": {
+      "bytes": 1611,
+      "sha256": "efb6dac0f9bf39aeccd23c348ed6829ba6f9a02a0f4d5ce02768cd8b3fbee183"
+    },
+    "public-inputs.json": {
+      "bytes": 8917,
+      "sha256": "5dada56bfde891803f5dc60031a1407433aab74e76a81a386134a7a0fb901542"
+    },
+    "source-inputs.json": {
+      "bytes": 1321,
+      "sha256": "8c9abd0e6bfaf9fc549cbce4aa710fa1d5d3ea2a12a30945586afb948ec9d925"
+    },
+    "transport.json": {
+      "bytes": 1701,
+      "sha256": "9335f268b739625071594d7273838fd30f0062cd1ceb0ae140964a75a60b55eb"
+    }
+  },
+  "compositions": [
+    {
+      "target": "rouge/damage.py",
+      "exact_literal_composition": true,
+      "changed_top_level_definitions": [
+        "_skill_damage_base"
+      ],
+      "compile_noexec": true
+    },
+    {
+      "target": "rouge/estimate.py",
+      "exact_literal_composition": true,
+      "changed_top_level_definitions": [
+        "build_estimate"
+      ],
+      "compile_noexec": true
+    }
+  ],
+  "production_unchanged_v1": true,
+  "test_method_count": 9,
+  "public_case_count": 11,
+  "resolved_blocker": "v1 empty Kaltsit recipient mismatch corrected to 0; added explicit friendly fallback complete control and public-path test",
+  "arithmetic_not_runtime": [
+    {
+      "operator": "mechanist",
+      "raw_skill_values": {
+        "attack@atk_scale": 1.1,
+        "attack@trigger_time": 3.0,
+        "attack@times": 5.0,
+        "base_attack_time": 1.3,
+        "attack@projectile_delay_time": 1.3,
+        "attack@projectile_range": 1.1,
+        "attack@interval": 0.2
+      },
+      "base_interval": 1.2,
+      "step_frames": 75,
+      "attack_reference": 1000,
+      "per_pellet_reference": 1100.0,
+      "source_shots": 3,
+      "limited_release_frames": [
+        0,
+        75
+      ],
+      "limited_impact_frames": [
+        39,
+        45,
+        51,
+        57,
+        63,
+        114,
+        120,
+        126,
+        132,
+        138
+      ],
+      "window_damage_source_arithmetic": 11000.0,
+      "positive_lifetime_damage_source_arithmetic": 5500.0,
+      "full_damage_source_arithmetic": 16500.0,
+      "old_complete_duration_source_arithmetic": 5.833333333333333,
+      "healing_per_recipient_source_arithmetic": 0
+    },
+    {
+      "operator": "kaltsit",
+      "raw_skill_values": {
+        "atk": 1.25,
+        "attack@atk_scale": 3.5,
+        "attack@heal_scale": 1.7,
+        "attack@sluggish": 5.0,
+        "attack@trigger_time": 10.0
+      },
+      "base_interval": 2.85,
+      "step_frames": 86,
+      "attack_reference": 2250.0,
+      "per_pellet_reference": 7875.0,
+      "source_shots": 10,
+      "limited_release_frames": [
+        0,
+        86
+      ],
+      "limited_impact_frames": [
+        0,
+        86
+      ],
+      "window_damage_source_arithmetic": 15750.0,
+      "positive_lifetime_damage_source_arithmetic": 15750.0,
+      "full_damage_source_arithmetic": 78750.0,
+      "old_complete_duration_source_arithmetic": 25.833333333333332,
+      "healing_per_recipient_source_arithmetic": 3825.0
+    }
+  ],
+  "friendly_complete_reference_arithmetic": {
+    "per_recipient": 3825.0,
+    "recipients": 2,
+    "full_release_count": 10,
+    "full_healing": 76500,
+    "frames_explicit_window_release_count": 4,
+    "frames_window_healing": 30600,
+    "continuous_explicit_window_release_count": 3,
+    "continuous_window_healing": 22950
+  },
+  "blocking_findings": [],
+  "qualified_open_boundaries": [
+    {
+      "id": "implicit-window-partial",
+      "detail": "Duration None retains old implicit window0/window_damage None; production/reference claims explicitly limited to supplied window. Not certified as a new implicit window behavior."
+    },
+    {
+      "id": "client-clock",
+      "detail": "Enough release events establishes completion only in existing parameter model; native/game endpoint clock and manual stopping remain unverified."
+    }
+  ],
+  "root_runtime_required": [
+    "Original vs candidate same public inputs and complete output graph plus ordinary/technical formatters",
+    "Both modes, positive supply/lifetime, empty enemy with 0 and 2 friendly recipients, complete default and 100s delayed impact controls",
+    "Related ammunition/refill/target/range/healing/timing regressions and real MainWindow witness"
+  ]
+}

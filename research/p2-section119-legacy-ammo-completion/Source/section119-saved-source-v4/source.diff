@@ -1,0 +1,132 @@
+--- sealed-v3/audit_saved119.py
++++ source-v4/audit_saved119.py
+@@ -382,9 +382,101 @@
+     assert [m['path'] for m in r['records'] if m['kind']=='actual_window_snapshot']==[row['snapshot']['path'] for row in r['rows']]
+     return {'folder':folder,'receipt':r,'raw':raw,'get':get,'values':values,'positions':positions,'numeric':numeric}
+ 
++GUI_FRAME_OBSERVATIONS={
++    # op, scope, ammo, cadence frames, actual starts/releases, pellets, spacing,
++    # current execution end (None when not all ammo placed), resume, full end.
++    'mechanist-frames-limited_windows':('mechanist','enemy',3,75,(0,75),5,6,None,0,None),
++    'mechanist-frames-positive_lifetime':('mechanist','enemy',3,75,(0,75),5,6,None,0,None),
++    'mechanist-frames-interrupted_tail':('mechanist','enemy',3,75,(0,75),5,6,None,0,None),
++    'mechanist-frames-complete_control':('mechanist','enemy',3,75,(0,75,150),5,6,175,50,175),
++    'mechanist-frames-short_control':('mechanist','enemy',3,75,(0,),5,6,None,15,175),
++    'mechanist-frames-empty_control':('mechanist','enemy',3,75,(),5,6,None,0,None),
++    'mechanist-frames-late_complete_control':('mechanist','enemy',3,75,(0,75,150),5,6,175,50,175),
++    'kaltsit-frames-limited_windows':('kaltsit','enemy',10,86,(0,86),1,0,None,0,None),
++    'kaltsit-frames-positive_lifetime':('kaltsit','enemy',10,86,(0,86),1,0,None,0,None),
++    'kaltsit-frames-interrupted_tail':('kaltsit','enemy',10,86,(0,86),1,0,None,0,None),
++    'kaltsit-frames-complete_control':('kaltsit','enemy',10,86,(0,86,172,258),1,0,None,44,775),
++    'kaltsit-frames-short_control':('kaltsit','enemy',10,86,(0,),1,0,None,26,775),
++    'kaltsit-frames-empty_control':('kaltsit','enemy',10,86,(),1,0,None,0,None),
++    'kaltsit-frames-late_complete_control':('kaltsit','enemy',10,86,(0,86,172,258),1,0,None,44,775),
++    'kaltsit-frames-friendly_complete_control':('kaltsit','friendly',10,86,(0,86,172,258),1,0,None,44,775),
++}
++
++def checked_current_gui_observation(case,caller,result,base):
++    """Positive fixed frame-only current clock and independent full-cast checks."""
++    identity=case['id'];assert identity in GUI_FRAME_OBSERVATIONS
++    op,scope,ammo,interval,starts,pellets,spacing,current_end,resume,full_end=GUI_FRAME_OBSERVATIONS[identity]
++    assert case['operator']==caller['operator']==op and case['mode']==caller['timing_mode']=='frames'
++    assert caller['skill']==case['skill']==(1 if op=='mechanist' else 2)
++    assert (caller['elite'],caller['level'],caller['skill_rank'],caller['trust'],caller['potential'])==(2,1,7,0,1)
++    assert caller['module_id'] is None and caller['module_level']==0
++    for key in ('relic_ids','char_buff_ids','char_buff_absent_ids','char_buff_pending_ids'):
++        same(caller.get(key,[]),[],'fixed GUI no selected relic/buff '+key)
++    for key in ('run_config','relic_context'):
++        same(caller.get(key,{}),{},'fixed GUI empty '+key)
++    assert not {'initial_sp_bonus','sp_recovery_bonus','_relic_rules','_relic_final_attack_factor'} & set(caller)
++    same(caller['timing'],case['timing'],'fixed whole GUI declaration without hidden clock inputs')
++    assert caller['timing']['windup_frames']==caller['timing']['recovery_frames']==0
++    assert type(caller['window_seconds']) in (int,float) and math.isfinite(caller['window_seconds'])
++    assert caller['window_seconds']==case['seconds']
++    horizon=math.ceil(caller['window_seconds']*30-1e-9)
++    same(horizon,60 if case['shape']=='short_control' else 300,'fixed GUI observation frame horizon')
++    same(result['ammo_rounds'],ammo,'fixed GUI actual ammunition limit')
++    assert result['timing']['mode']=='frames' and result['timing']['fps']==30
++    streams=result['timing']['streams'];assert type(streams) is list and len(streams)==1
++    stream=streams[0]
++    assert stream['unit']==op and stream['target_scope']==scope
++    assert stream['known_animation'] is True and stream['temporary_attack_speed'] is False
++    same(stream['windup_frames'],0,'fixed GUI manual windup')
++    same(stream['recovery_frames'],0,'fixed GUI manual recovery')
++    same(stream['start_frames'],list(starts),'whole fixed GUI actual starts')
++    same(stream['release_frames'],list(starts),'whole fixed GUI actual releases')
++    same(stream['interval_frames'],interval,'fixed GUI actual cadence')
++    same(stream['interval_seconds'],interval/30,'fixed GUI actual cadence seconds')
++    same(stream['interval_frames_by_attack'],[interval]*len(starts),'whole GUI per-attack cadence')
++    current_complete=len(stream['release_frames'])>=result['ammo_rounds']
++    if current_complete:
++        derived_end=stream['release_frames'][-1]+(pellets-1)*spacing+1
++        same(derived_end,current_end,'GUI full ammunition current placement end')
++        same(result['execution_seconds'],derived_end/30,'GUI current placed execution seconds')
++        effective_end=math.ceil(result['execution_seconds']*30-1e-9)
++        same(effective_end,derived_end,'GUI current execution end frame roundtrip')
++    else:
++        assert current_end is None and result['execution_seconds'] is None
++        effective_end=horizon
++    derived_resume=max(0,stream['start_frames'][-1]+interval-effective_end) if starts else 0
++    same(derived_resume,resume,'independent GUI current resume formula')
++    same(stream['resume_frame'],derived_resume,'actual GUI current resume value')
++    skill=result['estimate']['skill']
++    full_known=case['shape'] not in ('limited_windows','positive_lifetime','interrupted_tail','empty_control')
++    if full_known:
++        planned_starts=[i*interval for i in range(ammo)]
++        planned_end=planned_starts[-1]+(pellets-1)*spacing+1
++        same(planned_end,full_end,'independent GUI full ammunition placement end')
++        same(skill['duration_seconds'],planned_end/30,'GUI full cast known independently of current completion')
++        full_damage=base*1.1*ammo*pellets if op=='mechanist' else 0 if scope=='friendly' else base*2.25*3.5*ammo
++        full_healing=0 if op=='mechanist' else base*2.25*1.7*case['healing_targets']*ammo
++        near(skill['total_damage'],full_damage,'independent GUI complete cast damage')
++        near(skill['total_healing'],full_healing,'independent GUI complete cast potential healing')
++    else:
++        assert full_end is None and skill['duration_seconds'] is None
++        for key in ('cycle_seconds','cycle_damage','cycle_healing','cycle_dps','cycle_hps'):
++            assert skill[key] is None,(identity,key,skill[key])
++        if case['shape']=='empty_control':
++            near(skill['total_damage'],0,'GUI empty full zero damage')
++            near(skill['total_healing'],0,'GUI empty full zero healing')
++        else:
++            assert skill['total_damage'] is None
++            if op=='kaltsit':assert skill['total_healing'] is None
++            else:near(skill['total_healing'],0,'GUI partial mechanical full zero healing')
++    return {'case':identity,'current_release_count':len(starts),'ammo_rounds':ammo,
++        'current_ammunition_complete':current_complete,'current_execution_end_frame':current_end,
++        'observation_horizon_frame':horizon,'current_resume_frame':derived_resume,
++        'independent_full_cast_known':full_known,'independent_full_cast_end_frame':full_end}
++
+ def audit_window(bundle,cases):
+     r=bundle['receipt'];get=bundle['get'];initial=get(r['initial'],'actual_public_fixture_loaded')['value']
+-    snapshots={};ref_ids={}
++    snapshots={};ref_ids={};current_clock_proofs=[]
+     for row,case in zip(r['rows'],cases):
+         identity=case['id'];saved=get(row['snapshot'],'actual_window_snapshot');value=saved['value']
+         assert (row['operator'],row['mode'],row['shape'],row['window_seconds'])==(
+@@ -407,6 +499,8 @@
+         base=425 if case['operator']=='mechanist' else 408
+         near(result['estimate']['base_stats']['attack'],base,'independent pinned native profile baseattack')
+         want=numerical(case,base,result,caller)
++        if case['mode']=='frames':
++            current_clock_proofs.append(checked_current_gui_observation(case,caller,result,base))
+         producer_oracle={key:want[key] for key in ('window_damage','window_healing','duration','full_damage','full_healing')}
+         producer_oracle.update(incomplete=want['partial'],literal_base_attack=base)
+         same(saved['manual_oracle'],producer_oracle,'saved GUI manual expectation independently derived')
+@@ -424,6 +518,7 @@
+         same(formatter['before']['joint'],initial,'formatter input complete initial public context')
+         same(formatter['texts'],value['texts'],'complete snapshot/formatter text link')
+         snapshots[identity]=value;ref_ids[row['snapshot']['path']]=identity
++    assert [proof['case'] for proof in current_clock_proofs]==list(GUI_FRAME_OBSERVATIONS)
+     expected_pair_keys=[(op,mode) for op in ('mechanist','kaltsit') for mode in ('frames','continuous')]
+     assert [(p['operator'],p['mode']) for p in r['pairs']]==expected_pair_keys
+     seen_pair_refs=set()
+@@ -483,7 +578,8 @@
+     assert len([v for v in bundle['values'].values() if v['kind']=='actual_close_RunState_reload'])==1
+     return {'states':len(snapshots),'lifecycle_pairs':len(r['pairs']),'native_records_decoded':len(bundle['values']),
+         'actual_numeric_records':len(bundle['numeric']),'PNGs':pictures,
+-        'scope':'22 complete typed caller/result/UI/report saved states, four exact twelve-field lifecycle pairs, all numerical/UI/formatter joint purity, real close and two direct reloads. PNG bytes/metadata bounds checked; pixels require separate Root visual review.'}
++        'fixed_fifteen_frames_current_clock_and_full_cast_proofs':current_clock_proofs,
++        'scope':'22 complete typed caller/result/UI/report saved states, fifteen positively qualified frame-only current execution/resume checks linked to independent full-cast known/unknown state, four exact twelve-field lifecycle pairs, all numerical/UI/formatter joint purity, real close and two direct reloads. Continuous cases retain all previous checks without a frame-only raw execution field assertion. PNG bytes/metadata bounds checked; pixels require separate Root visual review.'}
+ 
+ def main():
+     parser=argparse.ArgumentParser()
