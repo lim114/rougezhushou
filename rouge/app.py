@@ -15,6 +15,7 @@ from .catalog import catalog,operator_profiles,stage_previews
 from .operator_summary import format_operator_observation
 from .account_cache import AccountCache
 from .run_state import RunState
+from .record_flags import active_record
 from .damage import calculate_damage
 from .manual_scenario import parse_preview_object
 from .relics import mechanics,matches
@@ -138,7 +139,7 @@ class MainWindow(QMainWindow):
         self.refresh_windows()
         selected=self.run.state.get('selected_operator')
         if not selected:
-            available=[key for key,member in self.run.state['operators'].items() if key in catalog()['operators'] and member.get('present',True)]
+            available=[key for key,member in self.run.state['operators'].items() if key in catalog()['operators'] and active_record(member,'present')]
             if len(available)==1:selected=available[0]
         if selected:self.select_operator(selected)
         self.update_operator()
@@ -791,7 +792,7 @@ class MainWindow(QMainWindow):
 
     def recruited_operator_ids(self):
         return tuple(key for key,member in self.run.state['operators'].items()
-                     if key in operator_profiles() and member.get('present',True) and member.get('scope')!='account')
+                     if key in operator_profiles() and active_record(member,'present') and member.get('scope')!='account')
 
     def refresh_operator_overview(self):
         return self.operator_choices.set_overview(self.recruited_operator_ids(),emit=False)

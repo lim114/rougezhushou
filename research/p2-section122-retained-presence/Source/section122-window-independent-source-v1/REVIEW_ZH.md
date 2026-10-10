@@ -1,0 +1,17 @@
+# 第122节真实窗口提案：独立 Source 审阅
+
+本审阅绑定正式封存窗口 MANIFEST 1546 bytes / SHA256 6e3d3d1e4843a82087b8fdc12b9ac6245d53ab25b6210d45167f2050d3bc5736，逐项核对7份 payload原件，均为444只读。window122.py为38509 bytes / 83e96b323101d93d70c24a04f2e6519f3659ccac5f04f6475e88709ef41c54e7；cases.json为41008 bytes / ba420ec06d02f9476814a4b3da0b2b353a1703cfaa9885f464164c41be7af6e1；helper6468 bytes / f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a。
+
+结论：在已读公开源码及这份精确协议范围内，未发现仍可达的 Source 阻塞。允许 Root 继续独立准备实际组合后的 Source guard、执行本窗口和独立 Saved。此结论不是 Runtime PASS，也不证明Qt、Wine、数值结果、截图或重载已经完成。本人项目/API/tests/helper/native/Qt/Wine/Saved/Git运行、gzip解码、私态读取及tracked修改均为0；仅stdlib读/hash/AST/compile-noexec及本独立目录写入。
+
+协议覆盖六个实际窗口：字符串、数字、null未知flag，精确True、False和missing。42份完整状态分为初始12、字符串12次更新24、账号参考选择/取消4、数字零清单更新2；13次明确公开更新、6次真实close与RunState/AccountCache双重直接重载、2幅有界PNG。每个状态保存7个相邻完整native refs，含实际numeric、UI完成、新API参考、三formatter整体、真实技术/普通切换及snapshot。普通caller/result/report/run/account/raw disks完整joint必须严格保留；未知flag原叶不得被清空，旧字段/ranks/来源/进阶/强化/计数只能各自经新的明确证据恢复资格。
+
+实际begin/end更新间隔逐条完整ref绑定，范围内仅numeric回调；因为apply_run_observation先save再更新UI，内部numeric joint要求等于end.after。end后恢复普通纯度，同case或phase不产生额外写权限。更新caller纯净，账号原图和磁盘不变。identity-only保存完整原成员及state_flag_reconfirmed证据，held正/负重新确认不伪造获得、失去或离队。constructor初始numeric只允许唯一尚未赋值window的公开构造阶段缺少joint。900秒watchdog和逐记录flush/fsync提供失败断点。
+
+已反馈并在最终封包中核到的修正：section122 receipt及路径变量恢复；fresh_fields明确再次提供level55，以符合既有elite变化使等级失效的规则；公开保存核真实平台JSON原始bytes，不假设JSON保留内存共享list；restart从实际persisted JSON图推导旧constructor顺序及restore notice，避免复制live alias；初始总览实际overview_ids纳入证据。末次封存只在helper import前增加sys.dont_write_bytecode并补account_cache Source pin。
+
+等级纠正不修改旧封包：初始unknown fallback账号对象为E2 level1，已知S1/S3等级3，因此默认account_reference3；identity重新确认后run有效旧ranks为空，既有E2默认preview_unconfirmed10。显式账号参考为3，取消恢复10。健康True/missing保留E1 level20 rank7。公开原表S3rank10 SP35 / initial25，rank7 SP41 / initial22；零食盒0.8乘数使35变为28.0，疗养礼品卡只含attack_speed50.0。所有PUBLIC_GAME_CONTRACT字典已与公开JSON完整序列化type/order原记录比较，不引入未验证叠加或新游戏公式。
+
+两幅PNG立即绑定对应snapshot与完整joint：初始未知run-summary QLabel在viewport内；新零食盒后damage title至最后metric的连续文档块及首尾cursor bounds。Root仍需亲自查看原像素；方案不声称整份长报告均可见。Saved不得重新运行项目、API、formatter或Qt。
+
+实际Root Source还在推进，source-inputs是作者当时的公开读证，而非未来121/122已组合的guard。当前比较见source-checks.json；任何Root漂移应明确记录，实际执行前须按最终组成重新建完整Source map/count和CORE guard，不可全文件覆盖sealed候选快照。未预填未来HEAD、PASS或运行目录。

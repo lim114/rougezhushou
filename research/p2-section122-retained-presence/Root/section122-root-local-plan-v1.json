@@ -1,0 +1,267 @@
+{
+  "section": 122,
+  "files": [
+    {
+      "path": "rouge/run_state.py",
+      "blocks": [
+        {
+          "before": "from .catalog import catalog,operator_profiles,tactical_tools\r\n",
+          "after": "from .catalog import catalog,operator_profiles,tactical_tools\r\nfrom .record_flags import (record_flag,active_record,unconfirmed_record_ids,unconfirmed_item_ids,\r\n    memory_has_unconfirmed_items,metadata_mask,RUN_METADATA_KEYS,RECIPIENT_KEYS)\r\n"
+        },
+        {
+          "before": "            if (member.get('scope')!='run' or member.get('present') is not True\r\n",
+          "after": "            if (member.get('scope')!='run' or member.get('present') is not True\r\n                    or metadata_mask(member).intersection(('recruitment_kind',*RECIPIENT_KEYS))\r\n"
+        },
+        {
+          "before": "            if record.get('held', True) and identity not in known:reject()\r\n",
+          "after": "            if active_record(record, 'held') and identity not in known:reject()\r\n"
+        },
+        {
+          "before": "        if not signature or type(count) is not int or len(signature)!=count:return\r\n        icons=[]\r\n",
+          "after": "        if not signature or type(count) is not int or len(signature)!=count:return\r\n        # A historical slot cannot overrule an unqualified possession flag.\r\n        unknown=set(unconfirmed_item_ids(self.state))\r\n        if any(unknown.intersection(candidates) for candidates in signature):return\r\n        icons=[]\r\n"
+        },
+        {
+          "before": "                if rid in self.state['relics'] and self.state['relics'][rid].get('held',True)]\r\n",
+          "after": "                if rid in self.state['relics'] and active_record(self.state['relics'][rid],'held')]\r\n"
+        },
+        {
+          "before": "        memory=copy.deepcopy(state.get('relic_icon_memory'))\r\n",
+          "after": "        retained_memory=state.get('relic_icon_memory')\r\n        suspended=memory_has_unconfirmed_items(state,retained_memory)\r\n        memory=None if suspended else copy.deepcopy(retained_memory)\r\n"
+        },
+        {
+          "before": "        else:state['relic_icon_memory']=None\r\n",
+          "after": "        elif not (suspended and count is None and not icons and not current_ids and not tools):\r\n            state['relic_icon_memory']=None\r\n        # A metadata-only read leaves suspended raw memory intact; it cannot\r\n        # replay or silently delete that historical possession evidence.\r\n"
+        },
+        {
+          "before": "                if record.get('held',True) and record.get('source')=='held_icon_and_run_difficulty':\r\n",
+          "after": "                if active_record(record,'held') and record.get('source')=='held_icon_and_run_difficulty':\r\n"
+        },
+        {
+          "before": "    def apply(self,observed,captured_at):\r\n",
+          "after": "    def confirm_record_flag(self,kind,identity,record,key,value,captured_at):\r\n        \"\"\"Retain an unknown raw flag when fresh direct evidence qualifies it.\r\n\r\n        Qualification is not an acquisition, departure or recruitment event.\r\n        The caller supplies the already established observation's bool; this\r\n        method cannot infer a game lifecycle from an invalid old JSON value.\r\n        \"\"\"\r\n        if record_flag(record,key) is None:\r\n            self.state['history'].append({'at':captured_at,'kind':'state_flag_reconfirmed',\r\n                'record_kind':kind,'id':identity,'field':key,\r\n                'previous_value':copy.deepcopy(record[key]),'value':value,\r\n                'previous_record':copy.deepcopy(record)})\r\n            if kind=='operator' and key=='present':\r\n                record['unconfirmed_run_metadata']=sorted(metadata_mask(record)|set(RUN_METADATA_KEYS))\r\n                record['qualified_char_buff_ids']=[]\r\n\r\n    def apply(self,observed,captured_at):\r\n"
+        },
+        {
+          "before": "        prior_held=set(self.held_relic_ids())\r\n",
+          "after": "        prior_held=set(self.held_relic_ids())\r\n        prior_unknown_held=set(unconfirmed_record_ids(state['relics'],'held'))\r\n"
+        },
+        {
+          "before": "            if rid not in state['relics'] or not state['relics'][rid].get('held',True):\r\n                state['history'].append({'at':captured_at,'kind':'relic_confirmed','id':rid})\r\n",
+          "after": "            prior=state['relics'].get(rid,{})\r\n            if rid not in state['relics'] or record_flag(prior,'held') is False:\r\n                state['history'].append({'at':captured_at,'kind':'relic_confirmed','id':rid})\r\n            self.confirm_record_flag('relic',rid,prior,'held',True,captured_at)\r\n"
+        },
+        {
+          "before": "            if tid not in state['tactical_tools'] or not state['tactical_tools'][tid].get('held',True):\r\n                state['history'].append({'at':captured_at,'kind':'tool_confirmed','id':tid})\r\n",
+          "after": "            prior=state['tactical_tools'].get(tid,{})\r\n            if tid not in state['tactical_tools'] or record_flag(prior,'held') is False:\r\n                state['history'].append({'at':captured_at,'kind':'tool_confirmed','id':tid})\r\n            self.confirm_record_flag('tactical_tool',tid,prior,'held',True,captured_at)\r\n"
+        },
+        {
+          "before": "                if rid not in incoming and record.get('held',True):\r\n                    record['held']=False\r\n                    state['history'].append({'at':captured_at,'kind':'relic_no_longer_held','id':rid})\r\n",
+          "after": "                if rid not in incoming and record_flag(record,'held') is not False:\r\n                    prior=record_flag(record,'held')\r\n                    self.confirm_record_flag('relic',rid,record,'held',False,captured_at)\r\n                    record['held']=False\r\n                    if prior is True:\r\n                        state['history'].append({'at':captured_at,'kind':'relic_no_longer_held','id':rid})\r\n"
+        },
+        {
+          "before": "                if tid not in incoming_tools and record.get('held',True):\r\n                    record['held']=False\r\n                    state['history'].append({'at':captured_at,'kind':'tool_no_longer_held','id':tid})\r\n",
+          "after": "                if tid not in incoming_tools and record_flag(record,'held') is not False:\r\n                    prior=record_flag(record,'held')\r\n                    self.confirm_record_flag('tactical_tool',tid,record,'held',False,captured_at)\r\n                    record['held']=False\r\n                    if prior is True:\r\n                        state['history'].append({'at':captured_at,'kind':'tool_no_longer_held','id':tid})\r\n"
+        },
+        {
+          "before": "            previous=state['operators'].get(member['id'],{})\r\n",
+          "after": "            previous=state['operators'].get(member['id'],{})\r\n            prior_presence=record_flag(previous,'present')\r\n            prior_metadata_mask=metadata_mask(previous)\r\n"
+        },
+        {
+          "before": "            changed_origin=origin is not None and previous.get('recruitment_kind') is not None and origin!=previous['recruitment_kind']\r\n",
+          "after": "            changed_origin=prior_presence is not None and 'recruitment_kind' not in prior_metadata_mask and origin is not None and previous.get('recruitment_kind') is not None and origin!=previous['recruitment_kind']\r\n"
+        },
+        {
+          "before": "            corrected=(origin is not None and isinstance(origin_source,dict)\r\n",
+          "after": "            corrected=(prior_presence is not None and 'recruitment_kind' not in prior_metadata_mask and origin is not None and isinstance(origin_source,dict)\r\n"
+        },
+        {
+          "before": "            if ((type(prior_elite) is int and type(current_elite) is int and current_elite>prior_elite)\r\n                    or previous.get('advanced') is False and member.get('advanced') is True):\r\n",
+          "after": "            elite_qualified=not ('unconfirmed_run_metadata' in previous and 'elite' in previous.get('invalid_fields',[]))\r\n            if (prior_presence is not None and ((elite_qualified and type(prior_elite) is int and type(current_elite) is int and current_elite>prior_elite)\r\n                    or 'advanced' not in prior_metadata_mask and previous.get('advanced') is False and member.get('advanced') is True)):\r\n"
+        },
+        {
+          "before": "            returned=bool(previous) and not previous.get('present',True)\r\n",
+          "after": "            returned=bool(previous) and prior_presence is False\r\n            if prior_presence is None:\r\n                # Keep old leaves, but an identity re-read does not reconfirm\r\n                # the historical cultivation hidden by an unknown presence.\r\n                invalid.update(previous.get('fields',{}))\r\n                invalid_ranks.update(previous.get('skill_ranks',{}))\r\n            self.confirm_record_flag('operator',member['id'],previous,'present',True,captured_at)\r\n"
+        },
+        {
+          "before": "            if fields!=previous.get('fields') or ranks!=previous.get('skill_ranks') or not previous.get('present',True) or advanced_changed:\r\n",
+          "after": "            if fields!=previous.get('fields') or ranks!=previous.get('skill_ranks') or prior_presence is False or advanced_changed:\r\n"
+        },
+        {
+          "before": "            from .recipient_state import merge_recipient_evidence\r\n",
+          "after": "            merged=state['operators'][member['id']]\r\n            mask=metadata_mask(merged)\r\n            if mask:\r\n                if origin is not None:mask.discard('recruitment_kind')\r\n                if 'advanced' in member:mask.discard('advanced')\r\n                if 'char_buff_ids' in member:\r\n                    if member.get('char_buffs_complete') is True:\r\n                        mask.difference_update(RECIPIENT_KEYS)\r\n                        merged.pop('qualified_char_buff_ids',None)\r\n                    elif mask.intersection(RECIPIENT_KEYS):\r\n                        prior=[] if changed_origin or returned else previous.get('qualified_char_buff_ids',[])\r\n                        if type(prior) is not list or any(type(bid) is not str for bid in prior):prior=[]\r\n                        merged['qualified_char_buff_ids']=list(dict.fromkeys(prior+member['char_buff_ids']))\r\n                merged['unconfirmed_run_metadata']=sorted(mask)\r\n            from .recipient_state import merge_recipient_evidence\r\n"
+        },
+        {
+          "before": "                if key not in current and member.get('present',True):\r\n                    member['present']=False\r\n                    state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})\r\n",
+          "after": "                if key not in current and record_flag(member,'present') is not False:\r\n                    prior=record_flag(member,'present')\r\n                    self.confirm_record_flag('operator',key,member,'present',False,captured_at)\r\n                    member['present']=False\r\n                    if prior is True:\r\n                        state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})\r\n"
+        },
+        {
+          "before": "        invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held,promoted_ids,captured_at)\r\n",
+          "after": "        invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held-prior_unknown_held,promoted_ids,captured_at)\r\n"
+        },
+        {
+          "before": "        complete=_inventory_confirmation_flag(self.state['inventory_verified']) and count is not None and known+tools==count\r\n        return {'source':'run_capture','complete':complete,\r\n",
+          "after": "        complete=_inventory_confirmation_flag(self.state['inventory_verified']) and count is not None and known+tools==count\r\n        unknown=unconfirmed_item_ids(self.state)\r\n        if complete and unknown:complete=False\r\n        return {**({'unconfirmed_item_ids':unknown} if unknown else {}),'source':'run_capture','complete':complete,\r\n"
+        },
+        {
+          "before": "        return sorted(tid for tid,record in self.state['tactical_tools'].items() if record.get('held',True))\r\n",
+          "after": "        return sorted(tid for tid,record in self.state['tactical_tools'].items() if active_record(record,'held'))\r\n"
+        },
+        {
+          "before": "        return sorted(rid for rid,record in self.state['relics'].items() if record.get('held',True))\r\n",
+          "after": "        return sorted(rid for rid,record in self.state['relics'].items() if active_record(record,'held'))\r\n"
+        },
+        {
+          "before": "        names=[operator_profiles()[key]['name']+('（已离队，保留记录）' if not member.get('present',True) else '')\r\n",
+          "after": "        names=[operator_profiles()[key]['name']+('（在场状态未确认，保留记录）' if record_flag(member,'present') is None else\r\n                '（已离队，保留记录）' if record_flag(member,'present') is False else '')\r\n"
+        },
+        {
+          "before": "               +('（已进阶）' if member.get('advanced') else '')\r\n",
+          "after": "               +('（已进阶）' if record_flag(member,'present') is not None and 'advanced' not in metadata_mask(member) and member.get('advanced') else '')\r\n"
+        },
+        {
+          "before": "               +('（应急雇佣，仅一次作战）' if member.get('recruitment_kind')=='emergency_hire' else '')\r\n",
+          "after": "               +('（应急雇佣，仅一次作战）' if record_flag(member,'present') is not None and 'recruitment_kind' not in metadata_mask(member) and member.get('recruitment_kind')=='emergency_hire' else '')\r\n"
+        },
+        {
+          "before": "        present=sum(bool(member.get('present',True)) for member in state['operators'].values())\r\n",
+          "after": "        present=sum(active_record(member,'present') for member in state['operators'].values())\r\n"
+        },
+        {
+          "before": "            resources or '源石锭/零件数尚未确认',\r\n",
+          "after": "            resources or '源石锭/零件数尚未确认',\r\n            *(['部分记录的持有状态未确认；原记录保留，暂不自动套用对应持有效果与层数。'] if status.get('unconfirmed_item_ids') else []),\r\n"
+        }
+      ]
+    },
+    {
+      "path": "rouge/training_view.py",
+      "blocks": [
+        {
+          "before": "from .account_cache import _record_issue\n",
+          "after": "from .account_cache import _record_issue\nfrom .catalog import operator_profiles\nfrom .record_flags import record_flag,active_record,metadata_mask,projected_run_metadata\n"
+        },
+        {
+          "before": "    if (not enabled or not member or not member.get('present', True)\n",
+          "after": "    if (not enabled or not member or not active_record(member, 'present')\n"
+        },
+        {
+          "before": "    if not member or not member.get('present', True):\n        return {'state': account, 'notice': '', 'selection': 'account'}\n",
+          "after": "    if not member or record_flag(member, 'present') is False:\n        return {'state': account, 'notice': '', 'selection': 'account'}\n    if record_flag(member, 'present') is None:\n        return {'state': account,\n                'notice': '本局记录的在场标记未确认；暂用标注的账号参考或档案预览，不自动确认该成员的本局培养与强化，原记录保留。',\n                'selection': 'account_after_unconfirmed_presence'}\n"
+        },
+        {
+          "before": "    return member\n",
+          "after": "    return projected_run_metadata(member)\n"
+        },
+        {
+          "before": "    current = {key: value for key, value in member.get('fields', {}).items()\n",
+          "after": "    member = projected_run_metadata(member)\n    current = {key: value for key, value in member.get('fields', {}).items()\n"
+        },
+        {
+          "before": "    try:\n        return format_operator_observation({**member, 'id': op})\n",
+          "after": "    try:\n        if record_flag(member,'present') is None:\n            return (f'干员：{operator_profiles()[op][\"name\"]}\\n'\n                    '本局记录的在场状态未确认；原培养、来源与强化仅作保留记录，请重新读取相应页面确认。')\n        view=projected_run_metadata(member)\n        text=format_operator_observation({**view, 'id': op})\n        if metadata_mask(member):\n            text+='\\n部分保留的来源或强化资格尚未确认；仅使用此次重新读取的明确字段与强化。'\n        return text\n"
+        }
+      ]
+    },
+    {
+      "path": "rouge/recipient_state.py",
+      "blocks": [
+        {
+          "before": "from .relics import mechanics\n",
+          "after": "from .relics import mechanics\nfrom .record_flags import active_record,metadata_mask,RECIPIENT_KEYS\n"
+        },
+        {
+          "before": "    absent = set() if new_recruitment or not previous else absent_buffs(previous)\n",
+          "after": "    if metadata_mask(merged).intersection(RECIPIENT_KEYS) and 'char_buff_ids' not in observed:\n        return  # Retain raw popup evidence; identity-only reads cannot renew it.\n    absent = set() if new_recruitment or not previous else absent_buffs(previous)\n"
+        },
+        {
+          "before": "    held = {rid for rid, record in state['relics'].items() if record.get('held', True)}\n",
+          "after": "    held = {rid for rid, record in state['relics'].items() if active_record(record, 'held')}\n"
+        },
+        {
+          "before": "        if member.get('scope') != 'run' or not member.get('present', True):\n",
+          "after": "        if (member.get('scope') != 'run' or not active_record(member, 'present')\n                or metadata_mask(member).intersection(RECIPIENT_KEYS)):\n"
+        }
+      ]
+    },
+    {
+      "path": "rouge/relic_counter_semantics.py",
+      "blocks": [
+        {
+          "before": "from .relics import mechanics\n",
+          "after": "from .relics import mechanics\nfrom .record_flags import active_record\n"
+        },
+        {
+          "before": "    losses={}\n",
+          "after": "    losses={};qualification_cutoffs={}\n"
+        },
+        {
+          "before": "        at=event.get('at')\n        if rid and type(at) in (int,float) and math.isfinite(at):\n",
+          "after": "        at=event.get('at')\n        if (event.get('kind')=='state_flag_reconfirmed' and event.get('record_kind')=='relic'\n                and event.get('field')=='held' and type(event.get('value')) is bool\n                and isinstance(event.get('id'),str) and type(at) in (int,float) and math.isfinite(at)):\n            identity=event['id']\n            qualification_cutoffs[identity]=max(qualification_cutoffs.get(identity,float('-inf')),at)\n        if rid and type(at) in (int,float) and math.isfinite(at):\n"
+        },
+        {
+          "before": "                or not state['relics'][rid].get('held',True)\n                or losses.get(rid,float('-inf'))>=at):continue\n",
+          "after": "                or not active_record(state['relics'][rid],'held')\n                or losses.get(rid,float('-inf'))>=at\n                or qualification_cutoffs.get(rid,float('-inf'))>at):continue\n"
+        }
+      ]
+    },
+    {
+      "path": "rouge/app.py",
+      "blocks": [
+        {
+          "before": "from .run_state import RunState\r\n",
+          "after": "from .run_state import RunState\r\nfrom .record_flags import active_record\r\n"
+        },
+        {
+          "before": "            available=[key for key,member in self.run.state['operators'].items() if key in catalog()['operators'] and member.get('present',True)]\r\n",
+          "after": "            available=[key for key,member in self.run.state['operators'].items() if key in catalog()['operators'] and active_record(member,'present')]\r\n"
+        },
+        {
+          "before": "                     if key in operator_profiles() and member.get('present',True) and member.get('scope')!='account')\r\n",
+          "after": "                     if key in operator_profiles() and active_record(member,'present') and member.get('scope')!='account')\r\n"
+        }
+      ]
+    },
+    {
+      "path": "rouge/run_metadata_view.py",
+      "blocks": [
+        {
+          "before": "\n\ndef format_run_buff_status(state, buffs):\n",
+          "after": "\nfrom .record_flags import record_flag,active_record,metadata_mask,projected_run_metadata,RECIPIENT_KEYS\n\n\ndef format_run_buff_status(state, buffs):\n"
+        },
+        {
+          "before": "    current = state.get('scope') == 'run'\n",
+          "after": "    if state.get('scope')=='run' and record_flag(state,'present') is None:\n        return '本局记录的在场状态未确认；原强化记录保留，暂不自动套用。'\n    qualified=projected_run_metadata(state)\n    if (state.get('scope')=='run' and active_record(state,'present')\n            and metadata_mask(state).intersection(RECIPIENT_KEYS) and not qualified.get('char_buff_ids')):\n        return '保留的个人强化资格尚未重新确认；原记录保留，暂不自动套用。'\n    retained=metadata_mask(state).intersection(RECIPIENT_KEYS)\n    state=qualified\n    current = state.get('scope') == 'run' and active_record(state,'present')\n"
+        },
+        {
+          "before": "    return text\n",
+          "after": "    if current and retained:text+='；其他保留的个人强化资格尚未重新确认。'\n    return text\n"
+        }
+      ]
+    },
+    {
+      "path": "tests/test_cache_consumers_101.py",
+      "blocks": [
+        {
+          "before": "    def test_summary_counts_present_members_with_the_existing_truthiness_gate(self):\n        for value, expected in (('yes', 1), (None, 0), ([], 0), ([1], 1), ({}, 0),\n                                ({'public': 1}, 1), (False, 0), (True, 1), (0, 0), (1, 1)):\n            with self.subTest(value=value):\n                run, raw = self.load({'operators': {'mechanist': {'present': value}}})\n                text = self.view_unchanged(run, raw, run.summary)\n                self.assertIn(f'当前已识别 {expected} /', text)\n                self.assertEqual(native(run.state['operators']['mechanist']['present']), native(value))\n",
+          "after": "    def test_summary_counts_only_qualified_presence_and_retains_unknown_raw_flags(self):\n        # Section122 intentionally replaces the old non-bool truthiness claim.\n        # Boolean controls and the next method's missing-default contract stay.\n        for value in ('yes', None, [], [1], {}, {'public': 1}, False, True, 0, 1):\n            with self.subTest(value=value):\n                run, raw = self.load({'operators': {'mechanist': {'present': value}}})\n                text = self.view_unchanged(run, raw, run.summary)\n                self.assertIn(f'当前已识别 {int(value is True)} /', text)\n                if type(value) is not bool:self.assertIn('在场状态未确认', text)\n                self.assertEqual(native(run.state['operators']['mechanist']['present']), native(value))\n"
+        }
+      ]
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "blocks": [
+        {
+          "before": "MODULES = (\n",
+          "after": "MODULES = (\n    \"tests.test_retained_presence_122\",\n"
+        }
+      ]
+    },
+    {
+      "path": "rouge/record_flags.py",
+      "new_source": "/workspace/.continuation/section122-retained-presence-source-v1/candidate/rouge/record_flags.py",
+      "new_source_sha256": "9f546e072015aeb19bec7c1c8c16b30425ef7c918f2463b88a86e5dff0b2237d"
+    },
+    {
+      "path": "tests/test_retained_presence_122.py",
+      "new_source": "/workspace/.continuation/section122-retained-presence-source-v1/candidate/tests/test_retained_presence_122.py",
+      "new_source_sha256": "b8504a8270e301c4e688cd9f2bee99ee00764869a2355c110eebf838610a6a9f"
+    }
+  ]
+}

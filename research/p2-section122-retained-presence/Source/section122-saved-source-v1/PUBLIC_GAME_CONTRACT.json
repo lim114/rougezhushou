@@ -1,0 +1,261 @@
+{
+  "kind": "LITERAL_PUBLIC_GAME_DATA_SOURCE_QUOTES_NOT_API_RESULTS",
+  "operator": "mechanist",
+  "native_id": "char_4230_mcnist",
+  "skill3_rank10": {
+    "json_coordinate": "operators.mechanist.skills[2].levels[9]",
+    "raw": {
+      "name": "工程学十字星",
+      "initial_sp": 25,
+      "sp_cost": 35
+    }
+  },
+  "skill3_rank7": {
+    "json_coordinate": "operators.mechanist.skills[2].levels[6]",
+    "raw": {
+      "name": "工程学十字星",
+      "initial_sp": 22,
+      "sp_cost": 41
+    }
+  },
+  "recipient_buffs": {
+    "rogue_6_from_relic_13": {
+      "name": "零食盒",
+      "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "relic_id": "rogue_6_relic_assign_13",
+      "required_profession": "",
+      "effects": [
+        {
+          "kind": "sp_cost_factor",
+          "value": 0.8,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "group": "char_skill_cost_mul",
+          "stacking": "unverified",
+          "source_buff_key": "char_skill_cost_mul",
+          "source_buff_index": 0
+        },
+        {
+          "kind": "automatic_skill",
+          "value": 1,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "source_buff_key": "char_ability_new",
+          "source_buff_index": 1
+        }
+      ],
+      "pending": [],
+      "raw": {
+        "id": "rogue_6_from_relic_13",
+        "buffType": "FROM_RELIC",
+        "iconId": "rogue_6_relic_assign_13",
+        "relatedItemId": "rogue_6_relic_assign_13",
+        "outerName": "零食盒",
+        "innerName": "零食盒",
+        "functionDesc": "下一个招募或进阶的干员的技能会自动开启，技力需求-20%",
+        "desc": "下一个招募或进阶的干员的技能会自动开启，技力需求-20%",
+        "buffs": [
+          {
+            "key": "char_skill_cost_mul",
+            "blackboard": [
+              {
+                "key": "scale",
+                "value": 0.8,
+                "valueStr": null
+              }
+            ]
+          },
+          {
+            "key": "char_ability_new",
+            "blackboard": [
+              {
+                "key": "key",
+                "value": 0.0,
+                "valueStr": "AutoSkillTrigger"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "rogue_6_from_relic_9": {
+      "name": "疗养礼品卡",
+      "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "relic_id": "rogue_6_relic_assign_9",
+      "required_profession": "",
+      "effects": [
+        {
+          "kind": "attack_speed",
+          "value": 50.0,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "source_buff_key": "char_attribute_add",
+          "attribute_layer": "relic_rune",
+          "formula_item": "ADDITION",
+          "source_buff_index": 0
+        }
+      ],
+      "pending": [],
+      "raw": {
+        "id": "rogue_6_from_relic_9",
+        "buffType": "FROM_RELIC",
+        "iconId": "rogue_6_relic_assign_9",
+        "relatedItemId": "rogue_6_relic_assign_9",
+        "outerName": "疗养礼品卡",
+        "innerName": "疗养礼品卡",
+        "functionDesc": "下一个招募或进阶的干员攻击速度+50",
+        "desc": "下一个招募或进阶的干员攻击速度+50",
+        "buffs": [
+          {
+            "key": "char_attribute_add",
+            "blackboard": [
+              {
+                "key": "attack_speed",
+                "value": 50.0,
+                "valueStr": null
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "relics": {
+    "rogue_6_relic_legacy_15": {
+      "name": "皇帝的恩宠",
+      "usage": "所有我方近战单位的攻击力+15%",
+      "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "verification": "game_data_verified_runtime_pending",
+      "status": "numeric",
+      "effects": [
+        {
+          "kind": "attack_pct",
+          "value": 0.15,
+          "profession": "",
+          "position": "melee",
+          "subprofession": "",
+          "source_buff_key": "char_attribute_mul",
+          "attribute_layer": "relic_rune",
+          "formula_item": "MULTIPLIER",
+          "source_buff_index": 0
+        }
+      ],
+      "pending": [],
+      "raw_buffs": [
+        {
+          "key": "char_attribute_mul",
+          "blackboard": [
+            {
+              "key": "selector.buildable",
+              "value": 0.0,
+              "valueStr": "melee"
+            },
+            {
+              "key": "atk",
+              "value": 0.15,
+              "valueStr": null
+            }
+          ]
+        }
+      ],
+      "bound_char_buffs": [],
+      "relic_params": {
+        "id": "rogue_6_relic_legacy_15",
+        "checkCharBoxTypes": [],
+        "checkCharBoxParams": []
+      }
+    },
+    "rogue_6_relic_legacy_103": {
+      "name": "圆石祭坛",
+      "usage": "战斗后有概率使所有我方单位的攻击力和防御力永久+5%（最多叠加10层）",
+      "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "verification": "game_data_verified_runtime_pending",
+      "status": "conditional",
+      "effects": [
+        {
+          "kind": "attack_pct",
+          "value": 0.05,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "condition": "altar_stacks",
+          "scale_by_condition": true,
+          "maximum": 10.0,
+          "source_buff_key": "layer_char_attribute_mul",
+          "attribute_layer": "relic_rune",
+          "formula_item": "MULTIPLIER",
+          "native_count_scale": "float32_before_fp",
+          "source_buff_index": 1
+        },
+        {
+          "kind": "defense_pct",
+          "value": 0.05,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "condition": "altar_stacks",
+          "scale_by_condition": true,
+          "maximum": 10.0,
+          "source_buff_key": "layer_char_attribute_mul",
+          "attribute_layer": "relic_rune",
+          "formula_item": "MULTIPLIER",
+          "native_count_scale": "float32_before_fp",
+          "source_buff_index": 1
+        }
+      ],
+      "pending": [],
+      "raw_buffs": [
+        {
+          "key": "layer_after_battle_data",
+          "blackboard": [
+            {
+              "key": "src",
+              "value": 0.0,
+              "valueStr": "rogue_6_relic_legacy_103"
+            },
+            {
+              "key": "max",
+              "value": 10.0,
+              "valueStr": null
+            },
+            {
+              "key": "scale",
+              "value": 1.0,
+              "valueStr": null
+            },
+            {
+              "key": "prob",
+              "value": 0.3,
+              "valueStr": null
+            }
+          ]
+        },
+        {
+          "key": "layer_char_attribute_mul",
+          "blackboard": [
+            {
+              "key": "atk",
+              "value": 0.05,
+              "valueStr": null
+            },
+            {
+              "key": "def",
+              "value": 0.05,
+              "valueStr": null
+            }
+          ]
+        }
+      ],
+      "bound_char_buffs": [],
+      "relic_params": {
+        "id": "rogue_6_relic_legacy_103",
+        "checkCharBoxTypes": [],
+        "checkCharBoxParams": []
+      }
+    }
+  },
+  "mechanics_root_source": null
+}

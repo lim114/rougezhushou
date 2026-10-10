@@ -1,0 +1,342 @@
+{
+  "kind": "ACTUAL_EXISTING_PUBLIC_JSON_SOURCE_READ_NOT_NEW_DOWNLOAD_OR_RUNTIME",
+  "new_game_rules_added": false,
+  "scope": "These existing attack/counter/snack/gain_random records support meaningful consumption controls; qualification does not alter their mechanics.",
+  "sources": [
+    {
+      "path": "/workspace/rougezhushou/rouge/data/relic-mechanics.json",
+      "bytes": 500847,
+      "sha256": "6ee8d52cbaffdb0ec79a1ab44689e0bd1ef43364f6ddb3b2e4f2c80afbfe6f47",
+      "source_url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "original_source_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "records": {
+        "rogue_6_relic_legacy_15": {
+          "name": "皇帝的恩宠",
+          "usage": "所有我方近战单位的攻击力+15%",
+          "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "verification": "game_data_verified_runtime_pending",
+          "status": "numeric",
+          "effects": [
+            {
+              "kind": "attack_pct",
+              "value": 0.15,
+              "profession": "",
+              "position": "melee",
+              "subprofession": "",
+              "source_buff_key": "char_attribute_mul",
+              "attribute_layer": "relic_rune",
+              "formula_item": "MULTIPLIER",
+              "source_buff_index": 0
+            }
+          ],
+          "pending": [],
+          "raw_buffs": [
+            {
+              "key": "char_attribute_mul",
+              "blackboard": [
+                {
+                  "key": "selector.buildable",
+                  "value": 0.0,
+                  "valueStr": "melee"
+                },
+                {
+                  "key": "atk",
+                  "value": 0.15,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "bound_char_buffs": [],
+          "relic_params": {
+            "id": "rogue_6_relic_legacy_15",
+            "checkCharBoxTypes": [],
+            "checkCharBoxParams": []
+          }
+        },
+        "rogue_6_relic_legacy_103": {
+          "name": "圆石祭坛",
+          "usage": "战斗后有概率使所有我方单位的攻击力和防御力永久+5%（最多叠加10层）",
+          "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "verification": "game_data_verified_runtime_pending",
+          "status": "conditional",
+          "effects": [
+            {
+              "kind": "attack_pct",
+              "value": 0.05,
+              "profession": "",
+              "position": "",
+              "subprofession": "",
+              "condition": "altar_stacks",
+              "scale_by_condition": true,
+              "maximum": 10.0,
+              "source_buff_key": "layer_char_attribute_mul",
+              "attribute_layer": "relic_rune",
+              "formula_item": "MULTIPLIER",
+              "native_count_scale": "float32_before_fp",
+              "source_buff_index": 1
+            },
+            {
+              "kind": "defense_pct",
+              "value": 0.05,
+              "profession": "",
+              "position": "",
+              "subprofession": "",
+              "condition": "altar_stacks",
+              "scale_by_condition": true,
+              "maximum": 10.0,
+              "source_buff_key": "layer_char_attribute_mul",
+              "attribute_layer": "relic_rune",
+              "formula_item": "MULTIPLIER",
+              "native_count_scale": "float32_before_fp",
+              "source_buff_index": 1
+            }
+          ],
+          "pending": [],
+          "raw_buffs": [
+            {
+              "key": "layer_after_battle_data",
+              "blackboard": [
+                {
+                  "key": "src",
+                  "value": 0.0,
+                  "valueStr": "rogue_6_relic_legacy_103"
+                },
+                {
+                  "key": "max",
+                  "value": 10.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "scale",
+                  "value": 1.0,
+                  "valueStr": null
+                },
+                {
+                  "key": "prob",
+                  "value": 0.3,
+                  "valueStr": null
+                }
+              ]
+            },
+            {
+              "key": "layer_char_attribute_mul",
+              "blackboard": [
+                {
+                  "key": "atk",
+                  "value": 0.05,
+                  "valueStr": null
+                },
+                {
+                  "key": "def",
+                  "value": 0.05,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "bound_char_buffs": [],
+          "relic_params": {
+            "id": "rogue_6_relic_legacy_103",
+            "checkCharBoxTypes": [],
+            "checkCharBoxParams": []
+          }
+        },
+        "rogue_6_relic_assign_13": {
+          "name": "零食盒",
+          "usage": "下一个招募或进阶的干员的技能会自动开启，技力需求-20%",
+          "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "verification": "game_data_verified_runtime_pending",
+          "status": "conditional",
+          "effects": [],
+          "pending": [],
+          "raw_buffs": [
+            {
+              "key": "next_recruit_upgrade_char_buff",
+              "blackboard": [
+                {
+                  "key": "char_buff",
+                  "value": 0.0,
+                  "valueStr": "rogue_6_from_relic_13"
+                }
+              ]
+            }
+          ],
+          "bound_char_buffs": [
+            {
+              "id": "rogue_6_from_relic_13",
+              "buffType": "FROM_RELIC",
+              "iconId": "rogue_6_relic_assign_13",
+              "relatedItemId": "rogue_6_relic_assign_13",
+              "outerName": "零食盒",
+              "innerName": "零食盒",
+              "functionDesc": "下一个招募或进阶的干员的技能会自动开启，技力需求-20%",
+              "desc": "下一个招募或进阶的干员的技能会自动开启，技力需求-20%",
+              "buffs": [
+                {
+                  "key": "char_skill_cost_mul",
+                  "blackboard": [
+                    {
+                      "key": "scale",
+                      "value": 0.8,
+                      "valueStr": null
+                    }
+                  ]
+                },
+                {
+                  "key": "char_ability_new",
+                  "blackboard": [
+                    {
+                      "key": "key",
+                      "value": 0.0,
+                      "valueStr": "AutoSkillTrigger"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "relic_params": {
+            "id": "rogue_6_relic_assign_13",
+            "checkCharBoxTypes": [],
+            "checkCharBoxParams": []
+          },
+          "recipient_binding": {
+            "char_buff_ids": [
+              "rogue_6_from_relic_13"
+            ],
+            "scope": "current_operator_only",
+            "required_observation": "confirmed_char_buff_or_complete_current_operator_list",
+            "effect_path": "char_buff_only",
+            "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json"
+          }
+        },
+        "rogue_6_relic_assign_15": {
+          "name": "幸运饼干",
+          "usage": "获得此收藏品时，使随机2名干员的技力回复速度+0.8/秒",
+          "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+          "verification": "game_data_verified_runtime_pending",
+          "status": "conditional",
+          "effects": [],
+          "pending": [],
+          "raw_buffs": [
+            {
+              "key": "rand_gain_char_buff",
+              "blackboard": [
+                {
+                  "key": "char_buff_list",
+                  "value": 0.0,
+                  "valueStr": "rogue_6_from_relic_15"
+                },
+                {
+                  "key": "count",
+                  "value": 2.0,
+                  "valueStr": null
+                }
+              ]
+            }
+          ],
+          "bound_char_buffs": [
+            {
+              "id": "rogue_6_from_relic_15",
+              "buffType": "FROM_RELIC",
+              "iconId": "rogue_6_relic_assign_15",
+              "relatedItemId": "rogue_6_relic_assign_15",
+              "outerName": "幸运饼干",
+              "innerName": "幸运饼干",
+              "functionDesc": "获得此收藏品时，使随机2名干员的技力回复速度+0.8/s",
+              "desc": "获得此收藏品时，使随机2名干员的技力回复速度+0.8/s",
+              "buffs": [
+                {
+                  "key": "char_ability_new",
+                  "blackboard": [
+                    {
+                      "key": "key",
+                      "value": 0.0,
+                      "valueStr": "rogue_6_sp_recover"
+                    },
+                    {
+                      "key": "sp_recovery_per_sec",
+                      "value": 0.8,
+                      "valueStr": null
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "relic_params": {
+            "id": "rogue_6_relic_assign_15",
+            "checkCharBoxTypes": [],
+            "checkCharBoxParams": []
+          },
+          "recipient_binding": {
+            "char_buff_ids": [
+              "rogue_6_from_relic_15"
+            ],
+            "scope": "current_operator_only",
+            "required_observation": "confirmed_char_buff_or_complete_current_operator_list",
+            "effect_path": "char_buff_only",
+            "source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json"
+          }
+        }
+      }
+    },
+    {
+      "path": "/workspace/rougezhushou/rouge/data/recipient-lifecycle.json",
+      "bytes": 4546,
+      "sha256": "e0044ec3aba29640712dcd27a6cb0af7bea041f31a56eaba4f9780a7ac3717ed",
+      "source_url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "original_source_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "records": {
+        "rogue_6_relic_assign_13": {
+          "trigger": "next_recruit_or_upgrade",
+          "char_buff_ids": [
+            "rogue_6_from_relic_13"
+          ],
+          "raw_parent": {
+            "id": "rogue_6_relic_assign_13",
+            "buffs": [
+              {
+                "key": "next_recruit_upgrade_char_buff",
+                "blackboard": [
+                  {
+                    "key": "char_buff",
+                    "value": 0.0,
+                    "valueStr": "rogue_6_from_relic_13"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "rogue_6_relic_assign_15": {
+          "trigger": "gain_random",
+          "char_buff_ids": [
+            "rogue_6_from_relic_15"
+          ],
+          "raw_parent": {
+            "id": "rogue_6_relic_assign_15",
+            "buffs": [
+              {
+                "key": "rand_gain_char_buff",
+                "blackboard": [
+                  {
+                    "key": "char_buff_list",
+                    "value": 0.0,
+                    "valueStr": "rogue_6_from_relic_15"
+                  },
+                  {
+                    "key": "count",
+                    "value": 2.0,
+                    "valueStr": null
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

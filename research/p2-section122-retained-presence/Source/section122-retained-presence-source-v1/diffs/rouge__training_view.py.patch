@@ -1,0 +1,54 @@
+--- a/rouge/training_view.py
++++ b/rouge/training_view.py
+@@ -7,6 +7,8 @@
+ import time
+ 
+ from .account_cache import _record_issue
++from .catalog import operator_profiles
++from .record_flags import record_flag,active_record,metadata_mask,projected_run_metadata
+ from .operator_summary import format_operator_observation
+ 
+ 
+@@ -34,10 +36,10 @@
+     This is an opaque original reference, not a new metadata schema or copy.
+     A bad training value does not revoke independent recruitment/buff evidence.
+     """
+-    if (not enabled or not member or not member.get('present', True)
++    if (not enabled or not member or not active_record(member, 'present')
+             or member.get('scope') != 'run'):
+         return {}
+-    return member
++    return projected_run_metadata(member)
+ 
+ 
+ def training_view_issue(op, state, profiles, implemented_ids, *, use_record_level=True):
+@@ -86,8 +88,13 @@
+     A failed combination does not prove that a separately valid file is damaged.
+     Unknown extras remain shallow, opaque references as in the existing method.
+     """
+-    if not member or not member.get('present', True):
++    if not member or record_flag(member, 'present') is False:
+         return {'state': account, 'notice': '', 'selection': 'account'}
++    if record_flag(member, 'present') is None:
++        return {'state': account,
++                'notice': '本局记录的在场标记未确认；暂用标注的账号参考或档案预览，不自动确认该成员的本局培养与强化，原记录保留。',
++                'selection': 'account_after_unconfirmed_presence'}
++    member = projected_run_metadata(member)
+     current = {key: value for key, value in member.get('fields', {}).items()
+                if key not in member.get('invalid_fields', [])}
+     ranks = {key: value for key, value in member.get('skill_ranks', {}).items()
+@@ -119,6 +126,13 @@
+     original member metadata and all stored leaves remain untouched.
+     """
+     try:
+-        return format_operator_observation({**member, 'id': op})
++        if record_flag(member,'present') is None:
++            return (f'干员：{operator_profiles()[op]["name"]}\n'
++                    '本局记录的在场状态未确认；原培养、来源与强化仅作保留记录，请重新读取相应页面确认。')
++        view=projected_run_metadata(member)
++        text=format_operator_observation({**view, 'id': op})
++        if metadata_mask(member):
++            text+='\n部分保留的来源或强化资格尚未确认；仅使用此次重新读取的明确字段与强化。'
++        return text
+     except (KeyError, TypeError, ValueError, OverflowError):
+         return '本局培养记录的部分读取值暂不可显示；原记录未修改，请重新读取相应培养页面确认。'

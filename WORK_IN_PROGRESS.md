@@ -1,3 +1,11 @@
+## 当前连续开发进度 · 第122节
+
+2026-10-10T15:22:31.386457+08:00（北京时间）。Require exact boolean retained presence; preserve unknown original records while excluding them from automatic held, training, buff and counter use, and restore qualified fields only through fresh public confirmation. 相关Linux/Wine实际结果分别为{"linux": {"tests_run": 131, "tests_passed": 130, "declared_skips": 0, "unavailable_records": 1, "failures": 0, "errors": 0}, "wine": {"tests_run": 131, "tests_passed": 130, "declared_skips": 0, "unavailable_records": 1, "failures": 0, "errors": 0}}；真实窗口42状态、735份原生记录及2幅实际查看的有界截图；完整Saved审计通过。 本节检查及公开证据已封存，下一步：本批在125节结束，不启动126；依序推进第123节，完成125节后停止。
+
+以下记录为历史断点，当前以上述安排为准。
+
+---
+
 ## 当前连续开发进度 · 第121节
 
 2026-10-10T15:05:05.576971+08:00（北京时间）。连续攻击模式下已满足技力条件的下次攻击技能初动为0，不再额外等待一击；正需求且无技力增量仍未知，原帧模式、施放/充能/周期和健康对照完整保留。 相关Linux/Wine实际结果分别为{"linux": {"tests_run": 43, "tests_passed": 43, "declared_skips": 0, "unavailable_records": 0, "failures": 0, "errors": 0}, "wine": {"tests_run": 43, "tests_passed": 43, "declared_skips": 0, "unavailable_records": 0, "failures": 0, "errors": 0}}；真实窗口8状态、158份原生记录及2幅实际查看的有界截图；完整Saved审计通过。 本节检查及公开证据已封存，下一步：本批在125节结束，不启动126；依序推进第122节，完成125节后停止。

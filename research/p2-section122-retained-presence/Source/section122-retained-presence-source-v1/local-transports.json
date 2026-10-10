@@ -1,0 +1,397 @@
+{
+  "kind": "SOURCE_ONLY_UNEXECUTED_LOCAL_TRANSPORT",
+  "planned_section": 122,
+  "targets": {
+    "rouge/run_state.py": {
+      "baseline_bytes": 54623,
+      "baseline_sha256": "ee46af93155e210a47a3cd8dcbb4dfcecd0c7b2596c2e0f32e2bd9d4c5f6a9a9",
+      "candidate_bytes": 59949,
+      "candidate_sha256": "f7e03bf32f64c96e5b8efd2ea5e10d7822131a2599e466028ff09b193a0072f9",
+      "CRLF_preserved": true,
+      "blocks": [
+        {
+          "old_lf": "from .catalog import catalog,operator_profiles,tactical_tools\n",
+          "new_lf": "from .catalog import catalog,operator_profiles,tactical_tools\nfrom .record_flags import (record_flag,active_record,unconfirmed_record_ids,unconfirmed_item_ids,\n    memory_has_unconfirmed_items,metadata_mask,RUN_METADATA_KEYS,RECIPIENT_KEYS)\n",
+          "old_lf_sha256": "cdacf6004a75bd2d1cbea1a3c7306547fb1a3ec2ba84158991d1d9a06d853139",
+          "new_lf_sha256": "8843eb50cbf65b7031375c0f2d18abec8170f115af84fc8248fd84467805069d"
+        },
+        {
+          "old_lf": "            if (member.get('scope')!='run' or member.get('present') is not True\n",
+          "new_lf": "            if (member.get('scope')!='run' or member.get('present') is not True\n                    or metadata_mask(member).intersection(('recruitment_kind',*RECIPIENT_KEYS))\n",
+          "old_lf_sha256": "a520a235762e32aef0585cd81d74743b780be1c31e7f5d5eb6bedc6af555dbee",
+          "new_lf_sha256": "efbbc5a4106fe1dfc5ef9c7b20e77ea37a65a80d555dbbd44f014076b298d148"
+        },
+        {
+          "old_lf": "            if record.get('held', True) and identity not in known:reject()\n",
+          "new_lf": "            if active_record(record, 'held') and identity not in known:reject()\n",
+          "old_lf_sha256": "33da527355011dcc2acb1134dd93ac6fb927354c339cf8aba00aaadc388aa476",
+          "new_lf_sha256": "5627a14692c82b88efd22b6da7615705b37a8cd0c10ad490915b32460af06609"
+        },
+        {
+          "old_lf": "        if not signature or type(count) is not int or len(signature)!=count:return\n        icons=[]\n",
+          "new_lf": "        if not signature or type(count) is not int or len(signature)!=count:return\n        # A historical slot cannot overrule an unqualified possession flag.\n        unknown=set(unconfirmed_item_ids(self.state))\n        if any(unknown.intersection(candidates) for candidates in signature):return\n        icons=[]\n",
+          "old_lf_sha256": "57f58e3151faae3f040fcc95ab560fefedb955a75629b24a696e5337e3aeddf5",
+          "new_lf_sha256": "005d1a6bb9237552648d373677e4aaa04bbdc0dfefa9c5e6b9e902885dd0e129"
+        },
+        {
+          "old_lf": "                if rid in self.state['relics'] and self.state['relics'][rid].get('held',True)]\n",
+          "new_lf": "                if rid in self.state['relics'] and active_record(self.state['relics'][rid],'held')]\n",
+          "old_lf_sha256": "9cd1200f9d0d24c14cfee6a041d36dba649e1b65986876ec7b631bffdcd8e367",
+          "new_lf_sha256": "d0433145b3ba3a274be9af709a5fd6aa355c8809c1950af5a635be7bdb66bad5"
+        },
+        {
+          "old_lf": "        memory=copy.deepcopy(state.get('relic_icon_memory'))\n",
+          "new_lf": "        retained_memory=state.get('relic_icon_memory')\n        suspended=memory_has_unconfirmed_items(state,retained_memory)\n        memory=None if suspended else copy.deepcopy(retained_memory)\n",
+          "old_lf_sha256": "63f7ce21fd3b2dba3c845d8bdb3e6c122baab1c285d02d798dae55aed25568fd",
+          "new_lf_sha256": "aea038c064b6f64fe5e64103a5091701f278c6f36bbb53999430ef582d8dddc1"
+        },
+        {
+          "old_lf": "        else:state['relic_icon_memory']=None\n",
+          "new_lf": "        elif not (suspended and count is None and not icons and not current_ids and not tools):\n            state['relic_icon_memory']=None\n        # A metadata-only read leaves suspended raw memory intact; it cannot\n        # replay or silently delete that historical possession evidence.\n",
+          "old_lf_sha256": "4cee70d20ae3dd4bcce9719d5ce1af7437d8614e16a4f6effe24acdc215afd35",
+          "new_lf_sha256": "7fdaf31465b8086a47b6c195e5e88f2dd44da87d5f9515229ab5b5612b7a9ee3"
+        },
+        {
+          "old_lf": "                if record.get('held',True) and record.get('source')=='held_icon_and_run_difficulty':\n",
+          "new_lf": "                if active_record(record,'held') and record.get('source')=='held_icon_and_run_difficulty':\n",
+          "old_lf_sha256": "b6e63ed1510d854b1ea1f3f5fdb2c4db8a693a60e14f510a18dee28ff8146de6",
+          "new_lf_sha256": "962b9b1561839f62b84b37c83bd17ee93b25ce13861110a2b7ad2c0b03828cc2"
+        },
+        {
+          "old_lf": "    def apply(self,observed,captured_at):\n",
+          "new_lf": "    def confirm_record_flag(self,kind,identity,record,key,value,captured_at):\n        \"\"\"Retain an unknown raw flag when fresh direct evidence qualifies it.\n\n        Qualification is not an acquisition, departure or recruitment event.\n        The caller supplies the already established observation's bool; this\n        method cannot infer a game lifecycle from an invalid old JSON value.\n        \"\"\"\n        if record_flag(record,key) is None:\n            self.state['history'].append({'at':captured_at,'kind':'state_flag_reconfirmed',\n                'record_kind':kind,'id':identity,'field':key,\n                'previous_value':copy.deepcopy(record[key]),'value':value,\n                'previous_record':copy.deepcopy(record)})\n            if kind=='operator' and key=='present':\n                record['unconfirmed_run_metadata']=sorted(metadata_mask(record)|set(RUN_METADATA_KEYS))\n                record['qualified_char_buff_ids']=[]\n\n    def apply(self,observed,captured_at):\n",
+          "old_lf_sha256": "a213e33bff7d48a49fd255f2108f0be460b9d863469ee6152957833d9cef2950",
+          "new_lf_sha256": "29e3f0461480c99ba6005db8286475cf297e667def267bdb45dc64d97e32ed01"
+        },
+        {
+          "old_lf": "        prior_held=set(self.held_relic_ids())\n",
+          "new_lf": "        prior_held=set(self.held_relic_ids())\n        prior_unknown_held=set(unconfirmed_record_ids(state['relics'],'held'))\n",
+          "old_lf_sha256": "197951a748d89d44e495734148c4b099dcabeb4a24676b31dcfe2f12c4cd4a4f",
+          "new_lf_sha256": "b992652c9ac17b599636f67fa2366d0c14add16fff2209634e113268718be3a6"
+        },
+        {
+          "old_lf": "            if rid not in state['relics'] or not state['relics'][rid].get('held',True):\n                state['history'].append({'at':captured_at,'kind':'relic_confirmed','id':rid})\n",
+          "new_lf": "            prior=state['relics'].get(rid,{})\n            if rid not in state['relics'] or record_flag(prior,'held') is False:\n                state['history'].append({'at':captured_at,'kind':'relic_confirmed','id':rid})\n            self.confirm_record_flag('relic',rid,prior,'held',True,captured_at)\n",
+          "old_lf_sha256": "84ae355b6e5d78ec379b8aabd20cf496da70f8bfb9395e5f32b4b64364183b8f",
+          "new_lf_sha256": "6f66641626afe3996bcccaf192e302c44ae8f717b13613128b8b3347da604344"
+        },
+        {
+          "old_lf": "            if tid not in state['tactical_tools'] or not state['tactical_tools'][tid].get('held',True):\n                state['history'].append({'at':captured_at,'kind':'tool_confirmed','id':tid})\n",
+          "new_lf": "            prior=state['tactical_tools'].get(tid,{})\n            if tid not in state['tactical_tools'] or record_flag(prior,'held') is False:\n                state['history'].append({'at':captured_at,'kind':'tool_confirmed','id':tid})\n            self.confirm_record_flag('tactical_tool',tid,prior,'held',True,captured_at)\n",
+          "old_lf_sha256": "076b8ad82c089a989d2cdc1be25f888c3f2745d87755d39696b54a295c6aec86",
+          "new_lf_sha256": "1f8a4de608c82a017cf1779e98093955d48873a164a9ffda496c9316510c4975"
+        },
+        {
+          "old_lf": "                if rid not in incoming and record.get('held',True):\n                    record['held']=False\n                    state['history'].append({'at':captured_at,'kind':'relic_no_longer_held','id':rid})\n",
+          "new_lf": "                if rid not in incoming and record_flag(record,'held') is not False:\n                    prior=record_flag(record,'held')\n                    self.confirm_record_flag('relic',rid,record,'held',False,captured_at)\n                    record['held']=False\n                    if prior is True:\n                        state['history'].append({'at':captured_at,'kind':'relic_no_longer_held','id':rid})\n",
+          "old_lf_sha256": "91ca82bd2caa2a10a547e12955d2c068bb8b32d0013cfe21de75dbdf42a08f8d",
+          "new_lf_sha256": "11fa34c20a102aeca9627f51b2a246f0af4cdb366f7d48454f689a3c5180f639"
+        },
+        {
+          "old_lf": "                if tid not in incoming_tools and record.get('held',True):\n                    record['held']=False\n                    state['history'].append({'at':captured_at,'kind':'tool_no_longer_held','id':tid})\n",
+          "new_lf": "                if tid not in incoming_tools and record_flag(record,'held') is not False:\n                    prior=record_flag(record,'held')\n                    self.confirm_record_flag('tactical_tool',tid,record,'held',False,captured_at)\n                    record['held']=False\n                    if prior is True:\n                        state['history'].append({'at':captured_at,'kind':'tool_no_longer_held','id':tid})\n",
+          "old_lf_sha256": "557c8129799debe01afc0d7234a2f6fb2408371e3b6a44e834b1c41cf68a6f57",
+          "new_lf_sha256": "62e270329fdcf977388cbc9a727768c252c009f255dbb41097880f99f63ae4b8"
+        },
+        {
+          "old_lf": "            previous=state['operators'].get(member['id'],{})\n",
+          "new_lf": "            previous=state['operators'].get(member['id'],{})\n            prior_presence=record_flag(previous,'present')\n            prior_metadata_mask=metadata_mask(previous)\n",
+          "old_lf_sha256": "eed36aecffa5719b41b4d47b6f9955438492168c55747b958f5a7da547ec15de",
+          "new_lf_sha256": "18f36c2a975bd6691f1c934c4bd65ffa4ab20345a9900a004464c80b6b370bde"
+        },
+        {
+          "old_lf": "            changed_origin=origin is not None and previous.get('recruitment_kind') is not None and origin!=previous['recruitment_kind']\n",
+          "new_lf": "            changed_origin=prior_presence is not None and 'recruitment_kind' not in prior_metadata_mask and origin is not None and previous.get('recruitment_kind') is not None and origin!=previous['recruitment_kind']\n",
+          "old_lf_sha256": "100509a65e011d0872732f8d84cd5c0542e2d1f8929c2377ec9753e62844a2e3",
+          "new_lf_sha256": "d197d80c9f9c6dfc7b823ee2f58cdd2ad01408c294ac2e063b601f75b011950f"
+        },
+        {
+          "old_lf": "            corrected=(origin is not None and isinstance(origin_source,dict)\n",
+          "new_lf": "            corrected=(prior_presence is not None and 'recruitment_kind' not in prior_metadata_mask and origin is not None and isinstance(origin_source,dict)\n",
+          "old_lf_sha256": "373e15f29cc398a778afa78825038eee082625ee89778fd21f579a9030c1e26b",
+          "new_lf_sha256": "00d504d095f87b3b43b168f1b2238debc22a4fefd1c8bc1a57dfd1bfa87fbaa1"
+        },
+        {
+          "old_lf": "            if ((type(prior_elite) is int and type(current_elite) is int and current_elite>prior_elite)\n                    or previous.get('advanced') is False and member.get('advanced') is True):\n",
+          "new_lf": "            elite_qualified=not ('unconfirmed_run_metadata' in previous and 'elite' in previous.get('invalid_fields',[]))\n            if (prior_presence is not None and ((elite_qualified and type(prior_elite) is int and type(current_elite) is int and current_elite>prior_elite)\n                    or 'advanced' not in prior_metadata_mask and previous.get('advanced') is False and member.get('advanced') is True)):\n",
+          "old_lf_sha256": "318fcba799408cd9f606a5ac73943d88d72e903f00bad2b6a2d5b11cf1426f04",
+          "new_lf_sha256": "74a40e6c99638b23620eee4573f719faee8fd6897f8cc40112a2904098f3bd80"
+        },
+        {
+          "old_lf": "            returned=bool(previous) and not previous.get('present',True)\n",
+          "new_lf": "            returned=bool(previous) and prior_presence is False\n            if prior_presence is None:\n                # Keep old leaves, but an identity re-read does not reconfirm\n                # the historical cultivation hidden by an unknown presence.\n                invalid.update(previous.get('fields',{}))\n                invalid_ranks.update(previous.get('skill_ranks',{}))\n            self.confirm_record_flag('operator',member['id'],previous,'present',True,captured_at)\n",
+          "old_lf_sha256": "f8aad6af057c3ddd2968f2d5ba3cd20fd6e9f5d3d12e2e3dfbee3a29ee4b3111",
+          "new_lf_sha256": "fbbdc73ffc17c11d27077f42a34cb1281b1f249b43bbfd8e7bba6210687876bb"
+        },
+        {
+          "old_lf": "            if fields!=previous.get('fields') or ranks!=previous.get('skill_ranks') or not previous.get('present',True) or advanced_changed:\n",
+          "new_lf": "            if fields!=previous.get('fields') or ranks!=previous.get('skill_ranks') or prior_presence is False or advanced_changed:\n",
+          "old_lf_sha256": "14aa624553a3e86b5fd1208fb96b52dc499eb0379499d2722b965355fa78a3ad",
+          "new_lf_sha256": "2412b4cb7736b1d712a8bc598a2d530ff76039999e7ad16b623839efe32e850b"
+        },
+        {
+          "old_lf": "            from .recipient_state import merge_recipient_evidence\n",
+          "new_lf": "            merged=state['operators'][member['id']]\n            mask=metadata_mask(merged)\n            if mask:\n                if origin is not None:mask.discard('recruitment_kind')\n                if 'advanced' in member:mask.discard('advanced')\n                if 'char_buff_ids' in member:\n                    if member.get('char_buffs_complete') is True:\n                        mask.difference_update(RECIPIENT_KEYS)\n                        merged.pop('qualified_char_buff_ids',None)\n                    elif mask.intersection(RECIPIENT_KEYS):\n                        prior=[] if changed_origin or returned else previous.get('qualified_char_buff_ids',[])\n                        if type(prior) is not list or any(type(bid) is not str for bid in prior):prior=[]\n                        merged['qualified_char_buff_ids']=list(dict.fromkeys(prior+member['char_buff_ids']))\n                merged['unconfirmed_run_metadata']=sorted(mask)\n            from .recipient_state import merge_recipient_evidence\n",
+          "old_lf_sha256": "f245e63359ed72dc595e4ebebc6473245fec0dd412c13b54cfc78c9a708d99fc",
+          "new_lf_sha256": "c9badc889b38880267c1289e50a918846721e28cd6b3c1bbede06d127895a1bc"
+        },
+        {
+          "old_lf": "                if key not in current and member.get('present',True):\n                    member['present']=False\n                    state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})\n",
+          "new_lf": "                if key not in current and record_flag(member,'present') is not False:\n                    prior=record_flag(member,'present')\n                    self.confirm_record_flag('operator',key,member,'present',False,captured_at)\n                    member['present']=False\n                    if prior is True:\n                        state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})\n",
+          "old_lf_sha256": "a475b22806e0a835e59fa1686c27d5154104f6a9a0766c6c6ccfcab5d283af0b",
+          "new_lf_sha256": "a8de5d9cdca5ecd7f4a7c3c2d9e359414a6166b6e3002d4cae4a5c54bb7d66c1"
+        },
+        {
+          "old_lf": "        invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held,promoted_ids,captured_at)\n",
+          "new_lf": "        invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held-prior_unknown_held,promoted_ids,captured_at)\n",
+          "old_lf_sha256": "82c73575a674b78a2daf084652a0ad136edfd9d8d7723f76f27b802bdc0cc319",
+          "new_lf_sha256": "e11312f6442185031b713ffac5f923de99a73d5587cfa11d2a9ce37d41aa3ef5"
+        },
+        {
+          "old_lf": "        complete=_inventory_confirmation_flag(self.state['inventory_verified']) and count is not None and known+tools==count\n        return {'source':'run_capture','complete':complete,\n",
+          "new_lf": "        complete=_inventory_confirmation_flag(self.state['inventory_verified']) and count is not None and known+tools==count\n        unknown=unconfirmed_item_ids(self.state)\n        if complete and unknown:complete=False\n        return {**({'unconfirmed_item_ids':unknown} if unknown else {}),'source':'run_capture','complete':complete,\n",
+          "old_lf_sha256": "917b81bae9aae311dddc6b79eb0516b1a923ac55b344c7fbb9bec2d31b1e32cf",
+          "new_lf_sha256": "0e11c55cc4c9ae66c852d8a77f71f5b4f3ed6ea05cd5dbecc7e599710cdd85e9"
+        },
+        {
+          "old_lf": "        return sorted(tid for tid,record in self.state['tactical_tools'].items() if record.get('held',True))\n",
+          "new_lf": "        return sorted(tid for tid,record in self.state['tactical_tools'].items() if active_record(record,'held'))\n",
+          "old_lf_sha256": "ef80a0332ba6af6408bb4699dd6a495e6a09e9ee38cfb46aa0d59b2c894cf4e0",
+          "new_lf_sha256": "08089a412768e09995e193e79e6bbe388a437cd0781bc672dc8f7488986ed589"
+        },
+        {
+          "old_lf": "        return sorted(rid for rid,record in self.state['relics'].items() if record.get('held',True))\n",
+          "new_lf": "        return sorted(rid for rid,record in self.state['relics'].items() if active_record(record,'held'))\n",
+          "old_lf_sha256": "a0a6263d1a9ccfa17651e1b4048a8788759d35fda89da5f3e044697107bdcf01",
+          "new_lf_sha256": "856edf93c9c816d75f57c4b35123e88ff75890797f425f0bfb037bfc76859a57"
+        },
+        {
+          "old_lf": "        names=[operator_profiles()[key]['name']+('（已离队，保留记录）' if not member.get('present',True) else '')\n",
+          "new_lf": "        names=[operator_profiles()[key]['name']+('（在场状态未确认，保留记录）' if record_flag(member,'present') is None else\n                '（已离队，保留记录）' if record_flag(member,'present') is False else '')\n",
+          "old_lf_sha256": "05e71a322229cc6fa0a9acca5b638e71f6c9b92b06d24b5fa39847f650cf8709",
+          "new_lf_sha256": "3c3634fff4d94ec11b0ca164d396d5fbf317f5acf2499691efe13c8e922eb564"
+        },
+        {
+          "old_lf": "               +('（已进阶）' if member.get('advanced') else '')\n",
+          "new_lf": "               +('（已进阶）' if record_flag(member,'present') is not None and 'advanced' not in metadata_mask(member) and member.get('advanced') else '')\n",
+          "old_lf_sha256": "8c85a860adb32a6b8087ea770d4b7d0a348d7d22454b4e52efd6b7fbed94beeb",
+          "new_lf_sha256": "d6aadda31679271cff5876d23b4497c065acefdc8f481e8ee66a05a44f23e3b2"
+        },
+        {
+          "old_lf": "               +('（应急雇佣，仅一次作战）' if member.get('recruitment_kind')=='emergency_hire' else '')\n",
+          "new_lf": "               +('（应急雇佣，仅一次作战）' if record_flag(member,'present') is not None and 'recruitment_kind' not in metadata_mask(member) and member.get('recruitment_kind')=='emergency_hire' else '')\n",
+          "old_lf_sha256": "346ec2e773984cf9036bf117f1ff4e1c3aa926440ec4b51dcc609daf4150c49e",
+          "new_lf_sha256": "5966b109fbaf2e6e388db9b57c6699e83048ceaac2242bc69d2088f2b888f086"
+        },
+        {
+          "old_lf": "        present=sum(bool(member.get('present',True)) for member in state['operators'].values())\n",
+          "new_lf": "        present=sum(active_record(member,'present') for member in state['operators'].values())\n",
+          "old_lf_sha256": "684be29dab1be66611523c8a64d4b08f7d2ed640854ff7893d022e1c7adcada9",
+          "new_lf_sha256": "ac5454897048182dca640ad6c613b9162926def69f72d7ab2d3e0bed2e4fd746"
+        },
+        {
+          "old_lf": "            resources or '源石锭/零件数尚未确认',\n",
+          "new_lf": "            resources or '源石锭/零件数尚未确认',\n            *(['部分记录的持有状态未确认；原记录保留，暂不自动套用对应持有效果与层数。'] if status.get('unconfirmed_item_ids') else []),\n",
+          "old_lf_sha256": "ec657f5d20a347f4d6c6b06f104a3ecb37165b87d6f1e0ee081f33128e5c4e67",
+          "new_lf_sha256": "9723a451737e0c00ef7c8a9dfdf355312c195c247c58e3e6d48f0b8e280a7763"
+        }
+      ]
+    },
+    "rouge/training_view.py": {
+      "baseline_bytes": 6050,
+      "baseline_sha256": "5bef7b6f03592a5df615711568d116a0ffd9170f9be99832ca75d9eee78fcdb4",
+      "candidate_bytes": 7077,
+      "candidate_sha256": "fd38b92f2893f18369fc4364b9e2e80128151aa1b7625a2b15f0bfa1392f4dfb",
+      "CRLF_preserved": false,
+      "blocks": [
+        {
+          "old_lf": "from .account_cache import _record_issue\n",
+          "new_lf": "from .account_cache import _record_issue\nfrom .catalog import operator_profiles\nfrom .record_flags import record_flag,active_record,metadata_mask,projected_run_metadata\n",
+          "old_lf_sha256": "3c8295b47a0320600d4472213b54242e1950d54d6b9b6e75fe01d6cf19d78d52",
+          "new_lf_sha256": "a3d79b1566a5d3a441c9127a8c804e27155665544a0993f226caf3821b936abf"
+        },
+        {
+          "old_lf": "    if (not enabled or not member or not member.get('present', True)\n",
+          "new_lf": "    if (not enabled or not member or not active_record(member, 'present')\n",
+          "old_lf_sha256": "21d3c9c25de2113204a6f18263b5e32387114742002f23abe72263e02dcc9296",
+          "new_lf_sha256": "5f252718247d3c6d64ce0c43d6d645e0eaef093bbae0fe44dbe67fa374290086"
+        },
+        {
+          "old_lf": "    if not member or not member.get('present', True):\n        return {'state': account, 'notice': '', 'selection': 'account'}\n",
+          "new_lf": "    if not member or record_flag(member, 'present') is False:\n        return {'state': account, 'notice': '', 'selection': 'account'}\n    if record_flag(member, 'present') is None:\n        return {'state': account,\n                'notice': '本局记录的在场标记未确认；暂用标注的账号参考或档案预览，不自动确认该成员的本局培养与强化，原记录保留。',\n                'selection': 'account_after_unconfirmed_presence'}\n",
+          "old_lf_sha256": "dd9334cac482e3defd59063f5159fe9410f2b91debb4d09a779352ee70dac343",
+          "new_lf_sha256": "c5d066ae15889fbb135ea2f01c08074307211275284954307aee3e77f3bd8477"
+        },
+        {
+          "old_lf": "    return member\n",
+          "new_lf": "    return projected_run_metadata(member)\n",
+          "old_lf_sha256": "dd7643ccf02d4317ade1bc9deac81876fddd6b0d74f97a16b994f5629db02ab0",
+          "new_lf_sha256": "42576721b62516a4776008b17601a82ab4cfeb8a8aa8a4ffdfa73e913fa1a040"
+        },
+        {
+          "old_lf": "    current = {key: value for key, value in member.get('fields', {}).items()\n",
+          "new_lf": "    member = projected_run_metadata(member)\n    current = {key: value for key, value in member.get('fields', {}).items()\n",
+          "old_lf_sha256": "e5c4f566857ecc3ee0882a3890592fccbc7932e62f8f1135ccad608e7bdb4d03",
+          "new_lf_sha256": "876c21c18bd8e641fa7c25116a64f41731581f998bd0fe7782897fef85cef8f0"
+        },
+        {
+          "old_lf": "    try:\n        return format_operator_observation({**member, 'id': op})\n",
+          "new_lf": "    try:\n        if record_flag(member,'present') is None:\n            return (f'干员：{operator_profiles()[op][\"name\"]}\\n'\n                    '本局记录的在场状态未确认；原培养、来源与强化仅作保留记录，请重新读取相应页面确认。')\n        view=projected_run_metadata(member)\n        text=format_operator_observation({**view, 'id': op})\n        if metadata_mask(member):\n            text+='\\n部分保留的来源或强化资格尚未确认；仅使用此次重新读取的明确字段与强化。'\n        return text\n",
+          "old_lf_sha256": "8c01f04617bea80e7a9e94f8cb7e20f5db7d4bf1b48b2c6f3cc629430aa135b9",
+          "new_lf_sha256": "ef3400ffb265889b18502a0d8ff0a33af14a3c14bbddaa4b825609bc17a91d12"
+        }
+      ]
+    },
+    "rouge/recipient_state.py": {
+      "baseline_bytes": 4338,
+      "baseline_sha256": "8a183ba7b1cc39f2ccaba4e64e6f07c7268868ab26c6dd02c35afdd057e3be73",
+      "candidate_bytes": 4666,
+      "candidate_sha256": "837e7990a8983efb3f64228f1a11511a15749ff8e202305d2fdc10e8efa83785",
+      "CRLF_preserved": false,
+      "blocks": [
+        {
+          "old_lf": "from .relics import mechanics\n",
+          "new_lf": "from .relics import mechanics\nfrom .record_flags import active_record,metadata_mask,RECIPIENT_KEYS\n",
+          "old_lf_sha256": "17c66c89517eb1e8c6a55d47e9687f21cbf5986dbb30d5390de9b241cbbb09e0",
+          "new_lf_sha256": "a9a9f5e0fc215d293fda2a1a989bbeacde53656b23a65bd938bde82ce1d83f23"
+        },
+        {
+          "old_lf": "    absent = set() if new_recruitment or not previous else absent_buffs(previous)\n",
+          "new_lf": "    if metadata_mask(merged).intersection(RECIPIENT_KEYS) and 'char_buff_ids' not in observed:\n        return  # Retain raw popup evidence; identity-only reads cannot renew it.\n    absent = set() if new_recruitment or not previous else absent_buffs(previous)\n",
+          "old_lf_sha256": "405958e884eed0801abe3a0009745abb7c7df7da54fff27f678ff38d826e278c",
+          "new_lf_sha256": "f43f1540385d7f1e274c9c197e594fc92ced0757f59eebeb8d6f0d98d7ce780d"
+        },
+        {
+          "old_lf": "    held = {rid for rid, record in state['relics'].items() if record.get('held', True)}\n",
+          "new_lf": "    held = {rid for rid, record in state['relics'].items() if active_record(record, 'held')}\n",
+          "old_lf_sha256": "7e602bf9a73d31c06c7f9b770a21a12e769aa0ee18d9b7794512f0bc08f1e5cf",
+          "new_lf_sha256": "850718a4c615cb2bcb9786d4317f9b4f8843ec3b16e5f638404cf5be970342d4"
+        },
+        {
+          "old_lf": "        if member.get('scope') != 'run' or not member.get('present', True):\n",
+          "new_lf": "        if (member.get('scope') != 'run' or not active_record(member, 'present')\n                or metadata_mask(member).intersection(RECIPIENT_KEYS)):\n",
+          "old_lf_sha256": "c9d858da731c923acf9c22e5b5e8d62132ad87da600b394bea3e858e849d83a2",
+          "new_lf_sha256": "d8a04fbbec6595f4474a3d480362e809c9959170d2afd5718656939f20ce5f40"
+        }
+      ]
+    },
+    "rouge/relic_counter_semantics.py": {
+      "baseline_bytes": 4867,
+      "baseline_sha256": "60ceda0596102e893240ac149a751868cd5a9ef61fe4e1a20ed2ebb907fa0cbd",
+      "candidate_bytes": 5421,
+      "candidate_sha256": "e0ebdb321a45c49d2f72141326cd8afd4ff97525f4f7a425334755834acba27d",
+      "CRLF_preserved": false,
+      "blocks": [
+        {
+          "old_lf": "from .relics import mechanics\n",
+          "new_lf": "from .relics import mechanics\nfrom .record_flags import active_record\n",
+          "old_lf_sha256": "17c66c89517eb1e8c6a55d47e9687f21cbf5986dbb30d5390de9b241cbbb09e0",
+          "new_lf_sha256": "af2d4dccecfea55c9ba5473f0f73c702ac4ec0212b63d172b417ec452dc8531c"
+        },
+        {
+          "old_lf": "    losses={}\n",
+          "new_lf": "    losses={};qualification_cutoffs={}\n",
+          "old_lf_sha256": "fb6ab9be03481850abd11a55706019cdd53e0962e1ba95c6f7a7d8b37398b4ad",
+          "new_lf_sha256": "a7f8685eb72c926a8209ac35b984712ef690ed43f65a496e9aee9b91e9caa8e9"
+        },
+        {
+          "old_lf": "        at=event.get('at')\n        if rid and type(at) in (int,float) and math.isfinite(at):\n",
+          "new_lf": "        at=event.get('at')\n        if (event.get('kind')=='state_flag_reconfirmed' and event.get('record_kind')=='relic'\n                and event.get('field')=='held' and type(event.get('value')) is bool\n                and isinstance(event.get('id'),str) and type(at) in (int,float) and math.isfinite(at)):\n            identity=event['id']\n            qualification_cutoffs[identity]=max(qualification_cutoffs.get(identity,float('-inf')),at)\n        if rid and type(at) in (int,float) and math.isfinite(at):\n",
+          "old_lf_sha256": "4d1e8ee53862dd59507e114dcbfb8df9b4d0b91f9391f7e8e6efa56814cb964a",
+          "new_lf_sha256": "2f922d7657ade15d102be8aa58fc4ed2be88e2fd68343247ec89782308fc7a10"
+        },
+        {
+          "old_lf": "                or not state['relics'][rid].get('held',True)\n                or losses.get(rid,float('-inf'))>=at):continue\n",
+          "new_lf": "                or not active_record(state['relics'][rid],'held')\n                or losses.get(rid,float('-inf'))>=at\n                or qualification_cutoffs.get(rid,float('-inf'))>at):continue\n",
+          "old_lf_sha256": "7b6db8a649435a068e41f7c4a7ee805dbe1570668efc46f15c077009dcec3c35",
+          "new_lf_sha256": "c4053df95e4bb4298f8b12e8f3959b6b69a139aa01ba62d5e2f92e23858a06b0"
+        }
+      ]
+    },
+    "rouge/app.py": {
+      "baseline_bytes": 101930,
+      "baseline_sha256": "98c9a20135a83b6da1f696b7d7fb57c39d2113034765018c4bdda262cf5e1fd7",
+      "candidate_bytes": 101981,
+      "candidate_sha256": "16322d4a80c64c3f022eb6e08354d877da25019d138d001661e52e3144d9f3af",
+      "CRLF_preserved": true,
+      "blocks": [
+        {
+          "old_lf": "from .run_state import RunState\n",
+          "new_lf": "from .run_state import RunState\nfrom .record_flags import active_record\n",
+          "old_lf_sha256": "077db5c437b5adf608181d5f0811e048c1908b7f47773308edce536d6e62e007",
+          "new_lf_sha256": "7ca91e82ccd7207780407e8c59e491e6f2e84875dc59ed17de58da3657497199"
+        },
+        {
+          "old_lf": "            available=[key for key,member in self.run.state['operators'].items() if key in catalog()['operators'] and member.get('present',True)]\n",
+          "new_lf": "            available=[key for key,member in self.run.state['operators'].items() if key in catalog()['operators'] and active_record(member,'present')]\n",
+          "old_lf_sha256": "835c70ff36a5fb3d505361b5b01bad6068f74abeda9b9bedd13264a321492f48",
+          "new_lf_sha256": "cb0d24f9229a68db72414253d8c44ceb9fcfd3f687bab9edf1076bc9541ff417"
+        },
+        {
+          "old_lf": "                     if key in operator_profiles() and member.get('present',True) and member.get('scope')!='account')\n",
+          "new_lf": "                     if key in operator_profiles() and active_record(member,'present') and member.get('scope')!='account')\n",
+          "old_lf_sha256": "d181905d5fb0c373641a4017c7a433b9ec05f92e5d7a3bf30cefcf49ab405998",
+          "new_lf_sha256": "6862016545274a83efe878fd295073ca68611660bd75064b5e387d60381cc181"
+        }
+      ]
+    },
+    "rouge/run_metadata_view.py": {
+      "baseline_bytes": 1483,
+      "baseline_sha256": "96765f55f696815c44b9c3eb22b4e6247f4ffe1c9d3a064c5301cfdc33de7e3b",
+      "candidate_bytes": 2302,
+      "candidate_sha256": "1af6da39c24a55d591647a98f5941ac66f3a6665788a0ec812d012f631f8b6be",
+      "CRLF_preserved": false,
+      "blocks": [
+        {
+          "old_lf": "\n\ndef format_run_buff_status(state, buffs):\n",
+          "new_lf": "\nfrom .record_flags import record_flag,active_record,metadata_mask,projected_run_metadata,RECIPIENT_KEYS\n\n\ndef format_run_buff_status(state, buffs):\n",
+          "old_lf_sha256": "4f3c4a4309a6585efa7670eb3985721b98639e4dcbcbee7c47fb51b7833debd6",
+          "new_lf_sha256": "c049188ab642d16054190a7eada9ee5e731618b7d20eb4318063dea217deb6ae"
+        },
+        {
+          "old_lf": "    current = state.get('scope') == 'run'\n",
+          "new_lf": "    if state.get('scope')=='run' and record_flag(state,'present') is None:\n        return '本局记录的在场状态未确认；原强化记录保留，暂不自动套用。'\n    qualified=projected_run_metadata(state)\n    if (state.get('scope')=='run' and active_record(state,'present')\n            and metadata_mask(state).intersection(RECIPIENT_KEYS) and not qualified.get('char_buff_ids')):\n        return '保留的个人强化资格尚未重新确认；原记录保留，暂不自动套用。'\n    retained=metadata_mask(state).intersection(RECIPIENT_KEYS)\n    state=qualified\n    current = state.get('scope') == 'run' and active_record(state,'present')\n",
+          "old_lf_sha256": "c7c1948b920c09604a84d73bb8f1c6d887f4d641d75abb32f54f3e75b5119cc8",
+          "new_lf_sha256": "62666873b8a0e34b94c82f862372b5bbc96057dfe95a96c0840486faa4b5ea26"
+        },
+        {
+          "old_lf": "    return text\n",
+          "new_lf": "    if current and retained:text+='；其他保留的个人强化资格尚未重新确认。'\n    return text\n",
+          "old_lf_sha256": "dab8f4f41359f6c0bf7abc047d4c57745722334f5d2d6e72e166a55b3a097471",
+          "new_lf_sha256": "15e49a555fac710a9a874cea9e45115fa63ebad150a6f0ce351573b7c8a653e0"
+        }
+      ]
+    },
+    "tests/test_cache_consumers_101.py": {
+      "baseline_bytes": 16712,
+      "baseline_sha256": "cf8654a622f8c09d4ec41cbd1a857c9e1733c500c3fc9c93ecb495f9f36f18b8",
+      "candidate_bytes": 16881,
+      "candidate_sha256": "33896921571ac07fc0b0181cca276988521f4f7107c2556e7148cce334355d56",
+      "CRLF_preserved": false,
+      "blocks": [
+        {
+          "old_lf": "    def test_summary_counts_present_members_with_the_existing_truthiness_gate(self):\n        for value, expected in (('yes', 1), (None, 0), ([], 0), ([1], 1), ({}, 0),\n                                ({'public': 1}, 1), (False, 0), (True, 1), (0, 0), (1, 1)):\n            with self.subTest(value=value):\n                run, raw = self.load({'operators': {'mechanist': {'present': value}}})\n                text = self.view_unchanged(run, raw, run.summary)\n                self.assertIn(f'当前已识别 {expected} /', text)\n                self.assertEqual(native(run.state['operators']['mechanist']['present']), native(value))\n",
+          "new_lf": "    def test_summary_counts_only_qualified_presence_and_retains_unknown_raw_flags(self):\n        # Section122 intentionally replaces the old non-bool truthiness claim.\n        # Boolean controls and the next method's missing-default contract stay.\n        for value in ('yes', None, [], [1], {}, {'public': 1}, False, True, 0, 1):\n            with self.subTest(value=value):\n                run, raw = self.load({'operators': {'mechanist': {'present': value}}})\n                text = self.view_unchanged(run, raw, run.summary)\n                self.assertIn(f'当前已识别 {int(value is True)} /', text)\n                if type(value) is not bool:self.assertIn('在场状态未确认', text)\n                self.assertEqual(native(run.state['operators']['mechanist']['present']), native(value))\n",
+          "old_lf_sha256": "7b8b5af01efdfa1cd217b68b790f778d57c14b9e1f7d72cc36fe3ddabd0b6c50",
+          "new_lf_sha256": "2f247c99ad0c33aaaa746d8262e71b8daea199748fe130c2da38dff385d70aab"
+        }
+      ]
+    },
+    "scripts/verify_cloud.py": {
+      "baseline_bytes": 5862,
+      "baseline_sha256": "c20038a2226200eb986a820ddbc00655efadf0917bf442f62d955e30da22114e",
+      "candidate_bytes": 5902,
+      "candidate_sha256": "c826f85f3a8447eaca9384c9a47e98e8c2a3b87395e7071a1343def7f310bcff",
+      "CRLF_preserved": false,
+      "blocks": [
+        {
+          "old_lf": "MODULES = (\n",
+          "new_lf": "MODULES = (\n    \"tests.test_retained_presence_122\",\n",
+          "old_lf_sha256": "1110da6891585800a07d4685a774255aefd8b37a12b538e5b11fd26bd37b79e3",
+          "new_lf_sha256": "6a0c0d33e73042e948d8bd26583bdc83d08c3568f4bcd54a766772d5b3f78f21"
+        }
+      ]
+    }
+  },
+  "root_application_rule": "Rebind every target and single-match local block against actual section121 Source. Do not replace the full future app or any candidate snapshot. All other bytes and line endings must remain unchanged."
+}
