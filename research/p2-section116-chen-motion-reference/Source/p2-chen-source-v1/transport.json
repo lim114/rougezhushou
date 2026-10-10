@@ -1,0 +1,63 @@
+{
+  "kind": "SOURCE_ONLY_LOCAL_ANCHOR_TRANSPORT_NOT_APPLIED",
+  "blocks": [
+    {
+      "path": "rouge/reporting.py",
+      "baseline_sha256": "4231daf2170bed34002b4f70ef54a5bcc350bff21e3e124f7e9acb76ebfc317f",
+      "before": "def build_report(scenario,result):\n",
+      "after": "def chen_motion_reference_sections(scenario):\n    \"\"\"Expose original motion facts, keeping them outside numeric scheduling.\"\"\"\n    from .chen_motion_reference import chen_motion_reference\n    reference=chen_motion_reference(scenario)\n    if reference is None:return []\n    blocks=[]\n    for face in ('Front','Back'):\n        motions=[r for r in reference['motions'] if r['orientation']==face]\n        if not motions:continue\n        rows=[];notes=[\n            '这些是原版资源中的独立动作条目；排列便于查看，不代表实际执行顺序、循环次数或当前皮肤动作选择。',\n            '每个事件的偏移以该动作资源自身起点为0；不是技能开启后的实际命中或碰撞时刻。',\n            '原始秒数和浮点帧保留原值；30帧/秒归一化仅处理资源表示误差，不证明游戏帧取整或客户端相位。',\n            '参考只改变资料展示，不排程多事件伤害，不替换攻击模板，也不将动作长度相加作为技能持续时间。']\n        for index,motion in enumerate(motions):\n            prefix='motion_'+str(index);duration=motion['duration'];label=motion['label']\n            rows.extend([\n                metric(prefix+'_duration',label+' · 资源时长',repr(duration['seconds']),'秒（原值）'),\n                metric(prefix+'_raw_frames',label+' · 原始浮点帧',repr(duration['raw_frames_30hz']),'帧'),\n                metric(prefix+'_strict_ceil',label+' · 严格向上取整帧',duration['strict_ceil_frames_30hz'],'帧'),\n                metric(prefix+'_normalized',label+' · 归一化参考帧',duration['ceil_frames_30hz'],'帧'),\n                metric(prefix+'_events',label+' · 命名事件数量',len(motion['events']),'个')])\n            for event_index,event in enumerate(motion['events']):\n                event_prefix=prefix+'_event_'+str(event_index)\n                event_label=label+' · 第'+str(event_index+1)+'个命名事件'\n                rows.extend([\n                    metric(event_prefix+'_seconds',event_label+' · 原始偏移',repr(event['seconds']),'秒（动作内）'),\n                    metric(event_prefix+'_raw_frames',event_label+' · 原始浮点帧',repr(event['raw_frames_30hz']),'帧'),\n                    metric(event_prefix+'_strict_ceil',event_label+' · 严格向上取整帧',event['strict_ceil_frames_30hz'],'帧'),\n                    metric(event_prefix+'_normalized',event_label+' · 归一化参考偏移',event['ceil_frames_30hz'],'帧')])\n                notes.append(event_label+'名称：'+event['name']+'；原名不等于已核验的实际伤害绑定。')\n            notes.append(label+'资源动作原名：'+motion['animation']+'；来源：'+motion['source']['url']+\n                         '；资源SHA-256：'+motion['source']['sha256'])\n        rows.extend([metric('actual_damage','实际命中时刻',None,'秒'),\n                     metric('actual_end','实际技能结束时刻',None,'秒')])\n        if reference['skill']==2:\n            rows.extend([metric('slash_end','实际斩击结束时刻',None,'秒'),\n                         metric('strengthening_start','实际强化起点',None,'秒')])\n            notes.append('普攻动作仅列资源参照，未证明它用于斩击后强化；消失动作长度不等于斩击持续时间。')\n        elif reference['skill']==3:\n            rows.append(metric('wave_collision','实际剑气碰撞时刻',None,'秒'))\n            notes.append('循环动作的三个命名事件不补齐剑气碰撞、开启交接、实际循环次数或结束时刻。')\n        else:\n            notes.append('循环动作的两个命名事件仅列原始偏移，未绑定实际两段伤害或开启、结束交接。')\n        blocks.append(section('chen_motion_'+face.lower(),'陈 · 原版阶段资料 · '+\n                              {'Front':'正面','Back':'背面'}[face],rows,notes))\n    return blocks\n\n\ndef build_report(scenario,result):\n",
+      "newline": "'\\n'",
+      "before_sha256": "277b7cad962f8176fc31f7f217003072d64b8c97bdb9a8ff0a913b799f1f8279",
+      "after_sha256": "fe68e550482fc5adf4382584ef61c99acea7fe9e46eee26598593fd58d98c858"
+    },
+    {
+      "path": "rouge/reporting.py",
+      "baseline_sha256": "4231daf2170bed34002b4f70ef54a5bcc350bff21e3e124f7e9acb76ebfc317f",
+      "before": "    chen_phase=result.get('chen_phase_reference')\n",
+      "after": "    sections.extend(chen_motion_reference_sections(scenario))\n    chen_phase=result.get('chen_phase_reference')\n",
+      "newline": "'\\n'",
+      "before_sha256": "0d6a994dec8fa93ae66905e21546eb26af3a4ac797291941ffb01d1d1b10a583",
+      "after_sha256": "5c6dae38b80f6a6882335d43429ac181ddbf7226445c860afc39470cefc58db2"
+    },
+    {
+      "path": "rouge/app.py",
+      "baseline_sha256": "fa77caff7b133a42d651f25166327982f37487a57ddb84f3461fc13bed1e03c8",
+      "before": "        self.timing_scenario=QPlainTextEdit()\n",
+      "after": "        self.chen_motion_orientation=QComboBox()\n        self.chen_motion_orientation.addItem('不显示原版阶段资料',None)\n        self.chen_motion_orientation.addItem('正面原版动作资料','Front')\n        self.chen_motion_orientation.addItem('背面原版动作资料','Back')\n        self.chen_motion_orientation.addItem('正背面原版动作对照','both')\n        self.chen_motion_preview_key=None;self.chen_motion_previews={}\n        form.addRow('陈原版阶段资料',self.chen_motion_orientation)\n        form.setRowVisible(self.chen_motion_orientation,False)\n        self.chen_motion_orientation.setToolTip('仅显示当前技能的原版动作资源长度与全部命名事件；不排程多段伤害，不补齐斩击结束、剑气碰撞或技能结束。连续与逐帧模式均可查看，不写入培养或本局记忆。')\n        self.chen_motion_orientation.currentIndexChanged.connect(lambda:self.calculate())\n        self.timing_scenario=QPlainTextEdit()\n",
+      "newline": "'\\r\\n'",
+      "before_sha256": "7f646836f3175f44b22383e755f3847c0d3e414e35d82266ff3a93b856d0cdd3",
+      "after_sha256": "9de84a4e5004b1730ff14b82f65f2a386379abc5ee89a91276a7470db9b4f5b9"
+    },
+    {
+      "path": "rouge/app.py",
+      "baseline_sha256": "fa77caff7b133a42d651f25166327982f37487a57ddb84f3461fc13bed1e03c8",
+      "before": "            if self.frame_timing.isChecked():\n                for field,widget in (('normal_animation_reference',self.normal_animation_reference),\n",
+      "after": "            if op=='char_1050_chen3' and self.chen_motion_orientation.currentData() is not None:\n                scenario['chen_motion_orientation']=self.chen_motion_orientation.currentData()\n            if self.frame_timing.isChecked():\n                for field,widget in (('normal_animation_reference',self.normal_animation_reference),\n",
+      "newline": "'\\r\\n'",
+      "before_sha256": "421d6df7cf67f234ef7269bbfb2e236f5a66074067828bbb9f629a77e0e87ce6",
+      "after_sha256": "4e6b13349d906af180a9ae5c23f750d1bcb664c7f3e12678f3f28d8d2e78c77a"
+    },
+    {
+      "path": "rouge/app.py",
+      "baseline_sha256": "fa77caff7b133a42d651f25166327982f37487a57ddb84f3461fc13bed1e03c8",
+      "before": "        for widget in widgets:\n            self.damage_form.setRowVisible(widget,self.frame_timing.isChecked() and widget.count()>1)\n\n    def sync_target_buffs(self,op):\n",
+      "after": "        for widget in widgets:\n            self.damage_form.setRowVisible(widget,self.frame_timing.isChecked() and widget.count()>1)\n        if key!=self.chen_motion_preview_key:\n            if self.chen_motion_preview_key is not None:\n                self.chen_motion_previews[self.chen_motion_preview_key]=self.chen_motion_orientation.currentData()\n            self.chen_motion_orientation.blockSignals(True)\n            found=self.chen_motion_orientation.findData(self.chen_motion_previews.get(key))\n            self.chen_motion_orientation.setCurrentIndex(max(0,found))\n            self.chen_motion_orientation.blockSignals(False)\n            self.chen_motion_preview_key=key\n        self.damage_form.setRowVisible(self.chen_motion_orientation,op=='char_1050_chen3' and skill in (1,2,3))\n\n    def sync_target_buffs(self,op):\n",
+      "newline": "'\\r\\n'",
+      "before_sha256": "7900bbfcd31ba4609c4e99a16a055bfe38c2f9e8443fb4bdafdd25a59fd039d3",
+      "after_sha256": "0966c4988226354b159dfdcc9c73ce9d6639ab97502be61abe01fa5182a25b1c"
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "baseline_sha256": "81f1154516b10880e760a7331fc6daed069e8ffd4de31b260c1a12979544235d",
+      "before": "MODULES = (\n",
+      "after": "MODULES = (\n    \"tests.test_chen_motion_reference\",\n",
+      "newline": "'\\n'",
+      "before_sha256": "1110da6891585800a07d4685a774255aefd8b37a12b538e5b11fd26bd37b79e3",
+      "after_sha256": "d6883d4a0895830a17b59aea8980c881b0b38de1d05ec20346ee5f5fd28d5d82"
+    }
+  ],
+  "new_files": [
+    "rouge/chen_motion_reference.py",
+    "tests/test_chen_motion_reference.py"
+  ]
+}

@@ -1,0 +1,6636 @@
+{
+  "captured_at_utc": "2026-10-07T18:16:54.097965+00:00",
+  "reviewed_head": "89377978c99b87525f9276040502e416a0ee875a",
+  "workflow": "read-only audit; cached pinned tables; public calculate_damage only; no network or repository edits",
+  "sources": {
+    "skill_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/skill_table.json",
+      "sha256": "86f4aa64c785f39727edd06d6dd8a4f27f371c8e4ace5345ba0dc61dee1386ca",
+      "bytes": 11447929,
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/skill_table.json",
+      "reused_existing_receipt": "/workspace/rougezhushou/research/p2-phase-guards/source-receipt.json"
+    },
+    "character_table": {
+      "path": "/workspace/rougezhushou/.cache/p2-s1-binding/character_table.json",
+      "sha256": "68e3a3b5ee0d407ce234afaa5867c6fda6379a6843c7d5317a7bbda4779f8697",
+      "bytes": 14975251,
+      "sha256_matched": true,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+      "reused_existing_receipt": "/workspace/rougezhushou/research/p2-phase-guards/source-receipt.json"
+    }
+  },
+  "selectors": {
+    "character_table.char_1029_yato2.skills[1]": {
+      "skillId": "skchr_yato2_2",
+      "overridePrefabKey": null,
+      "overrideTokenKey": null,
+      "levelUpCostCond": [
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 28800,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 8,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30014",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31013",
+              "count": 8,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 57600,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 12,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31054",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31044",
+              "count": 9,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 86400,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 15,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30145",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30014",
+              "count": 4,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ],
+      "unlockCond": {
+        "phase": "PHASE_1",
+        "level": 1
+      }
+    },
+    "character_table.char_1029_yato2.talents": [
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "双雷剑麒麟",
+            "description": "攻击额外造成攻击力6%的法术伤害",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "attack@atk_scale_1",
+                "value": 0.06,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "双雷剑麒麟",
+            "description": "攻击额外造成攻击力13%的法术伤害",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "attack@atk_scale_1",
+                "value": 0.13,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "双雷剑麒麟",
+            "description": "攻击额外造成攻击力20%的法术伤害",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "attack@atk_scale_1",
+                "value": 0.2,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      },
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "2",
+            "name": "鬼人强化状态",
+            "description": "技能期间及技能结束后的10秒内攻击力+13%",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.13,
+                "valueStr": null
+              },
+              {
+                "key": "duration",
+                "value": 10.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "2",
+            "name": "鬼人强化状态",
+            "description": "技能期间及技能结束后的10秒内攻击力+16%<@ba.talpu>（+3%）</>",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.16,
+                "valueStr": null
+              },
+              {
+                "key": "duration",
+                "value": 10.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      }
+    ],
+    "skill_table.skchr_yato2_2.levels[9]": {
+      "name": "乱舞",
+      "rangeId": null,
+      "description": "第一天赋效果提升至<@ba.vup>{talent_scale_display:0.0}</>倍，攻击力提升至<@ba.vup>{atk_scale:0%}</>并对前方一格的所有敌人发动16次斩击，<@ba.vdown>期间更容易受到敌人的攻击</>",
+      "skillType": "PASSIVE",
+      "durationType": "NONE",
+      "spData": {
+        "spType": 8,
+        "levelUpCost": null,
+        "maxChargeTime": 0,
+        "spCost": 0,
+        "initSp": 0,
+        "increment": 0.0
+      },
+      "prefabId": "skchr_yato2_2",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "talent_scale",
+          "value": 3.75,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 1.5,
+          "valueStr": null
+        },
+        {
+          "key": "taunt_level",
+          "value": 1.0,
+          "valueStr": null
+        },
+        {
+          "key": "talent_scale_display",
+          "value": 2.5,
+          "valueStr": null
+        }
+      ]
+    },
+    "local_timing_profiles.operators.char_1029_yato2": {
+      "id": "char_1029_yato2",
+      "normal": {
+        "animation": "Attack1",
+        "windup_frames": 15,
+        "recovery_frames": 15,
+        "animation_frames": 30,
+        "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+      },
+      "skills": {},
+      "binding_status": "reference_only",
+      "missing": "客户端攻击模板、皮肤、技能重置/阻回绑定未经实测"
+    },
+    "character_table.char_1029_yato2.skills[2]": {
+      "skillId": "skchr_yato2_3",
+      "overridePrefabKey": null,
+      "overrideTokenKey": null,
+      "levelUpCostCond": [
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 28800,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 8,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31054",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30013",
+              "count": 9,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 57600,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 12,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30104",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31024",
+              "count": 8,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 86400,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 15,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30155",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30064",
+              "count": 3,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ],
+      "unlockCond": {
+        "phase": "PHASE_2",
+        "level": 1
+      }
+    },
+    "skill_table.skchr_yato2_3.levels[9]": {
+      "name": "空中回旋乱舞",
+      "rangeId": null,
+      "description": "向前突进2格，每突进一段距离都会对周围所有敌人发动攻击力<@ba.vup>{atk_scale:0%}</>的斩击；期间每攻击到一个敌人都会使突进距离<@ba.vup>延长</>（最多延长至5格，<@ba.vup>可以攻击空中单位</>）",
+      "skillType": "PASSIVE",
+      "durationType": "NONE",
+      "spData": {
+        "spType": 8,
+        "levelUpCost": null,
+        "maxChargeTime": 0,
+        "spCost": 0,
+        "initSp": 0,
+        "increment": 0.0
+      },
+      "prefabId": "skchr_yato2_3",
+      "duration": -1.0,
+      "blackboard": [
+        {
+          "key": "atk_scale",
+          "value": 3.0,
+          "valueStr": null
+        },
+        {
+          "key": "min_dist",
+          "value": 2.0,
+          "valueStr": null
+        },
+        {
+          "key": "max_dist",
+          "value": 5.0,
+          "valueStr": null
+        },
+        {
+          "key": "dist_interval",
+          "value": 0.2,
+          "valueStr": null
+        },
+        {
+          "key": "dist_unit",
+          "value": 0.3,
+          "valueStr": null
+        }
+      ]
+    },
+    "character_table.char_1050_chen3.skills[1]": {
+      "skillId": "skchr_chen3_2",
+      "overridePrefabKey": null,
+      "overrideTokenKey": null,
+      "levelUpCostCond": [
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 28800,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 8,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31084",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31073",
+              "count": 4,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 57600,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 12,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30044",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31074",
+              "count": 7,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 86400,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 15,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30115",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31034",
+              "count": 5,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ],
+      "unlockCond": {
+        "phase": "PHASE_1",
+        "level": 1
+      }
+    },
+    "character_table.char_1050_chen3.talents": [
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "形意洞照",
+            "description": "攻击力+8%，攻击速度+8，攻击变为<$ba.weaknessatk>弱点伤害</>",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.08,
+                "valueStr": null
+              },
+              {
+                "key": "attack_speed",
+                "value": 8.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_1",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "1",
+            "name": "形意洞照",
+            "description": "攻击力+11%<@ba.talpu>（+3%）</>，攻击速度+11<@ba.talpu>（+3）</>，攻击变为<$ba.weaknessatk>弱点伤害</>",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.11,
+                "valueStr": null
+              },
+              {
+                "key": "attack_speed",
+                "value": 11.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "1",
+            "name": "形意洞照",
+            "description": "攻击力+13%，攻击速度+13，攻击变为<$ba.weaknessatk>弱点伤害</>",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.13,
+                "valueStr": null
+              },
+              {
+                "key": "attack_speed",
+                "value": 13.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 4,
+            "prefabKey": "1",
+            "name": "形意洞照",
+            "description": "攻击力+16%<@ba.talpu>（+3%）</>，攻击速度+16<@ba.talpu>（+3）</>，攻击变为<$ba.weaknessatk>弱点伤害</>",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "atk",
+                "value": 0.16,
+                "valueStr": null
+              },
+              {
+                "key": "attack_speed",
+                "value": 16.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      },
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "2",
+            "name": "寒暑觉知",
+            "description": "未受到伤害时，每7秒随机治疗自身一定（攻击力的30%~160%）生命值，并闪避下次物理与法术攻击",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "stack_time",
+                "value": 7.0,
+                "valueStr": null
+              },
+              {
+                "key": "heal_atk_scale_min",
+                "value": 30.0,
+                "valueStr": null
+              },
+              {
+                "key": "heal_atk_scale_max",
+                "value": 161.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          },
+          {
+            "unlockCondition": {
+              "phase": "PHASE_2",
+              "level": 1
+            },
+            "requiredPotentialRank": 2,
+            "prefabKey": "2",
+            "name": "寒暑觉知",
+            "description": "未受到伤害时，每7秒随机治疗自身一定（攻击力的35%<@ba.talpu>（+5%）</>~165%<@ba.talpu>（+5%）</>）生命值，并闪避下次物理与法术攻击",
+            "rangeId": null,
+            "blackboard": [
+              {
+                "key": "stack_time",
+                "value": 7.0,
+                "valueStr": null
+              },
+              {
+                "key": "heal_atk_scale_min",
+                "value": 35.0,
+                "valueStr": null
+              },
+              {
+                "key": "heal_atk_scale_max",
+                "value": 166.0,
+                "valueStr": null
+              }
+            ],
+            "tokenKey": null,
+            "isHideTalent": false
+          }
+        ]
+      },
+      {
+        "candidates": [
+          {
+            "unlockCondition": {
+              "phase": "PHASE_0",
+              "level": 1
+            },
+            "requiredPotentialRank": 0,
+            "prefabKey": "-1",
+            "name": null,
+            "description": null,
+            "rangeId": null,
+            "blackboard": [],
+            "tokenKey": null,
+            "isHideTalent": true
+          }
+        ]
+      }
+    ],
+    "skill_table.skchr_chen3_2.levels[9]": {
+      "name": "赤霄·绝影-驰",
+      "rangeId": "x-1",
+      "description": "对周围最近的1名敌人发动<@ba.vup>10</>次斩击，每次造成攻击力<@ba.vup>{atk_scale:0%}</>的法术伤害，敌人被击倒时转移至目标周围最近的其他敌人并使剩余攻击次数<@ba.vup>+1</>；斩击结束时，若目标未被击倒且其位置可部署则<$ba.addash>移动</>至该位置，否则返回原位置。接下来攻击力<@ba.vup>+{chen3_s2[respawn_buff].atk:0%}</>，获得<@ba.vup>{chen3_s2[respawn_buff].prob:0%}</>物理和法术闪避",
+      "skillType": "MANUAL",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 20,
+        "initSp": 15,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_chen3_2",
+      "duration": 6.0,
+      "blackboard": [
+        {
+          "key": "atk_scale",
+          "value": 4.8,
+          "valueStr": null
+        },
+        {
+          "key": "chen3_s2[respawn_buff].atk",
+          "value": 3.0,
+          "valueStr": null
+        },
+        {
+          "key": "chen3_s2[respawn_buff].prob",
+          "value": 0.6,
+          "valueStr": null
+        }
+      ]
+    },
+    "local_timing_profiles.operators.char_1050_chen3": {
+      "id": "char_1050_chen3",
+      "normal": null,
+      "skills": {},
+      "binding_status": "reference_only",
+      "missing": "客户端攻击模板、皮肤、技能重置/阻回绑定未经实测"
+    },
+    "character_table.char_1050_chen3.skills[2]": {
+      "skillId": "skchr_chen3_3",
+      "overridePrefabKey": null,
+      "overrideTokenKey": null,
+      "levelUpCostCond": [
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 28800,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 8,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31044",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30043",
+              "count": 7,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 57600,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 12,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31054",
+              "count": 4,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31094",
+              "count": 9,
+              "type": "MATERIAL"
+            }
+          ]
+        },
+        {
+          "unlockCond": {
+            "phase": "PHASE_2",
+            "level": 1
+          },
+          "lvlUpTime": 86400,
+          "levelUpCost": [
+            {
+              "id": "3303",
+              "count": 15,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "30155",
+              "count": 6,
+              "type": "MATERIAL"
+            },
+            {
+              "id": "31064",
+              "count": 2,
+              "type": "MATERIAL"
+            }
+          ]
+        }
+      ],
+      "unlockCond": {
+        "phase": "PHASE_2",
+        "level": 1
+      }
+    },
+    "skill_table.skchr_chen3_3.levels[9]": {
+      "name": "赤霄·天喟",
+      "rangeId": "3-12",
+      "description": "技能开启时向前释放一道可转向的剑气，对穿过的敌人造成相当于其当前生命值<@ba.vup>{hp_ratio:0%}</>的法术伤害（至少造成自身攻击力<@ba.vup>{projectile_min_atk_scale:0%}</>的法术伤害）；攻击范围扩大，每次攻击对最多<@ba.vup>{attack@max_target}</>名地面敌人造成<@ba.vup>3</>次攻击力<@ba.vup>{attack@atk_scale:0%}</>的法术伤害",
+      "skillType": "MANUAL",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 25,
+        "initSp": 18,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_chen3_3",
+      "duration": 20.0,
+      "blackboard": [
+        {
+          "key": "hp_ratio",
+          "value": 0.06,
+          "valueStr": null
+        },
+        {
+          "key": "projectile_min_atk_scale",
+          "value": 5.8,
+          "valueStr": null
+        },
+        {
+          "key": "attack@atk_scale",
+          "value": 2.1,
+          "valueStr": null
+        },
+        {
+          "key": "attack@max_target",
+          "value": 4.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "skill_table.skchr_amiya2_2.levels[9]": {
+      "name": "影霄·绝影",
+      "rangeId": "x-2",
+      "description": "立即寻找前方生命值最低的目标，进行<@ba.vup>{times}</>次攻击力为<@ba.vup>{atk_scale:0%}</>的法术斩击（最后一击系数加倍且为<@ba.vup>真实</>伤害）；斩击期间每击败一个敌人获得攻击力<@ba.vup>+{amiya2_s_2[kill].atk:0%}</>和法术抗性<@ba.vup>+{amiya2_s_2[kill].magic_resistance}</>（最多叠加<@ba.vup>{amiya2_s_2[kill].max_stack_cnt}</>次），并且接下来的伤害类型变为<@ba.vup>真实</>；<@ba.rem>整场战斗中该技能只能释放一次</>",
+      "skillType": "MANUAL",
+      "durationType": "NONE",
+      "spData": {
+        "spType": "INCREASE_WITH_TIME",
+        "levelUpCost": null,
+        "maxChargeTime": 1,
+        "spCost": 20,
+        "initSp": 0,
+        "increment": 1.0
+      },
+      "prefabId": "skchr_amiya2_2",
+      "duration": 35.0,
+      "blackboard": [
+        {
+          "key": "times",
+          "value": 10.0,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale",
+          "value": 2.2,
+          "valueStr": null
+        },
+        {
+          "key": "atk_scale_2",
+          "value": 4.4,
+          "valueStr": null
+        },
+        {
+          "key": "amiya2_s_2[kill].atk",
+          "value": 0.4,
+          "valueStr": null
+        },
+        {
+          "key": "amiya2_s_2[kill].magic_resistance",
+          "value": 20.0,
+          "valueStr": null
+        },
+        {
+          "key": "amiya2_s_2[kill].max_stack_cnt",
+          "value": 3.0,
+          "valueStr": null
+        },
+        {
+          "key": "talent_scale",
+          "value": 2.0,
+          "valueStr": null
+        }
+      ]
+    },
+    "local_timing_profiles.operators.char_1001_amiya2": {
+      "id": "char_1001_amiya2",
+      "normal": {
+        "animation": "Attack",
+        "windup_frames": 17,
+        "recovery_frames": 21,
+        "animation_frames": 38,
+        "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+      },
+      "skills": {},
+      "binding_status": "reference_only",
+      "missing": "客户端攻击模板、皮肤、技能重置/阻回绑定未经实测"
+    }
+  },
+  "snapshot_hashes": {
+    "rouge/operator_engine.py": "70fe077234306b3991096a4cbd32e7a15896ab576393a4ff3fbbe0aa2db64466",
+    "rouge/data/catalog.json": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+    "rouge/data/timing-profiles.json": "f65ef84219e6b7dae18d6b5ee1dadce304a616978336ea1edf83a7b05b73e324"
+  },
+  "results": [
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames"
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 0
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 1
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_empty",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "global_lifetime0",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_late",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous"
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 0
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 1
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_empty",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "global_lifetime0",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_late",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 40680.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 40680.0,
+        "phase_damage": 40680.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "乱舞",
+          "damage_type": "physical",
+          "hits": 16,
+          "per_hit": 1695.0,
+          "total": 27120.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "强化双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 16,
+          "per_hit": 847.5,
+          "total": 13560.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames"
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 0
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 1
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_empty",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "global_lifetime0",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_late",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0.0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous"
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 0
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 1
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_empty",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "global_lifetime0",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_late",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 4068.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "deployment",
+        "window_seconds": 0,
+        "window_dps": null,
+        "duration_seconds": 0,
+        "total_damage": 4068.0,
+        "phase_damage": 4068.0,
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 1.0,
+          "per_hit": 3390.0,
+          "total": 3390.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 1.0,
+          "per_hit": 678.0,
+          "total": 678.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames"
+      },
+      "public_total_damage": 74890.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 6.0,
+        "window_dps": 12481.666666666666,
+        "duration_seconds": 6.0,
+        "total_damage": 74890.0,
+        "phase_damage": 74890.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 10.0,
+          "per_hit": 5424.0,
+          "total": 54240.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 5,
+          "per_hit": 4130.0,
+          "total": 20650.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1,
+            2.2,
+            3.3,
+            4.4,
+            5.5
+          ]
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [
+            0,
+            33,
+            66,
+            99,
+            132
+          ],
+          "release_frames": [
+            33,
+            66,
+            99,
+            132,
+            165
+          ],
+          "impact_frames": [
+            33,
+            66,
+            99,
+            132,
+            165
+          ],
+          "times_seconds": [
+            1.1,
+            2.2,
+            3.3,
+            4.4,
+            5.5
+          ],
+          "emitted_impact_frames": [
+            33,
+            66,
+            99,
+            132,
+            165
+          ],
+          "emitted_times_seconds": [
+            1.1,
+            2.2,
+            3.3,
+            4.4,
+            5.5
+          ],
+          "emitted_release_frames": [
+            33,
+            66,
+            99,
+            132,
+            165
+          ],
+          "hit_release_frames": [
+            33,
+            66,
+            99,
+            132,
+            165
+          ],
+          "interval_frames_by_attack": [
+            33,
+            33,
+            33,
+            33,
+            33
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 0
+      },
+      "public_total_damage": 54240.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 0.0,
+        "window_dps": null,
+        "duration_seconds": 6.0,
+        "total_damage": 74890.0,
+        "phase_damage": 74890.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 10.0,
+          "per_hit": 5424.0,
+          "total": 54240.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 4130.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 1
+      },
+      "public_total_damage": 54240.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 1.0,
+        "window_dps": 54240.0,
+        "duration_seconds": 6.0,
+        "total_damage": 74890.0,
+        "phase_damage": 74890.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 10.0,
+          "per_hit": 5424.0,
+          "total": 54240.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 4130.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "owner_supply_empty",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 0.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 6.0,
+        "window_dps": 0.0,
+        "duration_seconds": 6.0,
+        "total_damage": 0.0,
+        "phase_damage": 0.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 5424.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 4130.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "global_lifetime0",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 0.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 6.0,
+        "window_dps": 0.0,
+        "duration_seconds": 6.0,
+        "total_damage": 0.0,
+        "phase_damage": 0.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 5424.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 4130.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 0.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 6.0,
+        "window_dps": 0.0,
+        "duration_seconds": 6.0,
+        "total_damage": 0.0,
+        "phase_damage": 0.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 5424.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 4130.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "owner_supply_late",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 0.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 6.0,
+        "window_dps": 0.0,
+        "duration_seconds": 6.0,
+        "total_damage": 0.0,
+        "phase_damage": 0.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 5424.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 4130.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous"
+      },
+      "public_total_damage": 74890.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 6.0,
+        "window_dps": 12481.666666666666,
+        "duration_seconds": 6.0,
+        "total_damage": 74890.0,
+        "phase_damage": 74890.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 10.0,
+          "per_hit": 5424.0,
+          "total": 54240.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 5,
+          "per_hit": 4130.0,
+          "total": 20650.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1061946902654867,
+            2.2123893805309733,
+            3.31858407079646,
+            4.424778761061947,
+            5.530973451327434
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 0
+      },
+      "public_total_damage": 54240.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 0.0,
+        "window_dps": null,
+        "duration_seconds": 6.0,
+        "total_damage": 74890.0,
+        "phase_damage": 74890.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 10.0,
+          "per_hit": 5424.0,
+          "total": 54240.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 4130.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 1
+      },
+      "public_total_damage": 54240.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 1.0,
+        "window_dps": 54240.0,
+        "duration_seconds": 6.0,
+        "total_damage": 74890.0,
+        "phase_damage": 74890.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 10.0,
+          "per_hit": 5424.0,
+          "total": 54240.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 4130.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_empty",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 74890.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 6.0,
+        "window_dps": 12481.666666666666,
+        "duration_seconds": 6.0,
+        "total_damage": 74890.0,
+        "phase_damage": 74890.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 10.0,
+          "per_hit": 5424.0,
+          "total": 54240.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 5,
+          "per_hit": 4130.0,
+          "total": 20650.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1061946902654867,
+            2.2123893805309733,
+            3.31858407079646,
+            4.424778761061947,
+            5.530973451327434
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "global_lifetime0",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 74890.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 6.0,
+        "window_dps": 12481.666666666666,
+        "duration_seconds": 6.0,
+        "total_damage": 74890.0,
+        "phase_damage": 74890.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 10.0,
+          "per_hit": 5424.0,
+          "total": 54240.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 5,
+          "per_hit": 4130.0,
+          "total": 20650.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1061946902654867,
+            2.2123893805309733,
+            3.31858407079646,
+            4.424778761061947,
+            5.530973451327434
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 74890.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 6.0,
+        "window_dps": 12481.666666666666,
+        "duration_seconds": 6.0,
+        "total_damage": 74890.0,
+        "phase_damage": 74890.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 10.0,
+          "per_hit": 5424.0,
+          "total": 54240.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 5,
+          "per_hit": 4130.0,
+          "total": 20650.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1061946902654867,
+            2.2123893805309733,
+            3.31858407079646,
+            4.424778761061947,
+            5.530973451327434
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_late",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 74890.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 6.0,
+        "window_dps": 12481.666666666666,
+        "duration_seconds": 6.0,
+        "total_damage": 74890.0,
+        "phase_damage": 74890.0,
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 10.0,
+          "per_hit": 5424.0,
+          "total": 54240.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 5,
+          "per_hit": 4130.0,
+          "total": 20650.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1061946902654867,
+            2.2123893805309733,
+            3.31858407079646,
+            4.424778761061947,
+            5.530973451327434
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames"
+      },
+      "public_total_damage": 134696.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 20.0,
+        "window_dps": 6734.8,
+        "duration_seconds": 20.0,
+        "total_damage": 134696.0,
+        "phase_damage": 134696.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 159556.0,
+        "cycle_dps": 3545.688888888889
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 54,
+          "per_hit": 2373.0,
+          "total": 128142.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1,
+            1.1,
+            1.1,
+            2.2,
+            2.2,
+            2.2,
+            3.3,
+            3.3,
+            3.3,
+            4.4,
+            4.4,
+            4.4,
+            5.5,
+            5.5,
+            5.5,
+            6.6,
+            6.6,
+            6.6,
+            7.7,
+            7.7,
+            7.7,
+            8.8,
+            8.8,
+            8.8,
+            9.9,
+            9.9,
+            9.9,
+            11.0,
+            11.0,
+            11.0,
+            12.1,
+            12.1,
+            12.1,
+            13.2,
+            13.2,
+            13.2,
+            14.3,
+            14.3,
+            14.3,
+            15.4,
+            15.4,
+            15.4,
+            16.5,
+            16.5,
+            16.5,
+            17.6,
+            17.6,
+            17.6,
+            18.7,
+            18.7,
+            18.7,
+            19.8,
+            19.8,
+            19.8
+          ]
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [
+            0,
+            33,
+            66,
+            99,
+            132,
+            165,
+            198,
+            231,
+            264,
+            297,
+            330,
+            363,
+            396,
+            429,
+            462,
+            495,
+            528,
+            561
+          ],
+          "release_frames": [
+            33,
+            66,
+            99,
+            132,
+            165,
+            198,
+            231,
+            264,
+            297,
+            330,
+            363,
+            396,
+            429,
+            462,
+            495,
+            528,
+            561,
+            594
+          ],
+          "impact_frames": [
+            33,
+            66,
+            99,
+            132,
+            165,
+            198,
+            231,
+            264,
+            297,
+            330,
+            363,
+            396,
+            429,
+            462,
+            495,
+            528,
+            561,
+            594
+          ],
+          "times_seconds": [
+            1.1,
+            2.2,
+            3.3,
+            4.4,
+            5.5,
+            6.6,
+            7.7,
+            8.8,
+            9.9,
+            11.0,
+            12.1,
+            13.2,
+            14.3,
+            15.4,
+            16.5,
+            17.6,
+            18.7,
+            19.8
+          ],
+          "emitted_impact_frames": [
+            33,
+            66,
+            99,
+            132,
+            165,
+            198,
+            231,
+            264,
+            297,
+            330,
+            363,
+            396,
+            429,
+            462,
+            495,
+            528,
+            561,
+            594
+          ],
+          "emitted_times_seconds": [
+            1.1,
+            2.2,
+            3.3,
+            4.4,
+            5.5,
+            6.6,
+            7.7,
+            8.8,
+            9.9,
+            11.0,
+            12.1,
+            13.2,
+            14.3,
+            15.4,
+            16.5,
+            17.6,
+            18.7,
+            19.8
+          ],
+          "emitted_release_frames": [
+            33,
+            66,
+            99,
+            132,
+            165,
+            198,
+            231,
+            264,
+            297,
+            330,
+            363,
+            396,
+            429,
+            462,
+            495,
+            528,
+            561,
+            594
+          ],
+          "hit_release_frames": [
+            33,
+            66,
+            99,
+            132,
+            165,
+            198,
+            231,
+            264,
+            297,
+            330,
+            363,
+            396,
+            429,
+            462,
+            495,
+            528,
+            561,
+            594
+          ],
+          "interval_frames_by_attack": [
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33,
+            33
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 0
+      },
+      "public_total_damage": 6554.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 0.0,
+        "window_dps": null,
+        "duration_seconds": 20.0,
+        "total_damage": 134696.0,
+        "phase_damage": 134696.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 159556.0,
+        "cycle_dps": 3545.688888888889
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 2373.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 1
+      },
+      "public_total_damage": 6554.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 1.0,
+        "window_dps": 6554.0,
+        "duration_seconds": 20.0,
+        "total_damage": 134696.0,
+        "phase_damage": 134696.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 159556.0,
+        "cycle_dps": 3545.688888888889
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 2373.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "owner_supply_empty",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 6554.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 10.0,
+        "window_dps": 655.4,
+        "duration_seconds": 20.0,
+        "total_damage": 6554.0,
+        "phase_damage": 6554.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 6554.0,
+        "cycle_dps": 145.64444444444445
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 2373.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "global_lifetime0",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 6554.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 10.0,
+        "window_dps": 655.4,
+        "duration_seconds": 20.0,
+        "total_damage": 6554.0,
+        "phase_damage": 6554.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 6554.0,
+        "cycle_dps": 145.64444444444445
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 2373.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 6554.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 10.0,
+        "window_dps": 655.4,
+        "duration_seconds": 20.0,
+        "total_damage": 6554.0,
+        "phase_damage": 6554.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 6554.0,
+        "cycle_dps": 145.64444444444445
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 2373.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "owner_supply_late",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 35030.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 10.0,
+        "window_dps": 3503.0,
+        "duration_seconds": 20.0,
+        "total_damage": 42149.0,
+        "phase_damage": 42149.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 42149.0,
+        "cycle_dps": 936.6444444444444
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 12,
+          "per_hit": 2373.0,
+          "total": 28476.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            6.1,
+            6.1,
+            6.1,
+            7.2,
+            7.2,
+            7.2,
+            8.3,
+            8.3,
+            8.3,
+            9.4,
+            9.4,
+            9.4
+          ]
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [
+            150,
+            183,
+            216,
+            249
+          ],
+          "release_frames": [
+            183,
+            216,
+            249,
+            282
+          ],
+          "impact_frames": [
+            183,
+            216,
+            249,
+            282
+          ],
+          "times_seconds": [
+            6.1,
+            7.2,
+            8.3,
+            9.4
+          ],
+          "emitted_impact_frames": [
+            183,
+            216,
+            249,
+            282
+          ],
+          "emitted_times_seconds": [
+            6.1,
+            7.2,
+            8.3,
+            9.4
+          ],
+          "emitted_release_frames": [
+            183,
+            216,
+            249,
+            282
+          ],
+          "hit_release_frames": [
+            183,
+            216,
+            249,
+            282
+          ],
+          "interval_frames_by_attack": [
+            33,
+            33,
+            33,
+            33
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous"
+      },
+      "public_total_damage": 134696.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 20.0,
+        "window_dps": 6734.8,
+        "duration_seconds": 20.0,
+        "total_damage": 134696.0,
+        "phase_damage": 134696.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 159556.0,
+        "cycle_dps": 3545.688888888889
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 54,
+          "per_hit": 2373.0,
+          "total": 128142.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1061946902654867,
+            1.1061946902654867,
+            1.1061946902654867,
+            2.2123893805309733,
+            2.2123893805309733,
+            2.2123893805309733,
+            3.31858407079646,
+            3.31858407079646,
+            3.31858407079646,
+            4.424778761061947,
+            4.424778761061947,
+            4.424778761061947,
+            5.530973451327434,
+            5.530973451327434,
+            5.530973451327434,
+            6.63716814159292,
+            6.63716814159292,
+            6.63716814159292,
+            7.7433628318584065,
+            7.7433628318584065,
+            7.7433628318584065,
+            8.849557522123893,
+            8.849557522123893,
+            8.849557522123893,
+            9.95575221238938,
+            9.95575221238938,
+            9.95575221238938,
+            11.061946902654867,
+            11.061946902654867,
+            11.061946902654867,
+            12.168141592920353,
+            12.168141592920353,
+            12.168141592920353,
+            13.27433628318584,
+            13.27433628318584,
+            13.27433628318584,
+            14.380530973451327,
+            14.380530973451327,
+            14.380530973451327,
+            15.486725663716813,
+            15.486725663716813,
+            15.486725663716813,
+            16.5929203539823,
+            16.5929203539823,
+            16.5929203539823,
+            17.699115044247787,
+            17.699115044247787,
+            17.699115044247787,
+            18.805309734513273,
+            18.805309734513273,
+            18.805309734513273,
+            19.91150442477876,
+            19.91150442477876,
+            19.91150442477876
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 0
+      },
+      "public_total_damage": 6554.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 0.0,
+        "window_dps": null,
+        "duration_seconds": 20.0,
+        "total_damage": 134696.0,
+        "phase_damage": 134696.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 159556.0,
+        "cycle_dps": 3545.688888888889
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 2373.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 1
+      },
+      "public_total_damage": 6554.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 1.0,
+        "window_dps": 6554.0,
+        "duration_seconds": 20.0,
+        "total_damage": 134696.0,
+        "phase_damage": 134696.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 159556.0,
+        "cycle_dps": 3545.688888888889
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 2373.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_empty",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 70625.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 10.0,
+        "window_dps": 7062.5,
+        "duration_seconds": 20.0,
+        "total_damage": 134696.0,
+        "phase_damage": 134696.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 159556.0,
+        "cycle_dps": 3545.688888888889
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 27,
+          "per_hit": 2373.0,
+          "total": 64071.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1061946902654867,
+            1.1061946902654867,
+            1.1061946902654867,
+            2.2123893805309733,
+            2.2123893805309733,
+            2.2123893805309733,
+            3.31858407079646,
+            3.31858407079646,
+            3.31858407079646,
+            4.424778761061947,
+            4.424778761061947,
+            4.424778761061947,
+            5.530973451327434,
+            5.530973451327434,
+            5.530973451327434,
+            6.63716814159292,
+            6.63716814159292,
+            6.63716814159292,
+            7.7433628318584065,
+            7.7433628318584065,
+            7.7433628318584065,
+            8.849557522123893,
+            8.849557522123893,
+            8.849557522123893,
+            9.95575221238938,
+            9.95575221238938,
+            9.95575221238938
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "global_lifetime0",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 70625.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 10.0,
+        "window_dps": 7062.5,
+        "duration_seconds": 20.0,
+        "total_damage": 134696.0,
+        "phase_damage": 134696.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 159556.0,
+        "cycle_dps": 3545.688888888889
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 27,
+          "per_hit": 2373.0,
+          "total": 64071.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1061946902654867,
+            1.1061946902654867,
+            1.1061946902654867,
+            2.2123893805309733,
+            2.2123893805309733,
+            2.2123893805309733,
+            3.31858407079646,
+            3.31858407079646,
+            3.31858407079646,
+            4.424778761061947,
+            4.424778761061947,
+            4.424778761061947,
+            5.530973451327434,
+            5.530973451327434,
+            5.530973451327434,
+            6.63716814159292,
+            6.63716814159292,
+            6.63716814159292,
+            7.7433628318584065,
+            7.7433628318584065,
+            7.7433628318584065,
+            8.849557522123893,
+            8.849557522123893,
+            8.849557522123893,
+            9.95575221238938,
+            9.95575221238938,
+            9.95575221238938
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 70625.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 10.0,
+        "window_dps": 7062.5,
+        "duration_seconds": 20.0,
+        "total_damage": 134696.0,
+        "phase_damage": 134696.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 159556.0,
+        "cycle_dps": 3545.688888888889
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 27,
+          "per_hit": 2373.0,
+          "total": 64071.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1061946902654867,
+            1.1061946902654867,
+            1.1061946902654867,
+            2.2123893805309733,
+            2.2123893805309733,
+            2.2123893805309733,
+            3.31858407079646,
+            3.31858407079646,
+            3.31858407079646,
+            4.424778761061947,
+            4.424778761061947,
+            4.424778761061947,
+            5.530973451327434,
+            5.530973451327434,
+            5.530973451327434,
+            6.63716814159292,
+            6.63716814159292,
+            6.63716814159292,
+            7.7433628318584065,
+            7.7433628318584065,
+            7.7433628318584065,
+            8.849557522123893,
+            8.849557522123893,
+            8.849557522123893,
+            9.95575221238938,
+            9.95575221238938,
+            9.95575221238938
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_late",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 70625.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "timed",
+        "window_seconds": 10.0,
+        "window_dps": 7062.5,
+        "duration_seconds": 20.0,
+        "total_damage": 134696.0,
+        "phase_damage": 134696.0,
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "cycle_damage": 159556.0,
+        "cycle_dps": 3545.688888888889
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 6554.0,
+          "total": 6554.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 27,
+          "per_hit": 2373.0,
+          "total": 64071.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.1061946902654867,
+            1.1061946902654867,
+            1.1061946902654867,
+            2.2123893805309733,
+            2.2123893805309733,
+            2.2123893805309733,
+            3.31858407079646,
+            3.31858407079646,
+            3.31858407079646,
+            4.424778761061947,
+            4.424778761061947,
+            4.424778761061947,
+            5.530973451327434,
+            5.530973451327434,
+            5.530973451327434,
+            6.63716814159292,
+            6.63716814159292,
+            6.63716814159292,
+            7.7433628318584065,
+            7.7433628318584065,
+            7.7433628318584065,
+            8.849557522123893,
+            8.849557522123893,
+            8.849557522123893,
+            9.95575221238938,
+            9.95575221238938,
+            9.95575221238938
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames"
+      },
+      "public_total_damage": 59508.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 35.0,
+        "window_dps": 1700.2285714285715,
+        "duration_seconds": 35.0,
+        "total_damage": 59508.0,
+        "phase_damage": 59508.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 9.0,
+          "per_hit": 2508.0,
+          "total": 22572.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 1,
+          "per_hit": 5016.0,
+          "total": 5016.0,
+          "source_unit": "operator",
+          "instant_event": true
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 28,
+          "per_hit": 1140.0,
+          "total": 31920.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            0.5666666666666667,
+            1.8333333333333333,
+            3.1,
+            4.366666666666666,
+            5.633333333333334,
+            6.9,
+            8.166666666666666,
+            9.433333333333334,
+            10.7,
+            11.966666666666667,
+            13.233333333333333,
+            14.5,
+            15.766666666666667,
+            17.033333333333335,
+            18.3,
+            19.566666666666666,
+            20.833333333333332,
+            22.1,
+            23.366666666666667,
+            24.633333333333333,
+            25.9,
+            27.166666666666668,
+            28.433333333333334,
+            29.7,
+            30.966666666666665,
+            32.233333333333334,
+            33.5,
+            34.766666666666666
+          ]
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1001_amiya2",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": "Attack",
+          "windup_frames": 17,
+          "recovery_frames": 21,
+          "interval_frames": 38,
+          "interval_seconds": 1.2666666666666666,
+          "start_frames": [
+            0,
+            38,
+            76,
+            114,
+            152,
+            190,
+            228,
+            266,
+            304,
+            342,
+            380,
+            418,
+            456,
+            494,
+            532,
+            570,
+            608,
+            646,
+            684,
+            722,
+            760,
+            798,
+            836,
+            874,
+            912,
+            950,
+            988,
+            1026
+          ],
+          "release_frames": [
+            17,
+            55,
+            93,
+            131,
+            169,
+            207,
+            245,
+            283,
+            321,
+            359,
+            397,
+            435,
+            473,
+            511,
+            549,
+            587,
+            625,
+            663,
+            701,
+            739,
+            777,
+            815,
+            853,
+            891,
+            929,
+            967,
+            1005,
+            1043
+          ],
+          "impact_frames": [
+            17,
+            55,
+            93,
+            131,
+            169,
+            207,
+            245,
+            283,
+            321,
+            359,
+            397,
+            435,
+            473,
+            511,
+            549,
+            587,
+            625,
+            663,
+            701,
+            739,
+            777,
+            815,
+            853,
+            891,
+            929,
+            967,
+            1005,
+            1043
+          ],
+          "times_seconds": [
+            0.5666666666666667,
+            1.8333333333333333,
+            3.1,
+            4.366666666666666,
+            5.633333333333334,
+            6.9,
+            8.166666666666666,
+            9.433333333333334,
+            10.7,
+            11.966666666666667,
+            13.233333333333333,
+            14.5,
+            15.766666666666667,
+            17.033333333333335,
+            18.3,
+            19.566666666666666,
+            20.833333333333332,
+            22.1,
+            23.366666666666667,
+            24.633333333333333,
+            25.9,
+            27.166666666666668,
+            28.433333333333334,
+            29.7,
+            30.966666666666665,
+            32.233333333333334,
+            33.5,
+            34.766666666666666
+          ],
+          "emitted_impact_frames": [
+            17,
+            55,
+            93,
+            131,
+            169,
+            207,
+            245,
+            283,
+            321,
+            359,
+            397,
+            435,
+            473,
+            511,
+            549,
+            587,
+            625,
+            663,
+            701,
+            739,
+            777,
+            815,
+            853,
+            891,
+            929,
+            967,
+            1005,
+            1043
+          ],
+          "emitted_times_seconds": [
+            0.5666666666666667,
+            1.8333333333333333,
+            3.1,
+            4.366666666666666,
+            5.633333333333334,
+            6.9,
+            8.166666666666666,
+            9.433333333333334,
+            10.7,
+            11.966666666666667,
+            13.233333333333333,
+            14.5,
+            15.766666666666667,
+            17.033333333333335,
+            18.3,
+            19.566666666666666,
+            20.833333333333332,
+            22.1,
+            23.366666666666667,
+            24.633333333333333,
+            25.9,
+            27.166666666666668,
+            28.433333333333334,
+            29.7,
+            30.966666666666665,
+            32.233333333333334,
+            33.5,
+            34.766666666666666
+          ],
+          "emitted_release_frames": [
+            17,
+            55,
+            93,
+            131,
+            169,
+            207,
+            245,
+            283,
+            321,
+            359,
+            397,
+            435,
+            473,
+            511,
+            549,
+            587,
+            625,
+            663,
+            701,
+            739,
+            777,
+            815,
+            853,
+            891,
+            929,
+            967,
+            1005,
+            1043
+          ],
+          "hit_release_frames": [
+            17,
+            55,
+            93,
+            131,
+            169,
+            207,
+            245,
+            283,
+            321,
+            359,
+            397,
+            435,
+            473,
+            511,
+            549,
+            587,
+            625,
+            663,
+            701,
+            739,
+            777,
+            815,
+            853,
+            891,
+            929,
+            967,
+            1005,
+            1043
+          ],
+          "interval_frames_by_attack": [
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38,
+            38
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 14,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 0
+      },
+      "public_total_damage": 27588.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 0.0,
+        "window_dps": null,
+        "duration_seconds": 35.0,
+        "total_damage": 59508.0,
+        "phase_damage": 59508.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 9.0,
+          "per_hit": 2508.0,
+          "total": 22572.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 1,
+          "per_hit": 5016.0,
+          "total": 5016.0,
+          "source_unit": "operator",
+          "instant_event": true
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 0,
+          "per_hit": 1140.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1001_amiya2",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": "Attack",
+          "windup_frames": 17,
+          "recovery_frames": 21,
+          "interval_frames": 38,
+          "interval_seconds": 1.2666666666666666,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 1
+      },
+      "public_total_damage": 28728.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 1.0,
+        "window_dps": 28728.0,
+        "duration_seconds": 35.0,
+        "total_damage": 59508.0,
+        "phase_damage": 59508.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 9.0,
+          "per_hit": 2508.0,
+          "total": 22572.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 1,
+          "per_hit": 5016.0,
+          "total": 5016.0,
+          "source_unit": "operator",
+          "instant_event": true
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 1,
+          "per_hit": 1140.0,
+          "total": 1140.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            0.5666666666666667
+          ]
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1001_amiya2",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": "Attack",
+          "windup_frames": 17,
+          "recovery_frames": 21,
+          "interval_frames": 38,
+          "interval_seconds": 1.2666666666666666,
+          "start_frames": [
+            0
+          ],
+          "release_frames": [
+            17
+          ],
+          "impact_frames": [
+            17
+          ],
+          "times_seconds": [
+            0.5666666666666667
+          ],
+          "emitted_impact_frames": [
+            17
+          ],
+          "emitted_times_seconds": [
+            0.5666666666666667
+          ],
+          "emitted_release_frames": [
+            17
+          ],
+          "hit_release_frames": [
+            17
+          ],
+          "interval_frames_by_attack": [
+            38
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 8,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "owner_supply_empty",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 0.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 10.0,
+        "window_dps": 0.0,
+        "duration_seconds": 35.0,
+        "total_damage": 0.0,
+        "phase_damage": 0.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 2508.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 0,
+          "per_hit": 5016.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 0,
+          "per_hit": 1140.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1001_amiya2",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": "Attack",
+          "windup_frames": 17,
+          "recovery_frames": 21,
+          "interval_frames": 38,
+          "interval_seconds": 1.2666666666666666,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "global_lifetime0",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 0.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 10.0,
+        "window_dps": 0.0,
+        "duration_seconds": 35.0,
+        "total_damage": 0.0,
+        "phase_damage": 0.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 2508.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 0,
+          "per_hit": 5016.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 0,
+          "per_hit": 1140.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1001_amiya2",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": "Attack",
+          "windup_frames": 17,
+          "recovery_frames": 21,
+          "interval_frames": 38,
+          "interval_seconds": 1.2666666666666666,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 0.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 10.0,
+        "window_dps": 0.0,
+        "duration_seconds": 35.0,
+        "total_damage": 0.0,
+        "phase_damage": 0.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 2508.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 0,
+          "per_hit": 5016.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 0,
+          "per_hit": 1140.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1001_amiya2",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": "Attack",
+          "windup_frames": 17,
+          "recovery_frames": 21,
+          "interval_frames": 38,
+          "interval_seconds": 1.2666666666666666,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "owner_supply_late",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 4560.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 10.0,
+        "window_dps": 456.0,
+        "duration_seconds": 35.0,
+        "total_damage": 4560.0,
+        "phase_damage": 4560.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 0,
+          "per_hit": 2508.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 0,
+          "per_hit": 5016.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 4,
+          "per_hit": 1140.0,
+          "total": 4560.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            5.566666666666666,
+            6.833333333333333,
+            8.1,
+            9.366666666666667
+          ]
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1001_amiya2",
+          "known_animation": true,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": "Attack",
+          "windup_frames": 17,
+          "recovery_frames": 21,
+          "interval_frames": 38,
+          "interval_seconds": 1.2666666666666666,
+          "start_frames": [
+            150,
+            188,
+            226,
+            264
+          ],
+          "release_frames": [
+            167,
+            205,
+            243,
+            281
+          ],
+          "impact_frames": [
+            167,
+            205,
+            243,
+            281
+          ],
+          "times_seconds": [
+            5.566666666666666,
+            6.833333333333333,
+            8.1,
+            9.366666666666667
+          ],
+          "emitted_impact_frames": [
+            167,
+            205,
+            243,
+            281
+          ],
+          "emitted_times_seconds": [
+            5.566666666666666,
+            6.833333333333333,
+            8.1,
+            9.366666666666667
+          ],
+          "emitted_release_frames": [
+            167,
+            205,
+            243,
+            281
+          ],
+          "hit_release_frames": [
+            167,
+            205,
+            243,
+            281
+          ],
+          "interval_frames_by_attack": [
+            38,
+            38,
+            38,
+            38
+          ],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 2,
+          "source": "https://github.com/xulai1001/arkdps_data_collection/blob/31269be4ca10124ca3f994ab33382dfc3d502991/customdata/dps_anim.json"
+        }
+      ]
+    },
+    {
+      "label": "default",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous"
+      },
+      "public_total_damage": 59508.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 35.0,
+        "window_dps": 1700.2285714285715,
+        "duration_seconds": 35.0,
+        "total_damage": 59508.0,
+        "phase_damage": 58368.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 9.0,
+          "per_hit": 2508.0,
+          "total": 22572.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 1,
+          "per_hit": 5016.0,
+          "total": 5016.0,
+          "source_unit": "operator",
+          "instant_event": true
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 28,
+          "per_hit": 1140.0,
+          "total": 31920.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.25,
+            2.5,
+            3.75,
+            5.0,
+            6.25,
+            7.5,
+            8.75,
+            10.0,
+            11.25,
+            12.5,
+            13.75,
+            15.0,
+            16.25,
+            17.5,
+            18.75,
+            20.0,
+            21.25,
+            22.5,
+            23.75,
+            25.0,
+            26.25,
+            27.5,
+            28.75,
+            30.0,
+            31.25,
+            32.5,
+            33.75,
+            35.0
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window0",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 0
+      },
+      "public_total_damage": 27588.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 0.0,
+        "window_dps": null,
+        "duration_seconds": 35.0,
+        "total_damage": 59508.0,
+        "phase_damage": 58368.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 9.0,
+          "per_hit": 2508.0,
+          "total": 22572.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 1,
+          "per_hit": 5016.0,
+          "total": 5016.0,
+          "source_unit": "operator",
+          "instant_event": true
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 0,
+          "per_hit": 1140.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "window1",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 1
+      },
+      "public_total_damage": 27588.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 1.0,
+        "window_dps": 27588.0,
+        "duration_seconds": 35.0,
+        "total_damage": 59508.0,
+        "phase_damage": 58368.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 9.0,
+          "per_hit": 2508.0,
+          "total": 22572.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 1,
+          "per_hit": 5016.0,
+          "total": 5016.0,
+          "source_unit": "operator",
+          "instant_event": true
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 0,
+          "per_hit": 1140.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_empty",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": []
+        }
+      },
+      "public_total_damage": 36708.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 10.0,
+        "window_dps": 3670.8,
+        "duration_seconds": 35.0,
+        "total_damage": 59508.0,
+        "phase_damage": 58368.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 9.0,
+          "per_hit": 2508.0,
+          "total": 22572.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 1,
+          "per_hit": 5016.0,
+          "total": 5016.0,
+          "source_unit": "operator",
+          "instant_event": true
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 8,
+          "per_hit": 1140.0,
+          "total": 9120.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.25,
+            2.5,
+            3.75,
+            5.0,
+            6.25,
+            7.5,
+            8.75,
+            10.0
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "global_lifetime0",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_disappears_seconds": 0
+        }
+      },
+      "public_total_damage": 36708.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 10.0,
+        "window_dps": 3670.8,
+        "duration_seconds": 35.0,
+        "total_damage": 59508.0,
+        "phase_damage": 58368.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 9.0,
+          "per_hit": 2508.0,
+          "total": 22572.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 1,
+          "per_hit": 5016.0,
+          "total": 5016.0,
+          "source_unit": "operator",
+          "instant_event": true
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 8,
+          "per_hit": 1140.0,
+          "total": 9120.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.25,
+            2.5,
+            3.75,
+            5.0,
+            6.25,
+            7.5,
+            8.75,
+            10.0
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "all_interrupt",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "interrupt_windows": [
+            [
+              0,
+              3600
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 36708.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 10.0,
+        "window_dps": 3670.8,
+        "duration_seconds": 35.0,
+        "total_damage": 59508.0,
+        "phase_damage": 58368.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 9.0,
+          "per_hit": 2508.0,
+          "total": 22572.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 1,
+          "per_hit": 5016.0,
+          "total": 5016.0,
+          "source_unit": "operator",
+          "instant_event": true
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 8,
+          "per_hit": 1140.0,
+          "total": 9120.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.25,
+            2.5,
+            3.75,
+            5.0,
+            6.25,
+            7.5,
+            8.75,
+            10.0
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "owner_supply_late",
+      "scenario": {
+        "operator": "char_1001_amiya2",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 10,
+        "timing": {
+          "target_windows": [
+            [
+              5,
+              10
+            ]
+          ]
+        }
+      },
+      "public_total_damage": 36708.0,
+      "public_total_healing": 0,
+      "skill": {
+        "mode": "once",
+        "window_seconds": 10.0,
+        "window_dps": 3670.8,
+        "duration_seconds": 35.0,
+        "total_damage": 59508.0,
+        "phase_damage": 58368.0,
+        "initial_seconds": 20.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "cycle_damage": null,
+        "cycle_dps": null
+      },
+      "components": [
+        {
+          "name": "绝影前九击",
+          "damage_type": "magic",
+          "hits": 9.0,
+          "per_hit": 2508.0,
+          "total": 22572.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "绝影终击",
+          "damage_type": "true",
+          "hits": 1,
+          "per_hit": 5016.0,
+          "total": 5016.0,
+          "source_unit": "operator",
+          "instant_event": true
+        },
+        {
+          "name": "绝影持续真伤",
+          "damage_type": "true",
+          "hits": 8,
+          "per_hit": 1140.0,
+          "total": 9120.0,
+          "source_unit": "operator",
+          "times_seconds": [
+            1.25,
+            2.5,
+            3.75,
+            5.0,
+            6.25,
+            7.5,
+            8.75,
+            10.0
+          ]
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "declared_count_or_hp_with_zero_window",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 0,
+        "dash_hits": 0
+      },
+      "public_total_damage": 0.0,
+      "public_total_healing": 0,
+      "skill": {
+        "name": "空中回旋乱舞",
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": 0.0,
+        "total_damage": 0.0,
+        "total_healing": 0,
+        "phase_damage": 0.0,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1130.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "sp_recovery_per_second": null,
+        "mode": "deployment",
+        "hit_counts": {
+          "双雷剑麒麟": 0.0,
+          "空中回旋乱舞": 0.0
+        },
+        "window_seconds": 0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 0.0,
+          "per_hit": 3390.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 0.0,
+          "per_hit": 678.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "declared_count_or_hp_with_zero_window",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 0,
+        "dash_hits": 0
+      },
+      "public_total_damage": 0.0,
+      "public_total_healing": 0,
+      "skill": {
+        "name": "空中回旋乱舞",
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": 0,
+        "total_damage": 0.0,
+        "total_healing": 0,
+        "phase_damage": 0.0,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1130.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "sp_recovery_per_second": null,
+        "mode": "deployment",
+        "hit_counts": {
+          "双雷剑麒麟": 0.0,
+          "空中回旋乱舞": 0.0
+        },
+        "window_seconds": 0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 0.0,
+          "per_hit": 3390.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 0.0,
+          "per_hit": 678.0,
+          "total": 0.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "declared_count_or_hp_with_zero_window",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 0,
+        "dash_hits": 3
+      },
+      "public_total_damage": 12204.0,
+      "public_total_healing": 0,
+      "skill": {
+        "name": "空中回旋乱舞",
+        "initial_seconds": 0.0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": 0.0,
+        "total_damage": 12204.0,
+        "total_healing": 0,
+        "phase_damage": 12204.0,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1130.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "sp_recovery_per_second": null,
+        "mode": "deployment",
+        "hit_counts": {
+          "双雷剑麒麟": 3.0,
+          "空中回旋乱舞": 3.0
+        },
+        "window_seconds": 0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 3.0,
+          "per_hit": 3390.0,
+          "total": 10170.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 3.0,
+          "per_hit": 678.0,
+          "total": 2034.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "declared_count_or_hp_with_zero_window",
+      "scenario": {
+        "operator": "char_1029_yato2",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 0,
+        "dash_hits": 3
+      },
+      "public_total_damage": 12204.0,
+      "public_total_healing": 0,
+      "skill": {
+        "name": "空中回旋乱舞",
+        "initial_seconds": 0,
+        "recharge_seconds": null,
+        "cycle_seconds": null,
+        "duration_seconds": 0,
+        "total_damage": 12204.0,
+        "total_healing": 0,
+        "phase_damage": 12204.0,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 1130.0,
+        "skill_attack_speed": 100.0,
+        "skill_attack_speed_reference": 100.0,
+        "sp_recovery_per_second": null,
+        "mode": "deployment",
+        "hit_counts": {
+          "双雷剑麒麟": 3.0,
+          "空中回旋乱舞": 3.0
+        },
+        "window_seconds": 0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": null
+      },
+      "components": [
+        {
+          "name": "空中回旋乱舞",
+          "damage_type": "physical",
+          "hits": 3.0,
+          "per_hit": 3390.0,
+          "total": 10170.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "双雷剑麒麟",
+          "damage_type": "magic",
+          "hits": 3.0,
+          "per_hit": 678.0,
+          "total": 2034.0,
+          "source_unit": "operator"
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "declared_count_or_hp_with_zero_window",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 0,
+        "slash_kills": 1
+      },
+      "public_total_damage": 59664.0,
+      "public_total_healing": 0,
+      "skill": {
+        "name": "赤霄·绝影-驰",
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "duration_seconds": 6.0,
+        "total_damage": 80314.0,
+        "total_healing": 0,
+        "phase_damage": 80314.0,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 4130.0,
+        "skill_attack_speed": 113.0,
+        "skill_attack_speed_reference": 113.0,
+        "sp_recovery_per_second": 1.0,
+        "mode": "timed",
+        "hit_counts": {
+          "斩击后的6秒强化": 5,
+          "绝影斩击": 11.0
+        },
+        "window_seconds": 0.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 11.0,
+          "per_hit": 5424.0,
+          "total": 59664.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 4130.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "declared_count_or_hp_with_zero_window",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 2,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 0,
+        "slash_kills": 1
+      },
+      "public_total_damage": 59664.0,
+      "public_total_healing": 0,
+      "skill": {
+        "name": "赤霄·绝影-驰",
+        "initial_seconds": 5.0,
+        "recharge_seconds": 20.0,
+        "cycle_seconds": null,
+        "duration_seconds": 6.0,
+        "total_damage": 80314.0,
+        "total_healing": 0,
+        "phase_damage": 80314.0,
+        "phase_healing": 0,
+        "cycle_dps": null,
+        "cycle_hps": null,
+        "cycle_damage": null,
+        "cycle_healing": null,
+        "skill_attack": 4130.0,
+        "skill_attack_speed": 113.0,
+        "skill_attack_speed_reference": 113.0,
+        "sp_recovery_per_second": 1.0,
+        "mode": "timed",
+        "hit_counts": {
+          "斩击后的6秒强化": 5,
+          "绝影斩击": 11.0
+        },
+        "window_seconds": 0.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": null
+      },
+      "components": [
+        {
+          "name": "绝影斩击",
+          "damage_type": "weakness",
+          "hits": 11.0,
+          "per_hit": 5424.0,
+          "total": 59664.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "斩击后的6秒强化",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 4130.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": []
+    },
+    {
+      "label": "declared_count_or_hp_with_zero_window",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "frames",
+        "window_seconds": 0,
+        "enemy_current_hp": 200000
+      },
+      "public_total_damage": 12000.0,
+      "public_total_healing": 0,
+      "skill": {
+        "name": "赤霄·天喟",
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "duration_seconds": 20.0,
+        "total_damage": 140142.0,
+        "total_healing": 0,
+        "phase_damage": 140142.0,
+        "phase_healing": 0,
+        "cycle_dps": 3666.711111111111,
+        "cycle_hps": 0.0,
+        "cycle_damage": 165002.0,
+        "cycle_healing": 0,
+        "skill_attack": 1130.0,
+        "skill_attack_speed": 113.0,
+        "skill_attack_speed_reference": 113.0,
+        "sp_recovery_per_second": 1.0,
+        "mode": "timed",
+        "hit_counts": {
+          "天喟剑气": 1,
+          "技能攻击": 54
+        },
+        "window_seconds": 0.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": null
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 12000.0,
+          "total": 12000.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 2373.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": [
+        {
+          "unit": "char_1050_chen3",
+          "known_animation": false,
+          "exact_binding": false,
+          "reference_binding": false,
+          "animation": null,
+          "windup_frames": null,
+          "recovery_frames": null,
+          "interval_frames": 33,
+          "interval_seconds": 1.1,
+          "start_frames": [],
+          "release_frames": [],
+          "impact_frames": [],
+          "times_seconds": [],
+          "emitted_impact_frames": [],
+          "emitted_times_seconds": [],
+          "emitted_release_frames": [],
+          "hit_release_frames": [],
+          "interval_frames_by_attack": [],
+          "temporary_attack_speed": false,
+          "attack_speed_sample": "攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准",
+          "resume_frame": 0,
+          "source": "未确认；保留延迟首击情景"
+        }
+      ]
+    },
+    {
+      "label": "declared_count_or_hp_with_zero_window",
+      "scenario": {
+        "operator": "char_1050_chen3",
+        "skill": 3,
+        "skill_rank": 10,
+        "base_attack": 1000,
+        "enemy_defense": 0,
+        "enemy_resistance": 0,
+        "timing_mode": "continuous",
+        "window_seconds": 0,
+        "enemy_current_hp": 200000
+      },
+      "public_total_damage": 12000.0,
+      "public_total_healing": 0,
+      "skill": {
+        "name": "赤霄·天喟",
+        "initial_seconds": 7.0,
+        "recharge_seconds": 25.0,
+        "cycle_seconds": 45.0,
+        "duration_seconds": 20.0,
+        "total_damage": 140142.0,
+        "total_healing": 0,
+        "phase_damage": 140142.0,
+        "phase_healing": 0,
+        "cycle_dps": 3666.711111111111,
+        "cycle_hps": 0.0,
+        "cycle_damage": 165002.0,
+        "cycle_healing": 0,
+        "skill_attack": 1130.0,
+        "skill_attack_speed": 113.0,
+        "skill_attack_speed_reference": 113.0,
+        "sp_recovery_per_second": 1.0,
+        "mode": "timed",
+        "hit_counts": {
+          "天喟剑气": 1,
+          "技能攻击": 54
+        },
+        "window_seconds": 0.0,
+        "window_healing": 0,
+        "window_dps": null,
+        "window_hps": null
+      },
+      "components": [
+        {
+          "name": "天喟剑气",
+          "damage_type": "weakness",
+          "hits": 1,
+          "per_hit": 12000.0,
+          "total": 12000.0,
+          "source_unit": "operator"
+        },
+        {
+          "name": "技能攻击",
+          "damage_type": "weakness",
+          "hits": 0,
+          "per_hit": 2373.0,
+          "total": 0.0,
+          "source_unit": "operator",
+          "times_seconds": []
+        }
+      ],
+      "timing_streams": []
+    }
+  ],
+  "interpretation_limits": {
+    "owner_supply_empty": "Owner target_windows=[] does not prove dash path or independent projectile coverage is empty.",
+    "global_lifetime0": "Current target lifetime=0 implies no actual damage against that target, irrespective of independent path or manual positive hit reference.",
+    "all_interrupt": "Observation of current calculator only; deployed dash/slash and emitted projectile cancel behavior remains unknown.",
+    "amiya_mapping": "Skill selector pinned and verified; char_1001_amiya2 mapping is from local catalog because char_patch_table is not cached. Horizontal example only."
+  }
+}

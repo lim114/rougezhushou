@@ -14,21 +14,21 @@
     "wrap_up_below_usage_percent": 15,
     "usage_percent_available": false,
     "usage_monitoring": "No enabled tool exposes account usage; do not invent a percentage. Honor any subsequent user-provided low-usage signal.",
-    "automatic_next_batch": false,
+    "automatic_next_batch": true,
     "commit_interval": 1,
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section: commit and push origin codex/p2-development; every five sections full available validation and progress summary",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": true,
+    "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
-    "stop_after_section": 115,
+    "stop_after_section": 125,
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "accuracy_validation_after_section": 115,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS."
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 115,
+  "completed_sections": 116,
   "sections": [
     {
       "number": 1,
@@ -726,10 +726,16 @@
       "topic": "当前输出分项",
       "verification": "verification/sections/115.json",
       "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
+    },
+    {
+      "number": 116,
+      "topic": "陈原版阶段资料完整查看",
+      "verification": "verification/sections/116.json",
+      "commit_status": "VALIDATED_READY_FOR_PER_SECTION_SAVE"
     }
   ],
-  "next_section": 116,
-  "next_action": "本批111–115结束；停在115，不启动116。后续收到继续开发指令后从116恢复，并保留P2剩余项目及95/109原流程搁置记录。",
+  "next_section": 117,
+  "next_action": "依序实施117完整计算条件、独立时序流与输出口径报告；逐节commit/push，120全量后总结并继续至125，125全量后结束，不执行126。",
   "full_validation_due": false,
   "last_full_validation": {
     "kind": "ROOT_ACTUAL_FULL115_AVAILABLE_SCOPE_CLOSURE",
@@ -1109,21 +1115,18 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 115,
-    "prepared_at_Beijing": "2026-10-10T03:53:43.281937+08:00",
+    "section": 116,
+    "prepared_at_Beijing": "2026-10-10T12:32:17.828687+08:00",
     "status": "READY_FOR_REAL_COMMIT_AND_PUSH",
-    "prior_actual_HEAD": "f7d18324b3589299984d68379cd5b92cca9883c8",
-    "archive_manifest": "research/p2-section115-current-output-breakdown/manifest.json",
-    "full_validation_due": false,
-    "batch_validation_closed": true,
-    "report": "BATCH_111_115_REPORT.md",
-    "publication_identity_lookup": "Containing section115 Git commit. Root verifies ordinary push and remote HEAD equality after this snapshot is committed."
+    "prior_actual_HEAD": "0cfb8813130a9c91a5f91820864a9f7154261a2e",
+    "archive_manifest": "research/p2-section116-chen-motion-reference/manifest.json",
+    "full_validation_due": false
   },
   "last_verified_cloud_save": {
-    "section": 114,
-    "commit": "f7d18324b3589299984d68379cd5b92cca9883c8",
+    "section": 115,
+    "commit": "0cfb8813130a9c91a5f91820864a9f7154261a2e",
     "remote": "origin codex/p2-development",
-    "proof": "research/p2-section115-current-output-breakdown/prior-publication.json"
+    "proof": "research/p2-section116-chen-motion-reference/prior-publication.json"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -1316,7 +1319,7 @@
   },
   "next_full_validation_after": 120,
   "user_requested_wrap": {
-    "status": "BATCH111_115_CLOSED_AFTER_ACTUAL_FULL_VALIDATION",
+    "status": "SUPERSEDED_BY_USER_BATCH116_125_RESUME_2026_10_10",
     "completed_section": 115,
     "next_section": 116,
     "next_section_started": false,
@@ -1353,5 +1356,26 @@
     "public_examples_matched": 4,
     "native_windows_game_chat_verified": false,
     "stop_before_section116": true
+  },
+  "development_resumption_116_125": {
+    "requested_date_Asia_Shanghai": "2026-10-10",
+    "actual_prior_HEAD": "0cfb8813130a9c91a5f91820864a9f7154261a2e",
+    "branch": "codex/p2-development",
+    "start_section": 116,
+    "stop_after_section": 125,
+    "full_validation_sections": [
+      120,
+      125
+    ],
+    "per_section_commit_and_push": true,
+    "baseline_linux": {
+      "raw_exit": 0,
+      "tests_run": 1459,
+      "skipped": 1,
+      "failures": 0,
+      "errors": 0
+    },
+    "P2_first": true,
+    "deferred095_and109_preserved": true
   }
 }
