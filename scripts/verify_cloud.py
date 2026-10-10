@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 MODULES = (
+    "tests.test_manual_scenario_120",
     "tests.test_legacy_ammo_completion",
     "tests.test_skill_cultivation_118",
     "tests.test_chen_motion_reference",

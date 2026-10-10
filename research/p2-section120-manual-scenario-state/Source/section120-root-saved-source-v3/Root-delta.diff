@@ -1,0 +1,22 @@
+--- sealed-v2/audit_saved120.py
++++ Root-v3/audit_saved120.py
+@@ -9,7 +9,7 @@
+ from native_evidence import read_record, assert_native_equal as same, source_map
+ 
+ HELPER_SHA='f040258eddbb7ad624e547e2c422a3d432f7ffeae025b2576b625683ea43fe9a'
+-RUNNER_SHA='20116467c8260f163de914dd707ffb314a2fab5a6e28d3c2ba82c3a37911387b'
++RUNNER_SHA='5e0af2c6309884b13c3155dc056e5cb67c41ac95bca085cb70c1fc468a676489'
+ A='mechanist';B='char_002_amiya';DEEP='char_110_deepcl';TOKEN='token_10001_deepcl_tentac';CARGO='rogue_6_relic_cargo_2'
+ A_TIMING='{ "windup_frames" : 0, "recovery_frames" : 0, "target_windows" : [] }\n'
+ A_RELIC='{ "parts_count" : 0, "unused" : "A 原文" }\n'
+@@ -247,7 +247,9 @@
+             same(v['visible_report_blocks'],v['displayed_text'].split('\n')[:4],'profile-only PNG consecutive first four-or-less blocks')
+         x,y,w,h=v['report_viewport'];assert w>0 and h>0 and len(v['cursor_rects'])==2*len(v['visible_report_blocks'])
+         for a,b,c,d in v['cursor_rects']:assert c>0 and d>0 and x<=a and y<=b and a+c<=x+w and b+d<=y+h
+-        assert len(v['timing_control_rect'])==4 and v['timing_control_rect'][2]>0 and v['timing_control_rect'][3]>0
++        assert len(v['timing_control_rect'])==len(v['timing_viewport_rect'])==4
++        a,b,c,d=v['timing_control_rect'];x,y,w,h=v['timing_viewport_rect']
++        assert c>0 and d>0 and w>0 and h>0 and x<=a and y<=b and a+c<=x+w and b+d<=y+h
+         pictures.append({'path':row['path'],'sha256':row['sha256'],'width':width,'height':height})
+     close=get(r['close_reload'],'actual_close_RunState_reload');initial=bundle['initial']
+     same(close['live_before'],initial,'real close original live run/account/disk')

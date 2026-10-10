@@ -1,0 +1,53 @@
+{
+  "section": 120,
+  "files": [
+    {
+      "path": "rouge/app.py",
+      "blocks": [
+        {
+          "before": "from .damage import calculate_damage\r\n",
+          "after": "from .damage import calculate_damage\r\nfrom .manual_scenario import parse_preview_object\r\n"
+        },
+        {
+          "before": "    def calculate(self):\r\n",
+          "after": "    def sync_scenario_previews(self,op,skill):\r\n        \"\"\"Keep both temporary editors bound to an implemented owner/skill.\"\"\"\r\n        key=(op,skill) if op in catalog()['operators'] and skill is not None else None\r\n        if key!=self.timing_preview_key:\r\n            if self.timing_preview_key is not None:\r\n                self.timing_previews[self.timing_preview_key]=self.timing_scenario.toPlainText()\r\n                self.relic_context_previews[self.timing_preview_key]=self.relic_context.toPlainText()\r\n            for widget,previews in ((self.timing_scenario,self.timing_previews),\r\n                                    (self.relic_context,self.relic_context_previews)):\r\n                blocked=widget.blockSignals(True)\r\n                widget.setPlainText(previews.get(key,'') if key is not None else '')\r\n                widget.blockSignals(blocked)\r\n            self.timing_preview_key=key\r\n        self.timing_scenario.setEnabled(key is not None)\r\n        self.relic_context.setEnabled(key is not None)\r\n\r\n    def calculate(self):\r\n"
+        },
+        {
+          "before": "        if op is None:\r\n            self.show_damage_text('本局总览暂无已确认招募干员。请选择职业分支进行局外预览。')\r\n",
+          "after": "        self.sync_scenario_previews(op,self.skill.currentData())\r\n        if op is None:\r\n            self.show_damage_text('本局总览暂无已确认招募干员。请选择职业分支进行局外预览。')\r\n"
+        },
+        {
+          "before": "            key=(scenario['operator'],scenario['skill'])\r\n            if key!=self.timing_preview_key:\r\n                if self.timing_preview_key is not None:\r\n                    self.timing_previews[self.timing_preview_key]=self.timing_scenario.toPlainText()\r\n                    self.relic_context_previews[self.timing_preview_key]=self.relic_context.toPlainText()\r\n                self.timing_scenario.blockSignals(True)\r\n                self.timing_scenario.setPlainText(self.timing_previews.get(key,''))\r\n                self.timing_scenario.blockSignals(False)\r\n                self.timing_preview_key=key\r\n                self.relic_context.blockSignals(True)\r\n                self.relic_context.setPlainText(self.relic_context_previews.get(key,''))\r\n                self.relic_context.blockSignals(False)\r\n",
+          "after": ""
+        },
+        {
+          "before": "                try:preview=json.loads(self.relic_context.toPlainText())\r\n                except json.JSONDecodeError:raise ValueError('藏品测试条件需要合法JSON对象。') from None\r\n                if not isinstance(preview,dict):raise ValueError('藏品测试条件需要JSON对象。')\r\n",
+          "after": "                preview=parse_preview_object(self.relic_context.toPlainText(),'藏品测试条件')\r\n"
+        },
+        {
+          "before": "                try:scenario['timing']=json.loads(self.timing_scenario.toPlainText())\r\n                except json.JSONDecodeError:raise ValueError('战斗时序情景需要合法JSON对象。') from None\r\n                if not isinstance(scenario['timing'],dict):raise ValueError('战斗时序情景需要JSON对象。')\r\n",
+          "after": "                scenario['timing']=parse_preview_object(self.timing_scenario.toPlainText(),'战斗时序情景')\r\n"
+        }
+      ]
+    },
+    {
+      "path": "rouge/manual_scenario.py",
+      "new_source": "/workspace/.continuation/p2-scenario-state-source-v1/candidate/rouge/manual_scenario.py",
+      "new_source_sha256": "1a15f179950e1cb0856e303d06fc02562b825f4ca730fd41489456b3d9c5f603"
+    },
+    {
+      "path": "tests/test_manual_scenario_120.py",
+      "new_source": "/workspace/.continuation/p2-scenario-state-source-v1/candidate/tests/test_manual_scenario_120.py",
+      "new_source_sha256": "8ecaa04ece9e43a93e2890b4fe6e371b2bc85ed3d83b1039f15290f7261ae37c"
+    },
+    {
+      "path": "scripts/verify_cloud.py",
+      "blocks": [
+        {
+          "before": "MODULES = (\n",
+          "after": "MODULES = (\n    \"tests.test_manual_scenario_120\",\n"
+        }
+      ]
+    }
+  ]
+}

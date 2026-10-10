@@ -1,0 +1,70 @@
+"""Root-activated bounded window launcher; closes the separate admission ledger."""
+import hashlib
+import json
+import runpy
+import sys
+from pathlib import Path
+
+WINDOW_SHA256 = None
+SOURCE120_GUARD_SHA256 = None
+if WINDOW_SHA256 is None or SOURCE120_GUARD_SHA256 is None:
+    raise ValueError('Inactive full120 launcher: actual Source/evidence not bound')
+window = Path(__file__).with_name('window.py')
+if hashlib.sha256(window.read_bytes()).hexdigest() != WINDOW_SHA256:
+    raise AssertionError('Activated full120 window Source hash drift')
+args = sys.argv[1:]
+if args.count('--out') != 1 or args.count('--guard') != 1:
+    raise ValueError('Exact output/guard arguments required')
+out = Path(args[args.index('--out') + 1])
+guard = Path(args[args.index('--guard') + 1])
+if hashlib.sha256(guard.read_bytes()).hexdigest() != SOURCE120_GUARD_SHA256:
+    raise AssertionError('Root final120 guard hash drift')
+code = None
+try:
+    runpy.run_path(str(window), run_name='__main__')
+except SystemExit as exit_event:
+    code = exit_event.code
+if type(code) is not int or code != 0:
+    sys.exit(code if type(code) is int and code != 0 else 1)
+guard_raw_after = guard.read_bytes()
+if hashlib.sha256(guard_raw_after).hexdigest() != SOURCE120_GUARD_SHA256:
+    raise AssertionError('Root final120 guard bytes drift during actual window')
+guard_data = json.loads(guard_raw_after)
+for name, sha256 in guard_data['full120_113_bridge_sha256'].items():
+    if hashlib.sha256(window.with_name(name).read_bytes()).hexdigest() != sha256:
+        raise AssertionError('Comparison bridge Source/map drift after actual window')
+if hashlib.sha256(window.read_bytes()).hexdigest() != WINDOW_SHA256:
+    raise AssertionError('Actual full120 runner Source drift after window')
+receipt = json.loads((out / 'wine-ui-100.json').read_bytes())
+ledger = json.loads((out / 'full120-113-bridge-ledger.json').read_bytes())
+admission = json.loads(window.with_name('expected-map120.json').read_bytes())
+expected = [18,19,20,21,38,39,40,41,44,45]
+rows = ledger['actual_admissions']
+if (receipt['passed'] is not True or receipt['complete_ui_validation'] is not True
+        or receipt['total_actual_checks'] != 4283
+        or receipt['new_explicit_damage_button_requests090'] != 52
+        or receipt['source_drift'] or receipt['source_additional_drift']
+        or receipt['source100_guard_sha256'] != SOURCE120_GUARD_SHA256
+        or ledger['mapping_sha256'] != guard_data['full120_113_bridge_sha256']['expected-map120.json']
+        or ledger['all10_admitted'] is not True or len(rows) != 10
+        or sorted(row['literal_index'] for row in rows) != expected):
+    raise AssertionError('Original complete window / exact ten admissions closure failed')
+for actual, proved in zip(sorted(rows,key=lambda row:row['literal_index']), admission['rows']):
+    for name in ('literal_index','section','pair_id','widget_checked',
+                 'full_source_row_sha256_json_ordered','input_sha256_json_ordered'):
+        if type(actual[name]) is not type(proved[name]) or actual[name] != proved[name]:
+            raise AssertionError('Actual ledger identity differs from admitted evidence')
+    if actual['raw_result_and_caller_unchanged'] is not True:
+        raise AssertionError('Comparison bridge result/caller purity incomplete')
+closure = {'kind':'ROOT_ACTUAL_FULL120_WINDOW_BRIDGE_CLOSURE',
+    'window_primary_code':code, 'passed':True, 'workflow_complete':True,
+    'source_drift':receipt['source_drift'],
+    'source_additional_drift':receipt['source_additional_drift'],
+    'window_receipt_sha256':hashlib.sha256((out/'wine-ui-100.json').read_bytes()).hexdigest(),
+    'ledger_sha256':hashlib.sha256((out/'full120-113-bridge-ledger.json').read_bytes()).hexdigest(),
+    'launcher_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+    'window_sha256':WINDOW_SHA256,'guard_sha256':SOURCE120_GUARD_SHA256,
+    'scope':ledger['scope'], 'Saved_and_PNG_inspection_claimed':False}
+(out / 'full120-bridge-closure.json').write_text(
+    json.dumps(closure,ensure_ascii=False,indent=2)+'\n', encoding='utf-8')
+sys.exit(0)

@@ -16,6 +16,7 @@ from .operator_summary import format_operator_observation
 from .account_cache import AccountCache
 from .run_state import RunState
 from .damage import calculate_damage
+from .manual_scenario import parse_preview_object
 from .relics import mechanics,matches
 from .offline_scope import active_effects,partition
 from .operator_options import OPTIONS
@@ -1130,6 +1131,22 @@ class MainWindow(QMainWindow):
             item = self.relic_list.item(i)
             item.setHidden(text not in item.text())
 
+    def sync_scenario_previews(self,op,skill):
+        """Keep both temporary editors bound to an implemented owner/skill."""
+        key=(op,skill) if op in catalog()['operators'] and skill is not None else None
+        if key!=self.timing_preview_key:
+            if self.timing_preview_key is not None:
+                self.timing_previews[self.timing_preview_key]=self.timing_scenario.toPlainText()
+                self.relic_context_previews[self.timing_preview_key]=self.relic_context.toPlainText()
+            for widget,previews in ((self.timing_scenario,self.timing_previews),
+                                    (self.relic_context,self.relic_context_previews)):
+                blocked=widget.blockSignals(True)
+                widget.setPlainText(previews.get(key,'') if key is not None else '')
+                widget.blockSignals(blocked)
+            self.timing_preview_key=key
+        self.timing_scenario.setEnabled(key is not None)
+        self.relic_context.setEnabled(key is not None)
+
     def calculate(self):
         self.damage_result=None
         if hasattr(self,'relic_context'):self.damage_form.setRowVisible(self.relic_context,False)
@@ -1137,6 +1154,7 @@ class MainWindow(QMainWindow):
         self.sync_animation_references(op,self.skill.currentData())
         if hasattr(self,'target_buff_list'):
             self.sync_target_buffs(op)
+        self.sync_scenario_previews(op,self.skill.currentData())
         if op is None:
             self.show_damage_text('本局总览暂无已确认招募干员。请选择职业分支进行局外预览。')
             return
@@ -1206,18 +1224,6 @@ class MainWindow(QMainWindow):
         if self.operator.currentData()=='mechanist' and self.skill.currentData()==2 and self.shield_duration_known.isChecked():
             scenario['skill_duration_seconds']=self.shield_duration.value()
         try:
-            key=(scenario['operator'],scenario['skill'])
-            if key!=self.timing_preview_key:
-                if self.timing_preview_key is not None:
-                    self.timing_previews[self.timing_preview_key]=self.timing_scenario.toPlainText()
-                    self.relic_context_previews[self.timing_preview_key]=self.relic_context.toPlainText()
-                self.timing_scenario.blockSignals(True)
-                self.timing_scenario.setPlainText(self.timing_previews.get(key,''))
-                self.timing_scenario.blockSignals(False)
-                self.timing_preview_key=key
-                self.relic_context.blockSignals(True)
-                self.relic_context.setPlainText(self.relic_context_previews.get(key,''))
-                self.relic_context.blockSignals(False)
             profile=catalog()['operators'][op]
             needed=set()
             for rid in ids:
@@ -1261,18 +1267,14 @@ class MainWindow(QMainWindow):
             if 'empty_slots' in needed and isinstance(parts.get('capacity'),int) and isinstance(parts.get('value'),int):
                 context['empty_slots']=parts['capacity']-parts['value']
             if needed and self.relic_context.toPlainText().strip():
-                try:preview=json.loads(self.relic_context.toPlainText())
-                except json.JSONDecodeError:raise ValueError('藏品测试条件需要合法JSON对象。') from None
-                if not isinstance(preview,dict):raise ValueError('藏品测试条件需要JSON对象。')
+                preview=parse_preview_object(self.relic_context.toPlainText(),'藏品测试条件')
                 context.update({k:v for k,v in preview.items() if k in needed})
             if 'enemy_level_type' in context:scenario['enemy_level_type']=context.pop('enemy_level_type')
             scenario['relic_context']=context
             scenario['relic_context_source']='本局最近确认的计数；测试条件仅用于预览'
             scenario['timing_mode']='frames' if self.frame_timing.isChecked() else 'continuous'
             if self.timing_scenario.toPlainText().strip():
-                try:scenario['timing']=json.loads(self.timing_scenario.toPlainText())
-                except json.JSONDecodeError:raise ValueError('战斗时序情景需要合法JSON对象。') from None
-                if not isinstance(scenario['timing'],dict):raise ValueError('战斗时序情景需要JSON对象。')
+                scenario['timing']=parse_preview_object(self.timing_scenario.toPlainText(),'战斗时序情景')
             if op=='char_1050_chen3' and self.chen_motion_orientation.currentData() is not None:
                 scenario['chen_motion_orientation']=self.chen_motion_orientation.currentData()
             if self.frame_timing.isChecked():

@@ -1,0 +1,82 @@
+{
+  "kind": "SOURCE_ONLY_SECTION120_TEMPORARY_EDITOR_LOCAL_TRANSPORT",
+  "section": 120,
+  "runtime_executed": false,
+  "tracked_applied": false,
+  "product_pass": false,
+  "section_complete": false,
+  "future_actual120_HEAD": null,
+  "future_actual120_guard": null,
+  "future_actual120_source_count": null,
+  "basis_app": {
+    "path": "/workspace/rougezhushou/rouge/app.py",
+    "bytes": 100115,
+    "sha256": "fa77caff7b133a42d651f25166327982f37487a57ddb84f3461fc13bed1e03c8"
+  },
+  "candidate_app": {
+    "path": "candidate/rouge/app.py",
+    "bytes": 100029,
+    "sha256": "19ddbe647157316e07301c5b4d383cad2d8f622257457a52a57429f20fe5e7b4"
+  },
+  "app_local_transports": [
+    {
+      "description": "Import temporary-editor parser only; public calculate_damage unchanged",
+      "old": "from .damage import calculate_damage\r\n",
+      "new": "from .damage import calculate_damage\r\nfrom .manual_scenario import parse_preview_object\r\n",
+      "occurrences": 1
+    },
+    {
+      "description": "Move dual-editor cache transition ahead of all no-selection/no-implementation/no-skill early returns",
+      "old": "    def calculate(self):\r\n",
+      "new": "    def sync_scenario_previews(self,op,skill):\r\n        \"\"\"Keep both temporary editors bound to an implemented owner/skill.\"\"\"\r\n        key=(op,skill) if op in catalog()['operators'] and skill is not None else None\r\n        if key!=self.timing_preview_key:\r\n            if self.timing_preview_key is not None:\r\n                self.timing_previews[self.timing_preview_key]=self.timing_scenario.toPlainText()\r\n                self.relic_context_previews[self.timing_preview_key]=self.relic_context.toPlainText()\r\n            for widget,previews in ((self.timing_scenario,self.timing_previews),\r\n                                    (self.relic_context,self.relic_context_previews)):\r\n                blocked=widget.blockSignals(True)\r\n                widget.setPlainText(previews.get(key,'') if key is not None else '')\r\n                widget.blockSignals(blocked)\r\n            self.timing_preview_key=key\r\n        self.timing_scenario.setEnabled(key is not None)\r\n        self.relic_context.setEnabled(key is not None)\r\n\r\n    def calculate(self):\r\n",
+      "occurrences": 1
+    },
+    {
+      "description": "Advance scope before early returns without running a numerical model",
+      "old": "        if op is None:\r\n            self.show_damage_text('本局总览暂无已确认招募干员。请选择职业分支进行局外预览。')\r\n",
+      "new": "        self.sync_scenario_previews(op,self.skill.currentData())\r\n        if op is None:\r\n            self.show_damage_text('本局总览暂无已确认招募干员。请选择职业分支进行局外预览。')\r\n",
+      "occurrences": 1
+    },
+    {
+      "description": "Remove old late-only cache transition; keep existing dictionaries and exact editor strings",
+      "old": "            key=(scenario['operator'],scenario['skill'])\r\n            if key!=self.timing_preview_key:\r\n                if self.timing_preview_key is not None:\r\n                    self.timing_previews[self.timing_preview_key]=self.timing_scenario.toPlainText()\r\n                    self.relic_context_previews[self.timing_preview_key]=self.relic_context.toPlainText()\r\n                self.timing_scenario.blockSignals(True)\r\n                self.timing_scenario.setPlainText(self.timing_previews.get(key,''))\r\n                self.timing_scenario.blockSignals(False)\r\n                self.timing_preview_key=key\r\n                self.relic_context.blockSignals(True)\r\n                self.relic_context.setPlainText(self.relic_context_previews.get(key,''))\r\n                self.relic_context.blockSignals(False)\r\n",
+      "new": "",
+      "occurrences": 1
+    },
+    {
+      "description": "Only parse the currently applicable nonblank relic editor; needed filtering stays exact",
+      "old": "                try:preview=json.loads(self.relic_context.toPlainText())\r\n                except json.JSONDecodeError:raise ValueError('藏品测试条件需要合法JSON对象。') from None\r\n                if not isinstance(preview,dict):raise ValueError('藏品测试条件需要JSON对象。')\r\n",
+      "new": "                preview=parse_preview_object(self.relic_context.toPlainText(),'藏品测试条件')\r\n",
+      "occurrences": 1
+    },
+    {
+      "description": "Explicit duplicate/nonfinite editor policy; core dictionaries are untouched",
+      "old": "                try:scenario['timing']=json.loads(self.timing_scenario.toPlainText())\r\n                except json.JSONDecodeError:raise ValueError('战斗时序情景需要合法JSON对象。') from None\r\n                if not isinstance(scenario['timing'],dict):raise ValueError('战斗时序情景需要JSON对象。')\r\n",
+      "new": "                scenario['timing']=parse_preview_object(self.timing_scenario.toPlainText(),'战斗时序情景')\r\n",
+      "occurrences": 1
+    }
+  ],
+  "inverse_byte_exact_to_read_basis": true,
+  "only_existing_MainWindow_method_AST_changed": [
+    "calculate"
+  ],
+  "new_MainWindow_method_AST": [
+    "sync_scenario_previews"
+  ],
+  "all_other_MainWindow_method_AST_unchanged": true,
+  "cloud_selector_transport": {
+    "path": "scripts/verify_cloud.py",
+    "basis_bytes": 5780,
+    "basis_sha256": "81f1154516b10880e760a7331fc6daed069e8ffd4de31b260c1a12979544235d",
+    "old": "MODULES = (\n",
+    "new": "MODULES = (\n    \"tests.test_manual_scenario_120\",\n",
+    "occurrences": 1,
+    "candidate_bytes": 5818,
+    "candidate_sha256": "91f29accd20c88e8dbde68b91515a15a9b21b3a471aaa2f1bd2af9d480ca6d23"
+  },
+  "new_files": [
+    "rouge/manual_scenario.py",
+    "tests/test_manual_scenario_120.py"
+  ],
+  "Root_application_rule": "Do not whole-file overwrite later maintained app/cloud. Root verify local old anchors and recompose only listed increments against actual pre120 Source, then inverse-check current basis and freeze real guard. Source count, actual HEAD and Runtime PASS remain pending."
+}

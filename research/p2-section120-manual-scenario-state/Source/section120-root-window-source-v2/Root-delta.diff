@@ -1,0 +1,35 @@
+--- sealed-v1/window120.py
++++ Root-v2/window120.py
+@@ -134,7 +134,7 @@
+             run_path.write_bytes(run_raw);account_path.write_bytes(account_raw)
+             module.RUN_STATE=run_path;module.OPERATOR_STATE=account_path;module.SETTINGS=folder/'settings.json'
+             module.DesktopBackend=lambda _path,callback:backend(folder/'chat',callback)
+-            window=module.MainWindow();window.resize(1400,1200);window.show();window.centralWidget().setCurrentIndex(1)
++            window=module.MainWindow();window.resize(2200,1400);window.show();window.centralWidget().setCurrentIndex(1)
+             def idle():
+                 application.processEvents()
+                 assert window.isVisible() and not window.auto.isChecked() and not window.timer.isActive()
+@@ -250,14 +250,20 @@
+                 parent=window.timing_scenario.parentWidget()
+                 while parent is not None and not isinstance(parent,QScrollArea):parent=parent.parentWidget()
+                 assert parent is not None
+-                pure('show actual timing editor viewport',lambda:parent.ensureWidgetVisible(window.timing_scenario))
++                pure('show actual timing editor viewport',lambda:parent.ensureWidgetVisible(window.timing_scenario,0,0))
++                point=window.timing_scenario.mapTo(parent.viewport(),QPoint(0,0))
++                pure('align actual timing editor within viewport',lambda:(
++                    parent.horizontalScrollBar().setValue(parent.horizontalScrollBar().value()+point.x()-8),
++                    parent.verticalScrollBar().setValue(parent.verticalScrollBar().value()+point.y()-8)))
+                 point=window.timing_scenario.mapTo(parent.viewport(),QPoint(0,0));rect=window.timing_scenario.rect().translated(point)
+-                assert window.timing_scenario.isVisible() and parent.viewport().rect().contains(rect)
++                timing_viewport=parent.viewport().rect()
++                assert window.timing_scenario.isVisible() and timing_viewport.contains(rect), (rect.getRect(),timing_viewport.getRect())
+                 ref=save('actual_PNG_bounded_editor_report_excerpt',title=title,visible_report_blocks=visible,
+                     entire_long_report_visible=False,displayed_text=window.damage_text.toPlainText(),editors=editor_state(),
+                     cursor_rects=[(r.x(),r.y(),r.width(),r.height()) for r in rectangles],
+                     report_viewport=(viewport.x(),viewport.y(),viewport.width(),viewport.height()),
+-                    timing_control_rect=(rect.x(),rect.y(),rect.width(),rect.height()))
++                    timing_control_rect=(rect.x(),rect.y(),rect.width(),rect.height()),
++                    timing_viewport_rect=(timing_viewport.x(),timing_viewport.y(),timing_viewport.width(),timing_viewport.height()))
+                 path=out/(identity+'.png');assert window.grab().save(str(path),'PNG')
+                 pngs.append({'path':path.name,'bytes':path.stat().st_size,'sha256':sha(path.read_bytes()),'visual':ref})
+             idle();assert not window.run.preserve_unreadable and window.run.save_issue is None
