@@ -1,0 +1,61 @@
+test_e0_use_and_nonfixed_end_not_authorized (tests.test_skill_upgrade_comparison_133.SkillUpgradeTests.test_e0_use_and_nonfixed_end_not_authorized) ... ERROR
+test_e1_mastery_unavailable_and_training_reference (tests.test_skill_upgrade_comparison_133.SkillUpgradeTests.test_e1_mastery_unavailable_and_training_reference) ... ok
+test_invalid_ranks (tests.test_skill_upgrade_comparison_133.SkillUpgradeTests.test_invalid_ranks) ... ok
+test_same_scenario_baseline_and_differences (tests.test_skill_upgrade_comparison_133.SkillUpgradeTests.test_same_scenario_baseline_and_differences) ... FAIL
+test_unknown_healing_is_not_zero_difference (tests.test_skill_upgrade_comparison_133.SkillUpgradeTests.test_unknown_healing_is_not_zero_difference) ... ERROR
+test_account_only_view_is_reference_and_keeps_old_read_label (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_account_only_view_is_reference_and_keeps_old_read_label) ... ok
+test_all_30_original_forms_and_83_skills_have_exact_training_coordinates (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_all_30_original_forms_and_83_skills_have_exact_training_coordinates) ... ok
+test_cancelling_reference_returns_to_original_run_rank (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_cancelling_reference_returns_to_original_run_rank) ... ok
+test_changed_skill_identity_or_unlock_cannot_locate_old_original (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_changed_skill_identity_or_unlock_cannot_locate_old_original) ... ok
+test_compatible_account_mastery_is_available_only_at_existing_elite2_gate (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_compatible_account_mastery_is_available_only_at_existing_elite2_gate) ... ok
+test_default_missing_run_rank_keeps_old_preview_and_does_not_fill_account (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_default_missing_run_rank_keeps_old_preview_and_does_not_fill_account) ... ok
+test_default_old_preview_label_and_no_selection_remain (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_default_old_preview_label_and_no_selection_remain) ... ok
+test_default_run_rank_wins_over_different_account_rank (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_default_run_rank_wins_over_different_account_rank) ... ok
+test_e0_accepted_common5to7_results_stay_old_api_results (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_e0_accepted_common5to7_results_stay_old_api_results) ... ok
+test_e0_common5to7_training_gate_does_not_claim_use_evidence (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_e0_common5to7_training_gate_does_not_claim_use_evidence) ... ok
+test_explicit_account_reference_can_choose_higher_and_lower_read_rank (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_explicit_account_reference_can_choose_higher_and_lower_read_rank) ... ok
+test_explicit_reference_drives_real_healing_level_and_cancel_restores_full_result (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_explicit_reference_drives_real_healing_level_and_cancel_restores_full_result) ... ok
+test_invalid_new_reference_leaves_never_replace_qualified_default (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_invalid_new_reference_leaves_never_replace_qualified_default) ... ok
+test_locked_skill_cannot_adopt_account_reference_or_gain_new_unlock (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_locked_skill_cannot_adopt_account_reference_or_gain_new_unlock) ... ok
+test_masked_account_reference_is_not_used (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_masked_account_reference_is_not_used) ... ok
+test_missing_patch_form_originals_remain_missing_without_borrowing_caster (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_missing_patch_form_originals_remain_missing_without_borrowing_caster) ... ok
+test_original_recruit_caps_are_reference_and_do_not_fill_skill_facts (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_original_recruit_caps_are_reference_and_do_not_fill_skill_facts) ... ok
+test_string_and_integer_keys_keep_old_priority (tests.test_skill_cultivation_118.SkillCultivation118Tests.test_string_and_integer_keys_keep_old_priority) ... ok
+
+======================================================================
+ERROR: test_e0_use_and_nonfixed_end_not_authorized (tests.test_skill_upgrade_comparison_133.SkillUpgradeTests.test_e0_use_and_nonfixed_end_not_authorized)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_skill_upgrade_comparison_133.py", line 31, in test_e0_use_and_nonfixed_end_not_authorized
+    result=compare_skill_upgrades({'operator':'char_196_sunbr','skill':1,'elite':0,'skill_rank':7},{'ranks':[7]})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/rougezhushou/rouge/skill_upgrade_comparison.py", line 34, in compare_skill_upgrades
+    for key in ('window_damage','window_healing','cycle_damage','cycle_healing'): row[key] = metrics[key]
+                                                                                             ~~~~~~~^^^^^
+KeyError: 'window_damage'
+
+======================================================================
+ERROR: test_unknown_healing_is_not_zero_difference (tests.test_skill_upgrade_comparison_133.SkillUpgradeTests.test_unknown_healing_is_not_zero_difference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_skill_upgrade_comparison_133.py", line 24, in test_unknown_healing_is_not_zero_difference
+    result=compare_skill_upgrades({'operator':'char_2025_shu','skill':1,'skill_rank':7},{'ranks':[7,10]})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/rougezhushou/rouge/skill_upgrade_comparison.py", line 34, in compare_skill_upgrades
+    for key in ('window_damage','window_healing','cycle_damage','cycle_healing'): row[key] = metrics[key]
+                                                                                             ~~~~~~~^^^^^
+KeyError: 'window_damage'
+
+======================================================================
+FAIL: test_same_scenario_baseline_and_differences (tests.test_skill_upgrade_comparison_133.SkillUpgradeTests.test_same_scenario_baseline_and_differences)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_skill_upgrade_comparison_133.py", line 12, in test_same_scenario_baseline_and_differences
+    self.assertEqual(upgrade['duration_parameter'],40);self.assertEqual(upgrade['sp_cost_parameter'],40)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 35 != 40
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.276s
+
+FAILED (failures=1, errors=2)

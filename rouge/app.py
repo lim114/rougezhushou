@@ -766,6 +766,10 @@ class MainWindow(QMainWindow):
         self.healing_budget_button.setEnabled(False)
         self.healing_budget_button.clicked.connect(self.show_healing_budget)
         layout.addWidget(self.healing_budget_button)
+        self.skill_upgrade_button=QPushButton('比较技能等级升级收益（同培养）')
+        self.skill_upgrade_button.setEnabled(False)
+        self.skill_upgrade_button.clicked.connect(self.show_skill_upgrades)
+        layout.addWidget(self.skill_upgrade_button)
         self.damage_text = QPlainTextEdit()
         self.damage_text.setReadOnly(True)
         layout.addWidget(self.damage_text,1)
@@ -845,6 +849,21 @@ class MainWindow(QMainWindow):
         if previous is not None:previous.close();previous.deleteLater()
         dialog=ChargeTimelineDialog(scenario,self.damage_result['result']['estimate']['skill']['duration_seconds'],self)
         self.charge_timeline_dialog=dialog;dialog.show()
+
+    def show_skill_upgrades(self):
+        if not self.damage_result:return
+        from copy import deepcopy
+        from .skill_upgrade_comparison import compare_skill_upgrades,format_skill_upgrades
+        from .reference_dialog import ReferenceDialog
+        scenario=deepcopy(self.damage_result['scenario'])
+        previous=getattr(self,'skill_upgrade_dialog',None)
+        if previous is not None:previous.close();previous.deleteLater()
+        self.skill_upgrade_dialog=ReferenceDialog('技能等级 · 同培养收益对照',
+            '选择要比较的公共等级1–7或专精8–10。只替换等级，账号和本局不变；不可测算的等级列出原因。',
+            {'ranks':list(range(1,11))},lambda preview:compare_skill_upgrades(scenario,preview),format_skill_upgrades,
+            [('label','等级'),('status','测算状态'),('duration_parameter','持续参数/秒'),('sp_cost_parameter','技力参数'),
+             ('window_damage','窗口总伤'),('delta_window_damage','相对基准伤害'),('window_healing','窗口治疗'),('delta_window_healing','相对基准治疗')],self)
+        self.skill_upgrade_dialog.show()
 
     def show_healing_budget(self):
         if not self.damage_result:return
@@ -1273,6 +1292,7 @@ class MainWindow(QMainWindow):
         if hasattr(self,'charge_timeline_button'):self.charge_timeline_button.setEnabled(False)
         if hasattr(self,'shield_timeline_button'):self.shield_timeline_button.setEnabled(False)
         if hasattr(self,'healing_budget_button'):self.healing_budget_button.setEnabled(False)
+        if hasattr(self,'skill_upgrade_button'):self.skill_upgrade_button.setEnabled(False)
         self.damage_result=None
         if hasattr(self,'relic_context'):self.damage_form.setRowVisible(self.relic_context,False)
         op=self.operator.currentData()
@@ -1416,6 +1436,7 @@ class MainWindow(QMainWindow):
             self.shield_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==2)
             from .healing_budget import healing_sources
             self.healing_budget_button.setEnabled(bool(healing_sources(result)))
+            self.skill_upgrade_button.setEnabled(True)
             self.render_damage()
         except Exception as error:
             self.damage_result=None

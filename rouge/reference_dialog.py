@@ -37,6 +37,7 @@ class ReferenceDialog(QDialog):
             for j,(key,_) in enumerate(self.columns):
                 value = row[key]
                 text = '未知' if value is None else format(value,'.8g') if type(value) in (int,float) else str(value)
+                if row.get(key+'_applicable') is False: text = '不适用'
                 self.table.setItem(i,j,QTableWidgetItem(text))
         self.table.resizeColumnsToContents(); self.notice.setPlainText(self.formatter(result)); self.copy_button.setEnabled(True)
 

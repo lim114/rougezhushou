@@ -1,0 +1,52 @@
+{
+  "section": 133,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T16:36:42.841005+08:00",
+  "prior_commit": "ca28b47e30880e83c391a691c2c3eb27481a97d2",
+  "title": "同培养技能等级升级收益对照",
+  "remaining_project_item": "P2技能精度：技能等级、肉鸽受限培养及特殊分项",
+  "new_capability": "按同一培养、模组、目标和观察条件比较公共等级1–7与专精8–10，显示持续/技力参数、窗口输出与相对基准差值，原训练门和不可测算等级的原因可查看复制。",
+  "acceptance": [
+    "只替换技能等级",
+    "当前等级差值为零",
+    "未知整体输出不当零",
+    "已计小计与整体分开",
+    "精一专精不开放",
+    "受限精英公共使用仍未知",
+    "不适用输出明确标注"
+  ],
+  "limitations": [
+    "原训练门不等于账户培养或肉鸽受限形态的实际使用资格",
+    "原生结束、充能、回转和特殊分项仍待核验"
+  ],
+  "sources": [
+    "rouge/skill_upgrade_comparison.py",
+    "rouge/reference_dialog.py",
+    "rouge/app.py",
+    "tests/test_skill_upgrade_comparison_133.py"
+  ],
+  "evidence_reused": [
+    "rouge/skill_cultivation.py",
+    "rouge/data/skill-cultivation-reference.json",
+    "rouge/catalog.py"
+  ],
+  "failure_record": "verification/section-133/failure-record.json",
+  "validation": {
+    "necessary_tests_run": 23,
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 4,
+    "test_output": "verification/section-133/tests.txt",
+    "window_receipt": "verification/section-133/window.json"
+  },
+  "source_sha256": {
+    "rouge/skill_upgrade_comparison.py": "4d96a006c780ed372c9076eceb842466bb482cfa6bb170923114813ef0b4b77b",
+    "rouge/reference_dialog.py": "c24fee8bf85535b422d3137425fda819d2204d99dc0ce28093d873e4bc199863",
+    "rouge/app.py": "f169dbef6e3a1d7193849549279de7999b38352877ac995e329ad1854177c179",
+    "tests/test_skill_upgrade_comparison_133.py": "d2bb71d0b027cc70f4707b4729f12e9f1a2cee338e7f44f759bac6f576638423"
+  },
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}
