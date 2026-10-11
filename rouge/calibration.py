@@ -79,3 +79,39 @@ def panel_layers(scenario):
                      '技能面板仅列当前模型已输出的攻击与攻速；未覆盖的技能生命、防御变化没有伪造数值。']}
 
 COMMANDS={'panel':panel_layers}
+
+
+def compare_panel(scenario, observation, tolerance=0):
+    """Compare only the declared matching panel/context; never relabel a source."""
+    predicted=panel_layers(scenario);_number(tolerance,'tolerance')
+    if not isinstance(observation,dict):raise ValueError('observation需要JSON对象。')
+    if observation.get('context_token')!=predicted['context_token']:
+        raise ValueError('观察值与预测条件不一致；请先用panel导出相同条件标识。')
+    panel=observation.get('panel')
+    if panel not in predicted['panels']:raise ValueError('观察面板类型不明确。')
+    kind=observation.get('evidence_kind')
+    if kind not in ('game_panel','public_case','formula_reference'):
+        raise ValueError('必须区分游戏面板、公开算例与公式参考。')
+    source=observation.get('source')
+    if not isinstance(source,str) or not source.strip():raise ValueError('观察值必须注明来源。')
+    values=observation.get('values')
+    if not isinstance(values,dict) or not values:raise ValueError('观察值不能为空。')
+    rows=[]
+    for field,actual in values.items():
+        if field not in LABELS:raise ValueError('未支持的面板字段：'+str(field))
+        _number(actual,field);expect=predicted['panels'][panel].get(field)
+        delta=None if expect is None else actual-expect
+        rows.append({'field':field,'label':LABELS[field],'predicted':expect,'observed':actual,
+                     'difference':delta,'relative_difference':None if not expect else delta/abs(expect),
+                     'matches_declared_tolerance':None if delta is None else abs(delta)<=tolerance,
+                     'other_stage_matches':[r['stage'] for row in predicted['rows'] if row['field']==field
+                         for r in row['stages'] if r['value'] is not None and abs(actual-r['value'])<=tolerance and r['stage']!=panel]})
+    return {'operator':predicted['operator'],'context_token':predicted['context_token'],
+            'panel':panel,'evidence_kind':kind,'source':source,'tolerance':tolerance,'rows':rows,
+            'all_compared_values_match':all(r['matches_declared_tolerance'] is True for r in rows),
+            'uncompared_fields':[f for f in predicted['panels'][panel] if f in LABELS and f not in values],
+            'native_verified':False,'notes':[BOUNDARY,
+                '来源类型由调用方声明；工具不把网页计算或用户填写值升级为实机证据。',
+                '其它层命中仅是排查线索，不证明差异原因；部分字段相符不等于完整面板已通过。']}
+
+COMMANDS['pair']=compare_panel

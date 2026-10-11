@@ -18,4 +18,23 @@ class CalibrationTests(unittest.TestCase):
         self.assertEqual(r['panels']['藏品与分队符文写回']['hp'],3180)
         self.assertEqual(r['panels']['已覆盖常态天赋与效果']['hp'],3975)
 
+
+    def test_152_paired_context_and_stage_diagnostic(self):
+        s={'operator':'mechanist','skill':3};p=c.panel_layers(s)
+        obs={'context_token':p['context_token'],'panel':'已覆盖常态天赋与效果',
+             'evidence_kind':'formula_reference','source':'固定培养表独立对照','values':{'attack':573,'defense':765}}
+        r=c.compare_panel(s,obs)
+        self.assertTrue(r['all_compared_values_match']);self.assertFalse(r['native_verified'])
+        obs['values']['attack']=2177.4;r=c.compare_panel(s,obs)
+        self.assertFalse(r['all_compared_values_match'])
+        self.assertIn('技能期间参考',r['rows'][0]['other_stage_matches'])
+        with self.assertRaises(ValueError):c.compare_panel({**s,'potential':4},obs)
+    def test_152_public_case_not_promoted_to_native(self):
+        s={'operator':'kaltsit','skill':2};p=c.panel_layers(s)
+        r=c.compare_panel(s,{'context_token':p['context_token'],'panel':'技能期间参考',
+            'evidence_kind':'public_case','source':'https://prts.wiki/w/凯尔希·思衡托',
+            'values':{'attack':1275}})
+        self.assertTrue(r['all_compared_values_match'])
+        self.assertEqual(r['evidence_kind'],'public_case');self.assertFalse(r['native_verified'])
+
 if __name__=='__main__':unittest.main()
