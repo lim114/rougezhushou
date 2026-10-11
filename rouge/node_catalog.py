@@ -196,3 +196,55 @@ def event_reward_options(event_id):
     return _result(rows,event=_summary(e),inventory_updated=False,
                    named_grant_only=True,full_reward_pool_known=False)
 COMMANDS['rewards']=event_reward_options
+@lru_cache(maxsize=1)
+def _battle_pools():
+    return json.loads((Path(__file__).with_name('data')/'battle-node-pools.json').read_text(encoding='utf-8'))
+def _difficulty(difficulty):
+    if difficulty is not None and (type(difficulty) is not int or difficulty not in _data()['valid_difficulties']):
+        raise ValueError('保密等级需要固定资料中的普通模式整数或留空。')
+def _node_requirement_checks(node_type,floor=None,difficulty=None,special_region=False):
+    _floor(floor,special_region);_difficulty(difficulty)
+    rules={'“居民”据点':{'excluded_main_floors':[1,6],'minimum_difficulty':4},
+           '曲折密道':{'excluded_main_floors':[1,2,6]},'应急助力':{'excluded_main_floors':[1,6]}}
+    rule=rules.get(node_type,{})
+    reference=next((f for f in _battle_pools()['node_functions'] if f['node_type']==node_type),None)
+    return {'excluded_main_floors':deepcopy(rule.get('excluded_main_floors',[])),
+            'minimum_difficulty':rule.get('minimum_difficulty'),
+            'known_floor_requirement_matches':None if not rule.get('excluded_main_floors') or floor is None or special_region else floor not in rule['excluded_main_floors'],
+            'known_difficulty_requirement_matches':None if rule.get('minimum_difficulty') is None or difficulty is None else difficulty>=rule['minimum_difficulty'],
+            'condition_sources':deepcopy(reference['references']) if rule and reference else [],
+            'full_server_eligibility_verified':False}
+def battle_candidates(node_type=None,floor=None,context='natural',special_region=False,difficulty=None):
+    from .catalog import catalog
+    _text(node_type,'节点类型',True);_floor(floor,special_region)
+    if context not in ('natural','content','all'):raise ValueError('战斗来源需要natural、content或all。')
+    pool=_battle_pools();rows=[];excluded=[]
+    checks=_node_requirement_checks(node_type,floor,difficulty,special_region)
+    if node_type is not None and node_type not in _all_node_types():raise ValueError('节点类型不在已证目录中。')
+    meta=json.loads((Path(__file__).with_name('data')/'view-catalog.json').read_text(encoding='utf-8'))['stages']
+    for sid,p in pool['stages'].items():
+        membership=p['natural_node_types'] if context=='natural' else p['content_node_types'] if context=='content' else list(dict.fromkeys(p['natural_node_types']+p['content_node_types']))
+        if node_type is not None and node_type not in membership:continue
+        # An unfiltered query is the complete fixed stage directory, not a node pool.
+        s=catalog()['stages'][sid];m=meta.get(sid,{})
+        r={'id':sid,'title':s['name'],'difficulty':s['difficulty'],'boss_parameter':s['isBoss'],
+           'floor':m.get('floor'),'floor_label':m.get('label'),'floors':deepcopy(p['floors']),
+           'categories':deepcopy(p['categories']),'natural_node_types':deepcopy(p['natural_node_types']),
+           'content_node_types':deepcopy(p['content_node_types']),'source_references':deepcopy(p['source_references']),
+           'settlement_context_references':deepcopy(p['settlement_context_references']),
+           'known_requirement_checks':deepcopy(checks),'context':context,'natural_pool_reference':bool(p['natural_node_types']),
+           'node_applicability':'来源具名池引用；服务器资格未知','description':s['description'],
+           'actual_occurrence':None,'server_eligibility':'未知','hidden_layer_reference':p['hidden_layer_reference']}
+        if checks['known_floor_requirement_matches'] is False or checks['known_difficulty_requirement_matches'] is False:
+            excluded.append({**r,'exclusion_reason':'已核对的节点主层或保密等级门槛不符'});continue
+        # Generic displayed floors on pursuit/special variants cannot filter content contexts.
+        apply_floor=node_type is not None and context in ('natural','all') and not special_region and bool(p['natural_node_types'])
+        if floor is not None and apply_floor and p['hidden_layer_reference']:
+            excluded.append({**r,'exclusion_reason':'固定目录标记为隐藏层，不能当作所选主层'});continue
+        if floor is not None and apply_floor and p['floors'] and floor not in p['floors']:
+            excluded.append({**r,'exclusion_reason':'具名自然节点池的固定目录主层不符'});continue
+        rows.append(r)
+    return _result(rows,excluded=excluded,node_type=node_type,floor=floor,context=context,special_region=special_region,difficulty=difficulty,known_requirement_checks=checks,
+                   stage_source=deepcopy(catalog()['source']),pool_sources=deepcopy(pool['sources']),
+                   pool_limits=deepcopy(pool['limitations']),unfiltered_is_directory=node_type is None)
+COMMANDS['battles']=battle_candidates

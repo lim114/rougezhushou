@@ -110,3 +110,41 @@ class NodeCatalogTests(unittest.TestCase):
         with patch('rouge.node_rewards._reference',return_value=bad):
             changed=next(x for x in c.event_reward_options(e['id'])['rows'] if x['choice_id']==row['choice_id'])
         self.assertFalse(changed['rewards']);self.assertTrue(changed['rejected_reward_links'])
+    def test_178(self):
+        r=c.battle_candidates('作战',floor=1);self.assertIn('遗忘时间',[x['title'] for x in r['rows']])
+        self.assertTrue(all(x['categories']==['normal'] and x['natural_node_types']==['作战'] for x in r['rows']))
+        self.assertFalse(c.battle_candidates('作战',floor=6)['rows'])
+        self.assertEqual(len(c.battle_candidates('作战')['rows']),31)
+        self.assertEqual(len(c.battle_candidates('紧急作战')['rows']),31)
+        self.assertFalse(c.battle_candidates('险路尽头')['rows'])
+        self.assertEqual(len(c.battle_candidates()['rows']),105)
+    def test_178_contexts_never_mix_normal_events_pursuit(self):
+        ordinary={r['id'] for r in c.battle_candidates('作战')['rows']}
+        self.assertNotIn('ro6_t_1',ordinary);self.assertNotIn('ro6_c_1',ordinary)
+        self.assertNotIn('ro6_t_6',ordinary);self.assertNotIn('ro6_t_8',ordinary)
+        event=c.battle_candidates('不期而遇',context='content',floor=1)['rows']
+        self.assertIn('ro6_t_1',{r['id'] for r in event})
+        self.assertTrue(any('event' in r['categories'] and 'pursuit' in r['categories'] for r in event))
+        self.assertFalse(c.battle_candidates('不期而遇',context='natural')['rows'])
+        bosses={r['id'] for r in c.battle_candidates('险路恶敌')['rows']}
+        self.assertIn('ro6_b_1',bosses);self.assertNotIn('ro6_b_1_b',bosses)
+        self.assertEqual({r['id'] for r in c.battle_candidates('“居民”据点')['rows']},{'ro6_t_10','ro6_t_11'})
+        self.assertEqual({r['id'] for r in c.battle_candidates('诡意行商',context='content')['rows']},{'ro6_t_6','ro6_t_7'})
+        with self.assertRaises(ValueError):c.battle_candidates(context='invalid')
+    def test_178_hidden_floor_not_reassigned_to_main_floor(self):
+        r=c.battle_candidates('作战',floor=1)
+        self.assertEqual(len(r['rows']),4)
+        self.assertTrue(any(x['hidden_layer_reference'] for x in r['excluded']))
+        hidden=c.battle_candidates('作战',floor=6,special_region=True)['rows']
+        self.assertTrue(any(x['hidden_layer_reference'] for x in hidden))
+    def test_178_resident_gate_uses_explicit_node_conditions(self):
+        for floor in (1,6):
+            r=c.battle_candidates('“居民”据点',floor=floor,difficulty=15)
+            self.assertFalse(r['rows']);self.assertEqual(len(r['excluded']),2)
+            self.assertFalse(r['known_requirement_checks']['known_floor_requirement_matches'])
+        r=c.battle_candidates('“居民”据点',floor=2,difficulty=3)
+        self.assertFalse(r['rows']);self.assertFalse(r['known_requirement_checks']['known_difficulty_requirement_matches'])
+        r=c.battle_candidates('“居民”据点',floor=2)
+        self.assertEqual(len(r['rows']),2);self.assertIsNone(r['known_requirement_checks']['known_difficulty_requirement_matches'])
+        self.assertEqual(len(c.battle_candidates('“居民”据点',floor=2,difficulty=4)['rows']),2)
+        with self.assertRaises(ValueError):c.battle_candidates(difficulty=True)
