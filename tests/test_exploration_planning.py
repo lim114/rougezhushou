@@ -15,6 +15,39 @@ def graph():
         'edges':[['s','wish'],['wish','shop'],['s','combat'],['s','unknown'],['shop','far']]}
 
 class ExplorationPlanningTests(unittest.TestCase):
+    def test_217_move_grants_and_exact_passive_conditions(self):
+        g=graph();old=copy.deepcopy(g)
+        r=p.movement_effects(g,'rogue_6_scrap_M_10','shop',remaining_uses=2,
+            passive_items=[{'item_id':'rogue_6_scrap_P_03','remaining_activations':1}])
+        self.assertEqual(r['movement_grants'][0]['amount'],4)
+        self.assertTrue(r['movement_grants'][0]['condition_matches'])
+        self.assertTrue(r['passives'][0]['condition_matches'])
+        self.assertEqual(r['passives'][0]['effects'],[{'resource':'shield','amount':3}])
+        r=p.movement_effects(g,'rogue_6_scrap_M_12','wish',remaining_uses=1,
+            passive_items=[{'item_id':'rogue_6_scrap_P_05','remaining_activations':1}])
+        self.assertEqual(r['movement_grants'][0]['resource'],'ap')
+        self.assertEqual(r['movement_grants'][0]['amount'],3)
+        self.assertTrue(r['passives'][0]['condition_matches']);self.assertEqual(g,old)
+        self.assertFalse(r['combat_modifiers_applied']);self.assertIsNone(r['actual_new_resources'])
+
+    def test_217_unknown_and_failed_conditions_do_not_become_grants(self):
+        g=graph()
+        r=p.movement_effects(g,'rogue_6_scrap_M_09','wish',remaining_uses=1)
+        self.assertIsNone(r['movement_grants'][0]['condition_matches'])
+        g['nodes'][2]['scrap_category']='EVENTS'
+        r=p.movement_effects(g,'rogue_6_scrap_M_09','wish',remaining_uses=1,
+            passive_items=[{'item_id':'rogue_6_scrap_P_02','remaining_activations':0}])
+        self.assertTrue(r['movement_grants'][0]['condition_matches'])
+        self.assertFalse(r['passives'][0]['condition_matches'])
+        r=p.movement_effects(g,'rogue_6_scrap_M_10','wish',remaining_uses=2)
+        self.assertFalse(r['movement_grants'][0]['condition_matches'])
+        r=p.movement_effects(g,'rogue_6_scrap_M_07','wish',remaining_uses=1,
+            passive_items=[{'item_id':'rogue_6_scrap_P_03','remaining_activations':1}])
+        self.assertIsNone(r['random_target_selection_condition']);self.assertIsNone(r['passives'][0]['condition_matches'])
+        with self.assertRaises(ValueError):p.movement_effects(g,'rogue_6_scrap_M_01','s')
+        with self.assertRaises(ValueError):p.movement_effects(g,'rogue_6_scrap_M_08','wish',passive_items=[
+            {'item_id':'rogue_6_scrap_P_03','remaining_activations':2}])
+
     def test_216_original_item_and_range_parameters(self):
         data=p.reference_data();self.assertEqual(len(p.item_catalog()['items']),30)
         self.assertEqual({k:len(p.item_catalog(k)['items']) for k in ('MOVE','GOODS','PASSIVE')},

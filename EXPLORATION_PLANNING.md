@@ -11,4 +11,6 @@
 
 `EVENTS`/`BATTLES` 内部成员关系不在本原件中，缺证时保留全部范围候选并输出未知；可显式声明 `scrap_category` 为 `EVENTS`、`BATTLES`、`EMPTY`。该声明不会被标为实机核验。加工品直达不借用路径长度；随机加工品保留全部候选且不选择终点、不输出概率。同格再进入单列未知。
 
+`effects` 在 `targets` 条件之外增加 `target` 和可选的 `passive_items` 持有声明。每项概念体使用 `item_id` 和可选 `remaining_activations`；缺少次数时不认定可触发。结果逐项显示加工品的希望/锭/AP具名增量及6概念体的节点条件、次数条件、效果描述。攻速保留为战斗资料，不接入战斗数值；随机收藏品仅列数量，完整池未知。条件不符或未知不会当作已领取收益，重复同类概念体叠加不猜。
+
 源版本：`Kengxxiao/ArknightsGameData@a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`，完整原件哈希和精确字段在 `research/p3-exploration-planning/source-receipt.json` 与结果中。仅提取小范围事实参数；未声称上游许可证已核实。

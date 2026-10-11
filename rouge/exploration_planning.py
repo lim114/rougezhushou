@@ -117,4 +117,61 @@ def movement_targets(graph,item_id,start=None,remaining_uses=None):
                    random_selection_verified=False,inventory_initial_uses=raw['count'])
 
 
-COMMANDS={'items':item_catalog,'targets':movement_targets}
+def _and(*values):
+    return False if False in values else None if None in values else True
+
+
+MOVEMENT_GAINS={'rogue_6_scrap_M_09':[{'resource':'hope','amount':2}],
+                'rogue_6_scrap_M_10':[{'resource':'gold','amount':4}],
+                'rogue_6_scrap_M_12':[{'resource':'ap','amount':3}]}
+PASSIVE_EFFECTS={
+    'rogue_6_scrap_P_01':[{'resource':'battle_attack_speed_reference','amount':50},
+                        {'resource':'random_relic','amount':1,'timing':'after_battle'}],
+    'rogue_6_scrap_P_02':[{'resource':'random_relic','amount':1}],
+    'rogue_6_scrap_P_03':[{'resource':'shield','amount':3}],
+    'rogue_6_scrap_P_04':[{'resource':'battle_attack_speed_reference','amount':35}],
+    'rogue_6_scrap_P_05':[{'resource':'random_relic','amount':1}],
+    'rogue_6_scrap_P_06':[{'resource':'random_relic','amount':2}],
+}
+
+
+def movement_effects(graph,item_id,target,start=None,remaining_uses=None,passive_items=None):
+    """Source-stated movement grants and each passive condition, kept separate."""
+    result=movement_targets(graph,item_id,start,remaining_uses);nodes,_=_graph(graph,start)
+    if not isinstance(target,str) or target not in nodes: raise ValueError('目的地必须在声明地图中。')
+    destination=next((row for row in result['targets']+result['excluded'] if row['node_id']==target),None)
+    if destination is None: raise ValueError('同格再进入适用性未知，不能作为加工品移动收益计算。')
+    eligible=_and(destination['geometry_matches'],destination['node_type_matches'],destination['uses_available'])
+    selection_condition=None if result['item']['raw']['isRandomMove'] else True
+    grants=[{**deepcopy(grant),'condition_matches':_and(eligible,selection_condition),
+             'actual_granted':None,'source_selector':result['item']['source_selector']}
+            for grant in MOVEMENT_GAINS.get(item_id,[])]
+    if passive_items is None:passive_items=[]
+    if not isinstance(passive_items,list): raise ValueError('概念体持有声明需要对象列表。')
+    passives=[];seen=set()
+    for declaration in passive_items:
+        if not isinstance(declaration,dict): raise ValueError('概念体声明需要对象。')
+        item=_item(declaration.get('item_id'),'PASSIVE');key=item['id']
+        if key in seen: raise ValueError('同一概念体重复持有叠加未核验，请分别保留来源，不合并计算。')
+        seen.add(key);remaining=declaration.get('remaining_activations')
+        _integer(remaining,'概念体剩余激活次数',optional=True)
+        limited=key in ('rogue_6_scrap_P_01','rogue_6_scrap_P_02','rogue_6_scrap_P_03')
+        if limited and remaining is not None and remaining>1:
+            raise ValueError('一次性概念体声明激活次数超过固定描述。')
+        availability=None if remaining is None else remaining>0
+        match,basis=_membership(nodes[target],[item['raw']['node']])
+        condition=_and(eligible,selection_condition,match,availability)
+        passives.append({'item_id':key,'name':item['name'],'node_type_matches':match,'type_basis':basis,
+                         'activation_available_declared':availability,'remaining_activations_declared':remaining,
+                         'source_stated_single_activation':limited,'condition_matches':condition,
+                         'effects':deepcopy(PASSIVE_EFFECTS[key]),'source_selector':item['source_selector'],
+                         'random_reward_pool_known':False,'actual_activation':None})
+    return _result(item=result['item'],start=result['start'],target=target,destination=destination,
+                   declared_move_condition_matches=eligible,random_target_selection_condition=selection_condition,
+                   movement_grants=grants,passives=passives,actual_new_resources=None,
+                   combat_modifiers_applied=False,passive_stacking_verified=False,
+                   additional_limits=['住民临时占领不自动改写原节点类型；特殊转换的原始节点归属须明确。',
+                                      '攻速仅列触发资料，未接入战斗计算；随机收藏品仅有描述数量，不生成具名池。'])
+
+
+COMMANDS={'items':item_catalog,'targets':movement_targets,'effects':movement_effects}
