@@ -9,7 +9,7 @@ from PySide6.QtCore import QObject, Signal, Qt, QTimer,QSize
 from PySide6.QtGui import QImage, QPixmap, QIcon
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QFormLayout, QPushButton, QLabel, QComboBox, QTabWidget, QPlainTextEdit, QLineEdit,
-    QDoubleSpinBox, QSpinBox, QCheckBox, QListWidget, QListWidgetItem, QSplitter,QScrollArea)
+    QDoubleSpinBox, QSpinBox, QCheckBox, QListWidget, QListWidgetItem, QSplitter,QScrollArea,QDialog,QTableWidget,QTableWidgetItem)
 from .capture import GameCapture, list_game_windows
 from .catalog import catalog,operator_profiles,stage_previews
 from .operator_summary import format_operator_observation
@@ -748,6 +748,9 @@ class MainWindow(QMainWindow):
         calculate = QPushButton('计算属性与技能预估')
         calculate.clicked.connect(self.calculate)
         layout.addWidget(calculate)
+        self.token_comparison_button=QPushButton('比较召唤物模组升级（局外参考）')
+        self.token_comparison_button.clicked.connect(self.show_token_module_comparison)
+        layout.addWidget(self.token_comparison_button)
         self.damage_text = QPlainTextEdit()
         self.damage_text.setReadOnly(True)
         layout.addWidget(self.damage_text,1)
@@ -817,6 +820,52 @@ class MainWindow(QMainWindow):
             self.displayed_enemy_context=key
         self.damage_form.setRowVisible(self.orb_mode,target.get('enemy_id')=='enemy_2148_shorbb')
         if hasattr(self,'raw_damage'):self.calculate()
+
+    def show_token_module_comparison(self):
+        from .token_module_comparison import compare_token_module
+        op=self.operator.currentData();profile=catalog()['operators'][op]
+        if not profile.get('tokens'):return
+        training=self.training_conditions()
+        previous=getattr(self,'token_comparison_dialog',None)
+        if previous is not None:previous.close();previous.deleteLater()
+        dialog=QDialog(self);dialog.setWindowTitle('召唤物模组升级参考（局外对照）')
+        dialog.resize(950,600);layout=QVBoxLayout(dialog)
+        label=QLabel(profile['name']+' · 同一培养条件：精英'+str(training['elite'])+' / 等级'+str(training['level'])+'。所选模组仅作升级模拟，不改变账号培养或本局记录。')
+        label.setWordWrap(True);layout.addWidget(label)
+        selector=QComboBox();selector.addItem('仅查看独立实体培养基础',None)
+        for module in profile['modules']:selector.addItem(module['name']+'（模拟升级）',module['id'])
+        layout.addWidget(selector)
+        table=QTableWidget();table.setColumnCount(6)
+        table.setHorizontalHeaderLabels(['独立实体 / 参数','无模组基础','模组1级','模组2级','模组3级','范围'])
+        table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers);layout.addWidget(table)
+        notice=QLabel();notice.setWordWrap(True);layout.addWidget(notice)
+        def refresh():
+            try:result=compare_token_module(op,training,selector.currentData())
+            except (ValueError,KeyError) as error:
+                table.setRowCount(0);notice.setText(str(error));dialog.comparison_result=None;return
+            dialog.comparison_result=result;fields=(('hp','生命'),('attack','攻击'),('defense','防御'),
+                ('resistance','法抗'),('deployment_cost','部署费用'),('interval','基础攻击间隔/秒'),
+                ('held_limit','库存上限'),('concurrent_limit','每类在场上限'))
+            table.setRowCount(len(result['tokens'])*len(fields))
+            row=0
+            for token in result['tokens']:
+                for key,title in fields:
+                    table.setItem(row,0,QTableWidgetItem(token['name']+' / '+title))
+                    for column in range(1,5):
+                        stage=next((s for s in token['stages'] if s['module_level']==column-1),None)
+                        value=stage['values'].get(key) if stage else None
+                        text=(format(value,'.6g') if value is not None else '未解锁' if stage and stage['state']=='locked' else '未确认' if stage else '未选择')
+                        if stage and key in stage['differences']:text+=' ('+format(stage['differences'][key],'+.6g')+')'
+                        table.setItem(row,column,QTableWidgetItem(text))
+                    table.setItem(row,5,QTableWidgetItem('已核验片段；实际在场未知' if key in ('held_limit','concurrent_limit') else '独立培养 / 已核验模组片段'))
+                    row+=1
+            table.resizeColumnsToContents();notice.setText('\n'.join(result['notes']))
+        selector.currentIndexChanged.connect(refresh)
+        chosen=selector.findData(training.get('module_id'))
+        if chosen<=0 and profile['modules']:chosen=1
+        selector.setCurrentIndex(max(0,chosen));refresh()
+        dialog.module_selector=selector;dialog.comparison_table=table
+        self.token_comparison_dialog=dialog;dialog.show()
 
     def current_operator_state(self,*,preserve_level=None):
         from .training_view import select_training_view
@@ -901,6 +950,8 @@ class MainWindow(QMainWindow):
         if not hasattr(self,'attack'):
             return
         op = self.operator.currentData()
+        if hasattr(self,'token_comparison_button'):
+            self.token_comparison_button.setEnabled(bool(catalog()['operators'].get(op,{}).get('tokens')))
         if op is None:
             self.display_operator=None;self.skill_override=False;self.level_override=False
             self.operator_picture.set_subject(None,None,'');self.level.setEnabled(False)

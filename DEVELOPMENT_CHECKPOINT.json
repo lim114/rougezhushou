@@ -36,7 +36,7 @@
     "latest_functional_scope_requirement_Beijing": "2026-10-11"
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 125,
+  "completed_sections": 126,
   "sections": [
     {
       "number": 1,
@@ -791,10 +791,16 @@
       "number": 125,
       "topic": "时序预览超范围数值的明确错误处理",
       "verification": "verification/sections/125.json"
+    },
+    {
+      "number": 126,
+      "topic": "召唤物模组升级局外对照",
+      "verification": "verification/sections/126.json",
+      "functional_project_advancement": true
     }
   ],
-  "next_section": 126,
-  "next_action": "第126节：召唤物模组升级局外对照；须交付同培养基础/1–3级已核验片段比较、未知边界与真实窗口验收。下次全量140。",
+  "next_section": 127,
+  "next_action": "继续P2第127节：先明确剩余事项、新能力和验收标准，再实现并做必要检查；维护不独立计节，下一次全量140。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 125,
@@ -976,16 +982,18 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 125,
-    "status": "COMMITTED_PUSHED_AVAILABLE_FULL_VALIDATION_CLOSED",
-    "product_commit": "bb91ce42ec69e4875ab11da5882f8a844082e868",
-    "receipt": "verification/full-125/summary.json"
+    "section": 126,
+    "prepared_at_Beijing": "2026-10-11T13:44:02.240322+08:00",
+    "status": "VALIDATED_SAVE_WITH_THIS_COMMIT",
+    "prior_actual_HEAD": "3224c039495632d153c8bf39364549f6f9c76172",
+    "verification": "verification/sections/126.json",
+    "full_validation_due": false
   },
   "last_verified_cloud_save": {
-    "section": 124,
-    "commit": "e714ed1f59eaf28128eea7d7525d8d1433ebcfb2",
+    "section": 125,
+    "commit": "3224c039495632d153c8bf39364549f6f9c76172",
     "remote": "origin codex/p2-development",
-    "proof": "git log and ordinary push verified during current session"
+    "proof": "Actual prior ordinary push confirmed in session; contains full125 closure"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -1260,5 +1268,8 @@
     "125": "Maintenance: oversized timing input handling; no P2 todo closed",
     "historical_commit_numbers_preserved": true,
     "functional_progress_must_not_be_inferred_from_section_numbers": true
-  }
+  },
+  "functional_sections_since_latest_requirement": [
+    126
+  ]
 }
