@@ -1,6 +1,6 @@
 """Technology references and explicitly edited account-labelled records."""
 from PySide6.QtWidgets import (QCheckBox, QComboBox, QHBoxLayout, QLabel,
-    QLineEdit, QPlainTextEdit, QPushButton, QVBoxLayout, QWidget)
+    QLineEdit, QPlainTextEdit, QPushButton, QTabWidget, QVBoxLayout, QWidget)
 from .technology import format_technology, technology_labels, technology_nodes
 from .technology_state import STATUS_LABELS, TechnologyState
 
@@ -39,7 +39,13 @@ class TechnologyReferencePanel(QWidget):
         self.technical = QCheckBox('显示技术资料（原始标识与来源）')
         layout.addWidget(self.technical)
         self.text = QPlainTextEdit(); self.text.setReadOnly(True)
-        layout.addWidget(self.text, 1)
+        from .squad_account_view import SquadAccountPanel
+        self.squad_plan = SquadAccountPanel(self.account_state)
+        self.reference_tabs = QTabWidget()
+        self.reference_tabs.addTab(self.text, '科技详情')
+        self.reference_tabs.addTab(self.squad_plan, '强化分队条件清单')
+        layout.addWidget(self.reference_tabs, 1)
+        self.squad_plan.technology_requested.connect(self.show_technology)
         self.search.textChanged.connect(self.populate)
         self.status_filter.currentIndexChanged.connect(self.populate)
         self.profiles.currentIndexChanged.connect(self.select_profile)
@@ -54,6 +60,11 @@ class TechnologyReferencePanel(QWidget):
             self.profiles.addItem(profile['name'], profile['id'])
         self.profiles.setCurrentIndex(self.profiles.findData(self.account_state.selected_profile))
         self.profiles.blockSignals(False)
+
+    def show_technology(self, identity):
+        self.search.clear(); self.status_filter.setCurrentIndex(0)
+        self.nodes.setCurrentIndex(self.nodes.findData(identity))
+        self.reference_tabs.setCurrentIndex(0)
 
     def select_profile(self, *_args):
         identity = self.profiles.currentData()
@@ -93,6 +104,7 @@ class TechnologyReferencePanel(QWidget):
         counts = self.account_state.counts()
         self.summary.setText(f"本档案{len(self.account_state.known_ids)}项科技：已解锁{counts['unlocked']}、未解锁{counts['locked']}、未知{counts['unknown']}；当前筛选{self.nodes.count()}项。")
         self.persistence.setText(self.account_state.persistence_notice())
+        self.squad_plan.refresh()
         for button in self.status_buttons.values(): button.setEnabled(node_id is not None)
         self.text.setPlainText(format_technology(node_id, technical=self.technical.isChecked(), account_state=self.account_state)
                                if node_id else '没有匹配的长期科技资料。')

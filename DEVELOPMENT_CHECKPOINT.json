@@ -33,10 +33,11 @@
     "each_section_requires_meaningful_project_advancement": true,
     "bugfix_only_counts_as_functional_section": false,
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
-    "latest_functional_scope_requirement_Beijing": "2026-10-11"
+    "latest_functional_scope_requirement_Beijing": "2026-10-11",
+    "current_user_batch_target_section": 135
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 128,
+  "completed_sections": 129,
   "sections": [
     {
       "number": 1,
@@ -809,10 +810,16 @@
       "topic": "长期科技账户资料与解锁状态",
       "verification": "verification/sections/128.json",
       "functional_project_advancement": true
+    },
+    {
+      "number": 129,
+      "completion_ref": "p2-section-129",
+      "topic": "账户资料联动的强化分队条件清单",
+      "verification": "verification/sections/129.json"
     }
   ],
-  "next_section": 129,
-  "next_action": "继续P2第129节：针对已核验资料支撑的剩余计算或状态缺口，先确定新增能力和验收标准再实施；科技自动读取/身份/效果仍待核验。必要检查后逐节提交推送，下一次全量140。",
+  "next_section": 130,
+  "next_action": "本轮继续第130节，连续完成至135；每节必要检查后提交和普通推送，全量140。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 125,
@@ -994,18 +1001,16 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 128,
-    "prepared_at_Beijing": "2026-10-11T15:26:33.488839+08:00",
+    "section": 129,
     "status": "VALIDATED_SAVE_WITH_THIS_COMMIT",
-    "prior_actual_HEAD": "f05f1bb0ccb040aaaa648f823e1ff4d63390bf08",
-    "verification": "verification/sections/128.json",
-    "full_validation_due": false
+    "prior_commit": "a40eb5bb5ecf1c5c91e190f80a7f0241884e27f7",
+    "receipt": "verification/sections/129.json"
   },
   "last_verified_cloud_save": {
-    "section": 127,
-    "commit": "f05f1bb0ccb040aaaa648f823e1ff4d63390bf08",
-    "remote": "origin codex/p2-development",
-    "proof": "本节开始时实际git ls-remote与HEAD一致，普通push已确认。"
+    "section": 128,
+    "commit": "a40eb5bb5ecf1c5c91e190f80a7f0241884e27f7",
+    "remote_branch": "origin/codex/p2-development",
+    "verified_by": "git ls-remote after prior ordinary push"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -1284,6 +1289,7 @@
   "functional_sections_since_latest_requirement": [
     126,
     127,
-    128
+    128,
+    129
   ]
 }
