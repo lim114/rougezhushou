@@ -116,3 +116,31 @@ def event_details(event_id):
                    unclassified_original_query={'command':'original','input':{'query':e['title']}},
                    server_scene_reachability_verified=False)
 COMMANDS.update(detail=event_details,original=original_references)
+def _choice_navigation(event,choice):
+    keys={s['key'] for s in event['scenes']};branches=[]
+    for i,target in enumerate(choice['destination_keys']):
+        branches.append({'branch_id':choice['key']+':main:'+str(i),'to':target,'subchoice':None})
+    for i,sub in enumerate(choice.get('subchoices',[])):
+        # The parser already maps group-local scene array indices to scene keys.
+        branches.append({'branch_id':choice['key']+':sub:'+str(i),
+                         'to':sub.get('community_destination_scene_id'),'subchoice':deepcopy(sub)})
+    if not branches:branches=[{'branch_id':choice['key']+':unknown','to':None,'subchoice':None}]
+    if any(b['to'] is not None and b['to'] not in keys for b in branches):
+        raise ValueError('来源导航边指向组外，拒绝跨事件拼接。')
+    return branches
+def choice_graph(event_id):
+    e=_event(event_id);edges=[];unresolved=[]
+    for s in e['scenes']:
+        for ch in s['choices']:
+            for b in _choice_navigation(e,ch):
+                row={'from':s['key'],'scene':s['key'],'choice_id':ch['key'],'choice':ch['key'],
+                     'title':ch['title'],'role':ch['presentation_role'],'game_choice_ids':deepcopy(ch['game_choice_ids']),
+                     'branch_id':b['branch_id'],'subchoice':b['subchoice'],
+                     'evidence':'固定社区页面局部导航','server_option_available':None,
+                     'game_exit_verified':False,'branch_probability':None}
+                if b['to'] is None:
+                    unresolved.append({**row,'status':ch['destination_status']})
+                else:edges.append({**row,'to':b['to']})
+    return _result(edges,event=_summary(e),entries=deepcopy(e['entry']),unresolved=unresolved,
+                   community_navigation_only=True)
+COMMANDS['graph']=choice_graph

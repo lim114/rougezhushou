@@ -59,3 +59,16 @@ class NodeCatalogTests(unittest.TestCase):
             self.assertEqual(len(single),1);self.assertFalse(single[0]['source_scene_link_verified'])
         x=c.original_references(title='行动奖励')['rows'];self.assertEqual(len(x),1)
         self.assertFalse(c.original_references()['natural_node_entry_verified'])
+    def test_175(self):
+        e=next(e for e in c.all_events()['rows'] if e['title']=='桑尼的邀请');r=c.choice_graph(e['id'])
+        x=next(x for x in r['rows'] if x['title']=='帮它梳理绒毛')
+        self.assertTrue(x['from'].endswith(':0'));self.assertTrue(x['to'].endswith(':1'))
+        self.assertIsNone(x['server_option_available'])
+        self.assertTrue(all(not x['game_exit_verified'] for x in r['unresolved']))
+    def test_175_all_subchoices_preserved(self):
+        e=next(e for e in c.all_events(include_indirect=True)['rows'] if e['title']=='安眠一隅')
+        r=c.choice_graph(e['id']);sub=[x for x in r['rows'] if x['subchoice']]
+        self.assertEqual(len(sub),9)
+        valid={s['key'] for s in c.event_details(e['id'])['rows']}
+        self.assertTrue(all(x['from'] in valid and x['to'] in valid for x in sub))
+        self.assertTrue(all(x['branch_probability'] is None for x in sub))

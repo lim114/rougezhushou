@@ -1,7 +1,7 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第174节
+# 当前云端续接索引 · 第175节
 
-已完成至174，后续175；本批状态 `IN_PROGRESS`。下次定期全量185。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至175，后续176；本批状态 `IN_PROGRESS`。下次定期全量185。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
