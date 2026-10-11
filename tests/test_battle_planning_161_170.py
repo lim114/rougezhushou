@@ -137,3 +137,18 @@ class BattlePlanningTests(unittest.TestCase):
         r=cell_planning_references('ro6_n_1_1',0,0)
         self.assertEqual(r['source_position']['row'],len(battle_data()['stages']['ro6_n_1_1']['map'])-1)
         with self.assertRaises(ValueError):cell_planning_references('ro6_n_1_1',-1,0)
+
+    def test_169_mechanism_stage_override(self):
+        from rouge.battle_planning import mechanism_provenance
+        r=mechanism_provenance('ro6_n_1_1','enemy_2133_shdopl',0)
+        self.assertEqual(r['records'][-1]['origin'],'stage_override')
+        self.assertTrue(r['records'][-1]['fields']['talentBlackboard'])
+        self.assertIsNone(r['effective_merged_mechanism'])
+
+    def test_169_null_empty_zero_distinct(self):
+        from rouge.battle_planning import _field_diff
+        r=_field_diff({'s':None,'v':0,'a':[]},{'s':[],'v':None})
+        self.assertEqual(next(x for x in r if x['path']=='$.s')['left']['state'],'null')
+        self.assertEqual(next(x for x in r if x['path']=='$.s')['right']['state'],'empty_list')
+        self.assertEqual(next(x for x in r if x['path']=='$.a')['right']['state'],'absent')
+        self.assertTrue(_field_diff({'s':False},{'s':0}))

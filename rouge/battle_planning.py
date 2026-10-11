@@ -244,3 +244,39 @@ def cell_planning_references(stage_id,row,col):
         source_position={'row':nr-1-row,'col':col},
         limits=list(LIMITS)+['仅查询明确配置点，不将折线穿过此格当作实际必经路径。',
             '分支路线作用域未确认，不按同routeIndex借用基础路线。'])
+
+def _leaf_values(value,prefix='$'):
+    if isinstance(value,dict):
+        if not value: return {prefix:{'state':'empty_object','value':{}}}
+        result={}
+        for k,v in value.items():result.update(_leaf_values(v,prefix+'.'+str(k)))
+        return result
+    if isinstance(value,list):
+        if not value:return {prefix:{'state':'empty_list','value':[]}}
+        result={}
+        for i,v in enumerate(value):result.update(_leaf_values(v,prefix+f'[{i}]'))
+        return result
+    return {prefix:{'state':'null' if value is None else 'value','value_type':type(value).__name__,'value':deepcopy(value)}}
+
+def _field_diff(left,right):
+    a=_leaf_values(left);b=_leaf_values(right);out=[]
+    for path in sorted(set(a)|set(b)):
+        l=a.get(path,{'state':'absent'});r=b.get(path,{'state':'absent'})
+        if l!=r:out.append({'path':path,'left':l,'right':r})
+    return out
+
+def mechanism_provenance(stage_id,enemy_id,level):
+    """Compare source records without silently inheriting/overwriting skills."""
+    from .enemy_skills import enemy_skill_reference
+    stage=_stage(stage_id);ref=enemy_skill_reference(stage_id,enemy_id,level)
+    records=[{'origin':'database_level','level':d['level'],'fields':{k:v for k,v in d.items() if k!='level'}}
+        for d in ref['definitions']]
+    records.append({'origin':'stage_override','level':level,'fields':ref['stage_overrides']})
+    comparisons=[{'left_origin':a['origin'],'left_level':a['level'],'right_origin':b['origin'],
+        'right_level':b['level'],'differences':_field_diff(a['fields'],b['fields'])}
+        for a,b in zip(records,records[1:])]
+    return _result(stage,enemy_id=enemy_id,level=level,records=records,comparisons=comparisons,
+        exact_level_present=ref['exact_requested_level_present'],effective_merged_mechanism=None,
+        enemy_source=ref['source'],limits=list(LIMITS)+[
+            '字段缺失、null、空列表及0分别保留；差异不证明继承或覆盖顺序。',
+            '同一参数位置变化不证明对应招式等价，不推算首发、伤害或阶段。'])

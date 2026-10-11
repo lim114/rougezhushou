@@ -6,7 +6,7 @@ from rouge.battle_planning import *
 
 def main():
     parser=argparse.ArgumentParser(description='固定关卡局外规划：查询完整动作、条件与地图资料。')
-    parser.add_argument('command',choices=['actions', 'activations', 'candidates', 'window', 'enemy-sources', 'branches', 'route', 'cell'])
+    parser.add_argument('command',choices=['actions', 'activations', 'candidates', 'window', 'enemy-sources', 'branches', 'route', 'cell', 'mechanism'])
     parser.add_argument('stage')
     parser.add_argument('--enemy');parser.add_argument('--level',type=int,default=0)
     parser.add_argument('--start',type=float,default=0);parser.add_argument('--end',type=float,default=60)
@@ -26,6 +26,7 @@ def main():
         elif args.command=='branches': result=branch_phase_catalog(args.stage,args.branch)
         elif args.command=='route': result=route_segments(args.stage,args.route)
         elif args.command=='cell': result=cell_planning_references(args.stage,args.row,args.col)
+        elif args.command=='mechanism': result=mechanism_provenance(args.stage,args.enemy,args.level)
     except (ValueError,KeyError,TypeError) as error:
         parser.error(str(error))
     print(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False))
