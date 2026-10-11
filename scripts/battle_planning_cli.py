@@ -3,10 +3,11 @@ import argparse,json,sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from rouge.battle_planning import *
+from rouge.enemy_panel import enemy_panel_reference
 
 def main():
     parser=argparse.ArgumentParser(description='固定关卡局外规划：查询完整动作、条件与地图资料。')
-    parser.add_argument('command',choices=['actions', 'activations', 'candidates', 'window', 'enemy-sources', 'branches', 'route', 'cell', 'mechanism', 'compare'])
+    parser.add_argument('command',choices=['actions', 'activations', 'candidates', 'window', 'enemy-sources', 'branches', 'route', 'cell', 'mechanism', 'compare', 'panel'])
     parser.add_argument('stage')
     parser.add_argument('--enemy');parser.add_argument('--level',type=int,default=0)
     parser.add_argument('--start',type=float,default=0);parser.add_argument('--end',type=float,default=60)
@@ -27,6 +28,7 @@ def main():
         elif args.command=='route': result=route_segments(args.stage,args.route)
         elif args.command=='cell': result=cell_planning_references(args.stage,args.row,args.col)
         elif args.command=='mechanism': result=mechanism_provenance(args.stage,args.enemy,args.level)
+        elif args.command=='panel': result=enemy_panel_reference(args.stage,args.enemy,args.level)
         elif args.command=='compare': result=enemy_scenario_comparison(args.stage,args.other_stage,args.enemy,args.level,args.other_level,run_config=json.loads(args.run_config),right_run_config=json.loads(args.other_run_config) if args.other_run_config else None)
     except (ValueError,KeyError,TypeError) as error:
         parser.error(str(error))

@@ -1,3 +1,7 @@
+## 功能第190节 · 完整固定敌人属性与漏怪等引用字段进入实际预览
+
+2026-10-12T07:36:43.431287+08:00。新增：实际敌人预览技术资料与panel来源CLI覆盖32个固定属性及6个其他字段，含技力回复、嘲讽、命中率、元素爆发恢复、标签/生命扣除/计数/范围参数；普通面板仅保留已有环境预测，新增未核验完整值显示未知并标记已有来源，原值只在技术查询显示。。必要检查17项，跳过0项，无失败。边界：Current server/hotfix/native scalar and script revisions are not proved equivalent to the pinned data.；完整有效面板、实际命中/扣血、技能/阶段/藏品/动态关卡层仍未知；不合并skills/spData/talentBlackboard。；Actual Windows window not run by subagent; root must verify UI text if needed.；P2望数量原生链仍待新版标量链核验，未计成该功能节。。回执verification/sections/190.json。下一节191，下次全量200。
+
 ## 功能第189节 · 全区域目标与行动力耗尽预算
 
 2026-10-12T07:35:30.342489+08:00。新增：按26个原区域ID分别查询目标及耗尽提示，将徒步或加工品前置付款、已证移动AP增量及到零边界分开展示；主层追猎/秘境返回与首领胜利条件不同。。必要检查2项，跳过0项，无失败。边界：仍未确认第六层或秘境连接拓扑。；付款/奖励/羽瞰点/出口相位与费用修正未证，实际最终AP/追猎触发未知。；目标完成与AP仅声明，不从旧本局猜取。。回执verification/sections/189.json。下一节190，下次全量200。

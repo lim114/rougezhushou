@@ -87,6 +87,8 @@ def enemy_preview(stage_id,enemy_id,level,run_config=None):
     entry=copy.deepcopy(matches[0]);config=copy.deepcopy(run_config or {})
     from .enemy_skills import enemy_skill_reference
     entry['skill_reference']=enemy_skill_reference(stage_id,enemy_id,level)
+    from .enemy_panel import enemy_panel_reference
+    entry['fixed_panel_reference']=enemy_panel_reference(stage_id,enemy_id,level)
     entry['movement_reference']=movement_reference(stage,entry['reference_stats'].get('moveSpeed'))
     scenario={'target_enemy':{'stage_id':stage_id,'enemy_id':enemy_id,'level':level},'run_config':config}
     try:
@@ -125,6 +127,9 @@ def enemy_text(entry,technical=False):
     lines.extend(('预计攻速：未知（技能/阶段/其他修正未核验）',
         '预计攻击间隔：未知（技能/阶段/动画未核验）',
         '预计有效移速：未知（未推算移动入场时间）'))
+    if entry.get('fixed_panel_reference'):
+        from .enemy_panel import enemy_panel_text
+        lines.extend(['',enemy_panel_text(entry['fixed_panel_reference'],technical=technical)])
     if entry['context_pending']:
         pending=[s for s in entry['context_pending'] if not s.startswith('关卡脚本修正待核验：')]
         scripts=len(entry['context_pending'])-len(pending)
