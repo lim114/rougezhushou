@@ -30,3 +30,17 @@ class NodeCatalogTests(unittest.TestCase):
         r=c.event_candidates(floor=6,include_indirect=True)
         self.assertIn('安眠一隅',[e['title'] for e in r['rows']])
         with self.assertRaises(ValueError):c.event_candidates(special_region=1)
+    def test_173(self):
+        n={'id':'n1','observed_type':'林间空地','remembered_type':'不期而遇'};old=deepcopy(n)
+        r=c.node_events(n,floor=1);self.assertFalse(r['rows']);self.assertTrue(r['history_candidates']);self.assertEqual(n,old)
+        r=c.node_events({'id':'n2','observed_type':'未知的诡秘','prediction':{'candidates':['不期而遇','失与得']}})
+        self.assertIn('回滚文明',[e['title'] for e in r['rows']]);self.assertIn('桑尼的邀请',[e['title'] for e in r['rows']])
+        self.assertEqual(len({e['id'] for e in r['rows']}),len(r['rows']))
+    def test_173_unknown_includes_battles_functions_and_keeps_history(self):
+        r=c.node_events({'observed_type':'未知的诡秘'})
+        for t in ('作战','紧急作战','险路恶敌','羽瞰点','诡意行商'):
+            self.assertIn(t,r['type_candidates'])
+        r=c.node_events({'observed_type':'林间空地','remembered_type':'不期而遇'},floor=6)
+        self.assertIn('桑尼的邀请',[e['title'] for e in r['history_candidates']])
+        for n in ({'observed_type':3},{'prediction':['不期而遇']},{'content':[]}):
+            with self.assertRaises(ValueError):c.node_events(n)

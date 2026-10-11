@@ -56,3 +56,37 @@ def event_candidates(node_type=None,floor=None,special_region=False,include_indi
     return _result(rows,excluded=excluded,floor=floor,special_region=special_region,
                    indirect_included=include_indirect)
 COMMANDS['candidates']=event_candidates
+def _validate_node(node):
+    if not isinstance(node,dict):raise ValueError('节点需要对象。')
+    for key in ('observed_type','remembered_type'):_text(node.get(key),key,True)
+    prediction=node.get('prediction')
+    if prediction is not None and not isinstance(prediction,dict):raise ValueError('类型预测需要对象。')
+    types=(prediction or {}).get('candidates')
+    if types is not None and (not isinstance(types,list) or any(not isinstance(t,str) or not t for t in types)):
+        raise ValueError('类型候选需要非空文字列表。')
+    for key in ('content','remembered_content'):
+        value=node.get(key)
+        if value is not None and not isinstance(value,dict):raise ValueError(key+'需要对象。')
+    history=node.get('content_history')
+    if history is not None and (not isinstance(history,list) or any(not isinstance(v,dict) for v in history)):
+        raise ValueError('历史内容需要对象列表。')
+def node_events(node,floor=None,special_region=False):
+    _validate_node(node);_floor(floor,special_region)
+    observed=node.get('observed_type');remembered=node.get('remembered_type')
+    # A current floor filter cannot discard the identity of an earlier read.
+    history=all_events(remembered,include_indirect=True)['rows'] if remembered and remembered!=observed else []
+    if observed in ('林间空地','曲折密道'):
+        return _result([],history_candidates=history,type_candidates=[observed],node_id=node.get('id'),
+                       state='当前通行节点；历史内容仅作过去参考')
+    if observed and not observed.startswith('未知'):
+        types=[observed];basis='当前已读类型'
+    else:
+        types=(node.get('prediction') or {}).get('candidates') or []
+        if not types:types=_all_node_types()
+        basis='模板类型候选' if (node.get('prediction') or {}).get('candidates') else '类型未确认，全部已证节点类别联合'
+    by_id={}
+    for t in types:
+        for e in event_candidates(t,floor,special_region)['rows']:by_id[e['id']]=e
+    return _result(list(by_id.values()),history_candidates=history,type_candidates=deepcopy(types),
+                   remembered_type=remembered,node_id=node.get('id'),type_basis=basis)
+COMMANDS['node']=node_events
