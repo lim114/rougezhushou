@@ -33,13 +33,13 @@ class SupplementalCost143Tests(unittest.TestCase):
         e['relic_ids']+=['rogue_6_relic_fight_11']
         self.assertEqual(run_skill_reference(p,e)['deployment_reference']['estimated_cost'],0)
 
-    def test_fang_talent_unchanged_alone_unknown_with_discount(self):
+    def test_fang_talent_composes_after_rune_integer(self):
         p=defaults('char_123_fang')
         self.assertEqual(run_skill_reference(p,environment())['deployment_reference']['estimated_cost'],10)
         r=run_skill_reference(p,environment(['rogue_6_relic_hand_1']))
-        self.assertIsNone(r['deployment_reference']['estimated_cost'])
-        self.assertTrue(r['deployment_reference']['talent_composition_pending'])
-        self.assertIsNone(r['rows'][1]['delta'])
+        self.assertEqual(r['deployment_reference']['estimated_cost'],4)
+        self.assertFalse(r['deployment_reference']['talent_composition_pending'])
+        self.assertEqual(r['rows'][1]['delta'],-6)
         p.update(elite=0,level=1)
         self.assertEqual(run_skill_reference(p,environment(['rogue_6_relic_hand_1']))['deployment_reference']['estimated_cost'],3)
 

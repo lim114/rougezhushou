@@ -1,0 +1,29 @@
+[
+  {
+    "attempt": 1,
+    "action": "reuse old0.54 address map on current file",
+    "result": "rejected",
+    "reason": "DLL SHA differs; no old addresses interpreted"
+  },
+  {
+    "attempt": 2,
+    "action": "strict old88-byte v29 metadata reader",
+    "result": "rejected",
+    "reason": "4686848-byte table not divisible by88; no records emitted"
+  },
+  {
+    "action": "new 92-byte reader",
+    "result": "validated",
+    "reason": "all50944 type rows and full method/field/parameter tables bounded and ownership/token checks pass; extra uint remains opaque"
+  },
+  {
+    "action": "first metadata verifier driver",
+    "result": "failed_then_fixed",
+    "reason": "missing __file__ injection in isolated driver"
+  },
+  {
+    "action": "sequential type token assumption in verifier",
+    "result": "rejected_then_corrected",
+    "reason": "type tokens are unique but stripped gaps exist; codegen method tokens are sequential"
+  }
+]

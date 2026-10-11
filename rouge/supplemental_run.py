@@ -115,7 +115,7 @@ def run_skill_reference(preview,environment,*,target_enemy=None):
     result['target_enemy']=deepcopy(run_resolution.get('enemy'))
     result['damage_reference']=damage
     apply_damage_reference(result,damage)
-    cost=cost_reference(stats,result['talents'],resolved,relic_resolution['records'])
+    cost=cost_reference(stats,result['talents'],resolved,relic_resolution['records'],operator=identity)
     result['deployment_reference']=cost
     result['sp_reference']=sp_reference(result['skill_parameter'],resolved,relic_resolution['records'])
     result['healing_reference']=apply_healing_reference(result,resolved,relic_resolution['records'],raw['kind'])
@@ -152,7 +152,7 @@ def run_skill_reference(preview,environment,*,target_enemy=None):
         'complete_for_attribute_scope':not warnings,'baseline_error':baseline_error,
         'source':deepcopy(selectors()['source'])}
     result['notes'][1]='培养按独立预览条件计算；本局已证属性符文先写回，再将已确认的稳定普通属性增益与天赋/技能加成相加。未接入效果不默认为零；不写入账户或本局。'
-    result['notes'].extend(['本局修正含已证属性/费用/技力参数、自然回技加算、单来源治疗/回复、减防/定向穿透及单来源受伤倍率；芬费用天赋、技力时钟、多来源倍率及其它特殊分项仍有缺口，不生成回转和周期。',
+    result['notes'].extend(['本局修正含已证属性/费用/技力参数、芬轻量化费用链、自然回技加算、单来源治疗/回复、减防/定向穿透及单来源受伤倍率；技力时钟、多来源倍率及其它特殊分项仍有缺口，不生成回转和周期。',
                             '生命回复以常态最大生命计算藏品贡献，独立于直接治疗；不推算首跳、次数、受疗资格或技能期间最大生命的动态积分。',
                             '对照列为相同培养且没有本局修正的单次参考；差值不代表完整施放、周期或真实击杀。',
                             '藏品与分队取打开或更新时的快照；修改干员仅使用其自己的已确认强化，不沿用上一名干员的领取信息。'])
@@ -184,6 +184,8 @@ def format_run_reference(result):
         lines.append(f"标称结束返技力{value(sp['end_return_parameter'])}；此后尚需补充{value(sp['recharge_requirement'])}点；实际结束/阻回及获取时钟未知。")
     lines.append('技力缺口是参数算术，不等于初动或回转秒数；不推算自动施放时刻。')
     lines.append('预计普通首次部署费用：'+('未知' if cost['estimated_cost'] is None else str(cost['estimated_cost'])))
+    if cost['talent_source']:
+        lines.append('芬轻量化：符文先取整数，再减1费用，再处理重部署/首次卡片折扣与实时费用加减；这是固定安装原生参考，当前热更新及实际扣费仍未核验。')
     if cost['first_card_only']:lines.append('本费用包含仅首次有效卡片折扣；未确认本局是否已经消费，不沿用到再次部署。')
     if cost['skill_start_dp']:lines.append(f"先锋每次技能开启额外回费{cost['skill_start_dp']:g}；芬已合入单次回费，不生成回费时钟。")
     sources=list(dict.fromkeys(names.get(e.get('relic_id'),'已确认分队') for e in resolution['runes']))

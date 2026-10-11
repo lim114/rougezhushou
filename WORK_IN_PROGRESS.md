@@ -1,3 +1,7 @@
+## 功能第191节 · 芬轻量化天赋接入符文整数后费用链
+
+2026-10-12T07:38:51.336402+08:00。新增：补充本局参考支持芬轻量化与藏品费用加算/乘算、空床runtime减费的复合链；天赋减费发生在符文取整数后、重部署及首次卡片缩放前，当前精英资格和本局身份独立。。必要检查32项，跳过0项，无失败。边界：当前DLL/metadata已重新提取；XLua/hotfix等价性未证，actual_cost仍None；当前固定源默认算法与实际游戏热更新/扣费仍需成对核对；纯helper中显式redeploy/card factor不会自动推断实际已消费/在场状态；未知额外uint字段只用于跳过保持结构对齐，没有业务语义。回执verification/sections/191.json。下一节192，下次全量200。
+
 ## 功能第190节 · 完整固定敌人属性与漏怪等引用字段进入实际预览
 
 2026-10-12T07:36:43.431287+08:00。新增：实际敌人预览技术资料与panel来源CLI覆盖32个固定属性及6个其他字段，含技力回复、嘲讽、命中率、元素爆发恢复、标签/生命扣除/计数/范围参数；普通面板仅保留已有环境预测，新增未核验完整值显示未知并标记已有来源，原值只在技术查询显示。。必要检查17项，跳过0项，无失败。边界：Current server/hotfix/native scalar and script revisions are not proved equivalent to the pinned data.；完整有效面板、实际命中/扣血、技能/阶段/藏品/动态关卡层仍未知；不合并skills/spData/talentBlackboard。；Actual Windows window not run by subagent; root must verify UI text if needed.；P2望数量原生链仍待新版标量链核验，未计成该功能节。。回执verification/sections/190.json。下一节191，下次全量200。

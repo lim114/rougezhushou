@@ -1,0 +1,97 @@
+{
+  "date": "2026-10-12",
+  "scope": "Fang lightweight native-baseline deployment composition; no gameplay/live state",
+  "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "prefab_base_version": "26-09-13-15-28-10-30688348",
+  "current_hotfix_equivalence_proven": false,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_files_read": false,
+  "mechanism_facts": [
+    {
+      "step": 1,
+      "fact": "Fang talent prefab1 uniquely binds by exact properties hash to current MonoScript DeckTalentToAddCardCost; selector onlySelectMe=1."
+    },
+    {
+      "step": 2,
+      "fact": "AssignData cost literal from current metadata; Blackboard.GetIntOrDefault -> m_cost+0x80.",
+      "cost_literal": "cost",
+      "literal_encoded": "0xa000d5fb"
+    },
+    {
+      "step": 3,
+      "fact": "CreateDeckModifier transfers integer m_cost to modifier+0x50. Virtual slot15 selects TryGetCardCostDelta; DeckSelector.Verify onlySelectMe tests sourceCard identity."
+    },
+    {
+      "step": 4,
+      "fact": "Card.UpdateDeckAttributeData callback preprocesses runes, constructs snapshot, calls _PreprocessCharCost. Slot15 delta is added to snapshot integer cost then ModifyCost/OverwriteRawData(COST=4).",
+      "addresses": [
+        "0x1806bde5a",
+        "0x1806be042",
+        "0x1806be11d",
+        "0x1806beed1",
+        "0x1806bef55",
+        "0x1806bef5a"
+      ]
+    },
+    {
+      "step": 5,
+      "fact": "Card.get_rawCost reads modified snapshot, scales redeployment and floors. Card.get_cost applies runtime scale floor then integer runtime delta; fixed limits preserved."
+    },
+    {
+      "step": 6,
+      "fact": "Relic final attributes writer is FP.AsFloat then ObscuredInt ties-to-even; current float round exact half checks integer parity. FP Floor/Multiply and runtime floor independently mapped."
+    }
+  ],
+  "oracle_cases": [
+    {
+      "cultivated_cost": 11,
+      "relic_rune_factor": 0.5,
+      "rune_integer": 6,
+      "fang_talent_delta": -1,
+      "expected_first_cost": 5
+    },
+    {
+      "cultivated_cost": 9,
+      "relic_rune_factor": 0.5,
+      "rune_integer": 4,
+      "fang_talent_delta": -1,
+      "expected_first_cost": 3,
+      "wrong_pre_rune_result": 4
+    },
+    {
+      "cultivated_cost": 11,
+      "relic_rune_add": -1,
+      "relic_rune_factor": 0.5,
+      "rune_integer": 5,
+      "fang_talent_delta": -1,
+      "expected_first_cost": 4
+    }
+  ],
+  "mechanism_limitations": [
+    "Current XLua/hotfix branches retained; current equivalence unknown.",
+    "No actual card consumption/deployment/game actions inferred.",
+    "Only Fang prefab1 is source-qualified; a cost key on another talent stays unknown.",
+    "Explicit pure redeploy/card-factor oracle does not imply those conditions were sampled."
+  ],
+  "public_parser_references": [
+    "https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/MetadataClass.cs",
+    "https://github.com/SamboyCoding/Cpp2IL/blob/development/LibCpp2IL/Metadata/Il2CppTypeDefinition.cs"
+  ],
+  "data_source": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/character_table.json",
+  "validation": {
+    "method_count": 18,
+    "unique_instructions": 1825,
+    "physical_bytes_checked": true,
+    "tests_run": 32,
+    "passed": true
+  },
+  "artifact_sha256": {
+    "failures.json": "41b6cd14537085783340343aa33f44af1f497a555d988db54ef05abd89de0baa",
+    "fang-prefab-binding.json": "60e06b508d06d1f6a2a3d38bedc6cccac474bbaab7894a2d34653c4436dd279a",
+    "metadata-layout-validation.json": "ad7f2656656fd4dc16a44bcadb0d8d9e9fbc60772862d53630e799a1d19cfd77",
+    "native-proof.json": "09473a4df827df102ea076622a1033498a0aab52acd5614c0d677531bd65ff35",
+    "selected-metadata.json": "54c44b5892a3e8d22e2b06172009f2d374e26963338eb10373672f75a98f5ed6"
+  }
+}
