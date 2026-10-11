@@ -1,0 +1,57 @@
+{
+  "section": 186,
+  "title": "七低星本局自然回技速率与恢复类型资格",
+  "remaining_item": "技能时序与精度：低星干员技力回复时序/倍率与其它局外属性",
+  "new_capability": "本局补充计算消耗已证的三种通用自然回技加算、医疗筛选及幸运饼干当前干员强化，并输出常态速率参数；攻击回复保持不适用，缺领取归属时完整参数未知。",
+  "source_evidence": [
+    {
+      "path": ".cache/research/sp-attributes-066/native-proof.json",
+      "facts": "原始主题表五种常态来源及安装默认原生加算路径；11方法1589指令物理核验。",
+      "source_version": "26-08-16-14-00-43_415873 installed native; original game-data a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json"
+    },
+    {
+      "path": "rouge/data/supplemental-skills.json",
+      "facts": "七人恢复类型和increment来自固定skill_table，未推断获取时间。"
+    }
+  ],
+  "acceptance": [
+    "通用0.2+0.35+0.5=1.05，重复ID/六种顺序稳定",
+    "医疗0.3+已绑定个人0.8与通用加算组合，身份切换不泄漏",
+    "攻回两人无自然速率/秒，不生成任何时钟",
+    "幸运饼干未确认领取则完整自然回技参数未知；战斗HP曲线不接入",
+    "原144/141相关功能24测试通过"
+  ],
+  "limitations": [
+    "当前热更新等价性未证",
+    "实际自然冷却槽相位、阻回/首次获取、结束与周期均未知",
+    "倍率或负值未有来源，不默认为通用算法"
+  ],
+  "files": [
+    "rouge/supplemental_sp.py",
+    "rouge/supplemental_run.py",
+    "tests/test_supplemental_natural_sp_186.py"
+  ],
+  "test_selectors": [
+    "tests.test_supplemental_natural_sp_186",
+    "tests.test_supplemental_sp_144",
+    "tests.test_supplemental_run_141"
+  ],
+  "validation": {
+    "tests_run": 24,
+    "passed": 24,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-186/tests.txt"
+  },
+  "base_sha256": {
+    "rouge/supplemental_sp.py": "37aeceeab2a03f1604fe53cbfb7ffaf5133d3c8e3c09151509606ef91b7763b9",
+    "rouge/supplemental_run.py": "f83c571d6251af47a4439c2139ad8ecfd28c5cc5d6ed2bafa36e8625a1b9f1ab"
+  },
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T07:23:42.134216+08:00",
+  "branch": "codex/p2-development",
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}
