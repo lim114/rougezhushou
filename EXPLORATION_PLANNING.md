@@ -17,4 +17,6 @@
 
 `valuation` 输入自然物 `item_id`、可选 `initial_estimate` 及 `events` 账本。事件 `kind` 支持 `battle_completed`、`node_revealed`、`operator_recruited`、`movement_completed`、`parts_obtained`、`item_obtained`；`count` 是声明的独立触发次数，默认1。作战可声明 `perfect`。分别显示已证估价增量、未知变化、完美/损坏分支和已损坏后的不再触发。多生苔藓的3个枯苔藓球列具名数量，派生触发顺序不自动补入。上下限和售卖修正缺证，算术小计可为负数但实际售价始终未知。
 
-源版本：`Kengxxiao/ArknightsGameData@a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`，完整原件哈希和精确字段在 `research/p3-exploration-planning/source-receipt.json` 与结果中。仅提取小范围事实参数；未声称上游许可证已核实。
+`options` 输入 `graph`、`target`、可选 `action_points`、`inventory`、`passive_items`、`start` 和 `include_walking`。库存每项使用 `item_id`、可选 `remaining_uses` 和独立 `instance_id`。步行使用声明 `edges`，区分纯拓扑、没有已知阻碍及所有中途条件已声明清楚的最短路线。节点可声明 `completed_declared`、`occupied_declared`、`other_blocked_declared`，均为布尔或未知。未完成/占领中途节点可阻断步行，加工品仍按直达范围比较。最低基础AP成本只比较保留的候选，未把未知库存/随机传送当保证，也不评价未证完整收益；原地再进入基础参考1AP而非免费。
+
+源版本：`Kengxxiao/ArknightsGameData@a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`，完整原件哈希和精确字段在 `research/p3-exploration-planning/source-receipt.json` 与结果中。步行规则复用已核对PRTS页面与 `.cache/research/routes-049/evidence.json`；本次未冒充服务器重新验证。仅提取小范围事实参数；未声称上游许可证已核实。

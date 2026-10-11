@@ -4,6 +4,7 @@ These functions never read or mutate run state. Range membership, declared
 resources and source-backed subtotals are separate from actual game eligibility.
 """
 from copy import deepcopy
+from collections import deque
 from functools import lru_cache
 import json
 from pathlib import Path
@@ -53,6 +54,11 @@ def _graph(graph,start=None):
         for field in ('base_node_type','node_type_raw'):
             if node.get(field) is not None and node[field] not in reference_data()['node_types']:
                 raise ValueError(field+'必须是原表节点类型。')
+        if node.get('scrap_category') is not None and node['scrap_category'] not in ('EVENTS','BATTLES','EMPTY'):
+            raise ValueError('scrap_category需要EVENTS、BATTLES或EMPTY。')
+        for field in ('completed_declared','occupied_declared','other_blocked_declared'):
+            if node.get(field) is not None and type(node[field]) is not bool:
+                raise ValueError(field+'需要布尔值或留空。')
         nodes[node['id']]=node;positions.add(key)
     if start is None: start=graph.get('current_node')
     if not isinstance(start,str) or start not in nodes:
@@ -71,8 +77,6 @@ def _type_candidates(node):
 
 def _membership(node,allowed):
     if 'ALL' in allowed: return True,'all_nodes_parameter'
-    types,basis=_type_candidates(node)
-    if not types: return None,'node_type_unknown'
     # Group membership is not serialized in this public original table. Preserve
     # every grouped candidate unless the caller explicitly declares the group.
     # Exact enum restrictions (shops, WISH, SACRIFICE) are directly testable.
@@ -81,6 +85,8 @@ def _membership(node,allowed):
         if group is None: return None,'original_group_membership_unknown'
         if group not in ('EVENTS','BATTLES','EMPTY'): raise ValueError('scrap_category需要EVENTS、BATTLES或EMPTY。')
         return group in allowed,'declared_scrap_category'
+    types,basis=_type_candidates(node)
+    if not types: return None,'node_type_unknown'
     values=[key in allowed for key in types]
     return values[0] if all(v==values[0] for v in values) else None,basis
 
@@ -296,5 +302,101 @@ def goods_valuation(item_id,events=None,initial_estimate=None):
                        '种子培育奖励、笼控器事件作用与随机价格范围没有完整池，保持原文参考。'])
 
 
+ROUTE_RULES_SOURCE={'url':'https://prts.wiki/w/沉沦者的黑流树海',
+                    'sha256':'b7a0e04867c45642914e9dd8ae2e3dbc51efd0c86b76d8e9f1bd42ac5eade381',
+                    'checked_at':'2026-10-04','receipt':'.cache/research/routes-049/evidence.json',
+                    'scope':'cached_complete_page; not a new current-server verification'}
+
+
+def _passability(node):
+    if node.get('occupied_declared') is True or node.get('other_blocked_declared') is True:return False
+    types,_=_type_candidates(node)
+    exception=bool(types) and all(key in ('EMPTY','DOOR') for key in types)
+    completion=True if exception else node.get('completed_declared')
+    return _and(completion,None if node.get('occupied_declared') is None else not node['occupied_declared'],
+                None if node.get('other_blocked_declared') is None else not node['other_blocked_declared'])
+
+
+def _adjacency(graph,nodes):
+    edges=graph.get('edges')
+    if not isinstance(edges,list):raise ValueError('步行方案需要声明连线列表。')
+    adjacency={key:set() for key in nodes}
+    for edge in edges:
+        if (not isinstance(edge,(list,tuple)) or len(edge)!=2 or
+            any(not isinstance(key,str) or key not in nodes for key in edge) or edge[0]==edge[1]):
+            raise ValueError('连线必须是两个已知不同节点标识。')
+        a,b=edge;adjacency[a].add(b);adjacency[b].add(a)
+    return adjacency
+
+
+def _walking_paths(graph,nodes,start,target):
+    adjacency=_adjacency(graph,nodes);results={}
+    for mode in ('topology','no_known_blocker','declared_clear'):
+        previous={start:None};queue=deque([start])
+        while queue and target not in previous:
+            key=queue.popleft()
+            for other in sorted(adjacency[key],key=lambda k:(nodes[k]['row'],nodes[k]['col'],k)):
+                if other in previous:continue
+                if other!=target and mode!='topology':
+                    status=_passability(nodes[other])
+                    if status is False or (mode=='declared_clear' and status is not True):continue
+                previous[other]=key;queue.append(other)
+        if target not in previous:results[mode]=None;continue
+        path=[target]
+        while path[-1]!=start:path.append(previous[path[-1]])
+        path.reverse()
+        results[mode]={'path':path,'steps':len(path)-1,
+                       'intermediate_conditions':[{'node_id':key,'passability':_passability(nodes[key])}
+                                                  for key in path[1:-1]]}
+    return results
+
+
+def movement_options(graph,target,inventory=None,action_points=None,start=None,passive_items=None,include_walking=True):
+    """Compare all declared item destinations and walking constraints by base cost."""
+    nodes,start=_graph(graph,start);_integer(action_points,'行动力',optional=True)
+    if not isinstance(target,str) or target not in nodes:raise ValueError('目标需要地图中的明确节点。')
+    if type(include_walking) is not bool:raise ValueError('include_walking需要布尔值。')
+    if inventory is None:inventory=[]
+    if not isinstance(inventory,list) or len(inventory)>100:raise ValueError('加工品库存需要至多100项对象列表。')
+    options=[];paths=None;seen=set()
+    if include_walking:
+        paths=_walking_paths(graph,nodes,start,target)
+        candidate=paths['no_known_blocker']
+        if candidate:
+            reentry=start==target;cost=1 if reentry else candidate['steps']
+            condition=_and(*(row['passability'] for row in candidate['intermediate_conditions']))
+            options.append({'id':'walking','mode':'same_position_reentry_reference' if reentry else 'walking',
+                'path':candidate['path'],'steps':candidate['steps'],'base_ap_cost':cost,
+                'known_conditions_match':None if reentry else condition,
+                'base_cost_affordable':None if action_points is None else action_points>=cost,
+                'remaining_uses_declared':None,'actual_entry_eligible':None,
+                'movement_grants':[],'passives':[],'source':deepcopy(ROUTE_RULES_SOURCE)})
+    for ordinal,declaration in enumerate(inventory,1):
+        if not isinstance(declaration,dict):raise ValueError('每个加工品库存条目需要对象。')
+        item_id=declaration.get('item_id');item=_item(item_id,'MOVE');instance=declaration.get('instance_id',f'inventory:{ordinal}')
+        if not isinstance(instance,str) or not instance or instance in seen:raise ValueError('库存实例标识需要唯一非空文字。')
+        seen.add(instance)
+        if target==start:continue
+        effects=movement_effects(graph,item_id,target,start,declaration.get('remaining_uses'),passive_items)
+        row=effects['destination'];condition=_and(effects['declared_move_condition_matches'],
+                                                effects['random_target_selection_condition'])
+        options.append({'id':instance,'mode':'processed_item','item_id':item_id,'name':item['name'],
+            'is_random_destination':item['raw']['isRandomMove'],'probability':None,
+            'base_ap_cost':row['base_ap_cost'],'remaining_uses_declared':declaration.get('remaining_uses'),
+            'known_conditions_match':condition,'excluded_reasons':deepcopy(row.get('excluded_reasons',[])),
+            'base_cost_affordable':None if action_points is None else action_points>=row['base_ap_cost'],
+            'actual_entry_eligible':None,'movement_grants':effects['movement_grants'],'passives':effects['passives'],
+            'source_selector':item['source_selector']})
+    candidates=[row for row in options if row['known_conditions_match'] is not False and row['base_cost_affordable'] is not False]
+    minimum=min((row['base_ap_cost'] for row in candidates),default=None)
+    return _result(start=start,target=target,action_points_declared=action_points,walking_paths=paths,
+                   options=options,minimum_base_ap_cost_reference=minimum,
+                   minimum_base_cost_candidates=[row['id'] for row in candidates if row['base_ap_cost']==minimum],
+                   actual_best_route=None,limits=deepcopy(reference_data()['limits'])+[
+                       '完成、住民和其他阻碍仅用明确声明；未知保留，已占领中途节点阻断步行。',
+                       '加工品直达不受未完成中途节点阻断，但真实资格仍未知；每个库存实例独立保留。',
+                       '最低基础成本只是候选比较，不是最优收益、确定可用方案或游戏操作。'])
+
+
 COMMANDS={'items':item_catalog,'targets':movement_targets,'effects':movement_effects,
-          'zones':zone_catalog,'budget':zone_budget,'valuation':goods_valuation}
+          'zones':zone_catalog,'budget':zone_budget,'valuation':goods_valuation,'options':movement_options}

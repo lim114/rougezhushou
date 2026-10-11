@@ -15,6 +15,43 @@ def graph():
         'edges':[['s','wish'],['wish','shop'],['s','combat'],['s','unknown'],['shop','far']]}
 
 class ExplorationPlanningTests(unittest.TestCase):
+    def test_220_walking_blockers_item_direct_and_base_cost_comparison(self):
+        g=graph();g['nodes'][2].update(completed_declared=False,occupied_declared=False,other_blocked_declared=False)
+        r=p.movement_options(g,'shop',inventory=[{'item_id':'rogue_6_scrap_M_10','remaining_uses':2}],action_points=1)
+        self.assertIsNone(r['walking_paths']['no_known_blocker'])
+        self.assertEqual(r['walking_paths']['topology']['steps'],2)
+        self.assertEqual(r['minimum_base_cost_candidates'],['inventory:1'])
+        g['nodes'][2]['completed_declared']=True
+        r=p.movement_options(g,'shop',inventory=[{'item_id':'rogue_6_scrap_M_08','remaining_uses':1},
+            {'item_id':'rogue_6_scrap_M_10','remaining_uses':2}],action_points=1)
+        self.assertEqual(r['walking_paths']['declared_clear']['steps'],2)
+        self.assertFalse(r['options'][0]['base_cost_affordable'])
+        self.assertEqual(r['minimum_base_ap_cost_reference'],0)
+        self.assertEqual(r['minimum_base_cost_candidates'],['inventory:1'])
+        self.assertIsNone(r['actual_best_route'])
+        g['nodes'][2]['occupied_declared']=True
+        self.assertIsNone(p.movement_options(g,'shop')['walking_paths']['no_known_blocker'])
+
+    def test_220_unknown_graph_inventory_instances_reentry_and_validation(self):
+        g=graph();old=copy.deepcopy(g)
+        r=p.movement_options(g,'shop',inventory=[{'item_id':'rogue_6_scrap_M_10'},
+            {'item_id':'rogue_6_scrap_M_10','remaining_uses':0}])
+        self.assertEqual(len(r['options']),3);self.assertIsNone(r['options'][0]['known_conditions_match'])
+        self.assertIsNone(r['options'][1]['known_conditions_match']);self.assertFalse(r['options'][2]['known_conditions_match'])
+        self.assertEqual(g,old)
+        r=p.movement_options(g,'s',action_points=0)
+        self.assertEqual(r['options'][0]['base_ap_cost'],1)
+        self.assertFalse(r['options'][0]['base_cost_affordable'])
+        bad=graph();bad['edges']=[['s','missing']]
+        with self.assertRaises(ValueError):p.movement_options(bad,'shop')
+        bad=graph();bad['nodes'][2]['completed_declared']=1
+        with self.assertRaises(ValueError):p.movement_options(bad,'shop')
+        with self.assertRaises(ValueError):p.movement_options(g,'shop',inventory=[
+            {'item_id':'rogue_6_scrap_M_10','instance_id':'a'},{'item_id':'rogue_6_scrap_M_10','instance_id':'a'}])
+        group=graph();group['nodes'][4]['scrap_category']='EVENTS'
+        r=p.movement_targets(group,'rogue_6_scrap_M_07')
+        self.assertTrue(next(x for x in r['targets'] if x['node_id']=='unknown')['node_type_matches'])
+
     def test_219_event_estimate_and_unknown_sale_bounds(self):
         r=p.goods_valuation('rogue_6_scrap_G_02',[{'kind':'battle_completed','count':3},
             {'kind':'movement_completed','count':5}])
