@@ -89,7 +89,7 @@ class WangTokenModuleReferenceTests(unittest.TestCase):
         self.assertIsNone(r['actual_deployment_count'])
         self.assertIsNone(r['actual_alive_seconds'])
         self.assertFalse(r['live_state_verified'])
-        self.assertIsNone(token_concurrent_limit(catalog()['operators'][OP],scenario(),TOKEN))
+        self.assertEqual(token_concurrent_limit(catalog()['operators'][OP],scenario(),TOKEN),7)
         self.assertNotIn('held_limit',r)
         self.assertNotIn('concurrent_limit',r)
         base=calculate_damage(scenario(module_id=None,module_level=0,base_attack=1000))

@@ -25,14 +25,16 @@ class TokenModuleComparison126Tests(unittest.TestCase):
         self.assertAlmostEqual(stages[3]['differences']['hp'],302.4)
         self.assertIsNone(r['tokens'][0]['actual_presence'])
 
-    def test_wang_known_cost_does_not_fill_unknown_hp_stock_or_concurrent_count(self):
+    def test_wang_known_cost_and_count_limits_leave_unknown_module_hp_separate(self):
         stages=compare_token_module(W,{'elite':2,'level':80},WM)['tokens'][0]['stages']
         self.assertEqual(stages[0]['values']['deployment_cost'],3)
         for stage in stages[1:]:
-            self.assertEqual(stage['verified_fields'],['deployment_cost'])
+            self.assertEqual(stage['verified_fields'],['concurrent_limit','deployment_cost','held_limit'])
             self.assertEqual(stage['values']['deployment_cost'],2)
-            self.assertEqual(stage['differences'],{'deployment_cost':-1})
-            for key in ('hp','held_limit','concurrent_limit'):self.assertIsNone(stage['values'][key])
+            self.assertEqual(stage['differences'],{'deployment_cost':-1,'held_limit':0,'concurrent_limit':1})
+            self.assertIsNone(stage['values']['hp'])
+            self.assertEqual(stage['values']['held_limit'],7)
+            self.assertEqual(stage['values']['concurrent_limit'],7)
 
     def test_unlock_boundary_keeps_locked_upgrades_unknown(self):
         for level,state in ((59,'locked'),(60,'partial_reference')):

@@ -16,11 +16,12 @@ class TokenBudgetTests(unittest.TestCase):
         self.assertFalse(row['stock_sufficient_declared']); self.assertFalse(row['concurrent_within_reference'])
         self.assertEqual(result['remaining_budget_reference'],1); self.assertIsNone(row['actual_deployable'])
 
-    def test_wang_cost_only_unknown_limits(self):
+    def test_wang_default_counts_do_not_approve_insufficient_currency(self):
         op='char_2027_wang'; result=token_budget(op,{'elite':2,'level':80,'module_id':'uniequip_002_wang','module_level':2},requests(op,2,0,5),3)
         row=result['rows'][0]; self.assertEqual(row['cost_reference'],2); self.assertEqual(result['total_cost_reference'],4)
-        self.assertFalse(result['budget_sufficient_reference']); self.assertIsNone(row['concurrent_limit_reference'])
-        self.assertIsNone(row['concurrent_within_reference']); self.assertIsNone(row['held_limit_reference'])
+        self.assertFalse(result['budget_sufficient_reference']); self.assertEqual(row['concurrent_limit_reference'],7)
+        self.assertTrue(row['concurrent_within_reference']); self.assertEqual(row['held_limit_reference'],7)
+        self.assertIsNone(row['actual_deployable'])
 
     def test_unknown_module_cost_not_zero_or_approved(self):
         op='mechanist'; profile=catalog()['operators'][op]; module=profile['modules'][0]['id']

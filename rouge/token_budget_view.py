@@ -12,6 +12,8 @@ class TokenBudgetDialog(QDialog):
         self.setWindowTitle('召唤物 · 局外配额测算'); self.resize(1050,650)
         layout = QVBoxLayout(self)
         label = QLabel('填写新增数量；在场与剩余库存可设为未知。使用打开时的培养与模组，费用不代表实际部署资格。')
+        if operator=='char_2027_wang':
+            label.setText(label.text()+' 望的声明在场只填写计入手动棋子限制的数量；不含自动额外棋子或技能期间数量修改。')
         label.setWordWrap(True); layout.addWidget(label)
         actions = QHBoxLayout(); actions.addWidget(QLabel('费用预算'))
         self.budget = QSpinBox(); self.budget.setRange(0,9999); actions.addWidget(self.budget)
@@ -56,5 +58,6 @@ class TokenBudgetDialog(QDialog):
         for row in result['rows']:
             if row['stock_sufficient_declared'] is False: warnings.append(row['name']+'：声明库存不足。')
             if row['concurrent_within_reference'] is False: warnings.append(row['name']+'：超出每类在场参考上限。')
+            if row.get('stock_within_reference') is False: warnings.append(row['name']+'：声明库存超出默认培养参考；不据此否定未核验的技能库存修改。')
         self.notice.setPlainText(format_token_budget(result)+'\n'+'\n'.join(warnings))
         self.copy_button.setEnabled(True)

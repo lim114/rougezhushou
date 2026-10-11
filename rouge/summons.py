@@ -146,6 +146,9 @@ def token_concurrent_limit(profile,scenario,token_id):
     Cultivation/unlock checks are shared with the other token module effects.
     Unknown pairs never infer a concurrent cap from the held inventory.
     """
+    from .token_counts import token_count_reference
+    counts=token_count_reference(profile,scenario,token_id)
+    if counts is not None:return counts['concurrent_limit']
     rule=next((r for r in module_rules().values() if
         r['operator']==scenario['operator'] and r['token_id']==token_id and
         r.get('concurrent_limit_verified')),None)
