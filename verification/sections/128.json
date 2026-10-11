@@ -1,0 +1,63 @@
+{
+  "section": 128,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T15:26:33.488839+08:00",
+  "prior_commit": "f05f1bb0ccb040aaaa648f823e1ff4d63390bf08",
+  "remaining_project_item": "PROJECT_PROGRESS.md：P2本局环境，长期科技账户状态",
+  "new_capability": "按独立资料档案手动管理57项科技的解锁/未解锁/未知状态，搜索筛选，保存并跨启动及新局恢复；每项保留用户来源和时间。",
+  "acceptance": {
+    "all57_node_ids_independent": true,
+    "same_name_nodes_separate": true,
+    "multiple_account_labelled_profiles_isolated": true,
+    "status_and_text_filters": true,
+    "manual_unknown_is_explicit": true,
+    "persist_and_restore_selected_profile": true,
+    "new_run_preserves_technology": true,
+    "source_and_Beijing_record_time_visible": true,
+    "damaged_external_or_failed_save_preserves_original": true,
+    "opaque_metadata_preserved_unconsumed": true,
+    "manual_state_never_infers_neighbours_identity_or_effects": true,
+    "manual_edits_do_not_change_operator_account_run_or_damage": true
+  },
+  "validation": {
+    "necessary_tests_run": 22,
+    "new_tests": 15,
+    "reused_tests": 7,
+    "modules": [
+      "tests.test_technology_state_128",
+      "tests.test_technology_reference"
+    ],
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 7,
+    "window_receipt": "verification/section-128/window.json",
+    "screenshot_actually_viewed": true,
+    "test_output": "verification/section-128/tests.txt",
+    "expected_io_failure_injection": "Atomic replacement error is deliberately injected in a focused test; original bytes and absence of retries verified."
+  },
+  "evidence_reused": [
+    "rouge/data/technology-reference.json",
+    "research/p2-technology/NOTE.md",
+    "research/p2-technology/source-receipt.json"
+  ],
+  "new_native_numeric_rule_inferred": false,
+  "storage_scope": "Private sidecar technology-state.json beside existing operator account file; no write on startup, no run-state integration.",
+  "source_sha256": {
+    "rouge/app.py": "7655e3b05e07eeee186f11ec4233b046719fd823bf1ccca689e8db58af75187a",
+    "rouge/technology.py": "77c299542c2fb3966d5bbc0a327fc8f91d3eb3ac7ef19bdfff097201681b461a",
+    "rouge/technology_state.py": "9a5093ac8523e3d8a7b287fa26931fdd182984653367c4e319c14dfcc670e639",
+    "rouge/technology_view.py": "2955dd0fbcb56288c0473f606c3f9a5daae3dfca9e8d6d5c77043fa206acbc82",
+    "rouge/data/technology-reference.json": "30640cb8ca4d9c2bbedce971a7545cbdbed7b6aab177a880c9faaf4eddee0d30",
+    "tests/test_technology_state_128.py": "d66b6398028e4f8b5550ed80a0ce52015564372346f1e4eb0960e780ce4feda1"
+  },
+  "visual_review": "Known manual records have a distinct reference caption; default unknown browser wording and source data remain compatible.",
+  "limitations": [
+    "资料档案名称与科技状态均由用户手动记录，不证明实际游戏账户身份。",
+    "账户自动读取、真实启用、科技buff与属性层及适用模式继续待核验。",
+    "科技连接只展示资料关系，不推导前置AND/OR解锁条件或累计数值效果。"
+  ],
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}

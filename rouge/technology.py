@@ -44,17 +44,21 @@ def _plain(text):
     return re.sub(r'<(?:@[^>]*|\$[^>]*|/)>', '', text).replace('\\n', '\n')
 
 
-def format_technology(node_id, *, technical=False):
+def format_technology(node_id, *, technical=False, account_state=None):
     node = technology_node(node_id); labels = technology_labels()
     kinds = {'NORMAL': '普通节点', 'KEY': '关键节点', 'DIFFICULTY': '难度门槛节点'}
     lines = [labels[node_id], kinds.get(node['nodeType'], node['nodeType']),
              f"花费：{node['tokenCost']}", '', *(_plain(t) for t in node['rawDesc'])]
+    if account_state is not None:
+        lines = [account_state.describe(node_id), '', *lines]
     gate = technology_gates().get(node_id)
     if gate:
         lines += ['', '生效门槛资料：'+gate['enableDesc']]
     for key, label in (('frontNodeId', '前置显示节点'), ('nextNodeId', '后续显示节点')):
         lines += ['', label+'：'+('、'.join(labels[n] for n in node[key]) or '无')]
-    lines += ['', '账户解锁状态：未知。这里只展示科技资料，未将效果加入本局计算。',
+    unknown = account_state is None or account_state.view(node_id)['status'] == 'unknown'
+    lines += ['', ('账户解锁状态：未知。这里只展示科技资料，未将效果加入本局计算。' if unknown else
+                  '本档案记录仅作手动账户参考，未将科技效果加入本局计算。'),
               '节点连接表示资料中的展示关系；多个前置节点的解锁判定仍待核验。']
     if technical:
         source = _data()['source']
