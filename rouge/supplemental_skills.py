@@ -48,7 +48,8 @@ def skill_reference(preview):
     rows=[]
     def add(label,value,unit,countable=False):
         rows.append({'name':label,'value':value,'unit':unit,
-                     'declared_total':value*preview['count'] if countable and value is not None else None})
+                     'declared_total':value*preview['count'] if countable and value is not None else None,
+                     'declared_total_applicable':countable})
     kind=profile['kind']
     if kind=='attack_boost':
         skill_attack=stats['attack']*(1+bonuses.get('atk',0)+bb['atk'])

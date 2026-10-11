@@ -1,0 +1,44 @@
+{
+  "section": 140,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T17:47:18.105957+08:00",
+  "prior_commit": "1519d4bae97c0566134c46ba3587ac6ce96b19db",
+  "title": "独立培养方案属性与技能收益对照",
+  "remaining_project_item": "P2条件天赋/模组/培养的数值可用性与局外比较",
+  "new_capability": "提供至多12个独立培养方案的等级/信赖/潜能/模组比较，第一方案为基准；432档案可比较基础属性，已接入技能重算窗口输出，补充七干员重算单次技能与天赋门，未知差值不当零。",
+  "acceptance": [
+    "55级与潜能天赋门差值",
+    "核心技能移除旧基础攻击后按新培养重算",
+    "未开放技能保留属性与未知差值",
+    "一般档案与模组未解锁边界",
+    "实际窗口与账户/本局隔离"
+  ],
+  "limitations": [
+    "没有材料成本或自动培养建议；不覆盖未接入的技能数值",
+    "条件模组、原生时钟、实机面板与本局特殊修正缺口保留"
+  ],
+  "sources": [
+    "rouge/cultivation_comparison.py",
+    "rouge/supplemental_skills.py",
+    "rouge/app.py",
+    "tests/test_cultivation_comparison_140.py"
+  ],
+  "validation": {
+    "necessary_tests_run": 9,
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 4,
+    "test_output": "verification/section-140/tests.txt",
+    "window_receipt": "verification/section-140/window.json"
+  },
+  "source_sha256": {
+    "rouge/cultivation_comparison.py": "2a372290133f38f3c84b78a1aeae74af4dab04702be4ca05b759abc35d1caf45",
+    "rouge/supplemental_skills.py": "45656268dae5ade8ffa6b5f47d97af5a0bbc07ebcab3d042cd89f0e04754b18b",
+    "rouge/app.py": "b57df34dde79b2161941fcc1045ad41e14aaac3e1fe8c7a9823f559c2052de9d",
+    "tests/test_cultivation_comparison_140.py": "c215d90e2aab3c25c705ced25320eec188af512b548d7d468750cf1ab1315edb"
+  },
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": true,
+  "next_full_validation_after": 140
+}

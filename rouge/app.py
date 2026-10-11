@@ -785,11 +785,14 @@ class MainWindow(QMainWindow):
         self.damage_budget_button.setEnabled(False)
         self.damage_budget_button.clicked.connect(self.show_damage_budget)
         layout.addWidget(self.damage_budget_button)
+        self.cultivation_comparison_button=QPushButton('比较等级、信赖、潜能与模组培养方案')
+        self.cultivation_comparison_button.clicked.connect(self.show_cultivation_comparison)
+        layout.addWidget(self.cultivation_comparison_button)
         tools_layout=QGridLayout()
         for index,button in enumerate((self.token_comparison_button,self.token_budget_button,
                 self.charge_timeline_button,self.shield_timeline_button,self.healing_budget_button,
                 self.skill_upgrade_button,self.enemy_comparison_button,self.scenario_library_button,
-                self.supplemental_skill_button,self.damage_budget_button)):
+                self.supplemental_skill_button,self.damage_budget_button,self.cultivation_comparison_button)):
             layout.removeWidget(button);tools_layout.addWidget(button,index//2,index%2)
         layout.addLayout(tools_layout)
         self.damage_text = QPlainTextEdit()
@@ -871,6 +874,29 @@ class MainWindow(QMainWindow):
         if previous is not None:previous.close();previous.deleteLater()
         dialog=ChargeTimelineDialog(scenario,self.damage_result['result']['estimate']['skill']['duration_seconds'],self)
         self.charge_timeline_dialog=dialog;dialog.show()
+
+    def show_cultivation_comparison(self):
+        from .catalog import operator_profiles
+        from .cultivation_comparison import compare_cultivation,format_cultivation
+        from .reference_dialog import ReferenceDialog
+        from copy import deepcopy
+        identity=self.operator.currentData();profile=operator_profiles()[identity]
+        scenario=deepcopy(self.damage_result['scenario']) if getattr(self,'damage_result',None) else {
+            'operator':identity,'skill':self.skill.currentData() or 1,'skill_rank':7,
+            'enemy_defense':self.defense.value(),'enemy_resistance':self.resistance.value()}
+        elite=scenario.get('elite',len(profile['phases'])-1)
+        proposal={'name':'当前预览基准','elite':elite,'level':scenario.get('level') or profile['phases'][elite]['max_level'],
+            'trust':scenario.get('trust',100),'potential':scenario.get('potential',1),
+            'module_id':scenario.get('module_id'),'module_level':scenario.get('module_level',0)}
+        previous=getattr(self,'cultivation_comparison_dialog',None)
+        if previous:previous.close()
+        self.cultivation_comparison_dialog=ReferenceDialog('培养方案 · 属性与技能收益',
+            '独立培养方案；第一项为差值基准，可添加不同等级、信赖、潜能和模组的完整方案。',
+            {'proposals':[proposal]},lambda preview:compare_cultivation(scenario,preview),format_cultivation,
+            [('name','方案'),('status','状态'),('attack','基础攻击'),('delta_attack','攻击差'),
+             ('hp','基础生命'),('delta_hp','生命差'),('defense','基础防御'),
+             ('window_damage','窗口伤害'),('delta_window_damage','伤害差')],self)
+        self.cultivation_comparison_dialog.show()
 
     def show_damage_budget(self):
         if not getattr(self,'damage_result',None):return
