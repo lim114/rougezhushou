@@ -14,12 +14,12 @@ def supplemental_profiles():
 
 def defaults(operator='char_208_melan'):
     return dict(operator=operator,elite=1,level=55,trust=100,potential=1,skill_rank=7,
-                enemy_defense=0,enemy_resistance=0,count=1)
+                enemy_defense=0,enemy_resistance=0,count=1,missing_hp=500)
 
 
 def skill_reference(preview):
     if type(preview) is not dict or set(preview)!=set(defaults()):
-        raise ValueError('需要operator、elite、level、trust、potential、skill_rank、enemy_defense、enemy_resistance、count。')
+        raise ValueError('需要operator、elite、level、trust、potential、skill_rank、enemy_defense、enemy_resistance、count、missing_hp。')
     data=supplemental_profiles(); identity=preview['operator']
     if type(identity) is not str or identity not in data['operators']: raise ValueError('干员未接入补充技能参考。')
     profile=data['operators'][identity]
@@ -30,6 +30,7 @@ def skill_reference(preview):
     trust=_amount(preview['trust'],'信赖',100)
     defense=_amount(preview['enemy_defense'],'敌人防御')
     resistance=_amount(preview['enemy_resistance'],'敌人抗性',100)
+    missing_hp=_amount(preview['missing_hp'],'声明生命缺口')
     stats=operator_attributes(identity,preview['elite'],preview['level'],trust,preview['potential'])
     talents=[]; bonuses={}
     for slot in profile['talents'] or []:
@@ -72,6 +73,20 @@ def skill_reference(preview):
         add('二连射单击（未触发天赋）',hit,'物理伤害')
         add('二连射合计（未触发天赋）',hit*bb['times'],'物理伤害',True)
         add('二连射含天赋组合',None if probability else hit*bb['times'],'物理伤害',not bool(probability))
+    elif kind=='defense_boost':
+        add('普通防御力',armor,'防御力')
+        add('技能期间防御力',stats['defense']*(1+bonuses.get('def',0)+bb['def']),'防御力')
+    elif kind in ('self_heal','heal_boost'):
+        if kind=='self_heal':
+            if missing_hp>hp: raise ValueError('自身生命缺口不能超过计算的最大生命。')
+            heal=hp*bb['heal_scale'];add('天赋后最大生命',hp,'最大生命')
+        else:
+            heal=stats['attack']*(1+bonuses.get('atk',0)+bb['atk'])
+            add('普通单次治疗',attack,'治疗量')
+        add('技能单次治疗',heal,'治疗量',True)
+        potential_heal=heal*preview['count'];effective=min(potential_heal,missing_hp)
+        add('声明次数有效治疗合计',effective,'治疗量')
+        add('声明次数过量治疗合计',potential_heal-effective,'治疗量')
     else: raise ValueError('技能分项尚未实现。')
     return {'preview':deepcopy(preview),'operator_name':profile['name'],'rows':rows,
             'attributes':{'attack':attack,'hp':hp,'defense':armor},'talents':talents,
@@ -81,6 +96,7 @@ def skill_reference(preview):
                      '培养按单独预览条件计算；不写入账户或本局。未含藏品、科技、本局增益、目标获取及原生时序。',
                      '精零已培养高等级技能的实际可用性、当前热更新与实机面板仍待核验。',
                      '各行次数分别表示该分项的声明次数，不将普通攻击、技能和期望重复相加。',
+                     '治疗合计面对单个声明生命缺口，期间没有新增损失；不推断友方获取、阈值、实际存活或复活资格。',
                      '暴击只计算普通单次分支与边际期望；二连射与天赋的组合层、共享/独立抽样未知，组合输出保留未知。不模拟随机序列或击杀概率。']}
 
 
