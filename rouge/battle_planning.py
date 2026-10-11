@@ -123,3 +123,31 @@ def local_time_window(stage_id,start_seconds,end_seconds,*,limit=4096):
         queue['count_is_actual_enemy_total']=False
     return _result(stage,start_seconds=start_seconds,end_seconds=end_seconds,queues=list(queues.values()),
         sorting_rule='nominal offset then serialized action order; not a native same-frame proof')
+
+def enemy_entry_sources(stage_id,enemy_id,level):
+    """Reverse-link a selected enemy reference to every configured entry source."""
+    stage=_stage(stage_id)
+    if type(level) is not int or level<0: raise ValueError('敌人引用等级需要非负整数。')
+    refs=[e for e in stage['enemies'] if e['id']==enemy_id]
+    selected=[e for e in refs if e['level']==level]
+    if len(selected)!=1: raise ValueError('敌人及等级必须与关卡引用唯一匹配。')
+    levels=sorted(set(e['level'] for e in refs)); sources=[]
+    for row in action_catalog(stage_id)['actions']:
+        if row['type']=='SPAWN' and row['action'].get('key')==enemy_id:
+            sources.append({'kind':'main_queue','id':row['id'],'queue_id':row['queue_id'],
+                'source_selector':row['source_selector'],'action':row['action'],
+                'local_sequence':local_sequence(row,limit=16)})
+    for row in stage['branch_spawns']:
+        if row['action'].get('key')==enemy_id:
+            sources.append({'kind':'conditional_branch','id':row['id'],'branch':row['branch'],
+                'phase':row['phase'],'action':deepcopy(row['action']),
+                'local_sequence':local_sequence(row,limit=16),'route_scope_verified':False})
+    for index,record in enumerate(stage['initial_enemy_records']):
+        # Preserve full records and match only explicit identity fields.
+        if isinstance(record,dict) and (record.get('id')==enemy_id or record.get('enemyId')==enemy_id):
+            sources.append({'kind':'initial_record','index':index,'raw':deepcopy(record),
+                'actual_entry_seconds':None})
+    return _result(stage,enemy_id=enemy_id,level=level,name=selected[0]['name'],
+        referenced_levels=levels,action_level_binding_unique=len(levels)==1,
+        entry_sources=sources,actual_enemy_count=None,
+        limits=list(LIMITS)+['动作key不包含等级；多个引用等级时不得据此猜有效等级。'])

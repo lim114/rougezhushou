@@ -6,7 +6,7 @@ from rouge.battle_planning import *
 
 def main():
     parser=argparse.ArgumentParser(description='固定关卡局外规划：查询完整动作、条件与地图资料。')
-    parser.add_argument('command',choices=['actions', 'activations', 'candidates', 'window'])
+    parser.add_argument('command',choices=['actions', 'activations', 'candidates', 'window', 'enemy-sources'])
     parser.add_argument('stage')
     parser.add_argument('--enemy');parser.add_argument('--level',type=int,default=0)
     parser.add_argument('--start',type=float,default=0);parser.add_argument('--end',type=float,default=60)
@@ -22,6 +22,7 @@ def main():
         elif args.command=='activations': result=predefined_activations(args.stage)
         elif args.command=='candidates': result=candidate_groups(args.stage)
         elif args.command=='window': result=local_time_window(args.stage,args.start,args.end,limit=args.limit)
+        elif args.command=='enemy-sources': result=enemy_entry_sources(args.stage,args.enemy,args.level)
     except (ValueError,KeyError,TypeError) as error:
         parser.error(str(error))
     print(json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False))

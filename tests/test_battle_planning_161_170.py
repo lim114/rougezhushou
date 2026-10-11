@@ -70,3 +70,19 @@ class BattlePlanningTests(unittest.TestCase):
             result=local_time_window('ro6_n_1_1',0,20,limit=1)
         self.assertEqual(result['queues'][0]['occurrences'][0]['offset_seconds'],1)
         self.assertEqual(result['queues'][0]['matching_declared_occurrences'],2)
+
+    def test_165_enemy_reverse_sources(self):
+        from rouge.battle_planning import enemy_entry_sources
+        r=enemy_entry_sources('ro6_n_1_1','enemy_2152_shezlc',0)
+        self.assertTrue(any(e['kind']=='conditional_branch' for e in r['entry_sources']))
+        self.assertIsNone(r['actual_enemy_count'])
+        self.assertTrue(all(e['action']['key']==r['enemy_id'] for e in r['entry_sources']))
+        with self.assertRaises(ValueError):enemy_entry_sources('ro6_n_1_1','enemy_2152_shezlc',999)
+
+    def test_165_main_sources(self):
+        from rouge.battle_planning import enemy_entry_sources, action_catalog
+        a=next(a for a in action_catalog('ro6_n_1_1')['actions'] if a['type']=='SPAWN')
+        from rouge.battle_preview import battle_data
+        e=next(e for e in battle_data()['stages']['ro6_n_1_1']['enemies'] if e['id']==a['action']['key'])
+        r=enemy_entry_sources('ro6_n_1_1',e['id'],e['level'])
+        self.assertTrue(any(s['id']==a['id'] for s in r['entry_sources']))
