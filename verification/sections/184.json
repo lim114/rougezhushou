@@ -1,0 +1,41 @@
+{
+  "section": 184,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T23:43:27.122423+08:00",
+  "branch": "codex/p2-development",
+  "title": "地图位置绑定的全部节点内容浏览界面",
+  "remaining_item": "P3节点事件与掉落、固定地图预览",
+  "new_capability": "主测试窗口新增节点事件分支，公开事件/战斗/功能/未归类原文可筛选查阅，所选节点的全部候选与历史分别显示；战斗资料可跳转到准确关卡变体的固定地图。",
+  "acceptance": "所有资料分组、场景与选项可以在真实Qt窗口查询；采样刷新保留手工筛选、已选条目与阅读位置，不修改当前本局。",
+  "source_evidence": [
+    "rouge/data/node-catalog.json",
+    "rouge/data/battle-node-pools.json"
+  ],
+  "limitations": [
+    "来源目录全覆盖不等于当前服务器所有可达事件全部核验，未归类原文保留未知。",
+    "特殊入口、功能解锁、完整奖励池和实际按钮资格保持未知，不自动选择或操作游戏。"
+  ],
+  "test_selectors": [
+    "tests.test_node_catalog_view"
+  ],
+  "files": [
+    "rouge/app.py",
+    "rouge/node_catalog_view.py",
+    "tests/test_node_catalog_view.py"
+  ],
+  "preparation_issue": {
+    "first_attempt": "git apply --check failed app.py context due existing CRLF working file",
+    "resolution": "LF normalization of existing app.py before applying public UI patch",
+    "only_line_endings_changed": true
+  },
+  "validation": {
+    "tests_run": 7,
+    "passed": 7,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-184/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 185
+}

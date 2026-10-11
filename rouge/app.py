@@ -129,6 +129,10 @@ class MainWindow(QMainWindow):
         self.battle_preview=BattlePreviewPanel()
         self.battle_preview.stageSelected.connect(self.select_battle_stage)
         tabs.addTab(self.battle_preview,'战斗预览')
+        from .node_catalog_view import NodeCatalogPanel
+        self.node_catalog=NodeCatalogPanel()
+        self.node_catalog.stageSelected.connect(self.show_catalog_battle)
+        tabs.addTab(self.node_catalog,'节点事件')
         from .technology_view import TechnologyReferencePanel
         self.technology_reference=TechnologyReferencePanel(account_path=Path(OPERATOR_STATE).with_name('technology-state.json'))
         tabs.addTab(self.technology_reference,'长期科技')
@@ -255,6 +259,9 @@ class MainWindow(QMainWindow):
                      technical=self.map_technical.isChecked()),
                      preserve=self.map_detail_key==key)
         self.map_detail_key=key
+        if hasattr(self,'node_catalog'):
+            from .node_catalog_view import map_conditions
+            self.node_catalog.set_node(graph,node_id,**map_conditions(graph,self.run.state.get('config',{})))
         self.map_nodes.blockSignals(True)
         self.map_nodes.setCurrentIndex(max(0,self.map_nodes.findData(node_id or None)))
         self.map_nodes.blockSignals(False)
@@ -833,6 +840,11 @@ class MainWindow(QMainWindow):
         self.target_enemy.blockSignals(False)
         self.update_enemy_context()
         if hasattr(self,'battle_preview'):self.battle_preview.set_stage(sid)
+
+    def show_catalog_battle(self,sid):
+        self.select_battle_stage(sid)
+        self.battle_preview.set_stage(sid)
+        self.centralWidget().setCurrentWidget(self.battle_preview)
 
     def select_battle_stage(self,sid):
         self.target_stage_choices.select_value(sid)
