@@ -21,4 +21,6 @@
 
 `itinerary` 输入同样的声明图、库存/AP/概念体和 `steps`。每一步使用 `mode`（`walking` 或库存 `instance_id`）、`target`。独立账本扣减加工品次数；一次性概念体已满足条件后参考次数归零，不重复发放。未知资格/次数、随机落点或AP不足会停止依赖链，后续步骤原样保留为未求值。付款到零与AP未知使完整条件链未知；源规则算术账本不证明实际连续探索，节点完成和住民移动不会擅自模拟。
 
-源版本：`Kengxxiao/ArknightsGameData@a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`，完整原件哈希和精确字段在 `research/p3-exploration-planning/source-receipt.json` 与结果中。步行规则复用已核对PRTS页面与 `.cache/research/routes-049/evidence.json`；本次未冒充服务器重新验证。仅提取小范围事实参数；未声称上游许可证已核实。
+`transition` 输入 `transition`（`main_region_advance`、`portal_enter`、`portal_return`）、可选 `inventory`、`remaining_ap`、`goal_success`。主区域前进另需 `exit_node_type`（`FINAL`、`EVACUATE`、`BATTLE_BOSS`）。分别列重弹簧/小八界在主区域转换成功后的损坏与秘境进出例外；不改变输入库存。险路尽头/胜利后的险路恶敌将剩余AP用于希望转换，原件未证比率所以希望数量未知；险路小径携带剩余AP，新区域基础AP未知所以不算总AP。具名加工品获取仅知1个，完整池与稀有范围未知。
+
+源版本：`Kengxxiao/ArknightsGameData@a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`，完整原件哈希和精确字段在 `research/p3-exploration-planning/source-receipt.json` 与结果中。步行/转移规则复用已核对PRTS页面与 `.cache/research/routes-049/evidence.json`；本次未冒充服务器重新验证。仅提取小范围事实参数；未声称上游许可证已核实。

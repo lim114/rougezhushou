@@ -462,6 +462,57 @@ def itinerary(graph,steps,inventory=None,action_points=None,start=None,passive_i
                        '居民随移动更新、节点完成/战斗结算、零AP处理与其他费用仍未知，静态声明图不证明实际连续链。'])
 
 
+def region_transition(transition,inventory=None,remaining_ap=None,exit_node_type=None,goal_success=None):
+    """Conditional expiry and exit-resource dispositions, keeping portal exceptions."""
+    if transition not in ('main_region_advance','portal_enter','portal_return'):
+        raise ValueError('转移需要main_region_advance、portal_enter或portal_return。')
+    _integer(remaining_ap,'剩余行动力',optional=True)
+    if goal_success is not None and type(goal_success) is not bool:raise ValueError('目标成功需要布尔值或留空。')
+    if transition=='main_region_advance' and exit_node_type not in ('FINAL','EVACUATE','BATTLE_BOSS'):
+        raise ValueError('主区域转移需要明确险路尽头、险路小径或险路恶敌原类型。')
+    if transition!='main_region_advance' and exit_node_type is not None:
+        raise ValueError('秘境进出不是主区域出口，不填写主区域出口类型。')
+    if inventory is None:inventory=[]
+    if not isinstance(inventory,list) or len(inventory)>1000:raise ValueError('零件库存需要至多1000项对象列表。')
+    rows=[];seen=set();conditional_losses=[];preserved=[]
+    for ordinal,entry in enumerate(inventory,1):
+        if not isinstance(entry,dict):raise ValueError('库存条目需要对象。')
+        item=_item(entry.get('item_id'));instance=entry.get('instance_id',f'inventory:{ordinal}')
+        if not isinstance(instance,str) or not instance or instance in seen:raise ValueError('库存实例标识需要唯一非空文字。')
+        seen.add(instance);remaining=entry.get('remaining_uses');_integer(remaining,'剩余使用次数',optional=True)
+        if remaining is not None and item['kind']!='MOVE':raise ValueError('remaining_uses只用于加工品；概念体另有激活次数。')
+        if remaining is not None and remaining>item['raw']['count']:
+            raise ValueError('剩余次数超过原件初始次数；额外来源尚未核验。')
+        temporary='无法被携带至下一区域' in item['usage']
+        expires=temporary and transition=='main_region_advance'
+        portal_preserved=temporary and transition in ('portal_enter','portal_return')
+        row={'instance_id':instance,'item_id':item['id'],'name':item['name'],'kind':item['kind'],
+             'remaining_uses_declared':remaining,'source_stated_main_region_expiry':temporary,
+             'expires_if_transition_succeeds':expires,'preserved_by_portal_exception':portal_preserved,
+             'transition_success_declared':goal_success,'already_depleted_declared':remaining==0,
+             'actual_retained':None,'source_selector':item['source_selector']}
+        rows.append(row)
+        if expires:conditional_losses.append(instance)
+        elif portal_preserved:preserved.append(instance)
+    resources={'source_rule_ap_conversion':None,'source_rule_carried_ap':None,'hope_conversion_ratio':None,
+               'hope_gain':None,'next_region_total_ap':None,'named_item_grants':[]}
+    if transition=='main_region_advance':
+        if exit_node_type in ('FINAL','BATTLE_BOSS'):resources['source_rule_ap_conversion']=remaining_ap
+        elif exit_node_type=='EVACUATE':resources['source_rule_carried_ap']=remaining_ap
+        if exit_node_type in ('FINAL','EVACUATE'):
+            resources['named_item_grants']=[{'kind':'MOVE','quantity':1,'actual_pool_known':False,
+                                            'rarity_constraint_known':False,'actual_granted':None}]
+    return _result(transition=transition,exit_node_type=exit_node_type,goal_success_declared=goal_success,
+                   remaining_ap_declared=remaining_ap,inventory_conditions=rows,
+                   losses_if_transition_succeeds=conditional_losses,preserved_by_explicit_portal_exception=preserved,
+                   resources=resources,route_rule_source=deepcopy(ROUTE_RULES_SOURCE),
+                   actual_transition_completed=None,actual_inventory_after=None,
+                   limits=deepcopy(reference_data()['limits'])+[
+                       '只有重弹簧和小八界的跨主区域损坏被描述明确列出；其他零件没有新增过期规则。',
+                       '秘境进出不损坏这两种暂存加工品，包括秘境获得的；不把秘境当下一主区域。',
+                       '剩余AP转希望的比率和新区域总AP未在本原件中核验，不默认1:1；首领必须击败才满足出口条件。'])
+
+
 COMMANDS={'items':item_catalog,'targets':movement_targets,'effects':movement_effects,
           'zones':zone_catalog,'budget':zone_budget,'valuation':goods_valuation,'options':movement_options,
-          'itinerary':itinerary}
+          'itinerary':itinerary,'transition':region_transition}

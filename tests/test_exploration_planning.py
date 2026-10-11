@@ -15,6 +15,34 @@ def graph():
         'edges':[['s','wish'],['wish','shop'],['s','combat'],['s','unknown'],['shop','far']]}
 
 class ExplorationPlanningTests(unittest.TestCase):
+    def test_222_temporary_main_region_loss_and_portal_exception(self):
+        stock=[{'item_id':'rogue_6_scrap_M_04','remaining_uses':1},
+               {'item_id':'rogue_6_scrap_M_07','remaining_uses':1},
+               {'item_id':'rogue_6_scrap_M_08','remaining_uses':1},
+               {'item_id':'rogue_6_scrap_G_10'}];old=copy.deepcopy(stock)
+        r=p.region_transition('main_region_advance',stock,remaining_ap=7,exit_node_type='FINAL',goal_success=True)
+        self.assertEqual(r['losses_if_transition_succeeds'],['inventory:1','inventory:2'])
+        self.assertEqual(r['resources']['source_rule_ap_conversion'],7)
+        self.assertIsNone(r['resources']['hope_gain']);self.assertIsNone(r['resources']['hope_conversion_ratio'])
+        for direction in ('portal_enter','portal_return'):
+            r=p.region_transition(direction,stock,remaining_ap=7)
+            self.assertFalse(r['losses_if_transition_succeeds'])
+            self.assertEqual(r['preserved_by_explicit_portal_exception'],['inventory:1','inventory:2'])
+            self.assertIsNone(r['resources']['source_rule_ap_conversion'])
+        self.assertEqual(stock,old)
+
+    def test_222_side_exit_carried_ap_and_unknown_goal_do_not_complete(self):
+        r=p.region_transition('main_region_advance',remaining_ap=8,exit_node_type='EVACUATE')
+        self.assertEqual(r['resources']['source_rule_carried_ap'],8)
+        self.assertIsNone(r['resources']['next_region_total_ap'])
+        self.assertEqual(r['resources']['named_item_grants'][0]['quantity'],1)
+        self.assertFalse(r['resources']['named_item_grants'][0]['actual_pool_known'])
+        self.assertIsNone(r['actual_transition_completed'])
+        for args in ({'transition':'main_region_advance'},
+                     {'transition':'portal_return','exit_node_type':'FINAL'},
+                     {'transition':'portal_enter','remaining_ap':True}):
+            with self.assertRaises(ValueError):p.region_transition(**args)
+
     def test_221_itinerary_consumes_instances_and_single_use_passive(self):
         g=graph();inventory=[{'instance_id':'engine','item_id':'rogue_6_scrap_M_11','remaining_uses':3}]
         passives=[{'item_id':'rogue_6_scrap_P_03','remaining_activations':1}]
