@@ -778,10 +778,13 @@ class MainWindow(QMainWindow):
         self.scenario_library_button.setEnabled(False)
         self.scenario_library_button.clicked.connect(self.show_scenario_library)
         layout.addWidget(self.scenario_library_button)
+        self.supplemental_skill_button=QPushButton('补充干员技能参数与声明次数')
+        self.supplemental_skill_button.clicked.connect(self.show_supplemental_skills)
+        layout.addWidget(self.supplemental_skill_button)
         tools_layout=QGridLayout()
         for index,button in enumerate((self.token_comparison_button,self.token_budget_button,
                 self.charge_timeline_button,self.shield_timeline_button,self.healing_budget_button,
-                self.skill_upgrade_button,self.enemy_comparison_button,self.scenario_library_button)):
+                self.skill_upgrade_button,self.enemy_comparison_button,self.scenario_library_button,self.supplemental_skill_button)):
             layout.removeWidget(button);tools_layout.addWidget(button,index//2,index%2)
         layout.addLayout(tools_layout)
         self.damage_text = QPlainTextEdit()
@@ -863,6 +866,19 @@ class MainWindow(QMainWindow):
         if previous is not None:previous.close();previous.deleteLater()
         dialog=ChargeTimelineDialog(scenario,self.damage_result['result']['estimate']['skill']['duration_seconds'],self)
         self.charge_timeline_dialog=dialog;dialog.show()
+
+    def show_supplemental_skills(self):
+        from .supplemental_skills import defaults,skill_reference,format_reference,supplemental_profiles
+        from .reference_dialog import ReferenceDialog
+        profiles=supplemental_profiles()['operators'];identity=self.operator.currentData()
+        if identity not in profiles:identity=next(iter(profiles))
+        previous=getattr(self,'supplemental_skill_dialog',None)
+        if previous:previous.close()
+        self.supplemental_skill_dialog=ReferenceDialog('补充干员 · 单次技能参考',
+            '独立培养预览；次数手动声明。可选operator：'+ '；'.join(k+'（'+v['name']+'）' for k,v in profiles.items()),
+            defaults(identity),skill_reference,format_reference,
+            [('name','分项'),('value','单次/属性'),('unit','单位'),('declared_total','声明次数合计')],self)
+        self.supplemental_skill_dialog.show()
 
     def show_scenario_library(self):
         if not self.damage_result:return

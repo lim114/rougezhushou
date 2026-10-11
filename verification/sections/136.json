@@ -1,0 +1,43 @@
+{
+  "section": 136,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T17:38:01.908203+08:00",
+  "prior_commit": "aba289ea3e3098802c851f57a6aafd658c44b7ee",
+  "title": "低星近战攻击与即时回费参考",
+  "remaining_project_item": "P2技能时序与精度：其余天赋及技能特殊分项",
+  "new_capability": "为玫兰莎和芬提供可独立使用的七级技能参数计算，按精英/等级/潜能筛选天赋，支持物理保底、即时回费、部署成本及声明次数合计。",
+  "acceptance": [
+    "来源哈希与原字段一致",
+    "攻击加算和物理保底独立算例",
+    "回费与费用天赋边界",
+    "实际窗口入口、输入失效和账户/本局隔离"
+  ],
+  "limitations": [
+    "参数参考未含藏品/科技/本局修正；不生成技能时钟或循环",
+    "精零高技能可用性、原生获取和热更新/实机仍未知"
+  ],
+  "sources": [
+    "rouge/supplemental_skills.py",
+    "rouge/data/supplemental-skills.json",
+    "rouge/app.py",
+    "tests/test_supplemental_skills_136.py"
+  ],
+  "validation": {
+    "necessary_tests_run": 4,
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 4,
+    "test_output": "verification/section-136/tests.txt",
+    "window_receipt": "verification/section-136/window.json"
+  },
+  "source_sha256": {
+    "rouge/supplemental_skills.py": "b01ed33a4057d988b4ec4a1f19ba07d207114ea2005acce58cc43f354edb0047",
+    "rouge/data/supplemental-skills.json": "bbf03f131513327ce0eb9e5779234e4c7368fb6de6e0cbd0e5b84c8918a7dca4",
+    "rouge/app.py": "5fdd90cde04ce2c4032c7d49c5c635a8d78809684b606163e99c07550adba82f",
+    "tests/test_supplemental_skills_136.py": "a54883b4d2c0eb2cc53685364543c44548eb07c18039b0ea273926577ec48122"
+  },
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}
