@@ -5,6 +5,7 @@ from .reference_dialog import ReferenceDialog
 from .supplemental_skills import supplemental_profiles
 from .supplemental_run import run_skill_reference,format_run_reference
 from .supplemental_comparison import compare_ranks,format_comparison
+from .supplemental_cultivation import compare_cultivation,cultivation_defaults,format_cultivation_comparison
 
 
 class SupplementalRunDialog(ReferenceDialog):
@@ -25,6 +26,21 @@ class SupplementalRunDialog(ReferenceDialog):
         self.rank_button=QPushButton('本局技能等级收益对照')
         self.layout().insertWidget(3,self.rank_button)
         self.rank_button.clicked.connect(self.show_ranks)
+        self.cultivation_button=QPushButton('本局培养与招募来源对照')
+        self.layout().insertWidget(4,self.cultivation_button)
+        self.cultivation_button.clicked.connect(self.show_cultivation)
+
+    def show_cultivation(self):
+        if self.result is None:
+            self.notice.setPlainText('请先计算当前干员条件，再打开对照工具。');return
+        result=deepcopy(self.result)
+        dialog=ReferenceDialog('补充干员 · 本局培养与招募来源对照',
+            '方案仅用于局外比较；来源null为未知，non_emergency为非应急，emergency_hire为应急助力。',
+            cultivation_defaults(result['preview'],result['environment']),
+            lambda p:compare_cultivation(result['preview'],result['environment'],p),format_cultivation_comparison,
+            [('proposal','培养方案'),('name','分项'),('value','预计结果'),
+             ('base_value','当前培养基准'),('delta','差值'),('unit','单位')],self)
+        self.children_dialogs.append(dialog);dialog.show()
 
     def show_ranks(self):
         if self.result is None:
