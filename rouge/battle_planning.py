@@ -64,3 +64,24 @@ def predefined_activations(stage_id):
     return _result(stage,activations=rows,unreferenced_objects=[deepcopy(o) for o in objects
         if not any(r['key']==o.get('alias') for r in rows)],
         binding_rule='alias equality; activation routeIndex is not a spatial lookup')
+
+def candidate_groups(stage_id):
+    """Queue-scoped group and package membership, without selecting a winner."""
+    stage=_stage(stage_id); actions=action_catalog(stage_id)['actions']; grouped={}; packages={}
+    for row in actions:
+        a=row['action']; group=a.get('randomSpawnGroupKey'); pack=a.get('randomSpawnGroupPackKey')
+        member={'action_id':row['id'],'type':row['type'],'type_label':row['type_label'],
+            'key':a.get('key'),'weight_parameter':a.get('weight'),'count_parameter':a.get('count'),
+            'hidden_group':a.get('hiddenGroup'),'empty_key':not bool(a.get('key')),
+            'package_key':pack,'source_selector':row['source_selector']}
+        if group: grouped.setdefault((row['queue_id'],group),[]).append(member)
+        if pack: packages.setdefault((row['queue_id'],pack),[]).append({**member,'group_key':group})
+    groups=[]
+    for (queue,key),members in grouped.items():
+        groups.append({'queue_id':queue,'group_key':key,'candidates':deepcopy(members),
+            'actual_choice':None,'probabilities':None,
+            'companion_packages':[{'package_key':p,'members':deepcopy(packages[(queue,p)])}
+                for p in dict.fromkeys(m['package_key'] for m in members if m['package_key'])]})
+    return _result(stage,groups=groups,packages=[{'queue_id':q,'package_key':p,'members':deepcopy(m)}
+        for (q,p),m in packages.items()],
+        grouping_rule='queue identity and raw key equality; no actual selection inferred')

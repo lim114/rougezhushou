@@ -27,3 +27,19 @@ class BattlePlanningTests(unittest.TestCase):
         from rouge.battle_planning import predefined_activations
         r=predefined_activations('ro6_n_1_1');r['activations'].clear()
         self.assertTrue(predefined_activations('ro6_n_1_1')['activations'])
+
+    def test_163_queue_groups(self):
+        from rouge.battle_planning import candidate_groups
+        r=candidate_groups('ro6_n_1_1')
+        self.assertTrue(r['groups'])
+        self.assertTrue(all(g['actual_choice'] is None and g['probabilities'] is None for g in r['groups']))
+        self.assertTrue(any(c['empty_key'] for g in r['groups'] for c in g['candidates']))
+        self.assertEqual(len({(g['queue_id'],g['group_key']) for g in r['groups']}),len(r['groups']))
+
+    def test_163_packages_preserved(self):
+        from rouge.battle_planning import candidate_groups
+        from rouge.battle_preview import battle_data
+        sid=next(s for s in battle_data()['stages'] if candidate_groups(s)['packages'])
+        r=candidate_groups(sid)
+        self.assertTrue(r['packages'])
+        self.assertTrue(all(p['members'] for p in r['packages']))
