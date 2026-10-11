@@ -243,3 +243,22 @@ def talent_states(scenario, elapsed_seconds=None):
             '未声明领取者、进入时刻、损血和首跳的增益不换算为有效治疗总量。']}
 
 COMMANDS['talents']=talent_states
+
+
+def animation_events(scenario, orientation=None, animation_contains=None):
+    """Return original events, including excluded loops, without auto-binding."""
+    s=_scenario(scenario);_cultivated(s)
+    if orientation is not None and orientation not in ('Front','Back'):raise ValueError('orientation为Front或Back。')
+    if animation_contains is not None and not isinstance(animation_contains,str):raise ValueError('animation_contains需要文本。')
+    data=json.loads((Path(__file__).parent/'data/original-animation-references.json').read_text(encoding='utf-8'))
+    profile=data['operators'].get(s['operator'])
+    if profile is None:raise ValueError('当前干员缺原动画资料。')
+    records=[deepcopy(r) for r in profile['records'] if (orientation is None or r['orientation']==orientation)
+             and (animation_contains is None or animation_contains.casefold() in r['animation'].casefold())]
+    return {'operator':profile['name'],'source_commit':data['source_commit'],'reference_fps':data['fps'],
+        'records':records,'count':len(records),'native_verified':False,'notes':[
+            '原版动作资料，不证明实际选择此动画、OnAttack等于命中、皮肤等价或技能状态重置。',
+            '循环/过渡/多事件动作保留用于查证，不能默认拼接或作为攻击时钟。',
+            '严格向上取整与表示误差归一帧均保留；表示归一不能当作实际游戏容差。']}
+
+COMMANDS['animations']=animation_events

@@ -97,4 +97,18 @@ class CalibrationTests(unittest.TestCase):
         self.assertIsNone(t['actual_healing_total'])
         self.assertEqual(c.talent_states({'operator':'mechanist'},elapsed_seconds=[0])['rows'][0]['talent_references'],[])
 
+
+    def test_157_kaltsit_directional_s3_events(self):
+        f=c.animation_events({'operator':'kaltsit'},orientation='Front',animation_contains='Skill_3_Attack')
+        b=c.animation_events({'operator':'kaltsit'},orientation='Back',animation_contains='Skill_3_Attack')
+        self.assertTrue(f['records']);self.assertTrue(b['records'])
+        self.assertEqual(f['records'][0]['events'][0]['ceil_frames_30hz'],12)
+        self.assertEqual(b['records'][0]['events'][0]['ceil_frames_30hz'],13)
+        self.assertFalse(f['records'][0]['runtime_binding_verified'])
+    def test_157_transition_preserved_not_selected(self):
+        r=c.animation_events({'operator':'kaltsit'},orientation='Front',animation_contains='Attack_Begin')
+        self.assertTrue(r['records'])
+        self.assertFalse(r['records'][0]['selectable_as_conventional_reference'])
+        self.assertEqual(r['records'][0]['events'],[])
+
 if __name__=='__main__':unittest.main()
