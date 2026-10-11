@@ -21,7 +21,7 @@
     "push_after_batch_commit": true,
     "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
-    "stop_after_section": 185,
+    "stop_after_section": 285,
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "accuracy_validation_after_section": 115,
@@ -34,8 +34,9 @@
     "bugfix_only_counts_as_functional_section": false,
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
-    "current_user_batch_target_section": 185,
-    "current_user_batch_completed": false
+    "current_user_batch_target_section": 285,
+    "current_user_batch_completed": false,
+    "requirements_synced_each_section": true
   },
   "baseline_commit": "0015c20",
   "completed_sections": 185,
@@ -1163,76 +1164,16 @@
     }
   ],
   "next_section": 186,
-  "next_action": "本批151–185已结束；后续186等待用户续接，不继续自动推进",
+  "next_action": "继续186–285：P2优先，独立有证P3可推进，每节源码/索引/要求普通推送",
   "full_validation_due": false,
   "last_full_validation": {
-    "after_section": 140,
-    "at_UTC": "2026-10-11T09:59:34.869978+00:00",
-    "passed": true,
-    "available_scope_passed": true,
-    "workflow_complete": true,
-    "product_commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
-    "source_files": 809,
-    "source_drift": [],
-    "linux": {
-      "tests_run": 2613,
-      "tests_passed": 2390,
-      "historical_or_declared_skips": 84,
-      "failures": 0,
-      "errors": 0,
-      "unavailable_records": 192,
-      "unavailable_parent_count": 151
-    },
-    "wine": {
-      "tests_run": 2683,
-      "tests_passed": 2470,
-      "historical_or_declared_skips": 87,
-      "failures": 0,
-      "errors": 0,
-      "unavailable_records": 186,
-      "unavailable_parent_count": 145
-    },
-    "selected": {
-      "tests_run": 1678,
-      "skipped": 4,
-      "failures": 0,
-      "errors": 0
-    },
-    "actual_gui_checks": 4283,
-    "saved_states": 52,
-    "saved_audit_passed": true,
-    "actual_gui_attempts": 1,
-    "focused_window_cases": 14,
-    "specialist_window_sections": [
-      126,
-      127,
-      128,
-      129,
-      130,
-      131,
-      132,
-      133,
-      134,
-      135,
-      136,
-      137,
-      138,
-      139,
-      140
-    ],
-    "specialist_window_cases": 64,
-    "actual_screenshots_viewed": 7,
-    "environment_capability_skips": 3,
+    "after_section": 185,
+    "receipt": "verification/full-185/native.json",
+    "available_scope_passed": false,
     "complete_repository_validation": false,
-    "native_windows_game_chat_verified": false,
-    "old095_and109_deferred_preserved": true,
-    "next_full_validation_after": 155,
-    "scope": "All maintained current Linux/Wine selector union and selected Wine regressions; original4283 Qt checks,52 saved states and14 focused cases retained; all126–140 added windows rerun. Missing migrated evidence and declared skips are not PASS.",
-    "inherited125_selector_scope_retained": true,
-    "original831_assert_AST_and_functional_try_unchanged": true,
-    "original42_projections_and_exact10_admissions_retained": true,
-    "linux_and_wine_dependencies_passed": true,
-    "functional_progress_not_inferred_from_section_numbers": true
+    "failed_parent_tests": 3,
+    "failure_records": 12,
+    "native_windows_game_chat_verified": false
   },
   "windows_native_validation": "Windows本机：同步精选计算通过，首次全量12个旧断言缺口保留；第142节41必要检查、7个隔离Qt合成条件入口、实际窗口/更新响应通过。未完成全部游戏采样或聊天集成验收。",
   "wine_validation": "第115节当前可用Wine全量/精选/依赖、4283检查52状态窗口、专项4状态及公开算例核对实际退出0。兼容验证不等同原生Windows。第95/109原流程仍搁置。",
@@ -1321,12 +1262,12 @@
     }
   ],
   "current_batch_commit_policy": {
-    "user_instruction": "每完成一个小节进行一次保存，5个小节的测试后进行一次当前进度总结",
-    "effective_after_completed_section": 95,
+    "effective_after_completed_section": 185,
     "commit_interval": 1,
     "push_after_each_section": true,
-    "full_validation_interval": 5,
-    "next_full_validation_after": 120
+    "full_validation_interval": 15,
+    "next_full_validation_after": 200,
+    "requirements_synced_each_section": true
   },
   "pending_batch_sections": [],
   "pending_batch_save": {
@@ -1632,7 +1573,7 @@
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": 185,
-  "batch_status": "TARGET_185_COMPLETED",
+  "batch_status": "IN_PROGRESS",
   "policy_revision_Beijing": "2026-10-11",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -1737,5 +1678,84 @@
     "node_generation_probabilities_required": false,
     "all_node_possible_events_required": true,
     "independent_public_cases_first": true
-  }
+  },
+  "historical_last_full_validation_140": {
+    "after_section": 140,
+    "at_UTC": "2026-10-11T09:59:34.869978+00:00",
+    "passed": true,
+    "available_scope_passed": true,
+    "workflow_complete": true,
+    "product_commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
+    "source_files": 809,
+    "source_drift": [],
+    "linux": {
+      "tests_run": 2613,
+      "tests_passed": 2390,
+      "historical_or_declared_skips": 84,
+      "failures": 0,
+      "errors": 0,
+      "unavailable_records": 192,
+      "unavailable_parent_count": 151
+    },
+    "wine": {
+      "tests_run": 2683,
+      "tests_passed": 2470,
+      "historical_or_declared_skips": 87,
+      "failures": 0,
+      "errors": 0,
+      "unavailable_records": 186,
+      "unavailable_parent_count": 145
+    },
+    "selected": {
+      "tests_run": 1678,
+      "skipped": 4,
+      "failures": 0,
+      "errors": 0
+    },
+    "actual_gui_checks": 4283,
+    "saved_states": 52,
+    "saved_audit_passed": true,
+    "actual_gui_attempts": 1,
+    "focused_window_cases": 14,
+    "specialist_window_sections": [
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140
+    ],
+    "specialist_window_cases": 64,
+    "actual_screenshots_viewed": 7,
+    "environment_capability_skips": 3,
+    "complete_repository_validation": false,
+    "native_windows_game_chat_verified": false,
+    "old095_and109_deferred_preserved": true,
+    "next_full_validation_after": 155,
+    "scope": "All maintained current Linux/Wine selector union and selected Wine regressions; original4283 Qt checks,52 saved states and14 focused cases retained; all126–140 added windows rerun. Missing migrated evidence and declared skips are not PASS.",
+    "inherited125_selector_scope_retained": true,
+    "original831_assert_AST_and_functional_try_unchanged": true,
+    "original42_projections_and_exact10_admissions_retained": true,
+    "linux_and_wine_dependencies_passed": true,
+    "functional_progress_not_inferred_from_section_numbers": true
+  },
+  "historical_batch_commit_policy_before186": {
+    "user_instruction": "每完成一个小节进行一次保存，5个小节的测试后进行一次当前进度总结",
+    "effective_after_completed_section": 95,
+    "commit_interval": 1,
+    "push_after_each_section": true,
+    "full_validation_interval": 5,
+    "next_full_validation_after": 120
+  },
+  "batch_start_section": 186,
+  "batch_target_section": 285
 }
