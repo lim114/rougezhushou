@@ -37,11 +37,18 @@ def skill_reference(preview):
     return _skill_reference(preview,_cultivated_stats(preview))
 
 
-def _skill_reference(preview,stats):
-    """Shared talent/skill layer; callers qualify the cultivated or rune snapshot."""
+def _skill_reference(preview,stats,battle_attributes=None):
+    """Qualified ordinary multipliers share the talent/skill additive layer.
+
+    Stats are the cultivated or rune-written basis, never pre-multiplied by
+    ordinary buffs. The run adapter owns qualification of battle_attributes.
+    """
     data=supplemental_profiles();profile=data['operators'][preview['operator']]
     defense=preview['enemy_defense'];resistance=preview['enemy_resistance'];missing_hp=preview['missing_hp']
-    talents=[]; bonuses={}
+    talents=[]
+    battle_attributes=battle_attributes or {}
+    bonuses={key:battle_attributes.get(kind,0) for kind,key in
+             (('attack_pct','atk'),('hp_pct','max_hp'),('defense_pct','def'))}
     for slot in profile['talents'] or []:
         candidates=[t for t in slot['candidates'] if
             (int(t['unlockCondition']['phase'].split('_')[-1]),t['unlockCondition']['level']) <=

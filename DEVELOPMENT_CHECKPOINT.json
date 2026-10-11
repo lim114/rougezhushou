@@ -12,8 +12,8 @@
     ],
     "max_failed_attempts_per_problem": 3,
     "wrap_up_below_usage_percent": 15,
-    "usage_percent_available": false,
-    "usage_monitoring": "No enabled tool exposes account usage; do not invent a percentage. Honor any subsequent user-provided low-usage signal.",
+    "usage_percent_available": true,
+    "usage_monitoring": "Use Codex get_usage_limits when needed; missing windows are unavailable, not zero. Do not publish account details or redeem resets without explicit confirmation.",
     "automatic_next_batch": true,
     "commit_interval": 1,
     "commit_after_full_validation_pass": false,
@@ -38,7 +38,7 @@
     "current_user_batch_completed": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 141,
+  "completed_sections": 142,
   "sections": [
     {
       "number": 1,
@@ -893,11 +893,18 @@
       "number": 141,
       "completion_ref": "p2-section-141",
       "topic": "七名低星干员的本局属性符文与单次技能对照",
-      "verification": "verification/sections/141.json"
+      "verification": "verification/sections/141.json",
+      "actual_commit": "4d32fdbe9317ac80d94a791bbb71b24e4fea9ec9"
+    },
+    {
+      "number": 142,
+      "completion_ref": "p2-section-142",
+      "topic": "七名低星干员稳定普通属性与单次技能修正",
+      "verification": "verification/sections/142.json"
     }
   ],
-  "next_section": 142,
-  "next_action": "从142接续P2有依据的未完成事项；七低星剩余本局修正与原生时钟继续查证，不把稳定符文接入视为全部完成。每节必要验证、commit及普通push；全量155，P1断点和识别最后保留。",
+  "next_section": 143,
+  "next_action": "从143继续P2有依据的低星费用/技力等本局修正；保留其它局外属性、回复/最终伤害、原生时钟和实机/热更新未知。每节必要检查、commit普通push；全量155，P1断点和识别最后。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 140,
@@ -968,7 +975,7 @@
     "linux_and_wine_dependencies_passed": true,
     "functional_progress_not_inferred_from_section_numbers": true
   },
-  "windows_native_validation": "Windows本机：同步精选计算通过，首次全量12个断言缺口保留；第141节31必要检查、7个隔离Qt入口、实际窗口/更新响应通过。未完成全部游戏采样或聊天集成验收。",
+  "windows_native_validation": "Windows本机：同步精选计算通过，首次全量12个旧断言缺口保留；第142节41必要检查、7个隔离Qt合成条件入口、实际窗口/更新响应通过。未完成全部游戏采样或聊天集成验收。",
   "wine_validation": "第115节当前可用Wine全量/精选/依赖、4283检查52状态窗口、专项4状态及公开算例核对实际退出0。兼容验证不等同原生Windows。第95/109原流程仍搁置。",
   "deferred_problems": [
     {
@@ -1402,14 +1409,15 @@
     138,
     139,
     140,
-    141
+    141,
+    142
   ],
   "current_batch": {
-    "start": 141,
-    "end": 141,
+    "start": 142,
+    "end": 142,
     "status": "FUNCTIONAL_SECTION_VALIDATED",
-    "next_section": 142,
-    "receipt": "verification/sections/141.json",
+    "next_section": 143,
+    "receipt": "verification/sections/142.json",
     "next_full_validation_after": 155
   },
   "current_full140_checkpoint": {
@@ -1439,6 +1447,15 @@
     "necessary_tests": 31,
     "isolated_entries": 7,
     "actual_window_verified": true,
+    "complete_repository_validation": false
+  },
+  "native_section142_validation": {
+    "receipt": "verification/sections/142.json",
+    "actual_window_tool": "Windows-mcp",
+    "necessary_tests": 41,
+    "isolated_entries": 7,
+    "actual_window_verified": true,
+    "synthetic_conditions_distinguished": true,
     "complete_repository_validation": false
   }
 }
