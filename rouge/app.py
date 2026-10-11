@@ -781,10 +781,15 @@ class MainWindow(QMainWindow):
         self.supplemental_skill_button=QPushButton('补充干员技能参数与声明次数')
         self.supplemental_skill_button.clicked.connect(self.show_supplemental_skills)
         layout.addWidget(self.supplemental_skill_button)
+        self.damage_budget_button=QPushButton('测算逐敌人有效伤害与溢出')
+        self.damage_budget_button.setEnabled(False)
+        self.damage_budget_button.clicked.connect(self.show_damage_budget)
+        layout.addWidget(self.damage_budget_button)
         tools_layout=QGridLayout()
         for index,button in enumerate((self.token_comparison_button,self.token_budget_button,
                 self.charge_timeline_button,self.shield_timeline_button,self.healing_budget_button,
-                self.skill_upgrade_button,self.enemy_comparison_button,self.scenario_library_button,self.supplemental_skill_button)):
+                self.skill_upgrade_button,self.enemy_comparison_button,self.scenario_library_button,
+                self.supplemental_skill_button,self.damage_budget_button)):
             layout.removeWidget(button);tools_layout.addWidget(button,index//2,index%2)
         layout.addLayout(tools_layout)
         self.damage_text = QPlainTextEdit()
@@ -866,6 +871,24 @@ class MainWindow(QMainWindow):
         if previous is not None:previous.close();previous.deleteLater()
         dialog=ChargeTimelineDialog(scenario,self.damage_result['result']['estimate']['skill']['duration_seconds'],self)
         self.charge_timeline_dialog=dialog;dialog.show()
+
+    def show_damage_budget(self):
+        if not getattr(self,'damage_result',None):return
+        from .damage_budget import damage_sources,damage_budget,format_damage_budget
+        from .reference_dialog import ReferenceDialog
+        from copy import deepcopy
+        scenario=deepcopy(self.damage_result['scenario']);sources=damage_sources(self.damage_result['result'])
+        if not sources:return
+        previous=getattr(self,'damage_budget_dialog',None)
+        if previous:previous.close()
+        self.damage_budget_dialog=ReferenceDialog('逐敌人伤害 · 声明生命预算',
+            '手动声明目标与事件；预算耗尽不代表实际击杀。可选source：'+ '；'.join(s['id']+'（'+s['name']+'）' for s in sources),
+            {'targets':[{'id':'目标甲','hp':10000,'defense':scenario.get('enemy_defense',0),'resistance':scenario.get('enemy_resistance',0)}],
+             'events':[{'at_seconds':0,'target':'目标甲','source':sources[0]['id']}]},
+            lambda preview:damage_budget(scenario,preview),format_damage_budget,
+            [('at_seconds','声明秒数'),('target','目标'),('source','分项'),('per_hit','潜在伤害'),
+             ('effective_damage','有效伤害'),('overkill','溢出'),('hp_after','剩余预算')],self)
+        self.damage_budget_dialog.show()
 
     def show_supplemental_skills(self):
         from .supplemental_skills import defaults,skill_reference,format_reference,supplemental_profiles
@@ -1342,6 +1365,7 @@ class MainWindow(QMainWindow):
         if hasattr(self,'skill_upgrade_button'):self.skill_upgrade_button.setEnabled(False)
         if hasattr(self,'enemy_comparison_button'):self.enemy_comparison_button.setEnabled(False)
         if hasattr(self,'scenario_library_button'):self.scenario_library_button.setEnabled(False)
+        if hasattr(self,'damage_budget_button'):self.damage_budget_button.setEnabled(False)
         self.damage_result=None
         if hasattr(self,'relic_context'):self.damage_form.setRowVisible(self.relic_context,False)
         op=self.operator.currentData()
@@ -1488,6 +1512,8 @@ class MainWindow(QMainWindow):
             self.skill_upgrade_button.setEnabled(True)
             self.enemy_comparison_button.setEnabled(True)
             self.scenario_library_button.setEnabled(True)
+            from .damage_budget import damage_sources
+            self.damage_budget_button.setEnabled(bool(damage_sources(result)))
             self.render_damage()
         except Exception as error:
             self.damage_result=None
