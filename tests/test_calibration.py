@@ -50,4 +50,17 @@ class CalibrationTests(unittest.TestCase):
         r=c.skill_matrix({'operator':'mechanist','elite':0,'skill_rank':7,'module_id':'uniequip_002_mcnist','module_level':3})
         self.assertEqual(sum(x['status']=='培养条件未开放' for x in r['rows']),6)
 
+
+    def test_154_full_curve_rounding_and_contributions(self):
+        r=c.cultivation_curve({'operator':'kaltsit','potential':4})
+        self.assertEqual(len(r['rows']),90)
+        end=r['rows'][-1]['contributions']
+        self.assertEqual(end['attack'],{'level_base':510,'trust_increment':0,'potential_increment':25.0,'module_increment':0.0})
+        self.assertEqual(end['hp']['trust_increment'],500)
+        self.assertEqual(r['rows'][0]['cultivated']['attack'],433)
+    def test_154_module_gate_inside_level_curve(self):
+        r=c.cultivation_curve({'operator':'mechanist','module_id':'uniequip_002_mcnist','module_level':3},levels=[59,60])
+        self.assertEqual(r['rows'][0]['contributions']['attack']['module_increment'],0)
+        self.assertEqual(r['rows'][1]['contributions']['attack']['module_increment'],100)
+
 if __name__=='__main__':unittest.main()

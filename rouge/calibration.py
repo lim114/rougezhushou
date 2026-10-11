@@ -153,3 +153,29 @@ def skill_matrix(scenario, operators=None):
         '调用方所选模组和专属事件条件只用于原干员，不复制到其他干员。']}
 
 COMMANDS['skills']=skill_matrix
+
+
+def cultivation_curve(scenario, levels=None):
+    """Explain every level's base rounding and trust/potential/module increments."""
+    s=_scenario(scenario);_cultivated(s)
+    cap=catalog()['operators'][s['operator']]['phases'][s['elite']]['max_level']
+    levels=list(range(1,cap+1)) if levels is None else list(levels)
+    if not levels or len(levels)>cap or len(set(levels))!=len(levels):raise ValueError('levels需要不重复的有效等级。')
+    rows=[]
+    for level in sorted(levels):
+        if not isinstance(level,int) or isinstance(level,bool) or not 1<=level<=cap:raise ValueError('等级超出当前阶段。')
+        bare=_cultivated(s,level=level,trust=0,potential=1,module_id=None,module_level=0)
+        trust=_cultivated(s,level=level,potential=1,module_id=None,module_level=0)
+        pot=_cultivated(s,level=level,module_id=None,module_level=0)
+        all_stats=_cultivated(s,level=level)
+        rows.append({'level':level,'cultivated':all_stats,'contributions':{
+            f:{'level_base':bare[f],'trust_increment':trust[f]-bare[f],
+               'potential_increment':pot[f]-trust[f],'module_increment':all_stats[f]-pot[f]}
+            for f in LABELS if f in all_stats}})
+    return {'operator':catalog()['operators'][s['operator']]['name'],'elite':s['elite'],
+            'rows':rows,'source':_source(),'scope':'培养属性，不包含藏品、部署天赋或技能。',
+            'notes':['信赖为加成进度0–100，不是游戏显示的0–200信赖百分比。',
+                     '潜能强化的天赋变体不冒充潜能直接白值增量；模组未达门槛时贡献为0。'],
+            'native_verified':False}
+
+COMMANDS['cultivation']=cultivation_curve
