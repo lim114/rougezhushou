@@ -751,6 +751,10 @@ class MainWindow(QMainWindow):
         self.token_comparison_button=QPushButton('比较召唤物模组升级（局外参考）')
         self.token_comparison_button.clicked.connect(self.show_token_module_comparison)
         layout.addWidget(self.token_comparison_button)
+        self.charge_timeline_button=QPushButton('机械师S3：比较冲锋时刻与观察窗口')
+        self.charge_timeline_button.setEnabled(False)
+        self.charge_timeline_button.clicked.connect(self.show_charge_timeline)
+        layout.addWidget(self.charge_timeline_button)
         self.damage_text = QPlainTextEdit()
         self.damage_text.setReadOnly(True)
         layout.addWidget(self.damage_text,1)
@@ -820,6 +824,16 @@ class MainWindow(QMainWindow):
             self.displayed_enemy_context=key
         self.damage_form.setRowVisible(self.orb_mode,target.get('enemy_id')=='enemy_2148_shorbb')
         if hasattr(self,'raw_damage'):self.calculate()
+
+    def show_charge_timeline(self):
+        if not self.damage_result:return
+        scenario=self.damage_result['scenario']
+        if scenario['operator']!='mechanist' or scenario['skill']!=3:return
+        from .charge_timeline_view import ChargeTimelineDialog
+        previous=getattr(self,'charge_timeline_dialog',None)
+        if previous is not None:previous.close();previous.deleteLater()
+        dialog=ChargeTimelineDialog(scenario,self.damage_result['result']['estimate']['skill']['duration_seconds'],self)
+        self.charge_timeline_dialog=dialog;dialog.show()
 
     def show_token_module_comparison(self):
         from .token_module_comparison import compare_token_module
@@ -1200,6 +1214,7 @@ class MainWindow(QMainWindow):
         self.relic_context.setEnabled(key is not None)
 
     def calculate(self):
+        if hasattr(self,'charge_timeline_button'):self.charge_timeline_button.setEnabled(False)
         self.damage_result=None
         if hasattr(self,'relic_context'):self.damage_form.setRowVisible(self.relic_context,False)
         op=self.operator.currentData()
@@ -1339,6 +1354,7 @@ class MainWindow(QMainWindow):
             if self.target_buff_test.isChecked():
                 result['estimate']['notes'].insert(0,'当前启用个人强化测试；测试选项不代表从本局画面读取到的强化，也不写入记忆。')
             self.damage_result = {'scenario':scenario,'result':result}
+            self.charge_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==3)
             self.render_damage()
         except Exception as error:
             self.damage_result=None

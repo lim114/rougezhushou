@@ -1,0 +1,60 @@
+{
+  "section": 127,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T14:25:42.654872+08:00",
+  "prior_commit": "64f88238069e6ebcb79119cce3760ccd27902313",
+  "remaining_project_item": "PROJECT_PROGRESS.md：P2技能时序与精度，机械师S3冲锋命中时序",
+  "new_capability": "逐次声明冲锋命中时刻，比较最多12个观察窗口内的轰击、冲锋及条件伤害小计，查看累计事件并复制可复现计算条件。",
+  "acceptance": {
+    "real_calculator_entry": true,
+    "equal_timestamps_keep_multiplicity": true,
+    "exact_half_open_window_boundaries": true,
+    "zero_window_and_empty_events": true,
+    "bombardment_uses_existing_calculator_in_both_modes": true,
+    "current_rank_duration_gate": true,
+    "stale_preview_cleared_until_explicit_recompute": true,
+    "frozen_opening_conditions": true,
+    "copy_conditions_and_unknowns": true,
+    "original_damage_account_run_unchanged": true
+  },
+  "validation": {
+    "necessary_tests_run": 17,
+    "modules": [
+      "tests.test_charge_timeline_127",
+      "tests.test_charge_reference"
+    ],
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 5,
+    "screenshot_actually_viewed": true,
+    "receipt": "verification/section-127/window.json",
+    "test_output": "verification/section-127/tests.txt"
+  },
+  "evidence_reused": [
+    "research/p2-charge-clock/source-receipt.json",
+    "rouge/data/catalog.json",
+    "rouge/data/skill-impact-delays.json",
+    "rouge/damage.py",
+    "rouge/charge_reference.py"
+  ],
+  "new_native_mechanism_inferred": false,
+  "source_sha256": {
+    "rouge/app.py": "ce2bdf8790bfa7b18d2d21526c01cd4252fcdac436f4668a4f72f9edca79cd9d",
+    "rouge/charge_timeline.py": "dbc27d953cb0ef2f23ed5a913e24cd8a6899a3eac2a6e292a4777866d2819988",
+    "rouge/charge_timeline_view.py": "220f2059114c5aecdd7cc207c7b9b2738d142cc221278931f47e8ab6ee085524",
+    "research/p2-charge-clock/source-receipt.json": "6c6f3264906e145144d94bf6091568fcd43166a840c4be4507ec59832b3373fa",
+    "rouge/data/catalog.json": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+    "rouge/data/skill-impact-delays.json": "196beb0784be7086fbfe046010f8f50c0aa8f0e25360011c7de3d8ad8992ae11"
+  },
+  "limitations": [
+    "用户声明的命中秒数不是原生碰撞时钟；真实快照、临时加成取值和条件模组仍未知。",
+    "冲锋按原始秒数，轰击沿用原计算模式；本体时序不能定位独立冲锋。",
+    "窗口仅在技能参数持续范围内；晚到声明不证明技能后存活。",
+    "结果为条件已计部分；完整施放与周期总伤未知，P2机制待办未关闭。"
+  ],
+  "first_failed_attempt": "verification/section-127/first-test-attempt.json",
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}
