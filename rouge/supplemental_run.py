@@ -9,6 +9,7 @@ from .supplemental_skills import (_cultivated_stats,_skill_reference,
 from .relic_attributes import is_attribute_rune,apply_attribute_runes
 from .supplemental_cost import supported_cost,cost_reference
 from .supplemental_sp import supported_sp,sp_reference
+from .supplemental_healing import supported_healing,apply_healing_reference
 
 ENVIRONMENT_KEYS={'relic_ids','run_config','relic_context','inventory_status','operator_metadata'}
 # Proven child-buff multipliers from the pinned templates, not every rule with
@@ -78,8 +79,10 @@ def run_skill_reference(preview,environment):
     ordinary=[e for e in resolved if _ordinary_attribute(e)]
     costs=[e for e in resolved if supported_cost(e)]
     sp_rules=[e for e in resolved if supported_sp(e)]
+    healing_rules=[e for e in resolved if supported_healing(e,raw['kind'])]
     unsupported=[e for e in resolved if not is_attribute_rune(e) and
                  not _ordinary_attribute(e) and not supported_cost(e) and not supported_sp(e)
+                 and not supported_healing(e,raw['kind'])
                  and not e.get('token_only')]
     battle_attributes={kind:sum(e['value'] for e in ordinary if e['kind']==kind)
                        for kind in ('attack_pct','hp_pct','defense_pct')}
@@ -88,6 +91,7 @@ def run_skill_reference(preview,environment):
     cost=cost_reference(stats,result['talents'],resolved,relic_resolution['records'])
     result['deployment_reference']=cost
     result['sp_reference']=sp_reference(result['skill_parameter'],resolved,relic_resolution['records'])
+    result['healing_reference']=apply_healing_reference(result,resolved,relic_resolution['records'],raw['kind'])
     if preview['operator']=='char_123_fang':
         row=next(r for r in result['rows'] if r['name']=='单次回费')
         row['value']+=cost['skill_start_dp'];row['declared_total']=row['value']*preview['count']
@@ -99,6 +103,7 @@ def run_skill_reference(preview,environment):
         baseline=None;baseline_error=str(error)
     else:baseline_error=None
     base_rows={r['name']:r['value'] for r in baseline['rows']} if baseline else {}
+    if baseline:base_rows['藏品常态生命回复']=0
     for row in result['rows']:
         row['base_value']=base_rows.get(row['name'])
         row['delta']=row['value']-row['base_value'] if row['value'] is not None and row['base_value'] is not None else None
@@ -112,14 +117,15 @@ def run_skill_reference(preview,environment):
     result['run_attributes']={key:modified[key] for key in
                              ('hp','attack','defense','resistance','attack_speed','redeploy_seconds','block_count')}
     result['environment']=environment
-    result['attribute_resolution']={'runes':deepcopy(runes),'ordinary':deepcopy(ordinary),'costs':deepcopy(costs),'sp_rules':deepcopy(sp_rules),
+    result['attribute_resolution']={'runes':deepcopy(runes),'ordinary':deepcopy(ordinary),'costs':deepcopy(costs),'sp_rules':deepcopy(sp_rules),'healing_rules':deepcopy(healing_rules),
         'battle_attributes':battle_attributes,'unsupported':deepcopy(unsupported),
         'warnings':list(dict.fromkeys(warnings)),'relics':deepcopy(relic_resolution['records']),
         'run':run_resolution,'inventory_complete':complete is True,
         'complete_for_attribute_scope':not warnings,'baseline_error':baseline_error,
         'source':deepcopy(selectors()['source'])}
     result['notes'][1]='培养按独立预览条件计算；本局已证属性符文先写回，再将已确认的稳定普通属性增益与天赋/技能加成相加。未接入效果不默认为零；不写入账户或本局。'
-    result['notes'].extend(['本局修正含已证属性、普通首次费用、开启回费及技力参数；芬费用天赋组合、技力时钟、持续回复与最终伤害修正仍有缺口，不能生成回转和周期。',
+    result['notes'].extend(['本局修正含已证属性、普通首次费用、开启回费、技力参数和单来源治疗/生命回复参考；芬费用天赋组合、技力时钟、多来源倍率与最终伤害修正仍有缺口，不能生成回转和周期。',
+                            '生命回复以常态最大生命计算藏品贡献，独立于直接治疗；不推算首跳、次数、受疗资格或技能期间最大生命的动态积分。',
                             '对照列为相同培养且没有本局修正的单次参考；差值不代表完整施放、周期或真实击杀。',
                             '藏品与分队取打开或更新时的快照；修改干员仅使用其自己的已确认强化，不沿用上一名干员的领取信息。'])
     return result
