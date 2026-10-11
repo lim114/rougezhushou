@@ -228,5 +228,73 @@ def zone_budget(zone_id,action_points=None,walking_steps=None,item_id=None,goal_
                        '首领节点抵达不等于击败；特殊区返回原区域不冒充进入下一主层。'])
 
 
+GOODS_EVENTS=('battle_completed','node_revealed','operator_recruited','movement_completed',
+              'parts_obtained','item_obtained')
+GOODS_DELTAS={
+    ('rogue_6_scrap_G_02','battle_completed'):2,
+    ('rogue_6_scrap_G_03','node_revealed'):1,
+    ('rogue_6_scrap_G_04','operator_recruited'):3,
+    ('rogue_6_scrap_G_07','parts_obtained'):1,
+    ('rogue_6_scrap_G_09','parts_obtained'):4,
+    ('rogue_6_scrap_G_10','movement_completed'):-2,
+}
+
+
+def goods_valuation(item_id,events=None,initial_estimate=None):
+    """Source-backed estimate deltas over a declared event ledger; never a sale quote."""
+    item=_item(item_id,'GOODS');_integer(initial_estimate,'初始估价',optional=True)
+    if events is None:events=[]
+    if not isinstance(events,list) or len(events)>1000: raise ValueError('估价事件需要至多1000项对象列表。')
+    initial=item['raw']['sellPrice'] if initial_estimate is None else initial_estimate
+    known_delta=0;unknown=[];rows=[];destroyed=False;destroyed_unknown=False;grants=[]
+    for ordinal,event in enumerate(events,1):
+        if not isinstance(event,dict) or event.get('kind') not in GOODS_EVENTS:
+            raise ValueError('估价事件类别不在支持目录中。')
+        count=event.get('count',1);_integer(count,'独立触发次数')
+        perfect=event.get('perfect')
+        if perfect is not None and type(perfect) is not bool: raise ValueError('完美作战需要布尔值或留空。')
+        kind=event['kind'];delta=0;reasons=[];effects=[];status='no_source_stated_effect'
+        if destroyed:
+            status='after_declared_destruction'
+        elif count:
+            if (item_id,kind) in GOODS_DELTAS:
+                delta=GOODS_DELTAS[(item_id,kind)]*count;status='known_description_delta'
+            if item_id=='rogue_6_scrap_G_05' and kind=='movement_completed':
+                reasons.append('每次移动后的随机估价变化缺范围和数值原件');status='random_change_unknown'
+            if item_id=='rogue_6_scrap_G_06' and kind=='battle_completed':
+                if perfect is True:
+                    delta=4*count;status='known_description_delta'
+                elif perfect is False:
+                    destroyed=True;status='source_stated_destruction'
+                else:
+                    destroyed_unknown=True;reasons.append('作战完美状态未知：+4或损坏两个分支均保留')
+                    effects=[{'condition':'perfect','estimate_delta':4*count},
+                             {'condition':'nonperfect','destroyed':True}];status='condition_unknown'
+            if item_id=='rogue_6_scrap_G_07' and kind=='item_obtained':
+                grant={'item_id':'rogue_6_scrap_G_08','name':reference_data()['items']['rogue_6_scrap_G_08']['name'],
+                       'quantity':3*count,'condition':'声明获得多生苔藓','source_selector':item['source_selector']}
+                grants.append(grant);effects.append(deepcopy(grant));status='named_grant_reference'
+                reasons.append('自身获得及派生3零件是否触发估价链的顺序/计数未核验；不自动追加parts_obtained')
+        if destroyed_unknown and not destroyed:
+            reasons.append('前序可能损坏，后续触发是否仍有效未知')
+        known_delta+=delta
+        for reason in reasons:unknown.append({'event_ordinal':ordinal,'reason':reason})
+        rows.append({'event_ordinal':ordinal,'kind':kind,'count_declared':count,'perfect_declared':perfect,
+                     'known_description_delta':delta,'status':status,'conditional_effects':effects,
+                     'subtotal_before_unknown_effects':initial+known_delta,'source_selector':item['source_selector']})
+    arithmetic=initial+known_delta
+    return _result(item=deepcopy(item),initial_estimate_reference=initial,
+                   initial_estimate_basis='fixed_sellPrice_parameter' if initial_estimate is None else 'caller_declaration',
+                   events=rows,known_description_delta=known_delta,arithmetic_subtotal=arithmetic,
+                   nominal_estimate=None if unknown or destroyed or destroyed_unknown else arithmetic,
+                   destroyed_in_declared_ledger=destroyed,destruction_condition_unknown=destroyed_unknown,
+                   unknown_effects=unknown,named_grant_references=grants,actual_sell_value=None,
+                   valuation_floor_and_cap_verified=False,
+                   limits=deepcopy(reference_data()['limits'])+[
+                       'count表示声明的独立触发次数，不把一次批量获得自动拆成若干触发。',
+                       '估价上下限、售卖修正、派生连锁与真实当前估价未自动取得；算术小计不是售价。',
+                       '种子培育奖励、笼控器事件作用与随机价格范围没有完整池，保持原文参考。'])
+
+
 COMMANDS={'items':item_catalog,'targets':movement_targets,'effects':movement_effects,
-          'zones':zone_catalog,'budget':zone_budget}
+          'zones':zone_catalog,'budget':zone_budget,'valuation':goods_valuation}

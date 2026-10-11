@@ -15,6 +15,38 @@ def graph():
         'edges':[['s','wish'],['wish','shop'],['s','combat'],['s','unknown'],['shop','far']]}
 
 class ExplorationPlanningTests(unittest.TestCase):
+    def test_219_event_estimate_and_unknown_sale_bounds(self):
+        r=p.goods_valuation('rogue_6_scrap_G_02',[{'kind':'battle_completed','count':3},
+            {'kind':'movement_completed','count':5}])
+        self.assertEqual(r['arithmetic_subtotal'],8);self.assertEqual(r['known_description_delta'],6)
+        self.assertIsNone(r['actual_sell_value'])
+        r=p.goods_valuation('rogue_6_scrap_G_04',[{'kind':'operator_recruited','count':2}],initial_estimate=10)
+        self.assertEqual(r['nominal_estimate'],16)
+        r=p.goods_valuation('rogue_6_scrap_G_10',[{'kind':'movement_completed','count':20}])
+        self.assertEqual(r['arithmetic_subtotal'],-8);self.assertFalse(r['valuation_floor_and_cap_verified'])
+        self.assertIsNone(r['actual_sell_value'])
+        for args in ({'initial_estimate':True},{'events':[{'kind':'unknown'}]},
+                     {'events':[{'kind':'battle_completed','perfect':1}]}):
+            with self.assertRaises(ValueError):p.goods_valuation('rogue_6_scrap_G_02',**args)
+
+    def test_219_random_destruction_and_acquisition_cascade(self):
+        r=p.goods_valuation('rogue_6_scrap_G_05',[{'kind':'movement_completed'}])
+        self.assertIsNone(r['nominal_estimate']);self.assertTrue(r['unknown_effects'])
+        events=[{'kind':'battle_completed','perfect':True},
+                {'kind':'battle_completed','perfect':False},
+                {'kind':'battle_completed','perfect':True}]
+        before=copy.deepcopy(events);r=p.goods_valuation('rogue_6_scrap_G_06',events)
+        self.assertEqual(r['known_description_delta'],4);self.assertTrue(r['destroyed_in_declared_ledger'])
+        self.assertEqual(r['events'][-1]['status'],'after_declared_destruction')
+        self.assertEqual(events,before);self.assertIsNone(r['nominal_estimate'])
+        r=p.goods_valuation('rogue_6_scrap_G_06',[{'kind':'battle_completed'}])
+        self.assertTrue(r['destruction_condition_unknown']);self.assertEqual(len(r['events'][0]['conditional_effects']),2)
+        r=p.goods_valuation('rogue_6_scrap_G_07',[{'kind':'item_obtained'}])
+        self.assertEqual(r['named_grant_references'][0]['quantity'],3)
+        self.assertEqual(r['known_description_delta'],0);self.assertIsNone(r['nominal_estimate'])
+        r=p.goods_valuation('rogue_6_scrap_G_09',[{'kind':'parts_obtained','count':2}])
+        self.assertEqual(r['arithmetic_subtotal'],16)
+
     def test_218_all_zones_ids_and_goal_exhaustion_distinct(self):
         rows=p.zone_catalog()['zones'];self.assertEqual(len(rows),26)
         self.assertEqual(sum(x['source_stated_exhaustion_outcome']=='pursuit' for x in rows),7)

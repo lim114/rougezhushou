@@ -15,4 +15,6 @@
 
 `zones` 列原件26个区域ID，各自目标和耗尽提示；同名秘境不合并。`budget` 输入 `zone_id`、可选 `action_points` 与 `goal_completed`；以 `walking_steps` 或 `item_id` 选择一种移动成本。分别显示付款后小计、移动奖励后小计及到零边界。首领目标需要胜利，抵达本身不算完成；主层追猎、特殊区返回明确分开。缺AP不做可负担判断，退款不自动用来支付前置成本，到零与奖励/出口的执行顺序仍未知。
 
+`valuation` 输入自然物 `item_id`、可选 `initial_estimate` 及 `events` 账本。事件 `kind` 支持 `battle_completed`、`node_revealed`、`operator_recruited`、`movement_completed`、`parts_obtained`、`item_obtained`；`count` 是声明的独立触发次数，默认1。作战可声明 `perfect`。分别显示已证估价增量、未知变化、完美/损坏分支和已损坏后的不再触发。多生苔藓的3个枯苔藓球列具名数量，派生触发顺序不自动补入。上下限和售卖修正缺证，算术小计可为负数但实际售价始终未知。
+
 源版本：`Kengxxiao/ArknightsGameData@a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`，完整原件哈希和精确字段在 `research/p3-exploration-planning/source-receipt.json` 与结果中。仅提取小范围事实参数；未声称上游许可证已核实。
