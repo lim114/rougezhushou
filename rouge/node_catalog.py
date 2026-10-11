@@ -259,3 +259,26 @@ def indirect_events(floor=None):
     support=deepcopy(_data()['uncataloged_original_titles'])
     return _result(rows,cross_run_support=support,floor=floor)
 COMMANDS['indirect']=indirect_events
+def search_events(query,node_type=None,floor=None,include_indirect=True):
+    if not isinstance(query,str) or not query.strip() or len(query)>120:raise ValueError('请输入1–120字检索词。')
+    needle=query.strip().casefold();rows=[]
+    for summary in event_candidates(node_type,floor,include_indirect=include_indirect)['rows']:
+        e=_event(summary['id']);matches=[]
+        if needle in e['title'].casefold():matches.append({'scope':'事件名','text':e['title']})
+        for s in e['scenes']:
+            for scope,text in [('场景正文',s['description'])]+[('场景补充说明',t) for t in s['edesc_texts']]:
+                if needle in text.casefold():matches.append({'scope':scope,'scene':s['key'],'text':text})
+            for ch in s['choices']:
+                text=' '.join([ch.get('title') or '',ch.get('description') or '',ch.get('conditional') or ''])
+                if needle in text.casefold():matches.append({'scope':'选择或条件','scene':s['key'],'choice':ch['key'],'text':text})
+                for i,sub in enumerate(ch.get('subchoices',[])):
+                    text=sub.get('raw') or ''
+                    if needle in text.casefold():matches.append({'scope':'来源子分支','scene':s['key'],'choice':ch['key'],'subchoice_index':i,'text':text})
+        for row in event_reward_options(e['id'])['rows']:
+            for reward in row['rewards']:
+                name=reward.get('reward',{}).get('name') or ''
+                if needle in name.casefold():matches.append({'scope':'已证具名奖励','scene':row['scene'],'choice':row['choice_id'],'text':name})
+        if matches:rows.append({**summary,'matches':matches})
+    return _result(rows,query=query,original_matches=original_references(query=query)['rows'],
+                   indirect_included=include_indirect,original_matches_have_unclassified_context=True)
+COMMANDS['search']=search_events

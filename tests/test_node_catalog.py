@@ -157,3 +157,15 @@ class NodeCatalogTests(unittest.TestCase):
         e=c.indirect_events()['rows'][0]
         self.assertEqual(len(c.event_details(e['id'])['rows']),12)
         self.assertFalse(c.indirect_events()['scope']['all_server_events_verified'])
+    def test_180(self):
+        r=c.search_events('绒毛');self.assertEqual([e['title'] for e in r['rows']],['桑尼的邀请'])
+        self.assertEqual(r['rows'][0]['matches'][0]['scope'],'选择或条件')
+        self.assertEqual(len(c.search_events('三重身')['rows']),3)
+        self.assertFalse(c.search_events('不存在的词123')['rows'])
+    def test_180_special_notes_subchoices_originals_searchable(self):
+        self.assertEqual([e['title'] for e in c.search_events('安眠')['rows']],['安眠一隅'])
+        r=c.search_events('动物泥偶')
+        self.assertTrue(any(x['scope']=='来源子分支' for e in r['rows'] for x in e['matches']))
+        self.assertTrue(c.search_events('行动奖励')['original_matches'])
+        self.assertTrue(c.search_events('他缚')['rows'])
+        self.assertFalse(c.search_events('安眠',include_indirect=False)['rows'])

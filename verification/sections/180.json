@@ -1,0 +1,38 @@
+{
+  "section": 180,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T23:42:05.107945+08:00",
+  "branch": "codex/p2-development",
+  "title": "按事件正文选项与奖励检索全部资料分组",
+  "remaining_item": "P3节点全部事件与选择链（不要求生成概率）",
+  "new_capability": "按事件正文选项与奖励检索全部资料分组",
+  "acceptance": "可直接通过API/CLI使用，来源条件、目录范围及未知资格保留，不修改本局记忆。",
+  "source_evidence": [
+    "rouge/data/node-catalog.json",
+    "rouge/data/node-events.json",
+    "rouge/data/node-reward-reference.json",
+    "rouge/data/battle-node-pools.json"
+  ],
+  "limitations": [
+    "固定资料全覆盖不等于当前服务器全部事件已核验；资格未知保留候选。",
+    "不输出节点生成概率，不自动领取奖励或操作游戏。"
+  ],
+  "test_selectors": [
+    "tests.test_node_catalog.NodeCatalogTests.test_180",
+    "tests.test_node_catalog.NodeCatalogTests.test_180_special_notes_subchoices_originals_searchable"
+  ],
+  "files": [
+    "rouge/node_catalog.py",
+    "tests/test_node_catalog.py"
+  ],
+  "validation": {
+    "tests_run": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-180/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 185
+}
