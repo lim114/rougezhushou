@@ -184,3 +184,41 @@ def branch_phase_catalog(stage_id,branch_id=None):
     return _result(stage,branches=result,limits=list(LIMITS)+[
         '完整阶段目录不证明当前触发、游标推进、回绕或随机选阶段规则。',
         'routeIndex缺少运行时基础/额外路线选择，分支位置保持未知。'])
+
+def route_segments(stage_id,route_index):
+    """Separate serialized spatial segments at disappearance/reappearance."""
+    stage=_stage(stage_id)
+    if type(route_index) is not int or not 0<=route_index<len(stage['routes']):
+        raise ValueError('基础路线引用需要有效整数。')
+    route=stage['routes'][route_index]; rows=len(stage['map']); cols=len(stage['map'][0])
+    supported=route.get('motionMode') in ('WALK','FLY'); segments=[]; current=[]; waits=[]; transitions=[]; pending=[]
+    def cell(pos): return display_cell(pos,rows,cols) if supported else None
+    start=cell(route.get('startPosition')); end=cell(route.get('endPosition'))
+    if start: current.append({'kind':'start','cell':start})
+    for index,cp in enumerate(route.get('checkpoints') or []):
+        typ=cp.get('type'); entry={'checkpoint_index':index,'type':typ,'time_parameter':cp.get('time')}
+        if typ=='DISAPPEAR':
+            if current: segments.append(current); current=[]
+            transitions.append({**entry,'display_cell':None,'kind':'disappear'})
+        elif typ=='APPEAR_AT_POS':
+            if current: segments.append(current); current=[]
+            c=cell(cp.get('position')); transitions.append({**entry,'display_cell':c,'kind':'appear'})
+            if c: current.append({'kind':'appear','cell':c,'checkpoint_index':index})
+            else: pending.append({'checkpoint_index':index,'reason':'再出现位置无法映射。'})
+        elif typ=='MOVE':
+            c=cell(cp.get('position'))
+            if c: current.append({'kind':'move','cell':c,'checkpoint_index':index})
+            else: pending.append({'checkpoint_index':index,'reason':'移动检查点超出地图或移动类型未确认。'})
+        elif typ in ('WAIT_FOR_SECONDS','WAIT_CURRENT_FRAGMENT_TIME'):
+            waits.append({**entry,'display_cell':None,'anchor':'elapsed_fragment_time' if typ=='WAIT_CURRENT_FRAGMENT_TIME' else 'arrival_local_wait',
+                'arrival_seconds':None})
+        else: pending.append({'checkpoint_index':index,'reason':'未核验检查点类型：'+str(typ)})
+    if end: current.append({'kind':'end','cell':end})
+    if current: segments.append(current)
+    return _result(stage,route_index=route_index,motion=route.get('motionMode'),
+        segments=segments,transitions=transitions,waits=waits,pending=pending,
+        spawn_offset_parameter=deepcopy(route.get('spawnOffset')),
+        spawn_random_range_parameter=deepcopy(route.get('spawnRandomRange')),
+        actual_path=None,arrival_seconds=None,projection_plane='serialized nominal grid cells',
+        limits=list(LIMITS)+['不连接消失前与再出现后的轨迹；等待的占位坐标不映射为地图位置。',
+            '分段折线是配置参考，不证明寻路、三维脚点、出生偏移或地形可通行性。'])

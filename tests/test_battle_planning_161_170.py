@@ -107,3 +107,18 @@ class BattlePlanningTests(unittest.TestCase):
             result=branch_phase_catalog('ro6_n_1_1')['branches'][0]
             self.assertTrue(result['phases'][0]['empty_configuration'])
             self.assertEqual(result['phases'][0]['pre_delay_parameter'],3)
+
+    def test_167_discontinuous_route(self):
+        from rouge.battle_planning import route_segments
+        r=route_segments('ro6_n_1_3',10)
+        self.assertGreater(len(r['segments']),1)
+        self.assertTrue(any(t['kind']=='disappear' for t in r['transitions']))
+        self.assertTrue(all(w['display_cell'] is None and w['arrival_seconds'] is None for w in r['waits']))
+        self.assertIsNone(r['actual_path'])
+
+    def test_167_endpoints_and_invalid_route(self):
+        from rouge.battle_planning import route_segments
+        r=route_segments('ro6_n_1_3',10)
+        self.assertEqual(r['segments'][0][0]['kind'],'start')
+        self.assertEqual(r['segments'][-1][-1]['kind'],'end')
+        with self.assertRaises(ValueError):route_segments('ro6_n_1_3',True)
