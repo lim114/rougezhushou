@@ -9,7 +9,7 @@ from PySide6.QtCore import QObject, Signal, Qt, QTimer,QSize
 from PySide6.QtGui import QImage, QPixmap, QIcon
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QFormLayout, QPushButton, QLabel, QComboBox, QTabWidget, QPlainTextEdit, QLineEdit,
-    QDoubleSpinBox, QSpinBox, QCheckBox, QListWidget, QListWidgetItem, QSplitter,QScrollArea,QDialog,QTableWidget,QTableWidgetItem)
+    QDoubleSpinBox, QSpinBox, QCheckBox, QListWidget, QListWidgetItem, QSplitter,QScrollArea,QDialog,QTableWidget,QTableWidgetItem,QGridLayout)
 from .capture import GameCapture, list_game_windows
 from .catalog import catalog,operator_profiles,stage_previews
 from .operator_summary import format_operator_observation
@@ -774,6 +774,16 @@ class MainWindow(QMainWindow):
         self.enemy_comparison_button.setEnabled(False)
         self.enemy_comparison_button.clicked.connect(self.show_enemy_comparison)
         layout.addWidget(self.enemy_comparison_button)
+        self.scenario_library_button=QPushButton('保存与比较局外情景')
+        self.scenario_library_button.setEnabled(False)
+        self.scenario_library_button.clicked.connect(self.show_scenario_library)
+        layout.addWidget(self.scenario_library_button)
+        tools_layout=QGridLayout()
+        for index,button in enumerate((self.token_comparison_button,self.token_budget_button,
+                self.charge_timeline_button,self.shield_timeline_button,self.healing_budget_button,
+                self.skill_upgrade_button,self.enemy_comparison_button,self.scenario_library_button)):
+            layout.removeWidget(button);tools_layout.addWidget(button,index//2,index%2)
+        layout.addLayout(tools_layout)
         self.damage_text = QPlainTextEdit()
         self.damage_text.setReadOnly(True)
         layout.addWidget(self.damage_text,1)
@@ -853,6 +863,15 @@ class MainWindow(QMainWindow):
         if previous is not None:previous.close();previous.deleteLater()
         dialog=ChargeTimelineDialog(scenario,self.damage_result['result']['estimate']['skill']['duration_seconds'],self)
         self.charge_timeline_dialog=dialog;dialog.show()
+
+    def show_scenario_library(self):
+        if not self.damage_result:return
+        from .scenario_library_view import ScenarioLibraryDialog
+        previous=getattr(self,'scenario_library_dialog',None)
+        if previous is not None:previous.close();previous.deleteLater()
+        self.scenario_library_dialog=ScenarioLibraryDialog(self.damage_result['scenario'],
+            Path(OPERATOR_STATE).with_name('scenario-library.json'),self)
+        self.scenario_library_dialog.show()
 
     def show_enemy_comparison(self):
         if not self.damage_result:return
@@ -1306,6 +1325,7 @@ class MainWindow(QMainWindow):
         if hasattr(self,'healing_budget_button'):self.healing_budget_button.setEnabled(False)
         if hasattr(self,'skill_upgrade_button'):self.skill_upgrade_button.setEnabled(False)
         if hasattr(self,'enemy_comparison_button'):self.enemy_comparison_button.setEnabled(False)
+        if hasattr(self,'scenario_library_button'):self.scenario_library_button.setEnabled(False)
         self.damage_result=None
         if hasattr(self,'relic_context'):self.damage_form.setRowVisible(self.relic_context,False)
         op=self.operator.currentData()
@@ -1451,6 +1471,7 @@ class MainWindow(QMainWindow):
             self.healing_budget_button.setEnabled(bool(healing_sources(result)))
             self.skill_upgrade_button.setEnabled(True)
             self.enemy_comparison_button.setEnabled(True)
+            self.scenario_library_button.setEnabled(True)
             self.render_damage()
         except Exception as error:
             self.damage_result=None

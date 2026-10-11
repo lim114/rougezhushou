@@ -1,0 +1,80 @@
+{
+  "sections": [
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135
+  ],
+  "branch": "codex/p2-development",
+  "status": "ALL_FINAL_NECESSARY_CHECKS_PASSED",
+  "functional_outcomes": [
+    {
+      "section": 129,
+      "title": "账户资料联动的强化分队条件清单",
+      "new_capability": "七种强化分队按当前科技资料档案联动手动状态，支持分队筛选、0–15等级门槛参数对照、精确跳转科技及复制完整清单。",
+      "receipt": "verification/sections/129.json",
+      "commit": "2045a770bfe273f8896d012710b360602f58480c"
+    },
+    {
+      "section": 130,
+      "title": "召唤物费用与配额测算",
+      "new_capability": "当前培养和模组下逐实体填写新增数量、声明在场与剩余库存，比较费用预算、已计费用及库存和每类在场限制；支持未知条件、超限提示和复制。",
+      "receipt": "verification/sections/130.json",
+      "commit": "72b5ddd3cdab5ba6a0ddf6ddc61743f6dd9176d1"
+    },
+    {
+      "section": 131,
+      "title": "机械师S2破屏与爆炸事件窗口测算",
+      "new_capability": "逐次声明本体或结构体破屏及独立命中秒数，支持未命中、多次同刻、多个窗口，分列破屏数、各来源命中、爆炸条件伤害与原普通攻击参考；复制完整条件。",
+      "receipt": "verification/sections/131.json",
+      "commit": "5a41bee311f95cdc6830d1b6b972ffadfd74f16f"
+    },
+    {
+      "section": 132,
+      "title": "逐友方有效治疗与生命预算",
+      "new_capability": "从当前技能选取已接入的单次治疗来源，声明多位友方生命和逐次治疗/生命减少事件，分列有效治疗、过量治疗、最终预算生命和缺口，支持排序、同刻输入顺序和完整条件复制。",
+      "receipt": "verification/sections/132.json",
+      "commit": "ca28b47e30880e83c391a691c2c3eb27481a97d2"
+    },
+    {
+      "section": 133,
+      "title": "同培养技能等级升级收益对照",
+      "new_capability": "按同一培养、模组、目标和观察条件比较公共等级1–7与专精8–10，显示持续/技力参数、窗口输出与相对基准差值，原训练门和不可测算等级的原因可查看复制。",
+      "receipt": "verification/sections/133.json",
+      "commit": "2099b4dc4343017b2f5c6747be68ce4beb0a4068"
+    },
+    {
+      "section": 134,
+      "title": "固定关卡敌人与难度条件批量对照",
+      "new_capability": "在固定关卡候选中选择多个敌人和多个保密等级，逐行比较生命攻击防御法抗及窗口输出，保留源阶方明确情景、原始引用、已计修正和未覆盖脚本；复制完整选择及来源。",
+      "receipt": "verification/sections/134.json",
+      "commit": "c881c45a2dda5e88f72f5be98a2a27fea23a30cd"
+    },
+    {
+      "section": 135,
+      "title": "独立局外情景库与条件差异对照",
+      "new_capability": "保存最多20个独立局外计算情景，关闭重开后在独立编辑器载入，按当前资料重新对照最多6项及当前基准；逐项显示条件差异、窗口输出与同窗口差值，计算资料变化明确提示。实际界面工具入口整理为两列。",
+      "receipt": "verification/sections/135.json",
+      "commit": "THIS_COMMIT"
+    }
+  ],
+  "final_necessary_tests_run": 145,
+  "actual_wine_window_cases": 31,
+  "screenshots_actually_viewed": [
+    "verification/section-135/calculator-tools.png",
+    "verification/section-135/scenario-library.png"
+  ],
+  "earlier_failed_attempts_preserved": [
+    "verification/section-133/failure-record.json"
+  ],
+  "full_validation_repeated": false,
+  "next_full_validation_after": 140,
+  "next_section": 136,
+  "P2_complete": false,
+  "native_windows_game_chat_verified": false,
+  "private_state_included": false,
+  "save_policy": "Each section committed and ordinarily pushed immediately;135 saved and pushed with this commit; actual remote HEAD verified afterwards."
+}
