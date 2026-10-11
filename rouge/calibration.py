@@ -179,3 +179,32 @@ def cultivation_curve(scenario, levels=None):
             'native_verified':False}
 
 COMMANDS['cultivation']=cultivation_curve
+
+
+def module_stages(scenario):
+    """List actual module stage records and cultivated deltas behind their gates."""
+    s=_scenario(scenario);baseline=_cultivated(s,module_id=None,module_level=0)
+    profile=catalog()['operators'][s['operator']];rows=[]
+    for module in profile['modules']:
+        qualified=s['elite']>=module['unlock_elite'] and s['level']>=module['unlock_level']
+        for stage in module['levels']:
+            stats=_cultivated(s,module_id=module['id'],module_level=stage['level'])
+            parts=[]
+            for index,part in enumerate(stage.get('parts',[])):
+                parts.append({'part_index':index,'resource_key':part.get('resKey'),
+                    'target':part.get('target'),'token_part':part.get('isToken'),
+                    'game_tag':part.get('validInGameTag'),'map_tag':part.get('validInMapTag'),
+                    'talent_candidates':deepcopy(part.get('addOrOverrideTalentDataBundle')),
+                    'trait_candidates':deepcopy(part.get('overrideTraitDataBundle')),
+                    'runtime_attachment_verified':False})
+            rows.append({'module_id':module['id'],'name':module['name'],'stage':stage['level'],
+                'qualified':qualified,'unlock_elite':module['unlock_elite'],'unlock_level':module['unlock_level'],
+                'requested':s.get('module_id')==module['id'] and s.get('module_level')==stage['level'],
+                'cultivated_attributes':stats,'attribute_delta':{f:stats[f]-baseline[f] for f in LABELS if f in stats},
+                'source_attributes':deepcopy(stage.get('attributes',{})),'parts':parts})
+    return {'operator':profile['name'],'baseline':baseline,'rows':rows,'source':_source(),
+        'native_verified':False,'notes':[BOUNDARY,
+            '属性资格与实际装备分开；列出候选不证明隐藏脚本附着或特殊伤害包都受加成。',
+            '当前快照无模组记录时列空，不等同证明当前热更新也没有模组。']}
+
+COMMANDS['modules']=module_stages

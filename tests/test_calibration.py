@@ -63,4 +63,20 @@ class CalibrationTests(unittest.TestCase):
         self.assertEqual(r['rows'][0]['contributions']['attack']['module_increment'],0)
         self.assertEqual(r['rows'][1]['contributions']['attack']['module_increment'],100)
 
+
+    def test_155_three_module_stages_and_exact_gate(self):
+        r=c.module_stages({'operator':'mechanist','level':90})
+        self.assertEqual([x['attribute_delta']['attack'] for x in r['rows']],[60,80,100])
+        self.assertEqual([x['attribute_delta']['defense'] for x in r['rows']],[40,60,80])
+        self.assertTrue(all(x['qualified'] for x in r['rows']))
+        self.assertEqual(r['rows'][2]['cultivated_attributes']['attack'],673)
+        self.assertEqual(r['rows'][2]['cultivated_attributes']['defense'],845)
+        low=c.module_stages({'operator':'mechanist','level':59})
+        self.assertTrue(all(x['attribute_delta']['attack']==0 and not x['qualified'] for x in low['rows']))
+    def test_155_empty_module_identity_and_parts_not_certified(self):
+        self.assertEqual(c.module_stages({'operator':'kaltsit'})['rows'],[])
+        r=c.module_stages({'operator':'mechanist'})
+        self.assertFalse(r['rows'][0]['parts'][1]['runtime_attachment_verified'])
+        self.assertEqual(r['rows'][0]['parts'][1]['map_tag'],'rogue_6')
+
 if __name__=='__main__':unittest.main()
