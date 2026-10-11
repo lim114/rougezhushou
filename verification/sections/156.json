@@ -1,0 +1,36 @@
+{
+  "section": 156,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T23:11:18.383906+08:00",
+  "branch": "codex/p2-development",
+  "title": "条件天赋与常态时间段对照",
+  "remaining_item": "P2首批三名条件天赋",
+  "new_capability": "按声明在场时间生成条件天赋引用与常态面板，银灰15秒前后被动回复率单列",
+  "acceptance": "直接API与CLI可用；来源及未知边界保留，独立相关测试通过；不读取/改写私人状态。",
+  "source_evidence": [
+    "固定游戏原表 a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "已有 .cache/research/relic-panel-056/REPORT.md 与 timing-048/REPORT.md 原件算式/动作资料"
+  ],
+  "limitations": [
+    "这是公开数据/算式交叉核对和声明观察比较，不是公开游戏成对实机验收。",
+    "当前热更新、原生事件时钟、未覆盖条件机制保持未知；没有操作游戏或发送聊天。"
+  ],
+  "files": [
+    "rouge/calibration.py",
+    "tests/test_calibration.py"
+  ],
+  "test_selectors": [
+    "tests.test_calibration.CalibrationTests.test_156_silver_time_and_potential_variants",
+    "tests.test_calibration.CalibrationTests.test_156_kaltsit_recipient_unknown_not_skill_healing"
+  ],
+  "validation": {
+    "tests_run": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-156/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 170
+}

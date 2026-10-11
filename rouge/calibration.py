@@ -208,3 +208,38 @@ def module_stages(scenario):
             '当前快照无模组记录时列空，不等同证明当前热更新也没有模组。']}
 
 COMMANDS['modules']=module_stages
+
+
+def talent_states(scenario, elapsed_seconds=None):
+    """Inspect selected talent variants and their declaration-dependent panels."""
+    from .operator_engine import selected_talents
+    s=_scenario(scenario);_cultivated(s)
+    profile=catalog()['operators'][s['operator']]
+    selected,_=selected_talents(profile,s)
+    times=[0,14.9,15,30] if elapsed_seconds is None else list(elapsed_seconds)
+    if not times or len(times)>100:raise ValueError('最多100个在场时间条件。')
+    rows=[]
+    for elapsed in times:
+        _number(elapsed,'在场秒数')
+        request={**deepcopy(s),'deployment_elapsed_seconds':elapsed}
+        result=calculate_damage(request);stats=result['estimate']['base_stats'];references=[]
+        for talent in selected:
+            bb=talent['values']
+            if s['operator']=='silverash' and talent['name']=='雪境先驱':
+                doubled=elapsed>=bb['interval']
+                references.append({'name':talent['name'],'doubled':doubled,
+                    'defense_addition_reference':bb['def']*(2 if doubled else 1),
+                    'regeneration_per_second_reference':stats['hp']*bb['hp_recovery_per_sec_by_max_hp_ratio']*(2 if doubled else 1),
+                    'kind':'独立生命回复速度','actual_healing_total':None})
+            elif s['operator']=='kaltsit' and talent['name']=='医者丰碑':
+                references.append({'name':talent['name'],'recipient_regeneration_rate_reference':bb['hp_recovery_per_sec'],
+                    'rhodes_rate_reference':bb['hp_recovery_per_sec']*bb['rhodes_bonus'],
+                    'duration_parameter_seconds':bb['buff_duration'],'kind':'进入范围后的条件生命回复',
+                    'actual_healing_total':None})
+        rows.append({'deployment_elapsed_seconds':elapsed,'base_stats':deepcopy(stats),'talent_references':references})
+    return {'operator':profile['name'],'selected_talents':deepcopy(selected),'rows':rows,
+        'source':_source(),'native_verified':False,'notes':[BOUNDARY,
+            '在场秒数由调用方声明，不是局内自动测量；被动回复速度独立于技能直接治疗。',
+            '未声明领取者、进入时刻、损血和首跳的增益不换算为有效治疗总量。']}
+
+COMMANDS['talents']=talent_states

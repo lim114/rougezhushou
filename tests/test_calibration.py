@@ -79,4 +79,22 @@ class CalibrationTests(unittest.TestCase):
         self.assertFalse(r['rows'][0]['parts'][1]['runtime_attachment_verified'])
         self.assertEqual(r['rows'][0]['parts'][1]['map_tag'],'rogue_6')
 
+
+    def test_156_silver_time_and_potential_variants(self):
+        r=c.talent_states({'operator':'silverash'},elapsed_seconds=[14.9,15])
+        self.assertEqual(r['rows'][0]['base_stats']['defense'],497)
+        self.assertEqual(r['rows'][1]['base_stats']['defense'],557)
+        refs=[x['talent_references'][0] for x in r['rows']]
+        self.assertAlmostEqual(refs[0]['regeneration_per_second_reference'],34.77)
+        self.assertAlmostEqual(refs[1]['regeneration_per_second_reference'],69.54)
+        p=c.talent_states({'operator':'silverash','potential':5},elapsed_seconds=[15])
+        self.assertEqual(p['rows'][0]['talent_references'][0]['defense_addition_reference'],160)
+    def test_156_kaltsit_recipient_unknown_not_skill_healing(self):
+        r=c.talent_states({'operator':'kaltsit','potential':6},elapsed_seconds=[0])
+        t=r['rows'][0]['talent_references'][0]
+        self.assertEqual(t['recipient_regeneration_rate_reference'],60)
+        self.assertEqual(t['rhodes_rate_reference'],120)
+        self.assertIsNone(t['actual_healing_total'])
+        self.assertEqual(c.talent_states({'operator':'mechanist'},elapsed_seconds=[0])['rows'][0]['talent_references'],[])
+
 if __name__=='__main__':unittest.main()
