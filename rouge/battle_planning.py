@@ -222,3 +222,25 @@ def route_segments(stage_id,route_index):
         actual_path=None,arrival_seconds=None,projection_plane='serialized nominal grid cells',
         limits=list(LIMITS)+['不连接消失前与再出现后的轨迹；等待的占位坐标不映射为地图位置。',
             '分段折线是配置参考，不证明寻路、三维脚点、出生偏移或地形可通行性。'])
+
+def cell_planning_references(stage_id,row,col):
+    """Inverse map lookup for configured route points and predefined entities."""
+    stage=_stage(stage_id); grid=stage['map'];nr=len(grid);nc=len(grid[0])
+    if type(row) is not int or type(col) is not int or not 0<=row<nr or not 0<=col<nc:
+        raise ValueError('显示格图行列超出范围。')
+    cell={'row':row,'col':col}; route_hits=[];all_actions=action_catalog(stage_id)['actions']
+    for index in range(len(stage['routes'])):
+        reference=route_segments(stage_id,index); hits=[]
+        for si,segment in enumerate(reference['segments']):
+            hits.extend({'segment_index':si,**point} for point in segment if point['cell']==cell)
+        if hits:
+            actions=[{'id':a['id'],'key':a['action'].get('key'),'queue_id':a['queue_id'],
+                'random_group':a['action'].get('randomSpawnGroupKey'),'hidden_group':a['action'].get('hiddenGroup')}
+                for a in all_actions if a['type']=='SPAWN' and a['action'].get('routeIndex')==index]
+            route_hits.append({'route_index':index,'points':hits,'main_spawn_actions':actions})
+    entities=[deepcopy(o) for o in stage['predefined_objects'] if display_cell(o.get('position'),nr,nc)==cell]
+    return _result(stage,display_cell=cell,tile=deepcopy(stage['tiles'][grid[row][col]]),
+        route_references=route_hits,predefined_objects=entities,actual_occupants=None,
+        source_position={'row':nr-1-row,'col':col},
+        limits=list(LIMITS)+['仅查询明确配置点，不将折线穿过此格当作实际必经路径。',
+            '分支路线作用域未确认，不按同routeIndex借用基础路线。'])

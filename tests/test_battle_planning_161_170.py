@@ -122,3 +122,18 @@ class BattlePlanningTests(unittest.TestCase):
         self.assertEqual(r['segments'][0][0]['kind'],'start')
         self.assertEqual(r['segments'][-1][-1]['kind'],'end')
         with self.assertRaises(ValueError):route_segments('ro6_n_1_3',True)
+
+    def test_168_inverse_cell_reference(self):
+        from rouge.battle_planning import cell_planning_references,route_segments
+        cell=route_segments('ro6_n_1_3',10)['segments'][0][0]['cell']
+        r=cell_planning_references('ro6_n_1_3',**cell)
+        self.assertTrue(any(x['route_index']==10 for x in r['route_references']))
+        self.assertIsNone(r['actual_occupants'])
+        self.assertIn('tileKey',r['tile'])
+
+    def test_168_cell_origin_and_bounds(self):
+        from rouge.battle_planning import cell_planning_references
+        from rouge.battle_preview import battle_data
+        r=cell_planning_references('ro6_n_1_1',0,0)
+        self.assertEqual(r['source_position']['row'],len(battle_data()['stages']['ro6_n_1_1']['map'])-1)
+        with self.assertRaises(ValueError):cell_planning_references('ro6_n_1_1',-1,0)

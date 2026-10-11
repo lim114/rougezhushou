@@ -1,0 +1,51 @@
+{
+  "section": 168,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T23:18:42.522061+08:00",
+  "branch": "codex/p2-development",
+  "title": "固定地块反查路径及预置实体",
+  "remaining_item": "P3固定出怪时间轴/分支位置/敌人面板与机制",
+  "new_capability": "固定地块反查路径及预置实体；独立公开查询接口及CLI命令 cell",
+  "acceptance": "固定原始配置完整保留并可查询；未知执行、时钟与继承不数值化；对应公开来源及边界用例通过",
+  "source_evidence": [
+    {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/levels/obt/roguelike/ro6/level_rogue6_1-1.json",
+      "sha256": "b9b632f7cd1c73da5e6cd107eec81c5d45d44b8cb934e6989db73095ec44c0a8",
+      "scope": "example original level; all stages retain their individual level_source hashes"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/levels/enemydata/enemy_database.json",
+      "scope": "existing fixed enemy reference; no new inheritance model",
+      "sha256": "f8dd03997d0e3eae65cc4b77bcb6b5ef198488504f738defc31cad5e13c3680c"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Tim23333/Arknights_timer/6264b020513de479056c3db41216037abaadde50/Ark_emulator/docs/MECHANICS.md",
+      "scope": "community scheduling reference only; not native execution proof"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Tim23333/Arknights_timer/6264b020513de479056c3db41216037abaadde50/tools/enemy_health/game_structs.py",
+      "sha256": "2bd6d5ddf15cba979be4b332936eb218d6d2e1fd9095fb2c5345dad4c56bfa6f",
+      "scope": "runtime base/extra route field; its absence remains unresolved"
+    }
+  ],
+  "limitations": [
+    "不验证游戏当前热更新、真实出场、全局时间、概率、三维脚点、路径寻路或默认技能继承。",
+    "不改变任何核心计算或私人状态。"
+  ],
+  "test_selectors": [
+    "tests.test_battle_planning_161_170.BattlePlanningTests.test_168_inverse_cell_reference",
+    "tests.test_battle_planning_161_170.BattlePlanningTests.test_168_cell_origin_and_bounds"
+  ],
+  "patch_sha256": "3d1f18f0f9308ec444b973f04b38608ebecd68151a3734a4f66a5bd3ca54f068",
+  "candidate_validation": "161-170-sequential-check.json; 161-170-data-coverage.json",
+  "validation": {
+    "tests_run": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-168/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 170
+}
