@@ -47,7 +47,7 @@ def skill_reference(preview):
     rows=[]
     def add(label,value,unit,countable=False):
         rows.append({'name':label,'value':value,'unit':unit,
-                     'declared_total':value*preview['count'] if countable else None})
+                     'declared_total':value*preview['count'] if countable and value is not None else None})
     kind=profile['kind']
     if kind=='attack_boost':
         skill_attack=stats['attack']*(1+bonuses.get('atk',0)+bb['atk'])
@@ -56,6 +56,22 @@ def skill_reference(preview):
     elif kind=='dp':
         add('单次回费',bb['cost'],'部署费用',True)
         add('部署费用（含已解锁天赋）',stats['deployment_cost']+bonuses.get('cost',0),'部署费用')
+    elif kind=='magic_strike':
+        add('普通单次法术伤害',attack*(1-min(resistance,95)/100),'法术伤害',True)
+        add('技能单次法术伤害',attack*bb['atk_scale']*(1-min(resistance,95)/100),'法术伤害',True)
+    elif kind=='double_physical':
+        normal=max(attack-defense,attack*.05)
+        critical_attack=attack*bonuses.get('atk_scale',1)
+        critical=max(critical_attack-defense,critical_attack*.05)
+        probability=bonuses.get('prob',0)
+        add('普通攻击未触发天赋',normal,'物理伤害',True)
+        add('普通攻击触发天赋',critical if probability else None,'物理伤害',bool(probability))
+        add('普通单次边际期望',normal*(1-probability)+critical*probability,'期望伤害',True)
+        skill_attack=attack*bb['atk_scale']
+        hit=max(skill_attack-defense,skill_attack*.05)
+        add('二连射单击（未触发天赋）',hit,'物理伤害')
+        add('二连射合计（未触发天赋）',hit*bb['times'],'物理伤害',True)
+        add('二连射含天赋组合',None if probability else hit*bb['times'],'物理伤害',not bool(probability))
     else: raise ValueError('技能分项尚未实现。')
     return {'preview':deepcopy(preview),'operator_name':profile['name'],'rows':rows,
             'attributes':{'attack':attack,'hp':hp,'defense':armor},'talents':talents,
@@ -63,7 +79,9 @@ def skill_reference(preview):
             'actual_activation_verified':None,'cycle_output':None,
             'notes':['次数为手动声明，不生成技能或攻击时刻；持续时间、技力成本及初始技力仅为原表参数。',
                      '培养按单独预览条件计算；不写入账户或本局。未含藏品、科技、本局增益、目标获取及原生时序。',
-                     '精零已培养高等级技能的实际可用性、当前热更新与实机面板仍待核验。']}
+                     '精零已培养高等级技能的实际可用性、当前热更新与实机面板仍待核验。',
+                     '各行次数分别表示该分项的声明次数，不将普通攻击、技能和期望重复相加。',
+                     '暴击只计算普通单次分支与边际期望；二连射与天赋的组合层、共享/独立抽样未知，组合输出保留未知。不模拟随机序列或击杀概率。']}
 
 
 def format_reference(result):
@@ -71,7 +89,7 @@ def format_reference(result):
     lines=[result['operator_name']+' · 补充技能参考',
            '条件：'+json.dumps(result['preview'],ensure_ascii=False),
            f"原表：{skill['name']}；持续参数{skill['duration']:g}秒，技力成本{skill['spData']['spCost']:g}，初始技力{skill['spData']['initSp']:g}"]
-    lines += [f"{r['name']}：{r['value']:.8g} {r['unit']}"+(f"；声明次数合计{r['declared_total']:.8g}" if r['declared_total'] is not None else '') for r in result['rows']]
+    lines += [r['name']+'：'+('未知' if r['value'] is None else format(r['value'],'.8g'))+' '+r['unit']+(f"；声明次数合计{r['declared_total']:.8g}" if r['declared_total'] is not None else '') for r in result['rows']]
     lines += ['适用天赋：'+json.dumps(result['talents'],ensure_ascii=False),*result['notes'],
               '固定资料：'+json.dumps(result['source'],ensure_ascii=False)]
     return '\n'.join(lines)
