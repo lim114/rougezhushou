@@ -151,3 +151,36 @@ def enemy_entry_sources(stage_id,enemy_id,level):
         referenced_levels=levels,action_level_binding_unique=len(levels)==1,
         entry_sources=sources,actual_enemy_count=None,
         limits=list(LIMITS)+['动作key不包含等级；多个引用等级时不得据此猜有效等级。'])
+
+@lru_cache(maxsize=1)
+def _branch_data():
+    return json.loads((Path(__file__).with_name('data')/'battle-branches.json').read_text(encoding='utf-8'))
+
+def branch_phase_catalog(stage_id,branch_id=None):
+    """Complete original phases, including empty phases and non-SPAWN actions."""
+    stage=_stage(stage_id); reference=_branch_data()['stages'].get(stage_id)
+    if reference is None or reference['source']!=stage['level_source']:
+        raise ValueError('分支原件与关卡来源不匹配。')
+    branches=reference['branches']
+    if branch_id is not None and branch_id not in branches: raise ValueError('关卡没有该条件分支。')
+    result=[]
+    for key,branch in branches.items():
+        if branch_id is not None and key!=branch_id: continue
+        phases=[]
+        for ordinal,phase in enumerate(branch.get('phases') or [],1):
+            actions=[]
+            for ai,a in enumerate(phase.get('actions') or [],1):
+                row={'branch':key,'action':a}; seq=local_sequence(row,limit=16)
+                actions.append({'id':f'branch:{key}.p{ordinal}.a{ai}',
+                    'type_label':ACTION_LABELS.get(a.get('actionType'),'未核验动作类型'),
+                    'action':deepcopy(a),'local_sequence':seq,
+                    'route_scope_verified':False,
+                    'source_selector':f'$.branches[{json.dumps(key)}].phases[{ordinal-1}].actions[{ai-1}]'})
+            phases.append({'phase':ordinal,'pre_delay_parameter':phase.get('preDelay'),
+                'actions':actions,'empty_configuration':not bool(actions),'actual_activation_seconds':None})
+        result.append({'branch_id':key,'phases':phases,'phase_count':len(phases),
+            'trigger_mechanism':None,'phase_selection':None,'raw_nonphase_fields':deepcopy(
+                {k:v for k,v in branch.items() if k!='phases'})})
+    return _result(stage,branches=result,limits=list(LIMITS)+[
+        '完整阶段目录不证明当前触发、游标推进、回绕或随机选阶段规则。',
+        'routeIndex缺少运行时基础/额外路线选择，分支位置保持未知。'])

@@ -86,3 +86,24 @@ class BattlePlanningTests(unittest.TestCase):
         e=next(e for e in battle_data()['stages']['ro6_n_1_1']['enemies'] if e['id']==a['action']['key'])
         r=enemy_entry_sources('ro6_n_1_1',e['id'],e['level'])
         self.assertTrue(any(s['id']==a['id'] for s in r['entry_sources']))
+
+    def test_166_full_branch_phase(self):
+        from rouge.battle_planning import branch_phase_catalog
+        r=branch_phase_catalog('ro6_n_1_1')
+        self.assertEqual({b['branch_id'] for b in r['branches']},{'shsbox1','shsbox2'})
+        self.assertTrue(all(b['trigger_mechanism'] is None for b in r['branches']))
+        self.assertEqual(len(branch_phase_catalog('ro6_n_1_1','shsbox1')['branches']),1)
+        with self.assertRaises(ValueError):branch_phase_catalog('ro6_n_1_1','missing')
+
+    def test_166_empty_and_nonspawn_preserved(self):
+        from rouge.battle_planning import branch_phase_catalog
+        from rouge.battle_preview import battle_data
+        all_phases=[p for sid in battle_data()['stages'] for b in branch_phase_catalog(sid)['branches'] for p in b['phases']]
+        self.assertTrue(any(a['action']['actionType']!='SPAWN' for p in all_phases for a in p['actions']))
+        from unittest.mock import patch
+        source=battle_data()['stages']['ro6_n_1_1']['level_source']
+        synthetic={'stages':{'ro6_n_1_1':{'source':source,'branches':{'declared_empty':{'phases':[{'preDelay':3,'actions':[]}]}}}}}
+        with patch('rouge.battle_planning._branch_data',return_value=synthetic):
+            result=branch_phase_catalog('ro6_n_1_1')['branches'][0]
+            self.assertTrue(result['phases'][0]['empty_configuration'])
+            self.assertEqual(result['phases'][0]['pre_delay_parameter'],3)
