@@ -169,3 +169,15 @@ class NodeCatalogTests(unittest.TestCase):
         self.assertTrue(c.search_events('行动奖励')['original_matches'])
         self.assertTrue(c.search_events('他缚')['rows'])
         self.assertFalse(c.search_events('安眠',include_indirect=False)['rows'])
+    def test_181(self):
+        e=next(e for e in c.all_events()['rows'] if e['title']=='桑尼的邀请')
+        r=c.scene_choices(e['id'],e['entry'][0]);row=next(x for x in r['rows'] if x['title']=='帮它梳理绒毛')
+        self.assertEqual(row['original_candidates'][0]['id'],'choice_ro6_res1_1');self.assertIsNone(row['actual_selectable'])
+        roles={x['role'] for e in c.all_events()['rows'] for s in c.event_details(e['id'])['rows'] for x in c.scene_choices(e['id'],s['key'])['rows']}
+        self.assertGreater(len(roles),1)
+    def test_181_source_subchoices_have_group_local_targets(self):
+        e=next(e for e in c.all_events(include_indirect=True)['rows'] if e['title']=='安眠一隅')
+        r=c.scene_choices(e['id'],e['id']+':scene:1')
+        self.assertEqual(len(r['rows'][0]['subchoices']),3)
+        self.assertEqual({x.rsplit(':',1)[1] for x in r['rows'][0]['next_scenes']},{'2','4','5'})
+        self.assertIn('edesc_texts',r['scene'])

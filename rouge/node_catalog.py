@@ -282,3 +282,16 @@ def search_events(query,node_type=None,floor=None,include_indirect=True):
     return _result(rows,query=query,original_matches=original_references(query=query)['rows'],
                    indirect_included=include_indirect,original_matches_have_unclassified_context=True)
 COMMANDS['search']=search_events
+def scene_choices(event_id,scene_key):
+    e=_event(event_id);s=_scene(event_id,scene_key);original=_original()['choices'];rows=[]
+    for ch in s['choices']:
+        raw=[{'id':cid,**deepcopy(original[cid])} for cid in ch['game_choice_ids'] if cid in original]
+        navigation=_choice_navigation(e,ch)
+        rows.append({'id':ch['key'],'title':ch['title'],'description':ch['description'],
+            'conditional_text':ch['conditional'],'role':ch['presentation_role'],'source_type':ch['source_type'],
+            'button_identity_status':'多个原表候选' if len(raw)>1 else '单个原表候选' if raw else '仅社区展示',
+            'original_candidates':raw,'next_scenes':list(dict.fromkeys(b['to'] for b in navigation if b['to'])),
+            'subchoices':deepcopy(ch.get('subchoices',[])),'navigation':navigation,
+            'actual_selectable':None,'visible_button_proven':False})
+    return _result(rows,scene={'key':s['key'],'description':s['description'],'edesc_texts':deepcopy(s['edesc_texts'])},event=_summary(e))
+COMMANDS['choices']=scene_choices
