@@ -1,11 +1,11 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第184节
+# 当前云端续接索引 · 第185节
 
-已完成至184，后续185；本批状态 `IN_PROGRESS`。下次定期全量185。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至185，后续186；本批状态 `TARGET_185_COMPLETED`。下次定期全量200。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
-最新本机全量：`verification/full-170/native.json`，可用范围全通过：`False`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。下面是历史交接，不代表当前节数。
+最新本机全量：`verification/full-185/native.json`，可用范围全通过：`False`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。下面是历史交接，不代表当前节数。
 <!-- live-cloud-index:end -->
 
 ## 本机与 GitHub 开发分支同步 · 2026-10-11

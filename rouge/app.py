@@ -79,7 +79,7 @@ def number(value=0, maximum=100000, decimals=2):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('黑流树海助手 0.70 · 识别与计算测试版')
+        self.setWindowTitle('黑流树海助手 0.70 · 局外计算与节点测试（185）')
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader()
@@ -133,6 +133,10 @@ class MainWindow(QMainWindow):
         self.node_catalog=NodeCatalogPanel()
         self.node_catalog.stageSelected.connect(self.show_catalog_battle)
         tabs.addTab(self.node_catalog,'节点事件')
+        from .offline_tools_view import OfflineToolsPanel
+        self.offline_tools=OfflineToolsPanel()
+        tabs.addTab(self.offline_tools,'局外工具')
+        self.offline_tools.set_stage(self.target_stage.currentData())
         from .technology_view import TechnologyReferencePanel
         self.technology_reference=TechnologyReferencePanel(account_path=Path(OPERATOR_STATE).with_name('technology-state.json'))
         tabs.addTab(self.technology_reference,'长期科技')
@@ -840,6 +844,7 @@ class MainWindow(QMainWindow):
         self.target_enemy.blockSignals(False)
         self.update_enemy_context()
         if hasattr(self,'battle_preview'):self.battle_preview.set_stage(sid)
+        if hasattr(self,'offline_tools'):self.offline_tools.set_stage(sid)
 
     def show_catalog_battle(self,sid):
         self.select_battle_stage(sid)
@@ -1570,6 +1575,7 @@ class MainWindow(QMainWindow):
             if self.target_buff_test.isChecked():
                 result['estimate']['notes'].insert(0,'当前启用个人强化测试；测试选项不代表从本局画面读取到的强化，也不写入记忆。')
             self.damage_result = {'scenario':scenario,'result':result}
+            if hasattr(self,'offline_tools'):self.offline_tools.set_scenario(scenario)
             self.charge_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==3)
             self.shield_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==2)
             from .healing_budget import healing_sources
