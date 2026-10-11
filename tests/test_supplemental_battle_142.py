@@ -139,7 +139,8 @@ class SupplementalBattle142Tests(unittest.TestCase):
         e['relic_context']['battle_start_shields']=2
         r=run_skill_reference(p,e)
         self.assertEqual(r['rows'][0]['value'],6)
-        self.assertEqual(r['rows'][1]['value'],skill_reference(p)['rows'][1]['value'])
+        self.assertIsNone(r['rows'][1]['value'])
+        self.assertIn('轻量化天赋与藏品费用链',format_run_reference(r))
         self.assertAlmostEqual(r['attributes']['attack'],r['run_attributes']['attack']*1.4)
         self.assertAlmostEqual(r['attributes']['hp'],r['run_attributes']['hp']*1.4)
         self.assertTrue(r['attribute_resolution']['unsupported'])

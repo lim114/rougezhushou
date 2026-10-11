@@ -7,6 +7,7 @@ from .catalog import operator_profiles
 from .supplemental_skills import (_cultivated_stats,_skill_reference,
                                   supplemental_profiles,format_reference)
 from .relic_attributes import is_attribute_rune,apply_attribute_runes
+from .supplemental_cost import supported_cost,cost_reference
 
 ENVIRONMENT_KEYS={'relic_ids','run_config','relic_context','inventory_status','operator_metadata'}
 # Proven child-buff multipliers from the pinned templates, not every rule with
@@ -74,12 +75,20 @@ def run_skill_reference(preview,environment):
     resolved=scenario.get('effects',[])+scenario.get('_relic_rules',[])
     runes=[e for e in resolved if is_attribute_rune(e) and not e.get('token_only')]
     ordinary=[e for e in resolved if _ordinary_attribute(e)]
+    costs=[e for e in resolved if supported_cost(e)]
     unsupported=[e for e in resolved if not is_attribute_rune(e) and
-                 not _ordinary_attribute(e) and not e.get('token_only')]
+                 not _ordinary_attribute(e) and not supported_cost(e) and not e.get('token_only')]
     battle_attributes={kind:sum(e['value'] for e in ordinary if e['kind']==kind)
                        for kind in ('attack_pct','hp_pct','defense_pct')}
     modified=apply_attribute_runes(stats,runes)
     result=_skill_reference(preview,modified,battle_attributes)
+    cost=cost_reference(stats,result['talents'],resolved,relic_resolution['records'])
+    result['deployment_reference']=cost
+    if preview['operator']=='char_123_fang':
+        row=next(r for r in result['rows'] if r['name']=='单次回费')
+        row['value']+=cost['skill_start_dp'];row['declared_total']=row['value']*preview['count']
+        row=next(r for r in result['rows'] if r['name'].startswith('部署费用'))
+        row['value']=cost['estimated_cost']
     try:baseline=_skill_reference(preview,stats)
     except ValueError as error:
         # A gap can be legal with an HP rune but exceed unmodified max HP.
@@ -90,6 +99,8 @@ def run_skill_reference(preview,environment):
         row['base_value']=base_rows.get(row['name'])
         row['delta']=row['value']-row['base_value'] if row['value'] is not None and row['base_value'] is not None else None
     warnings=[*relic_resolution['warnings'],*run_resolution['pending']]
+    if cost['talent_composition_pending']:
+        warnings.append('轻量化天赋与藏品费用链的组合层尚未核验；部署费用未知，未将天赋减费放入任意乘区。')
     if complete is not True:warnings.append('藏品持有清单尚未确认完整；只计算当前明确的条目，不能当作完整本局面板。')
     names={r['id']:r['name'] for r in relic_resolution['records']}
     for rid in dict.fromkeys(e.get('relic_id') for e in unsupported):
@@ -97,14 +108,14 @@ def run_skill_reference(preview,environment):
     result['run_attributes']={key:modified[key] for key in
                              ('hp','attack','defense','resistance','attack_speed','redeploy_seconds','block_count')}
     result['environment']=environment
-    result['attribute_resolution']={'runes':deepcopy(runes),'ordinary':deepcopy(ordinary),
+    result['attribute_resolution']={'runes':deepcopy(runes),'ordinary':deepcopy(ordinary),'costs':deepcopy(costs),
         'battle_attributes':battle_attributes,'unsupported':deepcopy(unsupported),
         'warnings':list(dict.fromkeys(warnings)),'relics':deepcopy(relic_resolution['records']),
         'run':run_resolution,'inventory_complete':complete is True,
         'complete_for_attribute_scope':not warnings,'baseline_error':baseline_error,
         'source':deepcopy(selectors()['source'])}
     result['notes'][1]='培养按独立预览条件计算；本局已证属性符文先写回，再将已确认的稳定普通属性增益与天赋/技能加成相加。未接入效果不默认为零；不写入账户或本局。'
-    result['notes'].extend(['本局修正覆盖稳定属性符文、同行者应急增益、悲伤的红零件增益及仇名录已确认持久层数；未接入回费/费用、技力、持续回复或最终伤害修正，不能生成回转和周期。',
+    result['notes'].extend(['本局修正覆盖已证属性及普通首次卡片费用、先锋开启回费；芬天赋与费用修正组合仍未知。未接入技力、持续回复或最终伤害修正，不能生成回转和周期。',
                             '对照列为相同培养且没有本局修正的单次参考；差值不代表完整施放、周期或真实击杀。',
                             '藏品与分队取打开或更新时的快照；修改干员仅使用其自己的已确认强化，不沿用上一名干员的领取信息。'])
     return result
@@ -115,6 +126,10 @@ def format_run_reference(result):
     lines=['本局属性与单次技能 · '+('当前支持范围内参考' if resolution['complete_for_attribute_scope'] else '部分参考，仍有未计或未确认项'),
            f"预计常态：生命{stats['hp']:.8g}；攻击{stats['attack']:.8g}；防御{stats['defense']:.8g}；法抗{runes['resistance']:.8g}；攻速{runes['attack_speed']:.8g}（官方单位）；再部署{runes['redeploy_seconds']:g}秒；阻挡{runes['block_count']:g}"]
     names={r['id']:r['name'] for r in resolution['relics']}
+    cost=result['deployment_reference']
+    lines.append('预计普通首次部署费用：'+('未知' if cost['estimated_cost'] is None else str(cost['estimated_cost'])))
+    if cost['first_card_only']:lines.append('本费用包含仅首次有效卡片折扣；未确认本局是否已经消费，不沿用到再次部署。')
+    if cost['skill_start_dp']:lines.append(f"先锋每次技能开启额外回费{cost['skill_start_dp']:g}；芬已合入单次回费，不生成回费时钟。")
     sources=list(dict.fromkeys(names.get(e.get('relic_id'),'已确认分队') for e in resolution['runes']))
     lines.append('已计符文及分队来源：'+('、'.join(sources) if sources else '没有已解析的适用属性符文'))
     ordinary=resolution['ordinary'];totals=resolution['battle_attributes']
