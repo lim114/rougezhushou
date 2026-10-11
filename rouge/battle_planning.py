@@ -85,3 +85,41 @@ def candidate_groups(stage_id):
     return _result(stage,groups=groups,packages=[{'queue_id':q,'package_key':p,'members':deepcopy(m)}
         for (q,p),m in packages.items()],
         grouping_rule='queue identity and raw key equality; no actual selection inferred')
+
+def local_time_window(stage_id,start_seconds,end_seconds,*,limit=4096):
+    """Query nominal action occurrences separately in each fragment anchor."""
+    from .spawn_reference import finite_nonnegative
+    import heapq
+    if not finite_nonnegative(start_seconds) or not finite_nonnegative(end_seconds) or start_seconds>end_seconds:
+        raise ValueError('局部时间窗需要有限、非负且有序的秒数。')
+    if type(limit) is not int or not 1<=limit<=4096: raise ValueError('展示上限需要1–4096整数。')
+    stage=_stage(stage_id); queues={}; start=Decimal(str(start_seconds)); end=Decimal(str(end_seconds))
+    for row in action_catalog(stage_id)['actions']:
+        queue=queues.setdefault(row['queue_id'],{'queue_id':row['queue_id'],'anchor':'fragment_action_queue_start',
+            'occurrences':[],'matching_declared_occurrences':0,'pending':[],
+            'fragment_pre_delay_parameter':row['fragment_pre_delay_parameter'],
+            'absolute_start_seconds':None,'truncated':False,'_streams':[]})
+        seq=local_sequence(row,limit=0)
+        if seq['pending']:
+            queue['pending'].append({'action_id':row['id'],'reasons':seq['pending']}); continue
+        count=seq['count']
+        if not count: continue
+        a=row['action']; delay=Decimal(str(a['preDelay'])); interval=Decimal(str(a['interval']))
+        if not interval: first=0; last=count-1 if start<=delay<=end else -1
+        else:
+            first=max(0,int(((start-delay)/interval).to_integral_value(rounding=ROUND_CEILING)))
+            last=min(count-1,int(((end-delay)/interval).to_integral_value(rounding=ROUND_FLOOR)))
+        matches=max(0,last-first+1); queue['matching_declared_occurrences']+=matches
+        if matches: heapq.heappush(queue['_streams'],(delay+first*interval,row['action_ordinal'],first,last,interval,row))
+    for queue in queues.values():
+        streams=queue.pop('_streams'); queue['truncated']=queue['matching_declared_occurrences']>limit
+        while streams and len(queue['occurrences'])<limit:
+            offset,_,i,last,interval,row=heapq.heappop(streams);a=row['action']
+            queue['occurrences'].append({'action_id':row['id'],'ordinal':i+1,'type':row['type'],
+                'type_label':row['type_label'],'key':a.get('key'),'offset_seconds':float(offset),
+                'configured_action_ordinal':row['action_ordinal'],
+                'conditional':bool(a.get('hiddenGroup') or a.get('randomSpawnGroupKey') or a.get('randomSpawnGroupPackKey'))})
+            if i<last: heapq.heappush(streams,(offset+interval,row['action_ordinal'],i+1,last,interval,row))
+        queue['count_is_actual_enemy_total']=False
+    return _result(stage,start_seconds=start_seconds,end_seconds=end_seconds,queues=list(queues.values()),
+        sorting_rule='nominal offset then serialized action order; not a native same-frame proof')

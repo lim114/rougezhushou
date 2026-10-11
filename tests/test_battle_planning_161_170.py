@@ -43,3 +43,30 @@ class BattlePlanningTests(unittest.TestCase):
         r=candidate_groups(sid)
         self.assertTrue(r['packages'])
         self.assertTrue(all(p['members'] for p in r['packages']))
+
+    def test_164_local_window(self):
+        from rouge.battle_planning import local_time_window
+        r=local_time_window('ro6_n_1_1',0,0)
+        self.assertTrue(r['queues'])
+        self.assertTrue(any(a['type']=='ACTIVATE_PREDEFINED' for q in r['queues'] for a in q['occurrences']))
+        self.assertTrue(all(a['offset_seconds']==0 for q in r['queues'] for a in q['occurrences']))
+        self.assertTrue(all(q['absolute_start_seconds'] is None for q in r['queues']))
+
+    def test_164_window_bounds_and_truncation(self):
+        from rouge.battle_planning import local_time_window
+        r=local_time_window('ro6_n_1_1',0,10000,limit=1)
+        self.assertTrue(any(q['truncated'] for q in r['queues']))
+        self.assertTrue(all(len(q['occurrences'])<=1 for q in r['queues']))
+        with self.assertRaises(ValueError):local_time_window('ro6_n_1_1',3,2)
+
+    def test_164_earliest_results_before_serialized_order(self):
+        from rouge.battle_planning import local_time_window, action_catalog
+        from unittest.mock import patch
+        rows=action_catalog('ro6_n_1_1')['actions'][:2]
+        for r in rows:
+            r['action']['count']=1;r['action']['interval']=1
+        rows[0]['action']['preDelay']=10;rows[1]['action']['preDelay']=1
+        with patch('rouge.battle_planning.action_catalog',return_value={'actions':rows}):
+            result=local_time_window('ro6_n_1_1',0,20,limit=1)
+        self.assertEqual(result['queues'][0]['occurrences'][0]['offset_seconds'],1)
+        self.assertEqual(result['queues'][0]['matching_declared_occurrences'],2)
