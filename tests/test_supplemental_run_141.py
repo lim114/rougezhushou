@@ -90,8 +90,9 @@ class SupplementalRun141Tests(unittest.TestCase):
         e=environment();e['operator_metadata']={'char_208_melan':{'char_buff_ids':['rogue_6_from_relic_10']}}
         with self.assertRaisesRegex(ValueError,'禁止.*技能'):run_skill_reference(defaults(),e)
 
-    def test_unhandled_sp_and_incomplete_inventory_visible(self):
-        e=environment(['rogue_6_relic_legacy_95']);e['inventory_status']['complete']=False
+    def test_unhandled_attribute_and_incomplete_inventory_visible(self):
+        e=environment(['rogue_6_relic_legacy_57']);e['relic_context']['battle_start_shields']=1
+        e['inventory_status']['complete']=False
         r=run_skill_reference(defaults('char_123_fang'),e)
         self.assertEqual(r['rows'][0]['value'],6)
         self.assertFalse(r['attribute_resolution']['complete_for_attribute_scope'])

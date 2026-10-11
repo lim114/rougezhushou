@@ -1,13 +1,134 @@
 {
   "target": 150,
   "sections": {
-    "143": {"title":"七名低星干员部署费用与先锋开启回费", "scope":"按已证符文/卡片取整链提供普通首次费用；钝爪先机合入芬单次回费；芬减费天赋组合未知保护", "modules":["tests.test_supplemental_cost_143","tests.test_supplemental_run_141","tests.test_supplemental_battle_142"], "evidence":["BATCH_0.54.md","BATCH_0.57.md","https://prts.wiki/w/部署费用","https://prts.wiki/w/芬"], "limits":["芬轻量化与藏品费用乘区仍未知","当前热更新、首次卡片是否已消费和再部署状态未确认"]},
-    "144": {"title":"低星技能技力参数与缺口对照", "scope":"已解析预置技力、单来源技力消耗与结束返技力参数；明确参数缺口，保持原生时钟未知", "modules":["tests.test_supplemental_sp_144"], "evidence":["rouge/relics.py:effective_skill,recharge_requirement","rouge/data/relic-mechanics.json","rouge/data/supplemental-skills.json"], "limits":["不计算初动、回转、周期或未证SP_RATE叠加","结束返技力为标称参数，不确认实际事件时钟"]},
-    "145": {"title":"低星单次治疗倍率与独立生命回复参考", "scope":"已证单来源治疗倍率重算有效/过量预算，稳定生命回复按常态最大生命单独输出", "modules":["tests.test_supplemental_healing_145"], "evidence":["research/p2-healing-subtotal-scaling/NOTE.md","rouge/relics.py:finish"], "limits":["多治疗/回复倍率叠加未知保护","不将持续生命回复转换为治疗施放或原生跳数"]},
-    "146": {"title":"低星目标减防、定向穿透及伤害倍率", "scope":"来源合格的敌方减防、克洛丝新典训穿透及物理/法术受伤倍率接入各单次分支", "modules":["tests.test_supplemental_damage_146"], "evidence":["rouge/operator_engine.py:Combat.hit","rouge/data/relic-mechanics.json"], "limits":["未知减防组合不补默认叠加","克洛丝二连射含天赋组合仍未知；不推击杀概率"]},
-    "147": {"title":"低星同局技能等级收益批量对照", "scope":"冻结本局条件，批量比较1–7级的已接入分项、技力与差值；提供可操作入口", "modules":["tests.test_supplemental_comparison_147"], "evidence":["rouge/data/supplemental-skills.json","verification/sections/143.json","verification/sections/144.json","verification/sections/145.json","verification/sections/146.json"], "limits":["不是实际培养或技能使用资格","没有技能循环、材料成本或自动培养建议"]},
-    "148": {"title":"低星同局培养与招募形态收益对照", "scope":"批量改变培养条件，重算天赋门、藏品效果、单次技能和费用；未知基准差值不补零", "modules":["tests.test_supplemental_cultivation_148"], "evidence":["rouge/catalog.py:operator_attributes","rouge/data/supplemental-skills.json"], "limits":["独立局外培养方案，不改变账户或本局","精零高公共等级实际使用资格仍未证明"]},
-    "149": {"title":"低星固定关卡敌人与保密等级对照", "scope":"七名干员联动固定敌人引用和难度环境，按已证目标属性重算单次技能分项", "modules":["tests.test_supplemental_enemies_149"], "evidence":["rouge/enemy_environment.py","rouge/enemy_effects.py"], "limits":["候选敌人不保证出场","阶段、隐藏脚本和实际击杀时钟不推断"]},
-    "150": {"title":"低星逐目标与逐友方声明预算", "scope":"按各目标防御重算伤害，按已接入单次治疗输出生命预算与溢出；声明事件保留顺序，真实时钟未知", "modules":["tests.test_supplemental_budget_150"], "evidence":["rouge/damage_budget.py","rouge/healing_budget.py"], "limits":["声明预算不证明碰撞、受疗、存活或复活","不将边际期望用于击杀概率，不生成实时战斗干预"]}
+    "143": {
+      "title": "七名低星干员部署费用与先锋开启回费",
+      "scope": "按已证符文/卡片取整链提供普通首次费用；钝爪先机合入芬单次回费；芬减费天赋组合未知保护",
+      "modules": [
+        "tests.test_supplemental_cost_143",
+        "tests.test_supplemental_run_141",
+        "tests.test_supplemental_battle_142"
+      ],
+      "evidence": [
+        "BATCH_0.54.md",
+        "BATCH_0.57.md",
+        "https://prts.wiki/w/部署费用",
+        "https://prts.wiki/w/芬"
+      ],
+      "limits": [
+        "芬轻量化与藏品费用乘区仍未知",
+        "当前热更新、首次卡片是否已消费和再部署状态未确认"
+      ]
+    },
+    "144": {
+      "title": "低星技能技力参数与缺口对照",
+      "scope": "已解析预置技力、单来源技力消耗与结束返技力参数；明确参数缺口，保持原生时钟未知",
+      "modules": [
+        "tests.test_supplemental_sp_144",
+        "tests.test_supplemental_run_141.SupplementalRun141Tests.test_unhandled_attribute_and_incomplete_inventory_visible"
+      ],
+      "evidence": [
+        "rouge/relics.py:effective_skill,recharge_requirement",
+        "rouge/data/relic-mechanics.json",
+        "rouge/data/supplemental-skills.json"
+      ],
+      "limits": [
+        "不计算初动、回转、周期或未证SP_RATE叠加",
+        "结束返技力为标称参数，不确认实际事件时钟"
+      ]
+    },
+    "145": {
+      "title": "低星单次治疗倍率与独立生命回复参考",
+      "scope": "已证单来源治疗倍率重算有效/过量预算，稳定生命回复按常态最大生命单独输出",
+      "modules": [
+        "tests.test_supplemental_healing_145"
+      ],
+      "evidence": [
+        "research/p2-healing-subtotal-scaling/NOTE.md",
+        "rouge/relics.py:finish"
+      ],
+      "limits": [
+        "多治疗/回复倍率叠加未知保护",
+        "不将持续生命回复转换为治疗施放或原生跳数"
+      ]
+    },
+    "146": {
+      "title": "低星目标减防、定向穿透及伤害倍率",
+      "scope": "来源合格的敌方减防、克洛丝新典训穿透及物理/法术受伤倍率接入各单次分支",
+      "modules": [
+        "tests.test_supplemental_damage_146"
+      ],
+      "evidence": [
+        "rouge/operator_engine.py:Combat.hit",
+        "rouge/data/relic-mechanics.json"
+      ],
+      "limits": [
+        "未知减防组合不补默认叠加",
+        "克洛丝二连射含天赋组合仍未知；不推击杀概率"
+      ]
+    },
+    "147": {
+      "title": "低星同局技能等级收益批量对照",
+      "scope": "冻结本局条件，批量比较1–7级的已接入分项、技力与差值；提供可操作入口",
+      "modules": [
+        "tests.test_supplemental_comparison_147"
+      ],
+      "evidence": [
+        "rouge/data/supplemental-skills.json",
+        "verification/sections/143.json",
+        "verification/sections/144.json",
+        "verification/sections/145.json",
+        "verification/sections/146.json"
+      ],
+      "limits": [
+        "不是实际培养或技能使用资格",
+        "没有技能循环、材料成本或自动培养建议"
+      ]
+    },
+    "148": {
+      "title": "低星同局培养与招募形态收益对照",
+      "scope": "批量改变培养条件，重算天赋门、藏品效果、单次技能和费用；未知基准差值不补零",
+      "modules": [
+        "tests.test_supplemental_cultivation_148"
+      ],
+      "evidence": [
+        "rouge/catalog.py:operator_attributes",
+        "rouge/data/supplemental-skills.json"
+      ],
+      "limits": [
+        "独立局外培养方案，不改变账户或本局",
+        "精零高公共等级实际使用资格仍未证明"
+      ]
+    },
+    "149": {
+      "title": "低星固定关卡敌人与保密等级对照",
+      "scope": "七名干员联动固定敌人引用和难度环境，按已证目标属性重算单次技能分项",
+      "modules": [
+        "tests.test_supplemental_enemies_149"
+      ],
+      "evidence": [
+        "rouge/enemy_environment.py",
+        "rouge/enemy_effects.py"
+      ],
+      "limits": [
+        "候选敌人不保证出场",
+        "阶段、隐藏脚本和实际击杀时钟不推断"
+      ]
+    },
+    "150": {
+      "title": "低星逐目标与逐友方声明预算",
+      "scope": "按各目标防御重算伤害，按已接入单次治疗输出生命预算与溢出；声明事件保留顺序，真实时钟未知",
+      "modules": [
+        "tests.test_supplemental_budget_150"
+      ],
+      "evidence": [
+        "rouge/damage_budget.py",
+        "rouge/healing_budget.py"
+      ],
+      "limits": [
+        "声明预算不证明碰撞、受疗、存活或复活",
+        "不将边际期望用于击杀概率，不生成实时战斗干预"
+      ]
+    }
   }
 }
