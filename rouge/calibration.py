@@ -354,3 +354,50 @@ def packet_worksheet(scenario):
             '攻击取现有模型已覆盖条件；机械师模组伤害包适用范围及限时攻击快照仍须独立核验。']}
 
 COMMANDS['packets']=packet_worksheet
+
+
+def calibration_worksheets(cases=None):
+    """Replay sourced arithmetic references, without calling them game captures."""
+    if cases is None:
+        common='已封存属性层原件算式，.cache/research/relic-panel-056/REPORT.md'
+        cases=[
+            {'id':'mechanist_base','scenario':{'operator':'mechanist','skill':3},'panel':'培养与模组',
+             'values':{'hp':3631,'attack':573,'defense':765},'source':'https://m.prts.wiki/w/机械师','evidence_kind':'public_case'},
+            {'id':'mechanist_module_1','scenario':{'operator':'mechanist','skill':3,'module_id':'uniequip_002_mcnist','module_level':1},
+             'panel':'培养与模组','values':{'attack':633,'defense':805},'source':common,'evidence_kind':'formula_reference'},
+            {'id':'mechanist_module_3','scenario':{'operator':'mechanist','skill':3,'module_id':'uniequip_002_mcnist','module_level':3},
+             'panel':'培养与模组','values':{'attack':673,'defense':845},'source':common,'evidence_kind':'formula_reference'},
+            {'id':'mechanist_rune_skill','scenario':{'operator':'mechanist','skill':3,'relic_ids':['rogue_6_relic_legacy_16']},
+             'panel':'技能期间参考','values':{'attack':2720.8},'source':common,'evidence_kind':'formula_reference','tolerance':1e-9},
+            {'id':'kaltsit_base','scenario':{'operator':'kaltsit','skill':2},'panel':'培养与模组',
+             'values':{'hp':2120,'attack':510,'defense':306},'source':'https://prts.wiki/w/凯尔希·思衡托','evidence_kind':'public_case'},
+            {'id':'kaltsit_rune_talent','scenario':{'operator':'kaltsit','skill':2,'relic_ids':['rogue_6_relic_legacy_90']},
+             'panel':'已覆盖常态天赋与效果','values':{'hp':3975},'source':common,'evidence_kind':'formula_reference'},
+            {'id':'kaltsit_rune_skill','scenario':{'operator':'kaltsit','skill':2,'relic_ids':['rogue_6_relic_legacy_19']},
+             'panel':'技能期间参考','values':{'attack':1595},'source':common,'evidence_kind':'formula_reference'},
+            {'id':'silverash_base','scenario':{'operator':'silverash','skill':3},'panel':'培养与模组',
+             'values':{'hp':2318,'attack':653,'defense':437},'source':'https://prts.wiki/w/凛御银灰','evidence_kind':'public_case'},
+            {'id':'silverash_talent_early','scenario':{'operator':'silverash','skill':3,'deployment_elapsed_seconds':0},
+             'panel':'已覆盖常态天赋与效果','values':{'defense':497},'source':'固定天赋60与培养DEF437算式','evidence_kind':'formula_reference'},
+            {'id':'silverash_talent_late','scenario':{'operator':'silverash','skill':3,'deployment_elapsed_seconds':15},
+             'panel':'已覆盖常态天赋与效果','values':{'defense':557},'source':'固定天赋60×2与培养DEF437算式','evidence_kind':'formula_reference'},
+        ]
+    if not isinstance(cases,list) or not cases or len(cases)>100:raise ValueError('cases需要1–100份注明来源的算例。')
+    rows=[];seen=set()
+    for case in cases:
+        if not isinstance(case,dict) or not isinstance(case.get('id'),str) or not case['id'] or case['id'] in seen:
+            raise ValueError('每份算例需要唯一非空id。')
+        seen.add(case['id']);s=case['scenario'];panel=panel_layers(s)
+        observation={key:deepcopy(case[key]) for key in ('panel','values','source','evidence_kind')}
+        observation['context_token']=case.get('context_token',panel['context_token'])
+        compared=compare_panel(s,observation,case.get('tolerance',0))
+        rows.append({'id':case['id'],'scenario':deepcopy(s),'comparison':compared})
+    return {'rows':rows,'case_count':len(rows),
+        'matching_reference_cases':sum(r['comparison']['all_compared_values_match'] for r in rows),
+        'source':_source(),'native_verified':False,'notes':[
+            '默认案例为公开培养表与已封存原件算式的交叉核对，不是网上实机录屏或当局截图。',
+            '公式参考、公开算例、调用方声明实机观察分别保留；不以共同数据源一致代替独立实机验收。',
+            '机械师2720.8手算十进制例声明1e-9数值容差，仅覆盖浮点表示尾差，不是游戏误差范围；其它案例默认0。',
+            '每份工作表仅覆盖列出的字段和固定来源版本；未证明动作时钟或当前热更新。']}
+
+COMMANDS['worksheets']=calibration_worksheets

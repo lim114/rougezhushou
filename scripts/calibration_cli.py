@@ -13,6 +13,7 @@ def main(argv=None):
     args=parser.parse_args(argv)
     payload=json.loads(args.input.read_text(encoding='utf-8-sig')) if args.input else {
         'scenario':{'operator':'mechanist','skill':3,'charge_count':0}}
+    if args.input is None and args.command=='worksheets':payload={}
     if not isinstance(payload,dict):parser.error('输入需要JSON对象。')
     try:result=COMMANDS[args.command](**payload)
     except (ValueError,TypeError,KeyError) as exc:parser.error(str(exc))

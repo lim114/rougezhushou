@@ -141,4 +141,20 @@ class CalibrationTests(unittest.TestCase):
         self.assertAlmostEqual(r['rows'][1]['single_packet_reference'],2177.4*3-100)
         self.assertEqual(c.packet_worksheet({'operator':'silverash','skill':1})['rows'],[])
 
+
+    def test_160_default_source_worksheets(self):
+        r=c.calibration_worksheets()
+        self.assertEqual(r['case_count'],10)
+        self.assertEqual(r['matching_reference_cases'],10)
+        self.assertFalse(r['native_verified'])
+        self.assertTrue(all(not x['comparison']['native_verified'] for x in r['rows']))
+        matrix=c.skill_matrix({'operator':'mechanist','skill':3})
+        self.assertTrue(all(x.get('native_clock_verified') is False for x in matrix['rows']))
+        self.assertTrue(all(x['full_skill_damage'] in (0,None) and x['full_skill_healing'] in (0,None) for x in matrix['rows']))
+    def test_160_custom_failure_not_hidden(self):
+        r=c.calibration_worksheets([{'id':'public_mismatch','scenario':{'operator':'kaltsit','skill':2},
+            'panel':'技能期间参考','values':{'attack':1402.5},'source':'自定义旧算例','evidence_kind':'formula_reference'}])
+        self.assertEqual(r['matching_reference_cases'],0)
+        self.assertEqual(r['rows'][0]['comparison']['rows'][0]['difference'],127.5)
+
 if __name__=='__main__':unittest.main()
