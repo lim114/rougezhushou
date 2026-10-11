@@ -23,4 +23,6 @@
 
 `transition` 输入 `transition`（`main_region_advance`、`portal_enter`、`portal_return`）、可选 `inventory`、`remaining_ap`、`goal_success`。主区域前进另需 `exit_node_type`（`FINAL`、`EVACUATE`、`BATTLE_BOSS`）。分别列重弹簧/小八界在主区域转换成功后的损坏与秘境进出例外；不改变输入库存。险路尽头/胜利后的险路恶敌将剩余AP用于希望转换，原件未证比率所以希望数量未知；险路小径携带剩余AP，新区域基础AP未知所以不算总AP。具名加工品获取仅知1个，完整池与稀有范围未知。
 
-源版本：`Kengxxiao/ArknightsGameData@a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`，完整原件哈希和精确字段在 `research/p3-exploration-planning/source-receipt.json` 与结果中。步行/转移规则复用已核对PRTS页面与 `.cache/research/routes-049/evidence.json`；本次未冒充服务器重新验证。仅提取小范围事实参数；未声称上游许可证已核实。
+`residents` 输入 `graph`，可选 `post_node`、`residents`（唯一 `id` 和 `node_id`）、`moves`（1–10）、`floor`、`difficulty`、`recall_mode`、`player_positions`（各次移动后的声明位置）。初始位置只按连通5步以内空地筛选，保留未知类型；来源上限3与追忆0–3数量候选不等于实际数量。每移动后展开所有未被原文明令排除的相邻节点，已完成空地/已知可重复节点和具名禁入类型分别排除。输出每步可能占领并集及与声明路线的交集；多居民同步/碰撞/无相邻点回退未知，不求概率，不声称可同时占领所有候选。
+
+源版本：`Kengxxiao/ArknightsGameData@a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`，完整原件哈希和精确字段在 `research/p3-exploration-planning/source-receipt.json` 与结果中。步行/转移/居民规则复用已核对PRTS页面与 `.cache/research/routes-049/evidence.json`；本次还通过目标搜索核对公开页面继续保留同样居民文字，未冒充真实服务器验证。仅提取小范围事实参数；未声称上游许可证已核实。

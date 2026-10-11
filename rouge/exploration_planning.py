@@ -56,7 +56,7 @@ def _graph(graph,start=None):
                 raise ValueError(field+'必须是原表节点类型。')
         if node.get('scrap_category') is not None and node['scrap_category'] not in ('EVENTS','BATTLES','EMPTY'):
             raise ValueError('scrap_category需要EVENTS、BATTLES或EMPTY。')
-        for field in ('completed_declared','occupied_declared','other_blocked_declared'):
+        for field in ('completed_declared','occupied_declared','other_blocked_declared','repeatable_declared'):
             if node.get(field) is not None and type(node[field]) is not bool:
                 raise ValueError(field+'需要布尔值或留空。')
         nodes[node['id']]=node;positions.add(key)
@@ -513,6 +513,102 @@ def region_transition(transition,inventory=None,remaining_ap=None,exit_node_type
                        '剩余AP转希望的比率和新区域总AP未在本原件中核验，不默认1:1；首领必须击败才满足出口条件。'])
 
 
+RESIDENT_NAMED_EXCLUSIONS=('BATTLE_SHOP','SCRAP_SHOP','EVACUATE','FINAL','DOOR',
+                           'STORY','STORY_HIDDEN','BATTLE_SAVAGE')
+
+
+def _resident_destination(node):
+    types,basis=_type_candidates(node)
+    if node.get('repeatable_declared') is True:return False,'declared_repeatable_node'
+    if types and all(key in RESIDENT_NAMED_EXCLUSIONS for key in types):return False,'source_named_node_exclusion'
+    if types and all(key=='EMPTY' for key in types) and node.get('completed_declared') is True:
+        return False,'player_completed_clearing_exclusion'
+    if not types:return None,'original_node_type_unknown'
+    return None,'no_named_exclusion; full_destination_eligibility_unknown'
+
+
+def resident_candidates(graph,post_node=None,residents=None,moves=1,floor=None,difficulty=None,
+                        recall_mode=None,player_positions=None):
+    """Initial connected-distance pool and independent bounded movement candidates."""
+    nodes,start=_graph(graph);adjacency=_adjacency(graph,nodes)
+    _integer(moves,'玩家移动次数',minimum=1)
+    if moves>10:raise ValueError('居民候选展开最多10次移动。')
+    if floor is not None and (type(floor) is not int or floor not in range(1,7)):
+        raise ValueError('主层需要1–6的整数或留空。')
+    _integer(difficulty,'保密等级',optional=True)
+    if recall_mode is not None and type(recall_mode) is not bool:raise ValueError('追忆模式需要布尔值或留空。')
+    gate=_and(None if floor is None else floor not in (1,6),None if difficulty is None else difficulty>=4)
+    spawn=[];excluded=[]
+    if post_node is not None:
+        if not isinstance(post_node,str) or post_node not in nodes:raise ValueError('据点需要地图中的明确节点。')
+        post_types,_=_type_candidates(nodes[post_node])
+        if post_types and 'BATTLE_SAVAGE' not in post_types:raise ValueError('声明据点的明确原类型不是居民据点。')
+        distances={post_node:0};queue=deque([post_node])
+        while queue:
+            current=queue.popleft()
+            if distances[current]>=5:continue
+            for other in adjacency[current]:
+                if other not in distances:distances[other]=distances[current]+1;queue.append(other)
+        for key,node in nodes.items():
+            types,basis=_type_candidates(node);empty=None if not types else all(t=='EMPTY' for t in types)
+            row={'node_id':key,'connected_distance':distances.get(key),
+                 'initial_clearing_type_matches':empty,'type_basis':basis,'actual_spawn':None,
+                 'probability':None,'known_post_gate_matches':gate}
+            if key not in distances or empty is False or gate is False:
+                row['exclusion_reasons']=[label for condition,label in ((key not in distances,'beyond_five_connected_steps'),
+                    (empty is False,'not_original_clearing'),(gate is False,'source_post_gate_mismatch')) if condition]
+                excluded.append(row)
+            else:spawn.append(row)
+    if residents is None:residents=[]
+    if not isinstance(residents,list) or len(residents)>100:raise ValueError('居民位置需要至多100项对象列表。')
+    if player_positions is not None:
+        if (not isinstance(player_positions,list) or len(player_positions)>moves or
+            any(not isinstance(key,str) or key not in nodes for key in player_positions)):
+            raise ValueError('玩家移动后位置需要地图节点列表，长度不能超过移动次数。')
+    movements=[];seen=set();occupied={step:set() for step in range(1,moves+1)}
+    for ordinal,resident in enumerate(residents,1):
+        if not isinstance(resident,dict) or not isinstance(resident.get('node_id'),str) or resident['node_id'] not in nodes:
+            raise ValueError('居民需要地图中的位置。')
+        identity=resident.get('id',f'resident:{ordinal}')
+        if not isinstance(identity,str) or not identity or identity in seen:raise ValueError('居民标识需要唯一非空文字。')
+        seen.add(identity);positions={resident['node_id']};steps=[]
+        for step in range(1,moves+1):
+            candidates={};rejects=[];fallbacks=[]
+            for current in sorted(positions):
+                found=False
+                for other in sorted(adjacency[current]):
+                    status,basis=_resident_destination(nodes[other])
+                    row={'from':current,'to':other,'destination_condition_matches':status,'basis':basis,
+                         'actual_selected':None,'probability':None}
+                    if status is False:rejects.append(row)
+                    else:candidates.setdefault(other,[]).append(row);found=True
+                if not found:fallbacks.append({'from':current,'possible_position':current,
+                                             'condition':'无未排除相邻节点；停留/其他回退规则未知'})
+            positions=set(candidates);occupied[step].update(positions)
+            steps.append({'movement_step':step,'candidate_positions':sorted(positions),
+                          'navigation_candidates':[row for values in candidates.values() for row in values],
+                          'source_excluded_transitions':rejects,'unresolved_fallbacks':fallbacks,
+                          'actual_position':None})
+        movements.append({'resident_id':identity,'initial_position_declared':resident['node_id'],'steps':steps})
+    risk=[]
+    for step,positions in occupied.items():
+        player=player_positions[step-1] if player_positions is not None and step<=len(player_positions) else None
+        risk.append({'movement_step':step,'possible_occupied_union':sorted(positions),
+                     'player_position_declared':player,'source_candidate_overlap':None if player is None else player in positions,
+                     'actual_collision_or_blockage':None})
+    maximum=min(3,len(spawn)) if post_node is not None else None
+    return _result(post_node=post_node,spawn_candidates=spawn,excluded_spawn_candidates=excluded,
+                   source_maximum_residents=3,initial_count_upper_bound=maximum,
+                   recalled_count_source_candidates=None if recall_mode is False else list(range((maximum if maximum is not None else 3)+1)),
+                   actual_initial_count=None,known_post_gate_matches=gate,movement_candidates=movements,
+                   player_route_risk=risk,resident_count_declaration_conflicts_source_max=len(residents)>3,
+                   joint_collision_resolution_verified=False,route_rule_source=deepcopy(ROUTE_RULES_SOURCE),
+                   limits=deepcopy(reference_data()['limits'])+[
+                       '初始仅沿已声明连线计算距居民据点5步以内空地；类型未知仍保留，不用直线距离代替。',
+                       '每次移动后相邻一格候选逐步展开；居民之间的碰撞、同步顺序、回退和实际选择未知。',
+                       '临时占領不改变概念体原节点归属；候选并集不证明全部位置可以同时被占领。'])
+
+
 COMMANDS={'items':item_catalog,'targets':movement_targets,'effects':movement_effects,
           'zones':zone_catalog,'budget':zone_budget,'valuation':goods_valuation,'options':movement_options,
-          'itinerary':itinerary,'transition':region_transition}
+          'itinerary':itinerary,'transition':region_transition,'residents':resident_candidates}

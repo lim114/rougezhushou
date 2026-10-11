@@ -1,0 +1,43 @@
+{
+  "title": "流窜居民初始位置、移动全候选与声明路线风险",
+  "remaining_item": "探索地图与路线建议：住民状态与连接规则",
+  "new_capability": "按据点连通5步范围生成全部固定图初始空地候选并保留未知类型；依据具名禁入、可重复、玩家完成空地条件逐步展开1–10次移动全部候选，给出与声明路线位置的交集风险，数量/同时碰撞仍未知。",
+  "source_evidence": [
+    "routes-049完整PRTS原文：沿实际路径距据点5步内空地，上限3，追忆0–3；每移动后沿连线移动1格；禁入具名可重复、居民据点及玩家完成空地",
+    "本次targeted公开搜索prts主页面/黑流数据库仍保留相同规则；只确认公开文档，未验证服务器脚本",
+    "原件节点类型名称与既有居民据点4+、非1/6层门槛复用"
+  ],
+  "acceptance": [
+    "连通距离而非直线位置；断连空地排除，未知类型保留；层数/难度已知不符与未知区分",
+    "一格移动逐次完整展开，据点/商店/完成空地分别排除，无邻居回退未知明确保留",
+    "路线交集只报候选风险，输入不变，不把多居民并集当同时占领；2项新测试与17项模块回归通过"
+  ],
+  "limitations": [
+    "实际初始个数、位置、随机选择、碰撞/同步/回退、服务器更新与当前图连线仍未证。",
+    "不新增识别或私人持有更新，不操作游戏，不声称路线可执行或安全。"
+  ],
+  "section": 197,
+  "files": [
+    "EXPLORATION_PLANNING.md",
+    "rouge/exploration_planning.py",
+    "tests/test_exploration_planning.py"
+  ],
+  "patch": ".cache/batch186-285/p3-map-events/section223.patch",
+  "test_selectors": [
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_223_resident_connected_spawn_pool_and_gate_unknowns",
+    "tests.test_exploration_planning.ExplorationPlanningTests.test_223_resident_movement_named_exclusions_completion_and_route_risk"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T07:52:32.960418+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 2,
+    "passed": 2,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-197/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 200
+}

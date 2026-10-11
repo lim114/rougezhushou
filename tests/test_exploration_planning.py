@@ -15,6 +15,44 @@ def graph():
         'edges':[['s','wish'],['wish','shop'],['s','combat'],['s','unknown'],['shop','far']]}
 
 class ExplorationPlanningTests(unittest.TestCase):
+    def test_223_resident_connected_spawn_pool_and_gate_unknowns(self):
+        g={'current_node':'a','nodes':[
+            {'id':'a','row':0,'col':0,'node_type_raw':'EMPTY'},
+            {'id':'post','row':0,'col':1,'node_type_raw':'BATTLE_SAVAGE'},
+            {'id':'b','row':0,'col':2,'node_type_raw':'EMPTY'},
+            {'id':'c','row':0,'col':3},
+            {'id':'far','row':0,'col':4,'node_type_raw':'EMPTY'}],
+            'edges':[['a','post'],['post','b'],['b','c']]}
+        r=p.resident_candidates(g,'post',floor=2,difficulty=4,recall_mode=True)
+        self.assertEqual({x['node_id'] for x in r['spawn_candidates']},{'a','b','c'})
+        self.assertEqual(r['initial_count_upper_bound'],3)
+        self.assertEqual(r['recalled_count_source_candidates'],[0,1,2,3])
+        self.assertIsNone(next(x for x in r['spawn_candidates'] if x['node_id']=='c')['initial_clearing_type_matches'])
+        self.assertIn('far',{x['node_id'] for x in r['excluded_spawn_candidates']})
+        self.assertFalse(p.resident_candidates(g,'post',floor=1,difficulty=15)['spawn_candidates'])
+        self.assertIsNone(p.resident_candidates(g,'post')['known_post_gate_matches'])
+
+    def test_223_resident_movement_named_exclusions_completion_and_route_risk(self):
+        g={'current_node':'a','nodes':[
+            {'id':'a','row':0,'col':0,'node_type_raw':'EMPTY'},
+            {'id':'post','row':0,'col':1,'node_type_raw':'BATTLE_SAVAGE'},
+            {'id':'b','row':0,'col':2,'node_type_raw':'EMPTY'},
+            {'id':'event','row':0,'col':3,'node_type_raw':'WISH'},
+            {'id':'shop','row':0,'col':4,'node_type_raw':'BATTLE_SHOP'},
+            {'id':'done','row':1,'col':3,'node_type_raw':'EMPTY','completed_declared':True}],
+            'edges':[['a','post'],['post','b'],['b','event'],['event','shop'],['event','done']]}
+        old=copy.deepcopy(g)
+        r=p.resident_candidates(g,residents=[{'id':'r','node_id':'b'}],moves=2,player_positions=['event','b'])
+        self.assertEqual(r['movement_candidates'][0]['steps'][0]['candidate_positions'],['event'])
+        self.assertEqual(r['movement_candidates'][0]['steps'][1]['candidate_positions'],['b'])
+        self.assertTrue(all(row['source_candidate_overlap'] for row in r['player_route_risk']))
+        self.assertIsNone(r['player_route_risk'][0]['actual_collision_or_blockage'])
+        self.assertEqual(g,old)
+        r=p.resident_candidates(g,residents=[{'node_id':'a'}])
+        self.assertTrue(r['movement_candidates'][0]['steps'][0]['unresolved_fallbacks'])
+        with self.assertRaises(ValueError):p.resident_candidates(g,moves=11)
+        with self.assertRaises(ValueError):p.resident_candidates(g,'event')
+
     def test_222_temporary_main_region_loss_and_portal_exception(self):
         stock=[{'item_id':'rogue_6_scrap_M_04','remaining_uses':1},
                {'item_id':'rogue_6_scrap_M_07','remaining_uses':1},
