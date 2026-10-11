@@ -262,3 +262,50 @@ def animation_events(scenario, orientation=None, animation_contains=None):
             '严格向上取整与表示误差归一帧均保留；表示归一不能当作实际游戏容差。']}
 
 COMMANDS['animations']=animation_events
+
+
+def recipient_events(scenario, recipients=None, enemy_defense=0, window_seconds=None):
+    """SilverAsh S2 declared recipient packets; independent of his own attack."""
+    s=_scenario(scenario)
+    if s['operator']!='silverash' or s['skill']!=2:raise ValueError('此时间线仅支持凛御银灰S2。')
+    calculate_damage(deepcopy(s))
+    _number(enemy_defense,'enemy_defense')
+    if window_seconds is not None:_number(window_seconds,'window_seconds')
+    recipients=[] if recipients is None else recipients
+    if not isinstance(recipients,list) or len(recipients)>100:raise ValueError('recipients最多100个声明单位。')
+    bb=catalog()['operators']['silverash']['skills'][1]['levels'][s['skill_rank']-1]['values']
+    records=[];seen=set()
+    for recipient in recipients:
+        if not isinstance(recipient,dict):raise ValueError('受益人需要JSON对象。')
+        identity=recipient.get('id')
+        if not isinstance(identity,str) or not identity or identity in seen:raise ValueError('每次受益部署需要唯一非空id。')
+        seen.add(identity)
+        if recipient.get('is_token',False) is not False:raise ValueError('固定原补丁排除召唤物卡；请声明真实干员受益部署。')
+        deployment=recipient.get('deployment_seconds',0);_number(deployment,'deployment_seconds')
+        stacks=_integer(recipient.get('stacks',0),'stacks',int(bb['max_stack_cnt']))
+        attacks=recipient.get('attack_at_triggers',[None]*stacks)
+        if not isinstance(attacks,list) or len(attacks)!=stacks:raise ValueError('attack_at_triggers需与声明叠层数一一对应。')
+        for index,attack in enumerate(attacks):
+            if attack is not None:_number(attack,'触发时受益干员攻击力')
+            time=deployment+1.1+0.5*index
+            raw=None if attack is None else attack*bb['atk_scale']
+            amount=None if raw is None else max(raw-enemy_defense,raw*.05)
+            included=window_seconds is None or time<window_seconds
+            records.append({'recipient_id':identity,'trigger_index':index+1,
+                'time_seconds_reference':time,'recipient_attack_at_trigger':attack,'attack_scale':bb['atk_scale'],
+                'pre_defense_damage':raw,'post_defense_damage_reference':amount,
+                'included_in_declared_window':included,'source_unit':None,'damage_type':'physical'})
+    known=sum(r['post_defense_damage_reference'] for r in records if r['included_in_declared_window'] and r['post_defense_damage_reference'] is not None)
+    missing=sum(r['included_in_declared_window'] and r['post_defense_damage_reference'] is None for r in records)
+    return {'events':records,'known_packet_subtotal_reference':known,
+        'declared_recipient_damage_reference':None if missing else known,'missing_attack_snapshots':missing,
+        'full_skill_damage':None,'native_clock_verified':False,'source':[
+            {'url':'https://prts.wiki/w/凛御银灰','observed_revision':435034,'kind':'社区详细机制资料'},
+            {'url':'https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/gamedata/%5Buc%5Dlua/hotfixes/svash2hotfixer.lua',
+             'kind':'固定原补丁','establishes':'待部署卡必须存在data且非token；不能证明事件时钟。'}],
+        'notes':['声明受益条件下、单个命中目标的参考包；不自动判定获得效果、格子命中、在场存续或当前客户端热更新。',
+            '每包使用调用方声明的触发时受益干员攻击力；不沿用银灰攻击，不推测同帧属性写入顺序。',
+            '1.1秒首触发及0.5秒间隔来自已读取的机制页；未证明逻辑帧相位，不计入完整技能总量。',
+            '仅标准物理减伤，未混入自身伤害来源天赋、敌方阶段、其他承伤倍率或脆弱；窗口为左闭右开。']}
+
+COMMANDS['recipient-events']=recipient_events

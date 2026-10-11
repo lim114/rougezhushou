@@ -111,4 +111,22 @@ class CalibrationTests(unittest.TestCase):
         self.assertFalse(r['records'][0]['selectable_as_conventional_reference'])
         self.assertEqual(r['records'][0]['events'],[])
 
+
+    def test_158_recipient_independent_clocks_and_attack_snapshots(self):
+        r=c.recipient_events({'operator':'silverash','skill':2},recipients=[
+            {'id':'A','deployment_seconds':8,'stacks':2,'attack_at_triggers':[500,600]},
+            {'id':'B','deployment_seconds':9,'stacks':1,'attack_at_triggers':[400]}],enemy_defense=200)
+        self.assertEqual([round(x['time_seconds_reference'],1) for x in r['events']],[9.1,9.6,10.1])
+        self.assertEqual([x['post_defense_damage_reference'] for x in r['events']],[1700,2080,1320])
+        self.assertEqual(r['declared_recipient_damage_reference'],5100)
+        self.assertIsNone(r['full_skill_damage']);self.assertFalse(r['native_clock_verified'])
+    def test_158_unknown_snapshot_window_and_token_exclusion(self):
+        s={'operator':'silverash','skill':2}
+        r=c.recipient_events(s,recipients=[{'id':'A','stacks':2,'attack_at_triggers':[500,None]}],window_seconds=1.6)
+        self.assertEqual(r['declared_recipient_damage_reference'],1900)
+        r=c.recipient_events(s,recipients=[{'id':'A','stacks':2,'attack_at_triggers':[500,None]}])
+        self.assertEqual(r['known_packet_subtotal_reference'],1900)
+        self.assertIsNone(r['declared_recipient_damage_reference'])
+        with self.assertRaises(ValueError):c.recipient_events(s,recipients=[{'id':'T','is_token':True,'stacks':1}])
+
 if __name__=='__main__':unittest.main()
