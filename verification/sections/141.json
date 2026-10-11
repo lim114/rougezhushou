@@ -1,0 +1,67 @@
+{
+  "section": 141,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T20:05:42.873461+08:00",
+  "prior_commit": "6aa7437bddadec620d95e29c7527ea390f22969b",
+  "branch": "codex/p2-development",
+  "title": "七名低星干员的本局属性符文与单次技能对照",
+  "remaining_project_item": "P2技能时序与精度：补充低星干员的本局修正",
+  "new_capability": "七名干员按原始选择器及本人强化解析现有稳定属性符文和已确认分队；重算已接入的天赋、技能及声明次数输出，提供无本局修正对照与差值；更新条件保留编辑器。",
+  "acceptance": [
+    "七名干员无修正保持原分项",
+    "符文和分队先写回再计算天赋/技能",
+    "职业/位置/分支选择器与领取者隔离",
+    "未确认条件和未覆盖效果显式部分参考",
+    "有效/过量治疗与无修正对照非法缺口",
+    "更新条件保留干员与编辑器",
+    "真实Windows入口可见且响应，私人状态不变"
+  ],
+  "limitations": [
+    "仅稳定属性符文，未接入费用/技力/持续回复、普通战斗增益和最终伤害修正",
+    "不生成原生获取、技能结束、回转或周期；克洛丝二连射与天赋组合仍未知",
+    "精零公共等级5–7实际使用规则、游戏当前热更新与真实预计/实际面板仍待证",
+    "首次Windows全量的12个旧断言缺口保留，本批不是全仓库验收"
+  ],
+  "source_evidence": "research/p2-supplemental-run/README.md",
+  "validation": {
+    "necessary_tests_run": 31,
+    "passed": 31,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "test_output": "verification/section-141/tests.txt",
+    "isolated_native_Qt_entry_cases": 7,
+    "isolated_refresh_case": true,
+    "native_Qt_script": "verification/section-141/check_window.py",
+    "actual_project_window_verified_with": "Windows-mcp",
+    "actual_entry_visible": true,
+    "actual_refresh_responded": true,
+    "private_files_unchanged": 5
+  },
+  "initial_failed_attempt": {
+    "tests_run": 29,
+    "failures": 1,
+    "errors": 1,
+    "errors_detail": [
+      "New test gap3500 exceeded actual maximum HP; changed gap to2750, legal only after rune.",
+      "New forbidden-skill regex too narrow; accepted established message without production mechanism change."
+    ]
+  },
+  "source_download_attempt": "Pinned URL attempted but not completed; interrupted. Existing original hash verified and reused.",
+  "source_sha256": {
+    "rouge/app.py": "6ff3c12d5cd2dd217db580af4a252d261298cc0ded91944f882da4144a6613ed",
+    "rouge/supplemental_skills.py": "2b7148ff183ec3a5ae3565699e3933a6eb587a05100aabc0ee396e81f7b75319",
+    "rouge/supplemental_run.py": "8c1f6d8b970792fa25532c2cadb9b56fd5e9bb3a4341fb8d7c31f2c46c9737ec",
+    "rouge/supplemental_run_view.py": "f1dad0cbd521dc8a98e9f5ea96a187eabb2c76365fbd11296827acbcb3b21664",
+    "rouge/data/supplemental-run-selectors.json": "a14cad4a4c4e9c0e0faa7e36aece0fbcfd0b25cd6194e98d7be9d0717fafb1d6",
+    "tests/test_supplemental_run_141.py": "7389a8e05d59d1ae847f0a96d3747159d1c92d85d92dd6c993c57c05102df24a",
+    "tests/test_supplemental_run_view_141.py": "67591ade2ff9894432f78305c69bbfbeec46d466aa1e0e9f9359bcf7bce02f29"
+  },
+  "private_state_included": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "native_game_panel_verified": false,
+  "complete_repository_validation": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 155
+}

@@ -38,7 +38,7 @@
     "current_user_batch_completed": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 140,
+  "completed_sections": 141,
   "sections": [
     {
       "number": 1,
@@ -888,10 +888,16 @@
       "topic": "独立培养方案属性与技能收益对照",
       "verification": "verification/sections/140.json",
       "actual_commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55"
+    },
+    {
+      "number": 141,
+      "completion_ref": "p2-section-141",
+      "topic": "七名低星干员的本局属性符文与单次技能对照",
+      "verification": "verification/sections/141.json"
     }
   ],
-  "next_section": 141,
-  "next_action": "本批140及到期全量已完成；后续从141接续P2。每节实际改进后提交/普通推送，必要检查按改动保留，下次全量155。",
+  "next_section": 142,
+  "next_action": "从142接续P2有依据的未完成事项；七低星剩余本局修正与原生时钟继续查证，不把稳定符文接入视为全部完成。每节必要验证、commit及普通push；全量155，P1断点和识别最后保留。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 140,
@@ -962,7 +968,7 @@
     "linux_and_wine_dependencies_passed": true,
     "functional_progress_not_inferred_from_section_numbers": true
   },
-  "windows_native_validation": "unavailable: attached environment is Linux",
+  "windows_native_validation": "Windows本机：同步精选计算通过，首次全量12个断言缺口保留；第141节31必要检查、7个隔离Qt入口、实际窗口/更新响应通过。未完成全部游戏采样或聊天集成验收。",
   "wine_validation": "第115节当前可用Wine全量/精选/依赖、4283检查52状态窗口、专项4状态及公开算例核对实际退出0。兼容验证不等同原生Windows。第95/109原流程仍搁置。",
   "deferred_problems": [
     {
@@ -1395,22 +1401,16 @@
     137,
     138,
     139,
-    140
+    140,
+    141
   ],
   "current_batch": {
-    "start": 136,
-    "end": 140,
-    "status": "ALL_FUNCTIONAL_SECTIONS_AND_FULL_AVAILABLE_VALIDATION_COMPLETED",
-    "next_section": 141,
-    "next_full_validation_after": 155,
-    "receipt": "verification/batch-136-140.json",
-    "section_commits": {
-      "140": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
-      "139": "1519d4bae97c0566134c46ba3587ac6ce96b19db",
-      "138": "4cf13efd041d82de2aad66d52e16b0077c1a5991",
-      "137": "d78558b45ba53dfea676a4a7f1032443adefce45",
-      "136": "aa65628cb6a899bc987ebbc8f4d89847421f1b81"
-    }
+    "start": 141,
+    "end": 141,
+    "status": "FUNCTIONAL_SECTION_VALIDATED",
+    "next_section": 142,
+    "receipt": "verification/sections/141.json",
+    "next_full_validation_after": 155
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -1432,5 +1432,13 @@
     "complete_repository_validation": false,
     "receipt": "verification/local-sync-20261011/summary.json",
     "next_section_started_by_this_maintenance": false
+  },
+  "native_section141_validation": {
+    "receipt": "verification/sections/141.json",
+    "actual_window_tool": "Windows-mcp",
+    "necessary_tests": 31,
+    "isolated_entries": 7,
+    "actual_window_verified": true,
+    "complete_repository_validation": false
   }
 }

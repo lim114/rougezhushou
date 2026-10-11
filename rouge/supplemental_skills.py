@@ -17,21 +17,30 @@ def defaults(operator='char_208_melan'):
                 enemy_defense=0,enemy_resistance=0,count=1,missing_hp=500)
 
 
-def skill_reference(preview):
+def _cultivated_stats(preview):
     if type(preview) is not dict or set(preview)!=set(defaults()):
         raise ValueError('需要operator、elite、level、trust、potential、skill_rank、enemy_defense、enemy_resistance、count、missing_hp。')
     data=supplemental_profiles(); identity=preview['operator']
     if type(identity) is not str or identity not in data['operators']: raise ValueError('干员未接入补充技能参考。')
-    profile=data['operators'][identity]
     for key in ('elite','level','potential','skill_rank','count'):
         if type(preview[key]) is not int: raise ValueError(key+'需要整数。')
     if not 1<=preview['skill_rank']<=7: raise ValueError('技能参数等级需要1–7。')
     if not 0<=preview['count']<=1000: raise ValueError('声明次数需要0–1000。')
     trust=_amount(preview['trust'],'信赖',100)
-    defense=_amount(preview['enemy_defense'],'敌人防御')
-    resistance=_amount(preview['enemy_resistance'],'敌人抗性',100)
-    missing_hp=_amount(preview['missing_hp'],'声明生命缺口')
-    stats=operator_attributes(identity,preview['elite'],preview['level'],trust,preview['potential'])
+    _amount(preview['enemy_defense'],'敌人防御')
+    _amount(preview['enemy_resistance'],'敌人抗性',100)
+    _amount(preview['missing_hp'],'声明生命缺口')
+    return operator_attributes(identity,preview['elite'],preview['level'],trust,preview['potential'])
+
+
+def skill_reference(preview):
+    return _skill_reference(preview,_cultivated_stats(preview))
+
+
+def _skill_reference(preview,stats):
+    """Shared talent/skill layer; callers qualify the cultivated or rune snapshot."""
+    data=supplemental_profiles();profile=data['operators'][preview['operator']]
+    defense=preview['enemy_defense'];resistance=preview['enemy_resistance'];missing_hp=preview['missing_hp']
     talents=[]; bonuses={}
     for slot in profile['talents'] or []:
         candidates=[t for t in slot['candidates'] if

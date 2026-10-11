@@ -778,7 +778,7 @@ class MainWindow(QMainWindow):
         self.scenario_library_button.setEnabled(False)
         self.scenario_library_button.clicked.connect(self.show_scenario_library)
         layout.addWidget(self.scenario_library_button)
-        self.supplemental_skill_button=QPushButton('补充干员技能参数与声明次数')
+        self.supplemental_skill_button=QPushButton('补充干员本局属性与单次技能对照')
         self.supplemental_skill_button.clicked.connect(self.show_supplemental_skills)
         layout.addWidget(self.supplemental_skill_button)
         self.damage_budget_button=QPushButton('测算逐敌人有效伤害与溢出')
@@ -917,17 +917,44 @@ class MainWindow(QMainWindow):
         self.damage_budget_dialog.show()
 
     def show_supplemental_skills(self):
-        from .supplemental_skills import defaults,skill_reference,format_reference,supplemental_profiles
-        from .reference_dialog import ReferenceDialog
+        from .supplemental_skills import defaults,supplemental_profiles
+        from .supplemental_run_view import SupplementalRunDialog
         profiles=supplemental_profiles()['operators'];identity=self.operator.currentData()
         if identity not in profiles:identity=next(iter(profiles))
         previous=getattr(self,'supplemental_skill_dialog',None)
         if previous:previous.close()
-        self.supplemental_skill_dialog=ReferenceDialog('补充干员 · 单次技能参考',
-            '独立培养预览；次数手动声明。可选operator：'+ '；'.join(k+'（'+v['name']+'）' for k,v in profiles.items()),
-            defaults(identity),skill_reference,format_reference,
-            [('name','分项'),('value','单次/属性'),('unit','单位'),('declared_total','声明次数合计')],self)
+        preview=defaults(identity)
+        if identity==self.operator.currentData():
+            conditions=self.training_conditions()
+            preview.update({key:conditions[key] for key in ('elite','level','trust','potential')})
+            from .skill_cultivation import select_rank
+            preview['skill_rank']=select_rank(operator_profiles()[identity],1,conditions['elite'],
+                state=self.current_operator_state(),account=self.account_cache.view(identity))['rank']
+            preview.update(enemy_defense=self.defense.value(),enemy_resistance=self.resistance.value())
+        self.supplemental_skill_dialog=SupplementalRunDialog(preview,self.supplemental_run_environment,self)
         self.supplemental_skill_dialog.show()
+
+    def supplemental_run_environment(self):
+        from copy import deepcopy
+        from .supplemental_skills import supplemental_profiles
+        from .training_view import run_operator_metadata
+        ids=(self.run.held_relic_ids() if self.auto_relics.isChecked() else
+             [self.relic_list.item(i).data(Qt.ItemDataRole.UserRole) for i in range(self.relic_list.count())
+              if self.relic_list.item(i).checkState()==Qt.CheckState.Checked])
+        resources=self.run.calculation_resources()
+        context={key:record['value'] for key,record in resources.items() if 'value' in record}
+        parts=resources.get('parts_count',{})
+        if type(parts.get('capacity')) is int and type(parts.get('value')) is int:
+            context['empty_slots']=parts['capacity']-parts['value']
+        metadata={}
+        for identity in supplemental_profiles()['operators']:
+            member=run_operator_metadata(self.run.state['operators'].get(identity),enabled=self.use_run_training.isChecked())
+            metadata[identity]={key:member[key] for key in ('recruitment_kind','char_buff_ids','char_buffs_complete',
+                               'char_buff_absent_ids','char_buff_pending_ids') if key in member}
+        return deepcopy({'relic_ids':ids,'run_config':self.run.state.get('config',{}),'relic_context':context,
+            'inventory_status':self.run.inventory_status() if self.auto_relics.isChecked() else
+                {'source':'manual_test','complete':True,'recognized':len(ids),'expected_count':None},
+            'operator_metadata':metadata})
 
     def show_scenario_library(self):
         if not self.damage_result:return

@@ -1,6 +1,8 @@
 # rougezhushou 云端开发副本
 
-当前源代码版本为 0.70.0。云端接续说明见 [CLOUD_HANDOFF.md](CLOUD_HANDOFF.md)，最新待办见 [PROJECT_PROGRESS.md](PROJECT_PROGRESS.md)。此副本独立于本机 rouge 项目，未包含私人配置、本局记忆和个人游戏截图。
+当前源代码版本为 0.70.0。本机 rouge 与 GitHub 的 codex/p2-development 已同步开发；私人配置、本局记忆和个人游戏截图不进入仓库。云端接续说明见 [CLOUD_HANDOFF.md](CLOUD_HANDOFF.md)，最新待办见 [PROJECT_PROGRESS.md](PROJECT_PROGRESS.md)。
+
+第141节：伤害测试页的“补充干员本局属性与单次技能对照”支持七名低星干员的稳定属性符文、已确认分队和个人强化，显示单次分项、无本局修正对照及差值。“更新本局条件”保留当前编辑内容；清单不全、条件不明或尚未接入的效果明确提示。费用、技力、普通战斗增益及原生时钟仍有缺口，详见 [本节回执](verification/sections/141.json)。
 
 ## 历史 README（下方旧版本号仅为历史记录）
 
