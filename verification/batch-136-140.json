@@ -1,0 +1,108 @@
+{
+  "batch": [
+    136,
+    140
+  ],
+  "functional_sections": [
+    {
+      "section": 136,
+      "title": "低星近战攻击与即时回费参考",
+      "capability": "为玫兰莎和芬提供可独立使用的七级技能参数计算，按精英/等级/潜能筛选天赋，支持物理保底、即时回费、部署成本及声明次数合计。",
+      "validation": {
+        "necessary_tests_run": 4,
+        "failures": 0,
+        "errors": 0,
+        "actual_wine_window_cases": 4,
+        "test_output": "verification/section-136/tests.txt",
+        "window_receipt": "verification/section-136/window.json"
+      },
+      "limitations": [
+        "参数参考未含藏品/科技/本局修正；不生成技能时钟或循环",
+        "精零高技能可用性、原生获取和热更新/实机仍未知"
+      ]
+    },
+    {
+      "section": 137,
+      "title": "低星远程连击与暴击分支参考",
+      "capability": "接入克洛丝二连射、普通攻击暴击分支/单次边际期望，以及史都华德法术强力击和等级天赋；按防御/抗性分别结算，天赋与二连射组合保留未知。",
+      "validation": {
+        "necessary_tests_run": 8,
+        "failures": 0,
+        "errors": 0,
+        "actual_wine_window_cases": 3,
+        "test_output": "verification/section-137/tests.txt",
+        "window_receipt": "verification/section-137/window.json"
+      },
+      "limitations": [
+        "未证明二连射暴击组合层及随机相关性，组合值不冒充确定伤害",
+        "不生成攻击回技力或技能时钟；本局修正与实机核验未接入"
+      ]
+    },
+    {
+      "section": 138,
+      "title": "低星防御与生命回复预算",
+      "capability": "接入卡缇按天赋后最大生命回复、米格鲁防御加算和芙蓉技能治疗；声明次数共用一个生命缺口，分列有效/过量治疗，拒绝不可能的自身生命缺口。",
+      "validation": {
+        "necessary_tests_run": 12,
+        "failures": 0,
+        "errors": 0,
+        "actual_wine_window_cases": 3,
+        "test_output": "verification/section-138/tests.txt",
+        "window_receipt": "verification/section-138/window.json"
+      },
+      "limitations": [
+        "预算期间默认无新损失，不判断实际生存、复活或受疗资格",
+        "不代表多来源原生叠加/获取时钟或本局完整计算"
+      ]
+    },
+    {
+      "section": 139,
+      "title": "逐敌人有效伤害与溢出预算",
+      "capability": "新增逐目标伤害预算工具，按独立防御/抗性重算已有单次分项，按声明事件排序，分列潜在/有效/溢出伤害与剩余生命预算；不会将预算耗尽当实际击杀。",
+      "validation": {
+        "necessary_tests_run": 5,
+        "failures": 0,
+        "errors": 0,
+        "actual_wine_window_cases": 3,
+        "test_output": "verification/section-139/tests.txt",
+        "window_receipt": "verification/section-139/window.json"
+      },
+      "limitations": [
+        "生命预算不是原生击杀时钟；无敌/阶段/护盾/回血未自动模拟",
+        "单次参考可能含边际期望或不完整分项，不推算击杀概率"
+      ]
+    },
+    {
+      "section": 140,
+      "title": "独立培养方案属性与技能收益对照",
+      "capability": "提供至多12个独立培养方案的等级/信赖/潜能/模组比较，第一方案为基准；432档案可比较基础属性，已接入技能重算窗口输出，补充七干员重算单次技能与天赋门，未知差值不当零。",
+      "validation": {
+        "necessary_tests_run": 9,
+        "failures": 0,
+        "errors": 0,
+        "actual_wine_window_cases": 4,
+        "test_output": "verification/section-140/tests.txt",
+        "window_receipt": "verification/section-140/window.json"
+      },
+      "limitations": [
+        "没有材料成本或自动培养建议；不覆盖未接入的技能数值",
+        "条件模组、原生时钟、实机面板与本局特殊修正缺口保留"
+      ]
+    }
+  ],
+  "all_sections_committed_and_ordinary_pushed": true,
+  "product_commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
+  "full_validation_status": "PASSED_FULL_AVAILABLE_SCOPE",
+  "next_section": 141,
+  "native_windows_game_chat_verified": false,
+  "full_validation": "verification/full-140/summary.json",
+  "next_full_validation_after": 155,
+  "section_commits": {
+    "140": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
+    "139": "1519d4bae97c0566134c46ba3587ac6ce96b19db",
+    "138": "4cf13efd041d82de2aad66d52e16b0077c1a5991",
+    "137": "d78558b45ba53dfea676a4a7f1032443adefce45",
+    "136": "aa65628cb6a899bc987ebbc8f4d89847421f1b81"
+  },
+  "verified_ordinary_remote_save": true
+}

@@ -27,7 +27,7 @@
     "accuracy_validation_after_section": 115,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
     "full_validation_anchor_section": 125,
-    "next_full_validation_after": 140,
+    "next_full_validation_after": 155,
     "validation_per_section": "Necessary checks tied to changed behavior only; omit when unnecessary. Full available suite unchanged.",
     "each_section_window_required": false,
     "each_section_requires_meaningful_project_advancement": true,
@@ -35,7 +35,7 @@
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
     "current_user_batch_target_section": 140,
-    "current_user_batch_completed": false
+    "current_user_batch_completed": true
   },
   "baseline_commit": "0015c20",
   "completed_sections": 140,
@@ -858,48 +858,53 @@
       "number": 136,
       "completion_ref": "p2-section-136",
       "topic": "低星近战攻击与即时回费参考",
-      "verification": "verification/sections/136.json"
+      "verification": "verification/sections/136.json",
+      "actual_commit": "aa65628cb6a899bc987ebbc8f4d89847421f1b81"
     },
     {
       "number": 137,
       "completion_ref": "p2-section-137",
       "topic": "低星远程连击与暴击分支参考",
-      "verification": "verification/sections/137.json"
+      "verification": "verification/sections/137.json",
+      "actual_commit": "d78558b45ba53dfea676a4a7f1032443adefce45"
     },
     {
       "number": 138,
       "completion_ref": "p2-section-138",
       "topic": "低星防御与生命回复预算",
-      "verification": "verification/sections/138.json"
+      "verification": "verification/sections/138.json",
+      "actual_commit": "4cf13efd041d82de2aad66d52e16b0077c1a5991"
     },
     {
       "number": 139,
       "completion_ref": "p2-section-139",
       "topic": "逐敌人有效伤害与溢出预算",
-      "verification": "verification/sections/139.json"
+      "verification": "verification/sections/139.json",
+      "actual_commit": "1519d4bae97c0566134c46ba3587ac6ce96b19db"
     },
     {
       "number": 140,
       "completion_ref": "p2-section-140",
       "topic": "独立培养方案属性与技能收益对照",
-      "verification": "verification/sections/140.json"
+      "verification": "verification/sections/140.json",
+      "actual_commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55"
     }
   ],
   "next_section": 141,
-  "next_action": "本轮140功能已完成，继续到期全量检查后从141节接续P2；每节提交推送，全量140。",
-  "full_validation_due": true,
+  "next_action": "本批140及到期全量已完成；后续从141接续P2。每节实际改进后提交/普通推送，必要检查按改动保留，下次全量155。",
+  "full_validation_due": false,
   "last_full_validation": {
-    "after_section": 125,
-    "at_UTC": "2026-10-11T05:39:51.526033+00:00",
+    "after_section": 140,
+    "at_UTC": "2026-10-11T09:59:34.869978+00:00",
     "passed": true,
     "available_scope_passed": true,
     "workflow_complete": true,
-    "product_commit": "bb91ce42ec69e4875ab11da5882f8a844082e868",
-    "source_files": 773,
+    "product_commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
+    "source_files": 809,
     "source_drift": [],
     "linux": {
-      "tests_run": 2516,
-      "tests_passed": 2293,
+      "tests_run": 2613,
+      "tests_passed": 2390,
       "historical_or_declared_skips": 84,
       "failures": 0,
       "errors": 0,
@@ -907,8 +912,8 @@
       "unavailable_parent_count": 151
     },
     "wine": {
-      "tests_run": 2586,
-      "tests_passed": 2373,
+      "tests_run": 2683,
+      "tests_passed": 2470,
       "historical_or_declared_skips": 87,
       "failures": 0,
       "errors": 0,
@@ -916,7 +921,7 @@
       "unavailable_parent_count": 145
     },
     "selected": {
-      "tests_run": 1581,
+      "tests_run": 1678,
       "skipped": 4,
       "failures": 0,
       "errors": 0
@@ -924,17 +929,37 @@
     "actual_gui_checks": 4283,
     "saved_states": 52,
     "saved_audit_passed": true,
-    "actual_gui_attempts": 2,
-    "first_gui_attempt": "X11 BadWindow;1888partial checks;no final receipt;not PASS",
+    "actual_gui_attempts": 1,
     "focused_window_cases": 14,
-    "actual_screenshots_viewed": 5,
+    "specialist_window_sections": [
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139,
+      140
+    ],
+    "specialist_window_cases": 64,
+    "actual_screenshots_viewed": 7,
     "environment_capability_skips": 3,
     "complete_repository_validation": false,
     "native_windows_game_chat_verified": false,
     "old095_and109_deferred_preserved": true,
-    "next_full_validation_after": 140,
-    "scope": "All maintained available Linux/Wine selectors, selected Wine union, full bounded4283 Qt checks/52 saved states plus14 current behavior cases; missing migrated evidence and declared skips remain unverified.",
-    "failure_records_preserved": true,
+    "next_full_validation_after": 155,
+    "scope": "All maintained current Linux/Wine selector union and selected Wine regressions; original4283 Qt checks,52 saved states and14 focused cases retained; all126–140 added windows rerun. Missing migrated evidence and declared skips are not PASS.",
+    "inherited125_selector_scope_retained": true,
+    "original831_assert_AST_and_functional_try_unchanged": true,
+    "original42_projections_and_exact10_admissions_retained": true,
+    "linux_and_wine_dependencies_passed": true,
     "functional_progress_not_inferred_from_section_numbers": true
   },
   "windows_native_validation": "unavailable: attached environment is Linux",
@@ -1069,15 +1094,17 @@
   },
   "current_section_save": {
     "section": 140,
-    "status": "VALIDATED_SAVE_WITH_THIS_COMMIT",
+    "status": "VALIDATED_COMMITTED_AND_PUSHED",
     "prior_commit": "1519d4bae97c0566134c46ba3587ac6ce96b19db",
-    "receipt": "verification/sections/140.json"
+    "receipt": "verification/sections/140.json",
+    "commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
+    "full_validation_receipt": "verification/full-140/summary.json"
   },
   "last_verified_cloud_save": {
-    "section": 139,
-    "commit": "1519d4bae97c0566134c46ba3587ac6ce96b19db",
+    "section": 140,
+    "commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
     "remote_branch": "origin/codex/p2-development",
-    "verified_by": "git ls-remote after prior ordinary push"
+    "verified_by": "ordinary push and git ls-remote after functional140 save"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -1268,7 +1295,7 @@
     "full095_deferred_preserved": true,
     "scope": "Current239 maintained available selector union plus inherited bounded healthy functional MainWindow suite. Specialist101–104 receipts separately archived. Missing evidence, original skips and3 actual Wine capability bodies are not PASS."
   },
-  "next_full_validation_after": 140,
+  "next_full_validation_after": 155,
   "user_requested_wrap": {
     "status": "SUPERSEDED_BY_USER_BATCH116_125_RESUME_2026_10_10",
     "completed_section": 115,
@@ -1330,9 +1357,9 @@
     "deferred095_and109_preserved": true
   },
   "current_available_full_validation": {
-    "section": 125,
+    "section": 140,
     "available_scope_passed": true,
-    "receipt": "verification/full-125/summary.json",
+    "receipt": "verification/full-140/summary.json",
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": null,
@@ -1373,8 +1400,23 @@
   "current_batch": {
     "start": 136,
     "end": 140,
-    "status": "FUNCTIONAL140_SAVED_FULL_VALIDATION_DUE",
+    "status": "ALL_FUNCTIONAL_SECTIONS_AND_FULL_AVAILABLE_VALIDATION_COMPLETED",
     "next_section": 141,
-    "next_full_validation_after": 140
+    "next_full_validation_after": 155,
+    "receipt": "verification/batch-136-140.json",
+    "section_commits": {
+      "140": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
+      "139": "1519d4bae97c0566134c46ba3587ac6ce96b19db",
+      "138": "4cf13efd041d82de2aad66d52e16b0077c1a5991",
+      "137": "d78558b45ba53dfea676a4a7f1032443adefce45",
+      "136": "aa65628cb6a899bc987ebbc8f4d89847421f1b81"
+    }
+  },
+  "current_full140_checkpoint": {
+    "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
+    "after_section": 140,
+    "receipt": "verification/full-140/summary.json",
+    "product_commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
+    "next_full_validation_after": 155
   }
 }
