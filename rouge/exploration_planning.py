@@ -174,4 +174,59 @@ def movement_effects(graph,item_id,target,start=None,remaining_uses=None,passive
                                       '攻速仅列触发资料，未接入战斗计算；随机收藏品仅有描述数量，不生成具名池。'])
 
 
-COMMANDS={'items':item_catalog,'targets':movement_targets,'effects':movement_effects}
+def _zone(row):
+    key=row['raw']['id'];mission=row['mission']['bannerText'];hint=row['exhaustion']['hintText']
+    outcome='pursuit' if '追猎' in hint else 'return_original_zone' if '返回' in hint else None
+    goal='BATTLE_BOSS' if '险路恶敌' in mission else 'FINAL' if '险路尽头' in mission else None
+    return {'zone_id':key,'name':row['raw']['name'],'mission_text':mission,'exhaustion_text':hint,
+            'goal_node_type':goal,'goal_requires_battle_victory':goal=='BATTLE_BOSS',
+            'source_stated_exhaustion_outcome':outcome,
+            'original_return_zone_identity':None,'source_selector':row['source_selector'],
+            'layout_edges_verified':False}
+
+
+def zone_catalog():
+    """Keep all original zone IDs, including portals sharing one display name."""
+    return _result(zones=[_zone(row) for row in reference_data()['zones'].values()])
+
+
+def zone_budget(zone_id,action_points=None,walking_steps=None,item_id=None,goal_completed=None):
+    """Payment subtotal and zone-specific exhaustion conditions, without ordering guesses."""
+    if not isinstance(zone_id,str) or zone_id not in reference_data()['zones']:
+        raise ValueError('区域需要固定原件中的唯一标识。')
+    _integer(action_points,'行动力',optional=True);_integer(walking_steps,'徒步格点数',optional=True)
+    if goal_completed is not None and type(goal_completed) is not bool:
+        raise ValueError('目标完成状态需要布尔值或留空。')
+    if walking_steps is not None and item_id is not None:
+        raise ValueError('徒步与加工品分别是一种移动方案，不能同时填入。')
+    item=_item(item_id,'MOVE') if item_id is not None else None
+    cost=item['raw']['step'] if item else walking_steps
+    grant=sum(row['amount'] for row in MOVEMENT_GAINS.get(item_id,[]) if row['resource']=='ap') if item else 0
+    affordability=None if cost is None or action_points is None else action_points>=cost
+    after_payment=action_points-cost if affordability is True else None
+    after_grant=after_payment+grant if after_payment is not None else None
+    zone=_zone(reference_data()['zones'][zone_id]);source_outcome=zone['source_stated_exhaustion_outcome']
+    outcomes=[]
+    if source_outcome=='pursuit':
+        outcomes=[{'outcome':'pursuit','condition':'行动力耗尽且区域目标未完成',
+                   'goal_condition_matches':None if goal_completed is None else not goal_completed},
+                  {'outcome':'goal_resolved','condition':'区域目标完成；离层/结局实际流程另外核验',
+                   'goal_condition_matches':goal_completed}]
+    elif source_outcome=='return_original_zone':
+        outcomes=[{'outcome':'return_original_zone','condition':'特殊区域行动力耗尽',
+                   'goal_condition_matches':True,'return_zone_id':None}]
+    boundary=after_payment==0 if after_payment is not None else None
+    return _result(zone=zone,action_points_declared=action_points,walking_steps_declared=walking_steps,
+                   movement_item=deepcopy(item),base_ap_cost=cost,source_stated_movement_ap_grant=grant,
+                   base_cost_affordable=affordability,nominal_ap_after_payment=after_payment,
+                   nominal_ap_after_stated_grant=after_grant,goal_completed_declared=goal_completed,
+                   payment_zero_boundary=boundary,conditional_outcomes=outcomes,
+                   actual_exhaustion_trigger=None,actual_final_ap=None,
+                   limits=deepcopy(reference_data()['limits'])+[
+                       '徒步格点数是声明成本；完成标志、住民、迷雾及其他来源费用未自动取得。',
+                       '付款、移动奖励、羽瞰点返还及出口处理的执行顺序未核验；到零后再返还不能据此保证免追猎。',
+                       '首领节点抵达不等于击败；特殊区返回原区域不冒充进入下一主层。'])
+
+
+COMMANDS={'items':item_catalog,'targets':movement_targets,'effects':movement_effects,
+          'zones':zone_catalog,'budget':zone_budget}

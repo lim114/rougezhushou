@@ -13,4 +13,6 @@
 
 `effects` 在 `targets` 条件之外增加 `target` 和可选的 `passive_items` 持有声明。每项概念体使用 `item_id` 和可选 `remaining_activations`；缺少次数时不认定可触发。结果逐项显示加工品的希望/锭/AP具名增量及6概念体的节点条件、次数条件、效果描述。攻速保留为战斗资料，不接入战斗数值；随机收藏品仅列数量，完整池未知。条件不符或未知不会当作已领取收益，重复同类概念体叠加不猜。
 
+`zones` 列原件26个区域ID，各自目标和耗尽提示；同名秘境不合并。`budget` 输入 `zone_id`、可选 `action_points` 与 `goal_completed`；以 `walking_steps` 或 `item_id` 选择一种移动成本。分别显示付款后小计、移动奖励后小计及到零边界。首领目标需要胜利，抵达本身不算完成；主层追猎、特殊区返回明确分开。缺AP不做可负担判断，退款不自动用来支付前置成本，到零与奖励/出口的执行顺序仍未知。
+
 源版本：`Kengxxiao/ArknightsGameData@a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`，完整原件哈希和精确字段在 `research/p3-exploration-planning/source-receipt.json` 与结果中。仅提取小范围事实参数；未声称上游许可证已核实。

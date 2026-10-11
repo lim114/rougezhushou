@@ -15,6 +15,34 @@ def graph():
         'edges':[['s','wish'],['wish','shop'],['s','combat'],['s','unknown'],['shop','far']]}
 
 class ExplorationPlanningTests(unittest.TestCase):
+    def test_218_all_zones_ids_and_goal_exhaustion_distinct(self):
+        rows=p.zone_catalog()['zones'];self.assertEqual(len(rows),26)
+        self.assertEqual(sum(x['source_stated_exhaustion_outcome']=='pursuit' for x in rows),7)
+        self.assertEqual(sum(x['source_stated_exhaustion_outcome']=='return_original_zone' for x in rows),19)
+        self.assertEqual(len({x['zone_id'] for x in rows if x['name']=='未萌生的摇篮'}),19)
+        r=p.zone_budget('zone_6',action_points=2,walking_steps=2,goal_completed=False)
+        self.assertEqual(r['nominal_ap_after_payment'],0);self.assertTrue(r['payment_zero_boundary'])
+        self.assertTrue(r['zone']['goal_requires_battle_victory'])
+        self.assertTrue(r['conditional_outcomes'][0]['goal_condition_matches'])
+        r=p.zone_budget('zone_portal_normal_6_3',action_points=1,walking_steps=1)
+        self.assertEqual(r['conditional_outcomes'][0]['outcome'],'return_original_zone')
+        self.assertIsNone(r['conditional_outcomes'][0]['return_zone_id'])
+
+    def test_218_unknown_budget_insufficient_and_refund_boundary(self):
+        r=p.zone_budget('zone_1',walking_steps=3)
+        self.assertIsNone(r['base_cost_affordable']);self.assertIsNone(r['actual_final_ap'])
+        r=p.zone_budget('zone_1',action_points=2,walking_steps=3)
+        self.assertFalse(r['base_cost_affordable']);self.assertIsNone(r['nominal_ap_after_payment'])
+        r=p.zone_budget('zone_1',action_points=0,item_id='rogue_6_scrap_M_12')
+        self.assertEqual(r['nominal_ap_after_stated_grant'],3)
+        self.assertTrue(r['payment_zero_boundary']);self.assertIsNone(r['actual_exhaustion_trigger'])
+        r=p.zone_budget('zone_5',action_points=5,walking_steps=1,goal_completed=True)
+        self.assertFalse(r['conditional_outcomes'][0]['goal_condition_matches'])
+        for args in ({'action_points':True},{'walking_steps':-1},{'goal_completed':1},
+                     {'walking_steps':1,'item_id':'rogue_6_scrap_M_01'}):
+            with self.assertRaises(ValueError):p.zone_budget('zone_1',**args)
+        with self.assertRaises(ValueError):p.zone_budget('未萌生的摇篮')
+
     def test_217_move_grants_and_exact_passive_conditions(self):
         g=graph();old=copy.deepcopy(g)
         r=p.movement_effects(g,'rogue_6_scrap_M_10','shop',remaining_uses=2,

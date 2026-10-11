@@ -30,7 +30,7 @@ def update(root=ROOT):
         'commit_reference': 'the commit containing this index; verify Git branch and remote before resuming',
         'latest_full_receipt': latest.relative_to(root).as_posix() if latest else None,
         'latest_full_available_checks_passed': json.loads(latest.read_text(encoding='utf-8'))['available_checks_passed'] if latest else None,
-        'priority_order': 'P2 first; independently evidenced P3 may advance; preserve P1; recognition last',
+        'priority_order': 'P2 first; after actual completion advance P3 and P1; independently evidenced P3 may advance; recognition last',
         'node_scope': 'list all source-covered possible events and conditions; no generation probabilities',
         'project_complete': False,
         'current_batch_target_section': checkpoint['policy'].get('current_user_batch_target_section'),
@@ -51,6 +51,7 @@ def update(root=ROOT):
         old = before + after.lstrip('\n')
     block = (f'{START}\n# 当前云端续接索引 · 第{completed}节\n\n'
              f'已完成至{completed}，后续{checkpoint["next_section"]}；本批状态 `{checkpoint.get("batch_status")}`。'
+             f'批次目标{index["current_batch_target_section"]}。'
              f'下次定期全量{checkpoint["next_full_validation_after"]}。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。\n\n'
              '恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。'
              '当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。'
