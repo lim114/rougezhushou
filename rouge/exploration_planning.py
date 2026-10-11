@@ -398,5 +398,70 @@ def movement_options(graph,target,inventory=None,action_points=None,start=None,p
                        '最低基础成本只是候选比较，不是最优收益、确定可用方案或游戏操作。'])
 
 
+def itinerary(graph,steps,inventory=None,action_points=None,start=None,passive_items=None):
+    """A scratch reference ledger for a declared multi-move plan, never run memory."""
+    nodes,start=_graph(graph,start);_integer(action_points,'行动力',optional=True)
+    if not isinstance(steps,list) or not 1<=len(steps)<=100:raise ValueError('移动计划需要1–100项步骤对象。')
+    if inventory is None:inventory=[]
+    if not isinstance(inventory,list):raise ValueError('库存需要对象列表。')
+    stock=deepcopy(inventory);passives=deepcopy(passive_items or []);seen=set()
+    for ordinal,entry in enumerate(stock,1):
+        if not isinstance(entry,dict):raise ValueError('库存条目需要对象。')
+        _item(entry.get('item_id'),'MOVE')
+        instance=entry.setdefault('instance_id',f'inventory:{ordinal}')
+        if not isinstance(instance,str) or not instance or instance in seen:raise ValueError('库存实例标识必须唯一。')
+        seen.add(instance);_integer(entry.get('remaining_uses'),'加工品剩余次数',optional=True)
+    cursor=start;ap=action_points;rows=[];stopped=None;known_cost=0;known_ap_grant=0;conditions_known=True
+    for ordinal,step in enumerate(steps,1):
+        if not isinstance(step,dict) or not isinstance(step.get('mode'),str):raise ValueError('每步需要移动mode和target。')
+        target=step.get('target')
+        if not isinstance(target,str) or target not in nodes:raise ValueError('每步目的地必须属于声明图。')
+        if stopped:
+            rows.append({'step':ordinal,'target':target,'status':'not_evaluated_after_stop','reason':stopped});continue
+        scratch=deepcopy(graph);scratch['current_node']=cursor
+        options=movement_options(scratch,target,stock,ap,cursor,passives)
+        selected=next((row for row in options['options'] if row['id']==step['mode']),None)
+        if selected is None:raise ValueError('所选mode没有对应步行候选或库存实例。')
+        if selected['known_conditions_match'] is False or selected['base_cost_affordable'] is False:
+            stopped='known_condition_or_ap_failed';conditions_known=False
+            rows.append({'step':ordinal,'target':target,'status':'blocked','option':selected,'reason':stopped});continue
+        if selected['known_conditions_match'] is None:
+            stopped='eligibility_or_inventory_condition_unknown';conditions_known=False
+            rows.append({'step':ordinal,'target':target,'status':'unresolved','option':selected,'reason':stopped});continue
+        cost=selected['base_ap_cost'];grant=sum(g['amount'] for g in selected['movement_grants']
+                                               if g['resource']=='ap' and g['condition_matches'] is True)
+        after_payment=None if ap is None else ap-cost
+        after_grant=None if after_payment is None else after_payment+grant
+        known_cost+=cost;known_ap_grant+=grant
+        if selected['mode']=='processed_item':
+            entry=next(e for e in stock if e['instance_id']==step['mode'])
+            entry['remaining_uses']-=1;entry['nominal_destroyed']=entry['remaining_uses']==0
+        passive_rows=[]
+        for row in selected['passives']:
+            declaration=next(e for e in passives if e['item_id']==row['item_id'])
+            if row['condition_matches'] is True and row['source_stated_single_activation']:
+                declaration['remaining_activations']-=1
+            passive_rows.append({'item_id':row['item_id'],'condition_matches':row['condition_matches'],
+                'remaining_activations_reference':declaration.get('remaining_activations'),
+                'effects':deepcopy(row['effects']),'actual_activation':None})
+        boundary=after_payment==0 if after_payment is not None else None
+        if boundary or ap is None:conditions_known=False
+        rows.append({'step':ordinal,'start':cursor,'target':target,'status':'conditional_reference_step',
+                     'option':selected,'base_ap_cost':cost,'stated_ap_grant':grant,
+                     'nominal_ap_after_payment':after_payment,'nominal_ap_after_stated_grant':after_grant,
+                     'payment_zero_boundary':boundary,'passive_reference_states':passive_rows,
+                     'actual_move_succeeded':None})
+        ap=after_grant;cursor=target
+    return _result(start=start,steps=rows,known_base_ap_cost_sum=known_cost,known_stated_ap_grant_sum=known_ap_grant,
+                   inventory_reference_state=stock,passive_reference_state=passives,
+                   nominal_position=cursor,nominal_final_ap=ap,complete_declared_conditions=conditions_known and not stopped,
+                   stopped_reason=stopped,actual_final_position=None,actual_final_inventory=None,actual_final_ap=None,
+                   limits=deepcopy(reference_data()['limits'])+[
+                       '账本只对声明方案扣减已证使用次数，不更新本局持有或清空记忆。',
+                       '随机落点、未知次数/资格或明确AP不足会停止依赖链，后续步骤保留为未求值。',
+                       '居民随移动更新、节点完成/战斗结算、零AP处理与其他费用仍未知，静态声明图不证明实际连续链。'])
+
+
 COMMANDS={'items':item_catalog,'targets':movement_targets,'effects':movement_effects,
-          'zones':zone_catalog,'budget':zone_budget,'valuation':goods_valuation,'options':movement_options}
+          'zones':zone_catalog,'budget':zone_budget,'valuation':goods_valuation,'options':movement_options,
+          'itinerary':itinerary}

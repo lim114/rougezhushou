@@ -19,4 +19,6 @@
 
 `options` 输入 `graph`、`target`、可选 `action_points`、`inventory`、`passive_items`、`start` 和 `include_walking`。库存每项使用 `item_id`、可选 `remaining_uses` 和独立 `instance_id`。步行使用声明 `edges`，区分纯拓扑、没有已知阻碍及所有中途条件已声明清楚的最短路线。节点可声明 `completed_declared`、`occupied_declared`、`other_blocked_declared`，均为布尔或未知。未完成/占领中途节点可阻断步行，加工品仍按直达范围比较。最低基础AP成本只比较保留的候选，未把未知库存/随机传送当保证，也不评价未证完整收益；原地再进入基础参考1AP而非免费。
 
+`itinerary` 输入同样的声明图、库存/AP/概念体和 `steps`。每一步使用 `mode`（`walking` 或库存 `instance_id`）、`target`。独立账本扣减加工品次数；一次性概念体已满足条件后参考次数归零，不重复发放。未知资格/次数、随机落点或AP不足会停止依赖链，后续步骤原样保留为未求值。付款到零与AP未知使完整条件链未知；源规则算术账本不证明实际连续探索，节点完成和住民移动不会擅自模拟。
+
 源版本：`Kengxxiao/ArknightsGameData@a550f5e048bb94e7cdefc6eb97a4091f0c4c7add`，完整原件哈希和精确字段在 `research/p3-exploration-planning/source-receipt.json` 与结果中。步行规则复用已核对PRTS页面与 `.cache/research/routes-049/evidence.json`；本次未冒充服务器重新验证。仅提取小范围事实参数；未声称上游许可证已核实。

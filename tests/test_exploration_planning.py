@@ -15,6 +15,33 @@ def graph():
         'edges':[['s','wish'],['wish','shop'],['s','combat'],['s','unknown'],['shop','far']]}
 
 class ExplorationPlanningTests(unittest.TestCase):
+    def test_221_itinerary_consumes_instances_and_single_use_passive(self):
+        g=graph();inventory=[{'instance_id':'engine','item_id':'rogue_6_scrap_M_11','remaining_uses':3}]
+        passives=[{'item_id':'rogue_6_scrap_P_03','remaining_activations':1}]
+        old=(copy.deepcopy(g),copy.deepcopy(inventory),copy.deepcopy(passives))
+        r=p.itinerary(g,[{'mode':'engine','target':'wish'},{'mode':'engine','target':'shop'}],
+                      inventory,action_points=3,passive_items=passives)
+        self.assertEqual(r['known_base_ap_cost_sum'],2);self.assertEqual(r['nominal_final_ap'],1)
+        self.assertEqual(r['inventory_reference_state'][0]['remaining_uses'],1)
+        self.assertEqual(r['passive_reference_state'][0]['remaining_activations'],0)
+        self.assertFalse(r['steps'][1]['passive_reference_states'][0]['condition_matches'])
+        self.assertEqual((g,inventory,passives),old);self.assertIsNone(r['actual_final_inventory'])
+
+    def test_221_unresolved_random_exhausted_and_zero_boundary_stop_or_unknown(self):
+        steps=[{'mode':'tool','target':'wish'},{'mode':'tool','target':'shop'}]
+        r=p.itinerary(graph(),steps,[{'instance_id':'tool','item_id':'rogue_6_scrap_M_03','remaining_uses':1}],action_points=3)
+        self.assertEqual(r['steps'][1]['status'],'blocked')
+        r=p.itinerary(graph(),steps,[{'instance_id':'tool','item_id':'rogue_6_scrap_M_11'}],action_points=3)
+        self.assertEqual(r['steps'][0]['status'],'unresolved')
+        self.assertEqual(r['steps'][1]['status'],'not_evaluated_after_stop')
+        g=graph();g['nodes'][2]['scrap_category']='EVENTS'
+        r=p.itinerary(g,steps,[{'instance_id':'tool','item_id':'rogue_6_scrap_M_07','remaining_uses':1}],action_points=3)
+        self.assertEqual(r['stopped_reason'],'eligibility_or_inventory_condition_unknown')
+        r=p.itinerary(graph(),[{'mode':'tool','target':'wish'}],
+                      [{'instance_id':'tool','item_id':'rogue_6_scrap_M_12','remaining_uses':1}],action_points=0)
+        self.assertEqual(r['nominal_final_ap'],3);self.assertFalse(r['complete_declared_conditions'])
+        self.assertIsNone(r['actual_final_ap'])
+
     def test_220_walking_blockers_item_direct_and_base_cost_comparison(self):
         g=graph();g['nodes'][2].update(completed_declared=False,occupied_declared=False,other_blocked_declared=False)
         r=p.movement_options(g,'shop',inventory=[{'item_id':'rogue_6_scrap_M_10','remaining_uses':2}],action_points=1)
