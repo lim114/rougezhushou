@@ -309,3 +309,48 @@ def recipient_events(scenario, recipients=None, enemy_defense=0, window_seconds=
             '仅标准物理减伤，未混入自身伤害来源天赋、敌方阶段、其他承伤倍率或脆弱；窗口为左闭右开。']}
 
 COMMANDS['recipient-events']=recipient_events
+
+
+def packet_worksheet(scenario):
+    """Expose stat/multiplier/defense arithmetic without assuming attack counts."""
+    from .enemy_environment import damage_factor
+    s=_scenario(scenario);prepared=_prepare_damage(deepcopy(s));resolved=prepared[0]
+    result=calculate_damage(deepcopy(s));profile=catalog()['operators'][s['operator']]
+    bb=profile['skills'][s['skill']-1]['levels'][s['skill_rank']-1]['values']
+    attack=result['attack'];op=s['operator'];number=s['skill'];rows=[]
+    defense=float(resolved.get('enemy_defense',0));resistance=float(resolved.get('enemy_resistance',0))
+    def add(name,dtype,scale,owner_attack=attack):
+        raw=owner_attack*scale
+        after=(max(raw-defense,raw*.05) if dtype=='physical' else
+               max(raw*(1-resistance/100),raw*.05) if dtype=='magic' else raw)
+        factor=damage_factor(resolved,dtype) if dtype!='healing' else 1
+        if dtype!='healing':factor*=1+sum(float(e['value']) for e in result.get('applied_effects',[]) if e['kind']=='damage_taken' and e.get('damage_type')==dtype)
+        fragile=bb['damage_scale'] if op=='silverash' and number==3 and s.get('preexisting_fragile',False) else 1
+        if dtype!='healing':factor*=fragile
+        rows.append({'name':name,'damage_type':dtype,'owner_attack_reference':owner_attack,'scale':scale,
+            'pre_defense_value':raw,'enemy_defense':defense if dtype=='physical' else None,
+            'enemy_resistance':resistance if dtype=='magic' else None,'after_defense_value':after,
+            'supported_damage_factor':factor,'single_packet_reference':after*factor,
+            'packet_count':None,'complete_cast_total':None})
+    if op=='kaltsit':
+        if number==2:
+            add('医疗单元单个敌人真实伤害','true',bb['attack@atk_scale'])
+            add('医疗单元每名受益人的潜在治疗','healing',bb['attack@heal_scale'])
+        else:add('本体每个受疗目标的潜在治疗','healing',1)
+    elif op=='mechanist':
+        if number==1:add('五连击中单段物理伤害','physical',bb['attack@atk_scale'])
+        elif number==2:add('单次破屏条件爆炸','magic',bb['atk_scale'])
+        else:
+            add('本体单次轰击','magic',bb['attack@atk_scale'])
+            add('结构性原理单次冲锋条件','physical',bb['atk_scale'])
+    elif number==2:
+        add('本体单次技能范围效果','physical',bb['atk_scale'])
+        if 'companion_attack' in s:add('声明受益干员单次部署效果','physical',bb['atk_scale'],float(s['companion_attack']))
+    elif number==3:add('丹增单次命中条件','physical',bb['bird_atk_scale'])
+    return {'operator':profile['name'],'skill':s['skill'],'skill_name':result['estimate']['skill']['name'],
+        'rows':rows,'source':_source(),'native_verified':False,'warnings':result.get('warnings',[]),
+        'notes':[BOUNDARY,'单包不乘未知攻击次数，不生成技能总量、回转或周期。',
+            '治疗包是单名受益人的原始潜在治疗，未加入受疗加成、禁疗、实际损血或有效覆盖。',
+            '攻击取现有模型已覆盖条件；机械师模组伤害包适用范围及限时攻击快照仍须独立核验。']}
+
+COMMANDS['packets']=packet_worksheet

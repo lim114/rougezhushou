@@ -129,4 +129,16 @@ class CalibrationTests(unittest.TestCase):
         self.assertIsNone(r['declared_recipient_damage_reference'])
         with self.assertRaises(ValueError):c.recipient_events(s,recipients=[{'id':'T','is_token':True,'stacks':1}])
 
+
+    def test_159_kaltsit_true_damage_and_single_healing(self):
+        r=c.packet_worksheet({'operator':'kaltsit','skill':2,'enemy_defense':9999,'enemy_resistance':100})
+        self.assertEqual(r['rows'][0]['single_packet_reference'],4845)
+        self.assertEqual(r['rows'][1]['single_packet_reference'],2550)
+        self.assertTrue(all(x['complete_cast_total'] is None for x in r['rows']))
+    def test_159_mechanist_separate_physical_magic_packets(self):
+        r=c.packet_worksheet({'operator':'mechanist','skill':3,'enemy_defense':100,'enemy_resistance':20})
+        self.assertAlmostEqual(r['rows'][0]['single_packet_reference'],2177.4*2.6*.8)
+        self.assertAlmostEqual(r['rows'][1]['single_packet_reference'],2177.4*3-100)
+        self.assertEqual(c.packet_worksheet({'operator':'silverash','skill':1})['rows'],[])
+
 if __name__=='__main__':unittest.main()
