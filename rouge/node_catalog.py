@@ -373,3 +373,30 @@ def node_dossier(graph,node_id,floor=None,special_region=False,difficulty=None):
         type_candidates=types,actual_content_identity_confirmed=identity['unique_identity_confirmed'],
         current_content_observed=bool(current),history_only=not bool(current) and bool(history))
 COMMANDS.update(dossier=node_dossier,functions=function_nodes)
+def route_events(graph,path,floor=None,special_region=False,difficulty=None):
+    nodes=_graph_nodes(graph);_floor(floor,special_region);_difficulty(difficulty)
+    if not isinstance(path,list) or not path or any(not isinstance(k,str) or not k for k in path):raise ValueError('路线需要非空节点引用列表。')
+    if len(set(path))!=len(path):raise ValueError('内容路线对照不接受重复节点。')
+    known={n['id'] for n in nodes}
+    if not set(path)<=known:raise ValueError('路线引用包含图外节点。')
+    raw_edges=graph.get('edges',[])
+    if not isinstance(raw_edges,list):raise ValueError('地图连接需要列表。')
+    for edge in raw_edges:
+        if not isinstance(edge,(list,tuple)) or len(edge)!=2 or any(not isinstance(k,str) or k not in known for k in edge) or edge[0]==edge[1]:
+            raise ValueError('模板连接需要两个不同的图内节点。')
+    edges={frozenset(edge) for edge in raw_edges}
+    if any(frozenset([a,b]) not in edges for a,b in zip(path,path[1:])):raise ValueError('路线步骤不符合所给模板连接。')
+    rows=[];union={};shared=None
+    for key in path:
+        dossier=node_dossier(graph,key,floor,special_region,difficulty);ids={e['id'] for e in dossier['rows']}
+        for e in dossier['rows']:union[e['id']]=e
+        shared=ids if shared is None else shared&ids
+        rows.append({'node_id':key,'position':dossier['position'],'events':dossier['rows'],'battle_rows':dossier['battle_rows'],
+                     'function_rows':dossier['function_rows'],'history_events':dossier['history_events'],
+                     'current_content':dossier['current_content'],'history_content':dossier['history_content'],
+                     'content_identity_status':dossier['content_identity_status'],
+                     'actual_content_identity_confirmed':dossier['actual_content_identity_confirmed']})
+    return _result(rows,event_union=list(union.values()),common_event_references=[union[k] for k in sorted(shared or [])],
+                   actual_entry_or_rewards_confirmed=False,path=deepcopy(path),topology_verified=False,
+                   topology_scope='所给模板无向连接引用，不证明游戏可实际移动')
+COMMANDS['route']=route_events

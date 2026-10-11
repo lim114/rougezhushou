@@ -221,3 +221,20 @@ class NodeCatalogTests(unittest.TestCase):
         self.assertEqual([x['title'] for x in r['rows']],['桑尼的邀请'])
         self.assertTrue(r['generic_event_candidates'])
         self.assertTrue(all(x['title']!='桑尼的邀请' for x in r['generic_event_candidates']))
+    def test_183(self):
+        g={'nodes':[{'id':'a','row':0,'col':0,'observed_type':'不期而遇'},{'id':'b','row':0,'col':1,'observed_type':'失与得'}],'edges':[['a','b']]}
+        r=c.route_events(g,['a','b'],floor=1)
+        self.assertIn('回滚文明',[e['title'] for e in r['event_union']]);self.assertFalse(r['common_event_references'])
+        self.assertFalse(r['actual_entry_or_rewards_confirmed'])
+        with self.assertRaises(ValueError):c.route_events({**g,'edges':[]},['a','b'])
+    def test_183_history_function_route_and_input_errors(self):
+        g={'nodes':[{'id':'a','observed_type':'林间空地','remembered_type':'不期而遇',
+             'remembered_content':{'kind':'event','title':'桑尼的邀请','scene_candidates':['scene_ro6_res1_enter']}},
+             {'id':'b','observed_type':'羽瞰点'}],'edges':[['a','b']]}
+        before=deepcopy(g);r=c.route_events(g,['a','b'],floor=6)
+        self.assertFalse(r['rows'][0]['events']);self.assertTrue(r['rows'][0]['history_events'])
+        self.assertEqual(r['rows'][1]['function_rows'][0]['node_type'],'羽瞰点')
+        self.assertEqual(g,before);self.assertFalse(r['topology_verified'])
+        for graph,path in ((None,['a']),({**g,'edges':['ab']},['a','b']),({**g,'edges':[['a','x']]},['a']),
+                           (g,['a','a']),(g,['missing'])):
+            with self.assertRaises(ValueError):c.route_events(graph,path)
