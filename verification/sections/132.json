@@ -1,0 +1,48 @@
+{
+  "section": 132,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T16:33:15.678243+08:00",
+  "prior_commit": "5a41bee311f95cdc6830d1b6b972ffadfd74f16f",
+  "title": "逐友方有效治疗与生命预算",
+  "remaining_project_item": "P2技能精度：友方获取、阈值及治疗组合的条件测算",
+  "new_capability": "从当前技能选取已接入的单次治疗来源，声明多位友方生命和逐次治疗/生命减少事件，分列有效治疗、过量治疗、最终预算生命和缺口，支持排序、同刻输入顺序和完整条件复制。",
+  "acceptance": [
+    "逐友方缺口分开",
+    "既有单次治疗和藏品倍率复用",
+    "生命回复不误当治疗",
+    "声明顺序不等于原生时钟",
+    "无治疗来源禁用入口",
+    "原治疗估算和本局不改写"
+  ],
+  "limitations": [
+    "这是声明条件下的生命预算算术，不确认真实受疗、存活、复活或获取阈值",
+    "原生多目标、充能、时钟、快照和多来源组合仍待核验"
+  ],
+  "sources": [
+    "rouge/healing_budget.py",
+    "rouge/app.py",
+    "tests/test_healing_budget_132.py"
+  ],
+  "evidence_reused": [
+    "rouge/haruka_healing_reference.py",
+    "tests/test_next_attack_healing_reference.py",
+    "tests/test_healing_subtotal_scaling.py"
+  ],
+  "validation": {
+    "necessary_tests_run": 20,
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 4,
+    "test_output": "verification/section-132/tests.txt",
+    "window_receipt": "verification/section-132/window.json"
+  },
+  "source_sha256": {
+    "rouge/healing_budget.py": "8b4dd0f23f04f9f7d97c11b296582fe2f5181ceda3d72234cb940730a48cf303",
+    "rouge/app.py": "52bb5323d46dc1376c112c9193c4bfb6137edf4db6b3662197063f54c19dc107",
+    "tests/test_healing_budget_132.py": "0de1758b2f1f6e52b8bc98b4e5519e9922486d8b9e42b8c2312e2bd8b895148c"
+  },
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}

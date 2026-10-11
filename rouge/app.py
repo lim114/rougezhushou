@@ -762,6 +762,10 @@ class MainWindow(QMainWindow):
         self.shield_timeline_button.setEnabled(False)
         self.shield_timeline_button.clicked.connect(self.show_shield_timeline)
         layout.addWidget(self.shield_timeline_button)
+        self.healing_budget_button=QPushButton('测算逐友方有效治疗与生命预算')
+        self.healing_budget_button.setEnabled(False)
+        self.healing_budget_button.clicked.connect(self.show_healing_budget)
+        layout.addWidget(self.healing_budget_button)
         self.damage_text = QPlainTextEdit()
         self.damage_text.setReadOnly(True)
         layout.addWidget(self.damage_text,1)
@@ -841,6 +845,24 @@ class MainWindow(QMainWindow):
         if previous is not None:previous.close();previous.deleteLater()
         dialog=ChargeTimelineDialog(scenario,self.damage_result['result']['estimate']['skill']['duration_seconds'],self)
         self.charge_timeline_dialog=dialog;dialog.show()
+
+    def show_healing_budget(self):
+        if not self.damage_result:return
+        from copy import deepcopy
+        from .healing_budget import healing_sources,healing_budget,format_healing_budget
+        from .reference_dialog import ReferenceDialog
+        scenario=deepcopy(self.damage_result['scenario'])
+        sources=healing_sources(self.damage_result['result'])
+        if not sources:return
+        previous=getattr(self,'healing_budget_dialog',None)
+        if previous is not None:previous.close();previous.deleteLater()
+        self.healing_budget_dialog=ReferenceDialog('逐友方有效治疗 · 局外生命预算',
+            '下方友方生命是可修改的示例。events填写治疗heal（source选下方来源ID）或生命减少loss（amount填写减少量）；同刻按输入顺序。',
+            {'recipients':[{'id':'示例友方','max_hp':3000,'hp':1000}],'events':[]},
+            lambda preview:healing_budget(scenario,preview),format_healing_budget,
+            [('at_seconds','声明秒数'),('recipient','友方'),('kind','事件'),('hp_before','此前生命'),
+             ('amount_reference','单次量'),('effective_healing','有效治疗'),('overhealing','过量治疗'),('hp_after','之后生命')],self)
+        self.healing_budget_dialog.show()
 
     def show_shield_timeline(self):
         if not self.damage_result:return
@@ -1250,6 +1272,7 @@ class MainWindow(QMainWindow):
     def calculate(self):
         if hasattr(self,'charge_timeline_button'):self.charge_timeline_button.setEnabled(False)
         if hasattr(self,'shield_timeline_button'):self.shield_timeline_button.setEnabled(False)
+        if hasattr(self,'healing_budget_button'):self.healing_budget_button.setEnabled(False)
         self.damage_result=None
         if hasattr(self,'relic_context'):self.damage_form.setRowVisible(self.relic_context,False)
         op=self.operator.currentData()
@@ -1391,6 +1414,8 @@ class MainWindow(QMainWindow):
             self.damage_result = {'scenario':scenario,'result':result}
             self.charge_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==3)
             self.shield_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==2)
+            from .healing_budget import healing_sources
+            self.healing_budget_button.setEnabled(bool(healing_sources(result)))
             self.render_damage()
         except Exception as error:
             self.damage_result=None
