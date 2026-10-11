@@ -1,0 +1,36 @@
+{
+  "section": 150,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "title": "低星逐目标与逐友方声明预算",
+  "at_Beijing": "2026-10-11T21:24:45.620146+08:00",
+  "branch": "codex/p2-development",
+  "remaining_item": "P2补充低星本局修正与局外测算",
+  "new_capability": "按各目标防御重算伤害，按已接入单次治疗输出生命预算与溢出；声明事件保留顺序，真实时钟未知",
+  "source_evidence": [
+    "rouge/damage_budget.py",
+    "rouge/healing_budget.py"
+  ],
+  "limitations": [
+    "声明预算不证明碰撞、受疗、存活或复活",
+    "不将边际期望用于击杀概率，不生成实时战斗干预"
+  ],
+  "validation": {
+    "tests_run": 19,
+    "passed": 19,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-150/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 155,
+  "ui_capability_guard_validation": {
+    "tests_run": 4,
+    "passed": 4,
+    "skipped": 0,
+    "output": "verification/section-150/ui-portability-check.txt",
+    "scope": "Qt entry cases retain their bodies; headless hosts without display/offscreen report unavailable instead of aborting"
+  },
+  "actual_windows_window_receipt": "verification/batch-143-150/window.json"
+}

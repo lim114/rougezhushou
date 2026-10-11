@@ -21,6 +21,11 @@ def damage_sources(result):
 
 
 def damage_budget(scenario,preview):
+    return _damage_budget(scenario,preview,calculate_damage)
+
+
+def _damage_budget(scenario,preview,calculator):
+    """Shared declared-budget arithmetic, with a model-specific reference seam."""
     if type(preview) is not dict or set(preview)!={'targets','events'}: raise ValueError('需要targets和events。')
     targets=preview['targets']; events=preview['events']
     if type(targets) is not list or not 1<=len(targets)<=20: raise ValueError('目标需要1–20项。')
@@ -36,7 +41,7 @@ def damage_budget(scenario,preview):
         defense=_amount(target['defense'],'声明防御'); resistance=_amount(target['resistance'],'声明抗性',100)
         proposed=deepcopy(scenario);proposed.pop('target_enemy',None)
         proposed.update(enemy_defense=defense,enemy_resistance=resistance)
-        calculated=calculate_damage(proposed); sources=damage_sources(calculated)
+        calculated=calculator(proposed); sources=damage_sources(calculated)
         if not sources: raise ValueError('当前技能没有可用于预算的单次伤害分项。治疗与未知伤害不当作0。')
         references[identity]={'scenario':proposed,'sources':sources,'calculation_notes':deepcopy(calculated['estimate']['notes'])}
         states[identity]={'id':identity,'initial_hp':hp,'hp':hp,'potential_damage':0.,'effective_damage':0.,'overkill':0.,'budget_exhausted_at':None}

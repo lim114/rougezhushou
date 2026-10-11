@@ -1,3 +1,4 @@
+import os
 import unittest
 from copy import deepcopy
 from rouge.supplemental_skills import defaults,_cultivated_stats
@@ -53,6 +54,8 @@ class Cultivation148Tests(unittest.TestCase):
         choices['proposals'][1]['name']=choices['proposals'][0]['name']
         with self.assertRaises(ValueError):compare_cultivation(p,e,choices)
 
+    @unittest.skipUnless(os.name=="nt" or os.environ.get("QT_QPA_PLATFORM")=="offscreen" or os.environ.get("DISPLAY"),
+                         "Qt entry unavailable without a display/offscreen capability")
     def test_ui_entry_and_pending_edit_cannot_use_stale_cultivation(self):
         try:
             from PySide6.QtWidgets import QApplication

@@ -28,8 +28,13 @@ def healing_sources(result):
 
 
 def healing_budget(scenario, preview):
+    return _healing_budget(scenario,preview,calculate_damage)
+
+
+def _healing_budget(scenario,preview,calculator):
+    """Shared declared-budget arithmetic; the caller owns the reference model."""
     if set(preview) != {'recipients','events'}: raise ValueError('需要recipients和events。')
-    reference = calculate_damage(deepcopy(scenario)); sources = healing_sources(reference)
+    reference = calculator(deepcopy(scenario)); sources = healing_sources(reference)
     if not sources: raise ValueError('当前技能没有已接入的单次治疗参考。生命回复与伤害不自动当作治疗。')
     source_map = {source['id']:source for source in sources}
     recipients = preview['recipients']

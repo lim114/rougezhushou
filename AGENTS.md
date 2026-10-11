@@ -2,7 +2,7 @@
 
 用户电脑操作工具要求（2026-10-11）：Windows-mcp 已安装，当前会话可用。后续 Windows 桌面读取和操作直接优先使用 Windows-mcp，不再默认使用 computer-use 技能。操作仍限定在已授权范围；不操作游戏、不发送开发测试聊天、不清空本局记忆或覆盖私人设置。
 
-用户本机最新要求（2026-10-11）：检查 GitHub `lim114/rougezhushou` 并同步到原 Windows `rouge`；后续改动同时应用于本机与远端 `codex/p2-development`。当前原 `rouge` 已是该分支的 Git工作副本；本机开发在这里进行，完成后按授权 commit 并普通 push，不能修改 main 或强推。云端修改回到本机先同步最新分支。私人运行状态、配置、聊天绑定与游戏样本始终只留本机，不能进入提交。同步维护不增加功能节数；用户随后已明确继续，第142节七低星稳定普通属性与单次技能修正完成，后续143，下次定期全量155。最新范围以 DEVELOPMENT_CHECKPOINT.json 和第142节回执为准。
+用户本机最新要求（2026-10-11）：检查 GitHub `lim114/rougezhushou` 并同步到原 Windows `rouge`；后续改动同时应用于本机与远端 `codex/p2-development`。当前原 `rouge` 已是该分支的 Git工作副本；本机开发在这里进行，完成后按授权 commit 并普通 push，不能修改 main 或强推。云端修改回到本机先同步最新分支。私人运行状态、配置、聊天绑定与游戏样本始终只留本机，不能进入提交。同步维护不增加功能节数；用户随后已明确本批完成到150，第143–150节七低星本局修正/对照/预算完成，后续151，下次定期全量155。最新范围以 DEVELOPMENT_CHECKPOINT.json 和 verification/batch-143-150/summary.json 为准。
 
 Windows 代码批次结束后更新并打开原项目实际测试窗口，核对可见与响应。既有 Wine 回执保留其兼容范围；2026-10-11 本机回执见 `verification/local-sync-20261011/summary.json`，精选计算通过、初次全量仍有12个断言缺口，不能把同步完成当作全部验收通过。
 
@@ -25,7 +25,7 @@ Continue development on `codex/p2-development`. The user requested that all subs
 
 The user authorized continuous work without confirmation between sections. Each coherent functional section records its implemented scope, necessary validation (or why none is needed), limitations and next action in DEVELOPMENT_CHECKPOINT.json and WORK_IN_PROGRESS.md, then commits and ordinarily pushes. Reuse unchanged passing evidence; do not require exhaustive native graph comparisons, repeated independent audits, screenshots or broad regression on every section. Run an actual window only when needed to verify the changed UI behavior; full Linux/Wine/window validation keeps its complete available scope. Wine is compatibility validation, not genuine Windows/game/desktop integration.
 
-User instruction on 2026-10-07: after P2 is complete, continue P3. If the same problem remains unresolved after three attempts, defer it with evidence, attempt count and restart conditions; continue independent work. If account usage drops below 15%, finish required validation and checkpoints for the active section, then wrap up. No enabled tool currently exposes account usage; never invent a percentage.
+User instruction on 2026-10-07: after P2 is complete, continue P3. If the same problem remains unresolved after three attempts, defer it with evidence, attempt count and restart conditions; continue independent work. If account usage drops below 15%, finish required validation and checkpoints for the active section, then wrap up. Use the account usage tool when available for a required threshold check; never invent an unavailable percentage.
 
 User instructions on 2026-10-08: increase the amount of useful work in each section. Group related, source-supported functional improvements with their complete verification into one section; source collection, an isolated assertion, or routine archival preparation is not a separate progress milestone. Keep per-issue original evidence, applicability, boundary input/output checks, failure records and restart conditions. Use only necessary change-specific validation before archiving the group; full validation follows the latest cadence above. Broader scope does not reduce detail control.
 

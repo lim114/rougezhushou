@@ -35,10 +35,10 @@
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
     "current_user_batch_target_section": 150,
-    "current_user_batch_completed": false
+    "current_user_batch_completed": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 149,
+  "completed_sections": 150,
   "sections": [
     {
       "number": 1,
@@ -944,10 +944,16 @@
       "topic": "低星固定关卡敌人与保密等级对照",
       "completion_ref": "p2-section-149",
       "verification": "verification/sections/149.json"
+    },
+    {
+      "number": 150,
+      "topic": "低星逐目标与逐友方声明预算",
+      "completion_ref": "p2-section-150",
+      "verification": "verification/sections/150.json"
     }
   ],
-  "next_section": 150,
-  "next_action": "从150接续当前批次；目标150，随后必要收尾。P2先推进，P1保留，识别最后，全量155。",
+  "next_section": 151,
+  "next_action": "本批143–150功能与必要Windows窗口核验完成；在下一次授权继续时从151接续P2。本机历史12断言缺口保留，定期全量155，P1断点保留，识别最后。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 140,
@@ -1149,18 +1155,17 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 140,
-    "status": "VALIDATED_COMMITTED_AND_PUSHED",
-    "prior_commit": "1519d4bae97c0566134c46ba3587ac6ce96b19db",
-    "receipt": "verification/sections/140.json",
-    "commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
-    "full_validation_receipt": "verification/full-140/summary.json"
+    "section": 150,
+    "status": "VALIDATED_SAVE_RECEIPT_CONTAINED_IN_ENCLOSING_COMMIT",
+    "prior_commit": "3a83f60a",
+    "receipt": "verification/sections/150.json",
+    "post_push_verification_required": "compare actual HEAD and origin branch after ordinary push; no self-referential commit hash"
   },
   "last_verified_cloud_save": {
-    "section": 140,
-    "commit": "db31051de1f1eae220dcf5a897ca60b90bb93e55",
+    "section": 149,
+    "commit": "3a83f60a",
     "remote_branch": "origin/codex/p2-development",
-    "verified_by": "ordinary push and git ls-remote after functional140 save"
+    "verified_by": "successful ordinary push; section150 will contain this checkpoint and be verified after its ordinary push"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -1418,8 +1423,8 @@
     "receipt": "verification/full-140/summary.json",
     "native_windows_game_chat_verified": false
   },
-  "batch_stop_after_section": null,
-  "batch_status": "CONTINUOUS_DEVELOPMENT_AUTHORIZED",
+  "batch_stop_after_section": 150,
+  "batch_status": "USER_REQUESTED_BATCH_TO150_COMPLETE",
   "policy_revision_Beijing": "2026-10-11",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -1460,14 +1465,16 @@
     146,
     147,
     148,
-    149
+    149,
+    150
   ],
   "current_batch": {
     "start": 143,
     "end": 150,
-    "status": "IN_PROGRESS",
-    "next_section": 150,
-    "next_full_validation_after": 155
+    "status": "COMPLETE_WITH_ACTUAL_WINDOWS_WINDOW_VERIFIED",
+    "next_section": 151,
+    "next_full_validation_after": 155,
+    "receipt": "verification/batch-143-150/summary.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -1506,5 +1513,12 @@
     "actual_window_verified": true,
     "synthetic_conditions_distinguished": true,
     "complete_repository_validation": false
+  },
+  "native_section150_validation": {
+    "receipt": "verification/batch-143-150/summary.json",
+    "actual_window_tool": "Windows-mcp",
+    "actual_window_verified": true,
+    "complete_repository_validation": false,
+    "native_game_or_chat_verified": false
   }
 }

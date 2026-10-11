@@ -1,3 +1,4 @@
+import os
 import unittest
 from copy import deepcopy
 from rouge.supplemental_skills import defaults
@@ -42,6 +43,8 @@ class RankComparison147Tests(unittest.TestCase):
         for ranks in [[],[True],[0],[8],[1,1],list(range(1,9)),'7']:
             with self.subTest(ranks=ranks),self.assertRaises(ValueError):compare_ranks(p,old[1],{'ranks':ranks})
 
+    @unittest.skipUnless(os.name=="nt" or os.environ.get("QT_QPA_PLATFORM")=="offscreen" or os.environ.get("DISPLAY"),
+                         "Qt entry unavailable without a display/offscreen capability")
     def test_visible_entry_freezes_conditions_and_keeps_operator(self):
         try:
             from PySide6.QtWidgets import QApplication

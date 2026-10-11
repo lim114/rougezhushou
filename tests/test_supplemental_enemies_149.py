@@ -1,3 +1,4 @@
+import os
 import unittest
 from copy import deepcopy
 from rouge.catalog import catalog,stage_previews
@@ -68,6 +69,8 @@ class Enemy149Tests(unittest.TestCase):
         data['enemies']=[data['enemies'][0]]*2
         with self.assertRaises(ValueError):compare_fixed_enemies(p,e,data)
 
+    @unittest.skipUnless(os.name=="nt" or os.environ.get("QT_QPA_PLATFORM")=="offscreen" or os.environ.get("DISPLAY"),
+                         "Qt entry unavailable without a display/offscreen capability")
     def test_qt_fixed_target_entry_returns_readable_result(self):
         try:
             from PySide6.QtWidgets import QApplication
