@@ -12,7 +12,7 @@ FPS=30
 def finite(value,label,maximum=108000):
     if isinstance(value,bool):raise ValueError(label+'不能是布尔值。')
     try:value=float(value)
-    except (TypeError,ValueError):raise ValueError(label+'需要有限非负数。') from None
+    except (TypeError,ValueError,OverflowError):raise ValueError(label+'需要有限非负数。') from None
     if not math.isfinite(value) or not 0<=value<=maximum:raise ValueError(label+'需要范围内有限非负数。')
     return value
 
