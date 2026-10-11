@@ -183,7 +183,7 @@ class AttackTimeline:
         lifetime=self.options.get('target_disappears_seconds')
         if isinstance(lifetime,str) and finite(lifetime,'target_disappears_seconds',3600)==0:
             self.options={**self.options,'target_disappears_seconds':0}
-        self.streams=[];self.notes=[];self.target_scope_notes=[]
+        self.streams=[];self.notes=[];self.target_scope_notes=[];self.unit_scenarios=[]
         self.deployment_offset=0 if self.options.get('_deployment_initial') else frame_time(scenario.get('_deployment_skill_start_seconds',0))
         self.windows=self.ranges('target_windows')
         self.blocked=sorted(self.ranges('movement_windows')+self.ranges('interrupt_windows'))
@@ -221,6 +221,7 @@ class AttackTimeline:
             stream=child.attacks(seconds,interval,speed,unit=unit,limit=limit,delay=delay,
                 start_delay=start_delay,ramp=ramp,attribute_speed=attribute_speed)
             self.streams.extend(child.streams)
+            self.unit_scenarios.extend(child.unit_scenarios)
             note='空敌方供靶或0秒敌人生命周期不取消友方潜在治疗；其它既有情景时钟保留参考，真实友方获取时钟未核验。'
             if target_scope=='friendly' and note not in self.notes:
                 self.notes.append(note);self.target_scope_notes.append(note)
@@ -235,6 +236,17 @@ class AttackTimeline:
                 '_relic_rules':[r for r in self.s.get('_relic_rules',[]) if r['kind']!='deployment_attack_speed']},normal=True,offset=self.offset/FPS,target_scope=self.target_scope)
             stream=child.attacks(seconds,interval,speed,attribute_speed=attribute_speed,limit=limit,delay=delay,start_delay=start_delay)
             self.streams.extend(child.streams)
+            # These are supplied preview conditions, not verified acquisitions.
+            # Record them even when continuous scheduling stores no frame stream.
+            keys=('target_windows','movement_windows','interrupt_windows',
+                  'target_disappears_seconds','projectile_travel_seconds',
+                  'windup_frames','recovery_frames','start_delay_frames',
+                  'post_skill_lock_frames','sp_lockout_extra_seconds')
+            from copy import deepcopy
+            self.unit_scenarios.append({'unit':unit,'target_scope':self.target_scope,
+                'options':deepcopy({k:v for k,v in child.options.items() if k in keys}),
+                'lifetime_source':('unit' if 'target_disappears_seconds' in scoped.get(unit,{}) else
+                    'owner' if 'target_disappears_seconds' in self.options else 'unspecified')})
             return stream
         duration=finite(seconds,'窗口秒数',3600)
         ready=finite(start_delay,'起始延迟秒数',3600)
@@ -377,7 +389,9 @@ class AttackTimeline:
         return ends is None or frame<frame_time(ends)
 
     def output(self):
+        from copy import deepcopy
         return {'mode':self.mode,'fps':FPS,'streams':self.streams,
+            'unit_scenarios':deepcopy(self.unit_scenarios),
             'window_convention':'[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消',
             'scenario_provided':bool({k:v for k,v in self.options.items() if not k.startswith('_')}),
             'target_scope_notes':list(self.target_scope_notes),

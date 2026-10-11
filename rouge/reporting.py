@@ -430,6 +430,8 @@ def reproducible_context_sections(scenario,result):
     notes.extend(condition_lines(timing,'本体声明 · '))
     active_units={stream.get('unit') for key in ('streams','recharge_streams')
                   for stream in result.get('timing',{}).get(key,[]) if isinstance(stream,dict)}
+    unit_scenarios=result.get('timing',{}).get('unit_scenarios',[])
+    active_units.update(record['unit'] for record in unit_scenarios)
     units=timing.get('units',{})
     if isinstance(units,dict):
         tokens=catalog()['operators'][scenario['operator']].get('tokens',{})
@@ -437,6 +439,12 @@ def reproducible_context_sections(scenario,result):
             if identity not in active_units or not isinstance(options,dict):continue
             name=tokens.get(identity,{}).get('name') or '独立单位'
             notes.extend(condition_lines(options,name+'声明 · '))
+    for record in unit_scenarios:
+        name=catalog()['operators'][scenario['operator']].get('tokens',{}).get(record['unit'],{}).get('name') or '独立单位'
+        source={'unit':'单位自身声明','owner':'继承本体声明','unspecified':'未声明，沿用既有无限生命周期参考'}[record['lifetime_source']]
+        scope={'enemy':'敌方','friendly':'友方'}[record['target_scope']]
+        note=name+'情景 · '+scope+'获取参考；目标生命周期来源：'+source+'。'
+        if note not in notes:notes.append(note)
     if not any(key in timing for key in ('target_windows','target_disappears_seconds')):
         notes.append('未声明敌方供靶或消失限制；沿用当前计算原有的连续供靶参考，不表示已观察到该条件。')
     notes.append('敌方供靶不等于友方受疗资格；独立单位采用自己的已声明情景，未声明的获取/命中脚本继续未知。')
