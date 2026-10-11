@@ -143,7 +143,7 @@ class DifficultyQualification106Tests(unittest.TestCase):
             self.assertNotIn('mode', run.state['config']['difficulty'])
             self.assertIn('保密等级 2', run.summary())
             restarted = RunState(path)
-            self.assertEqual(restarted.state, json.loads(path.read_text()))
+            self.assertEqual(restarted.state, json.loads(path.read_text(encoding='utf-8')))
             self.assertIn('difficulty', confirmed_config(restarted.recognition_context()))
             result = calculate_damage(calculation(restarted.state['config']['difficulty']))
             self.assertIn('public-fresh-normal', environment_note(result))

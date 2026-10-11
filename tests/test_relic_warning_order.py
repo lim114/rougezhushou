@@ -94,9 +94,10 @@ print(json.dumps([r, format_estimate(r), format_report(r), format_report(r, tech
                         relic_ids=['rogue_6_relic_legacy_61', 'rogue_6_relic_legacy_62', ROSE, CROWN])
         outputs = []
         for seed in ('0', '1', '42', '314159'):
-            env = {**os.environ, 'PYTHONHASHSEED': seed, 'PYTHONPATH': str(root)}
+            env = {**os.environ, 'PYTHONHASHSEED': seed, 'PYTHONPATH': str(root),
+                   'PYTHONIOENCODING': 'utf-8'}
             outputs.append(subprocess.check_output([sys.executable, '-c', code, json.dumps(args)],
-                                                   cwd=root, env=env, text=True))
+                                                   cwd=root, env=env, text=True, encoding='utf-8'))
         self.assertEqual(len(set(outputs)), 1)
 
 if __name__ == '__main__':

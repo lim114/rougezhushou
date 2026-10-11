@@ -123,7 +123,7 @@ class YatoDeploymentReferenceTests(unittest.TestCase):
         self.assertIn('声明回旋命中次数：3',dash)
         self.assertIn('基础突进距离参数：2',dash)
         self.assertIn('最大突进距离参数：5',dash)
-        receipt=json.loads((Path(__file__).resolve().parents[1]/'research/p2-yato-deployment-reference/source-receipt.json').read_text())
+        receipt=json.loads((Path(__file__).resolve().parents[1]/'research/p2-yato-deployment-reference/source-receipt.json').read_text(encoding='utf-8'))
         raw=receipt['selectors']['skill_table.skchr_yato2_3.levels[9]']
         blackboard={item['key']:item['value'] for item in raw['blackboard']}
         self.assertEqual(blackboard['dist_interval'],.2)

@@ -1,3 +1,9 @@
+## 本机与 GitHub 开发分支同步 · 2026-10-11
+
+已在原生 Windows、原项目运行环境核对最新开发分支。依赖检查通过；实际主窗口可见、伤害报告与第140节培养方案对照可响应。精选计算1,678项（4既有跳过）0失败/错误，三处文本编码修正相关42项通过。初次全量2,848项仍保留12个历史/识别断言缺口；不能宣称完整验证通过。87技能全窗口、实际游戏采样与聊天集成未在此次验证。详见 `verification/local-sync-20261011/summary.json`。
+
+下文是云端 Wine 历史；当前定期全量频率以 AGENTS.md 为准（140已到期、下一次155），不按历史五节安排重新验证。
+
 # Linux 上的 Windows 兼容验证
 
 用户已授权使用 Wine。2026-10-07 已在 `/workspace/.compat` 建立独立环境：Debian Wine 10、官方 Windows CPython 3.12.10、PySide6 6.9.3、NumPy 2.2.6，以及官方 Microsoft SDK x64 UCRT。真实 Windows 依赖均可导入；`pip check` 通过。Qt/NumPy 版本在项目允许范围内；Qt 6.11 缺少 Wine 系统 ICU 的失败及内置 UCRT 缺少 `crealf` 的失败保留在环境缓存中。
