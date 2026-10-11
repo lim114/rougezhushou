@@ -92,3 +92,21 @@ class NodeCatalogTests(unittest.TestCase):
         self.assertEqual(len(limited['rows']),1);self.assertTrue(limited['truncated'])
         e=next(e for e in c.all_events(include_indirect=True)['rows'] if e['title']=='安眠一隅')
         self.assertGreater(len({s for row in c.event_paths(e['id'])['rows'] for s in row['scenes']}),2)
+    def test_177(self):
+        e=next(e for e in c.all_events()['rows'] if e['title']=='桑尼的邀请');r=c.event_reward_options(e['id'])
+        self.assertFalse(r['inventory_updated']);self.assertTrue(all(x['actual_claim_eligible'] is None for x in r['rows']))
+        for e in c.all_events()['rows']:self.assertEqual(c.event_reward_options(e['id'])['event']['id'],e['id'])
+        total=sum(bool(x['rewards']) for e in c.all_events()['rows'] for x in c.event_reward_options(e['id'])['rows'])
+        self.assertGreater(total,0)
+    def test_177_reward_title_guard_and_incomplete_pool(self):
+        from unittest.mock import patch
+        e=next(e for e in c.all_events()['rows'] if e['title']=='血衣之下')
+        good=c.event_reward_options(e['id']);row=next(x for x in good['rows'] if x['rewards'])
+        self.assertTrue(row['named_reward_found']);self.assertFalse(row['full_reward_pool_known'])
+        self.assertTrue(row['unknown_reward_pool'])
+        from rouge.node_rewards import _reference
+        bad=deepcopy(_reference());cid=row['rewards'][0]['choice_id']
+        bad['event_rewards'][cid]['choice_title']='不同选项'
+        with patch('rouge.node_rewards._reference',return_value=bad):
+            changed=next(x for x in c.event_reward_options(e['id'])['rows'] if x['choice_id']==row['choice_id'])
+        self.assertFalse(changed['rewards']);self.assertTrue(changed['rejected_reward_links'])

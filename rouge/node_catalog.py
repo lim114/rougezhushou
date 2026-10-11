@@ -175,3 +175,24 @@ def event_paths(event_id,max_steps=40,max_paths=128):
                    game_execution_verified=False,cycles_are_navigation_references=True,
                    limits={'max_steps':max_steps,'max_paths':max_paths})
 COMMANDS['paths']=event_paths
+def event_reward_options(event_id):
+    from .node_rewards import _reference
+    e=_event(event_id);rewards=_reference()['event_rewards'];rows=[]
+    norm=lambda text:re.sub(r'[\W_]+','',text or '')
+    for s in e['scenes']:
+        for ch in s['choices']:
+            candidates=[];rejected=[]
+            for cid in ch['game_choice_ids']:
+                reward=rewards.get(cid)
+                if not reward:continue
+                if reward['event_title']==e['title'] and norm(reward['choice_title'])==norm(ch['title']):
+                    candidates.append({'choice_id':cid,**deepcopy(reward)})
+                else:rejected.append({'choice_id':cid,'reason':'事件标题或选项标题不一致'})
+            rows.append({'scene':s['key'],'choice_id':ch['key'],'choice_title':ch['title'],
+                         'role':ch['presentation_role'],'rewards':candidates,'rejected_reward_links':rejected,
+                         'named_reward_found':bool(candidates),'full_reward_pool_known':False,
+                         'unknown_reward_pool':True,'actual_claim_eligible':None,
+                         'source_scene_link_verified':False})
+    return _result(rows,event=_summary(e),inventory_updated=False,
+                   named_grant_only=True,full_reward_pool_known=False)
+COMMANDS['rewards']=event_reward_options
