@@ -1,0 +1,50 @@
+{
+  "section": 130,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T16:25:57.918384+08:00",
+  "prior_commit": "2045a770bfe273f8896d012710b360602f58480c",
+  "title": "召唤物费用与配额测算",
+  "remaining_project_item": "P2召唤物模组：费用、库存与在场上限映射",
+  "new_capability": "当前培养和模组下逐实体填写新增数量、声明在场与剩余库存，比较费用预算、已计费用及库存和每类在场限制；支持未知条件、超限提示和复制。",
+  "acceptance": [
+    "13实体基础参考",
+    "深海色费用库存和并发分别检查",
+    "望仅费用已核验",
+    "未知模组费用不当零",
+    "库存上限不填补可用库存",
+    "原计算账号本局不变"
+  ],
+  "limitations": [
+    "地块、全局部署位、原生库存和实际可部署资格仍未知",
+    "费用只作一次新增参考，不推断技能免费创建或返费"
+  ],
+  "sources": [
+    "rouge/token_budget.py",
+    "rouge/token_budget_view.py",
+    "rouge/app.py",
+    "tests/test_token_budget_130.py"
+  ],
+  "evidence_reused": [
+    "rouge/token_module_comparison.py",
+    "research/p2-wang-token-module-reference/NOTE.md",
+    "rouge/data/summon-module-rules.json"
+  ],
+  "validation": {
+    "necessary_tests_run": 12,
+    "failures": 0,
+    "errors": 0,
+    "actual_wine_window_cases": 4,
+    "test_output": "verification/section-130/tests.txt",
+    "window_receipt": "verification/section-130/window.json"
+  },
+  "source_sha256": {
+    "rouge/token_budget.py": "5ebcbb84e89de8f8dcea6ac0551f39cde2fc29e9365486d14d1e98d459e9d57e",
+    "rouge/token_budget_view.py": "879ac75416910641001941c7b9e31956f8ef10786722e41960433f3f81cfc968",
+    "rouge/app.py": "b87eaffb84be6a4a31f61420bd4bca2884987868e92c90b01293bbd4567aee1d",
+    "tests/test_token_budget_130.py": "3f75a775547f9df3b82563d083a1b76a2b1b1538d093f2723531ac0e5ab1c861"
+  },
+  "private_state_included": false,
+  "native_windows_game_chat_verified": false,
+  "full_validation_due": false,
+  "next_full_validation_after": 140
+}

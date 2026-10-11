@@ -751,6 +751,9 @@ class MainWindow(QMainWindow):
         self.token_comparison_button=QPushButton('比较召唤物模组升级（局外参考）')
         self.token_comparison_button.clicked.connect(self.show_token_module_comparison)
         layout.addWidget(self.token_comparison_button)
+        self.token_budget_button=QPushButton('测算召唤物费用与配额（局外参考）')
+        self.token_budget_button.clicked.connect(self.show_token_budget)
+        layout.addWidget(self.token_budget_button)
         self.charge_timeline_button=QPushButton('机械师S3：比较冲锋时刻与观察窗口')
         self.charge_timeline_button.setEnabled(False)
         self.charge_timeline_button.clicked.connect(self.show_charge_timeline)
@@ -834,6 +837,16 @@ class MainWindow(QMainWindow):
         if previous is not None:previous.close();previous.deleteLater()
         dialog=ChargeTimelineDialog(scenario,self.damage_result['result']['estimate']['skill']['duration_seconds'],self)
         self.charge_timeline_dialog=dialog;dialog.show()
+
+    def show_token_budget(self):
+        op=self.operator.currentData()
+        if op not in catalog()['operators'] or not catalog()['operators'][op].get('tokens'):
+            self.show_damage_text('当前干员没有已接入的独立召唤物配额资料。');return
+        from .token_budget_view import TokenBudgetDialog
+        previous=getattr(self,'token_budget_dialog',None)
+        if previous is not None:previous.close();previous.deleteLater()
+        self.token_budget_dialog=TokenBudgetDialog(op,self.training_conditions(),self)
+        self.token_budget_dialog.show()
 
     def show_token_module_comparison(self):
         from .token_module_comparison import compare_token_module
