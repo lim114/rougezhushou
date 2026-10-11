@@ -10,6 +10,7 @@ from .relic_attributes import is_attribute_rune,apply_attribute_runes
 from .supplemental_cost import supported_cost,cost_reference
 from .supplemental_sp import supported_sp,sp_reference
 from .supplemental_healing import supported_healing,apply_healing_reference
+from .supplemental_damage import supported_damage,damage_reference,apply_damage_reference
 
 ENVIRONMENT_KEYS={'relic_ids','run_config','relic_context','inventory_status','operator_metadata'}
 # Proven child-buff multipliers from the pinned templates, not every rule with
@@ -80,14 +81,22 @@ def run_skill_reference(preview,environment):
     costs=[e for e in resolved if supported_cost(e)]
     sp_rules=[e for e in resolved if supported_sp(e)]
     healing_rules=[e for e in resolved if supported_healing(e,raw['kind'])]
+    damage_rules=[e for e in resolved if supported_damage(e)]
     unsupported=[e for e in resolved if not is_attribute_rune(e) and
                  not _ordinary_attribute(e) and not supported_cost(e) and not supported_sp(e)
                  and not supported_healing(e,raw['kind'])
+                 and not supported_damage(e)
                  and not e.get('token_only')]
     battle_attributes={kind:sum(e['value'] for e in ordinary if e['kind']==kind)
                        for kind in ('attack_pct','hp_pct','defense_pct')}
     modified=apply_attribute_runes(stats,runes)
-    result=_skill_reference(preview,modified,battle_attributes)
+    damage=damage_reference(scenario,resolved,relic_resolution['records'])
+    effective_preview={**preview,'enemy_defense':damage['effective_target_defense']
+        if damage['effective_target_defense'] is not None else scenario['enemy_defense']}
+    result=_skill_reference(effective_preview,modified,battle_attributes)
+    result['preview']=deepcopy(preview)
+    result['damage_reference']=damage
+    apply_damage_reference(result,damage)
     cost=cost_reference(stats,result['talents'],resolved,relic_resolution['records'])
     result['deployment_reference']=cost
     result['sp_reference']=sp_reference(result['skill_parameter'],resolved,relic_resolution['records'])
@@ -108,6 +117,7 @@ def run_skill_reference(preview,environment):
         row['base_value']=base_rows.get(row['name'])
         row['delta']=row['value']-row['base_value'] if row['value'] is not None and row['base_value'] is not None else None
     warnings=[*relic_resolution['warnings'],*run_resolution['pending']]
+    warnings.extend(damage['warnings'])
     if cost['talent_composition_pending']:
         warnings.append('轻量化天赋与藏品费用链的组合层尚未核验；部署费用未知，未将天赋减费放入任意乘区。')
     if complete is not True:warnings.append('藏品持有清单尚未确认完整；只计算当前明确的条目，不能当作完整本局面板。')
@@ -117,14 +127,14 @@ def run_skill_reference(preview,environment):
     result['run_attributes']={key:modified[key] for key in
                              ('hp','attack','defense','resistance','attack_speed','redeploy_seconds','block_count')}
     result['environment']=environment
-    result['attribute_resolution']={'runes':deepcopy(runes),'ordinary':deepcopy(ordinary),'costs':deepcopy(costs),'sp_rules':deepcopy(sp_rules),'healing_rules':deepcopy(healing_rules),
+    result['attribute_resolution']={'runes':deepcopy(runes),'ordinary':deepcopy(ordinary),'costs':deepcopy(costs),'sp_rules':deepcopy(sp_rules),'healing_rules':deepcopy(healing_rules),'damage_rules':deepcopy(damage_rules),
         'battle_attributes':battle_attributes,'unsupported':deepcopy(unsupported),
         'warnings':list(dict.fromkeys(warnings)),'relics':deepcopy(relic_resolution['records']),
         'run':run_resolution,'inventory_complete':complete is True,
         'complete_for_attribute_scope':not warnings,'baseline_error':baseline_error,
         'source':deepcopy(selectors()['source'])}
     result['notes'][1]='培养按独立预览条件计算；本局已证属性符文先写回，再将已确认的稳定普通属性增益与天赋/技能加成相加。未接入效果不默认为零；不写入账户或本局。'
-    result['notes'].extend(['本局修正含已证属性、普通首次费用、开启回费、技力参数和单来源治疗/生命回复参考；芬费用天赋组合、技力时钟、多来源倍率与最终伤害修正仍有缺口，不能生成回转和周期。',
+    result['notes'].extend(['本局修正含已证属性/费用/技力参数、单来源治疗/回复、减防/定向穿透及单来源受伤倍率；芬费用天赋、技力时钟、多来源倍率及其它特殊分项仍有缺口，不生成回转和周期。',
                             '生命回复以常态最大生命计算藏品贡献，独立于直接治疗；不推算首跳、次数、受疗资格或技能期间最大生命的动态积分。',
                             '对照列为相同培养且没有本局修正的单次参考；差值不代表完整施放、周期或真实击杀。',
                             '藏品与分队取打开或更新时的快照；修改干员仅使用其自己的已确认强化，不沿用上一名干员的领取信息。'])
@@ -139,6 +149,8 @@ def format_run_reference(result):
     cost=result['deployment_reference']
     sp=result['sp_reference']
     value=lambda v:'未知' if v is None else format(v,'.8g')
+    damage=result['damage_reference']
+    lines.append('物理结算目标防御（已计支持的减防/穿透）：'+value(damage['effective_target_defense']))
     lines.append(f"本局技力参数：消耗{value(sp['cost_parameter'])}；部署预置{value(sp['initial_parameter'])}；初次尚需补充{value(sp['initial_requirement'])}点。")
     if sp['end_return_parameter'] or sp['unresolved_end_sources']:
         lines.append(f"标称结束返技力{value(sp['end_return_parameter'])}；此后尚需补充{value(sp['recharge_requirement'])}点；实际结束/阻回及获取时钟未知。")
