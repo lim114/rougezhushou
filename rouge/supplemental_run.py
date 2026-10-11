@@ -35,7 +35,7 @@ def selectors():
     return json.loads((Path(__file__).parent/'data/supplemental-run-selectors.json').read_text(encoding='utf-8'))
 
 
-def run_skill_reference(preview,environment):
+def run_skill_reference(preview,environment,*,target_enemy=None):
     """A frozen raw run input, never a previously prepared damage scenario.
 
     Attribute runes and the proven, stable ordinary HP/ATK/DEF sources are
@@ -67,6 +67,13 @@ def run_skill_reference(preview,environment):
               'base_attack':stats['attack'],'enemy_defense':preview['enemy_defense'],
               'enemy_resistance':preview['enemy_resistance'],'relic_ids':ids,
               'run_config':environment['run_config'],'relic_context':environment['relic_context']}
+    if target_enemy is not None:
+        if (type(target_enemy) is not dict or
+            not {'stage_id','enemy_id','level'}<=set(target_enemy)<= {'stage_id','enemy_id','level','orb_mode'} or
+            type(target_enemy['stage_id']) is not str or type(target_enemy['enemy_id']) is not str or
+            type(target_enemy['level']) is not int):
+            raise ValueError('绑定目标需固定stage_id、enemy_id及整数level，可选orb_mode。')
+        scenario['target_enemy']=deepcopy(target_enemy)
     # Identity-specific metadata must never follow a different selection.
     for key in ('recruitment_kind','char_buff_ids','char_buffs_complete',
                 'char_buff_absent_ids','char_buff_pending_ids'):
@@ -74,7 +81,14 @@ def run_skill_reference(preview,environment):
     from .run_modifiers import prepare_run
     from .relics import prepare
     scenario,run_resolution=prepare_run(scenario)
+    baseline_preview={**preview,'enemy_defense':scenario['enemy_defense'],
+                      'enemy_resistance':scenario['enemy_resistance']}
     scenario,relic_resolution=prepare(scenario,profile)
+    if target_enemy is not None:
+        from .run_modifiers import finish_run
+        summary={'relic_resolution':relic_resolution,'estimate':{'notes':[],'warnings':[]},
+                 'warnings':[],'complete':True}
+        finish_run(summary,run_resolution)
     resolved=scenario.get('effects',[])+scenario.get('_relic_rules',[])
     runes=[e for e in resolved if is_attribute_rune(e) and not e.get('token_only')]
     ordinary=[e for e in resolved if _ordinary_attribute(e)]
@@ -86,15 +100,19 @@ def run_skill_reference(preview,environment):
                  not _ordinary_attribute(e) and not supported_cost(e) and not supported_sp(e)
                  and not supported_healing(e,raw['kind'])
                  and not supported_damage(e)
+                 and not (target_enemy is not None and e.get('_verified_rule') and
+                          e['kind'] in ('enemy_hp_factor','enemy_atk_factor','enemy_spawn_hp_branch','enemy_weight_delta'))
                  and not e.get('token_only')]
     battle_attributes={kind:sum(e['value'] for e in ordinary if e['kind']==kind)
                        for kind in ('attack_pct','hp_pct','defense_pct')}
     modified=apply_attribute_runes(stats,runes)
     damage=damage_reference(scenario,resolved,relic_resolution['records'])
     effective_preview={**preview,'enemy_defense':damage['effective_target_defense']
-        if damage['effective_target_defense'] is not None else scenario['enemy_defense']}
+        if damage['effective_target_defense'] is not None else scenario['enemy_defense'],
+        'enemy_resistance':scenario['enemy_resistance']}
     result=_skill_reference(effective_preview,modified,battle_attributes)
     result['preview']=deepcopy(preview)
+    result['target_enemy']=deepcopy(run_resolution.get('enemy'))
     result['damage_reference']=damage
     apply_damage_reference(result,damage)
     cost=cost_reference(stats,result['talents'],resolved,relic_resolution['records'])
@@ -106,7 +124,7 @@ def run_skill_reference(preview,environment):
         row['value']+=cost['skill_start_dp'];row['declared_total']=row['value']*preview['count']
         row=next(r for r in result['rows'] if r['name'].startswith('部署费用'))
         row['value']=cost['estimated_cost']
-    try:baseline=_skill_reference(preview,stats)
+    try:baseline=_skill_reference(baseline_preview,stats)
     except ValueError as error:
         # A gap can be legal with an HP rune but exceed unmodified max HP.
         baseline=None;baseline_error=str(error)
@@ -138,6 +156,9 @@ def run_skill_reference(preview,environment):
                             '生命回复以常态最大生命计算藏品贡献，独立于直接治疗；不推算首跳、次数、受疗资格或技能期间最大生命的动态积分。',
                             '对照列为相同培养且没有本局修正的单次参考；差值不代表完整施放、周期或真实击杀。',
                             '藏品与分队取打开或更新时的快照；修改干员仅使用其自己的已确认强化，不沿用上一名干员的领取信息。'])
+    if target_enemy is not None:
+        result['notes'].extend(run_resolution['notes'])
+        result['notes'].append('绑定固定候选目标后，手动防御/法抗输入被目标引用覆盖；无本局对照采用相同目标和难度，未加敌方藏品修正。')
     return result
 
 
@@ -145,6 +166,9 @@ def format_run_reference(result):
     resolution=result['attribute_resolution'];stats=result['attributes'];runes=result['run_attributes']
     lines=['本局属性与单次技能 · '+('当前支持范围内参考' if resolution['complete_for_attribute_scope'] else '部分参考，仍有未计或未确认项'),
            f"预计常态：生命{stats['hp']:.8g}；攻击{stats['attack']:.8g}；防御{stats['defense']:.8g}；法抗{runes['resistance']:.8g}；攻速{runes['attack_speed']:.8g}（官方单位）；再部署{runes['redeploy_seconds']:g}秒；阻挡{runes['block_count']:g}"]
+    if result.get('target_enemy'):
+        enemy=result['target_enemy'];panel=enemy['stats']
+        lines.append(f"固定候选目标：{enemy['stage_name']} · {enemy['name']}；生命参考{panel['maxHp']:.8g}、攻击参考{panel['atk']:.8g}、防御参考{panel['def']:.8g}、法抗参考{panel['magicResistance']:.8g}。未确认动态脚本及实际出场。")
     names={r['id']:r['name'] for r in resolution['relics']}
     cost=result['deployment_reference']
     sp=result['sp_reference']

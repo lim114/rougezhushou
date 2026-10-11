@@ -104,11 +104,13 @@
       "title": "低星固定关卡敌人与保密等级对照",
       "scope": "七名干员联动固定敌人引用和难度环境，按已证目标属性重算单次技能分项",
       "modules": [
-        "tests.test_supplemental_enemies_149"
+        "tests.test_supplemental_enemies_149",
+        "tests.test_supplemental_damage_146"
       ],
       "evidence": [
-        "rouge/enemy_environment.py",
-        "rouge/enemy_effects.py"
+        "rouge/enemy_environment.py:resolve_enemy",
+        "rouge/run_modifiers.py:finish_run",
+        "rouge/relics.py:prepare"
       ],
       "limits": [
         "候选敌人不保证出场",

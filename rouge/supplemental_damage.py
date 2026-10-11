@@ -21,7 +21,9 @@ def damage_reference(scenario,rules,records):
     factors={}
     for dtype in ('physical','magic','true'):
         values=[r['value'] for r in selected if r['kind']=='damage_taken' and r['damage_type']==dtype]
-        factors[dtype]=None if len(values)>1 else 1+values[0] if values else 1
+        ordinary=None if len(values)>1 else 1+values[0] if values else 1
+        from .enemy_environment import damage_factor
+        factors[dtype]=None if ordinary is None else ordinary*damage_factor(scenario,dtype)
         if len(values)>1:warnings.append('同类型多来源受伤倍率未在补充干员路径取得组合证据；'+dtype+'伤害组合未知。')
     return {'effective_target_defense':None if pending_defense else scenario['enemy_defense']*max(0,1-penetration),
         'penetration_ratio':penetration,'damage_factors':factors,'pending_defense':pending_defense,'warnings':warnings}

@@ -6,6 +6,7 @@ from .supplemental_skills import supplemental_profiles
 from .supplemental_run import run_skill_reference,format_run_reference
 from .supplemental_comparison import compare_ranks,format_comparison
 from .supplemental_cultivation import compare_cultivation,cultivation_defaults,format_cultivation_comparison
+from .supplemental_enemies import compare_fixed_enemies,enemy_defaults,format_fixed_enemies
 
 
 class SupplementalRunDialog(ReferenceDialog):
@@ -29,6 +30,21 @@ class SupplementalRunDialog(ReferenceDialog):
         self.cultivation_button=QPushButton('本局培养与招募来源对照')
         self.layout().insertWidget(4,self.cultivation_button)
         self.cultivation_button.clicked.connect(self.show_cultivation)
+        self.enemy_button=QPushButton('固定关卡敌人与保密等级对照')
+        self.layout().insertWidget(5,self.enemy_button)
+        self.enemy_button.clicked.connect(self.show_enemies)
+
+    def show_enemies(self):
+        if self.result is None:
+            self.notice.setPlainText('请先计算当前干员条件，再打开对照工具。');return
+        result=deepcopy(self.result)
+        dialog=ReferenceDialog('补充干员 · 固定关卡敌人与保密等级对照',
+            '固定候选目标不会保证出场；每名敌人以所选第一个难度为比较基准。脚本缺口保留。',
+            enemy_defaults(result['environment']),
+            lambda p:compare_fixed_enemies(result['preview'],result['environment'],p),format_fixed_enemies,
+            [('enemy_name','候选敌人'),('grade','保密等级'),('name','分项'),('value','预计参考'),
+             ('base_value','首选难度基准'),('delta','差值'),('unit','单位')],self)
+        self.children_dialogs.append(dialog);dialog.show()
 
     def show_cultivation(self):
         if self.result is None:
