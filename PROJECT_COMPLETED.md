@@ -1,3 +1,11 @@
+## 当前连续开发进度 · 第123节
+
+2026-10-11T13:23:34.204752+08:00。独立单位目标生命周期的零值边界。独立召唤物的0秒及合法零字符串统一取消敌方攻击；保留显式单位覆盖、缺省继承、友方治疗和原始情景文本，非法值仍明确报错。 必要回归19项通过，0失败/错误；未重复运行全量检查或窗口检查，完整范围在第125节统一验证。回执：verification/sections/123.json。完成后立即commit并普通push。
+
+以下为历史记录，当前以上述安排为准。
+
+---
+
 ## 当前连续开发进度 · 第122节
 
 2026-10-10T15:22:31.386457+08:00（北京时间）。Require exact boolean retained presence; preserve unknown original records while excluding them from automatic held, training, buff and counter use, and restore qualified fields only through fresh public confirmation. 相关Linux/Wine实际结果分别为{"linux": {"tests_run": 131, "tests_passed": 130, "declared_skips": 0, "unavailable_records": 1, "failures": 0, "errors": 0}, "wine": {"tests_run": 131, "tests_passed": 130, "declared_skips": 0, "unavailable_records": 1, "failures": 0, "errors": 0}}；真实窗口42状态、735份原生记录及2幅实际查看的有界截图；完整Saved审计通过。 本节相关检查和窗口检验已闭合，原始证据见 research/p2-section122-retained-presence；准备真实逐节commit/push。

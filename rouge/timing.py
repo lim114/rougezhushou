@@ -178,6 +178,11 @@ class AttackTimeline:
             if key in self.options:finite(self.options[key],key)
         for key in ('sp_lockout_extra_seconds','projectile_travel_seconds','target_disappears_seconds'):
             if key in self.options:finite(self.options[key],key,3600)
+        # Unit previews pass through here too. Keep the public input untouched,
+        # but make all accepted zero spellings use the same empty-target gate.
+        lifetime=self.options.get('target_disappears_seconds')
+        if isinstance(lifetime,str) and finite(lifetime,'target_disappears_seconds',3600)==0:
+            self.options={**self.options,'target_disappears_seconds':0}
         self.streams=[];self.notes=[];self.target_scope_notes=[]
         self.deployment_offset=0 if self.options.get('_deployment_initial') else frame_time(scenario.get('_deployment_skill_start_seconds',0))
         self.windows=self.ranges('target_windows')

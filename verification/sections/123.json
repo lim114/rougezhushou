@@ -1,0 +1,27 @@
+{
+  "section": 123,
+  "topic": "独立单位目标生命周期的零值边界",
+  "implemented_scope": "独立召唤物的0秒及合法零字符串统一取消敌方攻击；保留显式单位覆盖、缺省继承、友方治疗和原始情景文本，非法值仍明确报错。",
+  "at_Beijing": "2026-10-11T13:23:34.204752+08:00",
+  "prior_commit": "06fec05fa3a10f2313f4e9a6a874a29b9f2fd64d",
+  "validation": {
+    "mode": "necessary_change_specific",
+    "tests_run": 19,
+    "failures": 0,
+    "errors": 0,
+    "modules": [
+      "tests.test_unit_lifetime_123",
+      "tests.test_timing"
+    ]
+  },
+  "sources": [
+    "TIMING_MODEL.md",
+    "rouge/timing.py"
+  ],
+  "limitations": [
+    "30Hz reference model; unverified game clocks remain unknown",
+    "Native Windows, game and chat integration not verified"
+  ],
+  "private_state_included": false,
+  "full_validation_due": false
+}
