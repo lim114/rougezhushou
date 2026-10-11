@@ -770,6 +770,10 @@ class MainWindow(QMainWindow):
         self.skill_upgrade_button.setEnabled(False)
         self.skill_upgrade_button.clicked.connect(self.show_skill_upgrades)
         layout.addWidget(self.skill_upgrade_button)
+        self.enemy_comparison_button=QPushButton('比较固定关卡敌人与难度条件')
+        self.enemy_comparison_button.setEnabled(False)
+        self.enemy_comparison_button.clicked.connect(self.show_enemy_comparison)
+        layout.addWidget(self.enemy_comparison_button)
         self.damage_text = QPlainTextEdit()
         self.damage_text.setReadOnly(True)
         layout.addWidget(self.damage_text,1)
@@ -849,6 +853,14 @@ class MainWindow(QMainWindow):
         if previous is not None:previous.close();previous.deleteLater()
         dialog=ChargeTimelineDialog(scenario,self.damage_result['result']['estimate']['skill']['duration_seconds'],self)
         self.charge_timeline_dialog=dialog;dialog.show()
+
+    def show_enemy_comparison(self):
+        if not self.damage_result:return
+        from .enemy_comparison_view import EnemyComparisonDialog
+        previous=getattr(self,'enemy_comparison_dialog',None)
+        if previous is not None:previous.close();previous.deleteLater()
+        self.enemy_comparison_dialog=EnemyComparisonDialog(self.damage_result['scenario'],self)
+        self.enemy_comparison_dialog.show()
 
     def show_skill_upgrades(self):
         if not self.damage_result:return
@@ -1293,6 +1305,7 @@ class MainWindow(QMainWindow):
         if hasattr(self,'shield_timeline_button'):self.shield_timeline_button.setEnabled(False)
         if hasattr(self,'healing_budget_button'):self.healing_budget_button.setEnabled(False)
         if hasattr(self,'skill_upgrade_button'):self.skill_upgrade_button.setEnabled(False)
+        if hasattr(self,'enemy_comparison_button'):self.enemy_comparison_button.setEnabled(False)
         self.damage_result=None
         if hasattr(self,'relic_context'):self.damage_form.setRowVisible(self.relic_context,False)
         op=self.operator.currentData()
@@ -1437,6 +1450,7 @@ class MainWindow(QMainWindow):
             from .healing_budget import healing_sources
             self.healing_budget_button.setEnabled(bool(healing_sources(result)))
             self.skill_upgrade_button.setEnabled(True)
+            self.enemy_comparison_button.setEnabled(True)
             self.render_damage()
         except Exception as error:
             self.damage_result=None
