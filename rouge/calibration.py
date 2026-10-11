@@ -115,3 +115,41 @@ def compare_panel(scenario, observation, tolerance=0):
                 '其它层命中仅是排查线索，不证明差异原因；部分字段相符不等于完整面板已通过。']}
 
 COMMANDS['pair']=compare_panel
+
+
+def skill_matrix(scenario, operators=None):
+    """Show all nine skills' known components and missing complete totals."""
+    base=_scenario(scenario);ops=list(OPERATORS) if operators is None else list(operators)
+    if not ops or len(ops)>3 or any(op not in OPERATORS for op in ops):raise ValueError('operators只能选择首批三名。')
+    rows=[]
+    for op in dict.fromkeys(ops):
+        profile=catalog()['operators'][op]
+        for number,entry in enumerate(profile['skills'],1):
+            s={**deepcopy(base),'operator':op,'skill':number}
+            # Module IDs and operator-specific event conditions cannot cross owners.
+            if op!=base['operator']:
+                for key in ('module_id','module_level','base_attack','activation_count','deployment_stacks',
+                            'companion_attack','shield_break_count','charge_count','cooperative','preexisting_fragile'):
+                    s.pop(key,None)
+            row={'operator':profile['name'],'operator_id':profile['id'],'skill':number,'skill_id':entry['id']}
+            if s['elite']<entry['unlock_elite'] or (s['elite']<2 and s['skill_rank']>7):
+                row.update(status='培养条件未开放',full_skill_damage=None,full_skill_healing=None)
+            else:
+                result=calculate_damage(s);skill=result['estimate']['skill']
+                complete=bool(result['estimate'].get('complete',False))
+                row.update(name=skill['name'],status='条件模型参考' if complete else '存在未核验项',
+                    initial_seconds_reference=skill.get('initial_seconds'),recharge_seconds_reference=skill.get('recharge_seconds'),
+                    cycle_seconds_reference=skill.get('cycle_seconds'),model_complete=complete,
+                    model_complete_definition=result.get('complete_definition'),native_clock_verified=False,
+                    conditional_total_reference={'damage':skill.get('total_damage'),'healing':skill.get('total_healing')},
+                    full_skill_damage=0 if (op=='kaltsit' and number in (1,3)) or (op=='silverash' and number==1) else None,
+                    full_skill_healing=0 if op in ('mechanist','silverash') else None,
+                    declared_components=deepcopy(result.get('components',[])),
+                    window_damage_reference=skill.get('window_damage'),window_healing_reference=skill.get('window_healing'),
+                    missing_or_conditional_notes=deepcopy(result['estimate']['notes']),native_verified=False)
+            rows.append(row)
+    return {'rows':rows,'source':_source(),'native_verified':False,'notes':[BOUNDARY,
+        '模型complete不是原生动作时钟核验；非零完整总量保持未知，原模型总量独立标为条件参考。',
+        '调用方所选模组和专属事件条件只用于原干员，不复制到其他干员。']}
+
+COMMANDS['skills']=skill_matrix

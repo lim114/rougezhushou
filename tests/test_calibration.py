@@ -37,4 +37,17 @@ class CalibrationTests(unittest.TestCase):
         self.assertTrue(r['all_compared_values_match'])
         self.assertEqual(r['evidence_kind'],'public_case');self.assertFalse(r['native_verified'])
 
+
+    def test_153_nine_skills_and_partial_unknown(self):
+        r=c.skill_matrix({'operator':'mechanist','skill':3,'charge_count':1})
+        self.assertEqual(len(r['rows']),9)
+        m=next(x for x in r['rows'] if x['operator_id']=='char_4230_mcnist' and x['skill']==3)
+        self.assertFalse(m['model_complete']);self.assertIsNone(m['full_skill_damage'])
+        self.assertTrue(m['declared_components'])
+        silver=next(x for x in r['rows'] if x['operator_id']=='char_1045_svash2' and x['skill']==2)
+        self.assertEqual(len(silver['declared_components']),1)
+    def test_153_locked_skills_and_module_ownership(self):
+        r=c.skill_matrix({'operator':'mechanist','elite':0,'skill_rank':7,'module_id':'uniequip_002_mcnist','module_level':3})
+        self.assertEqual(sum(x['status']=='培养条件未开放' for x in r['rows']),6)
+
 if __name__=='__main__':unittest.main()
