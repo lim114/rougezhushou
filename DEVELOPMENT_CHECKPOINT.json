@@ -2,7 +2,7 @@
   "branch": "codex/p2-development",
   "policy": {
     "commit_after_each_section": true,
-    "full_validation_interval": 5,
+    "full_validation_interval": 15,
     "continuous_work_authorized": true,
     "windows_compatibility": "Wine authorized; distinct from native Windows verification",
     "scheduled_background_work": false,
@@ -21,11 +21,15 @@
     "push_after_batch_commit": true,
     "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
-    "stop_after_section": 125,
+    "stop_after_section": null,
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "accuracy_validation_after_section": 115,
-    "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS."
+    "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
+    "full_validation_anchor_section": 125,
+    "next_full_validation_after": 125,
+    "validation_per_section": "Necessary checks tied to changed behavior only; omit when unnecessary. Full available suite unchanged.",
+    "each_section_window_required": false
   },
   "baseline_commit": "0015c20",
   "completed_sections": 122,
@@ -771,7 +775,7 @@
     }
   ],
   "next_section": 123,
-  "next_action": "本批在125节结束，不启动126；依序推进第123节，完成125节后停止。",
+  "next_action": "继续第123节；每节必要检查后commit/push。125节全量，之后140/155等每15节全量；P2完成后P3，识别最后。",
   "full_validation_due": false,
   "last_full_validation": {
     "kind": "ROOT_ACTUAL_FULL115_AVAILABLE_SCOPE_CLOSURE",
@@ -1421,5 +1425,14 @@
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": 125,
-  "batch_status": "CONTINUE121_TO125"
+  "batch_status": "CONTINUE121_TO125",
+  "policy_revision_Beijing": "2026-10-11",
+  "environment_recovery": {
+    "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
+    "branch": "codex/p2-development",
+    "linux_dependency_check": "passed",
+    "wine_dependency_check": "passed",
+    "baseline_tests_reused": "Latest122 snapshot1567/1566passed/1existing skip from immediately preceding review; unchanged source",
+    "native_windows_game_chat_verified": false
+  }
 }

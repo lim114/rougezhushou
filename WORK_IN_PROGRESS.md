@@ -1,3 +1,11 @@
+## 当前续接规则与环境恢复 · 2026-10-11
+
+用户最新要求（2026-10-11）：恢复最新远端开发分支并从第123节继续；为节约资源，每小节仅保留与实际改动直接相关的必要检查，无必要时省略，不重复运行已通过且源码未变的检查。全量测试范围不缩减。每完成一节立即commit保存，并沿用已授权的普通push。保留第125节全量检查，此后每15节一次（140、155……）。继续开发，旧“125后停止/不启动126”安排已被本次续接要求替代。每节仍须有实际功能成果，未知机制先查来源；95/109已延期的原流程不无故重试。
+
+实际远端第122节 `b1e63a8` 已恢复到开发分支。Linux/Wine依赖检查通过；前一轮最新源码1567项精选与实际窗口检查已通过，本次不重复未变基线。下一节123，125全量后按每15节执行。以下内容为历史断点，不覆盖本段。
+
+---
+
 ## 当前连续开发进度 · 第122节
 
 2026-10-10T15:22:31.386457+08:00（北京时间）。Require exact boolean retained presence; preserve unknown original records while excluding them from automatic held, training, buff and counter use, and restore qualified fields only through fresh public confirmation. 相关Linux/Wine实际结果分别为{"linux": {"tests_run": 131, "tests_passed": 130, "declared_skips": 0, "unavailable_records": 1, "failures": 0, "errors": 0}, "wine": {"tests_run": 131, "tests_passed": 130, "declared_skips": 0, "unavailable_records": 1, "failures": 0, "errors": 0}}；真实窗口42状态、735份原生记录及2幅实际查看的有界截图；完整Saved审计通过。 本节检查及公开证据已封存，下一步：本批在125节结束，不启动126；依序推进第123节，完成125节后停止。

@@ -1,6 +1,6 @@
 # Project working rules
 
-用户最新要求（2026-10-10）：从实际已推送115节继续第116–125节，第125节全量可用检验与总结完成后结束，不启动126。每节必须有实际功能推进成果，测试/资料整理/存档仅作附加。每节检验、归档、断点保存、commit并普通push当前开发分支；120与125完成全量可用Linux/Wine/窗口检验和进度总结。未知机制先查固定来源，缺失依据或条件不符保持未知；95/109原三次未完成流程继续搁置。
+用户最新要求（2026-10-11）：恢复最新远端开发分支并从第123节继续；为节约资源，每小节仅保留与实际改动直接相关的必要检查，无必要时省略，不重复运行已通过且源码未变的检查。全量测试范围不缩减。每完成一节立即commit保存，并沿用已授权的普通push。保留第125节全量检查，此后每15节一次（140、155……）。继续开发，旧“125后停止/不启动126”安排已被本次续接要求替代。每节仍须有实际功能成果，未知机制先查来源；95/109已延期的原流程不无故重试。
 
 
 ## Cloud continuation
@@ -9,15 +9,15 @@ This independent project is named rougezhushou and starts from local version 0.7
 
 ## Current work order
 
-Latest user instruction (2026-10-09): resume continuous development in order. After every completed coherent section, run its relevant checks, archive evidence and checkpoint, commit and push the current development branch. After each five-section group, run full available Linux/Wine/window validation and present a current progress summary, then continue. Section95 full-window validation remains deferred after three incomplete attempts; do not count it as passed or repeat it without a new diagnosis. This instruction supersedes the previous pause and five-section-only commit cadence.
+Current validation cadence: necessary checks only after each section; full available Linux/Wine/window validation at section125, then every15 completed sections. The scope of full validation remains unchanged. Commit and ordinarily push every completed section. Do not interpret historical five-section rules or stop125 notes as current instructions.
 
 Continue development on `codex/p2-development`. The user requested that all subsequent changes be applied on this branch. Check the active branch before editing; preserve existing changes and do not switch to or apply new work on another branch unless the user changes this instruction. Use the existing checkout.
 
-The user authorized continuous work without confirmation between sections. After each coherent section, run its relevant checks, archive it, and update DEVELOPMENT_CHECKPOINT.json and WORK_IN_PROGRESS.md with its evidence, limitations and next action. User instruction on 2026-10-08 supersedes the earlier per-section commit rule: after each group of five sections passes its full available validation, commit the verified group once and push it to the GitHub current development branch, as explicitly confirmed by the user. Preserve exact working-tree source snapshots between sections; do not describe an uncreated section commit or tag as real. Keep the existing numbered five-section validation cadence (the next full checkpoint is section 95); after every five completed sections run the full available cloud regression and Windows compatibility checks, then automatically continue the next five sections without waiting for a user message. The user authorized trying Wine on Linux. Report Wine results as compatibility validation; genuine Windows/game/desktop integration remains unverified unless an actual Windows environment and its prerequisites are available. Never simulate native success, create scheduled automation, or send chat messages. A saved checkpoint does not run work after the active task ends.
+The user authorized continuous work without confirmation between sections. Each coherent functional section records its implemented scope, necessary validation (or why none is needed), limitations and next action in DEVELOPMENT_CHECKPOINT.json and WORK_IN_PROGRESS.md, then commits and ordinarily pushes. Reuse unchanged passing evidence; do not require exhaustive native graph comparisons, repeated independent audits, screenshots or broad regression on every section. Run an actual window only when needed to verify the changed UI behavior; full Linux/Wine/window validation keeps its complete available scope. Wine is compatibility validation, not genuine Windows/game/desktop integration.
 
 User instruction on 2026-10-07: after P2 is complete, continue P3. If the same problem remains unresolved after three attempts, defer it with evidence, attempt count and restart conditions; continue independent work. If account usage drops below 15%, finish required validation and checkpoints for the active section, then wrap up. No enabled tool currently exposes account usage; never invent a percentage.
 
-User instructions on 2026-10-08: increase the amount of useful work in each section. Group related, source-supported functional improvements with their complete verification into one section; source collection, an isolated assertion, or routine archival preparation is not a separate progress milestone. Keep per-issue original evidence, applicability, boundary input/output checks, failure records and restart conditions. Run appropriate related regression and the actual project window before archiving the group; after every five sections run the full available Linux/Wine/window suite and continue automatically. Broader scope does not reduce detail control.
+User instructions on 2026-10-08: increase the amount of useful work in each section. Group related, source-supported functional improvements with their complete verification into one section; source collection, an isolated assertion, or routine archival preparation is not a separate progress milestone. Keep per-issue original evidence, applicability, boundary input/output checks, failure records and restart conditions. Use only necessary change-specific validation before archiving the group; full validation follows the latest cadence above. Broader scope does not reduce detail control.
 
 User instruction on 2026-10-06: advance P2 first. Preserve the unfinished P1 checkpoint; do not resume P1 automatically from older handoff text. Recognition optimization remains after all other work.
 
@@ -40,6 +40,6 @@ User requirement reaffirmed globally on 2026-10-07 (originally recorded on 2026-
 - Do not send chat messages during development/verification. Preserve private settings and chat bindings. Only the user's manual reset clears actual run memory; do not restore an older run over the current one.
 - Combat-only relic triggers remain reference information according to the current offline scope. Do not reintroduce removed event inputs or numerical effects.
 - Use temporary state directories for verification. Do not copy private runtime contents into public artifacts or backups.
-- Keep the simple test interface available; at the end of a code batch update and open the actual project test window, verifying visibility and response.
+- Keep the simple test interface available. Validate the actual project window when the change needs UI verification; full window validation remains part of the full-check cadence.
 - Automation 1-3 was deleted at the user's request. Do not recreate it.
 - Do not start overlapping edits or spawn agents unless explicitly authorized by the user or another applicable instruction.
