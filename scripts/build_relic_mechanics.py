@@ -17,6 +17,9 @@ NATIVE_PROOF=native['research_summary_sha256']
 TIMER_PROOF=native['timer_book_native_proof_sha256']
 WAVE_STACK_PENDING='波纹之手与断杖-同调的3秒攻击叠层刷新、归属及逐命中取值待核验'
 BINDING_RELIC_IDS={'rogue_6_relic_assign_'+str(n) for n in (5,7,9,10,12,13,15)}
+FLOWER_PARAMS={'rogue_6_relic_legacy_81':(.2,1.2),'rogue_6_relic_legacy_82':(.3,1.3),
+               'rogue_6_relic_legacy_83':(.4,1.4)}
+FLOWER_COMPOSITION_EVIDENCE='research/p2-flower-healing-composition-current/receipt.json'
 NONCOMBAT={'immediate_reward','level_char_limit_add','level_init_cost_add','up_reward','shop_discount_item',
     'battle_extra_recruit_ticket','player_level_rewards','battle_fail_protect','battle_extra_relic',
     'misc_shuffle_deck_cost','immediate_reward_on_vehicle_broken','vehicle_move_no_ap_cost','scrap_fill_up',
@@ -75,9 +78,16 @@ def extract(buff,rid):
         elif token=='rogue_6_caster_book_2':effects.append(rule('caster_end_sp',bb['sp'],bb,condition='deployed_casters',group=token))
         elif token=='rogue_6_tank_book_2' and rid=='rogue_6_relic_book_3':pass  # Synergy marker; fee comes from the separate card buff.
         elif token=='modify_sp[warrior]':effects.append(rule('attack_sp',bb['sp'],{'selector.profession':'warrior'},group=token))
-        elif token=='heal_scale':effects.append(rule('healing_factor',bb['heal_scale'],{},group=token,stacking='unverified'))
+        elif token=='heal_scale':
+            verified=key=='global_buff_normal' and rid in FLOWER_PARAMS and bb['heal_scale']==FLOWER_PARAMS[rid][1]
+            extra={'composition_evidence':FLOWER_COMPOSITION_EVIDENCE,'healing_composition':'independent_modifier_product'} if verified else {}
+            effects.append(rule('healing_factor',bb['heal_scale'],{},group=token,
+                stacking='native_independent_instances' if verified else 'unverified',**extra))
         elif token in ('hp_recovery_per_sec[mul]','hp_recovery_per_sec_by_max_hp_ratio[mul]'):
-            effects.append(rule('regeneration_factor',1+bb[token.split('[')[0]],{},group='received_regeneration',stacking='unverified'))
+            verified=key=='global_buff_normal' and rid in FLOWER_PARAMS and bb[token.split('[')[0]]==FLOWER_PARAMS[rid][0]
+            extra={'composition_evidence':FLOWER_COMPOSITION_EVIDENCE,'regeneration_composition':'direct_multiplier_sum'} if verified else {}
+            effects.append(rule('regeneration_factor',1+bb[token.split('[')[0]],{},group='received_regeneration',
+                stacking='native_independent_instances' if verified else 'unverified',**extra))
         elif token=='enemy_def_down':effects.append(rule('enemy_def_delta',bb['def'],{},group=token,stacking='unverified'))
         elif token=='enemy_lighter' and rid=='rogue_6_relic_legacy_56':
             effects.append(rule('enemy_weight_delta',bb['mass_level'],{},group=token,stacking='unverified'))

@@ -71,30 +71,32 @@ class RelicMechanism053Tests(unittest.TestCase):
                                plain['relic_token_stats'][0]['regeneration_rate'] * 1.2)
         self.assertEqual(actual['estimate']['skill']['total_healing'], 0)
 
-    def test_multiple_healing_and_regeneration_items_keep_unknown_stacking(self):
+    def test_verified_flowers_use_independent_healing_and_additive_regen_layers(self):
+        factors={ROSE:1.2,CROWN:1.3,MEAL:1.4}
         for items in ((ROSE, CROWN), (ROSE, MEAL), (CROWN, MEAL), (ROSE, CROWN, MEAL)):
             with self.subTest(items=items):
                 args = scenario('char_1037_amiya3', 1)
                 plain = calculate_damage(args)
                 actual = calculate_damage({**args, 'relic_ids': list(items)})
-                self.assertFalse(actual['relic_resolution']['complete'])
-                self.assertEqual(actual['estimate']['skill']['total_healing'],
-                                 plain['estimate']['skill']['total_healing'])
-                self.assertFalse(any(rule['kind'] in ('healing_factor', 'regeneration_factor')
-                                     for rule in actual['relic_resolution']['rules']))
-                self.assertTrue(all(row['status'] == 'incomplete'
-                                    for row in actual['relic_resolution']['records']))
-                self.assertTrue(any('heal_scale' in text for text in actual['warnings']))
-                self.assertTrue(any('received_regeneration' in text for text in actual['warnings']))
+                self.assertTrue(actual['relic_resolution']['complete'])
+                import math
+                factor=math.prod(factors[item]for item in items)
+                self.assertAlmostEqual(actual['estimate']['skill']['total_healing'],
+                                       plain['estimate']['skill']['total_healing']*factor)
+                self.assertEqual(len([r for r in actual['relic_resolution']['rules']
+                                      if r['kind']=='healing_factor']),len(items))
+                self.assertAlmostEqual(actual['relic_regeneration_multiplier'],
+                                       1+sum(factors[item]-1 for item in items))
+                self.assertFalse(any('组合叠加规则' in p for row in actual['relic_resolution']['records']for p in row['pending']))
 
-    def test_unknown_multipliers_preserve_fixed_and_ratio_single_source_references(self):
+    def test_two_flower_regeneration_applies_to_flat_and_ratio_channels_once(self):
         args = scenario('char_110_deepcl', 1, relic_ids=[MEAT, PERFUME])
         plain = calculate_damage(args)
         actual = calculate_damage({**args, 'relic_ids': args['relic_ids'] + [ROSE, CROWN]})
-        self.assertFalse(actual['relic_resolution']['complete'])
-        self.assertEqual(actual['relic_regeneration_rate'], plain['relic_regeneration_rate'])
-        self.assertEqual(actual['relic_token_stats'][0]['regeneration_rate'],
-                         plain['relic_token_stats'][0]['regeneration_rate'])
+        self.assertTrue(actual['relic_resolution']['complete'])
+        self.assertAlmostEqual(actual['relic_regeneration_rate'], plain['relic_regeneration_rate']*1.5)
+        self.assertAlmostEqual(actual['relic_token_stats'][0]['regeneration_rate'],
+                               plain['relic_token_stats'][0]['regeneration_rate']*1.5)
         self.assertEqual(actual['estimate']['skill']['cycle_hps'], 0)
 
     def test_duplicate_ids_and_repeated_evaluation_do_not_accumulate_multipliers(self):

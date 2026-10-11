@@ -15,13 +15,13 @@ class SupplementalHealing145Tests(unittest.TestCase):
             self.assertAlmostEqual(rows['声明次数过量治疗合计']['value'],max(0,a*2-1000))
             self.assertAlmostEqual(rows['技能单次治疗']['delta'],a-a/1.2)
 
-    def test_ambiguous_multiple_factors_keep_unknown_rows(self):
+    def test_verified_two_flower_healing_factors_multiply(self):
         p=defaults('char_120_hibisc');e=environment(['rogue_6_relic_legacy_81','rogue_6_relic_legacy_82'])
         r=run_skill_reference(p,e)
-        self.assertIsNone(r['healing_reference']['healing_factor'])
-        for row in r['rows']:
-            if row['unit']=='治疗量':self.assertIsNone(row['value']);self.assertIsNone(row['delta'])
-        self.assertIn('叠加规则',format_run_reference(r))
+        self.assertAlmostEqual(r['healing_reference']['healing_factor'],1.56)
+        row=next(x for x in r['rows']if x['name']=='技能单次治疗')
+        self.assertAlmostEqual(row['value'],row['base_value']*1.56)
+        self.assertIn('两种组合层分别计算',format_run_reference(r))
 
     def test_flat_ratio_and_single_regen_factor_use_normal_hp(self):
         p=defaults('char_209_ardign')

@@ -1,5 +1,6 @@
 """Reuse proven single healing/regen factors; never synthesize tick events."""
 from .relics import mechanics
+from .relic_healing_factors import healing_factor,regeneration_factor,COMPOSITION_EVIDENCE
 
 HEAL_KINDS={'self_heal','heal_boost'}
 REGEN_KINDS={'regeneration','regeneration_hp_ratio','regeneration_factor'}
@@ -12,16 +13,16 @@ def supported_healing(rule,kind):
 
 def apply_healing_reference(result,rules,records,kind):
     selected=[r for r in rules if supported_healing(r,kind)]
-    factors=[r['value'] for r in selected if r['kind']=='healing_factor']
-    regen_factors={r['relic_id']:r['value'] for r in selected if r['kind']=='regeneration_factor'}
+    healing=[r for r in selected if r['kind']=='healing_factor']
+    regeneration=[r for r in selected if r['kind']=='regeneration_factor']
     pending_healing=[];pending_regen=[]
     for record in records:
         entry=mechanics()['relics'].get(record['id']) or mechanics()['char_buffs'].get(record['id'])
         if not entry or not (record['pending'] or record['missing_conditions']):continue
         if kind in HEAL_KINDS and any(e['kind']=='healing_factor' for e in entry['effects']):pending_healing.append(record['name'])
         if any(e['kind'] in REGEN_KINDS for e in entry['effects']):pending_regen.append(record['name'])
-    factor=None if pending_healing or len(factors)>1 else factors[0] if factors else 1
-    regen_factor=None if pending_regen or len(regen_factors)>1 else next(iter(regen_factors.values()),1)
+    factor=None if pending_healing else healing_factor(healing)
+    regen_factor=None if pending_regen else regeneration_factor(regeneration)
     flat=sum(r['value'] for r in selected if r['kind']=='regeneration')
     ratio=sum(r['value'] for r in selected if r['kind']=='regeneration_hp_ratio')
     rate=(flat+result['attributes']['hp']*ratio)*regen_factor if regen_factor is not None else None
@@ -41,5 +42,8 @@ def apply_healing_reference(result,rules,records,kind):
         result['rows'].append({'name':'藏品常态生命回复','value':rate,'unit':'生命/秒',
                               'declared_total':None,'declared_total_applicable':False})
     return {'healing_factor':factor,'regeneration_factor':regen_factor,'flat_regeneration':flat,
+        'composition_evidence':COMPOSITION_EVIDENCE if len({r['relic_id']for r in healing+regeneration})>1 else None,
+        'healing_source_ids':list(dict.fromkeys(r['relic_id'] for r in healing)),
+        'regeneration_source_ids':list(dict.fromkeys(r['relic_id'] for r in regeneration)),
         'hp_regeneration_ratio':ratio,'relic_regeneration_rate':rate,'pending_healing':pending_healing,
         'pending_regeneration':pending_regen,'actual_ticks_verified':False}

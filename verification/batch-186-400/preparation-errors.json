@@ -1,0 +1,23 @@
+[
+  {
+    "candidate": "186",
+    "issue": "CRLF patch context rejected",
+    "resolution": "patch LF only; no logic change"
+  },
+  {
+    "candidate": "189",
+    "issue": "PowerShell quoting invalidated Python preparation command",
+    "resolution": "replaced shell string preparation with explicit apply.py; no source mutation from failed command"
+  },
+  {
+    "candidate": "198",
+    "issue": "LF patch rejected three existing CRLF source files; premature test invocation reported missing not-yet-applied new test module",
+    "result": "completed_sections remained197; no false pass or commit",
+    "first_test_attempt": {
+      "tests_run": 76,
+      "errors": 1,
+      "skipped": 1
+    },
+    "resolution": "normalize three existing files line endings; sequential guarded application and necessary rerun"
+  }
+]

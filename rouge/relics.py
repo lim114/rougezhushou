@@ -396,8 +396,10 @@ def finish(result,resolution,attributes,scenario):
     if len(scalers)==1:result['estimate']['base_stats']['redeploy_seconds']*=1+scalers[0]['value']
     elif scalers:warnings.append('多个最终再部署缩放的叠加规则尚未核验，此组合未套用。')
     healing=[r for r in rules if r['kind']=='healing_factor']
-    if len(healing)==1:
-        factor=healing[0]['value']
+    from .relic_healing_factors import healing_factor,regeneration_factor
+    combined_healing=healing_factor(healing)
+    if healing and combined_healing is not None:
+        factor=combined_healing
         if result.get('total_healing') is not None:result['total_healing']*=factor
         skill=result['estimate']['skill']
         for key in ('total_healing','phase_healing','window_healing','cycle_healing','cycle_hps','window_hps'):
@@ -416,8 +418,10 @@ def finish(result,resolution,attributes,scenario):
         if amiya and amiya['kind']=='medical_opening':
             amiya['opening_healing_reference']*=factor
             amiya['window_reference']['opening_healing_reference']*=factor
-    regeneration={r['relic_id']:r['value'] for r in rules if r['kind']=='regeneration_factor'}
-    factor=next(iter(regeneration.values())) if len(regeneration)==1 else 1
+    factor=regeneration_factor([r for r in rules if r['kind']=='regeneration_factor'])
+    # Unproved combinations are filtered by prepare and retain their warnings.
+    # This fallback preserves the known subtotal if an external rule remains.
+    if factor is None:factor=1
     result['relic_regeneration_multiplier']=factor
     for c in result.get('components',[]):
         if c.get('damage_type')=='regeneration':c['total']*=factor;c['per_hit']*=factor

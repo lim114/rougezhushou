@@ -152,7 +152,7 @@ def run_skill_reference(preview,environment,*,target_enemy=None):
         'complete_for_attribute_scope':not warnings,'baseline_error':baseline_error,
         'source':deepcopy(selectors()['source'])}
     result['notes'][1]='培养按独立预览条件计算；本局已证属性符文先写回，再将已确认的稳定普通属性增益与天赋/技能加成相加。未接入效果不默认为零；不写入账户或本局。'
-    result['notes'].extend(['本局修正含已证属性/费用/技力参数、芬轻量化费用链、自然回技加算、单来源治疗/回复、减防/定向穿透及单来源受伤倍率；技力时钟、多来源倍率及其它特殊分项仍有缺口，不生成回转和周期。',
+    result['notes'].extend(['本局修正含已证属性/费用/技力参数、芬轻量化费用链、自然回技加算、三种治疗藏品的治疗/生命回复组合、减防/定向穿透及单来源受伤倍率；技力时钟、其它未核验的多来源倍率及特殊分项仍有缺口，不生成回转和周期。',
                             '生命回复以常态最大生命计算藏品贡献，独立于直接治疗；不推算首跳、次数、受疗资格或技能期间最大生命的动态积分。',
                             '对照列为相同培养且没有本局修正的单次参考；差值不代表完整施放、周期或真实击杀。',
                             '藏品与分队取打开或更新时的快照；修改干员仅使用其自己的已确认强化，不沿用上一名干员的领取信息。'])
@@ -174,6 +174,9 @@ def format_run_reference(result):
     sp=result['sp_reference']
     value=lambda v:'未知' if v is None else format(v,'.8g')
     damage=result['damage_reference']
+    healing=result['healing_reference']
+    if healing['composition_evidence']:
+        lines.append('活玫瑰、苍白花冠及涌动之餐的已证组合：直接治疗独立乘算因子'+value(healing['healing_factor'])+'；生命回复同乘区加算因子'+value(healing['regeneration_factor'])+'。两种组合层分别计算，未核验当前热更新和实际附着/回复时钟。')
     lines.append('物理结算目标防御（已计支持的减防/穿透）：'+value(damage['effective_target_defense']))
     lines.append(f"本局技力参数：消耗{value(sp['cost_parameter'])}；部署预置{value(sp['initial_parameter'])}；初次尚需补充{value(sp['initial_requirement'])}点。")
     if sp['natural_recovery_applicable']:
