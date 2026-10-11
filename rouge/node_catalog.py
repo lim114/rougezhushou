@@ -248,3 +248,14 @@ def battle_candidates(node_type=None,floor=None,context='natural',special_region
                    stage_source=deepcopy(catalog()['source']),pool_sources=deepcopy(pool['sources']),
                    pool_limits=deepcopy(pool['limitations']),unfiltered_is_directory=node_type is None)
 COMMANDS['battles']=battle_candidates
+def indirect_events(floor=None):
+    if floor is not None and (type(floor) is not int or floor not in range(1,7)):raise ValueError('主层需要1–6。')
+    rows=[]
+    for e in _data()['events']:
+        if e['natural'] is not False:continue
+        item=_summary(e);item['current_eligibility']='未知'
+        item['floor_reference_matches']=None if floor is None or not e['floors'] else floor in e['floors']
+        item['entry_source']='特殊传送，不能作为自然生成候选';rows.append(item)
+    support=deepcopy(_data()['uncataloged_original_titles'])
+    return _result(rows,cross_run_support=support,floor=floor)
+COMMANDS['indirect']=indirect_events

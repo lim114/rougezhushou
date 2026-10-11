@@ -148,3 +148,12 @@ class NodeCatalogTests(unittest.TestCase):
         self.assertEqual(len(r['rows']),2);self.assertIsNone(r['known_requirement_checks']['known_difficulty_requirement_matches'])
         self.assertEqual(len(c.battle_candidates('“居民”据点',floor=2,difficulty=4)['rows']),2)
         with self.assertRaises(ValueError):c.battle_candidates(difficulty=True)
+    def test_179(self):
+        r=c.indirect_events(floor=1);self.assertEqual([e['title'] for e in r['rows']],['安眠一隅'])
+        self.assertEqual(r['cross_run_support'][0]['title'],'行动奖励')
+        self.assertIsNone(r['rows'][0]['current_eligibility']) if r['rows'][0]['current_eligibility'] is None else self.assertEqual(r['rows'][0]['current_eligibility'],'未知')
+        self.assertNotIn('安眠一隅',[e['title'] for e in c.event_candidates()['rows']])
+    def test_179_special_is_inspectable_not_natural(self):
+        e=c.indirect_events()['rows'][0]
+        self.assertEqual(len(c.event_details(e['id'])['rows']),12)
+        self.assertFalse(c.indirect_events()['scope']['all_server_events_verified'])
