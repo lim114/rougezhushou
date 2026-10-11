@@ -1,0 +1,1752 @@
+{
+  "schema_version": 1,
+  "source": {
+    "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+    "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+    "upstream_license_status": "No license statement verified; small factual parameter and item-reference extraction only."
+  },
+  "node_types": {
+    "BATTLE_NORMAL": {
+      "name": "作战",
+      "subName": "作战",
+      "description": "大家手里都拿着武器，肯定不是来谈判的。"
+    },
+    "BATTLE_ELITE": {
+      "name": "紧急作战",
+      "subName": "紧急作战",
+      "description": "有些暴力可能会超出你的预期，这很常见。"
+    },
+    "BATTLE_BOSS": {
+      "name": "险路恶敌",
+      "subName": "险路恶敌",
+      "description": "坏人、恶棍、受诅咒之人......你有麻烦了。"
+    },
+    "BATTLE_SHOP": {
+      "name": "诡意行商",
+      "subName": "商店",
+      "description": "不是盟友也不是敌人，有些人喜欢站在中间。"
+    },
+    "REST": {
+      "name": "安全的角落",
+      "subName": "事件",
+      "description": "这里不会有人打扰，食物和水也很充足，别一直紧绷着神经了。"
+    },
+    "INCIDENT": {
+      "name": "不期而遇",
+      "subName": "事件",
+      "description": "新朋友、老对头......奇遇不会老去，陈旧的只有伤疤。"
+    },
+    "WISH": {
+      "name": "得偿所愿",
+      "subName": "事件",
+      "description": "许愿的形式千奇百怪，而愿望本身却大同小异。"
+    },
+    "SACRIFICE": {
+      "name": "失与得",
+      "subName": "事件",
+      "description": "失去的空洞与无措，会被获得的满足与喜悦填充。"
+    },
+    "EXPEDITION": {
+      "name": "先行一步",
+      "subName": "事件",
+      "description": "总有人要走在前头，好为后来的人指明道路。"
+    },
+    "PORTAL": {
+      "name": "误入奇境",
+      "subName": "事件",
+      "description": "枝条旁，叶片外，未探之地就在身边。"
+    },
+    "DUEL": {
+      "name": "狭路相逢",
+      "subName": "事件",
+      "description": "猎物与猎手的对话。"
+    },
+    "STORY": {
+      "name": "命运所指",
+      "subName": "事件",
+      "description": "抉择就在眼前，结果早已注定。"
+    },
+    "STORY_HIDDEN": {
+      "name": "命运所指",
+      "subName": "事件",
+      "description": "抉择就在眼前，结果早已注定。"
+    },
+    "SCRAP_SHOP": {
+      "name": "秘境行商",
+      "subName": "商店",
+      "description": "秘密与路途被摆上天平，摇晃之间价码已被定下。"
+    },
+    "DOOR": {
+      "name": "曲折密道",
+      "subName": "传送",
+      "description": "本地人的杰作。"
+    },
+    "FINAL": {
+      "name": "险路尽头",
+      "subName": "事件",
+      "description": "只是另一场求索的起点。"
+    },
+    "EVACUATE": {
+      "name": "险路小径",
+      "subName": "事件",
+      "description": "嘘，不要把这个秘密告诉别人。"
+    },
+    "EMPLOY": {
+      "name": "应急助力",
+      "subName": "商店",
+      "description": "人手不嫌多，朋友不嫌少。"
+    },
+    "LIGHT": {
+      "name": "羽瞰点",
+      "subName": "视野",
+      "description": "所见并非所得，做好标记后别忘了计算行程。"
+    },
+    "BATTLE_SAVAGE": {
+      "name": "“居民”据点",
+      "subName": "“居民”据点",
+      "description": "平静的生活被打破，也难怪它们怒火中烧。"
+    },
+    "EMPTY": {
+      "name": "林间空地",
+      "subName": "“空白”",
+      "description": "无事发生便是最动人的温柔。"
+    }
+  },
+  "ranges": {
+    "r-1": {
+      "id": "r-1",
+      "direction": "RIGHT",
+      "grids": [
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": -1
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": -1,
+          "col": 0
+        }
+      ]
+    },
+    "r-2": {
+      "id": "r-2",
+      "direction": "RIGHT",
+      "grids": [
+        {
+          "row": 1,
+          "col": -1
+        },
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 1,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": -1
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": -1,
+          "col": -1
+        },
+        {
+          "row": -1,
+          "col": 0
+        },
+        {
+          "row": -1,
+          "col": 1
+        }
+      ]
+    },
+    "r-3": {
+      "id": "r-3",
+      "direction": "RIGHT",
+      "grids": [
+        {
+          "row": 2,
+          "col": 0
+        },
+        {
+          "row": 1,
+          "col": -1
+        },
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 1,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": -2
+        },
+        {
+          "row": 0,
+          "col": -1
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": 2
+        },
+        {
+          "row": -1,
+          "col": -1
+        },
+        {
+          "row": -1,
+          "col": 0
+        },
+        {
+          "row": -1,
+          "col": 1
+        },
+        {
+          "row": -2,
+          "col": 0
+        }
+      ]
+    },
+    "r-4": {
+      "id": "r-4",
+      "direction": "RIGHT",
+      "grids": [
+        {
+          "row": 2,
+          "col": -1
+        },
+        {
+          "row": 2,
+          "col": 0
+        },
+        {
+          "row": 2,
+          "col": 1
+        },
+        {
+          "row": 1,
+          "col": -2
+        },
+        {
+          "row": 1,
+          "col": -1
+        },
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 1,
+          "col": 1
+        },
+        {
+          "row": 1,
+          "col": 2
+        },
+        {
+          "row": 0,
+          "col": -2
+        },
+        {
+          "row": 0,
+          "col": -1
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": 2
+        },
+        {
+          "row": -1,
+          "col": -2
+        },
+        {
+          "row": -1,
+          "col": -1
+        },
+        {
+          "row": -1,
+          "col": 0
+        },
+        {
+          "row": -1,
+          "col": 1
+        },
+        {
+          "row": -1,
+          "col": 2
+        },
+        {
+          "row": -2,
+          "col": -1
+        },
+        {
+          "row": -2,
+          "col": 0
+        },
+        {
+          "row": -2,
+          "col": 1
+        }
+      ]
+    },
+    "r-5": {
+      "id": "r-5",
+      "direction": "RIGHT",
+      "grids": [
+        {
+          "row": 3,
+          "col": 0
+        },
+        {
+          "row": 2,
+          "col": -1
+        },
+        {
+          "row": 2,
+          "col": 0
+        },
+        {
+          "row": 2,
+          "col": 1
+        },
+        {
+          "row": 1,
+          "col": -2
+        },
+        {
+          "row": 1,
+          "col": -1
+        },
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 1,
+          "col": 1
+        },
+        {
+          "row": 1,
+          "col": 2
+        },
+        {
+          "row": 0,
+          "col": -3
+        },
+        {
+          "row": 0,
+          "col": -2
+        },
+        {
+          "row": 0,
+          "col": -1
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": 2
+        },
+        {
+          "row": 0,
+          "col": 3
+        },
+        {
+          "row": -1,
+          "col": -2
+        },
+        {
+          "row": -1,
+          "col": -1
+        },
+        {
+          "row": -1,
+          "col": 0
+        },
+        {
+          "row": -1,
+          "col": 1
+        },
+        {
+          "row": -1,
+          "col": 2
+        },
+        {
+          "row": -2,
+          "col": -1
+        },
+        {
+          "row": -2,
+          "col": 0
+        },
+        {
+          "row": -2,
+          "col": 1
+        },
+        {
+          "row": -3,
+          "col": 0
+        }
+      ]
+    },
+    "r-6": {
+      "id": "r-6",
+      "direction": "RIGHT",
+      "grids": [
+        {
+          "row": 2,
+          "col": 0
+        },
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": -2
+        },
+        {
+          "row": 0,
+          "col": -1
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": 2
+        },
+        {
+          "row": -1,
+          "col": 0
+        },
+        {
+          "row": -2,
+          "col": 0
+        }
+      ]
+    },
+    "r-7": {
+      "id": "r-7",
+      "direction": "RIGHT",
+      "grids": [
+        {
+          "row": 3,
+          "col": 0
+        },
+        {
+          "row": 2,
+          "col": 0
+        },
+        {
+          "row": 1,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": -3
+        },
+        {
+          "row": 0,
+          "col": -2
+        },
+        {
+          "row": 0,
+          "col": -1
+        },
+        {
+          "row": 0,
+          "col": 0
+        },
+        {
+          "row": 0,
+          "col": 1
+        },
+        {
+          "row": 0,
+          "col": 2
+        },
+        {
+          "row": 0,
+          "col": 3
+        },
+        {
+          "row": -1,
+          "col": 0
+        },
+        {
+          "row": -2,
+          "col": 0
+        },
+        {
+          "row": -3,
+          "col": 0
+        }
+      ]
+    }
+  },
+  "items": {
+    "rogue_6_scrap_M_01": {
+      "id": "rogue_6_scrap_M_01",
+      "name": "报废轮子",
+      "kind": "MOVE",
+      "raw": {
+        "count": 1,
+        "range": "r-6",
+        "rangeType": "RANGE",
+        "node": [
+          "ALL"
+        ],
+        "step": 1,
+        "isRandomMove": false,
+        "scrapId": "rogue_6_scrap_M_01",
+        "scrapDesc": "装载后能够移动至<color=#20b4a1>直线2格内</color>任意节点（可移动1次）",
+        "sellPrice": 1
+      },
+      "usage": "装载后能够移动至<color=#20b4a1>直线2格内</color>任意节点（可移动1次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_01",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_01"
+    },
+    "rogue_6_scrap_M_02": {
+      "id": "rogue_6_scrap_M_02",
+      "name": "报废假肢",
+      "kind": "MOVE",
+      "raw": {
+        "count": 1,
+        "range": "r-2",
+        "rangeType": "RANGE",
+        "node": [
+          "ALL"
+        ],
+        "step": 1,
+        "isRandomMove": false,
+        "scrapId": "rogue_6_scrap_M_02",
+        "scrapDesc": "装载后能够移动至<color=#20b4a1>相邻8格内</color>任意节点（可移动1次）",
+        "sellPrice": 1
+      },
+      "usage": "装载后能够移动至<color=#20b4a1>相邻8格内</color>任意节点（可移动1次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_02",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_02"
+    },
+    "rogue_6_scrap_M_03": {
+      "id": "rogue_6_scrap_M_03",
+      "name": "标准引擎",
+      "kind": "MOVE",
+      "raw": {
+        "count": 3,
+        "range": "r-2",
+        "rangeType": "RANGE",
+        "node": [
+          "ALL"
+        ],
+        "step": 1,
+        "isRandomMove": false,
+        "scrapId": "rogue_6_scrap_M_03",
+        "scrapDesc": "装载后能够移动至<color=#20b4a1>相邻8格内</color>任意节点（可移动3次）",
+        "sellPrice": 1
+      },
+      "usage": "装载后能够移动至<color=#20b4a1>相邻8格内</color>任意节点（可移动3次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_03",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_03"
+    },
+    "rogue_6_scrap_M_04": {
+      "id": "rogue_6_scrap_M_04",
+      "name": "重弹簧",
+      "kind": "MOVE",
+      "raw": {
+        "count": 1,
+        "range": "r-3",
+        "rangeType": "RANGE",
+        "node": [
+          "ALL"
+        ],
+        "step": 0,
+        "isRandomMove": false,
+        "scrapId": "rogue_6_scrap_M_04",
+        "scrapDesc": "装载后能够移动至<color=#20b4a1>周围12格内</color>任意节点，无需行动力，无法被携带至下一区域（可移动1次）",
+        "sellPrice": 1
+      },
+      "usage": "装载后能够移动至<color=#20b4a1>周围12格内</color>任意节点，无需行动力，无法被携带至下一区域（可移动1次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_04",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_04"
+    },
+    "rogue_6_scrap_M_05": {
+      "id": "rogue_6_scrap_M_05",
+      "name": "气垫底座",
+      "kind": "MOVE",
+      "raw": {
+        "count": 2,
+        "range": "r-3",
+        "rangeType": "RANGE",
+        "node": [
+          "ALL"
+        ],
+        "step": 1,
+        "isRandomMove": false,
+        "scrapId": "rogue_6_scrap_M_05",
+        "scrapDesc": "装载后能够移动至<color=#20b4a1>周围12格内</color>任意节点（可移动2次）",
+        "sellPrice": 1
+      },
+      "usage": "装载后能够移动至<color=#20b4a1>周围12格内</color>任意节点（可移动2次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_05",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_05"
+    },
+    "rogue_6_scrap_M_06": {
+      "id": "rogue_6_scrap_M_06",
+      "name": "试作外骨骼",
+      "kind": "MOVE",
+      "raw": {
+        "count": 2,
+        "range": "r-7",
+        "rangeType": "RANGE",
+        "node": [
+          "ALL"
+        ],
+        "step": 1,
+        "isRandomMove": false,
+        "scrapId": "rogue_6_scrap_M_06",
+        "scrapDesc": "装载后能够移动至<color=#20b4a1>直线3格内</color>任意节点（可移动2次）",
+        "sellPrice": 1
+      },
+      "usage": "装载后能够移动至<color=#20b4a1>直线3格内</color>任意节点（可移动2次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_06",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_06"
+    },
+    "rogue_6_scrap_M_07": {
+      "id": "rogue_6_scrap_M_07",
+      "name": "小八界",
+      "kind": "MOVE",
+      "raw": {
+        "count": 1,
+        "range": null,
+        "rangeType": "FULL_MAP",
+        "node": [
+          "EVENTS",
+          "EMPTY"
+        ],
+        "step": 0,
+        "isRandomMove": true,
+        "scrapId": "rogue_6_scrap_M_07",
+        "scrapDesc": "装载并使用后会被随机传送至任意<color=#20b4a1>非作战节点</color>，无需行动力，无法被携带至下一区域（可移动1次）",
+        "sellPrice": 1
+      },
+      "usage": "装载并使用后会被随机传送至任意<color=#20b4a1>非作战节点</color>，无需行动力，无法被携带至下一区域（可移动1次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_07",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_07"
+    },
+    "rogue_6_scrap_M_08": {
+      "id": "rogue_6_scrap_M_08",
+      "name": "一次性喷气背包",
+      "kind": "MOVE",
+      "raw": {
+        "count": 1,
+        "range": null,
+        "rangeType": "FULL_MAP",
+        "node": [
+          "ALL"
+        ],
+        "step": 0,
+        "isRandomMove": false,
+        "scrapId": "rogue_6_scrap_M_08",
+        "scrapDesc": "装载后能够移动至<color=#20b4a1>任意节点</color>，无需行动力（可移动1次）",
+        "sellPrice": 1
+      },
+      "usage": "装载后能够移动至<color=#20b4a1>任意节点</color>，无需行动力（可移动1次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_08",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_08"
+    },
+    "rogue_6_scrap_M_09": {
+      "id": "rogue_6_scrap_M_09",
+      "name": "老妈妈的融雪",
+      "kind": "MOVE",
+      "raw": {
+        "count": 1,
+        "range": null,
+        "rangeType": "FULL_MAP",
+        "node": [
+          "EVENTS",
+          "EMPTY"
+        ],
+        "step": 1,
+        "isRandomMove": false,
+        "scrapId": "rogue_6_scrap_M_09",
+        "scrapDesc": "装载后能够移动至任意<color=#20b4a1>非作战节点</color>，且移动后希望+2（可移动1次）",
+        "sellPrice": 1
+      },
+      "usage": "装载后能够移动至任意<color=#20b4a1>非作战节点</color>，且移动后希望+2（可移动1次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_09",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_09"
+    },
+    "rogue_6_scrap_M_10": {
+      "id": "rogue_6_scrap_M_10",
+      "name": "坎诺特的触须",
+      "kind": "MOVE",
+      "raw": {
+        "count": 2,
+        "range": null,
+        "rangeType": "FULL_MAP",
+        "node": [
+          "BATTLE_SHOP",
+          "SCRAP_SHOP"
+        ],
+        "step": 1,
+        "isRandomMove": false,
+        "scrapId": "rogue_6_scrap_M_10",
+        "scrapDesc": "装载后能够移动至任意<color=#20b4a1>行商节点</color>，且每次移动后源石锭+4（可移动2次）",
+        "sellPrice": 1
+      },
+      "usage": "装载后能够移动至任意<color=#20b4a1>行商节点</color>，且每次移动后源石锭+4（可移动2次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_10",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_10"
+    },
+    "rogue_6_scrap_M_11": {
+      "id": "rogue_6_scrap_M_11",
+      "name": "结构性原理",
+      "kind": "MOVE",
+      "raw": {
+        "count": 3,
+        "range": null,
+        "rangeType": "FULL_MAP",
+        "node": [
+          "ALL"
+        ],
+        "step": 1,
+        "isRandomMove": false,
+        "scrapId": "rogue_6_scrap_M_11",
+        "scrapDesc": "装载后能够移动至<color=#20b4a1>任意节点</color>（可移动3次）",
+        "sellPrice": 1
+      },
+      "usage": "装载后能够移动至<color=#20b4a1>任意节点</color>（可移动3次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_11",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_11"
+    },
+    "rogue_6_scrap_M_12": {
+      "id": "rogue_6_scrap_M_12",
+      "name": "“简易遥控器”",
+      "kind": "MOVE",
+      "raw": {
+        "count": 1,
+        "range": "r-2",
+        "rangeType": "RANGE",
+        "node": [
+          "ALL"
+        ],
+        "step": 0,
+        "isRandomMove": false,
+        "scrapId": "rogue_6_scrap_M_12",
+        "scrapDesc": "装载后能够移动至<color=#20b4a1>相邻8格内</color>任意节点，无需行动力，且移动后行动力+3（可移动1次）",
+        "sellPrice": 1
+      },
+      "usage": "装载后能够移动至<color=#20b4a1>相邻8格内</color>任意节点，无需行动力，且移动后行动力+3（可移动1次）",
+      "source_selector": "$.modules.rogue_6.scrap.moveScrapData.rogue_6_scrap_M_12",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_M_12"
+    },
+    "rogue_6_scrap_G_01": {
+      "id": "rogue_6_scrap_G_01",
+      "name": "种子",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_01",
+        "scrapDesc": "可在秘境行商中培育并获得奖励",
+        "sellPrice": 2
+      },
+      "usage": "可在秘境行商中培育并获得奖励",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_01",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_01"
+    },
+    "rogue_6_scrap_G_02": {
+      "id": "rogue_6_scrap_G_02",
+      "name": "血蕈",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_02",
+        "scrapDesc": "每次作战后估价+2",
+        "sellPrice": 2
+      },
+      "usage": "每次作战后估价+2",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_02",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_02"
+    },
+    "rogue_6_scrap_G_03": {
+      "id": "rogue_6_scrap_G_03",
+      "name": "雾滚草",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_03",
+        "scrapDesc": "每次揭示节点信息时估价+1",
+        "sellPrice": 2
+      },
+      "usage": "每次揭示节点信息时估价+1",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_03",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_03"
+    },
+    "rogue_6_scrap_G_04": {
+      "id": "rogue_6_scrap_G_04",
+      "name": "回声玉米",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_04",
+        "scrapDesc": "每次招募干员时估价+3",
+        "sellPrice": 4
+      },
+      "usage": "每次招募干员时估价+3",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_04",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_04"
+    },
+    "rogue_6_scrap_G_05": {
+      "id": "rogue_6_scrap_G_05",
+      "name": "浪花",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_05",
+        "scrapDesc": "每次移动后，估价会随机变化",
+        "sellPrice": 3
+      },
+      "usage": "每次移动后，估价会随机变化",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_05",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_05"
+    },
+    "rogue_6_scrap_G_06": {
+      "id": "rogue_6_scrap_G_06",
+      "name": "霜晶树",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_06",
+        "scrapDesc": "每次完美作战后估价+4，非完美作战后自身损坏",
+        "sellPrice": 6
+      },
+      "usage": "每次完美作战后估价+4，非完美作战后自身损坏",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_06",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_06"
+    },
+    "rogue_6_scrap_G_07": {
+      "id": "rogue_6_scrap_G_07",
+      "name": "多生苔藓",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_07",
+        "scrapDesc": "获得时立刻获得3个<枯苔藓球>，获得零件时估价+1",
+        "sellPrice": 1
+      },
+      "usage": "获得时立刻获得3个<枯苔藓球>，获得零件时估价+1",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_07",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_07"
+    },
+    "rogue_6_scrap_G_08": {
+      "id": "rogue_6_scrap_G_08",
+      "name": "枯苔藓球",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_08",
+        "scrapDesc": "估价较低的自然物",
+        "sellPrice": 2
+      },
+      "usage": "估价较低的自然物",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_08",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_08"
+    },
+    "rogue_6_scrap_G_09": {
+      "id": "rogue_6_scrap_G_09",
+      "name": "板藤",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_09",
+        "scrapDesc": "每次获得零件时估价+4",
+        "sellPrice": 8
+      },
+      "usage": "每次获得零件时估价+4",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_09",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_09"
+    },
+    "rogue_6_scrap_G_10": {
+      "id": "rogue_6_scrap_G_10",
+      "name": "恋家果",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_10",
+        "scrapDesc": "每次移动后估价-2",
+        "sellPrice": 32
+      },
+      "usage": "每次移动后估价-2",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_10",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_10"
+    },
+    "rogue_6_scrap_G_11": {
+      "id": "rogue_6_scrap_G_11",
+      "name": "光彩松露",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_11",
+        "scrapDesc": "估价较高的自然物",
+        "sellPrice": 32
+      },
+      "usage": "估价较高的自然物",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_11",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_11"
+    },
+    "rogue_6_scrap_G_12": {
+      "id": "rogue_6_scrap_G_12",
+      "name": "笼控器",
+      "kind": "GOODS",
+      "raw": {
+        "scrapId": "rogue_6_scrap_G_12",
+        "scrapDesc": "在不期而遇中存在特殊作用",
+        "sellPrice": 16
+      },
+      "usage": "在不期而遇中存在特殊作用",
+      "source_selector": "$.modules.rogue_6.scrap.goodsScrapData.rogue_6_scrap_G_12",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_G_12"
+    },
+    "rogue_6_scrap_P_01": {
+      "id": "rogue_6_scrap_P_01",
+      "name": "白模鸟",
+      "kind": "PASSIVE",
+      "raw": {
+        "node": "BATTLES",
+        "buffStack": 1,
+        "scrapId": "rogue_6_scrap_P_01",
+        "scrapDesc": "装载加工品移动至<color=#20b4a1>作战节点</color>时，本次战斗我方单位攻击速度+50，战斗后获得1个随机收藏品（可激活1次）",
+        "sellPrice": 1
+      },
+      "usage": "装载加工品移动至<color=#20b4a1>作战节点</color>时，本次战斗我方单位攻击速度+50，战斗后获得1个随机收藏品（可激活1次）",
+      "source_selector": "$.modules.rogue_6.scrap.passiveScrapData.rogue_6_scrap_P_01",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_P_01"
+    },
+    "rogue_6_scrap_P_02": {
+      "id": "rogue_6_scrap_P_02",
+      "name": "白模狗",
+      "kind": "PASSIVE",
+      "raw": {
+        "node": "EVENTS",
+        "buffStack": 1,
+        "scrapId": "rogue_6_scrap_P_02",
+        "scrapDesc": "装载加工品移动至<color=#20b4a1>非作战节点</color>时，获得1个随机收藏品（可激活1次）",
+        "sellPrice": 1
+      },
+      "usage": "装载加工品移动至<color=#20b4a1>非作战节点</color>时，获得1个随机收藏品（可激活1次）",
+      "source_selector": "$.modules.rogue_6.scrap.passiveScrapData.rogue_6_scrap_P_02",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_P_02"
+    },
+    "rogue_6_scrap_P_03": {
+      "id": "rogue_6_scrap_P_03",
+      "name": "白模鱼",
+      "kind": "PASSIVE",
+      "raw": {
+        "node": "ALL",
+        "buffStack": 1,
+        "scrapId": "rogue_6_scrap_P_03",
+        "scrapDesc": "装载加工品移动至<color=#20b4a1>任意节点</color>时，获得3点护盾（可激活1次）",
+        "sellPrice": 1
+      },
+      "usage": "装载加工品移动至<color=#20b4a1>任意节点</color>时，获得3点护盾（可激活1次）",
+      "source_selector": "$.modules.rogue_6.scrap.passiveScrapData.rogue_6_scrap_P_03",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_P_03"
+    },
+    "rogue_6_scrap_P_04": {
+      "id": "rogue_6_scrap_P_04",
+      "name": "涂装黎博利",
+      "kind": "PASSIVE",
+      "raw": {
+        "node": "BATTLES",
+        "buffStack": 1,
+        "scrapId": "rogue_6_scrap_P_04",
+        "scrapDesc": "装载加工品移动至<color=#20b4a1>作战节点</color>时，本次战斗我方单位攻击速度+35",
+        "sellPrice": 1
+      },
+      "usage": "装载加工品移动至<color=#20b4a1>作战节点</color>时，本次战斗我方单位攻击速度+35",
+      "source_selector": "$.modules.rogue_6.scrap.passiveScrapData.rogue_6_scrap_P_04",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_P_04"
+    },
+    "rogue_6_scrap_P_05": {
+      "id": "rogue_6_scrap_P_05",
+      "name": "涂装佩洛",
+      "kind": "PASSIVE",
+      "raw": {
+        "node": "WISH",
+        "buffStack": 1,
+        "scrapId": "rogue_6_scrap_P_05",
+        "scrapDesc": "装载加工品移动至<color=#20b4a1>得偿所愿节点</color>时，获得1个随机收藏品",
+        "sellPrice": 1
+      },
+      "usage": "装载加工品移动至<color=#20b4a1>得偿所愿节点</color>时，获得1个随机收藏品",
+      "source_selector": "$.modules.rogue_6.scrap.passiveScrapData.rogue_6_scrap_P_05",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_P_05"
+    },
+    "rogue_6_scrap_P_06": {
+      "id": "rogue_6_scrap_P_06",
+      "name": "涂装阿戈尔",
+      "kind": "PASSIVE",
+      "raw": {
+        "node": "SACRIFICE",
+        "buffStack": 1,
+        "scrapId": "rogue_6_scrap_P_06",
+        "scrapDesc": "装载加工品移动至<color=#20b4a1>失与得节点</color>时，获得2个随机收藏品",
+        "sellPrice": 1
+      },
+      "usage": "装载加工品移动至<color=#20b4a1>失与得节点</color>时，获得2个随机收藏品",
+      "source_selector": "$.modules.rogue_6.scrap.passiveScrapData.rogue_6_scrap_P_06",
+      "item_selector": "$.details.rogue_6.items.rogue_6_scrap_P_06"
+    }
+  },
+  "zones": {
+    "zone_1": {
+      "raw": {
+        "id": "zone_1",
+        "name": "玻利瓦尔肤层",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "未经探索的土地将自己献与新的主人。",
+        "buffDescription": null,
+        "endingDescription": "征服者欣然笑纳，将剑与火作为忠诚的馈赠。",
+        "backgroundId": "rogue_6_map_1",
+        "zoneIconId": "zone_1",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPLOW",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_01"
+      },
+      "mission": {
+        "zoneId": "zone_1",
+        "bannerText": "目标：找到<color=#0f907f>险路尽头</color>节点进入下一区域",
+        "bannerIcon": "zone_banner_goal_final"
+      },
+      "exhaustion": {
+        "zoneId": "zone_1",
+        "hintText": "行动力耗尽未抵达<color=#e4817e>险路尽头</color>\n将强制触发<color=#e4817e>追猎</color>"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_1"
+    },
+    "zone_2": {
+      "raw": {
+        "id": "zone_2",
+        "name": "甜美的伤口",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "刀锋划开，原罪混杂着甘甜倾泻而出。",
+        "buffDescription": null,
+        "endingDescription": "饮下蜜糖之人，可曾想过它的来处？",
+        "backgroundId": "rogue_6_map_2",
+        "zoneIconId": "zone_2",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPLOW",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_02"
+      },
+      "mission": {
+        "zoneId": "zone_2",
+        "bannerText": "目标：找到<color=#0f907f>险路尽头</color>节点进入下一区域",
+        "bannerIcon": "zone_banner_goal_final"
+      },
+      "exhaustion": {
+        "zoneId": "zone_2",
+        "hintText": "行动力耗尽未抵达<color=#e4817e>险路尽头</color>\n将强制触发<color=#e4817e>追猎</color>"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_2"
+    },
+    "zone_3": {
+      "raw": {
+        "id": "zone_3",
+        "name": "血色空脉",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "当赤金沐浴阳光的那一刻，整片大地都为之闪烁。",
+        "buffDescription": null,
+        "endingDescription": "光芒之下，贪婪大快朵颐。",
+        "backgroundId": "rogue_6_map_3",
+        "zoneIconId": "zone_3",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPHIGH",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_03"
+      },
+      "mission": {
+        "zoneId": "zone_3",
+        "bannerText": "目标：找到<color=#0f907f>险路恶敌</color>节点并取得胜利",
+        "bannerIcon": "zone_banner_goal_boss_3"
+      },
+      "exhaustion": {
+        "zoneId": "zone_3",
+        "hintText": "行动力耗尽未击败<color=#e4817e>险路恶敌</color>\n将强制触发<color=#e4817e>追猎</color>"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_3"
+    },
+    "zone_4": {
+      "raw": {
+        "id": "zone_4",
+        "name": "受害者腐殖",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "如果大地不能缓和您的愤怒，就请拿走我的血与骨。",
+        "buffDescription": null,
+        "endingDescription": "只知供奉的人从不知道，索取永无尽头。",
+        "backgroundId": "rogue_6_map_4",
+        "zoneIconId": "zone_4",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPHIGH",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_04"
+      },
+      "mission": {
+        "zoneId": "zone_4",
+        "bannerText": "目标：找到<color=#0f907f>险路尽头</color>节点进入下一区域",
+        "bannerIcon": "zone_banner_goal_final"
+      },
+      "exhaustion": {
+        "zoneId": "zone_4",
+        "hintText": "行动力耗尽未抵达<color=#e4817e>险路尽头</color>\n将强制触发<color=#e4817e>追猎</color>"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_4"
+    },
+    "zone_4_1": {
+      "raw": {
+        "id": "zone_4_1",
+        "name": "受害者腐殖",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "如果大地不能缓和您的愤怒，就请拿走我的血与骨。",
+        "buffDescription": null,
+        "endingDescription": "只知供奉的人从不知道，索取永无尽头。",
+        "backgroundId": "rogue_6_map_4",
+        "zoneIconId": "zone_4",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPHIGH",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_04"
+      },
+      "mission": {
+        "zoneId": "zone_4_1",
+        "bannerText": "目标：找到<color=#0f907f>险路尽头</color>节点进入下一区域",
+        "bannerIcon": "zone_banner_goal_final"
+      },
+      "exhaustion": {
+        "zoneId": "zone_4_1",
+        "hintText": "行动力耗尽未抵达<color=#e4817e>险路尽头</color>\n将强制触发<color=#e4817e>追猎</color>"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_4_1"
+    },
+    "zone_5": {
+      "raw": {
+        "id": "zone_5",
+        "name": "卡德霍之颅",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "有些伤口不会愈合，有些愤怒不会平息。",
+        "buffDescription": null,
+        "endingDescription": "当祂张开巨口，文明的辩解将苍白无力。",
+        "backgroundId": "rogue_6_map_5",
+        "zoneIconId": "zone_5",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPHIGH",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_05"
+      },
+      "mission": {
+        "zoneId": "zone_5",
+        "bannerText": "目标：找到<color=#0f907f>险路恶敌</color>节点并取得胜利",
+        "bannerIcon": "zone_banner_goal_boss_5"
+      },
+      "exhaustion": {
+        "zoneId": "zone_5",
+        "hintText": "行动力耗尽未击败<color=#e4817e>险路恶敌</color>\n将强制触发<color=#e4817e>追猎</color>"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_5"
+    },
+    "zone_6": {
+      "raw": {
+        "id": "zone_6",
+        "name": "源流交汇处",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "兽主们欢迎你的到来。",
+        "buffDescription": null,
+        "endingDescription": "祂们很喜欢你，如果你能再多坚持一会就好了。\n",
+        "backgroundId": "rogue_6_map_6",
+        "zoneIconId": "zone_6",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPBOSS",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_06"
+      },
+      "mission": {
+        "zoneId": "zone_6",
+        "bannerText": "目标：找到<color=#0f907f>险路恶敌</color>节点并取得胜利",
+        "bannerIcon": "zone_banner_goal_boss_5"
+      },
+      "exhaustion": {
+        "zoneId": "zone_6",
+        "hintText": "行动力耗尽未击败<color=#e4817e>险路恶敌</color>\n将强制触发<color=#e4817e>追猎</color>"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_6"
+    },
+    "zone_portal_normal_1_1": {
+      "raw": {
+        "id": "zone_portal_normal_1_1",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_1_1",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_1_1",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_1_1"
+    },
+    "zone_portal_normal_1_2": {
+      "raw": {
+        "id": "zone_portal_normal_1_2",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_1_2",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_1_2",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_1_2"
+    },
+    "zone_portal_normal_2_1": {
+      "raw": {
+        "id": "zone_portal_normal_2_1",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_2_1",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_2_1",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_2_1"
+    },
+    "zone_portal_normal_2_2": {
+      "raw": {
+        "id": "zone_portal_normal_2_2",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_2_2",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_2_2",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_2_2"
+    },
+    "zone_portal_normal_3_1": {
+      "raw": {
+        "id": "zone_portal_normal_3_1",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_3_1",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_3_1",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_3_1"
+    },
+    "zone_portal_normal_3_2": {
+      "raw": {
+        "id": "zone_portal_normal_3_2",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_3_2",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_3_2",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_3_2"
+    },
+    "zone_portal_normal_4_1": {
+      "raw": {
+        "id": "zone_portal_normal_4_1",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_4_1",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_4_1",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_4_1"
+    },
+    "zone_portal_normal_4_2": {
+      "raw": {
+        "id": "zone_portal_normal_4_2",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_4_2",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_4_2",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_4_2"
+    },
+    "zone_portal_normal_5_1": {
+      "raw": {
+        "id": "zone_portal_normal_5_1",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_5_1",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_5_1",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_5_1"
+    },
+    "zone_portal_normal_5_2": {
+      "raw": {
+        "id": "zone_portal_normal_5_2",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_5_2",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_5_2",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_5_2"
+    },
+    "zone_portal_normal_5_3": {
+      "raw": {
+        "id": "zone_portal_normal_5_3",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_5_3",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_5_3",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_5_3"
+    },
+    "zone_portal_normal_6_1": {
+      "raw": {
+        "id": "zone_portal_normal_6_1",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_6_1",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_6_1",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_6_1"
+    },
+    "zone_portal_normal_6_2": {
+      "raw": {
+        "id": "zone_portal_normal_6_2",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_6_2",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_6_2",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_6_2"
+    },
+    "zone_portal_normal_6_3": {
+      "raw": {
+        "id": "zone_portal_normal_6_3",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_6_3",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_6_3",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_6_3"
+    },
+    "zone_portal_normal_7_1": {
+      "raw": {
+        "id": "zone_portal_normal_7_1",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_7_1",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_7_1",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_7_1"
+    },
+    "zone_portal_normal_7_2": {
+      "raw": {
+        "id": "zone_portal_normal_7_2",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_7_2",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_7_2",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_7_2"
+    },
+    "zone_portal_normal_8_1": {
+      "raw": {
+        "id": "zone_portal_normal_8_1",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_8_1",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_8_1",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_8_1"
+    },
+    "zone_portal_normal_8_2": {
+      "raw": {
+        "id": "zone_portal_normal_8_2",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_8_2",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_8_2",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_8_2"
+    },
+    "zone_portal_normal_9": {
+      "raw": {
+        "id": "zone_portal_normal_9",
+        "name": "未萌生的摇篮",
+        "clockPerformance": null,
+        "displayTime": null,
+        "description": "诞生前的炼狱。",
+        "buffDescription": null,
+        "endingDescription": "很高兴你不用见识世间的残酷。\n",
+        "backgroundId": "rogue_6_map_0",
+        "zoneIconId": "zone_portal",
+        "isHiddenZone": false,
+        "bgmSignal": "ON_ROGUELIKE_MAPSECRET",
+        "bgmSignalWithLowSan": null,
+        "transitionEffectId": "main_transition_view_00"
+      },
+      "mission": {
+        "zoneId": "zone_portal_normal_9",
+        "bannerText": "自由探索，行动力耗尽后，将返回林间",
+        "bannerIcon": "zone_banner_goal_back"
+      },
+      "exhaustion": {
+        "zoneId": "zone_portal_normal_9",
+        "hintText": "行动力耗尽后\n将<color=#e4817e>返回</color>原先的区域"
+      },
+      "source_selector": "$.details.rogue_6.zones.zone_portal_normal_9"
+    }
+  },
+  "limits": [
+    "固定公开原件，不等于当前服务器或账户状态。",
+    "节点类型、持有及次数仅为声明条件，未读取或改写本局。",
+    "同格再进入、未知类型资格和特殊转换可能影响适用性；候选不保证可进入。"
+  ]
+}
