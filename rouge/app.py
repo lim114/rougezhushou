@@ -758,6 +758,10 @@ class MainWindow(QMainWindow):
         self.charge_timeline_button.setEnabled(False)
         self.charge_timeline_button.clicked.connect(self.show_charge_timeline)
         layout.addWidget(self.charge_timeline_button)
+        self.shield_timeline_button=QPushButton('机械师S2：比较破屏与爆炸时刻')
+        self.shield_timeline_button.setEnabled(False)
+        self.shield_timeline_button.clicked.connect(self.show_shield_timeline)
+        layout.addWidget(self.shield_timeline_button)
         self.damage_text = QPlainTextEdit()
         self.damage_text.setReadOnly(True)
         layout.addWidget(self.damage_text,1)
@@ -837,6 +841,23 @@ class MainWindow(QMainWindow):
         if previous is not None:previous.close();previous.deleteLater()
         dialog=ChargeTimelineDialog(scenario,self.damage_result['result']['estimate']['skill']['duration_seconds'],self)
         self.charge_timeline_dialog=dialog;dialog.show()
+
+    def show_shield_timeline(self):
+        if not self.damage_result:return
+        from copy import deepcopy
+        from .reference_dialog import ReferenceDialog
+        from .shield_timeline import compare_shield_windows,format_shield_windows
+        scenario=deepcopy(self.damage_result['scenario'])
+        if scenario['operator']!='mechanist' or scenario['skill']!=2:return
+        previous=getattr(self,'shield_timeline_dialog',None)
+        if previous is not None:previous.close();previous.deleteLater()
+        self.shield_timeline_dialog=ReferenceDialog('机械师S2 · 破屏与爆炸时刻',
+            'source填owner（本体）或structure（结构体）；破屏与命中分别填写秒数。hit_seconds可为null。原表弹药不决定事件次数或结束时刻。',
+            {'events':[],'windows_seconds':[0,5,20]},lambda preview:compare_shield_windows(scenario,preview),
+            format_shield_windows,[('window_seconds','窗口/秒'),('declared_breaks','破屏'),('owner_hits','本体命中'),
+                ('structure_hits','结构命中'),('explosion_damage_reference','爆炸条件伤害'),
+                ('ordinary_damage_reference','普通攻击参考'),('conditional_damage_subtotal','条件小计')],self)
+        self.shield_timeline_dialog.show()
 
     def show_token_budget(self):
         op=self.operator.currentData()
@@ -1228,6 +1249,7 @@ class MainWindow(QMainWindow):
 
     def calculate(self):
         if hasattr(self,'charge_timeline_button'):self.charge_timeline_button.setEnabled(False)
+        if hasattr(self,'shield_timeline_button'):self.shield_timeline_button.setEnabled(False)
         self.damage_result=None
         if hasattr(self,'relic_context'):self.damage_form.setRowVisible(self.relic_context,False)
         op=self.operator.currentData()
@@ -1368,6 +1390,7 @@ class MainWindow(QMainWindow):
                 result['estimate']['notes'].insert(0,'当前启用个人强化测试；测试选项不代表从本局画面读取到的强化，也不写入记忆。')
             self.damage_result = {'scenario':scenario,'result':result}
             self.charge_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==3)
+            self.shield_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==2)
             self.render_damage()
         except Exception as error:
             self.damage_result=None
