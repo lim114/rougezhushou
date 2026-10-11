@@ -44,3 +44,18 @@ class NodeCatalogTests(unittest.TestCase):
         self.assertIn('桑尼的邀请',[e['title'] for e in r['history_candidates']])
         for n in ({'observed_type':3},{'prediction':['不期而遇']},{'content':[]}):
             with self.assertRaises(ValueError):c.node_events(n)
+    def test_174(self):
+        e=next(e for e in c.all_events()['rows'] if e['title']=='桑尼的邀请');r=c.event_details(e['id'])
+        self.assertEqual(r['rows'][0]['game_scene_ids'],['scene_ro6_res1_enter'])
+        self.assertIn('云兽玩偶',r['rows'][0]['description'])
+        ids=[e['id'] for e in c.all_events()['rows'] if e['title']=='三重身'];self.assertEqual(len(set(ids)),3)
+        with self.assertRaises(ValueError):c.event_details('三重身')
+    def test_174_all_unmapped_original_records_queryable(self):
+        r=c.original_references();self.assertEqual(len(r['rows']),108)
+        self.assertEqual(len(c.original_references(record_type='scene')['rows']),45)
+        self.assertEqual(len(c.original_references(record_type='choice')['rows']),63)
+        for row in r['rows']:
+            single=c.original_references(record_id=row['record_id'])['rows']
+            self.assertEqual(len(single),1);self.assertFalse(single[0]['source_scene_link_verified'])
+        x=c.original_references(title='行动奖励')['rows'];self.assertEqual(len(x),1)
+        self.assertFalse(c.original_references()['natural_node_entry_verified'])

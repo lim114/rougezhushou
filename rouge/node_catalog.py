@@ -90,3 +90,29 @@ def node_events(node,floor=None,special_region=False):
     return _result(list(by_id.values()),history_candidates=history,type_candidates=deepcopy(types),
                    remembered_type=remembered,node_id=node.get('id'),type_basis=basis)
 COMMANDS['node']=node_events
+def original_references(query='',title=None,record_type='all',record_id=None):
+    if not isinstance(query,str) or len(query)>120:raise ValueError('检索词需要0–120字。')
+    _text(title,'标题',True);_text(record_id,'原表引用',True)
+    if record_type not in ('all','scene','choice'):raise ValueError('原表类别需要all、scene或choice。')
+    rows=[];needle=query.strip().casefold()
+    for kind,field,idkey in (('scene','unmapped_original_scenes','scene_id'),('choice','unmapped_original_choices','choice_id')):
+        if record_type not in ('all',kind):continue
+        for raw in _data()[field]:
+            if record_id is not None and raw[idkey]!=record_id:continue
+            if title is not None and raw['title']!=title:continue
+            text=json.dumps(raw,ensure_ascii=False).casefold()
+            if needle and needle not in text:continue
+            rows.append({'record_type':kind,'record_id':raw[idkey],**deepcopy(raw),
+                         'source_scene_link_verified':False,'reachable_from_entry':None})
+    if record_id is not None and not rows:raise ValueError('引用不在未分类原表记录中。')
+    return _result(rows,query=query,title=title,record_type=record_type,
+                   next_scene_is_destination_reference_only=True,
+                   natural_node_entry_verified=False)
+def event_details(event_id):
+    e=deepcopy(_event(event_id));represented={i for s in e['scenes'] for i in s['game_scene_ids']}
+    unlinked=[{'id':i,**deepcopy(s),'reachable_from_entry':None} for i,s in _original()['scenes'].items()
+              if s['title']==e['title'] and i not in represented]
+    return _result(e['scenes'],event=_summary(e),unlinked_original_scenes=unlinked,
+                   unclassified_original_query={'command':'original','input':{'query':e['title']}},
+                   server_scene_reachability_verified=False)
+COMMANDS.update(detail=event_details,original=original_references)
