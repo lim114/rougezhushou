@@ -72,3 +72,23 @@ class NodeCatalogTests(unittest.TestCase):
         valid={s['key'] for s in c.event_details(e['id'])['rows']}
         self.assertTrue(all(x['from'] in valid and x['to'] in valid for x in sub))
         self.assertTrue(all(x['branch_probability'] is None for x in sub))
+    def test_176(self):
+        e=next(e for e in c.all_events()['rows'] if e['title']=='桑尼的邀请')
+        r=c.event_paths(e['id']);self.assertGreaterEqual(len(r['rows']),2)
+        self.assertTrue(any(x['scenes'][-1].endswith(':1') for x in r['rows']))
+        one=c.event_paths(e['id'],max_paths=1);self.assertTrue(one['truncated'])
+        self.assertFalse(one['game_execution_verified'])
+    def test_176_no_navigation_depth_and_cycle_limits(self):
+        from unittest.mock import patch
+        e=next(e for e in c.all_events()['rows'] if e['title']=='黑诞')
+        rows=c.event_paths(e['id'])['rows'];used={k for row in rows for k in row['choices']}
+        self.assertIn(e['entry'][0]+':choice:1',used)
+        e=next(e for e in c.all_events()['rows'] if e['title']=='被歌颂的影子')
+        limited=c.event_paths(e['id'],max_steps=1)
+        self.assertTrue(limited['truncated']);self.assertIn('max_steps',limited['truncation_reasons'])
+        g={'rows':[{'from':'a','to':'a','choice_id':'x'+str(i)} for i in range(4)],'entries':['a'],'event':{},'unresolved':[]}
+        with patch.object(c,'choice_graph',return_value=g):
+            limited=c.event_paths('mock',max_paths=1)
+        self.assertEqual(len(limited['rows']),1);self.assertTrue(limited['truncated'])
+        e=next(e for e in c.all_events(include_indirect=True)['rows'] if e['title']=='安眠一隅')
+        self.assertGreater(len({s for row in c.event_paths(e['id'])['rows'] for s in row['scenes']}),2)

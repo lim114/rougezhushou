@@ -144,3 +144,34 @@ def choice_graph(event_id):
     return _result(edges,event=_summary(e),entries=deepcopy(e['entry']),unresolved=unresolved,
                    community_navigation_only=True)
 COMMANDS['graph']=choice_graph
+def event_paths(event_id,max_steps=40,max_paths=128):
+    if type(max_steps) is not int or not 1<=max_steps<=100 or type(max_paths) is not int or not 1<=max_paths<=4096:
+        raise ValueError('路径限制需要有效整数。')
+    g=choice_graph(event_id);adj={};stops={};rows=[];truncated=False;reasons=set()
+    for edge in g['rows']:adj.setdefault(edge['from'],[]).append(edge)
+    for stop in g['unresolved']:stops.setdefault(stop['scene'],[]).append(stop)
+    stack=[('visit',key,[key],[],[],None) for key in reversed(g['entries'])]
+    while stack:
+        if len(rows)>=max_paths:truncated=True;reasons.add('max_paths');break
+        mode,key,path,choices,navigation,status=stack.pop()
+        if mode=='emit':
+            rows.append({'scenes':path,'choices':choices,'navigation':navigation,'status':status});continue
+        out=adj.get(key,[]);unknown=stops.get(key,[])
+        if len(choices)>=max_steps and (out or unknown):
+            rows.append({'scenes':path,'choices':choices,'navigation':navigation,'status':'达到展示深度'})
+            truncated=True;reasons.add('max_steps');continue
+        if not out and not unknown:
+            rows.append({'scenes':path,'choices':choices,'navigation':navigation,'status':'导航末端，游戏结束未知'});continue
+        pending=[]
+        for edge in out:
+            target=edge['to'];nav=navigation+[deepcopy(edge)]
+            pending.append(('emit' if target in path else 'visit',target,path+[target],choices+[edge['choice_id']],nav,
+                            '循环导航；后续未枚举' if target in path else None))
+        for stop in unknown:
+            pending.append(('emit',key,path,choices+[stop['choice_id']],navigation+[deepcopy(stop)],
+                            '选择后续导航未知，游戏结束未知'))
+        stack.extend(reversed(pending))
+    return _result(rows,event=g['event'],truncated=truncated,truncation_reasons=sorted(reasons),
+                   game_execution_verified=False,cycles_are_navigation_references=True,
+                   limits={'max_steps':max_steps,'max_paths':max_paths})
+COMMANDS['paths']=event_paths
