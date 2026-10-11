@@ -42,3 +42,25 @@ def action_catalog(stage_id):
                     'absolute_seconds':None,
                     'source_selector':f"$.waves[{w['index']-1}].fragments[{f['index']-1}].actions[{ordinal-1}]"})
     return _result(stage,actions=rows,action_types=sorted(set(r['type'] for r in rows)))
+
+def predefined_activations(stage_id):
+    """Bind activation keys to exact public object aliases, not routeIndex."""
+    stage=_stage(stage_id); rows=[]; objects=stage['predefined_objects']
+    for row in action_catalog(stage_id)['actions']:
+        if row['type']!='ACTIVATE_PREDEFINED': continue
+        key=row['action'].get('key'); matches=[o for o in objects if o.get('alias')==key] if key else []
+        refs=[]
+        for obj in matches:
+            refs.append({'alias':obj.get('alias'), 'instance':deepcopy(obj.get('inst')),
+                'display_cell':display_cell(obj.get('position'),len(stage['map']),len(stage['map'][0])),
+                'direction_parameter':obj.get('direction'), 'hidden_parameter':obj.get('hidden'),
+                'skill_index_parameter':obj.get('skillIndex'),
+                'skill_rank_parameter':obj.get('mainSkillLvl'), 'actual_activation_seconds':None})
+        rows.append({'action_id':row['id'], 'queue_id':row['queue_id'], 'key':key,
+            'binding_status':'empty_key' if not key else 'exact_alias' if len(matches)==1 else
+                'ambiguous_alias' if matches else 'unresolved_alias', 'objects':refs,
+            'random_group':row['action'].get('randomSpawnGroupKey'),
+            'source_selector':row['source_selector'], 'actual_active':None})
+    return _result(stage,activations=rows,unreferenced_objects=[deepcopy(o) for o in objects
+        if not any(r['key']==o.get('alias') for r in rows)],
+        binding_rule='alias equality; activation routeIndex is not a spatial lookup')
