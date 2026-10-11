@@ -2,6 +2,8 @@
 
 # Project working rules
 
+用户2026-10-11追加要求：每节完成后更新云端索引。同步维护 CLOUD_INDEX.json 和 CLOUD_HANDOFF.md 顶部实时入口，记录真实完成节数、下一步与最新验收回执，和功能提交一起普通推送到 codex/p2-development；历史迁移清单不冒充当前索引。索引不能替代源码或远端核对，未通过全量仍如实记录。
+
 用户电脑操作工具要求（2026-10-11）：Windows-mcp 已安装，当前会话可用。后续 Windows 桌面读取和操作直接优先使用 Windows-mcp，不再默认使用 computer-use 技能。操作仍限定在已授权范围；不操作游戏、不发送开发测试聊天、不清空本局记忆或覆盖私人设置。
 
 用户本机最新要求（2026-10-11）：检查 GitHub `lim114/rougezhushou` 并同步到原 Windows `rouge`；后续改动同时应用于本机与远端 `codex/p2-development`。当前原 `rouge` 已是该分支的 Git工作副本；本机开发在这里进行，完成后按授权 commit 并普通 push，不能修改 main 或强推。云端修改回到本机先同步最新分支。私人运行状态、配置、聊天绑定与游戏样本始终只留本机，不能进入提交。同步维护不增加功能节数；用户随后已明确本批完成到150，第143–150节七低星本局修正/对照/预算完成，后续151，下次定期全量155。最新范围以 DEVELOPMENT_CHECKPOINT.json 和 verification/batch-143-150/summary.json 为准。

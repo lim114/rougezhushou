@@ -1,0 +1,45 @@
+{
+  "section": 171,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-11T23:39:14.326292+08:00",
+  "branch": "codex/p2-development",
+  "title": "全部具名事件入口与特殊来源目录",
+  "remaining_item": "P3节点全部事件与选择链（不要求生成概率）",
+  "new_capability": "全部具名事件入口与特殊来源目录",
+  "acceptance": "可直接通过API/CLI使用，来源条件、目录范围及未知资格保留，不修改本局记忆。",
+  "source_evidence": [
+    "rouge/data/node-catalog.json",
+    "rouge/data/node-events.json",
+    "rouge/data/node-reward-reference.json",
+    "rouge/data/battle-node-pools.json"
+  ],
+  "limitations": [
+    "固定资料全覆盖不等于当前服务器全部事件已核验；资格未知保留候选。",
+    "不输出节点生成概率，不自动领取奖励或操作游戏。"
+  ],
+  "test_selectors": [
+    "tests.test_node_catalog.NodeCatalogTests.test_171",
+    "tests.test_node_catalog.NodeCatalogTests.test_171_category_coverage",
+    "tests.test_node_catalog.NodeCatalogTests.test_171_pinned_source_revision"
+  ],
+  "files": [
+    "rouge/node_catalog.py",
+    "tests/test_node_catalog.py",
+    "rouge/data/node-catalog.json",
+    "scripts/node_catalog_cli.py"
+  ],
+  "validation": {
+    "tests_run": 3,
+    "passed": 3,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-171/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 185,
+  "preparation_issue": {
+    "kind": "git_diff_check_rejected_extra_EOF_blank_lines",
+    "resolution": "trimmed_code_EOF_and_regenerated_following_patches; no numerical/source-data change"
+  }
+}
