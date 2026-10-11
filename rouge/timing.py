@@ -391,7 +391,7 @@ class AttackTimeline:
     def output(self):
         from copy import deepcopy
         return {'mode':self.mode,'fps':FPS,'streams':self.streams,
-            'unit_scenarios':deepcopy(self.unit_scenarios),
+            **({'unit_scenarios':deepcopy(self.unit_scenarios)} if self.unit_scenarios else {}),
             'window_convention':'[开始帧,结束帧)，已锁定目标离开范围不取消弹体；消失另行取消',
             'scenario_provided':bool({k:v for k,v in self.options.items() if not k.startswith('_')}),
             'target_scope_notes':list(self.target_scope_notes),

@@ -41,3 +41,6 @@ CLOUD_SOURCE_MANIFEST.json 记录复制时公开源文件的哈希，状态仅�
 ## 手机首条续接指令
 
 读取 CLOUD_HANDOFF.md、AGENTS.md、PROJECT_PROGRESS.md 和 WORK_IN_PROGRESS.md 顶部，先运行 scripts/verify_cloud.py，然后衔接剩余 P2。机制未明先查原始证据；不操作游戏，不发送聊天，不清空本局记忆，不启动代理或定时任务。完成项从待办销项并记录到 PROJECT_COMPLETED.md。Windows 专属验证明确留给本机。
+# 2026-10-11追加：功能节必须推进待办
+
+每节都必须有具有实际意义的功能成果，明确对应PROJECT_PROGRESS.md中的剩余工作、新增能力和验收标准。只修漏洞、测试、研究归档或更新文档不能单独算一节；并入相关功能节，或记录为维护提交而不增加功能完成节数。已提交的编号作为历史保留，不能因维护提交而宣称P2待办已推进或完成。
