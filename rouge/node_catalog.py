@@ -295,3 +295,81 @@ def scene_choices(event_id,scene_key):
             'actual_selectable':None,'visible_button_proven':False})
     return _result(rows,scene={'key':s['key'],'description':s['description'],'edesc_texts':deepcopy(s['edesc_texts'])},event=_summary(e))
 COMMANDS['choices']=scene_choices
+def function_nodes(node_type=None,floor=None,difficulty=None,special_region=False):
+    _text(node_type,'节点类型',True)
+    if node_type is not None and node_type not in _all_node_types():raise ValueError('节点类型不在已证目录中。')
+    _floor(floor,special_region);_difficulty(difficulty)
+    rows=[{**deepcopy(f),'current_eligibility':None,'inventory_or_state_updated':False,'reference_only':True,
+           'known_requirement_checks':_node_requirement_checks(f['node_type'],floor,difficulty,special_region)}
+          for f in _battle_pools()['node_functions'] if node_type is None or f['node_type']==node_type]
+    return _result(rows,function_sources=deepcopy(_battle_pools()['sources']),
+                   condition_text_is_reference_only=True)
+def _graph_nodes(graph):
+    if not isinstance(graph,dict):raise ValueError('地图需要对象。')
+    nodes=graph.get('nodes')
+    if not isinstance(nodes,list):raise ValueError('地图节点需要列表。')
+    for node in nodes:
+        _validate_node(node);_text(node.get('id'),'节点引用')
+    if len({n['id'] for n in nodes})!=len(nodes):raise ValueError('地图节点引用必须唯一。')
+    return nodes
+def _content_event_rows(content):
+    if not content or content.get('kind')!='event' or not isinstance(content.get('title'),str):return []
+    rows=[];ids=content.get('scene_candidates') or []
+    if not isinstance(ids,list) or any(not isinstance(i,str) for i in ids):raise ValueError('场景候选需要文字列表。')
+    for e in _data()['events']:
+        if e['title']!=content['title']:continue
+        linked={i for s in e['scenes'] for i in s['game_scene_ids']}
+        row=_summary(e);row['observed_title_reference']=True
+        row['scene_candidate_overlap']=sorted(linked.intersection(ids))
+        row['floor_filter_applied']=False;row['server_eligibility']='未知';rows.append(row)
+    return rows
+def _content_identity_status(content,pass_through=False):
+    if not content:return {'observed_title':None,'status':'未读取','unique_identity_confirmed':False}
+    title=content.get('title');_text(title,'内容标题',True)
+    status=content.get('identity_status') or '身份未确认';unique=False
+    if content.get('source')=='same_frame_selected_node' and not pass_through:
+        if content.get('kind')=='event' and status=='visible_scene':
+            ids=content.get('scene_candidates') or []
+            unique=bool(isinstance(ids,list) and len(ids)==1 and isinstance(ids[0],str) and
+                        _original()['scenes'].get(ids[0],{}).get('title')==title)
+        elif content.get('kind')=='battle':
+            from .catalog import catalog
+            sid=content.get('variant_id')
+            unique=bool(isinstance(sid,str) and catalog()['stages'].get(sid,{}).get('name')==title)
+    return {'observed_title':title,'status':status,'unique_identity_confirmed':unique}
+def node_dossier(graph,node_id,floor=None,special_region=False,difficulty=None):
+    nodes=_graph_nodes(graph);_text(node_id,'节点引用');_floor(floor,special_region);_difficulty(difficulty)
+    matches=[n for n in nodes if n['id']==node_id]
+    if len(matches)!=1:raise ValueError('节点引用必须在当前地图唯一。')
+    node=matches[0];events=node_events(node,floor,special_region);battles={};types=events['type_candidates']
+    for t in types:
+        for s in battle_candidates(t,floor,context='all',special_region=special_region,difficulty=difficulty)['rows']:battles[s['id']]=s
+    current=deepcopy(node.get('content'));history=deepcopy(node.get('remembered_content'))
+    observed_refs=_content_event_rows(current);history_refs=_content_event_rows(history)
+    pass_through=node.get('observed_type') in ('林间空地','曲折密道')
+    # Visible title references narrow the current content; generic directory stays separate.
+    active_events=observed_refs if observed_refs and not pass_through else events['rows']
+    by_id={e['id']:e for e in active_events}
+    past={e['id']:e for e in events['history_candidates']}
+    for e in history_refs:past[e['id']]=e
+    identity=_content_identity_status(current,node.get('observed_type') in ('林间空地','曲折密道'))
+    # Explicit observed variant survives directory floor/context filtering.
+    if current and current.get('kind')=='battle' and isinstance(current.get('variant_id'),str):
+        explicit=next((s for s in battle_candidates(context='all')['rows'] if s['id']==current['variant_id'] and s['title']==current.get('title')),None)
+        if explicit:battles[explicit['id']]={**explicit,'observed_variant_reference':True,'floor_filter_applied':False}
+    generic_battles=deepcopy(list(battles.values()))
+    if current and current.get('kind')=='battle' and isinstance(current.get('title'),str) and not pass_through:
+        visible=[s for s in battle_candidates(context='all')['rows'] if s['title']==current['title'] and
+                 (not current.get('variant_id') or s['id']==current['variant_id'])]
+        if visible:battles={s['id']:{**s,'observed_title_reference':True,'floor_filter_applied':False} for s in visible}
+    functions=[f for t in types for f in function_nodes(t,floor,difficulty,special_region)['rows']]
+    return _result(list(by_id.values()),history_events=list(past.values()),battle_rows=list(battles.values()),function_rows=functions,
+        position={'node_id':node_id,'row':node.get('row'),'col':node.get('col'),'template_id':graph.get('template_id'),'zone_id':graph.get('zone_id')},
+        generic_event_candidates=deepcopy(events['rows']),generic_battle_candidates=generic_battles,
+        revealed_content=deepcopy(current or history),current_content=current,history_content=history,
+        content_history=deepcopy(node.get('content_history') or []),
+        observed_event_rows=observed_refs,history_event_rows=history_refs,
+        observed_title=identity['observed_title'],content_identity_status=identity['status'],
+        type_candidates=types,actual_content_identity_confirmed=identity['unique_identity_confirmed'],
+        current_content_observed=bool(current),history_only=not bool(current) and bool(history))
+COMMANDS.update(dossier=node_dossier,functions=function_nodes)

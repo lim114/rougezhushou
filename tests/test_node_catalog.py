@@ -181,3 +181,43 @@ class NodeCatalogTests(unittest.TestCase):
         self.assertEqual(len(r['rows'][0]['subchoices']),3)
         self.assertEqual({x.rsplit(':',1)[1] for x in r['rows'][0]['next_scenes']},{'2','4','5'})
         self.assertIn('edesc_texts',r['scene'])
+    def test_182(self):
+        graph={'template_id':'t','zone_id':'zone_1','nodes':[{'id':'n','row':1,'col':2,'observed_type':'不期而遇'}]};before=deepcopy(graph)
+        r=c.node_dossier(graph,'n',floor=1);self.assertEqual(r['position']['col'],2);self.assertTrue(r['rows']);self.assertEqual(graph,before)
+        graph['nodes'][0]['observed_type']='作战';r=c.node_dossier(graph,'n',floor=1);self.assertTrue(r['battle_rows'])
+        self.assertFalse(r['actual_content_identity_confirmed'])
+    def test_182_ambiguous_current_and_confirmed_history_separate(self):
+        n={'id':'n','observed_type':'得偿所愿','content':{'kind':'event','title':'无人商店',
+           'scene_candidates':['scene_ro6_wish_2','scene_ro6_wish_3'],'identity_status':'ambiguous_scene','source':'same_frame_selected_node'},
+           'remembered_content':{'kind':'event','title':'桑尼的邀请','scene_candidates':['scene_ro6_res1_enter'],'identity_status':'visible_scene'}}
+        g={'nodes':[n]};before=deepcopy(g);r=c.node_dossier(g,'n',floor=6)
+        self.assertFalse(r['actual_content_identity_confirmed']);self.assertEqual(r['observed_title'],'无人商店')
+        self.assertEqual(r['history_content']['title'],'桑尼的邀请');self.assertEqual(g,before)
+        self.assertIn('桑尼的邀请',[x['title'] for x in r['history_event_rows']])
+        n['content']={'kind':'event','title':'桑尼的邀请','scene_candidates':['scene_ro6_res1_enter'],
+                      'identity_status':'visible_scene','source':'same_frame_selected_node'}
+        r=c.node_dossier(g,'n',floor=6)
+        self.assertIn('桑尼的邀请',[x['title'] for x in r['rows']]);self.assertTrue(r['actual_content_identity_confirmed'])
+    def test_182_functions_unknown_types_and_final_no_boss(self):
+        self.assertEqual(len(c.function_nodes()['rows']),7)
+        g={'nodes':[{'id':'n','observed_type':'羽瞰点'}]}
+        r=c.node_dossier(g,'n');self.assertEqual(r['function_rows'][0]['node_type'],'羽瞰点')
+        g['nodes'][0]['observed_type']='未知的诡秘';r=c.node_dossier(g,'n')
+        self.assertIn('作战',r['type_candidates']);self.assertEqual(len(r['function_rows']),7)
+        g['nodes'][0]['observed_type']='险路尽头';r=c.node_dossier(g,'n')
+        self.assertFalse(r['battle_rows'])
+        for g in ({'nodes':[3]},{'nodes':None},{'nodes':[{'id':'n'},{'id':'n'}]}):
+            with self.assertRaises(ValueError):c.node_dossier(g,'n')
+    def test_182_function_reference_stays_visible_when_ineligible(self):
+        r=c.function_nodes('“居民”据点',floor=1,difficulty=3)['rows'][0]
+        self.assertTrue(r['reference_only']);self.assertFalse(r['known_requirement_checks']['known_floor_requirement_matches'])
+        self.assertFalse(r['known_requirement_checks']['known_difficulty_requirement_matches'])
+        dossier=c.node_dossier({'nodes':[{'id':'n','observed_type':'“居民”据点'}]},'n',floor=1,difficulty=3)
+        self.assertFalse(dossier['battle_rows']);self.assertTrue(dossier['function_rows'])
+    def test_182_visible_title_does_not_retain_unrelated_current_events(self):
+        n={'id':'n','observed_type':'不期而遇','content':{'kind':'event','title':'桑尼的邀请',
+              'scene_candidates':['scene_ro6_res1_enter'],'identity_status':'visible_scene','source':'same_frame_selected_node'}}
+        r=c.node_dossier({'nodes':[n]},'n',floor=3)
+        self.assertEqual([x['title'] for x in r['rows']],['桑尼的邀请'])
+        self.assertTrue(r['generic_event_candidates'])
+        self.assertTrue(all(x['title']!='桑尼的邀请' for x in r['generic_event_candidates']))
