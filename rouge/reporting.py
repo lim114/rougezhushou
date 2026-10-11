@@ -438,6 +438,8 @@ def reproducible_context_sections(scenario,result):
         for identity,options in units.items():
             if identity not in active_units or not isinstance(options,dict):continue
             name=tokens.get(identity,{}).get('name') or '独立单位'
+            if scenario.get('timing_mode','frames')=='continuous':
+                options={k:v for k,v in options.items() if k in ('target_windows','target_disappears_seconds')}
             notes.extend(condition_lines(options,name+'声明 · '))
     for record in unit_scenarios:
         name=catalog()['operators'][scenario['operator']].get('tokens',{}).get(record['unit'],{}).get('name') or '独立单位'

@@ -242,6 +242,7 @@ class AttackTimeline:
                   'target_disappears_seconds','projectile_travel_seconds',
                   'windup_frames','recovery_frames','start_delay_frames',
                   'post_skill_lock_frames','sp_lockout_extra_seconds')
+            if self.mode=='continuous':keys=('target_windows','target_disappears_seconds')
             from copy import deepcopy
             self.unit_scenarios.append({'unit':unit,'target_scope':self.target_scope,
                 'options':deepcopy({k:v for k,v in child.options.items() if k in keys}),
