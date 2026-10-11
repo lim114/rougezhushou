@@ -1,3 +1,13 @@
+<!-- live-cloud-index:start -->
+# 当前云端续接索引 · 第170节
+
+已完成至170，后续171；本批状态 `IN_PROGRESS`。下次定期全量185。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+
+恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
+
+最新本机全量：`verification/full-170/native.json`，可用范围全通过：`False`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。下面是历史交接，不代表当前节数。
+<!-- live-cloud-index:end -->
+
 ## 本机与 GitHub 开发分支同步 · 2026-10-11
 
 原 Windows `rouge` 工作目录已按用户新指令同步最新 `codex/p2-development` 并建立同仓库 upstream，源提交 `69497c98a17415ee4b635cef088e465aa6c9188c`。后续在该分支开发并普通推送；本机运行仍从原 `rouge/run.cmd` 启动。原始配置、账号/本局档案、聊天绑定及私人样本没有迁入公开仓库，也没有被云端旧状态覆盖。下文“独立项目/原项目保留”是2026-10-06初次迁移历史，当前已由本次源码同步接续。

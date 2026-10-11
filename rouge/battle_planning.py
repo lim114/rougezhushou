@@ -280,3 +280,39 @@ def mechanism_provenance(stage_id,enemy_id,level):
         enemy_source=ref['source'],limits=list(LIMITS)+[
             '字段缺失、null、空列表及0分别保留；差异不证明继承或覆盖顺序。',
             '同一参数位置变化不证明对应招式等价，不推算首发、伤害或阶段。'])
+
+def enemy_scenario_comparison(left_stage,right_stage,enemy_id,left_level,right_level,*,run_config=None,right_run_config=None):
+    """Compare known effective environment subtotals and source-bound mechanics."""
+    left=enemy_preview(left_stage,enemy_id,left_level,run_config)
+    right=enemy_preview(right_stage,enemy_id,right_level,run_config if right_run_config is None else right_run_config)
+    def side(sid,entry):
+        env=entry['environment'];pending=entry['context_pending']
+        return {'stage_id':sid,'stage_name':_stage(sid)['name'],'enemy_id':entry['id'],'level':entry['level'],
+            'known_environment_subtotal':deepcopy(env['stats']) if env else None,
+            'full_effective_panel':None,
+            'supported_environment_complete':bool(env) and not pending,
+            'damage_factor_subtotal':env['damage_factor'] if env else None,
+            'pending':list(pending),'modifier_steps':deepcopy(env['steps']) if env else [],
+            'immunity_reference':deepcopy(entry['immunity_reference']),
+            'abilities_reference':deepcopy(entry['abilities']),
+            'mechanism_sources':mechanism_provenance(sid,enemy_id,entry['level']),
+            'stage_source':deepcopy(_stage(sid)['level_source'])}
+    a=side(left_stage,left);b=side(right_stage,right);differences=[]
+    pa=a['known_environment_subtotal'];pb=b['known_environment_subtotal']
+    if pa is not None and pb is not None:
+        for key in sorted(set(pa)|set(pb)):
+            if pa.get(key)!=pb.get(key):
+                av=pa.get(key);bv=pb.get(key)
+                numerical=type(av) in (int,float) and type(bv) in (int,float)
+                differences.append({'attribute':key,'left_known_subtotal':av,'right_known_subtotal':bv,
+                    'subtotal_delta':bv-av if numerical else None,
+                    'full_effective_delta':None})
+    return {'left':a,'right':b,'left_run_config':deepcopy(run_config or {}),
+        'right_run_config':deepcopy((run_config if right_run_config is None else right_run_config) or {}),
+        'attribute_differences':differences,
+        'immunity_differences':_field_diff(a['immunity_reference'],b['immunity_reference']),
+        'ability_differences':_field_diff(a['abilities_reference'],b['abilities_reference']),
+        'actual_gameplay_verified':False,'scope':'offline_fixed_scenario_comparison',
+        'limits':list(LIMITS)+['环境小计差值不证明完整阶段伤害；未套用藏品或隐藏技能。',
+            '两个关卡分别求值，同敌人ID不意味着等级、阶段、免疫和环境相同。',
+            '完整有效面板保持未知：敌人技能和阶段的实际属性修正未完全核验。']}

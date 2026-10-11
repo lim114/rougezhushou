@@ -152,3 +152,32 @@ class BattlePlanningTests(unittest.TestCase):
         self.assertEqual(next(x for x in r if x['path']=='$.s')['right']['state'],'empty_list')
         self.assertEqual(next(x for x in r if x['path']=='$.a')['right']['state'],'absent')
         self.assertTrue(_field_diff({'s':False},{'s':0}))
+
+    def test_170_enemy_variant_compare(self):
+        from rouge.battle_planning import enemy_scenario_comparison
+        from rouge.battle_preview import battle_data
+        s=battle_data()['stages']['ro6_n_1_1'];eid=s['enemies'][0]['id'];lvl=s['enemies'][0]['level']
+        variants=[(sid,e) for sid,t in battle_data()['stages'].items() if sid!=s['id'] for e in t['enemies'] if e['id']==eid]
+        sid,e=variants[0]
+        r=enemy_scenario_comparison(s['id'],sid,eid,lvl,e['level'],run_config={'difficulty':{'value':0,'mode':'NORMAL'}})
+        self.assertEqual(r['left']['enemy_id'],r['right']['enemy_id'])
+        self.assertEqual(r['right']['stage_id'],sid)
+        self.assertFalse(r['actual_gameplay_verified'])
+
+    def test_170_unknown_full_panel_preserved(self):
+        from rouge.battle_planning import enemy_scenario_comparison
+        r=enemy_scenario_comparison('ro6_n_1_1','ro6_n_1_1','enemy_2133_shdopl',0,0)
+        self.assertIsNotNone(r['left']['known_environment_subtotal'])
+        self.assertIsNone(r['left']['full_effective_panel'])
+        self.assertTrue(r['left']['pending'])
+
+    def test_170_independent_difficulty_scenarios(self):
+        from rouge.battle_planning import enemy_scenario_comparison
+        r=enemy_scenario_comparison('ro6_n_1_1','ro6_n_1_1','enemy_2133_shdopl',0,0,
+            run_config={'difficulty':{'value':4,'mode':'NORMAL'},'zone':{'id':'zone_1'}},
+            right_run_config={'difficulty':{'value':5,'mode':'NORMAL'},'zone':{'id':'zone_1'}})
+        hp=next(d for d in r['attribute_differences'] if d['attribute']=='maxHp')
+        self.assertGreater(hp['right_known_subtotal'],hp['left_known_subtotal'])
+        self.assertIsNone(hp['full_effective_delta'])
+        self.assertEqual(r['left_run_config']['difficulty']['value'],4)
+        self.assertEqual(r['right_run_config']['difficulty']['value'],5)
