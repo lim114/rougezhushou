@@ -44,3 +44,15 @@ def all_events(node_type=None,include_indirect=False):
                    original_uncataloged=deepcopy(_data()['uncataloged_original_titles']),
                    known_node_types=_all_node_types())
 COMMANDS={'events':all_events}
+def event_candidates(node_type=None,floor=None,special_region=False,include_indirect=False):
+    _floor(floor,special_region)
+    rows=[];excluded=[]
+    for e in all_events(node_type,include_indirect)['rows']:
+        natural_context=e['natural'] is not False
+        if floor is not None and not special_region and natural_context and e['floors'] and floor not in e['floors']:
+            excluded.append({**e,'reason':'固定社区目录的主层范围不包含所选层'});continue
+        e['floor_status']='目录主层条件相符' if floor is not None and not special_region and natural_context and e['floors'] else '层数或特殊区域资格未知'
+        e['server_eligibility']='未知';rows.append(e)
+    return _result(rows,excluded=excluded,floor=floor,special_region=special_region,
+                   indirect_included=include_indirect)
+COMMANDS['candidates']=event_candidates

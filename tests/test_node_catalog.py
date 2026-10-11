@@ -19,3 +19,14 @@ class NodeCatalogTests(unittest.TestCase):
         r=c.all_events();source=r['sources']['cached_community_catalog']
         self.assertIn('oldid=427904',source['url']);self.assertEqual(source['revision'],'427904')
         self.assertEqual(r['scope']['parsed_source_revision'],'427904')
+    def test_172(self):
+        a=c.event_candidates('不期而遇',floor=1);b=c.event_candidates('不期而遇',floor=3)
+        self.assertIn('桑尼的邀请',[e['title'] for e in a['rows']])
+        self.assertNotIn('桑尼的邀请',[e['title'] for e in b['rows']])
+        self.assertIn('桑尼的邀请',[e['title'] for e in c.event_candidates('不期而遇',floor=3,special_region=True)['rows']])
+        self.assertTrue(c.event_candidates('先行一步',floor=6)['rows'])
+        with self.assertRaises(ValueError):c.event_candidates(floor=True)
+    def test_172_indirect_not_main_floor_filtered(self):
+        r=c.event_candidates(floor=6,include_indirect=True)
+        self.assertIn('安眠一隅',[e['title'] for e in r['rows']])
+        with self.assertRaises(ValueError):c.event_candidates(special_region=1)
