@@ -1024,6 +1024,26 @@ def build_report(scenario,result):
             ['没有有效出手参考时不生成技能来源；出手参考不证明余震或残影实际命中。',
              '随机独立性、残影刷新/消耗顺序未核验，不套用多次独立判定公式；S1完整结束与周期未知。',
              '指定魂灵施放次数只列窗口条件参考，不证明完整施放或周期归属，不在两个阶段重复计入。']))
+    module_reference=result.get('mechanist_module_reference')
+    if module_reference:
+        rows=[]
+        for index,packet in enumerate(module_reference['packets']):
+            key='packet_'+str(index)+'_'
+            rows.extend([metric(key+'attack',packet['name']+' · 稳定攻击参考',packet['source_attack_reference']),
+                         metric(key+'skill_scale',packet['name']+' · 原包倍率',packet['skill_attack_scale'],'倍'),
+                         metric(key+'module_scale',packet['name']+' · 模组包倍率',packet['module_attack_scale'],'倍'),
+                         metric(key+'raw',packet['name']+' · 减伤前条件量',packet['selected_raw_packet']),
+                         metric(key+'damage',packet['name']+' · 单包条件伤害',packet['per_hit_reference'])])
+            if packet['modeled_or_declared_count'] is not None:
+                rows.append(metric(key+'count',packet['name']+' · 既有预览/声明次数',packet['modeled_or_declared_count'],'次'))
+                rows.append(metric(key+'subtotal',packet['name']+' · 固定条件次数小计',packet['conditional_count_damage_reference']))
+            if packet['blocker_unknown_candidates']:
+                rows.extend([metric(key+'unblocked',packet['name']+' · 未满足阻挡条件的候选',packet['blocker_unknown_candidates'][0]),
+                             metric(key+'blocked',packet['name']+' · 满足阻挡条件的候选',packet['blocker_unknown_candidates'][1])])
+        rows.extend([metric('static_subtotal','静态条件次数小计',module_reference['conditional_count_damage_reference']),
+                     metric('static_window','既有预览窗口条件小计',module_reference['modeled_window_damage_reference']),
+                     metric('actual_total','完整实际技能伤害',None),metric('collision','实际冲锋碰撞时刻',None,'秒')])
+        sections.append(section('mechanist_module_reference','机械师模组 · 明确选择的静态单包条件',rows,module_reference['notes']))
     charge=result.get('charge_reference')
     if charge:
         sections.append(section('charge_reference','结构性原理 · 冲锋次数参考',[

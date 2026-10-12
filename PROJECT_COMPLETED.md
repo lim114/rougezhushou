@@ -1,3 +1,7 @@
+## 功能第214节 · 机械师模组防御前条件单包与既有窗口计算
+
+2026-10-12T15:45:58.408591+08:00。新增：当前封存隐藏天赋、技能索引门、伤害来源与事件14闭合后，默认关闭的机械师模组条件单包接入实际计算/报告、培养界面、单包算例及既有冲锋/破屏窗口。明确本体、自己token、其它/未阻挡/未知身份，防御前atkScale乘法不重复面板或最终伤害层，完整实际总量保持未知。。必要检查95项，跳过0项，无失败。边界：static versioned native rule, not current hotfix or actual runtime binding；each source-valid packet and actual hidden ability attachment are explicit mathematical preconditions；manual JSON blocker identity is not automatic actual combat state; counts/range/token number do not determine identity；existing preview counts and supplied collisions remain conditional references; actual clock/start/sample/end unknown；full totals and cycle/window DPS stay None; static condition subtotals have a separate report section；no promotion to token own damage, summoned-structure damage, healing or unknown packet scope；root212 timing offset clipping repair is untouched: no timing.py or static_action_window hunks in this patch。回执verification/sections/214.json。下一节215，下次全量215。
+
 ## 功能第213节 · 事件与特殊战斗入口分类、主层条件和精确预览
 
 2026-10-12T15:22:44.565799+08:00。新增：固定选择器拆分21关的实际来源类别；节点目录按可靠主层选择两种商店挑战、按自然入口核对两据点与两狭路的条件。未知不排除；已列条件排除独立展示且仍可精确ID预览，保留输入/选择/折叠/滚动和既有历史/导航。。必要检查72项，跳过0项，无失败；首次归档摘要失败由多出的末尾LF造成，恢复精确原字节后复验通过。真实0.82商店挑战分支与死箱地图查询已核对，私人五项保持。边界：匹配仅指已列条件；挑战解锁、其他前置及完整服务器资格仍未知。；特殊区域层数口径未证；不能用秘境区域ID后缀充当主层。；自然节点范围不用于内容强制入口、历史读取或流窜居民克隆。；15个原事件/特殊关卡尚无层数适用依据；未把同类关卡当当前可发生全集。；固定原件与社区条件引用分别保留，不宣称当前客户端全覆盖。；没有新增地图校准：232四图失败原样封存，手工瓶颈延期，不计节。。回执verification/sections/213.json。下一节214，下次全量215。

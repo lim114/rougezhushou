@@ -347,7 +347,18 @@ def packet_worksheet(scenario):
         add('本体单次技能范围效果','physical',bb['atk_scale'])
         if 'companion_attack' in s:add('声明受益干员单次部署效果','physical',bb['atk_scale'],float(s['companion_attack']))
     elif number==3:add('丹增单次命中条件','physical',bb['bird_atk_scale'])
+    module_reference=result.get('mechanist_module_reference')
+    if module_reference:
+        selected=[row for row in module_reference['packets'] if row['key']!='normal']
+        for row,packet in zip(rows,selected):
+            row['module_attack_scale']=packet['module_attack_scale']
+            row['pre_module_packet_reference']=row['pre_defense_value']
+            raw=packet['selected_raw_packet']
+            row['pre_defense_value']=raw
+            row['after_defense_value']=None if raw is None else (max(raw-defense,raw*.05) if row['damage_type']=='physical' else max(raw*(1-resistance/100),raw*.05))
+            row['single_packet_reference']=packet['per_hit_reference']
     return {'operator':profile['name'],'skill':s['skill'],'skill_name':result['estimate']['skill']['name'],
+        **({'mechanist_module_reference':deepcopy(module_reference)} if module_reference else {}),
         'rows':rows,'source':_source(),'native_verified':False,'warnings':result.get('warnings',[]),
         'notes':[BOUNDARY,'单包不乘未知攻击次数，不生成技能总量、回转或周期。',
             '治疗包是单名受益人的原始潜在治疗，未加入受疗加成、禁疗、实际损血或有效覆盖。',

@@ -1,0 +1,214 @@
+{
+  "title": "机械师模组防御前条件单包与既有窗口计算",
+  "remaining_item": "机械师模组条件范围；实际阻挡、冲锋碰撞、攻击快照和当前热更新仍未知",
+  "new_capability": "当前封存隐藏天赋、技能索引门、伤害来源与事件14闭合后，默认关闭的机械师模组条件单包接入实际计算/报告、培养界面、单包算例及既有冲锋/破屏窗口。明确本体、自己token、其它/未阻挡/未知身份，防御前atkScale乘法不重复面板或最终伤害层，完整实际总量保持未知。",
+  "source_evidence": {
+    "report": "research/p2-mechanist-module-current/REPORT.md",
+    "receipt": "research/p2-mechanist-module-current/receipt.json",
+    "data_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "base_manifest_version": "26-09-13-15-28-10-30688348",
+    "physical_validation": {
+      "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+      "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+      "methods": 57,
+      "unique_instructions": 9097,
+      "all_instruction_bytes_match": true,
+      "limits": []
+    },
+    "asset_validation": [
+      {
+        "source": "battle/prefabs/[uc]equips.ab",
+        "sha256": "6f15ab7b956b76e00ca88b95ff9f18b4ba53ee48510fab563915d7d1a91e24ea",
+        "bytes": 730733,
+        "matches_current_manifest": true
+      },
+      {
+        "source": "config/buff_template_holder.ab",
+        "sha256": "12419ad8d1ea9f670cca214e525240c691cdf3796b82acc8050698d66c202a37",
+        "bytes": 2022247,
+        "matches_current_manifest": true
+      },
+      {
+        "source": "battle/prefabs/[uc]projectiles.ab",
+        "sha256": "bfd637cca7e39e239534da33a580bc6a02d8f160a24708466028dee5e32d7b73",
+        "bytes": 1848878,
+        "matches_current_manifest": true
+      },
+      {
+        "source": "charpack/char_4230_mcnist.ab",
+        "sha256": "16fd579398c3c1cf5b6c000bd01413d0af41dc493d64144dd763c15995954e1b",
+        "bytes": 29788,
+        "matches_current_manifest": true
+      },
+      {
+        "source": "battle/prefabs/[uc]skills.ab",
+        "sha256": "14306a31b1856f61b25812a69a2a057b7c4634561fb2c2bccc42fb37ee41a27e",
+        "bytes": 1343313,
+        "matches_current_manifest": true
+      }
+    ],
+    "monoscripts_physical_sha256": "02266c5aff4a6d7b6e08db5b70acd76cbaf8dc14818bdeaa0c94af04a25efcce",
+    "stage_skill_indices": {
+      "1": [
+        0
+      ],
+      "2": [],
+      "3": []
+    },
+    "skill_index_binding": {
+      "converter_method_index": 77906,
+      "array_index_read": "0x180abd037..0x180abd044 reads skills[index] at array+0x20; index zero is first skill",
+      "copied_to_main_skill_index": "0x180abd6ef..0x180abd6f3 -> BattleCharacterData.mainSkillIndex+0x100",
+      "checked_before_assign": "Character._AssignTalents 0x180a348ed..0x180a34900 -> BasicTalent.CheckValidBySkillIndex",
+      "empty_list": "current helper0x1844acab0 returns true for null/empty; otherwise Contains(index) is required"
+    },
+    "create_projectile_parameter_binding": {
+      "method_index": 64709,
+      "flags": "0x86",
+      "static": false,
+      "registers": "instance rcx; key rdx; damage source r8; projectile start r9; target stack+0x20",
+      "owner_bombardment": "RangedAttack.CreateProjectile 0x180ec3153 get_owner -> r13 -> r8 at0x180ec329c",
+      "charge": "EmitProjectileToTileUseSelector 0x1810ac4c0 _sourceType -> stack+0x50 -> r8 at0x1810ac723; _spawnSourceType selects token ability/start, not damage owner"
+    },
+    "template_event": "ON_CALCULATE_DAMAGE=14; self blocker branch or own-token checker-success branch",
+    "multiply_layer": "AtkScaleUp.Execute96910 -> MergeScale0x180ae1fa0 -> atkInfo.atkScale -> finalAtk -> armor/resistance",
+    "source_valid_required": true,
+    "public_targeted_search": "https://prts.wiki/w/机械师",
+    "public_search_boundary": "corroboration only; does not override current stage1 skill gate or prove current hotfix equivalence"
+  },
+  "acceptance": {
+    "unique_necessary_cases": 95,
+    "passed_at_least_once": 95,
+    "remaining_failures": 0,
+    "remaining_errors": 0,
+    "skips": 0,
+    "new_final": {
+      "tests_run": 17,
+      "passed": 17,
+      "main_window_class_offscreen_cases": 2
+    },
+    "initial_new": {
+      "tests_run": 15,
+      "passed": 13,
+      "failures": 1,
+      "errors": 1,
+      "failure": "implicit unavailable duration0 was mistaken for explicit zero window; original assertion preserved and fixed",
+      "error": "root concurrent public211 dependency absent in early isolation; exact files copied to base/work"
+    },
+    "initial_compatibility": {
+      "tests_run": 78,
+      "passed": 76,
+      "errors": 2,
+      "cause": "two existing045 tests needed omitted public cache fixtures"
+    },
+    "compatibility_recheck": {
+      "tests_run": 2,
+      "passed": 2,
+      "fixture_only_fix": true
+    },
+    "source_receipt_final_recheck": {
+      "tests_run": 1,
+      "passed": 1,
+      "unique_case_already_counted": true
+    },
+    "aggregate_boundary": "95 unique tests have passing receipts; no single95-run all-pass claim",
+    "initial_failures_retained": true,
+    "visible_original_window_required_after_root_integration": true,
+    "private_state_used": false,
+    "game_operated": false,
+    "chat_sent": false,
+    "git_apply_check": {
+      "command": "git apply --check --ignore-space-change",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "packet_encoding_check": "0 CR bytes; one final LF",
+    "root_current_file_check": "57 methods9097 unique instructions all raw bytes and digests;5AB SHA/size/manifest MD5 and gmassets SHA all match.",
+    "root_actual_window": "See verification/section-214/window.json; true native project window observed, not gameplay source validation."
+  },
+  "acceptance_cases": [
+    "default disabled and unqualified cultivation/map/stage-skill gate preserve old calculation results",
+    "stage1 zero-based index0 only; stage2/3 empty allow-list all selected skills; level59 excluded and60 included",
+    "self/own_token exactly1.5; other/none1; missing/unknown lists two candidates and perpacket None",
+    "strict identity/flag types; other operators do not consume hidden flag/context",
+    "atkScale before physical defense, scaled minimum damage, magical resistance, stable attack bonus and taken multipliers once",
+    "normal/S1/shield/bombard/charge packet amounts and existing counts; source mechanical rather than token attack",
+    "declared target lifetime0 excludes counts; owner empty acquisition range does not exclude independent shield explosion",
+    "zero window only when explicit; whole-skill S2 break declaration does not become window placement",
+    "single packet worksheet, existing damage budget, charge collision declaration window and shield window consume selected perpacket references",
+    "actual complete cast/window/cycle/dps, source validity, blocker, collision and sample clock remain None",
+    "temporary public MainWindow-class shows option only when qualified, default off, missing identity unknown, manual own_token produces report1.5, no cross-operator hidden flag reuse"
+  ],
+  "limitations": [
+    "static versioned native rule, not current hotfix or actual runtime binding",
+    "each source-valid packet and actual hidden ability attachment are explicit mathematical preconditions",
+    "manual JSON blocker identity is not automatic actual combat state; counts/range/token number do not determine identity",
+    "existing preview counts and supplied collisions remain conditional references; actual clock/start/sample/end unknown",
+    "full totals and cycle/window DPS stay None; static condition subtotals have a separate report section",
+    "no promotion to token own damage, summoned-structure damage, healing or unknown packet scope",
+    "root212 timing offset clipping repair is untouched: no timing.py or static_action_window hunks in this patch"
+  ],
+  "files": [
+    "research/p2-mechanist-module-current/catalog-stage-binding.json",
+    "research/p2-mechanist-module-current/character-skill-binding.json",
+    "research/p2-mechanist-module-current/compatibility-fixture-recheck-receipt.json",
+    "research/p2-mechanist-module-current/compatibility-initial-receipt.json",
+    "research/p2-mechanist-module-current/equip-prefab-binding.json",
+    "research/p2-mechanist-module-current/exact-parameters.json",
+    "research/p2-mechanist-module-current/initial-new-tests-failures.json",
+    "research/p2-mechanist-module-current/initial-preparation-failures.json",
+    "research/p2-mechanist-module-current/native-proof.json",
+    "research/p2-mechanist-module-current/necessary-final-receipt.json",
+    "research/p2-mechanist-module-current/projectile-prefab-binding.json",
+    "research/p2-mechanist-module-current/receipt.json",
+    "research/p2-mechanist-module-current/REPORT.md",
+    "research/p2-mechanist-module-current/selected-metadata.json",
+    "research/p2-mechanist-module-current/source-final-recheck-receipt.json",
+    "research/p2-mechanist-module-current/template-binding.json",
+    "rouge/mechanist_module_reference.py",
+    "rouge/data/mechanist-module-native-reference.json",
+    "rouge/damage.py",
+    "rouge/operator_options.py",
+    "rouge/app.py",
+    "rouge/reporting.py",
+    "rouge/calibration.py",
+    "rouge/charge_timeline.py",
+    "rouge/shield_timeline.py",
+    "tests/test_mechanist_module_reference_current.py",
+    "tests/test_mechanist_module_reference_window.py",
+    "verification/section-214/native-static-check.json",
+    "verification/section-214/window.json"
+  ],
+  "test_selectors": [
+    "tests.test_mechanist_module_reference_current",
+    "tests.test_mechanist_module_reference_window",
+    "tests.test_charge_reference",
+    "tests.test_calibration",
+    "tests.test_damage_budget_139",
+    "tests.test_charge_timeline_127",
+    "tests.test_training_input_types",
+    "tests.test_shield_break_reference",
+    "tests.test_shield_timeline_131",
+    "tests.test_view_catalog_045"
+  ],
+  "baseline_snapshot_commit": "ca8a3c8abbd7066ca5f824da50f13e429ffc9748",
+  "baseline_boundary": "copied public210 and concurrent public211 dependencies to both base/work; export only listed own functional hunks, no timing/environment/branch edits",
+  "root_head_at_export": "1c3037def5043fedc82bcc3ad53b0f097a5fbe52",
+  "patch_sha256": "9e7b819ee34694a5dac12f80aa6947c3973dbe6776ae0108d426933d1fe4a77c",
+  "patch_bytes": 8274929,
+  "section": 214,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T15:45:58.408591+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 95,
+    "passed": 95,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-214/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 215
+}

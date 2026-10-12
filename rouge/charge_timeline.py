@@ -46,12 +46,15 @@ def compare_charge_windows(scenario, hit_times_seconds, windows_seconds):
         raise ValueError('观察窗口不能超过当前技能的参数持续时间；技能后的独立生命周期仍未知。')
     charge = next(c for c in reference['components'] if c['name'] == '结构性原理冲锋')
     per_hit = charge['per_hit']
+    if per_hit is None:
+        raise ValueError('冲锋单包仍未知；先明确已选模组参考的目标阻挡身份。')
     rows = []
     for window in windows:
         modeled = calculate_damage({**deepcopy(base), 'window_seconds': window})
         included = [time for time in times if time < window]
         charge_damage = per_hit * len(included)
-        bombard_damage = modeled['total_damage']
+        module_reference=modeled.get('mechanist_module_reference')
+        bombard_damage=(module_reference['modeled_window_damage_reference'] if module_reference else modeled['total_damage'])
         subtotal = None if bombard_damage is None else bombard_damage + charge_damage
         rows.append({'window_seconds': window, 'hit_times_seconds': included,
             'charge_hits': len(included), 'bombard_damage': bombard_damage,
@@ -72,7 +75,7 @@ def compare_charge_windows(scenario, hit_times_seconds, windows_seconds):
         'notes': [
             '冲锋时刻是用户声明的局外条件；0秒为技能开启。只填写命中当前目标的事件，同一时刻可有多次命中。',
             '冲锋按原始秒数计入[0,观察窗口)；恰好位于窗口结束的事件不计入。[]仅表示此情景未声明命中。',
-            '每次冲锋沿用现有技能攻击与减伤参数的固定参考；真实快照、短时属性变化和条件模组仍需核验。',
+            '每次冲锋沿用现有技能攻击与减伤参数的固定参考；已明确选用静态模组参考时另按声明阻挡身份调整。真实采样时刻、短时属性变化、实际附着与当前热更新仍需核验。',
             '本体供靶、移动、中断和弹道参数只影响既有轰击；不能用本体0.8秒落地延迟定位独立冲锋。',
             '仅比较当前技能参数持续范围内的已计部分，不外推充能期。给定事件不证明召唤物实际在场、完整施放次数或周期归属。',
             '晚于技能参数持续时间的声明只保留在事件表，不据此推定技能后召唤物仍存活。',

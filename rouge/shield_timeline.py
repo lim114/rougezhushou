@@ -26,6 +26,8 @@ def compare_shield_windows(scenario, preview):
     if not windows: raise ValueError('至少填写一个观察窗口。')
     base = deepcopy(scenario); base.pop('window_seconds',None); base['shield_break_count'] = 0
     reference = calculate_damage(base); per_hit = reference['shield_break_reference']['per_hit_damage_reference']
+    if per_hit is None:
+        raise ValueError('破屏单包仍未知；先明确已选模组参考的目标阻挡身份。')
     rows = []
     for window in windows:
         modeled = calculate_damage({**deepcopy(base),'window_seconds':window})

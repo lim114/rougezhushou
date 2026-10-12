@@ -1,6 +1,7 @@
 """Combat scenario controls; cultivation is never editable through these controls."""
 # key, label, default, upper bound, applicable skill numbers. bool default -> checkbox.
 OPTIONS={
+ 'mechanist':[('mechanist_module_static_reference','采用已封存模组单包条件参考（实际总量未知）',False,1,(1,2,3))],
  'char_110_deepcl':[('summon_count','测算触手数（局外假设）',1,7,(1,2))],
  'char_196_sunbr':[],
  'char_2025_shu':[('three_professions','三种不同职业在场',False,1,(1,2,3)),('three_same_profession','三名相同职业在场',False,1,(1,2,3)),

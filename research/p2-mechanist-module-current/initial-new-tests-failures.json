@@ -1,0 +1,20 @@
+{
+  "command": "python -m unittest tests.test_mechanist_module_reference_current tests.test_mechanist_module_reference_window",
+  "run": 15,
+  "passed": 13,
+  "failures": 1,
+  "errors": 1,
+  "records": [
+    {
+      "test": "test_skill1_and_shield_single_packets_keep_independent_counts",
+      "failure": "implicit unavailable S2 duration produced window_seconds0; selected module used it as explicit zero and returned0 instead ofNone",
+      "repair": "require explicit window_seconds in scenario before zero-window shortcut; exact original assertion retained"
+    },
+    {
+      "test": "test_mechanist_module_reference_window import",
+      "error": "ModuleNotFoundError: rouge.branch_reference_view",
+      "repair": "root concurrent211 public dependency was not tracked at snapshot time; copy exact newly public files to BOTH baseline and work snapshots, do not patch or overwrite root source"
+    }
+  ],
+  "scope": "initial attempt; not a passing acceptance result"
+}

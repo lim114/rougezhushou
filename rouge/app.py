@@ -79,7 +79,7 @@ def number(value=0, maximum=100000, decimals=2):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('黑流树海助手 0.82 · 局外计算与节点测试（213）')
+        self.setWindowTitle('黑流树海助手 0.83 · 局外计算与节点测试（214）')
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader()
@@ -1378,7 +1378,12 @@ class MainWindow(QMainWindow):
                     *[(w,op=='silverash' and skill==2) for w in (self.activation_count,self.companion_attack,self.stacks)]]
         for widget,visible in conditions:self.damage_form.setRowVisible(widget,visible)
         for owner,key,skills,widget in self.model_option_widgets:
-            self.damage_form.setRowVisible(widget,owner==op and skill in skills)
+            visible=owner==op and skill in skills
+            if owner=='mechanist' and key=='mechanist_module_static_reference':
+                from .mechanist_module_reference import qualification
+                visible=visible and qualification({'operator':op,'skill':skill,**self.training_conditions()})['qualified']
+                widget.setToolTip('默认关闭。仅按已封存版本计算本体伤害包；在局外情景JSON声明当前目标由谁阻挡。实际阻挡、来源存续、碰撞和完整总量未知。一级原件只开放第一技能。')
+            self.damage_form.setRowVisible(widget,visible)
             if owner==op=='char_110_deepcl' and key=='summon_count':
                 from .summons import token_concurrent_limit
                 cap=token_concurrent_limit(profile,{'operator':op,**self.training_conditions()},'token_10001_deepcl_tentac')
@@ -1492,6 +1497,9 @@ class MainWindow(QMainWindow):
             'deployment_stacks':self.stacks.value(),'relic_ids':ids}
         for owner,key,skills,widget in self.model_option_widgets:
             if owner==op and self.skill.currentData() in skills:
+                if owner=='mechanist' and key=='mechanist_module_static_reference':
+                    from .mechanist_module_reference import qualification
+                    if not qualification(scenario)['qualified']:continue
                 scenario[key]=widget.isChecked() if isinstance(widget,QCheckBox) else widget.value()
         state=self.current_operator_state()
         run_state=self.current_run_operator_state()
@@ -1547,14 +1555,17 @@ class MainWindow(QMainWindow):
                         if effect.get('loss_pending_condition'):needed.add(effect['loss_pending_condition'])
                         if effect.get('unit_condition') and profile.get('tokens'):needed.add('token_conditions')
                         if effect.get('enemy_level'):needed.add('enemy_level_type')
+            if op=='mechanist' and scenario.get('mechanist_module_static_reference'):
+                needed.add('mechanist_target_blocker')
             self.damage_form.setRowVisible(self.relic_context,bool(needed))
-            examples={'gold':25,'parts_count':3,'empty_slots':4,'current_hp_ratio':.65,'deployed_casters':2,'adjacent_allies':1,
+            self.damage_form.labelForField(self.relic_context).setText('局外情景条件（测试）' if 'mechanist_target_blocker' in needed else '当前藏品条件（测试）')
+            examples={'mechanist_target_blocker':'own_token','gold':25,'parts_count':3,'empty_slots':4,'current_hp_ratio':.65,'deployed_casters':2,'adjacent_allies':1,
                 'skill_cast_stacks':1,'altar_stacks':3,'chitin_recipient':1,'battle_start_shields':1,'blocked_enemies':1,
                 'probe_stacks':2,'fire_rod_stacks':3,'deployment_hp_ratio':.65,'deployment_loss_unused':1,'enemy_level_type':'ELITE',
                 'grudge_stacks':100,'deployed_seconds':80,'near_protection_point':1,'enemy_first_damage_unused':1,
                 'entered_zone_count':2,'active_other_aura_sources':1,'mercenary_recipient':1,'mercenary_stacks':1,
                 'token_conditions':{tid:{'blocked_enemies':1} for tid in profile.get('tokens',{})}}
-            labels={'parts_count':'当前零件箱实有零件数量（不是容量或估价）；悲伤的红计数上限99',
+            labels={'mechanist_target_blocker':'当前目标阻挡身份：self本体、own_token所属召唤物、other其他单位、none未阻挡、unknown未确认；不能用人数代替。此值仅来自手动局外声明。','parts_count':'当前零件箱实有零件数量（不是容量或估价）；悲伤的红计数上限99',
                 'altar_stacks':'圆石祭坛实际层数（非战斗次数，最多10）','chitin_recipient':'当前干员是否获得几丁质刺刃（0/1）',
                 'battle_start_shields':'开战时的对局护盾值（不是屏障）','blocked_enemies':'本体实际阻挡敌人数（不是阻挡上限）',
                 'probe_stacks':'探测先锋实际层数（最多99）','token_conditions':'各召唤物独立阻挡条件（不继承本体）'}
@@ -1571,10 +1582,10 @@ class MainWindow(QMainWindow):
                 deployment_hp_ratio='他缚本次部署损血事件前生命比例（0–1，独立局外参考，不读取实时生命）',
                 deployment_loss_unused='本次部署他缚损血是否尚未触发（0/1）；重算不推进此状态，退场后新部署需重新确认情景')
             self.relic_context.setPlaceholderText('局外情景示例（不会自动套用）：'+json.dumps({k:examples.get(k,0) for k in sorted(needed)},ensure_ascii=False))
-            self.relic_context.setToolTip('只使用当前适用藏品的条件；留空保持未确认，测试值不写入本局记忆。\n'+
+            self.relic_context.setToolTip('只使用当前适用藏品或已选模组参考的条件；留空保持未确认，测试值不写入本局记忆。\n'+
                 '\n'.join(k+'：'+labels.get(k,'当前藏品所需的明确计算条件') for k in sorted(needed)))
             resources=self.run.calculation_resources()
-            context={name:r['value'] for name,r in resources.items() if name in needed}
+            context={name:r['value'] for name,r in resources.items() if name in needed and name!='mechanist_target_blocker'}
             parts=resources.get('parts_count',{})
             if 'empty_slots' in needed and isinstance(parts.get('capacity'),int) and isinstance(parts.get('value'),int):
                 context['empty_slots']=parts['capacity']-parts['value']
