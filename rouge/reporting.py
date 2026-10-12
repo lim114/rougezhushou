@@ -1434,6 +1434,21 @@ def build_report(scenario,result):
             ['此输入属于受疗者，与苏苏洛自身生命、缺失生命及敌人血量无关；未指定时不默认满血或低血。',
              '基包LE按Q32.32原值与阈值加42950原始单位比较：恰好50%符合，容差内稍高于50%也可能符合；当前热更新未核验。',
              '15%为治疗输出层增强，与低费受疗及三花受疗因子分别作用；不增强自然生命回复。固定比例情景不证明实际友方获取、覆盖、血量轨迹或治疗时刻。']))
+    guardian=result.get('guardian_module_healing_reference')
+    if guardian:
+        qualified=guardian['qualified']
+        boundary='比例原值 < 阈值原值 −42950' if guardian['comparison']=='LT' else '比例原值 < 阈值原值 +42950'
+        sections.append(section('guardian_module_healing',guardian['operator_name']+'模组 · 受疗者生命条件',[
+            metric('recipient_ratio','声明受疗者生命比例',guardian['recipient_hp_ratio'],''),
+            metric('comparison','当前基包条件门',guardian['comparison']),
+            metric('qualified','固定比例条件判断','未知' if qualified is None else '符合' if qualified else '不符合'),
+            metric('healing_factor','直接治疗情景倍率',guardian['factor'],'倍'),
+            metric('regen_factor','生命回复额外倍率',1,'倍'),
+            metric('actual_hp_trajectory','实际受疗者血量变化','未知')],
+            [boundary+'；古米LT与黍LE来自各自当前resKey和buff模板，不按相同文字统一比较。',
+             '受疗者比例独立于自身生命、敌人血量和缺失生命；未指定不默认满血或低血。',
+             '固定比例只改变已建模直接治疗分项，与已核验受疗因子独立作用。自然生命回复、播种地块回复、物理攻击和技力时钟不乘此倍率。',
+             '固定比例不证明实际生命变化、友方获取/资格、范围或技能结束和充能时钟；当前热更新未核验。']))
     sections.extend(current_output_breakdown_sections(result))
     sections.extend(reproducible_context_sections(scenario,result))
     sections.extend(event_clock_reference_sections(scenario,result))

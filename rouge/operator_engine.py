@@ -86,6 +86,8 @@ class Combat:
         self.tv={t['name']:t['values'] for t in self.talents}
         from .susuro_healing import reference as susuro_healing_reference
         self.susuro_module_healing_reference=susuro_healing_reference(self.p,scenario)
+        from .guardian_healing import reference as guardian_healing_reference
+        self.guardian_module_healing_reference=guardian_healing_reference(self.p,scenario)
         self.gnosis_isw_a_reference=next((t['gnosis_isw_a_reference'] for t in self.talents
             if t.get('gnosis_isw_a_reference')),None)
         self.mizuki_amb_y_reference=next((t for t in self.talents
@@ -365,6 +367,7 @@ class Combat:
                 op=='char_298_susuro' and self.s.get('low_cost_healing_target')) else 1
             if self.susuro_module_healing_reference:
                 recipient_factor*=self.susuro_module_healing_reference['factor'] or 1
+            guardian_factor=(self.guardian_module_healing_reference['factor'] or 1) if self.guardian_module_healing_reference else 1
             if normal and op=='char_298_susuro':regular('healing',scale=recipient_factor,times=min(1,healing_targets),name='普通治疗')
             elif normal:
                 if op=='char_196_sunbr':
@@ -380,15 +383,15 @@ class Combat:
             elif self.n==1:
                 mode='next_attack';duration=interval if window is None else window
                 recipients=min(1,healing_targets) if duration>0 else 0
-                emit('治疗替代下次攻击',attack*bb['heal_scale'],'healing',recipients)
+                emit('治疗替代下次攻击',attack*bb['heal_scale']*guardian_factor,'healing',recipients)
                 if recipients:components[-1]['actual_total']=None
             elif op=='char_196_sunbr':
                 stream=timeline.attacks(duration,interval,speed,attribute_speed=speed_reference,start_delay=bb['disarm'],target_scope='friendly')
                 events=stream.get('emitted_times_seconds',stream['times_seconds']) if window is None else stream['times_seconds']
                 events=[t for t in events for _ in range(int(min(1,healing_targets)))]
-                emit('技能攻击',attack,'healing',len(events),event_times=events)
+                emit('技能攻击',attack*guardian_factor,'healing',len(events),event_times=events)
                 self.notes.append('食粮烹制先停止攻击烹饪，再按特殊间隔治疗。')
-            elif self.n==2:regular('healing',times=min(2,healing_targets))
+            elif self.n==2:regular('healing',scale=guardian_factor,times=min(2,healing_targets))
             else:
                 if isinstance(self.s.get('enemy_on_sown_tile'),str):
                     raise ValueError('enemy_on_sown_tile 不接受文本条件；请使用布尔值。')
@@ -397,7 +400,7 @@ class Combat:
                     speed=effective_attack_speed(speed_reference)
                     interval=self.a['interval']*100/speed
                 regular(name='本体攻击')
-                regular('healing',times=min(1,healing_targets),name='同步治疗')
+                regular('healing',scale=guardian_factor,times=min(1,healing_targets),name='同步治疗')
             if op=='char_2025_shu' and not normal:
                 self.notes.append('播种地块生命回复与庇护不混入直接技能治疗；四岁/三职业等条件按所选情景。')
         elif op=='char_4228_closur':
@@ -1968,6 +1971,8 @@ class Combat:
                 '不折算成自然回复速度，不用其它来源的充能算例证明完整初动、结束后充能或周期。')
         from .susuro_healing import attach_result as attach_susuro_healing
         attach_susuro_healing(result,self.susuro_module_healing_reference)
+        from .guardian_healing import attach_result as attach_guardian_healing
+        attach_guardian_healing(result,self.guardian_module_healing_reference)
         return result
 
 

@@ -1,3 +1,7 @@
+## 功能第219节 · 古米与黍GUA-X独立生命条件与复合治疗
+
+2026-10-12T20:30:39.472731+08:00。新增：合格古米GUA-X的S1/S2与黍GUA-X的S1/S2/S3按显式受疗比例采用各自当前LT/LE原生门，直接治疗分项和预算来源独立乘1.15一次；未知保留小计遮受影响完整非零总量，各自专属控件，无自然回复/播种/物理/时钟混算。。必要检查130项，跳过0项，无失败。边界：Actual recipient hp/maxHp and HP trajectory；Actual acquisition, coverage, life eligibility, healing clocks；Current XLua/hotfix equivalence；Arbitrary heal/regen/final-damage source combinations outside the listed binding；Declared fixed ratio does not prove actual friendly HP/survival/range/timing; budget recipient values do not dynamically requalify this scenario；Existing unknownS1 actual totals remainNone; no actual multi-charge/skill-end claims；CurrentGUA-X coverage only; no imported unseen currentGUA-Y module or newhotfix。回执verification/sections/219.json。下一节220，下次全量230。
+
 ## 功能第218节 · 固定同类承伤与双来源元素伤害组合进入局外计算
 
 2026-10-12T20:26:44.586847+08:00。新增：七低星物理/法术同类白名单藏品先按base-one合并黑板；阿猛与冰中火元素伤害层独立相乘为3.5，损伤积累独立；混入未核验手动来源保留已证小计且完整伤害未知，中文报告注明来源及层。。必要检查62项，跳过0项，无失败。边界：参数算术不是float32获取顺序与FP完整逐包复制；实际附着、获取顺序、当前热更新、其他敌方/手动来源组合仍未核验；战斗条件断杖-波纹继续仅作说明，不恢复部署术师输入；不是完整实战技能总量或游戏面板成对校准。回执verification/sections/218.json。下一节219，下次全量230。

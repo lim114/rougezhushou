@@ -1,0 +1,49 @@
+{
+  "source": "config/buff_template_holder.ab",
+  "source_sha256": "12419ad8d1ea9f670cca214e525240c691cdf3796b82acc8050698d66c202a37",
+  "source_md5": "742411805a565d5f80e829f884ca21a5",
+  "source_bytes": 2022247,
+  "manifest_version": "26-09-13-15-28-10-30688348",
+  "parse_stats": [
+    {
+      "file": "CAB-7983df61b3ae63c96fb4e076fc3d80af",
+      "objects": 2,
+      "all_read_exact": true
+    }
+  ],
+  "total_templates": 8659,
+  "selected": [
+    {
+      "templateKey": "set_heal_scale_by_hpratio",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 8,
+            "value": {
+              "SerializedState": "[{\"$type\":\"Torappu.Battle.Action.Nodes+IsHeal\"},{\"_conditionNode\":{\"_targetType\":\"MODIFIER_TARGET\",\"_condType\":\"LT\",\"_value\":0.0,\"_useSourceHpRatio\":false,\"_sourceType\":\"SOURCE\",\"_blackboardPrefix\":null,\"$type\":\"Torappu.Battle.Action.Nodes+FilterByTargetHpRatio\"},\"_succeedNodes\":[{\"_scaleKey\":null,\"$type\":\"Torappu.Battle.Action.Nodes+ModifierScaleUp\"}],\"_failNodes\":null,\"$type\":\"Torappu.Battle.Action.Nodes+IfElse\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "templateKey": "heal_scale_up[hpratio][LE]",
+      "effectKey": "",
+      "onEventPriority": 0,
+      "eventToActions": {
+        "_items": [
+          {
+            "key": 8,
+            "value": {
+              "SerializedState": "[{\"$type\":\"Torappu.Battle.Action.Nodes+IsHeal\"},{\"_targetType\":\"MODIFIER_TARGET\",\"_condType\":\"LE\",\"_value\":0.0,\"_useSourceHpRatio\":false,\"_sourceType\":\"SOURCE\",\"_blackboardPrefix\":null,\"$type\":\"Torappu.Battle.Action.Nodes+FilterByTargetHpRatio\"},{\"_scaleKey\":\"\",\"$type\":\"Torappu.Battle.Action.Nodes+ModifierScaleUp\"}]",
+              "SerializedObjectReferences": []
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
