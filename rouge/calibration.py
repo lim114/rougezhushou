@@ -80,6 +80,9 @@ def panel_layers(scenario):
 
 COMMANDS={'panel':panel_layers}
 
+from .relic_panel_diagnostics import relic_panel_diagnostics
+COMMANDS['relic-panels'] = relic_panel_diagnostics
+
 
 def compare_panel(scenario, observation, tolerance=0):
     """Compare only the declared matching panel/context; never relabel a source."""

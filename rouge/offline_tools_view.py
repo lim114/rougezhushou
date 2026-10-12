@@ -27,6 +27,7 @@ CALIBRATION_QUERIES = (
     ('skills', '首批三名全部技能'), ('cultivation', '等级与培养贡献'),
     ('modules', '模组阶段与门槛'), ('talents', '天赋与在场时间'),
     ('animations', '原动作事件与帧数'), ('recipient-events', '银灰二技能受益包'),
+    ('relic-panels', '藏品组合与面板差值诊断'),
     ('packets', '单包伤害与治疗算式'), ('worksheets', '公开培养公式算例'),
 )
 BATTLE_QUERIES = (
@@ -62,6 +63,7 @@ BATTLE_COMMANDS = {
 EVIDENCE_NAMES = {'game_panel': '调用方声明的游戏面板',
     'public_case': '调用方声明的公开算例', 'formula_reference': '公式参考算例'}
 INPUT_GUIDANCE = {
+    'relic-panels':'scenario声明当前培养、技能和藏品。relic_ids选择其中1–12件审计，留空审计全部；未选来源作为共同背景。并列移除单件/仅保留单件的模型差值，定向强化独立保留。零差值与非相加残差不证明实际机制或偏差原因。',
     'search-routes':'goal为声明终点，逐边步行并列举加工品候选；max_steps/max_results/max_transitions控制有限搜索。battle_declarations按节点声明独立关卡和胜利。随机落点、未知资格和AP到零保留停止前沿，不补完整收益或真实最优。',
     'compare-routes':'routes为1–20条带唯一id的明确路线，每条steps只含mode/target和可选battle。battle独立声明精确关卡/入口/胜利；不是胜利预测。共同graph、行动力和库存不随自动刷新覆盖。只比较同终点的已证净AP及基础战斗收益，不穷举概率或替代真实最优。',
     'settlements':'steps每项使用精确stage_id/stage_ids，或graph中的target。battle_floor是战斗所属主层，秘境编号不代替；entry_context需要unknown/map_battle/event_battle/pursuit。仅声明胜利后的基础分项，实际胜利和完整奖励未知。steps留空（null）只列图中当前战斗身份参考；不读取本局库存。',
@@ -173,6 +175,8 @@ def public_payload(family, command):
         scenario = {'operator': 'mechanist', 'skill': 3, 'charge_count': 0}
         payload = {'scenario': scenario}
         if command == 'worksheets': return {}
+        if command == 'relic-panels':
+            payload['scenario']['relic_ids']=['rogue_6_relic_legacy_27','rogue_6_relic_legacy_29','rogue_6_relic_legacy_12']
         if command == 'pair':
             payload['observation'] = {
                 'context_token': calibration.panel_layers(scenario)['context_token'],
@@ -327,6 +331,21 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
         elif command == 'packets':
             parts.append(_table(['分项','类型','来源攻击','倍率','减伤前','减伤后','已支持承伤因子','单包条件参考','完整施放合计'],
                 [(r['name'],r['damage_type'],r['owner_attack_reference'],r['scale'],r['pre_defense_value'],r['after_defense_value'],r['supported_damage_factor'],r['single_packet_reference'],r['complete_cast_total']) for r in data['rows']]))
+        elif command == 'relic-panels':
+            parts += [_p('干员：'+data['operator']),_p('共同背景藏品：'+_text(data['background_relic_ids'])),
+                _p('独立保留的定向强化：'+_text(data['preserved_targeted_buff_ids'])),
+                _p('下面均为当前模型差值；实际加成、实际偏差原因及完整实机面板仍未知。'),
+                _table(['面板层','属性','组合模型值','共同背景值','组合差值','单件背景增量之和','非相加模型残差'],
+                    [(r['panel'],r['label'],r['combined_model_reference'],r['background_model_reference'],r['combined_model_difference'],
+                        r['sum_single_background_model_differences'],r['nonadditive_model_residual']) for r in data['combination_rows'] if r['panel']!='培养与模组'])]
+            for source in data['source_rows']:
+                parts += [_h(source['name']),_p('固定机制记录：'+_text(source['fixed_mechanic_record_available'])),
+                    _table(['面板层','属性','组合值','移除后值','移除单件边际差值','共同背景加单件值','单件背景增量'],
+                        [(r['panel'],r['label'],r['combined_model_reference'],r['without_source_model_reference'],r['marginal_model_difference'],
+                            r['single_source_background_model_reference'],r['single_background_model_difference']) for r in source['fields'] if r['panel']!='培养与模组']),
+                    _p('移除单件后的警告：'+_text(source['without_source_warnings'])),
+                    _p('共同背景加单件的警告：'+_text(source['single_source_warnings']))]
+            parts += [_p('当前组合警告：'+_text(data['full_warnings'])),_p('共同背景警告：'+_text(data['background_warnings']))]
         elif command == 'worksheets':
             parts += [_p(f"公式参考算例 {data['case_count']} 组；相符 {data['matching_reference_cases']} 组。不是公开实机成对验收。"),
                 _table(['算例','干员','比较属性','预测','公式参考','差值','在声明容差内'],
