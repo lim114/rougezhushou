@@ -7,6 +7,8 @@ from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QComboBox,QLineEd
     QLabel,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QSplitter,QPushButton,QCheckBox)
 from . import node_catalog as catalog
 from . import event_planning
+from . import original_destinations
+from .original_destinations_view import OriginalDestinationPanel
 from .battle_reward_planning import stage_reward_sources,reward_source_text
 from .ui_state import replace_text
 from .stage_context import stage_context_text
@@ -269,6 +271,7 @@ class NodeCatalogPanel(QWidget):
         super().__init__(parent)
         self.dossier=None;self.node_context=None;self.entries=[];self.detail_key=None
         self.map_context=None;self.runtime_context={};self._first_tree=True
+        self.destination_window=None;self.destination_origin_key=None
         layout=QVBoxLayout(self)
         self.context_label=QLabel('公开目录以自然入口核对已列条件；特殊事件原文仍保留，不代表当前可进入，不提供生成概率。')
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
@@ -295,6 +298,8 @@ class NodeCatalogPanel(QWidget):
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);rl.addWidget(self.detail,1)
         self.battle_button=QPushButton('查看对应固定战斗地图');self.battle_button.setEnabled(False)
         self.event_stage=QComboBox();self.event_stage.setAccessibleName('事件选项对应作战资料');rl.addWidget(self.event_stage)
+        self.destination_choice=QComboBox();self.destination_choice.setAccessibleName('原选项目的地资料候选');rl.addWidget(self.destination_choice)
+        self.destination_button=QPushButton('查看选项目的地原文与作战资料');rl.addWidget(self.destination_button)
         self.map_location=QComboBox();self.map_location.setAccessibleName('该内容对应地图节点');rl.addWidget(self.map_location)
         self.map_jump=QPushButton('在地图预览定位节点');self.map_jump.setEnabled(False);rl.addWidget(self.map_jump)
         self.map_contents=QPushButton('查看此节点事件与作战');self.map_contents.setEnabled(False);rl.addWidget(self.map_contents)
@@ -304,6 +309,7 @@ class NodeCatalogPanel(QWidget):
         self.list.currentItemChanged.connect(lambda *_:self.show_selected())
         self.bind_button.clicked.connect(self.bind_current_node);self.all_button.clicked.connect(self.show_directory)
         self.battle_button.clicked.connect(self.select_stage)
+        self.destination_button.clicked.connect(self.open_original_destination)
         self.expand_button.clicked.connect(self.list.expandAll);self.collapse_button.clicked.connect(self.list.collapseAll)
         self.map_button.clicked.connect(self.show_map_nodes);self.map_jump.clicked.connect(self.select_map_node)
         self.map_contents.clicked.connect(self.show_map_entry_contents)
@@ -453,6 +459,7 @@ class NodeCatalogPanel(QWidget):
         entry=next((e for e in self.entries if e['key']==key),None)
         previous=self.event_stage.itemData(self.event_stage.currentIndex(),Qt.ItemDataRole.UserRole+1)
         previous_location=self.map_location.currentData();self.event_stage.clear()
+        previous_destination=self.destination_choice.currentData(Qt.ItemDataRole.UserRole+1);self.destination_choice.clear()
         self.map_location.clear();self.map_jump.setEnabled(False)
         self.map_contents.setEnabled(bool(entry and entry['kind']=='map'))
         if entry and entry['kind']=='event':
@@ -473,6 +480,29 @@ class NodeCatalogPanel(QWidget):
             if previous:
                 self.event_stage.setCurrentIndex(next((i for i in range(self.event_stage.count())
                     if self.event_stage.itemData(i,Qt.ItemDataRole.UserRole+1)==previous),0))
+        try:
+            if entry and entry['kind']=='event':
+                rows=original_destinations.event_destination_choices(entry['record']['id'])['rows']
+                for number,row in enumerate(rows,1):
+                    self.destination_choice.addItem(f"场景{row['scene_number']} · {row['choice_title']} · 原选项资料候选{number}",row['original_choice_id'])
+                    self.destination_choice.setItemData(self.destination_choice.count()-1,
+                        [row['scene_key'],row['choice_key'],row['original_choice_id']],Qt.ItemDataRole.UserRole+1)
+            elif entry and entry['kind']=='original':
+                raw=entry['record']['record']
+                if raw['record_type']=='choice' and raw.get('nextSceneId'):
+                    self.destination_choice.addItem(raw.get('title') or '原选项目的地',raw['record_id'])
+                    self.destination_choice.setItemData(0,['original',raw['record_id']],Qt.ItemDataRole.UserRole+1)
+        except (ValueError,TypeError,KeyError) as error:
+            self.destination_choice.clear();self.destination_button.setToolTip(str(error))
+        if self.detail_key==key and previous_destination:
+            index=next((i for i in range(self.destination_choice.count())
+                if self.destination_choice.itemData(i,Qt.ItemDataRole.UserRole+1)==previous_destination),-1)
+            if index>=0:self.destination_choice.setCurrentIndex(index)
+        visible=bool(self.destination_choice.count())
+        self.destination_choice.setVisible(visible);self.destination_button.setVisible(visible)
+        if self.destination_window and self.destination_origin_key==key:
+            context=self._event_context(entry['record']) if entry and entry['kind']=='event' else self.runtime_context
+            self.destination_window.set_context(context)
         self.event_stage.setVisible(bool(entry and entry['kind']=='event'))
         self.battle_button.setEnabled(bool(entry and (entry['kind']=='battle' or self.event_stage.count())))
         if not entry:text='没有符合筛选的资料。不能把资料缺失视为不可能出现。'
@@ -570,6 +600,19 @@ class NodeCatalogPanel(QWidget):
             hist=self.dossier.get('history_events',[])
             if hist:text+='\n过去类型的候选：'+'、'.join(e['title'] for e in hist)
         replace_text(self.detail,text,preserve=self.detail_key==key);self.detail_key=key
+
+    def open_original_destination(self):
+        choice_id=self.destination_choice.currentData()
+        if not choice_id:return
+        key=self.list.selected_key();entry=next((e for e in self.entries if e['key']==key),None)
+        if not entry:return
+        context=self._event_context(entry['record']) if entry['kind']=='event' else self.runtime_context
+        if self.destination_window is None:
+            self.destination_window=OriginalDestinationPanel(self)
+            self.destination_window.stageSelected.connect(self.stageSelected.emit)
+        self.destination_origin_key=key
+        self.destination_window.set_reference(choice_id,context)
+        self.destination_window.show();self.destination_window.raise_();self.destination_window.activateWindow()
 
     def select_stage(self):
         key=self.list.selected_key()

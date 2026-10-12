@@ -1,3 +1,7 @@
+## 功能第237节 · 原件明确目的地导航与独立条件/作战预览
+
+2026-10-13T06:38:46.077440+08:00。新增：全部306明确 nextSceneId 目的地可读原文；90无明确目标不推断；37原未归类明确目标从目录真实按钮打开。；事件原选项资料候选亦可打开原件目标；288条目标引用按精确原ID匹配已有目录场景，11条目标拥有独立明确战斗入口，保留所有关卡别名及条件未知/不符。；非模态只读目的地窗口，默认中文，技术字段可展开；刷新保留源选项精确分支、窗口阅读、目标关卡选择；无相关字段的节点隐藏控件。。必要检查44项，跳过0项，无失败。边界：来源场景、实际可达链、服务器资格、实际进入/实际战斗和跳转后状态均未知；NEXT不证明来源或战斗。；原25未归类scene和57来源配对缺口没有销项，目标无目录时只显示原文。；目的地清除来源node_type/natural入口，仅对当前声明状态比较，跳转后库存/层数/难度连续性不保证；切离来源条目后窗口是独立比较快照，重开/返回来源更新。；固定427904目录边界不升级为当前服务器完整；没有生成概率。；本地cache offscreen非原Windows可见验收，根代理串行合入需实际窗口适当验证。。回执verification/sections/237.json。下一节238，下次全量245。
+
 ## 功能第236节 · 首批三人藏品组合与面板差值诊断
 
 2026-10-13T06:10:45.210019+08:00。新增：按当前组合、移除单件、共同背景加单件、共同背景四种条件计算攻击/生命/防御等预测层差值和模型非相加残差；每条件有上下文及警告。最多12件子集，未选来源与已领取定向强化独立保留；未收录/零差不认定实机无效果。接入实际校准工具显式导入和刷新留存。。必要检查41项，跳过0项，无失败。边界：Counterfactual arithmetic is not an observed game panel, actual source effect or causal attribution.；Rounding and nonadditive residual describe existing model only, not unknown acquisition order or missing scripts.；Acquired targeted buffs retained independently; removing a relic declaration never simulates an actual discard/lifetime consequence.；Original0.91 visible window remains available; new diagnostic query validated temporaryQt and will be checked at grouped native/full closeout.。回执verification/sections/236.json。下一节237，下次全量245。
