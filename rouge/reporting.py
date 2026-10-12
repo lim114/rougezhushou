@@ -734,12 +734,16 @@ def build_report(scenario,result):
             metric('per_hit','破屏单次法伤条件参考',shield['per_hit_damage_reference']),
             metric('declared','给定总次数条件伤害参考',shield['declared_count_damage_reference']),
             metric('ammo','原表弹药数量参数',shield['nominal_ammunition_parameter'],'发'),
+            metric('ammo_spent','给定破屏无补弹耗弹参考',shield['ammunition_budget_reference']['ammunition_consumed_reference'],'发'),
+            metric('ammo_left','给定破屏无补弹剩余参考',shield['ammunition_budget_reference']['ammunition_remaining_reference'],'发'),
+            metric('shield_refills','给定破屏再次屏障参考',shield['ammunition_budget_reference']['barrier_replenishments_reference'],'次'),
             metric('manual_duration','手动结束时间条件参数',shield['manual_duration_parameter_seconds'],'秒'),
             metric('break_times','实际破屏/爆炸时刻',None,'秒'),
             metric('actual_end','实际结束时刻',None,'秒')]
         sections.append(section('shield_break','协防术式 · 破屏条件来源待核验',rows,[
             '总次数不证明当前窗口内的事件数量；零观察窗口和当前敌人0秒生命周期不产生实际伤害。',
-            '本体与结构性原理的破屏、耗弹与再次屏障顺序未闭合；普通攻击沿用既有手动结束参数参考，未并入未定位的爆炸来源。']))
+            '本体与结构性原理共用补盾弹匣，初始屏障不耗弹；预算同时假定技能主buff仍生效、所属skill ability的isAffecting计数门成立，后者不能由主buff存在推导；余量为正时破屏先耗1发再获得屏障。限定无补弹与容量变化，耗尽不推定结束帧。',
+            '普通攻击沿用既有手动结束参数参考，未并入未定位的爆炸来源。']))
     external=result.get('external_event_reference')
     if external:
         rows=[metric('source_'+str(i),c['name']+'条件总量',c['total'],

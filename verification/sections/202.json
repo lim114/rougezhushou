@@ -1,0 +1,73 @@
+{
+  "title": "机械师S2共享屏障补弹预算",
+  "remaining_item": "技能时序与精度：机械师S2本体及结构性原理破屏、耗弹对应",
+  "new_capability": "依据当前原件建立共同弹匣的破屏补盾资源预算，接入已有总破屏次数与131声明事件窗口对照；免费初始屏障、补盾每次耗1、最后一发仍补盾、剩余量和耗尽状态可显示，实际结束/碰撞时钟不推定。",
+  "source_evidence": {
+    "receipt": "research/p2-mechanist-s2-shared-barrier-current/receipt.json",
+    "baseline": "26-09-13-15-28-10-30688348",
+    "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+    "proof": "16 methods / 1168 physical instructions freshly rechecked; current prefab5 objects /3 unique hash bindings; current holder2 selected templates",
+    "rule": "ON_TAKE_DAMAGE盾尽分支读取施放者技能remainingCount并查主buff，手动事件7消耗1后CreateBuff；_useExtraModeProgress=0，无方向分弹匣"
+  },
+  "acceptance": {
+    "tests": 56,
+    "passed": 56,
+    "failed": 0,
+    "boundary_cases": [
+      "rank1/4/7/10 capacity5/6/7/8",
+      "shared owner/token repeated events",
+      "zero/last/overcapacity counts",
+      "inactive mainbuff no consumption",
+      "declared breaks separate from collisions [0,window)",
+      "same-time ordering budget invariant",
+      "no actual clocks/finish/cap explosion count",
+      "no private input mutation",
+      "isAffecting计数门独立条件明确，不由主buff存在推导"
+    ],
+    "first_attempt_failure_retained": "wrong selector names;28 actual passed+2 import errors; corrected selectors56passed",
+    "review_fix_applied": "Explicit ability isAffecting premise added independently from mainbuff; no extra battle input or actual end inferred."
+  },
+  "limitations": [
+    "只对技能主buff仍生效、所属skill ability的isAffecting计数门成立且无补弹/容量变化的声明事件作条件预算；两项生效前提独立声明，不把主buff存在等同于计数门成立；原表容量版本与原生基线明确区分",
+    "实际盾破/命中、独立攻击快照、scheduler运行顺序/结束、首跳及当前热更新/实机附着未知",
+    "实际补弹安全轮询仍未接入机械师S2；不把盾爆计数绑定成普攻时钟",
+    "不能按弹药容量限制条件爆炸次数，同帧零余量时主buff是否已结束保持未知"
+  ],
+  "files": [
+    "rouge/barrier_ammo.py",
+    "rouge/shield_break_reference.py",
+    "rouge/shield_timeline.py",
+    "rouge/reporting.py",
+    "tests/test_barrier_ammo_current.py",
+    "tests/test_shield_break_reference.py",
+    "research/p2-mechanist-s2-shared-barrier-current/buff-template-binding.json",
+    "research/p2-mechanist-s2-shared-barrier-current/native-proof.json",
+    "research/p2-mechanist-s2-shared-barrier-current/receipt.json",
+    "research/p2-mechanist-s2-shared-barrier-current/selected-metadata.json",
+    "research/p2-mechanist-s2-shared-barrier-current/skill-prefab-binding.json",
+    "verification/section-202/native-static-bytes.json"
+  ],
+  "test_selectors": [
+    "tests.test_barrier_ammo_current",
+    "tests.test_shield_break_reference",
+    "tests.test_shield_timeline_131",
+    "tests.test_ammo_counter_055",
+    "tests.test_ammo_events_067"
+  ],
+  "root_verification": "verification/section-202/native-static-bytes.json;16 methods/1168 physical instruction bytes checked independently",
+  "section": 202,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T09:23:35.881932+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 56,
+    "passed": 56,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-202/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 215
+}

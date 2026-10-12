@@ -1,5 +1,6 @@
 """Separate a declared shield-break total from unknown event and end clocks."""
 from .catalog import catalog
+from .barrier_ammo import declared_barrier_ammo
 from .timing import AttackTimeline, finite
 
 
@@ -59,7 +60,8 @@ def finish_shield_break_reference(scenario, result):
         'source_possible': {'cast': pending, 'window': window_pending},
         'actual_break_times_seconds': None, 'actual_collision_times_seconds': None,
         'actual_end_seconds': None, 'actual_ammunition_consumption_times_seconds': None,
-        'owner_and_structure_count_mapping_verified': False,
+        'owner_and_structure_count_mapping_verified': True,
+        'ammunition_budget_reference': declared_barrier_ammo(int(source['values']['trigger_time']), count),
         'events_scheduled': False, 'source_commit': 'a550f5e048bb94e7cdefc6eb97a4091f0c4c7add'}
     result.setdefault('timing', AttackTimeline(scenario).output())['phase_clock_unbound'] = True
     result['timing']['resource_and_damage_shared_clock'] = False
@@ -67,5 +69,5 @@ def finish_shield_break_reference(scenario, result):
         '声明总破屏次数的法术爆炸条件参考，事件时刻未知；已计普通攻击仅为手动结束参数参考。')
     result['complete'] = result['estimate']['complete'] = False
     result['estimate']['notes'].append(
-        '协防术式总破屏次数只列命中当前敌人的条件伤害；破屏/爆炸时刻、双方耗弹对应和实际结束未核验，'
+        '协防术式总破屏次数只列命中当前敌人的条件伤害；本体与结构性原理共用补盾弹匣；预算另要求所属skill ability的isAffecting计数门成立，不能由主buff存在推导；破屏/爆炸时刻和实际结束未核验，'
         '未自动放入观察窗口、技能阶段或周期。指定结束时间只保留手动条件参数和既有普通攻击小计，不能定位破屏事件。')

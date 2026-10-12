@@ -129,7 +129,7 @@ class ShieldBreakReferenceTests(unittest.TestCase):
         self.assertEqual(ref['hits_requested'],30)
         self.assertEqual(ref['nominal_ammunition_parameter'],8)
         self.assertEqual(ref['declared_count_damage_reference'],150000)
-        self.assertFalse(ref['owner_and_structure_count_mapping_verified'])
+        self.assertTrue(ref['owner_and_structure_count_mapping_verified'])
         self.assertFalse(ref['events_scheduled'])
         self.assertIsNone(ref['actual_ammunition_consumption_times_seconds'])
 

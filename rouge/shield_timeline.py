@@ -3,6 +3,7 @@ import json
 from copy import deepcopy
 from .charge_timeline import _seconds
 from .damage import calculate_damage
+from .barrier_ammo import BarrierAmmoProjection
 
 
 def compare_shield_windows(scenario, preview):
@@ -30,11 +31,15 @@ def compare_shield_windows(scenario, preview):
         modeled = calculate_damage({**deepcopy(base),'window_seconds':window})
         included = [e for e in validated if e['hit_seconds'] is not None and e['hit_seconds'] < window]
         owner = sum(e['source']=='owner' for e in included); structure = len(included)-owner
+        budget = BarrierAmmoProjection(int(reference['shield_break_reference']['nominal_ammunition_parameter']))
+        for event in validated:
+            if event['break_seconds'] < window:budget.barrier_break(event['source'])
         ordinary = modeled['estimate']['skill']['window_damage']
         explosion = per_hit*len(included)
         subtotal = ordinary + explosion if ordinary is not None else None
         rows.append({'window_seconds':window,'owner_hits':owner,'structure_hits':structure,
             'declared_breaks':sum(e['break_seconds']<window for e in validated),
+            'ammunition_budget_reference':budget.output(),
             'explosion_damage_reference':explosion,'ordinary_damage_reference':ordinary,
             'conditional_damage_subtotal':subtotal,'conditional_dps':subtotal/window if subtotal is not None and window else None})
     return {'scenario':deepcopy(scenario),'events':validated,'rows':rows,'per_hit_damage_reference':per_hit,
@@ -44,7 +49,8 @@ def compare_shield_windows(scenario, preview):
                  '按原始秒数计入[0,窗口)，同刻多次保留；破屏计数和命中计数分开。',
                  '本体和结构体均沿用现有固定技能攻击与减伤的单次爆炸条件参考，不证明独立攻击快照或实际伤害。',
                  '普通攻击仅沿用既有时序与手动结束参考；不把供靶参数自动用作独立爆炸碰撞时钟。',
-                 '原表弹药参数不限制声明事件数量；破屏与双方耗弹对应、实际结束、完整施放及周期仍未知。',
+                 '本体与结构性原理共用补盾弹匣；预算同时假定技能主buff仍生效及所属skill ability的isAffecting计数门成立（不能由主buff存在推导），且无补弹/容量变化，初始屏障不耗弹，每次余量为正的破屏补盾耗1发。',
+                 '原表弹药参数不限制声明爆炸数量；耗尽不证明同帧技能已结束，实际结束、完整施放及周期仍未知。',
                  '此工具替代原合计破屏次数做局外事件条件对照，原计算、账号及本局不变。'],
         'calculation_notes':deepcopy(reference['estimate']['notes'])}
 
@@ -54,5 +60,5 @@ def format_shield_windows(result):
              '用户事件：'+json.dumps(result['events'],ensure_ascii=False),
              f"单次条件爆炸{result['per_hit_damage_reference']:.8g}；原表弹药参数{result['nominal_ammunition_parameter']:.8g}"]
     for row in result['rows']:
-        lines.append(f"{row['window_seconds']:g}秒：破屏{row['declared_breaks']}；本体命中{row['owner_hits']}、结构命中{row['structure_hits']}；爆炸条件伤害{row['explosion_damage_reference']:.8g}；普通攻击参考{row['ordinary_damage_reference']}；条件小计{row['conditional_damage_subtotal']}")
+        lines.append(f"{row['window_seconds']:g}秒：破屏{row['declared_breaks']}；本体命中{row['owner_hits']}、结构命中{row['structure_hits']}；爆炸条件伤害{row['explosion_damage_reference']:.8g}；普通攻击参考{row['ordinary_damage_reference']}；条件小计{row['conditional_damage_subtotal']}；共享补盾耗弹参考{row['ammunition_budget_reference']['ammunition_consumed_reference']}、剩余{row['ammunition_budget_reference']['ammunition_remaining_reference']}")
     return '\n'.join([*lines,*result['notes'],*result['calculation_notes']])
