@@ -1,3 +1,9 @@
+## 当前恢复断点 · 第214节收尾后停止
+
+2026-10-12T19:08:37.405567+08:00。按最新用户要求完成当前节后结束。本机与GitHub开发分支的功能提交为 `2d650fed`；95项必要检查通过，原0.83测试窗口已显示并响应，私人五项核对保持。后续215等待用户明确继续；215必须运行既定全量，200全量遗留失败仍保留。
+
+7组候选仅保存在本机缓存，未合入、未计完成；清单与摘要见 `verification/section-214/local-candidate-checkpoint.json`。内部234/235/236是候选标签，不是当前项目节数。苏苏洛候选还需复制其public来源包；基础战斗奖励依赖234→235。恢复时先核对真实远端与清单摘要，串行review/验收，勿重做已完成214或覆盖私人状态。原400累计目标暂挂。
+
 ## 功能第214节 · 机械师模组防御前条件单包与既有窗口计算
 
 2026-10-12T15:45:58.408591+08:00。新增：当前封存隐藏天赋、技能索引门、伤害来源与事件14闭合后，默认关闭的机械师模组条件单包接入实际计算/报告、培养界面、单包算例及既有冲锋/破屏窗口。明确本体、自己token、其它/未阻挡/未知身份，防御前atkScale乘法不重复面板或最终伤害层，完整实际总量保持未知。。必要检查95项，跳过0项，无失败。边界：static versioned native rule, not current hotfix or actual runtime binding；each source-valid packet and actual hidden ability attachment are explicit mathematical preconditions；manual JSON blocker identity is not automatic actual combat state; counts/range/token number do not determine identity；existing preview counts and supplied collisions remain conditional references; actual clock/start/sample/end unknown；full totals and cycle/window DPS stay None; static condition subtotals have a separate report section；no promotion to token own damage, summoned-structure damage, healing or unknown packet scope；root212 timing offset clipping repair is untouched: no timing.py or static_action_window hunks in this patch。回执verification/sections/214.json。下一节215，下次全量215。

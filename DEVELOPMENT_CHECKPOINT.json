@@ -3,7 +3,7 @@
   "policy": {
     "commit_after_each_section": true,
     "full_validation_interval": 15,
-    "continuous_work_authorized": true,
+    "continuous_work_authorized": false,
     "windows_compatibility": "Wine authorized; distinct from native Windows verification",
     "scheduled_background_work": false,
     "priority_order": [
@@ -20,9 +20,9 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section: commit and ordinary push origin codex/p2-development; full available validation after125 then every15 sections",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": false,
+    "development_paused_by_latest_user_request": true,
     "summary_interval": 5,
-    "stop_after_section": 400,
+    "stop_after_section": 214,
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "accuracy_validation_after_section": 115,
@@ -35,9 +35,10 @@
     "bugfix_only_counts_as_functional_section": false,
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
-    "current_user_batch_target_section": 400,
-    "current_user_batch_completed": false,
-    "requirements_synced_each_section": true
+    "current_user_batch_target_section": 214,
+    "current_user_batch_completed": true,
+    "requirements_synced_each_section": true,
+    "long_term_target_section": 400
   },
   "baseline_commit": "0015c20",
   "completed_sections": 214,
@@ -1339,7 +1340,7 @@
     }
   ],
   "next_section": 215,
-  "next_action": "继续有证P2实际功能，完成后P3/P1；每节同步要求与索引，400后停止",
+  "next_action": "本批已按用户要求在214节后结束；等待明确继续，再从215节恢复并执行215全量验证。先审阅本机候选与其来源，不能把候选编号当完成节数。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 200,
@@ -1747,8 +1748,8 @@
     "receipt": "verification/full-140/summary.json",
     "native_windows_game_chat_verified": false
   },
-  "batch_stop_after_section": 185,
-  "batch_status": "IN_PROGRESS",
+  "batch_stop_after_section": 214,
+  "batch_status": "PAUSED_BY_USER_AFTER_SECTION_214",
   "policy_revision_Beijing": "2026-10-11",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -1932,5 +1933,14 @@
     "next_full_validation_after": 120
   },
   "batch_start_section": 186,
-  "batch_target_section": 400
+  "batch_target_section": 214,
+  "suspended_target_section": 400,
+  "latest_user_pause": {
+    "at_Beijing": "2026-10-12T19:08:37.405567+08:00",
+    "instruction": "恢复断点并完成当前小节后结束",
+    "completed_section": 214,
+    "pending_candidate_manifest": "verification/section-214/local-candidate-checkpoint.json",
+    "new_section_authorized": false,
+    "long_term_target_not_completed": 400
+  }
 }
