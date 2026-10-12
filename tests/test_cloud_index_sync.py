@@ -58,3 +58,26 @@ class CloudIndexSyncTests(unittest.TestCase):
         with self.assertRaisesRegex(FileNotFoundError, 'PROJECT_REQUIREMENTS'):
             update(self.root)
         self.assertEqual((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'), 'Existing publication')
+
+    def test_declared_repair_receipt_is_preferred_over_first_native_receipt(self):
+        path=self.root/'DEVELOPMENT_CHECKPOINT.json'
+        checkpoint=json.loads(path.read_text(encoding='utf-8'))
+        checkpoint['last_full_validation']={'after_section':185,'receipt':'verification/full-185/native-after-repair.json'}
+        path.write_text(json.dumps(checkpoint),encoding='utf-8')
+        (self.root/'verification/full-185/native-after-repair.json').write_text(json.dumps({'available_checks_passed':True}),encoding='utf-8')
+        update(self.root)
+        index=json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+        self.assertEqual(index['latest_full_receipt'],'verification/full-185/native-after-repair.json')
+        self.assertTrue(index['latest_full_available_checks_passed'])
+        self.assertIn('native-after-repair.json',(self.root/'CLOUD_HANDOFF.md').read_text(encoding='utf-8'))
+
+    def test_missing_or_private_declared_receipt_cannot_overwrite_public_index(self):
+        path=self.root/'DEVELOPMENT_CHECKPOINT.json'
+        checkpoint=json.loads(path.read_text(encoding='utf-8'))
+        for reference in ('verification/full-185/missing.json','.local/run-state.json','verification/full-184/native.json'):
+            with self.subTest(reference=reference):
+                (self.root/'CLOUD_INDEX.json').write_text('Existing publication',encoding='utf-8')
+                checkpoint['last_full_validation']={'after_section':185,'receipt':reference}
+                path.write_text(json.dumps(checkpoint),encoding='utf-8')
+                with self.assertRaises((ValueError,FileNotFoundError)):update(self.root)
+                self.assertEqual((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'),'Existing publication')

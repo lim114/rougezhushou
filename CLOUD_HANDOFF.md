@@ -5,7 +5,7 @@
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
-最新本机全量：`verification/full-200/native.json`，可用范围全通过：`False`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。下面是历史交接，不代表当前节数。
+最新本机全量：`verification/full-200/native-after-repair.json`，可用范围全通过：`False`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。下面是历史交接，不代表当前节数。
 <!-- live-cloud-index:end -->
 
 ## 本机与 GitHub 开发分支同步 · 2026-10-11

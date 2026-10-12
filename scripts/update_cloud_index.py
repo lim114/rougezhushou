@@ -1,6 +1,7 @@
 """Refresh public continuation pointers; never read private runtime state."""
 import hashlib
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +20,18 @@ def update(root=ROOT):
                    key=lambda p: int(p.parent.name.split('-')[1]))
     fulls = [p for p in fulls if int(p.parent.name.split('-')[1]) <= completed]
     latest = fulls[-1] if fulls else None
+    declared=checkpoint.get('last_full_validation') or {}
+    if (type(declared.get('after_section')) is int and declared['after_section']<=completed
+            and declared['after_section'] >= (int(latest.parent.name.split('-')[1]) if latest else 0)):
+        reference=declared.get('receipt')
+        match=re.fullmatch(r'verification/full-(\d+)/[^/]+\.json',reference or '')
+        if not match or int(match[1])!=declared['after_section']:
+            raise ValueError('Cloud full receipt must name its declared public verification section.')
+        candidate=(root/reference).resolve()
+        if not candidate.is_relative_to((root/'verification').resolve()):
+            raise ValueError('Cloud full receipt must remain inside public verification.')
+        if not candidate.is_file():raise FileNotFoundError('Declared latest full receipt is missing: '+reference)
+        latest=candidate
     files = ['DEVELOPMENT_CHECKPOINT.json', 'PROJECT_PROGRESS.md', 'WORK_IN_PROGRESS.md',
              'PROJECT_COMPLETED.md', 'AGENTS.md', 'PROJECT_REQUIREMENTS.md',
              f'verification/sections/{completed:03}.json']

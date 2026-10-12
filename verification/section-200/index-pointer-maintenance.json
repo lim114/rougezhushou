@@ -1,0 +1,18 @@
+{
+  "maintenance_sections_added": 0,
+  "problem": "Filename-only discovery selected the first full200 receipt after an explicit repair receipt was saved in the checkpoint.",
+  "current_receipt": "verification/full-200/native-after-repair.json",
+  "source_files": [
+    "scripts/update_cloud_index.py",
+    "tests/test_cloud_index_sync.py"
+  ],
+  "necessary_validation": {
+    "selector": "tests.test_cloud_index_sync",
+    "tests": 5,
+    "passed": 5,
+    "errors": 0
+  },
+  "full_receipt_scope": "The saved full200 snapshot predates this index-only maintenance; numerical and GUI product modules did not change. Five index boundary checks cover this change; next maintained full scope215 includes the new cases.",
+  "project_complete": false,
+  "private_state_read": false
+}
