@@ -34,7 +34,7 @@ class ExplorationToolsTests(unittest.TestCase):
              for w in (self.panel.result_view,self.panel.raw_result)])
 
     def test_all_ten_queries_complete_public_results_and_readable_node_locations(self):
-        count=new_count=0
+        count=new_count=route_count=0
         for command,title in QUERIES['exploration']:
             with self.subTest(command=command):
                 payload=public_payload('exploration',command);before=deepcopy(payload)
@@ -46,15 +46,18 @@ class ExplorationToolsTests(unittest.TestCase):
                 if command=='targets':
                     self.assertIn('第2行、第4列',rendered);self.assertIn('1,3',rendered);self.assertIn('诡意行商',rendered)
                 if command=='settlements':new_count+=1
+                elif command=='compare-routes':route_count+=1
                 else:count+=1
         self.assertEqual(count,10)
         self.assertEqual(new_count,1)
+        self.assertEqual(route_count,1)
 
     def test_all_ten_queries_and_seven_boundary_presets_run_in_qt(self):
         count=variants=new_variants=reward_defaults=0
         original_variants={'exhausted','activation-unknown','payment-zero','random-price','exhausted-chain','main-final','gate-unknown'}
         seen_original=set()
         reward_variants=set()
+        route_presets=set()
         for command,title in QUERIES['exploration']:
             self.panel.select_query('exploration',command)
             for preset in exploration_presets(command):
@@ -66,7 +69,8 @@ class ExplorationToolsTests(unittest.TestCase):
                     self.assertIn(title,self.panel.result_view.toPlainText())
                     self.assertIn('所有持有/AP/状态均为说明声明',self.panel.result_view.toPlainText())
                     self.assertFalse(self.panel._result_links)
-                    if command=='settlements':
+                    if command=='compare-routes':route_presets.add(preset['id'])
+                    elif command=='settlements':
                         if preset['id']=='default':reward_defaults+=1
                         else:reward_variants.add(preset['id'])
                     elif preset['id']=='default':count+=1
@@ -76,6 +80,7 @@ class ExplorationToolsTests(unittest.TestCase):
         self.assertEqual(seen_original,original_variants)
         self.assertEqual(new_variants,6)
         self.assertEqual(reward_defaults,1)
+        self.assertEqual(route_presets,{'default','route-zero','route-unknown-victory','route-repeat-reward'})
         self.assertEqual(reward_variants,{'base-pursuit-event','base-boss-pursuit','base-portal-origin-known',
             'base-portal-origin-unknown','base-special-unknown-gold','base-ambiguous-variants','base-graph-reference'})
 

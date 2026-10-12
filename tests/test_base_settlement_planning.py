@@ -178,7 +178,7 @@ class BaseSettlementViewTests(unittest.TestCase):
 
     def test_new_query_all_eight_public_scenarios_run_and_render_in_qt(self):
         self.assertEqual(len(QUERIES['calibration'])+len(QUERIES['battle']),20)
-        self.assertEqual(len(QUERIES['exploration']),11)
+        self.assertEqual(len(QUERIES['exploration']),12)
         self.panel.select_query('exploration','settlements');presets=exploration_presets('settlements')
         self.assertEqual(len(presets),8)
         for preset in presets:

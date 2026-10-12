@@ -774,6 +774,108 @@
           "battle_floor": 1
         }
       ]
+    },
+    "compare-routes": {
+      "graph": {
+        "current_node": "s",
+        "nodes": [
+          {
+            "id": "s",
+            "row": 0,
+            "col": 0,
+            "base_node_type": "EMPTY"
+          },
+          {
+            "id": "a",
+            "row": 0,
+            "col": 1,
+            "base_node_type": "BATTLE_NORMAL",
+            "completed_declared": true,
+            "occupied_declared": false,
+            "other_blocked_declared": false
+          },
+          {
+            "id": "g",
+            "row": 0,
+            "col": 2,
+            "base_node_type": "FINAL"
+          },
+          {
+            "id": "q",
+            "row": 1,
+            "col": 0,
+            "base_node_type": "EMPTY"
+          }
+        ],
+        "edges": [
+          [
+            "s",
+            "a"
+          ],
+          [
+            "a",
+            "g"
+          ],
+          [
+            "s",
+            "q"
+          ],
+          [
+            "q",
+            "a"
+          ]
+        ]
+      },
+      "routes": [
+        {
+          "id": "direct",
+          "name": "短路声明",
+          "steps": [
+            {
+              "mode": "walking",
+              "target": "a",
+              "battle": {
+                "stage_id": "ro6_n_1_1",
+                "battle_floor": 1,
+                "entry_context": "map_battle",
+                "special_region": false,
+                "victory_declared": true
+              }
+            },
+            {
+              "mode": "walking",
+              "target": "g"
+            }
+          ]
+        },
+        {
+          "id": "detour",
+          "name": "绕路声明",
+          "steps": [
+            {
+              "mode": "walking",
+              "target": "q"
+            },
+            {
+              "mode": "walking",
+              "target": "a",
+              "battle": {
+                "stage_id": "ro6_n_1_1",
+                "battle_floor": 1,
+                "entry_context": "map_battle",
+                "special_region": false,
+                "victory_declared": true
+              }
+            },
+            {
+              "mode": "walking",
+              "target": "g"
+            }
+          ]
+        }
+      ],
+      "action_points": 6,
+      "inventory": []
     }
   },
   "variants": {
@@ -1947,6 +2049,316 @@
               ]
             ]
           }
+        }
+      }
+    ],
+    "compare-routes": [
+      {
+        "id": "route-zero",
+        "label": "付款到零与未到达尾链",
+        "payload": {
+          "graph": {
+            "current_node": "s",
+            "nodes": [
+              {
+                "id": "s",
+                "row": 0,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "a",
+                "row": 0,
+                "col": 1,
+                "base_node_type": "BATTLE_NORMAL",
+                "completed_declared": true,
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              },
+              {
+                "id": "g",
+                "row": 0,
+                "col": 2,
+                "base_node_type": "FINAL"
+              },
+              {
+                "id": "q",
+                "row": 1,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              }
+            ],
+            "edges": [
+              [
+                "s",
+                "a"
+              ],
+              [
+                "a",
+                "g"
+              ],
+              [
+                "s",
+                "q"
+              ],
+              [
+                "q",
+                "a"
+              ]
+            ]
+          },
+          "routes": [
+            {
+              "id": "direct",
+              "name": "短路声明",
+              "steps": [
+                {
+                  "mode": "walking",
+                  "target": "a",
+                  "battle": {
+                    "stage_id": "ro6_n_1_1",
+                    "battle_floor": 1,
+                    "entry_context": "map_battle",
+                    "special_region": false,
+                    "victory_declared": true
+                  }
+                },
+                {
+                  "mode": "walking",
+                  "target": "g"
+                }
+              ]
+            },
+            {
+              "id": "detour",
+              "name": "绕路声明",
+              "steps": [
+                {
+                  "mode": "walking",
+                  "target": "q"
+                },
+                {
+                  "mode": "walking",
+                  "target": "a",
+                  "battle": {
+                    "stage_id": "ro6_n_1_1",
+                    "battle_floor": 1,
+                    "entry_context": "map_battle",
+                    "special_region": false,
+                    "victory_declared": true
+                  }
+                },
+                {
+                  "mode": "walking",
+                  "target": "g"
+                }
+              ]
+            }
+          ],
+          "action_points": 1,
+          "inventory": []
+        }
+      },
+      {
+        "id": "route-unknown-victory",
+        "label": "胜利未知保留基础分项",
+        "payload": {
+          "graph": {
+            "current_node": "s",
+            "nodes": [
+              {
+                "id": "s",
+                "row": 0,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "a",
+                "row": 0,
+                "col": 1,
+                "base_node_type": "BATTLE_NORMAL",
+                "completed_declared": true,
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              },
+              {
+                "id": "g",
+                "row": 0,
+                "col": 2,
+                "base_node_type": "FINAL"
+              },
+              {
+                "id": "q",
+                "row": 1,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              }
+            ],
+            "edges": [
+              [
+                "s",
+                "a"
+              ],
+              [
+                "a",
+                "g"
+              ],
+              [
+                "s",
+                "q"
+              ],
+              [
+                "q",
+                "a"
+              ]
+            ]
+          },
+          "routes": [
+            {
+              "id": "direct",
+              "name": "短路声明",
+              "steps": [
+                {
+                  "mode": "walking",
+                  "target": "a",
+                  "battle": {
+                    "stage_id": "ro6_n_1_1",
+                    "battle_floor": 1,
+                    "entry_context": "map_battle",
+                    "special_region": false,
+                    "victory_declared": null
+                  }
+                },
+                {
+                  "mode": "walking",
+                  "target": "g"
+                }
+              ]
+            },
+            {
+              "id": "detour",
+              "name": "绕路声明",
+              "steps": [
+                {
+                  "mode": "walking",
+                  "target": "q"
+                },
+                {
+                  "mode": "walking",
+                  "target": "a",
+                  "battle": {
+                    "stage_id": "ro6_n_1_1",
+                    "battle_floor": 1,
+                    "entry_context": "map_battle",
+                    "special_region": false,
+                    "victory_declared": true
+                  }
+                },
+                {
+                  "mode": "walking",
+                  "target": "g"
+                }
+              ]
+            }
+          ],
+          "action_points": 6,
+          "inventory": []
+        }
+      },
+      {
+        "id": "route-repeat-reward",
+        "label": "重复节点不重复领取奖励",
+        "payload": {
+          "graph": {
+            "current_node": "s",
+            "nodes": [
+              {
+                "id": "s",
+                "row": 0,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "a",
+                "row": 0,
+                "col": 1,
+                "base_node_type": "BATTLE_NORMAL",
+                "completed_declared": true,
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              },
+              {
+                "id": "g",
+                "row": 0,
+                "col": 2,
+                "base_node_type": "FINAL"
+              },
+              {
+                "id": "q",
+                "row": 1,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              }
+            ],
+            "edges": [
+              [
+                "s",
+                "a"
+              ],
+              [
+                "a",
+                "g"
+              ],
+              [
+                "s",
+                "q"
+              ],
+              [
+                "q",
+                "a"
+              ]
+            ]
+          },
+          "routes": [
+            {
+              "id": "direct",
+              "name": "短路声明",
+              "steps": [
+                {
+                  "mode": "walking",
+                  "target": "a",
+                  "battle": {
+                    "stage_id": "ro6_n_1_1",
+                    "battle_floor": 1,
+                    "entry_context": "map_battle",
+                    "special_region": false,
+                    "victory_declared": true
+                  }
+                },
+                {
+                  "mode": "walking",
+                  "target": "s"
+                },
+                {
+                  "mode": "walking",
+                  "target": "a",
+                  "battle": {
+                    "stage_id": "ro6_n_1_1",
+                    "battle_floor": 1,
+                    "entry_context": "map_battle",
+                    "special_region": false,
+                    "victory_declared": true
+                  }
+                },
+                {
+                  "mode": "walking",
+                  "target": "g"
+                }
+              ]
+            }
+          ],
+          "action_points": 6,
+          "inventory": []
         }
       }
     ]

@@ -670,3 +670,6 @@ COMMANDS={'items':item_catalog,'targets':movement_targets,'effects':movement_eff
           'zones':zone_catalog,'budget':zone_budget,'valuation':goods_valuation,'options':movement_options,
           'itinerary':itinerary,'transition':region_transition,'residents':resident_candidates}
 COMMANDS['settlements']=settlements
+
+from .route_comparison import compare_routes
+COMMANDS["compare-routes"]=compare_routes
