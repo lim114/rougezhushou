@@ -75,7 +75,7 @@ INPUT_GUIDANCE = {
     'branches': 'stage_id 为关卡；branch_id 可选，用于筛选分支。列各阶段完整动作；触发机制、实际阶段选择、分支路线作用域缺证时未知。',
     'route': 'route_index 为固定路线序号（从0计）。折线分段、消失、再出现和等待分别列出；名义格不是实测寻路或实际到达时间。',
     'cell': 'row、col 是显示地图从上到下的行列（从0计）。反查明确配置点、主队列关联和预置实体；不声称实际占用或必经。',
-    'mechanism': 'stage_id、enemy_id、level 选择关卡敌人。原数据库等级与关卡覆盖差异分别保留，缺字段、null、空表与0不同；不猜继承或脚本合并。',
+    'mechanism': 'stage_id、enemy_id、level 选择关卡敌人。原等级与覆盖分别保留；另列已证基包招式/黑板配置分项。缺字段、null、空表与0不同；实际脚本、热更新与时钟未知。',
     'compare': 'left_stage/right_stage 与 left_level/right_level 分别指定两组条件；run_config/right_run_config 为局外环境。比较已支持环境小计，完整有效面板仍未知。',
 }
 INPUT_GUIDANCE.update({
@@ -416,6 +416,10 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
             parts += [_p('敌人：'+data['enemy_id']+'；等级：'+str(data['level'])),
                 _p('准确等级记录存在：'+_text(data['exact_level_present'])+'；实际合并机制：未知'),
                 _table(['记录来源','等级','原字段数'],[(r['origin'],r['level'],len(r['fields'])) for r in data['records']])]
+            compiled=data.get('compiled_configuration')
+            if compiled:
+                from .enemy_configuration import construction_text
+                parts += [_h('基包配置分项'),_p(construction_text(compiled))]
             for diff in data['comparisons']:
                 parts += [_h(_text(diff['left_origin'])+' → '+_text(diff['right_origin'])),
                     _table(['字段位置','左记录状态 / 值','右记录状态 / 值'],

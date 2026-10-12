@@ -32,13 +32,20 @@ def resolve_enemy(scenario,resolution):
         raise ValueError('目标敌人身份/等级必须与关卡引用唯一匹配。')
     candidates=[e for e in preview['possible_enemies'] if e['id']==target.get('enemy_id') and e['level']==target.get('level')]
     if len(candidates)!=1:raise ValueError('目标敌人身份/等级必须与关卡引用唯一匹配。')
-    record=candidates[0];stats=dict(record['reference_stats'])
+    from .enemy_panel import enemy_panel_reference
+    panel=enemy_panel_reference(sid,target['enemy_id'],target['level'])
+    if not panel['compiled_database_result_available']:
+        raise ValueError('固定敌人数据库精确等级不可用；别名/默认构建路径未核验，不能用原字段投影进行伤害计算。')
+    record=candidates[0];stats=dict(panel['attributes'])
     for key in ('maxHp','atk','def','magicResistance'):
-        if not isinstance(stats.get(key),(int,float)) or not math.isfinite(stats[key]) or stats[key]<0:
+        if type(stats.get(key)) not in (int,float) or not math.isfinite(stats[key]) or stats[key]<0:
             raise ValueError('目标敌人属性不完整。')
     enemy={**target,'name':record['name'],'stage_name':stage['name'],'stage_difficulty':stage['difficulty'],
         'level_type':record['level_type'],'reference_stats':dict(stats),'stats':stats,'steps':[],
-        'damage_factor':1,'pending':[],'source':config_data()['source_url']}
+        'damage_factor':1,'pending':[],'source':config_data()['source_url'],
+        'fixed_source_qualification':{'state':panel['source_state'],'source':panel['source'],
+            'field_provenance':panel['field_provenance'],
+            'actual_gameplay_verified':False}}
     resolution['enemy']=enemy
     def multiply(label,values):
         for key,value in values.items():stats[key]*=value

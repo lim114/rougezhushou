@@ -19,11 +19,13 @@ def enemy_skill_reference(stage_id,enemy_id,level):
         'exact_requested_level_present':str(level) in source,
         'stage_overrides':copy.deepcopy(data['bindings'][stage_id][key]['stage_overrides']),
         'first_activation_seconds':None,'effective_skill_damage':None,'inheritance_resolved':False,
-        'limits':['按原始等级分别列出；未把null当空列表，也未猜测继承、覆盖或默认技能。',
+        'limits':['原始等级分别保留；已证的基包配置另列，未把null当空列表或猜测当前实战默认技能。',
             '冷却、初始冷却、技力和参数都是配置；不等于实际首发、轮次或技能伤害。',
             '图鉴触发、首领阶段、隐藏脚本和环境修正还需逐项核验；字段0不证明出生即发动。']}
     from .enemy_sp_reference import compiled_sp_reference
     reference['compiled_sp_reference']=compiled_sp_reference(reference)
+    from .enemy_configuration import compiled_configuration
+    reference['compiled_configuration']=compiled_configuration(reference)
     return reference
 
 def raw_text(value):
@@ -88,7 +90,7 @@ def enemy_skill_text(reference,technical=False):
         parts=([f'{configured}条招式配置'] if configured else [])+([f'{sp_records}组技力配置'] if sp_records else [])
         lines.append('未合并资料：'+('、'.join(parts) if parts else '仅包含待核验机制参数')+'。')
         if parameter_count:lines.append(f'另有{parameter_count}项未核验参数；原文可在技术资料中查看。')
-        lines.append('原始等级定义与本关卡覆盖未推定合并；配置不等于实际首发、轮次或技能伤害。')
+        lines.append('原始等级定义与本关卡覆盖分别保留，未推定合并为当前实战技能；配置不等于实际首发、轮次或技能伤害。')
     else:
         lines.append('未取得非空技能/技力配置；这不证明没有默认或隐藏技能。')
     if malformed:lines.append('部分参数格式未确认，保留原文并等待核验。')
@@ -102,6 +104,10 @@ def enemy_skill_text(reference,technical=False):
         lines.append('技力配置分项已按基包非空整记录规则解析；实际控制器、首次发动与完整回转仍未知。')
     if compiled and compiled['initialization_reference']['state']=='conditional_baseline_available':
         lines.append('默认或显式初始化来源已核验到基包条件分支；当前热更新和实际控制器仍未知。')
+    configuration=reference.get('compiled_configuration')
+    if configuration:
+        from .enemy_configuration import construction_text
+        lines.extend(['',construction_text(configuration,technical=technical)])
     if not technical:return '\n'.join(lines)
     if compiled:
         lines.extend(['','【基包技力配置继承参考】',

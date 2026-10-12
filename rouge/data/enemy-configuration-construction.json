@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "scope": "fixed_serialized_enemy_data_under_verified_baseline_native_construction",
+  "rules": {
+    "exact_database_level_required": true,
+    "source_order": "ascending_database_levels_then_stage_override",
+    "talents_allocate_only_when_destination_null_and_delta_nonempty": true,
+    "blackboard_update": "remove_all_same_ordinal_key_then_append_reconstructed_pair",
+    "pair_numeric_when_valueStr_null_or_empty": true,
+    "numeric_pair_valueStr": null,
+    "string_pair_value": 0,
+    "skills_match": "first_matching_ordinal_prefabKey",
+    "skills_merge_only_if_match_exists_and_delta_blackboard_nonempty": true,
+    "merged_skill_scalars": "all_from_deep_cloned_delta_record",
+    "merged_skill_board": "copy_previous_board_or_create_empty_then_apply_delta_board",
+    "whole_record_branch_preserves_serialized_board": true,
+    "skills_write": "remove_all_same_prefabKey_then_append_result",
+    "empty_final_skills": null
+  },
+  "native_evidence": {
+    "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+    "proof_directory": "research/p3-enemy-configuration-current",
+    "source_order_and_exact_level_proof": "research/p3-enemy-sp-inheritance-current/native-proof.json",
+    "apply_defined_data_metadata_method_index": 31291,
+    "apply_blackboard_data_metadata_method_index": 31294,
+    "apply_skill_data_metadata_method_index": 31295,
+    "current_hotfix_verified": false,
+    "game_dll_executed": false,
+    "process_memory_read": false
+  },
+  "limits": [
+    "仅解析固定版本中明确序列化的技能和黑板配置，未创建当前游戏控制器或套用动态脚本。",
+    "数值字段保留固定序列化参考；本项不求当前技能伤害、首次发动或完整回转。",
+    "数据库精确等级缺失时不使用较低等级投影、关卡覆盖或猜测的别名/默认路径。",
+    "缺失、null与空列表分别保留；未覆盖的条目格式使配置参考保持未知。",
+    "技能未列出不证明不存在默认或隐藏技能；实际技能附着、阶段与热更新仍待核验。"
+  ]
+}
