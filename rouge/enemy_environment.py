@@ -54,6 +54,15 @@ def resolve_enemy(scenario,resolution,*,panel_only=False):
             'construction_reference':panel['construction_reference'],
             'compiled_identity':panel['compiled_identity'],'actual_gameplay_verified':False}}
     resolution['enemy']=enemy
+    # Preserve the raw attribute as a source field. This separate conditioned
+    # source subtotal does not silently act as an actual dynamic stat.
+    if sid=='ro6_e_3_6':
+        from .battle_preview import battle_data
+        from .spawn_reference import movement_reference
+        fixed_stage=battle_data()['stages'].get(sid)
+        if fixed_stage is not None:
+            component=movement_reference(fixed_stage,stats.get('moveSpeed')).get('conditional_native_movement')
+            if component is not None:enemy['movement_source_reference']=component
     def multiply(label,values):
         for key,value in values.items():
             if stats.get(key) is not None:stats[key]*=value

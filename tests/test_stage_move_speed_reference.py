@@ -124,7 +124,9 @@ class StageMoveSpeedReferenceTests(unittest.TestCase):
         self.assertIn('关卡移速符文参数参考：1.5', technical)
         self.assertIn('基础移速×关卡倍率小计：1', technical)
         self.assertIn('符文与关卡倍率合成的移速：未知', technical)
-        self.assertIn('原生目标、写入及叠加层尚未核验', technical)
+        self.assertIn('字段接收、乘法写入及读取层已绑定', technical)
+        self.assertIn('实际执行资格/动态修正尚未核验', technical)
+        self.assertIn('无其他属性修正的条件移速：1.5 格/秒', ordinary)
         self.assertIn(entry['movement_reference'][KEY]['source']['url'], technical)
         self.assertNotIn('关卡移速符文参数参考', enemy_text(enemy_preview(NORMAL, EID, 0), True))
 

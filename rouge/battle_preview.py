@@ -139,6 +139,12 @@ def enemy_text(entry,technical=False):
     lines.extend(('预计攻速：未知（技能/阶段/其他修正未核验）',
         '预计攻击间隔：未知（技能/阶段/动画未核验）',
         '预计有效移速：未知（未推算移动入场时间）'))
+    movement=entry.get('movement_reference',{}).get('conditional_native_movement')
+    if movement is not None:
+        lines.extend(['','【移速条件分项】',
+            '符文写入移速属性：'+value_text(movement.get('written_move_speed_attribute')),
+            '无其他属性修正的条件移速：'+value_text(movement.get('conditional_speed_tiles_per_second'))+' 格/秒',
+            '条件：符文实际写入、使用标准范围且无额外移动属性修正；不代表当前完整移速或入场时刻。'])
     if entry.get('fixed_panel_reference'):
         from .enemy_panel import enemy_panel_text
         lines.extend(['',enemy_panel_text(entry['fixed_panel_reference'],technical=technical)])
@@ -191,8 +197,14 @@ def enemy_text(entry,technical=False):
         rune=movement.get('stage_move_speed_rune_reference')
         if rune:
             lines.extend(['关卡移速符文参数参考：'+value_text(rune['parameter']),
-                '基础移速×关卡倍率小计：'+value_text(movement['base_times_stage_speed']),
-                '符文与关卡倍率合成的移速：未知；原生目标、写入及叠加层尚未核验。'])
+                '基础移速×关卡倍率小计：'+value_text(movement['base_times_stage_speed'])])
+            component=movement.get('conditional_native_movement')
+            if component is not None:
+                lines.extend(['符文与关卡倍率合成的移速：未知；字段接收、乘法写入及读取层已绑定，实际执行资格/动态修正尚未核验。',
+                    '符文与关卡倍率条件合成移速：'+value_text(component.get('conditional_speed_tiles_per_second'))+' 格/秒',
+                    '条件分项采用公开标准无上限分支；未写最大范围标志及选择器指针的原生分配基线未闭合。',
+                    '原生条件分项数据：'+json.dumps(component,ensure_ascii=False)])
+            else:lines.append('符文与关卡倍率合成的移速：未知；原生目标、写入及叠加层尚未核验。')
             if rune['source']:lines.append('关卡移速参数来源：'+rune['source']['url'])
         source=battle_data()['source']
         for key,label in (('enemy_database','敌人原始数据'),('handbook','中文图鉴')):

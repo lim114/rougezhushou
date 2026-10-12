@@ -76,6 +76,12 @@ def movement_reference(stage,base_speed):
                 'combined_with_stage_multiplier_speed':None,
                 'complete_effective_speed_verified':False,
             }
+            from .enemy_movement_reference import stage_movement_component
+            component=stage_movement_component(stage,base_speed,result['stage_move_speed_rune_reference'])
+            if component is not None:
+                result['stage_move_speed_rune_reference']['native_field_writer_bound']=True
+                result['stage_move_speed_rune_reference']['native_receiver_type_bound']=True
+                result['conditional_native_movement']=component
     return result
 
 def sequence_text(row):

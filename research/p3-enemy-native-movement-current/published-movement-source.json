@@ -1,0 +1,15 @@
+{
+  "source_url": "https://prts.wiki/api.php?action=query&format=json&prop=revisions&titles=%E6%B8%B8%E6%88%8F%E6%95%B0%E6%8D%AE%E5%9F%BA%E7%A1%80&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main",
+  "page_title": "游戏数据基础",
+  "page_id": 1319,
+  "revision": 440563,
+  "timestamp": "2026-10-10T07:00:23Z",
+  "source_response_sha256": "94bfaad0735af871917a584ad158d79399a657fd8a201ea7a5c631464b6d69c1",
+  "source_response_bytes": 56915,
+  "pinned_url": "https://prts.wiki/index.php?title=%E6%B8%B8%E6%88%8F%E6%95%B0%E6%8D%AE%E5%9F%BA%E7%A1%80&oldid=440563",
+  "section_heading": "移速",
+  "section_wikitext": "===移速===\n{{Cbox2|lv=1|icon=info|text=此部分内容和敌方单位的行动有关。<br>关于此部分的详细内容参见[[作战机制#敌方单位行动与坐标相关|作战机制的“敌方单位行动与坐标相关”部分]]。}}\n通常情况下，敌人在可以正常移动的每帧都会以寻路算法向着目标点以最短路径移动 \\(\\text{移动速度} \\times m \\div \\text{帧率}\\) 格直至其途径目标点，哪怕其与目标点之间的距离小于该数值也会移动（并越过那个位置），且移动时并不会检测本次移动的落点是否处于可通行地块。其中 \\(m\\) 为 <code>move_multiplier</code>。\n* <code>move_multiplier</code> 默认值为0.5，即通常情况下实际移动速度是一半（在二倍速下才会视觉相等）。\n*由于[[#数值范围|数值范围]]问题，移动速度数值不会低于速度下限0.1（即在 <code>move_multiplier</code> 为正常的0.5的情况下，每秒只能移动0.05格），但无上限。\n*虽然无法移动，但我方干员、装置、召唤物移动速度均为默认的1.0。\n",
+  "facts_scope": "Published standard enemy movement lower bound0.1/no upper and separate move_multiplier; not current server/runtime proof",
+  "native_gate_max_zero_baseline_verified": false,
+  "private_state_read": false
+}
