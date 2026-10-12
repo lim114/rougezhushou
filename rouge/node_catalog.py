@@ -11,6 +11,9 @@ def _data():
 @lru_cache(maxsize=1)
 def _original():
     return json.loads((Path(__file__).with_name('data')/'node-events.json').read_text(encoding='utf-8'))
+@lru_cache(maxsize=1)
+def _original_entries():
+    return json.loads((Path(__file__).with_name('data')/'original-entry-reference.json').read_text(encoding='utf-8'))
 def _text(value,label,optional=False):
     if optional and value is None:return
     if not isinstance(value,str) or not value.strip():raise ValueError(label+'需要非空文字。')
@@ -102,17 +105,24 @@ def original_references(query='',title=None,record_type='all',record_id=None):
             if title is not None and raw['title']!=title:continue
             text=json.dumps(raw,ensure_ascii=False).casefold()
             if needle and needle not in text:continue
+            entry=_original_entries()['records'].get(raw[idkey])
             rows.append({'record_type':kind,'record_id':raw[idkey],**deepcopy(raw),
-                         'source_scene_link_verified':False,'reachable_from_entry':None})
+                         'source_scene_link_verified':bool(entry and entry['source_scene_link_verified']),
+                         'special_entry_reference':deepcopy(entry),'reachable_from_entry':None})
     if record_id is not None and not rows:raise ValueError('引用不在未分类原表记录中。')
     return _result(rows,query=query,title=title,record_type=record_type,
                    next_scene_is_destination_reference_only=True,
-                   natural_node_entry_verified=False)
+                   natural_node_entry_verified=False,
+                   special_entry_sources=deepcopy(_original_entries()['sources']))
 def event_details(event_id):
     e=deepcopy(_event(event_id));represented={i for s in e['scenes'] for i in s['game_scene_ids']}
+    entry_variants=[deepcopy(row) for row in _original_entries()['records'].values()
+                    if row.get('source_event_id')==event_id]
+    represented.update(row['source_scene_id'] for row in entry_variants)
     unlinked=[{'id':i,**deepcopy(s),'reachable_from_entry':None} for i,s in _original()['scenes'].items()
               if s['title']==e['title'] and i not in represented]
     return _result(e['scenes'],event=_summary(e),unlinked_original_scenes=unlinked,
+                   original_entry_variants=entry_variants,
                    unclassified_original_query={'command':'original','input':{'query':e['title']}},
                    server_scene_reachability_verified=False)
 COMMANDS.update(detail=event_details,original=original_references)

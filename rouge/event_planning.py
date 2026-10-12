@@ -381,3 +381,88 @@ def choice_resources(event_id,scene_key,context=None):
 
 COMMANDS={'events':qualified_events,'event':event_eligibility,'choices':choice_eligibility,'battles':event_battle_links,
           'scene-outcomes':scene_outcomes,'resources':choice_resources,'final-conversion':final_ap_conversion}
+
+
+def _original_context(context):
+    """Separate startup declarations; current held items never imply inheritance."""
+    context=_context(context)
+    for key,values in (('phase',('run_start','map_node')),('exploration_mode',('NORMAL','MONTH_TEAM'))):
+        if context.get(key) is not None and context[key] not in values:raise ValueError(key+'声明不在支持范围中。')
+    previous=context.get('previous_regions_completed')
+    if previous is not None and (type(previous) is not int or previous<0):raise ValueError('上一局通过区域数需要非负整数或留空。')
+    data=catalog._original_entries();known=set(data['startup']['known_legacy_ids'])
+    inherited=context.get('inherited_legacy_ids',[]);presence=context.get('inherited_legacy_presence',{})
+    if (not isinstance(inherited,list) or any(not isinstance(key,str) or key not in known for key in inherited)
+        or len(set(inherited))!=len(inherited)):raise ValueError('继承LEGACY需要原件唯一ID列表；同名不能代替原ID。')
+    if (not isinstance(presence,dict) or any(key not in known or (value is not None and type(value) is not bool)
+        for key,value in presence.items())):raise ValueError('继承LEGACY状态需要原ID到布尔或未知的对象。')
+    if any(presence.get(key) is False for key in inherited):raise ValueError('同一继承LEGACY的正/负声明冲突。')
+    if type(context.get('inherited_legacy_complete',False)) is not bool:raise ValueError('inherited_legacy_complete需要布尔值。')
+    if context.get('fog_color') is not None and context['fog_color'] not in ('red','blue','green','gold','orange','purple'):
+        raise ValueError('雾色需要red/blue/green/gold/orange/purple或留空。')
+    if context.get('original_scene_id') is not None:
+        catalog._text(context['original_scene_id'],'原场景声明')
+        if context['original_scene_id'] not in catalog._original()['scenes']:raise ValueError('原场景声明不在固定原件中。')
+    return context
+
+
+def _inherited_legacy(context,legacy_id):
+    if legacy_id in context.get('inherited_legacy_ids',[]):return True
+    if legacy_id in context.get('inherited_legacy_presence',{}):return context['inherited_legacy_presence'][legacy_id]
+    return False if context.get('inherited_legacy_complete',False) else None
+
+
+def original_entry_qualification(record_id,context=None):
+    """Direct special-entry identity and documented conditions, not natural spawning."""
+    context=_original_context(context);raw=catalog.original_references(record_id=record_id)['rows'][0]
+    data=catalog._original_entries();reference=data['records'].get(record_id);checks=[];extra={}
+    if reference is None:
+        checks=[_check('original_source_scene_unrecovered',None,
+                       '原来源场景/展示条件未恢复；nextSceneId只能证明目的地。')]
+    elif reference['kind']=='portal_entry_variant':
+        event=catalog._event(reference['source_event_id']);checks=_event_checks(event,context)
+        fog=context.get('fog_color');identity=context.get('original_scene_id')
+        matches=None if fog is None and identity is None else _and(
+            True if fog is None else fog==reference['fog_color'],True if identity is None else identity==record_id)
+        checks.append(_check('explicit_portal_entry_identity',matches,
+            reference['label']+'完整差分句与原description逐字相等；不从ID后缀推断实例。',
+            fog_color_reference=reference['fog_color'],original_scene_id_reference=record_id))
+        extra.update(documented_identity_matches=matches,actual_original_scene_selected=None,
+                     original_id_suffix_used_as_evidence=False)
+    else:
+        phase=context.get('phase');previous=context.get('previous_regions_completed')
+        checks=[_check('startup_phase',None if phase is None else phase=='run_start','行动奖励属于开始探索时的支援阶段，未加入普通地图自然候选。'),
+            _check('previous_completed_regions',None if previous is None else previous>=2,
+                '上一局至少通过两个区域；抵达的最高层号和当前持有不能替代。',minimum_completed_regions=2)]
+        scene=context.get('original_scene_id')
+        if scene is not None:checks.append(_check('startup_scene_identity',scene==data['startup']['scene']['id'],'明确原场景ID须对应行动奖励。'))
+        if reference['kind']=='startup_legacy_extra':
+            mode=context.get('exploration_mode');legacy=reference['legacy_id']
+            checks += [_check('legacy_normal_mode_scope',None if mode is None else mode=='NORMAL','襁褓培育/继承仅常规探索生效；模式未知不默认常规。'),
+                _check('inherited_original_legacy',_inherited_legacy(context,legacy),
+                       '对应继承LEGACY原ID的force_add_choice直接指向本隐藏选项与行动奖励场景。',legacy_id=legacy)]
+            extra.update(legacy_id=legacy,documented_extra_blue_display_count=1,actual_selectable=None)
+        else:
+            # The regular action section documents NORMAL. It does not prove absence in every other mode.
+            mode=context.get('exploration_mode')
+            checks.append(_check('regular_mode_documented_scope',True if mode=='NORMAL' else None,'常规行动的初始支援公开规则；其它模式未在此入口依据中闭合。'))
+        extra.update(documented_regular_candidate_count=6,documented_regular_display_count=3,
+            actual_displayed_choice_ids=None,all_twelve_choices_displayed=False)
+    return _result(record=raw,reference=deepcopy(reference),checks=checks,status=_status(checks),context=context,
+        source_scene_link_verified=bool(reference and reference['source_scene_link_verified']),
+        special_entry_sources=deepcopy(data['sources']),actual_server_eligible=None,
+        full_server_conditions_known=False,natural_node_generation_verified=False,
+        reachable_from_entry=None,generation_probability=None,
+        limits=deepcopy(data['limits']),**extra)
+
+
+def original_entry_variants(event_id,context=None):
+    context=_original_context(context);catalog._event(event_id)
+    records=[(key,row) for key,row in catalog._original_entries()['records'].items() if row.get('source_event_id')==event_id]
+    rows=[original_entry_qualification(key,context) for key,_ in records]
+    return _result(event_id=event_id,rows=rows,context=context,actual_original_scene_selected=None,
+        source_scene_link_verified=bool(records),source_scene_script_recovered=False,
+        original_id_suffix_used_as_evidence=False,special_entry_sources=deepcopy(catalog._original_entries()['sources']))
+
+
+COMMANDS.update({'original-entry':original_entry_qualification,'original-variants':original_entry_variants})

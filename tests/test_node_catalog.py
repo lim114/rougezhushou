@@ -56,7 +56,11 @@ class NodeCatalogTests(unittest.TestCase):
         self.assertEqual(len(c.original_references(record_type='choice')['rows']),63)
         for row in r['rows']:
             single=c.original_references(record_id=row['record_id'])['rows']
-            self.assertEqual(len(single),1);self.assertFalse(single[0]['source_scene_link_verified'])
+            self.assertEqual(len(single),1)
+            proof=row.get('special_entry_reference')
+            self.assertEqual(single[0]['source_scene_link_verified'],bool(proof and proof['source_scene_link_verified']))
+            self.assertIsNone(single[0]['reachable_from_entry'])
+        self.assertEqual(sum(row['source_scene_link_verified'] for row in r['rows']),26)
         x=c.original_references(title='行动奖励')['rows'];self.assertEqual(len(x),1)
         self.assertFalse(c.original_references()['natural_node_entry_verified'])
     def test_175(self):

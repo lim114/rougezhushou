@@ -74,6 +74,25 @@ def known_node_type(value):
     return value if isinstance(value,str) and value and not value.startswith(('未知','类型未确认')) else None
 
 
+def original_scene_reference(content):
+    """Use an exact declaration or the existing same-frame unique read contract."""
+    if not isinstance(content,dict) or content.get('kind')!='event':return None
+    declarations=[content[k] for k in ('original_scene_id','scene_id') if content.get(k) is not None]
+    if any(not isinstance(key,str) for key in declarations) or len(set(declarations))>1:return None
+    declared=declarations[0] if declarations else None
+    if declared and declared not in catalog._original()['scenes']:return None
+    candidates=content.get('scene_candidates')
+    observed=None
+    if (content.get('source')=='same_frame_selected_node' and content.get('identity_status')=='visible_scene'
+            and isinstance(candidates,list) and len(candidates)==1 and isinstance(candidates[0],str)
+            and catalog._original()['scenes'].get(candidates[0],{}).get('title')==content.get('title')):
+        observed=candidates[0]
+    if observed and declared and observed!=declared:return None
+    if observed:return observed,'同帧唯一原场景候选（实际实例仍待核验）'
+    if declared:return declared,'声明原场景ID对应（身份仍须核验）'
+    return None
+
+
 class CatalogTree(QTreeWidget):
     """Grouped visible tree, with stable flat-entry selection for existing callers."""
     def __init__(self):
@@ -183,6 +202,42 @@ def _event_flow_text(event_id,context=None,planning=False):
     sources=result['sources'].values() if isinstance(result['sources'],dict) else result['sources']
     for source in sources:
         if isinstance(source,dict):lines.append(str(source.get('url') or source.get('source_url') or source))
+    return '\n'.join(lines)
+
+
+def special_original_text(record_id,context=None):
+    result=event_planning.original_entry_qualification(record_id,context);reference=result['reference']
+    if reference is None:
+        raw=result['record'];destination=raw.get('nextSceneId')
+        return ('来源入口仍未知；nextSceneId只证明目的地，不反推来源场景。'+
+                ('\n原件目的地：'+destination if destination else '')+'\n当前服务器资格与完整可达链：未知。')
+    kind=reference['kind'];lines=['特殊入口资料：'+QUALIFICATIONS[result['status']],
+        '来源绑定：'+('直接指针或完整差分原文已证' if result['source_scene_link_verified'] else '公开候选库身份相符；原sourceScene指针仍未证'),
+        '实际当前展示/进入/服务器资格：未知；未加入普通地图自然候选。']
+    if kind=='portal_entry_variant':
+        lines += ['固定目录入口：'+reference['source_community_scene'],
+            '原场景：'+reference['source_scene_id']+' · '+reference['label'],
+            '直接文字依据：共同入口前缀与下列明确差分句组合后，和原description逐字相等：',
+            reference['explicit_clause'],'同色多个原ID仍分别保留；没有按ID数字或后缀挑选当前实例。',
+            '加工品稀有度对应初始秘境AP、自然出现脚本与13个拒绝差分的源场景仍未知。']
+    else:
+        lines += ['来源阶段：开始探索时的行动奖励；上一局通过区域数不是当前层数或最高抵达层号。',
+            '常规初始候选库：6项中随机展示3项；候选库不是本次展示全集。',
+            '襁褓羽蛇的额外蓝色支援：1项，实际选中/显示哪项未知。']
+        if kind=='startup_legacy_extra':
+            lines += ['继承LEGACY原ID：'+reference['legacy_id']+'；同名羽蛇的六种原ID不能合并。',
+                '原force_add_choice参数：choice_id='+record_id+'；scene_ids='+reference['source_scene_id'],
+                '原件路径：'+reference['source_path'],
+                '当前持有的襁褓生灵不能替代上一局继承来源；缺独立继承记录时继续未知。']
+        elif kind=='startup_regular_pool':lines.append('仅按公开候选标题唯一对应原choice；没有原件sourceScene指针，不能冒称该指针已证。')
+    for check in result['checks']:
+        state='相符' if check['matches'] is True else '不符' if check['matches'] is False else '未知'
+        lines.append('条件核对：'+state+'；'+check['source_text'])
+    sources=result['special_entry_sources']
+    lines += ['固定社区目录427904与本次独立在线433770/434599规则观察分开；不是当前完整目录替换。',
+        '原件来源：'+sources['original']['url'],'固定差分来源：'+sources['fixed_community']['url']]
+    if kind!='portal_entry_variant':
+        lines.extend('独立规则来源：'+row['url'] for row in sources['online_independent_rules'])
     return '\n'.join(lines)
 
 
@@ -319,7 +374,7 @@ class NodeCatalogPanel(QWidget):
             battles=catalog.battle_candidates(node_type=nt,floor=floor,context='all')['rows'] if nt is None or nt in ('作战','紧急作战','险路恶敌','不期而遇','诡意行商','狭路相逢','“居民”据点') else []
             functions=catalog.function_nodes(node_type=nt)['rows']
             originals=[{'id':str(item.get('id') or index),
-                        'title':f"未归类原文 · {item.get('title') or item.get('id') or index}",
+                        'title':f"原文 · {item.get('title') or item.get('id') or index} · {item['record_id']}",
                         'record':item} for index,item in enumerate(catalog.original_references()['rows'])]
         entries=[]
         for category,rows in (('event',events),('battle',battles),('function',functions),('original',originals)):
@@ -339,7 +394,9 @@ class NodeCatalogPanel(QWidget):
                     entry['group']=('历史已读内容 · '+entry['group'] if entry.get('history_read') else entry['group']+' · '+QUALIFICATIONS[entry['qualification']['status']])
                 elif category=='function':entry['group']=('历史已读类型 · ' if entry.get('history_read') else '')+r['node_type']
                 elif category=='battle':entry['group']=('历史已读内容 · ' if entry.get('history_read') else '')+' / '.join(CATEGORIES.get(t,t) for t in r.get('categories',[]))+' · 战斗资料'
-                else:entry['group']='未归类原文 · 入口未知'
+                else:
+                    reference=r['record'].get('special_entry_reference')
+                    entry['group']=('特殊入口原文 · 来源身份已证' if reference['source_scene_link_verified'] else '初始候选原文 · 源场景未证') if reference else '未归类原文 · 入口未知'
                 entries.append(entry)
         return entries
 
@@ -382,6 +439,12 @@ class NodeCatalogPanel(QWidget):
                     self.event_stage.addItem(f"{row['choice_title']} → {stage['name']} · {difficulty} · {status} · 资料候选{number}",stage['stage_id'])
                     self.event_stage.setItemData(self.event_stage.count()-1,
                         [row['scene_key'],row['choice_key'],stage['stage_id']],Qt.ItemDataRole.UserRole+1)
+                pool=row.get('generic_pool_requirement') or {}
+                for number,stage in enumerate(pool.get('fixed_named_pool',[]),1):
+                    difficulty={'NORMAL':'普通','FOUR_STAR':'紧急'}.get(stage['difficulty'],'难度未确认')
+                    self.event_stage.addItem(f"{row['choice_title']} → {stage['title']} · {difficulty} · {status} · 下一主层固定资料候选{number}",stage['id'])
+                    self.event_stage.setItemData(self.event_stage.count()-1,
+                        [row['scene_key'],row['choice_key'],stage['id'],'generic_next_floor'],Qt.ItemDataRole.UserRole+1)
             if previous:
                 self.event_stage.setCurrentIndex(next((i for i in range(self.event_stage.count())
                     if self.event_stage.itemData(i,Qt.ItemDataRole.UserRole+1)==previous),0))
@@ -401,6 +464,11 @@ class NodeCatalogPanel(QWidget):
                     if choice['conditional_text']:
                         text+='\n选项 '+choice['choice_title']+'：'+QUALIFICATIONS[choice['status']]+'；'+choice['conditional_text']
             if self.event_stage.count():text+='\n作战入口见下方选择：仅固定资料预览，不代表实际触发或确定选中该变体。'
+            for row in result['rows']:
+                pool=row.get('generic_pool_requirement')
+                if pool:
+                    floor=pool['next_main_floor_reference']
+                    text+='\n下一主层作战：'+(f'第{floor}层固定来源候选可预览' if pool['fixed_named_pool'] else '下一主层或固定池未确认，无可绑定关卡')+'；完整服务器池与实际选择未知。'
         elif entry['kind']=='map':
             graph,conditions,epoch,historical=self.map_context;r=entry['record']
             dossier=catalog.node_dossier(graph,r['id'],**conditions)
@@ -433,7 +501,9 @@ class NodeCatalogPanel(QWidget):
         elif entry['kind']=='battle':
             r=entry['record'];text=f"{entry['title']}\n\n类别：{'、'.join(CATEGORIES.get(t,t) for t in r.get('categories',[]))}\n层数：{floor_text(r.get('floors'))}\n关卡版本：{r.get('id') or r.get('stage_id')}\n"
             text+='\n'.join(r.get('notes',[]))+'\n实际出现/分支/出怪全局时钟：未知。此项仅连接到对应固定地图资料。'
-        else:text='未归类原始资料，尚不能连接为完整可达事件链。\n\n'+json.dumps(entry['record']['record'],ensure_ascii=False,indent=2)
+        else:
+            raw=entry['record']['record']
+            text=special_original_text(raw['record_id'],self.runtime_context)+'\n\n完整原文与字段：\n'+json.dumps(raw,ensure_ascii=False,indent=2)
         if entry and entry.get('history_read') and entry['kind']!='event':
             text='历史已读取内容或类型；以下仅原件参考，不代表当前节点仍有此功能或作战。\n\n'+text
         if entry and entry['kind']!='map' and self.map_context:
@@ -445,11 +515,17 @@ class NodeCatalogPanel(QWidget):
                             for k in ('zone_id','template_id'))):continue
                 records=[node.get('content'),node.get('remembered_content'),*(node.get('content_history') or [])]
                 match=any(isinstance(r,dict) and r.get('title')==entry['title'] and r.get('kind')==entry['kind'] for r in records)
+                if entry['kind']=='original':
+                    raw=entry['record']['record'];reference=raw.get('special_entry_reference')
+                    original_match=next((identity for r in records if (identity:=original_scene_reference(r))
+                        and identity[0]==raw['record_id']),None)
+                    match=bool(reference and reference['kind']=='portal_entry_variant' and original_match)
                 if entry['kind']=='function':match=entry['title'] in (node.get('observed_type'),node.get('remembered_type'))
                 if match:
                     binding={'node_id':node['id'],'row':node['row'],'col':node['col'],'epoch':epoch,
                         'zone_id':graph.get('zone_id'),'template_id':graph.get('template_id')}
                     source_label='当前/过去已读取类型对应' if entry['kind']=='function' else '当前/历史标题对应（同名身份仍须核验）'
+                    if entry['kind']=='original':source_label=original_match[1]
                     self.map_location.addItem(f"第{node['row']+1}行、第{node['col']+1}列 · {source_label}",binding)
             self.map_jump.setEnabled(bool(self.map_location.count()))
         if previous_location:

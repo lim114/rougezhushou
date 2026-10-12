@@ -1,0 +1,1153 @@
+{
+  "schema_version": 1,
+  "sources": {
+    "original": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "bytes": 17943244,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    "fixed_community": {
+      "url": "https://m.prts.wiki/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7/%E4%BA%8B%E4%BB%B6%E4%B8%80%E8%A7%88&oldid=427904",
+      "sha256": "faa088b0474e75806b357df8648c6a59b1be6dcbc9be749db7c934ca9e6307e9",
+      "bytes": 183007,
+      "requested_url": "https://m.prts.wiki/w/%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7/%E4%BA%8B%E4%BB%B6%E4%B8%80%E8%A7%88",
+      "revision": "427904",
+      "role": "actual_bytes_parsed_fixed_revision"
+    },
+    "online_independent_rules": [
+      {
+        "key": "topic_online",
+        "url": "https://m.prts.wiki/w/沉沦者的黑流树海",
+        "footer_revision_observed": "433770",
+        "facts_line_ranges": [
+          [
+            499,
+            524
+          ],
+          [
+            594,
+            608
+          ],
+          [
+            1023,
+            1028
+          ]
+        ],
+        "short_excerpts": [
+          "至少通过两层",
+          "6个选项中随机出现3个"
+        ],
+        "pinned_whole_bytes": false
+      },
+      {
+        "key": "blackflow_database_online",
+        "url": "https://m.prts.wiki/w/沉沦者的黑流树海/黑流数据库#襁褓培育室",
+        "footer_revision_observed": "434599",
+        "facts_line_ranges": [
+          [
+            1002,
+            1072
+          ]
+        ],
+        "short_excerpts": [
+          "至少两个区域",
+          "一个随机的〖蓝色襁褓生灵〗选项"
+        ],
+        "pinned_whole_bytes": false
+      }
+    ]
+  },
+  "startup": {
+    "scene": {
+      "id": "scene_ro6_startbuff_enter",
+      "title": "行动奖励",
+      "description": "你的上一次探索突破了至少两层困难，这一次可以获得更多支援。",
+      "background": null,
+      "titleIcon": null,
+      "subTypeId": 0,
+      "useHiddenMusic": false
+    },
+    "regular_choices": [
+      {
+        "id": "choice_ro6_startbuff_1",
+        "title": "未编号物",
+        "description": "获得<@ro6.get>1件</>普通收藏品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "initial_reward_relic",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "initial_reward_relic",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      {
+        "id": "choice_ro6_startbuff_2",
+        "title": "调查预付款",
+        "description": "获得<@ro6.get>8</>源石锭",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "initial_reward_gold",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "initial_reward_gold",
+          "itemId": "rogue_6_gold",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      {
+        "id": "choice_ro6_startbuff_3",
+        "title": "空间租赁",
+        "description": "消耗<@ro6.lose>6</>源石锭，零件箱容量<@ro6.get>+2</>",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "initial_reward_max_weight",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "initial_reward_max_weight",
+          "itemId": "rogue_6_max_weight",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      {
+        "id": "choice_ro6_startbuff_4",
+        "title": "退行补偿",
+        "description": "消耗<@ro6.lose>2</>目标生命值上限，获得<@ro6.get>1件</>随机收藏品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "initial_reward_unknown_pay_hp",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "initial_reward_unknown_pay_hp",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      {
+        "id": "choice_ro6_startbuff_5",
+        "title": "林间代步",
+        "description": "获得<@ro6.get>1件</>加工品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "initial_reward_scrap_move",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "initial_reward_scrap_move",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      {
+        "id": "choice_ro6_startbuff_6",
+        "title": "巢寄生",
+        "description": "零件箱容量<@ro6.lose>-1</>，获得<@ro6.get>1件</>稀有收藏品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "initial_reward_unknown_pay_weight",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "initial_reward_unknown_pay_weight",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      }
+    ],
+    "legacy_choices": [
+      {
+        "legacy_id": "rogue_6_legacy_04",
+        "legacy_item": {
+          "id": "rogue_6_legacy_04",
+          "name": "襁褓羽蛇",
+          "description": "愿新生的他们不再被过往束缚。",
+          "usage": "若本次探索通过至少两个区域，<color=#ff9e20>下次探索</color>时，初始可额外获得1个支援选项",
+          "obtainApproach": "在集成战略模式中获得",
+          "iconId": "rogue_6_legacy_04",
+          "itemIconGroupId": null,
+          "type": "LEGACY",
+          "subType": "NONE",
+          "rarity": "NORMAL",
+          "sortId": 999,
+          "canSacrifice": false,
+          "tinyIconColor": null,
+          "unlockCondDesc": null,
+          "shortUsage": null
+        },
+        "choice": {
+          "id": "choice_ro6_startbuff_7",
+          "title": "襁褓天马",
+          "description": "每一区域额外获得<@ro6.get>1</>行动力",
+          "lockedCoverDesc": null,
+          "type": "TRADE",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "ITEM",
+            "costHintType": "NONE",
+            "effectHintType": "ITEM",
+            "funcIconId": null,
+            "itemId": "rogue_6_start_1",
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": true,
+          "sortId": 1
+        },
+        "scene_id": "scene_ro6_startbuff_enter",
+        "force_add_choice_buff": {
+          "key": "force_add_choice",
+          "blackboard": [
+            {
+              "key": "choice_id",
+              "value": 0.0,
+              "valueStr": "choice_ro6_startbuff_7"
+            },
+            {
+              "key": "scene_ids",
+              "value": 0.0,
+              "valueStr": "scene_ro6_startbuff_enter"
+            }
+          ]
+        },
+        "source_path": "$.details.rogue_6.relics.rogue_6_legacy_04.buffs[0]"
+      },
+      {
+        "legacy_id": "rogue_6_legacy_05",
+        "legacy_item": {
+          "id": "rogue_6_legacy_05",
+          "name": "襁褓羽蛇",
+          "description": "愿新生的他们不再被过往束缚。",
+          "usage": "若本次探索通过至少两个区域，<color=#ff9e20>下次探索</color>时，初始可额外获得1个支援选项",
+          "obtainApproach": "在集成战略模式中获得",
+          "iconId": "rogue_6_legacy_05",
+          "itemIconGroupId": null,
+          "type": "LEGACY",
+          "subType": "NONE",
+          "rarity": "NORMAL",
+          "sortId": 999,
+          "canSacrifice": false,
+          "tinyIconColor": null,
+          "unlockCondDesc": null,
+          "shortUsage": null
+        },
+        "choice": {
+          "id": "choice_ro6_startbuff_8",
+          "title": "襁褓骏鹰",
+          "description": "初始额外获得<@ro6.get>1</>希望，前2个区域初始揭露全部视野",
+          "lockedCoverDesc": null,
+          "type": "TRADE",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "ITEM",
+            "costHintType": "NONE",
+            "effectHintType": "ITEM",
+            "funcIconId": null,
+            "itemId": "rogue_6_start_2",
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": true,
+          "sortId": 1
+        },
+        "scene_id": "scene_ro6_startbuff_enter",
+        "force_add_choice_buff": {
+          "key": "force_add_choice",
+          "blackboard": [
+            {
+              "key": "choice_id",
+              "value": 0.0,
+              "valueStr": "choice_ro6_startbuff_8"
+            },
+            {
+              "key": "scene_ids",
+              "value": 0.0,
+              "valueStr": "scene_ro6_startbuff_enter"
+            }
+          ]
+        },
+        "source_path": "$.details.rogue_6.relics.rogue_6_legacy_05.buffs[0]"
+      },
+      {
+        "legacy_id": "rogue_6_legacy_06",
+        "legacy_item": {
+          "id": "rogue_6_legacy_06",
+          "name": "襁褓羽蛇",
+          "description": "愿新生的他们不再被过往束缚。",
+          "usage": "若本次探索通过至少两个区域，<color=#ff9e20>下次探索</color>时，初始可额外获得1个支援选项",
+          "obtainApproach": "在集成战略模式中获得",
+          "iconId": "rogue_6_legacy_06",
+          "itemIconGroupId": null,
+          "type": "LEGACY",
+          "subType": "NONE",
+          "rarity": "NORMAL",
+          "sortId": 999,
+          "canSacrifice": false,
+          "tinyIconColor": null,
+          "unlockCondDesc": null,
+          "shortUsage": null
+        },
+        "choice": {
+          "id": "choice_ro6_startbuff_9",
+          "title": "襁褓巨龙",
+          "description": "前2个区域中所有敌人的最大生命值-50%",
+          "lockedCoverDesc": null,
+          "type": "TRADE",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "ITEM",
+            "costHintType": "NONE",
+            "effectHintType": "ITEM",
+            "funcIconId": null,
+            "itemId": "rogue_6_start_3",
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": true,
+          "sortId": 1
+        },
+        "scene_id": "scene_ro6_startbuff_enter",
+        "force_add_choice_buff": {
+          "key": "force_add_choice",
+          "blackboard": [
+            {
+              "key": "choice_id",
+              "value": 0.0,
+              "valueStr": "choice_ro6_startbuff_9"
+            },
+            {
+              "key": "scene_ids",
+              "value": 0.0,
+              "valueStr": "scene_ro6_startbuff_enter"
+            }
+          ]
+        },
+        "source_path": "$.details.rogue_6.relics.rogue_6_legacy_06.buffs[0]"
+      },
+      {
+        "legacy_id": "rogue_6_legacy_07",
+        "legacy_item": {
+          "id": "rogue_6_legacy_07",
+          "name": "襁褓羽蛇",
+          "description": "愿新生的他们不再被过往束缚。",
+          "usage": "若本次探索通过至少两个区域，<color=#ff9e20>下次探索</color>时，初始可额外获得1个支援选项",
+          "obtainApproach": "在集成战略模式中获得",
+          "iconId": "rogue_6_legacy_07",
+          "itemIconGroupId": null,
+          "type": "LEGACY",
+          "subType": "NONE",
+          "rarity": "NORMAL",
+          "sortId": 999,
+          "canSacrifice": false,
+          "tinyIconColor": null,
+          "unlockCondDesc": null,
+          "shortUsage": null
+        },
+        "choice": {
+          "id": "choice_ro6_startbuff_10",
+          "title": "襁褓九头蛇",
+          "description": "所有敌人的攻击和生命值+30%，每次进入新的区域，我方单位攻击力和生命值+10%",
+          "lockedCoverDesc": null,
+          "type": "TRADE",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "ITEM",
+            "costHintType": "NONE",
+            "effectHintType": "ITEM",
+            "funcIconId": null,
+            "itemId": "rogue_6_start_4",
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": true,
+          "sortId": 1
+        },
+        "scene_id": "scene_ro6_startbuff_enter",
+        "force_add_choice_buff": {
+          "key": "force_add_choice",
+          "blackboard": [
+            {
+              "key": "choice_id",
+              "value": 0.0,
+              "valueStr": "choice_ro6_startbuff_10"
+            },
+            {
+              "key": "scene_ids",
+              "value": 0.0,
+              "valueStr": "scene_ro6_startbuff_enter"
+            }
+          ]
+        },
+        "source_path": "$.details.rogue_6.relics.rogue_6_legacy_07.buffs[0]"
+      },
+      {
+        "legacy_id": "rogue_6_legacy_08",
+        "legacy_item": {
+          "id": "rogue_6_legacy_08",
+          "name": "襁褓羽蛇",
+          "description": "愿新生的他们不再被过往束缚。",
+          "usage": "若本次探索通过至少两个区域，<color=#ff9e20>下次探索</color>时，初始可额外获得1个支援选项",
+          "obtainApproach": "在集成战略模式中获得",
+          "iconId": "rogue_6_legacy_08",
+          "itemIconGroupId": null,
+          "type": "LEGACY",
+          "subType": "NONE",
+          "rarity": "NORMAL",
+          "sortId": 999,
+          "canSacrifice": false,
+          "tinyIconColor": null,
+          "unlockCondDesc": null,
+          "shortUsage": null
+        },
+        "choice": {
+          "id": "choice_ro6_startbuff_11",
+          "title": "襁褓白泽",
+          "description": "临时招募干员的出现概率提升",
+          "lockedCoverDesc": null,
+          "type": "TRADE",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "ITEM",
+            "costHintType": "NONE",
+            "effectHintType": "ITEM",
+            "funcIconId": null,
+            "itemId": "rogue_6_start_5",
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": true,
+          "sortId": 1
+        },
+        "scene_id": "scene_ro6_startbuff_enter",
+        "force_add_choice_buff": {
+          "key": "force_add_choice",
+          "blackboard": [
+            {
+              "key": "choice_id",
+              "value": 0.0,
+              "valueStr": "choice_ro6_startbuff_11"
+            },
+            {
+              "key": "scene_ids",
+              "value": 0.0,
+              "valueStr": "scene_ro6_startbuff_enter"
+            }
+          ]
+        },
+        "source_path": "$.details.rogue_6.relics.rogue_6_legacy_08.buffs[0]"
+      },
+      {
+        "legacy_id": "rogue_6_legacy_09",
+        "legacy_item": {
+          "id": "rogue_6_legacy_09",
+          "name": "襁褓羽蛇",
+          "description": "愿新生的他们不再被过往束缚。",
+          "usage": "若本次探索通过至少两个区域，<color=#ff9e20>下次探索</color>时，初始可额外获得1个支援选项",
+          "obtainApproach": "在集成战略模式中获得",
+          "iconId": "rogue_6_legacy_09",
+          "itemIconGroupId": null,
+          "type": "LEGACY",
+          "subType": "NONE",
+          "rarity": "NORMAL",
+          "sortId": 999,
+          "canSacrifice": false,
+          "tinyIconColor": null,
+          "unlockCondDesc": null,
+          "shortUsage": null
+        },
+        "choice": {
+          "id": "choice_ro6_startbuff_12",
+          "title": "襁褓金乌",
+          "description": "进入区域血色空脉时获得<@ro6.get>3个</>随机收藏品",
+          "lockedCoverDesc": null,
+          "type": "TRADE",
+          "leftDecoType": "NONE",
+          "nextSceneId": null,
+          "icon": null,
+          "displayData": {
+            "type": "ITEM",
+            "costHintType": "NONE",
+            "effectHintType": "ITEM",
+            "funcIconId": null,
+            "itemId": "rogue_6_start_6",
+            "difficultyUpgradeRelicGroupId": null,
+            "taskId": null,
+            "instId": null
+          },
+          "forceShowWhenOnlyLeave": false,
+          "isHiddenChoice": true,
+          "sortId": 1
+        },
+        "scene_id": "scene_ro6_startbuff_enter",
+        "force_add_choice_buff": {
+          "key": "force_add_choice",
+          "blackboard": [
+            {
+              "key": "choice_id",
+              "value": 0.0,
+              "valueStr": "choice_ro6_startbuff_12"
+            },
+            {
+              "key": "scene_ids",
+              "value": 0.0,
+              "valueStr": "scene_ro6_startbuff_enter"
+            }
+          ]
+        },
+        "source_path": "$.details.rogue_6.relics.rogue_6_legacy_09.buffs[0]"
+      }
+    ],
+    "known_legacy_ids": [
+      "rogue_6_legacy_01",
+      "rogue_6_legacy_01_1",
+      "rogue_6_legacy_01_2",
+      "rogue_6_legacy_02",
+      "rogue_6_legacy_02_1",
+      "rogue_6_legacy_02_2",
+      "rogue_6_legacy_03",
+      "rogue_6_legacy_04",
+      "rogue_6_legacy_05",
+      "rogue_6_legacy_06",
+      "rogue_6_legacy_07",
+      "rogue_6_legacy_08",
+      "rogue_6_legacy_09",
+      "rogue_6_legacy_10"
+    ],
+    "minimum_previous_completed_regions": 2,
+    "documented_regular_display_count": 3,
+    "documented_extra_blue_display_count": 1,
+    "regular_source_scene_pointer_verified": false,
+    "extra_legacy_normal_mode_only_documented": true,
+    "actual_displayed_choices": null,
+    "generation_probability": null
+  },
+  "portal": {
+    "event_id": "community_group_027",
+    "community_entry_scene_key": "community_group_027:scene:0",
+    "explanation_choice_key": "community_group_027:scene:0:choice:0",
+    "common_prefix": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，",
+    "variants": [
+      {
+        "fog_color": "red",
+        "label": "红雾",
+        "explicit_clause": "红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+        "exact_original_description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+        "original_scenes": [
+          {
+            "id": "scene_ro6_portal1a_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal1b_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal2a_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal2b_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal3a_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal3b_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal4a_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal4b_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          }
+        ]
+      },
+      {
+        "fog_color": "blue",
+        "label": "蓝雾",
+        "explicit_clause": "蓝色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以灵活调整极速适应为策略。”",
+        "exact_original_description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，蓝色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以灵活调整极速适应为策略。”",
+        "original_scenes": [
+          {
+            "id": "scene_ro6_portal5a_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，蓝色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以灵活调整极速适应为策略。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal5b_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，蓝色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以灵活调整极速适应为策略。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal5c_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，蓝色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以灵活调整极速适应为策略。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          }
+        ]
+      },
+      {
+        "fog_color": "green",
+        "label": "绿雾",
+        "explicit_clause": "绿色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以全民皆兵维护尊严为根本。”",
+        "exact_original_description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，绿色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以全民皆兵维护尊严为根本。”",
+        "original_scenes": [
+          {
+            "id": "scene_ro6_portal6a_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，绿色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以全民皆兵维护尊严为根本。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal6b_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，绿色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以全民皆兵维护尊严为根本。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal6c_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，绿色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以全民皆兵维护尊严为根本。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          }
+        ]
+      },
+      {
+        "fog_color": "gold",
+        "label": "金雾",
+        "explicit_clause": "金色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以熔炼历史浇铸未来为纲领。”",
+        "exact_original_description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，金色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以熔炼历史浇铸未来为纲领。”",
+        "original_scenes": [
+          {
+            "id": "scene_ro6_portal7a_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，金色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以熔炼历史浇铸未来为纲领。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal7b_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，金色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以熔炼历史浇铸未来为纲领。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          }
+        ]
+      },
+      {
+        "fog_color": "orange",
+        "label": "橙雾",
+        "explicit_clause": "橙色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以舍生忘死不惧挑战为荣耀。”",
+        "exact_original_description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，橙色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以舍生忘死不惧挑战为荣耀。”",
+        "original_scenes": [
+          {
+            "id": "scene_ro6_portal8a_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，橙色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以舍生忘死不惧挑战为荣耀。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          },
+          {
+            "id": "scene_ro6_portal8b_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，橙色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以舍生忘死不惧挑战为荣耀。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          }
+        ]
+      },
+      {
+        "fog_color": "purple",
+        "label": "紫雾",
+        "explicit_clause": "紫色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以追溯本源复兴文明为己任。”",
+        "exact_original_description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，紫色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以追溯本源复兴文明为己任。”",
+        "original_scenes": [
+          {
+            "id": "scene_ro6_portal9_enter",
+            "title": "溯源",
+            "description": "一处弥漫着雾气的黑潭拦住了你的去路，若贸然踏入恐怕会有被黑流吞没的风险，但这是一个甩开猎犬的好机会。在你犹疑之际，紫色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以追溯本源复兴文明为己任。”",
+            "background": "pic_rogue_6_23",
+            "titleIcon": null,
+            "subTypeId": 0,
+            "useHiddenMusic": false
+          }
+        ]
+      }
+    ],
+    "identity_match_method": "shared literal prefix + explicitly documented complete variant sentence == original description",
+    "original_id_suffix_used_as_evidence": false,
+    "actual_original_scene_selected": null
+  },
+  "records": {
+    "scene_ro6_startbuff_enter": {
+      "kind": "startup_scene",
+      "source_scene_link_verified": true,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "proof": "Six original force_add_choice records explicitly name this scene_ids value."
+    },
+    "choice_ro6_startbuff_1": {
+      "kind": "startup_regular_pool",
+      "source_scene_link_verified": false,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "documented_initial_pool_identity_verified": true,
+      "proof": "Current public initial reward candidate pool has a unique exact-title original match; sourceScene pointer absent."
+    },
+    "choice_ro6_startbuff_2": {
+      "kind": "startup_regular_pool",
+      "source_scene_link_verified": false,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "documented_initial_pool_identity_verified": true,
+      "proof": "Current public initial reward candidate pool has a unique exact-title original match; sourceScene pointer absent."
+    },
+    "choice_ro6_startbuff_3": {
+      "kind": "startup_regular_pool",
+      "source_scene_link_verified": false,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "documented_initial_pool_identity_verified": true,
+      "proof": "Current public initial reward candidate pool has a unique exact-title original match; sourceScene pointer absent."
+    },
+    "choice_ro6_startbuff_4": {
+      "kind": "startup_regular_pool",
+      "source_scene_link_verified": false,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "documented_initial_pool_identity_verified": true,
+      "proof": "Current public initial reward candidate pool has a unique exact-title original match; sourceScene pointer absent."
+    },
+    "choice_ro6_startbuff_5": {
+      "kind": "startup_regular_pool",
+      "source_scene_link_verified": false,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "documented_initial_pool_identity_verified": true,
+      "proof": "Current public initial reward candidate pool has a unique exact-title original match; sourceScene pointer absent."
+    },
+    "choice_ro6_startbuff_6": {
+      "kind": "startup_regular_pool",
+      "source_scene_link_verified": false,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "documented_initial_pool_identity_verified": true,
+      "proof": "Current public initial reward candidate pool has a unique exact-title original match; sourceScene pointer absent."
+    },
+    "choice_ro6_startbuff_7": {
+      "kind": "startup_legacy_extra",
+      "source_scene_link_verified": true,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "legacy_id": "rogue_6_legacy_04",
+      "source_path": "$.details.rogue_6.relics.rogue_6_legacy_04.buffs[0]",
+      "proof": "Original force_add_choice blackboard directly pairs choice_id and scene_ids."
+    },
+    "choice_ro6_startbuff_8": {
+      "kind": "startup_legacy_extra",
+      "source_scene_link_verified": true,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "legacy_id": "rogue_6_legacy_05",
+      "source_path": "$.details.rogue_6.relics.rogue_6_legacy_05.buffs[0]",
+      "proof": "Original force_add_choice blackboard directly pairs choice_id and scene_ids."
+    },
+    "choice_ro6_startbuff_9": {
+      "kind": "startup_legacy_extra",
+      "source_scene_link_verified": true,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "legacy_id": "rogue_6_legacy_06",
+      "source_path": "$.details.rogue_6.relics.rogue_6_legacy_06.buffs[0]",
+      "proof": "Original force_add_choice blackboard directly pairs choice_id and scene_ids."
+    },
+    "choice_ro6_startbuff_10": {
+      "kind": "startup_legacy_extra",
+      "source_scene_link_verified": true,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "legacy_id": "rogue_6_legacy_07",
+      "source_path": "$.details.rogue_6.relics.rogue_6_legacy_07.buffs[0]",
+      "proof": "Original force_add_choice blackboard directly pairs choice_id and scene_ids."
+    },
+    "choice_ro6_startbuff_11": {
+      "kind": "startup_legacy_extra",
+      "source_scene_link_verified": true,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "legacy_id": "rogue_6_legacy_08",
+      "source_path": "$.details.rogue_6.relics.rogue_6_legacy_08.buffs[0]",
+      "proof": "Original force_add_choice blackboard directly pairs choice_id and scene_ids."
+    },
+    "choice_ro6_startbuff_12": {
+      "kind": "startup_legacy_extra",
+      "source_scene_link_verified": true,
+      "source_scene_id": "scene_ro6_startbuff_enter",
+      "legacy_id": "rogue_6_legacy_09",
+      "source_path": "$.details.rogue_6.relics.rogue_6_legacy_09.buffs[0]",
+      "proof": "Original force_add_choice blackboard directly pairs choice_id and scene_ids."
+    },
+    "scene_ro6_portal1a_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "red",
+      "label": "红雾",
+      "explicit_clause": "红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+      "source_scene_id": "scene_ro6_portal1a_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal1b_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "red",
+      "label": "红雾",
+      "explicit_clause": "红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+      "source_scene_id": "scene_ro6_portal1b_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal2a_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "red",
+      "label": "红雾",
+      "explicit_clause": "红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+      "source_scene_id": "scene_ro6_portal2a_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal2b_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "red",
+      "label": "红雾",
+      "explicit_clause": "红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+      "source_scene_id": "scene_ro6_portal2b_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal3a_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "red",
+      "label": "红雾",
+      "explicit_clause": "红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+      "source_scene_id": "scene_ro6_portal3a_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal3b_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "red",
+      "label": "红雾",
+      "explicit_clause": "红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+      "source_scene_id": "scene_ro6_portal3b_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal4a_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "red",
+      "label": "红雾",
+      "explicit_clause": "红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+      "source_scene_id": "scene_ro6_portal4a_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal4b_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "red",
+      "label": "红雾",
+      "explicit_clause": "红色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以趋利避害掌控规则为目标。”",
+      "source_scene_id": "scene_ro6_portal4b_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal5a_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "blue",
+      "label": "蓝雾",
+      "explicit_clause": "蓝色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以灵活调整极速适应为策略。”",
+      "source_scene_id": "scene_ro6_portal5a_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal5b_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "blue",
+      "label": "蓝雾",
+      "explicit_clause": "蓝色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以灵活调整极速适应为策略。”",
+      "source_scene_id": "scene_ro6_portal5b_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal5c_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "blue",
+      "label": "蓝雾",
+      "explicit_clause": "蓝色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以灵活调整极速适应为策略。”",
+      "source_scene_id": "scene_ro6_portal5c_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal6a_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "green",
+      "label": "绿雾",
+      "explicit_clause": "绿色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以全民皆兵维护尊严为根本。”",
+      "source_scene_id": "scene_ro6_portal6a_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal6b_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "green",
+      "label": "绿雾",
+      "explicit_clause": "绿色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以全民皆兵维护尊严为根本。”",
+      "source_scene_id": "scene_ro6_portal6b_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal6c_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "green",
+      "label": "绿雾",
+      "explicit_clause": "绿色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以全民皆兵维护尊严为根本。”",
+      "source_scene_id": "scene_ro6_portal6c_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal7a_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "gold",
+      "label": "金雾",
+      "explicit_clause": "金色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以熔炼历史浇铸未来为纲领。”",
+      "source_scene_id": "scene_ro6_portal7a_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal7b_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "gold",
+      "label": "金雾",
+      "explicit_clause": "金色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以熔炼历史浇铸未来为纲领。”",
+      "source_scene_id": "scene_ro6_portal7b_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal8a_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "orange",
+      "label": "橙雾",
+      "explicit_clause": "橙色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以舍生忘死不惧挑战为荣耀。”",
+      "source_scene_id": "scene_ro6_portal8a_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal8b_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "orange",
+      "label": "橙雾",
+      "explicit_clause": "橙色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以舍生忘死不惧挑战为荣耀。”",
+      "source_scene_id": "scene_ro6_portal8b_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    },
+    "scene_ro6_portal9_enter": {
+      "kind": "portal_entry_variant",
+      "source_scene_link_verified": true,
+      "source_event_id": "community_group_027",
+      "source_community_scene": "community_group_027:scene:0",
+      "fog_color": "purple",
+      "label": "紫雾",
+      "explicit_clause": "紫色的雾气钻入你的耳中，声音在你脑海中响起：“踏足我等乌托邦者，须遵循我等之纯粹理想，以追溯本源复兴文明为己任。”",
+      "source_scene_id": "scene_ro6_portal9_enter",
+      "proof": "Exact original description equals shared entry prefix plus an explicitly listed community variation."
+    }
+  },
+  "coverage": {
+    "historical_unmapped_scenes": 45,
+    "historical_unmapped_choices": 63,
+    "portal_entry_description_aliases": 19,
+    "startup_scene_named_by_original_buff": 1,
+    "hidden_choice_direct_source_scene_links": 6,
+    "regular_choice_documented_pool_references": 6,
+    "all_original_source_scene_scripts_recovered": false
+  },
+  "limits": [
+    "Only direct original pointers or whole literal descriptions establish these bindings.",
+    "nextSceneId only establishes a destination, never the source scene.",
+    "The twelve initial candidates are not a claim that twelve choices are displayed.",
+    "Previous completed-region count is not highest reached floor or current holdings.",
+    "Natural portal-node generation restrictions do not prove portal-event scene eligibility.",
+    "Fixed427904 catalog, existing440271 single-scene observation and online433770/434599 rules stay separate.",
+    "Current server eligibility, exact startup shown subset and special-area AP remain unknown."
+  ],
+  "license_note": "原始游戏文本版权属于鹰角及关联公司；社区其它内容声明CC BY-NC-SA 4.0。保留来源与适用范围，未复制社区widget实现。"
+}

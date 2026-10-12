@@ -110,6 +110,25 @@ class NodeMapNavigationTests(unittest.TestCase):
         self.assertIn('过去已读取类型',self.panel.map_location.currentText())
         self.assertEqual(source['nodes'][1]['observed_type'],'林间空地')
 
+    def test_next_main_floor_source_pool_provides_all_fixed_preview_entrances(self):
+        from rouge import event_planning
+        self.panel.floor.setCurrentIndex(self.panel.floor.findData(3));self.select_title('洞中宝')
+        event=next(e for e in self.panel.entries if e['title']=='洞中宝')
+        result=event_planning.event_battle_links(event['record']['id'],context=self.panel._event_context(event['record']))
+        pool=next(r['generic_pool_requirement']['fixed_named_pool'] for r in result['rows'] if r['generic_pool_requirement'])
+        self.assertEqual(len(pool),7)
+        self.assertEqual({self.panel.event_stage.itemData(i) for i in range(self.panel.event_stage.count())},{r['id'] for r in pool})
+        self.assertTrue(self.panel.battle_button.isEnabled());self.assertIn('完整服务器池与实际选择未知',self.panel.detail.toPlainText())
+        calls=[];self.panel.stageSelected.connect(calls.append);selected=self.panel.event_stage.currentData()
+        self.panel.battle_button.click();self.assertEqual(calls,[selected])
+
+    def test_unknown_or_special_next_main_floor_never_fabricates_preview_pool(self):
+        self.select_title('洞中宝');self.assertEqual(self.panel.event_stage.count(),0)
+        source=graph();source['nodes'][0]['content']={'kind':'event','title':'洞中宝'}
+        self.panel.set_map_context(source,{'floor':2,'special_region':True},epoch='public-run')
+        self.panel.set_node(source,'a',floor=2,special_region=True);self.panel.bind_current_node();self.select_title('洞中宝')
+        self.assertEqual(self.panel.event_stage.count(),0);self.assertFalse(self.panel.battle_button.isEnabled())
+
 
 class NodeMainWindowNavigationTests(unittest.TestCase):
     setUpClass=classmethod(setup_module.Batch185WindowTests.setUpClass.__func__)

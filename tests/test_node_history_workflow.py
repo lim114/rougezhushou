@@ -68,9 +68,10 @@ class NodeHistoryWorkflowTests(unittest.TestCase):
         node['content_history']=[];value=catalog.node_dossier(source,'b',floor=6)
         self.assertEqual([r['id'] for r in value['history_observed_battle_rows']],['ro6_t_1'])
         self.assertTrue(value['history_observed_battle_rows'][0]['observed_variant_reference'])
-        node['remembered_content']={'kind':'battle','title':'鸭爵的宴会'}
+        node['remembered_content']={'kind':'battle','title':'遗忘时间'}
         value=catalog.node_dossier(source,'b',floor=6)
-        expected={r['id'] for r in catalog.battle_candidates(context='all')['rows'] if r['title']=='鸭爵的宴会'}
+        expected={r['id'] for r in catalog.battle_candidates(context='all')['rows'] if r['title']=='遗忘时间'}
+        self.assertEqual(expected,{'ro6_n_1_2','ro6_e_1_2'})
         self.assertEqual({r['id'] for r in value['history_observed_battle_rows']},expected)
         self.assertTrue(all(not r['observed_variant_reference'] for r in value['history_observed_battle_rows']))
 
