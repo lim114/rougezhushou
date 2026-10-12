@@ -1,0 +1,47 @@
+{
+  "scope": "explicit shared observed public-rank reference for confirmed run elite0/1",
+  "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "physical_methods": 20,
+  "unique_physical_instructions": 4778,
+  "all_instruction_bytes_match": true,
+  "limits": [],
+  "metadata_layout": "reuse established92-byte type and current registration; no new layout inference",
+  "current_input_type": "Torappu.PlayerRoguelikeV2.CurrentData.Char / RecruitChar inherits PlayerCharacter",
+  "shared_common_counter": "PlayerCharacter.mainSkillLvl+0x34 -> RoguelikeBasicCharInfoModel.mainSkillLvl+0xa8",
+  "all_skill_view": "GenerateSkillViewModel34097 reads same common counter for every skill and each own specializeLevel",
+  "selected_skill_native_sum": "GetFinalSkillLvl29007 adds own specializeLevel only if PlayerCharSkill.unlock true",
+  "rank_use_binding": {
+    "converter_method_index": 77906,
+    "call_addresses": "0x180abd09e..0x180abd0c4",
+    "main_skill_method": "MainSkill.TryGetUnlockCondition0x182327cc0",
+    "common1to7": "rank<=7 returns MainSkill.initialUnlockCond+0x30; does not consult allSkillLvlup training gate",
+    "mastery": "rank>7 with nonempty specializeLevelUpData+0x28 returns that mastery condition; empty list falls back to skill gate",
+    "validate": "UnlockCondition.Validate0x182329c70: phase greater passes, equal requires level>=gate.level, lower fails",
+    "failed_converter_gate": "0x180abd0cb ->0x180abe263; no inferred common-rank fallback or compensation"
+  },
+  "public_profile_binding": {
+    "profiles": 431,
+    "skills": 949,
+    "includes_exact_amiya_patch_forms": true
+  },
+  "public_targeted_search": "https://prts.wiki/w/集成战略",
+  "public_search_role": "recruitment limits and temporary/support differences only; not evidence of E0common5to7 or automatic rank compensation",
+  "explicit_projection_only": true,
+  "default_enabled": false,
+  "mastery_propagated": false,
+  "account_mastery_truncated": false,
+  "actual_unread_skill_ranks": null,
+  "actual_runtime_use_verified": null,
+  "current_hotfix_equivalence_verified": false,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_files_read": false,
+  "remaining_unknown": [
+    "account-to-run recruitment compensation and clipping generation",
+    "actual per-skill runtime unlock flags and current hotfix",
+    "elite2 missing mastery and unobserved target skill rank",
+    "temporary/support real cultivation source and lifecycle"
+  ],
+  "non_applicable_line": "CharacterUtil.CheckData/CheckAllSkillAndEquipData33564-33566 consume SharedCharData and friendship cap; not bound as current roguelike recruitment generation"
+}

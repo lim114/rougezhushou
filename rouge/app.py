@@ -584,6 +584,9 @@ class MainWindow(QMainWindow):
         self.account_skill_reference=QCheckBox('选择账号已读技能等级作局外模拟参考（仅当前技能）')
         self.account_skill_reference.toggled.connect(lambda:self.update_skill_options())
         form.addRow(self.account_skill_reference)
+        self.run_common_skill_reference=QCheckBox('选择本局已读公共等级作其它技能的局外参考')
+        self.run_common_skill_reference.toggled.connect(lambda:self.update_skill_options())
+        form.addRow(self.run_common_skill_reference)
         self.skill_cultivation_row=None
         self.skill_cultivation_explanation=QLabel('')
         self.skill_cultivation_explanation.setWordWrap(True)
@@ -1167,7 +1170,9 @@ class MainWindow(QMainWindow):
         elite=state.get('fields',{}).get('elite',len(profile['phases'])-1 if profile else 2)
         return select_rank(profile,self.skill.currentData(),elite,state=state,
             account=self.account_cache.view(op),
-            account_reference=(hasattr(self,'account_skill_reference') and self.account_skill_reference.isChecked()))
+            account_reference=(hasattr(self,'account_skill_reference') and self.account_skill_reference.isChecked()),
+            run_common_reference=(hasattr(self,'run_common_skill_reference') and self.run_common_skill_reference.isChecked()),
+            level=self.level.value())
 
     def skill_rank_value(self):
         return self.skill_rank_selection()['rank']
@@ -1178,6 +1183,10 @@ class MainWindow(QMainWindow):
             self.account_skill_reference.blockSignals(True)
             self.account_skill_reference.setChecked(False)
             self.account_skill_reference.blockSignals(False)
+        if hasattr(self,'run_common_skill_reference'):
+            self.run_common_skill_reference.blockSignals(True)
+            self.run_common_skill_reference.setChecked(False)
+            self.run_common_skill_reference.blockSignals(False)
 
     def update_skill_rank_source(self):
         if not hasattr(self,'skill_cultivation_explanation'):return
@@ -1196,6 +1205,17 @@ class MainWindow(QMainWindow):
             selection=self.skill_rank_selection()
         self.account_skill_reference.setToolTip(selection['account_reason'] or
             '明确选择该技能已读账号等级作局外模拟；不会标作本局读取，不改写账号或本局记录。')
+        usable=selection.get('common_reference_usable',False) and not self.account_skill_reference.isChecked()
+        if not usable and self.run_common_skill_reference.isChecked():
+            self.run_common_skill_reference.blockSignals(True)
+            self.run_common_skill_reference.setChecked(False)
+            self.run_common_skill_reference.blockSignals(False)
+            selection=self.skill_rank_selection()
+        self.run_common_skill_reference.setEnabled(usable)
+        self.damage_form.setRowVisible(self.run_common_skill_reference,selection.get('common_reference_usable',False))
+        common=selection.get('common_reference',{})
+        self.run_common_skill_reference.setToolTip(common.get('reason') or
+            '仅对精英0/1本局已确认形态采用其它已开放技能的同一公共等级来源；该技能未直接读取，不传递专精，不补账号或招募上限，不改写本局。')
         profile=operator_profiles().get(op)
         state=self.current_operator_state()
         elite=state.get('fields',{}).get('elite',len(profile['phases'])-1 if profile else 2)
@@ -1528,6 +1548,8 @@ class MainWindow(QMainWindow):
         known_ranks=state.get('skill_ranks',{})
         if self.skill_rank_selection()['manual_reference_applied']:
             scenario['unconfirmed_training'].append('所选技能等级（已选账号参考，局外模拟）')
+        elif self.skill_rank_selection().get('common_reference_applied'):
+            scenario['unconfirmed_training'].append('所选技能等级（已选本局公共等级来源参考，未直接读取）')
         elif str(self.skill.currentData()) not in known_ranks and self.skill.currentData() not in known_ranks:
             scenario['unconfirmed_training'].append('所选技能等级')
         if 'level' not in fields and not self.level_override:scenario['unconfirmed_training'].append('当前等级')

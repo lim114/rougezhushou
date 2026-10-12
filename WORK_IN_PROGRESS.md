@@ -1,3 +1,7 @@
+## 功能第216节 · 本局共享公共技能等级的显式参考与全技能使用资格
+
+2026-10-12T20:22:24.350475+08:00。新增：新增默认关闭的共享公共等级参考，采用同一干员精英0/1已确认本局形态下其它已开放技能的有效且一致公共1–7来源，驱动未直接读取技能的真实计算输入，输出全部技能来源/等级/静态使用门；取消恢复、不写记录、不传播专精或填招募上限。。必要检查34项，跳过0项，无失败。边界：only opt-in offline reference for unread target skill; actual unread rank/runtime use remain unknown；current static native rule plus pinned original data; current hotfix unverified；account-to-run recruitment compensation/clipping generation and temporary/support source remain unknown；no mastery propagation/truncation, cap filling, recognition or combat event inputs；e0_common_use_verified keeps actual usage None; native_static_rule_verified describes sealed compiled gate；old118 training-source30 forms/83skills unchanged; new431-form binding is skill use gates only；offscreen MainWindow class does not replace visible original project window acceptance；no timing/reporting/damage/enemy/Mechanist module/Susuro algorithm hunks; app only rank controls/selection/provenance。回执verification/sections/216.json。下一节217，下次全量230。
+
 ## 功能第215节 · 苏苏洛模组受疗生命条件与多来源治疗组合
 
 2026-10-12T20:21:03.195575+08:00。新增：有效PHY-X独占的受疗者固定生命比例输入驱动普疗、两技能和技能后普疗；按基包Q32.32 LE容差判定，源端15%与低费/三花受疗层各乘一次；未知保留已证小计并遮非零完整量，自然生命回复不改变。。必要检查150项，跳过0项，无失败。边界：实际受疗者HP轨迹、获取、范围、覆盖及治疗时钟未证；版本化基包附着与当前XLua热更新不同；不是实机面板成对校准；固定比例情景不恢复游戏显示百分比的真实HP；其他多来源治疗和生命回复组合仍待证据；保持既有全量遗留失败，不缩减测试范围。回执verification/sections/215.json。下一节216，下次全量230。

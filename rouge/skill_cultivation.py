@@ -15,6 +15,7 @@ _SOURCE_LABELS = {
     'account_reference': '账号档案参考，本局未确认',
     'preview_unconfirmed': '未确认，档案预览',
     'manual_account_reference': '已选账号等级作局外模拟，本局未确认',
+    'manual_run_common_reference': '已选本局公共等级来源作其它技能参考，局外模拟',
 }
 
 
@@ -30,7 +31,8 @@ def _rank(record, skill):
             str(skill) in ranks or skill in ranks)
 
 
-def select_rank(profile, skill, elite, *, state=None, account=None, account_reference=False):
+def select_rank(profile, skill, elite, *, state=None, account=None, account_reference=False,
+                run_common_reference=False, level=None):
     """Return the original rank or an explicitly selected, compatible reference.
 
     Inputs are already qualified public UI views. The optional account branch
@@ -59,11 +61,22 @@ def select_rank(profile, skill, elite, *, state=None, account=None, account_refe
     else:
         reason = ''
     applied = bool(account_reference and not reason)
-    return {'rank': reference if applied else baseline,
-            'source': 'manual_account_reference' if applied else source,
+    from .run_common_skill_reference import shared_common_reference, use_qualification
+    if level is None:
+        level=state.get('fields',{}).get('level')
+        if level is None and type(elite) is int and 0<=elite<len(profile['phases']):
+            level=profile['phases'][elite]['max_level']
+    common=shared_common_reference(profile,elite,level,state)
+    common_usable=(not known and common['usable'] and
+                   use_qualification(profile,skill,common['rank'],elite,level)['available'] is True)
+    common_applied=bool(run_common_reference is True and common_usable and not applied)
+    return {'rank': reference if applied else common['rank'] if common_applied else baseline,
+            'source': 'manual_account_reference' if applied else 'manual_run_common_reference' if common_applied else source,
             'known': known, 'account_usable': not reason,
             'account_rank': reference if reference_known else None,
-            'account_reason': reason, 'manual_reference_applied': applied}
+            'account_reason': reason, 'manual_reference_applied': applied,
+            'common_reference_applied':common_applied,'common_reference_usable':common_usable,
+            'common_reference':common,'level':level}
 
 
 def rank_label(selection):
@@ -73,7 +86,8 @@ def rank_label(selection):
     text = f'等级 {rank}' if rank <= 7 else f'专精 {rank - 7}'
     # Keep the old label byte-for-byte unless the user explicitly chooses the
     # new account simulation. Detailed default provenance is in the new row.
-    suffix = ('（账号等级参考，局外模拟）' if selection['manual_reference_applied'] else
+    suffix = ('（本局公共等级来源参考，局外模拟）' if selection.get('common_reference_applied') else
+              '（账号等级参考，局外模拟）' if selection['manual_reference_applied'] else
               '（读取）' if selection['known'] else '（未确认，档案预览）')
     return text + suffix
 
@@ -106,6 +120,8 @@ def explanation(operator, profile, skill, elite, selection):
                     'path': f'{original["native_id"]}.skills[{skill - 1}].levelUpCostCond[{rank - 8}].unlockCond',
                     'raw': dict(original['skills'][skill - 1]['levelUpCostCond'][rank - 8]['unlockCond'])}
     policy_met = (selected.get('unlock_elite', skill - 1) <= elite and not (elite < 2 and rank > 7))
+    from .run_common_skill_reference import use_qualification
+    native_use=use_qualification(profile,skill,rank,elite,selection.get('level'))
     return {'operator': operator, 'skill': skill, 'rank': rank, 'elite': elite,
             'rank_source': selection['source'], 'manual_reference_applied': selection['manual_reference_applied'],
             'model_gate_met': policy_met, 'skill_unlock_elite': selected.get('unlock_elite', skill - 1),
@@ -116,6 +132,9 @@ def explanation(operator, profile, skill, elite, selection):
                 key: dict(value) for key, value in source['recruit_upper_bounds']['rogue_6'].items()},
             'e0_common_use_verified': None if elite == 0 and 5 <= rank <= 7 else 'not_applicable',
             'actual_activation_verified': None, 'account_training_verified': None,
+            'native_skill_use_rule':native_use,
+            'common_reference_applied':selection.get('common_reference_applied',False),
+            'common_reference':selection.get('common_reference'),
             'arithmetic_changed_by_explanation': False}
 
 
@@ -141,6 +160,12 @@ def format_explanation(row):
                  f'、公共{first["skillLevel"]}级、专精{first["skillSpecializeLevel"]}；阶段1精英' +
                  advanced['evolvePhase'][-1] + f'、公共{advanced["skillLevel"]}级、专精{advanced["skillSpecializeLevel"]}。上限参数不填补账号或本局等级。')
     if row['e0_common_use_verified'] is None:
-        lines.append('精英0受限形态使用已培养公共5–7级的肉鸽规则仍未核验；当前等级仅按既有局外测算口径展示。')
+        if row['native_skill_use_rule'].get('native_static_rule_verified'):
+            lines.append('封存原生公共等级1–7只检查技能开放门，独立于训练门；精英0使用已培养5–7的静态门已核验，当前热更新与实际本局使用仍未核验。')
+        else:
+            lines.append('精英0受限形态使用已培养公共5–7级的肉鸽规则仍未核验；当前等级仅按既有局外测算口径展示。')
+    if row.get('common_reference_applied'):
+        from .run_common_skill_reference import format_reference
+        lines.append(format_reference(row['common_reference']))
     lines.append('以上资料与已读等级不确认实际施放、原生附着或本局未观察到的培养。')
     return '\n'.join(lines)
