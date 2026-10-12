@@ -2,6 +2,7 @@
 from copy import deepcopy
 from functools import lru_cache
 from pathlib import Path
+from .stage_context import stage_context
 import json,re
 
 NOTICE='固定资料候选与原文引用；未知资格仍保留，不表示必然出现，不提供生成概率。'
@@ -224,12 +225,15 @@ def _node_requirement_checks(node_type,floor=None,difficulty=None,special_region
             'known_difficulty_requirement_matches':None if rule.get('minimum_difficulty') is None or difficulty is None else difficulty>=rule['minimum_difficulty'],
             'condition_sources':deepcopy(reference['references']) if rule and reference else [],
             'full_server_eligibility_verified':False}
-def battle_candidates(node_type=None,floor=None,context='natural',special_region=False,difficulty=None):
+def battle_candidates(node_type=None,floor=None,context='natural',special_region=False,difficulty=None,entry_mode=None):
     from .catalog import catalog
     _text(node_type,'节点类型',True);_floor(floor,special_region)
     if context not in ('natural','content','all'):raise ValueError('战斗来源需要natural、content或all。')
+    if entry_mode not in (None,'natural','content'):raise ValueError('入口需要natural、content或留空。')
+    effective_entry_mode=entry_mode or ('content' if context=='content' else 'natural')
     pool=_battle_pools();rows=[];excluded=[]
-    checks=_node_requirement_checks(node_type,floor,difficulty,special_region)
+    # Explicit content/forced entries cannot inherit natural node generation gates.
+    checks=_node_requirement_checks(node_type if effective_entry_mode=='natural' else None,floor,difficulty,special_region)
     if node_type is not None and node_type not in _all_node_types():raise ValueError('节点类型不在已证目录中。')
     meta=json.loads((Path(__file__).with_name('data')/'view-catalog.json').read_text(encoding='utf-8'))['stages']
     for sid,p in pool['stages'].items():
@@ -245,10 +249,14 @@ def battle_candidates(node_type=None,floor=None,context='natural',special_region
            'known_requirement_checks':deepcopy(checks),'context':context,'natural_pool_reference':bool(p['natural_node_types']),
            'node_applicability':'来源具名池引用；服务器资格未知','description':s['description'],
            'actual_occurrence':None,'server_eligibility':'未知','hidden_layer_reference':p['hidden_layer_reference']}
+        r['entry_context_reference']=stage_context(sid,node_type=node_type,floor=floor,
+            special_region=special_region,difficulty=difficulty,entry_mode=effective_entry_mode)
+        if r['entry_context_reference'] and r['entry_context_reference']['status']=='excluded':
+            excluded.append({**r,'exclusion_reason':'精确入口的已列主层或保密等级条件不符'});continue
         if checks['known_floor_requirement_matches'] is False or checks['known_difficulty_requirement_matches'] is False:
             excluded.append({**r,'exclusion_reason':'已核对的节点主层或保密等级门槛不符'});continue
         # Generic displayed floors on pursuit/special variants cannot filter content contexts.
-        apply_floor=node_type is not None and context in ('natural','all') and not special_region and bool(p['natural_node_types'])
+        apply_floor=effective_entry_mode=='natural' and node_type is not None and context in ('natural','all') and not special_region and bool(p['natural_node_types'])
         if floor is not None and apply_floor and p['hidden_layer_reference']:
             excluded.append({**r,'exclusion_reason':'固定目录标记为隐藏层，不能当作所选主层'});continue
         if floor is not None and apply_floor and p['floors'] and floor not in p['floors']:
@@ -256,7 +264,7 @@ def battle_candidates(node_type=None,floor=None,context='natural',special_region
         rows.append(r)
     return _result(rows,excluded=excluded,node_type=node_type,floor=floor,context=context,special_region=special_region,difficulty=difficulty,known_requirement_checks=checks,
                    stage_source=deepcopy(catalog()['source']),pool_sources=deepcopy(pool['sources']),
-                   pool_limits=deepcopy(pool['limitations']),unfiltered_is_directory=node_type is None)
+                   pool_limits=deepcopy(pool['limitations']),unfiltered_is_directory=node_type is None,entry_mode=effective_entry_mode)
 COMMANDS['battles']=battle_candidates
 def indirect_events(floor=None):
     if floor is not None and (type(floor) is not int or floor not in range(1,7)):raise ValueError('主层需要1–6。')

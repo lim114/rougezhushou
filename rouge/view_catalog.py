@@ -2,6 +2,7 @@
 import json
 from functools import lru_cache
 from pathlib import Path
+from .stage_context import context_data
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtGui import QIcon, QPixmap
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QLabel
@@ -98,8 +99,15 @@ def operator_groups(profiles,implemented):
 
 def stage_groups(stages):
     metadata=view_catalog()['stages'];groups=[]
-    for group in STAGE_GROUPS:
-        entries=[(sid,s) for sid,s in stages.items() if metadata[sid]['group']==group]
+    order=[(group,None) for group in STAGE_GROUPS if group!='unconfirmed']
+    context=context_data()['stages']
+    order.extend(('unconfirmed',kind) for kind in ('event','shop_challenge','duel',
+        'resident_stronghold','roaming_resident','special_challenge','other'))
+    for group,kind in order:
+        entries=[(sid,s) for sid,s in stages.items() if metadata[sid]['group']==group
+            and (kind is None or context.get(sid,{}).get('group')==kind
+                 or kind=='other' and context.get(sid,{}).get('group') not in
+                 ('event','shop_challenge','duel','resident_stronghold','roaming_resident','special_challenge'))]
         totals={}
         for _,s in entries:
             key=(s['name'],s['difficulty']);totals[key]=totals.get(key,0)+1
@@ -109,7 +117,12 @@ def stage_groups(stages):
             title=s['name']+' · '+('紧急' if s['difficulty']=='FOUR_STAR' else '普通')
             if totals[key]>1:title+=' · 同名资料'+str(seen[key])
             items.append((title,sid,QIcon()))
-        if entries:groups.append((metadata[entries[0][0]]['label'],items))
+        if entries:
+            label=metadata[entries[0][0]]['label']
+            if kind not in (None,'other'):
+                reference=context[entries[0][0]]
+                label=reference['label']+('（入口层条件有引用）' if reference['conditions'] else '（层数未知）')
+            groups.append((label,items))
     return groups
 
 

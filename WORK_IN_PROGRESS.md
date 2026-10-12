@@ -1,3 +1,7 @@
+## 功能第213节 · 事件与特殊战斗入口分类、主层条件和精确预览
+
+2026-10-12T15:22:44.565799+08:00。新增：固定选择器拆分21关的实际来源类别；节点目录按可靠主层选择两种商店挑战、按自然入口核对两据点与两狭路的条件。未知不排除；已列条件排除独立展示且仍可精确ID预览，保留输入/选择/折叠/滚动和既有历史/导航。。必要检查72项，跳过0项，无失败；首次归档摘要失败由多出的末尾LF造成，恢复精确原字节后复验通过。真实0.82商店挑战分支与死箱地图查询已核对，私人五项保持。边界：匹配仅指已列条件；挑战解锁、其他前置及完整服务器资格仍未知。；特殊区域层数口径未证；不能用秘境区域ID后缀充当主层。；自然节点范围不用于内容强制入口、历史读取或流窜居民克隆。；15个原事件/特殊关卡尚无层数适用依据；未把同类关卡当当前可发生全集。；固定原件与社区条件引用分别保留，不宣称当前客户端全覆盖。；没有新增地图校准：232四图失败原样封存，手工瓶颈延期，不计节。。回执verification/sections/213.json。下一节214，下次全量215。
+
 ## 功能第212节 · 凯尔希与银灰三段等待、声明中断和窗口预算
 
 2026-10-12T15:13:56.366391+08:00。新增：已选凯normal/S1及银normal参考实际计算分列两门条件下每段等待预算、窗口内已消耗/未执行/仍待等待、声明中断取消预算与重新开始候选；各段用float32比值最近整数/中点取偶、至少1次，跳过段不调用等待；移动/供靶空窗不取消等待或重开门。。必要检查95项，跳过0项，无失败。边界：firstAttack/FSM path and actual mode/skin/XLua remain unknown；movement or target gaps do not cancel waits or reopen firstAttack；only explicitly declared interrupt_windows cancel this reference chain as a model condition; actual native event occurrence unknown；input-period playback remains a fixed profile condition; actual midchain speed changes unknown；no actual callback, skill-end or absolute clock derived from wait counts；wait cancellation discards unexecuted budget; a restart candidate does not resume cancelled iterator or imply animation/event stop；a budget assumes a chain started at the existing preview anchor; generic attack-start rows/target acquisition do not prove that native origin；Declaration offset rebasing does not recover real native chain origin or callback phase.。回执verification/sections/212.json。下一节213，下次全量215。

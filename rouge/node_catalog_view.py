@@ -9,6 +9,7 @@ from . import node_catalog as catalog
 from . import event_planning
 from .battle_reward_planning import stage_reward_sources,reward_source_text
 from .ui_state import replace_text
+from .stage_context import stage_context_text
 
 KINDS={'event':'事件','battle':'战斗资料','function':'功能节点','original':'未归类原文','map':'本图节点'}
 QUALIFICATIONS={'matched':'已列条件相符','unknown':'资格未确认','excluded':'已列条件不符'}
@@ -372,7 +373,8 @@ class NodeCatalogPanel(QWidget):
         else:
             events=catalog.all_events(node_type=nt,include_indirect=True)['rows']
             if floor is not None:events=[e for e in events if not e['floors'] or floor in e['floors']]
-            battles=catalog.battle_candidates(node_type=nt,floor=floor,context='all')['rows'] if nt is None or nt in ('作战','紧急作战','险路恶敌','不期而遇','诡意行商','狭路相逢','“居民”据点') else []
+            battle_result=catalog.battle_candidates(node_type=nt,floor=floor,context='all',entry_mode='natural') if nt is None or nt in ('作战','紧急作战','险路恶敌','不期而遇','诡意行商','狭路相逢','“居民”据点') else {'rows':[],'excluded':[]}
+            battles=[*battle_result['rows'],*({**r,'entry_condition_excluded_reference':True} for r in battle_result['excluded'])]
             functions=catalog.function_nodes(node_type=nt)['rows']
             originals=[{'id':str(item.get('id') or index),
                         'title':f"原文 · {item.get('title') or item.get('id') or index} · {item['record_id']}",
@@ -394,7 +396,11 @@ class NodeCatalogPanel(QWidget):
                     entry['group']=' / '.join(r['node_types']) or '特殊入口'
                     entry['group']=('历史已读内容 · '+entry['group'] if entry.get('history_read') else entry['group']+' · '+QUALIFICATIONS[entry['qualification']['status']])
                 elif category=='function':entry['group']=('历史已读类型 · ' if entry.get('history_read') else '')+r['node_type']
-                elif category=='battle':entry['group']=('历史已读内容 · ' if entry.get('history_read') else '')+' / '.join(CATEGORIES.get(t,t) for t in r.get('categories',[]))+' · 战斗资料'
+                elif category=='battle':
+                    reference=r.get('entry_context_reference')
+                    label=reference['label'] if reference else ' / '.join(CATEGORIES.get(t,t) for t in r.get('categories',[]))
+                    prefix='历史已读内容 · ' if entry.get('history_read') else '已列条件排除 · ' if r.get('entry_condition_excluded_reference') else ''
+                    entry['group']=prefix+label+' · 战斗资料'
                 else:
                     reference=r['record'].get('special_entry_reference')
                     entry['group']=('特殊入口原文 · 来源身份已证' if reference['source_scene_link_verified'] else '初始候选原文 · 源场景未证') if reference else '未归类原文 · 入口未知'
@@ -502,6 +508,9 @@ class NodeCatalogPanel(QWidget):
         elif entry['kind']=='battle':
             r=entry['record'];text=f"{entry['title']}\n\n类别：{'、'.join(CATEGORIES.get(t,t) for t in r.get('categories',[]))}\n层数：{floor_text(r.get('floors'))}\n关卡版本：{r.get('id') or r.get('stage_id')}\n"
             text+='\n'.join(r.get('notes',[]))+'\n实际出现/分支/出怪全局时钟：未知。此项仅连接到对应固定地图资料。'
+            text+='\n\n'+stage_context_text(r.get('entry_context_reference'))
+            if r.get('entry_condition_excluded_reference'):
+                text+='\n此条为已列条件排除的资料参考；仍可预览原图，不作为当前候选。'
             text+='\n\n'+reward_source_text(stage_reward_sources(r.get('id') or r.get('stage_id')))
         else:
             raw=entry['record']['record']
