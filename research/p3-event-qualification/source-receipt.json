@@ -41,5 +41,33 @@
     "事件页面链接只证实社区选项到关卡页面，不证明服务器场景脚本。",
     "同名同关卡文件原ID全部保留，不从ID前缀猜当前实例。",
     "原choices无battleInfo/stageID，nextSceneId只证实目标场景，不推出作战。"
-  ]
+  ],
+  "resource_parsing": {
+    "scope": "Top-level explicit amounts; nested relic effects retained in raw prose, not merged as immediate grants",
+    "coverage": {
+      "events": 38,
+      "scenes": 190,
+      "choices": 233,
+      "resource_references": 70,
+      "kinds": {
+        "nominal_gain_or_recovery": 33,
+        "nominal_cost": 22,
+        "fraction_cost": 2,
+        "named_item_cost": 5,
+        "category_item_cost": 5,
+        "random_category_item_gain": 3
+      }
+    },
+    "final_equal_amount_source_choice_ids": [
+      "choice_ro6_final1_1",
+      "choice_ro6_final1_3",
+      "choice_ro6_final1_5"
+    ],
+    "unknowns": [
+      "Half-resource rounding",
+      "Minimum-retained-HP actual payment",
+      "Random category member selection",
+      "Current server qualification and actual changes"
+    ]
+  }
 }

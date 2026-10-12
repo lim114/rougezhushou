@@ -61,7 +61,8 @@ class ExplorationPlanningTests(unittest.TestCase):
         r=p.region_transition('main_region_advance',stock,remaining_ap=7,exit_node_type='FINAL',goal_success=True)
         self.assertEqual(r['losses_if_transition_succeeds'],['inventory:1','inventory:2'])
         self.assertEqual(r['resources']['source_rule_ap_conversion'],7)
-        self.assertIsNone(r['resources']['hope_gain']);self.assertIsNone(r['resources']['hope_conversion_ratio'])
+        self.assertIsNone(r['resources']['hope_gain']);self.assertEqual(r['resources']['hope_conversion_ratio'],1)
+        self.assertEqual(r['resources']['hope_gain_reference'],7)
         for direction in ('portal_enter','portal_return'):
             r=p.region_transition(direction,stock,remaining_ap=7)
             self.assertFalse(r['losses_if_transition_succeeds'])

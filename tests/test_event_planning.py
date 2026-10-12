@@ -16,6 +16,74 @@ def choice_by_title(title,option,ctx):
     raise AssertionError('source fixture choice missing')
 
 class EventPlanningTests(unittest.TestCase):
+    def test_resource_cost_budget_is_separate_from_server_eligibility(self):
+        e=event('货从口出');scene=c.event_details(e['id'])['rows'][0]
+        result=p.choice_resources(e['id'],scene['key'],{'gold':3})
+        row=next(r for r in result['rows'] if '消耗4源石锭' in r['description'])
+        cost=next(r for r in row['resource_references'] if r['kind']=='nominal_cost')
+        self.assertFalse(cost['nominal_budget_covers']);self.assertEqual(cost['quantity_reference'],4)
+        self.assertFalse(row['budget_failure_is_server_exclusion']);self.assertIsNone(row['actual_new_resources'])
+        with self.assertRaises(ValueError):p.choice_resources(e['id'],scene['key'],{'gold':3,'resources':{'gold':4}})
+
+    def test_resource_fraction_and_minimum_hp_do_not_guess_payment(self):
+        e=event('沉重的契约');scene=c.event_details(e['id'])['rows'][0]
+        rows=p.choice_resources(e['id'],scene['key'],{'resources':{'hp':5}})['rows']
+        fractional=next(r for row in rows for r in row['resource_references'] if r['kind']=='fraction_cost')
+        self.assertEqual(fractional['fraction_arithmetic_reference'],2.5)
+        self.assertIsNone(fractional['actual_integer_cost']);self.assertFalse(fractional['integer_rounding_verified'])
+        e=event('黑诞');rows=p.choice_resources(e['id'],c.event_details(e['id'])['rows'][0]['key'],{'resources':{'hp':2}})['rows']
+        guarded=next(r for row in rows for r in row['resource_references'] if r.get('minimum_retained_hp_reference'))
+        self.assertEqual(guarded['minimum_retained_hp_reference'],1)
+        self.assertIsNone(guarded['nominal_budget_covers']);self.assertFalse(guarded['special_payment_rule_verified'])
+
+    def test_category_item_cost_incomplete_stock_and_nested_relic_effects(self):
+        e=event('回滚文明');scene=c.event_details(e['id'])['rows'][0]
+        r=p.choice_resources(e['id'],scene['key'],{'item_quantities':{'rogue_6_scrap_G_01':1}})
+        cost=next(x for row in r['rows'] for x in row['resource_references'] if x['kind']=='category_item_cost')
+        self.assertEqual(cost['quantity_reference'],2);self.assertIsNone(cost['nominal_budget_covers'])
+        r=p.choice_resources(e['id'],scene['key'],{'item_quantities':{'rogue_6_scrap_G_01':1},'inventory_complete':True})
+        cost=next(x for row in r['rows'] for x in row['resource_references'] if x['kind']=='category_item_cost')
+        self.assertFalse(cost['nominal_budget_covers'])
+        e=event('安眠一隅');r=p.choice_resources(e['id'],c.event_details(e['id'])['rows'][0]['key'])
+        self.assertFalse(any(x.get('quantity_reference')==99 for row in r['rows'] for x in row['resource_references']))
+        self.assertTrue(all(not row['nested_relic_effects_auto_applied'] for row in r['rows']))
+
+    def test_final_equal_hope_reference_does_not_leak_to_boss_exit(self):
+        r=p.final_ap_conversion(7);self.assertEqual(r['conversion_ratio_reference'],1)
+        self.assertEqual(r['hope_gain_reference'],7);self.assertIsNone(r['actual_hope_gain'])
+        self.assertEqual({row['id'] for row in r['original_choice_records']},
+            {'choice_ro6_final1_1','choice_ro6_final1_3','choice_ro6_final1_5'})
+        from rouge.exploration_planning import region_transition
+        r=region_transition('main_region_advance',remaining_ap=7,exit_node_type='BATTLE_BOSS')
+        self.assertIsNone(r['resources']['hope_conversion_ratio']);self.assertIsNone(r['resources']['hope_gain'])
+        with self.assertRaises(ValueError):p.final_ap_conversion(True)
+
+    def test_current_terminal_outcomes_require_pre_entry_snapshot(self):
+        e=event('被歌颂的影子');scene=next(s for s in c.event_details(e['id'])['rows'] if '若在进入本事件前已拥有【犬植浆】' in s['description'])
+        ctx={'item_quantities':{'rogue_6_relic_artifact_3':0,'rogue_6_relic_artifact_4':0},'inventory_complete':True}
+        r=p.scene_outcomes(e['id'],scene['key'],ctx)
+        self.assertTrue(all(x['status']=='unknown' for x in r['rows']))
+        ctx['pre_entry_inventory_complete']=True
+        r=p.scene_outcomes(e['id'],scene['key'],ctx)
+        self.assertEqual([x['status'] for x in r['rows']],['matched','excluded'])
+        self.assertIsNone(r['actual_final_reward']);self.assertTrue(r['current_document_rule_is_deterministic'])
+        self.assertEqual(r['current_document_source']['revision'],'440271')
+        self.assertFalse(r['current_document_source']['whole_html_downloaded'])
+
+    def test_current_terminal_origin_unknown_and_complement_are_preserved(self):
+        e=event('被歌颂的影子');scene=next(s for s in c.event_details(e['id'])['rows'] if '若在进入本事件前已拥有【犬植浆】' in s['description'])
+        ctx={'pre_entry_inventory_complete':True,'pre_entry_item_quantities':{'rogue_6_relic_artifact_4':1}}
+        self.assertTrue(all(x['status']=='unknown' for x in p.scene_outcomes(e['id'],scene['key'],ctx)['rows']))
+        ctx['pre_entry_item_origins']={'rogue_6_relic_artifact_4':[e['id']]}
+        self.assertEqual([x['status'] for x in p.scene_outcomes(e['id'],scene['key'],ctx)['rows']],['excluded','matched'])
+        ctx['pre_entry_item_origins']={'rogue_6_relic_artifact_4':['other_source']};ctx['pre_entry_item_origins_complete']=True
+        self.assertEqual([x['status'] for x in p.scene_outcomes(e['id'],scene['key'],ctx)['rows']],['matched','excluded'])
+        ctx['pre_entry_item_quantities']['rogue_6_relic_artifact_3']=1
+        self.assertEqual([x['status'] for x in p.scene_outcomes(e['id'],scene['key'],ctx)['rows']],['excluded','matched'])
+        choices=p.choice_eligibility(e['id'],scene['key'])['rows']
+        self.assertTrue(all(row['edition_warnings'] for row in choices))
+        with self.assertRaises(ValueError):p.scene_outcomes(e['id'],scene['key'],{'pre_entry_inventory_complete':1})
+
     def test_qualification_predecessor_three_state_and_unknown_server(self):
         red,house=event('呼吸的红苔'),event('沉寂之屋');ctx=context('呼吸的红苔')
         self.assertEqual(p.event_eligibility(red['id'],ctx)['status'],'unknown')

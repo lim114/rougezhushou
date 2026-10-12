@@ -498,6 +498,12 @@ def region_transition(transition,inventory=None,remaining_ap=None,exit_node_type
                'hope_gain':None,'next_region_total_ap':None,'named_item_grants':[]}
     if transition=='main_region_advance':
         if exit_node_type in ('FINAL','BATTLE_BOSS'):resources['source_rule_ap_conversion']=remaining_ap
+        if exit_node_type=='FINAL':
+            from .event_planning import final_ap_conversion
+            reference=final_ap_conversion(remaining_ap)
+            resources['hope_conversion_ratio']=reference['conversion_ratio_reference']
+            resources['hope_gain_reference']=reference['hope_gain_reference']
+            resources['conversion_original_choice_records']=reference['original_choice_records']
         elif exit_node_type=='EVACUATE':resources['source_rule_carried_ap']=remaining_ap
         if exit_node_type in ('FINAL','EVACUATE'):
             resources['named_item_grants']=[{'kind':'MOVE','quantity':1,'actual_pool_known':False,
@@ -510,7 +516,7 @@ def region_transition(transition,inventory=None,remaining_ap=None,exit_node_type
                    limits=deepcopy(reference_data()['limits'])+[
                        '只有重弹簧和小八界的跨主区域损坏被描述明确列出；其他零件没有新增过期规则。',
                        '秘境进出不损坏这两种暂存加工品，包括秘境获得的；不把秘境当下一主区域。',
-                       '剩余AP转希望的比率和新区域总AP未在本原件中核验，不默认1:1；首领必须击败才满足出口条件。'])
+                       '险路尽头的原choices明确等量希望，只在FINAL列1:1参考；首领出口比率与新区域总AP不借用此规则。'])
 
 
 RESIDENT_NAMED_EXCLUSIONS=('BATTLE_SHOP','SCRAP_SHOP','EVACUATE','FINAL','DOOR',

@@ -15,6 +15,11 @@ def reference_data():
     return json.loads((Path(__file__).with_name('data')/'event-planning-reference.json').read_text(encoding='utf-8'))
 
 
+@lru_cache(maxsize=1)
+def current_observation():
+    return json.loads((Path(__file__).with_name('data')/'event-current-observation.json').read_text(encoding='utf-8'))
+
+
 def _reference():
     reference=reference_data();source=catalog._data()['sources']['cached_community_catalog']
     if reference['sources']['event_catalog_dom']['sha256']!=source['sha256']:
@@ -41,8 +46,23 @@ def _context(context):
     if not isinstance(quantities,dict) or any(not isinstance(k,str) or not k or type(v) is not int or v<0 for k,v in quantities.items()):
         raise ValueError('持有数量需要原物品ID到非负整数的对象。')
     if type(context.get('inventory_complete',False)) is not bool:raise ValueError('inventory_complete需要布尔值。')
+    prior=context.get('pre_entry_item_quantities',{})
+    if not isinstance(prior,dict) or any(not isinstance(k,str) or not k or type(v) is not int or v<0 for k,v in prior.items()):
+        raise ValueError('进入前持有需要原物品ID到非负整数的对象。')
+    for key in ('pre_entry_inventory_complete','pre_entry_item_origins_complete'):
+        if type(context.get(key,False)) is not bool:raise ValueError(key+'需要布尔值。')
+    origins=context.get('pre_entry_item_origins',{})
+    if not isinstance(origins,dict) or any(not isinstance(k,str) or not k or not isinstance(v,list) or
+        any(not isinstance(source,str) or not source for source in v) for k,v in origins.items()):
+        raise ValueError('进入前物品来源需要原物品ID到来源ID列表的对象。')
     gold=context.get('gold')
     if gold is not None and (type(gold) is not int or gold<0):raise ValueError('源石锭需要非负整数或留空。')
+    resources=context.get('resources',{})
+    valid_resources=('hp','max_hp','gold','hope','shield','ap')
+    if not isinstance(resources,dict) or any(k not in valid_resources or type(v) is not int or v<0 for k,v in resources.items()):
+        raise ValueError('resources只接受hp/max_hp/gold/hope/shield/ap非负整数。')
+    if gold is not None and 'gold' in resources and gold!=resources['gold']:
+        raise ValueError('gold与resources.gold声明不一致，不能选择其中一个覆盖。')
     history=context.get('event_history',{})
     if not isinstance(history,dict):raise ValueError('事件历史需要按目录事件ID分组的对象。')
     valid={e['id'] for e in catalog._data()['events']}
@@ -164,12 +184,19 @@ def choice_eligibility(event_id,scene_key,context=None):
         mapped=[deepcopy(original[cid]) for cid in choice['game_choice_ids'] if cid in original]
         if any(row['isHiddenChoice'] for row in mapped):
             checks.append(_check('hidden_option_unlock',None,'原件isHiddenChoice为true；解锁脚本条件未公开。'))
+        edition_warnings=[]
+        if event['title']=='被歌颂的影子' and '若在进入本事件前已拥有【犬植浆】' in scene['description']:
+            edition_warnings.append({'kind':'newer_document_rule_differs','old_revision':'427904',
+                                     'observed_revision':current_observation()['source']['revision'],
+                                     'source':deepcopy(current_observation()['source']),
+                                     'reason':current_observation()['delta'],
+                                     'query':'scene-outcomes','actual_server_rule_verified':False})
         rows.append({'choice_key':choice['key'],'choice_title':choice['title'],'presentation_role':choice['presentation_role'],
                      'status':_status(checks),'checks':checks,'parsed_special_requirements':parsed,
                      'conditional_text':choice['conditional'],'unparsed_condition_text':text if text and not parsed else None,
                      'game_choice_ids':deepcopy(choice['game_choice_ids']),'original_choice_records':mapped,
                      'actual_selectable':None,'full_server_conditions_known':False,
-                     'source_origin_scene_binding_verified':False})
+                     'source_origin_scene_binding_verified':False,'edition_warnings':edition_warnings})
     return _result(event=catalog._summary(event),scene_key=scene_key,rows=rows,context=context)
 
 
@@ -219,4 +246,130 @@ def event_battle_links(event_id,scene_key=None,choice_key=None,context=None):
                    context=context,all_actual_stage_instances_verified=False)
 
 
-COMMANDS={'events':qualified_events,'event':event_eligibility,'choices':choice_eligibility,'battles':event_battle_links}
+def _pre_owned(context,item_id):
+    values=context.get('pre_entry_item_quantities',{})
+    if item_id in values:return values[item_id]>0
+    return False if context.get('pre_entry_inventory_complete',False) else None
+
+
+def scene_outcomes(event_id,scene_key,context=None):
+    """Current documented terminal-reward conditions, preserving snapshot and origin gaps."""
+    context=_context(context);event=catalog._event(event_id);scene=catalog._scene(event_id,scene_key)
+    observation=current_observation()
+    applicable=event['title']==observation['event_title'] and '若在进入本事件前已拥有【犬植浆】' in scene['description']
+    if not applicable:
+        return _result(event=catalog._summary(event),scene_key=scene_key,rows=[],current_rule_applicable=False,
+                       full_current_scene_rules_known=False)
+    plant,dog=_named_item('植浆'),_named_item('犬植浆')
+    plant_owned=None if plant is None else _pre_owned(context,plant)
+    dog_owned=None if dog is None else _pre_owned(context,dog)
+    origins=context.get('pre_entry_item_origins',{}).get(dog,[])
+    from_event=False if dog_owned is False else True if dog_owned is True and event_id in origins else (
+        False if dog_owned is True and context.get('pre_entry_item_origins_complete',False) else None)
+    dog_condition=_and(_not(plant_owned),_not(from_event));ap_condition=_not(dog_condition)
+    rows=[{'outcome':'named_relic','item_id':dog,'item_name':'犬植浆','quantity':1,
+           'document_condition_matches':dog_condition,'status':'unknown' if dog_condition is None else 'matched' if dog_condition else 'excluded',
+           'source_condition':'进入前无植浆，且不持有来自本事件的犬植浆','actual_granted':None,'probability':None},
+          {'outcome':'action_points','resource':'ap','quantity':1,'document_condition_matches':ap_condition,
+           'status':'unknown' if ap_condition is None else 'matched' if ap_condition else 'excluded',
+           'source_condition':'前一条件的补集：拥有植浆或持有来自本事件的犬植浆','actual_granted':None,'probability':None}]
+    return _result(event=catalog._summary(event),scene_key=scene_key,rows=rows,current_rule_applicable=True,
+                   current_document_source=deepcopy(observation['source']),fixed_old_catalog_revision='427904',
+                   version_difference=observation['delta'],pre_entry_snapshot_required=True,
+                   pre_entry_plant_owned=plant_owned,pre_entry_dog_owned=dog_owned,
+                   pre_entry_dog_from_this_event=from_event,actual_final_reward=None,
+                   full_current_scene_rules_known=False,current_document_rule_is_deterministic=True,
+                   additional_limits=deepcopy(observation['limits'])+[
+                       '当前持有不能替代进入前快照；犬植浆的来源未知时保留两个候选。',
+                       '只实现直接读到的当前文档条件；没有把整份旧目录换成新版本，也未证明客户端脚本。'])
+
+
+RESOURCE_NAMES={'目标生命值上限':'max_hp','目标生命值':'hp','源石锭':'gold','希望':'hope','护盾':'shield','行动力':'ap'}
+
+
+def _outside_parentheses(text):
+    depth=0;result=[]
+    for char in text:
+        if char in '(（':depth+=1
+        elif char in ')）':depth=max(0,depth-1)
+        elif not depth:result.append(char)
+    return ''.join(result)
+
+
+def _resource_value(context,resource):
+    if resource=='gold' and context.get('gold') is not None:return context['gold']
+    return context.get('resources',{}).get(resource)
+
+
+def _item_name_candidates(name):
+    return [key for key,row in _reference()['source_item_names'].items() if row['name']==name]
+
+
+def final_ap_conversion(remaining_ap=None):
+    """FINAL has original equal-amount wording; no borrowed rule for boss exits."""
+    if remaining_ap is not None and (type(remaining_ap) is not int or remaining_ap<0):raise ValueError('剩余AP需要非负整数。')
+    records=[deepcopy(row) for key,row in _reference()['original_choices'].items()
+             if key in ('choice_ro6_final1_1','choice_ro6_final1_5','choice_ro6_final1_3') and '等量希望' in row['description']]
+    if not records:raise ValueError('原件没有等量希望描述，不能使用1:1参考。')
+    return _result(exit_node_type='FINAL',remaining_ap_declared=remaining_ap,conversion_ratio_reference=1,
+                   hope_gain_reference=remaining_ap,original_choice_records=records,
+                   actual_hope_gain=None,actual_transition_succeeded=None,boss_exit_rule_verified=False)
+
+
+def choice_resources(event_id,scene_key,context=None):
+    """Documented top-level resource amounts and independent nominal budgets."""
+    context=_context(context);event=catalog._event(event_id);scene=catalog._scene(event_id,scene_key);rows=[]
+    for choice in scene['choices']:
+        description=choice['description'] or '';top=_outside_parentheses(description);actions=[]
+        pattern=r'(消耗|获得|回复|损失|失去)(\d+)(?:点)?(目标生命值上限|目标生命值|源石锭|希望|护盾|行动力)'
+        for match in re.finditer(pattern,top):
+            verb,amount,name=match.groups();quantity=int(amount);resource=RESOURCE_NAMES[name]
+            value=_resource_value(context,resource);cost=verb in ('消耗','损失','失去')
+            guard=1 if cost and resource=='hp' and '至少保留1目标生命值' in description else None
+            actions.append({'kind':'nominal_cost' if cost else 'nominal_gain_or_recovery','resource':resource,
+                'source_item_id':_reference()['resource_item_ids'].get(resource),'quantity_reference':quantity,
+                'source_match':match.group(0),'resource_value_declared':value,
+                'nominal_budget_covers':None if not cost or value is None or guard is not None else value>=quantity,
+                'minimum_retained_hp_reference':guard,'special_payment_rule_verified':False if guard else None,
+                'actual_changed':None})
+        for match in re.finditer(r'消耗一半(?:的)?(目标生命值|源石锭)',top):
+            resource=RESOURCE_NAMES[match.group(1)];value=_resource_value(context,resource)
+            actions.append({'kind':'fraction_cost','resource':resource,'fraction_reference':0.5,
+                'source_match':match.group(0),'resource_value_declared':value,
+                'fraction_arithmetic_reference':None if value is None else value*0.5,
+                'actual_integer_cost':None,'integer_rounding_verified':False,'nominal_budget_covers':None,'actual_changed':None})
+        for match in re.finditer(r'(消耗|获得)(?:随机|零件箱里的)?(\d+)件(加工品|自然物|概念体|零件)',top):
+            verb,amount,name=match.groups();category={'加工品':'MOVE','自然物':'GOODS','概念体':'PASSIVE','零件':None}[name]
+            ids=[key for key,item in _reference()['source_item_names'].items()
+                 if item['type']=='SCRAP' and (category is None or item['scrap_category']==category)]
+            quantities=context.get('item_quantities',{});known=sum(quantities.get(key,0) for key in ids)
+            amount=int(amount);cost=verb=='消耗';complete=context.get('inventory_complete',False)
+            coverage=None if not cost else True if known>=amount else False if complete else None
+            actions.append({'kind':'category_item_cost' if cost else 'random_category_item_gain',
+                'scrap_category':category,'quantity_reference':amount,'candidate_item_ids':ids,
+                'known_owned_subtotal':known,'inventory_complete_declared':complete,'nominal_budget_covers':coverage,
+                'source_match':match.group(0),'actual_items_selected':None,'actual_pool_complete':False,'probability':None})
+        for verb,name,quantity in (('消耗','源私钥',1),('交出','源私钥',1),('种下','种子',1)):
+            if (verb+name in top) or (verb=='种下' and '种下1枚种子' in top):
+                ids=_item_name_candidates(name);owned=None if len(ids)!=1 else _owned(context,ids[0])
+                actions.append({'kind':'named_item_cost','item_name':name,'candidate_item_ids':ids,
+                    'quantity_reference':quantity,'nominal_budget_covers':owned,'actual_consumed':None,
+                    'source_match':verb+name})
+        conversion=None
+        if '等量希望' in top and event['title']=='险路尽头':
+            conversion=final_ap_conversion(_resource_value(context,'ap'))
+        eligibility=next(r for r in choice_eligibility(event_id,scene_key,context)['rows'] if r['choice_key']==choice['key'])
+        rows.append({'choice_key':choice['key'],'choice_title':choice['title'],'presentation_role':choice['presentation_role'],
+                     'description':description,'resource_references':actions,'ap_conversion_reference':conversion,
+                     'choice_eligibility':eligibility,'complete_resource_effects_known':False,
+                     'unparsed_description_retained':description,'nested_relic_effects_auto_applied':False,
+                     'actual_new_resources':None,'budget_failure_is_server_exclusion':False})
+    return _result(event=catalog._summary(event),scene_key=scene_key,rows=rows,context=context,
+                   complete_node_resource_effects_known=False,
+                   additional_limits=['数量只来自顶层原文；括号内藏品效果不混入直接节点增减。',
+                       '预算覆盖不足与服务器不可选/不出现是不同状态，资格三态仍独立。',
+                       '半数取整、最低保留HP的特殊扣除、随机物品选择及未解析效果仍未知。'])
+
+
+COMMANDS={'events':qualified_events,'event':event_eligibility,'choices':choice_eligibility,'battles':event_battle_links,
+          'scene-outcomes':scene_outcomes,'resources':choice_resources,'final-conversion':final_ap_conversion}

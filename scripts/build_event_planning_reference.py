@@ -86,6 +86,12 @@ data={'schema_version':1,'sources':{'event_catalog_dom':source,'original_game':g
       'limits':['事件页面链接只证实社区选项到关卡页面，不证明服务器场景脚本。',
                 '同名同关卡文件原ID全部保留，不从ID前缀猜当前实例。',
                 '原choices无battleInfo/stageID，nextSceneId只证实目标场景，不推出作战。']}
+data['resource_item_ids']={key:detail['gameConst'].get(field) for key,field in {'hp':'hpItemId','max_hp':'maxHpItemId','gold':'goldItemId','hope':'populationItemId','shield':'shieldItemId'}.items()}
+ap_ids=[key for key,item in detail['items'].items() if item['name']=='行动力']
+assert len(ap_ids)==1
+data['resource_item_ids']['ap']=ap_ids[0]
+scrap_types=json.loads(topicraw)['modules']['rogue_6']['scrap']['scrapItemToType']
+data['source_item_names']={key:{'name':item['name'],'type':item['type'],'scrap_category':scrap_types.get(key)} for key,item in detail['items'].items()}
 (OUT/'rouge/data/event-planning-reference.json').write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 receipt={'sources':data['sources'],'counts':counts,'scene_choice_binding':'Full source DOM group/scene/choice ordinals match all existing 38/190/233 catalog rows.',
          'original_choice_fields':list(next(iter(detail['choices'].values())).keys()),

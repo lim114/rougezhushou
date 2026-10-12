@@ -15,6 +15,60 @@ ROLES={'display_option_reference':'选择参考','explanatory_text':'说明参�
        'community_navigation_guide':'导航参考'}
 CATEGORIES={'normal':'普通','emergency':'紧急','boss':'首领','pursuit':'追猎',
             'event':'事件内战斗','special':'特殊挑战','resident':'居民战斗'}
+RESOURCE_NAMES={'hp':'目标生命值','max_hp':'目标生命值上限','gold':'源石锭',
+                'hope':'希望','shield':'护盾','ap':'行动力'}
+BUDGETS={True:'覆盖已列费用',False:'不足已列费用',None:'预算未知'}
+SCRAP_CATEGORIES={'MOVE':'加工品','GOODS':'自然物','PASSIVE':'概念体',None:'零件'}
+
+
+def resource_reference_lines(reference):
+    """Format declared amounts without claiming payment or changing eligibility."""
+    kind=reference['kind'];amount=reference.get('quantity_reference')
+    source=reference.get('source_match') or '见原文'
+    lines=[]
+    if kind in ('nominal_cost','nominal_gain_or_recovery'):
+        name=RESOURCE_NAMES[reference['resource']]
+        label='费用参考' if kind=='nominal_cost' else '增量或回复参考'
+        lines.append(f'{label}：{source}；明确数量 {amount}{name}。')
+        if kind=='nominal_cost':
+            value=reference.get('resource_value_declared')
+            held=f'声明资源 {value}{name}' if value is not None else '资源数量未声明'
+            lines.append(f"名义预算：{BUDGETS[reference['nominal_budget_covers']]}；{held}。")
+            if reference.get('minimum_retained_hp_reference'):
+                lines.append(f"最低保留参考：{reference['minimum_retained_hp_reference']}目标生命值；特殊扣除规则未证，实际费用未知。")
+    elif kind=='fraction_cost':
+        value=reference.get('fraction_arithmetic_reference')
+        arithmetic=str(value) if value is not None else '未知（资源数量未声明）'
+        lines += [f'费用参考：{source}；比例 1/2；算术参考 {arithmetic}。',
+                  '名义预算：预算未知；实际整数费用和取整规则未证。']
+    elif kind in ('category_item_cost','random_category_item_gain'):
+        category=SCRAP_CATEGORIES[reference['scrap_category']]
+        if kind=='category_item_cost':
+            coverage=BUDGETS[reference['nominal_budget_covers']]
+            complete='持有表声明完整' if reference['inventory_complete_declared'] else '持有表不完整'
+            lines += [f'物品费用参考：{source}；{amount}件{category}。',
+                      f"名义预算：{coverage}；已声明持有小计 {reference['known_owned_subtotal']}件，{complete}。"]
+        else:lines.append(f'随机物品增量参考：{source}；{amount}件{category}；实际物品与完整奖励池未知。')
+    elif kind=='named_item_cost':
+        lines += [f"物品费用参考：{reference['item_name']} × {amount}；{source}。",
+                  f"名义预算：{BUDGETS[reference['nominal_budget_covers']]}；实际消耗未知。"]
+    return lines
+
+
+def scene_outcome_lines(result):
+    if not result.get('current_rule_applicable'):return []
+    observation=event_planning.current_observation()
+    source=result['current_document_source'];lines=[
+        '版本警示：本场景的旧版流程与较新文档条件不同。',
+        f"固定旧版 {result['fixed_old_catalog_revision']}：{observation['old_rule']}",
+        f"较新文档 {source['revision']}：{observation['current_rule']}",
+        '进入前条件：需要独立的进入前持有快照及犬植浆来源；当前持有不能替代。']
+    for row in result['rows']:
+        reward=f"{row['item_name']} × {row['quantity']}" if row['outcome']=='named_relic' else f"{row['quantity']}行动力"
+        lines.append(f"当前文档分支参考：{reward}；{QUALIFICATIONS[row['status']]}；{row['source_condition']}。")
+    lines += ['实际领取：未知；未证当前服务器脚本。仅此场景有较新文档观察，整份目录仍保留固定旧版范围。',
+              '当前条件来源：'+source['url']]
+    return lines
 
 def known_node_type(value):
     return value if isinstance(value,str) and value and not value.startswith(('未知','类型未确认')) else None
@@ -61,15 +115,29 @@ def map_conditions(graph,run_config):
 
 @lru_cache(maxsize=64)
 def event_text(event_id):
+    return _event_flow_text(event_id)
+
+
+def event_details_text(event_id,context=None):
+    """Read-only scene/choice planning using declarations supplied by the caller."""
+    return _event_flow_text(event_id,context=context,planning=True)
+
+
+def _event_flow_text(event_id,context=None,planning=False):
     result=catalog.event_details(event_id);event=result['event']
     lines=[event['title'],f"类型：{'、'.join(event['node_types']) or '特殊传送来源'}",
            f"公开层数参考：{floor_text(event['floors'])}",
            '游戏内当前能否进入、按钮是否可选：未知。下列是固定资料中的流程，不能据此自动选择。']
+    if planning:
+        lines += ['资源参考：顶层原文明示数量单独列出；预算与资格分别判断，实际变化未知。',
+                  '流程来源：固定旧版427904；较新末舞条件在对应场景标明，不声称当前完整覆盖。']
     rewards={r['choice_id']:r for r in catalog.event_reward_options(event_id)['rows']}
     scenes=result['rows']; numbers={s['key']:n for n,s in enumerate(scenes,1)}
     for number,scene in enumerate(scenes,1):
         lines += ['',f'场景 {number}',scene['description']]
         lines.extend(scene.get('edesc_texts',[]))
+        resources={r['choice_key']:r for r in event_planning.choice_resources(event_id,scene['key'],context)['rows']} if planning else {}
+        if planning:lines.extend(scene_outcome_lines(event_planning.scene_outcomes(event_id,scene['key'],context)))
         for choice in scene['choices']:
             role=ROLES.get(choice['presentation_role'],'展示参考（不是已证按钮）')
             lines += [f"  {role}：{choice['title']}",f"    {choice.get('description') or '结果说明未知'}"]
@@ -86,6 +154,27 @@ def event_text(event_id):
             for reference in reward.get('rewards',[]):
                 lines.append('    有证具名奖励：'+str(reference.get('reward',{}).get('name') or reference.get('description') or '见来源原文'))
             if reward.get('rewards'):lines.append('    完整奖励池、数量和领取资格尚未核验。')
+            if planning:
+                row=resources[choice['key']];qualification=row['choice_eligibility']
+                lines.append('    已列选项条件：'+QUALIFICATIONS[qualification['status']]+'；服务器是否可选仍未知。')
+                for check in qualification['parsed_special_requirements']:
+                    state='相符' if check['matches'] is True else '不符' if check['matches'] is False else '未知'
+                    lines.append('    条件核对：'+state+'；'+check['source_text'])
+                references=row['resource_references']
+                if not references:lines.append('    资源数量：未识别顶层明确数量；不能视为零费用或零收益。')
+                for reference in references:
+                    lines.extend('    '+line for line in resource_reference_lines(reference))
+                conversion=row.get('ap_conversion_reference')
+                if conversion:
+                    gain=conversion['hope_gain_reference']
+                    lines.append('    FINAL转换参考：每1行动力对应1希望；'+
+                        (f'声明余AP得到{gain}希望参考' if gain is not None else '余AP未声明，转换量未知')+'；实际领取未知。')
+                if qualification.get('edition_warnings'):
+                    lines.append('    旧版导航参考：本场景有版本差异，请对照上方较新条件；当前按钮与后续尚未核验。')
+                if qualification.get('unparsed_condition_text'):
+                    lines.append('    未解析条件：'+qualification['unparsed_condition_text'])
+                lines += ['    未解析边界：完整效果未证；上方结果原文保留，括号内藏品效果不自动计即时增减。',
+                          '    预算不足只表示已列费用覆盖不足，不改变事件资格，不认定服务器隐藏或禁用选项。']
     unlinked=result.get('unlinked_original_scenes',[])
     if unlinked:
         lines += ['','同名原始场景的来源链尚未归类（不能认定从入口可达）：']
@@ -106,7 +195,7 @@ class NodeCatalogPanel(QWidget):
         self.dossier=None;self.node_context=None;self.entries=[];self.detail_key=None
         self.map_context=None;self.runtime_context={};self._first_tree=True
         layout=QVBoxLayout(self)
-        self.context_label=QLabel('公开目录：不要求打开游戏，也不提供生成概率。')
+        self.context_label=QLabel('公开目录以自然入口核对已列条件；特殊事件原文仍保留，不代表当前可进入，不提供生成概率。')
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
         controls=QHBoxLayout()
         self.kind=QComboBox();self.kind.addItem('全部公开内容',None)
@@ -192,7 +281,7 @@ class NodeCatalogPanel(QWidget):
         self.dossier=None
         if self.kind.currentData()=='map':
             self.kind.blockSignals(True);self.kind.setCurrentIndex(0);self.kind.blockSignals(False)
-        self.context_label.setText('公开目录：不要求打开游戏，也不提供生成概率。');self.refresh()
+        self.context_label.setText('公开目录以自然入口核对已列条件；特殊事件原文仍保留，不代表当前可进入，不提供生成概率。');self.refresh()
 
     def _entries(self):
         nt=self.node_type.currentData();floor=self.floor.currentData();kind=self.kind.currentData()
@@ -282,7 +371,7 @@ class NodeCatalogPanel(QWidget):
         self.battle_button.setEnabled(bool(entry and (entry['kind']=='battle' or self.event_stage.count())))
         if not entry:text='没有符合筛选的资料。不能把资料缺失视为不可能出现。'
         elif entry['kind']=='event':
-            q=entry['qualification'];text=event_text(entry['record']['id'])
+            q=entry['qualification'];text=event_details_text(entry['record']['id'],self._event_context(entry['record']))
             text+='\n\n资料出现条件：'+QUALIFICATIONS[q['status']]+'；当前服务器资格仍未知。'
             text+='\n'+'\n'.join(('相符' if c['matches'] is True else '不符' if c['matches'] is False else '未知')+'：'+c['source_text'] for c in q['checks'])
             context=self._event_context(entry['record'])
