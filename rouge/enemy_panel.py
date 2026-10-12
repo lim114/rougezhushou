@@ -31,15 +31,23 @@ def enemy_panel_reference(stage_id,enemy_id,level):
         fields[path]={'state':'stage_override','value':deepcopy(value),'source_level':level,
             'source_selector':'$.enemyDbRefs['+str(binding['source_index'])+'].overwrittenData.'+
                 (path if path.startswith('attributes.') else path.split('.',1)[1])+'.m_value'}
+    exact=str(level) in definitions
+    projection={'attributes':{key:fields['attributes.'+key]['value'] for key in data['attribute_fields']},
+        'metadata':{key:fields['metadata.'+key]['value'] for key in data['metadata_fields']}}
     return {'stage_id':stage_id,'enemy_id':enemy_id,'requested_level':level,
-        'scope':data['scope'],'attributes':{key:fields['attributes.'+key]['value'] for key in data['attribute_fields']},
-        'metadata':{key:fields['metadata.'+key]['value'] for key in data['metadata_fields']},
+        'scope':data['scope'],
+        'attributes':deepcopy(projection['attributes']) if exact else {key:None for key in data['attribute_fields']},
+        'metadata':deepcopy(projection['metadata']) if exact else {key:None for key in data['metadata_fields']},
+        'source_projection':projection,
+        'source_state':'exact_database_level_available' if exact else 'unavailable_exact_database_level',
+        'compiled_database_result_available':exact,
         'field_provenance':fields,'exact_level_present':str(level) in definitions,
         'source':{'game_commit':data['source']['game_commit'],
             'enemy_database':deepcopy(data['source']['enemy_database']),
             'stage':deepcopy(data['source']['stages'][stage_id])},
         'complete_effective_panel':None,'actual_gameplay_verified':False,
-        'limits':['仅按现有固定面板字段规则读取明确写入：等级定义后读取本关卡覆盖；未写入项保持未知。',
+        'limits':['精确数据库等级可用时按已证基包规则读取等级定义；精确等级缺失时构建器返回空，未借用较低等级字段。',
+            '关卡覆盖的原字段仍保留为来源分项；缺少精确数据库等级的别名/默认构建路径未核验，不能当有效面板。',
             '本表含完整固定属性字段；技能、藏品、阶段和关卡动态脚本的完整有效面板仍未知。',
             '技力回复、命中率、攻击范围与扣除生命等均为字段参考；不推算实际发动、命中、范围或通过终点时的事件。',
             '固定数据版本不证明当前服务器、资源包或热更新一致；未合并技能/天赋/技力控制器配置。']}
@@ -53,10 +61,12 @@ def enemy_panel_text(reference,technical=False):
             'attributes.epBreakRecoverSpeed',*('metadata.'+key for key in meta))
         written=sum(reference['field_provenance'].get(key,{}).get('state') not in (None,'undefined')
             for key in additional)
+        unavailable=reference.get('source_state')=='unavailable_exact_database_level'
         return '\n'.join(['【扩展属性预测】',
             '预计技力回复、嘲讽、物理/法术命中率、元素爆发恢复速度：未知。',
             '漏怪扣血、分类和敌人计数适用性：未知；动态脚本与阶段尚未完全核验。',
-            f'{written}项扩展字段已有明确来源，完整值仍未知；原文可在技术资料中查看。'])
+            f'{written}项扩展字段已有明确来源，完整值仍未知；原文可在技术资料中查看。',
+            *(['固定数据库精确等级不可用；别名/默认构建路径尚未核验。'] if unavailable else [])])
     labels=(('maxHp','生命'),('atk','攻击'),('def','防御'),('magicResistance','法抗'),
         ('attackSpeed','攻速'),('baseAttackTime','基础攻击间隔参数'),('moveSpeed','移速参数'),
         ('massLevel','重量'),('hpRecoveryPerSec','每秒生命回复参数'),
@@ -75,5 +85,7 @@ def enemy_panel_text(reference,technical=False):
     lines.extend(['完整固定属性字段：'+json.dumps(attrs,ensure_ascii=False),
         '其他固定敌人字段：'+json.dumps(meta,ensure_ascii=False),
         '各字段明确来源：'+json.dumps(reference['field_provenance'],ensure_ascii=False),
-        '来源版本：'+reference['source']['game_commit']])
+        '来源版本：'+reference['source']['game_commit'],
+        '精确等级可用性：'+str(reference.get('compiled_database_result_available')),
+        '原字段投影（不作为缺失精确等级的有效面板）：'+json.dumps(reference.get('source_projection'),ensure_ascii=False)])
     return '\n'.join(lines)

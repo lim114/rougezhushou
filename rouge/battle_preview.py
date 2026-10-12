@@ -97,6 +97,8 @@ def enemy_preview(stage_id,enemy_id,level,run_config=None):
         entry['context_pending']=resolution['pending']
     except (ValueError,KeyError) as error:
         entry['environment']=None;entry['context_pending']=['本局环境无法确认：'+str(error)]
+    if not entry['fixed_panel_reference']['compiled_database_result_available']:
+        entry['context_pending'].append('固定敌人数据库精确等级不可用；关卡别名/默认构建路径尚未核验，完整预计面板未知。')
     entry['limits']=['扩展属性（攻速/移动/重量等）仅为引用基础值，未模拟敌人技能、阶段或动画。',
         '本预览不套用藏品；含藏品的目标参考请在伤害测试页查看。',
         '图鉴未列出的阶段、技能参数和隐藏触发条件仍需核验。']

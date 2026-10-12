@@ -1,0 +1,363 @@
+{
+  "candidate_id": 203,
+  "title": "敌人技力整记录继承、条件默认初始化与精确等级门槛进入实际预览",
+  "remaining_item": "P3敌人面板与机制：默认/继承配置，以及190完整固定面板缺精确等级时的原生来源有效性",
+  "new_capability": "实际enemy_skill_reference和mechanism来源CLI解析基包SP配置：null不覆盖、非null整对象替换、缺精确数据库等级不借低等级；有精确等级时区分无热更新钩子的共享默认/显式转换入口，技术分支获取maxSp→spCost、单次充能与构造默认字段参考；当前控制器/首发/回转仍未知。enemy_panel实际属性/metadata在无精确等级时保持未知，原字段分项仍可技术查询，普通预测加入未核验别名/默认构建路径待确认，不显示源白值。",
+  "source_evidence": [
+    {
+      "native_contract": {
+        "schema_version": 1,
+        "scope": "compiled_enemy_database_sp_field_reference",
+        "rules": {
+          "requires_exact_nonnegative_level": true,
+          "null_sp_data": "no_write",
+          "nonnull_sp_data": "replace_complete_record",
+          "fieldwise_sp_data_merge": false,
+          "initialization": {
+            "scope": "no_hotfix_compiled_initialization_reference",
+            "sp_types": {
+              "NONE": 0,
+              "INCREASE_WITH_TIME": 1,
+              "INCREASE_WHEN_ATTACK": 2,
+              "INCREASE_WHEN_TAKEN_DAMAGE": 4,
+              "ATTACK_OR_DAMAGE": 6,
+              "ALL": 7
+            },
+            "default_scalar_assignments": {
+              "spType": "NONE",
+              "maxChargeTime": 1,
+              "spCost": 0,
+              "initSp": 0,
+              "increment": 1.0,
+              "maxSp": 0
+            },
+            "explicit_field_mapping": {
+              "spType": "spType",
+              "maxSp": "spCost",
+              "initSp": "initSp",
+              "increment": "increment"
+            },
+            "explicit_max_charge_time": 1,
+            "current_hooks_bound": false
+          }
+        },
+        "native_evidence": {
+          "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+          "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+          "source_sp_offset": 168,
+          "computed_sp_offset": 120,
+          "methods": [
+            {
+              "name": "Torappu.EnemyDatabase$$GetComputedEnemyData",
+              "address": "0x182417f40",
+              "instructions": 188,
+              "reachable_bytes_sha256": "7f8d41d272ddc213e5cdd23e46ec56c1558274dd514b01936c7e813bba26f696"
+            },
+            {
+              "name": "Torappu.EnemyDatabase$$ApplyDefinedData",
+              "address": "0x182417c30",
+              "instructions": 114,
+              "reachable_bytes_sha256": "48bbfeb17f224db95486e5d919760c6d21620368d1a00ad5e95bbb8d524a4460"
+            },
+            {
+              "name": "Torappu.EnemyDatabase$$_FindEnemyLevel",
+              "address": "0x182419db0",
+              "instructions": 50,
+              "reachable_bytes_sha256": "c02558631972f33bc1b93a2513fe1b05db4e273cd6195c95e00e0ebc97899469"
+            }
+          ],
+          "source_fields": {
+            "spType": {
+              "name": "spType",
+              "type": "Torappu.SpType",
+              "offset": 16,
+              "default": null
+            },
+            "maxSp": {
+              "name": "maxSp",
+              "type": "System.Int32",
+              "offset": 20,
+              "default": null
+            },
+            "initSp": {
+              "name": "initSp",
+              "type": "System.Int32",
+              "offset": 24,
+              "default": null
+            },
+            "increment": {
+              "name": "increment",
+              "type": "System.Single",
+              "offset": 28,
+              "default": null
+            }
+          },
+          "evidence_points": {
+            "exact_level_comparison": "0x182419e11 cmp [level+0x10],requested; no match returns0@0x182419e4b",
+            "get_computed_unavailable": "0x182417fee _FindEnemyLevel then null branch to0x1824181e1",
+            "sp_whole_object_copy": "0x182417de2 checks raw+0xa8; null skips to0x182417e00,nonnull pointer assigned tocomputed+0x78@0x182417df7"
+          },
+          "initialization_methods": [
+            {
+              "name": "Torappu.Battle.Enemy$$_GenerateSpData",
+              "address": "0x180a78710",
+              "instructions": 54,
+              "reachable_bytes_sha256": "35e74d497bd812c8115d9ef48d000554938190f6bdcd9812b01e6a0a412a6a42"
+            },
+            {
+              "name": "Torappu.SpData$$GetDefault",
+              "address": "0x18252b250",
+              "instructions": 37,
+              "reachable_bytes_sha256": "0aa9aae77b089a6f26c63f1365482f0e0598c967401b34810e0f2277f10dd516"
+            },
+            {
+              "name": "Torappu.SpData$$CreateFrom",
+              "address": "0x18252afc0",
+              "instructions": 101,
+              "reachable_bytes_sha256": "c68a5faac25aae1841debd3589faa48930a719826b67444cf3cf35f608b74af5"
+            },
+            {
+              "name": "Torappu.SpData$$.cctor",
+              "address": "0x18252b570",
+              "instructions": 45,
+              "reachable_bytes_sha256": "343deb13380cc20aff1fb362777dca66d83ff5b91ec15952daf23bd071ff4d2a"
+            },
+            {
+              "name": "Torappu.SpData$$Init",
+              "address": "0x18252b300",
+              "instructions": 137,
+              "reachable_bytes_sha256": "20c936ec5b14d5f62740d39406c4c1197ece76a2e68045d7fce677a1fa15a54b"
+            },
+            {
+              "name": "Torappu.SpData$$.ctor",
+              "address": "0x18252b5f0",
+              "instructions": 73,
+              "reachable_bytes_sha256": "33041ac25c3655b36180950e67448817d746c52b79841b9b5b3de8daceb31c59"
+            },
+            {
+              "name": "Torappu.SpData$$get_maxSp",
+              "address": "0x18252b820",
+              "instructions": 64,
+              "reachable_bytes_sha256": "a04e73b9848bfb25d0b0d3557895b979b3fd6c1ea4577402b168ac75bfd0f145"
+            }
+          ],
+          "runtime_scalar_fields": {
+            "DEFAULT": {
+              "name": "DEFAULT",
+              "type": "Torappu.SpData",
+              "offset": 0,
+              "default": null
+            },
+            "spType": {
+              "name": "spType",
+              "type": "Torappu.SpType",
+              "offset": 16,
+              "default": null
+            },
+            "levelUpCost": {
+              "name": "levelUpCost",
+              "type": "Torappu.ItemBundle[]",
+              "offset": 24,
+              "default": null
+            },
+            "maxChargeTime": {
+              "name": "maxChargeTime",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 32,
+              "default": null
+            },
+            "spCost": {
+              "name": "spCost",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 52,
+              "default": null
+            },
+            "initSp": {
+              "name": "initSp",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+              "offset": 72,
+              "default": null
+            },
+            "increment": {
+              "name": "increment",
+              "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+              "offset": 92,
+              "default": null
+            },
+            "m_incrementsForAllSpTypes": {
+              "name": "m_incrementsForAllSpTypes",
+              "type": "System.Single[]",
+              "offset": 120,
+              "default": null
+            },
+            "__Hotfix0_GetDefault": {
+              "name": "__Hotfix0_GetDefault",
+              "type": "XLua.DelegateBridge",
+              "offset": 8,
+              "default": null
+            },
+            "__Hotfix0_get_maxSp": {
+              "name": "__Hotfix0_get_maxSp",
+              "type": "XLua.DelegateBridge",
+              "offset": 16,
+              "default": null
+            },
+            "__Hotfix0_get_inited": {
+              "name": "__Hotfix0_get_inited",
+              "type": "XLua.DelegateBridge",
+              "offset": 24,
+              "default": null
+            },
+            "__Hotfix0_get_incrementsForAllSpTypes": {
+              "name": "__Hotfix0_get_incrementsForAllSpTypes",
+              "type": "XLua.DelegateBridge",
+              "offset": 32,
+              "default": null
+            },
+            "__Hotfix0_Init": {
+              "name": "__Hotfix0_Init",
+              "type": "XLua.DelegateBridge",
+              "offset": 40,
+              "default": null
+            },
+            "__Hotfix0_CreateFrom": {
+              "name": "__Hotfix0_CreateFrom",
+              "type": "XLua.DelegateBridge",
+              "offset": 48,
+              "default": null
+            },
+            "__Hotfix0_Duplicate": {
+              "name": "__Hotfix0_Duplicate",
+              "type": "XLua.DelegateBridge",
+              "offset": 56,
+              "default": null
+            },
+            "_c__Hotfix0_ctor": {
+              "name": "_c__Hotfix0_ctor",
+              "type": "XLua.DelegateBridge",
+              "offset": 64,
+              "default": null
+            }
+          },
+          "initialization_evidence_points": {
+            "entry": "0x180a78778 hook branch; supplied spData(+0x78) nonnull tailcallsCreateFrom@0x180a787b0, null tailcallsGetDefault@0x180a787d6",
+            "explicit": "0x18252b060 spType copy; sourcemaxSp+0x14 tospCost+0x34@0x18252b0a2; maxChargeTime+0x20=1@0x18252b0bc; sourceinitSp+0x18 toinitSp+0x48@0x18252b0db; sourceincrement+0x1c toincrement+0x5c@0x18252b11d; Init blackboardnull fromGenerate",
+            "default": "cctor newalloc+ctor stores sharedDEFAULT; GetDefault callsInit(null) andreturnsDEFAULT; ctor assigns maxChargeTime1/spCost0/initSp0/increment1; zero-initializedspTypeNONE(0); postctorhook branch@0x18252b70b",
+            "max_sp": "0x18252b8c1 reads spCost;0x18252b8df reads maxChargeTime;0x18252b8e4 imul; getterhotfixbranch@0x18252b885",
+            "scope": "All numeric references require absent EnemyGenerate/SpCreate/GetDefault/ctor/Init/getmaxSp hooks as applicable; no current binding or runtime controller claim"
+          },
+          "current_hotfix_verified": false,
+          "runtime_default_controller_verified": false,
+          "game_dll_executed": false,
+          "process_memory_read": false,
+          "private_state_read": false
+        }
+      }
+    },
+    {
+      "pinned_source": ".cache/research/enemy-skills-042/data-receipt.json",
+      "reused_fixed_data": "rouge/data/enemy-skill-references.json; rouge/data/enemy-panel-reference.json",
+      "native_cfg": ".cache/batch186-285/p2-units/research/enemy-sp-fields-current.json",
+      "native_layout": ".cache/batch186-285/p2-units/research/selected-current-metadata.json",
+      "replay_builder": ".cache/batch186-285/p2-units/research/build_enemy_sp_contract.py",
+      "initialization_cfg": [
+        ".cache/batch186-285/p2-units/research/enemy-default-sp-current.json",
+        ".cache/batch186-285/p2-units/research/enemy-sp-default-record-current.json",
+        ".cache/batch186-285/p2-units/research/enemy-sp-default-init-current.json",
+        ".cache/batch186-285/p2-units/research/enemy-sp-scalar-helpers-current.json"
+      ],
+      "verified_methods": 10,
+      "verified_instruction_bytes": 863
+    },
+    {
+      "physical_proof": "research/p3-enemy-sp-inheritance-current/native-proof.json",
+      "selected_metadata": "research/p3-enemy-sp-inheritance-current/selected-metadata.json",
+      "receipt": "research/p3-enemy-sp-inheritance-current/receipt.json",
+      "independent_verify_entry": "research/p3-enemy-sp-inheritance-current/verify_evidence.py",
+      "artifact_manifest": "research/p3-enemy-sp-inheritance-current/artifact-manifest.json",
+      "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+      "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+      "compiled_contract": "rouge/data/enemy-sp-inheritance-reference.json"
+    }
+  ],
+  "acceptance": [
+    "29necessary tests passed:15new SP/native-gate/default-initialization cases+10panel cases+4related existing checks",
+    "1087full fixed source references retain original source fields and clocks/current-hotfix unknown; unavailable exactlevel returns noSPconfiguration and noactive panel field",
+    "Valid exactlevel positive case still shows prior corrected environment prediction; ordinary text has no fixed whiteSPvalues",
+    "null/absent/zero/wholeoverwrite/partialbadshape/nonfinite/futurelevel/source-copy bounds passed; default initialization/explicit cost conversion/unsupported SP type preserve conditional/current-unknown boundary",
+    "Actual ro6_n_2_3 empty-plant alias preview renders HPunknown with precise source-gate explanation; explicit technical branch keeps rawsourceprojection and mechanism CLI contains compiledSPstatus",
+    "First isolated run had2test-fixture expectation edits placed in wrong method; corrected fixture contexts, rerun26allpassed; production native gate behavior passed both runs"
+  ],
+  "limitations": [
+    "仅已绑定当前编译基包GetComputedEnemyData/ApplyDefinedData标量配置规则应用于固定公开数据；服务器/XLua当前覆盖未核验。",
+    "精确等级缺失时，关卡别名/默认构建路径未核验；原字段投影不是可用完整面板。",
+    "已证默认/显式SP配置来源限无热更新钩子的基包路径；技能数组/天赋/黑板完整合并、实际默认SP控制器、首次发动/时序/完整回转仍未知，inheritance_resolved仍False。",
+    "未改伤害核心或执行游戏；实际Windows可见窗口验收保留由root本轮统一执行。"
+  ],
+  "files": [
+    "rouge/enemy_sp_reference.py",
+    "rouge/data/enemy-sp-inheritance-reference.json",
+    "rouge/enemy_skills.py",
+    "rouge/enemy_panel.py",
+    "rouge/battle_preview.py",
+    "rouge/battle_planning.py",
+    "tests/test_enemy_sp_inheritance_reference.py",
+    "tests/test_enemy_panel_reference.py",
+    "research/p3-enemy-sp-inheritance-current/native-proof.json",
+    "research/p3-enemy-sp-inheritance-current/selected-metadata.json",
+    "research/p3-enemy-sp-inheritance-current/receipt.json",
+    "research/p3-enemy-sp-inheritance-current/verify_evidence.py",
+    "research/p3-enemy-sp-inheritance-current/README.md",
+    "research/p3-enemy-sp-inheritance-current/artifact-manifest.json",
+    "verification/section-203/root-native-static-check.json"
+  ],
+  "test_selectors": [
+    "tests.test_enemy_sp_inheritance_reference",
+    "tests.test_enemy_panel_reference",
+    "tests.test_enemy_skills_042.EnemySkillReferenceTests.test_null_skill_lists_are_not_cleared_or_inherited",
+    "tests.test_enemy_skills_042.EnemySkillReferenceTests.test_stage_overrides_are_separate_not_merged_into_base_definitions",
+    "tests.test_enemy_skills_042.EnemySkillReferenceTests.test_missing_exact_level_is_explicit_not_a_fake_effective_definition",
+    "tests.test_readable_battle_047.ReadableBattleTests.test_enemy_predictions_use_environment_only_when_confirmed"
+  ],
+  "candidate_files_sha256": {
+    "rouge/enemy_sp_reference.py": "c8194e7c6b4b267bc40f35ab0c749a1aa3ee0ea03bc38dcfe6ef3f9473e033f6",
+    "rouge/data/enemy-sp-inheritance-reference.json": "9cc64fd8ea7ee59e6b5543237ae3cf20e410ca2fd13514faff8b120fad7fe1ad",
+    "rouge/enemy_skills.py": "e489c4ae306e610f25acf7d93eceffc2e21b594ced9e37b2c28bb0752db6f5c2",
+    "rouge/enemy_panel.py": "03fe2ff1ceb58c1d4a68e41dbb060ae0eb9676f20e4986ab0b547cecd59abe7a",
+    "rouge/battle_preview.py": "b5492daa1451cc29d0a76c88270ac0029e705f4682d74371988df4f8a30d6bd1",
+    "rouge/battle_planning.py": "57eceed30127dcf080078346ef5685e37a04385afe60051d2d043adad64f88d1",
+    "tests/test_enemy_sp_inheritance_reference.py": "12ec34461f75e245ea232edabc150eadab4614de5b5f6272ae106fd98ac4c7c4",
+    "tests/test_enemy_panel_reference.py": "5e7a0997833638761bd88f2e743542706ac7b65e0a081c6d90ade8ba33eec7cf"
+  },
+  "root_independent_evidence": {
+    "public_artifact_consistency": "passed",
+    "native_static_file_comparison": "passed",
+    "methods": 10,
+    "selected_instructions": 863,
+    "physical_instructions_rechecked": 863,
+    "selected_metadata_byte_spans": 287,
+    "current_hotfix_equivalence_proven": false,
+    "runtime_controller_verified": false,
+    "game_dll_executed": false,
+    "process_memory_read": false,
+    "private_state_read": false,
+    "limits": [
+      "Saved direct CFG and field byte bindings do not establish runtime hook activation or dynamic indirect-call semantics.",
+      "Without --game-dir, no comparison with an installed DLL/metadata is claimed."
+    ]
+  },
+  "section": 203,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T09:36:17.672852+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 29,
+    "passed": 29,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-203/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 215
+}

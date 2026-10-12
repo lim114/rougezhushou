@@ -31,7 +31,10 @@ class EnemyPanelReferenceTests(unittest.TestCase):
                 ref=enemy_panel_reference(sid,e['id'],e['level'])
                 self.assertEqual(set(ref['attributes']),set(data['attribute_fields']))
                 for key,value in {**e['reference_stats'],**e['immunity_reference']}.items():
-                    self.assertEqual(ref['attributes'][key],value,(sid,e['id'],key))
+                    self.assertEqual(ref['source_projection']['attributes'][key],value,(sid,e['id'],key))
+                if not ref['exact_level_present']:
+                    self.assertTrue(all(v is None for v in ref['attributes'].values()))
+                    self.assertFalse(ref['compiled_database_result_available'])
                 self.assertIsNone(ref['complete_effective_panel'])
                 self.assertFalse(ref['actual_gameplay_verified']);count+=1
         self.assertEqual(count,1087)
@@ -62,7 +65,8 @@ class EnemyPanelReferenceTests(unittest.TestCase):
             r=enemy_panel_reference('stage','enemy',1)
         self.assertFalse(r['exact_level_present'])
         self.assertIsNone(r['attributes']['damageHitratePhysical'])
-        self.assertEqual(r['attributes']['atk'],150)
+        self.assertIsNone(r['attributes']['atk'])
+        self.assertEqual(r['source_projection']['attributes']['atk'],150)
 
     def test_identity_and_level_are_bound_without_defaulting(self):
         for args in ((SID,EID,True),(SID,EID,-1),(SID,EID,0.),(SID,EID,None),

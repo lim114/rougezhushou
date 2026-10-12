@@ -277,6 +277,7 @@ def mechanism_provenance(stage_id,enemy_id,level):
         for a,b in zip(records,records[1:])]
     return _result(stage,enemy_id=enemy_id,level=level,records=records,comparisons=comparisons,
         exact_level_present=ref['exact_requested_level_present'],effective_merged_mechanism=None,
+        compiled_sp_reference=deepcopy(ref['compiled_sp_reference']),
         enemy_source=ref['source'],limits=list(LIMITS)+[
             '字段缺失、null、空列表及0分别保留；差异不证明继承或覆盖顺序。',
             '同一参数位置变化不证明对应招式等价，不推算首发、伤害或阶段。'])

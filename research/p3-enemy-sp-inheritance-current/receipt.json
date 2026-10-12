@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-12",
+  "scope": "203 functional group source proof supplement; no new milestone",
+  "contract_path": "rouge/data/enemy-sp-inheritance-reference.json",
+  "contract_sha256": "9cc64fd8ea7ee59e6b5543237ae3cf20e410ca2fd13514faff8b120fad7fe1ad",
+  "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "methods": 10,
+  "physical_instructions": 863,
+  "selected_types": 6,
+  "native_rule_points": {
+    "exact_level_comparison": "0x182419e11 cmp [level+0x10],requested; no match returns0@0x182419e4b",
+    "get_computed_unavailable": "0x182417fee _FindEnemyLevel then null branch to0x1824181e1",
+    "sp_whole_object_copy": "0x182417de2 checks raw+0xa8; null skips to0x182417e00,nonnull pointer assigned tocomputed+0x78@0x182417df7"
+  },
+  "initialization_rule_points": {
+    "entry": "0x180a78778 hook branch; supplied spData(+0x78) nonnull tailcallsCreateFrom@0x180a787b0, null tailcallsGetDefault@0x180a787d6",
+    "explicit": "0x18252b060 spType copy; sourcemaxSp+0x14 tospCost+0x34@0x18252b0a2; maxChargeTime+0x20=1@0x18252b0bc; sourceinitSp+0x18 toinitSp+0x48@0x18252b0db; sourceincrement+0x1c toincrement+0x5c@0x18252b11d; Init blackboardnull fromGenerate",
+    "default": "cctor newalloc+ctor stores sharedDEFAULT; GetDefault callsInit(null) andreturnsDEFAULT; ctor assigns maxChargeTime1/spCost0/initSp0/increment1; zero-initializedspTypeNONE(0); postctorhook branch@0x18252b70b",
+    "max_sp": "0x18252b8c1 reads spCost;0x18252b8df reads maxChargeTime;0x18252b8e4 imul; getterhotfixbranch@0x18252b885",
+    "scope": "All numeric references require absent EnemyGenerate/SpCreate/GetDefault/ctor/Init/getmaxSp hooks as applicable; no current binding or runtime controller claim"
+  },
+  "parameter_source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "reused_public_source_files": {
+    "rouge/data/enemy-skill-references.json": "8a80141b091f4ad0843a10bec070471e26459608034d77afd2e7b4d1e8ea17cd",
+    "rouge/data/enemy-panel-reference.json": "034884019cd8752d75c6c73d08092409e6aab393d757a15867dd2f9997379f97"
+  },
+  "source_version_limit": "Exact current installed DLL/metadata hashes bind the compiled baseline. Pinned public enemy parameters are a separate version; active server/Lua equality and stage alias construction are not claimed.",
+  "limitations": [
+    "Exact missing enemy level returns null on this compiled path; unverified alias/default level construction does not borrow lower-level data.",
+    "SP nonnull source pointer replaces the complete record; skills/talents/blackboards full inheritance is not proved.",
+    "Default and explicit initialization references require the applicable hook branches not to take over; actual controller, first activation and full cycle remain unknown.",
+    "The four-byte current typeDef addition at offset64 has no inferred business meaning.",
+    "Saved CFG covers direct branches only, with unresolved indirect calls retained; no runtime native/game/desktop validation is simulated."
+  ],
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_state_read": false,
+  "game_binary_copied": false,
+  "current_hotfix_equivalence_proven": false,
+  "producer_verification": {
+    "public_artifact_consistency": "passed",
+    "native_static_file_comparison": "passed",
+    "methods": 10,
+    "selected_instructions": 863,
+    "physical_instructions_rechecked": 863,
+    "selected_metadata_byte_spans": 287,
+    "current_hotfix_equivalence_proven": false,
+    "runtime_controller_verified": false,
+    "game_dll_executed": false,
+    "process_memory_read": false,
+    "private_state_read": false,
+    "limits": [
+      "Saved direct CFG and field byte bindings do not establish runtime hook activation or dynamic indirect-call semantics.",
+      "Without --game-dir, no comparison with an installed DLL/metadata is claimed."
+    ],
+    "root_independent_byte_review_pending": true,
+    "baseline_relative_source_files": [
+      "GameAssembly.dll",
+      "Arknights_Data/il2cpp_data/Metadata/global-metadata.dat"
+    ],
+    "reused_behavior_acceptance": "203 same functional group29 necessary behavior checks; evidence-only supplement changes no runtime module"
+  }
+}

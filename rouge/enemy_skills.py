@@ -15,13 +15,16 @@ def enemy_skill_reference(stage_id,enemy_id,level):
         raise ValueError('技能资料必须绑定本关卡的敌人和引用等级。')
     source=data['definitions'].get(enemy_id,{})
     definitions=[{'level':int(n),**copy.deepcopy(row)} for n,row in sorted(source.items(),key=lambda p:int(p[0])) if int(n)<=level]
-    return {'source':copy.deepcopy(data['source']),'requested_level':level,'definitions':definitions,
+    reference={'source':copy.deepcopy(data['source']),'requested_level':level,'definitions':definitions,
         'exact_requested_level_present':str(level) in source,
         'stage_overrides':copy.deepcopy(data['bindings'][stage_id][key]['stage_overrides']),
         'first_activation_seconds':None,'effective_skill_damage':None,'inheritance_resolved':False,
         'limits':['按原始等级分别列出；未把null当空列表，也未猜测继承、覆盖或默认技能。',
             '冷却、初始冷却、技力和参数都是配置；不等于实际首发、轮次或技能伤害。',
             '图鉴触发、首领阶段、隐藏脚本和环境修正还需逐项核验；字段0不证明出生即发动。']}
+    from .enemy_sp_reference import compiled_sp_reference
+    reference['compiled_sp_reference']=compiled_sp_reference(reference)
+    return reference
 
 def raw_text(value):
     if value is None:return '未知'
@@ -92,7 +95,28 @@ def enemy_skill_text(reference,technical=False):
     if any(d.get('skills')==[] for d in records):lines.append('部分技能字段为空，不证明没有默认/隐藏技能。')
     if not reference['exact_requested_level_present']:
         lines.append('当前引用等级没有独立定义；低等级资料不能当作已确认的有效继承。')
+    compiled=reference.get('compiled_sp_reference')
+    if compiled and compiled['state']=='unavailable_exact_database_level':
+        lines.append('固定数据库缺少精确等级；默认/别名构建路径未核验，未借用较低等级技力配置。')
+    elif compiled and compiled['state']=='compiled_configuration_available':
+        lines.append('技力配置分项已按基包非空整记录规则解析；实际控制器、首次发动与完整回转仍未知。')
+    if compiled and compiled['initialization_reference']['state']=='conditional_baseline_available':
+        lines.append('默认或显式初始化来源已核验到基包条件分支；当前热更新和实际控制器仍未知。')
     if not technical:return '\n'.join(lines)
+    if compiled:
+        lines.extend(['','【基包技力配置继承参考】',
+            '解析状态：'+({'compiled_configuration_available':'有明确配置参考',
+                'no_explicit_sp_configuration':'未取得显式配置，不证明没有默认控制器',
+                'unavailable_exact_database_level':'精确等级不可用，构建路径待核验',
+                'unsupported_source_shape':'来源形状未覆盖，保留未知'}.get(compiled['state'],'未知')),
+            '按源配置解析的技力记录：'+raw_text(compiled['configuration']),
+            '继承来源链：'+raw_text(compiled['source_chain']),
+            '当前实际技力控制器、首次发动和完整回转：未知。'])
+        init=compiled['initialization_reference']
+        lines.extend(['【无热更新钩子的基包初始化参考】',
+            '初始化参考状态：'+raw_text(init['state'])+'；路径：'+raw_text(init['path']),
+            '条件成立时的字段赋值参考：'+raw_text(init['scalar_assignment_reference']),
+            *('• '+note for note in init['required_conditions'])])
     detail=[]
     for d in reference['definitions']:
         content=definition_text(d)
