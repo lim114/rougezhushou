@@ -1,5 +1,5 @@
 {
-  "version": "0.51.0",
+  "version": "0.51.0+wood-ground-reference",
   "method": "Offline manual landmarks on pinned original PNGs; four ground-plane intersections fit a homography. Independent bitmap landmarks validate it. Camera data is a coordinate-orientation lead only, not an assumed preview FOV.",
   "scope": "Planar tile-center reference only, not elevated surfaces, hitboxes, actual pathfinding or live positions. Pixel readings are approximate and specific to the bound bitmap.",
   "source": {
@@ -48,6 +48,10 @@
       "file": ".cache\\research\\map-projection-051\\calibration-input.json",
       "sha256": "0b655839c5e5a1879e23204935901f92e7d06ba7eb5d635951ceecb15b2283a5",
       "evidence": ".cache/research/map-projection-051/evidence.json"
+    },
+    "added_wood_road_ground": {
+      "file": "research/p3-map-ground-current/source-receipt.json",
+      "sha256": "ae79d4145919fb37a981361f1917042d810738f8b8bc7315b2474b273c989f80"
     }
   },
   "calibrations": {
@@ -1917,6 +1921,602 @@
       "landmarks_sha256": "0b655839c5e5a1879e23204935901f92e7d06ba7eb5d635951ceecb15b2283a5",
       "scope": "Nominal planar ground-grid reference only. Independent source-pixel errors apply to recorded LOWLAND ground landmarks only; they do not establish whole-map accuracy, elevated surfaces, actual spawn offsets, rendered portal-object centers, random ranges, hitboxes, pathfinding or in-game arrival time.",
       "grid_correspondence": "Pinned LOWLAND tile_floor cells form a left upper three-column outlined-green patch at row 1 columns 4..6, continuing at row 2 columns 4 and 6 and row 3 columns 4..5; an independent two-by-two patch occupies rows 1..2 columns 8..9. These patterns match the original PNG. The device-obscured row 2 column 6, ice wall surfaces, road gaps, right portal lane and scenery are excluded. Holdouts verify the recorded upper patch only: lower and far-right extrapolation is not independently measured."
+    },
+    "ro6_n_2_1": {
+      "anchors": [
+        [
+          1.5,
+          2.5,
+          174,
+          76
+        ],
+        [
+          1.5,
+          8.5,
+          369,
+          76
+        ],
+        [
+          2.5,
+          2.5,
+          172,
+          103
+        ],
+        [
+          2.5,
+          8.5,
+          374,
+          103
+        ],
+        [
+          4.5,
+          2.5,
+          164,
+          159
+        ],
+        [
+          4.5,
+          8.5,
+          387,
+          159
+        ],
+        [
+          5.5,
+          2.5,
+          159,
+          194
+        ],
+        [
+          5.5,
+          8.5,
+          395,
+          194
+        ]
+      ],
+      "checks": [
+        {
+          "row": 2,
+          "col": 3,
+          "observed_pixel": [
+            189,
+            89
+          ],
+          "projected_pixel": [
+            189.54723059757006,
+            88.96023301928423
+          ],
+          "error_px": 0.5486736185312149,
+          "cue": "upper left wood road center"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "observed_pixel": [
+            256,
+            89
+          ],
+          "projected_pixel": [
+            255.68455820497746,
+            88.96053804477214
+          ],
+          "error_px": 0.3179005692939947,
+          "cue": "upper center wood road center"
+        },
+        {
+          "row": 2,
+          "col": 8,
+          "observed_pixel": [
+            357,
+            89
+          ],
+          "projected_pixel": [
+            354.8890687895351,
+            88.96099557617441
+          ],
+          "error_px": 2.111291528991869,
+          "cue": "upper right wood road center"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "observed_pixel": [
+            186,
+            116
+          ],
+          "projected_pixel": [
+            186.87404478869803,
+            115.33913448163919
+          ],
+          "error_px": 1.0957634443658366,
+          "cue": "middle left wood road center"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "observed_pixel": [
+            289,
+            116
+          ],
+          "projected_pixel": [
+            290.7482978533415,
+            115.33936617920898
+          ],
+          "error_px": 1.8689522276322315,
+          "cue": "middle center wood road center"
+        },
+        {
+          "row": 3,
+          "col": 9,
+          "observed_pixel": [
+            395,
+            116
+          ],
+          "projected_pixel": [
+            394.62060275549925,
+            115.33959787243326
+          ],
+          "error_px": 0.7616253929783594,
+          "cue": "middle right wood road center"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "observed_pixel": [
+            182,
+            144
+          ],
+          "projected_pixel": [
+            183.9368362826124,
+            144.32340242862435
+          ],
+          "error_px": 1.963650660500478,
+          "cue": "lower middle left wood road center"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "observed_pixel": [
+            256,
+            144
+          ],
+          "projected_pixel": [
+            256.60634709912915,
+            144.32337437147658
+          ],
+          "error_px": 0.6871883211683739,
+          "cue": "lower middle center wood road center"
+        },
+        {
+          "row": 4,
+          "col": 8,
+          "observed_pixel": [
+            368,
+            144
+          ],
+          "projected_pixel": [
+            365.60882554101,
+            144.32333228644518
+          ],
+          "error_px": 2.412935776348808,
+          "cue": "lower middle right wood road center"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "observed_pixel": [
+            178,
+            177
+          ],
+          "projected_pixel": [
+            180.69445797249264,
+            176.31907503112754
+          ],
+          "error_px": 2.7791658062740923,
+          "cue": "bottom left wood road center"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "observed_pixel": [
+            294,
+            177
+          ],
+          "projected_pixel": [
+            295.3609803408263,
+            176.3186995434472
+          ],
+          "error_px": 1.5219848225967094,
+          "cue": "bottom center wood road center"
+        },
+        {
+          "row": 5,
+          "col": 8,
+          "observed_pixel": [
+            373,
+            177
+          ],
+          "projected_pixel": [
+            371.8040096891429,
+            176.31844922264588
+          ],
+          "error_px": 1.3765552243829748,
+          "cue": "bottom right wood road center"
+        }
+      ],
+      "matrix": [
+        30.342263543217342,
+        -10.159049424866295,
+        103.20699182029254,
+        0.000383616242324765,
+        19.44713352262315,
+        42.72845859320612,
+        2.739202092646157e-06,
+        -0.04123801907467856,
+        1.0
+      ],
+      "inverse": [
+        0.032957556729110125,
+        0.009172842274306045,
+        -3.7933916990577927,
+        -4.1423777314351714e-07,
+        0.047149300541328786,
+        -2.014574183644333,
+        -1.0735975355122762e-07,
+        0.0019443186288123152,
+        0.9169333422540002
+      ],
+      "tolerance_px": 4,
+      "bitmap_sha256": "555ecf02e4a928039fb9a7c2eefe66c00bda837ce276c8bce0aef98d272d3d44",
+      "grid_sha256": "f86520a01dd480ac521d9d245cadc033856df9eeeef31fb335eeb3231a06c2e9",
+      "width": 512,
+      "height": 286,
+      "rows": 8,
+      "cols": 11,
+      "base_stage_id": "ro6_n_2_1",
+      "landmarks_sha256": "e04d5d02fbf6c6d48b15e780e8672e33dee1acd55108c6a3f0a7963a1a931bff",
+      "scope": "Nominal planar LOWLAND ground-grid reference only. Independent checks establish source pixel agreement at recorded cells only; unmeasured borders, elevated surfaces, portal roofs, actual spawn offsets, random ranges, hitboxes, pathfinding, live trajectories and timings remain unknown.",
+      "grid_correspondence": "Six adjacent top and bottom red entry cages independently correspond to columns3..8; middle road rectangle rows2..5 columns3..8 and two right blue protection tiles rows3..4 column10 establish the original matrix orientation. Anchor intersections are wood-road ground frame seams; check centers are separate wood ROAD/LOWLAND tiles, not cage roofs or bottoms inferred from projected centers.",
+      "independent_coverage": "Independent road centers cover rows2..5, cols3..9; row1/6 cages, protection column10 and outer borders are nominal extrapolation, not independently measured."
+    },
+    "ro6_n_2_5": {
+      "anchors": [
+        [
+          1.5,
+          0.5,
+          123,
+          86
+        ],
+        [
+          1.5,
+          4.5,
+          257,
+          86
+        ],
+        [
+          2.5,
+          0.5,
+          118,
+          112
+        ],
+        [
+          2.5,
+          6.5,
+          330,
+          112
+        ],
+        [
+          4.5,
+          0.5,
+          104,
+          174
+        ],
+        [
+          4.5,
+          6.5,
+          333,
+          174
+        ],
+        [
+          5.5,
+          0.5,
+          100,
+          206
+        ],
+        [
+          5.5,
+          6.5,
+          335,
+          206
+        ]
+      ],
+      "checks": [
+        {
+          "row": 1,
+          "col": 1,
+          "observed_pixel": [
+            144,
+            74
+          ],
+          "projected_pixel": [
+            141.5771885358478,
+            73.24048097879134
+          ],
+          "error_px": 2.5390715890665843,
+          "cue": "upper left wood road center"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "observed_pixel": [
+            176,
+            74
+          ],
+          "projected_pixel": [
+            174.7909550540238,
+            73.00421061573864
+          ],
+          "error_px": 1.5663288860255937,
+          "cue": "upper second wood road center"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "observed_pixel": [
+            209,
+            74
+          ],
+          "projected_pixel": [
+            208.18378384203936,
+            72.7666664703981
+          ],
+          "error_px": 1.478959232621471,
+          "cue": "upper third wood road center"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "observed_pixel": [
+            241,
+            74
+          ],
+          "projected_pixel": [
+            241.75712685626914,
+            72.52783821409291
+          ],
+          "error_px": 1.655445982316893,
+          "cue": "upper right wood road center"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "observed_pixel": [
+            141,
+            99
+          ],
+          "projected_pixel": [
+            137.03959700888197,
+            99.322838161244
+          ],
+          "error_px": 3.9735395216874396,
+          "cue": "second-row left wood road center"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "observed_pixel": [
+            175,
+            99
+          ],
+          "projected_pixel": [
+            171.3578511871324,
+            99.15109820142366
+          ],
+          "error_px": 3.6452816957741763,
+          "cue": "second-row second wood road center"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "observed_pixel": [
+            208,
+            99
+          ],
+          "projected_pixel": [
+            205.8673622659854,
+            98.97840112845144
+          ],
+          "error_px": 2.13274710544759,
+          "cue": "second-row third wood road center"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "observed_pixel": [
+            240,
+            99
+          ],
+          "projected_pixel": [
+            240.56973353571684,
+            98.80473891892943
+          ],
+          "error_px": 0.6022650508715031,
+          "cue": "second-row fourth wood road center"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "observed_pixel": [
+            274,
+            99
+          ],
+          "projected_pixel": [
+            275.46658625714497,
+            98.63010345952917
+          ],
+          "error_px": 1.5125140330915203,
+          "cue": "second-row fifth wood road center"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "observed_pixel": [
+            308,
+            99
+          ],
+          "projected_pixel": [
+            310.5595599141177,
+            98.45448654572813
+          ],
+          "error_px": 2.6170464043936685,
+          "cue": "second-row sixth wood road center"
+        },
+        {
+          "row": 2,
+          "col": 7,
+          "observed_pixel": [
+            342,
+            99
+          ],
+          "projected_pixel": [
+            345.8503124702685,
+            98.27787988052478
+          ],
+          "error_px": 3.917443501271697,
+          "cue": "second-row right wood road center"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "observed_pixel": [
+            122,
+            190
+          ],
+          "projected_pixel": [
+            121.39618968958715,
+            189.24211247840003
+          ],
+          "error_px": 0.9690100032289708,
+          "cue": "bottom left wood road center"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "observed_pixel": [
+            162,
+            190
+          ],
+          "projected_pixel": [
+            159.51743150370135,
+            189.32900555099945
+          ],
+          "error_px": 2.571649254739866,
+          "cue": "bottom second wood road center"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "observed_pixel": [
+            201,
+            190
+          ],
+          "projected_pixel": [
+            197.87504045902776,
+            189.41643739584725
+          ],
+          "error_px": 3.178980567049597,
+          "cue": "bottom third wood road center"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "observed_pixel": [
+            239,
+            190
+          ],
+          "projected_pixel": [
+            236.4712217501492,
+            189.5044130394358
+          ],
+          "error_px": 2.5768829760778322,
+          "cue": "bottom fourth wood road center"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "observed_pixel": [
+            278,
+            190
+          ],
+          "projected_pixel": [
+            275.3082080884632,
+            189.59293757097896
+          ],
+          "error_px": 2.7223966493028864,
+          "cue": "bottom fifth wood road center"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "observed_pixel": [
+            317,
+            190
+          ],
+          "projected_pixel": [
+            314.3882601327248,
+            189.68201614339353
+          ],
+          "error_px": 2.6310262004353175,
+          "cue": "bottom sixth wood road center"
+        },
+        {
+          "row": 5,
+          "col": 7,
+          "observed_pixel": [
+            355,
+            190
+          ],
+          "projected_pixel": [
+            353.71366692769874,
+            189.771653974299
+          ],
+          "error_px": 1.3064435235973437,
+          "cue": "bottom right wood road center"
+        }
+      ],
+      "matrix": [
+        31.633736608807958,
+        -8.67983683149136,
+        113.81807330748266,
+        -0.4173429694374627,
+        22.083289892389814,
+        49.08870781164568,
+        -0.0025901487583448657,
+        -0.03135045636839005,
+        0.9999999999999999
+      ],
+      "inverse": [
+        0.031381658598997185,
+        0.006790638665925588,
+        -3.90514359625714,
+        0.0003855192322538159,
+        0.04241640404394573,
+        -2.126045520772067,
+        9.336936792494354e-05,
+        0.00134736238859264,
+        0.9232325998268205
+      ],
+      "tolerance_px": 4,
+      "bitmap_sha256": "3b4af002b670ef71c2a0b2e2d7892cac820c9d6d7dcfa0edba7649652a77f2f5",
+      "grid_sha256": "567fadd3eca3f441ac1edfef46922e4deed83a3ebf5f1995c15edc2950e56ff1",
+      "width": 512,
+      "height": 286,
+      "rows": 7,
+      "cols": 10,
+      "base_stage_id": "ro6_n_2_5",
+      "landmarks_sha256": "fb50174cf3e063401d17b17fcdbff61dd108f714d10ef4da73811e08b187a32b",
+      "scope": "Nominal planar LOWLAND ground-grid reference only. Independent checks establish source pixel agreement at recorded cells only; unmeasured borders, elevated surfaces, portal roofs, actual spawn offsets, random ranges, hitboxes, pathfinding, live trajectories and timings remain unknown.",
+      "grid_correspondence": "Top four wood road cells original row1 columns1..4 stop at wall columns5..8; second seven-cell wood row2 columns1..7 stops at highland wall column8. Bottom passage row5 begins at a red entrance column0 and has roads columns1..7 then hole column8. Distinct two-row top and seven-road bottom identify original rows/cols independently of projected coordinates; anchors are LOWLAND wooden seams, not stone tops or portal roof positions.",
+      "independent_coverage": "Independent road centers cover rows1,2,5 cols1..7; other rows, far-left entry and teleporter ground/roof offsets are nominal extrapolation, not independently measured."
     }
   },
   "stages": {
@@ -2019,6 +2619,26 @@
       "calibration": "ro6_n_5_7",
       "level_sha256": "5656c1e79803400732a8c7b4ade6701fc5a2b349e4ce7e529e6113e9f93b5d65",
       "image_file": "battle-maps/ro6_e_5_7.png"
+    },
+    "ro6_n_2_1": {
+      "calibration": "ro6_n_2_1",
+      "level_sha256": "d067c73d052167dbe57f78693dc46d8a5e337c7f63f0f68ca1e5b1fd727c7d1b",
+      "image_file": "battle-maps/ro6_n_2_1.png"
+    },
+    "ro6_e_2_1": {
+      "calibration": "ro6_n_2_1",
+      "level_sha256": "d067c73d052167dbe57f78693dc46d8a5e337c7f63f0f68ca1e5b1fd727c7d1b",
+      "image_file": "battle-maps/ro6_e_2_1.png"
+    },
+    "ro6_n_2_5": {
+      "calibration": "ro6_n_2_5",
+      "level_sha256": "51d6d29e57339bb5f9b3b5af0aff4fbe08e4e2e1c8b56e2e5b47db653261c8f9",
+      "image_file": "battle-maps/ro6_n_2_5.png"
+    },
+    "ro6_e_2_5": {
+      "calibration": "ro6_n_2_5",
+      "level_sha256": "51d6d29e57339bb5f9b3b5af0aff4fbe08e4e2e1c8b56e2e5b47db653261c8f9",
+      "image_file": "battle-maps/ro6_e_2_5.png"
     }
   }
 }

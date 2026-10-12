@@ -1,0 +1,112 @@
+{
+  "title": "虫虫游戏厅与枝头陷阱固定原图的地面位置映射",
+  "present_candidate_only": true,
+  "remaining_item": "P3固定战斗地图映射：未校准原图及独立格点核验",
+  "new_capability": "两张已下载固定原图、普通/紧急四个精确关卡ID提供随窗口缩放的名义出生格、原路线检查点和点选格映射；原图/原网格/level/hash/file/size身份守卫完整保留。",
+  "source_evidence": [
+    "既有固定a550游戏原件与d0b5原图原字节/Blob身份核验；原mapData逐项相等，普通/紧急同原图和网格仍分别绑定ID/file。",
+    "冻结八角点和独立中心后才拟合；无主地和预算否决两份失败观察未调点、未晋升，全部原件/读数/首次结果留存。"
+  ],
+  "acceptance": [
+    "新增9项与旧04418项关联检查27/27通过；实际MapOriginal在三种窗口纵横比中绘制、点选反投影及四alias定位通过；失败图继续有原图但无overlay。",
+    "虫虫游戏厅12检查最大2.779166px，枝头陷阱18检查最大3.973540px，原4px门不变；旧10图/20stage/78检查完全不动，新12图24stage，仍81stage59bitmap未校准。",
+    "旧044将刚有源核验的2_1从未review样例移出，替换为两个未过门图普通/紧急四ID，None断言不减；首次失败回执保留。"
+  ],
+  "limitations": [
+    "Pixel observations approximate; the 3.974px worst point is close to the 4px gate, not subpixel accuracy.",
+    "Agreement only at recorded LOWLAND cells; outer extrapolation, elevated surfaces, portal object/ground offsets, spawn offsets/random ranges/pathfinding/live clocks remain unknown.",
+    "2_2/3_1 rejected; no full-map or current live/client/runtime position validation claimed.",
+    "Root serial integration, index/progress bookkeeping and native visible window validation remain pending."
+  ],
+  "files": [
+    ".gitattributes",
+    "rouge/data/battle-map-projections.json",
+    "tests/test_map_projection_044.py",
+    "tests/test_map_ground_extension.py",
+    "scripts/extend_fixed_map_projections.py",
+    "research/p3-map-ground-current/build-receipt.json",
+    "research/p3-map-ground-current/final-validation.txt",
+    "research/p3-map-ground-current/first-validation.txt",
+    "research/p3-map-ground-current/frozen-observation-1.json",
+    "research/p3-map-ground-current/frozen-observation-2.json",
+    "research/p3-map-ground-current/frozen-observation-3.json",
+    "research/p3-map-ground-current/frozen-observation-4.json",
+    "research/p3-map-ground-current/initial-fit-1.json",
+    "research/p3-map-ground-current/initial-fit-2.json",
+    "research/p3-map-ground-current/initial-fit-3.json",
+    "research/p3-map-ground-current/initial-fit-4.json",
+    "research/p3-map-ground-current/prior-projections.json",
+    "research/p3-map-ground-current/README.md",
+    "research/p3-map-ground-current/ro6_n_2_1-level.json",
+    "research/p3-map-ground-current/ro6_n_2_1-numbered-landmarks.png",
+    "research/p3-map-ground-current/ro6_n_2_2-level.json",
+    "research/p3-map-ground-current/ro6_n_2_5-level.json",
+    "research/p3-map-ground-current/ro6_n_2_5-numbered-landmarks.png",
+    "research/p3-map-ground-current/ro6_n_3_1-level.json",
+    "research/p3-map-ground-current/source-receipt.json"
+  ],
+  "test_selectors": [
+    "tests.test_map_ground_extension",
+    "tests.test_map_projection_044"
+  ],
+  "patch_sha256": "eb2a7b514e56e9aa26f348d8aed09759f83421666d92c6ba7a7f82cef0773500",
+  "patch_bytes": 1950483,
+  "diff_check_exit_code": 0,
+  "baseline_file_sha256": {
+    ".gitattributes": "6ab3a26017f5d3498efaf2dafb31a9036a8cd4a42d29a4ebdc352c3526b03c8f",
+    "rouge/data/battle-map-projections.json": "4f0ddb44843a5f70c7436e47503eca4edce4154cfc057718c972888f21137a08",
+    "tests/test_map_projection_044.py": "0b485b72403011b92f7cf9c620a6742467651eebdfdb79e8b47af10054d41017"
+  },
+  "final_file_sha256": {
+    ".gitattributes": "f2c2de71929854c6a837b5c022e0af1c07c464ec634b81827d7b07c8537d80d9",
+    "rouge/data/battle-map-projections.json": "b36710dbc381de0ded802d6edc4ef4eafe192432818180bf608a5fded3cf843c",
+    "tests/test_map_projection_044.py": "5bec52b81500482282ff8eff3fdb105b8ca577f27e5a345b9f56a45dffdfe7bf",
+    "tests/test_map_ground_extension.py": "22b798077aad358605b0f59322c502a32b44443ac99a3ec4cdb1abfebe52b3c9",
+    "scripts/extend_fixed_map_projections.py": "2a9bcd3378ab342cbec366b84d5881a013422b21e75e4befa17449edf07da0bb",
+    "research/p3-map-ground-current/build-receipt.json": "d537f4560aa9f7d2b15e34065f59ea47ca0bbc16f29913ce1f8e13b4fa226279",
+    "research/p3-map-ground-current/final-validation.txt": "143b32e9287fac6fb89e2adccb5b6568ca9e3d627fbb6f2a0a3a2741019a6695",
+    "research/p3-map-ground-current/first-validation.txt": "9e4562ec0d43e857e2d9ed67081f395fd3b1ea0da7608b12474eb1aa4a2e9df8",
+    "research/p3-map-ground-current/frozen-observation-1.json": "e04d5d02fbf6c6d48b15e780e8672e33dee1acd55108c6a3f0a7963a1a931bff",
+    "research/p3-map-ground-current/frozen-observation-2.json": "a577fee08959c4108fe816b4ba550ba71a1ab2c85938e2b5004c695fd01da287",
+    "research/p3-map-ground-current/frozen-observation-3.json": "755dcbed893adbe1b6e9c3b9c9488c33ef7261151edeb40e7cc5ff87084e9cfe",
+    "research/p3-map-ground-current/frozen-observation-4.json": "fb50174cf3e063401d17b17fcdbff61dd108f714d10ef4da73811e08b187a32b",
+    "research/p3-map-ground-current/initial-fit-1.json": "e7fba015b4f9523c4dd4d41060c61d3232da3eb19b5b1ed4b81c54c21b3e8e99",
+    "research/p3-map-ground-current/initial-fit-2.json": "cde79bfc38efe6534801db6cadeed0b47f49d077b6f962abb66f432462d36f2d",
+    "research/p3-map-ground-current/initial-fit-3.json": "b919331f4f5999345f25a977ef894f68f5bb80bfa22f48d1653a9956dd196afe",
+    "research/p3-map-ground-current/initial-fit-4.json": "4ae5cf54215b238b8b43a98e6f1fcd038f83b56507b57f98d27d981dc56b7fcf",
+    "research/p3-map-ground-current/prior-projections.json": "4f0ddb44843a5f70c7436e47503eca4edce4154cfc057718c972888f21137a08",
+    "research/p3-map-ground-current/README.md": "44a008e200d68a7fe4accb7e21f7d2d71ff90ceb2a3e844f05a033fed01972bf",
+    "research/p3-map-ground-current/ro6_n_2_1-level.json": "d067c73d052167dbe57f78693dc46d8a5e337c7f63f0f68ca1e5b1fd727c7d1b",
+    "research/p3-map-ground-current/ro6_n_2_1-numbered-landmarks.png": "271f68cfe22eccb1c6f46d3d3254ed09ef9312cc62a693110aca62677f94ca8c",
+    "research/p3-map-ground-current/ro6_n_2_2-level.json": "cde8dca0e1313091835e425c1f7c6e5ff30d17bfdeaf031f2966ca75421904bc",
+    "research/p3-map-ground-current/ro6_n_2_5-level.json": "51d6d29e57339bb5f9b3b5af0aff4fbe08e4e2e1c8b56e2e5b47db653261c8f9",
+    "research/p3-map-ground-current/ro6_n_2_5-numbered-landmarks.png": "6c73356cb2bbbaeb8d1a2e6499a40ca6ce6cf1fcc4a108d49668d81f196a81f0",
+    "research/p3-map-ground-current/ro6_n_3_1-level.json": "e6839a3624e06f5b18aa103889d734f2657ee69e75c6b55effd70d0649cb35e3",
+    "research/p3-map-ground-current/source-receipt.json": "ae79d4145919fb37a981361f1917042d810738f8b8bc7315b2474b273c989f80"
+  },
+  "review_images": [
+    "research/p3-map-ground-current/ro6_n_2_1-numbered-landmarks.png",
+    "research/p3-map-ground-current/ro6_n_2_5-numbered-landmarks.png"
+  ],
+  "merge_instructions": "Only production projection JSON + local old044 fixture update + new generator/new tests/public source evidence. No app/battle_view/node/event/reward/index/state modifications; independent of prepared234/235/236. Apply --ignore-space-change if CRLF context differs. Keep raw JSON source bytes/hash exact; no trailing LF addition. Baseline prior snapshot is LF-canonical and hash bound.",
+  "native_acceptance": [
+    "Select虫虫游戏厅普通/紧急 then枝头陷阱普通/紧急 in fixed battle preview; original map has approximate ground markers and selected route.",
+    "Change preview window size, click a recorded inner ground cell, keep cell and no timing/probability conclusion; caption retains partial-ground/extrapolation warning."
+  ],
+  "root_integration_scope": "Source-supported offline function; real runtime/clock/hotfix is not inferred from temporary Qt checks.",
+  "root_native_window": "Existing original test window remains available; temporary MainWindow tests validate new controls without writing original state. Updated visible original window is checked at the next grouped UI/full closeout.",
+  "section": 225,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T21:51:16.154632+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 27,
+    "passed": 27,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-225/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 230
+}
