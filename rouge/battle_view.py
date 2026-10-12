@@ -437,6 +437,8 @@ class BattlePreviewPanel(QWidget):
         replace_text(self.spawn_detail,reward_source_text(self.reward_result,row,technical=self.technical.isChecked()),
             preserve=preserve and self._detail_key==key)
         self._detail_key=key
+        if row and row['kind']=='rare_enemy_action':
+            self._render_enemy(row['entity_id'],preserve=preserve)
 
     def _clear_reward_selection(self):
         self.reward_combo.blockSignals(True);self.reward_combo.setCurrentIndex(0);self.reward_combo.blockSignals(False)

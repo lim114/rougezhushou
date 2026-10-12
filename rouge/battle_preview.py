@@ -106,6 +106,9 @@ def enemy_preview(stage_id,enemy_id,level,run_config=None):
     entry['limits']=['扩展属性（攻速/移动/重量等）仅为引用基础值，未模拟敌人技能、阶段或动画。',
         '本预览不套用藏品；含藏品的目标参考请在伤害测试页查看。',
         '图鉴未列出的阶段、技能参数和隐藏触发条件仍需核验。']
+    from .rare_reward_sources import enemy_reward_reference
+    reward_reference=enemy_reward_reference(stage_id,enemy_id,level)
+    if reward_reference:entry['conditional_reward_reference']=reward_reference
     return entry
 
 def value_text(value):
@@ -155,6 +158,15 @@ def enemy_text(entry,technical=False):
     lines.extend(['','【机制资料】'])
     lines.append(entry['description'] or entry['handbook_description'] or '未取得描述。')
     lines.extend('• '+text for text in entry['abilities'])
+    reward=entry.get('conditional_reward_reference')
+    if reward:
+        outcome=reward['rule']['outcomes'][0];quantity=outcome['quantity']
+        amount=f'{quantity}件收藏品' if quantity is not None else '数量未知'
+        lines += ['','【宝藏条件参考】',
+            f'本级别文档：击倒后战斗结算 {amount}；完整收藏品池未知。',
+            f"本关固定生成引用 {reward['fixed_spawn_reference_count']}条；引用数不是实际出现或击倒数。",
+            '实际出现、击倒、当前模式结算和已领取数量：未知；不合入预计面板或完整奖励总量。']
+        if technical:lines.append('条件数量文档：'+reward['rule']['quantity_source']['url'])
     from .enemy_skills import enemy_skill_text
     lines.append('\n'+enemy_skill_text(entry['skill_reference'],technical=technical))
     immunity_names={'stunImmune':'眩晕','silenceImmune':'沉默','sleepImmune':'沉睡',

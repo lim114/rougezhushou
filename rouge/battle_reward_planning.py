@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 from .battle_preview import battle_data, display_cell
 from .base_settlement_planning import stage_base_rewards,stage_reward_text
+from .rare_reward_sources import rare_stage_reward_sources
 
 MOVING='enemy_2152_shezlc'
 
@@ -54,8 +55,13 @@ def stage_reward_sources(stage_id):
             'source_selector':action['source_selector'],'queue_id':action['queue_id'],
             'display_cell':None,'rule':_rule(MOVING,level),'actual_activation':None,
             'actual_outcome':None,'actual_reward':None,'quantity_is_total':False})
+    rare=rare_stage_reward_sources(stage_id)
+    rows.extend(rare['rows'])
     return {'stage_id':stage_id,'stage_name':stage['name'],'source':deepcopy(level['source']),
         'rows':rows,'random_groups':deepcopy(level['random_groups']),
+        'rare_random_groups':deepcopy(rare['random_groups']),
+        'rare_source_mimic_ids':rare['mimic_source_ids'],
+        'unreferenced_mimic_ids':rare['unreferenced_mimic_ids'],
         'inspected_containers':list(level['inspected_containers']),
         'initial_records':deepcopy(level['initial_records']),
         'actual_reward_total':None,'complete_settlement_pool_known':False,
@@ -70,7 +76,16 @@ def reward_source_text(result,row=None,technical=False):
     for reference in rows:
         lines += ['',reference['name']]
         cell=reference['display_cell']
-        lines.append(f"预置资料位置：第{cell['row']+1}行、第{cell['col']+1}列。" if cell else '位置：未绑定；不按分支routeIndex推断。')
+        position_label='原路线名义起点' if reference['kind']=='rare_enemy_action' else '预置资料位置'
+        lines.append(f"{position_label}：第{cell['row']+1}行、第{cell['col']+1}列。" if cell else '位置：未绑定；不按分支routeIndex推断。')
+        if reference['kind']=='rare_enemy_action':
+            levels=reference['rule']['referenced_levels']
+            lines.append('固定敌人级别候选：'+('、'.join(str(n) for n in levels) if levels else '未知')+'；实际生成级别与击倒/领取未知。')
+            group=reference.get('candidate_group_reference')
+            if group:
+                names=[m.get('name') or ('空候选' if m['is_empty_key'] else '其他原配置候选') for m in group['members']]
+                lines.append('同一配置组全部候选：'+' / '.join(names)+'；这些不是同时出现的证明，不能相加为实际收藏品数。')
+            lines.append('数量为单个敌人的文档条件参考；原路线位置也只是固定资料，不表示当前已生成或实际移动路径。')
         if reference['kind']=='predefined_device':
             labels={'predefines':'普通预置容器','hardPredefines':'额外预置容器（实际适用未知）'}
             lines.append(labels.get(reference['container'],reference['container'])+'；激活引用 '+str(len(reference['activation_references']))+' 条，引用数不是实际生成数。')
@@ -78,7 +93,7 @@ def reward_source_text(result,row=None,technical=False):
                 lines.append('原件明确声明关联分支；配置'+('存在' if reference['branch_configuration_exists'] else '未找到')+'，实际触发、路线数组与时钟未知。')
         rule=reference['rule']
         for outcome in rule['outcomes']:
-            amount=outcome['quantity'];resource='源石锭' if outcome['resource']=='gold' else '随机零件'
+            amount=outcome['quantity'];resource={'gold':'源石锭','random_scrap':'随机零件','random_relic':'收藏品'}.get(outcome['resource'],'未核验资源')
             value='数量未证' if amount is None else f'{amount:+d}{resource}'
             lines.append('条件：'+outcome['condition_label']+'；数量参考 '+value+'。')
             if outcome.get('cost_quantity') is not None:
@@ -90,7 +105,7 @@ def reward_source_text(result,row=None,technical=False):
             lines += ['原实体：'+reference['entity_id'],'原件位置：'+reference['source_selector']]
             if reference.get('explicit_branch_id'):lines.append('原branch_id：'+reference['explicit_branch_id'])
             source=rule['quantity_source'];lines.append('数量来源：'+source['url'])
-    if not rows:lines.append('固定来源中未找到已核验的这五类实体；不代表当前关卡没有奖励或动态生成。')
+    if not rows:lines.append('固定来源中未找到已接入的奖励实体；不代表当前关卡没有奖励或动态生成。')
     lines += ['',stage_reward_text(stage_base_rewards(result['stage_id'])),*result['limits']]
     if technical:
         lines += ['原关卡来源：'+result['source']['url'],'已检查：'+', '.join(result['inspected_containers'])]

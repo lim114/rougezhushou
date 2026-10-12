@@ -24,7 +24,8 @@ class BattleRewardPlanningTests(unittest.TestCase):
                 self.assertIsNone(row['actual_activation']);self.assertIsNone(row['actual_reward'])
                 self.assertFalse(row['quantity_is_total']);seen.add(row['entity_id'])
         self.assertEqual(len(battle_data()['stages']),105)
-        self.assertEqual(seen,set(reward_data()['rules']))
+        from rouge.rare_reward_sources import rare_reward_data
+        self.assertEqual(seen,set(reward_data()['rules'])|set(rare_reward_data()['fixed_spawn_entity_ids']))
 
     def test_primary_device_counts_cost_and_same_name_id_distinction(self):
         result=stage_reward_sources('ro6_n_1_1');rows={r['entity_id']:r for r in result['rows']}

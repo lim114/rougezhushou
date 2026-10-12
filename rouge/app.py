@@ -79,7 +79,7 @@ def number(value=0, maximum=100000, decimals=2):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('黑流树海助手 0.88 · 局外计算与节点测试（219）')
+        self.setWindowTitle('黑流树海助手 0.89 · 局外计算与节点测试（226）')
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader()
