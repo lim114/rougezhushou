@@ -79,7 +79,7 @@ def number(value=0, maximum=100000, decimals=2):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('黑流树海助手 0.74 · 局外计算与节点测试（205）')
+        self.setWindowTitle('黑流树海助手 0.75 · 局外计算与节点测试（206）')
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader()
@@ -314,9 +314,8 @@ class MainWindow(QMainWindow):
         self.map_nodes.blockSignals(False)
         self.map_view.set_map(remembered,image,historical=not fresh)
         from .node_catalog_view import map_conditions
-        resources=self.run.calculation_resources()
-        gold=(resources.get('gold') or {}).get('value')
-        context={'gold':gold} if type(gold) is int and gold>=0 else {}
+        from .event_run_context import observed_event_context
+        context=observed_event_context(self.run)
         self.node_catalog.set_map_context(remembered,map_conditions(remembered,self.run.state.get('config',{})),
             epoch=self.run.state['id'],historical=not fresh,runtime_context=context)
         self.offline_tools.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)

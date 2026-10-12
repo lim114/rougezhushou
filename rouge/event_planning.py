@@ -45,6 +45,13 @@ def _context(context):
     quantities=context.get('item_quantities',{})
     if not isinstance(quantities,dict) or any(not isinstance(k,str) or not k or type(v) is not int or v<0 for k,v in quantities.items()):
         raise ValueError('持有数量需要原物品ID到非负整数的对象。')
+    presence=context.get('item_presence',{})
+    if not isinstance(presence,dict) or any(not isinstance(k,str) or not k or
+            v is not None and type(v) is not bool for k,v in presence.items()):
+        raise ValueError('持有状态需要原物品ID到布尔值或未知的对象。')
+    if any(presence[k] is not None and presence[k] is not (v>0)
+            for k,v in quantities.items() if k in presence):
+        raise ValueError('持有状态与数量声明矛盾，不能任选其一覆盖。')
     if type(context.get('inventory_complete',False)) is not bool:raise ValueError('inventory_complete需要布尔值。')
     prior=context.get('pre_entry_item_quantities',{})
     if not isinstance(prior,dict) or any(not isinstance(k,str) or not k or type(v) is not int or v<0 for k,v in prior.items()):
@@ -76,6 +83,7 @@ def _context(context):
 def _owned(context,item_id):
     quantities=context.get('item_quantities',{})
     if item_id in quantities:return quantities[item_id]>0
+    if item_id in context.get('item_presence',{}):return context['item_presence'][item_id]
     return False if context.get('inventory_complete',False) else None
 
 

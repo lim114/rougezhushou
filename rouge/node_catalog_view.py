@@ -251,6 +251,14 @@ class NodeCatalogPanel(QWidget):
         if self.dossier and self.node_context:
             graph,key,conditions=self.node_context;context.update(conditions)
             node=next((n for n in graph.get('nodes',[]) if n['id']==key),{})
+            if event and event.get('historical_read_reference'):
+                # Today's inventory/gold and a passed clearing cannot establish
+                # what was owned, paid, or selectable at this historical reading.
+                context=deepcopy(conditions)
+                previous=known_node_type(node.get('remembered_type'))
+                context.update(node_type=previous if previous in event['node_types'] else None,
+                    entry_mode='content',reference_context_scope='historical_title_reference_only')
+                return context
             context['node_type']=known_node_type(node.get('observed_type'))
             content=self.dossier.get('current_content') or {}
             if event and content.get('kind')=='event' and content.get('title')==event['title']:
@@ -274,7 +282,8 @@ class NodeCatalogPanel(QWidget):
         if self.kind.currentData()=='map':
             self.kind.blockSignals(True);self.kind.setCurrentIndex(0);self.kind.blockSignals(False)
         p=self.dossier['position'];row=p.get('row');col=p.get('col')
-        self.context_label.setText(f'地图所选节点：第{row+1}行、第{col+1}列' if type(row) is int and type(col) is int else '地图所选节点')
+        position=f'第{row+1}行、第{col+1}列' if type(row) is int and type(col) is int else '位置未确认'
+        self.context_label.setText('地图所选节点：'+position+'；使用节点类型及所属层数，目录类型/层数筛选已停用。')
         self.refresh()
 
     def show_directory(self):
@@ -300,7 +309,9 @@ class NodeCatalogPanel(QWidget):
                         'row':node['row'],'col':node['col'],'node_id':node['id']}})
             return rows
         if self.dossier is not None:
-            events=self.dossier['rows'];battles=self.dossier.get('battle_rows',[]);functions=self.dossier.get('function_rows',[])
+            events=[*self.dossier['rows'],*self.dossier.get('history_observed_event_rows',[])]
+            battles=[*self.dossier.get('battle_rows',[]),*self.dossier.get('history_observed_battle_rows',[])]
+            functions=[*self.dossier.get('function_rows',[]),*self.dossier.get('history_observed_function_rows',[])]
             originals=[]
         else:
             events=catalog.all_events(node_type=nt,include_indirect=True)['rows']
@@ -320,17 +331,24 @@ class NodeCatalogPanel(QWidget):
                 else:text=json.dumps(r,ensure_ascii=False)
                 if self.search.text().strip().casefold() not in text.casefold():continue
                 entry={'kind':category,'key':category+':'+key,'title':title,'record':r}
+                if r.get('historical_read_reference'):
+                    entry['key']+=':historical_read';entry['history_read']=True
                 if category=='event':
                     entry['qualification']=event_planning.event_eligibility(r['id'],self._event_context(r))
                     entry['group']=' / '.join(r['node_types']) or '特殊入口'
-                    entry['group']+=' · '+QUALIFICATIONS[entry['qualification']['status']]
-                elif category=='function':entry['group']=r['node_type']
-                elif category=='battle':entry['group']=' / '.join(CATEGORIES.get(t,t) for t in r.get('categories',[]))+' · 战斗资料'
+                    entry['group']=('历史已读内容 · '+entry['group'] if entry.get('history_read') else entry['group']+' · '+QUALIFICATIONS[entry['qualification']['status']])
+                elif category=='function':entry['group']=('历史已读类型 · ' if entry.get('history_read') else '')+r['node_type']
+                elif category=='battle':entry['group']=('历史已读内容 · ' if entry.get('history_read') else '')+' / '.join(CATEGORIES.get(t,t) for t in r.get('categories',[]))+' · 战斗资料'
                 else:entry['group']='未归类原文 · 入口未知'
                 entries.append(entry)
         return entries
 
     def refresh(self,*_):
+        bound=self.dossier is not None
+        self.node_type.setEnabled(not bound)
+        self.floor.setEnabled(not bound and self.kind.currentData()!='map')
+        self.node_type.setToolTip('绑定节点时使用它的类型；返回公开目录后可筛选。' if bound else '')
+        self.floor.setToolTip('本图或绑定节点使用记录的所属层数；返回公开目录后可筛选。' if not self.floor.isEnabled() else '')
         selected=self.list.selected_key();expanded=self.list.expanded_groups()
         scroll=self.list.verticalScrollBar().value()
         try:entries=self._entries()
@@ -372,6 +390,9 @@ class NodeCatalogPanel(QWidget):
         if not entry:text='没有符合筛选的资料。不能把资料缺失视为不可能出现。'
         elif entry['kind']=='event':
             q=entry['qualification'];text=event_details_text(entry['record']['id'],self._event_context(entry['record']))
+            if entry.get('history_read'):
+                text=('历史已读取内容；不证明当时已进入或选择了某个选项。\n'
+                    '当前持有与资源不用于推定当时资格/费用；下方为固定选项及作战预览。\n\n'+text)
             text+='\n\n资料出现条件：'+QUALIFICATIONS[q['status']]+'；当前服务器资格仍未知。'
             text+='\n'+'\n'.join(('相符' if c['matches'] is True else '不符' if c['matches'] is False else '未知')+'：'+c['source_text'] for c in q['checks'])
             context=self._event_context(entry['record'])
@@ -402,6 +423,7 @@ class NodeCatalogPanel(QWidget):
                 text+='\n\n功能 '+function['node_type']+'：'
                 text+='\n'.join(ref.get('description_text','') for ref in function.get('references',[]))
             if dossier['history_events']:text+='\n\n过去类型/内容的事件资料：'+'、'.join(e['title'] for e in dossier['history_events'])
+            text+='\n已读取的历史内容有独立分支入口；过去类型候选不能当作已发生事件。'
             text+='\n同类型资料不是当前可发生全集；出现资格须按前置、持有及服务器条件另外核验。'
             self.map_location.addItem(entry['title'],entry['map_binding']);self.map_jump.setEnabled(True)
         elif entry['kind']=='function':
@@ -412,9 +434,15 @@ class NodeCatalogPanel(QWidget):
             r=entry['record'];text=f"{entry['title']}\n\n类别：{'、'.join(CATEGORIES.get(t,t) for t in r.get('categories',[]))}\n层数：{floor_text(r.get('floors'))}\n关卡版本：{r.get('id') or r.get('stage_id')}\n"
             text+='\n'.join(r.get('notes',[]))+'\n实际出现/分支/出怪全局时钟：未知。此项仅连接到对应固定地图资料。'
         else:text='未归类原始资料，尚不能连接为完整可达事件链。\n\n'+json.dumps(entry['record']['record'],ensure_ascii=False,indent=2)
+        if entry and entry.get('history_read') and entry['kind']!='event':
+            text='历史已读取内容或类型；以下仅原件参考，不代表当前节点仍有此功能或作战。\n\n'+text
         if entry and entry['kind']!='map' and self.map_context:
             graph,_,epoch,_=self.map_context
             for node in graph.get('nodes',[]):
+                if self.dossier and self.node_context:
+                    bound_graph,bound_id,_=self.node_context
+                    if (node['id']!=bound_id or any(graph.get(k)!=bound_graph.get(k)
+                            for k in ('zone_id','template_id'))):continue
                 records=[node.get('content'),node.get('remembered_content'),*(node.get('content_history') or [])]
                 match=any(isinstance(r,dict) and r.get('title')==entry['title'] and r.get('kind')==entry['kind'] for r in records)
                 if entry['kind']=='function':match=entry['title'] in (node.get('observed_type'),node.get('remembered_type'))

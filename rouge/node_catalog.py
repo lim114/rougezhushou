@@ -78,7 +78,7 @@ def node_events(node,floor=None,special_region=False):
     if observed in ('林间空地','曲折密道'):
         return _result([],history_candidates=history,type_candidates=[observed],node_id=node.get('id'),
                        state='当前通行节点；历史内容仅作过去参考')
-    if observed and not observed.startswith('未知'):
+    if observed and not observed.startswith(('未知','类型未确认')):
         types=[observed];basis='当前已读类型'
     else:
         types=(node.get('prediction') or {}).get('candidates') or []
@@ -353,6 +353,28 @@ def node_dossier(graph,node_id,floor=None,special_region=False,difficulty=None):
     past={e['id']:e for e in events['history_candidates']}
     for e in history_refs:past[e['id']]=e
     identity=_content_identity_status(current,node.get('observed_type') in ('林间空地','曲折密道'))
+    history_read={}
+    readings=[('remembered_content',history),
+              *((f'content_history:{i}',c) for i,c in enumerate(node.get('content_history') or []))]
+    if pass_through and current:readings.append(('content_on_passed_node',current))
+    for field,content in readings:
+        for reference in _content_event_rows(content):
+            row=history_read.setdefault(reference['id'],{**reference,
+                'historical_read_reference':True,'reading_sources':[]})
+            row['reading_sources'].append(field)
+    history_battles={};stage_directory=battle_candidates(context='all')['rows']
+    for field,content in readings:
+        if not content or content.get('kind')!='battle' or not isinstance(content.get('title'),str):continue
+        for stage in stage_directory:
+            if stage['title']!=content['title'] or (content.get('variant_id') and content['variant_id']!=stage['id']):continue
+            row=history_battles.setdefault(stage['id'],{**stage,'historical_read_reference':True,
+                'reading_sources':[],'observed_variant_reference':bool(content.get('variant_id')),
+                'floor_filter_applied':False})
+            row['reading_sources'].append(field)
+    history_functions=[];previous_type=node.get('remembered_type')
+    if previous_type and previous_type!=node.get('observed_type'):
+        history_functions=[{**f,'historical_read_reference':True,'reading_sources':['remembered_type']}
+            for f in function_nodes(previous_type)['rows']]
     # Explicit observed variant survives directory floor/context filtering.
     if current and current.get('kind')=='battle' and isinstance(current.get('variant_id'),str):
         explicit=next((s for s in battle_candidates(context='all')['rows'] if s['id']==current['variant_id'] and s['title']==current.get('title')),None)
@@ -369,6 +391,9 @@ def node_dossier(graph,node_id,floor=None,special_region=False,difficulty=None):
         revealed_content=deepcopy(current or history),current_content=current,history_content=history,
         content_history=deepcopy(node.get('content_history') or []),
         observed_event_rows=observed_refs,history_event_rows=history_refs,
+        history_observed_event_rows=list(history_read.values()),
+        history_observed_battle_rows=list(history_battles.values()),
+        history_observed_function_rows=history_functions,
         observed_title=identity['observed_title'],content_identity_status=identity['status'],
         type_candidates=types,actual_content_identity_confirmed=identity['unique_identity_confirmed'],
         current_content_observed=bool(current),history_only=not bool(current) and bool(history))
