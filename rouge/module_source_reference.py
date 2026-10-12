@@ -61,6 +61,8 @@ def _existing_coverage(result, sections):
             'wisdel_summon_qualification_reference', 'token_duration_references',
         ) if result.get(key)
     ]
+    if result.get('haruka_module_target_static_reference'):
+        native_links.append('/haruka_module_target_static_reference')
     for i, token in enumerate(result.get('relic_token_stats', ())):
         for key in ('module_reference', 'module_cost_reference'):
             if token.get(key):

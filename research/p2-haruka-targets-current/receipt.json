@@ -1,0 +1,65 @@
+{
+  "scope": "Haruka BLS-Y source-bound potential body healing count and S2 trait-plus-skill composition",
+  "physical_validation": {
+    "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+    "methods": 46,
+    "unique_instructions": 7999,
+    "all_instruction_bytes_match": true,
+    "limits": []
+  },
+  "asset_validation": [
+    {
+      "source": "battle/prefabs/[uc]equips.ab",
+      "sha256": "6f15ab7b956b76e00ca88b95ff9f18b4ba53ee48510fab563915d7d1a91e24ea",
+      "bytes": 730733,
+      "matches_current_manifest": true
+    },
+    {
+      "source": "charpack/char_4202_haruka.ab",
+      "sha256": "857ea88d48121297eb70cf568a0ec7b2b190f46142e69af2ca78aa963bedd7f6",
+      "bytes": 33332,
+      "matches_current_manifest": true
+    },
+    {
+      "source": "battle/prefabs/[uc]skills.ab",
+      "sha256": "14306a31b1856f61b25812a69a2a057b7c4634561fb2c2bccc42fb37ee41a27e",
+      "bytes": 1343313,
+      "matches_current_manifest": true
+    }
+  ],
+  "base_manifest_version": "26-09-13-15-28-10-30688348",
+  "monoscripts_physical_sha256": "02266c5aff4a6d7b6e08db5b70acd76cbaf8dc14818bdeaa0c94af04a25efcce",
+  "monoscripts_current_physical_hash_matches": true,
+  "trait_binding": "All three BLS-Y stages TRAIT_DATA_ONLY / null resKey override selected TraitData. _PreprocessTrait76065 forms prefabKey -1; _PreprocessTalents76061 inserts current TraitTalentData in Dictionary<string,TalentData>; current root Talent -3774644463503651308 receives -1 data. No equip passive-ability prefab attachment is claimed.",
+  "data_flow_binding": "Current char UnitDataFlowConfig -7568208396754268652 config2 restricts mainSkillIndex1; THREE / ADDITION takes TALENT -1 attack@max_target_heal plus SKILL attack@max_target_heal_add; target SKILL attack@max_target_heal_add. CreateModifier reads exact typed sources; _ModifyBlackboard loads both values and adds at0x180ac00ff..0x180ac0109, assigns target at0x180ac00bc. No additional previous target or selector default is added.",
+  "propagation_binding": "_AssignSkill GetDelta(SKILL) -> BasicSkill.AssignData Delta BB Union (second wins) -> attack@ prefix BB. S2 BasicSkill mode2 GetAttackBlackboard -> Character.GetAttackBlackboard skill BB assigned after root Talent BB -> UnitMode.OnInit -> AbilitySelectable/Parallel groups -> AbilityStandard selectable SetData.",
+  "selector_binding": "S1 mode1 RangedHeal5737135052331372052 selector3138085066564128276 reads max_target_heal; S2 mode2 RangedHeal-7955318681639498220 selector9195501367670623764 reads max_target_heal_add; S3 mode3 RangedHeal8425666215004098068 selector-6106419707545039340 reads max_target_heal. AdvancedSelector.SetData74236 GetIntOrDefault replaces m_maxTargetNum, OnPostFilter uses this cap. Actual target collection is not inferred.",
+  "scale_binding": "Current same-gameobject UpdateHealScaleByTraitData SetData94958 reads Character.traitBlackboard heal_scale=.75; OnCastStart94959 passes cached value to Heal.ApplyHealScale with overwritefalse. This confirms static parameter use, not actual cast execution or recipient damage/HP state.",
+  "generic_binding": "Three exact caller MethodInfo references: Dictionary<string,TalentData>.TryGetValue/set_Item and CollectionExtensions.ContainsItem<int>. IL2CPP MethodSpec indices/args and helper CFG agree; no global generic-address map claim.",
+  "public_layout_source": "https://raw.githubusercontent.com/Perfare/Il2CppDumper/master/Il2CppDumper/Il2Cpp/Il2CppClass.cs",
+  "public_layout_source_commit": null,
+  "public_layout_pin_failures": [
+    "GitHub commits API RemoteDisconnected",
+    "web endpoint inaccessible"
+  ],
+  "public_layout_role": "Targeted public primary Il2CppMethodSpec three int32 / MetadataRegistration / GenericInst layouts only; source content read fresh, exact commit unavailable.",
+  "original_catalog_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "runtime_binding_verified": false,
+  "current_hotfix_equivalence_verified": false,
+  "actual_target_limit": null,
+  "actual_target_count": null,
+  "actual_acquisition_times_seconds": null,
+  "actual_total_healing": null,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_files_read": false,
+  "remaining_unknown": [
+    "current hotfix equivalence and successful current trait use",
+    "actual recipient acquisition / healthy friend filtering",
+    "actual heal callbacks / attack sample / clocks",
+    "actual adjacent enemy coverage for S2 derived damage",
+    "all actual full cast/window/cycle totals"
+  ],
+  "preserved_first_failure": "first-generic-method-spec-check.json preserves rejected classInst>=0 assumption; static generic method has classInst=-1 / methodInst82"
+}

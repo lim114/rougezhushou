@@ -804,7 +804,7 @@ def build_report(scenario,result):
         rows=[metric('trait_base','当前特性治疗人数参数',haruka['selected_trait_target_limit_parameter'],'名'),
             metric('skill_add','当前技能增加人数参数',haruka['skill_target_add_parameter'],'名'),
             metric('combined','人数相加条件参考',haruka['conditional_target_limit_reference'],'名'),
-            metric('modeled','独立来源支持的已建模人数范围',haruka['modeled_target_limit_reference'],'名'),
+            metric('modeled','当前预览建模人数范围',haruka['modeled_target_limit_reference'],'名'),
             metric('declared','声明满额潜在受疗人数',haruka['declared_healing_targets'],'名'),
             metric('actual_targets','实际同时受疗人数',None,'名')]
         if haruka['additional_conditional_targets']:
@@ -813,7 +813,17 @@ def build_report(scenario,result):
                 if c['name'] not in ('护佑者额外目标治疗（组合待核验）','额外目标治疗衍生伤害（组合待核验）'):continue
                 rows.append(metric('additional_'+str(i),'观察窗口'+c['name']+'条件总量',c['total'],
                     '治疗（最终受疗倍率前）' if c['damage_type']=='healing' else '伤害'))
-        sections.append(section('haruka_healing','遥 · 满额潜在治疗参考',rows,[
+        selected=result.get('haruka_module_target_static_reference')
+        if selected:
+            body=selected['packets'][0]
+            rows += [metric('native_cap','明确选择的静态治疗人数上限',selected['selector_limit_reference'],'名'),
+                metric('body_per_hit','单名受疗治疗条件参考',body['per_recipient_heal_reference']),
+                metric('body_heal_count','出手预览受疗份数',body['modeled_recipient_heal_count'],'份'),
+                metric('body_conditional_total','观察窗口普通治疗条件小计',body['conditional_window_subtotal'])]
+            if len(selected['packets'])>1:
+                rows.append(metric('derived_conditional_total','邻接条件下治疗衍生伤害小计',selected['packets'][1]['conditional_window_subtotal']))
+            sections.append(section('haruka_healing','遥 · 满额潜在治疗参考',rows,selected['notes']))
+        else:sections.append(section('haruka_healing','遥 · 满额潜在治疗参考',rows,[
             '普通治疗沿用既有动作参考和明确的特性人数参数；实际友方获取时刻、模组附着及当前客户端尚未核验。',
             '特性人数与当前技能增加人数保留独立来源；人数相加只列条件参数，超出已建模范围的份额及其派生伤害不并入已计小计。']))
     shield=result.get('shield_break_reference')

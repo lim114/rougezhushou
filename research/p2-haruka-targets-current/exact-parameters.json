@@ -1,0 +1,298 @@
+[
+  {
+    "method_index": 77864,
+    "declaring_type": "Torappu.Battle.UnitDataFlowConfig+ModifierConfig",
+    "name": "CreateModifier",
+    "flags": "0x86",
+    "return": "Torappu.Battle.UnitDataFlowConfig+Modifier",
+    "params": [
+      {
+        "name": "dataSource",
+        "type": "Torappu.Battle.BattleCharacterData",
+        "native_type": {
+          "index": 44214,
+          "data": 11502,
+          "bits": "0x120000",
+          "kind": 18,
+          "attrs": 0,
+          "byref": false
+        }
+      },
+      {
+        "name": "talentMap",
+        "type": "System.Collections.Generic.Dictionary`2<System.String,Torappu.TalentData>",
+        "native_type": {
+          "index": 10972,
+          "data": 6586891120,
+          "bits": "0x150000",
+          "kind": 21,
+          "attrs": 0,
+          "byref": false
+        }
+      }
+    ]
+  },
+  {
+    "method_index": 76061,
+    "declaring_type": "Torappu.Battle.Character",
+    "name": "_PreprocessTalents",
+    "flags": "0x81",
+    "return": "System.Void",
+    "params": [
+      {
+        "name": "talentsData",
+        "type": "System.Collections.Generic.IList`1<Torappu.TalentData>",
+        "native_type": {
+          "index": 17469,
+          "data": 6586905360,
+          "bits": "0x150000",
+          "kind": 21,
+          "attrs": 0,
+          "byref": false
+        }
+      },
+      {
+        "name": "traitTalentData",
+        "type": "Torappu.TalentData",
+        "native_type": {
+          "index": 77767,
+          "data": 5534,
+          "bits": "0x120000",
+          "kind": 18,
+          "attrs": 0,
+          "byref": false
+        }
+      },
+      {
+        "name": "talentMap",
+        "type": "System.Collections.Generic.Dictionary`2<System.String,Torappu.TalentData>",
+        "native_type": {
+          "index": 30656,
+          "data": 6586891120,
+          "bits": "0x20150002",
+          "kind": 21,
+          "attrs": 2,
+          "byref": true
+        }
+      },
+      {
+        "name": "skillBlackboard",
+        "type": "Torappu.Blackboard",
+        "native_type": {
+          "index": 31106,
+          "data": 4138,
+          "bits": "0x20120002",
+          "kind": 18,
+          "attrs": 2,
+          "byref": true
+        }
+      }
+    ]
+  },
+  {
+    "method_index": 76062,
+    "declaring_type": "Torappu.Battle.Character",
+    "name": "_AssignTalents",
+    "flags": "0x81",
+    "return": "System.Void",
+    "params": [
+      {
+        "name": "talentMap",
+        "type": "System.Collections.Generic.Dictionary`2<System.String,Torappu.TalentData>",
+        "native_type": {
+          "index": 10972,
+          "data": 6586891120,
+          "bits": "0x150000",
+          "kind": 21,
+          "attrs": 0,
+          "byref": false
+        }
+      }
+    ]
+  },
+  {
+    "method_index": 76054,
+    "declaring_type": "Torappu.Battle.Character",
+    "name": "_AssignData",
+    "flags": "0x81",
+    "return": "System.Void",
+    "params": [
+      {
+        "name": "data",
+        "type": "Torappu.Battle.BattleCharacterData",
+        "native_type": {
+          "index": 44214,
+          "data": 11502,
+          "bits": "0x120000",
+          "kind": 18,
+          "attrs": 0,
+          "byref": false
+        }
+      },
+      {
+        "name": "sideType",
+        "type": "Torappu.Battle.SideType",
+        "native_type": {
+          "index": 74958,
+          "data": 9850,
+          "bits": "0x80110000",
+          "kind": 17,
+          "attrs": 0,
+          "byref": false
+        }
+      },
+      {
+        "name": "playerSide",
+        "type": "Torappu.PlayerSide",
+        "native_type": {
+          "index": 64687,
+          "data": 38176,
+          "bits": "0x80110000",
+          "kind": 17,
+          "attrs": 0,
+          "byref": false
+        }
+      }
+    ]
+  },
+  {
+    "method_index": 72662,
+    "declaring_type": "Torappu.Battle.BasicSkill",
+    "name": "AssignData",
+    "flags": "0x1c6",
+    "return": "System.Void",
+    "params": [
+      {
+        "name": "data",
+        "type": "Torappu.SkillData",
+        "native_type": {
+          "index": 75437,
+          "data": 5401,
+          "bits": "0x120000",
+          "kind": 18,
+          "attrs": 0,
+          "byref": false
+        }
+      },
+      {
+        "name": "owner",
+        "type": "Torappu.Battle.Character",
+        "native_type": {
+          "index": 47216,
+          "data": 11346,
+          "bits": "0x120000",
+          "kind": 18,
+          "attrs": 0,
+          "byref": false
+        }
+      },
+      {
+        "name": "externalBlackboard",
+        "type": "Torappu.Blackboard",
+        "native_type": {
+          "index": 44675,
+          "data": 4138,
+          "bits": "0x120000",
+          "kind": 18,
+          "attrs": 0,
+          "byref": false
+        }
+      },
+      {
+        "name": "modifier",
+        "type": "Torappu.Battle.UnitDataFlowConfig+Delta",
+        "native_type": {
+          "index": 111245,
+          "data": 11464,
+          "bits": "0x80110000",
+          "kind": 17,
+          "attrs": 0,
+          "byref": false
+        }
+      }
+    ]
+  },
+  {
+    "method_index": 77833,
+    "declaring_type": "Torappu.Battle.UnitMode",
+    "name": "OnInit",
+    "flags": "0x1c6",
+    "return": "System.Void",
+    "params": []
+  },
+  {
+    "method_index": 73607,
+    "declaring_type": "Torappu.Battle.Talent",
+    "name": "GenerateAttackBlackboard",
+    "flags": "0xc6",
+    "return": "Torappu.Blackboard",
+    "params": [
+      {
+        "name": "mode",
+        "type": "Torappu.Battle.UnitMode",
+        "native_type": {
+          "index": 82052,
+          "data": 11459,
+          "bits": "0x120000",
+          "kind": 18,
+          "attrs": 0,
+          "byref": false
+        }
+      }
+    ]
+  },
+  {
+    "method_index": 74236,
+    "declaring_type": "Torappu.Battle.AdvancedSelector",
+    "name": "SetData",
+    "flags": "0xc6",
+    "return": "System.Void",
+    "params": [
+      {
+        "name": "blackboard",
+        "type": "Torappu.Blackboard",
+        "native_type": {
+          "index": 44675,
+          "data": 4138,
+          "bits": "0x120000",
+          "kind": 18,
+          "attrs": 0,
+          "byref": false
+        }
+      }
+    ]
+  },
+  {
+    "method_index": 77848,
+    "declaring_type": "Torappu.Battle.UnitDataFlowConfig",
+    "name": "Init",
+    "flags": "0x86",
+    "return": "System.Void",
+    "params": [
+      {
+        "name": "dataSource",
+        "type": "Torappu.Battle.BattleCharacterData",
+        "native_type": {
+          "index": 44214,
+          "data": 11502,
+          "bits": "0x120000",
+          "kind": 18,
+          "attrs": 0,
+          "byref": false
+        }
+      },
+      {
+        "name": "talentMap",
+        "type": "System.Collections.Generic.Dictionary`2<System.String,Torappu.TalentData>",
+        "native_type": {
+          "index": 10972,
+          "data": 6586891120,
+          "bits": "0x150000",
+          "kind": 21,
+          "attrs": 0,
+          "byref": false
+        }
+      }
+    ]
+  }
+]

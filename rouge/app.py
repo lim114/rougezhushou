@@ -1420,6 +1420,10 @@ class MainWindow(QMainWindow):
                 from .mei_module_static_reference import qualification
                 visible=visible and qualification({'operator':op,'skill':skill,**self.training_conditions()})['qualified']
                 widget.setToolTip('默认关闭。仅当前 MAR-X 精二40级及以上可选；局外 JSON 声明目标当前是否满足 FLY_ONLY。基础敌人飞行分类不代替当前状态，实际附着、攻击时钟与完整总量未知。')
+            if owner=='char_4202_haruka' and key=='haruka_module_target_static_reference':
+                from .haruka_target_static_reference import qualification
+                visible=visible and qualification({'operator':op,'skill':skill,**self.training_conditions()})['qualified']
+                widget.setToolTip('默认关闭。明确采用封存原件的满额潜在治疗人数和S2合成规则；沿用受疗人数声明，实际获取、回调和完整总量未知。')
             self.damage_form.setRowVisible(widget,visible)
             if owner==op=='char_110_deepcl' and key=='summon_count':
                 from .summons import token_concurrent_limit
@@ -1434,7 +1438,7 @@ class MainWindow(QMainWindow):
             from .haruka_healing_reference import conditional_input_limit
             limit=conditional_input_limit(profile,{'operator':op,**self.training_conditions(),
                 'skill_rank':self.skill_rank_value()},current)
-            tooltip='按当前培养和原表特性/技能参数声明满额潜在受疗数；实际友方获取未核验。BLS-Y基础人数与当前S2增加人数的组合仅列条件参考，额外份额不计实际合计。'
+            tooltip='按当前培养和原表特性/技能参数声明满额潜在受疗数；可明确选择已封存BLS-Y静态组合参考，实际友方获取和完整总量未知。默认继续保留独立来源与额外组合份额。'
         else:
             limit=100 if (op=='char_1037_amiya3' and skill==1) or (op=='kaltsit' and skill==2) else (
                 2 if (op=='char_2025_shu' and skill==2) or (op=='kaltsit' and skill==3) else 1)
@@ -1539,6 +1543,9 @@ class MainWindow(QMainWindow):
                     if not qualification(scenario)['qualified']:continue
                 if owner=='char_133_mm' and key=='mei_module_static_reference':
                     from .mei_module_static_reference import qualification
+                    if not qualification(scenario)['qualified']:continue
+                if owner=='char_4202_haruka' and key=='haruka_module_target_static_reference':
+                    from .haruka_target_static_reference import qualification
                     if not qualification(scenario)['qualified']:continue
                 scenario[key]=widget.isChecked() if isinstance(widget,QCheckBox) else widget.value()
         state=self.current_operator_state()

@@ -326,6 +326,8 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
     finalize_attack_speed_references(result)
     from .summons import finish_duration_references
     finish_duration_references(scenario,result)
+    from .haruka_target_static_reference import finish as finish_haruka_targets
+    finish_haruka_targets(scenario,result)
     from .mechanist_module_reference import finish as finish_mechanist_module_reference
     finish_mechanist_module_reference(scenario,result)
     from .mei_module_static_reference import finish as finish_mei_module_reference

@@ -31,10 +31,10 @@ def reference(profile, scenario, skill):
                     values = {b['key']: b['value'] for b in candidate['blackboard']}
                     if 'attack@max_target_heal' in values and 'heal_scale' in values:
                         selected = values
-    # The sum is an isolated parameter reference. In particular, the module
-    # base2 / skill+1 native property composition does not follow from addition.
+    # The default path preserves the original isolated parameter reference.
+    # The explicit source-bound selector path is selected only below.
     added = skill['values'].get('attack@max_target_heal_add', 0)
-    return {
+    result = {
         'operator_id': profile['id'], 'module_id': scenario.get('module_id'),
         'module_level': scenario.get('module_level', 0), 'module_unlocked': unlocked,
         'original_trait_target_limit_parameter': int(original_values['attack@max_target_heal']),
@@ -58,6 +58,8 @@ def reference(profile, scenario, skill):
             'uniequip_table.equipDict.uniequip_002_haruka',
             'battle_equip_table.uniequip_002_haruka.phases[*].parts[0].overrideTraitDataBundle.candidates',
             'skill_table.skchr_haruka_2.levels[*].blackboard']}
+    from .haruka_target_static_reference import select
+    return select(scenario, result)
 
 
 def conditional_input_limit(profile, scenario, skill):

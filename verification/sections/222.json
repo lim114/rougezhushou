@@ -1,0 +1,192 @@
+{
+  "title": "遥 BLS-Y 真实静态治疗选择上限与 S2 人数组合的显式计算",
+  "remaining_item": "BLS-Y附着/实际友方获取及S2特性与技能人数的真实组合；本组闭合当前静态 trait data / S2 composition / selector，实际友方与运行态仍未知",
+  "new_capability": "默认关闭选项按当前原件将三阶BLS-Y基本治疗人数、S2公共rank增加人数合成实际潜在普通治疗分项；当前S1/S3直接trait getter、S2数据流覆盖与selector覆盖均绑定。第三名声明不再作为独立未证组合来源，沿用现有出手预览产生最终治疗倍率后的普通治疗条件小计和S2邻接派生伤害条件小计，接入实际计算/原有控件/报告/模组源入口；全部实际总量仍None。",
+  "source_evidence": {
+    "report": "research/p2-haruka-targets-current/REPORT.md",
+    "receipt": "research/p2-haruka-targets-current/receipt.json",
+    "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+    "methods": 46,
+    "unique_instructions": 7999,
+    "all_instruction_bytes_match": true,
+    "limits": [],
+    "assets": [
+      {
+        "source": "battle/prefabs/[uc]equips.ab",
+        "sha256": "6f15ab7b956b76e00ca88b95ff9f18b4ba53ee48510fab563915d7d1a91e24ea",
+        "bytes": 730733,
+        "matches_current_manifest": true
+      },
+      {
+        "source": "charpack/char_4202_haruka.ab",
+        "sha256": "857ea88d48121297eb70cf568a0ec7b2b190f46142e69af2ca78aa963bedd7f6",
+        "bytes": 33332,
+        "matches_current_manifest": true
+      },
+      {
+        "source": "battle/prefabs/[uc]skills.ab",
+        "sha256": "14306a31b1856f61b25812a69a2a057b7c4634561fb2c2bccc42fb37ee41a27e",
+        "bytes": 1343313,
+        "matches_current_manifest": true
+      }
+    ],
+    "manifest_version": "26-09-13-15-28-10-30688348",
+    "gmassets_sha256": "02266c5aff4a6d7b6e08db5b70acd76cbaf8dc14818bdeaa0c94af04a25efcce",
+    "gmassets_current_physical_match": true,
+    "trait_binding": "All three BLS-Y stages TRAIT_DATA_ONLY / null resKey override selected TraitData. _PreprocessTrait76065 forms prefabKey -1; _PreprocessTalents76061 inserts current TraitTalentData in Dictionary<string,TalentData>; current root Talent -3774644463503651308 receives -1 data. No equip passive-ability prefab attachment is claimed.",
+    "data_flow_binding": "Current char UnitDataFlowConfig -7568208396754268652 config2 restricts mainSkillIndex1; THREE / ADDITION takes TALENT -1 attack@max_target_heal plus SKILL attack@max_target_heal_add; target SKILL attack@max_target_heal_add. CreateModifier reads exact typed sources; _ModifyBlackboard loads both values and adds at0x180ac00ff..0x180ac0109, assigns target at0x180ac00bc. No additional previous target or selector default is added.",
+    "propagation_binding": "_AssignSkill GetDelta(SKILL) -> BasicSkill.AssignData Delta BB Union (second wins) -> attack@ prefix BB. S2 BasicSkill mode2 GetAttackBlackboard -> Character.GetAttackBlackboard skill BB assigned after root Talent BB -> UnitMode.OnInit -> AbilitySelectable/Parallel groups -> AbilityStandard selectable SetData.",
+    "selector_binding": "S1 mode1 RangedHeal5737135052331372052 selector3138085066564128276 reads max_target_heal; S2 mode2 RangedHeal-7955318681639498220 selector9195501367670623764 reads max_target_heal_add; S3 mode3 RangedHeal8425666215004098068 selector-6106419707545039340 reads max_target_heal. AdvancedSelector.SetData74236 GetIntOrDefault replaces m_maxTargetNum, OnPostFilter uses this cap. Actual target collection is not inferred.",
+    "scale_binding": "Current same-gameobject UpdateHealScaleByTraitData SetData94958 reads Character.traitBlackboard heal_scale=.75; OnCastStart94959 passes cached value to Heal.ApplyHealScale with overwritefalse. This confirms static parameter use, not actual cast execution or recipient damage/HP state.",
+    "generic_binding": "Three exact caller MethodInfo references: Dictionary<string,TalentData>.TryGetValue/set_Item and CollectionExtensions.ContainsItem<int>. IL2CPP MethodSpec indices/args and helper CFG agree; no global generic-address map claim.",
+    "public_layout_source": "https://raw.githubusercontent.com/Perfare/Il2CppDumper/master/Il2CppDumper/Il2Cpp/Il2CppClass.cs",
+    "public_layout_source_commit": null,
+    "public_layout_pin_failures": [
+      "GitHub commits API RemoteDisconnected",
+      "web endpoint inaccessible"
+    ],
+    "original_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+  },
+  "acceptance": {
+    "unique_tests_run": 95,
+    "passed": 95,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "new_api_tests": 13,
+    "new_mainwindow_tests": 2,
+    "old_related_tests": 80,
+    "new_receipt": "research/p2-haruka-targets-current/new-checks-final.json",
+    "old_receipt": "research/p2-haruka-targets-current/existing-haruka-crosscase.json",
+    "source_link_followup_receipt": "research/p2-haruka-targets-current/final-source-report-links-repair.json",
+    "committed_app_context_followup": "research/p2-haruka-targets-current/app-committed-context-checks.json",
+    "first_new": {
+      "run": 15,
+      "passed": 13,
+      "failure": 1,
+      "error": 1,
+      "cause": "new fixtures expected core-invalid module stages to calculate; used unsupported interruptions key/assumed enemy windows suppress friendly healing"
+    },
+    "second_new": {
+      "run": 15,
+      "passed": 13,
+      "failure": 1,
+      "error": 1,
+      "cause": "remaining module0/bool invalid fixtures and unsupported interruption key; corrected to interrupt_windows and native existing friend/enemy separation"
+    },
+    "first_source_followup": {
+      "run": 27,
+      "passed": 26,
+      "error": 1,
+      "cause": "new assertion read selected_module_source_reference at root rather than existing report object"
+    },
+    "first_app_context_refresh": {
+      "run": 2,
+      "errors": 2,
+      "cause": "copying tracked working package encountered root in-flight untracked choice dependency; refresh changed to fixed committed git snapshot and two MainWindow checks rerun"
+    },
+    "original_failures_retained": true,
+    "old49_constraints_deleted_or_skipped": false,
+    "only_public_tracked_receipt_dependency_copied": "research/p2-mechanist-module-current/receipt.json",
+    "private_state_used": false,
+    "game_operated": false,
+    "chat_sent": false,
+    "dll_executed": false,
+    "process_memory_read": false,
+    "visible_original_window_after_root_integration_required": true,
+    "git_apply_check": {
+      "command": "git apply --check --ignore-space-change",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "encoding": "LF only, exactly one final LF"
+  },
+  "acceptance_cases": [
+    "all3stages/3skills/10ranks native mode and key selection; S2rank1-6 cap2/rank7-10 cap3; no selector default or previous target added",
+    "defaultoff old49 known2/unplacedthird keeps existing numeric totals/unknowns; cultivation/othermodule/operator gate and strictbool",
+    "declared 0/1/2/3/100 clipped to source cap; three belongs to one body component instead of extra-source duplicate",
+    "existing frame/continuous count preview only; actual targets/callbacks/runtime/hotfix/fullcast/window/cycle remain unknown",
+    "ordinaryheal covered20% multiplier applied once after recipient count; S2 derivative resistance separately; attack repeat condition remains explicit",
+    "emptywindow/declaration/interruption zero conditionalbody budget; empty enemy windows/lifetime do not cancel independent friend healing; adjacent damage remains condition",
+    "bubble/levitate references independent and unchanged; no battle-only relic numerical reactivation",
+    "real temporary MainWindow defaultoff/selection/report/cancel/E2lv60/module+skill/operator switches; recordsunchanged and auto samplingoff",
+    "report final perrecipient/referencecount/subtotal and unknownactuals; native source link joins existing module-source coverage",
+    "current raw instruction bytes/assets/hash/manifest and targeted generic signatures checked; initial failures remain; caller/catalog/cache/result immutable"
+  ],
+  "limitations": [
+    "Only pinned original and current static native resources; no current hotfix or runtime-equivalence claim",
+    "TRAIT_DATA_ONLY / null resKey binds existing -1 Talent, not a new passive ability prefab; actual trait use unobserved",
+    "Potential full recipient count uses existing manual offline declaration; actual friend collection/healthy filtering/acquisition unknown",
+    "No callback or timeline inferred from static binding; existing preview times remain previews; actual fullcast/window/cycle total healing None",
+    "S2 each recipient derivative additionally requires actual adjacent enemy; no live placement; actual damage total None",
+    "Public MethodSpec layout content checked but precise upstream commit unavailable; no global generic address-map claim",
+    "Client singleprecision/FP exact rounding not reproduced; uses existing parameter arithmetic"
+  ],
+  "files": [
+    "research/p2-haruka-targets-current/app-committed-context-checks.json",
+    "research/p2-haruka-targets-current/app-context-refresh-checks.json",
+    "research/p2-haruka-targets-current/app-context-refresh.json",
+    "research/p2-haruka-targets-current/catalog-binding.json",
+    "research/p2-haruka-targets-current/character-current.json",
+    "research/p2-haruka-targets-current/equips-current.json",
+    "research/p2-haruka-targets-current/exact-literals.json",
+    "research/p2-haruka-targets-current/exact-parameters.json",
+    "research/p2-haruka-targets-current/exact-selected-fields.json",
+    "research/p2-haruka-targets-current/existing-haruka-crosscase.json",
+    "research/p2-haruka-targets-current/final-source-report-links-repair.json",
+    "research/p2-haruka-targets-current/final-source-report-links.json",
+    "research/p2-haruka-targets-current/first-generic-method-spec-check.json",
+    "research/p2-haruka-targets-current/first-new-checks.json",
+    "research/p2-haruka-targets-current/native-proof.json",
+    "research/p2-haruka-targets-current/new-checks-after-fixture-repair.json",
+    "research/p2-haruka-targets-current/new-checks-final.json",
+    "research/p2-haruka-targets-current/receipt.json",
+    "research/p2-haruka-targets-current/relevant-graph.json",
+    "research/p2-haruka-targets-current/REPORT.md",
+    "research/p2-haruka-targets-current/skills-current.json",
+    "research/p2-haruka-targets-current/targeted-generic-methods.json",
+    "rouge/haruka_target_static_reference.py",
+    "rouge/data/haruka-targets-native-reference.json",
+    "rouge/haruka_healing_reference.py",
+    "rouge/operator_engine.py",
+    "rouge/damage.py",
+    "rouge/operator_options.py",
+    "rouge/app.py",
+    "rouge/reporting.py",
+    "rouge/module_source_reference.py",
+    "tests/test_haruka_target_static_reference.py",
+    "tests/test_haruka_target_static_reference_window.py"
+  ],
+  "test_selectors": [
+    "tests.test_haruka_target_static_reference",
+    "tests.test_haruka_target_static_reference_window",
+    "tests.test_haruka_healing_targets",
+    "tests.test_haruka_event_reference",
+    "tests.test_haruka_bubble_talent_qualification",
+    "tests.test_haruka_repeat_text_input",
+    "tests.test_healing_subtotal_scaling",
+    "tests.test_empty_enemy_scope",
+    "tests.test_target_count_input_types",
+    "tests.test_selected_module_source_reference"
+  ],
+  "patch_sha256": "feb2bf18c3444b9910606e00e24d3e3e3c7b45fc6afa661d431c660a68657af9",
+  "patch_bytes": 8003621,
+  "root_integration_scope": "Source-supported offline function; real runtime/clock/hotfix is not inferred from temporary Qt checks.",
+  "root_native_window": "Existing original test window remains available; temporary MainWindow tests validate new controls without writing original state. Updated visible original window is checked at the next grouped UI/full closeout.",
+  "section": 222,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T21:20:19.379570+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 95,
+    "passed": 95,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-222/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 230
+}

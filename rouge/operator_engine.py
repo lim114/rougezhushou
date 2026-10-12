@@ -728,6 +728,9 @@ class Combat:
                 extra_targets=max(0,declared-targets)
                 regular('healing',scale,targets,name='护佑者普通治疗')
                 body=components[-1]
+                if haruka_healing_reference.get('selected_static_reference'):
+                    body['actual_total']=None
+                    body['timing_reference']='existing offline body attack preview; actual recipient heal callbacks unknown'
                 if extra_targets:
                     emit('护佑者额外目标治疗（组合待核验）',attack*scale,'healing',
                         len(body['times_seconds'])//int(targets)*extra_targets)
@@ -736,6 +739,9 @@ class Combat:
                 emit('扶摇花火',attack*self.talent('扶摇花火','heal_scale'),'healing',flower_bursts)
                 if self.n==2:
                     regular('magic',scale*bb['atk_scale_extra'],targets,name='治疗衍生伤害')
+                    if haruka_healing_reference.get('selected_static_reference'):
+                        components[-1]['actual_total']=None
+                        components[-1]['timing_reference']='per-recipient adjacent enemy condition; actual heal/adjacency callbacks unknown'
                     if extra_targets:
                         count=components[-1]['hits']/targets*extra_targets
                         emit('额外目标治疗衍生伤害（组合待核验）',
@@ -1609,7 +1615,8 @@ class Combat:
         if full['haruka_healing_reference'] is not None:
             result['haruka_healing_reference']={**full['haruka_healing_reference'],
                 'window_reference':shown['haruka_healing_reference']}
-            result['estimate']['notes'].append('遥的普通治疗人数按已核特性和当前技能参数列满额潜在参考；未证明实际友方获取、模组附着或当前客户端。特性人数与当前技能增加人数分别保留，额外份额仅为组合条件来源。')
+            if not full['haruka_healing_reference'].get('selected_static_reference'):
+                result['estimate']['notes'].append('遥的普通治疗人数按已核特性和当前技能参数列满额潜在参考；未证明实际友方获取、模组附着或当前客户端。特性人数与当前技能增加人数分别保留，额外份额仅为组合条件来源。')
         if full['external_event_reference'] is not None:
             result['external_event_reference']={**full['external_event_reference'],
                 'window_reference':shown['external_event_reference'],'actual_event_times_seconds':None}

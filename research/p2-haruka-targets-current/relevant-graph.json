@@ -1,0 +1,610 @@
+[
+  {
+    "path_id": -7568208396754268652,
+    "class": "UnitDataFlowConfig",
+    "go": "char_4202_haruka",
+    "data": {
+      "m_GameObject": {
+        "m_FileID": 0,
+        "m_PathID": 7655891841221742100
+      },
+      "m_Enabled": 1,
+      "m_Script": {
+        "m_FileID": 1,
+        "m_PathID": -7874596179847693797
+      },
+      "m_Name": "",
+      "_config": [
+        {
+          "_formulaType": 0,
+          "_acceptEmptyBB": 0,
+          "_validateSkillIndices": 1,
+          "_skillIndices": [
+            0
+          ],
+          "_source": 0,
+          "_sourceTalentKey": "1",
+          "_sourceKey": "interval",
+          "_source2": 0,
+          "_sourceTalentKey2": "",
+          "_sourceKey2": "",
+          "_target": 1,
+          "_targetTalentKey": "",
+          "_targetKey": "interval",
+          "_overrideRangeId": 0,
+          "_type": 0
+        },
+        {
+          "_formulaType": 0,
+          "_acceptEmptyBB": 0,
+          "_validateSkillIndices": 1,
+          "_skillIndices": [
+            0
+          ],
+          "_source": 0,
+          "_sourceTalentKey": "1",
+          "_sourceKey": "damage_resistance",
+          "_source2": 0,
+          "_sourceTalentKey2": "",
+          "_sourceKey2": "",
+          "_target": 1,
+          "_targetTalentKey": "",
+          "_targetKey": "damage_resistance",
+          "_overrideRangeId": 0,
+          "_type": 0
+        },
+        {
+          "_formulaType": 1,
+          "_acceptEmptyBB": 0,
+          "_validateSkillIndices": 1,
+          "_skillIndices": [
+            1
+          ],
+          "_source": 0,
+          "_sourceTalentKey": "-1",
+          "_sourceKey": "attack@max_target_heal",
+          "_source2": 1,
+          "_sourceTalentKey2": "",
+          "_sourceKey2": "attack@max_target_heal_add",
+          "_target": 1,
+          "_targetTalentKey": "1",
+          "_targetKey": "attack@max_target_heal_add",
+          "_overrideRangeId": 0,
+          "_type": 1
+        },
+        {
+          "_formulaType": 1,
+          "_acceptEmptyBB": 0,
+          "_validateSkillIndices": 1,
+          "_skillIndices": [
+            1
+          ],
+          "_source": 0,
+          "_sourceTalentKey": "1",
+          "_sourceKey": "max_target_shield",
+          "_source2": 1,
+          "_sourceTalentKey2": "",
+          "_sourceKey2": "max_target_shield_add",
+          "_target": 0,
+          "_targetTalentKey": "1",
+          "_targetKey": "max_target_shield_add",
+          "_overrideRangeId": 0,
+          "_type": 1
+        }
+      ]
+    }
+  },
+  {
+    "path_id": -7495416644204409324,
+    "class": "Character",
+    "go": "char_4202_haruka",
+    "data": {
+      "_modes": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 735023330931920404
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 6858691781127982612
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -4630257185317368300
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 2970836311808495124
+        }
+      ],
+      "_traitAbility": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      },
+      "_preprocessData": 1
+    }
+  },
+  {
+    "path_id": -6106419707545039340,
+    "class": "AdvancedSelector",
+    "go": "Selector",
+    "data": {
+      "_targetSide": 1,
+      "_targetCategory": 1,
+      "_postFilter": 3,
+      "_limitTargetNum": 1,
+      "_maxTargetKey": "max_target_heal",
+      "_maxNum": 1
+    }
+  },
+  {
+    "path_id": 8425666215004098068,
+    "class": "RangedHeal",
+    "go": "FirstAttack",
+    "data": {
+      "_selector": {
+        "m_FileID": 0,
+        "m_PathID": -6106419707545039340
+      },
+      "_metadata": {
+        "namedAsAlias": "",
+        "blackboardPrefix": ""
+      },
+      "_activeBuffs": [],
+      "_isCont": 0,
+      "_hasNoActionNode": 0,
+      "_projectileKey": "projectile_chr_haruka_s3"
+    }
+  },
+  {
+    "path_id": 5256957894921637396,
+    "class": "AbilityParallelGroup",
+    "go": "AttackAndShield",
+    "data": {
+      "_abilities": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 8425666215004098068
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -1959318522995323372
+        }
+      ],
+      "_mainAbility": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      }
+    }
+  },
+  {
+    "path_id": -7655341110621286892,
+    "class": "AbilitySelectableGroup",
+    "go": "Attack",
+    "data": {
+      "_category": 4,
+      "_abilityConfigs": [
+        {
+          "_ability": {
+            "m_FileID": 0,
+            "m_PathID": 5256957894921637396
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": 5381786306060111380
+          },
+          "_alwaysUseTrigger": 0,
+          "_useInputTarget": 0,
+          "_checkInputTargetInTrigger": 0
+        },
+        {
+          "_ability": {
+            "m_FileID": 0,
+            "m_PathID": -3280768684760740332
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": 5868697422134398484
+          },
+          "_alwaysUseTrigger": 0,
+          "_useInputTarget": 0,
+          "_checkInputTargetInTrigger": 0
+        }
+      ],
+      "_selectAbilitySequentially": 0
+    }
+  },
+  {
+    "path_id": -6494051276503364076,
+    "class": "Talent",
+    "go": "1",
+    "data": {
+      "_overwriteTalentKey": "",
+      "_defaultModeIndex": -1,
+      "_attackBlackboardModeIndex": -1,
+      "_extraAttackBlackboardModeIndices": [],
+      "_applyBlackboardBySkill": 0,
+      "_affectWhenNotRootTalent": 0
+    }
+  },
+  {
+    "path_id": 2970836311808495124,
+    "class": "UnitMode",
+    "go": "S3",
+    "data": {
+      "_attack": {
+        "m_FileID": 0,
+        "m_PathID": -7655341110621286892
+      },
+      "_attackTrigger": {
+        "m_FileID": 0,
+        "m_PathID": -96710556563517932
+      },
+      "_generalAbilities": []
+    }
+  },
+  {
+    "path_id": 9195501367670623764,
+    "class": "AdvancedSelector",
+    "go": "Selector",
+    "data": {
+      "_targetSide": 1,
+      "_targetCategory": 1,
+      "_postFilter": 3,
+      "_limitTargetNum": 1,
+      "_maxTargetKey": "max_target_heal_add",
+      "_maxNum": 1
+    }
+  },
+  {
+    "path_id": -7955318681639498220,
+    "class": "RangedHeal",
+    "go": "FirstAttack",
+    "data": {
+      "_selector": {
+        "m_FileID": 0,
+        "m_PathID": 9195501367670623764
+      },
+      "_metadata": {
+        "namedAsAlias": "",
+        "blackboardPrefix": ""
+      },
+      "_activeBuffs": [],
+      "_isCont": 0,
+      "_hasNoActionNode": 0,
+      "_projectileKey": "projectile_chr_haruka_s2"
+    }
+  },
+  {
+    "path_id": -3442043173077889516,
+    "class": "AbilityParallelGroup",
+    "go": "AttackAndShield",
+    "data": {
+      "_abilities": [
+        {
+          "m_FileID": 0,
+          "m_PathID": -7955318681639498220
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -270980050622198252
+        }
+      ],
+      "_mainAbility": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      }
+    }
+  },
+  {
+    "path_id": 1373755177191296532,
+    "class": "AbilitySelectableGroup",
+    "go": "Attack",
+    "data": {
+      "_category": 4,
+      "_abilityConfigs": [
+        {
+          "_ability": {
+            "m_FileID": 0,
+            "m_PathID": -3442043173077889516
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": 23703644830191124
+          },
+          "_alwaysUseTrigger": 0,
+          "_useInputTarget": 0,
+          "_checkInputTargetInTrigger": 0
+        },
+        {
+          "_ability": {
+            "m_FileID": 0,
+            "m_PathID": -7264611948674331116
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": 3990843498407218708
+          },
+          "_alwaysUseTrigger": 0,
+          "_useInputTarget": 0,
+          "_checkInputTargetInTrigger": 0
+        }
+      ],
+      "_selectAbilitySequentially": 0
+    }
+  },
+  {
+    "path_id": -4457170251137135084,
+    "class": "Talent",
+    "go": "1",
+    "data": {
+      "_overwriteTalentKey": "",
+      "_defaultModeIndex": -1,
+      "_attackBlackboardModeIndex": -1,
+      "_extraAttackBlackboardModeIndices": [],
+      "_applyBlackboardBySkill": 0,
+      "_affectWhenNotRootTalent": 0
+    }
+  },
+  {
+    "path_id": -4630257185317368300,
+    "class": "UnitMode",
+    "go": "S2",
+    "data": {
+      "_attack": {
+        "m_FileID": 0,
+        "m_PathID": 1373755177191296532
+      },
+      "_attackTrigger": {
+        "m_FileID": 0,
+        "m_PathID": 909247073055952404
+      },
+      "_generalAbilities": []
+    }
+  },
+  {
+    "path_id": 3138085066564128276,
+    "class": "AdvancedSelector",
+    "go": "Selector",
+    "data": {
+      "_targetSide": 1,
+      "_targetCategory": 1,
+      "_postFilter": 3,
+      "_limitTargetNum": 1,
+      "_maxTargetKey": "max_target_heal",
+      "_maxNum": 1
+    }
+  },
+  {
+    "path_id": 5737135052331372052,
+    "class": "RangedHeal",
+    "go": "FirstAttack",
+    "data": {
+      "_selector": {
+        "m_FileID": 0,
+        "m_PathID": 3138085066564128276
+      },
+      "_metadata": {
+        "namedAsAlias": "",
+        "blackboardPrefix": ""
+      },
+      "_activeBuffs": [],
+      "_isCont": 0,
+      "_hasNoActionNode": 0,
+      "_projectileKey": "projectile_chr_haruka_s1"
+    }
+  },
+  {
+    "path_id": 8230184192368463380,
+    "class": "AbilityParallelGroup",
+    "go": "AttackAndShield",
+    "data": {
+      "_abilities": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 5737135052331372052
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": -8199953182835913196
+        }
+      ],
+      "_mainAbility": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      }
+    }
+  },
+  {
+    "path_id": 5241327123772493332,
+    "class": "AbilitySelectableGroup",
+    "go": "Attack",
+    "data": {
+      "_category": 4,
+      "_abilityConfigs": [
+        {
+          "_ability": {
+            "m_FileID": 0,
+            "m_PathID": 8230184192368463380
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": 5245722040077995540
+          },
+          "_alwaysUseTrigger": 0,
+          "_useInputTarget": 0,
+          "_checkInputTargetInTrigger": 0
+        },
+        {
+          "_ability": {
+            "m_FileID": 0,
+            "m_PathID": -2657174228792095212
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": -6936410438296580588
+          },
+          "_alwaysUseTrigger": 0,
+          "_useInputTarget": 0,
+          "_checkInputTargetInTrigger": 0
+        }
+      ],
+      "_selectAbilitySequentially": 0
+    }
+  },
+  {
+    "path_id": 2677334430487432724,
+    "class": "Talent",
+    "go": "1",
+    "data": {
+      "_overwriteTalentKey": "",
+      "_defaultModeIndex": -1,
+      "_attackBlackboardModeIndex": -1,
+      "_extraAttackBlackboardModeIndices": [],
+      "_applyBlackboardBySkill": 0,
+      "_affectWhenNotRootTalent": 0
+    }
+  },
+  {
+    "path_id": 6858691781127982612,
+    "class": "UnitMode",
+    "go": "S1",
+    "data": {
+      "_attack": {
+        "m_FileID": 0,
+        "m_PathID": 5241327123772493332
+      },
+      "_attackTrigger": {
+        "m_FileID": 0,
+        "m_PathID": -2265255121299616236
+      },
+      "_generalAbilities": []
+    }
+  },
+  {
+    "path_id": -288600806041956844,
+    "class": "AdvancedSelector",
+    "go": "Selector",
+    "data": {
+      "_targetSide": 2,
+      "_targetCategory": 1,
+      "_postFilter": 4,
+      "_limitTargetNum": 1,
+      "_maxTargetKey": "max_target",
+      "_maxNum": 1
+    }
+  },
+  {
+    "path_id": 7629166525707734548,
+    "class": "AbilityParallelGroup",
+    "go": "AttackAndShield",
+    "data": {
+      "_abilities": [
+        {
+          "m_FileID": 0,
+          "m_PathID": 7094268641299811860
+        },
+        {
+          "m_FileID": 0,
+          "m_PathID": 6932859324118289940
+        }
+      ],
+      "_mainAbility": {
+        "m_FileID": 0,
+        "m_PathID": 0
+      }
+    }
+  },
+  {
+    "path_id": 246712518673714708,
+    "class": "AbilitySelectableGroup",
+    "go": "Attack",
+    "data": {
+      "_category": 4,
+      "_abilityConfigs": [
+        {
+          "_ability": {
+            "m_FileID": 0,
+            "m_PathID": 7629166525707734548
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": 1782086364535082516
+          },
+          "_alwaysUseTrigger": 0,
+          "_useInputTarget": 0,
+          "_checkInputTargetInTrigger": 0
+        },
+        {
+          "_ability": {
+            "m_FileID": 0,
+            "m_PathID": -6704961048780780012
+          },
+          "_trigger": {
+            "m_FileID": 0,
+            "m_PathID": 3020204705325927956
+          },
+          "_alwaysUseTrigger": 0,
+          "_useInputTarget": 0,
+          "_checkInputTargetInTrigger": 0
+        }
+      ],
+      "_selectAbilitySequentially": 0
+    }
+  },
+  {
+    "path_id": 455127963730595348,
+    "class": "Talent",
+    "go": "1",
+    "data": {
+      "_overwriteTalentKey": "",
+      "_defaultModeIndex": -1,
+      "_attackBlackboardModeIndex": -1,
+      "_extraAttackBlackboardModeIndices": [],
+      "_applyBlackboardBySkill": 0,
+      "_affectWhenNotRootTalent": 0
+    }
+  },
+  {
+    "path_id": 735023330931920404,
+    "class": "UnitMode",
+    "go": "Default",
+    "data": {
+      "_attack": {
+        "m_FileID": 0,
+        "m_PathID": 246712518673714708
+      },
+      "_attackTrigger": {
+        "m_FileID": 0,
+        "m_PathID": 8086195897822694932
+      },
+      "_generalAbilities": []
+    }
+  },
+  {
+    "path_id": -3774644463503651308,
+    "class": "Talent",
+    "go": "-1",
+    "data": {
+      "_overwriteTalentKey": "",
+      "_defaultModeIndex": -1,
+      "_attackBlackboardModeIndex": -1,
+      "_extraAttackBlackboardModeIndices": [],
+      "_applyBlackboardBySkill": 0,
+      "_affectWhenNotRootTalent": 0
+    }
+  },
+  {
+    "path_id": 7723596933028531732,
+    "class": "Talent",
+    "go": "2",
+    "data": {
+      "_overwriteTalentKey": "",
+      "_defaultModeIndex": -1,
+      "_attackBlackboardModeIndex": -1,
+      "_extraAttackBlackboardModeIndices": [],
+      "_applyBlackboardBySkill": 0,
+      "_affectWhenNotRootTalent": 0
+    }
+  }
+]
