@@ -876,6 +876,62 @@
       ],
       "action_points": 6,
       "inventory": []
+    },
+    "search-routes": {
+      "graph": {
+        "current_node": "s",
+        "zone_id": "zone_1",
+        "template_id": "public-search-reference",
+        "nodes": [
+          {
+            "id": "s",
+            "row": 0,
+            "col": 0,
+            "base_node_type": "EMPTY"
+          },
+          {
+            "id": "a",
+            "row": 0,
+            "col": 1,
+            "base_node_type": "EMPTY"
+          },
+          {
+            "id": "b",
+            "row": 1,
+            "col": 0,
+            "base_node_type": "EMPTY"
+          },
+          {
+            "id": "g",
+            "row": 1,
+            "col": 1,
+            "base_node_type": "EMPTY"
+          }
+        ],
+        "edges": [
+          [
+            "s",
+            "a"
+          ],
+          [
+            "a",
+            "g"
+          ],
+          [
+            "s",
+            "b"
+          ],
+          [
+            "b",
+            "g"
+          ]
+        ]
+      },
+      "goal": "g",
+      "action_points": 6,
+      "max_steps": 8,
+      "max_results": 20,
+      "max_transitions": 200
     }
   },
   "variants": {
@@ -2359,6 +2415,195 @@
           ],
           "action_points": 6,
           "inventory": []
+        }
+      }
+    ],
+    "search-routes": [
+      {
+        "id": "search-zero",
+        "label": "付款到零停止前沿",
+        "payload": {
+          "graph": {
+            "current_node": "s",
+            "zone_id": "zone_1",
+            "template_id": "public-search-reference",
+            "nodes": [
+              {
+                "id": "s",
+                "row": 0,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "a",
+                "row": 0,
+                "col": 1,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "b",
+                "row": 1,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "g",
+                "row": 1,
+                "col": 1,
+                "base_node_type": "EMPTY"
+              }
+            ],
+            "edges": [
+              [
+                "s",
+                "a"
+              ],
+              [
+                "a",
+                "g"
+              ],
+              [
+                "s",
+                "b"
+              ],
+              [
+                "b",
+                "g"
+              ]
+            ]
+          },
+          "goal": "g",
+          "action_points": 1,
+          "max_steps": 8,
+          "max_results": 20,
+          "max_transitions": 200
+        }
+      },
+      {
+        "id": "search-depth",
+        "label": "深度上限而未得终点",
+        "payload": {
+          "graph": {
+            "current_node": "s",
+            "zone_id": "zone_1",
+            "template_id": "public-search-reference",
+            "nodes": [
+              {
+                "id": "s",
+                "row": 0,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "a",
+                "row": 0,
+                "col": 1,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "b",
+                "row": 1,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "g",
+                "row": 1,
+                "col": 1,
+                "base_node_type": "EMPTY"
+              }
+            ],
+            "edges": [
+              [
+                "s",
+                "a"
+              ],
+              [
+                "a",
+                "g"
+              ],
+              [
+                "s",
+                "b"
+              ],
+              [
+                "b",
+                "g"
+              ]
+            ]
+          },
+          "goal": "g",
+          "action_points": 6,
+          "max_steps": 1,
+          "max_results": 20,
+          "max_transitions": 200
+        }
+      },
+      {
+        "id": "search-random",
+        "label": "随机加工品保留未知分支",
+        "payload": {
+          "graph": {
+            "current_node": "s",
+            "zone_id": "zone_1",
+            "template_id": "public-search-reference",
+            "nodes": [
+              {
+                "id": "s",
+                "row": 0,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "a",
+                "row": 0,
+                "col": 1,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "b",
+                "row": 1,
+                "col": 0,
+                "base_node_type": "EMPTY"
+              },
+              {
+                "id": "g",
+                "row": 1,
+                "col": 1,
+                "base_node_type": "EMPTY"
+              }
+            ],
+            "edges": [
+              [
+                "s",
+                "a"
+              ],
+              [
+                "a",
+                "g"
+              ],
+              [
+                "s",
+                "b"
+              ],
+              [
+                "b",
+                "g"
+              ]
+            ]
+          },
+          "goal": "g",
+          "action_points": 6,
+          "max_steps": 8,
+          "max_results": 20,
+          "max_transitions": 200,
+          "inventory": [
+            {
+              "instance_id": "random",
+              "item_id": "rogue_6_scrap_M_07",
+              "remaining_uses": 1
+            }
+          ]
         }
       }
     ]

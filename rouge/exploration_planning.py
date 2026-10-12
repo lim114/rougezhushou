@@ -673,3 +673,6 @@ COMMANDS['settlements']=settlements
 
 from .route_comparison import compare_routes
 COMMANDS["compare-routes"]=compare_routes
+
+from .route_search import search_routes
+COMMANDS["search-routes"]=search_routes

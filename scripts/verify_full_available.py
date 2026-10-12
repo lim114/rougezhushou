@@ -17,6 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 NEW_MODULES = (
+    'tests.test_route_search_view',
     'tests.test_enemy_prefab_skill_gates',
     'tests.test_direct_landmark_extension',
     'tests.test_route_comparison_view',

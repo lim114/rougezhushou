@@ -44,6 +44,7 @@ EXPLORATION_QUERIES = (
     ('transition','主层与秘境转移条件'),('residents','居民位置与路线风险候选'),
     ('settlements','战斗基础奖励与路线分项'),
     ('compare-routes','多路线费用与战斗收益比较'),
+    ('search-routes','有限声明图的路线候选构造'),
 )
 QUERIES = {'calibration': CALIBRATION_QUERIES, 'battle': BATTLE_QUERIES,'exploration':EXPLORATION_QUERIES}
 BATTLE_COMMANDS = {
@@ -61,6 +62,7 @@ BATTLE_COMMANDS = {
 EVIDENCE_NAMES = {'game_panel': '调用方声明的游戏面板',
     'public_case': '调用方声明的公开算例', 'formula_reference': '公式参考算例'}
 INPUT_GUIDANCE = {
+    'search-routes':'goal为声明终点，逐边步行并列举加工品候选；max_steps/max_results/max_transitions控制有限搜索。battle_declarations按节点声明独立关卡和胜利。随机落点、未知资格和AP到零保留停止前沿，不补完整收益或真实最优。',
     'compare-routes':'routes为1–20条带唯一id的明确路线，每条steps只含mode/target和可选battle。battle独立声明精确关卡/入口/胜利；不是胜利预测。共同graph、行动力和库存不随自动刷新覆盖。只比较同终点的已证净AP及基础战斗收益，不穷举概率或替代真实最优。',
     'settlements':'steps每项使用精确stage_id/stage_ids，或graph中的target。battle_floor是战斗所属主层，秘境编号不代替；entry_context需要unknown/map_battle/event_battle/pursuit。仅声明胜利后的基础分项，实际胜利和完整奖励未知。steps留空（null）只列图中当前战斗身份参考；不读取本局库存。',
     'panel': '编辑 scenario 培养、藏品和技能条件。operator：kaltsit=凯尔希·思衡托，silverash=凛御银灰，mechanist=机械师；trust 为加成进度0–100。结果分层诊断，不是实机认证。',
@@ -129,6 +131,7 @@ VALUE_NAMES = {'physical': '物理', 'magic': '法术', 'true': '真实',
     'unresolved':'条件未知，停止依赖链','not_evaluated_after_stop':'前序停止，尚未求值',
     'zero_ap_callback_order_unverified':'付款到零，耗尽与返还顺序未证',
     'node_arrival_ap_condition_unknown':'到达节点AP条件未明确'}
+VALUE_NAMES.update({'transition_limit':'分支检查上限','result_limit':'结果数量上限','depth_limit':'步数上限','action_points_unknown':'起始行动力未明确','known_condition_or_ap_failed':'已列资格不符或AP不足','eligibility_or_inventory_condition_unknown':'资格、次数或随机目的地未证'})
 VALUE_NAMES.update({'arrival_chain_unresolved_or_blocked':'到达依赖链未知或被已列条件阻断','repeated_battle_reward_eligibility_unknown':'同节点再次作战奖励资格未证','declared_battle_not_won':'声明战斗未胜利，不证明后续成功路线','different_declared_goal':'声明终点不同，不作分项支配比较','component_conditions_not_closed':'声明分项条件未全部闭合'})
 
 
@@ -235,6 +238,12 @@ def _node_label(graph,node_id):
 
 
 def result_node_ids(command,data):
+    if command=='search-routes':
+        keys={data.get('start'),data.get('goal_node')}
+        for row in data['plans']+data['frontier']:
+            keys.update(step['target'] for step in row['steps'])
+        if data['comparison']:keys.update(result_node_ids('compare-routes',data['comparison']))
+        return {key for key in keys if isinstance(key,str)}
     keys={data.get('start'),data.get('target'),data.get('nominal_position'),data.get('post_node')}
     for row in data.get('targets',[])+data.get('excluded',[])+data.get('spawn_candidates',[]):keys.add(row.get('node_id'))
     for row in data.get('steps',[]):keys.update((row.get('start'),row.get('target')))
@@ -324,7 +333,17 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
                     [(row['id'],row['comparison']['operator'],r['label'],r['predicted'],r['observed'],r['difference'],r['matches_declared_tolerance']) for row in data['rows'] for r in row['comparison']['rows']])]
     elif family=='exploration':
         label=lambda key:_node_label(graph,key)
-        if command=='compare-routes':
+        if command=='search-routes':
+            parts += [_p('明确终点：'+label(data['goal_node'])),
+                _p('仅构造声明图中的不重复节点计划；每条步行连线分别核算，不以跨中途节点的捷径漏掉节点组件。'),
+                _table(['已检查分支','所得终点候选','深度截断前缀','上限停止原因','等待前缀'],
+                    [(data['examined_transitions'],len(data['plans']),data['depth_limited_prefixes'],data['limit_reason'] or '未触发上限',data['pending_prefixes_at_limit'])]),
+                _table(['停止位置','声明路径','未证或受阻原因','实际能否续行'],
+                    [(label(row['node_id']),[label(step['target']) for step in row['steps']],row['reason'],row['actual_continuation']) for row in data['frontier']]),
+                _p('实际终点可达性与最优路线：未知。没有候选不证明没有实际路线；上限与未知前沿会遗漏后续方案。')]
+            if data['comparison']:
+                parts.append(render_offline_result('exploration','compare-routes',data['comparison'],graph=graph))
+        elif command=='compare-routes':
             parts += [_p('每条路线独立使用共同声明的地图、行动力和库存；不更新本局。'),
                 _p('分项支配仅比较同终点的净行动力消耗、基础战斗经验和源石锭范围；范围只作保守端点比较，不取平均或赋概率。'),
                 _table(['路线','声明终点','净行动力消耗参考','已知基础经验小计','已知基础源石锭范围','声明分项齐全','分项支配来源'],
@@ -336,7 +355,7 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
                 rows=[]
                 for step in movement['steps']:
                     reward=rewards.get(step['step']);ref=reward['base_reward_reference'] if reward else {}
-                    rows.append((step['step'],label(step.get('start') or step.get('assumed_start_from_declared_plan')),
+                    rows.append((step['step'],label(step.get('start') or step.get('assumed_start_from_declared_plan') or movement['start']),
                         label(step['target']),step['status'],step.get('base_ap_cost'),step.get('stated_node_arrival_ap_grant'),
                         ref.get('victory_declared') if reward else '没有独立战斗声明',
                         ref.get('conditional_base_experience') if reward else '此项不列战斗收益',
@@ -651,12 +670,12 @@ class OfflineToolsPanel(QWidget):
         family,command=self.current_query()
         self.import_scenario.setEnabled(family=='calibration' and command!='worksheets' and self._scenario is not None)
         self.import_stage.setEnabled((family=='battle' or family=='exploration' and command=='settlements') and self._stage is not None)
-        exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes')
+        exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes','search-routes')
         self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
         self.graph_node.setVisible(exploring and graph_query);self.fill_node.setVisible(exploring and graph_query)
         self.import_graph.setText('导入缓存区域声明' if command=='budget' else '导入缓存地图声明')
         self.import_graph.setEnabled(exploring and (graph_query or command=='budget') and self._graph_cache is not None)
-        self.fill_node.setEnabled(exploring and command in ('targets','effects','options','residents','settlements') and self.graph_node.currentData() is not None)
+        self.fill_node.setEnabled(exploring and command in ('targets','effects','options','residents','settlements','search-routes') and self.graph_node.currentData() is not None)
         self.fill_node.setText('追加战斗节点参考' if command=='settlements' else '填写声明起点' if command=='targets' else '填写居民据点' if command=='residents' else '填写声明目标')
 
     def _family_changed(self):
@@ -803,7 +822,7 @@ class OfflineToolsPanel(QWidget):
         try:
             family,command=self.current_query()
             if family!='exploration' or self._graph_cache is None:raise ValueError('没有可导入的地图缓存。')
-            if command not in ('targets','effects','options','itinerary','residents','budget','settlements','compare-routes'):
+            if command not in ('targets','effects','options','itinerary','residents','budget','settlements','compare-routes','search-routes'):
                 raise ValueError('此查询不接受地图或区域声明。')
             payload=self._payload();cached=deepcopy(self._graph_cache);graph=cached['graph']
             if command=='budget':
@@ -822,7 +841,7 @@ class OfflineToolsPanel(QWidget):
     def _fill_node(self):
         try:
             family,command=self.current_query();node_id=self.graph_node.currentData();payload=self._payload()
-            if family!='exploration' or command not in ('targets','effects','options','residents','settlements'):
+            if family!='exploration' or command not in ('targets','effects','options','residents','settlements','search-routes'):
                 raise ValueError('此查询不接受单个节点字段。')
             if not any(n.get('id')==node_id for n in payload.get('graph',{}).get('nodes',[])):
                 raise ValueError('所选节点不在当前编辑的声明图中；请重新载入/导入声明图。')
@@ -835,7 +854,7 @@ class OfflineToolsPanel(QWidget):
                 payload['steps']=[*steps,{'target':node_id}]
                 self.editor.setPlainText(json.dumps(payload,ensure_ascii=False,indent=2))
                 self.status.setText('已追加声明图节点参考；身份、层数、入口与胜利未知仍保留。');return
-            field='start' if command=='targets' else 'post_node' if command=='residents' else 'target'
+            field='start' if command=='targets' else 'post_node' if command=='residents' else 'goal' if command=='search-routes' else 'target'
             payload[field]=node_id;self.editor.setPlainText(json.dumps(payload,ensure_ascii=False,indent=2))
             self.status.setText('已填写声明'+('起点' if field=='start' else '据点' if field=='post_node' else '目标')+'；不改变助手或游戏中的实际位置。')
         except Exception as exc:self.status.setText('未填写：'+str(exc))
