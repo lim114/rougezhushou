@@ -1,3 +1,7 @@
+## 功能第220节 · 羽瞰点首次到达与连续路线AP条件账本
+
+2026-10-12T20:34:04.230502+08:00。新增：现有options/itinerary工具分开列加工品与LIGHT到达AP，在明确首次未领条件下纳入+1，临时方案防重领；缺领取状态或重复访问保持unknown。到零不借未来返还续行，尾链配置与独立条件参考完整保留。4/12/24按分裂/难度列数量候选，6新公开预置完成实际Qt工作流。。必要检查50项，跳过0项，无失败。边界：重复到达AP发放、零AP耗尽回调与返还的先后仍未证；不能断言实际必结束或必可续行。；first_entry/reward_received只来自独立明确声明；未从历史标题、visited、完成标志、模板或当前持有造快照。；真实完成标志/住民/迷雾/AP/加工品自动读取仍留到识别阶段。；未计算其它节点选择、作战结算、费用修正、居民移动/碰撞与完整收益，也不推荐实际最优路线。；4/12/24没有几何或真实揭示位置依据；没有新增地图校准。；Qt offscreen通过，root须在原Windows可见探索工具验收六预设与尾链显示，未操作游戏/聊天。。回执verification/sections/220.json。下一节221，下次全量230。
+
 ## 功能第219节 · 古米与黍GUA-X独立生命条件与复合治疗
 
 2026-10-12T20:30:39.472731+08:00。新增：合格古米GUA-X的S1/S2与黍GUA-X的S1/S2/S3按显式受疗比例采用各自当前LT/LE原生门，直接治疗分项和预算来源独立乘1.15一次；未知保留小计遮受影响完整非零总量，各自专属控件，无自然回复/播种/物理/时钟混算。。必要检查130项，跳过0项，无失败。边界：Actual recipient hp/maxHp and HP trajectory；Actual acquisition, coverage, life eligibility, healing clocks；Current XLua/hotfix equivalence；Arbitrary heal/regen/final-damage source combinations outside the listed binding；Declared fixed ratio does not prove actual friendly HP/survival/range/timing; budget recipient values do not dynamically requalify this scenario；Existing unknownS1 actual totals remainNone; no actual multi-charge/skill-end claims；CurrentGUA-X coverage only; no imported unseen currentGUA-Y module or newhotfix。回执verification/sections/219.json。下一节220，下次全量230。

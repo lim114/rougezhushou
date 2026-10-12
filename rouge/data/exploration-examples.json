@@ -1286,6 +1286,215 @@
             }
           ]
         }
+      },
+      {
+        "id": "light-chain",
+        "label": "首次羽瞰点连续AP参考",
+        "payload": {
+          "graph": {
+            "current_node": "start",
+            "zone_id": "zone_2",
+            "template_id": "public-light-plan",
+            "declaration_basis": "公开说明用假设图；首次/领取/AP均为独立声明，不是本局观察。",
+            "nodes": [
+              {
+                "id": "start",
+                "row": 0,
+                "col": 0,
+                "node_type_raw": "EMPTY",
+                "completed_declared": true,
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              },
+              {
+                "id": "light",
+                "row": 0,
+                "col": 1,
+                "node_type_raw": "LIGHT",
+                "completed_declared": false,
+                "occupied_declared": true,
+                "other_blocked_declared": false,
+                "light_arrival_declaration": {
+                  "first_entry": true,
+                  "reward_received": false
+                }
+              },
+              {
+                "id": "shop",
+                "row": 0,
+                "col": 2,
+                "node_type_raw": "BATTLE_SHOP",
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              }
+            ],
+            "edges": [
+              [
+                "start",
+                "light"
+              ],
+              [
+                "light",
+                "shop"
+              ]
+            ]
+          },
+          "steps": [
+            {
+              "mode": "walking",
+              "target": "light"
+            },
+            {
+              "mode": "walking",
+              "target": "shop"
+            }
+          ],
+          "action_points": 2,
+          "difficulty": 3,
+          "split_unlocked": true
+        }
+      },
+      {
+        "id": "light-zero-tail",
+        "label": "付款到零保留尾链设想",
+        "payload": {
+          "graph": {
+            "current_node": "start",
+            "zone_id": "zone_2",
+            "template_id": "public-light-plan",
+            "declaration_basis": "公开说明用假设图；首次/领取/AP均为独立声明，不是本局观察。",
+            "nodes": [
+              {
+                "id": "start",
+                "row": 0,
+                "col": 0,
+                "node_type_raw": "EMPTY",
+                "completed_declared": true,
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              },
+              {
+                "id": "light",
+                "row": 0,
+                "col": 1,
+                "node_type_raw": "LIGHT",
+                "completed_declared": false,
+                "occupied_declared": true,
+                "other_blocked_declared": false,
+                "light_arrival_declaration": {
+                  "first_entry": true,
+                  "reward_received": false
+                }
+              },
+              {
+                "id": "shop",
+                "row": 0,
+                "col": 2,
+                "node_type_raw": "BATTLE_SHOP",
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              }
+            ],
+            "edges": [
+              [
+                "start",
+                "light"
+              ],
+              [
+                "light",
+                "shop"
+              ]
+            ]
+          },
+          "steps": [
+            {
+              "mode": "walking",
+              "target": "light"
+            },
+            {
+              "mode": "walking",
+              "target": "shop"
+            }
+          ],
+          "action_points": 1,
+          "difficulty": 3,
+          "split_unlocked": true
+        }
+      },
+      {
+        "id": "light-revisit",
+        "label": "再次到达不重领首次组件",
+        "payload": {
+          "graph": {
+            "current_node": "start",
+            "zone_id": "zone_2",
+            "template_id": "public-light-plan",
+            "declaration_basis": "公开说明用假设图；首次/领取/AP均为独立声明，不是本局观察。",
+            "nodes": [
+              {
+                "id": "start",
+                "row": 0,
+                "col": 0,
+                "node_type_raw": "EMPTY",
+                "completed_declared": true,
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              },
+              {
+                "id": "light",
+                "row": 0,
+                "col": 1,
+                "node_type_raw": "LIGHT",
+                "completed_declared": false,
+                "occupied_declared": true,
+                "other_blocked_declared": false,
+                "light_arrival_declaration": {
+                  "first_entry": true,
+                  "reward_received": false
+                }
+              },
+              {
+                "id": "shop",
+                "row": 0,
+                "col": 2,
+                "node_type_raw": "BATTLE_SHOP",
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              }
+            ],
+            "edges": [
+              [
+                "start",
+                "light"
+              ],
+              [
+                "light",
+                "shop"
+              ]
+            ]
+          },
+          "steps": [
+            {
+              "mode": "walking",
+              "target": "light"
+            },
+            {
+              "mode": "walking",
+              "target": "start"
+            },
+            {
+              "mode": "walking",
+              "target": "light"
+            },
+            {
+              "mode": "walking",
+              "target": "shop"
+            }
+          ],
+          "action_points": 3,
+          "difficulty": 3,
+          "split_unlocked": true
+        }
       }
     ],
     "transition": [
@@ -1372,6 +1581,193 @@
             "event",
             "near"
           ]
+        }
+      }
+    ],
+    "options": [
+      {
+        "id": "fresh-light-occupied",
+        "label": "首次羽瞰点与居民占领+1参考",
+        "payload": {
+          "graph": {
+            "current_node": "start",
+            "zone_id": "zone_2",
+            "template_id": "public-light-plan",
+            "declaration_basis": "公开说明用假设图；首次/领取/AP均为独立声明，不是本局观察。",
+            "nodes": [
+              {
+                "id": "start",
+                "row": 0,
+                "col": 0,
+                "node_type_raw": "EMPTY",
+                "completed_declared": true,
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              },
+              {
+                "id": "light",
+                "row": 0,
+                "col": 1,
+                "node_type_raw": "LIGHT",
+                "completed_declared": false,
+                "occupied_declared": true,
+                "other_blocked_declared": false,
+                "light_arrival_declaration": {
+                  "first_entry": true,
+                  "reward_received": false
+                }
+              },
+              {
+                "id": "shop",
+                "row": 0,
+                "col": 2,
+                "node_type_raw": "BATTLE_SHOP",
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              }
+            ],
+            "edges": [
+              [
+                "start",
+                "light"
+              ],
+              [
+                "light",
+                "shop"
+              ]
+            ]
+          },
+          "target": "light",
+          "action_points": 2,
+          "difficulty": 3,
+          "split_unlocked": true,
+          "inventory": [
+            {
+              "instance_id": "spring",
+              "item_id": "rogue_6_scrap_M_12",
+              "remaining_uses": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "light-state-unknown",
+        "label": "羽瞰点首次/科技未知",
+        "payload": {
+          "graph": {
+            "current_node": "start",
+            "zone_id": "zone_2",
+            "template_id": "public-light-plan",
+            "declaration_basis": "公开说明用假设图；首次/领取/AP均为独立声明，不是本局观察。",
+            "nodes": [
+              {
+                "id": "start",
+                "row": 0,
+                "col": 0,
+                "node_type_raw": "EMPTY",
+                "completed_declared": true,
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              },
+              {
+                "id": "light",
+                "row": 0,
+                "col": 1,
+                "node_type_raw": "LIGHT",
+                "completed_declared": false,
+                "occupied_declared": true,
+                "other_blocked_declared": false
+              },
+              {
+                "id": "shop",
+                "row": 0,
+                "col": 2,
+                "node_type_raw": "BATTLE_SHOP",
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              }
+            ],
+            "edges": [
+              [
+                "start",
+                "light"
+              ],
+              [
+                "light",
+                "shop"
+              ]
+            ]
+          },
+          "target": "light",
+          "action_points": 2,
+          "difficulty": null,
+          "split_unlocked": null,
+          "inventory": [
+            {
+              "instance_id": "spring",
+              "item_id": "rogue_6_scrap_M_12",
+              "remaining_uses": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "light-no-overdraft",
+        "label": "返还不允许透支付款",
+        "payload": {
+          "graph": {
+            "current_node": "start",
+            "zone_id": "zone_2",
+            "template_id": "public-light-plan",
+            "declaration_basis": "公开说明用假设图；首次/领取/AP均为独立声明，不是本局观察。",
+            "nodes": [
+              {
+                "id": "start",
+                "row": 0,
+                "col": 0,
+                "node_type_raw": "EMPTY",
+                "completed_declared": true,
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              },
+              {
+                "id": "light",
+                "row": 0,
+                "col": 1,
+                "node_type_raw": "LIGHT",
+                "completed_declared": false,
+                "occupied_declared": true,
+                "other_blocked_declared": false,
+                "light_arrival_declaration": {
+                  "first_entry": true,
+                  "reward_received": false
+                }
+              },
+              {
+                "id": "shop",
+                "row": 0,
+                "col": 2,
+                "node_type_raw": "BATTLE_SHOP",
+                "occupied_declared": false,
+                "other_blocked_declared": false
+              }
+            ],
+            "edges": [
+              [
+                "start",
+                "light"
+              ],
+              [
+                "light",
+                "shop"
+              ]
+            ]
+          },
+          "target": "light",
+          "action_points": 0,
+          "difficulty": 3,
+          "split_unlocked": true,
+          "inventory": []
         }
       }
     ]

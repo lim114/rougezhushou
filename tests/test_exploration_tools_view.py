@@ -49,7 +49,9 @@ class ExplorationToolsTests(unittest.TestCase):
         self.assertEqual(count,10)
 
     def test_all_ten_queries_and_seven_boundary_presets_run_in_qt(self):
-        count=variants=0
+        count=variants=new_variants=0
+        original_variants={'exhausted','activation-unknown','payment-zero','random-price','exhausted-chain','main-final','gate-unknown'}
+        seen_original=set()
         for command,title in QUERIES['exploration']:
             self.panel.select_query('exploration',command)
             for preset in exploration_presets(command):
@@ -62,8 +64,11 @@ class ExplorationToolsTests(unittest.TestCase):
                     self.assertIn('所有持有/AP/状态均为说明声明',self.panel.result_view.toPlainText())
                     self.assertFalse(self.panel._result_links)
                     if preset['id']=='default':count+=1
-                    else:variants+=1
+                    elif preset['id'] in original_variants:variants+=1;seen_original.add(preset['id'])
+                    else:new_variants+=1
         self.assertEqual((count,variants),(10,7))
+        self.assertEqual(seen_original,original_variants)
+        self.assertEqual(new_variants,6)
 
     def test_graph_cache_refresh_preserves_complete_work_and_deep_copies(self):
         self.execute('targets');self.panel.technical.setChecked(True);self.qt.processEvents()

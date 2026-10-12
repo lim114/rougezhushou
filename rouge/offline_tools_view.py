@@ -18,6 +18,7 @@ from . import calibration, battle_planning, exploration_planning
 from urllib.parse import quote, unquote
 from .catalog import catalog
 from .battle_preview import battle_data
+from .node_arrival import arrival_lines
 
 
 CALIBRATION_QUERIES = (
@@ -85,8 +86,8 @@ INPUT_GUIDANCE.update({
     'zones':'列全部26个原区域ID；同名秘境分别保留。区域目标、主层追猎和秘境返回不同。',
     'budget':'zone_id选择区域；声明action_points和walking_steps或item_id。付款到零与后续奖励分别显示，真实顺序未知。',
     'valuation':'item_id选择自然物；events逐项声明独立触发次数和完美作战状态。随机变化、损坏和实际售价分别保留。',
-    'options':'graph、target与inventory声明图和独立加工品实例。比较全部候选的基础AP；已完成/住民阻碍未知时不保证可走。',
-    'itinerary':'steps每步使用mode（walking或库存实例ID）和target。只修改临时方案账本；未知步骤会保留未求值尾链。',
+    'options':'graph、target与inventory声明图和独立加工品实例。羽瞰点需node.light_arrival_declaration明确first_entry与reward_received；历史访问不补状态。difficulty和split_unlocked只为揭示数量参数；不猜几何。返还不能透支付款。',
+    'itinerary':'steps每步使用mode（walking或库存实例ID）和target。首次羽瞰点组件只在临时账本记领；AP到零或到达AP未知会截断可续行推导，尾链保留独立声明参考。实际结果与领取不自动取得。',
     'transition':'transition选择主层前进、秘境进入或返回。主层需exit_node_type；暂存品、剩余AP、FINAL等量希望参考与其他出口未知比率分开。',
     'residents':'声明graph与可选据点/居民位置，moves为1–10。连通距离5以内初始候选、每步候选和路线交集不等于实际占领。',
 })
@@ -110,7 +111,9 @@ VALUE_NAMES = {'physical': '物理', 'magic': '法术', 'true': '真实',
     'main_region_advance':'进入下一主区域','portal_enter':'进入秘境','portal_return':'返回原区域',
     'processed_item':'加工品','walking':'步行','same_position_reentry_reference':'同格再进入参考',
     'conditional_reference_step':'声明条件下参考步骤','blocked':'已列条件阻断',
-    'unresolved':'条件未知，停止依赖链','not_evaluated_after_stop':'前序停止，尚未求值'}
+    'unresolved':'条件未知，停止依赖链','not_evaluated_after_stop':'前序停止，尚未求值',
+    'zero_ap_callback_order_unverified':'付款到零，耗尽与返还顺序未证',
+    'node_arrival_ap_condition_unknown':'到达节点AP条件未明确'}
 
 
 def exploration_examples():
@@ -336,11 +339,28 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
                 _p('最低基础AP候选：'+_text(data['minimum_base_cost_candidates'])+'；数值：'+_text(data['minimum_base_ap_cost_reference'])+'；实际最优路线未知。')]
             for mode,path in (data.get('walking_paths') or {}).items():
                 if path:parts.append(_p('步行路径参考 '+mode+'：'+' → '.join(label(key) for key in path['path'])))
+            parts += [_table(['方案','加工品AP参考','羽瞰点AP参考','付款后','列示奖励后','付款到零'],
+                [(r.get('name',r['id']),r.get('item_ap_grant_reference'),r.get('node_arrival_reference',{}).get('node_arrival_ap_reference'),
+                  r.get('nominal_ap_after_payment_reference'),r.get('nominal_ap_after_combined_grants_reference'),r.get('payment_zero_boundary_reference')) for r in data['options']])]
+            if data.get('node_arrival_reference'):parts.extend(_p(line) for line in arrival_lines(data['node_arrival_reference']))
         elif command=='itinerary':
             parts += [_table(['步骤','目的地','状态','基础AP','移动AP奖励','付款后小计','奖励后小计'],
                 [(r['step'],label(r['target']),r['status'],r.get('base_ap_cost'),r.get('stated_ap_grant'),r.get('nominal_ap_after_payment'),r.get('nominal_ap_after_stated_grant')) for r in data['steps']]),
                 _p('名义最终位置：'+label(data['nominal_position'])+'；名义最终AP：'+_text(data['nominal_final_ap'])),
                 _p('依赖链停止原因：'+_text(data['stopped_reason'])+'；实际最终库存未知。')]
+            for row in data['steps']:
+                arrival=row.get('node_arrival_reference')
+                if arrival and arrival['original_type_matches_light'] is not False:
+                    parts.append(_h('步骤 '+str(row['step'])+' · 节点到达AP'))
+                    parts.extend(_p(line) for line in arrival_lines(arrival))
+                    parts.append(_p('已证分项算术小计（不是完整终值）：'+_text(row.get('nominal_ap_after_known_grants_subtotal'))))
+            tails=[r for r in data['steps'] if r['status']=='not_evaluated_after_stop']
+            if tails:
+                parts += [_h('保留的尾链独立声明参考'),
+                    _p('这些行只假设前一个计划目标已到达；AP、库存与实际继续均未知，不表示已经续行或必然结束。'),
+                    _table(['后续步骤','设想起点','目的地','声明mode','独立基础AP','实际继续'],
+                        [(r['step'],label(r.get('assumed_start_from_declared_plan')),label(r['target']),
+                          r.get('declared_step',{}).get('mode'),(r.get('independent_declared_option_reference') or {}).get('base_ap_cost'),r.get('actual_continuation')) for r in tails])]
         elif command=='transition':
             parts += [_p('转移：'+_text(data['transition'])),
                 _table(['零件','主层成功后过期','秘境例外保留','已声明耗尽','实际保留'],

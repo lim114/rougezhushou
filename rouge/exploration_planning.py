@@ -8,6 +8,7 @@ from collections import deque
 from functools import lru_cache
 import json
 from pathlib import Path
+from .node_arrival import arrival_reference,validate_arrival_state
 
 
 @lru_cache(maxsize=1)
@@ -59,6 +60,7 @@ def _graph(graph,start=None):
         for field in ('completed_declared','occupied_declared','other_blocked_declared','repeatable_declared'):
             if node.get(field) is not None and type(node[field]) is not bool:
                 raise ValueError(field+'需要布尔值或留空。')
+        validate_arrival_state(node)
         nodes[node['id']]=node;positions.add(key)
     if start is None: start=graph.get('current_node')
     if not isinstance(start,str) or start not in nodes:
@@ -351,7 +353,8 @@ def _walking_paths(graph,nodes,start,target):
     return results
 
 
-def movement_options(graph,target,inventory=None,action_points=None,start=None,passive_items=None,include_walking=True):
+def movement_options(graph,target,inventory=None,action_points=None,start=None,passive_items=None,include_walking=True,
+                     difficulty=None,split_unlocked=None):
     """Compare all declared item destinations and walking constraints by base cost."""
     nodes,start=_graph(graph,start);_integer(action_points,'行动力',optional=True)
     if not isinstance(target,str) or target not in nodes:raise ValueError('目标需要地图中的明确节点。')
@@ -387,18 +390,34 @@ def movement_options(graph,target,inventory=None,action_points=None,start=None,p
             'base_cost_affordable':None if action_points is None else action_points>=row['base_ap_cost'],
             'actual_entry_eligible':None,'movement_grants':effects['movement_grants'],'passives':effects['passives'],
             'source_selector':item['source_selector']})
+    types,_=_type_candidates(nodes[target])
+    arrival=arrival_reference(nodes[target],types,difficulty=difficulty,split_unlocked=split_unlocked)
+    for row in options:
+        item_grants=[g for g in row['movement_grants'] if g['resource']=='ap']
+        item_ap=None if any(g['condition_matches'] is None for g in item_grants) else sum(g['amount'] for g in item_grants if g['condition_matches'] is True)
+        payment=None if action_points is None or row['base_cost_affordable'] is False else action_points-row['base_ap_cost']
+        node_ap=arrival['node_arrival_ap_reference']
+        row.update(node_arrival_reference=deepcopy(arrival),item_ap_grant_reference=item_ap,
+                   nominal_ap_after_payment_reference=payment,
+                   nominal_ap_after_combined_grants_reference=None if payment is None or item_ap is None or node_ap is None else payment+item_ap+node_ap,
+                   payment_zero_boundary_reference=None if payment is None else payment==0,
+                   actual_ap_after_arrival=None)
     candidates=[row for row in options if row['known_conditions_match'] is not False and row['base_cost_affordable'] is not False]
     minimum=min((row['base_ap_cost'] for row in candidates),default=None)
     return _result(start=start,target=target,action_points_declared=action_points,walking_paths=paths,
-                   options=options,minimum_base_ap_cost_reference=minimum,
+                   options=options,node_arrival_reference=arrival,minimum_base_ap_cost_reference=minimum,
                    minimum_base_cost_candidates=[row['id'] for row in candidates if row['base_ap_cost']==minimum],
                    actual_best_route=None,limits=deepcopy(reference_data()['limits'])+[
                        '完成、住民和其他阻碍仅用明确声明；未知保留，已占领中途节点阻断步行。',
                        '加工品直达不受未完成中途节点阻断，但真实资格仍未知；每个库存实例独立保留。',
-                       '最低基础成本只是候选比较，不是最优收益、确定可用方案或游戏操作。'])
+                       '最低基础成本只是候选比较，不是最优收益、确定可用方案或游戏操作。',
+                       '羽瞰点只在明确首次且未领取声明下计入+1；历史类型或visited不补领取状态。',
+                       '付款资格先核对基础成本，不能用到达后返还透支；付款到0的触发顺序未知。',
+                       'AP小计只含移动、加工品和受约束的羽瞰点组件；其他节点结算及完整实际AP未知。'])
 
 
-def itinerary(graph,steps,inventory=None,action_points=None,start=None,passive_items=None):
+def itinerary(graph,steps,inventory=None,action_points=None,start=None,passive_items=None,
+              difficulty=None,split_unlocked=None):
     """A scratch reference ledger for a declared multi-move plan, never run memory."""
     nodes,start=_graph(graph,start);_integer(action_points,'行动力',optional=True)
     if not isinstance(steps,list) or not 1<=len(steps)<=100:raise ValueError('移动计划需要1–100项步骤对象。')
@@ -411,15 +430,27 @@ def itinerary(graph,steps,inventory=None,action_points=None,start=None,passive_i
         instance=entry.setdefault('instance_id',f'inventory:{ordinal}')
         if not isinstance(instance,str) or not instance or instance in seen:raise ValueError('库存实例标识必须唯一。')
         seen.add(instance);_integer(entry.get('remaining_uses'),'加工品剩余次数',optional=True)
-    cursor=start;ap=action_points;rows=[];stopped=None;known_cost=0;known_ap_grant=0;conditions_known=True
+    cursor=start;ap=action_points;rows=[];stopped=None;known_cost=0;known_ap_grant=0;known_node_ap=0;conditions_known=True
+    plan_graph=deepcopy(graph)
     for ordinal,step in enumerate(steps,1):
         if not isinstance(step,dict) or not isinstance(step.get('mode'),str):raise ValueError('每步需要移动mode和target。')
         target=step.get('target')
         if not isinstance(target,str) or target not in nodes:raise ValueError('每步目的地必须属于声明图。')
         if stopped:
-            rows.append({'step':ordinal,'target':target,'status':'not_evaluated_after_stop','reason':stopped});continue
-        scratch=deepcopy(graph);scratch['current_node']=cursor
-        options=movement_options(scratch,target,stock,ap,cursor,passives)
+            assumed_start=steps[ordinal-2]['target']
+            scratch=deepcopy(plan_graph);scratch['current_node']=assumed_start
+            unknown_stock=deepcopy(stock);unknown_passives=deepcopy(passives)
+            for item in unknown_stock:item['remaining_uses']=None
+            for passive in unknown_passives:passive['remaining_activations']=None
+            independent=movement_options(scratch,target,unknown_stock,None,assumed_start,unknown_passives,
+                                         difficulty=difficulty,split_unlocked=split_unlocked)
+            selected=next((r for r in independent['options'] if r['id']==step['mode']),None)
+            rows.append({'step':ordinal,'target':target,'status':'not_evaluated_after_stop','reason':stopped,
+                         'declared_step':deepcopy(step),'assumed_start_from_declared_plan':assumed_start,
+                         'independent_declared_option_reference':selected,'actual_continuation':None});continue
+        scratch=deepcopy(plan_graph);scratch['current_node']=cursor
+        options=movement_options(scratch,target,stock,ap,cursor,passives,
+                                 difficulty=difficulty,split_unlocked=split_unlocked)
         selected=next((row for row in options['options'] if row['id']==step['mode']),None)
         if selected is None:raise ValueError('所选mode没有对应步行候选或库存实例。')
         if selected['known_conditions_match'] is False or selected['base_cost_affordable'] is False:
@@ -431,8 +462,12 @@ def itinerary(graph,steps,inventory=None,action_points=None,start=None,passive_i
         cost=selected['base_ap_cost'];grant=sum(g['amount'] for g in selected['movement_grants']
                                                if g['resource']=='ap' and g['condition_matches'] is True)
         after_payment=None if ap is None else ap-cost
-        after_grant=None if after_payment is None else after_payment+grant
-        known_cost+=cost;known_ap_grant+=grant
+        arrival=selected['node_arrival_reference'];node_ap=arrival['node_arrival_ap_reference']
+        # Unknown arrival AP is absent from the known subtotal. The combined
+        # reference stays None and cannot fund the dependent next step.
+        after_known=None if after_payment is None else after_payment+grant+(node_ap or 0)
+        after_grant=None if after_payment is None or node_ap is None else after_payment+grant+node_ap
+        known_cost+=cost;known_ap_grant+=grant;known_node_ap+=node_ap or 0
         if selected['mode']=='processed_item':
             entry=next(e for e in stock if e['instance_id']==step['mode'])
             entry['remaining_uses']-=1;entry['nominal_destroyed']=entry['remaining_uses']==0
@@ -449,17 +484,32 @@ def itinerary(graph,steps,inventory=None,action_points=None,start=None,passive_i
         rows.append({'step':ordinal,'start':cursor,'target':target,'status':'conditional_reference_step',
                      'option':selected,'base_ap_cost':cost,'stated_ap_grant':grant,
                      'nominal_ap_after_payment':after_payment,'nominal_ap_after_stated_grant':after_grant,
+                     'stated_node_arrival_ap_grant':node_ap,'node_arrival_reference':arrival,
+                     'nominal_ap_after_known_grants_subtotal':after_known,
+                     'unknown_ap_components':['node_arrival'] if node_ap is None else [],
                      'payment_zero_boundary':boundary,'passive_reference_states':passive_rows,
                      'actual_move_succeeded':None})
+        if arrival['first_component_condition_matches'] is True:
+            next(n for n in plan_graph['nodes'] if n['id']==target)['light_arrival_declaration']={'first_entry':False,'reward_received':True}
         ap=after_grant;cursor=target
+        if boundary:
+            stopped='zero_ap_callback_order_unverified';conditions_known=False
+        elif node_ap is None:
+            stopped='node_arrival_ap_condition_unknown';conditions_known=False
     return _result(start=start,steps=rows,known_base_ap_cost_sum=known_cost,known_stated_ap_grant_sum=known_ap_grant,
+                   known_node_arrival_ap_grant_sum=known_node_ap,known_combined_ap_grant_sum=known_ap_grant+known_node_ap,
+                   node_arrival_reference_state_scope='conditional_plan_only',
+                   node_arrival_reference_state=[{'node_id':n['id'],'light_arrival_declaration':deepcopy(n['light_arrival_declaration'])}
+                       for n in plan_graph['nodes'] if 'light_arrival_declaration' in n],
                    inventory_reference_state=stock,passive_reference_state=passives,
                    nominal_position=cursor,nominal_final_ap=ap,complete_declared_conditions=conditions_known and not stopped,
                    stopped_reason=stopped,actual_final_position=None,actual_final_inventory=None,actual_final_ap=None,
                    limits=deepcopy(reference_data()['limits'])+[
                        '账本只对声明方案扣减已证使用次数，不更新本局持有或清空记忆。',
                        '随机落点、未知次数/资格或明确AP不足会停止依赖链，后续步骤保留为未求值。',
-                       '居民随移动更新、节点完成/战斗结算、零AP处理与其他费用仍未知，静态声明图不证明实际连续链。'])
+                       '居民随移动更新、节点完成/战斗结算、零AP处理与其他费用仍未知，静态声明图不证明实际连续链。',
+                       '首次羽瞰点组件只在临时方案中标为已领，不更新本局；再次到达的AP规则未证。',
+                       '付款到0或到达AP未知时停止可续行依赖链；尾链保留声明起点及独立条件参考，不断言实际必结束。'])
 
 
 def region_transition(transition,inventory=None,remaining_ap=None,exit_node_type=None,goal_success=None):
