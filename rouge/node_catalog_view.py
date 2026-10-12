@@ -47,9 +47,9 @@ def resource_reference_lines(reference):
         category=SCRAP_CATEGORIES[reference['scrap_category']]
         if kind=='category_item_cost':
             coverage=BUDGETS[reference['nominal_budget_covers']]
-            complete='持有表声明完整' if reference['inventory_complete_declared'] else '持有表不完整'
+            complete='有关零件数量声明完整' if reference['inventory_complete_declared'] else '有关零件数量不完整'
             lines += [f'物品费用参考：{source}；{amount}件{category}。',
-                      f"名义预算：{coverage}；已声明持有小计 {reference['known_owned_subtotal']}件，{complete}。"]
+                      f"名义预算：{coverage}；已声明数量小计 {reference['known_owned_subtotal']}件，{complete}。"]
         else:lines.append(f'随机物品增量参考：{source}；{amount}件{category}；实际物品与完整奖励池未知。')
     elif kind=='named_item_cost':
         lines += [f"物品费用参考：{reference['item_name']} × {amount}；{source}。",
@@ -70,6 +70,19 @@ def scene_outcome_lines(result):
         lines.append(f"当前文档分支参考：{reward}；{QUALIFICATIONS[row['status']]}；{row['source_condition']}。")
     lines += ['实际领取：未知；未证当前服务器脚本。仅此场景有较新文档观察，整份目录仍保留固定旧版范围。',
               '当前条件来源：'+source['url']]
+    return lines
+
+
+def choice_requirement_lines(check):
+    state='相符' if check['matches'] is True else '不符' if check['matches'] is False else '未知'
+    lines=['条件核对：'+state+'；'+check['source_text']]
+    reference=check.get('description_condition_reference')
+    if reference:
+        source=reference['sources']['current_event_document']
+        lines += [f"持有门原ID：{reference['required_item_id']}；仅判断持有，不认定消耗或实际可选。",
+            f"文字条件来源：固定427904与较新{source['revision']}已对照；"+source['url']]
+        ids=reference.get('original_content_reference_ids') or [reference['record_id']]
+        lines.append('同值原选项文字：'+'、'.join(ids)+'；该文字佐证不补来源入口链。')
     return lines
 
 def known_node_type(value):
@@ -179,8 +192,7 @@ def _event_flow_text(event_id,context=None,planning=False):
                 row=resources[choice['key']];qualification=row['choice_eligibility']
                 lines.append('    已列选项条件：'+QUALIFICATIONS[qualification['status']]+'；服务器是否可选仍未知。')
                 for check in qualification['parsed_special_requirements']:
-                    state='相符' if check['matches'] is True else '不符' if check['matches'] is False else '未知'
-                    lines.append('    条件核对：'+state+'；'+check['source_text'])
+                    lines.extend('    '+line for line in choice_requirement_lines(check))
                 references=row['resource_references']
                 if not references:lines.append('    资源数量：未识别顶层明确数量；不能视为零费用或零收益。')
                 for reference in references:
@@ -211,8 +223,14 @@ def special_original_text(record_id,context=None):
     result=event_planning.original_entry_qualification(record_id,context);reference=result['reference']
     if reference is None:
         raw=result['record'];destination=raw.get('nextSceneId')
-        return ('来源入口仍未知；nextSceneId只证明目的地，不反推来源场景。'+
-                ('\n原件目的地：'+destination if destination else '')+'\n当前服务器资格与完整可达链：未知。')
+        lines=['来源入口仍未知；nextSceneId只证明目的地，不反推来源场景。']
+        if destination:lines.append('原件目的地：'+destination)
+        if result.get('documented_choice_requirements'):
+            lines.append('原选项已列持有条件：'+QUALIFICATIONS[result['documented_choice_requirements_status']])
+            for check in result['documented_choice_requirements']:lines.extend(choice_requirement_lines(check))
+            lines.append('该条件结果不证明本原选项属于当前事件入口；未加入普通节点自然候选。')
+        lines.append('当前服务器资格与完整可达链：未知。')
+        return '\n'.join(lines)
     kind=reference['kind'];lines=['特殊入口资料：'+QUALIFICATIONS[result['status']],
         '来源绑定：'+('直接指针或完整差分原文已证' if result['source_scene_link_verified'] else '公开候选库身份相符；原sourceScene指针仍未证'),
         '实际当前展示/进入/服务器资格：未知；未加入普通地图自然候选。']

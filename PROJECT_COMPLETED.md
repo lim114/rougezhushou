@@ -1,3 +1,7 @@
+## 功能第221节 · 节点选择正文持有门与本局库存范围资格
+
+2026-10-12T20:37:42.992821+08:00。新增：红苔与愈创两笼控器选择、无人商店两档次四叶草化石选择增加独立持有三态；黑诞原门去重增强。节点详情与未知原选项显示精确原ID、当前/旧版对照、原选择文字佐证和未证边界。生产库存仅对明确藏品/工具ID范围证明缺失，零件未知不excluded；随机零件费用不把持有布尔值当数量。。必要检查100项，跳过0项，无失败。边界：Actual server selectable/entry scripts and actual consumption/transition remain unknown.；Literal original choice content does not prove its originating scene.；Production held flags remain limited to existing relic/tool reader; no new zero/positive scrap readings fabricated.；Full source body supports this ownership scope, not a server-wide exhaustive rule claim.；Root native visible window validation and serial integration still pending.。回执verification/sections/221.json。下一节222，下次全量230。
+
 ## 功能第220节 · 羽瞰点首次到达与连续路线AP条件账本
 
 2026-10-12T20:34:04.230502+08:00。新增：现有options/itinerary工具分开列加工品与LIGHT到达AP，在明确首次未领条件下纳入+1，临时方案防重领；缺领取状态或重复访问保持unknown。到零不借未来返还续行，尾链配置与独立条件参考完整保留。4/12/24按分裂/难度列数量候选，6新公开预置完成实际Qt工作流。。必要检查50项，跳过0项，无失败。边界：重复到达AP发放、零AP耗尽回调与返还的先后仍未证；不能断言实际必结束或必可续行。；first_entry/reward_received只来自独立明确声明；未从历史标题、visited、完成标志、模板或当前持有造快照。；真实完成标志/住民/迷雾/AP/加工品自动读取仍留到识别阶段。；未计算其它节点选择、作战结算、费用修正、居民移动/碰撞与完整收益，也不推荐实际最优路线。；4/12/24没有几何或真实揭示位置依据；没有新增地图校准。；Qt offscreen通过，root须在原Windows可见探索工具验收六预设与尾链显示，未操作游戏/聊天。。回执verification/sections/220.json。下一节221，下次全量230。

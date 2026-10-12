@@ -16,7 +16,7 @@ def observed_event_context(run):
     state=run.state
     resources=run.calculation_resources()
     gold=(resources.get('gold') or {}).get('value')
-    result={'item_presence':{},'inventory_complete':False,
+    result={'item_presence':{},'inventory_complete':False,'inventory_complete_item_ids':[],
             'condition_sources':{},'reference_context_scope':'same_run_last_confirmed_read_only'}
     if type(gold) is int and gold>=0:
         result['gold']=gold
@@ -43,7 +43,9 @@ def observed_event_context(run):
     expected=status.get('recognized',0)+status.get('recognized_tools',0)
     result['inventory_complete']=bool(status.get('complete') is True and not conflicts and not unqualified
         and sum(v is True for v in result['item_presence'].values())==expected)
+    result['inventory_complete_item_ids']=sorted(allowed)
     result['condition_sources']['item_presence']=sources
     result['condition_sources']['inventory_complete']={
-        'scope':'last_confirmed_inventory_status','confirmed_at':status.get('confirmed_at')}
+        'scope':'last_confirmed_relic_and_tactical_tool_inventory','confirmed_at':status.get('confirmed_at'),
+        'absence_proof_item_ids':sorted(allowed),'scrap_inventory_covered':False}
     return deepcopy(result)

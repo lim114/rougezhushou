@@ -8,6 +8,7 @@ from functools import lru_cache
 import json,re
 from pathlib import Path
 from . import node_catalog as catalog
+from . import choice_held_requirements
 
 
 @lru_cache(maxsize=1)
@@ -53,6 +54,10 @@ def _context(context):
             for k,v in quantities.items() if k in presence):
         raise ValueError('持有状态与数量声明矛盾，不能任选其一覆盖。')
     if type(context.get('inventory_complete',False)) is not bool:raise ValueError('inventory_complete需要布尔值。')
+    complete_ids=context.get('inventory_complete_item_ids')
+    if ('inventory_complete_item_ids' in context and (not isinstance(complete_ids,list) or
+            any(not isinstance(key,str) or not key for key in complete_ids) or len(complete_ids)!=len(set(complete_ids)))):
+        raise ValueError('库存完整度范围需要不重复的原物品ID列表；省略仅用于手动完整库存声明。')
     prior=context.get('pre_entry_item_quantities',{})
     if not isinstance(prior,dict) or any(not isinstance(k,str) or not k or type(v) is not int or v<0 for k,v in prior.items()):
         raise ValueError('进入前持有需要原物品ID到非负整数的对象。')
@@ -84,7 +89,19 @@ def _owned(context,item_id):
     quantities=context.get('item_quantities',{})
     if item_id in quantities:return quantities[item_id]>0
     if item_id in context.get('item_presence',{}):return context['item_presence'][item_id]
-    return False if context.get('inventory_complete',False) else None
+    return False if _inventory_complete_for(context,[item_id]) else None
+
+
+def _inventory_complete_for(context,item_ids):
+    if not context.get('inventory_complete',False):return False
+    if 'inventory_complete_item_ids' not in context:return True  # Explicit offline global declaration.
+    return set(item_ids)<=set(context['inventory_complete_item_ids'])
+
+
+def _quantity_inventory_complete_for(context,item_ids):
+    if not _inventory_complete_for(context,item_ids):return False
+    quantities=context.get('item_quantities',{});presence=context.get('item_presence',{})
+    return not any(key not in quantities and key in presence and presence[key] is not False for key in item_ids)
 
 
 def _named_item(name):
@@ -188,6 +205,17 @@ def choice_eligibility(event_id,scene_key,context=None):
             parsed.append(_check('excluded_by_sandbox_pair_or_visited_box',_not(_or(pair,visited)),text,
                                  simultaneous_pair_matches=pair,visited_box_matches=visited,
                                  required_item_ids=[alpha,beta],excluded_event_id=_event_id('窥视箱中'),history_field='visited'))
+        owned_reference=choice_held_requirements.choice_reference(event_id,choice)
+        if owned_reference:
+            item_id=owned_reference['required_item_id']
+            existing=next((row for row in parsed if row['key']=='required_owned_item' and row['required_item_id']==item_id),None)
+            if existing is None:
+                existing=_check('required_owned_item',_owned(context,item_id),owned_reference['source_text'],
+                    required_item_name=owned_reference['required_item_name'],required_item_id=item_id,
+                    source_field='top_level_result_description')
+                parsed.append(existing)
+            existing.update(description_condition_reference=owned_reference,
+                holding_is_consumption=False,actual_consumed=None)
         checks.extend(parsed)
         mapped=[deepcopy(original[cid]) for cid in choice['game_choice_ids'] if cid in original]
         if any(row['isHiddenChoice'] for row in mapped):
@@ -351,7 +379,7 @@ def choice_resources(event_id,scene_key,context=None):
             ids=[key for key,item in _reference()['source_item_names'].items()
                  if item['type']=='SCRAP' and (category is None or item['scrap_category']==category)]
             quantities=context.get('item_quantities',{});known=sum(quantities.get(key,0) for key in ids)
-            amount=int(amount);cost=verb=='消耗';complete=context.get('inventory_complete',False)
+            amount=int(amount);cost=verb=='消耗';complete=_quantity_inventory_complete_for(context,ids)
             coverage=None if not cost else True if known>=amount else False if complete else None
             actions.append({'kind':'category_item_cost' if cost else 'random_category_item_gain',
                 'scrap_category':category,'quantity_reference':amount,'candidate_item_ids':ids,
@@ -413,12 +441,20 @@ def _inherited_legacy(context,legacy_id):
 
 
 def original_entry_qualification(record_id,context=None):
-    """Direct special-entry identity and documented conditions, not natural spawning."""
+    """Source entry identity and independent choice gates, never natural spawning."""
     context=_original_context(context);raw=catalog.original_references(record_id=record_id)['rows'][0]
     data=catalog._original_entries();reference=data['records'].get(record_id);checks=[];extra={}
     if reference is None:
         checks=[_check('original_source_scene_unrecovered',None,
                        '原来源场景/展示条件未恢复；nextSceneId只能证明目的地。')]
+        owned_reference=choice_held_requirements.original_reference(record_id)
+        if owned_reference:
+            checks.append(_check('required_owned_item',_owned(context,owned_reference['required_item_id']),
+                owned_reference['source_text'],required_item_name=owned_reference['required_item_name'],
+                required_item_id=owned_reference['required_item_id'],source_field='original_result_description',
+                description_condition_reference=owned_reference,holding_is_consumption=False,actual_consumed=None))
+            extra.update(documented_choice_requirements=deepcopy(checks[1:]),
+                documented_choice_requirements_status=_status(checks[1:]))
     elif reference['kind']=='portal_entry_variant':
         event=catalog._event(reference['source_event_id']);checks=_event_checks(event,context)
         fog=context.get('fog_color');identity=context.get('original_scene_id')
