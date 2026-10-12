@@ -1,0 +1,72 @@
+{
+  "source_game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "source_metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "source_manifest_version": "26-09-13-15-28-10-30688348",
+  "remaining_unknowns": [
+    "Current native C# path versus active XLua/hotfix override.",
+    "Actual Character FSM entry, exit and re-entry instants, including target search, readiness and ability replacements.",
+    "Binding of caller-supplied target/movement/interrupt windows to those actual FSM transitions.",
+    "Actual escapeTime, fixed delta, source clock phase, playback adjustment, event callback dispatch and native coroutine resume timing.",
+    "Current random_range_num, random implementation state/seed, draw sequence, distribution and independence.",
+    "Full current gameplay skin/mode/ability replacement and callback binding."
+  ],
+  "restart_conditions": [
+    "A new pinned original script or targeted native call chain closes actual state-path occurrence and its boundary conditions under supported offline inputs.",
+    "A source-backed playback/coroutine phase rule can produce a new conditional numerical capability without guessing current engine mode or startup phase.",
+    "New public read-only evidence supplies current hotfix routing, random_range_num or RNG behavior; do not repeat the same search merely to invent defaults.",
+    "An independently authorized public runtime trace establishes the missing actual bindings without touching the game or private state during this batch."
+  ],
+  "verified_rules": [
+    {
+      "id": "cast_parameter_is_first_attack_gate",
+      "fact": "AbilityStandard CastToTarget/Directly/InputPosition receive the Boolean firstAttack. Their ordinary C# branches pass it to set_firstAttack; the backing byte is offset 0x114. The property can also be replaced by a hotfix delegate.",
+      "methods": [
+        63132,
+        63133,
+        63140,
+        63141,
+        63142,
+        63205
+      ]
+    },
+    {
+      "id": "state_entry_true_continuation_false",
+      "fact": "Character.States.AttackState.OnEnter invokes _StartAttack(true) after its entry guards; _NextAttackOrExit invokes _StartAttack(false) after target search. _StartAttack forwards the same Boolean to slot 33 CastToTarget through helper 0x180012f30. This distinguishes entry and continuation of that native state, not first use in a deployment or first use of each animation candidate.",
+      "methods": [
+        76192,
+        76195,
+        76196
+      ]
+    },
+    {
+      "id": "random_child_bool_forwarded",
+      "fact": "AbilityRandomGroup.CastToTarget preserves the caller Boolean and passes it to the selected child through slot 33. CastDirectly also forwards its supplied Boolean through slot 34. Changing from A to B or C does not itself set firstAttack true.",
+      "methods": [
+        91665,
+        91666
+      ]
+    },
+    {
+      "id": "finished_callback_escape_threshold",
+      "fact": "AttackState finish callback sets m_nextEscapeTime = fixedPlayTime + finishedAbility.escapeTime. It calls _NextAttackOrExit only when this state is still current, reason is not INTERRUPTED (enum 1), and the current attack isReady. The callback timestamp and escapeTime value are not derived here.",
+      "methods": [
+        76200
+      ]
+    },
+    {
+      "id": "short_gap_need_not_exit",
+      "fact": "If target search or _StartAttack(false) fails, _NextAttackOrExit requests the fallback state only when fixedPlayTime >= m_nextEscapeTime. Before that comparison succeeds it can remain in AttackState, so a target-window gap is not proof of state exit or a fresh firstAttack gate.",
+      "methods": [
+        76195
+      ]
+    },
+    {
+      "id": "tick_and_exit_guards",
+      "fact": "AttackState.OnTick checks abnormal-state transition, hasAttack, canUseAtkOrCbt, dialogue-target state, combat switching and current attack readiness. OnExit calls current attack InterruptIfNot; if a distinct raw attack is replaced, it can interrupt that raw attack too, then invokes Unit.OnFinishAttack. These guards are not bound to current calculator movement or interruption windows.",
+      "methods": [
+        76193,
+        76194
+      ]
+    }
+  ]
+}

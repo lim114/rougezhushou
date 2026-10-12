@@ -215,7 +215,7 @@ class AttackTimeline:
         selected=p.get('normal') if self.normal else p.get('skills',{}).get(str(self.s['skill']))
         return selected or p.get('normal') or {},bool(selected)
 
-    def attach_original_reference(self,stream,data,interval):
+    def attach_original_reference(self,stream,data,interval,wait_context=None):
         if not data.get('reference_id'):return
         from copy import deepcopy
         original={k:data[k] for k in (
@@ -230,6 +230,11 @@ class AttackTimeline:
             from .animation_reference import three_part_profile
             original['body_event_is_not_first_release']=True
             stream['three_part_reference']=three_part_profile(data,interval)
+            if wait_context is not None:
+                from .three_part_wait import project_wait_budget
+                stream['three_part_reference']['wait_budget']=project_wait_budget(
+                    stream['three_part_reference'],data['three_part_reference'],fps=FPS,
+                    **wait_context)
             stream['actual_first_release_seconds']=None
             note='三段动作的firstAttack门和实际启动未知；主体事件不能单独作为首次出手，未显式覆盖前摇时逐击预览保留延迟首击情景。'
             if note not in self.notes:self.notes.append(note)
@@ -397,7 +402,17 @@ class AttackTimeline:
             'attack_speed_sample':'攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准',
             'resume_frame':max(0,(starts[-1]+step-end)) if starts else 0,
             'source':data.get('source','未确认；保留延迟首击情景')}
-        self.attach_original_reference(stream,data,interval)
+        absolute_windows={key:self.ranges(key) for key in ('interrupt_windows','movement_windows','target_windows')
+                          if key in self.options}
+        def local_windows(key):
+            return [(max(0,a-self.offset),b-self.offset) for a,b in absolute_windows.get(key,[])
+                    if b>self.offset]
+        wait_context={'origin_frame':math.ceil(begin),'horizon_frames':frame_time(duration),
+            'interrupt_windows':local_windows('interrupt_windows'),
+            'movement_windows':local_windows('movement_windows'),
+            'target_windows':local_windows('target_windows') if 'target_windows' in self.options else None,
+            'declaration_offset_frame':self.offset,'absolute_declared_windows':absolute_windows}
+        self.attach_original_reference(stream,data,interval,wait_context)
         if fixed_impact:
             stream.update(fixed_impact_delay_frames=frame_time(fixed_impact['seconds']),
                 fixed_impact_delay_seconds=fixed_impact['seconds'],

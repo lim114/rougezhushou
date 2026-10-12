@@ -49,3 +49,25 @@ class StaticActionWindowTests(unittest.TestCase):
         self.assertIsNone(stream['three_part_reference']['selection']['sequence'])
         self.assertIsNone(stream['three_part_reference']['selection']['probabilities'])
         self.assertIsNone(stream['actual_first_release_seconds'])
+
+    def test_declared_three_part_wait_budget_reaches_actual_window_result_and_text(self):
+        self.window.use_run_training.setChecked(False);self.window.select_operator('kaltsit')
+        self.window.skill.setCurrentIndex(self.window.skill.findData(1));self.qt.processEvents()
+        self.window.frame_timing.setChecked(True)
+        self.window.skill_animation_reference.setCurrentIndex(1)
+        self.window.timing_scenario.setPlainText('{"interrupt_windows":[[0.5,0.8]],"movement_windows":[[0.8,1.0]]}')
+        self.window.calculate();self.qt.processEvents();self.assertIsNotNone(self.window.damage_result)
+        result=self.window.damage_result['result']
+        stream=next(s for s in result['timing']['streams'] if s.get('three_part_reference',{}).get('wait_budget'))
+        budget=stream['three_part_reference']['wait_budget']
+        for case in budget['conditional_budgets']:
+            self.assertEqual(case['declared_interruption_frame'],15)
+            self.assertEqual(case['reference_resume_candidate_frame'],30)
+            self.assertEqual(case['pending_wait_ticks_at_window_end'],0)
+            self.assertGreater(case['discarded_wait_ticks_due_to_declared_interruption'],0)
+            self.assertIsNone(case['restart_first_attack_gate_actual'])
+        text=self.window.damage_text.toPlainText()
+        self.assertIn('三段等待与声明窗口预算',text)
+        self.assertIn('客户端实际步长',text)
+        self.assertIn('移动/目标空窗均不清除等待',text)
+        self.assertTrue(self.window.isVisible())

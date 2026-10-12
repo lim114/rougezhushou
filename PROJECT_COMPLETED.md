@@ -1,3 +1,7 @@
+## 功能第212节 · 凯尔希与银灰三段等待、声明中断和窗口预算
+
+2026-10-12T15:13:56.366391+08:00。新增：已选凯normal/S1及银normal参考实际计算分列两门条件下每段等待预算、窗口内已消耗/未执行/仍待等待、声明中断取消预算与重新开始候选；各段用float32比值最近整数/中点取偶、至少1次，跳过段不调用等待；移动/供靶空窗不取消等待或重开门。。必要检查95项，跳过0项，无失败。边界：firstAttack/FSM path and actual mode/skin/XLua remain unknown；movement or target gaps do not cancel waits or reopen firstAttack；only explicitly declared interrupt_windows cancel this reference chain as a model condition; actual native event occurrence unknown；input-period playback remains a fixed profile condition; actual midchain speed changes unknown；no actual callback, skill-end or absolute clock derived from wait counts；wait cancellation discards unexecuted budget; a restart candidate does not resume cancelled iterator or imply animation/event stop；a budget assumes a chain started at the existing preview anchor; generic attack-start rows/target acquisition do not prove that native origin；Declaration offset rebasing does not recover real native chain origin or callback phase.。回执verification/sections/212.json。下一节213，下次全量215。
+
 ## 功能第211节 · 条件分支来源与全部阶段动作检视
 
 2026-10-12T14:29:43.135666+08:00。新增：固定战斗新增折叠分支检视，可选择来源分支/阶段，查看136分支147直接参数引用、160阶段203全部动作与精确装置文档触发参考；9激活alias对象可定位固定资料格，保留选择/文本选择/滚动并验证当前stage/原件摘要/已存引用一致。。必要检查40项，跳过0项，无失败。边界：同值branch_id与唯一alias仅证明配置引用，不证明实际触发。；不根据参数名Killed、summon或数值推断回调、阶段或绝对时钟。；敌人资料引用不证明已创建，原件字段不完整时保留来源未知。；预置来源位置与激活对象位置是资料坐标；SPAWN的路线数组和实际出生位置仍未知。；实际回调、全局时钟、阶段循环选择及生成路线数组仍未知。；没有新增独立地标校准；原图标记受既有校准范围约束。；Qt与原Windows窗口均核验局外功能，不等于实机游戏触发。。回执verification/sections/211.json。下一节212，下次全量215。

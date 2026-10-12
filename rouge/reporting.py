@@ -686,6 +686,38 @@ def build_report(scenario,result):
             notes.append('普通攻击A/B/C属于随机候选；未设概率、轮转顺序或平均时钟，明确所选候选不代表每击都会使用它。')
         if original['overridden_by_preview']:notes.append('明确输入的前/后摇仅覆盖逐击情景预览，不改变上述原件段时长参考。')
         if stream.get('temporary_attack_speed'):notes.append('此表按所列输入周期计算；期间变速的每次取样与实际中途重算时钟未核验。')
+        budget=parts.get('wait_budget')
+        if budget is not None:
+            wait_rows=[metric(prefix+'_grid','现有预览网格',budget['grid_fps'],'帧/秒'),
+                       metric(prefix+'_origin','模型参考起点',budget['reference_origin_frame'],'帧'),
+                       metric(prefix+'_horizon','声明计算窗口终点',budget['reference_horizon_frames'],'帧')]
+            for index,case in enumerate(budget['conditional_budgets']):
+                condition='开始段门成立' if case['first_attack_condition'] else '开始段门不成立'
+                key=prefix+'_wait_'+str(index)
+                for part,label in (('begin','开始段'),('oneshot','主体段'),('end','结束段')):
+                    segment=next(s for s in case['segments'] if s['segment']==part)
+                    wait_rows.append(metric(key+'_'+part,condition+'：'+label+'等待预算',segment['wait_ticks'],'次恢复'))
+                wait_rows.extend([metric(key+'_total',condition+'：分段等待合计',case['total_wait_ticks'],'次恢复'),
+                    metric(key+'_spent',condition+'：窗口内已消耗等待',case['spent_wait_ticks'],'次恢复'),
+                    metric(key+'_remaining',condition+'：窗口末未执行预算',case['remaining_wait_ticks'],'次恢复'),
+                    metric(key+'_discarded',condition+'：声明中断取消预算',case['discarded_wait_ticks_due_to_declared_interruption'],'次恢复'),
+                    metric(key+'_pending',condition+'：窗口末仍待等待',case['pending_wait_ticks_at_window_end'],'次恢复'),
+                    metric(key+'_complete',condition+'：窗口内等待完成',case['reference_completion_inside_window']),
+                    metric(key+'_cut',condition+'：声明中断位置',case['declared_interruption_frame'],'帧'),
+                    metric(key+'_resume',condition+'：声明中断后的重新开始候选',case['reference_resume_candidate_frame'],'帧')])
+            wait_rows.extend([metric(prefix+'_actual_delta','客户端实际步长',budget['actual_delta_play_time_seconds'],'秒'),
+                              metric(prefix+'_actual_resume','客户端实际恢复相位',budget['actual_resume_phase'])])
+            wait_notes=['以下以参考链在模型起点已开始为条件；实际取得目标/开始仍未知，不保证供靶空窗中会产生这条链。',
+                '已开始参考链的等待与通用逐击预览分列；移动声明可能改变逐击供靶，但不证明协程取消或原生状态重入。',
+                '等待采用当前源浮点重载的最近整数/中点取偶，调用时至少1次；每段分别求预算，未对合计秒数向上取整。',
+                '30Hz为本应用现有预览网格参数，客户端实际delta、调度支路和起点未知；等待完成不等于实际首击或技能结束。',
+                '只有已声明interrupt_windows在本模型中取消本次参考链；移动/目标空窗均不清除等待、不证明FSM重入，也不重开firstAttack门。',
+                '取消等待并不证明原动画或伤害事件已停止；实际回调与完整技能结束仍未知。',
+                '中断后的未执行预算已取消，不接着等待；重新开始候选只表示声明中断结束且移动区间允许新参考链，实际重启/目标获取/动作与门状态未知。',
+                '窗口边界遵守[开始帧,结束帧)：边界耗尽的等待不代表窗口内已发生回调；各段播放速度保持所列输入周期的条件。']
+            if budget['movement_windows']:wait_notes.append('所给移动窗口保留在结果中：其实际状态切换与ClearCoroutine触发缺少绑定，不自动取消已开始的等待。')
+            if budget['target_windows'] is not None:wait_notes.append('所给供靶空窗保留在结果中：短空窗可能仍停留AttackState，不能按空窗长短指定首门。')
+            sections.append(section('three_part_wait_'+str(len(seen_parts)),'三段等待与声明窗口预算',wait_rows,wait_notes))
         sections.append(section('three_part_animation_'+str(len(seen_parts)),'三段动作条件参考',rows,notes))
     changed=[]
     base_speed=estimate['base_stats'].get('attack_speed_reference',estimate['base_stats']['attack_speed'])
