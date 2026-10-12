@@ -1,3 +1,7 @@
+## 功能第218节 · 固定同类承伤与双来源元素伤害组合进入局外计算
+
+2026-10-12T20:26:44.586847+08:00。新增：七低星物理/法术同类白名单藏品先按base-one合并黑板；阿猛与冰中火元素伤害层独立相乘为3.5，损伤积累独立；混入未核验手动来源保留已证小计且完整伤害未知，中文报告注明来源及层。。必要检查62项，跳过0项，无失败。边界：参数算术不是float32获取顺序与FP完整逐包复制；实际附着、获取顺序、当前热更新、其他敌方/手动来源组合仍未核验；战斗条件断杖-波纹继续仅作说明，不恢复部署术师输入；不是完整实战技能总量或游戏面板成对校准。回执verification/sections/218.json。下一节219，下次全量230。
+
 ## 功能第217节 · 梅 MAR-X 原生空中条件与防御前单包组合的显式计算
 
 2026-10-12T20:23:43.359402+08:00。新增：默认关闭的局外FLY_ONLY声明参考，当前三阶特性资源和MeleeAttack原件链闭合；110%乘入防御前atkScale，驱动梅常态/麻痹弹/S2实际伤害分项、条件次数小计、报告和既有伤害预算；留空列双候选，完整实际总量仍None。。必要检查71项，跳过0项，无失败。边界：current native static files plus pinned original parameters; actualhotfix equivalence and runtime binding unverified；target condition is manual offline declaration; no live state/placement or battle-event input；successful current trait Ability attachment, valid damage source and usable target snapshot are reference conditions, not observed facts；full cast/window/cycle and actual hit/sample/end clocks remain None; old output times are existing previews；existing decimal parameter arithmetic, not bitexact singleprecision→FP/rounding replica；separate relic/reference packets not multiplied; combat-only triggers not restored。回执verification/sections/217.json。下一节218，下次全量230。

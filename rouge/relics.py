@@ -250,6 +250,22 @@ def prepare(scenario,profile):
     scenario['relic_ids']=[]
     scenario['_token_relic_effects']=token_effects
     candidates=rules+effects+token_effects
+    # The two compiled elemental instances are independent. A foreign manual
+    # effect does not establish how a further real buff joins their layer.
+    from .relic_damage_factors import verified_rule
+    elemental=[e for e in effects if verified_rule(e,'elemental')]
+    foreign=[e for e in scenario['effects'] if e.get('kind')=='damage_taken' and
+        e.get('damage_type')=='elemental' and e.get('value')!=0 and not verified_rule(e,'elemental')]
+    damage_composition_unresolved=bool(len({r['relic_id'] for r in elemental})>1 and foreign)
+    if damage_composition_unresolved:
+        effects=[e for e in effects if e not in elemental]
+        token_effects=[e for e in token_effects if not verified_rule(e,'elemental')]
+        candidates=rules+effects+token_effects
+        warnings.append('阿猛/冰中火的双来源元素承伤组合已核验，但新增手动承伤效果的实际来源层未知；未将双藏品混入该手动参数，完整伤害仍未知。')
+        for record in records:
+            if record['id'] in {r['relic_id'] for r in elemental}:
+                record['applied']=[r for r in record['applied'] if not verified_rule(r,'elemental')]
+                record['pending'].append('双藏品与未绑定手动承伤来源的组合层未知');record['status']='incomplete'
     unresolved_hp_sources=set()
     for group in dict.fromkeys(r.get('group') for r in candidates if r.get('stacking')=='unverified'):
         grouped=[r for r in candidates if r.get('group')==group]
@@ -319,6 +335,7 @@ def prepare(scenario,profile):
         'source_commit':mechanics()['commit'],'complete':not warnings,'enemy_effects':scenario['_relic_enemy_effects'],
         'token_effects':token_effects,'context':scenario.get('relic_context',{}),
         'context_source':scenario.get('relic_context_source','明确提供的计算情景'),'timing_unresolved':timing_unresolved}
+    if damage_composition_unresolved:resolution['damage_composition_unresolved']=True
     if ammo_unresolved:resolution['ammo_refill_unresolved']=True
     if uncertain:resolution['recipient_evidence_pending']=list(dict.fromkeys(uncertain))
     return scenario,resolution
@@ -475,6 +492,9 @@ def finish(result,resolution,attributes,scenario):
     finish_deployment(result,resolution,attributes,profile)
     from .elemental_relics import finish_neural_reference
     finish_neural_reference(result)
+    from .relic_damage_factors import finish_unresolved_composition,note_verified_composition
+    note_verified_composition(result,scenario)
+    finish_unresolved_composition(result,resolution)
     if resolution.get('ammo_refill_unresolved') or any(r.get('ammo_polling_pending') or r.get('ammo_order_pending') for r in rules):
         skill=result['estimate']['skill']
         for key in ('total_damage','total_healing','phase_damage','phase_healing','duration_seconds',

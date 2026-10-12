@@ -30,11 +30,12 @@ class SupplementalDamage146Tests(unittest.TestCase):
         self.assertAlmostEqual(r['rows'][1]['value'],base['rows'][1]['value']*1.2)
         self.assertAlmostEqual(r['rows'][1]['delta'],base['rows'][1]['value']*.2)
 
-    def test_multi_damage_scale_unknown_does_not_zero_all_types(self):
+    def test_verified_base_one_combo_is_qualified_and_type_specific(self):
         p=defaults();r=run_skill_reference(p,environment(['rogue_6_relic_legacy_5','rogue_6_relic_legacy_6']))
-        self.assertIsNone(r['rows'][2]['value']);self.assertIsNone(r['rows'][2]['declared_total'])
-        self.assertFalse(r['attribute_resolution']['complete_for_attribute_scope'])
-        self.assertIn('组合未知',format_run_reference(r))
+        base=skill_reference(p)
+        self.assertAlmostEqual(r['rows'][2]['value'],base['rows'][2]['value']*1.4)
+        self.assertTrue(r['attribute_resolution']['complete_for_attribute_scope'])
+        self.assertIn('相同效果先合并增幅',format_run_reference(r))
         p=defaults('char_210_stward')
         r=run_skill_reference(p,environment(['rogue_6_relic_legacy_5','rogue_6_relic_legacy_6']))
         self.assertEqual(r['rows'][1]['value'],skill_reference(p)['rows'][1]['value'])

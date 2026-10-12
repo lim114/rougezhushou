@@ -175,6 +175,9 @@ def format_run_reference(result):
     value=lambda v:'未知' if v is None else format(v,'.8g')
     damage=result['damage_reference']
     healing=result['healing_reference']
+    for dtype,composition in damage.get('damage_composition_reference',{}).items():
+        label={'physical':'物理','magic':'法术','true':'真实'}[dtype]
+        lines.append(label+'承伤同类藏品：相同效果先合并增幅，参数倍率'+value(composition['factor_parameter'])+'。当前数值是参数算术参考；原生浮点获取顺序、实际附着及当前热更新仍未核验。')
     if healing['composition_evidence']:
         lines.append('活玫瑰、苍白花冠及涌动之餐的已证组合：直接治疗独立乘算因子'+value(healing['healing_factor'])+'；生命回复同乘区加算因子'+value(healing['regeneration_factor'])+'。两种组合层分别计算，未核验当前热更新和实际附着/回复时钟。')
     lines.append('物理结算目标防御（已计支持的减防/穿透）：'+value(damage['effective_target_defense']))

@@ -245,7 +245,8 @@ class Combat:
         elif dtype=='true':damage=raw
         elif dtype=='elemental':damage=raw*(1-self.option('enemy_elemental_resistance',0,maximum=100)/100)
         else:raise ValueError('未知伤害类型。')
-        return damage*(1+sum(float(e['value']) for e in (self.effects if effects is None else effects) if e['kind']=='damage_taken' and e.get('damage_type')==dtype))*damage_factor(self.s,dtype)
+        from .relic_damage_factors import parameter_factor
+        return damage*parameter_factor(self.effects if effects is None else effects,dtype)*damage_factor(self.s,dtype)
 
     def neural(self,events,components,recovery_speed=1):
         threshold=2000 if self.s.get('enemy_is_boss') else 1000

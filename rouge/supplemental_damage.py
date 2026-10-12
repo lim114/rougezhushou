@@ -19,13 +19,21 @@ def damage_reference(scenario,rules,records):
         if entry and (record['pending'] or record['missing_conditions']) and any(e['kind']=='enemy_def_delta' for e in entry['effects']):
             pending_defense.append(record['name'])
     factors={}
+    from .relic_damage_factors import source_factor,EVIDENCE
+    compositions={}
     for dtype in ('physical','magic','true'):
-        values=[r['value'] for r in selected if r['kind']=='damage_taken' and r['damage_type']==dtype]
-        ordinary=None if len(values)>1 else 1+values[0] if values else 1
+        type_rules=[r for r in selected if r['kind']=='damage_taken' and r['damage_type']==dtype]
+        ordinary=source_factor(type_rules,dtype)
         from .enemy_environment import damage_factor
         factors[dtype]=None if ordinary is None else ordinary*damage_factor(scenario,dtype)
-        if len(values)>1:warnings.append('同类型多来源受伤倍率未在补充干员路径取得组合证据；'+dtype+'伤害组合未知。')
-    return {'effective_target_defense':None if pending_defense else scenario['enemy_defense']*max(0,1-penetration),
+        if ordinary is None:warnings.append('同类型来源不在已核验预处理合并白名单；'+dtype+'伤害组合未知。')
+        if len({r['relic_id'] for r in type_rules})>1 and ordinary is not None:
+            compositions[dtype]={'factor_parameter':ordinary,'source_ids':[r['relic_id'] for r in type_rules],
+                'composition':'same-prefab base-one blackboard merge','evidence':EVIDENCE,
+                'native_source_order_verified':False,'native_runtime_verified':False,
+                'numeric_precision':'parameter arithmetic; native float32 acquisition order not assumed'}
+    return {'damage_composition_reference':compositions,
+        'effective_target_defense':None if pending_defense else scenario['enemy_defense']*max(0,1-penetration),
         'penetration_ratio':penetration,'damage_factors':factors,'pending_defense':pending_defense,'warnings':warnings}
 
 

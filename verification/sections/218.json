@@ -1,0 +1,66 @@
+{
+  "title": "固定同类承伤与双来源元素伤害组合进入局外计算",
+  "remaining_item": "同类多来源最终伤害与敌方修正组合层",
+  "new_capability": "七低星物理/法术同类白名单藏品先按base-one合并黑板；阿猛与冰中火元素伤害层独立相乘为3.5，损伤积累独立；混入未核验手动来源保留已证小计且完整伤害未知，中文报告注明来源及层。",
+  "source_evidence": {
+    "receipt": "research/p2-relic-damage-composition-current/receipt.json",
+    "native_verification": "research/p2-relic-damage-composition-current/independent-verification.json",
+    "report": "research/p2-relic-damage-composition-current/REPORT.md"
+  },
+  "acceptance": [
+    "精确来源/类型白名单、同ID去重/逆序",
+    "防御与法抗后层、元素生命伤害与损伤积累分层",
+    "未知混入与零输出、不恢复战斗藏品输入",
+    "当前28方法4099唯一指令477绑定和模板原件核验"
+  ],
+  "limitations": [
+    "参数算术不是float32获取顺序与FP完整逐包复制",
+    "实际附着、获取顺序、当前热更新、其他敌方/手动来源组合仍未核验",
+    "战斗条件断杖-波纹继续仅作说明，不恢复部署术师输入",
+    "不是完整实战技能总量或游戏面板成对校准"
+  ],
+  "files": [
+    "rouge/relic_damage_factors.py",
+    "rouge/operator_engine.py",
+    "rouge/relics.py",
+    "rouge/supplemental_damage.py",
+    "rouge/supplemental_run.py",
+    "scripts/build_relic_mechanics.py",
+    "rouge/data/relic-mechanics.json",
+    "tests/test_supplemental_damage_146.py",
+    "tests/test_relic_damage_composition.py",
+    "research/p2-relic-damage-composition-current/current-templates.json",
+    "research/p2-relic-damage-composition-current/fixed-raw-sources.json",
+    "research/p2-relic-damage-composition-current/independent-verification.json",
+    "research/p2-relic-damage-composition-current/native-proof.json",
+    "research/p2-relic-damage-composition-current/prefab-binding.json",
+    "research/p2-relic-damage-composition-current/receipt.json",
+    "research/p2-relic-damage-composition-current/selected-metadata.json",
+    "research/p2-relic-damage-composition-current/verify_native.py",
+    "research/p2-relic-damage-composition-current/REPORT.md",
+    "verification/section-218/first-selector-error.txt"
+  ],
+  "test_selectors": [
+    "tests.test_relic_damage_composition",
+    "tests.test_supplemental_damage_146",
+    "tests.test_flower_healing_composition",
+    "tests.test_neural_relic_034",
+    "tests.test_neural_sources_035"
+  ],
+  "root_integration_scope": "Source-supported offline function; real runtime/clock/hotfix is not inferred from temporary Qt checks.",
+  "root_native_window": "Existing original test window remains available; temporary MainWindow tests validate new controls without writing original state. Updated visible original window is checked at the next grouped UI/full closeout.",
+  "section": 218,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T20:26:44.586847+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 62,
+    "passed": 62,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-218/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 230
+}
