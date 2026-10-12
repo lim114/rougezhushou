@@ -139,11 +139,24 @@ class AmiyaPhaseReferenceTests(unittest.TestCase):
             self.assertEqual(zero['known_healing_subtotals']['window_healing'],0)
             self.assertEqual(zero['total_healing'],0)
 
-    def test_unverified_multiple_healing_factors_do_not_change_partial_reference(self):
-        r=evaluate(MEDICAL,relic_ids=['rogue_6_relic_legacy_81','rogue_6_relic_legacy_82'])
-        self.assertEqual(r['known_healing_subtotals']['window_healing'],1000)
-        self.assertEqual(sum(c['total'] for c in components(r)['咒愈师伤害转治疗']['known_healing_sources']),1000)
-        self.assertIsNone(r['total_healing'])
+    def test_proved_multiple_healing_factors_scale_partial_reference_keep_total_unknown(self):
+        # Section 198's independent receiving-heal modifiers multiply. Only
+        # the already placed opening subtotal is known; the attack phase and
+        # full linked healing remain unbound, so this is not full skill HPS.
+        for mode in ('frames','continuous'):
+            r=evaluate(MEDICAL,timing_mode=mode,
+                       relic_ids=['rogue_6_relic_legacy_81','rogue_6_relic_legacy_82'])
+            self.assertEqual(r['known_healing_subtotals']['window_healing'],1560)
+            self.assertEqual(sum(c['total'] for c in components(r)['咒愈师伤害转治疗']['known_healing_sources']),1560)
+            self.assertEqual(r['amiya_phase_reference']['opening_healing_reference'],1560)
+            self.assertEqual(r['amiya_phase_reference']['window_reference']['opening_healing_reference'],1560)
+            self.assertIsNone(components(r)['咒愈师伤害转治疗']['actual_total'])
+            self.assertIsNone(r['total_healing'])
+            self.assertIn('开启伤害派生治疗条件参考：1,560',format_estimate(r))
+            zero=evaluate(MEDICAL,timing_mode=mode,window_seconds=0,
+                          relic_ids=['rogue_6_relic_legacy_81','rogue_6_relic_legacy_82'])
+            self.assertEqual(zero['known_healing_subtotals']['window_healing'],0)
+            self.assertEqual(zero['total_healing'],0)
 
     def test_report_labels_nominal_reference_and_unknown_actual_phase(self):
         for op in (TACTICAL,MEDICAL):

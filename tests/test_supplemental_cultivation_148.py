@@ -33,7 +33,13 @@ class Cultivation148Tests(unittest.TestCase):
         p=defaults('char_123_fang');e=environment(['rogue_6_relic_hand_1'])
         r=compare_cultivation(p,e,cultivation_defaults(p,e))
         row=next(row for row in r['rows'] if row['proposal']=='当前培养及来源' and row['key']=='deployment')
-        self.assertIsNone(row['value']);self.assertIsNone(row['delta'])
+        # Section191 source: rune integer 10*0.5=5, then the unlocked talent -1.
+        # A conditional source projection is separate from an observed charge.
+        self.assertEqual(row['value'],4);self.assertEqual(row['delta'],0)
+        reference=r['baseline']['deployment_reference']
+        self.assertEqual(reference['native_with_talent']['attributes_cost'],5)
+        self.assertEqual(reference['talent_source']['layer'],'after_rune_integer_before_redeploy_and_first_card_scale')
+        self.assertIsNone(reference['actual_cost']);self.assertFalse(reference['live_first_deployment_verified'])
 
     def test_invalid_cultivation_does_not_destroy_other_variants(self):
         p=defaults();e=environment();choices=cultivation_defaults(p,e)

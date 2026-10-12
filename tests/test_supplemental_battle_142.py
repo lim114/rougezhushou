@@ -139,8 +139,14 @@ class SupplementalBattle142Tests(unittest.TestCase):
         e['relic_context']['battle_start_shields']=2
         r=run_skill_reference(p,e)
         self.assertEqual(r['rows'][0]['value'],6)
-        self.assertIsNone(r['rows'][1]['value'])
-        self.assertIn('轻量化天赋与藏品费用链',format_run_reference(r))
+        # The section191 compiled source closes only the -1 talent composition.
+        self.assertEqual(r['rows'][1]['value'],9)
+        self.assertIsNone(r['rows'][1]['declared_total'])
+        self.assertIsNone(r['deployment_reference']['actual_cost'])
+        self.assertFalse(r['deployment_reference']['talent_source']['current_hotfix_equivalence_proven'])
+        report=format_run_reference(r)
+        self.assertIn('芬轻量化：符文先取整数',report)
+        self.assertIn('当前热更新及实际扣费仍未核验',report)
         self.assertAlmostEqual(r['attributes']['attack'],r['run_attributes']['attack']*1.4)
         self.assertAlmostEqual(r['attributes']['hp'],r['run_attributes']['hp']*1.4)
         self.assertTrue(r['attribute_resolution']['unsupported'])

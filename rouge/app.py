@@ -79,7 +79,7 @@ def number(value=0, maximum=100000, decimals=2):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('黑流树海助手 0.70 · 局外计算与节点测试（185）')
+        self.setWindowTitle('黑流树海助手 0.71 · 局外计算与节点测试（200）')
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader()
@@ -125,13 +125,15 @@ class MainWindow(QMainWindow):
         tabs.addTab(self.make_capture_tab(), '采样测试')
         tabs.addTab(self.make_damage_tab(), '伤害测试')
         tabs.addTab(self.make_chat_tab(), '聊天分析')
-        tabs.addTab(self.make_map_tab(), '地图预测')
+        self.exploration_map_tab=self.make_map_tab()
+        tabs.addTab(self.exploration_map_tab, '地图预览')
         self.battle_preview=BattlePreviewPanel()
         self.battle_preview.stageSelected.connect(self.select_battle_stage)
         tabs.addTab(self.battle_preview,'战斗预览')
         from .node_catalog_view import NodeCatalogPanel
         self.node_catalog=NodeCatalogPanel()
         self.node_catalog.stageSelected.connect(self.show_catalog_battle)
+        self.node_catalog.mapNodeSelected.connect(self.show_catalog_map_node)
         tabs.addTab(self.node_catalog,'节点事件')
         from .offline_tools_view import OfflineToolsPanel
         self.offline_tools=OfflineToolsPanel()
@@ -310,6 +312,12 @@ class MainWindow(QMainWindow):
                 self.map_nodes.addItem(location(node,remembered['grid']['rows']),node['id'])
         self.map_nodes.blockSignals(False)
         self.map_view.set_map(remembered,image,historical=not fresh)
+        from .node_catalog_view import map_conditions
+        resources=self.run.calculation_resources()
+        gold=(resources.get('gold') or {}).get('value')
+        context={'gold':gold} if type(gold) is int and gold>=0 else {}
+        self.node_catalog.set_map_context(remembered,map_conditions(remembered,self.run.state.get('config',{})),
+            epoch=self.run.state['started_at'],historical=not fresh,runtime_context=context)
 
     def refresh_windows(self):
         if self.busy:
@@ -850,6 +858,20 @@ class MainWindow(QMainWindow):
         self.select_battle_stage(sid)
         self.battle_preview.set_stage(sid)
         self.centralWidget().setCurrentWidget(self.battle_preview)
+
+    def show_catalog_map_node(self,node_id,binding):
+        """Navigate the assistant only, rejecting stale run/template/position links."""
+        graph=self.map_view.graph or {}
+        node=next((n for n in graph.get('nodes',[]) if n['id']==node_id),None)
+        valid=(isinstance(binding,dict) and binding.get('epoch')==self.run.state['started_at']
+            and binding.get('zone_id')==graph.get('zone_id') and binding.get('template_id')==graph.get('template_id')
+            and binding.get('node_id')==node_id and node is not None
+            and type(binding.get('row')) is int and type(binding.get('col')) is int
+            and binding['row']==node['row'] and binding['col']==node['col'])
+        if not valid:
+            self.node_catalog.status.setText('节点链接已过期或位置不符；请使用本局当前地图记录。');return
+        self.map_view.select_node(node_id)
+        self.centralWidget().setCurrentWidget(self.exploration_map_tab)
 
     def select_battle_stage(self,sid):
         self.target_stage_choices.select_value(sid)
