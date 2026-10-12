@@ -1,0 +1,116 @@
+{
+  "date": "2026-10-12",
+  "scope": "Source-bound PHY-X fixed recipient ratio output-healing composition; not actual target timing or current hotfix",
+  "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "base_version": "26-09-13-15-28-10-30688348",
+  "native_methods": 40,
+  "unique_instruction_checks": 5195,
+  "metadata_binding_spans": 213,
+  "all_native_and_metadata_bytes_match": true,
+  "operator_id": "char_298_susuro",
+  "module_id": "uniequip_002_susuro",
+  "stages": [
+    1,
+    2,
+    3
+  ],
+  "comparison_rule": {
+    "formula": "target_ratio_raw < threshold_raw + EPS_raw",
+    "fractional_places": 32,
+    "threshold_raw": 2147483648,
+    "epsilon_source": "FP.EN5 = One / (100000<<32), native rounded division",
+    "epsilon_raw": 42950,
+    "last_passing_raw": 2147526597,
+    "first_failing_raw": 2147526598
+  },
+  "healing_composition": "source ON_OUTPUT_MODIFIER (module) then receiver ON_APPLYING_MODIFIER (Susuro cost talent and source-bound flowers); each ModifierScaleUp multiplies current modifier.value",
+  "natural_regeneration_affected": false,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_state_read": false,
+  "current_hotfix_equivalence_proven": false,
+  "preserved_correction": "Description says below50%, but current template usesLE and native FP_LARGE_EPS; the proposed equal50% not-applicable counterexample was withdrawn.",
+  "remaining_unknown": [
+    "Actual recipient hp/maxHp and HP trajectory",
+    "Actual acquisition, coverage, life eligibility, healing clocks",
+    "Current XLua/hotfix equivalence",
+    "Arbitrary heal/regen/final-damage source combinations outside the listed binding"
+  ],
+  "artifact_sha256": {
+    "native-proof.json": "058717a76d9d9856990386675226837287fc37d41d3ef652d667e63f99f99abf",
+    "selected-metadata.json": "69653c68f43e03a8e6daf437d7468b5f298b797790b64efe69683842a88e8cf4",
+    "prefab-binding.json": "95b8c625c258cc655d98ba2cd343cf46e42b097e4d4fde7a4023386cdc3b9dce",
+    "current-templates.json": "4c13eaa2e4af6b92c6a3fbaafbe738504514182ec8071c5d40481ec8bfb1df68",
+    "fixed-raw-sources.json": "3a17e1af2674f1b61d48fb5d3f9021e19ce16a61449664f491f2c62a3659c776",
+    "verify_native.py": "9aae432a8137ef5f9cc227fe06d0bea71288ddc8e781b9adb392a2a02d21bc4a"
+  },
+  "native_epsilon_independent_guard_bit_oracle": {
+    "guard_bit_quotient": 85899,
+    "rounded_raw": 42950
+  },
+  "native_boundary_oracles": [
+    {
+      "ratio_raw": 2147483648,
+      "ratio_reference": 0.5,
+      "qualified": true
+    },
+    {
+      "ratio_raw": 2147526597,
+      "ratio_reference": 0.5000099998433143,
+      "qualified": true
+    },
+    {
+      "ratio_raw": 2147526598,
+      "ratio_reference": 0.5000100000761449,
+      "qualified": false
+    },
+    {
+      "ratio_raw": 2147526599,
+      "ratio_reference": 0.5000100003089756,
+      "qualified": false
+    }
+  ],
+  "validation": {
+    "related_tests": 72,
+    "passed": 72,
+    "failed": 0,
+    "main_window_test": "temporary public state; offscreen, no actual visible native-window claim",
+    "game_sampling": false,
+    "chat_sends": false
+  },
+  "first_failures": [
+    {
+      "kind": "fixture",
+      "detail": "Zero-width window HPS was incorrectly expected0 in first new test; existing0/0 remainsNone. Corrected to compare existing high-HP fixture."
+    },
+    {
+      "kind": "draft formatting",
+      "detail": "First tiny existing-test fixture edit lost indentation; corrected before successful related run."
+    },
+    {
+      "kind": "fixture",
+      "detail": "First UI switch fixture used古米level80, which exceeds herlevel70 cap; corrected public fixture, no product change."
+    },
+    {
+      "kind": "source sealing",
+      "detail": "Initial vtable projection used unshifted encoded index; caught by method-identity check and corrected totag3 odd((encoded&0x1ffffffe)>>1). Slot44 isGetPassiveBuffs,45GetActiveBuffs,64AddPassiveBuffs. Final published slots assert these exact identities."
+    }
+  ],
+  "code_hygiene": {
+    "shared_tracked_source_modified": false,
+    "private_configs_read_or_written": false,
+    "patch_scope": [
+      "rouge/operator_engine.py",
+      "rouge/operator_options.py",
+      "rouge/app.py",
+      "rouge/reporting.py",
+      "rouge/susuro_healing.py",
+      "rouge/susuro_healing_view.py",
+      "tests/test_susuro_module_healing.py",
+      "tests/test_susuro_module_healing_view.py",
+      "tests/test_susuro_recipient_factor.py"
+    ],
+    "functional_section_number_assigned": false
+  }
+}

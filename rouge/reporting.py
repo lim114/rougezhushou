@@ -1399,6 +1399,19 @@ def build_report(scenario,result):
         sections.append(section('squad_unlock_reference','强化分队 · 条件资料',[
             metric('account_unlock','账户解锁状态',None),
             metric('activation','解锁条件实际激活',None)],notes))
+    susuro=result.get('susuro_module_healing_reference')
+    if susuro:
+        qualified=susuro['qualified']
+        sections.append(section('susuro_module_healing','苏苏洛模组 · 受疗者生命条件',[
+            metric('recipient_ratio','声明受疗者生命比例',susuro['recipient_hp_ratio'],''),
+            metric('qualified','基包条件判断','未知' if qualified is None else '符合' if qualified else '不符合'),
+            metric('healing_factor','直接治疗情景倍率',susuro['factor'],'倍'),
+            metric('regen_factor','自然生命回复额外倍率',1,'倍'),
+            metric('actual_hp_trajectory','实际受疗者血量变化','未知'),
+            metric('native_tolerance','原生比较容差',susuro['epsilon_ratio_reference'],'生命比例')],
+            ['此输入属于受疗者，与苏苏洛自身生命、缺失生命及敌人血量无关；未指定时不默认满血或低血。',
+             '基包LE按Q32.32原值与阈值加42950原始单位比较：恰好50%符合，容差内稍高于50%也可能符合；当前热更新未核验。',
+             '15%为治疗输出层增强，与低费受疗及三花受疗因子分别作用；不增强自然生命回复。固定比例情景不证明实际友方获取、覆盖、血量轨迹或治疗时刻。']))
     sections.extend(current_output_breakdown_sections(result))
     sections.extend(reproducible_context_sections(scenario,result))
     sections.extend(event_clock_reference_sections(scenario,result))

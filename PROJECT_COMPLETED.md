@@ -1,3 +1,7 @@
+## 功能第215节 · 苏苏洛模组受疗生命条件与多来源治疗组合
+
+2026-10-12T20:21:03.195575+08:00。新增：有效PHY-X独占的受疗者固定生命比例输入驱动普疗、两技能和技能后普疗；按基包Q32.32 LE容差判定，源端15%与低费/三花受疗层各乘一次；未知保留已证小计并遮非零完整量，自然生命回复不改变。。必要检查150项，跳过0项，无失败。边界：实际受疗者HP轨迹、获取、范围、覆盖及治疗时钟未证；版本化基包附着与当前XLua热更新不同；不是实机面板成对校准；固定比例情景不恢复游戏显示百分比的真实HP；其他多来源治疗和生命回复组合仍待证据；保持既有全量遗留失败，不缩减测试范围。回执verification/sections/215.json。下一节216，下次全量230。
+
 ## 功能第214节 · 机械师模组防御前条件单包与既有窗口计算
 
 2026-10-12T15:45:58.408591+08:00。新增：当前封存隐藏天赋、技能索引门、伤害来源与事件14闭合后，默认关闭的机械师模组条件单包接入实际计算/报告、培养界面、单包算例及既有冲锋/破屏窗口。明确本体、自己token、其它/未阻挡/未知身份，防御前atkScale乘法不重复面板或最终伤害层，完整实际总量保持未知。。必要检查95项，跳过0项，无失败。边界：static versioned native rule, not current hotfix or actual runtime binding；each source-valid packet and actual hidden ability attachment are explicit mathematical preconditions；manual JSON blocker identity is not automatic actual combat state; counts/range/token number do not determine identity；existing preview counts and supplied collisions remain conditional references; actual clock/start/sample/end unknown；full totals and cycle/window DPS stay None; static condition subtotals have a separate report section；no promotion to token own damage, summoned-structure damage, healing or unknown packet scope；root212 timing offset clipping repair is untouched: no timing.py or static_action_window hunks in this patch。回执verification/sections/214.json。下一节215，下次全量215。

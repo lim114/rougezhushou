@@ -79,7 +79,7 @@ def number(value=0, maximum=100000, decimals=2):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('黑流树海助手 0.83 · 局外计算与节点测试（214）')
+        self.setWindowTitle('黑流树海助手 0.84 · 局外计算与节点测试（215）')
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader()
@@ -712,7 +712,12 @@ class MainWindow(QMainWindow):
         for operator,entries in OPTIONS.items():
             for key,label,default,maximum,skills in entries:
                 if key=='healing_targets':continue
-                if isinstance(default,bool):
+                if default is None:
+                    from .susuro_healing_view import RecipientRatioInput
+                    widget=RecipientRatioInput()
+                    widget.setToolTip('受疗者独立生命比例情景；不使用干员自身生命、缺失生命或截图百分比推断。基包LE比较有Q32.32容差，恰好50%也生效；实际血量变化及时钟未知。')
+                    widget.valueChanged.connect(lambda:self.calculate())
+                elif isinstance(default,bool):
                     widget=QCheckBox(label);widget.setChecked(default)
                     widget.toggled.connect(lambda:self.calculate())
                 elif isinstance(default,int):
@@ -1379,6 +1384,9 @@ class MainWindow(QMainWindow):
         for widget,visible in conditions:self.damage_form.setRowVisible(widget,visible)
         for owner,key,skills,widget in self.model_option_widgets:
             visible=owner==op and skill in skills
+            if key=='healing_target_hp_ratio':
+                from .susuro_healing import selected_trait
+                visible=visible and selected_trait(profile,{'operator':op,**self.training_conditions()}) is not None
             if owner=='mechanist' and key=='mechanist_module_static_reference':
                 from .mechanist_module_reference import qualification
                 visible=visible and qualification({'operator':op,'skill':skill,**self.training_conditions()})['qualified']

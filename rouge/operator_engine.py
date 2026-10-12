@@ -84,6 +84,8 @@ class Combat:
         self.bb=self.skill['values']
         self.talents,self.module_parts=selected_talents(self.p,scenario)
         self.tv={t['name']:t['values'] for t in self.talents}
+        from .susuro_healing import reference as susuro_healing_reference
+        self.susuro_module_healing_reference=susuro_healing_reference(self.p,scenario)
         self.gnosis_isw_a_reference=next((t['gnosis_isw_a_reference'] for t in self.talents
             if t.get('gnosis_isw_a_reference')),None)
         self.mizuki_amb_y_reference=next((t for t in self.talents
@@ -360,6 +362,8 @@ class Combat:
                 raise ValueError('low_cost_healing_target 不接受文本条件；请使用布尔值。')
             recipient_factor=self.talent('微创治疗','heal_scale',1) if (
                 op=='char_298_susuro' and self.s.get('low_cost_healing_target')) else 1
+            if self.susuro_module_healing_reference:
+                recipient_factor*=self.susuro_module_healing_reference['factor'] or 1
             if normal and op=='char_298_susuro':regular('healing',scale=recipient_factor,times=min(1,healing_targets),name='普通治疗')
             elif normal:
                 if op=='char_196_sunbr':
@@ -1961,6 +1965,8 @@ class Combat:
             result['estimate']['notes'].append(
                 '四岁条件下保留攻击力加成与4秒获得1点技力原参数；周期首跳、计时起点、重置和阻回期间归属未核验，'
                 '不折算成自然回复速度，不用其它来源的充能算例证明完整初动、结束后充能或周期。')
+        from .susuro_healing import attach_result as attach_susuro_healing
+        attach_susuro_healing(result,self.susuro_module_healing_reference)
         return result
 
 

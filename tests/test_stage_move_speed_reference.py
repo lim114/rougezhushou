@@ -132,7 +132,13 @@ class StageMoveSpeedReferenceTests(unittest.TestCase):
         entry = enemy_preview(SID, EID, 0, {'difficulty': {'value': 4}})
         self.assertEqual(entry['environment']['stats']['maxHp'], 30000)
         self.assertEqual(entry['environment']['stats']['atk'], 198)
-        self.assertNotIn('moveSpeed', entry['environment']['stats'])
+        # Section203 retains all exact fixed fields; their presence does not prove
+        # the unresolved movement rune's target/write/stacking layer.
+        self.assertEqual(entry['environment']['stats']['moveSpeed'], 2)
+        self.assertEqual(entry['movement_reference']['base_times_stage_speed'], 1)
+        self.assertFalse(entry['movement_reference']['complete_effective_speed_verified'])
+        self.assertIsNone(entry['movement_reference'][KEY]['combined_with_stage_multiplier_speed'])
+        self.assertIn('预计有效移速：未知', enemy_text(entry))
         self.assertIn('关卡存在未覆盖的属性修正字段。', entry['context_pending'])
         for mode in ('frames', 'continuous'):
             for window in (0, 10):

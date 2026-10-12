@@ -41,7 +41,8 @@ class SusuroRecipientFactorTests(unittest.TestCase):
     def test_same_identity_module_override_replaces_base_factor_without_multiplying_it(self):
         for stage,potential,factor in ((1,1,1.2),(1,4,1.2),(1,5,1.23),(2,1,1.23),(2,4,1.23),(2,5,1.26),(3,1,1.25),(3,4,1.25),(3,5,1.28)):
             for mode in ('frames','continuous'):
-                base={'module_id':'uniequip_002_susuro','module_level':stage,'potential':potential,'timing_mode':mode}
+                base={'module_id':'uniequip_002_susuro','module_level':stage,'potential':potential,'timing_mode':mode,
+                    'healing_target_hp_ratio':.8}
                 a=evaluate(**base,low_cost_healing_target=False)['estimate']['skill']
                 b=evaluate(**base,low_cost_healing_target=True)['estimate']['skill']
                 self.assertAlmostEqual(b['total_healing'],a['total_healing']*factor)

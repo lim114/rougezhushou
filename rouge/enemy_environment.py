@@ -33,7 +33,9 @@ def resolve_enemy(scenario,resolution):
     candidates=[e for e in preview['possible_enemies'] if e['id']==target.get('enemy_id') and e['level']==target.get('level')]
     if len(candidates)!=1:raise ValueError('目标敌人身份/等级必须与关卡引用唯一匹配。')
     from .enemy_panel import enemy_panel_reference
-    panel=enemy_panel_reference(sid,target['enemy_id'],target['level'])
+    # The unique fixed record has an integer lookup key. Preserve the caller's
+    # historical integral float in the returned identity, never mutate it.
+    panel=enemy_panel_reference(sid,target['enemy_id'],int(candidates[0]['level']))
     if not panel['compiled_database_result_available']:
         raise ValueError('固定敌人数据库精确等级不可用；别名/默认构建路径未核验，不能用原字段投影进行伤害计算。')
     record=candidates[0];stats=dict(panel['attributes'])

@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-12",
+  "scope": "Independent read-only review of Susuro PHY-X source-bound recipient-ratio healing composition; draft tests, exact current files; no current combat/hotfix claim",
+  "patch_sha256": "09f527b551def5ead311fb0dde69e67e12601384fa030fe90339cb1ae7e54465",
+  "verdict": "accepted_no_blocking_finding",
+  "necessary_validation": {
+    "checks": 72,
+    "passed": 72,
+    "failed": 0,
+    "selectors": [
+      "tests.test_susuro_module_healing",
+      "tests.test_susuro_module_healing_view",
+      "tests.test_susuro_recipient_factor",
+      "tests.test_susuro_condition_text_input",
+      "tests.test_flower_healing_composition",
+      "tests.test_healing_subtotal_scaling",
+      "tests.test_amiya_regeneration_talent_qualification",
+      "tests.test_amiya_module_healing_trait",
+      "tests.test_healing_budget_132",
+      "tests.test_supplemental_healing_145"
+    ],
+    "scope": "isolated draft; MainWindow fixtures temporary public state and offscreen"
+  },
+  "native_file_verification": {
+    "artifact_consistency": true,
+    "native_file_comparison": "passed",
+    "unique_instruction_checks": 5195,
+    "metadata_and_binding_byte_spans": 213,
+    "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+    "game_dll_executed": false,
+    "process_memory_read": false
+  },
+  "accepted_rules": [
+    "Native comparison is recipient raw ratio < threshold raw +42950; threshold0.5 passes",
+    "Qualified output module factor1.15 multiplies each ordinary/S1/S2 direct healing once; same-identity talent data overlay replaces base, independent receiver factors multiply",
+    "Unknown ratio retains known subtotal and masks nonzero affected complete healing totals; known zero remainszero",
+    "Natural regeneration, SP/timing and unrelated actors ignore this factor",
+    "Only qualified Susuro PHY-X displays dedicated reference controls; other actors/modules ignore stale field"
+  ],
+  "remaining_unknown": [
+    "Actual recipient acquisition and HP trajectory/life eligibility/range",
+    "Actual healing clocks and coverage",
+    "Current XLua/hotfix equivalence"
+  ],
+  "development_boundaries": {
+    "game_operated": false,
+    "chat_sent": false,
+    "private_state_read_or_written": false,
+    "tracked_source_modified_by_reviewer": false
+  },
+  "execution_note": "First independent unittest invocation pointed to draft-local venv and failed before tests; corrected to shared absolute interpreter, all72 passed. Source consistency-only invocation correctly returned unavailable without game-dir; subsequent current static-file verification passed."
+}

@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 from rouge.catalog import stage_previews
 from rouge.damage import calculate_damage
+from rouge.enemy_panel import enemy_panel_reference
 
 OP = 'char_1015_aglna2'
 TARGET = {'stage_id': 'ro6_n_1_1', 'enemy_id': 'enemy_2133_shdopl', 'level': 0}
@@ -49,11 +50,11 @@ class AglnaManualWeightTests(unittest.TestCase):
         self.assertEqual(light['run_resolution']['enemy']['reference_stats']['massLevel'], 0)
 
     def test_missing_pinned_weight_cannot_silently_select_light_branch(self):
-        data = deepcopy(stage_previews())
-        for record in data[TARGET['stage_id']]['possible_enemies']:
-            if record['id'] == TARGET['enemy_id']:
-                record['reference_stats']['massLevel'] = None
-        with patch('rouge.enemy_environment.stage_previews', return_value=data):
+        # Section203 moved the authoritative attributes to the exact-level builder.
+        # Inject a missing field at that source, rather than an obsolete preview copy.
+        panel = deepcopy(enemy_panel_reference(TARGET['stage_id'], TARGET['enemy_id'], TARGET['level']))
+        panel['attributes']['massLevel'] = None
+        with patch('rouge.enemy_panel.enemy_panel_reference', return_value=panel):
             with self.assertRaisesRegex(ValueError, '固定敌人重量档案缺失'):
                 evaluate(target_enemy=TARGET, enemy_weight=4)
 
