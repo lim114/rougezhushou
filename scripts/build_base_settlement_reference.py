@@ -85,7 +85,7 @@ def build(root=ROOT):
         assert original_stage['code']+' '+original_stage['name'] in current_stage_pages
         zero_source=any(ref.get('display_floor')==0 and ref.get('source_membership') in
             ('normal_emergency_named_pool','boss_named_pool') for ref in row['source_references'])
-        metadata[row['id']]={'original':original_stage,'documented_floors':row['floors'],
+        metadata[row['id']]={'original':original_stage,'documented_floors':row.get('documented_floors',row['floors']),
             'settlement_source_floors':[6] if zero_source else row['floors'],
             'floor_zero_binding':{'document_heading':'0 源流交汇处 (VI)','original_zone_id':'zone_6',
                 'original_name':primary['zones']['zone_6']['name'],'original_icon':primary['zones']['zone_6']['zoneIconId'],

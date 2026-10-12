@@ -44,7 +44,7 @@ class NodeResourceViewTests(unittest.TestCase):
         stock={'item_quantities':{'rogue_6_scrap_G_01':1}}
         self.context(stock);text=self.select('回滚文明')
         self.assertIn('2件自然物',text)
-        self.assertIn('已声明持有小计 1件，持有表不完整',text)
+        self.assertIn('已声明数量小计 1件，有关零件数量不完整',text)
         self.assertIn('名义预算：预算未知',text)
         self.context({**stock,'inventory_complete':True});text=self.select('回滚文明')
         self.assertIn('名义预算：不足已列费用',text)

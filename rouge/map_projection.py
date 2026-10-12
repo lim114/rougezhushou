@@ -64,7 +64,9 @@ def projection_for(stage,image_sha256,image_size):
     """A stale image, alias, level, or geometry must never inherit a transform."""
     if not stage:return None
     data=projection_data();binding=data['stages'].get(stage['id'])
-    if not binding:return None
+    if not binding:
+        from .fixed_landmark_mapping import direct_reference_for
+        return direct_reference_for(stage,image_sha256,image_size)
     calibration=data['calibrations'][binding['calibration']];image=stage['image']
     if binding['level_sha256']!=stage['level_source']['sha256']:return None
     if binding['image_file']!=image['file']:return None

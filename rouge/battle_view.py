@@ -179,7 +179,7 @@ class MapOriginal(QWidget):
         painter.setPen(QPen(QColor('#ffe17d'),2,Qt.PenStyle.DashLine))
         # Segments only connect source checkpoints. Teleport/disappear records
         # do not acquire a fabricated continuous route or movement ETA.
-        if route.get('continuous_reference'):
+        if route.get('continuous_reference') and getattr(self.projection,'supports_segment_reference',True):
             for a,b in zip(points,points[1:]):
                 if a is not None and b is not None:painter.drawLine(a,b)
         painter.setBrush(QColor('#ffe17d'))
@@ -365,7 +365,13 @@ class BattlePreviewPanel(QWidget):
         self.original.set_reference(stage,self.rows)
         self.map_caption.setText('固定原图 · 地面参考标记（近似校准；检查点连线非实际寻路）'
             if self.original.projection else '固定原图参考（本图坐标尚未校准或版本不匹配）')
-        if self.original.projection:
+        direct=getattr(self.original.projection,'mapping_mode',None)=='direct_verified_centers'
+        if direct:
+            count=len(self.original.projection.points)
+            self.map_caption.setText(f'固定原图 · {count}个已核对的地面格中心（近似参考）\n'
+                '只显示这些格的点；其他位置未知，不外推、不连路线，也不从原图反算格。'
+                '独立读数相差不超过4源像素，不代表实际战斗位置误差。')
+        elif self.original.projection:
             data=projection_data();binding=data['stages'][stage['id']]
             columns={check['col'] for check in data['calibrations'][binding['calibration']]['checks']}
             coverage=(f'独立地标仅覆盖第{int(next(iter(columns)))+1}列，其他列为外推参考。'
@@ -502,11 +508,14 @@ class BattlePreviewPanel(QWidget):
         if not stage:return
         tile=stage['tiles'][stage['map'][cell['row']][cell['col']]]
         self._tile_cell=copy.deepcopy(cell)
-        self.occurrence_bar.hide();self.grid.selected=None;self.grid.update()
+        self.occurrence_bar.hide();self.grid.selected=None;self.grid.reference_cell=copy.deepcopy(cell);self.grid.update()
+        self.original.reference_cell=copy.deepcopy(cell) if self.original.cell_center(cell) is not None else None
         self.original.selected=None;self.original.selected_ordinal=1;self.original.update()
         key=(self.current_stage,'tile',cell['row'],cell['col'])
         replace_text(self.spawn_detail,f"格图第{cell['row']+1}行、第{cell['col']+1}列\n"+
             '地形：'+tile['tileKey']+'\n高度：'+str(tile.get('heightType'))+
             '\n可部署类型：'+str(tile.get('buildableType'))+'\n通行类型：'+str(tile.get('passableMask'))+
-            '\n当前筛选下没有映射到此格的主波次出生条目。',preserve=preserve and self._detail_key==key)
+            '\n当前筛选下没有映射到此格的主波次出生条目。'+
+            ('\n固定原图：已标出本格近似中心。' if self.original.reference_cell else '\n固定原图：本格位置尚未核对。'),
+            preserve=preserve and self._detail_key==key)
         self._detail_key=key
