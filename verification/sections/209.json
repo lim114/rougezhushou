@@ -1,0 +1,68 @@
+{
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "title": "固定战斗奖励条件、来源与地图资料定位",
+  "remaining_item": "节点事件与掉落：具名战斗资源数量/条件与固定来源覆盖；固定地图资料来源定位",
+  "new_capability": "固定105关卡/68原件的四具名装置与移动恶笼草独立条件数量进入节点目录和固定战斗预览；选择预置来源标紫色资料格，主队列/条件分支全引用、原件空候选和原branch_id条件保留，刷新保留来源选择/文本选择/滚动；实际奖励总量与完整池不求值。",
+  "source_evidence": [
+    "固定a550角色→技能直接指针和四条技能原文证明2/5/10与50部署费用→战后1零件",
+    "固定68关卡定义263条相关预置声明/249主队列+62分支引用/62相关随机组所有序列化成员",
+    "实际当前PRTS装置410407/410409/410406与移动敌人428232：箱型转化为另一目标；移动级别0 +10/-10，级别1/2仍???",
+    "显式overrideSkillBlackboard.branch_id只等值引用实际序列化分支，不推断触发/路线数组/位置或时钟"
+  ],
+  "acceptance": [
+    "新增10 API/Qt及原目录/导航/142刷新共30相关检查全部通过，输出保留",
+    "扩大检查047共49：48过1既有enemy_preview与047备份AST冲突，原断言未删未改；完整范围回执保留",
+    "同名装置/敌人分ID，箱型/移动引用不能双计，数量不是候选总和；级别1/2不继承0奖励",
+    "预置资料坐标仅按既有display_cell翻转；分支位置None，原图标记仍要求原校准可用",
+    "生成器重建与数据JSON对象逐项完全相等，无概率模型、私人状态写入或游戏/聊天动作",
+    "root逐个来源哈希核对并重建105身份/68原件，生成JSON对象与发布数据完全一致。",
+    "Windows-mcp在真实0.78窗口核验箱型恶笼草资料、+10条件和两幅地图紫色位置标记，私人5项保持。"
+  ],
+  "limitations": [
+    "实际出现/开启/击倒/领取与完整结算池/随机零件池/其它来源修正仍未知",
+    "105固定关卡身份是已存在公开资料范围；不冒称105个独立原图或所有当前服务器关卡",
+    "原25场景/57选项没有新增可靠source指针；当前事件页400，保持原入口未知",
+    "Qt临时状态检查和实际Windows窗口均通过；仍未证明实际结算、分支时钟或新的独立地标校准。"
+  ],
+  "files": [
+    "rouge/battle_reward_planning.py",
+    "rouge/data/battle-reward-reference.json",
+    "rouge/battle_view.py",
+    "rouge/node_catalog_view.py",
+    "scripts/build_battle_reward_reference.py",
+    "tests/test_battle_reward_planning.py",
+    "research/p3-battle-rewards/source-receipt.json",
+    "research/p3-battle-rewards/current-observation.json",
+    "BATTLE_REWARD_REFERENCES.md",
+    "rouge/app.py",
+    "verification/section-209/window.json",
+    "verification/section-209/source-rebuild.json"
+  ],
+  "test_selectors": [
+    "tests.test_battle_reward_planning",
+    "tests.test_node_catalog_view",
+    "tests.test_node_map_navigation.NodeMapNavigationTests",
+    "tests.test_supplemental_battle_view_142"
+  ],
+  "expanded_scope": "tests.test_readable_battle_047",
+  "source_receipt": "research/p3-battle-rewards/source-receipt.json",
+  "patch_sha256": "43d81f98a2bf1e1b830eddb525abfee852302fa16f4402fa1bd8652a99e45b12",
+  "baseline_source_sha256": {
+    "rouge/battle_view.py": "4b0ed251af237b701a5a18205cf4b140f8ab92c4cf3c5f37daf76893c7337834",
+    "rouge/node_catalog_view.py": "dabb29867ead765e48d91cebb0923f75b9038f1b500572718750a2eada69738a",
+    "rouge/battle_preview.py": "b5492daa1451cc29d0a76c88270ac0029e705f4682d74371988df4f8a30d6bd1"
+  },
+  "section": 209,
+  "at_Beijing": "2026-10-12T13:26:29.108459+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 30,
+    "passed": 30,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-209/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 215
+}

@@ -1,3 +1,7 @@
+## 功能第209节 · 固定战斗奖励条件、来源与地图资料定位
+
+2026-10-12T13:26:29.108459+08:00。新增：固定105关卡/68原件的四具名装置与移动恶笼草独立条件数量进入节点目录和固定战斗预览；选择预置来源标紫色资料格，主队列/条件分支全引用、原件空候选和原branch_id条件保留，刷新保留来源选择/文本选择/滚动；实际奖励总量与完整池不求值。。必要检查30项，跳过0项，无失败。边界：实际出现/开启/击倒/领取与完整结算池/随机零件池/其它来源修正仍未知；105固定关卡身份是已存在公开资料范围；不冒称105个独立原图或所有当前服务器关卡；原25场景/57选项没有新增可靠source指针；当前事件页400，保持原入口未知；Qt临时状态检查和实际Windows窗口均通过；仍未证明实际结算、分支时钟或新的独立地标校准。。回执verification/sections/209.json。下一节210，下次全量215。
+
 ## 功能第208节 · 凯尔希普通/S1与银灰普通三段动作条件参考
 
 2026-10-12T11:23:44.315422+08:00。新增：12个源绑定候选接入既有显式动作选择；实际计算及报告分列firstAttack门成立/不成立的源段合计、播放速度、缩放后begin/body/end和仅动画事件偏移；阻止单主体18帧或银灰随机候选被当完整首次出手；真实首次/结束仍None，不自动选参考。。必要检查74项，跳过0项，无失败。边界：current XLua/hotfix, actual mode/skin/direction and firstAttack gate unknown；segment durations omit scheduler resume phase, interruption, projectile travel and callback phase；Ability end animation is independent of empty ThreePart.end; no actual skill end inferred；body event frames are not a whole-chain first attack; generic windup is suppressed unless explicitly overridden；conditional profiles use raw seconds and numerical formula references, never ceiling/normalized callback frames；默认外观当前静态资产而非当前运行态热更新证明；未检查其它皮肤；body-only逐击不标runtime/exact绑定；未显式前摇时仍沿既有延迟首击情景，不把它当实际时钟；正常技能/普通充能分别保留normal/skill动作作用域；变速表只按列出的输入周期，实际中途重算/动态采样未知。回执verification/sections/208.json。下一节209，下次全量215。

@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QComboBox,QLineEd
     QLabel,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QSplitter,QPushButton,QCheckBox)
 from . import node_catalog as catalog
 from . import event_planning
+from .battle_reward_planning import stage_reward_sources,reward_source_text
 from .ui_state import replace_text
 
 KINDS={'event':'事件','battle':'战斗资料','function':'功能节点','original':'未归类原文','map':'本图节点'}
@@ -501,6 +502,7 @@ class NodeCatalogPanel(QWidget):
         elif entry['kind']=='battle':
             r=entry['record'];text=f"{entry['title']}\n\n类别：{'、'.join(CATEGORIES.get(t,t) for t in r.get('categories',[]))}\n层数：{floor_text(r.get('floors'))}\n关卡版本：{r.get('id') or r.get('stage_id')}\n"
             text+='\n'.join(r.get('notes',[]))+'\n实际出现/分支/出怪全局时钟：未知。此项仅连接到对应固定地图资料。'
+            text+='\n\n'+reward_source_text(stage_reward_sources(r.get('id') or r.get('stage_id')))
         else:
             raw=entry['record']['record']
             text=special_original_text(raw['record_id'],self.runtime_context)+'\n\n完整原文与字段：\n'+json.dumps(raw,ensure_ascii=False,indent=2)

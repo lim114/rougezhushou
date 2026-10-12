@@ -11,16 +11,17 @@ from .map_projection import projection_for,projection_data
 from .ui_state import replace_text
 from .view_catalog import stage_groups,enemy_groups,SubjectPicture,ENEMY_TIERS
 from .branch_choice import BranchChoice,OVERVIEW
+from .battle_reward_planning import stage_reward_sources,reward_source_text
 
 class BattleGrid(QWidget):
     cellSelected=Signal(object)
     def __init__(self,parent=None):
         super().__init__(parent)
-        self.stage=None;self.rows=[];self.selected=None;self.selected_ordinal=1
+        self.stage=None;self.rows=[];self.selected=None;self.selected_ordinal=1;self.reference_cell=None
         self.setMinimumSize(240,150)
 
     def set_reference(self,stage,rows):
-        self.stage=stage;self.rows=rows;self.selected=None;self.update()
+        self.stage=stage;self.rows=rows;self.selected=None;self.reference_cell=None;self.update()
 
     def grid_rect(self):
         if not self.stage:return QRectF()
@@ -72,6 +73,10 @@ class BattleGrid(QWidget):
                 painter.setPen(QColor('#fff3a0'))
                 painter.drawText(QRectF(center.x()-radius,center.y()-radius,2*radius,2*radius),
                     Qt.AlignmentFlag.AlignCenter,str(next(iter(waves))) if len(waves)==1 else '*')
+        if self.reference_cell:
+            center=self.cell_center(self.reference_cell)
+            painter.setPen(QPen(QColor('#f0a2ef'),3));painter.setBrush(Qt.BrushStyle.NoBrush)
+            painter.drawRect(QRectF(center.x()-size*.4,center.y()-size*.4,size*.8,size*.8))
         if self.selected:
             route=self.selected['route'];points=route.get('points',[])
             painter.setPen(QPen(QColor('#ffe17d'),2,Qt.PenStyle.DashLine))
@@ -103,7 +108,7 @@ class MapOriginal(QWidget):
     def __init__(self,parent=None):
         super().__init__(parent);self.pixmap=QPixmap();self.setMinimumSize(220,130)
         self.stage=None;self.rows=[];self.selected=None;self.selected_ordinal=1
-        self.projection=None;self.image_sha256=None
+        self.projection=None;self.image_sha256=None;self.reference_cell=None
 
     def set_file(self,path):
         try:raw=Path(path).read_bytes() if path else b''
@@ -111,11 +116,11 @@ class MapOriginal(QWidget):
         self.pixmap=QPixmap()
         if raw:self.pixmap.loadFromData(raw)
         self.image_sha256=hashlib.sha256(raw).hexdigest() if not self.pixmap.isNull() else None
-        self.stage=None;self.rows=[];self.selected=None;self.projection=None;self.selected_ordinal=1
+        self.stage=None;self.rows=[];self.selected=None;self.projection=None;self.selected_ordinal=1;self.reference_cell=None
         self.update()
 
     def set_reference(self,stage,rows):
-        self.stage=stage;self.rows=rows;self.selected=None;self.selected_ordinal=1
+        self.stage=stage;self.rows=rows;self.selected=None;self.selected_ordinal=1;self.reference_cell=None
         self.projection=projection_for(stage,self.image_sha256,(self.pixmap.width(),self.pixmap.height()))
         self.update()
 
@@ -163,6 +168,11 @@ class MapOriginal(QWidget):
             painter.setPen(QColor('#fff3a0'))
             painter.drawText(QRectF(center.x()-radius,center.y()-radius,2*radius,2*radius),
                 Qt.AlignmentFlag.AlignCenter,str(next(iter(waves))) if len(waves)==1 else '*')
+        if self.reference_cell:
+            center=self.cell_center(self.reference_cell)
+            if center is not None:
+                painter.setPen(QPen(QColor('#f0a2ef'),3));painter.setBrush(Qt.BrushStyle.NoBrush)
+                painter.drawRect(QRectF(center.x()-radius-3,center.y()-radius-3,2*radius+6,2*radius+6))
         if not self.selected:return
         route=self.selected['route'];points=[self.cell_center(p) for p in route.get('points',[])]
         painter.setPen(QPen(QColor('#ffe17d'),2,Qt.PenStyle.DashLine))
@@ -199,7 +209,7 @@ class BattlePreviewPanel(QWidget):
     stageSelected=Signal(object)
     def __init__(self,parent=None):
         super().__init__(parent);self.context={};self.current_stage=None;self.rows=[]
-        self._rows_stage=None;self._shown_enemy=None;self._tile_cell=None;self._detail_key=None
+        self._rows_stage=None;self._shown_enemy=None;self._tile_cell=None;self._detail_key=None;self.reward_result=None
         layout=QVBoxLayout(self);controls=QHBoxLayout()
         self.stage_combo=QComboBox()
         self.stage_choices=BranchChoice(self.stage_combo,stage_groups(battle_data()['stages']),
@@ -224,6 +234,8 @@ class BattlePreviewPanel(QWidget):
         self.occurrence_label=QLabel();occurrence_layout.addWidget(self.occurrence_label,1)
         layout.addWidget(self.occurrence_bar);self.occurrence_bar.hide()
         self.summary=QLabel();self.summary.setWordWrap(True);layout.addWidget(self.summary)
+        rewards=QHBoxLayout();rewards.addWidget(QLabel('条件奖励来源'))
+        self.reward_combo=QComboBox();rewards.addWidget(self.reward_combo,1);layout.addLayout(rewards)
         maps=QSplitter(Qt.Orientation.Horizontal)
         left=QWidget();l=QVBoxLayout(left);l.setContentsMargins(0,0,0,0)
         l.addWidget(QLabel('地图格与出生位置；*表示多波共用'))
@@ -250,6 +262,7 @@ class BattlePreviewPanel(QWidget):
         self.grid.cellSelected.connect(self._cell_selected)
         self.original.cellSelected.connect(self._cell_selected)
         self.occurrence.valueChanged.connect(self._occurrence_changed)
+        self.reward_combo.currentIndexChanged.connect(self._reward_selected)
         self._load_stage(None)
 
     def set_stage(self,stage_id):
@@ -270,6 +283,10 @@ class BattlePreviewPanel(QWidget):
 
     def _technical_changed(self):
         """Change detail presentation without rebuilding choices or occurrences."""
+        if self._detail_key and self._detail_key[1]=='reward':
+            self._reward_selected(preserve=True)
+            if self._shown_enemy:self._render_enemy(*self._shown_enemy[1:],preserve=False)
+            return
         row=self.grid.selected
         if self._tile_cell:
             self._cell_selected(self._tile_cell,preserve=True)
@@ -280,6 +297,13 @@ class BattlePreviewPanel(QWidget):
     def _load_stage(self,sid):
         self._rows_stage=None;self._shown_enemy=None;self._tile_cell=None;self._detail_key=None
         self.current_stage=sid;stage=battle_data()['stages'].get(sid)
+        self.reward_combo.blockSignals(True);self.reward_combo.clear()
+        self.reward_combo.addItem('选择来源查看数量条件；实际奖励总量未知',None)
+        self.reward_result=stage_reward_sources(sid) if stage else None
+        for row in (self.reward_result or {}).get('rows',[]):
+            cell=row['display_cell'];position=f"第{cell['row']+1}行、第{cell['col']+1}列" if cell else '分支位置未绑定'
+            self.reward_combo.addItem(row['name']+' · '+position,row)
+        self.reward_combo.blockSignals(False);self.reward_combo.setEnabled(bool(self.reward_result))
         for combo in (self.wave_combo,self.enemy_combo):combo.blockSignals(True);combo.clear()
         self.wave_combo.addItem('全部波次及分支',None)
         self.enemy_choices.set_groups(enemy_groups(stage['enemies'] if stage else [],
@@ -296,6 +320,7 @@ class BattlePreviewPanel(QWidget):
     def render_rows(self,*_):
         stage=battle_data()['stages'].get(self.current_stage)
         same_stage=self._rows_stage==self.current_stage
+        selected_reward=copy.deepcopy(self.reward_combo.currentData()) if same_stage else None
         item=self.spawn_list.currentItem()
         previous_id=item.data(Qt.ItemDataRole.UserRole)['id'] if same_stage and item else None
         ordinal=self.occurrence.value();scroll=self.spawn_list.verticalScrollBar().value()
@@ -339,7 +364,9 @@ class BattlePreviewPanel(QWidget):
             self.spawn_list.blockSignals(True)
             self.spawn_list.setCurrentRow(retained if retained is not None else 0)
             self.spawn_list.blockSignals(False)
-        if tile:
+        if selected_reward:
+            pass  # Keep the reward detail key/text while rebuilding static map rows.
+        elif tile:
             self._cell_selected(tile,preserve=True)
         elif self.rows:
             self._spawn_selected(self.spawn_list.currentItem(),preserve=retained is not None)
@@ -352,6 +379,27 @@ class BattlePreviewPanel(QWidget):
             self.occurrence_label.clear()
             if selected_enemy and stage:self._render_enemy(*selected_enemy)
         if retained is not None or tile:self.spawn_list.verticalScrollBar().setValue(scroll)
+        if selected_reward:
+            index=next((i for i in range(self.reward_combo.count())
+                if (self.reward_combo.itemData(i) or {}).get('id')==selected_reward['id']),0)
+            self.reward_combo.blockSignals(True);self.reward_combo.setCurrentIndex(index);self.reward_combo.blockSignals(False)
+            self._reward_selected(preserve=True)
+
+    def _reward_selected(self,*_,preserve=False):
+        row=self.reward_combo.currentData()
+        self.grid.reference_cell=copy.deepcopy(row['display_cell']) if row else None
+        self.original.reference_cell=copy.deepcopy(row['display_cell']) if row else None
+        self.grid.update();self.original.update()
+        if self.reward_result is None:return
+        self._tile_cell=None;self.grid.selected=None;self.original.selected=None;self.occurrence_bar.hide()
+        key=(self.current_stage,'reward',row['id'] if row else None)
+        replace_text(self.spawn_detail,reward_source_text(self.reward_result,row,technical=self.technical.isChecked()),
+            preserve=preserve and self._detail_key==key)
+        self._detail_key=key
+
+    def _clear_reward_selection(self):
+        self.reward_combo.blockSignals(True);self.reward_combo.setCurrentIndex(0);self.reward_combo.blockSignals(False)
+        self.grid.reference_cell=None;self.original.reference_cell=None
 
     def _render_enemy(self,enemy_id,level=None,*,preserve=False):
         stage=battle_data()['stages'].get(self.current_stage)
@@ -370,6 +418,7 @@ class BattlePreviewPanel(QWidget):
 
     def _spawn_selected(self,item,*_,preserve=False):
         if not item:return
+        self._clear_reward_selection()
         self._tile_cell=None
         row=item.data(Qt.ItemDataRole.UserRole);self.grid.selected=row;self.grid.update()
         self.original.selected=row;self.original.update()
@@ -394,6 +443,7 @@ class BattlePreviewPanel(QWidget):
             if offset is not None else '此条目局部时间无法确认。')
 
     def _cell_selected(self,cell,*,preserve=False):
+        self._clear_reward_selection()
         matching=[i for i,row in enumerate(self.rows) if row['route']['start']==cell]
         if matching:
             # The list preserves every same-cell action for independent selection.
