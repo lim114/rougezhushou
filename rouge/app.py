@@ -79,7 +79,7 @@ def number(value=0, maximum=100000, decimals=2):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('黑流树海助手 0.72 · 局外计算与节点测试（201）')
+        self.setWindowTitle('黑流树海助手 0.73 · 局外计算与节点测试（204）')
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader()
@@ -641,7 +641,7 @@ class MainWindow(QMainWindow):
         for title,widget in (('普攻阶段原版动作参考',self.normal_animation_reference),
                              ('技能阶段原版动作参考',self.skill_animation_reference)):
             form.addRow(title,widget)
-            widget.setToolTip('可选的局外时序参考；默认不选。原版正/背面动作不是已确认的技能绑定，循环、多事件或零帧动作不当作常规攻击模板。不会写入培养或本局记忆。')
+            widget.setToolTip('可选的局外时序参考；默认不选。部分默认外观与模式的静态动作选择已核验；动画内事件帧仅为条件参考，实际外观、回调和起止相位仍待核验。不会写入培养或本局记忆。')
             widget.currentIndexChanged.connect(lambda:self.calculate())
         self.chen_motion_orientation=QComboBox()
         self.chen_motion_orientation.addItem('不显示原版阶段资料',None)

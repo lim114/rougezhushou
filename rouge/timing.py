@@ -375,6 +375,12 @@ class AttackTimeline:
                 'reference_id','reference_label','original_orientation','skin','source_sha256','runtime_binding_verified')}
             stream['original_animation_reference']['overridden_by_preview']=any(
                 key in self.options for key in ('windup_frames','recovery_frames'))
+            if data.get('static_selection_verified'):
+                from copy import deepcopy
+                stream['original_animation_reference'].update({k:deepcopy(data[k]) for k in (
+                    'static_selection_verified','mode_indices','static_action_binding','selection_source_evidence',
+                    'frame_numbers_are_animation_segment_reference','actual_callback_frames',
+                    'actual_activation_phase_seconds','actual_end_seconds')})
         if fixed_impact:
             stream.update(fixed_impact_delay_frames=frame_time(fixed_impact['seconds']),
                 fixed_impact_delay_seconds=fixed_impact['seconds'],

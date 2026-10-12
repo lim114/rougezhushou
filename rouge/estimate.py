@@ -130,7 +130,14 @@ def build_estimate(scenario,result,attributes,compute_skill):
                 if (scenario.get('timing_mode','frames')=='frames' or
                         scenario.get('timing',{}).get('target_disappears_seconds')==0 or
                         scenario.get('timing',{}).get('target_windows')==[]):
-                    timeline=AttackTimeline(scenario,normal=True)
+                    # Only an explicit, statically matched active-S2 body
+                    # segment drives this manual-duration ordinary subtotal.
+                    # Without that choice retain the preexisting normal preview;
+                    # neither path locates shield breaks or the real skill end.
+                    from .animation_reference import descriptor as animation_descriptor
+                    chosen=animation_descriptor(operator,skill_index,scenario.get('timing',{}))
+                    active_reference=bool(chosen and chosen.get('static_selection_verified'))
+                    timeline=AttackTimeline(scenario,normal=not active_reference)
                     stream=timeline.attacks(duration,normal_interval,stats['attack_speed'],attribute_speed=stats['attack_speed_reference'])
                     events=stream.get('emitted_times_seconds',stream['times_seconds'])
                     damage=full['total_damage']+len(events)*hit

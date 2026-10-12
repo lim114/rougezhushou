@@ -642,7 +642,9 @@ def build_report(scenario,result):
         for stream in [*timing.get('streams',[]),*timing.get('recharge_streams',[])]:
             original=stream.get('original_animation_reference')
             if original:
-                if stream.get('multi_melee_reference'):
+                if original.get('static_selection_verified'):
+                    note='明确选用静态绑定动作参考：'+original['reference_label']+'；默认外观及所列模式的动作选择已核验，帧数仅为动画内条件参考；当前外观、热更新、实际首击回调和结束相位未核验。'
+                elif stream.get('multi_melee_reference'):
                     note=('使用已核验的原版技能动作参考：' if stream['multi_melee_reference']['automatic_original_reference'] else
                           '明确选用原版动画参考：')+original['reference_label']+'；仅局外参考，当前皮肤、热更新与实际出手相位未核验。'
                 else:

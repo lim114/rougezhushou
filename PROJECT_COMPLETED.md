@@ -1,3 +1,7 @@
+## 功能第204节 · 首批三名默认外观与静态动作选择绑定
+
+2026-10-12T09:56:49.520820+08:00。新增：当前模式PPtr与默认外观动画map共同筛选19个实际选择候选，排除已知不被技能选择的普通动作；允许原件非循环的Loop命名与银灰Combat段作明确动画内条件参考；机械师S2选定body段实际接入既有手动时间普通攻击小计。静态绑定与实际事件/相位保持独立。。必要检查43项，跳过0项，无失败。边界：仅当前静态defaultskin与所列模式候选；当前实际外观/模式与down/up分支、定制mix、XLua及热更新仍未知；runtime_binding_verified始终False，实际callback/activation/end均None；不将048归一化/ceil帧等同客户端回调；不自动选择参考或改变无参考默认数字；参考仍为显式动画内条件投影；凯尔希normal/S1三段生命周期、银灰normal序列继续未绑定；机械师S2破屏/耗尽/结束与S3冲锋碰撞等继续未知；根源首次UTF8二进制TextAsset失败完整回执保留cache，发布证明以原失败SHA/长度/类型保留，未重复嵌入原骨架二进制；源冻结root UI/源码未改；root需串行后核验实际动作选择窗口；Root application requires --ignore-space-change for existing CRLF timing.py/estimate.py; no logical source conflict and no root line-ending normalization was performed by author.。回执verification/sections/204.json。下一节205，下次全量215。
+
 ## 功能第203节 · 敌人技力整记录继承、条件默认初始化与精确等级门槛进入实际预览
 
 2026-10-12T09:36:17.672852+08:00。新增：实际enemy_skill_reference和mechanism来源CLI解析基包SP配置：null不覆盖、非null整对象替换、缺精确数据库等级不借低等级；有精确等级时区分无热更新钩子的共享默认/显式转换入口，技术分支获取maxSp→spCost、单次充能与构造默认字段参考；当前控制器/首发/回转仍未知。enemy_panel实际属性/metadata在无精确等级时保持未知，原字段分项仍可技术查询，普通预测加入未核验别名/默认构建路径待确认，不显示源白值。。必要检查29项，跳过0项，无失败。边界：仅已绑定当前编译基包GetComputedEnemyData/ApplyDefinedData标量配置规则应用于固定公开数据；服务器/XLua当前覆盖未核验。；精确等级缺失时，关卡别名/默认构建路径未核验；原字段投影不是可用完整面板。；已证默认/显式SP配置来源限无热更新钩子的基包路径；技能数组/天赋/黑板完整合并、实际默认SP控制器、首次发动/时序/完整回转仍未知，inheritance_resolved仍False。；未改伤害核心或执行游戏；实际Windows可见窗口验收保留由root本轮统一执行。。回执verification/sections/203.json。下一节204，下次全量215。

@@ -85,7 +85,7 @@ class OriginalAnimation048Tests(unittest.TestCase):
         self.assertNotIn('original_animation_reference',r['timing']['streams'][0])
 
     def test_reference_uses_existing_movement_and_half_open_window_clock(self):
-        ref=choices('mechanist',1,normal=True)[0]['id']
+        ref=choices('mechanist',2)[0]['id']
         timeline=AttackTimeline({'operator':'mechanist','skill':2,'timing':{
             'animation_reference':ref,'movement_windows':[[.2,.5]]}})
         stream=timeline.attacks(1,1.2)
