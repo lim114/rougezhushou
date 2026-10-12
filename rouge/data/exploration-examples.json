@@ -756,6 +756,24 @@
         "event",
         "near"
       ]
+    },
+    "settlements": {
+      "steps": [
+        {
+          "stage_id": "ro6_n_1_1",
+          "entry_context": "map_battle",
+          "special_region": false,
+          "victory_declared": true,
+          "battle_floor": 1
+        },
+        {
+          "stage_id": "ro6_e_1_1",
+          "entry_context": "map_battle",
+          "special_region": false,
+          "victory_declared": true,
+          "battle_floor": 1
+        }
+      ]
     }
   },
   "variants": {
@@ -1768,6 +1786,167 @@
           "difficulty": 3,
           "split_unlocked": true,
           "inventory": []
+        }
+      }
+    ],
+    "settlements": [
+      {
+        "id": "base-pursuit-event",
+        "label": "同名原ID：黑诞入口与普通追猎分别参考",
+        "payload": {
+          "steps": [
+            {
+              "stage_id": "ro6_c_5",
+              "entry_context": "event_battle",
+              "special_region": false,
+              "victory_declared": true,
+              "battle_floor": 4
+            },
+            {
+              "stage_id": "ro6_c_5",
+              "entry_context": "pursuit",
+              "special_region": false,
+              "victory_declared": true,
+              "battle_floor": 4
+            }
+          ]
+        }
+      },
+      {
+        "id": "base-boss-pursuit",
+        "label": "第三主层首领追猎：不套普通追猎零分项",
+        "payload": {
+          "steps": [
+            {
+              "stage_id": "ro6_b_1_b",
+              "entry_context": "pursuit",
+              "special_region": false,
+              "victory_declared": true,
+              "battle_floor": 3
+            }
+          ]
+        }
+      },
+      {
+        "id": "base-portal-origin-known",
+        "label": "秘境战斗：独立声明原战斗所属主层",
+        "payload": {
+          "steps": [
+            {
+              "stage_id": "ro6_n_1_1",
+              "entry_context": "map_battle",
+              "special_region": true,
+              "victory_declared": true,
+              "battle_floor": 1
+            }
+          ]
+        }
+      },
+      {
+        "id": "base-portal-origin-unknown",
+        "label": "秘境编号不代替战斗所属主层",
+        "payload": {
+          "steps": [
+            {
+              "stage_id": "ro6_n_1_1",
+              "entry_context": "map_battle",
+              "special_region": true,
+              "victory_declared": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "base-special-unknown-gold",
+        "label": "无效验尸：基础经验有证、源石锭未知",
+        "payload": {
+          "steps": [
+            {
+              "stage_id": "ro6_t_12",
+              "entry_context": "map_battle",
+              "special_region": false,
+              "victory_declared": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "base-ambiguous-variants",
+        "label": "普通/紧急原ID均保留：不挑奖励较高候选",
+        "payload": {
+          "steps": [
+            {
+              "stage_ids": [
+                "ro6_n_1_1",
+                "ro6_e_1_1"
+              ],
+              "battle_floor": 1,
+              "entry_context": "map_battle",
+              "special_region": false,
+              "victory_declared": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "base-graph-reference",
+        "label": "声明图中的当前战斗身份：不使用过去标题",
+        "payload": {
+          "steps": null,
+          "graph": {
+            "status": "matched",
+            "zone_id": "zone_1",
+            "template_id": "public-base-rewards",
+            "current_node": "a",
+            "captured_at": 1,
+            "nodes": [
+              {
+                "id": "a",
+                "row": 0,
+                "col": 0,
+                "observed_type": "作战",
+                "content": {
+                  "kind": "battle",
+                  "title": "猎犬病原",
+                  "variant_id": "ro6_n_1_1"
+                }
+              },
+              {
+                "id": "b",
+                "row": 0,
+                "col": 1,
+                "observed_type": "紧急作战",
+                "content": {
+                  "kind": "battle",
+                  "title": "猎犬病原",
+                  "variants": [
+                    {
+                      "id": "ro6_n_1_1"
+                    },
+                    {
+                      "id": "ro6_e_1_1"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "c",
+                "row": 1,
+                "col": 1,
+                "observed_type": "作战"
+              }
+            ],
+            "edges": [
+              [
+                "a",
+                "b"
+              ],
+              [
+                "b",
+                "c"
+              ]
+            ]
+          }
         }
       }
     ]

@@ -4,6 +4,7 @@ from functools import lru_cache
 import json
 from pathlib import Path
 from .battle_preview import battle_data, display_cell
+from .base_settlement_planning import stage_base_rewards,stage_reward_text
 
 MOVING='enemy_2152_shezlc'
 
@@ -90,7 +91,7 @@ def reward_source_text(result,row=None,technical=False):
             if reference.get('explicit_branch_id'):lines.append('原branch_id：'+reference['explicit_branch_id'])
             source=rule['quantity_source'];lines.append('数量来源：'+source['url'])
     if not rows:lines.append('固定来源中未找到已核验的这五类实体；不代表当前关卡没有奖励或动态生成。')
-    lines += ['',*result['limits']]
+    lines += ['',stage_reward_text(stage_base_rewards(result['stage_id'])),*result['limits']]
     if technical:
         lines += ['原关卡来源：'+result['source']['url'],'已检查：'+', '.join(result['inspected_containers'])]
     return '\n'.join(lines)

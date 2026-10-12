@@ -4,7 +4,7 @@ from pathlib import Path
 from PySide6.QtCore import Qt,QRectF,QPointF,Signal
 from PySide6.QtGui import QColor,QPainter,QPen,QPixmap
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,
-    QListWidget,QListWidgetItem,QPlainTextEdit,QSplitter,QCheckBox,QSpinBox)
+    QListWidget,QListWidgetItem,QPlainTextEdit,QSplitter,QCheckBox,QSpinBox,QPushButton)
 from .battle_preview import (DATA,battle_data,spawn_rows,enemy_preview,enemy_text,spawn_text)
 from .spawn_reference import local_sequence,ordinal_offset
 from .map_projection import projection_for,projection_data
@@ -237,6 +237,7 @@ class BattlePreviewPanel(QWidget):
         self.summary=QLabel();self.summary.setWordWrap(True);layout.addWidget(self.summary)
         rewards=QHBoxLayout();rewards.addWidget(QLabel('条件奖励来源'))
         self.reward_combo=QComboBox();rewards.addWidget(self.reward_combo,1);layout.addLayout(rewards)
+        self.reward_summary=QPushButton('基础结算与全部奖励来源');rewards.addWidget(self.reward_summary)
         self.branch_toggle=QCheckBox('条件分支来源与全部动作');layout.addWidget(self.branch_toggle)
         self.branch_panel=BranchReferencePanel();layout.addWidget(self.branch_panel);self.branch_panel.hide()
         maps=QSplitter(Qt.Orientation.Horizontal)
@@ -266,6 +267,7 @@ class BattlePreviewPanel(QWidget):
         self.original.cellSelected.connect(self._cell_selected)
         self.occurrence.valueChanged.connect(self._occurrence_changed)
         self.reward_combo.currentIndexChanged.connect(self._reward_selected)
+        self.reward_summary.clicked.connect(self._reward_summary)
         self.branch_toggle.toggled.connect(self.branch_panel.setVisible)
         self.branch_panel.referenceCellSelected.connect(self._branch_reference_cell)
         self.technical.toggled.connect(self.branch_panel.set_technical)
@@ -315,6 +317,7 @@ class BattlePreviewPanel(QWidget):
             cell=row['display_cell'];position=f"第{cell['row']+1}行、第{cell['col']+1}列" if cell else '分支位置未绑定'
             self.reward_combo.addItem(row['name']+' · '+position,row)
         self.reward_combo.blockSignals(False);self.reward_combo.setEnabled(bool(self.reward_result))
+        self.reward_summary.setEnabled(bool(self.reward_result))
         for combo in (self.wave_combo,self.enemy_combo):combo.blockSignals(True);combo.clear()
         self.wave_combo.addItem('全部波次及分支',None)
         self.enemy_choices.set_groups(enemy_groups(stage['enemies'] if stage else [],
@@ -333,6 +336,7 @@ class BattlePreviewPanel(QWidget):
         same_stage=self._rows_stage==self.current_stage
         branch_marker=copy.deepcopy(self._branch_marker) if same_stage else None
         selected_reward=copy.deepcopy(self.reward_combo.currentData()) if same_stage else None
+        reward_summary_selected=same_stage and self._detail_key==(self.current_stage,'reward',None)
         item=self.spawn_list.currentItem()
         previous_id=item.data(Qt.ItemDataRole.UserRole)['id'] if same_stage and item else None
         ordinal=self.occurrence.value();scroll=self.spawn_list.verticalScrollBar().value()
@@ -376,7 +380,7 @@ class BattlePreviewPanel(QWidget):
             self.spawn_list.blockSignals(True)
             self.spawn_list.setCurrentRow(retained if retained is not None else 0)
             self.spawn_list.blockSignals(False)
-        if selected_reward or branch_marker:
+        if selected_reward or reward_summary_selected or branch_marker:
             pass  # Keep the reward detail key/text while rebuilding static map rows.
         elif tile:
             self._cell_selected(tile,preserve=True)
@@ -396,6 +400,7 @@ class BattlePreviewPanel(QWidget):
                 if (self.reward_combo.itemData(i) or {}).get('id')==selected_reward['id']),0)
             self.reward_combo.blockSignals(True);self.reward_combo.setCurrentIndex(index);self.reward_combo.blockSignals(False)
             self._reward_selected(preserve=True)
+        elif reward_summary_selected:self._reward_selected(preserve=True)
         elif branch_marker:self._branch_reference_cell(branch_marker,preserve=True)
 
     def _branch_reference_cell(self,reference,*,preserve=False):
@@ -415,6 +420,10 @@ class BattlePreviewPanel(QWidget):
         text=f"条件分支资料格：{reference['name']}\n{label} · 第{cell['row']+1}行、第{cell['col']+1}列\n仅标记原件位置；实际触发、出生及路线仍未核验。"
         if self.technical.isChecked():text+='\n原件位置：'+reference['source_selector']
         replace_text(self.spawn_detail,text,preserve=preserve and self._detail_key==key);self._detail_key=key
+
+    def _reward_summary(self):
+        self.reward_combo.blockSignals(True);self.reward_combo.setCurrentIndex(0);self.reward_combo.blockSignals(False)
+        self._reward_selected()
 
     def _reward_selected(self,*_,preserve=False):
         self._branch_marker=None

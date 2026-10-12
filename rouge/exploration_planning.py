@@ -8,6 +8,7 @@ from collections import deque
 from functools import lru_cache
 import json
 from pathlib import Path
+from .base_settlement_planning import settlements
 from .node_arrival import arrival_reference,validate_arrival_state
 
 
@@ -668,3 +669,4 @@ def resident_candidates(graph,post_node=None,residents=None,moves=1,floor=None,d
 COMMANDS={'items':item_catalog,'targets':movement_targets,'effects':movement_effects,
           'zones':zone_catalog,'budget':zone_budget,'valuation':goods_valuation,'options':movement_options,
           'itinerary':itinerary,'transition':region_transition,'residents':resident_candidates}
+COMMANDS['settlements']=settlements

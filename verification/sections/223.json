@@ -1,0 +1,181 @@
+{
+  "title": "固定战斗基础经验/源石锭来源与声明路线奖励分项",
+  "remaining_item": "P3路线收益与节点战斗结算范围：基础分项、特殊入口、主层/秘境边界及未知完整奖励",
+  "new_capability": "六主层普通/紧急/首领/首领追猎24基础表格，区分满级科技参考列；18具名特殊行绑定27精确原ID，保留所有档次与别名。；普通追猎0分项与同名黑诞事件30经验按声明入口分别匹配/未知/来源条件不符；第六层旧floors=null保留，公开0/VI和原zone_6名称/icon单独证明结算所属层。；秘境仅普通/紧急继承已独立声明的战斗所属层；首领/首领追猎源空列保持数值未知，不断言入口不可能；19原portalZones明确区域ID不替代战斗所属层。；陌生旅伴金锭2–3区间与无效验尸金锭问号单独保留；声明胜利+来源条件闭合才纳入已知基础分项，实际胜利/领取/完整总量始终未知。；固定预览基础结算总览按钮和节点详情同源显示；局外探索第11项查询及8公开场景显式导入关卡/图节点，保持旧20+10查询、输入、选区、滚动和epoch导航守卫。",
+  "source_evidence": [
+    {
+      "source": "current PRTS mobile main page",
+      "revision": "433770",
+      "url": "https://m.prts.wiki/w/沉沦者的黑流树海",
+      "sha256": "8df90d811ef9516f46bb877a15c8701d83bd7d36ff744a42d9b27cfede8551e4",
+      "bytes": 803512,
+      "license": "CC BY-NC-SA4.0",
+      "local": "research/p3-base-settlement/current-main.html",
+      "establishes": "Documented base experience/gold; independent fulltech column; special exact stage pages; ordinary/boss pursuit text; portal colspan4 inheritance and blank boss cells. Not actual server execution."
+    },
+    {
+      "source": "a550 fixed topic original",
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "local": "research/p3-base-settlement/original-stage-meta.json",
+      "license": "Original game material remains Hypergryph copyright",
+      "establishes": "105 exact stage metadata/name/code/difficulty/isBoss and 26 zones; 19 explicit gameConst.portalZones; no base settlement numbers in original stage metadata."
+    },
+    {
+      "source": "exact fixed levels and legacy table limited audit",
+      "local": "research/p3-base-settlement/primary-scope-audit.json",
+      "establishes": "Two inspected level.options carry deployment initialCost, not gold; legacy global table has zero ro6 IDs. Source absence only within inspected fields."
+    }
+  ],
+  "acceptance": [
+    "Rebuild fixed generated JSON exactly from saved public HTML and original metadata; all105 exact IDs preserved, 18 special rows/27IDs; fulltech never auto-applied.",
+    "Main and special values, gold interval/?unknown, exact alias contexts, zero-area sixth-source proof, special-region scope, unknown victory/floor/variants and extra modifiers are checked.",
+    "Review reproductions: portal boss and boss pursuit do not reuse32/5; malformed variants rejected even when a valid variant_id is present.",
+    "Actual Qt offscreen entry points verify all8 scenarios, fixed summary button/no-device stage, NodeCatalog detail, explicit stage/graph imports, reading preservation and stale epoch rejection.",
+    "Existing20 calibration/battle and10 exploration assertions remain; all selectors below116/116 after final review repair. Native visible original Windows window pending root."
+  ],
+  "limitations": [
+    "PRTS published source values are conditional base references, not recovered native/server settlement script or actual victory/received rewards.",
+    "No complete reward pool/actual total, extra technology/relic/difficulty modifiers, random probability or optimized route; independent battle declarations do not prove feasible continuation.",
+    "Unknown special-region battle floor stays unknown; source blank boss cells do not prove exclusion. Current malformed IDs rejected; no historical content/title-only identity.",
+    "Latest arkrog module hash still identical to old43 one-through-five-floor templates; sixth/portal topology remains unknown and no new topology function claimed.",
+    "All verification uses public temporary/offline fixtures; no game, chat, PRIVATE or actual run writes; root native UI acceptance still required."
+  ],
+  "files": [
+    "rouge/exploration_planning.py",
+    "rouge/offline_tools_view.py",
+    "rouge/battle_reward_planning.py",
+    "rouge/battle_view.py",
+    "rouge/data/exploration-examples.json",
+    "tests/test_exploration_tools_view.py",
+    "rouge/base_settlement_planning.py",
+    "rouge/data/base-settlement-reference.json",
+    "scripts/build_base_settlement_reference.py",
+    "tests/test_base_settlement_planning.py",
+    "research/p3-base-settlement/current-main.html",
+    "research/p3-base-settlement/original-stage-meta.json",
+    "research/p3-base-settlement/source-receipt.json",
+    "research/p3-base-settlement/primary-scope-audit.json",
+    "BASE_BATTLE_SETTLEMENTS.md",
+    ".gitattributes",
+    ".gitattributes",
+    "verification/section-223/staging-format-failure.json"
+  ],
+  "file_hashes": {
+    "rouge/exploration_planning.py": {
+      "baseline_sha256": "d9c1dc3bed24f1d31c8f7993cab6def09eeebff5f9c133a782d051fd7f17cec6",
+      "candidate_sha256": "131e2267c846df47d8aefe1df39a075db0507196fd94b0392aa76062faf003aa",
+      "bytes": 48380
+    },
+    "rouge/offline_tools_view.py": {
+      "baseline_sha256": "c4f40037288953a07181bfc4624686f0eebacb2c12120cd69441fc51000ec086",
+      "candidate_sha256": "9f631e6e440a3c2ef650ae76ad5720ee93a3b656ddbd5796f0a38dd5a18aa5f1",
+      "bytes": 69414
+    },
+    "rouge/battle_reward_planning.py": {
+      "baseline_sha256": "6bb1ed96e3ee5153d11ec7687386726624efdd3fcb4ca496d7ed88f5469c4f31",
+      "candidate_sha256": "a6a60757dfdc839b11653e8a64782cae05227571dcf2dc2f95d4af3d4f15cc45",
+      "bytes": 6944
+    },
+    "rouge/battle_view.py": {
+      "baseline_sha256": "8a567caea2747b39d954ebdcc766c2713e149649e21f7eaf0d123199e7cc3e53",
+      "candidate_sha256": "e45b7308e723dca48df304b6d834cf81f2ff0f483737b9cb2b666eb42c032973",
+      "bytes": 32588
+    },
+    "rouge/data/exploration-examples.json": {
+      "baseline_sha256": "ef2f7559d5eab36609ef5c41b2649ef92622d145881e930903dad6c865b84756",
+      "candidate_sha256": "f77d2598536cd12b8510de182f382473a4117a7f0a2b003245b51ef618c00515",
+      "bytes": 53617
+    },
+    "tests/test_exploration_tools_view.py": {
+      "baseline_sha256": "bb3a980be4314de6694ba66f058d9eb98bfa82ae1edc273ba01c86afdf17d0f7",
+      "candidate_sha256": "a19789e08847c73a1b856a3a47496b94be40facd237bf46b8e4a06f2cb1bff16",
+      "bytes": 12808
+    },
+    "rouge/base_settlement_planning.py": {
+      "baseline_sha256": null,
+      "candidate_sha256": "519c4853bb6fcc6287e1700696039cfb3b4786dbca8f3a1fcfc5e97354a2592d",
+      "bytes": 15894
+    },
+    "rouge/data/base-settlement-reference.json": {
+      "baseline_sha256": null,
+      "candidate_sha256": "9921a3707e1b0a6aca19fd5644cc5653be095d3a0b43d44ca93ba308531d69ce",
+      "bytes": 132684
+    },
+    "scripts/build_base_settlement_reference.py": {
+      "baseline_sha256": null,
+      "candidate_sha256": "1152ff68618af08335f127e6dc73e3a095c2ffef82dded223a6fd439537ade51",
+      "bytes": 9637
+    },
+    "tests/test_base_settlement_planning.py": {
+      "baseline_sha256": null,
+      "candidate_sha256": "6ed41ae80f00ddd6a6c35bd48d77d5a071bc1cce69dd988b874e597d5ca9b588",
+      "bytes": 19489
+    },
+    "research/p3-base-settlement/current-main.html": {
+      "baseline_sha256": null,
+      "candidate_sha256": "8df90d811ef9516f46bb877a15c8701d83bd7d36ff744a42d9b27cfede8551e4",
+      "bytes": 803512
+    },
+    "research/p3-base-settlement/original-stage-meta.json": {
+      "baseline_sha256": null,
+      "candidate_sha256": "074b0ead9c0f82f902eafd4f2fb5f74ef38f87b3283bc27ca888a3a6846242fa",
+      "bytes": 33882
+    },
+    "research/p3-base-settlement/source-receipt.json": {
+      "baseline_sha256": null,
+      "candidate_sha256": "7b4c8b6df60c0664f134b8a44a3311e16b7604d331b050b0eefc8f0a16379b0b",
+      "bytes": 2771
+    },
+    "research/p3-base-settlement/primary-scope-audit.json": {
+      "baseline_sha256": null,
+      "candidate_sha256": "cbdadf597f351dfb7b44b582f563d77fa6bc1b54493467992cca9ab74eec8cd3",
+      "bytes": 3230
+    },
+    "BASE_BATTLE_SETTLEMENTS.md": {
+      "baseline_sha256": null,
+      "candidate_sha256": "ec4ec7b0cbc7c231865a8e89be9cf0863d4d999d56e8aeee1b8e2939573672e3",
+      "bytes": 4462
+    }
+  },
+  "test_selectors": [
+    "tests.test_base_settlement_planning",
+    "tests.test_battle_reward_planning",
+    "tests.test_exploration_planning",
+    "tests.test_exploration_tools_view",
+    "tests.test_offline_tools_view",
+    "tests.test_node_arrival_planning",
+    "tests.test_exploration_main_window",
+    "tests.test_node_map_navigation",
+    "tests.test_node_catalog_view",
+    "tests.test_branch_reference"
+  ],
+  "verification": {
+    "final": "necessary-tests-reviewed.log",
+    "tests": 116,
+    "passed": 116,
+    "new_scope": "new-tests-reviewed.log",
+    "new_scope_tests": 22,
+    "independent_review": "review-and-validation.json",
+    "native_visible_window": "pending root"
+  },
+  "counts_as": "One coherent new reward-source/route-components functional group; fixes/source collection/tests/docs are not separate sections.",
+  "root_integration_scope": "Source-supported offline function; real runtime/clock/hotfix is not inferred from temporary Qt checks.",
+  "root_native_window": "Existing original test window remains available; temporary MainWindow tests validate new controls without writing original state. Updated visible original window is checked at the next grouped UI/full closeout.",
+  "integration_dependencies": "Actual completed functional sections220/221 provide arrival and ownership baseline; internal234/235/236 are cache labels only.",
+  "section": 223,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T21:24:01.454804+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 116,
+    "passed": 116,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-223/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 230,
+  "staging_failure_repaired": "CRLF archived source and generated JSON preserved byte-exact with explicit line-ending policy; 116 passed necessary checks unchanged."
+}
