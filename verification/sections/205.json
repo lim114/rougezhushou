@@ -1,0 +1,75 @@
+{
+  "section": 205,
+  "internal_candidate_only": false,
+  "title": "局外探索工具完整工作流与声明地图预览绑定",
+  "remaining_item": "探索地图/节点资源与路线：187–197有证局外API的实际窗口入口、可用声明场景与旧输入结果保留",
+  "new_capability": "一个探索family提供10项查询+7边界预置、显式导入地图/区域、选择声明节点、中文位置结果与有来源身份守卫的预览链接；每查询保存输入/文字选择/双轴滚动/结果/技术详情及最后family选择。",
+  "source_evidence": [
+    "复用187–197已证exploration_planning接口与30零件/7范围/26区域固定原件",
+    "公开模板说明图保留arkrog资产URL/hash/2026-10-02来源版本；AP/次数/完成/持有是显式说明声明",
+    "不扩充未知服务器机制、不提供概率；FINAL参考自动消费201先行集成的226原件等量API结果，其它出口不外推"
+  ],
+  "acceptance": [
+    "原20查询所有旧渲染与widget执行断言保留，旧count=20仅统计calibration/battle，不删断言",
+    "10探索查询基本场景与7边界预置全部实际Qt按钮/worker跑通；21必要测试全过",
+    "set_graph深拷贝缓存；捕获时间/epoch/historical更新不改输入、选择、结果、读取文本选区或滚动",
+    "主动导入地图/区域保留独立AP/库存/次数/目标声明，节点选择明确填写起点/目标/据点",
+    "结果显示第N行第N列+节点类型/名称+ID；仅主动导入提供真实来源binding",
+    "公开同ID图、无epoch图、旧epoch/模板/ID/位置结果不误定位本局",
+    "不同查询/family切换恢复原输入与结果；stale worker不替换新输入或恢复的旧结果",
+    "合法JSON但nodes:null/原类型字段对象不冻结changing，worker保留具体错误；手动移动同ID节点后填写前须重新选择同步标签",
+    "MainWindow实际接入地图缓存与结果定位；epoch使用本局唯一ID而非时钟，同时间戳换局也拒绝旧节点/探索链接。",
+    "Windows-mcp实际0.74窗口可见、未最小化、响应正常；零件与加工品候选查询实际完成，五项私人文件检查保持。"
+  ],
+  "limitations": [
+    "仅声明条件与固定公开来源，不是已读本局资源或实际服务器资格；不写入本局记忆。",
+    "未知图类型、库存、随机落点、执行顺序和实际奖励保持未知；没有扩充无证生成概率。",
+    "公开模板说明保留URL/摘要/日期；许可证未独立核验，不宣称无限制再分发。",
+    "Windows实际窗口只运行公开示例；地图链接和同时间戳换局守卫在真实MainWindow的隔离公开状态验证。",
+    "正式客户端数据不在本批当作实机校准；私人状态不导入公共验收材料。"
+  ],
+  "files": [
+    "rouge/offline_tools_view.py",
+    "rouge/data/exploration-examples.json",
+    "tests/test_offline_tools_view.py",
+    "tests/test_exploration_tools_view.py",
+    "EXPLORATION_TOOLS_UI.md",
+    "rouge/app.py",
+    "tests/test_node_map_navigation.py",
+    "tests/test_exploration_main_window.py",
+    "verification/section-205/window.json"
+  ],
+  "patch": ".cache/batch186-285/p3-map-events/exploration-ui228/section228.patch",
+  "test_selectors": [
+    "tests.test_exploration_tools_view",
+    "tests.test_offline_tools_view",
+    "tests.test_exploration_main_window",
+    "tests.test_node_map_navigation",
+    "tests.test_batch185_mainwindow"
+  ],
+  "integration": {
+    "map_hook": "offline_tools.set_graph(remembered,epoch=run.state[id],historical=notfresh); UUID identity guards both node and exploration sources",
+    "signal": "offline_tools.mapNodeSelected(str,object) to same epoch/template/nodeID/rowcol-guarded preview handler as node_catalog; no game actions",
+    "dependency": "Consume after section201(225/226/227); numerical module is not changed by228"
+  },
+  "verification": "verification/section-205/window.json",
+  "base_source_sha256": "8fc9e06d04010d86033c68f7b8772764caa5b1636611d18d700fd921e64d8e2a",
+  "patch_application": "git apply --check --ignore-space-change for CRLF baseline; same flag for apply. Only context whitespace is ignored.",
+  "preparation_errors": [
+    "Candidate patch CRLF additions triggered whitespace warnings; only five named text files normalized before verification.",
+    "First MainWindow fixture lacked existing reporting grid/source, second lacked distance; completed public reporting schema and derived distance by declared-edge BFS. Product schema was not weakened and private data not used."
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T10:20:22.893549+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 39,
+    "passed": 39,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-205/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 215
+}

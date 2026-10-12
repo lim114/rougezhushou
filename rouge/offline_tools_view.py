@@ -7,12 +7,15 @@ from copy import deepcopy
 import html
 import json
 import math
+from pathlib import Path
 
 from PySide6.QtCore import QObject, QRunnable, QThreadPool, Signal
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QComboBox, QPushButton, QPlainTextEdit, QTextBrowser, QGroupBox, QSplitter)
 from PySide6.QtCore import Qt
-from . import calibration, battle_planning
+from PySide6.QtGui import QTextCursor
+from . import calibration, battle_planning, exploration_planning
+from urllib.parse import quote, unquote
 from .catalog import catalog
 from .battle_preview import battle_data
 
@@ -31,7 +34,14 @@ BATTLE_QUERIES = (
     ('route', '固定路线分段与等待'), ('cell', '地图格反向查询'),
     ('mechanism', '敌人机制原始来源差异'), ('compare', '两组敌人环境对照'),
 )
-QUERIES = {'calibration': CALIBRATION_QUERIES, 'battle': BATTLE_QUERIES}
+EXPLORATION_QUERIES = (
+    ('items','全部零件与原始参数'),('targets','加工品全部目的地候选'),
+    ('effects','移动资源与概念体条件'),('zones','主层和秘境目标'),
+    ('budget','行动力付款与耗尽边界'),('valuation','自然物估价与损坏账本'),
+    ('options','步行与加工品方案比较'),('itinerary','多步次数与资源账本'),
+    ('transition','主层与秘境转移条件'),('residents','居民位置与路线风险候选'),
+)
+QUERIES = {'calibration': CALIBRATION_QUERIES, 'battle': BATTLE_QUERIES,'exploration':EXPLORATION_QUERIES}
 BATTLE_COMMANDS = {
     'actions': battle_planning.action_catalog,
     'activations': battle_planning.predefined_activations,
@@ -68,6 +78,18 @@ INPUT_GUIDANCE = {
     'mechanism': 'stage_id、enemy_id、level 选择关卡敌人。原数据库等级与关卡覆盖差异分别保留，缺字段、null、空表与0不同；不猜继承或脚本合并。',
     'compare': 'left_stage/right_stage 与 left_level/right_level 分别指定两组条件；run_config/right_run_config 为局外环境。比较已支持环境小计，完整有效面板仍未知。',
 }
+INPUT_GUIDANCE.update({
+    'items':'列固定原件全部30零件。kind可选MOVE、GOODS、PASSIVE；目录不代表实际持有。',
+    'targets':'graph为声明地图，item_id为加工品；remaining_uses可声明余次数。未知资格仍保留候选，无生成概率。',
+    'effects':'明确target后逐项显示移动资源与passive_items概念体条件。结果不更新实际持有或战斗数值。',
+    'zones':'列全部26个原区域ID；同名秘境分别保留。区域目标、主层追猎和秘境返回不同。',
+    'budget':'zone_id选择区域；声明action_points和walking_steps或item_id。付款到零与后续奖励分别显示，真实顺序未知。',
+    'valuation':'item_id选择自然物；events逐项声明独立触发次数和完美作战状态。随机变化、损坏和实际售价分别保留。',
+    'options':'graph、target与inventory声明图和独立加工品实例。比较全部候选的基础AP；已完成/住民阻碍未知时不保证可走。',
+    'itinerary':'steps每步使用mode（walking或库存实例ID）和target。只修改临时方案账本；未知步骤会保留未求值尾链。',
+    'transition':'transition选择主层前进、秘境进入或返回。主层需exit_node_type；暂存品、剩余AP、FINAL等量希望参考与其他出口未知比率分开。',
+    'residents':'声明graph与可选据点/居民位置，moves为1–10。连通距离5以内初始候选、每步候选和路线交集不等于实际占领。',
+})
 LABELS = {**calibration.LABELS, 'maxHp': '生命上限', 'atk': '攻击力',
     'def': '防御力', 'magicResistance': '法术抗性', 'attackSpeed': '攻速属性',
     'baseAttackTime': '基础攻击间隔', 'moveSpeed': '移动速度',
@@ -82,7 +104,22 @@ VALUE_NAMES = {'physical': '物理', 'magic': '法术', 'true': '真实',
     'exact_alias': '唯一别名对应', 'empty_key': '空键，未绑定',
     'ambiguous_alias': '同名多个实体，未确认', 'unresolved_alias': '未找到对应实体',
     'elapsed_fragment_time': '当前片段计时条件', 'arrival_local_wait': '到达后的局部等待',
-    'OnAttack': '攻击事件（命中未核验）'}
+    'OnAttack': '攻击事件（命中未核验）','MOVE':'加工品','GOODS':'自然物','PASSIVE':'概念体',
+    'hope':'希望','gold':'源石锭','ap':'行动力','shield':'护盾',
+    'battle_attack_speed_reference':'战斗攻速资料','random_relic':'随机藏品',
+    'main_region_advance':'进入下一主区域','portal_enter':'进入秘境','portal_return':'返回原区域',
+    'processed_item':'加工品','walking':'步行','same_position_reentry_reference':'同格再进入参考',
+    'conditional_reference_step':'声明条件下参考步骤','blocked':'已列条件阻断',
+    'unresolved':'条件未知，停止依赖链','not_evaluated_after_stop':'前序停止，尚未求值'}
+
+
+def exploration_examples():
+    return json.loads((Path(__file__).with_name('data')/'exploration-examples.json').read_text(encoding='utf8'))
+
+
+def exploration_presets(command):
+    return [{'id':'default','label':'基本公开声明示例','payload':exploration_examples()['examples'][command]},
+            *exploration_examples().get('variants',{}).get(command,[])]
 
 
 def _finite_tree(value):
@@ -98,7 +135,7 @@ def run_offline_query(family, command, payload):
     """Public synchronous entry point used by a worker and public-fixture tests."""
     if not isinstance(payload, dict): raise ValueError('条件必须是 JSON 对象。')
     _finite_tree(payload)
-    commands = calibration.COMMANDS if family == 'calibration' else BATTLE_COMMANDS if family == 'battle' else {}
+    commands = calibration.COMMANDS if family == 'calibration' else BATTLE_COMMANDS if family == 'battle' else exploration_planning.COMMANDS if family=='exploration' else {}
     if command not in commands: raise ValueError('没有这个离线查询。')
     try:
         return commands[command](**deepcopy(payload))
@@ -108,6 +145,7 @@ def run_offline_query(family, command, payload):
 
 def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
+    if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
         scenario = {'operator': 'mechanist', 'skill': 3, 'charge_count': 0}
         payload = {'scenario': scenario}
@@ -165,13 +203,37 @@ def _attributes(stats):
     return _table(['属性', '条件参考值'], [(LABELS.get(k,k),v) for k,v in (stats or {}).items()])
 
 
-def render_offline_result(family, command, data):
+def _node_label(graph,node_id):
+    node=next((n for n in (graph or {}).get('nodes',[]) if isinstance(n,dict) and n.get('id')==node_id),None)
+    if node is None:return str(node_id)+'（位置未绑定）'
+    row,col=node.get('row'),node.get('col')
+    position=f'第{row+1}行、第{col+1}列' if type(row) is int and type(col) is int else '位置未明确'
+    raw=node.get('base_node_type') or node.get('node_type_raw')
+    if not isinstance(raw,str):raw=None
+    name=node.get('observed_type') or exploration_planning.reference_data()['node_types'].get(raw,{}).get('name') or '类型未知'
+    return f'{position} · {name} · {node_id}'
+
+
+def result_node_ids(command,data):
+    keys={data.get('start'),data.get('target'),data.get('nominal_position'),data.get('post_node')}
+    for row in data.get('targets',[])+data.get('excluded',[])+data.get('spawn_candidates',[]):keys.add(row.get('node_id'))
+    for row in data.get('steps',[]):keys.update((row.get('start'),row.get('target')))
+    for resident in data.get('movement_candidates',[]):
+        keys.add(resident.get('initial_position_declared'))
+        for step in resident.get('steps',[]):keys.update(step['candidate_positions'])
+    for path in (data.get('walking_paths') or {}).values():
+        if path:keys.update(path['path'])
+    return {key for key in keys if isinstance(key,str)}
+
+
+def render_offline_result(family, command, data, *, graph=None, map_link_nodes=None, input_source=None):
     """Readable main output; technical fields stay available in a collapsed pane."""
     title = dict(QUERIES[family])[command]
     parts = ['<html><body>', '<h2>'+_esc(title)+'</h2>',
         _p('局外声明条件 / 固定公开配置参考。尚未验证当前客户端实机；未知不等于0。')]
     if data.get('operator'): parts.append(_p('干员：'+data['operator']))
     if data.get('stage_name'): parts.append(_p('关卡：'+data['stage_name']))
+    if input_source:parts.append(_p('此次输入来源：'+input_source))
     if family == 'calibration':
         if command == 'panel':
             parts += [_p('分层差值用于排查，不能把跨层效果再次相加。'),
@@ -233,6 +295,72 @@ def render_offline_result(family, command, data):
             parts += [_p(f"公式参考算例 {data['case_count']} 组；相符 {data['matching_reference_cases']} 组。不是公开实机成对验收。"),
                 _table(['算例','干员','比较属性','预测','公式参考','差值','在声明容差内'],
                     [(row['id'],row['comparison']['operator'],r['label'],r['predicted'],r['observed'],r['difference'],r['matches_declared_tolerance']) for row in data['rows'] for r in row['comparison']['rows']])]
+    elif family=='exploration':
+        label=lambda key:_node_label(graph,key)
+        if command=='items':
+            parts.append(_table(['零件','类别','原文用途','初始估价参数','加工品初始次数'],
+                [(r['name'],r['kind'],r['usage'],r['raw']['sellPrice'],r['raw'].get('count')) for r in data['items']]))
+        elif command=='targets':
+            parts += [_p('起点：'+label(data['start'])),
+                _table(['目的地','基础AP','类型条件相符','声明余次','次数可用','随机落点'],
+                    [(label(r['node_id']),r['base_ap_cost'],r['node_type_matches'],r['remaining_uses_declared'],r['uses_available'],r['is_random_destination']) for r in data['targets']]),
+                _p('已排除目的地：'+_text([label(r['node_id']) for r in data['excluded']]))]
+        elif command=='effects':
+            parts += [_p('目的地：'+label(data['target'])),
+                _table(['移动资源','描述数量','声明条件相符','实际领取'],
+                    [(r['resource'],r['amount'],r['condition_matches'],r['actual_granted']) for r in data['movement_grants']]),
+                _table(['概念体','节点条件','次数可用','全部条件','效果资料','实际触发'],
+                    [(r['name'],r['node_type_matches'],r['activation_available_declared'],r['condition_matches'],r['effects'],r['actual_activation']) for r in data['passives']]),
+                _p('攻速只列战斗参考；实际新资源与完整随机池未知。')]
+        elif command=='zones':
+            parts.append(_table(['原区域ID','名称','目标','行动力耗尽提示'],
+                [(r['zone_id'],r['name'],r['mission_text'],r['exhaustion_text']) for r in data['zones']]))
+        elif command=='budget':
+            parts += [_p(data['zone']['name']+' · '+data['zone']['mission_text']),
+                _table(['AP参考项','数值'],[('声明AP',data['action_points_declared']),('基础付款',data['base_ap_cost']),
+                    ('基础成本可负担',data['base_cost_affordable']),('付款后小计',data['nominal_ap_after_payment']),
+                    ('描述移动AP奖励',data['source_stated_movement_ap_grant']),('奖励后小计',data['nominal_ap_after_stated_grant']),
+                    ('付款到零边界',data['payment_zero_boundary']),('实际最终AP',data['actual_final_ap'])]),
+                _table(['条件后果','适用条件','目标条件相符'],[(r['outcome'],r['condition'],r['goal_condition_matches']) for r in data['conditional_outcomes']])]
+        elif command=='valuation':
+            parts += [_p('自然物：'+data['item']['name']),
+                _table(['事件次序','事件','独立次数','已证描述增量','事件状态','未知影响前小计'],
+                    [(r['event_ordinal'],r['kind'],r['count_declared'],r['known_description_delta'],r['status'],r['subtotal_before_unknown_effects']) for r in data['events']]),
+                _table(['估价项','参考'],[('原始/声明估价',data['initial_estimate_reference']),('算术小计',data['arithmetic_subtotal']),
+                    ('条件估价',data['nominal_estimate']),('已声明损坏',data['destroyed_in_declared_ledger']),('实际售价',data['actual_sell_value'])]),
+                _table(['尚未知事件','原因'],[(r['event_ordinal'],r['reason']) for r in data['unknown_effects']])]
+        elif command=='options':
+            parts += [_p('目的地：'+label(data['target'])),
+                _table(['方案','移动方式','基础AP','声明条件相符','基础AP可负担','实际进入'],
+                    [(r.get('name',r['id']),r['mode'],r['base_ap_cost'],r['known_conditions_match'],r['base_cost_affordable'],r['actual_entry_eligible']) for r in data['options']]),
+                _p('最低基础AP候选：'+_text(data['minimum_base_cost_candidates'])+'；数值：'+_text(data['minimum_base_ap_cost_reference'])+'；实际最优路线未知。')]
+            for mode,path in (data.get('walking_paths') or {}).items():
+                if path:parts.append(_p('步行路径参考 '+mode+'：'+' → '.join(label(key) for key in path['path'])))
+        elif command=='itinerary':
+            parts += [_table(['步骤','目的地','状态','基础AP','移动AP奖励','付款后小计','奖励后小计'],
+                [(r['step'],label(r['target']),r['status'],r.get('base_ap_cost'),r.get('stated_ap_grant'),r.get('nominal_ap_after_payment'),r.get('nominal_ap_after_stated_grant')) for r in data['steps']]),
+                _p('名义最终位置：'+label(data['nominal_position'])+'；名义最终AP：'+_text(data['nominal_final_ap'])),
+                _p('依赖链停止原因：'+_text(data['stopped_reason'])+'；实际最终库存未知。')]
+        elif command=='transition':
+            parts += [_p('转移：'+_text(data['transition'])),
+                _table(['零件','主层成功后过期','秘境例外保留','已声明耗尽','实际保留'],
+                    [(r['name'],r['expires_if_transition_succeeds'],r['preserved_by_portal_exception'],r['already_depleted_declared'],r['actual_retained']) for r in data['inventory_conditions']]),
+                _table(['资源项','参考'],[('用于希望转换的剩余AP',data['resources']['source_rule_ap_conversion']),
+                    ('携带到下一区域的AP',data['resources']['source_rule_carried_ap']),('希望数量',data['resources']['hope_gain']),
+                    ('已证转换比率参考',data['resources'].get('hope_conversion_ratio')),('希望增量参考',data['resources'].get('hope_gain_reference')),
+                    ('下一区域总AP',data['resources']['next_region_total_ap'])])]
+        elif command=='residents':
+            parts += [_table(['初始生成位置候选','连通距离','空地类型条件','据点门槛','实际生成'],
+                [(label(r['node_id']),r['connected_distance'],r['initial_clearing_type_matches'],r['known_post_gate_matches'],r['actual_spawn']) for r in data['spawn_candidates']]),
+                _p('来源人数上限3；候选数量上界：'+_text(data['initial_count_upper_bound'])+'；实际人数未知。')]
+            for resident in data['movement_candidates']:
+                parts += [_h('居民 '+resident['resident_id']),_table(['第几次移动后','位置候选','未证回退数','实际位置'],
+                    [(r['movement_step'],[label(key) for key in r['candidate_positions']],len(r['unresolved_fallbacks']),r['actual_position']) for r in resident['steps']])]
+            parts.append(_table(['移动次序','与声明玩家位置候选重合','实际碰撞/阻断'],
+                [(r['movement_step'],r['source_candidate_overlap'],r['actual_collision_or_blockage']) for r in data['player_route_risk']]))
+        if map_link_nodes:
+            parts += [_h('定位已绑定来源图节点'),'<p>'+ '　'.join(
+                '<a href="rouge-map-node:'+quote(key,safe='')+'">'+html.escape(label(key))+'</a>' for key in map_link_nodes)+'</p>']
     else:
         if command == 'actions':
             parts.append(_table(['片段队列','次序','动作类型','配置键','声明数量','局部前延迟','间隔参数','全局秒数'],
@@ -303,7 +431,7 @@ def render_offline_result(family, command, data):
                 [(LABELS.get(r['attribute'],r['attribute']),r['left_known_subtotal'],r['right_known_subtotal'],r['subtotal_delta'],r['full_effective_delta']) for r in data['attribute_differences']]),
                 _p('免疫字段差异：'+str(len(data['immunity_differences']))+'；机制描述差异：'+str(len(data['ability_differences'])))]
     parts.append(_h('适用范围与未核验项'))
-    parts.extend(_p(n) for n in data.get('notes',[])+data.get('limits',[])+data.get('warnings',[]))
+    parts.extend(_p(n) for n in data.get('notes',[])+data.get('limits',[])+data.get('warnings',[])+data.get('additional_limits',[]))
     parts.append(_p('完整原始结果与来源记录保留在下方“技术详情”。'))
     parts.append('</body></html>')
     return ''.join(parts)
@@ -328,16 +456,25 @@ class _QueryWorker(QRunnable):
 class OfflineToolsPanel(QWidget):
     """Qt panel with explicit imports; automatic context refresh is nondestructive."""
     resultChanged = Signal(object)
+    mapNodeSelected = Signal(str,object)
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self._scenario=None; self._stage=None; self._buffers={}
+        self._scenario=None; self._stage=None; self._buffers={};self._views={};self._active_key=None;self._family_queries={}
         self._serial=0; self._workers={}; self._result=None; self._rendered=''
+        self._graph_cache=None;self._graph_import=None;self._origin='公开声明示例；不是本局状态'
+        self._result_graph=None;self._result_links={};self._worker_context={}
         self._changing=False
         layout=QVBoxLayout(self)
         row=QHBoxLayout()
-        self.family=QComboBox();self.family.addItem('干员校准','calibration');self.family.addItem('固定关卡规划','battle')
+        self.family=QComboBox();self.family.addItem('干员校准','calibration');self.family.addItem('固定关卡规划','battle');self.family.addItem('探索与路线','exploration')
         self.query=QComboBox();row.addWidget(self.family);row.addWidget(self.query,1)
+        layout.addLayout(row)
+        row=QHBoxLayout();self.preset=QComboBox();self.preset.setAccessibleName('探索公开场景预置')
+        self.import_graph=QPushButton('导入缓存地图声明')
+        self.graph_node=QComboBox();self.graph_node.setAccessibleName('声明图目标或起点')
+        self.fill_node=QPushButton('填写所选节点')
+        for control in (self.preset,self.import_graph,self.graph_node,self.fill_node):row.addWidget(control)
         layout.addLayout(row)
         self.scope=QLabel('纯局外查询：公共资料、声明条件、已证分项；不操作游戏，不发送聊天。')
         self.scope.setWordWrap(True);layout.addWidget(self.scope)
@@ -353,7 +490,7 @@ class OfflineToolsPanel(QWidget):
         self.status=QLabel('请检查条件后运行。');self.status.setWordWrap(True);layout.addWidget(self.status)
         splitter=QSplitter(Qt.Orientation.Vertical)
         self.editor=QPlainTextEdit();self.editor.setPlaceholderText('声明条件 JSON；不读取私人配置')
-        self.result_view=QTextBrowser();self.result_view.setOpenExternalLinks(False)
+        self.result_view=QTextBrowser();self.result_view.setOpenExternalLinks(False);self.result_view.setOpenLinks(False)
         splitter.addWidget(self.editor);splitter.addWidget(self.result_view)
         splitter.setSizes([200,450]);layout.addWidget(splitter,1)
         self.technical=QGroupBox('技术详情（完整 JSON 与来源，仅备查）');self.technical.setCheckable(True);self.technical.setChecked(False)
@@ -367,13 +504,17 @@ class OfflineToolsPanel(QWidget):
         self.load_example.clicked.connect(self._load_example)
         self.import_scenario.clicked.connect(self._import_scenario)
         self.import_stage.clicked.connect(self._import_stage)
+        self.import_graph.clicked.connect(self._import_graph)
+        self.fill_node.clicked.connect(self._fill_node)
+        self.graph_node.currentIndexChanged.connect(self._update_buttons)
+        self.result_view.anchorClicked.connect(self._map_anchor)
         self.run_button.clicked.connect(self._run)
         self._family_changed()
 
     def current_query(self): return self.family.currentData(),self.query.currentData()
 
     def select_query(self, family, command):
-        """Select one of the 20 public queries, preserving each editor buffer."""
+        """Select a public query, preserving each declaration and reading state."""
         index=self.family.findData(family)
         if index<0 or command not in dict(QUERIES[family]):raise ValueError('没有这个查询。')
         self.family.setCurrentIndex(index)
@@ -389,41 +530,105 @@ class OfflineToolsPanel(QWidget):
         if incoming==self._stage:return
         self._stage=incoming;self._update_context()
 
+    def set_graph(self,graph,*,epoch=None,historical=True):
+        """Deep-copy cache only. Capture timestamps never replace the input/result."""
+        self._graph_cache={'graph':deepcopy(graph),'epoch':epoch,'historical':bool(historical)} if isinstance(graph,dict) else None
+        self._update_context()
+
     def _update_context(self):
         name=catalog()['operators'].get((self._scenario or {}).get('operator'),{}).get('name')
         stage=battle_data()['stages'].get(self._stage,{})
-        self.context_label.setText(f"可显式导入：干员 {name or '尚无可用条件'}；关卡 {stage.get('name','尚无可用关卡')}。自动刷新不会改写编辑区或当前结果。")
+        graph=(self._graph_cache or {}).get('graph') or {}
+        graph_name=(str(graph.get('template_id') or '模板未确认')+' / '+str(graph.get('zone_id') or '区域未确认')) if graph else '尚无可用地图'
+        history='历史记录' if self._graph_cache and self._graph_cache['historical'] else '当前匹配记录'
+        self.context_label.setText(f"可显式导入：干员 {name or '尚无可用条件'}；关卡 {stage.get('name','尚无可用关卡')}；地图 {graph_name}（{history}）。自动刷新保留编辑、选择和结果。")
         self._update_buttons()
 
     def _update_buttons(self):
         family,command=self.current_query()
         self.import_scenario.setEnabled(family=='calibration' and command!='worksheets' and self._scenario is not None)
         self.import_stage.setEnabled(family=='battle' and self._stage is not None)
+        exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents')
+        self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
+        self.graph_node.setVisible(exploring and graph_query);self.fill_node.setVisible(exploring and graph_query)
+        self.import_graph.setText('导入缓存区域声明' if command=='budget' else '导入缓存地图声明')
+        self.import_graph.setEnabled(exploring and (graph_query or command=='budget') and self._graph_cache is not None)
+        self.fill_node.setEnabled(exploring and command in ('targets','effects','options','residents') and self.graph_node.currentData() is not None)
+        self.fill_node.setText('填写声明起点' if command=='targets' else '填写居民据点' if command=='residents' else '填写声明目标')
 
     def _family_changed(self):
         self._changing=True
         self.query.clear()
         for command,label in QUERIES[self.family.currentData()]:self.query.addItem(label,command)
+        remembered=self._family_queries.get(self.family.currentData())
+        if remembered:self.query.setCurrentIndex(self.query.findData(remembered))
         self._changing=False
         self._query_changed()
 
     def _query_changed(self):
         if self._changing or not self.query.currentData():return
+        self._save_view()
         key=self.current_query();self._changing=True
-        text=self._buffers.get(key)
-        if text is None:text=json.dumps(public_payload(*key),ensure_ascii=False,indent=2)
-        self.editor.setPlainText(text);self._changing=False
-        self._buffers[key]=text;self._invalidate('查询已切换，请检查声明条件后运行。')
+        try:
+            text=self._buffers.get(key)
+            if text is None:text=json.dumps(public_payload(*key),ensure_ascii=False,indent=2)
+            self.editor.setPlainText(text);self._buffers[key]=text;self._active_key=key
+            self.preset.clear()
+            if key[0]=='exploration':
+                for row in exploration_presets(key[1]):self.preset.addItem(row['label'],row['id'])
+            view=self._views.get(key)
+            self._origin=(view or {}).get('origin','公开声明示例；不是本局状态')
+            self._graph_import=deepcopy((view or {}).get('graph_import'))
+            self._refresh_graph_choices((view or {}).get('graph_node'))
+            self._serial+=1;self._restore_view(view)
+        finally:
+            self._changing=False
         self.scope.setText(INPUT_GUIDANCE[key[1]])
         self._update_buttons()
+
+    def _save_view(self):
+        if self._active_key is None:return
+        self._family_queries[self._active_key[0]]=self._active_key[1]
+        cursor=self.editor.textCursor()
+        self._views[self._active_key]={'cursor':[cursor.anchor(),cursor.position()],
+            'result_cursor':[self.result_view.textCursor().anchor(),self.result_view.textCursor().position()],
+            'raw_cursor':[self.raw_result.textCursor().anchor(),self.raw_result.textCursor().position()],
+            'editor_scroll':self.editor.verticalScrollBar().value(),'result_scroll':self.result_view.verticalScrollBar().value(),
+            'raw_scroll':self.raw_result.verticalScrollBar().value(),'technical':self.technical.isChecked(),
+            'horizontal_scroll':[w.horizontalScrollBar().value() for w in (self.editor,self.result_view,self.raw_result)],
+            'result':deepcopy(self._result),'rendered':self._rendered,'raw':self.raw_result.toPlainText(),
+            'status':self.status.text(),'origin':self._origin,'graph_import':deepcopy(self._graph_import),
+            'result_graph':deepcopy(self._result_graph),'result_links':deepcopy(self._result_links),
+            'preset':self.preset.currentData(),'graph_node':self.graph_node.currentData()}
+
+    def _restore_view(self,view):
+        self.run_button.setEnabled(True)
+        self._result=deepcopy((view or {}).get('result'));self._rendered=(view or {}).get('rendered','')
+        self._result_graph=deepcopy((view or {}).get('result_graph'));self._result_links=deepcopy((view or {}).get('result_links',{}))
+        message=(view or {}).get('status','查询已切换，请检查声明条件后运行。')
+        if message=='正在运行局外查询……':message='先前查询未保留结果，请重新运行。'
+        self.status.setText(message);self.result_view.setHtml(self._rendered or _p(message))
+        self.raw_result.setPlainText((view or {}).get('raw',''));self.technical.setChecked((view or {}).get('technical',False))
+        if view:
+            cursor=self.editor.textCursor();cursor.setPosition(view['cursor'][0]);cursor.setPosition(view['cursor'][1],QTextCursor.MoveMode.KeepAnchor)
+            self.editor.setTextCursor(cursor);self.editor.verticalScrollBar().setValue(view['editor_scroll'])
+            for widget,field in ((self.result_view,'result_cursor'),(self.raw_result,'raw_cursor')):
+                cursor=widget.textCursor();cursor.setPosition(view[field][0]);cursor.setPosition(view[field][1],QTextCursor.MoveMode.KeepAnchor)
+                widget.setTextCursor(cursor)
+            self.result_view.verticalScrollBar().setValue(view['result_scroll']);self.raw_result.verticalScrollBar().setValue(view['raw_scroll'])
+            for widget,value in zip((self.editor,self.result_view,self.raw_result),view['horizontal_scroll']):widget.horizontalScrollBar().setValue(value)
+            self.preset.setCurrentIndex(self.preset.findData(view['preset']))
+        self.resultChanged.emit(deepcopy(self._result))
 
     def _input_changed(self):
         if self._changing:return
         self._buffers[self.current_query()]=self.editor.toPlainText()
+        self._origin='用户编辑的局外声明；不是实际执行结果'
         self._invalidate('条件已修改，旧结果已失效，请重新运行。')
 
     def _invalidate(self, text):
         self._serial+=1;self._result=None;self._rendered=''
+        self._result_graph=None;self._result_links={}
         self.status.setText(text);self.result_view.setHtml(_p(text));self.raw_result.clear()
         self.run_button.setEnabled(True)
         self.resultChanged.emit(None)
@@ -438,7 +643,12 @@ class OfflineToolsPanel(QWidget):
         _finite_tree(payload);return payload
 
     def _load_example(self):
-        self.editor.setPlainText(json.dumps(public_payload(*self.current_query()),ensure_ascii=False,indent=2))
+        family,command=self.current_query();payload=public_payload(family,command)
+        if family=='exploration':payload=next(row['payload'] for row in exploration_presets(command) if row['id']==self.preset.currentData())
+        self._graph_import=None
+        self.editor.setPlainText(json.dumps(payload,ensure_ascii=False,indent=2))
+        self._origin='公开场景预置：'+(self.preset.currentText() if family=='exploration' else '基本示例')+'；所有持有/AP/状态均为说明声明'
+        self._refresh_graph_choices()
         self.status.setText('已载入公共示例；请检查条件。公式算例不是实机观察。')
 
     def _import_scenario(self):
@@ -466,27 +676,112 @@ class OfflineToolsPanel(QWidget):
             self.status.setText('已显式导入关卡；敌人、等级、路线和格子仍保留原声明，请核对。两组对照只替换左关卡。')
         except Exception as exc:self.status.setText('未导入：'+str(exc))
 
+    def _refresh_graph_choices(self,selected=None):
+        self.graph_node.blockSignals(True);self.graph_node.clear()
+        self.graph_node.addItem('请选择声明图节点',None)
+        try:graph=self._payload().get('graph') or {}
+        except ValueError:graph={}
+        nodes=graph.get('nodes') if isinstance(graph,dict) else None
+        for node in nodes if isinstance(nodes,list) else []:
+            if isinstance(node,dict) and isinstance(node.get('id'),str):
+                self.graph_node.addItem(_node_label(graph,node['id']),node['id'])
+        if selected is not None:self.graph_node.setCurrentIndex(max(0,self.graph_node.findData(selected)))
+        self.graph_node.blockSignals(False)
+
+    def _import_graph(self):
+        try:
+            family,command=self.current_query()
+            if family!='exploration' or self._graph_cache is None:raise ValueError('没有可导入的地图缓存。')
+            if command not in ('targets','effects','options','itinerary','residents','budget'):
+                raise ValueError('此查询不接受地图或区域声明。')
+            payload=self._payload();cached=deepcopy(self._graph_cache);graph=cached['graph']
+            if command=='budget':
+                zone=graph.get('zone_id')
+                if zone not in exploration_planning.reference_data()['zones']:raise ValueError('缓存区域ID尚未确认。')
+                payload['zone_id']=zone;graph_import=None
+            else:
+                payload['graph']=graph;graph_import=cached
+            text=json.dumps(payload,ensure_ascii=False,indent=2,allow_nan=False)
+            self.editor.setPlainText(text);self._graph_import=graph_import
+            self._origin=('历史' if cached['historical'] else '当前匹配')+'缓存图的显式副本；AP/次数/完成/阻碍仍是独立声明'
+            self._refresh_graph_choices();self._update_buttons()
+            self.status.setText('已显式导入地图/区域副本；目标、起点、库存和资源保留原声明，请核对。未写入本局。')
+        except Exception as exc:self.status.setText('未导入：'+str(exc))
+
+    def _fill_node(self):
+        try:
+            family,command=self.current_query();node_id=self.graph_node.currentData();payload=self._payload()
+            if family!='exploration' or command not in ('targets','effects','options','residents'):
+                raise ValueError('此查询不接受单个节点字段。')
+            if not any(n.get('id')==node_id for n in payload.get('graph',{}).get('nodes',[])):
+                raise ValueError('所选节点不在当前编辑的声明图中；请重新载入/导入声明图。')
+            if self.graph_node.currentText()!=_node_label(payload['graph'],node_id):
+                self._refresh_graph_choices();self._update_buttons()
+                raise ValueError('节点的位置或类型声明已修改；清单已同步，请重新选择后填写。')
+            field='start' if command=='targets' else 'post_node' if command=='residents' else 'target'
+            payload[field]=node_id;self.editor.setPlainText(json.dumps(payload,ensure_ascii=False,indent=2))
+            self.status.setText('已填写声明'+('起点' if field=='start' else '据点' if field=='post_node' else '目标')+'；不改变助手或游戏中的实际位置。')
+        except Exception as exc:self.status.setText('未填写：'+str(exc))
+
+    @staticmethod
+    def _graph_layout(graph):
+        if not isinstance(graph,dict):return None
+        if not isinstance(graph.get('nodes'),list):return None
+        rows=[]
+        for node in graph.get('nodes',[]):
+            if (not isinstance(node,dict) or not isinstance(node.get('id'),str)
+                or type(node.get('row')) is not int or type(node.get('col')) is not int):return None
+            rows.append((node['id'],node['row'],node['col']))
+        return (graph.get('zone_id'),graph.get('template_id'),tuple(sorted(rows)))
+
+    def _bindings_for_payload(self,payload):
+        imported=self._graph_import;graph=payload.get('graph')
+        layout=self._graph_layout(graph)
+        if not imported or imported.get('epoch') is None or layout is None or layout!=self._graph_layout(imported['graph']):return {}
+        if not graph.get('zone_id') or not graph.get('template_id'):return {}
+        return {node['id']:{'epoch':imported['epoch'],'zone_id':graph['zone_id'],'template_id':graph['template_id'],
+                'node_id':node['id'],'row':node['row'],'col':node['col']} for node in graph['nodes']}
+
+    def _map_anchor(self,url):
+        if url.scheme()!='rouge-map-node':return
+        key=unquote(url.path());binding=self._result_links.get(key);cached=self._graph_cache
+        current=(cached or {}).get('graph') or {}
+        nodes=current.get('nodes')
+        node=next((n for n in nodes if isinstance(n,dict) and n.get('id')==key),None) if isinstance(nodes,list) else None
+        if (not binding or not cached or cached['epoch']!=binding['epoch'] or not node
+            or current.get('zone_id')!=binding['zone_id'] or current.get('template_id')!=binding['template_id']
+            or type(node.get('row')) is not int or type(node.get('col')) is not int
+            or node['row']!=binding['row'] or node['col']!=binding['col']):
+            self.status.setText('地图链接已过期或来源未绑定；保留旧结果，请显式导入本局图后重新运行。');return
+        self.mapNodeSelected.emit(key,deepcopy(binding))
+
     def _run(self):
         try:payload=self._payload()
         except Exception as exc:
             self._invalidate('不能运行：'+str(exc));return
         self._invalidate('正在运行局外查询……')
         serial=self._serial;family,command=self.current_query()
+        if family=='exploration':self._refresh_graph_choices(self.graph_node.currentData());self._update_buttons()
         worker=_QueryWorker(serial,family,command,payload)
+        self._worker_context[serial]={'payload':deepcopy(payload),'origin':self._origin,'bindings':self._bindings_for_payload(payload) if family=='exploration' else {}}
         worker.signals.finished.connect(self._finished)
         self._workers[serial]=worker;self.run_button.setEnabled(False)
         QThreadPool.globalInstance().start(worker)
 
     def _finished(self, serial, family, command, result, error):
         self._workers.pop(serial,None)
+        context=self._worker_context.pop(serial,{})
         if serial!=self._serial or (family,command)!=self.current_query():return
         self.run_button.setEnabled(True)
         if error:self._invalidate(error);return
         try:
-            rendered=render_offline_result(family,command,result)
+            graph=context.get('payload',{}).get('graph');bindings=context.get('bindings',{})
+            links={key:binding for key,binding in bindings.items() if key in result_node_ids(command,result)}
+            rendered=render_offline_result(family,command,result,graph=graph,map_link_nodes=links,input_source=context.get('origin'))
             raw=json.dumps(result,ensure_ascii=False,indent=2,allow_nan=False)
         except Exception as exc:self._invalidate('结果结构无法显示：'+str(exc));return
         self._result=deepcopy(result)
+        self._result_graph=deepcopy(graph);self._result_links=deepcopy(links)
         if rendered!=self._rendered:
             self.result_view.setHtml(rendered);self._rendered=rendered
         self.raw_result.setPlainText(raw)

@@ -79,7 +79,7 @@ def number(value=0, maximum=100000, decimals=2):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle('黑流树海助手 0.73 · 局外计算与节点测试（204）')
+        self.setWindowTitle('黑流树海助手 0.74 · 局外计算与节点测试（205）')
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader()
@@ -137,6 +137,7 @@ class MainWindow(QMainWindow):
         tabs.addTab(self.node_catalog,'节点事件')
         from .offline_tools_view import OfflineToolsPanel
         self.offline_tools=OfflineToolsPanel()
+        self.offline_tools.mapNodeSelected.connect(self.show_catalog_map_node)
         tabs.addTab(self.offline_tools,'局外工具')
         self.offline_tools.set_stage(self.target_stage.currentData())
         from .technology_view import TechnologyReferencePanel
@@ -317,7 +318,8 @@ class MainWindow(QMainWindow):
         gold=(resources.get('gold') or {}).get('value')
         context={'gold':gold} if type(gold) is int and gold>=0 else {}
         self.node_catalog.set_map_context(remembered,map_conditions(remembered,self.run.state.get('config',{})),
-            epoch=self.run.state['started_at'],historical=not fresh,runtime_context=context)
+            epoch=self.run.state['id'],historical=not fresh,runtime_context=context)
+        self.offline_tools.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
 
     def refresh_windows(self):
         if self.busy:
@@ -863,7 +865,8 @@ class MainWindow(QMainWindow):
         """Navigate the assistant only, rejecting stale run/template/position links."""
         graph=self.map_view.graph or {}
         node=next((n for n in graph.get('nodes',[]) if n['id']==node_id),None)
-        valid=(isinstance(binding,dict) and binding.get('epoch')==self.run.state['started_at']
+        valid=(isinstance(binding,dict) and isinstance(binding.get('epoch'),str) and bool(binding['epoch'])
+            and binding['epoch']==self.run.state['id']
             and binding.get('zone_id')==graph.get('zone_id') and binding.get('template_id')==graph.get('template_id')
             and binding.get('node_id')==node_id and node is not None
             and type(binding.get('row')) is int and type(binding.get('col')) is int

@@ -1,3 +1,7 @@
+## 功能第205节 · 局外探索工具完整工作流与声明地图预览绑定
+
+2026-10-12T10:20:22.893549+08:00。新增：一个探索family提供10项查询+7边界预置、显式导入地图/区域、选择声明节点、中文位置结果与有来源身份守卫的预览链接；每查询保存输入/文字选择/双轴滚动/结果/技术详情及最后family选择。。必要检查39项，跳过0项，无失败。边界：仅声明条件与固定公开来源，不是已读本局资源或实际服务器资格；不写入本局记忆。；未知图类型、库存、随机落点、执行顺序和实际奖励保持未知；没有扩充无证生成概率。；公开模板说明保留URL/摘要/日期；许可证未独立核验，不宣称无限制再分发。；Windows实际窗口只运行公开示例；地图链接和同时间戳换局守卫在真实MainWindow的隔离公开状态验证。；正式客户端数据不在本批当作实机校准；私人状态不导入公共验收材料。。回执verification/sections/205.json。下一节206，下次全量215。
+
 ## 功能第204节 · 首批三名默认外观与静态动作选择绑定
 
 2026-10-12T09:56:49.520820+08:00。新增：当前模式PPtr与默认外观动画map共同筛选19个实际选择候选，排除已知不被技能选择的普通动作；允许原件非循环的Loop命名与银灰Combat段作明确动画内条件参考；机械师S2选定body段实际接入既有手动时间普通攻击小计。静态绑定与实际事件/相位保持独立。。必要检查43项，跳过0项，无失败。边界：仅当前静态defaultskin与所列模式候选；当前实际外观/模式与down/up分支、定制mix、XLua及热更新仍未知；runtime_binding_verified始终False，实际callback/activation/end均None；不将048归一化/ceil帧等同客户端回调；不自动选择参考或改变无参考默认数字；参考仍为显式动画内条件投影；凯尔希normal/S1三段生命周期、银灰normal序列继续未绑定；机械师S2破屏/耗尽/结束与S3冲锋碰撞等继续未知；根源首次UTF8二进制TextAsset失败完整回执保留cache，发布证明以原失败SHA/长度/类型保留，未重复嵌入原骨架二进制；源冻结root UI/源码未改；root需串行后核验实际动作选择窗口；Root application requires --ignore-space-change for existing CRLF timing.py/estimate.py; no logical source conflict and no root line-ending normalization was performed by author.。回执verification/sections/204.json。下一节205，下次全量215。

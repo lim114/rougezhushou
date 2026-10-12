@@ -136,10 +136,18 @@ class NodeMainWindowNavigationTests(unittest.TestCase):
     def test_stale_epoch_template_and_position_never_jump(self):
         self.install_map();panel=self.window.node_catalog;panel.map_button.click();panel.list.setCurrentRow(0)
         binding=deepcopy(panel.map_location.currentData());self.window.centralWidget().setCurrentWidget(panel)
-        for field,value in (('epoch',binding['epoch']-1),('template_id','other'),('row',2),('col',True)):
+        for field,value in (('epoch','other-run'),('template_id','other'),('row',2),('col',True)):
             bad={**binding,field:value};self.window.show_catalog_map_node('a',bad)
             self.assertIs(self.window.centralWidget().currentWidget(),panel);self.assertIsNone(self.window.map_view.selected)
         self.assertIn('链接已过期',panel.status.text())
+
+    def test_changed_run_id_rejects_old_link_even_if_clock_is_unchanged(self):
+        self.install_map();panel=self.window.node_catalog;panel.map_button.click();panel.list.setCurrentRow(0)
+        binding=deepcopy(panel.map_location.currentData());self.window.centralWidget().setCurrentWidget(panel)
+        before=self.window.run.state['started_at'];self.window.run.state['id']='different-local-run'
+        self.assertEqual(self.window.run.state['started_at'],before)
+        self.window.show_catalog_map_node('a',binding)
+        self.assertIs(self.window.centralWidget().currentWidget(),panel);self.assertIsNone(self.window.map_view.selected)
 
     def test_periodic_refresh_keeps_collapsed_tree_and_selected_event(self):
         source=self.install_map();panel=self.window.node_catalog
