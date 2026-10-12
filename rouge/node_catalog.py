@@ -226,6 +226,7 @@ def _node_requirement_checks(node_type,floor=None,difficulty=None,special_region
             'condition_sources':deepcopy(reference['references']) if rule and reference else [],
             'full_server_eligibility_verified':False}
 def battle_candidates(node_type=None,floor=None,context='natural',special_region=False,difficulty=None,entry_mode=None):
+    from .stage_floor_reference import sixth_floor_reference
     from .catalog import catalog
     _text(node_type,'节点类型',True);_floor(floor,special_region)
     if context not in ('natural','content','all'):raise ValueError('战斗来源需要natural、content或all。')
@@ -241,8 +242,13 @@ def battle_candidates(node_type=None,floor=None,context='natural',special_region
         if node_type is not None and node_type not in membership:continue
         # An unfiltered query is the complete fixed stage directory, not a node pool.
         s=catalog()['stages'][sid];m=meta.get(sid,{})
+        floor_source=sixth_floor_reference(sid,s)
+        reference_floors=[6] if floor_source else p['floors']
         r={'id':sid,'title':s['name'],'difficulty':s['difficulty'],'boss_parameter':s['isBoss'],
-           'floor':m.get('floor'),'floor_label':m.get('label'),'floors':deepcopy(p['floors']),
+           'floor':6 if floor_source else m.get('floor'),
+           'floor_label':floor_source['label'] if floor_source else m.get('label'),
+           'floors':deepcopy(reference_floors),'documented_floors':deepcopy(p['floors']),
+           'floor_reference_source':floor_source,
            'categories':deepcopy(p['categories']),'natural_node_types':deepcopy(p['natural_node_types']),
            'content_node_types':deepcopy(p['content_node_types']),'source_references':deepcopy(p['source_references']),
            'settlement_context_references':deepcopy(p['settlement_context_references']),
@@ -257,9 +263,9 @@ def battle_candidates(node_type=None,floor=None,context='natural',special_region
             excluded.append({**r,'exclusion_reason':'已核对的节点主层或保密等级门槛不符'});continue
         # Generic displayed floors on pursuit/special variants cannot filter content contexts.
         apply_floor=effective_entry_mode=='natural' and node_type is not None and context in ('natural','all') and not special_region and bool(p['natural_node_types'])
-        if floor is not None and apply_floor and p['hidden_layer_reference']:
+        if floor is not None and apply_floor and p['hidden_layer_reference'] and not floor_source:
             excluded.append({**r,'exclusion_reason':'固定目录标记为隐藏层，不能当作所选主层'});continue
-        if floor is not None and apply_floor and p['floors'] and floor not in p['floors']:
+        if floor is not None and apply_floor and reference_floors and floor not in reference_floors:
             excluded.append({**r,'exclusion_reason':'具名自然节点池的固定目录主层不符'});continue
         rows.append(r)
     return _result(rows,excluded=excluded,node_type=node_type,floor=floor,context=context,special_region=special_region,difficulty=difficulty,known_requirement_checks=checks,

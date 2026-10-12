@@ -117,7 +117,9 @@ class NodeCatalogTests(unittest.TestCase):
     def test_178(self):
         r=c.battle_candidates('作战',floor=1);self.assertIn('遗忘时间',[x['title'] for x in r['rows']])
         self.assertTrue(all(x['categories']==['normal'] and x['natural_node_types']==['作战'] for x in r['rows']))
-        self.assertFalse(c.battle_candidates('作战',floor=6)['rows'])
+        sixth=c.battle_candidates('作战',floor=6)['rows']
+        self.assertEqual({r['id'] for r in sixth},{'ro6_n_6_1','ro6_n_6_2'})
+        self.assertTrue(all(r['floor_reference_source']['actual_server_eligibility'] is None for r in sixth))
         self.assertEqual(len(c.battle_candidates('作战')['rows']),31)
         self.assertEqual(len(c.battle_candidates('紧急作战')['rows']),31)
         self.assertFalse(c.battle_candidates('险路尽头')['rows'])

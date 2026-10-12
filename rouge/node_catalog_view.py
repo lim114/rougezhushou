@@ -525,6 +525,8 @@ class NodeCatalogPanel(QWidget):
             text+='\n\n功能资料不证明当前解锁/实际状态；林间空地没有当前事件，过去内容单独保留。'
         elif entry['kind']=='battle':
             r=entry['record'];text=f"{entry['title']}\n\n类别：{'、'.join(CATEGORIES.get(t,t) for t in r.get('categories',[]))}\n层数：{floor_text(r.get('floors'))}\n关卡版本：{r.get('id') or r.get('stage_id')}\n"
+            from .stage_floor_reference import floor_reference_text
+            text+=floor_reference_text(r.get('floor_reference_source'))+'\n'
             text+='\n'.join(r.get('notes',[]))+'\n实际出现/分支/出怪全局时钟：未知。此项仅连接到对应固定地图资料。'
             text+='\n\n'+stage_context_text(r.get('entry_context_reference'))
             if r.get('entry_condition_excluded_reference'):

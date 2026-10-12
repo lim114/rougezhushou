@@ -374,6 +374,9 @@ class BattlePreviewPanel(QWidget):
         if stage:
             self.summary.setText(stage['name']+'：'+str(len(self.rows))+'个调度条目（含候选，并非实际敌人数）。'
                 '点击出生标记或条目查看位置、局部计划和条件；绝对时刻、分支触发和实际寻路尚未核验。')
+            from .stage_floor_reference import sixth_floor_reference,floor_reference_text
+            reference=sixth_floor_reference(stage['id'],stage)
+            if reference:self.summary.setText(self.summary.text()+'\n'+floor_reference_text(reference))
         else:self.summary.setText('读取节点详情后自动跟随已确认关卡；也可手动选择关卡进行局外预览。')
         retained=next((i for i,row in enumerate(self.rows) if row['id']==previous_id),None)
         if self.rows:

@@ -1,3 +1,7 @@
+## 功能第228节 · 第六层精确区域身份与节点/战斗分类浏览
+
+2026-10-12T23:41:48.133437+08:00。新增：依据既有完整主题页0/VI与原zone名称/icon独立身份，将五个第六层固定关卡接入实际分类分支、普通/紧急/首领候选及对应详情跳转。保留原目录0/null与来源注释，不把所属层当地图连接、服务器资格或实际出现。。必要检查77项，跳过0项，无失败。边界：Only fixed named area identity; sixth map connections/template/entry eligibility/current server remain unknown.；Original view metadata zero/null retained independently; 15 unclassified special stages remain unknown.；Temporary Qt selection/text checks; updated visible original window acceptance next grouped closeout.。回执verification/sections/228.json。下一节229，下次全量230。
+
 ## 功能第227节 · 移速符文FP写回、关卡倍率与标准范围的条件分项
 
 2026-10-12T22:55:16.621743+08:00。新增：紧急3–6原件12敌人进入预览与指定目标run_resolution的独立条件数值：FP乘法→范围Clamp→float字段写回→属性再读FP→关卡倍率。公开标准下限0.1无上限分支与原生层次交叉验证；main完整移速仍None、stats.moveSpeed保持来源字段，不借此推算出场/移动时间。。必要检查99项，跳过0项，无失败。边界：Actual rune qualification/extra selectors and unwritten selector pointer baseline；Unwritten max flag allocation baseline and actual range override；Other attribute modifiers/phase/special movement controller and current hotfix；Actual movement/arrival clocks/position and spawn callback；Published no-upper standard branch is not current native allocation-zero evidence；Both conditional data object and ordinary text explicitly require actual writer execution, standard range, no other attribute/phase/controller overrides；Exact caller generic usage/type args bound; no global generic native address-map claim；All complete dynamic movement/arrival/spawn clocks remain unknown; existing HP/ATK/DEF/RES math unchanged。回执verification/sections/227.json。下一节228，下次全量230。

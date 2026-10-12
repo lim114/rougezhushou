@@ -98,8 +98,14 @@ def operator_groups(profiles,implemented):
 
 
 def stage_groups(stages):
+    from .stage_floor_reference import sixth_floor_reference
     metadata=view_catalog()['stages'];groups=[]
+    metadata={sid:dict(record) for sid,record in metadata.items()}
+    for sid,stage in stages.items():
+        reference=sixth_floor_reference(sid,stage)
+        if reference:metadata[sid].update(group='floor_6',label=reference['label'],floor=6)
     order=[(group,None) for group in STAGE_GROUPS if group!='unconfirmed']
+    order.insert(5,('floor_6',None))
     context=context_data()['stages']
     order.extend(('unconfirmed',kind) for kind in ('event','shop_challenge','duel',
         'resident_stronghold','roaming_resident','special_challenge','other'))
