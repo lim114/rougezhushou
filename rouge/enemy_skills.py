@@ -7,7 +7,7 @@ from pathlib import Path
 def skill_data():
     return json.loads((Path(__file__).with_name('data')/'enemy-skill-references.json').read_text(encoding='utf-8'))
 
-def enemy_skill_reference(stage_id,enemy_id,level):
+def enemy_skill_reference(stage_id,enemy_id,level,*,resource_plan=None):
     if isinstance(level,bool) or not isinstance(level,int) or level<0:
         raise ValueError('敌人引用等级需要非负整数。')
     data=skill_data();key=enemy_id+'@'+str(level)
@@ -28,6 +28,8 @@ def enemy_skill_reference(stage_id,enemy_id,level):
     reference['compiled_sp_reference']=compiled_sp_reference(reference)
     from .enemy_configuration import compiled_configuration
     reference['compiled_configuration']=compiled_configuration(reference)
+    from .enemy_skill_resources import initial_skill_resource_reference
+    reference['initial_skill_resources']=initial_skill_resource_reference(reference,resource_plan)
     return reference
 
 def raw_text(value):
@@ -114,6 +116,11 @@ def enemy_skill_text(reference,technical=False):
     if configuration:
         from .enemy_configuration import construction_text
         lines.extend(['',construction_text(configuration,technical=technical)])
+    resources=reference.get('initial_skill_resources')
+    if resources:
+        from .enemy_skill_resources import skill_resource_text
+        content=skill_resource_text(resources,technical=technical)
+        if content:lines.extend(['',content])
     if not technical:return '\n'.join(lines)
     if compiled:
         lines.extend(['','【基包技力配置继承参考】',

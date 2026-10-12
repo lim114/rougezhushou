@@ -1,0 +1,95 @@
+{
+  "title": "固定敌人共享技力数值门与声明请求预算",
+  "remaining_item": "P3敌人技能控制器与初始动作；只关闭初始化池、独立费用门与明确条件账本分项",
+  "new_capability": "固定作战预览/局外机制页直接提供同实体初始化池和精确FP技力数值门；有序声明请求预算共享一个池，零负费不返技力；初始冷却数据分支保持实际预制体覆盖未知。1028引用完整数值门条件/43独立构造只知池/16未知，共450技能引用22正费用。实际施放、完整可用与全部时钟未知。",
+  "source_evidence": {
+    "report": "research/p3-enemy-skill-resource-gates-current/REPORT.md",
+    "receipt": "research/p3-enemy-skill-resource-gates-current/receipt.json",
+    "native_methods": 35,
+    "ordinary_definition_bindings": 35,
+    "unique_instruction_checks": 2897,
+    "metadata_binding_spans": 311,
+    "actual_current_static_bytes_match": true,
+    "actual_controller_or_hotfix_proven": false,
+    "initial_pool_signed_upper_cap_without_zero_floor": true,
+    "sp_ge_exact_raw_comparison_without_hp_epsilon": true
+  },
+  "acceptance": {
+    "checks": 101,
+    "passed": 101,
+    "failed": 0,
+    "new_api_and_temporary_qt": 17,
+    "production_reference_count": 1087,
+    "configured_skill_reference_count": 450,
+    "positive_cost_reference_count": 22,
+    "actual_visible_original_window": "root after integration",
+    "full_root_validation_scope_unchanged": true,
+    "game_operated": false,
+    "chat_sent": false,
+    "private_state_read_or_written": false,
+    "float_target_identity_preserved": true
+  },
+  "limitations": [
+    "Actual prefab concrete subclass, attachment, disabled/trigger/target/silence/stun gates",
+    "Actual shared SP/maxSP, modifier acceptance or other processors and extra SP sources",
+    "Actual prefab initial-CD override and current XLua/hotfix overrides",
+    "Initial action, first activation, recovery/animation/full cooldown clocks, real cast count and complete skill damage",
+    "Declared scope explicitly requires accepted unchanged baseline fees; it does not prove actual Modifier pipeline acceptance",
+    "43 independent constructors preserve known pool only, never borrow database fees;16unknown pointer baselines remain unknown",
+    "Unsupported signed32/FP/capacity float rounding remains unknown or invalid declaration, never default0",
+    "No actual first-cast/recovery/controller timing, hidden default skill or allocation-zero claim"
+  ],
+  "files": [
+    "rouge/battle_planning.py",
+    "rouge/enemy_skill_resources.py",
+    "rouge/enemy_skills.py",
+    "rouge/offline_tools_view.py",
+    "tests/test_enemy_skill_resources.py",
+    "research/p3-enemy-skill-resource-gates-current/current-file-verification.json",
+    "research/p3-enemy-skill-resource-gates-current/native-proof.json",
+    "research/p3-enemy-skill-resource-gates-current/necessary-validation.json",
+    "research/p3-enemy-skill-resource-gates-current/receipt.json",
+    "research/p3-enemy-skill-resource-gates-current/REPORT.md",
+    "research/p3-enemy-skill-resource-gates-current/resource-binding.json",
+    "research/p3-enemy-skill-resource-gates-current/selected-metadata.json",
+    "research/p3-enemy-skill-resource-gates-current/verify_native.py"
+  ],
+  "test_selectors": [
+    "tests.test_enemy_skill_resources",
+    "tests.test_enemy_skills_042",
+    "tests.test_enemy_sp_inheritance_reference",
+    "tests.test_enemy_configuration",
+    "tests.test_enemy_configuration_view",
+    "tests.test_battle_planning_161_170",
+    "tests.test_offline_tools_view"
+  ],
+  "isolated_patch": ".cache/batch209-400/review/enemy-skill-gates/enemy-skill-resource-gates.patch",
+  "patch_sha256": "8bd2433cc58bad7a62e56c2d30937de22aec2e767bf2f35ce74c6347bdb8110a",
+  "root_tracked_files_modified_by_this_agent": false,
+  "no_section_count_assigned": true,
+  "preparation_failures": [
+    "API test called wrong existing preview signature; corrected to actual 3-argument API",
+    "First broad isolated related run lacked public pinned enemy database/receipts/docs; copied necessary public files and reran unchanged selectors",
+    "Verifier initially assumed sorted last CheckAvailable instruction was GE; CFG has exception trap after tail, corrected to actual GE call-site address"
+  ],
+  "restart_conditions": [
+    "Direct current concrete prefab/subclass/attached controller and non-SP availability-gate sources",
+    "Source proof of actual modifier acceptance/additional SP effects, precise recovery/initial-action clocks and hotfix overrides"
+  ],
+  "root_integration_scope": "Source-supported offline function; real runtime/clock/hotfix is not inferred from temporary Qt checks.",
+  "root_native_window": "Existing original test window remains available; temporary MainWindow tests validate new controls without writing original state. Updated visible original window is checked at the next grouped UI/full closeout.",
+  "section": 229,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T00:46:11.908036+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 101,
+    "passed": 101,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-229/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 230
+}

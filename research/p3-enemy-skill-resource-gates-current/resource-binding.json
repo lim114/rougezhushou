@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "sp_cost_field": "Torappu.LevelData+EnemyData+ESkillData.spCost@0x24:System.Int32",
+  "same_owner_assignment": "Enemy._AssignSkill@0x180a7784a slot15 with r8=data r9=enemy; EnemySkill.AssignData@0x1806dca56 owner@0x88, 0x1806dca95 cost@0x24 -> m_spCost@0x3c",
+  "initial_pool": [
+    "Entity.Init@0x1806f5677 cmp maxSp,initSp; cmovl@0x1806f5679 signed upper cap only",
+    "cvtdq2ps@0x1806f5685 -> ObscuredFP(float)@0x1806f568b -> entity m_sp@0x50",
+    "Entity.set_maxSp@0x1806f56dc -> maxSp@0x178"
+  ],
+  "gate": [
+    "EnemySkill.CheckAvailable@0x1806dd77d Entity.get_sp(shared field m_sp@0x50)",
+    "source cost int->FP@0x1806dd7a1",
+    "tail FP.GE@0x1806dd7b9 ->0x185ed91b0 cmp rcx,rdx;setge al;ret"
+  ],
+  "positive_cost_request": [
+    "TryReduceSp@0x1806de8e2 nonpositive cost branch returns without NewSp",
+    "positive cost neg@0x1806de90f -> intFP -> NewSp@0x1806de9e5 with same source/target enemy",
+    "Entity.ApplyModifier@0x1806deab5; actual acceptance, processors and effects unknown"
+  ],
+  "later_baseline_pool_setter": "SetSpInternal/DoSetSpInternal -> TSMath.Clamp(value,FP(0),FP(maxSp)); not the initialization lower bound",
+  "initial_cooldown": [
+    "EnemySkill.ctor explicitly override=-1; actual serialized prefab override unknown",
+    "EnemySkill.Init@0x1806ddf9d jge chooses override including0; negative selects source initCooldown",
+    "PeriodicTimer.Reset(FP period,waitFirstPeriod=true)@0x1806de02e -> max(0,period) and remaining=period"
+  ],
+  "no_hp_epsilon_used": true,
+  "initial_lower_zero_clamp_applied": false,
+  "actual_current_controller_verified": false,
+  "actual_prefab_override_verified": false,
+  "actual_modifier_acceptance_verified": false,
+  "first_activation_seconds": null,
+  "complete_cycle_seconds": null,
+  "actual_cast_count": null,
+  "unwritten_allocation_default_inferred": false,
+  "current_hotfix_equivalence_proven": false
+}
