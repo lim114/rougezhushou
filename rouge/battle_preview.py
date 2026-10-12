@@ -109,6 +109,9 @@ def enemy_preview(stage_id,enemy_id,level,run_config=None):
     from .rare_reward_sources import enemy_reward_reference
     reward_reference=enemy_reward_reference(stage_id,enemy_id,level)
     if reward_reference:entry['conditional_reward_reference']=reward_reference
+    from .auxiliary_enemy_mechanisms import reference_for
+    auxiliary=reference_for(stage_id,enemy_id,level,entry['fixed_panel_reference'])
+    if auxiliary:entry['auxiliary_mechanism_reference']=auxiliary
     return entry
 
 def value_text(value):
@@ -173,6 +176,9 @@ def enemy_text(entry,technical=False):
             f"本关固定生成引用 {reward['fixed_spawn_reference_count']}条；引用数不是实际出现或击倒数。",
             '实际出现、击倒、当前模式结算和已领取数量：未知；不合入预计面板或完整奖励总量。']
         if technical:lines.append('条件数量文档：'+reward['rule']['quantity_source']['url'])
+    from .auxiliary_enemy_mechanisms import reference_text
+    auxiliary=entry.get('auxiliary_mechanism_reference')
+    if auxiliary:lines.append('\n'+reference_text(auxiliary,technical=technical))
     from .enemy_skills import enemy_skill_text
     lines.append('\n'+enemy_skill_text(entry['skill_reference'],technical=technical))
     immunity_names={'stunImmune':'眩晕','silenceImmune':'沉默','sleepImmune':'沉睡',
