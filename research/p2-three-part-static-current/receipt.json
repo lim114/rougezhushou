@@ -1,0 +1,71 @@
+{
+  "title": "ThreePart normal/S1 current static selector and conditional segment durations",
+  "asset_baseline_version": "26-09-13-15-28-10-30688348",
+  "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "new_scopes": {
+    "kaltsit": [
+      "normal",
+      "1"
+    ],
+    "silverash": [
+      "normal"
+    ]
+  },
+  "new_choice_records": 12,
+  "physical_method_records": 28,
+  "unique_instruction_count": 2748,
+  "facts": [
+    "AbilityStandard.Awake uses Component.GetComponents<Behaviour> on the same GameObject, initializes each behaviour; ThreePart subclass is present on exact selected ability GameObjects",
+    "ThreePart.Init initializes default bundle; _GetAnimBundle selects default/down bundle",
+    "InitAnimation counts begin only if firstAttack gate allows; uses sum(begin+oneshot+end)/cooldown reciprocal after explicit min/max duration-scale clamps",
+    "MoveNext plays begin if m_hasBeginAnim, then oneshot, then configured end if m_hasEndAnim; each segment yields WaitForFixedSeconds after Unit.PlayAnimation",
+    "Spine.UpdateAnimationData copies actual Spine.Animation duration to AnimationData.time; GetAnimationTime divides time by source speed",
+    "Silverash SelectMethod 0 is Random, _GetAbilityInternal reaches random branch; three _abilities PPtrs are actual candidate children; no probability or order assigned"
+  ],
+  "limitations": [
+    "current XLua/hotfix, actual mode/skin/direction and firstAttack gate unknown",
+    "segment durations omit scheduler resume phase, interruption, projectile travel and callback phase",
+    "Ability end animation is independent of empty ThreePart.end; no actual skill end inferred",
+    "body event frames are not a whole-chain first attack; generic windup is suppressed unless explicitly overridden",
+    "conditional profiles use raw seconds and numerical formula references, never ceiling/normalized callback frames"
+  ],
+  "public_search": {
+    "queries": [
+      "\"Arknights\" \"ThreePartOneshotAnimation\"",
+      "\"银灰\" \"攻击动作\" \"随机\"",
+      "\"凯尔希\" \"攻击前摇\" \"三段\""
+    ],
+    "result": "No primary source establishes game firstAttack or scheduler phase; current original assets/native static path used instead",
+    "struct_source": "https://raw.githubusercontent.com/Perfare/Il2CppDumper/4741d46ba9cd6159c5d853eb9d6fc48b4bfa2b1a/Il2CppDumper/Il2Cpp/Il2CppClass.cs"
+  },
+  "first_misaddress_extract_preserved": {
+    "path": "author-cache/next-review/evidence/threepart-iterator-initial.json",
+    "used_for_proof": false,
+    "reason": "Initial manual hex conversion accidentally selected interior 0x180f81ee0; corrected directly from metadata_method_index94090 to0x180f824e0",
+    "sha256": "73d9258c65ac0a46bfa6296098d7ae2bed1e14d3df00daf7161a9bf4194b771d",
+    "bytes": 34576
+  },
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_files_read": false,
+  "source_physical_verification": "fresh-physical-verification.json",
+  "first_test_invocation_failure": {
+    "cwd": "root source",
+    "tests_run": 13,
+    "errors": 1,
+    "cause": "author issued isolated new module selector at root cwd; ModuleNotFoundError; root source was read only",
+    "corrected_isolated_tests": 71,
+    "corrected_passed": 71,
+    "cache_file": "author-cache/next-review/evidence/initial-test-invocation-failure.txt",
+    "sha256": "b087d53c02f058353c0b03bac3bc1dfc02194fd936868e62c86a51cba16be813"
+  },
+  "acceptance": {
+    "tests_run": 71,
+    "passed": 71,
+    "failed": 0,
+    "errors": 0,
+    "skips": 0,
+    "root_window_check_required": true
+  }
+}

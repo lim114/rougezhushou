@@ -215,6 +215,26 @@ class AttackTimeline:
         selected=p.get('normal') if self.normal else p.get('skills',{}).get(str(self.s['skill']))
         return selected or p.get('normal') or {},bool(selected)
 
+    def attach_original_reference(self,stream,data,interval):
+        if not data.get('reference_id'):return
+        from copy import deepcopy
+        original={k:data[k] for k in (
+            'reference_id','reference_label','original_orientation','skin','source_sha256','runtime_binding_verified')}
+        original['overridden_by_preview']=any(key in self.options for key in ('windup_frames','recovery_frames'))
+        if data.get('static_selection_verified'):
+            original.update({k:deepcopy(data[k]) for k in (
+                'static_selection_verified','mode_indices','static_action_binding','selection_source_evidence',
+                'frame_numbers_are_animation_segment_reference','actual_callback_frames',
+                'actual_activation_phase_seconds','actual_end_seconds')})
+        if data.get('three_part_reference'):
+            from .animation_reference import three_part_profile
+            original['body_event_is_not_first_release']=True
+            stream['three_part_reference']=three_part_profile(data,interval)
+            stream['actual_first_release_seconds']=None
+            note='三段动作的firstAttack门和实际启动未知；主体事件不能单独作为首次出手，未显式覆盖前摇时逐击预览保留延迟首击情景。'
+            if note not in self.notes:self.notes.append(note)
+        stream['original_animation_reference']=original
+
     def attacks(self,seconds,interval,speed=100,unit=None,limit=None,delay=0,start_delay=0,ramp=None,attribute_speed=None,target_scope=None):
         if target_scope is not None and target_scope!=self.target_scope:
             child=AttackTimeline(self.s,normal=self.normal,offset=self.offset/FPS,target_scope=target_scope)
@@ -252,6 +272,7 @@ class AttackTimeline:
         duration=finite(seconds,'窗口秒数',3600)
         ready=finite(start_delay,'起始延迟秒数',3600)
         deployment_speed=[r for r in self.s.get('_relic_rules',[]) if r['kind']=='deployment_attack_speed']
+        data,exact=self.descriptor(unit)
         if self.mode=='continuous':
             if deployment_speed:
                 times=[];starts=[];steps=[];now=ready
@@ -282,15 +303,21 @@ class AttackTimeline:
                 stream['release_times_seconds']=times
                 stream['impact_frames']=[]
                 stream['times_seconds']=[]
+            if data.get('three_part_reference'):
+                self.attach_original_reference(stream,data,interval)
             if deployment_speed:
                 stream.update(temporary_attack_speed=True,interval_frames_by_attack=[cadence(s) for s in steps],
                     deployment_origin_seconds=(self.offset+self.deployment_offset)/FPS)
                 self.streams.append(stream)
+            elif data.get('three_part_reference'):self.streams.append(stream)
             return stream
-        data,exact=self.descriptor(unit)
         # Per-scenario overrides are explicitly a preview, never account cultivation.
         raw_windup=self.options.get('windup_frames',data.get('windup_frames')) if unit is None else data.get('windup_frames')
         raw_recovery=self.options.get('recovery_frames',data.get('recovery_frames')) if unit is None else data.get('recovery_frames')
+        if data.get('three_part_reference') and (unit is not None or 'windup_frames' not in self.options):
+            # The raw body event excludes conditional begin and native playback
+            # scaling. It cannot fill a whole-ability first-release clock.
+            raw_windup=None;raw_recovery=None
         step=cadence(interval)
         known=raw_windup is not None
         if known:
@@ -370,17 +397,7 @@ class AttackTimeline:
             'attack_speed_sample':'攻击开始帧取当前攻速；冷却/动画中途变速的客户端模板行为尚待校准',
             'resume_frame':max(0,(starts[-1]+step-end)) if starts else 0,
             'source':data.get('source','未确认；保留延迟首击情景')}
-        if data.get('reference_id'):
-            stream['original_animation_reference']={k:data[k] for k in (
-                'reference_id','reference_label','original_orientation','skin','source_sha256','runtime_binding_verified')}
-            stream['original_animation_reference']['overridden_by_preview']=any(
-                key in self.options for key in ('windup_frames','recovery_frames'))
-            if data.get('static_selection_verified'):
-                from copy import deepcopy
-                stream['original_animation_reference'].update({k:deepcopy(data[k]) for k in (
-                    'static_selection_verified','mode_indices','static_action_binding','selection_source_evidence',
-                    'frame_numbers_are_animation_segment_reference','actual_callback_frames',
-                    'actual_activation_phase_seconds','actual_end_seconds')})
+        self.attach_original_reference(stream,data,interval)
         if fixed_impact:
             stream.update(fixed_impact_delay_frames=frame_time(fixed_impact['seconds']),
                 fixed_impact_delay_seconds=fixed_impact['seconds'],

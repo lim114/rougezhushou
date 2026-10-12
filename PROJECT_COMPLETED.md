@@ -1,3 +1,7 @@
+## 功能第208节 · 凯尔希普通/S1与银灰普通三段动作条件参考
+
+2026-10-12T11:23:44.315422+08:00。新增：12个源绑定候选接入既有显式动作选择；实际计算及报告分列firstAttack门成立/不成立的源段合计、播放速度、缩放后begin/body/end和仅动画事件偏移；阻止单主体18帧或银灰随机候选被当完整首次出手；真实首次/结束仍None，不自动选参考。。必要检查74项，跳过0项，无失败。边界：current XLua/hotfix, actual mode/skin/direction and firstAttack gate unknown；segment durations omit scheduler resume phase, interruption, projectile travel and callback phase；Ability end animation is independent of empty ThreePart.end; no actual skill end inferred；body event frames are not a whole-chain first attack; generic windup is suppressed unless explicitly overridden；conditional profiles use raw seconds and numerical formula references, never ceiling/normalized callback frames；默认外观当前静态资产而非当前运行态热更新证明；未检查其它皮肤；body-only逐击不标runtime/exact绑定；未显式前摇时仍沿既有延迟首击情景，不把它当实际时钟；正常技能/普通充能分别保留normal/skill动作作用域；变速表只按列出的输入周期，实际中途重算/动态采样未知。回执verification/sections/208.json。下一节209，下次全量215。
+
 ## 功能第207节 · 特殊节点来源、限定条件与随机作战池预览
 
 2026-10-12T11:08:45.087490+08:00。新增：26条有证原文来源关系与三态条件进入目录；溯源19身份通过明确原ID或已有同帧唯一候选合同定位，冲突/多候选不映射；洞中宝按已知下一主层固定池列全部资料候选并跳入固定图，特殊区与实际随机选择保持未知。。必要检查93项，跳过0项，无失败。边界：actual服务器资格、完整场景脚本、当前展示子集、加工品稀有度与初始秘境AP、额外难度门槛仍未知；生成器是固定source摘要校验/直接字段抽取，不含任何概率或数值模型变化；206新history/provider/presence/_context/_owned完整保留；三个模块已对齐206公开源码，仅含独立原文局部hunks，未改共享_context/_owned、app/MainWindow/window/index。；唯一识别候选仅资料映射，不证明实际服务器实例；固定下一主层资料不是完整服务器池。。回执verification/sections/207.json。下一节208，下次全量215。

@@ -78,11 +78,12 @@ class StaticActionSelectionTests(unittest.TestCase):
             with self.assertRaises(ValueError):descriptor(op,skill,{'animation_reference':normal})
         self.assertIsNotNone(descriptor('mechanist',2,{'normal_animation_reference':normal},normal=True))
 
-    def test_unbound_three_part_modes_keep_their_existing_selection_scope(self):
-        # No first-attack/sequence lifecycle is inferred for these source types.
-        self.assertNotIn('1',static_bindings()['operators']['kaltsit'])
-        self.assertNotIn('normal',static_bindings()['operators']['silverash'])
-        self.assertTrue(all('static_action_binding' not in r for r in choices('silverash',normal=True)))
+    def test_three_part_static_proofs_do_not_fill_runtime_lifecycle_or_other_operator_scope(self):
+        for op,skill,normal in [('kaltsit',1,False),('silverash',3,True)]:
+            for r in choices(op,skill,normal=normal):
+                self.assertTrue(r['static_action_binding']['static_selection_verified'])
+                self.assertFalse(r['runtime_binding_verified'])
+                self.assertIsNone(r['static_action_binding']['three_part_reference']['first_attack_gate_actual'])
         self.assertTrue(all('static_action_binding' not in r for r in choices('char_196_sunbr',3)))
 
     def test_modified_skeleton_hash_or_play_config_cannot_inherit_proof(self):

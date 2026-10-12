@@ -634,7 +634,7 @@ def build_report(scenario,result):
                 metric('interval_frames','当前攻击间隔帧数',primary['interval_frames'],'帧'),
                 metric('windup','参考前摇',primary['windup_frames'],'帧'),
                 metric('recovery','参考后摇',primary['recovery_frames'],'帧'),
-                metric('first_release','原版锚点首个出手' if multi else '窗口首个出手',primary['release_frames'][0]/30 if primary['release_frames'] else None,'秒'),
+                metric('first_release',('延迟首击情景出手' if primary.get('three_part_reference') and not primary['known_animation'] else '原版锚点首个出手' if multi else '窗口首个出手'),primary['release_frames'][0]/30 if primary['release_frames'] else None,'秒'),
                 metric('first_impact','原版锚点首个命中' if multi else '窗口首个命中/治疗',primary['impact_frames'][0]/30 if primary['impact_frames'] else None,'秒')])
             if 'fixed_impact_delay_seconds' in primary:
                 rows.append(metric('fixed_impact_delay','本体固定落地延迟',primary['fixed_impact_delay_seconds'],'秒'))
@@ -642,7 +642,9 @@ def build_report(scenario,result):
         for stream in [*timing.get('streams',[]),*timing.get('recharge_streams',[])]:
             original=stream.get('original_animation_reference')
             if original:
-                if original.get('static_selection_verified'):
+                if stream.get('three_part_reference'):
+                    note='明确选用三段主体候选：'+original['reference_label']+'；主体事件帧不等于首次出手；开始段门、缩放及调度恢复共同影响整条动作，实际回调/开始/结束未知。'
+                elif original.get('static_selection_verified'):
                     note='明确选用静态绑定动作参考：'+original['reference_label']+'；默认外观及所列模式的动作选择已核验，帧数仅为动画内条件参考；当前外观、热更新、实际首击回调和结束相位未核验。'
                 elif stream.get('multi_melee_reference'):
                     note=('使用已核验的原版技能动作参考：' if stream['multi_melee_reference']['automatic_original_reference'] else
@@ -655,6 +657,36 @@ def build_report(scenario,result):
             '前后摇与攻击冷却有重叠，不把它们全部再加到攻击间隔上。',
             '时序资料及模板绑定未完整校准；无前摇资料时保持延迟首击参考。',
             ('技能相对窗口保留帧参考；独立技力算例不包含四岁周期来源，完整初动、结束后充能与回转未知。' if shu_sp else '初动/回转已按模拟帧处理；额外阻回与结束硬直使用明确提供的时序情景。'),*reference_notes]))
+    seen_parts=set()
+    for stream in [*timing.get('streams',[]),*timing.get('recharge_streams',[])]:
+        parts=stream.get('three_part_reference')
+        if parts is None:continue
+        original=stream['original_animation_reference']
+        identity=(original['reference_id'],parts['cooldown_reference_seconds'])
+        if identity in seen_parts:continue
+        seen_parts.add(identity)
+        prefix='three_part_'+str(len(seen_parts))
+        rows=[metric(prefix+'_cooldown','输入攻击周期参考',parts['cooldown_reference_seconds'],'秒')]
+        for index,profile in enumerate(parts['conditional_profiles']):
+            condition='开始段门成立' if profile['first_attack_condition'] else '开始段门不成立'
+            rowkey=prefix+'_'+str(index)
+            rows.append(metric(rowkey+'_raw_total',condition+'：源段时长合计',profile['source_chain_seconds'],'秒'))
+            rows.append(metric(rowkey+'_speed',condition+'：播放速度参考',profile['playback_speed'],'倍'))
+            for part,label in (('begin','开始段'),('oneshot','主体段'),('end','结束段')):
+                rows.append(metric(rowkey+'_'+part,condition+'：缩放后'+label,profile['scaled_segment_seconds'][part],'秒'))
+            rows.append(metric(rowkey+'_chain',condition+'：缩放后动画合计',profile['animation_only_chain_seconds'],'秒'))
+            rows.append(metric(rowkey+'_event',condition+'：仅动画事件偏移',profile['animation_only_on_attack_offset_seconds'],'秒'))
+        rows.extend([metric(prefix+'_actual_callback','实际首次出手回调',None,'秒'),
+                     metric(prefix+'_actual_end','实际动作结束',None,'秒')])
+        notes=[original['reference_label'],
+            '两组数值分别以firstAttack门成立/不成立为条件，未选择实际门状态；主体帧不自动填入完整首次出手。',
+            '段时长取原件秒数与原生缩放公式；每段等待还受调度恢复相位影响，动画合计/事件偏移不能当作实际回调或结束时钟。',
+            'ThreePart配置结束段为空；能力另有结束动作键'+parts['ability_end_animation_key']+'，其实际播放/打断/结束时刻仍未知。']
+        if parts['selection']['method']=='Random':
+            notes.append('普通攻击A/B/C属于随机候选；未设概率、轮转顺序或平均时钟，明确所选候选不代表每击都会使用它。')
+        if original['overridden_by_preview']:notes.append('明确输入的前/后摇仅覆盖逐击情景预览，不改变上述原件段时长参考。')
+        if stream.get('temporary_attack_speed'):notes.append('此表按所列输入周期计算；期间变速的每次取样与实际中途重算时钟未核验。')
+        sections.append(section('three_part_animation_'+str(len(seen_parts)),'三段动作条件参考',rows,notes))
     changed=[]
     base_speed=estimate['base_stats'].get('attack_speed_reference',estimate['base_stats']['attack_speed'])
     skill_speed=skill.get('skill_attack_speed_reference',skill['skill_attack_speed'])
