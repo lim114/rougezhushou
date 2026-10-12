@@ -34,23 +34,41 @@ def enemy_panel_reference(stage_id,enemy_id,level):
     exact=str(level) in definitions
     projection={'attributes':{key:fields['attributes.'+key]['value'] for key in data['attribute_fields']},
         'metadata':{key:fields['metadata.'+key]['value'] for key in data['metadata_fields']}}
-    return {'stage_id':stage_id,'enemy_id':enemy_id,'requested_level':level,
-        'scope':data['scope'],
-        'attributes':deepcopy(projection['attributes']) if exact else {key:None for key in data['attribute_fields']},
-        'metadata':deepcopy(projection['metadata']) if exact else {key:None for key in data['metadata_fields']},
-        'source_projection':projection,
-        'source_state':'exact_database_level_available' if exact else 'unavailable_exact_database_level',
-        'compiled_database_result_available':exact,
-        'field_provenance':fields,'exact_level_present':str(level) in definitions,
+    from .enemy_reference_construction import source_path,construction_data,compiled_identity
+    path=source_path(binding,exact)
+    compiled={key:{'state':'undefined','value':None,'source_selector':None,'source_level':None} for key in fields}
+    if path['compiled_result_available']:
+        for key,value in construction_data()['defaults'].items():
+            if key in compiled:compiled[key]={'state':'constructor_explicit_default','value':deepcopy(value),
+                'source_selector':'current native EnemyData/AttributesData constructor explicit assignment', 'source_level':None}
+        if path['database_records_used']:
+            for n,record in sorted(definitions.items(),key=lambda item:int(item[0])):
+                if int(n)>level:continue
+                for key,value in record['fields'].items():
+                    compiled[key]={'state':'database_definition','value':deepcopy(value),'source_level':int(n),
+                        'source_selector':record['source_selector']+'.'+(key if key.startswith('attributes.') else key.split('.',1)[1])+'.m_value'}
+        for key,value in binding['overrides'].items():
+            compiled[key]={'state':'stage_override','value':deepcopy(value),'source_level':level,
+                'source_selector':'$.enemyDbRefs['+str(binding['source_index'])+'].overwrittenData.'+
+                    (key if key.startswith('attributes.') else key.split('.',1)[1])+'.m_value'}
+    return {'stage_id':stage_id,'enemy_id':enemy_id,'requested_level':level,'scope':data['scope'],
+        'attributes':{key:compiled['attributes.'+key]['value'] for key in data['attribute_fields']},
+        'metadata':{key:compiled['metadata.'+key]['value'] for key in data['metadata_fields']},
+        'source_projection':projection,'source_projection_used_for_construction':False,
+        'source_state':path['state'],'compiled_database_result_available':path['compiled_result_available'],
+        'compiled_result_available':path['compiled_result_available'],'construction_reference':path,
+        'compiled_identity':compiled_identity(binding,path),
+        'field_provenance':compiled,'exact_level_present':exact,
         'source':{'game_commit':data['source']['game_commit'],
             'enemy_database':deepcopy(data['source']['enemy_database']),
             'stage':deepcopy(data['source']['stages'][stage_id])},
         'complete_effective_panel':None,'actual_gameplay_verified':False,
-        'limits':['精确数据库等级可用时按已证基包规则读取等级定义；精确等级缺失时构建器返回空，未借用较低等级字段。',
-            '关卡覆盖的原字段仍保留为来源分项；缺少精确数据库等级的别名/默认构建路径未核验，不能当有效面板。',
-            '本表含完整固定属性字段；技能、藏品、阶段和关卡动态脚本的完整有效面板仍未知。',
-            '技力回复、命中率、攻击范围与扣除生命等均为字段参考；不推算实际发动、命中、范围或通过终点时的事件。',
-            '固定数据版本不证明当前服务器、资源包或热更新一致；未合并技能/天赋/技力控制器配置。']}
+        'limits':['useDb=true要求精确数据库等级；缺失时不可借用较低等级。useDb=false且有覆盖对象时采用独立构造，不使用数据库定义。',
+            '仅写入有原生明确赋值的构造默认项；未闭合的攻击/防御结构默认值、免疫及空指针分配基线保持未知。',
+            '资源key与关卡alias分开；不因别名把派生敌人属性、资源或机制替换成原型敌人。',
+            '完整动态面板仍未知；范围、扣血、技力、命中率只是字段参考，不推定实际事件或完整回转。',
+            '未推算通过终点时的扣血事件；当前服务器、热更新、实际生成和控制器仍未核验。']}
+
 
 def enemy_panel_text(reference,technical=False):
     from .battle_preview import value_text
@@ -66,7 +84,7 @@ def enemy_panel_text(reference,technical=False):
             '预计技力回复、嘲讽、物理/法术命中率、元素爆发恢复速度：未知。',
             '漏怪扣血、分类和敌人计数适用性：未知；动态脚本与阶段尚未完全核验。',
             f'{written}项扩展字段已有明确来源，完整值仍未知；原文可在技术资料中查看。',
-            *(['固定数据库精确等级不可用；别名/默认构建路径尚未核验。'] if unavailable else [])])
+            *(['该引用要求数据库精确等级而条目缺失；不能以别名或默认路径替代所选构造模式。'] if unavailable else [])])
     labels=(('maxHp','生命'),('atk','攻击'),('def','防御'),('magicResistance','法抗'),
         ('attackSpeed','攻速'),('baseAttackTime','基础攻击间隔参数'),('moveSpeed','移速参数'),
         ('massLevel','重量'),('hpRecoveryPerSec','每秒生命回复参数'),
@@ -86,6 +104,9 @@ def enemy_panel_text(reference,technical=False):
         '其他固定敌人字段：'+json.dumps(meta,ensure_ascii=False),
         '各字段明确来源：'+json.dumps(reference['field_provenance'],ensure_ascii=False),
         '来源版本：'+reference['source']['game_commit'],
-        '精确等级可用性：'+str(reference.get('compiled_database_result_available')),
-        '原字段投影（不作为缺失精确等级的有效面板）：'+json.dumps(reference.get('source_projection'),ensure_ascii=False)])
+        '精确数据库等级存在：'+str(reference.get('exact_level_present')),
+        '基包构造结果可用：'+str(reference.get('compiled_result_available')),
+        '构造路径：'+json.dumps(reference.get('construction_reference'),ensure_ascii=False),
+        '资源及关卡标识：'+json.dumps(reference.get('compiled_identity'),ensure_ascii=False),
+        '原字段投影（按构造路径另行选择，不能直接当有效面板）：'+json.dumps(reference.get('source_projection'),ensure_ascii=False)])
     return '\n'.join(lines)

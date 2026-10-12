@@ -19,7 +19,7 @@ def fixture():
                 'metadata.enemyTags':[]}},
             '1':{'source_selector':'$.enemies[2].Value[1].enemyData','fields':{'attributes.atk':120}},
             '2':{'source_selector':'$.enemies[2].Value[2].enemyData','fields':{'attributes.damageHitratePhysical':.5}}}},
-        'bindings':{'stage':{'enemy@1':{'source_index':3,'overrides':{'attributes.atk':150}}}}}
+        'bindings':{'stage':{'enemy@1':{'source_index':3,'use_db':True,'overwritten_data_present':True,'overrides':{'attributes.atk':150}}}}}
 
 class EnemyPanelReferenceTests(unittest.TestCase):
     def test_complete_pinned_field_coverage_preserves_all_existing_panel_fields(self):
@@ -33,8 +33,10 @@ class EnemyPanelReferenceTests(unittest.TestCase):
                 for key,value in {**e['reference_stats'],**e['immunity_reference']}.items():
                     self.assertEqual(ref['source_projection']['attributes'][key],value,(sid,e['id'],key))
                 if not ref['exact_level_present']:
-                    self.assertTrue(all(v is None for v in ref['attributes'].values()))
-                    self.assertFalse(ref['compiled_database_result_available'])
+                    mode=data['bindings'][sid][e['id']+'@'+str(e['level'])]['use_db']
+                    self.assertFalse(mode);self.assertTrue(ref['compiled_database_result_available'])
+                    self.assertEqual(ref['source_state'],'stage_constructor_overrides_available')
+                    self.assertFalse(ref['construction_reference']['database_records_used'])
                 self.assertIsNone(ref['complete_effective_panel'])
                 self.assertFalse(ref['actual_gameplay_verified']);count+=1
         self.assertEqual(count,1087)
@@ -55,8 +57,10 @@ class EnemyPanelReferenceTests(unittest.TestCase):
         row=r['field_provenance']['attributes.atk']
         self.assertEqual(row['state'],'stage_override')
         self.assertEqual(row['source_selector'],'$.enemyDbRefs[3].overwrittenData.attributes.atk.m_value')
-        self.assertIsNone(r['attributes']['damageHitratePhysical'])
-        self.assertEqual(r['field_provenance']['attributes.damageHitratePhysical']['state'],'undefined')
+        self.assertEqual(r['attributes']['damageHitratePhysical'],1)
+        self.assertEqual(r['field_provenance']['attributes.damageHitratePhysical']['state'],'constructor_explicit_default')
+        self.assertIsNone(r['source_projection']['attributes']['damageHitratePhysical'])
+        self.assertEqual(r['field_provenance']['attributes.damageHitratePhysical']['state'],'constructor_explicit_default')
         self.assertEqual(r['field_provenance']['attributes.spRecoveryPerSec']['source_level'],0)
 
     def test_missing_exact_level_is_not_filled_from_future_definitions(self):

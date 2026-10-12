@@ -89,16 +89,20 @@ def enemy_preview(stage_id,enemy_id,level,run_config=None):
     entry['skill_reference']=enemy_skill_reference(stage_id,enemy_id,level)
     from .enemy_panel import enemy_panel_reference
     entry['fixed_panel_reference']=enemy_panel_reference(stage_id,enemy_id,level)
+    entry['raw_reference_stats']=copy.deepcopy(entry['reference_stats'])
+    entry['reference_stats']=copy.deepcopy(entry['fixed_panel_reference']['attributes'])
     entry['movement_reference']=movement_reference(stage,entry['reference_stats'].get('moveSpeed'))
     scenario={'target_enemy':{'stage_id':stage_id,'enemy_id':enemy_id,'level':level},'run_config':config}
     try:
-        _,resolution=prepare_run(scenario)
+        partial=entry['fixed_panel_reference']['construction_reference']['mode']=='stage_constructor' and any(
+            entry['fixed_panel_reference']['attributes'].get(k) is None for k in ('maxHp','atk','def','magicResistance'))
+        _,resolution=prepare_run(scenario,enemy_panel_only=True) if partial else prepare_run(scenario)
         entry['environment']=resolution['enemy']
         entry['context_pending']=resolution['pending']
     except (ValueError,KeyError) as error:
         entry['environment']=None;entry['context_pending']=['本局环境无法确认：'+str(error)]
     if not entry['fixed_panel_reference']['compiled_database_result_available']:
-        entry['context_pending'].append('固定敌人数据库精确等级不可用；关卡别名/默认构建路径尚未核验，完整预计面板未知。')
+        entry['context_pending'].append('固定敌人构造来源不可用；数据库精确等级或关卡独立覆盖缺失，完整预计面板未知。')
     entry['limits']=['扩展属性（攻速/移动/重量等）仅为引用基础值，未模拟敌人技能、阶段或动画。',
         '本预览不套用藏品；含藏品的目标参考请在伤害测试页查看。',
         '图鉴未列出的阶段、技能参数和隐藏触发条件仍需核验。']
@@ -124,6 +128,9 @@ def enemy_text(entry,technical=False):
     env=entry['environment']
     confirmed=env and not entry['context_pending']
     for key,label in labels:lines.append('预计'+label+'：'+value_text(env['stats'].get(key) if confirmed else None))
+    if env and not confirmed and entry['fixed_panel_reference']['construction_reference']['mode']=='stage_constructor':
+        lines.extend(['','【已证环境分项】','以下仅含已绑定构造值和已证环境修正，未含待确认修正；不能当完整预计面板。'])
+        for key,label in labels:lines.append(label+'已证分项：'+value_text(env['stats'].get(key)))
     if env and confirmed:
         if env['damage_factor']!=1:lines.append('预计承伤倍率：'+value_text(env['damage_factor']))
     lines.extend(('预计攻速：未知（技能/阶段/其他修正未核验）',

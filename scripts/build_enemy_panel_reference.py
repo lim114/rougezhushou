@@ -54,10 +54,20 @@ def build(root):
             matches=[(i,r) for i,r in enumerate(refs) if r['id']==e['id'] and r['level']==e['level']]
             if len(matches)!=1:raise ValueError('Ambiguous stage reference')
             index,ref=matches[0]
+            if type(ref.get('useDb')) is not bool:raise ValueError('Unsupported reference useDb mode')
+            identity={}
+            for key in ('name','description','prefabKey'):
+                raw_value=(ref.get('overwrittenData') or {}).get(key)
+                if raw_value is not None:
+                    if not isinstance(raw_value,dict) or type(raw_value.get('m_defined')) is not bool or 'm_value' not in raw_value:
+                        raise ValueError('Unsupported defined identity field: '+key)
+                    if raw_value['m_defined']:identity[key]=raw_value['m_value']
             rows[e['id']+'@'+str(e['level'])]={'source_index':index,
-                'overrides':explicit_fields(ref.get('overwrittenData') or {})}
+                'use_db':ref['useDb'],'reference_id':ref['id'],
+                'overwritten_data_present':ref.get('overwrittenData') is not None,
+                'identity_overrides':identity,'overrides':explicit_fields(ref.get('overwrittenData') or {})}
         bindings[sid]=rows;stage_sources[sid]=source
-    return {'schema_version':1,'scope':'complete_explicit_fixed_enemy_fields',
+    return {'schema_version':2,'scope':'source_bound_fixed_enemy_constructor_fields',
         'source':{'game_commit':receipt['commit'],
             'enemy_database':receipt['files']['enemydata/enemy_database.json'],
             'stages':stage_sources},

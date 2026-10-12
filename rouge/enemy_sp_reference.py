@@ -21,9 +21,18 @@ def compiled_sp_reference(reference):
         'native_evidence':deepcopy(rules['native_evidence']),
         'limits':['只解析固定来源中的基包技力配置整记录继承，不合并技能或天赋黑板。',
             'null不覆盖前项；非null技力配置整体替换，不按字段拼接。',
-            '已证无热更新钩子的默认/显式初始化来源；实际默认控制器、触发、首次发动、技能回转、关卡别名构建和当前热更新仍待核验。']}
-    if not result['database_exact_level_available']:return result
-    records=[('database_level',d['level'],d) for d in reference['definitions'] if d['level']<=reference['requested_level']]
+            '已证无热更新钩子的默认/显式初始化来源及引用构造分支；实际默认控制器、生成/资源绑定、触发、首次发动、技能回转和当前热更新仍待核验。']}
+    from .enemy_reference_construction import configuration_path
+    path=configuration_path(reference);result['construction_reference']=path
+    if not path['compiled_result_available']:return result
+    if path['mode']=='stage_constructor':
+        records=[]
+        if reference['stage_overrides'].get('spData') is None:
+            result.update(state='constructor_sp_baseline_unknown',configuration=None,
+                applied_source=None,source_chain=[{'origin':'stage_override','level':reference['requested_level'],'state':'null_preserves_unresolved_constructor_pointer'}])
+            return result
+    else:
+        records=[('database_level',d['level'],d) for d in reference['definitions'] if d['level']<=reference['requested_level']]
     records.append(('stage_override',reference['requested_level'],reference['stage_overrides']))
     configuration=None;source=None
     for origin,level,record in records:

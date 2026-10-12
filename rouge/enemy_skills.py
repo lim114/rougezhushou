@@ -22,6 +22,8 @@ def enemy_skill_reference(stage_id,enemy_id,level):
         'limits':['原始等级分别保留；已证的基包配置另列，未把null当空列表或猜测当前实战默认技能。',
             '冷却、初始冷却、技力和参数都是配置；不等于实际首发、轮次或技能伤害。',
             '图鉴触发、首领阶段、隐藏脚本和环境修正还需逐项核验；字段0不证明出生即发动。']}
+    from .enemy_reference_construction import source_path
+    reference['construction_reference']=source_path(data['bindings'][stage_id][key],reference['exact_requested_level_present'])
     from .enemy_sp_reference import compiled_sp_reference
     reference['compiled_sp_reference']=compiled_sp_reference(reference)
     from .enemy_configuration import compiled_configuration
@@ -95,11 +97,15 @@ def enemy_skill_text(reference,technical=False):
         lines.append('未取得非空技能/技力配置；这不证明没有默认或隐藏技能。')
     if malformed:lines.append('部分参数格式未确认，保留原文并等待核验。')
     if any(d.get('skills')==[] for d in records):lines.append('部分技能字段为空，不证明没有默认/隐藏技能。')
-    if not reference['exact_requested_level_present']:
+    if reference.get('construction_reference',{}).get('mode')=='stage_constructor':
+        lines.append('本关卡采用独立构造，不使用数据库等级定义；资源标识与关卡别名分开。')
+    elif not reference['exact_requested_level_present']:
         lines.append('当前引用等级没有独立定义；低等级资料不能当作已确认的有效继承。')
     compiled=reference.get('compiled_sp_reference')
     if compiled and compiled['state']=='unavailable_exact_database_level':
         lines.append('固定数据库缺少精确等级；默认/别名构建路径未核验，未借用较低等级技力配置。')
+    elif compiled and compiled['state']=='constructor_sp_baseline_unknown':
+        lines.append('未见非空技力覆盖，构造空指针分配基线尚未闭合；完整技力配置保持未知，不借用数据库。')
     elif compiled and compiled['state']=='compiled_configuration_available':
         lines.append('技力配置分项已按基包非空整记录规则解析；实际控制器、首次发动与完整回转仍未知。')
     if compiled and compiled['initialization_reference']['state']=='conditional_baseline_available':

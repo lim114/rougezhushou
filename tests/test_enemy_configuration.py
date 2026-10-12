@@ -104,10 +104,15 @@ class EnemyConfigurationTests(unittest.TestCase):
 
     def test_unavailable_target_is_rejected_in_calculation_but_raw_source_remains_viewable(self):
         sid='ro6_n_2_3';eid='enemy_2133_shdopl_lancer';target={'stage_id':sid,'enemy_id':eid,'level':0}
-        with self.assertRaisesRegex(ValueError,'不能用原字段投影'):
-            calculate_damage({'operator':'mechanist','skill':1,'target_enemy':target})
+        calculated=calculate_damage({'operator':'mechanist','skill':1,'target_enemy':target})
+        qualified=calculated['run_resolution']['enemy']['fixed_source_qualification']
+        self.assertEqual(qualified['state'],'stage_constructor_overrides_available')
+        self.assertFalse(qualified['construction_reference']['database_records_used'])
+        with self.assertRaisesRegex(ValueError,'不能填零'):
+            calculate_damage({'operator':'mechanist','skill':1,'target_enemy':{'stage_id':'ro6_n_3_2','enemy_id':'enemy_1303_mhshep_2b','level':0}})
         r=enemy_preview(sid,eid,0,{'difficulty':{'value':0}})
-        self.assertIsNone(r['environment']);self.assertIn('预计生命值：未知',enemy_text(r))
+        self.assertIsNotNone(r['environment']);self.assertIn('预计生命值：未知',enemy_text(r))
+        self.assertFalse(r['skill_reference']['compiled_configuration']['compiled_inheritance_resolved'])
         self.assertIsNotNone(r['fixed_panel_reference']['source_projection']['attributes']['maxHp'])
         self.assertIn('原字段投影',enemy_text(r,technical=True))
 

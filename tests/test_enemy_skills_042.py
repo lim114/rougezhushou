@@ -117,7 +117,9 @@ class EnemySkillReferenceTests(unittest.TestCase):
         self.assertIn('未命名参数 = 未知',blackboard_text([{}]))
 
     def test_bundle_and_primary_enemy_database_hashes_match_receipts(self):
-        receipt=json.loads((ROOT/'.cache/research/enemy-skills-042/data-receipt.json').read_text(encoding='utf-8'))
+        receipt_path=ROOT/'research/p3-enemy-default-alias-current/generation-receipt.json'
+        if not receipt_path.exists():receipt_path=ROOT/'.cache/research/enemy-skills-042/data-receipt.json'
+        receipt=json.loads(receipt_path.read_text(encoding='utf-8'))
         self.assertEqual(hashlib.sha256((ROOT/'rouge/data/enemy-skill-references.json').read_bytes()).hexdigest(),receipt['data_sha256'])
         self.assertEqual(hashlib.sha256((ROOT/'.cache/game-data/levels/enemydata/enemy_database.json').read_bytes()).hexdigest(),receipt['source']['enemy_database']['sha256'])
 
@@ -135,7 +137,10 @@ class EnemySkillReferenceTests(unittest.TestCase):
         for sid,s in battle_data()['stages'].items():
             for e in s['enemies']:
                 r=enemy_preview(sid,e['id'],e['level'])
-                for key,value in e.items():self.assertEqual(r[key],value)
+                for key,value in e.items():
+                    if key=='reference_stats':self.assertEqual(r['raw_reference_stats'],value)
+                    else:self.assertEqual(r[key],value)
+                self.assertEqual(r['reference_stats'],r['fixed_panel_reference']['attributes'])
                 self.assertIsNone(r['skill_reference']['first_activation_seconds'])
                 self.assertTrue(all(d['level']<=e['level'] for d in r['skill_reference']['definitions']))
                 self.assertIn('机制资料',enemy_text(r));count+=1

@@ -1,0 +1,3181 @@
+{
+  "schema_version": 1,
+  "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "methods": [
+    {
+      "method_definition_index": 31287,
+      "method": "Torappu.EnemyDatabase$$GetComputedEnemyData",
+      "address": "0x182417f40",
+      "token": "0x6007a38",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "id",
+          "type": "System.String"
+        },
+        {
+          "name": "level",
+          "type": "System.Int32"
+        }
+      ],
+      "return_type": "Torappu.LevelData+EnemyData"
+    },
+    {
+      "method_definition_index": 31291,
+      "method": "Torappu.EnemyDatabase$$ApplyDefinedData",
+      "address": "0x182417c30",
+      "token": "0x6007a3c",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "data",
+          "type": "Torappu.LevelData+EnemyData"
+        },
+        {
+          "name": "delta",
+          "type": "Torappu.EnemyDatabase+EnemyData"
+        }
+      ],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 31296,
+      "method": "Torappu.EnemyDatabase$$_FindEnemyLevel",
+      "address": "0x182419db0",
+      "token": "0x6007a41",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "enemyLevels",
+          "type": "System.Collections.Generic.List`1<Torappu.EnemyDatabase+EnemyLevel>"
+        },
+        {
+          "name": "targetLevel",
+          "type": "System.Int32"
+        }
+      ],
+      "return_type": "Torappu.EnemyDatabase+EnemyData"
+    },
+    {
+      "method_definition_index": 76541,
+      "method": "Torappu.Battle.Enemy$$_GenerateSpData",
+      "address": "0x180a78710",
+      "token": "0x6012afe",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "data",
+          "type": "Torappu.LevelData+EnemyData"
+        }
+      ],
+      "return_type": "Torappu.SpData"
+    },
+    {
+      "method_definition_index": 32848,
+      "method": "Torappu.SpData$$GetDefault",
+      "address": "0x18252b250",
+      "token": "0x6008051",
+      "slot": 65535,
+      "parameters": [],
+      "return_type": "Torappu.SpData"
+    },
+    {
+      "method_definition_index": 32853,
+      "method": "Torappu.SpData$$CreateFrom",
+      "address": "0x18252afc0",
+      "token": "0x6008056",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "eSpData",
+          "type": "Torappu.LevelData+EnemyData+ESpData"
+        },
+        {
+          "name": "blackboard",
+          "type": "Torappu.Blackboard"
+        }
+      ],
+      "return_type": "Torappu.SpData"
+    },
+    {
+      "method_definition_index": 32856,
+      "method": "Torappu.SpData$$.cctor",
+      "address": "0x18252b570",
+      "token": "0x6008059",
+      "slot": 65535,
+      "parameters": [],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 32852,
+      "method": "Torappu.SpData$$Init",
+      "address": "0x18252b300",
+      "token": "0x6008055",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "blackboard",
+          "type": "Torappu.Blackboard"
+        }
+      ],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 32855,
+      "method": "Torappu.SpData$$.ctor",
+      "address": "0x18252b5f0",
+      "token": "0x6008058",
+      "slot": 65535,
+      "parameters": [],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 32849,
+      "method": "Torappu.SpData$$get_maxSp",
+      "address": "0x18252b820",
+      "token": "0x6008052",
+      "slot": 65535,
+      "parameters": [],
+      "return_type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+    },
+    {
+      "method_definition_index": 31294,
+      "method": "Torappu.EnemyDatabase$$_ApplyBlackboardData",
+      "address": "0x182418c40",
+      "token": "0x6007a3f",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "data",
+          "type": "Torappu.Blackboard"
+        },
+        {
+          "name": "delta",
+          "type": "Torappu.Blackboard"
+        }
+      ],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 31295,
+      "method": "Torappu.EnemyDatabase$$_ApplySkillData",
+      "address": "0x182418ee0",
+      "token": "0x6007a40",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "data",
+          "type": "System.Collections.Generic.List`1<Torappu.LevelData+EnemyData+ESkillData>"
+        },
+        {
+          "name": "delta",
+          "type": "System.Collections.Generic.IEnumerable`1<Torappu.LevelData+EnemyData+ESkillData>"
+        }
+      ],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 30803,
+      "method": "Torappu.Blackboard$$.ctor",
+      "address": "0x182320ab0",
+      "token": "0x6007854",
+      "slot": 65535,
+      "parameters": [],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 30804,
+      "method": "Torappu.Blackboard$$.ctor",
+      "address": "0x1823209f0",
+      "token": "0x6007855",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "another",
+          "type": "System.Collections.Generic.IList`1<Torappu.Blackboard+DataPair>"
+        }
+      ],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 30849,
+      "method": "Torappu.Blackboard+DataPair$$get_isNumericValue",
+      "address": "0x1820d1be0",
+      "token": "0x6007882",
+      "slot": 65535,
+      "parameters": [],
+      "return_type": "System.Boolean"
+    },
+    {
+      "method_definition_index": 30852,
+      "method": "Torappu.Blackboard+DataPair$$.ctor",
+      "address": "0x182326bc0",
+      "token": "0x6007885",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "key",
+          "type": "System.String"
+        },
+        {
+          "name": "value",
+          "type": "System.Single"
+        }
+      ],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 30853,
+      "method": "Torappu.Blackboard+DataPair$$.ctor",
+      "address": "0x182326b80",
+      "token": "0x6007886",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "key",
+          "type": "System.String"
+        },
+        {
+          "name": "value",
+          "type": "System.String"
+        }
+      ],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 31304,
+      "method": "Torappu.EnemyDatabase+<>c__DisplayClass14_0$$<_ApplyBlackboardData>b__0",
+      "address": "0x180772dc0",
+      "token": "0x6007a49",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "x",
+          "type": "Torappu.Blackboard+DataPair"
+        }
+      ],
+      "return_type": "System.Boolean"
+    },
+    {
+      "method_definition_index": 31306,
+      "method": "Torappu.EnemyDatabase+<>c__DisplayClass15_0$$<_ApplySkillData>b__0",
+      "address": "0x180e441a0",
+      "token": "0x6007a4b",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "x",
+          "type": "Torappu.LevelData+EnemyData+ESkillData"
+        }
+      ],
+      "return_type": "System.Boolean"
+    },
+    {
+      "method_definition_index": 27732,
+      "method": "Torappu.EnemyDB$$TryGet",
+      "address": "0x18200bd90",
+      "token": "0x6006c55",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "id",
+          "type": "System.String"
+        },
+        {
+          "name": "level",
+          "type": "System.Int32"
+        },
+        {
+          "name": "output",
+          "type": "Torappu.LevelData+EnemyData"
+        }
+      ],
+      "return_type": "System.Boolean"
+    },
+    {
+      "method_definition_index": 27733,
+      "method": "Torappu.EnemyDB$$TryGet",
+      "address": "0x18200bb60",
+      "token": "0x6006c56",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "dbRef",
+          "type": "Torappu.LevelData+EnemyDataDbReference"
+        },
+        {
+          "name": "output",
+          "type": "Torappu.LevelData+EnemyData"
+        }
+      ],
+      "return_type": "System.Boolean"
+    },
+    {
+      "method_definition_index": 31300,
+      "method": "Torappu.EnemyDatabase+EnemyData$$.ctor",
+      "address": "0x1824179e0",
+      "token": "0x6007a45",
+      "slot": 65535,
+      "parameters": [],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 31518,
+      "method": "Torappu.LevelData+EnemyData$$.ctor",
+      "address": "0x182417a60",
+      "token": "0x6007b1f",
+      "slot": 65535,
+      "parameters": [],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 30793,
+      "method": "Torappu.AttributesData$$.ctor",
+      "address": "0x18231b650",
+      "token": "0x600784a",
+      "slot": 65535,
+      "parameters": [],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 72069,
+      "method": "Torappu.Battle.Scheduler$$Init",
+      "address": "0x1809135c0",
+      "token": "0x6011986",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "driver",
+          "type": "Torappu.Battle.SchedulerDriver"
+        },
+        {
+          "name": "subIndex",
+          "type": "System.Int32"
+        },
+        {
+          "name": "levelData",
+          "type": "Torappu.LevelData"
+        },
+        {
+          "name": "waveHandler",
+          "type": "Torappu.Battle.Scheduler+DefaultWaveHandler"
+        },
+        {
+          "name": "enabledHiddenGroups",
+          "type": "System.Collections.Generic.IList`1<System.String>"
+        },
+        {
+          "name": "disabledHiddenGroups",
+          "type": "System.Collections.Generic.IList`1<System.String>"
+        }
+      ],
+      "return_type": "System.Void"
+    },
+    {
+      "method_definition_index": 72120,
+      "method": "Torappu.Battle.Scheduler$$SpawnEnemyNpc",
+      "address": "0x1809151e0",
+      "token": "0x60119b9",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "enemyKey",
+          "type": "System.String"
+        },
+        {
+          "name": "targetPos",
+          "type": "Torappu.GridPosition"
+        },
+        {
+          "name": "endPos",
+          "type": "Torappu.GridPosition"
+        },
+        {
+          "name": "motionMode",
+          "type": "Torappu.MotionMode"
+        },
+        {
+          "name": "unharmful",
+          "type": "System.Boolean"
+        },
+        {
+          "name": "alwaysCountAsKilled",
+          "type": "System.Boolean"
+        },
+        {
+          "name": "alias",
+          "type": "System.String"
+        },
+        {
+          "name": "randomOffset",
+          "type": "System.Boolean"
+        }
+      ],
+      "return_type": "Torappu.Battle.Enemy"
+    },
+    {
+      "method_definition_index": 31515,
+      "method": "Torappu.LevelData+EnemyData$$get_keyInLevel",
+      "address": "0x182417c00",
+      "token": "0x6007b1c",
+      "slot": 65535,
+      "parameters": [],
+      "return_type": "System.String"
+    },
+    {
+      "method_definition_index": 237419,
+      "method": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt$$op_Implicit",
+      "address": "0x18660b950",
+      "token": "0x6002ea2",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "value",
+          "type": "System.Int32"
+        }
+      ],
+      "return_type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt"
+    },
+    {
+      "method_definition_index": 237392,
+      "method": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat$$op_Implicit",
+      "address": "0x18660a830",
+      "token": "0x6002e87",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "value",
+          "type": "System.Single"
+        }
+      ],
+      "return_type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat"
+    },
+    {
+      "method_definition_index": 238843,
+      "method": "System.String$$op_Inequality",
+      "address": "0x185dc0720",
+      "token": "0x60002be",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "a",
+          "type": "System.String"
+        },
+        {
+          "name": "b",
+          "type": "System.String"
+        }
+      ],
+      "return_type": "System.Boolean"
+    },
+    {
+      "method_definition_index": 238878,
+      "method": "System.String$$IsNullOrEmpty",
+      "address": "0x185db9d60",
+      "token": "0x60002e1",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "value",
+          "type": "System.String"
+        }
+      ],
+      "return_type": "System.Boolean"
+    },
+    {
+      "method_definition_index": 30787,
+      "method": "Torappu.AttributesData$$Assign",
+      "address": "0x18231a3a0",
+      "token": "0x6007844",
+      "slot": 65535,
+      "parameters": [
+        {
+          "name": "other",
+          "type": "Torappu.AttributesData"
+        }
+      ],
+      "return_type": "System.Void"
+    }
+  ],
+  "layouts": [
+    {
+      "name": "Torappu.AttributesData",
+      "type_index": 4132,
+      "fields": [
+        {
+          "name": "maxHp",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 16,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23200
+        },
+        {
+          "name": "atk",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 36,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23201
+        },
+        {
+          "name": "def",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 56,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23202
+        },
+        {
+          "name": "magicResistance",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 76,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23203
+        },
+        {
+          "name": "cost",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 100,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23204
+        },
+        {
+          "name": "blockCnt",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 120,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23205
+        },
+        {
+          "name": "moveSpeed",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 140,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23206
+        },
+        {
+          "name": "attackSpeed",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 164,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23207
+        },
+        {
+          "name": "baseAttackTime",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 188,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23208
+        },
+        {
+          "name": "respawnTime",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 212,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23209
+        },
+        {
+          "name": "hpRecoveryPerSec",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 232,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23210
+        },
+        {
+          "name": "spRecoveryPerSec",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 256,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23211
+        },
+        {
+          "name": "maxDeployCount",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 280,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23212
+        },
+        {
+          "name": "tauntLevel",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 320,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23214
+        },
+        {
+          "name": "massLevel",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 340,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23215
+        },
+        {
+          "name": "baseForceLevel",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredInt",
+          "offset": 360,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23216
+        },
+        {
+          "name": "epDamageResistance",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 380,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23217
+        },
+        {
+          "name": "epResistance",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 404,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23218
+        },
+        {
+          "name": "damageHitratePhysical",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 428,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23219
+        },
+        {
+          "name": "damageHitrateMagical",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 452,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23220
+        },
+        {
+          "name": "epBreakRecoverSpeed",
+          "type": "CodeStage.AntiCheat.ObscuredTypes.ObscuredFloat",
+          "offset": 712,
+          "attrs": 1,
+          "value": null,
+          "field_index": 23231
+        },
+        {
+          "name": "stunImmune",
+          "type": "System.Boolean",
+          "offset": 784,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23234
+        },
+        {
+          "name": "silenceImmune",
+          "type": "System.Boolean",
+          "offset": 785,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23235
+        },
+        {
+          "name": "sleepImmune",
+          "type": "System.Boolean",
+          "offset": 786,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23236
+        },
+        {
+          "name": "frozenImmune",
+          "type": "System.Boolean",
+          "offset": 787,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23237
+        },
+        {
+          "name": "levitateImmune",
+          "type": "System.Boolean",
+          "offset": 788,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23238
+        },
+        {
+          "name": "disarmedCombatImmune",
+          "type": "System.Boolean",
+          "offset": 789,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23239
+        },
+        {
+          "name": "fearedImmune",
+          "type": "System.Boolean",
+          "offset": 790,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23240
+        },
+        {
+          "name": "palsyImmune",
+          "type": "System.Boolean",
+          "offset": 791,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23241
+        },
+        {
+          "name": "attractImmune",
+          "type": "System.Boolean",
+          "offset": 792,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23242
+        },
+        {
+          "name": "teleportImmune",
+          "type": "System.Boolean",
+          "offset": 793,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23243
+        },
+        {
+          "name": "groundBoundImmune",
+          "type": "System.Boolean",
+          "offset": 794,
+          "attrs": 6,
+          "value": null,
+          "field_index": 23244
+        }
+      ],
+      "selected_vtable": []
+    },
+    {
+      "name": "Torappu.EnemyDatabase+EnemyData",
+      "type_index": 4501,
+      "fields": [
+        {
+          "name": "name",
+          "type": "Torappu.Undefinable`1<System.String>",
+          "offset": 16,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25306
+        },
+        {
+          "name": "description",
+          "type": "Torappu.Undefinable`1<System.String>",
+          "offset": 32,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25307
+        },
+        {
+          "name": "prefabKey",
+          "type": "Torappu.Undefinable`1<System.String>",
+          "offset": 48,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25308
+        },
+        {
+          "name": "attributes",
+          "type": "Torappu.EnemyDatabase+AttributesData",
+          "offset": 64,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25309
+        },
+        {
+          "name": "enemyTags",
+          "type": "Torappu.Undefinable`1<System.String[]>",
+          "offset": 88,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25312
+        },
+        {
+          "name": "lifePointReduce",
+          "type": "Torappu.Undefinable`1<System.Int32>",
+          "offset": 104,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25313
+        },
+        {
+          "name": "rangeRadius",
+          "type": "Torappu.Undefinable`1<System.Single>",
+          "offset": 120,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25315
+        },
+        {
+          "name": "numOfExtraDrops",
+          "type": "Torappu.Undefinable`1<System.Int32>",
+          "offset": 128,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25316
+        },
+        {
+          "name": "viewRadius",
+          "type": "Torappu.Undefinable`1<System.Single>",
+          "offset": 136,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25317
+        },
+        {
+          "name": "notCountInTotal",
+          "type": "Torappu.Undefinable`1<System.Boolean>",
+          "offset": 144,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25318
+        },
+        {
+          "name": "talentBlackboard",
+          "type": "Torappu.Blackboard",
+          "offset": 152,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25319
+        },
+        {
+          "name": "skills",
+          "type": "Torappu.LevelData+EnemyData+ESkillData[]",
+          "offset": 160,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25320
+        },
+        {
+          "name": "spData",
+          "type": "Torappu.LevelData+EnemyData+ESpData",
+          "offset": 168,
+          "attrs": 6,
+          "value": null,
+          "field_index": 25321
+        }
+      ],
+      "selected_vtable": []
+    },
+    {
+      "name": "Torappu.LevelData+EnemyData",
+      "type_index": 4657,
+      "fields": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "offset": 16,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26357
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "offset": 24,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26358
+        },
+        {
+          "name": "key",
+          "type": "System.String",
+          "offset": 32,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26359
+        },
+        {
+          "name": "attributes",
+          "type": "Torappu.AttributesData",
+          "offset": 40,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26360
+        },
+        {
+          "name": "enemyTags",
+          "type": "System.String[]",
+          "offset": 56,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26363
+        },
+        {
+          "name": "notCountInTotal",
+          "type": "System.Boolean",
+          "offset": 64,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26364
+        },
+        {
+          "name": "alias",
+          "type": "System.String",
+          "offset": 72,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26365
+        },
+        {
+          "name": "lifePointReduce",
+          "type": "System.Int32",
+          "offset": 80,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26366
+        },
+        {
+          "name": "rangeRadius",
+          "type": "System.Single",
+          "offset": 84,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26367
+        },
+        {
+          "name": "numOfExtraDrops",
+          "type": "System.Int32",
+          "offset": 88,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26368
+        },
+        {
+          "name": "viewRadius",
+          "type": "System.Single",
+          "offset": 92,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26369
+        },
+        {
+          "name": "talentBlackboard",
+          "type": "Torappu.Blackboard",
+          "offset": 104,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26371
+        },
+        {
+          "name": "skills",
+          "type": "Torappu.LevelData+EnemyData+ESkillData[]",
+          "offset": 112,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26372
+        },
+        {
+          "name": "spData",
+          "type": "Torappu.LevelData+EnemyData+ESpData",
+          "offset": 120,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26373
+        },
+        {
+          "name": "m_runtimeData",
+          "type": "Torappu.LevelData+EnemyData+RuntimeData",
+          "offset": 128,
+          "attrs": 1,
+          "value": null,
+          "field_index": 26374
+        }
+      ],
+      "selected_vtable": []
+    },
+    {
+      "name": "Torappu.LevelData+EnemyDataDbReference",
+      "type_index": 4658,
+      "fields": [
+        {
+          "name": "useDb",
+          "type": "System.Boolean",
+          "offset": 16,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26387
+        },
+        {
+          "name": "id",
+          "type": "System.String",
+          "offset": 24,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26388
+        },
+        {
+          "name": "level",
+          "type": "System.Int32",
+          "offset": 32,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26389
+        },
+        {
+          "name": "overwrittenData",
+          "type": "Torappu.EnemyDatabase+EnemyData",
+          "offset": 40,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26390
+        }
+      ],
+      "selected_vtable": []
+    },
+    {
+      "name": "Torappu.LevelData",
+      "type_index": 4680,
+      "fields": [
+        {
+          "name": "enemyDbRefs",
+          "type": "Torappu.LevelData+EnemyDataDbReference[]",
+          "offset": 120,
+          "attrs": 6,
+          "value": null,
+          "field_index": 26318
+        }
+      ],
+      "selected_vtable": []
+    }
+  ],
+  "byte_spans": [
+    {
+      "source": "metadata",
+      "physical_offset": "0xb63480",
+      "size": 32,
+      "bytes": "b10912009a1100009182010002a20000ffffffff387a000686000000ffff0200",
+      "reason": "method 31287"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c4799",
+      "size": 21,
+      "bytes": "476574436f6d7075746564456e656d794461746100",
+      "reason": "method 31287"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8611f38",
+      "size": 8,
+      "bytes": "407f418201000000",
+      "reason": "codegen pointer 31287"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb63500",
+      "size": 32,
+      "bytes": "fa0912009a1100007344010008a20000ffffffff3c7a000696000000ffff0200",
+      "reason": "method 31291"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c47e2",
+      "size": 17,
+      "bytes": "4170706c79446566696e65644461746100",
+      "reason": "method 31291"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8611f58",
+      "size": 8,
+      "bytes": "307c418201000000",
+      "reason": "codegen pointer 31291"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb635a0",
+      "size": 32,
+      "bytes": "6a0a12009a1100009e76010012a20000ffffffff417a000681000000ffff0200",
+      "reason": "method 31296"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c4852",
+      "size": 16,
+      "bytes": "5f46696e64456e656d794c6576656c00",
+      "reason": "method 31296"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8611f80",
+      "size": 8,
+      "bytes": "b09d418201000000",
+      "reason": "codegen pointer 31296"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xcc4d40",
+      "size": 32,
+      "bytes": "51322b00812c00003d28010070250100fffffffffe2a010684000000ffff0100",
+      "reason": "method 76541"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x457039",
+      "size": 16,
+      "bytes": "5f47656e657261746553704461746100",
+      "reason": "method 76541"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x866a568",
+      "size": 8,
+      "bytes": "1087a78001000000",
+      "reason": "codegen pointer 76541"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb6f7a0",
+      "size": 32,
+      "bytes": "e5311300171500003d280100ffffffffffffffff5180000696000000ffff0000",
+      "reason": "method 32848"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2d6fcd",
+      "size": 11,
+      "bytes": "47657444656661756c7400",
+      "reason": "method 32848"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8615000",
+      "size": 8,
+      "bytes": "50b2528201000000",
+      "reason": "codegen pointer 32848"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb6f840",
+      "size": 32,
+      "bytes": "1e321300171500003d280100b1a30000ffffffff5680000696000000ffff0200",
+      "reason": "method 32853"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2d7006",
+      "size": 11,
+      "bytes": "43726561746546726f6d00",
+      "reason": "method 32853"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8615028",
+      "size": 8,
+      "bytes": "c0af528201000000",
+      "reason": "codegen pointer 32853"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb6f8a0",
+      "size": 32,
+      "bytes": "400400001715000073440100ffffffffffffffff5980000691180000ffff0000",
+      "reason": "method 32856"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a4228",
+      "size": 7,
+      "bytes": "2e6363746f7200",
+      "reason": "method 32856"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8615040",
+      "size": 8,
+      "bytes": "70b5528201000000",
+      "reason": "codegen pointer 32856"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb6f820",
+      "size": 32,
+      "bytes": "1c0700001715000073440100b0a30000ffffffff5580000686000000ffff0100",
+      "reason": "method 32852"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a4504",
+      "size": 5,
+      "bytes": "496e697400",
+      "reason": "method 32852"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8615020",
+      "size": 8,
+      "bytes": "00b3528201000000",
+      "reason": "codegen pointer 32852"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb6f880",
+      "size": 32,
+      "bytes": "6b0000001715000073440100ffffffffffffffff5880000686180000ffff0000",
+      "reason": "method 32855"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a3e53",
+      "size": 6,
+      "bytes": "2e63746f7200",
+      "reason": "method 32855"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8615038",
+      "size": 8,
+      "bytes": "f0b5528201000000",
+      "reason": "codegen pointer 32855"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb6f7c0",
+      "size": 32,
+      "bytes": "f03113001715000097f60000ffffffffffffffff5280000686080000ffff0000",
+      "reason": "method 32849"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2d6fd8",
+      "size": 10,
+      "bytes": "6765745f6d6178537000",
+      "reason": "method 32849"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8615008",
+      "size": 8,
+      "bytes": "20b8528201000000",
+      "reason": "codegen pointer 32849"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb63560",
+      "size": 32,
+      "bytes": "390a12009a110000734401000ea20000ffffffff3f7a000691000000ffff0200",
+      "reason": "method 31294"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c4821",
+      "size": 21,
+      "bytes": "5f4170706c79426c61636b626f6172644461746100",
+      "reason": "method 31294"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8611f70",
+      "size": 8,
+      "bytes": "408c418201000000",
+      "reason": "codegen pointer 31294"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb63580",
+      "size": 32,
+      "bytes": "4e0a12009a1100007344010010a20000ffffffff407a000691000000ffff0200",
+      "reason": "method 31295"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c4836",
+      "size": 16,
+      "bytes": "5f4170706c79536b696c6c4461746100",
+      "reason": "method 31295"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8611f78",
+      "size": 8,
+      "bytes": "e08e418201000000",
+      "reason": "codegen pointer 31295"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb5f800",
+      "size": 32,
+      "bytes": "6b0000002a10000073440100ffffffffffffffff5478000686180000ffff0000",
+      "reason": "method 30803"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a3e53",
+      "size": 6,
+      "bytes": "2e63746f7200",
+      "reason": "method 30803"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8611018",
+      "size": 8,
+      "bytes": "b00a328201000000",
+      "reason": "codegen pointer 30803"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb5f820",
+      "size": 32,
+      "bytes": "6b0000002a1000007344010030a10000ffffffff5578000686180000ffff0100",
+      "reason": "method 30804"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a3e53",
+      "size": 6,
+      "bytes": "2e63746f7200",
+      "reason": "method 30804"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8611020",
+      "size": 8,
+      "bytes": "f009328201000000",
+      "reason": "codegen pointer 30804"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb5fdc0",
+      "size": 32,
+      "bytes": "f2af110029100000f5ae0000ffffffffffffffff8278000686080000ffff0000",
+      "reason": "method 30849"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2bedda",
+      "size": 19,
+      "bytes": "6765745f69734e756d6572696356616c756500",
+      "reason": "method 30849"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8611188",
+      "size": 8,
+      "bytes": "e01b0d8201000000",
+      "reason": "codegen pointer 30849"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb5fe20",
+      "size": 32,
+      "bytes": "6b000000291000007344010083a10000ffffffff8578000686180000ffff0200",
+      "reason": "method 30852"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a3e53",
+      "size": 6,
+      "bytes": "2e63746f7200",
+      "reason": "method 30852"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x86111a0",
+      "size": 8,
+      "bytes": "c06b328201000000",
+      "reason": "codegen pointer 30852"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb5fe40",
+      "size": 32,
+      "bytes": "6b000000291000007344010085a10000ffffffff8678000686180000ffff0200",
+      "reason": "method 30853"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a3e53",
+      "size": 6,
+      "bytes": "2e63746f7200",
+      "reason": "method 30853"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x86111a8",
+      "size": 8,
+      "bytes": "806b328201000000",
+      "reason": "codegen pointer 30853"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb636a0",
+      "size": 32,
+      "bytes": "350b120098110000f5ae000015a20000ffffffff497a000683000000ffff0100",
+      "reason": "method 31304"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c491d",
+      "size": 27,
+      "bytes": "3c5f4170706c79426c61636b626f617264446174613e625f5f3000",
+      "reason": "method 31304"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8611fc0",
+      "size": 8,
+      "bytes": "c02d778001000000",
+      "reason": "codegen pointer 31304"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb636e0",
+      "size": 32,
+      "bytes": "500b120099110000f5ae000016a20000ffffffff4b7a000683000000ffff0100",
+      "reason": "method 31306"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c4938",
+      "size": 22,
+      "bytes": "3c5f4170706c79536b696c6c446174613e625f5f3000",
+      "reason": "method 31306"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8611fd0",
+      "size": 8,
+      "bytes": "a041e48001000000",
+      "reason": "codegen pointer 31306"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb47820",
+      "size": 32,
+      "bytes": "0d700f0005060000f5ae0000219f0000ffffffff556c000686000000ffff0300",
+      "reason": "method 27732"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x29adf5",
+      "size": 7,
+      "bytes": "54727947657400",
+      "reason": "method 27732"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x860b020",
+      "size": 8,
+      "bytes": "90bd008201000000",
+      "reason": "codegen pointer 27732"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb47840",
+      "size": 32,
+      "bytes": "0d700f0005060000f5ae0000249f0000ffffffff566c000686000000ffff0200",
+      "reason": "method 27733"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x29adf5",
+      "size": 7,
+      "bytes": "54727947657400",
+      "reason": "method 27733"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x860b028",
+      "size": 8,
+      "bytes": "60bb008201000000",
+      "reason": "codegen pointer 27733"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb63620",
+      "size": 32,
+      "bytes": "6b0000009511000073440100ffffffffffffffff457a000686180000ffff0000",
+      "reason": "method 31300"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a3e53",
+      "size": 6,
+      "bytes": "2e63746f7200",
+      "reason": "method 31300"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8611fa0",
+      "size": 8,
+      "bytes": "e079418201000000",
+      "reason": "codegen pointer 31300"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb65160",
+      "size": 32,
+      "bytes": "6b0000003112000073440100ffffffffffffffff1f7b000686180000ffff0000",
+      "reason": "method 31518"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a3e53",
+      "size": 6,
+      "bytes": "2e63746f7200",
+      "reason": "method 31518"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8612670",
+      "size": 8,
+      "bytes": "607a418201000000",
+      "reason": "codegen pointer 31518"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb5f6c0",
+      "size": 32,
+      "bytes": "6b0000002410000073440100ffffffffffffffff4a78000686180000ffff0000",
+      "reason": "method 30793"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a3e53",
+      "size": 6,
+      "bytes": "2e63746f7200",
+      "reason": "method 30793"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8610fc8",
+      "size": 8,
+      "bytes": "50b6318201000000",
+      "reason": "codegen pointer 30793"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xca1e40",
+      "size": 32,
+      "bytes": "1c070000862a00007344010067160100ffffffff8619010686000000ffff0600",
+      "reason": "method 72069"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a4504",
+      "size": 5,
+      "bytes": "496e697400",
+      "reason": "method 72069"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x86619a8",
+      "size": 8,
+      "bytes": "c035918001000000",
+      "reason": "codegen pointer 72069"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xca24a0",
+      "size": 32,
+      "bytes": "566f2900862a0000b0cb000022170100ffffffffb919010686000000ffff0800",
+      "reason": "method 72120"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x43ad3e",
+      "size": 14,
+      "bytes": "537061776e456e656d794e706300",
+      "reason": "method 72120"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8661b40",
+      "size": 8,
+      "bytes": "e051918001000000",
+      "reason": "codegen pointer 72120"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb65100",
+      "size": 32,
+      "bytes": "c541120031120000902d0100ffffffffffffffff1c7b000686080000ffff0000",
+      "reason": "method 31515"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c7fad",
+      "size": 15,
+      "bytes": "6765745f6b6579496e4c6576656c00",
+      "reason": "method 31515"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8612658",
+      "size": 8,
+      "bytes": "007c418201000000",
+      "reason": "codegen pointer 31515"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x11adb00",
+      "size": 32,
+      "bytes": "69db0500b89e000097f6000040d80200ffffffffa22e000696080000ffff0100",
+      "reason": "method 237419"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x201951",
+      "size": 12,
+      "bytes": "6f705f496d706c6963697400",
+      "reason": "method 237419"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8c18b98",
+      "size": 8,
+      "bytes": "50b9608601000000",
+      "reason": "codegen pointer 237419"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x11ad7a0",
+      "size": 32,
+      "bytes": "69db0500b79e000092f600002ad80200ffffffff872e000696080000ffff0100",
+      "reason": "method 237392"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x201951",
+      "size": 12,
+      "bytes": "6f705f496d706c6963697400",
+      "reason": "method 237392"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8c18ac0",
+      "size": 8,
+      "bytes": "30a8608601000000",
+      "reason": "codegen pointer 237392"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x11b8d00",
+      "size": 32,
+      "bytes": "b6300800a39f0000f5ae0000abdf0200ffffffffbe02000696080000ffff0200",
+      "reason": "method 238843"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x226e9e",
+      "size": 14,
+      "bytes": "6f705f496e657175616c69747900",
+      "reason": "method 238843"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8bb4008",
+      "size": 8,
+      "bytes": "2007dc8501000000",
+      "reason": "codegen pointer 238843"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x11b9160",
+      "size": 32,
+      "bytes": "92a36400a39f0000f5ae0000e9df0200ffffffffe102000696000000ffff0100",
+      "reason": "method 238878"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x7ee17a",
+      "size": 14,
+      "bytes": "49734e756c6c4f72456d70747900",
+      "reason": "method 238878"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8bb4120",
+      "size": 8,
+      "bytes": "609ddb8501000000",
+      "reason": "codegen pointer 238878"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0xb5f600",
+      "size": 32,
+      "bytes": "dfa51100241000007344010024a10000ffffffff4478000686000000ffff0100",
+      "reason": "method 30787"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be3c7",
+      "size": 7,
+      "bytes": "41737369676e00",
+      "reason": "method 30787"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x8610f98",
+      "size": 8,
+      "bytes": "a0a3318201000000",
+      "reason": "codegen pointer 30787"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x24ab640",
+      "size": 92,
+      "bytes": "c1a51100267f07003aa70000ffffffff28f600003aa70000ffffffff012010009e5a000042780000ffffffff5c0d000010070000ffffffff91710000ffffffff00000000090001002f0000000100040000000000080c000024100002",
+      "reason": "type Torappu.AttributesData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be3a9",
+      "size": 15,
+      "bytes": "417474726962757465734461746100",
+      "reason": "type name Torappu.AttributesData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da25c8",
+      "size": 12,
+      "bytes": "3aa6110099f60000a15a0004",
+      "reason": "field Torappu.AttributesData.maxHp"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be422",
+      "size": 6,
+      "bytes": "6d6178487000",
+      "reason": "field name Torappu.AttributesData.maxHp"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df68",
+      "size": 4,
+      "bytes": "10000000",
+      "reason": "field offset Torappu.AttributesData.maxHp"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da25d4",
+      "size": 12,
+      "bytes": "b01b110099f60000a25a0004",
+      "reason": "field Torappu.AttributesData.atk"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2b5998",
+      "size": 4,
+      "bytes": "61746b00",
+      "reason": "field name Torappu.AttributesData.atk"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df6c",
+      "size": 4,
+      "bytes": "24000000",
+      "reason": "field offset Torappu.AttributesData.atk"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da25e0",
+      "size": 12,
+      "bytes": "b41b110099f60000a35a0004",
+      "reason": "field Torappu.AttributesData.def"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2b599c",
+      "size": 4,
+      "bytes": "64656600",
+      "reason": "field name Torappu.AttributesData.def"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df70",
+      "size": 4,
+      "bytes": "38000000",
+      "reason": "field offset Torappu.AttributesData.def"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da25ec",
+      "size": 12,
+      "bytes": "40a6110094f60000a45a0004",
+      "reason": "field Torappu.AttributesData.magicResistance"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be428",
+      "size": 16,
+      "bytes": "6d61676963526573697374616e636500",
+      "reason": "field name Torappu.AttributesData.magicResistance"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df74",
+      "size": 4,
+      "bytes": "4c000000",
+      "reason": "field offset Torappu.AttributesData.magicResistance"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da25f8",
+      "size": 12,
+      "bytes": "14c50f0099f60000a55a0004",
+      "reason": "field Torappu.AttributesData.cost"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2a02fc",
+      "size": 5,
+      "bytes": "636f737400",
+      "reason": "field name Torappu.AttributesData.cost"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df78",
+      "size": 4,
+      "bytes": "64000000",
+      "reason": "field offset Torappu.AttributesData.cost"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2604",
+      "size": 12,
+      "bytes": "50a6110099f60000a65a0004",
+      "reason": "field Torappu.AttributesData.blockCnt"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be438",
+      "size": 9,
+      "bytes": "626c6f636b436e7400",
+      "reason": "field name Torappu.AttributesData.blockCnt"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df7c",
+      "size": 4,
+      "bytes": "78000000",
+      "reason": "field offset Torappu.AttributesData.blockCnt"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2610",
+      "size": 12,
+      "bytes": "bc1b110094f60000a75a0004",
+      "reason": "field Torappu.AttributesData.moveSpeed"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2b59a4",
+      "size": 10,
+      "bytes": "6d6f7665537065656400",
+      "reason": "field name Torappu.AttributesData.moveSpeed"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df80",
+      "size": 4,
+      "bytes": "8c000000",
+      "reason": "field offset Torappu.AttributesData.moveSpeed"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da261c",
+      "size": 12,
+      "bytes": "59a6110094f60000a85a0004",
+      "reason": "field Torappu.AttributesData.attackSpeed"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be441",
+      "size": 12,
+      "bytes": "61747461636b537065656400",
+      "reason": "field name Torappu.AttributesData.attackSpeed"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df84",
+      "size": 4,
+      "bytes": "a4000000",
+      "reason": "field offset Torappu.AttributesData.attackSpeed"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2628",
+      "size": 12,
+      "bytes": "65a6110094f60000a95a0004",
+      "reason": "field Torappu.AttributesData.baseAttackTime"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be44d",
+      "size": 15,
+      "bytes": "6261736541747461636b54696d6500",
+      "reason": "field name Torappu.AttributesData.baseAttackTime"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df88",
+      "size": 4,
+      "bytes": "bc000000",
+      "reason": "field offset Torappu.AttributesData.baseAttackTime"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2634",
+      "size": 12,
+      "bytes": "74a6110099f60000aa5a0004",
+      "reason": "field Torappu.AttributesData.respawnTime"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be45c",
+      "size": 12,
+      "bytes": "7265737061776e54696d6500",
+      "reason": "field name Torappu.AttributesData.respawnTime"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df8c",
+      "size": 4,
+      "bytes": "d4000000",
+      "reason": "field offset Torappu.AttributesData.respawnTime"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2640",
+      "size": 12,
+      "bytes": "80a6110094f60000ab5a0004",
+      "reason": "field Torappu.AttributesData.hpRecoveryPerSec"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be468",
+      "size": 17,
+      "bytes": "68705265636f7665727950657253656300",
+      "reason": "field name Torappu.AttributesData.hpRecoveryPerSec"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df90",
+      "size": 4,
+      "bytes": "e8000000",
+      "reason": "field offset Torappu.AttributesData.hpRecoveryPerSec"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da264c",
+      "size": 12,
+      "bytes": "91a6110094f60000ac5a0004",
+      "reason": "field Torappu.AttributesData.spRecoveryPerSec"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be479",
+      "size": 17,
+      "bytes": "73705265636f7665727950657253656300",
+      "reason": "field name Torappu.AttributesData.spRecoveryPerSec"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df94",
+      "size": 4,
+      "bytes": "00010000",
+      "reason": "field offset Torappu.AttributesData.spRecoveryPerSec"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2658",
+      "size": 12,
+      "bytes": "a2a6110099f60000ad5a0004",
+      "reason": "field Torappu.AttributesData.maxDeployCount"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be48a",
+      "size": 15,
+      "bytes": "6d61784465706c6f79436f756e7400",
+      "reason": "field name Torappu.AttributesData.maxDeployCount"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7df98",
+      "size": 4,
+      "bytes": "18010000",
+      "reason": "field offset Torappu.AttributesData.maxDeployCount"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2670",
+      "size": 12,
+      "bytes": "c1a6110099f60000af5a0004",
+      "reason": "field Torappu.AttributesData.tauntLevel"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be4a9",
+      "size": 11,
+      "bytes": "7461756e744c6576656c00",
+      "reason": "field name Torappu.AttributesData.tauntLevel"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dfa0",
+      "size": 4,
+      "bytes": "40010000",
+      "reason": "field offset Torappu.AttributesData.tauntLevel"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da267c",
+      "size": 12,
+      "bytes": "cca6110099f60000b05a0004",
+      "reason": "field Torappu.AttributesData.massLevel"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be4b4",
+      "size": 10,
+      "bytes": "6d6173734c6576656c00",
+      "reason": "field name Torappu.AttributesData.massLevel"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dfa4",
+      "size": 4,
+      "bytes": "54010000",
+      "reason": "field offset Torappu.AttributesData.massLevel"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2688",
+      "size": 12,
+      "bytes": "d6a6110099f60000b15a0004",
+      "reason": "field Torappu.AttributesData.baseForceLevel"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be4be",
+      "size": 15,
+      "bytes": "62617365466f7263654c6576656c00",
+      "reason": "field name Torappu.AttributesData.baseForceLevel"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dfa8",
+      "size": 4,
+      "bytes": "68010000",
+      "reason": "field offset Torappu.AttributesData.baseForceLevel"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2694",
+      "size": 12,
+      "bytes": "e5a6110094f60000b25a0004",
+      "reason": "field Torappu.AttributesData.epDamageResistance"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be4cd",
+      "size": 19,
+      "bytes": "657044616d616765526573697374616e636500",
+      "reason": "field name Torappu.AttributesData.epDamageResistance"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dfac",
+      "size": 4,
+      "bytes": "7c010000",
+      "reason": "field offset Torappu.AttributesData.epDamageResistance"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da26a0",
+      "size": 12,
+      "bytes": "f8a6110094f60000b35a0004",
+      "reason": "field Torappu.AttributesData.epResistance"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be4e0",
+      "size": 13,
+      "bytes": "6570526573697374616e636500",
+      "reason": "field name Torappu.AttributesData.epResistance"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dfb0",
+      "size": 4,
+      "bytes": "94010000",
+      "reason": "field offset Torappu.AttributesData.epResistance"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da26ac",
+      "size": 12,
+      "bytes": "05a7110094f60000b45a0004",
+      "reason": "field Torappu.AttributesData.damageHitratePhysical"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be4ed",
+      "size": 22,
+      "bytes": "64616d61676548697472617465506879736963616c00",
+      "reason": "field name Torappu.AttributesData.damageHitratePhysical"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dfb4",
+      "size": 4,
+      "bytes": "ac010000",
+      "reason": "field offset Torappu.AttributesData.damageHitratePhysical"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da26b8",
+      "size": 12,
+      "bytes": "1ba7110094f60000b55a0004",
+      "reason": "field Torappu.AttributesData.damageHitrateMagical"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be503",
+      "size": 21,
+      "bytes": "64616d616765486974726174654d61676963616c00",
+      "reason": "field name Torappu.AttributesData.damageHitrateMagical"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dfb8",
+      "size": 4,
+      "bytes": "c4010000",
+      "reason": "field offset Torappu.AttributesData.damageHitrateMagical"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da273c",
+      "size": 12,
+      "bytes": "f4a7110093f60000c05a0004",
+      "reason": "field Torappu.AttributesData.epBreakRecoverSpeed"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be5dc",
+      "size": 20,
+      "bytes": "6570427265616b5265636f766572537065656400",
+      "reason": "field name Torappu.AttributesData.epBreakRecoverSpeed"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dfe4",
+      "size": 4,
+      "bytes": "c8020000",
+      "reason": "field offset Torappu.AttributesData.epBreakRecoverSpeed"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2760",
+      "size": 12,
+      "bytes": "22a81100faae0000c35a0004",
+      "reason": "field Torappu.AttributesData.stunImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be60a",
+      "size": 11,
+      "bytes": "7374756e496d6d756e6500",
+      "reason": "field name Torappu.AttributesData.stunImmune"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dff0",
+      "size": 4,
+      "bytes": "10030000",
+      "reason": "field offset Torappu.AttributesData.stunImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da276c",
+      "size": 12,
+      "bytes": "2da81100faae0000c45a0004",
+      "reason": "field Torappu.AttributesData.silenceImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be615",
+      "size": 14,
+      "bytes": "73696c656e6365496d6d756e6500",
+      "reason": "field name Torappu.AttributesData.silenceImmune"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dff4",
+      "size": 4,
+      "bytes": "11030000",
+      "reason": "field offset Torappu.AttributesData.silenceImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2778",
+      "size": 12,
+      "bytes": "3ba81100faae0000c55a0004",
+      "reason": "field Torappu.AttributesData.sleepImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be623",
+      "size": 12,
+      "bytes": "736c656570496d6d756e6500",
+      "reason": "field name Torappu.AttributesData.sleepImmune"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dff8",
+      "size": 4,
+      "bytes": "12030000",
+      "reason": "field offset Torappu.AttributesData.sleepImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2784",
+      "size": 12,
+      "bytes": "47a81100faae0000c65a0004",
+      "reason": "field Torappu.AttributesData.frozenImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be62f",
+      "size": 13,
+      "bytes": "66726f7a656e496d6d756e6500",
+      "reason": "field name Torappu.AttributesData.frozenImmune"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7dffc",
+      "size": 4,
+      "bytes": "13030000",
+      "reason": "field offset Torappu.AttributesData.frozenImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da2790",
+      "size": 12,
+      "bytes": "54a81100faae0000c75a0004",
+      "reason": "field Torappu.AttributesData.levitateImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be63c",
+      "size": 15,
+      "bytes": "6c65766974617465496d6d756e6500",
+      "reason": "field name Torappu.AttributesData.levitateImmune"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7e000",
+      "size": 4,
+      "bytes": "14030000",
+      "reason": "field offset Torappu.AttributesData.levitateImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da279c",
+      "size": 12,
+      "bytes": "63a81100faae0000c85a0004",
+      "reason": "field Torappu.AttributesData.disarmedCombatImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be64b",
+      "size": 21,
+      "bytes": "64697361726d6564436f6d626174496d6d756e6500",
+      "reason": "field name Torappu.AttributesData.disarmedCombatImmune"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7e004",
+      "size": 4,
+      "bytes": "15030000",
+      "reason": "field offset Torappu.AttributesData.disarmedCombatImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da27a8",
+      "size": 12,
+      "bytes": "78a81100faae0000c95a0004",
+      "reason": "field Torappu.AttributesData.fearedImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be660",
+      "size": 13,
+      "bytes": "666561726564496d6d756e6500",
+      "reason": "field name Torappu.AttributesData.fearedImmune"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7e008",
+      "size": 4,
+      "bytes": "16030000",
+      "reason": "field offset Torappu.AttributesData.fearedImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da27b4",
+      "size": 12,
+      "bytes": "85a81100faae0000ca5a0004",
+      "reason": "field Torappu.AttributesData.palsyImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be66d",
+      "size": 12,
+      "bytes": "70616c7379496d6d756e6500",
+      "reason": "field name Torappu.AttributesData.palsyImmune"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7e00c",
+      "size": 4,
+      "bytes": "17030000",
+      "reason": "field offset Torappu.AttributesData.palsyImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da27c0",
+      "size": 12,
+      "bytes": "91a81100faae0000cb5a0004",
+      "reason": "field Torappu.AttributesData.attractImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be679",
+      "size": 14,
+      "bytes": "61747472616374496d6d756e6500",
+      "reason": "field name Torappu.AttributesData.attractImmune"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7e010",
+      "size": 4,
+      "bytes": "18030000",
+      "reason": "field offset Torappu.AttributesData.attractImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da27cc",
+      "size": 12,
+      "bytes": "9fa81100faae0000cc5a0004",
+      "reason": "field Torappu.AttributesData.teleportImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be687",
+      "size": 15,
+      "bytes": "74656c65706f7274496d6d756e6500",
+      "reason": "field name Torappu.AttributesData.teleportImmune"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7e014",
+      "size": 4,
+      "bytes": "19030000",
+      "reason": "field offset Torappu.AttributesData.teleportImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da27d8",
+      "size": 12,
+      "bytes": "aea81100faae0000cd5a0004",
+      "reason": "field Torappu.AttributesData.groundBoundImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2be696",
+      "size": 18,
+      "bytes": "67726f756e64426f756e64496d6d756e6500",
+      "reason": "field name Torappu.AttributesData.groundBoundImmune"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7e018",
+      "size": 4,
+      "bytes": "1a030000",
+      "reason": "field offset Torappu.AttributesData.groundBoundImmune"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x24b3adc",
+      "size": 92,
+      "bytes": "a70a1200100000009e760100b6cb000028f600009e760100ffffffff02201000da620000447a0000ffffffffffffffffffffffffffffffffe77c0000ffffffff0000000001000000100000000000040000000000000c000097110002",
+      "reason": "type Torappu.EnemyDatabase+EnemyData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c488f",
+      "size": 10,
+      "bytes": "456e656d794461746100",
+      "reason": "type name Torappu.EnemyDatabase+EnemyData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da8880",
+      "size": 12,
+      "bytes": "ef1c0000f7730000db620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.name"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a5ad7",
+      "size": 5,
+      "bytes": "6e616d6500",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.name"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e72500",
+      "size": 4,
+      "bytes": "10000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.name"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da888c",
+      "size": 12,
+      "bytes": "1ecb0700f7730000dc620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.description"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x220906",
+      "size": 12,
+      "bytes": "6465736372697074696f6e00",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.description"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e72504",
+      "size": 4,
+      "bytes": "20000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.description"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da8898",
+      "size": 12,
+      "bytes": "e77c0d00f7730000dd620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.prefabKey"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x27bacf",
+      "size": 10,
+      "bytes": "7072656661624b657900",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.prefabKey"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e72508",
+      "size": 4,
+      "bytes": "30000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.prefabKey"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da88a4",
+      "size": 12,
+      "bytes": "28e307009d760100de620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.attributes"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x222110",
+      "size": 11,
+      "bytes": "6174747269627574657300",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.attributes"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7250c",
+      "size": 4,
+      "bytes": "40000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.attributes"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da88c8",
+      "size": 12,
+      "bytes": "c10a1200f0730000e1620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.enemyTags"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48a9",
+      "size": 10,
+      "bytes": "656e656d795461677300",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.enemyTags"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e72518",
+      "size": 4,
+      "bytes": "58000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.enemyTags"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da88d4",
+      "size": 12,
+      "bytes": "cb0a1200f3730000e2620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.lifePointReduce"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48b3",
+      "size": 16,
+      "bytes": "6c696665506f696e7452656475636500",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.lifePointReduce"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7251c",
+      "size": 4,
+      "bytes": "68000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.lifePointReduce"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da88ec",
+      "size": 12,
+      "bytes": "db0a1200f5730000e4620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.rangeRadius"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48c3",
+      "size": 12,
+      "bytes": "72616e676552616469757300",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.rangeRadius"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e72524",
+      "size": 4,
+      "bytes": "78000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.rangeRadius"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da88f8",
+      "size": 12,
+      "bytes": "e70a1200f3730000e5620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.numOfExtraDrops"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48cf",
+      "size": 16,
+      "bytes": "6e756d4f66457874726144726f707300",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.numOfExtraDrops"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e72528",
+      "size": 4,
+      "bytes": "80000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.numOfExtraDrops"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da8904",
+      "size": 12,
+      "bytes": "f70a1200f5730000e6620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.viewRadius"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48df",
+      "size": 11,
+      "bytes": "7669657752616469757300",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.viewRadius"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7252c",
+      "size": 4,
+      "bytes": "88000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.viewRadius"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da8910",
+      "size": 12,
+      "bytes": "020b1200f1730000e7620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.notCountInTotal"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48ea",
+      "size": 16,
+      "bytes": "6e6f74436f756e74496e546f74616c00",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.notCountInTotal"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e72530",
+      "size": 4,
+      "bytes": "90000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.notCountInTotal"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da891c",
+      "size": 12,
+      "bytes": "120b120085ae0000e8620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.talentBlackboard"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48fa",
+      "size": 17,
+      "bytes": "74616c656e74426c61636b626f61726400",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.talentBlackboard"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e72534",
+      "size": 4,
+      "bytes": "98000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.talentBlackboard"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da8928",
+      "size": 12,
+      "bytes": "f22b100056870000e9620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.skills"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2a69da",
+      "size": 7,
+      "bytes": "736b696c6c7300",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.skills"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e72538",
+      "size": 4,
+      "bytes": "a0000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.skills"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1da8934",
+      "size": 12,
+      "bytes": "230b12002aba0100ea620004",
+      "reason": "field Torappu.EnemyDatabase+EnemyData.spData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c490b",
+      "size": 7,
+      "bytes": "73704461746100",
+      "reason": "field name Torappu.EnemyDatabase+EnemyData.spData"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e7253c",
+      "size": 4,
+      "bytes": "a8000000",
+      "reason": "field offset Torappu.EnemyDatabase+EnemyData.spData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x24b72ec",
+      "size": 92,
+      "bytes": "a70a12001000000091820100a7ea000028f6000091820100ffffffff02201000f56600001b7b0000ffffffff7a0d0000d9070000ffffffff79810000ffffffff0000000004000300120000000300040000000000000c000030120002",
+      "reason": "type Torappu.LevelData+EnemyData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c488f",
+      "size": 10,
+      "bytes": "456e656d794461746100",
+      "reason": "type name Torappu.LevelData+EnemyData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1dab9c4",
+      "size": 12,
+      "bytes": "ef1c0000952d0100f6660004",
+      "reason": "field Torappu.LevelData+EnemyData.name"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a5ad7",
+      "size": 5,
+      "bytes": "6e616d6500",
+      "reason": "field name Torappu.LevelData+EnemyData.name"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e20",
+      "size": 4,
+      "bytes": "10000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.name"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1dab9d0",
+      "size": 12,
+      "bytes": "1ecb0700952d0100f7660004",
+      "reason": "field Torappu.LevelData+EnemyData.description"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x220906",
+      "size": 12,
+      "bytes": "6465736372697074696f6e00",
+      "reason": "field name Torappu.LevelData+EnemyData.description"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e24",
+      "size": 4,
+      "bytes": "18000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.description"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1dab9dc",
+      "size": 12,
+      "bytes": "53120000952d0100f8660004",
+      "reason": "field Torappu.LevelData+EnemyData.key"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a503b",
+      "size": 4,
+      "bytes": "6b657900",
+      "reason": "field name Torappu.LevelData+EnemyData.key"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e28",
+      "size": 4,
+      "bytes": "20000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.key"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1dab9e8",
+      "size": 12,
+      "bytes": "28e307003ca70000f9660004",
+      "reason": "field Torappu.LevelData+EnemyData.attributes"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x222110",
+      "size": 11,
+      "bytes": "6174747269627574657300",
+      "reason": "field name Torappu.LevelData+EnemyData.attributes"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e2c",
+      "size": 4,
+      "bytes": "28000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.attributes"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1daba0c",
+      "size": 12,
+      "bytes": "c10a1200f1830000fc660004",
+      "reason": "field Torappu.LevelData+EnemyData.enemyTags"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48a9",
+      "size": 10,
+      "bytes": "656e656d795461677300",
+      "reason": "field name Torappu.LevelData+EnemyData.enemyTags"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e38",
+      "size": 4,
+      "bytes": "38000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.enemyTags"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1daba18",
+      "size": 12,
+      "bytes": "020b1200faae0000fd660004",
+      "reason": "field Torappu.LevelData+EnemyData.notCountInTotal"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48ea",
+      "size": 16,
+      "bytes": "6e6f74436f756e74496e546f74616c00",
+      "reason": "field name Torappu.LevelData+EnemyData.notCountInTotal"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e3c",
+      "size": 4,
+      "bytes": "40000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.notCountInTotal"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1daba24",
+      "size": 12,
+      "bytes": "dbb00500952d0100fe660004",
+      "reason": "field Torappu.LevelData+EnemyData.alias"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1feec3",
+      "size": 6,
+      "bytes": "616c69617300",
+      "reason": "field name Torappu.LevelData+EnemyData.alias"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e40",
+      "size": 4,
+      "bytes": "48000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.alias"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1daba30",
+      "size": 12,
+      "bytes": "cb0a120088e60000ff660004",
+      "reason": "field Torappu.LevelData+EnemyData.lifePointReduce"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48b3",
+      "size": 16,
+      "bytes": "6c696665506f696e7452656475636500",
+      "reason": "field name Torappu.LevelData+EnemyData.lifePointReduce"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e44",
+      "size": 4,
+      "bytes": "50000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.lifePointReduce"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1daba3c",
+      "size": 12,
+      "bytes": "db0a12002025010000670004",
+      "reason": "field Torappu.LevelData+EnemyData.rangeRadius"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48c3",
+      "size": 12,
+      "bytes": "72616e676552616469757300",
+      "reason": "field name Torappu.LevelData+EnemyData.rangeRadius"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e48",
+      "size": 4,
+      "bytes": "54000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.rangeRadius"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1daba48",
+      "size": 12,
+      "bytes": "e70a120088e6000001670004",
+      "reason": "field Torappu.LevelData+EnemyData.numOfExtraDrops"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48cf",
+      "size": 16,
+      "bytes": "6e756d4f66457874726144726f707300",
+      "reason": "field name Torappu.LevelData+EnemyData.numOfExtraDrops"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e4c",
+      "size": 4,
+      "bytes": "58000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.numOfExtraDrops"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1daba54",
+      "size": 12,
+      "bytes": "f70a12002025010002670004",
+      "reason": "field Torappu.LevelData+EnemyData.viewRadius"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48df",
+      "size": 11,
+      "bytes": "7669657752616469757300",
+      "reason": "field name Torappu.LevelData+EnemyData.viewRadius"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e50",
+      "size": 4,
+      "bytes": "5c000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.viewRadius"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1daba6c",
+      "size": 12,
+      "bytes": "120b120085ae000004670004",
+      "reason": "field Torappu.LevelData+EnemyData.talentBlackboard"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c48fa",
+      "size": 17,
+      "bytes": "74616c656e74426c61636b626f61726400",
+      "reason": "field name Torappu.LevelData+EnemyData.talentBlackboard"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e58",
+      "size": 4,
+      "bytes": "68000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.talentBlackboard"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1daba78",
+      "size": 12,
+      "bytes": "f22b10005687000005670004",
+      "reason": "field Torappu.LevelData+EnemyData.skills"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2a69da",
+      "size": 7,
+      "bytes": "736b696c6c7300",
+      "reason": "field name Torappu.LevelData+EnemyData.skills"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e5c",
+      "size": 4,
+      "bytes": "70000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.skills"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1daba84",
+      "size": 12,
+      "bytes": "230b12002aba010006670004",
+      "reason": "field Torappu.LevelData+EnemyData.spData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c490b",
+      "size": 7,
+      "bytes": "73704461746100",
+      "reason": "field name Torappu.LevelData+EnemyData.spData"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e60",
+      "size": 4,
+      "bytes": "78000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.spData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1daba90",
+      "size": 12,
+      "bytes": "ef4112002cba010007670004",
+      "reason": "field Torappu.LevelData+EnemyData.m_runtimeData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c7fd7",
+      "size": 14,
+      "bytes": "6d5f72756e74696d654461746100",
+      "reason": "field name Torappu.LevelData+EnemyData.m_runtimeData"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76e64",
+      "size": 4,
+      "bytes": "80000000",
+      "reason": "field offset Torappu.LevelData+EnemyData.m_runtimeData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x24b7348",
+      "size": 92,
+      "bytes": "6a4212001000000094820100a7ea000028f6000094820100ffffffff0220100013670000227b0000ffffffffffffffffffffffffffffffff89810000ffffffff0000000001000000040000000000040000000000000c000034120002",
+      "reason": "type Torappu.LevelData+EnemyDataDbReference"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c8052",
+      "size": 21,
+      "bytes": "456e656d794461746144625265666572656e636500",
+      "reason": "type name Torappu.LevelData+EnemyDataDbReference"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1dabb2c",
+      "size": 12,
+      "bytes": "7f421200faae000014670004",
+      "reason": "field Torappu.LevelData+EnemyDataDbReference.useDb"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c8067",
+      "size": 6,
+      "bytes": "757365446200",
+      "reason": "field name Torappu.LevelData+EnemyDataDbReference.useDb"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76f58",
+      "size": 4,
+      "bytes": "10000000",
+      "reason": "field offset Torappu.LevelData+EnemyDataDbReference.useDb"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1dabb38",
+      "size": 12,
+      "bytes": "c7110000952d010015670004",
+      "reason": "field Torappu.LevelData+EnemyDataDbReference.id"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a4faf",
+      "size": 3,
+      "bytes": "696400",
+      "reason": "field name Torappu.LevelData+EnemyDataDbReference.id"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76f5c",
+      "size": 4,
+      "bytes": "18000000",
+      "reason": "field offset Torappu.LevelData+EnemyDataDbReference.id"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1dabb44",
+      "size": 12,
+      "bytes": "3639000088e6000016670004",
+      "reason": "field Torappu.LevelData+EnemyDataDbReference.level"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1a771e",
+      "size": 6,
+      "bytes": "6c6576656c00",
+      "reason": "field name Torappu.LevelData+EnemyDataDbReference.level"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76f60",
+      "size": 4,
+      "bytes": "20000000",
+      "reason": "field offset Torappu.LevelData+EnemyDataDbReference.level"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1dabb50",
+      "size": 12,
+      "bytes": "8e0912009f76010017670004",
+      "reason": "field Torappu.LevelData+EnemyDataDbReference.overwrittenData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c4776",
+      "size": 16,
+      "bytes": "6f7665727772697474656e4461746100",
+      "reason": "field name Torappu.LevelData+EnemyDataDbReference.overwrittenData"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e76f64",
+      "size": 4,
+      "bytes": "28000000",
+      "reason": "field offset Torappu.LevelData+EnemyDataDbReference.overwrittenData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x24b7b30",
+      "size": 92,
+      "bytes": "67731100267f0700a7ea0000ffffffff28f60000a7ea0000ffffffff01201000c1660000187b0000ffffffffffffffffeb070000ffffffff56810000ffffffff0000000002000000170000000b00040000000000000c00002c120002",
+      "reason": "type Torappu.LevelData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2bb14f",
+      "size": 10,
+      "bytes": "4c6576656c4461746100",
+      "reason": "type name Torappu.LevelData"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x1dab7f0",
+      "size": 12,
+      "bytes": "f43f12002a860000cf660004",
+      "reason": "field Torappu.LevelData.enemyDbRefs"
+    },
+    {
+      "source": "metadata",
+      "physical_offset": "0x2c7ddc",
+      "size": 12,
+      "bytes": "656e656d7944625265667300",
+      "reason": "field name Torappu.LevelData.enemyDbRefs"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e777a4",
+      "size": 4,
+      "bytes": "78000000",
+      "reason": "field offset Torappu.LevelData.enemyDbRefs"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e3e3e0",
+      "size": 4,
+      "bytes": "0000803f",
+      "reason": "AttributesData constructor float literal 1.0"
+    },
+    {
+      "source": "dll",
+      "physical_offset": "0x6e3e5c4",
+      "size": 4,
+      "bytes": "0000c842",
+      "reason": "AttributesData constructor float literal 100.0"
+    }
+  ]
+}

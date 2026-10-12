@@ -12,7 +12,8 @@ def difficulty_rules():
 def damage_factor(scenario,dtype):
     return scenario.get('_run_damage_factor',1)*scenario.get('_enemy_type_factors',{}).get(dtype,1)
 
-def resolve_enemy(scenario,resolution):
+def resolve_enemy(scenario,resolution,*,panel_only=False):
+    if type(panel_only) is not bool:raise ValueError('局外面板预览标记需要布尔值。')
     target=scenario.get('target_enemy')
     if not target:
         if scenario.get('operator')=='char_1015_aglna2' and 'enemy_weight' in scenario:
@@ -37,20 +38,25 @@ def resolve_enemy(scenario,resolution):
     # historical integral float in the returned identity, never mutate it.
     panel=enemy_panel_reference(sid,target['enemy_id'],int(candidates[0]['level']))
     if not panel['compiled_database_result_available']:
-        raise ValueError('固定敌人数据库精确等级不可用；别名/默认构建路径未核验，不能用原字段投影进行伤害计算。')
+        raise ValueError('固定敌人构造来源不可用；useDb=true缺少精确等级或独立构造缺少覆盖，不允许用原字段投影进行伤害计算。')
     record=candidates[0];stats=dict(panel['attributes'])
+    missing=[]
     for key in ('maxHp','atk','def','magicResistance'):
+        if stats.get(key) is None and panel_only:missing.append(key);continue
         if type(stats.get(key)) not in (int,float) or not math.isfinite(stats[key]) or stats[key]<0:
-            raise ValueError('目标敌人属性不完整。')
+            raise ValueError('目标敌人属性不完整；未闭合字段不能填零。')
     enemy={**target,'name':record['name'],'stage_name':stage['name'],'stage_difficulty':stage['difficulty'],
         'level_type':record['level_type'],'reference_stats':dict(stats),'stats':stats,'steps':[],
-        'damage_factor':1,'pending':[],'source':config_data()['source_url'],
+        'damage_factor':1,'pending':[],'unknown_panel_fields':missing,'panel_only':panel_only,
+        'source':config_data()['source_url'],
         'fixed_source_qualification':{'state':panel['source_state'],'source':panel['source'],
             'field_provenance':panel['field_provenance'],
-            'actual_gameplay_verified':False}}
+            'construction_reference':panel['construction_reference'],
+            'compiled_identity':panel['compiled_identity'],'actual_gameplay_verified':False}}
     resolution['enemy']=enemy
     def multiply(label,values):
-        for key,value in values.items():stats[key]*=value
+        for key,value in values.items():
+            if stats.get(key) is not None:stats[key]*=value
         enemy['steps'].append({'label':label,'factors':values})
     for rune in preview['runes']:
         if rune['difficultyMask'] not in (stage['difficulty'],'ALL'):continue
@@ -126,5 +132,6 @@ def resolve_enemy(scenario,resolution):
         raise ValueError('固定敌人重量档案缺失，无法选择重量天赋分支。')
     scenario['enemy_is_boss']=record['level_type']=='BOSS';scenario['enemy_level_type']=record['level_type']
     scenario['_run_damage_factor']=enemy['damage_factor']
+    if missing:enemy['pending'].append('有证面板分项可显示；构造器未闭合字段仍未知，完整目标计算不可用。')
     resolution['pending'].extend(enemy['pending'])
     resolution['notes'].append('敌人候选不保证出场；当前以持续存活目标计算，未模拟敌人自身技能、阶段、阻挡/环境变化和实际死亡时刻。')

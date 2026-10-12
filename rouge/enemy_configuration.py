@@ -51,7 +51,15 @@ def compiled_configuration(reference):
         'complete_cycle_seconds':None,'effective_skill_damage':None,
         'native_evidence':deepcopy(rules['native_evidence']),
         'limits':list(rules['limits'])}
-    if not result['database_exact_level_available']:return result
+    from .enemy_reference_construction import configuration_path
+    path=configuration_path(reference);result['construction_reference']=path
+    if not path['compiled_result_available']:return result
+    if path['mode']=='stage_constructor':
+        result.update(state='constructor_configuration_baseline_unknown',configuration=None,
+            source_written_configuration=deepcopy(reference['stage_overrides']),
+            source_chain=[{'origin':'stage_override','level':reference['requested_level'],
+                'state':'constructor_pointer_baseline_unresolved_no_database_inheritance'}])
+        return result
     skills=[];talents=None
     records=[('database_level',d['level'],d) for d in reference['definitions'] if d['level']<=reference['requested_level']]
     records.append(('stage_override',reference['requested_level'],reference['stage_overrides']))
@@ -87,6 +95,8 @@ def construction_text(result,technical=False):
         return '基包招式与机制参数：精确等级不可用；未借用旧等级或默认/别名构建结果。'
     if result['state']=='unsupported_source_shape':
         return '基包招式与机制参数：存在未覆盖的来源格式，完整配置参考保持未知。'
+    if result['state']=='constructor_configuration_baseline_unknown':
+        return '关卡独立构造的原招式覆写已保留；构造器未写空指针的分配基线仍未闭合，完整配置未知，未继承数据库条目。'
     config=result['configuration'];skills=config['skills'] or [];talents=config['talentBlackboard'] or []
     lines=[f'基包配置分项：{len(skills)}条招式、{len(talents)}项机制参数已按来源构建规则解析。',
         '此处解析的是固定配置；未推定合并为当前实战技能，当前热更新、控制器、实际发动与完整回转仍未知。']

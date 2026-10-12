@@ -111,16 +111,17 @@ class EnemySpInheritanceReferenceTests(unittest.TestCase):
     def test_invalid_source_level_reaches_preview_text_and_mechanism_source_query(self):
         sid='ro6_n_2_3';eid='enemy_2133_shdopl_lancer'
         ref=enemy_panel_reference(sid,eid,0)
-        self.assertFalse(ref['compiled_database_result_available'])
-        self.assertTrue(all(v is None for v in ref['attributes'].values()))
+        self.assertTrue(ref['compiled_database_result_available']);self.assertFalse(ref['exact_level_present'])
+        self.assertEqual(ref['attributes']['maxHp'],6000)
+        self.assertFalse(ref['construction_reference']['database_records_used'])
         self.assertIsNotNone(ref['source_projection']['attributes']['maxHp'])
         entry=enemy_preview(sid,eid,0,{'difficulty':{'value':0},'zone':{'id':'zone_2'}})
         text=enemy_text(entry)
         self.assertIn('预计生命值：未知',text)
-        self.assertIn('精确等级不可用',text)
+        self.assertIn('独立构造',text)
         self.assertIn('原字段投影',enemy_text(entry,technical=True))
         query=mechanism_provenance(sid,eid,0)
-        self.assertEqual(query['compiled_sp_reference']['state'],'unavailable_exact_database_level')
+        self.assertEqual(query['compiled_sp_reference']['state'],'constructor_sp_baseline_unknown')
         self.assertIsNone(query['effective_merged_mechanism'])
 
     def test_all_stage_references_keep_clock_and_current_hotfix_unknown(self):
@@ -131,7 +132,10 @@ class EnemySpInheritanceReferenceTests(unittest.TestCase):
                 self.assertFalse(ref['native_evidence']['current_hotfix_verified'])
                 self.assertIsNone(ref['complete_cycle_seconds']);self.assertIsNone(ref['first_activation_seconds'])
                 if ref['state']=='compiled_configuration_available':available+=1
-                if not ref['database_exact_level_available']:self.assertIsNone(ref['configuration'])
+                if not ref['database_exact_level_available']:
+                    self.assertEqual(ref['construction_reference']['mode'],'stage_constructor')
+                    if ref['state']=='compiled_configuration_available':self.assertEqual(ref['applied_source']['origin'],'stage_override')
+                    else:self.assertIsNone(ref['configuration'])
                 total+=1
         self.assertEqual(total,1087);self.assertGreater(available,0)
 

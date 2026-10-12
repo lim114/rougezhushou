@@ -1,7 +1,8 @@
 """Current-run modifiers sourced from pinned raw squad buffs."""
 from .run_config import config_data
 
-def prepare_run(scenario):
+def prepare_run(scenario,*,enemy_panel_only=False):
+    if type(enemy_panel_only) is not bool:raise ValueError('局外面板预览标记需要布尔值。')
     scenario=dict(scenario);config=scenario.get('run_config')
     if config is None:config={}
     if not isinstance(config,dict):raise ValueError('本局配置需要对象。')
@@ -50,7 +51,7 @@ def prepare_run(scenario):
         if not scenario.get('target_enemy'):
             resolution['pending'].append('已确认保密等级 '+str(value)+'；未选择关卡敌人，敌方难度/区域/关卡修正尚未自动计算，当前目标属性仍使用测试输入。')
     from .enemy_environment import resolve_enemy
-    resolve_enemy(scenario,resolution)
+    resolve_enemy(scenario,resolution,panel_only=enemy_panel_only)
     return scenario,resolution
 
 def finish_run(result,resolution):
