@@ -265,10 +265,10 @@ def _field_diff(left,right):
         if l!=r:out.append({'path':path,'left':l,'right':r})
     return out
 
-def mechanism_provenance(stage_id,enemy_id,level,*,resource_plan=None):
+def mechanism_provenance(stage_id,enemy_id,level,*,resource_plan=None,prefab_gate_plan=None):
     """Compare source records without silently inheriting/overwriting skills."""
     from .enemy_skills import enemy_skill_reference
-    stage=_stage(stage_id);ref=enemy_skill_reference(stage_id,enemy_id,level,resource_plan=resource_plan)
+    stage=_stage(stage_id);ref=enemy_skill_reference(stage_id,enemy_id,level,resource_plan=resource_plan,prefab_gate_plan=prefab_gate_plan)
     records=[{'origin':'database_level','level':d['level'],'fields':{k:v for k,v in d.items() if k!='level'}}
         for d in ref['definitions']]
     records.append({'origin':'stage_override','level':level,'fields':ref['stage_overrides']})
@@ -280,6 +280,7 @@ def mechanism_provenance(stage_id,enemy_id,level,*,resource_plan=None):
         compiled_sp_reference=deepcopy(ref['compiled_sp_reference']),
         compiled_configuration=deepcopy(ref['compiled_configuration']),
         initial_skill_resources=deepcopy(ref['initial_skill_resources']),
+        prefab_skill_gates=deepcopy(ref['prefab_skill_gates']),
         enemy_source=ref['source'],limits=list(LIMITS)+[
             '字段缺失、null、空列表及0分别保留；差异不证明继承或覆盖顺序。',
             '同一参数位置变化不证明对应招式等价，不推算首发、伤害或阶段。'])

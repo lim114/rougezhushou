@@ -81,7 +81,7 @@ INPUT_GUIDANCE = {
     'branches': 'stage_id 为关卡；branch_id 可选，用于筛选分支。列各阶段完整动作；触发机制、实际阶段选择、分支路线作用域缺证时未知。',
     'route': 'route_index 为固定路线序号（从0计）。折线分段、消失、再出现和等待分别列出；名义格不是实测寻路或实际到达时间。',
     'cell': 'row、col 是显示地图从上到下的行列（从0计）。反查明确配置点、主队列关联和预置实体；不声称实际占用或必经。',
-    'mechanism': 'stage_id、enemy_id、level 选择关卡敌人。另列基础初始化点共享技力数值门。可选resource_plan需声明scope=gated_baseline_sp_requests和requests招式标识列表；starting_sp或starting_sp_raw可声明初池，只模拟门通过时请求按基础费用被接受，不加回复或时间，不证明实际施放。原等级与覆盖分别保留；实际脚本、热更新与时钟未知。',
+    'mechanism': 'stage_id、enemy_id、level 选择关卡敌人。resource_plan 是基础共享技力请求账本；prefab_gate_plan 可声明scope=gated_baseline_skill_starts与requests启动序列，另受具体次数门约束；每项可为招式标识（声明启动成功）或{skill,ability_start_success}明确失败。starting_counts、starting_sp或starting_sp_raw仅为指定参考。数值门通过后先扣费，启动成功才增加次数，失败分支不在本函数立即退费。不加回复或时间，不证明实际施放。具体预制体、原等级及覆盖分别保留；实际附着、脚本、热更新与时钟未知。',
     'compare': 'left_stage/right_stage 与 left_level/right_level 分别指定两组条件；run_config/right_run_config 为局外环境。比较已支持环境小计，完整有效面板仍未知。',
 }
 INPUT_GUIDANCE.update({
@@ -514,6 +514,11 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
                 from .enemy_skill_resources import skill_resource_text
                 content=skill_resource_text(resources)
                 if content:parts += [_h('共享技力数值门与声明预算'),_p(content)]
+            prefab=data.get('prefab_skill_gates')
+            if prefab:
+                from .enemy_prefab_skill_gates import prefab_skill_text
+                content=prefab_skill_text(prefab)
+                if content:parts += [_h('具体预制体技能门与启动预算'),_p(content)]
             for diff in data['comparisons']:
                 parts += [_h(_text(diff['left_origin'])+' → '+_text(diff['right_origin'])),
                     _table(['字段位置','左记录状态 / 值','右记录状态 / 值'],

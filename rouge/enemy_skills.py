@@ -7,7 +7,9 @@ from pathlib import Path
 def skill_data():
     return json.loads((Path(__file__).with_name('data')/'enemy-skill-references.json').read_text(encoding='utf-8'))
 
-def enemy_skill_reference(stage_id,enemy_id,level,*,resource_plan=None):
+def enemy_skill_reference(stage_id,enemy_id,level,*,resource_plan=None,prefab_gate_plan=None):
+    if resource_plan is not None and prefab_gate_plan is not None:
+        raise ValueError('两种预算是同一基础池的替代声明，不能同时提交而重复解释为一次流程。')
     if isinstance(level,bool) or not isinstance(level,int) or level<0:
         raise ValueError('敌人引用等级需要非负整数。')
     data=skill_data();key=enemy_id+'@'+str(level)
@@ -30,6 +32,8 @@ def enemy_skill_reference(stage_id,enemy_id,level,*,resource_plan=None):
     reference['compiled_configuration']=compiled_configuration(reference)
     from .enemy_skill_resources import initial_skill_resource_reference
     reference['initial_skill_resources']=initial_skill_resource_reference(reference,resource_plan)
+    from .enemy_prefab_skill_gates import prefab_skill_reference
+    reference['prefab_skill_gates']=prefab_skill_reference(stage_id,enemy_id,level,reference,prefab_gate_plan)
     return reference
 
 def raw_text(value):
@@ -120,6 +124,11 @@ def enemy_skill_text(reference,technical=False):
     if resources:
         from .enemy_skill_resources import skill_resource_text
         content=skill_resource_text(resources,technical=technical)
+        if content:lines.extend(['',content])
+    prefab=reference.get('prefab_skill_gates')
+    if prefab:
+        from .enemy_prefab_skill_gates import prefab_skill_text
+        content=prefab_skill_text(prefab,technical=technical)
         if content:lines.extend(['',content])
     if not technical:return '\n'.join(lines)
     if compiled:
