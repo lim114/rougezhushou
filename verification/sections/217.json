@@ -1,0 +1,186 @@
+{
+  "title": "梅 MAR-X 原生空中条件与防御前单包组合的显式计算",
+  "remaining_item": "梅MAR-X原生附着/当前空中条件/伤害组合层；当前热更新、实际附着/状态与攻击时钟仍未闭合",
+  "new_capability": "默认关闭的局外FLY_ONLY声明参考，当前三阶特性资源和MeleeAttack原件链闭合；110%乘入防御前atkScale，驱动梅常态/麻痹弹/S2实际伤害分项、条件次数小计、报告和既有伤害预算；留空列双候选，完整实际总量仍None。",
+  "source_evidence": {
+    "report": "research/p2-mei-module-current/REPORT.md",
+    "receipt": "research/p2-mei-module-current/receipt.json",
+    "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+    "methods": 52,
+    "unique_instructions": 7514,
+    "all_instruction_bytes_match": true,
+    "limits": [],
+    "assets": [
+      {
+        "source": "battle/prefabs/[uc]equips.ab",
+        "sha256": "6f15ab7b956b76e00ca88b95ff9f18b4ba53ee48510fab563915d7d1a91e24ea",
+        "bytes": 730733,
+        "matches_current_manifest": true
+      },
+      {
+        "source": "charpack/char_133_mm.ab",
+        "sha256": "36538b9d52bbae869c5541ef804299bbc4e5567b498170f41f4c5f22ba47a265",
+        "bytes": 21648,
+        "matches_current_manifest": true
+      },
+      {
+        "source": "battle/prefabs/[uc]skills.ab",
+        "sha256": "14306a31b1856f61b25812a69a2a057b7c4634561fb2c2bccc42fb37ee41a27e",
+        "bytes": 1343313,
+        "matches_current_manifest": true
+      },
+      {
+        "source": "config/buff_template_holder.ab",
+        "sha256": "12419ad8d1ea9f670cca214e525240c691cdf3796b82acc8050698d66c202a37",
+        "bytes": 2022247,
+        "matches_current_manifest": true
+      }
+    ],
+    "manifest_version": "26-09-13-15-28-10-30688348",
+    "gmassets_sha256": "02266c5aff4a6d7b6e08db5b70acd76cbaf8dc14818bdeaa0c94af04a25efcce",
+    "gmassets_current_physical_match": true,
+    "trait_data_binding": "_ConvertInternal 77906 at0x180abdc18 passes BattleCharacterData.traitData+0x118 byref to AddEquipTraitData89574; selected equip trait blackboard retained; _AssignData76054 passes trait data to _AssignTrait76064; Blackboard ctor from TraitData.blackboard+0x20 -> Ability.SetData.",
+    "trait_ability_binding": "_PreprocessEquip76060 -> _EquipProcessTrait76067 -> AddTraitPrefab89575 -> _DoAddTrait89576 -> typed BattleFactory.AttachEquipIfNot71630 returns Ability; current equip prefab has one PassiveBuffAbility; stored m_traitAbility+0x4d8; _AssignTrait76064 SetData; OnBorn76027 at0x180a2d511/545/55b reads same field and calls Ability.Attach(owner).",
+    "packet_binding": "current normal mode0 -1074202291831238505, S1 replacement6997003709392759035, S2 mode1 1461104044418732183 are MeleeAttack. AbstractBasicAttack.DoSetData90309 at0x180e9ac63 reads vslot112/offset0x840 damageType+0x210, then vslot106/offset0x7e0 CreateDamageNode91791; wrapper0x180eff4b8 invokes vslot107/offset0x7f0 inherited NewDamageNode91792 -> ApplyDamage. Current virtual-pair base0x140 cross-checks three separate slot/offset mappings. Event14 source owner valid chain reused and freshly verified.",
+    "condition_binding": "IfTarget99327 GetActionTarget(TARGET) reads target.get_changeableMotionMode66374; motionMaskFLY_ONLY=2; dynamic FLY=1. Levitate/groundBound presence sequences can override raw motion; no timestamp or runtime state inferred.",
+    "damage_binding": "airforce_enhance event14 IfTarget then AtkScaleUp(overwritefalse,default1,atk_scale key); ActionUtil CheckExecute gates next node by prior check; MergeScale multiplicative -> AttackInfo.GetFinalAtk -> physical defense/floor then covered final factors.",
+    "original_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "public_targeted_sources": [
+      "https://prts.wiki/w/May",
+      "https://prts.wiki/w/异常效果图鉴/浮空",
+      "https://arknights.wiki.gg/wiki/May"
+    ],
+    "public_role": "corroboration of module110% and aerial/levitate descriptions; exact static binding and composition use original assets/native files."
+  },
+  "acceptance": {
+    "unique_tests_run": 71,
+    "passed": 71,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "new_api_tests": 15,
+    "new_mainwindow_class_tests": 2,
+    "old_related_tests": 54,
+    "api_receipt": "research/p2-mei-module-current/necessary-api.json",
+    "window_receipt": "research/p2-mei-module-current/necessary-window.json",
+    "final_changed_source_receipts": [
+      "research/p2-mei-module-current/necessary-api-final.json",
+      "research/p2-mei-module-current/necessary-module-links.json"
+    ],
+    "changed_only_followup": {
+      "native_wrapper_getter_evidence_and_assertions": "15/15",
+      "coverage_link_change": "28/28 including13 oldsource tests"
+    },
+    "initial_api": {
+      "run": 39,
+      "passed": 38,
+      "failures": 1,
+      "errors": 0,
+      "cause": "old73 report text still claimed static composition unverified"
+    },
+    "initial_crosscase": {
+      "run": 67,
+      "passed": 66,
+      "errors": 1,
+      "cause": "isolated public mechanist receipt dependency omitted; copied exact public file to base andwork"
+    },
+    "initial_window": {
+      "run": 4,
+      "passed": 3,
+      "errors": 1,
+      "cause": "test field account corrected to existing account_cache.records"
+    },
+    "initial_failures_retained": true,
+    "old73_numeric_unknown_timing_constraints_preserved": true,
+    "visible_original_window_required_after_root_integration": true,
+    "private_state_used": false,
+    "game_operated": false,
+    "chat_sent": false,
+    "dll_executed": false,
+    "process_memory_read": false,
+    "git_apply_check": {
+      "command": "git apply --check --ignore-space-change",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "encoding": "LF only, exactly one final LF"
+  },
+  "acceptance_cases": [
+    "defaultoff/cancel/inactive input preserve numeric results; E2lv40 source gate, all3stages bothskills and2timepreviews",
+    "beforearmor/floor versus afterarmor distinction; normal/S1/S2 rawattack uses existingtalent andgear onlyonce; additiveattack/final damage_taken onlyonce",
+    "manual fly/not_fly/unknown/missing stricttype; no enemybaseclass/name/weight/top-levelbool/levitateparameter inference",
+    "empty observation/target keepszero modeledcount subtotal while perpacketunknown and actualtotalunknown",
+    "actual components/per_hit/MeiS1 perpacket/report/declared budget source consume selectedvalue; fullcast/window/cycle None",
+    "static binding/composition true separate from currenthotfix/runtime false; currentMotion/attachment/source/sample actualunknown",
+    "input/catalog/result isolation and sourcevtable106/107/112 methodindices; current physical source/asset/manifests checked",
+    "realMainWindow publictempview defaultoff/manualcondition/cancel/unlock/operator+skill switch; automaticresources cannot supply motion; recordsunchanged",
+    "oldMei73 andS1/order/source immutability/fielderror constraints remain; 1oldsource-report assertion now matchesnewproof"
+  ],
+  "limitations": [
+    "current native static files plus pinned original parameters; actualhotfix equivalence and runtime binding unverified",
+    "target condition is manual offline declaration; no live state/placement or battle-event input",
+    "successful current trait Ability attachment, valid damage source and usable target snapshot are reference conditions, not observed facts",
+    "full cast/window/cycle and actual hit/sample/end clocks remain None; old output times are existing previews",
+    "existing decimal parameter arithmetic, not bitexact singleprecision→FP/rounding replica",
+    "separate relic/reference packets not multiplied; combat-only triggers not restored"
+  ],
+  "files": [
+    "research/p2-mei-module-current/catalog-stage-binding.json",
+    "research/p2-mei-module-current/character-prefab-binding.json",
+    "research/p2-mei-module-current/equip-prefab-binding.json",
+    "research/p2-mei-module-current/exact-parameters.json",
+    "research/p2-mei-module-current/initial-api-receipt.json",
+    "research/p2-mei-module-current/initial-crosscase-receipt.json",
+    "research/p2-mei-module-current/initial-preparation-failures.json",
+    "research/p2-mei-module-current/initial-window-receipt.json",
+    "research/p2-mei-module-current/native-proof.json",
+    "research/p2-mei-module-current/necessary-api-final.json",
+    "research/p2-mei-module-current/necessary-api.json",
+    "research/p2-mei-module-current/necessary-module-links.json",
+    "research/p2-mei-module-current/necessary-window.json",
+    "research/p2-mei-module-current/receipt.json",
+    "research/p2-mei-module-current/REPORT.md",
+    "research/p2-mei-module-current/selected-metadata.json",
+    "research/p2-mei-module-current/skill-prefab-binding.json",
+    "research/p2-mei-module-current/template-binding.json",
+    "rouge/mei_module_static_reference.py",
+    "rouge/data/mei-module-native-reference.json",
+    "rouge/damage.py",
+    "rouge/operator_options.py",
+    "rouge/app.py",
+    "rouge/reporting.py",
+    "rouge/module_source_reference.py",
+    "tests/test_mei_module_static_reference.py",
+    "tests/test_mei_module_static_reference_window.py",
+    "tests/test_mei_airborne_module_reference.py"
+  ],
+  "test_selectors": [
+    "tests.test_mei_module_static_reference",
+    "tests.test_mei_airborne_module_reference",
+    "tests.test_mei_s1_reference",
+    "tests.test_selected_module_source_reference",
+    "tests.test_mechanist_module_reference_current",
+    "tests.test_mei_module_static_reference_window",
+    "tests.test_mechanist_module_reference_window"
+  ],
+  "patch_sha256": "af1518504d0f600a3de00cfcb280c811775bfe9dda71ca636520279096fd56cf",
+  "patch_bytes": 6588832,
+  "root_integration_scope": "Source-supported offline function; real runtime/clock/hotfix is not inferred from temporary Qt checks.",
+  "root_native_window": "Existing original test window remains available; temporary MainWindow tests validate new controls without writing original state. Updated visible original window is checked at the next grouped UI/full closeout.",
+  "section": 217,
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-12T20:23:43.359402+08:00",
+  "branch": "codex/p2-development",
+  "validation": {
+    "tests_run": 71,
+    "passed": 71,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "output": "verification/section-217/tests.txt"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 230
+}

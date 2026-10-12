@@ -328,6 +328,8 @@ def _evaluate_damage_once(prepared,wine_phase=None) -> dict:
     finish_duration_references(scenario,result)
     from .mechanist_module_reference import finish as finish_mechanist_module_reference
     finish_mechanist_module_reference(scenario,result)
+    from .mei_module_static_reference import finish as finish_mei_module_reference
+    finish_mei_module_reference(scenario,result)
     from .reporting import build_report
     result['report']=build_report(scenario,result)
     # Validate the processed neural scenario after preserving legacy errors.

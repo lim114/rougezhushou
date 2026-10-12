@@ -44,7 +44,7 @@ def _candidate_qualification(candidate, training, module_gate):
 def _existing_coverage(result, sections):
     """Return string links only; preserve every existing specialized object."""
     section_ids = {
-        'talents', 'summons', 'mei_airborne_module', 'drone_trait',
+        'talents', 'summons', 'mei_airborne_module', 'mei_module_static_reference', 'drone_trait',
         'drone_aura', 'drone_arrival', 'gnosis_isw_a', 'mizuki_amb_y',
         'haruka_healing', 'wisdel_summon_qualification',
     }
@@ -55,7 +55,7 @@ def _existing_coverage(result, sections):
     ]
     native_links = [
         '/' + key for key in (
-            'mei_airborne_module_reference', 'drone_trait_reference',
+            'mei_airborne_module_reference', 'mei_module_static_reference', 'drone_trait_reference',
             'drone_lifecycle_reference', 'gnosis_isw_a_reference',
             'mizuki_amb_y_reference', 'haruka_healing_reference',
             'wisdel_summon_qualification_reference', 'token_duration_references',

@@ -1,0 +1,95 @@
+{
+  "scope": "explicit current native Mei MAR-X packet conditions",
+  "physical_validation": {
+    "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+    "methods": 52,
+    "unique_instructions": 7514,
+    "all_instruction_bytes_match": true,
+    "limits": []
+  },
+  "asset_validation": [
+    {
+      "source": "battle/prefabs/[uc]equips.ab",
+      "sha256": "6f15ab7b956b76e00ca88b95ff9f18b4ba53ee48510fab563915d7d1a91e24ea",
+      "bytes": 730733,
+      "matches_current_manifest": true
+    },
+    {
+      "source": "charpack/char_133_mm.ab",
+      "sha256": "36538b9d52bbae869c5541ef804299bbc4e5567b498170f41f4c5f22ba47a265",
+      "bytes": 21648,
+      "matches_current_manifest": true
+    },
+    {
+      "source": "battle/prefabs/[uc]skills.ab",
+      "sha256": "14306a31b1856f61b25812a69a2a057b7c4634561fb2c2bccc42fb37ee41a27e",
+      "bytes": 1343313,
+      "matches_current_manifest": true
+    },
+    {
+      "source": "config/buff_template_holder.ab",
+      "sha256": "12419ad8d1ea9f670cca214e525240c691cdf3796b82acc8050698d66c202a37",
+      "bytes": 2022247,
+      "matches_current_manifest": true
+    }
+  ],
+  "base_manifest_version": "26-09-13-15-28-10-30688348",
+  "monoscripts_physical_sha256": "02266c5aff4a6d7b6e08db5b70acd76cbaf8dc14818bdeaa0c94af04a25efcce",
+  "monoscripts_current_physical_hash_matches": true,
+  "trait_data_binding": "_ConvertInternal 77906 at0x180abdc18 passes BattleCharacterData.traitData+0x118 byref to AddEquipTraitData89574; selected equip trait blackboard retained; _AssignData76054 passes trait data to _AssignTrait76064; Blackboard ctor from TraitData.blackboard+0x20 -> Ability.SetData.",
+  "trait_ability_binding": "_PreprocessEquip76060 -> _EquipProcessTrait76067 -> AddTraitPrefab89575 -> _DoAddTrait89576 -> typed BattleFactory.AttachEquipIfNot71630 returns Ability; current equip prefab has one PassiveBuffAbility; stored m_traitAbility+0x4d8; _AssignTrait76064 SetData; OnBorn76027 at0x180a2d511/545/55b reads same field and calls Ability.Attach(owner).",
+  "trait_source_boundary": "typed factory signature verified; unspecified generic prefab-pool/GetComponent internals not assigned invented symbols; successful returned current prefab/ability and source valid required.",
+  "packet_binding": "current normal mode0 -1074202291831238505, S1 replacement6997003709392759035, S2 mode1 1461104044418732183 are MeleeAttack. AbstractBasicAttack.DoSetData90309 at0x180e9ac63 reads vslot112/offset0x840 damageType+0x210, then vslot106/offset0x7e0 CreateDamageNode91791; wrapper0x180eff4b8 invokes vslot107/offset0x7f0 inherited NewDamageNode91792 -> ApplyDamage. Current virtual-pair base0x140 cross-checks three separate slot/offset mappings. Event14 source owner valid chain reused and freshly verified.",
+  "condition_binding": "IfTarget99327 GetActionTarget(TARGET) reads target.get_changeableMotionMode66374; motionMaskFLY_ONLY=2; dynamic FLY=1. Levitate/groundBound presence sequences can override raw motion; no timestamp or runtime state inferred.",
+  "damage_binding": "airforce_enhance event14 IfTarget then AtkScaleUp(overwritefalse,default1,atk_scale key); ActionUtil CheckExecute gates next node by prior check; MergeScale multiplicative -> AttackInfo.GetFinalAtk -> physical defense/floor then covered final factors.",
+  "source_event": "ON_CALCULATE_DAMAGE=14",
+  "stages": {
+    "1": "mm_equip_1_1_p1",
+    "2": "mm_equip_1_2_p1",
+    "3": "mm_equip_1_3_p1"
+  },
+  "no_skill_indices_gate": true,
+  "module_multiplier": 1.1,
+  "module_unlock": {
+    "elite": 2,
+    "level": 40
+  },
+  "current_hotfix_equivalence_verified": false,
+  "runtime_binding_verified": false,
+  "actual_current_motion_mode": null,
+  "actual_attachment": null,
+  "actual_source_valid": null,
+  "actual_attack_sample_seconds": null,
+  "actual_damage_total": null,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_files_read": false,
+  "public_targeted_sources": [
+    "https://prts.wiki/w/May",
+    "https://prts.wiki/w/异常效果图鉴/浮空",
+    "https://arknights.wiki.gg/wiki/May"
+  ],
+  "public_source_role": "corroboration of module110% and aerial/levitate descriptions; exact static binding and composition use original assets/native files.",
+  "remaining_unknown": [
+    "current hotfix equivalence",
+    "actual current motion/levitate/groundBound",
+    "actual ability attachment and source validity",
+    "actual hit/collision/sample time",
+    "full cast/window/cycle damage and rotation"
+  ],
+  "preparation_failures": [
+    {
+      "phase": "targeted extraction invocation",
+      "cause": "PowerShell expanded unquoted $$ method names; selected method assertion failed before file extraction",
+      "repair": "exact single quoted native method names",
+      "numeric_model_changed": false
+    },
+    {
+      "phase": "public snapshot",
+      "cause": "copying all tracked research trees exceeded Windows path length",
+      "repair": "copy tracked public application/tests/scripts only; initial partial cache retained",
+      "private_files_copied": false
+    }
+  ]
+}

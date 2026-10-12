@@ -1,0 +1,202 @@
+[
+  {
+    "index": 71630,
+    "type": "Torappu.Battle.BattleFactory",
+    "name": "AttachEquipIfNot",
+    "flags": "0x86",
+    "return": "Torappu.Battle.Ability",
+    "params": [
+      {
+        "name": "equipResKey",
+        "token": "0x80114fe",
+        "type": "System.String"
+      },
+      {
+        "name": "parent",
+        "token": "0x80114ff",
+        "type": "UnityEngine.Transform"
+      },
+      {
+        "name": "equipKey",
+        "token": "0x8011500",
+        "type": "System.String"
+      },
+      {
+        "name": "equipOriginName",
+        "token": "0x8011501",
+        "type": "System.String"
+      }
+    ]
+  },
+  {
+    "index": 89575,
+    "type": "Torappu.Battle.UniEquip.UniEquipUtil",
+    "name": "AddTraitPrefab",
+    "flags": "0x96",
+    "return": "Torappu.Battle.Ability",
+    "params": [
+      {
+        "name": "equips",
+        "token": "0x8014f39",
+        "type": "System.Collections.Generic.IList`1<Torappu.Battle.UniEquip.UniEquip>"
+      },
+      {
+        "name": "level",
+        "token": "0x8014f3a",
+        "type": "System.Int32"
+      },
+      {
+        "name": "phase",
+        "token": "0x8014f3b",
+        "type": "Torappu.EvolvePhase"
+      },
+      {
+        "name": "potential",
+        "token": "0x8014f3c",
+        "type": "System.Int32"
+      },
+      {
+        "name": "parent",
+        "token": "0x8014f3d",
+        "type": "UnityEngine.Transform"
+      },
+      {
+        "name": "onEquipProcessed",
+        "token": "0x8014f3e",
+        "type": "System.Action`2<System.String,UnityEngine.GameObject>"
+      }
+    ]
+  },
+  {
+    "index": 89576,
+    "type": "Torappu.Battle.UniEquip.UniEquipUtil",
+    "name": "_DoAddTrait",
+    "flags": "0x91",
+    "return": "System.Boolean",
+    "params": [
+      {
+        "name": "resKey",
+        "token": "0x8014f3f",
+        "type": "System.String"
+      },
+      {
+        "name": "parent",
+        "token": "0x8014f40",
+        "type": "UnityEngine.Transform"
+      },
+      {
+        "name": "newTrait",
+        "token": "0x8014f41",
+        "type": "Torappu.Battle.Ability"
+      },
+      {
+        "name": "equipOriginName",
+        "token": "0x8014f42",
+        "type": "System.String"
+      }
+    ]
+  },
+  {
+    "index": 76064,
+    "type": "Torappu.Battle.Character",
+    "name": "_AssignTrait",
+    "flags": "0x81",
+    "return": "System.Void",
+    "params": [
+      {
+        "name": "traitData",
+        "token": "0x8012425",
+        "type": "Torappu.CharacterData+TraitData"
+      }
+    ]
+  },
+  {
+    "index": 76067,
+    "type": "Torappu.Battle.Character",
+    "name": "_EquipProcessTrait",
+    "flags": "0x81",
+    "return": "System.Void",
+    "params": []
+  },
+  {
+    "index": 76071,
+    "type": "Torappu.Battle.Character",
+    "name": "OnEquipProcessed",
+    "flags": "0x81",
+    "return": "System.Void",
+    "params": [
+      {
+        "name": "equipOriginKey",
+        "token": "0x801242a",
+        "type": "System.String"
+      },
+      {
+        "name": "equip",
+        "token": "0x801242b",
+        "type": "UnityEngine.GameObject"
+      }
+    ]
+  },
+  {
+    "index": 99327,
+    "type": "Torappu.Battle.Action.Nodes+IfTarget",
+    "name": "Execute",
+    "flags": "0xc6",
+    "return": "System.Boolean",
+    "params": [
+      {
+        "name": "blackboard",
+        "token": "0x8016ede",
+        "type": "Torappu.Blackboard"
+      },
+      {
+        "name": "sourceType",
+        "token": "0x8016edf",
+        "type": "Torappu.Battle.Action.ActionNode+SourceType"
+      },
+      {
+        "name": "snapshot",
+        "token": "0x8016ee0",
+        "type": "Torappu.Battle.Context+Snapshot"
+      }
+    ]
+  },
+  {
+    "index": 90353,
+    "type": "Torappu.Battle.Abilities.MeleeAttack",
+    "name": "DoSetData",
+    "flags": "0xc4",
+    "return": "System.Void",
+    "params": [
+      {
+        "name": "owner",
+        "token": "0x80151d0",
+        "type": "Torappu.Battle.Entity"
+      },
+      {
+        "name": "options",
+        "token": "0x80151d1",
+        "type": "Torappu.Battle.Ability+Options"
+      }
+    ]
+  },
+  {
+    "index": 90309,
+    "type": "Torappu.Battle.Abilities.AbstractBasicAttack",
+    "name": "DoSetData",
+    "flags": "0xc4",
+    "return": "System.Void",
+    "params": [
+      {
+        "name": "owner",
+        "token": "0x80151b8",
+        "type": "Torappu.Battle.Entity"
+      },
+      {
+        "name": "options",
+        "token": "0x80151b9",
+        "type": "Torappu.Battle.Ability+Options"
+      }
+    ]
+  }
+]

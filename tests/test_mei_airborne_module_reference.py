@@ -64,7 +64,7 @@ class MeiAirborneModuleReferenceTests(unittest.TestCase):
                 self.assertEqual(result['complete_definition'],
                                  'complete 仅指当前局外计算范围内的已支持部分；资料栏的战斗触发效果未计入，也不表示完整实战模拟。')
 
-    def test_report_discloses_unused_parameter_and_unknown_composition(self):
+    def test_report_discloses_unused_parameter_static_proof_and_unknown_runtime(self):
         result = calculate_damage(scenario(skill=2, module_level=3))
         section = next(s for s in result['report']['sections'] if s['id'] == 'mei_airborne_module')
         metrics = {m['key']: m['value'] for m in section['metrics']}
@@ -74,7 +74,8 @@ class MeiAirborneModuleReferenceTests(unittest.TestCase):
         text = format_report(result)
         self.assertIn('本次未确认目标是否为空中单位', text)
         self.assertIn('110%参数未计入当前伤害数值', text)
-        self.assertIn('组合层尚未核验', text)
+        self.assertIn('防御前组合层已核验', text)
+        self.assertIn('当前热更新、实际附着与空中条件未知', text)
         self.assertIn(result['complete_definition'], text)
         self.assertFalse(result['timing']['complete'])
 

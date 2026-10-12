@@ -548,6 +548,11 @@ def build_report(scenario,result):
             metric('duration','部署后持续参数',reference['duration_seconds'],'秒')],notes))
     mei_module=result.get('mei_airborne_module_reference')
     if mei_module:
+        mei_static=result.get('mei_module_static_reference')
+        module_notes=(mei_static['notes'] if mei_static else [
+             '仅列当前已解锁新手侦探礼包的原表条件参数；本次未确认目标是否为空中单位。',
+             '封存版本的原生特性附着路径和防御前组合层已核验；当前热更新、实际附着与空中条件未知，110%参数未计入当前伤害数值。',
+             '当前伤害与攻击时钟保留默认预览；显式选择静态条件参考后才采用所声明条件。'])
         sections.append(section('mei_airborne_module','梅 MAR-X · 空中条件参数参考',[
             metric('unlock_elite','模组解锁精英阶段',mei_module['unlock_elite']),
             metric('unlock_level','模组解锁等级',mei_module['unlock_level']),
@@ -556,10 +561,27 @@ def build_report(scenario,result):
             metric('target_airborne','当前目标空中条件',mei_module['actual_target_is_airborne']),
             metric('conditional_damage','该特性实际条件伤害',mei_module['actual_conditional_damage'])],
             [readable_description(mei_module['trait_description'],{'atk_scale':mei_module['attack_scale_parameter']}),
-             '仅列当前已解锁新手侦探礼包的原表条件参数；本次未确认目标是否为空中单位。',
-             '空中条件、真实模组附着以及与技能或其他加成的组合层尚未核验；110%参数未计入当前伤害数值。',
-             '现有伤害、攻击时钟与培养数值保持；本参考不表示该条件模组机制已完整覆盖。',
+             *module_notes,
              result['complete_definition']]))
+        if mei_static:
+            rows=[metric('motion_declaration','局外声明的当前 FLY_ONLY 条件',mei_static['target_motion_declaration'])]
+            for index,packet in enumerate(mei_static['packets']):
+                key='packet_'+str(index)+'_'
+                rows.extend([metric(key+'attack',packet['name']+' · 稳定攻击参考',packet['source_attack_reference']),
+                             metric(key+'skill_scale',packet['name']+' · 原包倍率',packet['skill_attack_scale'],'倍'),
+                             metric(key+'module_scale',packet['name']+' · 模组包倍率',packet['module_attack_scale'],'倍'),
+                             metric(key+'raw',packet['name']+' · 减防前条件量',packet['selected_raw_packet']),
+                             metric(key+'damage',packet['name']+' · 单包条件伤害',packet['per_hit_reference'])])
+                if packet['modeled_or_declared_count'] is not None:
+                    rows.extend([metric(key+'count',packet['name']+' · 既有预览次数',packet['modeled_or_declared_count'],'次'),
+                                 metric(key+'subtotal',packet['name']+' · 固定条件次数小计',packet['conditional_count_damage_reference'])])
+                if packet['motion_unknown_candidates']:
+                    rows.extend([metric(key+'not_fly',packet['name']+' · 条件不成立候选',packet['motion_unknown_candidates'][0]),
+                                 metric(key+'fly',packet['name']+' · 条件成立候选',packet['motion_unknown_candidates'][1])])
+            rows.extend([metric('static_subtotal','静态条件次数小计',mei_static['conditional_count_damage_reference']),
+                         metric('actual_total','完整实际技能伤害',None),metric('actual_motion','目标实际行动方式',None),
+                         metric('actual_hit','实际伤害发生时刻',None,'秒')])
+            sections.append(section('mei_module_static_reference','梅 MAR-X · 明确选择的静态单包条件',rows,mei_static['notes']))
     mode=skill.get('mode','ammo' if source['duration_type']=='AMMO' else 'instant' if source['duration']<=0 else 'timed')
     sections.append(section('timing','技能时序',[
         metric('initial','预计初动',skill['initial_seconds'],'秒'),
