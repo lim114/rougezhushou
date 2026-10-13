@@ -15,6 +15,7 @@ from .stage_context import stage_context_text
 from .duel_reward_planning import is_duel_stage
 from .duel_reward_view import DuelRewardPanel
 from .scrap_exchange_view import ScrapExchangePanel
+from .seed_cultivation_view import SeedCultivationPanel
 
 KINDS={'event':'事件','battle':'战斗资料','function':'功能节点','original':'未归类原文','map':'本图节点'}
 QUALIFICATIONS={'matched':'已列条件相符','unknown':'资格未确认','excluded':'已列条件不符'}
@@ -277,6 +278,7 @@ class NodeCatalogPanel(QWidget):
         self.destination_window=None;self.destination_origin_key=None
         self.duel_reward_window=None;self.duel_reward_origin_key=None
         self.exchange_window=None;self.exchange_origin_key=None
+        self.seed_window=None;self.seed_origin_key=None
         layout=QVBoxLayout(self)
         self.context_label=QLabel('公开目录以自然入口核对已列条件；特殊事件原文仍保留，不代表当前可进入，不提供生成概率。')
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
@@ -309,6 +311,8 @@ class NodeCatalogPanel(QWidget):
         self.duel_reward_button.hide();self.duel_reward_button.clicked.connect(self.open_duel_rewards)
         self.exchange_button=QPushButton('比较提供零件与交换候选');rl.addWidget(self.exchange_button)
         self.exchange_button.hide();self.exchange_button.clicked.connect(self.open_scrap_exchange)
+        self.seed_button=QPushButton('核对种子培育与下次探索奖励');rl.addWidget(self.seed_button)
+        self.seed_button.hide();self.seed_button.clicked.connect(self.open_seed_cultivation)
         self.map_location=QComboBox();self.map_location.setAccessibleName('该内容对应地图节点');rl.addWidget(self.map_location)
         self.map_jump=QPushButton('在地图预览定位节点');self.map_jump.setEnabled(False);rl.addWidget(self.map_jump)
         self.map_contents=QPushButton('查看此节点事件与作战');self.map_contents.setEnabled(False);rl.addWidget(self.map_contents)
@@ -523,6 +527,9 @@ class NodeCatalogPanel(QWidget):
         self.exchange_button.setVisible(exchange)
         if exchange and self.exchange_window and self.exchange_origin_key==key:
             self.exchange_window.set_context(self._event_context(entry['record']))
+        seed=bool(entry and entry['kind']=='function' and entry['record'].get('node_type')=='秘境行商')
+        self.seed_button.setVisible(seed)
+        if seed and self.seed_window and self.seed_origin_key==key:self.seed_window.set_context(self._event_context())
         if not entry:text='没有符合筛选的资料。不能把资料缺失视为不可能出现。'
         elif entry['kind']=='event':
             q=entry['qualification'];text=event_details_text(entry['record']['id'],self._event_context(entry['record']))
@@ -631,6 +638,23 @@ class NodeCatalogPanel(QWidget):
         self.destination_origin_key=key
         self.destination_window.set_reference(choice_id,context)
         self.destination_window.show();self.destination_window.raise_();self.destination_window.activateWindow()
+
+    def open_seed_cultivation(self):
+        key=self.list.selected_key();entry=next((e for e in self.entries if e['key']==key),None)
+        if not entry or entry['kind']!='function' or entry['record'].get('node_type')!='秘境行商':return
+        if self.seed_window is None:
+            self.seed_window=SeedCultivationPanel(self)
+            self.seed_window.originalChoiceSelected.connect(self.show_seed_choice_reference)
+        self.seed_origin_key=key;self.seed_window.set_context(self._event_context())
+        self.seed_window.show();self.seed_window.raise_()
+
+    def show_seed_choice_reference(self,choice_id):
+        if self.destination_window is None:
+            self.destination_window=OriginalDestinationPanel(self)
+            self.destination_window.stageSelected.connect(self.stageSelected.emit)
+        self.destination_origin_key='seed:'+str(self.seed_origin_key)
+        self.destination_window.set_reference(choice_id,self.seed_window.context if self.seed_window else {})
+        self.destination_window.show();self.destination_window.raise_()
 
     def open_scrap_exchange(self):
         key=self.list.selected_key();entry=next((e for e in self.entries if e['key']==key),None)
