@@ -157,6 +157,9 @@ class MainWindow(QMainWindow):
         from .timing_calibration_view import TimingCalibrationPanel
         self.timing_calibration=TimingCalibrationPanel()
         tabs.addTab(self.timing_calibration,'时刻校准')
+        from .relic_order_precision_view import RelicOrderPrecisionPanel
+        self.relic_order_precision=RelicOrderPrecisionPanel()
+        tabs.addTab(self.relic_order_precision,'藏品处理精度')
         from .technology_view import TechnologyReferencePanel
         self.technology_reference=TechnologyReferencePanel(account_path=Path(OPERATOR_STATE).with_name('technology-state.json'))
         tabs.addTab(self.technology_reference,'长期科技')
@@ -1701,6 +1704,7 @@ class MainWindow(QMainWindow):
             if hasattr(self,'paired_calibration'):self.paired_calibration.set_scenario(scenario)
             if hasattr(self,'attack_state_sequence'):self.attack_state_sequence.set_context(scenario)
             if hasattr(self,'timing_calibration'):self.timing_calibration.set_scenario(scenario)
+            if hasattr(self,'relic_order_precision'):self.relic_order_precision.set_context(scenario)
             self.charge_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==3)
             self.shield_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==2)
             from .healing_budget import healing_sources

@@ -1,0 +1,73 @@
+{
+  "section": 248,
+  "title": "藏品明确处理顺序的单精度逐步舍入与离散结果诊断",
+  "remaining_item": "P2逐路径single精度、藏品叠加顺序及现有合成数值差",
+  "new_capability": "六物理/法伤藏品明示处理次序与偏序最多720排列，每个addss/subss步骤独立舍入、位型与现有source_factor差、联合家族离散结果统计；主窗口精度页保留独立序列",
+  "limitations": [
+    "明示处理顺序不是实际获取顺序，原件未证获取到处理列表绑定",
+    "IEEE nearest-even数学参考，实际MXCSR/最终伤害包/当前运行处理顺序未知",
+    "枚举数量不是概率；默认伤害引擎不据参考改写",
+    "资料原生single路径已证不代表整个最终总量或游戏实测已证"
+  ],
+  "files": [
+    "research/p2-direct-continuation/RELIC_ORDER_REPORT.md",
+    "research/p2-direct-continuation/relic-order-public-vectors.json",
+    "research/p2-direct-continuation/relic-order-source-audit.json",
+    "research/p2-direct-continuation/relic-order-validation.json",
+    "rouge/app.py",
+    "rouge/data/relic-order-precision-source.json",
+    "rouge/relic_order_precision.py",
+    "rouge/relic_order_precision_view.py",
+    "scripts/build_relic_order_precision_source.py",
+    "scripts/verify_cloud.py",
+    "tests/test_relic_order_precision.py",
+    "verification/section-248/tests.txt",
+    "verification/section-248/validation.json"
+  ],
+  "source_evidence": [
+    "同版214 Preprocess/GlobalBuff/Strictly逐指令及完整prefab身份：movss/addss/subss/store每一步single",
+    "明确old/new blackboard相加减一与处理列表索引dispatch，未伪称OnStack/获取绑定"
+  ],
+  "acceptance": [
+    "27新顺序诊断/真实Qt与现有合成相关检查全过",
+    "三法伤项6排列两种位型，六项720物理/法伤联合结果及偏序约束全枚举，sourceguard不足返回未知而非猜值"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T13:36:31.690539+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "463f4df6b39eaf96290a2c161b5f1089f5f3adf8",
+  "required_raw_sha256": {
+    "research/p2-direct-continuation/RELIC_ORDER_REPORT.md": "824f5b7b72b4c8dbc9c5d0a0f977181d6e8cc4184d1f4e0effb2285f1a95e938",
+    "research/p2-direct-continuation/relic-order-public-vectors.json": "14aa8b1a0c3338ee3f5ee9ec9340ac5426a01f80e83639ab505fc24afca1b4b0",
+    "research/p2-direct-continuation/relic-order-source-audit.json": "e3f8cdc492df33310dd0e434ec1d95319ceaf8bb998b4c3b299aec46c1765142",
+    "research/p2-direct-continuation/relic-order-validation.json": "c30591542177a39d559e3cf7942aada2db03bce2f93a81c5c81bfad66f1f6e16",
+    "rouge/app.py": "67cdb25677101444308672124c42d4259151dd09e0e653cd7f2a2d5938d9b639",
+    "rouge/data/relic-order-precision-source.json": "c31555d9f88a73a9bcad0bfcf0a69940b2b2109511e694ab6c7c72c31e78613d",
+    "rouge/relic_order_precision.py": "4823e4c286f744f7a95f146e4edf8bccd610056e35c36e0d8cdce4f45e3de060",
+    "rouge/relic_order_precision_view.py": "a7522f9ffdd98204ba9be90b4d203c685a345f9daa20905d9ee2c546ac4e3d7a",
+    "scripts/build_relic_order_precision_source.py": "918e9da1dd4e0e91a56dbe6aa1f778ce57af8e5f473934559154752f39849abd",
+    "scripts/verify_cloud.py": "1b93b32782f612880fb969f318ee66912b99e97f6be297f3cbc695e92f768d6b",
+    "tests/test_relic_order_precision.py": "5fe50488d1d7bfa5505f2c003ba8cae79e036c4140d2037094cf48cb57ce9832",
+    "verification/section-248/tests.txt": "629ccd883c6d473178df4e40d4c82d912b705b0ec2ee17ea41a43259e533e3cf",
+    "verification/section-248/validation.json": "0a09d513f20fae09ce2380787165adc07485fba508f9daf1c2d3799589751b55"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_relic_order_precision",
+      "tests.test_relic_damage_composition"
+    ],
+    "tests_run": 27,
+    "passed": 27,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 260
+}

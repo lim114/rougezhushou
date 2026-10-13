@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "source_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+  "original_table_sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+  "native_base_version": "26-09-13-15-28-10-30688348",
+  "game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "source_evidence": "research/p2-relic-damage-composition-current/receipt.json",
+  "records": [
+    {
+      "relic_id": "rogue_6_relic_legacy_5",
+      "name": "锈蚀刀片",
+      "source_buff_key": "global_buff_stack_base_one",
+      "prefab_group": "enemy_damage_scale[phy]",
+      "damage_family": "physical",
+      "damage_mask": "PHYSICAL",
+      "parameter": 1.15,
+      "template_key": "damage_scale[phy]",
+      "raw_selector": "selected.rogue_6_relic_legacy_5.buffs[0].blackboard.damage_scale"
+    },
+    {
+      "relic_id": "rogue_6_relic_legacy_6",
+      "name": "赶车夫的长鞭",
+      "source_buff_key": "global_buff_stack_base_one",
+      "prefab_group": "enemy_damage_scale[phy]",
+      "damage_family": "physical",
+      "damage_mask": "PHYSICAL",
+      "parameter": 1.25,
+      "template_key": "damage_scale[phy]",
+      "raw_selector": "selected.rogue_6_relic_legacy_6.buffs[0].blackboard.damage_scale"
+    },
+    {
+      "relic_id": "rogue_6_relic_legacy_7",
+      "name": "“复仇者”",
+      "source_buff_key": "global_buff_stack_base_one",
+      "prefab_group": "enemy_damage_scale[phy]",
+      "damage_family": "physical",
+      "damage_mask": "PHYSICAL",
+      "parameter": 1.35,
+      "template_key": "damage_scale[phy]",
+      "raw_selector": "selected.rogue_6_relic_legacy_7.buffs[0].blackboard.damage_scale"
+    },
+    {
+      "relic_id": "rogue_6_relic_legacy_8",
+      "name": "制式防暴用具",
+      "source_buff_key": "global_buff_stack_base_one",
+      "prefab_group": "enemy_damage_scale[mag]",
+      "damage_family": "magic",
+      "damage_mask": "MAGICAL",
+      "parameter": 1.2,
+      "template_key": "damage_scale[mag]",
+      "raw_selector": "selected.rogue_6_relic_legacy_8.buffs[0].blackboard.damage_scale"
+    },
+    {
+      "relic_id": "rogue_6_relic_legacy_9",
+      "name": "皇帝的收藏",
+      "source_buff_key": "global_buff_stack_base_one",
+      "prefab_group": "enemy_damage_scale[mag]",
+      "damage_family": "magic",
+      "damage_mask": "MAGICAL",
+      "parameter": 1.3,
+      "template_key": "damage_scale[mag]",
+      "raw_selector": "selected.rogue_6_relic_legacy_9.buffs[0].blackboard.damage_scale"
+    },
+    {
+      "relic_id": "rogue_6_relic_legacy_10",
+      "name": "“璀璨悲泣”",
+      "source_buff_key": "global_buff_stack_base_one",
+      "prefab_group": "enemy_damage_scale[mag]",
+      "damage_family": "magic",
+      "damage_mask": "MAGICAL",
+      "parameter": 1.4,
+      "template_key": "damage_scale[mag]",
+      "raw_selector": "selected.rogue_6_relic_legacy_10.buffs[0].blackboard.damage_scale"
+    }
+  ],
+  "processing_rule": "same exact prefabGroup only: float32(float32(old + incoming) - float32(1)); first group record is copied, not merged with implicit1",
+  "runtime_acquisition_to_processing_order_verified": false,
+  "runtime_binding_verified": false,
+  "current_hotfix_equivalence_proven": false,
+  "source_artifact_sha256": {
+    "fixed-raw-sources.json": "6c56cfbf988995a5f46adb5898bffb13d8316b6d46ccda8ecd35a161a7bac3b7",
+    "prefab-binding.json": "cbdc7ff6d8ad3c7128daeaf8abee1edb2aa1674a5c4c8d8b7a997a2ed791eb98",
+    "current-templates.json": "d2f2f49d282fe173f31858781347fec9f8a37155507c1a211be3b2c52b23af89",
+    "native-proof.json": "4987e3ce81466a89bdd6cdfe627f8f3e85be28e10e93de5b98d82ea7a3a6ea1e",
+    "selected-metadata.json": "8e892fcfa4944edf51cfcc847cc3b8ff885cb12dbda609ee7ebe6adce73bd961"
+  }
+}
