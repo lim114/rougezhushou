@@ -257,14 +257,15 @@ class AccountCache:
         text = text.encode('utf-8', errors='backslashreplace').decode('utf-8')
         try:
             self.path.parent.mkdir(exist_ok=True)
-            temporary = self.path.with_suffix('.tmp')
-            temporary.write_text(text, encoding='utf-8')
-            if self._initial_path_missing:
-                from .persistence_install import install_initial_record
-                install_initial_record(temporary, self.path)
-                self._initial_path_missing = False
-            else:
-                temporary.replace(self.path)
+            from .persistence_install import record_save_lock, write_temporary_record
+            with record_save_lock(self.path):
+                temporary = write_temporary_record(self.path, text)
+                if self._initial_path_missing:
+                    from .persistence_install import install_initial_record
+                    install_initial_record(temporary, self.path)
+                    self._initial_path_missing = False
+                else:
+                    temporary.replace(self.path)
         except OSError:
             self.save_issue = '账号档案保存未完成'
             self._protect()

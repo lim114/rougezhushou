@@ -8,6 +8,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 MODULES = (
+    'tests.test_page_ocr_seed_bridge',
+    'tests.test_persistence_temporary_no_clobber_261',
+    'tests.test_restore_public_validation_inputs_261',
+    'tests.test_readable_battle_047_successor',
+    'tests.test_river_reporting_060_successor',
     'tests.test_readable_battle_047_current_guard',
     "tests.test_map_fit_replay",
     "tests.test_persistence_initial_install",

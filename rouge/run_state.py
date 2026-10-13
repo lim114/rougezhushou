@@ -278,14 +278,15 @@ class RunState:
         text=text.encode('utf-8',errors='backslashreplace').decode('utf-8')
         try:
             self.file.parent.mkdir(exist_ok=True)
-            temporary=self.file.with_suffix('.tmp')
-            temporary.write_text(text,encoding='utf-8')
-            if self._initial_path_missing:
-                from .persistence_install import install_initial_record
-                install_initial_record(temporary,self.file)
-                self._initial_path_missing=False
-            else:
-                temporary.replace(self.file)
+            from .persistence_install import record_save_lock, write_temporary_record
+            with record_save_lock(self.file):
+                temporary=write_temporary_record(self.file,text)
+                if self._initial_path_missing:
+                    from .persistence_install import install_initial_record
+                    install_initial_record(temporary,self.file)
+                    self._initial_path_missing=False
+                else:
+                    temporary.replace(self.file)
         except OSError:
             self.save_issue='本局记录保存未完成'
             return False

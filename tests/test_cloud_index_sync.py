@@ -214,3 +214,100 @@ class CloudIndexSyncTests(unittest.TestCase):
         self.assertEqual(result['next_section'],186)
         self.assertEqual(len(result['sections']),1)
         self.assertFalse(result['latest_full_available_checks_passed'])
+
+    def requested_repair_fixture(self, published_section=261):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        cp = json.loads(path.read_text())
+        reference = 'verification/sections/261.json'
+        (self.root/reference).write_text(json.dumps({'section':261,
+            'kind':'user_requested_repair_section', 'user_requested':True,
+            'authorization_quote':'用户明确要求第261节集中修复此前全量问题并最终完整重验。'}))
+        (self.root/'verification/sections/260.json').write_text(json.dumps({
+            'section':260,'kind':'MEANINGFUL_FUNCTIONAL_SECTION'}))
+        cp.update(completed_sections=261,next_section=262,next_full_validation_after=275,
+                  sections=[{'number':261,'verification':reference}])
+        cp['policy'].update(current_user_requested_repair_section=261,
+                            next_full_validation_after=275,new_functional_sections_paused=True)
+        cp['current_batch_commit_policy']['next_full_validation_after']=275
+        cp['current_section_save'].update(section=261,verification=reference,
+                                         scope='current_requested_repair_section')
+        proof = self.root/f'verification/publication/{published_section}.json'
+        commit = self.current_commit if published_section==261 else self.previous_commit
+        proof.write_text(json.dumps({'section':published_section,'passed':True,
+            'branch':'codex/p2-development','commit':commit,'local_HEAD':commit,'remote_HEAD':commit,
+            'remote_branch':'origin/codex/p2-development','push_primary_exit':0}))
+        cp['last_verified_cloud_save'].update(section=published_section,commit=commit,
+            scope='current_requested_repair_section' if published_section==261 else 'previous_functional_section',
+            proof=proof.relative_to(self.root).as_posix(),proof_sha256=hashlib.sha256(proof.read_bytes()).hexdigest())
+        path.write_text(json.dumps(cp))
+        return cp
+
+    def test_user_requested_repair_accepts_exact_authorized_current_and_precommit_publication(self):
+        for saved in (260,261):
+            with self.subTest(saved=saved):
+                self.requested_repair_fixture(saved)
+                update(self.root)
+                index=json.loads((self.root/'CLOUD_INDEX.json').read_text())
+                self.assertEqual((index['completed_sections'],index['next_section']),(261,262))
+                self.assertEqual(index['sections'],[{'number':261,'verification':'verification/sections/261.json'}])
+
+    def test_requested_repair_rejects_missing_stale_or_noninteger_authorization(self):
+        original=self.requested_repair_fixture()
+        for authorization in (None,260,262,True,'261'):
+            with self.subTest(authorization=authorization):
+                cp=copy.deepcopy(original)
+                if authorization is None:cp['policy'].pop('current_user_requested_repair_section')
+                else:cp['policy']['current_user_requested_repair_section']=authorization
+                (self.root/'DEVELOPMENT_CHECKPOINT.json').write_text(json.dumps(cp))
+                self.assert_rejected_without_output_change()
+
+    def test_requested_repair_rejects_wrong_receipt_kind_or_false_user_request(self):
+        self.requested_repair_fixture()
+        receipt=self.root/'verification/sections/261.json'
+        original=json.loads(receipt.read_text())
+        for field,value in (('kind','MEANINGFUL_FUNCTIONAL_SECTION'),('kind','arbitrary'),
+                            ('user_requested',False),('user_requested',1),('user_requested',None)):
+            with self.subTest(field=field,value=value):
+                changed={**original,field:value};receipt.write_text(json.dumps(changed))
+                self.assert_rejected_without_output_change()
+
+    def test_requested_repair_cannot_be_mislabeled_functional_or_arbitrary_scope(self):
+        original=self.requested_repair_fixture()
+        for key in ('current_section_save','last_verified_cloud_save'):
+            for scope in ('current_functional_section','maintenance','previous_requested_repair_section'):
+                with self.subTest(key=key,scope=scope):
+                    cp=copy.deepcopy(original);cp[key]['scope']=scope
+                    (self.root/'DEVELOPMENT_CHECKPOINT.json').write_text(json.dumps(cp))
+                    self.assert_rejected_without_output_change()
+
+    def functional_after_repair_fixture(self):
+        cp=self.requested_repair_fixture()
+        cp['policy'].pop('current_user_requested_repair_section')
+        cp['policy']['new_functional_sections_paused']=False
+        cp.update(completed_sections=262,next_section=263)
+        reference='verification/sections/262.json'
+        (self.root/reference).write_text(json.dumps({'section':262,'kind':'MEANINGFUL_FUNCTIONAL_SECTION'}))
+        cp['sections'].append({'number':262,'verification':reference})
+        cp['current_section_save'].update(section=262,verification=reference,scope='current_functional_section')
+        cp['last_verified_cloud_save']['scope']='previous_requested_repair_section'
+        (self.root/'DEVELOPMENT_CHECKPOINT.json').write_text(json.dumps(cp))
+        return cp
+
+    def test_future_functional_section_accepts_previous_authorized_repair_without_current_repair_policy(self):
+        self.functional_after_repair_fixture()
+        update(self.root)
+        index=json.loads((self.root/'CLOUD_INDEX.json').read_text())
+        self.assertEqual((index['completed_sections'],index['next_section']),(262,263))
+        self.assertEqual(index['sections'][-1],{'number':262,'verification':'verification/sections/262.json'})
+
+    def test_previous_repair_requires_its_receipt_and_cannot_be_claimed_functional(self):
+        cp=self.functional_after_repair_fixture()
+        receipt=self.root/'verification/sections/261.json';original=receipt.read_text()
+        receipt.unlink();self.assert_rejected_without_output_change()
+        receipt.write_text(original)
+        changed=json.loads(original);changed['user_requested']=False;receipt.write_text(json.dumps(changed))
+        self.assert_rejected_without_output_change()
+        receipt.write_text(original)
+        cp['last_verified_cloud_save']['scope']='previous_functional_section'
+        (self.root/'DEVELOPMENT_CHECKPOINT.json').write_text(json.dumps(cp))
+        self.assert_rejected_without_output_change()

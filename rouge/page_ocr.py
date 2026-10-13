@@ -20,6 +20,14 @@ from .dynamic_ocr import bounds, normalize_regions, positive_overlap
 from .recognition_cache import CachedOCR
 
 
+def frame_signature(image):
+    """Bind complete-current coverage to exact input pixels and geometry."""
+    if not isinstance(image, np.ndarray):
+        return None
+    return {'shape': list(image.shape), 'dtype': image.dtype.str,
+            'sha256': hashlib.sha256(np.ascontiguousarray(image).tobytes()).digest().hex()}
+
+
 def _callable_identity(value):
     """Bound method wrapper objects are recreated by every attribute read."""
     if hasattr(value, '__self__') and hasattr(value, '__func__'):
@@ -45,6 +53,17 @@ class PageOCR:
         self._bytes = 0
         self._context = None
         self.metrics = {}
+        self._current_frame = None
+
+    def complete_frame_matches(self, image):
+        """Require pixel equality too; a digest collision is not frame identity."""
+        current = self._current_frame
+        return (isinstance(image, np.ndarray) and current is not None
+                and image.shape == current.shape and image.dtype == current.dtype
+                and np.array_equal(image, current))
+
+    def release_frame_snapshot(self):
+        self._current_frame = None
 
     def _supported(self):
         try:
@@ -102,6 +121,7 @@ class PageOCR:
         return result, elapsed, False
 
     def __call__(self, image, *, regions=None, force_discovery=False, **kwargs):
+        self._current_frame = None
         if kwargs or not self._supported():
             self._cache.clear()
             self._bytes = 0
@@ -112,6 +132,11 @@ class PageOCR:
                             'fallback_reason': 'unsupported_arguments' if kwargs else 'unsupported_provider'}
             engine = self.provider if force_discovery else self.engine
             return engine(image, **kwargs)
+        # Detection and recognition share one immutable current-frame snapshot.
+        # A caller changing its input during inference must not seed another
+        # strategy with that frame's text under different pixels.
+        current = image.copy() if isinstance(image, np.ndarray) else image
+        signature = frame_signature(current)
         p = self.provider
         context = self._configuration()
         if context != self._context:
@@ -123,15 +148,18 @@ class PageOCR:
                         'full_text_coverage': True, 'complete_current_texts': True, 'fallback_reason': None,
                         'detected_boxes': 0, 'page_boxes': 0, 'guard_boxes': 0,
                         'recognized_batches': 0, 'reused_batches': 0,
-                        'recognized_boxes': 0, 'page_first_batches': 0}
-        img = p.load_img(image)
+                        'recognized_boxes': 0, 'page_first_batches': 0,
+                        'frame_signature': signature}
+        img = p.load_img(current)
         raw_h, raw_w = img.shape[:2]
+        self.metrics['raw_frame_size'] = [raw_w, raw_h]
         domain = normalize_regions(regions, (raw_h, raw_w))
         img, ratio_h, ratio_w = p.preprocess(img)
         operations = {'preprocess': {'ratio_h': ratio_h, 'ratio_w': ratio_w}}
         img, operations = p.maybe_add_letterbox(img, operations)
         boxes, det_elapsed = p.auto_text_det(img)
         if boxes is None:
+            self._current_frame = current if isinstance(current, np.ndarray) else None
             return None, None
         crops = p.get_crop_img_list(img, boxes)
         cls_result, cls_elapsed = None, 0.0
@@ -162,8 +190,10 @@ class PageOCR:
             self.metrics['page_first_batches'] += int(any(inside[i] for i in batch))
         self.metrics.update(detected_boxes=len(crops), page_boxes=sum(inside),
                             guard_boxes=len(crops)-sum(inside), cache_bytes=self._bytes)
-        return p.get_final_res(origin, cls_result, rec_result,
-                               det_elapsed, cls_elapsed, rec_elapsed)
+        result = p.get_final_res(origin, cls_result, rec_result,
+                                 det_elapsed, cls_elapsed, rec_elapsed)
+        self._current_frame = current if isinstance(current, np.ndarray) else None
+        return result
 
     def read(self, image, *, regions=None, force_discovery=False):
         return self(image, regions=regions, force_discovery=force_discovery)

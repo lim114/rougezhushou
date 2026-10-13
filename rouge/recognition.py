@@ -165,11 +165,27 @@ class ScreenReader:
         if page_batches:
             raw,_=self._page_ocr.read(image,regions=regions)
             if isinstance(self._frame_ocr,DynamicOCR):
-                # Never seed the legacy dirty-domain reader with another
-                # strategy's retained text. A later unknown page starts fresh.
-                self._frame_ocr.image=None;self._frame_ocr.raw=[]
-                self._frame_ocr.regions=None;self._frame_ocr.age=0
-                self._frame_ocr.metrics=dict(self._page_ocr.metrics)
+                # PageOCR has current full-frame detection and exact original
+                # recognition batches. Preserve that complete baseline when
+                # its pixel/geometry identity still matches this analysis
+                # frame; interpreted page facts are never carried forward.
+                from .page_ocr import frame_signature
+                metrics=self._page_ocr.metrics
+                complete=all(metrics.get(key) is True for key in
+                    ('full_frame_input','full_detection','full_text_coverage','complete_current_texts'))
+                seed_image=image.copy() if complete else None
+                signature=frame_signature(seed_image)
+                geometry=metrics.get('raw_frame_size')==[image.shape[1],image.shape[0]]
+                matches=getattr(self._page_ocr,'complete_frame_matches',None)
+                exact=callable(matches) and matches(seed_image) is True
+                if complete and signature is not None and geometry and exact and metrics.get('frame_signature')==signature:
+                    self._frame_ocr.seed_full_frame(seed_image,raw)
+                else:
+                    self._frame_ocr.image=None;self._frame_ocr.raw=[]
+                    self._frame_ocr.regions=None;self._frame_ocr.age=0
+                self._frame_ocr.metrics=dict(metrics)
+            release=getattr(self._page_ocr,'release_frame_snapshot',None)
+            if callable(release):release()
         elif isinstance(self._frame_ocr,DynamicOCR):
             raw,_=self._frame_ocr(image,regions=regions,seed_from_full=True,
                 force_discovery=force_discovery,guard_outside=regions is not None)

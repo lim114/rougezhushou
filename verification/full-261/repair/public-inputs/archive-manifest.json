@@ -1,0 +1,107 @@
+{
+  "archived_at_UTC": "2026-10-13T10:16:28.489765+00:00",
+  "scope": "exact public evidence copy only; no source or docs changes, no tests rerun",
+  "files": [
+    {
+      "source_path": "work/261-validation/public/fresh-source-indexes.json",
+      "archive_path": "verification/full-261/repair/public-inputs/fresh-source-indexes.json",
+      "sha256": "f58aebc08e3990b8c5baea62417149d49b590b3187553aabe1a3cfaa19369a24",
+      "bytes": 32623,
+      "original_bytes_preserved": true,
+      "role": "original_public_evidence"
+    },
+    {
+      "source_path": "work/261-validation/public/source-indexes-readback.json",
+      "archive_path": "verification/full-261/repair/public-inputs/source-indexes-readback.json",
+      "sha256": "96900b33fa6f75eedefab9f84065b33e0c45ddf54b707144a66fa042870ffe05",
+      "bytes": 32623,
+      "original_bytes_preserved": true,
+      "role": "original_public_evidence"
+    },
+    {
+      "source_path": "work/261-validation/public/verify-only.json",
+      "archive_path": "verification/full-261/repair/public-inputs/verify-only.json",
+      "sha256": "0cbf50a8742ecf53f39b5ceeaf03b89af49fb40ecd5f1436f93bf6fc0bcdf256",
+      "bytes": 32551,
+      "original_bytes_preserved": true,
+      "role": "original_public_evidence"
+    },
+    {
+      "source_path": "work/261-validation/public/original-consumer-tests.log",
+      "archive_path": "verification/full-261/repair/public-inputs/original-consumer-tests.log",
+      "sha256": "dbd34687b30825dc8ac53b347f03f55d17dfff219c3c0417fdad9e3cecda9137",
+      "bytes": 8291,
+      "original_bytes_preserved": true,
+      "role": "original_public_evidence"
+    },
+    {
+      "source_path": "work/261-validation/public/original-consumer-tests.exit",
+      "archive_path": "verification/full-261/repair/public-inputs/original-consumer-tests.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2,
+      "original_bytes_preserved": true,
+      "role": "original_public_evidence"
+    },
+    {
+      "source_path": "work/261-validation/public/necessary-source-index-tests.log",
+      "archive_path": "verification/full-261/repair/public-inputs/necessary-source-index-tests.log",
+      "sha256": "76f3de4b3bbd318d56daceb42a924d727778aae160ef8eb56b8e4f223c6b05ed",
+      "bytes": 1639,
+      "original_bytes_preserved": true,
+      "role": "original_public_evidence"
+    },
+    {
+      "source_path": "work/261-validation/public/necessary-source-index-tests.exit",
+      "archive_path": "verification/full-261/repair/public-inputs/necessary-source-index-tests.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2,
+      "original_bytes_preserved": true,
+      "role": "original_public_evidence"
+    },
+    {
+      "source_path": ".cache/game-data/receipt.json",
+      "archive_path": "verification/full-261/repair/public-inputs/fresh-indexes/game-data-receipt.json",
+      "sha256": "34e8b7106ffedbd502889febbac33a5f0e5a657c83a3e336419ab0e351bd9469",
+      "bytes": 2252,
+      "original_bytes_preserved": true,
+      "role": "fresh_public_source_index_not_historical_receipt"
+    },
+    {
+      "source_path": ".cache/research/battle-039/image-receipt.json",
+      "archive_path": "verification/full-261/repair/public-inputs/fresh-indexes/battle-039-image-receipt.json",
+      "sha256": "cd417f9c5eba9a398e047d3a76828a6c8c40148b3c6fbb42f65c583eab03aa1c",
+      "bytes": 45246,
+      "original_bytes_preserved": true,
+      "role": "fresh_public_source_index_not_historical_receipt"
+    },
+    {
+      "source_path": ".cache/research/timing-048/skeleton-downloads.json",
+      "archive_path": "verification/full-261/repair/public-inputs/fresh-indexes/timing-048-skeleton-downloads.json",
+      "sha256": "6544449eaaca8dd4b9fa994d797db31ff36c64662c6578403f8ae63c5b912d00",
+      "bytes": 48519,
+      "original_bytes_preserved": true,
+      "role": "fresh_public_source_index_not_historical_receipt"
+    },
+    {
+      "source_path": "scripts/restore_public_validation_inputs_261.py",
+      "archive_path": "verification/full-261/repair/public-inputs/executed-tools/restore_public_validation_inputs_261.py",
+      "sha256": "10120c345cc6111a8999b336b2fb4d549a36cb109e71851cfabaa74e0cc62b55",
+      "bytes": 11336,
+      "original_bytes_preserved": true,
+      "role": "restore_tool_snapshot"
+    }
+  ],
+  "source_file_count": 11,
+  "source_total_bytes": 215084,
+  "original_receipt_bodies_preserved": true,
+  "private_inputs_archived": false,
+  "compiled_artifacts_archived": false,
+  "exclusions": [
+    "Raw large source payloads, models, runtime/environment trees, private samples/state, any compiled caches."
+  ],
+  "notes": [
+    "52 original consumer tests and7 new necessary tests retained as exact log/exit files, not rerun.",
+    "Three actual fresh index byte hashes match source-indexes-readback.json. verify-only.json is the earlier prospective build with its own time and hashes; preserved unchanged.",
+    "Verified174 original public sources are represented by readback metadata; raw table/skeleton/image payloads are not copied into this archive."
+  ]
+}

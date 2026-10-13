@@ -1,5 +1,105 @@
 """Install a first record without replacing an entry hidden by metadata APIs."""
 import os
+import errno
+from contextlib import contextmanager
+from pathlib import Path
+import tempfile
+
+
+@contextmanager
+def record_save_lock(destination):
+    """Reject overlapping publishers without entering an existing lock entry.
+
+    The atomic directory claim spans writing, archival and publication. A
+    concurrent or interrupted owner remains a reported IO failure; it is never
+    removed or taken over automatically. Only this call's empty claim is removed.
+    """
+    destination = Path(destination)
+    claim = destination.with_name(destination.name + '.saving')
+    os.mkdir(claim)
+    try:
+        yield
+    finally:
+        os.rmdir(claim)
+
+
+@contextmanager
+def _open_claimed_temporary(path, mode, *args, **kwargs):
+    """Claim the name by hard link and write only our already-open descriptor.
+
+    Wine can follow a dangling host link even with Python's exclusive open.
+    Linking an owned same-directory file refuses that directory entry atomically.
+    Keep the descriptor until writing completes, retaining the diagnostic link
+    on errors and removing only our private anchor after the descriptor closes.
+    """
+    # The anchor itself must never be opened at a pre-existing file entry.
+    # Allocate a fresh directory atomically, then create the owned descriptor
+    # inside that new empty namespace. A random file name alone is insufficient.
+    with tempfile.TemporaryDirectory(prefix='.rouge-record-', dir=path.parent) as folder:
+        descriptor, anchor = tempfile.mkstemp(prefix='record-', dir=folder)
+        try:
+            try:
+                os.link(anchor, path)
+            except FileExistsError as error:
+                raise FileExistsError(error.errno, error.strerror, os.fspath(path)) from error
+            with os.fdopen(descriptor, mode, *args, **kwargs) as stream:
+                descriptor = None
+                yield stream
+        finally:
+            if descriptor is not None:
+                os.close(descriptor)
+
+
+class _ExclusiveTemporaryPath(type(Path())):
+    """Keep Path's text encoding/newlines, but create temporary bytes once.
+
+    Opening a pre-existing .tmp with mode='w' could follow a link or truncate
+    retained failure evidence. Hard-link claiming also handles directory entries
+    hidden from the compatibility metadata and exclusive-open APIs.
+    """
+
+    def open(self, mode='r', *args, **kwargs):
+        if mode.startswith('w'):
+            return _open_claimed_temporary(self, mode, *args, **kwargs)
+        return super().open(mode, *args, **kwargs)
+
+
+def write_temporary_record(destination, text):
+    """Write complete new bytes while retaining every older temporary entry.
+
+    Keep the usual diagnostic name when it can be exclusively claimed. An
+    actual atomic name conflict uses a separate exclusive file, so an older
+    interrupted write cannot block a user's explicit new run or be truncated.
+    Other IO failures retain their original failure/stop contract. The caller
+    must hold record_save_lock through publication to protect an in-flight name.
+    """
+    import uuid
+    destination = Path(destination)
+    temporary = _ExclusiveTemporaryPath(destination).with_suffix('.tmp')
+    if temporary != destination:
+        try:
+            temporary.write_text(text, encoding='utf-8')
+            return temporary
+        except FileExistsError as error:
+            if (error.errno != errno.EEXIST or error.filename is None
+                    or Path(error.filename) != temporary or temporary.is_dir()):
+                raise
+            # Consume the usual temporary name without consuming its bytes.
+            # Known entries move atomically to a no-replace retained original;
+            # the next hard-link claim still refuses a racing replacement.
+            try:
+                archive_unreadable_record(temporary)
+            except FileNotFoundError:
+                # Wine may hide a dangling host link from lstat. Do not guess
+                # its kind or remove it; use an independently claimed name.
+                pass
+            else:
+                temporary.write_text(text, encoding='utf-8')
+                return temporary
+    temporary = _ExclusiveTemporaryPath(destination.with_name(
+        destination.name + '.' + uuid.uuid4().hex + '.tmp'))
+    temporary.write_text(text, encoding='utf-8')
+    return temporary
 
 
 def install_initial_record(temporary, destination):

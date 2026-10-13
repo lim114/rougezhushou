@@ -13,6 +13,15 @@ class DynamicOCR:
         self.engine=engine;self.image=None;self.raw=[];self.age=0
         self.metrics={};self.regions=None
 
+    def seed_full_frame(self, image, raw):
+        """Accept only a caller-verified complete current-frame text result.
+
+        This stores OCR records, never interpreted page/operator facts. A later
+        call still covers every changed pixel and applies all discovery gates.
+        """
+        self.image=image.copy();self.raw=deepcopy(raw or [])
+        self.regions=None;self.age=0
+
     def __call__(self, image, *, regions=None, seed_from_full=False, force_discovery=False,
                  guard_outside=False):
         """Optional current-frame visual regions never carry page facts.

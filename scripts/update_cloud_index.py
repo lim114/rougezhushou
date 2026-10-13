@@ -31,6 +31,8 @@ def validate_delivery(root, checkpoint):
     already existing, independently verified remote commit with a hash-bound public proof. During a new feature
     section that record may be the previous section; during260 maintenance the
     already pushed functional260 is admissible without creating section261.
+    A numbered repair explicitly requested by the user has its own receipt
+    kind and authorization; it is never classified as a functional section.
     """
     root = Path(root).resolve()
     section = checkpoint.get('completed_sections')
@@ -47,16 +49,26 @@ def validate_delivery(root, checkpoint):
     _require(rows[-1].get('number') == section
              and rows[-1].get('verification') == expected_receipt,
              'Last section row differs from completed_sections/current receipt.')
-    _require(_public_json(root, expected_receipt).get('section') == section,
+    section_receipt = _public_json(root, expected_receipt)
+    _require(section_receipt.get('section') == section,
              'Current section receipt differs from completed_sections.')
+
+    current_repair = section_receipt.get('kind') == 'user_requested_repair_section'
+    if current_repair:
+        authorized = checkpoint.get('policy', {}).get('current_user_requested_repair_section')
+        _require(type(authorized) is int and authorized == section
+                 and section_receipt.get('user_requested') is True,
+                 'Requested repair needs its exact current user authorization and receipt.')
+    current_scope = ('current_requested_repair_section' if current_repair
+                     else 'current_functional_section')
 
     current = checkpoint.get('current_section_save') or {}
     _require(current.get('section') == section,
              'current_section_save is stale; it must name completed_sections.')
     _require(current.get('verification') == expected_receipt,
              'current_section_save must name the current public section receipt.')
-    _require(current.get('scope') == 'current_functional_section',
-             'Current save must explicitly describe the current functional section.')
+    _require(current.get('scope') == current_scope,
+             'Current save scope must match its functional or explicitly requested repair receipt.')
     _require(current.get('binding') == 'enclosing_commit',
              'Current save binding must explicitly be enclosing_commit, not a self hash.')
 
@@ -64,12 +76,25 @@ def validate_delivery(root, checkpoint):
     saved_section = published.get('section')
     _require(type(saved_section) is int and saved_section in (section - 1, section),
              'last_verified_cloud_save must be current or previous section; older records are historical.')
-    expected_scope = ('current_functional_section' if saved_section == section
-                      else 'previous_functional_section')
+    saved_repair = current_repair if saved_section == section else False
+    if saved_section != section:
+        saved_reference = f'verification/sections/{saved_section:03}.json'
+        # Historical functional fixtures may predate section receipts. A
+        # repair publication always needs its explicit public authorization.
+        if (root / saved_reference).is_file() or published.get('scope') == 'previous_requested_repair_section':
+            saved_receipt = _public_json(root, saved_reference)
+            _require(saved_receipt.get('section') == saved_section,
+                     'Previous section receipt differs from verified publication.')
+            saved_repair = saved_receipt.get('kind') == 'user_requested_repair_section'
+            if saved_repair:
+                _require(saved_receipt.get('user_requested') is True,
+                         'Previous repair publication needs its recorded user authorization.')
+    expected_scope = (('current_' if saved_section == section else 'previous_')
+                      + ('requested_repair_section' if saved_repair else 'functional_section'))
     _require(published.get('scope') == expected_scope,
              'Verified publication scope must distinguish current from previous section.')
     _require(not checkpoint.get('policy', {}).get('new_functional_sections_paused')
-             or saved_section == section,
+             or saved_section == section or current_repair,
              'Paused functional development requires the current functional section publication.')
     _require(published.get('binding') == 'verified_remote_commit',
              'Verified publication binding must be explicit and distinct from enclosing_commit.')
@@ -119,7 +144,9 @@ def validate_delivery(root, checkpoint):
                  and batch.get('next_full_validation_after') == next_full,
                  'Current batch pointer differs from the authoritative active batch.')
     return {'current_section': section, 'current_binding': 'enclosing_commit',
+            'current_scope': current_scope,
             'verified_remote_section': saved_section,
+            'verified_remote_scope': expected_scope,
             'verified_remote_commit': commit}
 
 
