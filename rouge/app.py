@@ -792,6 +792,10 @@ class MainWindow(QMainWindow):
         self.token_budget_button=QPushButton('测算召唤物费用与配额（局外参考）')
         self.token_budget_button.clicked.connect(self.show_token_budget)
         layout.addWidget(self.token_budget_button)
+        self.wang_resource_button=QPushButton('望S1/S2：核对卡片与跟子分池资源链')
+        self.wang_resource_button.setVisible(False)
+        self.wang_resource_button.clicked.connect(self.show_wang_resources)
+        layout.addWidget(self.wang_resource_button)
         self.charge_timeline_button=QPushButton('机械师S3：比较冲锋时刻与观察窗口')
         self.charge_timeline_button.setEnabled(False)
         self.charge_timeline_button.clicked.connect(self.show_charge_timeline)
@@ -830,7 +834,7 @@ class MainWindow(QMainWindow):
         for index,button in enumerate((self.token_comparison_button,self.token_budget_button,
                 self.charge_timeline_button,self.shield_timeline_button,self.healing_budget_button,
                 self.skill_upgrade_button,self.enemy_comparison_button,self.scenario_library_button,
-                self.supplemental_skill_button,self.damage_budget_button,self.cultivation_comparison_button)):
+                self.supplemental_skill_button,self.damage_budget_button,self.cultivation_comparison_button,self.wang_resource_button)):
             layout.removeWidget(button);tools_layout.addWidget(button,index//2,index%2)
         layout.addLayout(tools_layout)
         self.damage_text = QPlainTextEdit()
@@ -1091,6 +1095,16 @@ class MainWindow(QMainWindow):
         if previous is not None:previous.close();previous.deleteLater()
         self.token_budget_dialog=TokenBudgetDialog(op,self.training_conditions(),self)
         self.token_budget_dialog.show()
+
+    def show_wang_resources(self):
+        if self.operator.currentData()!='char_2027_wang' or self.skill.currentData() not in (1,2):
+            self.show_damage_text('分池资源链仅覆盖望S1/S2的固定来源；其它来源保持未知。');return
+        from .p2_wang_resource_view import WangResourceLedgerDialog
+        previous=getattr(self,'wang_resource_dialog',None)
+        if previous is not None:previous.close();previous.deleteLater()
+        self.wang_resource_dialog=WangResourceLedgerDialog(self.training_conditions(),self,
+            skill=self.skill.currentData(),rank=self.skill_rank_value())
+        self.wang_resource_dialog.show()
 
     def show_token_module_comparison(self):
         from .token_module_comparison import compare_token_module
@@ -1401,6 +1415,8 @@ class MainWindow(QMainWindow):
         self.skill_picture.set_subject('skill',profile['skills'][skill-1]['id'],current['name']) if skill else self.skill_picture.set_subject(None,None,'')
         from .reporting import has_healing
         implemented=op in catalog()['operators']
+        if hasattr(self,'wang_resource_button'):
+            self.wang_resource_button.setVisible(op=='char_2027_wang' and skill in (1,2))
         healer=implemented and has_healing(op,skill)
         conditions=[(self.deployment_elapsed,op=='silverash' and self.training_conditions()['elite']==2),
                     (self.healing_targets,healer),
