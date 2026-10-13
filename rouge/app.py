@@ -163,6 +163,9 @@ class MainWindow(QMainWindow):
         self.route_continuation=RouteContinuationPanel()
         self.route_continuation.mapNodeSelected.connect(self.show_catalog_map_node)
         tabs.addTab(self.route_continuation,'路线续接')
+        from .inventory_capacity_view import InventoryCapacityPanel
+        self.inventory_capacity=InventoryCapacityPanel()
+        tabs.addTab(self.inventory_capacity,'零件箱整理')
         from .attack_state_sequence_view import AttackStateSequencePanel
         self.attack_state_sequence=AttackStateSequencePanel()
         tabs.addTab(self.attack_state_sequence,'攻击状态序列')

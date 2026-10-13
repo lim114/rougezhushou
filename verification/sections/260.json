@@ -1,0 +1,77 @@
+{
+  "section": 260,
+  "title": "独立零件箱容量超载行动门与保留整理领取方案比较",
+  "remaining_item": "P3容量状态阻断与加工品整理规划",
+  "new_capability": "独立总容量/完整性/逐实例占用声明，已知下界超载证明和未知传播；保留偏好下最少释放实例证明/有限候选、假设丢弃后及领取后逐案比较，主窗口独立零件箱工作区",
+  "limitations": [
+    "每件占用单位与当前总容量未证，不默认1格/容量10，不读或写实际库存",
+    "容量条件不阻断不证明其它行动资格，actual_game_action_allowed始终未知",
+    "所有丢弃/领取仅局外假设，大多数界面规则不推全部允许丢弃",
+    "功能260已完成必要验收；按最新要求接着集中维护全量漏洞并重验完整范围，不启动261功能、不将未执行全量称通过"
+  ],
+  "files": [
+    "research/p3-inventory-capacity/README.md",
+    "research/p3-inventory-capacity/final-source-tests.txt",
+    "research/p3-inventory-capacity/final-tests.txt",
+    "research/p3-inventory-capacity/initial-tests.txt",
+    "research/p3-inventory-capacity/sealed-files.json",
+    "research/p3-inventory-capacity/source-fragment.txt",
+    "research/p3-inventory-capacity/validation.json",
+    "rouge/app.py",
+    "rouge/data/inventory-capacity-source.json",
+    "rouge/inventory_capacity.py",
+    "rouge/inventory_capacity_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_inventory_capacity.py",
+    "verification/section-260/tests.txt",
+    "verification/section-260/validation.json"
+  ],
+  "source_evidence": [
+    "PRTS固定433770超载无法行动包括追猎/可整理例如丢弃原句，完整来源HTML SHA先核对并封片段/产品规则指纹",
+    "精确非负占用下界、完整性条件与最少实例证明，有限枚举独立说明截断尾部"
+  ],
+  "acceptance": [
+    "9必要API和实际Qt检查全过，256独立穷举向量验证最少实例及全部最少集合",
+    "两次只读审查后的保护参数严格类型、访问上限、重复JSON键、下界显示/声明超载表述均修复验证"
+  ],
+  "next_action": "功能目标260已完成，立即集中解决全量检查漏洞并完整重验：修复旧查询/地图浮点复验、首次保存保护与显式归档、兼容运行时和旧完整窗口；维护不增加功能节数，不自动启动261。",
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T14:26:23.018349+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "29782b924ac4a49763d58a367612610b1d3f8e15",
+  "required_raw_sha256": {
+    "research/p3-inventory-capacity/README.md": "09dbd6f66f74822e99b31e409792f300cf34bd435053f892405f9ea11b33c975",
+    "research/p3-inventory-capacity/final-source-tests.txt": "38d44ac7819df6dc423a5a4de89dea082ab5a97ee6f4a6186f2ed67c2c304715",
+    "research/p3-inventory-capacity/final-tests.txt": "637ffee7594186ee8564e8065f35d50a486dbdfe8764657245cd3dfe01392350",
+    "research/p3-inventory-capacity/initial-tests.txt": "e4a1783f04eea7fa483f4d936a413c4db8e07f6dc3a67301c01dc0db5af7c5e9",
+    "research/p3-inventory-capacity/sealed-files.json": "c903fc1f606c43949532606cdb30ecb501149caa7d81c10487a4e738af31df03",
+    "research/p3-inventory-capacity/source-fragment.txt": "290d4e58c246c7e1dd986606e7bbcda2d758fc8d8e5be9732d174abb6d3fd518",
+    "research/p3-inventory-capacity/validation.json": "e4b1dc6425521f40bc31414f7e62e0cf0fd768645042e82ee5d9cf8c96cd1870",
+    "rouge/app.py": "84943431152bfaca05a100c9898d1eafff074b6be744c541c9f0510f72bec72c",
+    "rouge/data/inventory-capacity-source.json": "1f0af46425324b6ffd05005540af149e108fdf2b1d43b44e94babd921b3ebdae",
+    "rouge/inventory_capacity.py": "82f5283f01ec898eb58901a9f248ef90684cd8b0ad7b36ddeadebae75d0e8b41",
+    "rouge/inventory_capacity_view.py": "e477ee7620c98587f1b8b034dea4ce8c5814d8922bbda542296d12a7171a7329",
+    "scripts/verify_cloud.py": "013760181bd4cb680c17605822603a09f1e9ea3ada8b66149a04cf4f79ae8f8d",
+    "tests/test_inventory_capacity.py": "8b52c226673e44e54f0624f43223bc1f06b0e556fe9825a3a70021d1a199f307",
+    "verification/section-260/tests.txt": "6dc020aaa9a494f4fa1aab3d914d42c68b62ac2bd2e88ab67b3bbfd55af14e58",
+    "verification/section-260/validation.json": "f9ad6bd5bec934427db98348c93ce99502899ab560c07dda0d966bacf18dae71"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_inventory_capacity"
+    ],
+    "tests_run": 9,
+    "passed": 9,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 260
+}
