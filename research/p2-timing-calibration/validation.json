@@ -1,0 +1,37 @@
+{
+  "scope": "new_independent_skill_event_ledger_and_qt_calibration_workspace",
+  "test_command": "QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest tests.test_timing_calibration -v",
+  "tests_run": 25,
+  "passed": 25,
+  "skipped": 0,
+  "failures": 0,
+  "errors": 0,
+  "last_elapsed_seconds": 0.613,
+  "initial_failure": {
+    "tests_run": 25,
+    "passed": 24,
+    "failures": 1,
+    "test": "TimingCalibrationViewTests.test_actual_widget_renders_event_differences_repeated_waits_and_unknown_phases",
+    "failure": "AssertionError: 相邻两次开启间隔 not found in rendered widget text",
+    "repair": "Use the explicit adjacent-activation interval label in the result header and translate repeated-summary metric names to Chinese; preserve the assertion."
+  },
+  "public_reproduction": {
+    "command": ".venv/bin/python research/p2-timing-calibration/reproduce.py",
+    "literal_formula_ledgers": 3,
+    "matching_cases": 3,
+    "source_kind": "formula_reference"
+  },
+  "checks": [
+    "All first-nine source-supported channel compatibility with unknown actual native phases",
+    "Deployment readiness, end-origin recharge with identical lockout policy, start-to-ready cycle and distinct recast waits",
+    "Recorded first/last/end/unblock and repeat variability without causal inference",
+    "60-FPS video normalization independent of 30-Hz model references",
+    "Multicharge/partial recharge and selected/summon/impact interval boundaries",
+    "Strict clock/context/skill identity, nonfinite/malformed/order/overlap validation",
+    "Actual offscreen Qt buttons, explicit import and context binding preserve all event values and sources",
+    "Editing invalidates stale results, refresh/read-only queries preserve records, HTML escaping and output isolation"
+  ],
+  "native_game_or_chat_verified": false,
+  "mechanism_changes": false,
+  "private_state_loaded": false
+}

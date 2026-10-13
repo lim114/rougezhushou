@@ -1,0 +1,75 @@
+{
+  "section": 244,
+  "title": "技能事件时钟账本与首次就绪回转实录对照",
+  "remaining_item": "P2首批三名面板外的初动/回转/首尾时刻成对实录校准缺口",
+  "new_capability": "独立部署时钟和多周期事件账本，秒/视频帧规范化；分别比对初次就绪、结束到下次就绪、开启到下次就绪及手动开启等待，九技能适用口径和未知阶段分列；实际主窗口时刻校准页保留独立实录",
+  "limitations": [
+    "公式参考算例不当游戏实测",
+    "实际首次/末次本体释放、命中、技能结束、解除阻回相位未证时未知",
+    "视频FPS不是原生30Hz证据，记录差异不推因果或反写参数",
+    "多充能/部分技力和独立召唤体必须明示兼容，否则模型项未知",
+    "完整当前主窗口验证安排245，Wine不是原Windows/game"
+  ],
+  "files": [
+    "research/p2-timing-calibration/README.md",
+    "research/p2-timing-calibration/compatibility_matrix.json",
+    "research/p2-timing-calibration/examples.json",
+    "research/p2-timing-calibration/reproduce.py",
+    "research/p2-timing-calibration/source_manifest.json",
+    "research/p2-timing-calibration/validation.json",
+    "rouge/app.py",
+    "rouge/timing_calibration.py",
+    "rouge/timing_calibration_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_timing_calibration.py",
+    "verification/section-244/tests.txt",
+    "verification/section-244/validation.json"
+  ],
+  "source_evidence": [
+    "固定原件现有三名九技能初动/回转参数及明确阶段适用范围",
+    "用户独立context/clock/source/evidence_kind/event账本，不从模型生成观测"
+  ],
+  "acceptance": [
+    "60项新时钟及238/241相关API+实际离屏Qt检查通过",
+    "三公式账本和60FPS跨单位对照，手动等待/空未知/独立来源严格分离，刷新保留输入且编辑标旧结果"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T13:22:59.780665+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "cbe8d97f09943922bf49a5ccf1538e923441db54",
+  "required_raw_sha256": {
+    "research/p2-timing-calibration/README.md": "0408a1847a0ff2585b36a593aa00e337040e99b48f8f0e4cf55ceac6634ac519",
+    "research/p2-timing-calibration/compatibility_matrix.json": "9f63268829c8d185c88e58914d450c002f1751f9865e6df10f73bd5db4d5c3af",
+    "research/p2-timing-calibration/examples.json": "078b14f4abc235066becd1be0aab0db4c5fb3089a8c21f56eba98c577f3371ac",
+    "research/p2-timing-calibration/reproduce.py": "050a91d0e37f958f4a20ec73d8e8554d2fbd5dc72d722b99e84545b901bf0e57",
+    "research/p2-timing-calibration/source_manifest.json": "b5ff648db5098814e602a0048391332bfe54878fcc5652c0ea889a1f2c333179",
+    "research/p2-timing-calibration/validation.json": "d8c03c1e8033bbfbaf14967ce2a9095af77d2cbc0d0549af516af127b4722c39",
+    "rouge/app.py": "8bbefd5c4ece29f9b1faf5635cad67d35b7b002940d281561d283890d7eee465",
+    "rouge/timing_calibration.py": "12073d1762b21a2d00a8b830577fa10be3fff884ab06ffaf571ce43043dbd46f",
+    "rouge/timing_calibration_view.py": "8ff8279f93e9be2c0e55077a1ab512b58caa9e6cc7dadfd60b2cd4d603a36ed6",
+    "scripts/verify_cloud.py": "3afd07d8dcfd8a48a57e258be961b48258e5059ee8a13d5ea7ccbf880c9b9986",
+    "tests/test_timing_calibration.py": "d5ecf43dbef890f382601d6fa49bee48936fd21da5a17398b31a6aeb435ac3a8",
+    "verification/section-244/tests.txt": "822a7b03ddb25d43de4d69be432a34c51d231561cb5056bdf5c8b9cb7c51b4a4",
+    "verification/section-244/validation.json": "007d740c34f1d5c7de34287606569e77bb46b0c0fb08a5738b7d4bb765ca80eb"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_timing_calibration",
+      "tests.test_paired_calibration",
+      "tests.test_attack_state_sequence"
+    ],
+    "tests_run": 60,
+    "passed": 60,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 245
+}
