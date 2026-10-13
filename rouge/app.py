@@ -280,6 +280,9 @@ class MainWindow(QMainWindow):
         notice=QLabel('点击节点查看类型、候选及当前位置路线。青色＝已读类型，紫色＝隐藏候选，橙色＝本局历史；灰虚线＝模板连线。绿色圈＝当前确认位置，橙虚线圈＝历史位置。蓝绿色路线＝途中类型符合穿越条件；橙虚线路线＝仅拓扑参考，实际阻碍仍待确认。')
         notice.setWordWrap(True);layout.addWidget(notice)
         self.map_mode=QLabel();self.map_mode.setWordWrap(True);layout.addWidget(self.map_mode)
+        self.movement_source_button=QPushButton('加工品获取清单与来源机会')
+        self.movement_source_button.clicked.connect(self.show_movement_sources)
+        layout.addWidget(self.movement_source_button);self.movement_source_dialog=None
         self.map_content=QLabel();self.map_content.setWordWrap(True);layout.addWidget(self.map_content)
         self.map_view=MapView();self.map_view.nodeSelected.connect(self.map_node_selected)
         layout.addWidget(self.map_view,4)
@@ -365,6 +368,9 @@ class MainWindow(QMainWindow):
         self.route_resource_ledger.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
         self.route_scenarios.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
         self.route_continuation.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
+        if self.movement_source_dialog:
+            self.movement_source_dialog.set_map_context(remembered if fresh else None,
+                context=self.observed_event_context() if fresh else {},epoch=self.run.state['id'])
 
     def refresh_windows(self):
         if self.busy:
@@ -949,6 +955,26 @@ class MainWindow(QMainWindow):
 
     def refresh_operator_overview(self):
         return self.operator_choices.set_overview(self.recruited_operator_ids(),emit=False)
+
+    def show_movement_sources(self):
+        from .movement_source_view import MovementSourcePanel
+        if self.movement_source_dialog is None:
+            self.movement_source_dialog=MovementSourcePanel(self)
+            self.movement_source_dialog.mapNodeSelected.connect(self.show_catalog_map_node)
+            self.movement_source_dialog.catalogEventSelected.connect(self.show_source_catalog_event)
+        cached=self.node_catalog.map_context
+        live=bool(cached and not cached[3])
+        self.movement_source_dialog.set_map_context(cached[0] if live else None,
+            context=self.node_catalog.runtime_context if live else {},epoch=self.run.state['id'])
+        self.movement_source_dialog.show()
+
+    def show_source_catalog_event(self,event_id):
+        panel=self.node_catalog;panel.show_directory()
+        panel.kind.setCurrentIndex(panel.kind.findData('event'))
+        panel.floor.setCurrentIndex(0);panel.node_type.setCurrentIndex(0);panel.search.clear();panel.refresh()
+        row=next((i for i,e in enumerate(panel.entries) if e['kind']=='event' and e['record']['id']==event_id),None)
+        if row is not None:
+            panel.list.setCurrentRow(row);self.centralWidget().setCurrentWidget(panel)
 
     def select_operator(self,op):
         return self.operator_choices.select_value(op)
