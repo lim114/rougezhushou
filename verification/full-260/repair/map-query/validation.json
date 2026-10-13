@@ -1,0 +1,109 @@
+{
+  "scope": "Work-only source/gate preserving candidates; no production change or full-suite replacement",
+  "original_failure_receipts": [
+    "verification/full-245/linux.json",
+    "verification/full-245/wine.json",
+    "verification/full-245/summary.json"
+  ],
+  "candidate_patch": "repair-map-query.patch",
+  "git_apply_check_passed": true,
+  "original_source_fingerprints_still_exact": true,
+  "checks": [
+    {
+      "name": "candidate-linux",
+      "tests": 49,
+      "passed": 49,
+      "failures": 0,
+      "errors": 0,
+      "process_exit": 0,
+      "log": "candidate-linux.log"
+    },
+    {
+      "name": "candidate-wine",
+      "tests": 49,
+      "passed": 49,
+      "failures": 0,
+      "errors": 0,
+      "process_exit": 0,
+      "log": "candidate-wine-bash.log"
+    },
+    {
+      "name": "fit-replay-linux",
+      "process_exit": 0,
+      "receipt": "fit-replay-candidate-linux.json"
+    },
+    {
+      "name": "fit-replay-wine",
+      "process_exit": 0,
+      "receipt": "fit-replay-candidate-wine.json"
+    },
+    {
+      "name": "qt-import-original",
+      "process_exit": 0,
+      "loaded_cases_not_run": 3786,
+      "log": "qt-import-original.log"
+    },
+    {
+      "name": "qt-minimal-original",
+      "process_exit": 1,
+      "tests": 2,
+      "failures": 1,
+      "reason": "original stale count21!=20",
+      "log": "qt-minimal-original.log"
+    },
+    {
+      "name": "qt-runtime-original245",
+      "process_exit": 1,
+      "tests": 206,
+      "failures": 1,
+      "reason": "original stale count21!=20",
+      "log": "qt-runtime-original.log"
+    },
+    {
+      "name": "qt-runtime-explicit-shutdown",
+      "process_exit": 1,
+      "tests": 206,
+      "failures": 1,
+      "reason": "original stale count21!=20 retained",
+      "widgets_destroyed": 157,
+      "application_destroyed": true,
+      "log": "qt-runtime-explicit-shutdown.log"
+    },
+    {
+      "name": "optional-cleanup-linux",
+      "process_exit": 0,
+      "worker_completed": true,
+      "queued_result_delivered": true,
+      "widgets_destroyed": 3,
+      "application_destroyed": true,
+      "log": "qt-cleanup-candidate.log"
+    },
+    {
+      "name": "optional-cleanup-wine",
+      "process_exit": 0,
+      "worker_completed": true,
+      "queued_result_delivered": true,
+      "widgets_destroyed": 3,
+      "application_destroyed": true,
+      "log": "qt-cleanup-candidate-wine.log"
+    }
+  ],
+  "initial_setup_attempts": [
+    {
+      "log": "qt-import-explicit-shutdown.log",
+      "exit": 1,
+      "reason": "system Python lacks PySide6; used existing .venv"
+    },
+    {
+      "log": "candidate-wine.log",
+      "exit": 126,
+      "reason": "nonexecutable launcher script; used bash without changing permissions"
+    }
+  ],
+  "qt139_root_cause_proven": false,
+  "qt139_reproduced_by_minimal_or_qt_subset": false,
+  "native_windows_verified": false,
+  "full_repository_validation_claimed": false,
+  "source_and_golden_modified": false,
+  "next_acceptance": "After260 root serially applies supported fixes; full historicalCORE+NEW+current cloud selector union, original full-window range, faulthandler and real outer process exit remain mandatory"
+}

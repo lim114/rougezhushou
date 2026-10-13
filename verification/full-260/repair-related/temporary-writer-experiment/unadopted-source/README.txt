@@ -1,0 +1,1 @@
+Not adopted: unique temporary writer changed the established temporary-write injection boundary and removed failed temporary evidence. Original repair candidate restored without changing the original test assertions. All failed experimental verification is retained.

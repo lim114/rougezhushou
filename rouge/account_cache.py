@@ -136,6 +136,7 @@ class AccountCache:
         self.load_issue = None
         self.save_issue = None
         self.preserve_original = False
+        self._initial_path_missing = False
         try:
             decoded = json.loads(self.path.read_text(encoding='utf-8'))
         except FileNotFoundError:
@@ -144,6 +145,7 @@ class AccountCache:
             try:
                 self.path.lstat()
             except FileNotFoundError:
+                self._initial_path_missing = True
                 return
             except OSError:
                 pass
@@ -257,7 +259,12 @@ class AccountCache:
             self.path.parent.mkdir(exist_ok=True)
             temporary = self.path.with_suffix('.tmp')
             temporary.write_text(text, encoding='utf-8')
-            temporary.replace(self.path)
+            if self._initial_path_missing:
+                from .persistence_install import install_initial_record
+                install_initial_record(temporary, self.path)
+                self._initial_path_missing = False
+            else:
+                temporary.replace(self.path)
         except OSError:
             self.save_issue = '账号档案保存未完成'
             self._protect()

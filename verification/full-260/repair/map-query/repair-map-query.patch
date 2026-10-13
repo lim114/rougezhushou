@@ -1,0 +1,266 @@
+--- /dev/null
++++ b/scripts/map_fit_replay.py
+@@ -0,0 +1,67 @@
++"""Numerical replay of hash-sealed fits; source/gate decisions remain exact.
++
++OpenCV findHomography converts input point matrices to CV_32F before its
++homography kernel/iterative refinement. Use an explicit cross-build replay
++policy: one float32 epsilon scaled by the numeric leaf, only for computed
++matrix/projection/error leaves. This is an engineering replay policy, not a
++proven solver error bound, new pixel tolerance or claim of native precision.
++"""
++import copy
++import math
++import re
++
++import numpy as np
++
++REPLAY_EPSILON = float(np.finfo(np.float32).eps)
++COMPUTED_FLOAT = re.compile(r'^/(matrix/\d+|checks/\d+/(projected_pixel/[01]|error_px))$')
++
++
++def _number_close(current, frozen):
++    return math.isfinite(current) and math.isfinite(frozen) and abs(current - frozen) <= REPLAY_EPSILON * max(1.0, abs(current), abs(frozen))
++
++
++def verify_fit_replay(current, frozen):
++    """Validate both unchanged 4px decisions and every structural/data leaf."""
++    for value in (current, frozen):
++        if not isinstance(value, dict) or not isinstance(value.get('accepted'), bool):
++            raise ValueError('Fit replay schema/qualification changed.')
++        errors = [check['error_px'] for check in value['checks']]
++        if not errors or any(isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v) for v in errors):
++            raise ValueError('Fit replay has a nonfinite or malformed error.')
++        if value['accepted'] is not (max(errors) <= 4):
++            raise ValueError('The independent original 4px fit gate changed.')
++    differences = []
++    def visit(a, b, path):
++        if type(a) is not type(b):
++            raise ValueError('Fit replay structure/type changed: ' + path)
++        if isinstance(a, dict):
++            if set(a) != set(b):
++                raise ValueError('Fit replay keys changed: ' + path)
++            for key in a:
++                visit(a[key], b[key], path + '/' + key)
++        elif isinstance(a, list):
++            if len(a) != len(b):
++                raise ValueError('Fit replay list shape changed: ' + path)
++            for index, (one, two) in enumerate(zip(a, b)):
++                visit(one, two, path + '/' + str(index))
++        elif isinstance(a, float) and COMPUTED_FLOAT.fullmatch(path):
++            if not _number_close(a, b):
++                raise ValueError('Computed fit exceeds the float32 numerical replay policy: ' + path)
++            if a != b:
++                differences.append({'path': path, 'current': a, 'frozen': b, 'difference': abs(a - b),
++                    'allowed_numeric_difference': REPLAY_EPSILON * max(1.0, abs(a), abs(b))})
++        elif a != b:
++            raise ValueError('Fit source or qualification changed: ' + path)
++    visit(current, frozen, '')
++    return {'floating_policy': 'one_float32_epsilon_scaled_computed_leaf_only',
++        'epsilon': REPLAY_EPSILON, 'differing_computed_leaves': differences,
++        'qualification_and_source_structure_exact': True, 'original_pixel_gate': 4}
++
++
++def canonical_inverse(current, frozen):
++    """Recheck algebra, then retain already hash-sealed published inverse values."""
++    if not isinstance(current, list) or not isinstance(frozen, list) or len(current) != 9 or len(frozen) != 9:
++        raise ValueError('Canonical inverse shape changed.')
++    if any(type(a) is not float or type(b) is not float or not _number_close(a, b) for a, b in zip(current, frozen)):
++        raise ValueError('Canonical inverse exceeds the numerical replay policy.')
++    return copy.deepcopy(frozen)
+--- a/scripts/extend_fixed_map_projections.py
++++ b/scripts/extend_fixed_map_projections.py
+@@ -18,8 +18,11 @@
+ sys.path.insert(0, str(ROOT))
+ from rouge.battle_preview import battle_data, DATA
+ from rouge.map_projection import grid_digest
++from scripts.map_fit_replay import verify_fit_replay, canonical_inverse
+ 
+ BASE = ROOT / 'research/p3-map-ground-current'
++CANONICAL_PATH = ROOT / 'research/p3-direct-ground-current/prior-regular-projections.json'
++CANONICAL_SHA256 = 'b36710dbc381de0ded802d6edc4ef4eafe192432818180bf608a5fded3cf843c'
+ 
+ 
+ def digest(path):
+@@ -81,6 +84,9 @@
+     if digest(prior_path) != receipt['prior_sha256']:
+         raise ValueError('The frozen prior projection data changed.')
+     prior = read(prior_path)
++    if digest(CANONICAL_PATH) != CANONICAL_SHA256:
++        raise ValueError('The sealed published ground-calibration values changed.')
++    canonical = read(CANONICAL_PATH)
+     if len(prior['calibrations']) != 10 or len(prior['stages']) != 20:
+         raise ValueError('Review the prior calibration scope before rebasing.')
+     for name, sha in receipt['frozen_sha256'].items():
+@@ -92,8 +98,10 @@
+         entry = read(BASE / f'frozen-observation-{number}.json')['calibrations'][0]
+         original = read(BASE / f'initial-fit-{number}.json')[0]
+         result = fit(entry)
+-        if result != original:
+-            raise ValueError('The original observation cannot reproduce its first fit.')
++        verify_fit_replay(result, original)
++        # Recompute/validate independently, then retain the original published
++        # values. This never replaces a golden fit with this host's float bits.
++        result = copy.deepcopy(original)
+         stage = source_check(entry['id'], receipt)
+         expected = number in receipt['included_observations']
+         if result['accepted'] is not expected:
+@@ -114,7 +122,7 @@
+         image = stage['image']
+         output['calibrations'][cid] = {'anchors': copy.deepcopy(entry['anchors']),
+             'checks': result['checks'], 'matrix': result['matrix'],
+-            'inverse': np.linalg.inv(matrix).ravel().tolist(), 'tolerance_px': 4,
++            'inverse': canonical_inverse(np.linalg.inv(matrix).ravel().tolist(), canonical['calibrations'][cid]['inverse']), 'tolerance_px': 4,
+             'bitmap_sha256': image['sha256'], 'grid_sha256': grid_digest(stage),
+             'width': image['width'], 'height': image['height'],
+             'rows': len(stage['map']), 'cols': len(stage['map'][0]),
+--- a/scripts/build_fixed_landmark_references.py
++++ b/scripts/build_fixed_landmark_references.py
+@@ -12,6 +12,7 @@
+ from rouge.battle_preview import battle_data, DATA
+ from rouge.map_projection import grid_digest
+ from scripts.extend_fixed_map_projections import fit
++from scripts.map_fit_replay import verify_fit_replay
+ 
+ BASE = ROOT / 'research/p3-direct-ground-current'
+ OUTPUT = DATA / 'fixed-landmark-references.json'
+@@ -45,7 +46,8 @@
+     for number in (1, 2, 3):
+         frozen = read(BASE / f'frozen-observation-{number}.json')['calibrations'][0]
+         first = read(BASE / f'initial-fit-{number}.json')[0]
+-        if fit(frozen) != first or first['accepted']:
++        verify_fit_replay(fit(frozen), first)
++        if first['accepted']:
+             raise ValueError('A rejected original plane fit changed or was promoted.')
+         failed.append({'id': first['id'], 'observation': number,
+             'max_error_px': max(c['error_px'] for c in first['checks']), 'accepted_for_runtime': False})
+--- a/tests/test_map_ground_extension.py
++++ b/tests/test_map_ground_extension.py
+@@ -12,6 +12,7 @@
+ from rouge.battle_preview import battle_data, spawn_rows, DATA
+ from rouge.map_projection import grid_digest, projection_for, projection_data
+ from scripts.extend_fixed_map_projections import build, fit, BASE
++from scripts.map_fit_replay import verify_fit_replay
+ 
+ NEW = ('ro6_n_2_1', 'ro6_e_2_1', 'ro6_n_2_5', 'ro6_e_2_5')
+ REJECTED = ('ro6_n_2_2', 'ro6_e_2_2', 'ro6_n_3_1', 'ro6_e_3_1')
+@@ -83,7 +84,7 @@
+         for number in source['included_observations']:
+             frozen = read(BASE / f'frozen-observation-{number}.json')['calibrations'][0]
+             result = fit(frozen)
+-            self.assertEqual(result, read(BASE / f'initial-fit-{number}.json')[0])
++            self.assertTrue(verify_fit_replay(result, read(BASE / f'initial-fit-{number}.json')[0])['qualification_and_source_structure_exact'])
+             matrix, _ = cv2.findHomography(
+                 np.array([[c, r] for r, c, x, y in frozen['anchors']], float),
+                 np.array([[x, y] for r, c, x, y in frozen['anchors']], float), method=0)
+@@ -103,7 +104,7 @@
+         for number in (2, 3):
+             entry = read(BASE / f'frozen-observation-{number}.json')['calibrations'][0]
+             result = fit(entry)
+-            self.assertEqual(result, read(BASE / f'initial-fit-{number}.json')[0])
++            self.assertTrue(verify_fit_replay(result, read(BASE / f'initial-fit-{number}.json')[0])['qualification_and_source_structure_exact'])
+             self.assertFalse(result['accepted'])
+             self.assertGreater(max(c['error_px'] for c in result['checks']), 4)
+         for sid in REJECTED:
+--- a/tests/test_base_settlement_planning.py
++++ b/tests/test_base_settlement_planning.py
+@@ -177,7 +177,10 @@
+     def graph(self):return next(r['payload']['graph'] for r in exploration_presets('settlements') if r['id']=='base-graph-reference')
+ 
+     def test_new_query_all_eight_public_scenarios_run_and_render_in_qt(self):
+-        self.assertEqual(len(QUERIES['calibration'])+len(QUERIES['battle']),20)
++        # Section236 shipped relic-panels in addition to the original20;
++        # retain an explicit catalog-size assertion and require that command.
++        self.assertEqual(len(QUERIES['calibration'])+len(QUERIES['battle']),21)
++        self.assertIn(('relic-panels','藏品组合与面板差值诊断'),QUERIES['calibration'])
+         self.assertEqual(len(QUERIES['exploration']),13)
+         self.panel.select_query('exploration','settlements');presets=exploration_presets('settlements')
+         self.assertEqual(len(presets),8)
+--- /dev/null
++++ b/tests/test_map_fit_replay.py
+@@ -0,0 +1,85 @@
++"""Regression of floating replay without weakening source/gate constraints."""
++import copy
++import unittest
++
++from scripts.map_fit_replay import REPLAY_EPSILON, canonical_inverse, verify_fit_replay
++
++
++def original(error=1.0):
++    return {'id': 'literal', 'accepted': error <= 4,
++            'matrix': [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0],
++            'checks': [{'row': 1, 'col': 2, 'observed_pixel': [10, 20],
++                        'projected_pixel': [10.0, 20.0], 'error_px': error}]}
++
++
++class MapFitReplayTests(unittest.TestCase):
++    def test_permitted_leaf_drift_preserves_canonical_and_gate(self):
++        frozen = original()
++        current = copy.deepcopy(frozen)
++        current['matrix'][0] += REPLAY_EPSILON / 2
++        current['checks'][0]['projected_pixel'][0] += 5 * REPLAY_EPSILON
++        result = verify_fit_replay(current, frozen)
++        self.assertEqual(len(result['differing_computed_leaves']), 2)
++        self.assertEqual(result['original_pixel_gate'], 4)
++        self.assertTrue(result['qualification_and_source_structure_exact'])
++        self.assertEqual(frozen, original())
++
++    def test_drift_beyond_numerical_policy_rejected(self):
++        for path in ('matrix', 'projection', 'error'):
++            frozen = original()
++            current = copy.deepcopy(frozen)
++            if path == 'matrix':
++                current['matrix'][1] = 2 * REPLAY_EPSILON
++            elif path == 'projection':
++                current['checks'][0]['projected_pixel'][0] += 30 * REPLAY_EPSILON
++            else:
++                current['checks'][0]['error_px'] += 2 * REPLAY_EPSILON
++            with self.subTest(path=path), self.assertRaisesRegex(ValueError, 'exceeds'):
++                verify_fit_replay(current, frozen)
++
++    def test_pixel_gate_crossing_rejected_even_within_leaf_budget(self):
++        frozen = original(4.0)
++        current = copy.deepcopy(frozen)
++        current['checks'][0]['error_px'] += REPLAY_EPSILON / 2
++        current['accepted'] = False
++        with self.assertRaisesRegex(ValueError, 'qualification'):
++            verify_fit_replay(current, frozen)
++        # Lying about the recomputed gate also fails before comparison.
++        current['accepted'] = True
++        with self.assertRaisesRegex(ValueError, '4px'):
++            verify_fit_replay(current, frozen)
++
++    def test_source_shapes_types_and_original_readings_are_exact(self):
++        for mutation in ('source_pixel', 'identity', 'cell', 'type', 'shape', 'key'):
++            frozen = original()
++            current = copy.deepcopy(frozen)
++            if mutation == 'source_pixel': current['checks'][0]['observed_pixel'][0] += 1
++            elif mutation == 'identity': current['id'] = 'other'
++            elif mutation == 'cell': current['checks'][0]['row'] += 1
++            elif mutation == 'type': current['matrix'][0] = 1
++            elif mutation == 'shape': current['matrix'].pop()
++            else: current['extra'] = 0
++            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
++                verify_fit_replay(current, frozen)
++
++    def test_nonfinite_computed_leaves_are_rejected(self):
++        for bad in (float('nan'), float('inf'), -float('inf')):
++            for path in ('matrix', 'projection', 'error'):
++                current = original()
++                if path == 'matrix': current['matrix'][0] = bad
++                elif path == 'projection': current['checks'][0]['projected_pixel'][0] = bad
++                else: current['checks'][0]['error_px'] = bad
++                with self.subTest(path=path, bad=bad), self.assertRaises(ValueError):
++                    verify_fit_replay(current, original())
++
++    def test_inverse_verifies_then_returns_original_exact_values(self):
++        frozen = original()['matrix']
++        current = copy.deepcopy(frozen)
++        current[0] += REPLAY_EPSILON / 2
++        replayed = canonical_inverse(current, frozen)
++        self.assertEqual(replayed, frozen)
++        self.assertIsNot(replayed, frozen)
++        current[0] += REPLAY_EPSILON * 4
++        with self.assertRaisesRegex(ValueError, 'exceeds'):
++            canonical_inverse(current, frozen)
++

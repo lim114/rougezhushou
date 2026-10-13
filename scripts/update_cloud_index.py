@@ -9,6 +9,120 @@ START = '<!-- live-cloud-index:start -->'
 END = '<!-- live-cloud-index:end -->'
 
 
+def _require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def _public_json(root, relative):
+    _require(isinstance(relative, str), 'Public receipt path must be a string.')
+    path = (root / relative).resolve()
+    _require(path.is_relative_to((root / 'verification').resolve()),
+             'Publication/section receipts must stay in public verification.')
+    _require(path.is_file(), 'Missing public receipt: ' + relative)
+    return json.loads(path.read_text(encoding='utf-8'))
+
+
+def validate_delivery(root, checkpoint):
+    """Reject stale active fields; previous verified publication may be one behind.
+
+    current_section_save describes this enclosing commit and therefore does not
+    embed its own not-yet-created hash. last_verified_cloud_save describes an
+    already existing, independently verified remote commit with a hash-bound public proof. During a new feature
+    section that record may be the previous section; during260 maintenance the
+    already pushed functional260 is admissible without creating section261.
+    """
+    root = Path(root).resolve()
+    section = checkpoint.get('completed_sections')
+    _require(type(section) is int and section > 0,
+             'completed_sections must be a positive integer.')
+    _require(checkpoint.get('next_section') == section + 1,
+             'next_section must be completed_sections + 1.')
+    _require(checkpoint.get('branch') == 'codex/p2-development',
+             'Checkpoint branch must be codex/p2-development.')
+    expected_receipt = f'verification/sections/{section:03}.json'
+    rows = checkpoint.get('sections')
+    _require(isinstance(rows, list) and rows,
+             'Current completed section must have a recorded section row.')
+    _require(rows[-1].get('number') == section
+             and rows[-1].get('verification') == expected_receipt,
+             'Last section row differs from completed_sections/current receipt.')
+    _require(_public_json(root, expected_receipt).get('section') == section,
+             'Current section receipt differs from completed_sections.')
+
+    current = checkpoint.get('current_section_save') or {}
+    _require(current.get('section') == section,
+             'current_section_save is stale; it must name completed_sections.')
+    _require(current.get('verification') == expected_receipt,
+             'current_section_save must name the current public section receipt.')
+    _require(current.get('scope') == 'current_functional_section',
+             'Current save must explicitly describe the current functional section.')
+    _require(current.get('binding') == 'enclosing_commit',
+             'Current save binding must explicitly be enclosing_commit, not a self hash.')
+
+    published = checkpoint.get('last_verified_cloud_save') or {}
+    saved_section = published.get('section')
+    _require(type(saved_section) is int and saved_section in (section - 1, section),
+             'last_verified_cloud_save must be current or previous section; older records are historical.')
+    expected_scope = ('current_functional_section' if saved_section == section
+                      else 'previous_functional_section')
+    _require(published.get('scope') == expected_scope,
+             'Verified publication scope must distinguish current from previous section.')
+    _require(not checkpoint.get('policy', {}).get('new_functional_sections_paused')
+             or saved_section == section,
+             'Paused functional development requires the current functional section publication.')
+    _require(published.get('binding') == 'verified_remote_commit',
+             'Verified publication binding must be explicit and distinct from enclosing_commit.')
+    commit = published.get('commit')
+    _require(isinstance(commit, str) and re.fullmatch(r'[0-9a-f]{40}', commit),
+             'Verified remote commit needs the complete actual Git SHA.')
+    proof_reference = published.get('proof')
+    proof = _public_json(root, proof_reference)
+    proof_sha = published.get('proof_sha256')
+    _require(isinstance(proof_sha, str) and re.fullmatch(r'[0-9a-f]{64}', proof_sha)
+             and hashlib.sha256((root / proof_reference).read_bytes()).hexdigest() == proof_sha,
+             'Verified publication must bind the exact public proof bytes.')
+    _require(proof.get('passed') is True
+             and proof.get('section') == saved_section
+             and proof.get('branch') == 'codex/p2-development'
+             and proof.get('commit') == commit
+             and proof.get('local_HEAD') == commit == proof.get('remote_HEAD')
+             and proof.get('remote_branch') == 'origin/codex/p2-development'
+             and type(proof.get('push_primary_exit')) is int
+             and proof.get('push_primary_exit') == 0,
+             'Public publication proof must bind the actual local/remote development SHA.')
+
+    # Real Git-object/remote freshness is audited at publication, outside this
+    # portable reader. Re-reading a hash-bound proof is not a new remote check.
+
+    cadence = checkpoint.get('current_batch_commit_policy') or {}
+    _require('next_full_validation_after' in checkpoint
+             and 'next_full_validation_after' in cadence
+             and 'next_full_validation_after' in checkpoint.get('policy', {}),
+             'All three active cadence pointers must be present.')
+    next_full = checkpoint.get('next_full_validation_after')
+    _require(cadence.get('next_full_validation_after') == next_full
+             == checkpoint.get('policy', {}).get('next_full_validation_after'),
+             'Active batch cadence differs from the authoritative next full validation.')
+    available = checkpoint.get('current_available_full_validation')
+    if available is not None:
+        last = checkpoint.get('last_full_validation') or {}
+        _require(available.get('section') == last.get('after_section')
+                 and available.get('receipt') == last.get('receipt'),
+                 'Current full validation pointer differs from last_full_validation.')
+    batch = checkpoint.get('current_batch')
+    if batch is not None:
+        _require(batch.get('start') == checkpoint.get('batch_start_section')
+                 and batch.get('end') == checkpoint.get('batch_target_section')
+                 and batch.get('status') == checkpoint.get('batch_status')
+                 and batch.get('next_section') == section + 1
+                 and batch.get('next_full_validation_after') == next_full,
+                 'Current batch pointer differs from the authoritative active batch.')
+    return {'current_section': section, 'current_binding': 'enclosing_commit',
+            'verified_remote_section': saved_section,
+            'verified_remote_commit': commit}
+
+
 def update(root=ROOT):
     root = Path(root)
     requirements = root / 'PROJECT_REQUIREMENTS.md'
@@ -16,6 +130,7 @@ def update(root=ROOT):
         raise FileNotFoundError('Cloud index requires PROJECT_REQUIREMENTS.md; do not publish an incomplete requirements pointer.')
     checkpoint = json.loads((root / 'DEVELOPMENT_CHECKPOINT.json').read_text(encoding='utf-8'))
     completed = checkpoint['completed_sections']
+    validate_delivery(root, checkpoint)
     fulls = sorted((root / 'verification').glob('full-*/native.json'),
                    key=lambda p: int(p.parent.name.split('-')[1]))
     fulls = [p for p in fulls if int(p.parent.name.split('-')[1]) <= completed]

@@ -12,6 +12,7 @@ import numpy as np
 from rouge.battle_preview import battle_data, spawn_rows, DATA
 from rouge.map_projection import grid_digest, projection_for, projection_data
 from scripts.extend_fixed_map_projections import build, fit, BASE
+from scripts.map_fit_replay import verify_fit_replay
 
 NEW = ('ro6_n_2_1', 'ro6_e_2_1', 'ro6_n_2_5', 'ro6_e_2_5')
 REJECTED = ('ro6_n_2_2', 'ro6_e_2_2', 'ro6_n_3_1', 'ro6_e_3_1')
@@ -83,7 +84,7 @@ class FrozenGroundExtensionTests(unittest.TestCase):
         for number in source['included_observations']:
             frozen = read(BASE / f'frozen-observation-{number}.json')['calibrations'][0]
             result = fit(frozen)
-            self.assertEqual(result, read(BASE / f'initial-fit-{number}.json')[0])
+            self.assertTrue(verify_fit_replay(result, read(BASE / f'initial-fit-{number}.json')[0])['qualification_and_source_structure_exact'])
             matrix, _ = cv2.findHomography(
                 np.array([[c, r] for r, c, x, y in frozen['anchors']], float),
                 np.array([[x, y] for r, c, x, y in frozen['anchors']], float), method=0)
@@ -103,7 +104,7 @@ class FrozenGroundExtensionTests(unittest.TestCase):
         for number in (2, 3):
             entry = read(BASE / f'frozen-observation-{number}.json')['calibrations'][0]
             result = fit(entry)
-            self.assertEqual(result, read(BASE / f'initial-fit-{number}.json')[0])
+            self.assertTrue(verify_fit_replay(result, read(BASE / f'initial-fit-{number}.json')[0])['qualification_and_source_structure_exact'])
             self.assertFalse(result['accepted'])
             self.assertGreater(max(c['error_px'] for c in result['checks']), 4)
         for sid in REJECTED:

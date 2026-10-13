@@ -178,6 +178,9 @@ class RunState:
         self.file=Path(file)
         self.preserve_unreadable=False
         self.save_issue=None
+        self._initial_path_missing=False
+        self.archived_original=None
+        self.preserved_originals=()
         self.reset(save=False)
         repair_needs_save=False
         try:
@@ -194,7 +197,17 @@ class RunState:
             # A dangling link or unknown lstat is not a confirmed absent entry.
             confirmed_absent=False
             try:self.file.lstat()
-            except FileNotFoundError:confirmed_absent=True
+            except FileNotFoundError:
+                confirmed_absent=True
+                self._initial_path_missing=True
+                try:
+                    from .persistence_install import preserved_original_paths
+                    self.preserved_originals=preserved_original_paths(self.file)
+                except OSError:
+                    confirmed_absent=False
+                if self.preserved_originals:
+                    self.preserve_unreadable=True
+                    self.state['notice']='本局路径缺失，发现原件归档；请手动开始新局后继续保存。'
             except OSError:pass
             if not confirmed_absent:
                 self.preserve_unreadable=True
@@ -232,6 +245,20 @@ class RunState:
             'last_node_content':None,'node_contents':[],
             'notice':'等待本局页面读取；同一局记忆仅在手动开始新局后清空。'}
         if save:
+            if self.preserve_unreadable and not self.save_issue and not self._initial_path_missing:
+                try:
+                    from .persistence_install import archive_unreadable_record
+                    self.archived_original=archive_unreadable_record(self.file)
+                except OSError:
+                    self.save_issue='本局记录保存未完成（原记录归档未完成）'
+                    return
+                self._initial_path_missing=True
+                self.preserved_originals=(*self.preserved_originals,self.archived_original)
+                self.state['notice']='原不可读本局记录已归档到 '+self.archived_original.name+'；已开始新局。'
+            elif self.preserved_originals and not self.save_issue:
+                self.state['notice']='已开始新局；原件归档继续保留在同一目录。'
+            # An initially missing entry still requires no-clobber publication:
+            # Wine can hide a host link, and another process can create a file.
             self.preserve_unreadable=False
             self.save()
 
@@ -253,7 +280,12 @@ class RunState:
             self.file.parent.mkdir(exist_ok=True)
             temporary=self.file.with_suffix('.tmp')
             temporary.write_text(text,encoding='utf-8')
-            temporary.replace(self.file)
+            if self._initial_path_missing:
+                from .persistence_install import install_initial_record
+                install_initial_record(temporary,self.file)
+                self._initial_path_missing=False
+            else:
+                temporary.replace(self.file)
         except OSError:
             self.save_issue='本局记录保存未完成'
             return False

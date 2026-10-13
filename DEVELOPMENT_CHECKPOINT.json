@@ -28,7 +28,7 @@
     "accuracy_validation_after_section": 115,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
     "full_validation_anchor_section": 125,
-    "next_full_validation_after": 260,
+    "next_full_validation_after": 275,
     "validation_per_section": "Necessary checks tied to changed behavior only; omit when unnecessary. Full available suite unchanged.",
     "each_section_window_required": false,
     "each_section_requires_meaningful_project_advancement": true,
@@ -1600,19 +1600,21 @@
     }
   ],
   "next_section": 261,
-  "next_action": "功能目标260已完成，立即集中解决全量检查漏洞并完整重验：修复旧查询/地图浮点复验、首次保存保护与显式归档、兼容运行时和旧完整窗口；维护不增加功能节数，不自动启动261。",
-  "full_validation_due": true,
+  "next_action": "功能260及其后可用范围维护已完成，完整当前窗口已复验。261未启动，等待用户恢复；缺历史原件、私有样本及原Windows范围仍待补回和复验，下次定期全量275仅在恢复功能推进后适用。",
+  "full_validation_due": false,
   "last_full_validation": {
-    "after_section": 245,
-    "receipt": "verification/full-245/summary.json",
-    "available_checks_passed": false,
+    "after_section": 260,
+    "receipt": "verification/full-260/summary.json",
+    "available_checks_passed": true,
     "complete_repository_validation": false,
     "scope_not_reduced": true,
     "native_windows_verified": false,
-    "unresolved_failures": true
+    "unresolved_available_failures": false,
+    "historical_native230_full_reverified": false,
+    "original_failed_attempts_preserved": true
   },
   "windows_native_validation": "Windows本机：同步精选计算通过，首次全量12个旧断言缺口保留；第142节41必要检查、7个隔离Qt合成条件入口、实际窗口/更新响应通过。未完成全部游戏采样或聊天集成验收。",
-  "wine_validation": "第115节当前可用Wine全量/精选/依赖、4283检查52状态窗口、专项4状态及公开算例核对实际退出0。兼容验证不等同原生Windows。第95/109原流程仍搁置。",
+  "wine_validation": "260后维护：Wine11.19兼容全量3836项中3632通过、84历史/声明跳过、180不可用记录，失败/错误0，实际退出0；完整当前窗口4283条/52状态/精确10桥接及新增29项真实MainWindow流程通过。兼容验证不等同原生Windows；原Windows12条历史失败和缺历史/私有原件未计通过，详见verification/full-260/summary.json。",
   "deferred_problems": [
     {
       "id": "friendly_clock_ui_explanation",
@@ -1702,7 +1704,7 @@
     "commit_interval": 1,
     "push_after_each_section": true,
     "full_validation_interval": 15,
-    "next_full_validation_after": 245,
+    "next_full_validation_after": 275,
     "requirements_synced_each_section": true
   },
   "pending_batch_sections": [],
@@ -1742,15 +1744,21 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 237,
-    "verification": "verification/sections/237.json",
-    "commit_reference": "enclosing commit; verify remote after ordinary push"
+    "section": 260,
+    "verification": "verification/sections/260.json",
+    "scope": "current_functional_section",
+    "binding": "enclosing_commit",
+    "commit_reference": "the commit containing this checkpoint",
+    "original_functional_commit": "d29766f39be9b6885e07fbdba5cf4eccd620b17d",
+    "current_maintenance_validation": "verification/full-260/summary.json"
   },
   "last_verified_cloud_save": {
-    "section": 149,
-    "commit": "3a83f60a",
-    "remote_branch": "origin/codex/p2-development",
-    "verified_by": "successful ordinary push; section150 will contain this checkpoint and be verified after its ordinary push"
+    "section": 260,
+    "scope": "current_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "d29766f39be9b6885e07fbdba5cf4eccd620b17d",
+    "proof": "verification/full-260/functional260-publication.json",
+    "proof_sha256": "444ed7e8c5a84833a92cbcb1becdb7af8499b33463adba48c85abd06b61e2ef9"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -1941,7 +1949,7 @@
     "full095_deferred_preserved": true,
     "scope": "Current239 maintained available selector union plus inherited bounded healthy functional MainWindow suite. Specialist101–104 receipts separately archived. Missing evidence, original skips and3 actual Wine capability bodies are not PASS."
   },
-  "next_full_validation_after": 260,
+  "next_full_validation_after": 275,
   "user_requested_wrap": {
     "status": "SUPERSEDED_BY_USER_BATCH116_125_RESUME_2026_10_10",
     "completed_section": 115,
@@ -2003,14 +2011,14 @@
     "deferred095_and109_preserved": true
   },
   "current_available_full_validation": {
-    "section": 140,
+    "section": 260,
     "available_scope_passed": true,
-    "receipt": "verification/full-140/summary.json",
+    "receipt": "verification/full-260/summary.json",
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": 260,
-  "batch_status": "FUNCTIONAL_TARGET_COMPLETED_FULL_VALIDATION_REPAIR_IN_PROGRESS",
-  "policy_revision_Beijing": "2026-10-11",
+  "batch_status": "FUNCTIONAL260_COMPLETE_AVAILABLE_REPAIRS_VERIFIED_EXTERNAL_EVIDENCE_PENDING",
+  "policy_revision_Beijing": "2026-10-13",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
     "branch": "codex/p2-development",
@@ -2054,12 +2062,13 @@
     150
   ],
   "current_batch": {
-    "start": 143,
-    "end": 150,
-    "status": "COMPLETE_WITH_ACTUAL_WINDOWS_WINDOW_VERIFIED",
-    "next_section": 151,
-    "next_full_validation_after": 155,
-    "receipt": "verification/batch-143-150/summary.json"
+    "start": 186,
+    "end": 260,
+    "status": "FUNCTIONAL260_COMPLETE_AVAILABLE_REPAIRS_VERIFIED_EXTERNAL_EVIDENCE_PENDING",
+    "next_section": 261,
+    "next_section_started": false,
+    "next_full_validation_after": 275,
+    "receipt": "verification/full-260/summary.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -2208,5 +2217,58 @@
     "target_section": 260,
     "instruction": "刚才中断。恢复并继续；继续至260节"
   },
-  "latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here."
+  "latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
+  "historical_stale_current_section_save_before260_maintenance": {
+    "section": 237,
+    "verification": "verification/sections/237.json",
+    "commit_reference": "enclosing commit; verify remote after ordinary push"
+  },
+  "historical_stale_last_verified_cloud_save_before260_maintenance": {
+    "section": 149,
+    "commit": "3a83f60a",
+    "remote_branch": "origin/codex/p2-development",
+    "verified_by": "successful ordinary push; section150 will contain this checkpoint and be verified after its ordinary push"
+  },
+  "historical_stale_current_batch_commit_policy_before260_maintenance": {
+    "effective_after_completed_section": 185,
+    "commit_interval": 1,
+    "push_after_each_section": true,
+    "full_validation_interval": 15,
+    "next_full_validation_after": 260,
+    "requirements_synced_each_section": true
+  },
+  "historical_stale_current_available_full_validation_before260_maintenance": {
+    "section": 140,
+    "available_scope_passed": true,
+    "receipt": "verification/full-140/summary.json",
+    "native_windows_game_chat_verified": false
+  },
+  "historical_stale_current_batch_before260_maintenance": {
+    "start": 143,
+    "end": 150,
+    "status": "COMPLETE_WITH_ACTUAL_WINDOWS_WINDOW_VERIFIED",
+    "next_section": 151,
+    "next_full_validation_after": 155,
+    "receipt": "verification/batch-143-150/summary.json"
+  },
+  "historical_last_full_validation245_before_maintenance": {
+    "after_section": 245,
+    "receipt": "verification/full-245/summary.json",
+    "available_checks_passed": false,
+    "complete_repository_validation": false,
+    "scope_not_reduced": true,
+    "native_windows_verified": false,
+    "unresolved_failures": true
+  },
+  "maintenance_after260": {
+    "at_Beijing": "2026-10-13T16:18:22.862516+08:00",
+    "functional_section_count_increased": false,
+    "commit_binding": "the enclosing maintenance commit; verify remote HEAD after ordinary push",
+    "receipt": "verification/full-260/summary.json",
+    "available_scope_repair_verified": true,
+    "full_native_and_private_evidence_pending": true,
+    "next_functional_section_started": false
+  },
+  "historical_stale_next_action_before260_maintenance": "功能目标260已完成，立即集中解决全量检查漏洞并完整重验：修复旧查询/地图浮点复验、首次保存保护与显式归档、兼容运行时和旧完整窗口；维护不增加功能节数，不自动启动261。",
+  "historical_stale_wine_validation_before260_maintenance": "第115节当前可用Wine全量/精选/依赖、4283检查52状态窗口、专项4状态及公开算例核对实际退出0。兼容验证不等同原生Windows。第95/109原流程仍搁置。"
 }

@@ -99,7 +99,8 @@ NEW_MODULES = (
 
 def source_hashes():
     files = [*ROOT.glob('rouge/**/*.py'), *ROOT.glob('rouge/data/**/*.json'),
-             *ROOT.glob('tests/test_*.py'), Path(__file__)]
+             *ROOT.glob('tests/test_*.py'), *ROOT.glob('scripts/**/*.py'),
+             ROOT / 'CORE_0.70_VERIFICATION.json']
     return {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
             for p in sorted(set(files))}
 
@@ -174,6 +175,15 @@ def main():
     with args.output.with_suffix('.log').open('x', encoding='utf-8') as log:
         result = unittest.TextTestRunner(stream=log, verbosity=1,
             resultclass=AvailableResult).run(unittest.defaultTestLoader.loadTestsFromNames(selectors))
+    # Explicitly destroy the real Qt application after every assertion has run.
+    # Record failure and retain the ordinary process exit; never bypass teardown.
+    from qt_verification_cleanup import shutdown_verification_qt
+    try:
+        qt_shutdown = shutdown_verification_qt()
+        qt_shutdown_error = None
+    except Exception as error:
+        qt_shutdown = None
+        qt_shutdown_error = repr(error)
     after = source_hashes()
     drift = [name for name in sorted(set(before) | set(after)) if before.get(name) != after.get(name)]
     unavailable_parents = result.unavailable_parents
@@ -181,8 +191,9 @@ def main():
         'checked_at': datetime.now(timezone.utc).isoformat(),
         'platform': platform.system(), 'wine_compatibility': args.wine,
         'native_windows_integration_verified': False,
-        'available_checks_passed': result.wasSuccessful() and not drift,
-        'complete_repository_validation': result.wasSuccessful() and not drift and not result.unavailable,
+        'available_checks_passed': result.wasSuccessful() and not drift and qt_shutdown_error is None,
+        'complete_repository_validation': result.wasSuccessful() and not drift and qt_shutdown_error is None and not result.unavailable,
+        'qt_shutdown': qt_shutdown, 'qt_shutdown_error': qt_shutdown_error,
         'tests_run': result.testsRun, 'tests_passed': result.passed_count,
         'historical_or_declared_skips': len(result.skipped),
         'failures': len(result.failures), 'errors': len(result.errors),

@@ -82,6 +82,8 @@ class EnemyNativeMovementTests(unittest.TestCase):
         self.assertIn('符文写入移速属性：3',text)
         self.assertIn('无其他属性修正的条件移速：1.5 格/秒',text)
         self.assertIn('实际执行资格/动态修正尚未核验',tech)
+        self.assertIn('字段接收、乘法写入及读取层已绑定',tech)
+        self.assertIn('实际实例的原生目标、写入及叠加层尚未核验',tech)
         self.assertIn('未写最大范围标志及选择器指针',tech)
         self.assertNotIn('https://',text)
     def test_actual_target_calculation_keeps_original_damage_and_target_float_identity(self):

@@ -206,7 +206,7 @@ def enemy_text(entry,technical=False):
                 '基础移速×关卡倍率小计：'+value_text(movement['base_times_stage_speed'])])
             component=movement.get('conditional_native_movement')
             if component is not None:
-                lines.extend(['符文与关卡倍率合成的移速：未知；字段接收、乘法写入及读取层已绑定，实际执行资格/动态修正尚未核验。',
+                lines.extend(['符文与关卡倍率合成的移速：未知；字段接收、乘法写入及读取层已绑定，实际执行资格/动态修正尚未核验；实际实例的原生目标、写入及叠加层尚未核验。',
                     '符文与关卡倍率条件合成移速：'+value_text(component.get('conditional_speed_tiles_per_second'))+' 格/秒',
                     '条件分项采用公开标准无上限分支；未写最大范围标志及选择器指针的原生分配基线未闭合。',
                     '原生条件分项数据：'+json.dumps(component,ensure_ascii=False)])

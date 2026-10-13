@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT))
 from rouge.battle_preview import battle_data, DATA
 from rouge.map_projection import grid_digest
 from scripts.extend_fixed_map_projections import fit
+from scripts.map_fit_replay import verify_fit_replay
 
 BASE = ROOT / 'research/p3-direct-ground-current'
 OUTPUT = DATA / 'fixed-landmark-references.json'
@@ -45,7 +46,8 @@ def build(write=False):
     for number in (1, 2, 3):
         frozen = read(BASE / f'frozen-observation-{number}.json')['calibrations'][0]
         first = read(BASE / f'initial-fit-{number}.json')[0]
-        if fit(frozen) != first or first['accepted']:
+        verify_fit_replay(fit(frozen), first)
+        if first['accepted']:
             raise ValueError('A rejected original plane fit changed or was promoted.')
         failed.append({'id': first['id'], 'observation': number,
             'max_error_px': max(c['error_px'] for c in first['checks']), 'accepted_for_runtime': False})

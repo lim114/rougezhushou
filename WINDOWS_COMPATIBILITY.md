@@ -1,3 +1,5 @@
+第260节维护环境：正式完整兼容回执使用Wine11.19，明确设置ROUGE_WINE_PYTHON_LAUNCHER=/workspace/rougezhushou/work/wine-persistence-audit/runtime11/run-python11-devel.sh再经scripts/wine_python.sh串行运行。默认旧Wine10不能作为本次链接保护的通过证明；原10回执不改。跨环境重建按verification/full-260/repair/persistence/runtime11/migration-manifest.json核对实际包/hash，重新验收后使用。运行时前缀/二进制不提交，原生Windows仍另行验收。当前完整结果见verification/full-260/summary.json。
+
 ## 本机与 GitHub 开发分支同步 · 2026-10-11
 
 已在原生 Windows、原项目运行环境核对最新开发分支。依赖检查通过；实际主窗口可见、伤害报告与第140节培养方案对照可响应。精选计算1,678项（4既有跳过）0失败/错误，三处文本编码修正相关42项通过。初次全量2,848项仍保留12个历史/识别断言缺口；不能宣称完整验证通过。87技能全窗口、实际游戏采样与聊天集成未在此次验证。详见 `verification/local-sync-20261011/summary.json`。

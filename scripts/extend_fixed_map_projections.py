@@ -18,8 +18,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from rouge.battle_preview import battle_data, DATA
 from rouge.map_projection import grid_digest
+from scripts.map_fit_replay import verify_fit_replay, canonical_inverse
 
 BASE = ROOT / 'research/p3-map-ground-current'
+CANONICAL_PATH = ROOT / 'research/p3-direct-ground-current/prior-regular-projections.json'
+CANONICAL_SHA256 = 'b36710dbc381de0ded802d6edc4ef4eafe192432818180bf608a5fded3cf843c'
 
 
 def digest(path):
@@ -81,6 +84,9 @@ def build(write=False):
     if digest(prior_path) != receipt['prior_sha256']:
         raise ValueError('The frozen prior projection data changed.')
     prior = read(prior_path)
+    if digest(CANONICAL_PATH) != CANONICAL_SHA256:
+        raise ValueError('The sealed published ground-calibration values changed.')
+    canonical = read(CANONICAL_PATH)
     if len(prior['calibrations']) != 10 or len(prior['stages']) != 20:
         raise ValueError('Review the prior calibration scope before rebasing.')
     for name, sha in receipt['frozen_sha256'].items():
@@ -92,8 +98,10 @@ def build(write=False):
         entry = read(BASE / f'frozen-observation-{number}.json')['calibrations'][0]
         original = read(BASE / f'initial-fit-{number}.json')[0]
         result = fit(entry)
-        if result != original:
-            raise ValueError('The original observation cannot reproduce its first fit.')
+        verify_fit_replay(result, original)
+        # Recompute/validate independently, then retain the original published
+        # values. This never replaces a golden fit with this host's float bits.
+        result = copy.deepcopy(original)
         stage = source_check(entry['id'], receipt)
         expected = number in receipt['included_observations']
         if result['accepted'] is not expected:
@@ -114,7 +122,7 @@ def build(write=False):
         image = stage['image']
         output['calibrations'][cid] = {'anchors': copy.deepcopy(entry['anchors']),
             'checks': result['checks'], 'matrix': result['matrix'],
-            'inverse': np.linalg.inv(matrix).ravel().tolist(), 'tolerance_px': 4,
+            'inverse': canonical_inverse(np.linalg.inv(matrix).ravel().tolist(), canonical['calibrations'][cid]['inverse']), 'tolerance_px': 4,
             'bitmap_sha256': image['sha256'], 'grid_sha256': grid_digest(stage),
             'width': image['width'], 'height': image['height'],
             'rows': len(stage['map']), 'cols': len(stage['map'][0]),

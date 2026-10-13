@@ -1,0 +1,186 @@
+{
+  "kind": "SOURCE_DERIVED_LEGACY_WARNING_CONTRACT_DIAGNOSTIC",
+  "actual_full260_attempt": 2,
+  "not_a_replacement_full_window_run": true,
+  "trigger_case_inference_basis": "Original cases085 emits first positive frames char_1037_amiya3 S1 empty selection, single81, then pair81+82; two recorded completed cases and original require_warning_order085 failure identify the next pair. No live failing-local dump was preserved before finally restoration.",
+  "failed_frame_locals_recovered": false,
+  "original_require_warning_order_source": "def require_warning_order085(result,args,text,technical):\n    groups=('heal_scale','received_regeneration')\n    selected=args['relic_ids']\n    conflicting=len(set(selected)&{'rogue_6_relic_legacy_81','rogue_6_relic_legacy_82','rogue_6_relic_legacy_83'})>=2\n    expected=['组合 '+group+' 的叠加规则尚未核验，未套用该组合。'for group in groups]if conflicting else []\n    actual=[w for w in result['warnings']if w.startswith('组合 ')]\n    assert actual==expected\n    records=result['relic_resolution']['records']\n    assert [r['id']for r in records]==selected\n    if conflicting:\n        assert not result['relic_resolution']['complete']\n        assert not any(r['kind']in ('healing_factor','regeneration_factor')for r in result['relic_resolution']['rules'])\n        for record in records:\n            if record['id']in ('rogue_6_relic_legacy_81','rogue_6_relic_legacy_82','rogue_6_relic_legacy_83'):\n                assert record['pending']==['组合叠加规则待核验:'+group for group in groups]\n                assert record['applied']==[] and record['status']=='incomplete'\n        if technical:\n            assert text.index(expected[0])<text.index(expected[1])\n        else:\n            rendered='组合 未核验配置（原文见技术资料） 的叠加规则尚未核验，未套用该组合。'\n            assert text.count(rendered)==2\n            assert '组合 heal_scale 'not in text and '组合 received_regeneration 'not in text\n    if 'rogue_6_relic_legacy_5'in selected:\n        other=next(r for r in records if r['id']=='rogue_6_relic_legacy_5')\n        assert other['status']=='applied' and other['applied']\n    # Unknown stacking is excluded irrespective of zero observation; this\n    # never establishes real target/recipient state or a composition formula.\n    if args['window_seconds']==0:\n        assert result['total_damage']==0\n        if args['operator']=='mechanist'and args['skill']==3:\n            # Legacy _skill_damage emits a damage-only dictionary; its estimate\n            # independently carries zero direct healing without adding a field.\n            assert 'total_healing'not in result\n            assert result['estimate']['skill']['window_healing']==0\n        else:assert result['total_healing']==0",
+  "original_require_warning_order_sha256": "5d6252f921376bf0d1a8f9903c4f7b2e55c94f626d27919e9ea895d1ceb96d4c",
+  "source_based_next_case_args": {
+    "operator": "char_1037_amiya3",
+    "skill": 1,
+    "elite": 2,
+    "level": 60,
+    "skill_rank": 10,
+    "potential": 1,
+    "trust": 100,
+    "module_id": null,
+    "module_level": 0,
+    "timing_mode": "frames",
+    "window_seconds": 10,
+    "healing_targets": 1,
+    "enemy_defense": 0,
+    "enemy_resistance": 0,
+    "preexisting_fragile": false,
+    "cooperative": false,
+    "relic_ids": [
+      "rogue_6_relic_legacy_81",
+      "rogue_6_relic_legacy_82"
+    ]
+  },
+  "independent_current_pure_calculation_diagnostic": true,
+  "expected_old_combo_warnings": [
+    "组合 heal_scale 的叠加规则尚未核验，未套用该组合。",
+    "组合 received_regeneration 的叠加规则尚未核验，未套用该组合。"
+  ],
+  "actual_combo_warnings": [],
+  "result_warnings": [],
+  "resolution_complete": true,
+  "record_summaries": [
+    {
+      "id": "rogue_6_relic_legacy_81",
+      "status": "applied",
+      "pending": [],
+      "applied": [
+        {
+          "kind": "healing_factor",
+          "value": 1.2,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "group": "heal_scale",
+          "stacking": "native_independent_instances",
+          "composition_evidence": "research/p2-flower-healing-composition-current/receipt.json",
+          "healing_composition": "independent_modifier_product",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 0,
+          "relic_id": "rogue_6_relic_legacy_81",
+          "_verified_rule": true
+        },
+        {
+          "kind": "regeneration_factor",
+          "value": 1.2,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "group": "received_regeneration",
+          "stacking": "native_independent_instances",
+          "composition_evidence": "research/p2-flower-healing-composition-current/receipt.json",
+          "regeneration_composition": "direct_multiplier_sum",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 1,
+          "relic_id": "rogue_6_relic_legacy_81",
+          "_verified_rule": true
+        },
+        {
+          "kind": "regeneration_factor",
+          "value": 1.2,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "group": "received_regeneration",
+          "stacking": "native_independent_instances",
+          "composition_evidence": "research/p2-flower-healing-composition-current/receipt.json",
+          "regeneration_composition": "direct_multiplier_sum",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 2,
+          "relic_id": "rogue_6_relic_legacy_81",
+          "_verified_rule": true
+        }
+      ]
+    },
+    {
+      "id": "rogue_6_relic_legacy_82",
+      "status": "applied",
+      "pending": [],
+      "applied": [
+        {
+          "kind": "healing_factor",
+          "value": 1.3,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "group": "heal_scale",
+          "stacking": "native_independent_instances",
+          "composition_evidence": "research/p2-flower-healing-composition-current/receipt.json",
+          "healing_composition": "independent_modifier_product",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 0,
+          "relic_id": "rogue_6_relic_legacy_82",
+          "_verified_rule": true
+        },
+        {
+          "kind": "regeneration_factor",
+          "value": 1.3,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "group": "received_regeneration",
+          "stacking": "native_independent_instances",
+          "composition_evidence": "research/p2-flower-healing-composition-current/receipt.json",
+          "regeneration_composition": "direct_multiplier_sum",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 1,
+          "relic_id": "rogue_6_relic_legacy_82",
+          "_verified_rule": true
+        },
+        {
+          "kind": "regeneration_factor",
+          "value": 1.3,
+          "profession": "",
+          "position": "",
+          "subprofession": "",
+          "group": "received_regeneration",
+          "stacking": "native_independent_instances",
+          "composition_evidence": "research/p2-flower-healing-composition-current/receipt.json",
+          "regeneration_composition": "direct_multiplier_sum",
+          "source_buff_key": "global_buff_normal",
+          "source_buff_index": 2,
+          "relic_id": "rogue_6_relic_legacy_82",
+          "_verified_rule": true
+        }
+      ]
+    }
+  ],
+  "source_receipt": {
+    "file": "research/p2-flower-healing-composition-current/receipt.json",
+    "sha256": "42c5cbd5f37c0ac3376b4f6946cd8346108b4c86f7084868994050911af610b7",
+    "scope": "three fixed rogue6 received-healing/HP-recovery sources; parameter composition only",
+    "parameter_oracles": [
+      {
+        "source_ids": [
+          "rogue_6_relic_legacy_81",
+          "rogue_6_relic_legacy_82",
+          "rogue_6_relic_legacy_83"
+        ],
+        "received_healing_factor": 2.184,
+        "flat_and_hp_ratio_recovery_factor": 1.9,
+        "basis": "1.2*1.3*1.4 versus1+0.2+0.3+0.4"
+      },
+      {
+        "source_ids": [
+          "rogue_6_relic_legacy_81",
+          "rogue_6_relic_legacy_82"
+        ],
+        "received_healing_factor": 1.56,
+        "flat_and_hp_ratio_recovery_factor": 1.5,
+        "basis": "1.2*1.3 versus1+0.2+0.3"
+      }
+    ],
+    "source_scope_limitations": [
+      "Source-bound to these three exact raw rogue6 records; no general rule for arbitrary future multipliers.",
+      "Displayed factors are parameter arithmetic, not native bit-for-bit FP output or actual receiving eligibility.",
+      "No actual buff attachment, first recovery tick, refresh/cover/lifetime or event count inferred.",
+      "Current XLua/hotfix remains unknown; static installed path only.",
+      "Elemental-resistance part of涌动之餐 remains reference-only under product scope."
+    ]
+  },
+  "guard_bound_source_hashes_match": {
+    "rouge/damage.py": true,
+    "rouge/data/relic-mechanics.json": true,
+    "rouge/relic_healing_factors.py": true,
+    "rouge/relics.py": true
+  },
+  "conclusion": "The exact three supported source families now have proven parameter composition; old pair-must-be-unknown warnings/rule suppression/status requirements conflict with current evidenced behavior. Do not fabricate old warnings/pending, roll back source-supported composition, rewrite results, or invent bridge admissions to force the original contract to pass. Actual attachment/ticks/current hotfix remain unverified separately.",
+  "source_expected_values_or_bridge_modified": false
+}

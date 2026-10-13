@@ -1,0 +1,39 @@
+{
+  "original_test": "tests.test_adaptive_recognition.AdaptiveRecognitionTests.test_changed_icon_is_not_reported_as_fresh_and_geometry_change_rediscovers",
+  "original_result": "AssertionError: 2312604 not less than 2312604",
+  "original_platform": "Windows",
+  "original_test_executed_here": false,
+  "closed": false,
+  "required_original_input": "samples/native-client/operator-mechanist.png",
+  "original_input_hash_available_in230_receipt": null,
+  "input_cannot_be_substituted": true,
+  "sequence": [
+    "fresh ScreenReader(); no previous read, context=None, client_rect=None",
+    "load exact original through cv2.imdecode(np.fromfile(path,dtype=np.uint8),1); record bytes SHA256, actual shape/dtype, decoder version",
+    "first=reader.read(image), require current operator potential==6",
+    "changed=image.copy(); changed[400:590,1700:1920]=0",
+    "second=reader.read(changed), require potential absent and observed_at newer; preserve original less-than assertion unchanged",
+    "only after the old assertion succeeds, third=reader.read(relocated(image)) and original geometry/fresh potential assertions"
+  ],
+  "capture_for_each_frame": [
+    "original/frame/analysis shapes and dtype; viewport content_rect, scale, analysis_size",
+    "installed RapidOCR/ORT/OpenCV/NumPy; exact provider type, use_det/use_rec Python types, rec_batch_num/type, PageOCR._supported()",
+    "visual plan candidates/specialized/fallback_reason/current affine transform/control bounds and exact_controls reuse",
+    "normalized current region domain; page_verified_identity before/after; route_age/retry_after",
+    "DynamicOCR prior image present/shape/dtype/domain/age/current dirty pixel and outside-domain changes",
+    "prior OCR-box bounds and expanded/merged dirty rectangles; union-area denominator and >45% or >12 decisions",
+    "DynamicOCR kwargs force_discovery/seed_from_full/guard_outside and final metrics; actual engine call crop shapes/cache hits",
+    "current operator fields/missing_fields/complete and specialized_observation_valid; actual crop/full retry reason",
+    "PageOCR full detection and recognized/reused batch counts; do not reinterpret them as DynamicOCR pixels"
+  ],
+  "restore_policy": [
+    "Restore the genuine original authorized fixture with provenance; public composites and same-sized replacement captures cannot satisfy this condition.",
+    "Restore native Windows execution for native certification, or record a separate Linux/Wine replay scope.",
+    "Preserve original230 failed receipt; annotate a later genuine retrigger result instead of changing old tests or inventing a success."
+  ],
+  "known_discriminators": [
+    "The original second-frame failure has a pixels key: with unchanged source it reached the DynamicOCR metric path, not the supported PageOCR metrics schema.",
+    "Whether first-frame PageOCR cleared Dynamic state, visual-control damage, semantic incomplete retry, geometry/domain invalidation or dirty-area threshold caused it remains unobserved in original230.",
+    "2312604 alone does not prove image width/height; the public1280x703 frame is independently enlarged by prepare_frame to2052x1127 and yields that same area."
+  ]
+}
