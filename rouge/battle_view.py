@@ -15,6 +15,7 @@ from .battle_reward_planning import stage_reward_sources,reward_source_text
 from .branch_reference_view import BranchReferencePanel
 from .duel_reward_planning import is_duel_stage
 from .duel_reward_view import DuelRewardPanel
+from .highland_top_view import HighlandTopDialog
 
 class BattleGrid(QWidget):
     cellSelected=Signal(object)
@@ -243,6 +244,8 @@ class BattlePreviewPanel(QWidget):
         self.duel_reward_button=QPushButton('左中右档次奖励');rewards.addWidget(self.duel_reward_button)
         self.duel_reward_window=None
         self.duel_reward_button.clicked.connect(self.open_duel_rewards)
+        self.highland_top_button=QPushButton('高台名义表面资料');rewards.addWidget(self.highland_top_button)
+        self.highland_top_dialog=None;self.highland_top_button.clicked.connect(self.open_highland_top)
         self.branch_toggle=QCheckBox('条件分支来源与全部动作');layout.addWidget(self.branch_toggle)
         self.branch_panel=BranchReferencePanel();layout.addWidget(self.branch_panel);self.branch_panel.hide()
         maps=QSplitter(Qt.Orientation.Horizontal)
@@ -294,6 +297,13 @@ class BattlePreviewPanel(QWidget):
         if self._shown_enemy:
             self._render_enemy(*self._shown_enemy[1:],preserve=True)
 
+    def open_highland_top(self):
+        if not self.current_stage:return
+        if self.highland_top_dialog is None:
+            self.highland_top_dialog=HighlandTopDialog(self.current_stage,self)
+        else:self.highland_top_dialog.set_stage(self.current_stage)
+        self.highland_top_dialog.show();self.highland_top_dialog.raise_()
+
     def open_duel_rewards(self):
         if not is_duel_stage(self.current_stage):return
         if self.duel_reward_window is None:
@@ -325,6 +335,8 @@ class BattlePreviewPanel(QWidget):
         self._branch_marker=None;self.branch_panel.set_stage(sid)
         self.current_stage=sid;stage=battle_data()['stages'].get(sid)
         self.duel_reward_button.setVisible(is_duel_stage(sid))
+        self.highland_top_button.setEnabled(bool(stage and any(t.get('tileKey')=='tile_wall' and
+            t.get('heightType')=='HIGHLAND' for t in stage['tiles'])))
         self.reward_combo.blockSignals(True);self.reward_combo.clear()
         self.reward_combo.addItem('选择来源查看数量条件；实际奖励总量未知',None)
         self.reward_result=stage_reward_sources(sid) if stage else None
