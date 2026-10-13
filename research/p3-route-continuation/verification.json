@@ -1,0 +1,53 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "command": ".venv/bin/python -m unittest tests.test_route_constraints -v",
+      "tests": 13,
+      "failed": 0,
+      "scope": "Behavior over synthetic public declarations and existing fixed data."
+    },
+    {
+      "command": "QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest tests.test_route_constraints_view -v",
+      "tests": 6,
+      "failed": 0,
+      "scope": "Linux Qt actual widget rendering/interactions; not native Windows."
+    }
+  ],
+  "total_tests": 19,
+  "visual_check": {
+    "scope": "Linux offscreen actual widget at 1200x900, inspected rendered Chinese controls and results.",
+    "scratch_file": "work/route-continuation/constraints-window.png",
+    "passed": true
+  },
+  "covered": [
+    "Required/order/avoid constraints guide search before result limit.",
+    "Unknown admission stays frontier and never funds descendants or reward.",
+    "Independent item uses, AP/light/random-stop boundaries and battle identity/victory.",
+    "Truthful pending-prefix/sibling/depth caps and strict invalid-input handling.",
+    "Five usable presets, node-constraint controls and editable declarations.",
+    "Epoch/zone/template/coordinate guarded map signals.",
+    "Cache refresh preserves input, node choice, result and scroll; invalid result preserves prior output.",
+    "Edits after or during calculation keep exact computed snapshot and label output as previous input needing recalculation."
+  ],
+  "not_run": [
+    "Native Windows UI",
+    "Game integration or current-server verification",
+    "Desktop chat integration"
+  ],
+  "initial_failures": [
+    {
+      "stage": "Follow-up stale-input Qt regression addition",
+      "test": "test_edits_after_or_during_calculation_mark_the_retained_result_as_prior_input",
+      "error": "assertEqual(result_snapshot(), before) used original first-run baseline after a successful second calculation. Original invalid-input test tail was accidentally placed in the new test.",
+      "fix": "Restored that tail to invalid-input preservation test. Product stale-input behavior assertion already passed.",
+      "final": "6 Qt tests passed after fixing test placement; 13 prior unchanged behavior passes reused."
+    }
+  ],
+  "note": "Initial 13 behavior and 5 Qt checks passed; follow-up stale-input audit added one Qt regression and recorded its initial test-placement failure. Final 6 Qt checks passed; unchanged 13 behavior checks reused.",
+  "followup_review": {
+    "reviewer": "/root/validation_readiness",
+    "mode": "read-only code/source inspection, no rerun",
+    "result": "State/pruning/source/unknown/map guards reasonable; requested stale-input UI warning implemented."
+  }
+}

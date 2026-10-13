@@ -143,6 +143,10 @@ class MainWindow(QMainWindow):
         from .paired_calibration_view import PairedCalibrationPanel
         self.paired_calibration=PairedCalibrationPanel()
         tabs.addTab(self.paired_calibration,'前后校准')
+        from .route_constraints_view import RouteConstraintsPanel
+        self.route_constraints=RouteConstraintsPanel()
+        self.route_constraints.mapNodeSelected.connect(self.show_catalog_map_node)
+        tabs.addTab(self.route_constraints,'路线约束')
         from .technology_view import TechnologyReferencePanel
         self.technology_reference=TechnologyReferencePanel(account_path=Path(OPERATOR_STATE).with_name('technology-state.json'))
         tabs.addTab(self.technology_reference,'长期科技')
@@ -322,6 +326,7 @@ class MainWindow(QMainWindow):
         self.node_catalog.set_map_context(remembered,map_conditions(remembered,self.run.state.get('config',{})),
             epoch=self.run.state['id'],historical=not fresh,runtime_context=context)
         self.offline_tools.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
+        self.route_constraints.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
 
     def refresh_windows(self):
         if self.busy:
