@@ -1612,7 +1612,7 @@
     }
   ],
   "next_section": 262,
-  "next_action": "本批261修复及完整可用全量验收已完成，结束本批并保存云端交接；262未启动，等待用户明确继续。原Windows/缺历史原件/私有样本仍待原件复验，不计通过。下次定期全量275仅在恢复后适用。",
+  "next_action": "本批261修复及完整可用全量验收已完成并普通推送，云端94709ed9已真实核对；本次仅保存已验证发布证明与交接，262未启动，等待用户明确继续。原Windows/缺原件/私有样本未计通过，275仅恢复后适用。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 261,
@@ -1765,12 +1765,12 @@
     "batch_closed": true
   },
   "last_verified_cloud_save": {
-    "section": 260,
-    "scope": "previous_functional_section",
+    "section": 261,
+    "scope": "current_requested_repair_section",
     "binding": "verified_remote_commit",
-    "commit": "f4a0b964f8156bd29a84fa3e1be6d02cb6f75ac9",
-    "proof": "verification/full-261/prior-publication-260.json",
-    "proof_sha256": "60dfb23e8ad9f4999954dd9d31474c8b4cc0a84c914b18d289c4f4b8f95c4a95"
+    "commit": "94709ed9fa0e82a946651709cdedb7ef49419e23",
+    "proof": "verification/full-261/section261-publication.json",
+    "proof_sha256": "c3dbe3ebcc9e06b37bf77a79f07f5db3dccddbe92846041f0fc634ce361a7950"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -2337,7 +2337,9 @@
     "full_scope_required": true,
     "original_failures_must_be_preserved": true,
     "no_auto_section262": true,
-    "completed_at_Beijing": "2026-10-13T18:30:49.162033+08:00"
+    "completed_at_Beijing": "2026-10-13T18:30:49.162033+08:00",
+    "cloud_save_verified": true,
+    "verified_repair_commit": "94709ed9fa0e82a946651709cdedb7ef49419e23"
   },
   "historical_before_section261_last_full_validation": {
     "after_section": 260,
@@ -2380,5 +2382,22 @@
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
   "latest_functional_section": 260,
-  "current_completed_section_kind": "user_requested_repair_section"
+  "current_completed_section_kind": "user_requested_repair_section",
+  "historical_previous260_verified_save_before261_publication": {
+    "section": 260,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "f4a0b964f8156bd29a84fa3e1be6d02cb6f75ac9",
+    "proof": "verification/full-261/prior-publication-260.json",
+    "proof_sha256": "60dfb23e8ad9f4999954dd9d31474c8b4cc0a84c914b18d289c4f4b8f95c4a95"
+  },
+  "cloud_publication_closeout": {
+    "kind": "publication_metadata_only_not_new_section",
+    "enclosing_commit_binding": true,
+    "verified_repair_commit": "94709ed9fa0e82a946651709cdedb7ef49419e23",
+    "source_changes_after_full_validation": false,
+    "completed_sections": 261,
+    "batch_closed": true,
+    "section262_started": false
+  }
 }
