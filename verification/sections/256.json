@@ -1,0 +1,74 @@
+{
+  "section": 256,
+  "title": "受疗者HP原值分商精度与严格资格阈值诊断",
+  "remaining_item": "P2当前FP原值与受疗资格精度边界",
+  "new_capability": "独立HP整数或FP原值与来源、native正数分商逐步记录、三个模组门的阈值相邻值和多观察变化见证；独立后置比例另行声明，主窗口HP原值诊断页",
+  "limitations": [
+    "分商阶段不自动成为缺body的Clamp01/get_hpRatio后置结果",
+    "没有独立后置比例就不输出实际/后置资格；actualGetRatio/实际受疗资格保持未知",
+    "同版Clamp01三次有线索查询仍缺方法体，未拼其它版本推断",
+    "示例及5000oracle为算术验证，不是实际游戏测量或当前热更新认证"
+  ],
+  "files": [
+    "research/p2-recipient-native-ratio/REPORT.md",
+    "research/p2-recipient-native-ratio/candidate-manifest.json",
+    "research/p2-recipient-native-ratio/candidate-public-qt.png",
+    "research/p2-recipient-native-ratio/public-reference-vectors.json",
+    "research/p2-recipient-native-ratio/source-audit.json",
+    "research/p2-recipient-native-ratio/validation.json",
+    "rouge/app.py",
+    "rouge/data/recipient-native-ratio-source.json",
+    "rouge/recipient_native_ratio.py",
+    "rouge/recipient_native_ratio_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_recipient_native_ratio.py",
+    "verification/section-256/tests.txt",
+    "verification/section-256/validation.json"
+  ],
+  "source_evidence": [
+    "同版216 FP.op_Division125指令和3条int→FP转换原件逐条及14锚点，Entity.get_hpRatio调用后缺Clamp01body明确保留",
+    "原LT/LE容差门与原模组资格参数，精确分商和有理截断相邻值产生实际不同的条件门"
+  ],
+  "acceptance": [
+    "15新API/严格原值/真实Qt完整输入及后置声明检查通过",
+    "独立5000整数oracle、阈值前后端点/来源/超界/unknown/后置独立声明与宿主刷新保留"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T13:58:43.806779+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "03aeb25f49f8b32b02ff34aec280578c8de491aa",
+  "required_raw_sha256": {
+    "research/p2-recipient-native-ratio/REPORT.md": "1071bdd359f7bf92bbf71ba2381d9ba21e037be4d4603ae7300a2f872a615734",
+    "research/p2-recipient-native-ratio/candidate-manifest.json": "926a53badbac6db71132ee1b0d938def5f4460a86c8235e3fadeeac7ef1b2b27",
+    "research/p2-recipient-native-ratio/candidate-public-qt.png": "96901ea6d428b4b05481a2d4ddeb6ad2de85b25357c0a488e40a4bc7b8d3513f",
+    "research/p2-recipient-native-ratio/public-reference-vectors.json": "696affff7c41488c5e71765f977fbc920ecb02713c891d5c3e2cacc5e4cd72ce",
+    "research/p2-recipient-native-ratio/source-audit.json": "455cdbad341b34068dd130e35d0c6c7fc1a7fd00e28f99028a0ff7f9aad4a984",
+    "research/p2-recipient-native-ratio/validation.json": "46558af6e5c9a1d9a31e5280e1a2467db14066a2006905854325d33601055339",
+    "rouge/app.py": "ec5604d68312ab11d733013ecd1efa28370db6d329857f0239c715358d379577",
+    "rouge/data/recipient-native-ratio-source.json": "a95e0ac7fe99289825198ce1a59f4143bd5fe21e8669ebf8da0dea9842773ac3",
+    "rouge/recipient_native_ratio.py": "3d258e939a5de08d8e09412de66915bce89961494bf61d06fa3a8a7d36d4b022",
+    "rouge/recipient_native_ratio_view.py": "2e69fb61d4358da11f6d88449b4e5e611f6adb7dcd98ed640fbd52b08e0ae88a",
+    "scripts/verify_cloud.py": "22c600e517b1d94ea30128e232687f89a5cbbfd3c163001c16c806926a7066c8",
+    "tests/test_recipient_native_ratio.py": "7deaa37fc8cd4122a49cbdc1f6701ce38db94a2320e98bd04133d91ade68a844",
+    "verification/section-256/tests.txt": "0521f0002ce9a5b292ff8954dcc1457d466ef32c475ff1cae6a677d172d7068e",
+    "verification/section-256/validation.json": "5738c9381ef88471ff1285a5ee57e35deeb965edf69e941f8ab873bb213fda04"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_recipient_native_ratio"
+    ],
+    "tests_run": 15,
+    "passed": 15,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 260
+}
