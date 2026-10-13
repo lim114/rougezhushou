@@ -14,6 +14,7 @@ from .ui_state import replace_text
 from .stage_context import stage_context_text
 from .duel_reward_planning import is_duel_stage
 from .duel_reward_view import DuelRewardPanel
+from .scrap_exchange_view import ScrapExchangePanel
 
 KINDS={'event':'事件','battle':'战斗资料','function':'功能节点','original':'未归类原文','map':'本图节点'}
 QUALIFICATIONS={'matched':'已列条件相符','unknown':'资格未确认','excluded':'已列条件不符'}
@@ -275,6 +276,7 @@ class NodeCatalogPanel(QWidget):
         self.map_context=None;self.runtime_context={};self._first_tree=True
         self.destination_window=None;self.destination_origin_key=None
         self.duel_reward_window=None;self.duel_reward_origin_key=None
+        self.exchange_window=None;self.exchange_origin_key=None
         layout=QVBoxLayout(self)
         self.context_label=QLabel('公开目录以自然入口核对已列条件；特殊事件原文仍保留，不代表当前可进入，不提供生成概率。')
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
@@ -305,6 +307,8 @@ class NodeCatalogPanel(QWidget):
         self.destination_button=QPushButton('查看选项目的地原文与作战资料');rl.addWidget(self.destination_button)
         self.duel_reward_button=QPushButton('查看狭路相逢档次奖励');rl.addWidget(self.duel_reward_button)
         self.duel_reward_button.hide();self.duel_reward_button.clicked.connect(self.open_duel_rewards)
+        self.exchange_button=QPushButton('比较提供零件与交换候选');rl.addWidget(self.exchange_button)
+        self.exchange_button.hide();self.exchange_button.clicked.connect(self.open_scrap_exchange)
         self.map_location=QComboBox();self.map_location.setAccessibleName('该内容对应地图节点');rl.addWidget(self.map_location)
         self.map_jump=QPushButton('在地图预览定位节点');self.map_jump.setEnabled(False);rl.addWidget(self.map_jump)
         self.map_contents=QPushButton('查看此节点事件与作战');self.map_contents.setEnabled(False);rl.addWidget(self.map_contents)
@@ -515,6 +519,10 @@ class NodeCatalogPanel(QWidget):
         self.duel_reward_button.setVisible(duel)
         if duel and self.duel_reward_window and self.duel_reward_origin_key==key:
             self.duel_reward_window.set_context(self._event_context())
+        exchange=bool(entry and entry['kind']=='event' and entry['record'].get('title')=='回滚文明')
+        self.exchange_button.setVisible(exchange)
+        if exchange and self.exchange_window and self.exchange_origin_key==key:
+            self.exchange_window.set_context(self._event_context(entry['record']))
         if not entry:text='没有符合筛选的资料。不能把资料缺失视为不可能出现。'
         elif entry['kind']=='event':
             q=entry['qualification'];text=event_details_text(entry['record']['id'],self._event_context(entry['record']))
@@ -623,6 +631,14 @@ class NodeCatalogPanel(QWidget):
         self.destination_origin_key=key
         self.destination_window.set_reference(choice_id,context)
         self.destination_window.show();self.destination_window.raise_();self.destination_window.activateWindow()
+
+    def open_scrap_exchange(self):
+        key=self.list.selected_key();entry=next((e for e in self.entries if e['key']==key),None)
+        if not entry or entry['kind']!='event' or entry['record'].get('title')!='回滚文明':return
+        if self.exchange_window is None:self.exchange_window=ScrapExchangePanel(self)
+        self.exchange_origin_key=key
+        self.exchange_window.set_context(self._event_context(entry['record']))
+        self.exchange_window.show();self.exchange_window.raise_()
 
     def open_duel_rewards(self):
         key=self.list.selected_key();entry=next((e for e in self.entries if e['key']==key),None)

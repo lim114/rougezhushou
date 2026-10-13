@@ -1,0 +1,116 @@
+{
+  "after_section": 245,
+  "tested_worktree_parent_commit": "5e27e11be4f38592c724aa1a8c8e9bcff2fbf081",
+  "available_checks_passed": false,
+  "complete_repository_validation": false,
+  "native_windows_verified": false,
+  "game_captures": 0,
+  "chat_requests": 0,
+  "scope_not_reduced": true,
+  "selector_count": 362,
+  "scope": "complete historical CORE, NEW and current cloud selector union plus preserved legacy full-window attempt and current 238–245 actual MainWindow workflow",
+  "linux": {
+    "tests_run": 3443,
+    "tests_passed": 3212,
+    "failures": 1,
+    "errors": 3,
+    "historical_or_declared_skips": 84,
+    "unavailable_records": 205,
+    "source_drift": [],
+    "failed_cases": [
+      {
+        "test": "tests.test_base_settlement_planning.BaseSettlementViewTests.test_new_query_all_eight_public_scenarios_run_and_render_in_qt",
+        "reason": "AssertionError: 21 != 20"
+      },
+      {
+        "test": "setUpClass (tests.test_direct_landmark_mapping.DirectLandmarkTests)",
+        "reason": "ValueError: A rejected original plane fit changed or was promoted."
+      },
+      {
+        "test": "setUpClass (tests.test_map_ground_extension.FrozenGroundExtensionTests)",
+        "reason": "ValueError: The original observation cannot reproduce its first fit."
+      },
+      {
+        "test": "tests.test_node_content.NodeContentTests.test_event_same_title_and_description_preserve_ambiguous_scene_ids",
+        "reason": "RuntimeError: CJK font fixture unavailable: C:/Windows/Fonts/msyh.ttc; set ROUGE_TEST_CJK_FONT to a real font file containing Noto Sans CJK SC."
+      }
+    ]
+  },
+  "wine": {
+    "tests_run": 3545,
+    "tests_passed": 3329,
+    "failures": 3,
+    "errors": 4,
+    "historical_or_declared_skips": 84,
+    "unavailable_records": 187,
+    "source_drift": [],
+    "failed_cases": [
+      {
+        "test": "tests.test_base_settlement_planning.BaseSettlementViewTests.test_new_query_all_eight_public_scenarios_run_and_render_in_qt",
+        "reason": "AssertionError: 21 != 20"
+      },
+      {
+        "test": "tests.test_run_persistence_099.RunPersistenceTests.test_actual_dangling_symlink_is_not_missing_until_explicit_manual_reset",
+        "reason": "AssertionError: False is not true"
+      },
+      {
+        "test": "tests.test_account_cache_093.AccountCache093Tests.test_dangling_symlink_file_not_found_is_not_genuinely_absent",
+        "reason": "AssertionError: False is not true"
+      },
+      {
+        "test": "setUpClass (tests.test_direct_landmark_mapping.DirectLandmarkTests)",
+        "reason": "ValueError: A rejected original plane fit changed or was promoted."
+      },
+      {
+        "test": "setUpClass (tests.test_map_ground_extension.FrozenGroundExtensionTests)",
+        "reason": "ValueError: The original observation cannot reproduce its first fit."
+      },
+      {
+        "test": "tests.test_node_content.NodeContentTests.test_event_same_title_and_description_preserve_ambiguous_scene_ids",
+        "reason": "RuntimeError: CJK font fixture unavailable: C:\\windows\\Fonts\\msyh.ttc; set ROUGE_TEST_CJK_FONT to a real font file containing Noto Sans CJK SC."
+      },
+      {
+        "test": "tests.test_account_cache_093.AccountCache093Tests.test_symlink_to_damaged_file_retains_link_and_target_bytes",
+        "reason": "FileNotFoundError: [WinError 2] File not found: 'C:\\\\users\\\\agent\\\\AppData\\\\Local\\\\Temp\\\\tmpd619ok7x\\\\public-damaged-link.json'"
+      }
+    ]
+  },
+  "linux_process_exit_code": 139,
+  "wine_process_exit_code": 1,
+  "linux_teardown_signal": "segmentation fault after suite produced receipt; not converted into pass",
+  "legacy_window": {
+    "passed": false,
+    "recorded_checks": 209,
+    "preserved_original_assertions": 831,
+    "full_runtime_4283_completed": false,
+    "failure": {
+      "type": "AttributeError",
+      "message": "'RecipientRatioInput' object has no attribute 'setChecked'",
+      "traceback": "Traceback (most recent call last):\n  File \"Z:\\workspace\\rougezhushou\\work\\validation-audit\\full245-window-bundle\\window.py\", line 2002, in <module>\n    for key,widget in shu_widgets.items():widget.setChecked(False)\n                                          ^^^^^^^^^^^^^^^^^\nAttributeError: 'RecipientRatioInput' object has no attribute 'setChecked'\n"
+    },
+    "source_drift": [],
+    "process_exit_code": 1,
+    "unchanged_functional_try": true,
+    "tail_not_executed": true
+  },
+  "current_mainwindow_238_245": {
+    "passed": true,
+    "workflow_checks": 13,
+    "receipt": "verification/full-245/new-window/window.json"
+  },
+  "font_fixture_followup": {
+    "receipt": "verification/full-245/font-followup/validation.json",
+    "passed": true,
+    "scope": "the one original CJK-font test under a real explicitly selected NotoSansCJK fixture; original full-run errors preserved"
+  },
+  "prior_native230_failure_records": 12,
+  "prior_native230_failures_not_declared_fixed": true,
+  "limitations": [
+    "Absent .cache source receipts/golden files and private samples remain unavailable, not pass",
+    "Wine symlink behavior is an actual compatibility failure, not a native Windows assertion",
+    "The old query-count contract and frozen fit exact reproduction fail; no original golden/4px gate was changed",
+    "Legacy window uses obsolete setChecked API on RecipientRatioInput and stopped after209 check records; original assertion ASTs and functional try preserved",
+    "Linux full process segfaulted during teardown after report; product/full pass not claimed",
+    "Current real MainWindow additions passed independently and do not replace the unfinished831/4283 legacy scope"
+  ]
+}

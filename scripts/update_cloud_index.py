@@ -70,7 +70,7 @@ def update(root=ROOT):
              '当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。'
              '当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。'
              'P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。\n\n'
-             f'最新本机全量：`{index["latest_full_receipt"]}`，可用范围全通过：`{index["latest_full_available_checks_passed"]}`。'
+             f'最新记录全量：`{index["latest_full_receipt"]}`，可用范围全通过：`{index["latest_full_available_checks_passed"]}`。'
              'Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。'
              f'下面是历史交接，不代表当前节数。\n{END}\n\n')
     path.write_text(block+old, encoding='utf-8', newline='\n')
