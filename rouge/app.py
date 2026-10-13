@@ -155,6 +155,10 @@ class MainWindow(QMainWindow):
         self.route_resource_ledger=RouteResourceLedgerPanel()
         self.route_resource_ledger.mapNodeSelected.connect(self.show_catalog_map_node)
         tabs.addTab(self.route_resource_ledger,'路线资源')
+        from .route_scenarios_view import RouteScenarioMatrixPanel
+        self.route_scenarios=RouteScenarioMatrixPanel()
+        self.route_scenarios.mapNodeSelected.connect(self.show_catalog_map_node)
+        tabs.addTab(self.route_scenarios,'多情景路线')
         from .attack_state_sequence_view import AttackStateSequencePanel
         self.attack_state_sequence=AttackStateSequencePanel()
         tabs.addTab(self.attack_state_sequence,'攻击状态序列')
@@ -349,6 +353,7 @@ class MainWindow(QMainWindow):
         self.route_constraints.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
         self.resident_route_review.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
         self.route_resource_ledger.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
+        self.route_scenarios.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
 
     def refresh_windows(self):
         if self.busy:

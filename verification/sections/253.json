@@ -1,0 +1,71 @@
+{
+  "section": 253,
+  "title": "多情景路线状态矩阵与闭合分项敏感性比较",
+  "remaining_item": "P3路线难度风险与状态变化的有限多情景比较",
+  "new_capability": "共享明确图/计划与1–10独立AP库存触发终点居民情景，逐路线×情景状态矩阵、输入变化见证和全部闭合情景上的有限范围/保守分项比较；主窗口多情景路线页",
+  "limitations": [
+    "无分布/概率/效用权重，不称实际最优或安全",
+    "缺计划实例精确阻断该方案，不从同名库存替补；已知前缀不是完整总量",
+    "compound快照/尾部/资格未知保留，不能从部分情景证明全局优势",
+    "敏感性见证只为输入差异，不推实际因果或动态游戏状态"
+  ],
+  "files": [
+    "research/p3-route-continuation/scenarios/README.md",
+    "research/p3-route-continuation/scenarios/sealed-files.json",
+    "research/p3-route-continuation/scenarios/source-receipt.json",
+    "research/p3-route-continuation/scenarios/verification.json",
+    "rouge/app.py",
+    "rouge/route_scenarios.py",
+    "rouge/route_scenarios_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_route_scenarios.py",
+    "tests/test_route_scenarios_view.py",
+    "verification/section-253/tests.txt",
+    "verification/section-253/validation.json"
+  ],
+  "source_evidence": [
+    "既有233/234/239/246/251封闭移动/风险/终点声明规则，不增加实际脚本机制",
+    "严格有限共同情景矩阵与全部闭合条件下的分项数学比较"
+  ],
+  "acceptance": [
+    "15新API+实际Qt检查通过",
+    "缺实例/knownprefix/全unknown/复合风险/AP数量见证与过期链接、每情景来源输入保存和严格闭合轴关系"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T13:46:46.312305+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "1aea80fc63111e001375e40a918ac4950e8bc704",
+  "required_raw_sha256": {
+    "research/p3-route-continuation/scenarios/README.md": "8c028bf8247cfa50fb82ce2ae50e59ca4a001a247c8a8fe0a47d2f003bdbb76e",
+    "research/p3-route-continuation/scenarios/sealed-files.json": "c0c8d44e28c59a2a35d61f5bd0119da44e54a4003b0e09120e4ceb472f0e1a89",
+    "research/p3-route-continuation/scenarios/source-receipt.json": "9ffbfe1857f6aeeae6b9a3092c696157892ada1fe49a0ca95cdc516792b07992",
+    "research/p3-route-continuation/scenarios/verification.json": "52909d070446ed52df1f99eb815c73dc03a5c5ee8f724559491bf64e1ebd1413",
+    "rouge/app.py": "5dbc127941caea242142cd1027538fbe7dca17ef9cf1178dc0d38d670c30b88a",
+    "rouge/route_scenarios.py": "0b8f804c132f12cae893ae4fb84636ff40e67de795689d1d426f09ec937d48bf",
+    "rouge/route_scenarios_view.py": "3482d6a6fd451d82115b86e6e88c7b4b378ade4ad970c5bd6524583248cca626",
+    "scripts/verify_cloud.py": "37d3d0dba84b7c10ed00aeb71140e881208d6c39b9dfac67c375c4826dddfa1b",
+    "tests/test_route_scenarios.py": "61fdb892e75bcfb7fb85046f1d531ec6ea45590fa036e6c4f24d569c10302ac3",
+    "tests/test_route_scenarios_view.py": "92eeca573acb4aac32c8a9f107284d74d1cff7699670bb1a04eb84d9ee392918",
+    "verification/section-253/tests.txt": "808af4d1189d8ff9adbe0c30c9dff05d714c1d8afee0e9be2257aca61a4c21f9",
+    "verification/section-253/validation.json": "ea6a121bdcdb46607ad00c87ab65eef8e6b1a4ecd8f1c5faa65eef531c7dc556"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_route_scenarios",
+      "tests.test_route_scenarios_view"
+    ],
+    "tests_run": 15,
+    "passed": 15,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 260
+}

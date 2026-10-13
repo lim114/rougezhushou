@@ -1,0 +1,50 @@
+{
+  "scope": "Finite user-declared route×state matrix and source quantity sensitivity, not a probabilistic/game state model.",
+  "baseline": "a14f25aca23b065f461aab81c44fa2c4d742653c",
+  "reused_sources": [
+    {
+      "receipt": "research/p3-exploration-planning/source-receipt.json",
+      "original_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "facts": "Fixed move geometry, base cost/use counts and documented resource quantities."
+    },
+    {
+      "receipt": "research/p3-route-continuation/residents/source-receipt.json",
+      "facts": "Per-move connected resident candidates, named exclusions, unknown fallback/order retained."
+    },
+    {
+      "receipt": "research/p3-route-continuation/resources/source-receipt.json",
+      "facts": "Explicit passive activation/end/exit phases, uncertain single-use budgets, FINAL conversion, M04 vs M07 distinct portal exception qualification."
+    }
+  ],
+  "dependency_sha256": {
+    "rouge/route_resource_ledger.py": "2cb473479ffa8e5ba818a5a0aed314ccc55d3bfb932874d34c87ac0e9c743cae",
+    "rouge/route_resident_review.py": "467ebb1b07d9658ca5855110306006071110bbf0b93e6f676fb439b7d4e63b36",
+    "rouge/route_constraints_view.py": "29b91e0998130db13d333dd75c21283a50eb39dd4c79b7f496ca60fe685bd755",
+    "rouge/route_resident_review_view.py": "877f3c28c34b1555d5f37263780620383ba1c94e984428aedd94016cf374e577",
+    "rouge/route_resource_ledger_view.py": "01c4c9115dd2a90c3f79e69fa20d1f62e28be254ec417a1638b2511d74b39142",
+    "rouge/data/exploration-reference.json": "784ac156384551d4081de8e2734f9d6a10e72d2ef11f2196e3a498d4e042bb7a"
+  },
+  "new_declaration_rules": [
+    "Each scenario independently supplies AP, inventory and passive snapshot; missing required field is rejected.",
+    "null is unknown snapshot and never an empty snapshot; [] is explicitly empty.",
+    "Missing planned mode instance produces exact per-route blocked/unknown state and missing step, without substitution or dropping the entire matrix.",
+    "Known prefix before a later missing instance retains its source subtotal and risk reference, but not a full route total.",
+    "All per-case raw inputs and qualified source/risk ledgers retained as sensitivity witnesses."
+  ],
+  "new_mathematical_rules": [
+    "Maximum10 scenarios×20 plans of at most10 single-edge/item steps.",
+    "No probability or generated state from numeric intervals.",
+    "Quantity envelopes only when every explicitly supplied case closes that route quantity conditions; otherwise envelopeNone.",
+    "Conservative per-case named component rule compares same declared goal and terminal, closed quantities and matched risk policy.",
+    "Hope/shield grant quantities, baseXP, gold intervals and netAP remain independent axes; random-item value never ordered.",
+    "False conservative relation means rule not established, not actual route inferiority."
+  ],
+  "unknowns": [
+    "Actual state eligibility/reachability, collision/order, current server and unlisted cases.",
+    "Complete reward totals/pools, random-item quality/value, actual final resources and actual safety.",
+    "Unknown snapshots, blocked/unknown movement tails and independent phase declarations.",
+    "Actual optimum, scenario probabilities and utility."
+  ],
+  "no_new_mechanism_lookup_reason": "This group adds explicit-state bookkeeping and mathematical sensitivity over already pinned mechanisms; no new game numbers or script rules were introduced."
+}
