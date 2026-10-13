@@ -17,6 +17,30 @@ def fusion_source():
                       .read_text(encoding='utf-8'))
 
 
+def documented_form_values(base, skill_rank, form, active, qualified):
+    """Same documented form layer for endpoints and explicit native branches."""
+    if type(skill_rank) is not int or not 1 <= skill_rank <= 10:
+        raise ValueError('令三技能等级需要1–10整数。')
+    if form not in ('basic', 'advanced') or type(active) is not bool or type(qualified) is not bool:
+        raise ValueError('形态与技能状态需要明确声明。')
+    values = dict.fromkeys(FORM_FIELDS); trace = {}
+    if not qualified: return values, trace
+    source = fusion_source(); skill = source['owner_skill_levels'][skill_rank - 1]
+    buff = source['merged_additions'] if form == 'advanced' else {}
+    for key in ('hp', 'attack', 'defense', 'resistance'):
+        bonus = buff.get(key, 0) + (skill.get(key, 0) if active else 0)
+        values[key] = base[key] * (1 + bonus)
+        trace[key] = {'cultivation_and_direct_equipment': base[key],
+                      'form_additive_percent': buff.get(key, 0),
+                      'skill_additive_percent': skill.get(key, 0) if active else 0, 'factor': 1 + bonus}
+    values['attack_speed'] = base['attack_speed']
+    values['base_interval'] = base['base_interval'] + buff.get('base_interval', 0)
+    values['block'] = base['block'] + buff.get('block', 0)
+    values['deployment_slots'] = 2 if form == 'advanced' else 1
+    values['damage_type'] = '法术' if form == 'advanced' else '物理'
+    return values, trace
+
+
 def ling_fusion_reference(training, selection, skill_rank=10):
     if type(skill_rank) is not int or not 1 <= skill_rank <= 10:
         raise ValueError('令三技能等级需要1–10整数；8–10对应专精一至三。')
@@ -25,31 +49,12 @@ def ling_fusion_reference(training, selection, skill_rank=10):
     source = fusion_source()
     if variant['token_id'] != source['token_id'] or variant['skill_id'] != source['owner_skill_id']:
         raise ValueError('令三技能与弦惊原始身份不匹配。')
-    skill = source['owner_skill_levels'][skill_rank - 1]
-    merged = source['merged_additions']
     rows = []
     for stage in variant['stages']:
         qualified = variant['skill_qualified'] and stage['state'] != 'host_gate_unmet'
         for form in ('basic', 'advanced'):
             for active in (False, True):
-                values = dict.fromkeys(FORM_FIELDS)
-                trace = {}
-                if qualified:
-                    base = stage['values']
-                    buff = merged if form == 'advanced' else {}
-                    # Mode and skill percentages occupy the same documented additive layer.
-                    for key in ('hp', 'attack', 'defense', 'resistance'):
-                        bonus = buff.get(key, 0) + (skill.get(key, 0) if active else 0)
-                        values[key] = base[key] * (1 + bonus)
-                        trace[key] = {'cultivation_and_direct_equipment': base[key],
-                                      'form_additive_percent': buff.get(key, 0),
-                                      'skill_additive_percent': skill.get(key, 0) if active else 0,
-                                      'factor': 1 + bonus}
-                    values['attack_speed'] = base['attack_speed']
-                    values['base_interval'] = base['base_interval'] + buff.get('base_interval', 0)
-                    values['block'] = base['block'] + buff.get('block', 0)
-                    values['deployment_slots'] = 2 if form == 'advanced' else 1
-                    values['damage_type'] = '法术' if form == 'advanced' else '物理'
+                values, trace = documented_form_values(stage['values'], skill_rank, form, active, qualified)
                 rows.append({'module_level': stage['module_level'], 'form': form,
                              'skill_active_declared': active, 'skill_rank': skill_rank,
                              'state': 'documented_formula_reference' if qualified else 'host_gate_unmet',
