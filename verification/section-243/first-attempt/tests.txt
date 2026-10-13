@@ -1,0 +1,23 @@
+........This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+..................................E......................
+======================================================================
+ERROR: test_all_images_match_pinned_receipt (tests.test_battle_preview_039.BattlePreviewTests.test_all_images_match_pinned_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/rougezhushou/tests/test_battle_preview_039.py", line 145, in test_all_images_match_pinned_receipt
+    receipt=json.loads((ROOT/'.cache/research/battle-039/image-receipt.json').read_text(encoding='utf-8'))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/battle-039/image-receipt.json'
+
+----------------------------------------------------------------------
+Ran 67 tests in 1.126s
+
+FAILED (errors=1)

@@ -1,0 +1,29 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "tests.test_duel_reward_planning",
+    "tests.test_node_catalog",
+    "tests.test_node_catalog_view",
+    "tests.test_battle_preview_039"
+  ],
+  "classifier": "scripts.verify_full_available.AvailableResult; exact missing migrated cache/environment dependencies only",
+  "tests_run": 76,
+  "passed": 75,
+  "skipped": 0,
+  "failures": 0,
+  "errors": 0,
+  "unavailable_records": 1,
+  "unavailable": [
+    {
+      "test": "tests.test_battle_preview_039.BattlePreviewTests.test_all_images_match_pinned_receipt",
+      "kind": "unmigrated_cache",
+      "reason": "[Errno 2] No such file or directory: '/workspace/rougezhushou/.cache/research/battle-039/image-receipt.json'"
+    }
+  ],
+  "exit_code": 0,
+  "complete_related_validation": false,
+  "platform": "Linux",
+  "qt_scope": "real offscreen widgets; not native Windows or game verification"
+}

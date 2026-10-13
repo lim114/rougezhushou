@@ -13,6 +13,8 @@ from .view_catalog import stage_groups,enemy_groups,SubjectPicture,ENEMY_TIERS
 from .branch_choice import BranchChoice,OVERVIEW
 from .battle_reward_planning import stage_reward_sources,reward_source_text
 from .branch_reference_view import BranchReferencePanel
+from .duel_reward_planning import is_duel_stage
+from .duel_reward_view import DuelRewardPanel
 
 class BattleGrid(QWidget):
     cellSelected=Signal(object)
@@ -238,6 +240,9 @@ class BattlePreviewPanel(QWidget):
         rewards=QHBoxLayout();rewards.addWidget(QLabel('条件奖励来源'))
         self.reward_combo=QComboBox();rewards.addWidget(self.reward_combo,1);layout.addLayout(rewards)
         self.reward_summary=QPushButton('基础结算与全部奖励来源');rewards.addWidget(self.reward_summary)
+        self.duel_reward_button=QPushButton('左中右档次奖励');rewards.addWidget(self.duel_reward_button)
+        self.duel_reward_window=None
+        self.duel_reward_button.clicked.connect(self.open_duel_rewards)
         self.branch_toggle=QCheckBox('条件分支来源与全部动作');layout.addWidget(self.branch_toggle)
         self.branch_panel=BranchReferencePanel();layout.addWidget(self.branch_panel);self.branch_panel.hide()
         maps=QSplitter(Qt.Orientation.Horizontal)
@@ -289,6 +294,15 @@ class BattlePreviewPanel(QWidget):
         if self._shown_enemy:
             self._render_enemy(*self._shown_enemy[1:],preserve=True)
 
+    def open_duel_rewards(self):
+        if not is_duel_stage(self.current_stage):return
+        if self.duel_reward_window is None:
+            self.duel_reward_window=DuelRewardPanel(self)
+            self.duel_reward_window.stageSelected.connect(self.stageSelected.emit)
+        # Enemy calculation context does not establish an event entry or victory.
+        self.duel_reward_window.set_reference(self.current_stage)
+        self.duel_reward_window.show();self.duel_reward_window.raise_()
+
     def _technical_changed(self):
         """Change detail presentation without rebuilding choices or occurrences."""
         if self._branch_marker and self._detail_key and self._detail_key[1]=='branch_reference':
@@ -310,6 +324,7 @@ class BattlePreviewPanel(QWidget):
         self._rows_stage=None;self._shown_enemy=None;self._tile_cell=None;self._detail_key=None
         self._branch_marker=None;self.branch_panel.set_stage(sid)
         self.current_stage=sid;stage=battle_data()['stages'].get(sid)
+        self.duel_reward_button.setVisible(is_duel_stage(sid))
         self.reward_combo.blockSignals(True);self.reward_combo.clear()
         self.reward_combo.addItem('选择来源查看数量条件；实际奖励总量未知',None)
         self.reward_result=stage_reward_sources(sid) if stage else None
