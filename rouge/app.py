@@ -147,6 +147,10 @@ class MainWindow(QMainWindow):
         self.route_constraints=RouteConstraintsPanel()
         self.route_constraints.mapNodeSelected.connect(self.show_catalog_map_node)
         tabs.addTab(self.route_constraints,'路线约束')
+        from .route_resident_review_view import ResidentRouteReviewPanel
+        self.resident_route_review=ResidentRouteReviewPanel()
+        self.resident_route_review.mapNodeSelected.connect(self.show_catalog_map_node)
+        tabs.addTab(self.resident_route_review,'居民路线')
         from .attack_state_sequence_view import AttackStateSequencePanel
         self.attack_state_sequence=AttackStateSequencePanel()
         tabs.addTab(self.attack_state_sequence,'攻击状态序列')
@@ -333,6 +337,7 @@ class MainWindow(QMainWindow):
             epoch=self.run.state['id'],historical=not fresh,runtime_context=context)
         self.offline_tools.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
         self.route_constraints.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
+        self.resident_route_review.set_graph(remembered,epoch=self.run.state['id'],historical=not fresh)
 
     def refresh_windows(self):
         if self.busy:
