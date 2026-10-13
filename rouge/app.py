@@ -810,6 +810,10 @@ class MainWindow(QMainWindow):
         self.wang_resource_button.setVisible(False)
         self.wang_resource_button.clicked.connect(self.show_wang_resources)
         layout.addWidget(self.wang_resource_button)
+        self.supplemental_token_module_button=QPushButton('令/麦哲伦：召唤物模组端点对照')
+        self.supplemental_token_module_button.setVisible(False)
+        self.supplemental_token_module_button.clicked.connect(self.show_supplemental_token_modules)
+        layout.addWidget(self.supplemental_token_module_button)
         self.charge_timeline_button=QPushButton('机械师S3：比较冲锋时刻与观察窗口')
         self.charge_timeline_button.setEnabled(False)
         self.charge_timeline_button.clicked.connect(self.show_charge_timeline)
@@ -848,7 +852,8 @@ class MainWindow(QMainWindow):
         for index,button in enumerate((self.token_comparison_button,self.token_budget_button,
                 self.charge_timeline_button,self.shield_timeline_button,self.healing_budget_button,
                 self.skill_upgrade_button,self.enemy_comparison_button,self.scenario_library_button,
-                self.supplemental_skill_button,self.damage_budget_button,self.cultivation_comparison_button,self.wang_resource_button)):
+                self.supplemental_skill_button,self.damage_budget_button,self.cultivation_comparison_button,
+                self.wang_resource_button,self.supplemental_token_module_button)):
             layout.removeWidget(button);tools_layout.addWidget(button,index//2,index%2)
         layout.addLayout(tools_layout)
         self.damage_text = QPlainTextEdit()
@@ -1109,6 +1114,15 @@ class MainWindow(QMainWindow):
         if previous is not None:previous.close();previous.deleteLater()
         self.token_budget_dialog=TokenBudgetDialog(op,self.training_conditions(),self)
         self.token_budget_dialog.show()
+
+    def show_supplemental_token_modules(self):
+        owner=self.operator.currentData()
+        if owner not in ('char_2023_ling','char_248_mgllan'):return
+        from .p2_supplemental_token_module_view import SupplementalTokenModuleDialog
+        previous=getattr(self,'supplemental_token_module_dialog',None)
+        if previous:previous.close()
+        self.supplemental_token_module_dialog=SupplementalTokenModuleDialog(owner,self.training_conditions(),self)
+        self.supplemental_token_module_dialog.show()
 
     def show_wang_resources(self):
         if self.operator.currentData()!='char_2027_wang' or self.skill.currentData() not in (1,2):
@@ -1431,6 +1445,8 @@ class MainWindow(QMainWindow):
         implemented=op in catalog()['operators']
         if hasattr(self,'wang_resource_button'):
             self.wang_resource_button.setVisible(op=='char_2027_wang' and skill in (1,2))
+        if hasattr(self,'supplemental_token_module_button'):
+            self.supplemental_token_module_button.setVisible(op in ('char_2023_ling','char_248_mgllan'))
         healer=implemented and has_healing(op,skill)
         conditions=[(self.deployment_elapsed,op=='silverash' and self.training_conditions()['elite']==2),
                     (self.healing_targets,healer),
