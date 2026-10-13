@@ -140,6 +140,9 @@ class MainWindow(QMainWindow):
         self.offline_tools.mapNodeSelected.connect(self.show_catalog_map_node)
         tabs.addTab(self.offline_tools,'局外工具')
         self.offline_tools.set_stage(self.target_stage.currentData())
+        from .paired_calibration_view import PairedCalibrationPanel
+        self.paired_calibration=PairedCalibrationPanel()
+        tabs.addTab(self.paired_calibration,'前后校准')
         from .technology_view import TechnologyReferencePanel
         self.technology_reference=TechnologyReferencePanel(account_path=Path(OPERATOR_STATE).with_name('technology-state.json'))
         tabs.addTab(self.technology_reference,'长期科技')
@@ -1663,6 +1666,7 @@ class MainWindow(QMainWindow):
                 result['estimate']['notes'].insert(0,'当前启用个人强化测试；测试选项不代表从本局画面读取到的强化，也不写入记忆。')
             self.damage_result = {'scenario':scenario,'result':result}
             if hasattr(self,'offline_tools'):self.offline_tools.set_scenario(scenario)
+            if hasattr(self,'paired_calibration'):self.paired_calibration.set_scenario(scenario)
             self.charge_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==3)
             self.shield_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==2)
             from .healing_budget import healing_sources
