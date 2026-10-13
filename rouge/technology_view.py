@@ -19,6 +19,9 @@ class TechnologyReferencePanel(QWidget):
         self.create_profile_button = QPushButton('新建资料档案')
         profiles.addWidget(self.new_profile_name, 1); profiles.addWidget(self.create_profile_button)
         layout.addLayout(profiles)
+        self.upgrade_planner_button=QPushButton('核对自动资格与所选科技费用')
+        self.upgrade_planner_button.clicked.connect(self.open_upgrade_planner)
+        layout.addWidget(self.upgrade_planner_button);self.upgrade_planner_window=None
         self.summary = QLabel(); self.summary.setWordWrap(True); layout.addWidget(self.summary)
         self.persistence = QLabel(); self.persistence.setWordWrap(True); layout.addWidget(self.persistence)
         self.search = QLineEdit()
@@ -53,6 +56,13 @@ class TechnologyReferencePanel(QWidget):
         self.nodes.currentIndexChanged.connect(self.render)
         self.technical.toggled.connect(self.render)
         self.populate_profiles(); self.populate()
+
+    def open_upgrade_planner(self):
+        from .p2_technology_upgrade import capture_account_reference
+        from .p2_technology_upgrade_view import TechnologyUpgradePlannerDialog
+        if self.upgrade_planner_window:self.upgrade_planner_window.close()
+        self.upgrade_planner_window=TechnologyUpgradePlannerDialog(capture_account_reference(self.account_state),self)
+        self.upgrade_planner_window.show()
 
     def populate_profiles(self):
         self.profiles.blockSignals(True); self.profiles.clear()
