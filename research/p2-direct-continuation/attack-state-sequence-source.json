@@ -1,0 +1,177 @@
+{
+  "scope": "Reuse same-version complete original AttackState/RandomGroup/float-wait source for caller-declared sequence calculation",
+  "source_game_dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "source_metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "asset_baseline_version": "26-09-13-15-28-10-30688348",
+  "files": [
+    {
+      "path": "research/p2-three-part-wait-current/first-attack-rules.json",
+      "bytes": 4253,
+      "sha256": "08a3f37e694cf98f6580c5270f832953a7ecfe52164706f4662641921273fa34"
+    },
+    {
+      "path": "research/p2-three-part-wait-current/native-proof.json",
+      "bytes": 2323632,
+      "sha256": "519f46867a563b86ca1954d13eb4ed6c48c3a4dd847483c6d149d56a7bb2fcde"
+    },
+    {
+      "path": "research/p2-three-part-wait-current/selected-metadata.json",
+      "bytes": 340697,
+      "sha256": "9d1bec1a711180ca375a35e74aea2207efe5f5b09ec3d5340a97ef3d14019af0"
+    },
+    {
+      "path": "research/p2-three-part-wait-current/receipt.json",
+      "bytes": 4879,
+      "sha256": "6abcd975b6859d54ec2a62c443a99646e653d15e2104275da50158eae7b6ccca"
+    },
+    {
+      "path": "research/p2-three-part-static-current/native-proof.json",
+      "bytes": 2198342,
+      "sha256": "489c09a77f1ceb017af1c13c5708a3c475385219c2547a24a4267f3e4f9d0c2b"
+    },
+    {
+      "path": "research/p2-three-part-static-current/selected-metadata.json",
+      "bytes": 166076,
+      "sha256": "bfa9f57400a97c8d890481c409fb24a7b711666316f10eb734b1761a7d79f4e9"
+    },
+    {
+      "path": "research/p2-three-part-static-current/receipt.json",
+      "bytes": 3708,
+      "sha256": "6fe1152cb5a8d251e3edac1efdab572273b3e5c43fc75c8122e58c990c88214b"
+    },
+    {
+      "path": "rouge/data/native-static-action-bindings.json",
+      "bytes": 71610,
+      "sha256": "3f895c40da3cf1a52c2ae431a8060a6b37dbc0b29f8720f9108b8cdb28d5c09d"
+    },
+    {
+      "path": "rouge/data/original-animation-references.json",
+      "bytes": 1291928,
+      "sha256": "390deaa49bb353cface07b555c65a970b15a7ff1b58002008664e7872793ef53"
+    }
+  ],
+  "reused_methods": [
+    {
+      "metadata_method_index": 76192,
+      "name": "AttackState$$OnEnter",
+      "address": "0x180a64d30",
+      "instruction_count": 168,
+      "complete_saved_cfg": true
+    },
+    {
+      "metadata_method_index": 76195,
+      "name": "AttackState$$_NextAttackOrExit",
+      "address": "0x180a65870",
+      "instruction_count": 124,
+      "complete_saved_cfg": true
+    },
+    {
+      "metadata_method_index": 76196,
+      "name": "AttackState$$_StartAttack",
+      "address": "0x180a659b0",
+      "instruction_count": 212,
+      "complete_saved_cfg": true
+    },
+    {
+      "metadata_method_index": 91665,
+      "name": "Torappu.Battle.Abilities.AbilityRandomGroup$$CastToTarget",
+      "address": "0x180efa2f0",
+      "instruction_count": 113,
+      "complete_saved_cfg": true
+    },
+    {
+      "metadata_method_index": 91666,
+      "name": "Torappu.Battle.Abilities.AbilityRandomGroup$$CastDirectly",
+      "address": "0x180efa110",
+      "instruction_count": 116,
+      "complete_saved_cfg": true
+    },
+    {
+      "metadata_method_index": 64127,
+      "name": "Torappu.Battle.AsyncUtil$$WaitForFixedSeconds",
+      "address": "0x180647f20",
+      "instruction_count": 26,
+      "complete_saved_cfg": true
+    },
+    {
+      "metadata_method_index": 64149,
+      "name": "<WaitForFixedSeconds>d__0$$MoveNext",
+      "address": "0x180661350",
+      "instruction_count": 63,
+      "complete_saved_cfg": true
+    }
+  ],
+  "saved_instruction_anchor_checks": [
+    {
+      "method_index": 76192,
+      "address": "0x180a64e8e",
+      "mnemonic": "mov",
+      "operands": "dl, 1"
+    },
+    {
+      "method_index": 76192,
+      "address": "0x180a64e93",
+      "mnemonic": "call",
+      "operands": "0x180a659b0"
+    },
+    {
+      "method_index": 76195,
+      "address": "0x180a65909",
+      "mnemonic": "xor",
+      "operands": "edx, edx"
+    },
+    {
+      "method_index": 76195,
+      "address": "0x180a6590e",
+      "mnemonic": "call",
+      "operands": "0x180a659b0"
+    },
+    {
+      "method_index": 76196,
+      "address": "0x180a659c2",
+      "mnemonic": "movzx",
+      "operands": "r14d, dl"
+    },
+    {
+      "method_index": 76196,
+      "address": "0x180a65cb5",
+      "mnemonic": "mov",
+      "operands": "byte ptr [rsp + 0x20], r14b"
+    },
+    {
+      "method_index": 91665,
+      "address": "0x180efa30c",
+      "mnemonic": "movzx",
+      "operands": "ebp, r9b"
+    },
+    {
+      "method_index": 91665,
+      "address": "0x180efa44b",
+      "mnemonic": "mov",
+      "operands": "byte ptr [rsp + 0x20], bpl"
+    }
+  ],
+  "artifact_consistency_checked_in_cloud": true,
+  "fresh_native_binary_comparison": "unavailable",
+  "source_saved_original_byte_verification_receipts_reused": true,
+  "new_original_binary_download": false,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_state_read": false,
+  "actual_runtime_binding_verified": false,
+  "current_hotfix_equivalence_proven": false,
+  "functional_scope": [
+    "Each explicit entry selects native caller firstAttack=true; continue selects false",
+    "Changed Silverash random candidate forwards the caller bool, rather than recreating firstAttack",
+    "Each selected bound candidate uses proven conditional duration scale and independently rounded float32 fixed-wait segments",
+    "Sequence accumulator adds requested wait components only; does not infer time between starts",
+    "Explicit later entry begins a new declared state group; a sequence beginning at continue keeps earlier entry unknown"
+  ],
+  "remaining_unknown": [
+    "Actual state entry/exit/target/readiness paths",
+    "Actual random candidate draws/probability/order",
+    "Current game mode/skin/XLua/hotfix routing",
+    "First/end callback phase and actual elapsed sequence/cycle",
+    "Actual midchain playback changes and scheduler route"
+  ]
+}
