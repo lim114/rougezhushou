@@ -2,7 +2,7 @@
 from copy import deepcopy
 
 from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QDialog,
-    QHBoxLayout, QLabel, QPlainTextEdit, QPushButton, QTableWidget,
+    QGroupBox, QHBoxLayout, QLabel, QPlainTextEdit, QPushButton, QTableWidget,
     QTableWidgetItem, QVBoxLayout)
 
 from .p2_supplemental_token_modules import (FIELDS, LABELS,
@@ -15,6 +15,7 @@ class SupplementalTokenModuleDialog(QDialog):
         if operator not in supported_operators():
             raise ValueError('当前补充召唤物模组范围仅含令与麦哲伦。')
         self.operator = operator; self.training = deepcopy(training); self.result = None
+        self.fusion_result = None
         self.setWindowTitle(supported_operators()[operator] + ' · 分技能召唤物培养端点与模组对照')
         self.resize(1190, 780); layout = QVBoxLayout(self)
         self.scope_label = QLabel('显式选择独立实体的原始资料阶段和1级/满级端点。宿主培养只核技能及模组门，'
@@ -39,12 +40,29 @@ class SupplementalTokenModuleDialog(QDialog):
         self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         layout.addWidget(self.table)
+        if operator == 'char_2023_ling':
+            from .ling_fusion_reference import FORM_FIELDS, FORM_LABELS
+            self.ling_panel = QGroupBox('令三技能 · 弦惊形态与技能状态（文档算式参考）')
+            form_layout = QVBoxLayout(self.ling_panel)
+            rank_row = QHBoxLayout(); rank_row.addWidget(QLabel('宁作吾等级'))
+            self.ling_rank = QComboBox(); self.ling_rank.addItem('请选择技能等级', None)
+            for rank in range(1, 11):
+                self.ling_rank.addItem(f'等级{rank}' if rank <= 7 else f'专精{rank - 7}', rank)
+            rank_row.addWidget(self.ling_rank); rank_row.addStretch(); form_layout.addLayout(rank_row)
+            self.ling_forms = QTableWidget(0, 4 + len(FORM_FIELDS))
+            self.ling_forms.setHorizontalHeaderLabels(['模组阶段', '形态', '技能状态声明', '参考资格',
+                                                      *[FORM_LABELS[k] for k in FORM_FIELDS]])
+            self.ling_forms.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+            form_layout.addWidget(self.ling_forms); layout.addWidget(self.ling_panel)
+            self.ling_rank.currentIndexChanged.connect(self.invalidate)
         self.details = QPlainTextEdit(); self.details.setReadOnly(True); layout.addWidget(self.details)
         self.phase.currentIndexChanged.connect(self.invalidate)
         self.endpoint.currentIndexChanged.connect(self.invalidate); self.invalidate()
 
     def invalidate(self, *_args):
         self.result = None; self.copy_button.setEnabled(False); self.table.setRowCount(0)
+        self.fusion_result = None
+        if hasattr(self, 'ling_forms'): self.ling_forms.setRowCount(0)
         self.details.setPlainText('请显式选择独立实体资料阶段和端点后比较。所选端点为局外反事实，不确认当前实体培养。')
 
     def calculate(self):
@@ -77,7 +95,33 @@ class SupplementalTokenModuleDialog(QDialog):
                     self.table.setItem(index, column, item)
         self.table.resizeColumnsToContents(); self.copy_button.setEnabled(True)
         self.details.setPlainText(format_supplemental_token_modules(result))
+        if hasattr(self, 'ling_rank'):
+            if self.ling_rank.currentData() is None:
+                self.details.appendPlainText('令三技能形态对照：请明确选择宁作吾等级后重新比较。')
+                return
+            from .ling_fusion_reference import ling_fusion_reference, format_ling_fusion_reference, FORM_FIELDS
+            self.fusion_result = ling_fusion_reference(self.training,
+                {'token_elite': self.phase.currentData(), 'endpoint': self.endpoint.currentData()},
+                self.ling_rank.currentData())
+            for row in self.fusion_result['rows']:
+                index = self.ling_forms.rowCount(); self.ling_forms.insertRow(index)
+                texts = [str(row['module_level']), '基础形态' if row['form'] == 'basic' else '高级形态',
+                         '技能开启' if row['skill_active_declared'] else '技能未开启',
+                         '文档算式分项' if row['state'] == 'documented_formula_reference' else '宿主门未符合']
+                for key in FORM_FIELDS:
+                    v = row['values'][key]
+                    texts.append('未知' if v is None else v if isinstance(v, str) else f'{v:g}')
+                for column, value in enumerate(texts):
+                    item = QTableWidgetItem(value)
+                    item.setToolTip('固定资料端点与明确模式的文档算式，不证明实际合成/施放或当前完整面板。')
+                    self.ling_forms.setItem(index, column, item)
+            self.ling_forms.resizeColumnsToContents()
+            self.details.appendPlainText(format_ling_fusion_reference(self.fusion_result))
 
     def copy_result(self):
         if self.result is not None:
-            QApplication.clipboard().setText(format_supplemental_token_modules(self.result))
+            text = format_supplemental_token_modules(self.result)
+            if self.fusion_result is not None:
+                from .ling_fusion_reference import format_ling_fusion_reference
+                text += '\n\n' + format_ling_fusion_reference(self.fusion_result)
+            QApplication.clipboard().setText(text)
