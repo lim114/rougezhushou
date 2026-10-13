@@ -283,6 +283,9 @@ class MainWindow(QMainWindow):
         self.movement_source_button=QPushButton('加工品获取清单与来源机会')
         self.movement_source_button.clicked.connect(self.show_movement_sources)
         layout.addWidget(self.movement_source_button);self.movement_source_dialog=None
+        self.fruit_marker_button=QPushButton('藏果地标记：核对声明探索与密道保留')
+        self.fruit_marker_button.clicked.connect(self.show_fruit_marker_flow)
+        layout.addWidget(self.fruit_marker_button);self.fruit_marker_dialog=None
         self.map_content=QLabel();self.map_content.setWordWrap(True);layout.addWidget(self.map_content)
         self.map_view=MapView();self.map_view.nodeSelected.connect(self.map_node_selected)
         layout.addWidget(self.map_view,4)
@@ -955,6 +958,19 @@ class MainWindow(QMainWindow):
 
     def refresh_operator_overview(self):
         return self.operator_choices.set_overview(self.recruited_operator_ids(),emit=False)
+
+    def show_fruit_marker_flow(self):
+        from .fruit_marker_view import FruitMarkerPanel
+        if self.fruit_marker_dialog is None:
+            self.fruit_marker_dialog=FruitMarkerPanel(self)
+            self.fruit_marker_dialog.nodePreviewRequested.connect(self.show_fruit_marker_declaration)
+        self.fruit_marker_dialog.show()
+
+    def show_fruit_marker_declaration(self,reference):
+        # The marker tool owns a declared identity, without a verified map epoch.
+        self.map_detail.setPlainText('局外声明节点引用\n地图：'+str(reference.get('map_id'))+
+            '\n节点：'+str(reference.get('node_id'))+'\n实际地图绑定未核实；此引用不改变地图选择或本局状态。')
+        self.centralWidget().setCurrentWidget(self.exploration_map_tab)
 
     def show_movement_sources(self):
         from .movement_source_view import MovementSourcePanel
