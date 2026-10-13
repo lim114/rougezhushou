@@ -1,0 +1,70 @@
+{
+  "section": 250,
+  "title": "面板与技能时刻的联合有界实录校准",
+  "remaining_item": "P2前后面板/时刻的独立观测误差区间与联合一致性",
+  "new_capability": "调用方明确上下界的面板差/残差及端点偏差，连续时刻差分约束全链可行性与严格开闭边界；联合矛盾与紧界、视频帧覆盖区间、主窗口有界校准页",
+  "limitations": [
+    "误差界限由调用方明确，不自动生成置信度或来源误差",
+    "事件顺序必须显式协议或约束，事件名不自动证明原生先后",
+    "视频整帧端点仅连续覆盖界，不能证明native帧候选或30Hz",
+    "原生时钟/缺来源模型仍未知，共同有界相符不关闭实机缺口"
+  ],
+  "files": [
+    "research/p2-bounded-calibration/README.md",
+    "research/p2-bounded-calibration/examples.json",
+    "research/p2-bounded-calibration/reproduce.py",
+    "research/p2-bounded-calibration/source_manifest.json",
+    "research/p2-bounded-calibration/validation.json",
+    "rouge/app.py",
+    "rouge/bounded_calibration.py",
+    "rouge/bounded_calibration_view.py",
+    "scripts/verify_cloud.py",
+    "tests/test_bounded_calibration.py",
+    "verification/section-250/tests.txt",
+    "verification/section-250/validation.json"
+  ],
+  "source_evidence": [
+    "复用238/244已封来源和独立条件/观察标识，精确decimal Fraction的标准差分约束闭包",
+    "独立LP250图/600差分及严格端点审查，无原件时钟猜测"
+  ],
+  "acceptance": [
+    "28必要核心+实际离屏Qt检查通过",
+    "三退化公式向量、九独立整数oracle及跨界/开闭约束、后置命中合法显式协议、来源/未知/刷新留存严格检查"
+  ],
+  "kind": "MEANINGFUL_FUNCTIONAL_SECTION",
+  "at_Beijing": "2026-10-13T13:39:40.073774+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "7ec740d3b47caaf7fd3fcd5b8a9ced20ec8fb159",
+  "required_raw_sha256": {
+    "research/p2-bounded-calibration/README.md": "ea3ee0d42fc14a80cf38325ec9d7e357e816593cbfc5d289b84fb7e80447e154",
+    "research/p2-bounded-calibration/examples.json": "cf0bb97399820ff3a7c19d4fe6b7e14e9b8a3c72553148e5638e90662ad261aa",
+    "research/p2-bounded-calibration/reproduce.py": "80300705f6dc7430af70b3b22d68ae551358655c245fce19b6729bb8851b6caf",
+    "research/p2-bounded-calibration/source_manifest.json": "611034e9144494700af1794435b7b12525426956b2a313acfbb42ab7bd3cbb0f",
+    "research/p2-bounded-calibration/validation.json": "c4bd056a42401cf5d4c5774aa9a5061f98d3de023fccc44ce58662c957a03f75",
+    "rouge/app.py": "aed4680fd3189af5a88aab8b31a93a64fe7433253d9a61efe69f7e2e799d9d98",
+    "rouge/bounded_calibration.py": "0face840805fad334a4448a1927d50aff0fafc17109ea5095e6b66e0a99c1b29",
+    "rouge/bounded_calibration_view.py": "70d95df2657868b083e6075076e3051875b9090fcce0f7fdf28faa097881bd68",
+    "scripts/verify_cloud.py": "5ad0a8dbf588e1ca6e06fc4cb8a8ccc09a38c23a106045d37ce5cf4e965f7943",
+    "tests/test_bounded_calibration.py": "86f5bc8ed724b63389749cca3a463cdb0bd4b767dbc641b99d167cbbee07547b",
+    "verification/section-250/tests.txt": "ebfaa85d3ca33b8825441b31773004b57e0b1b71c0120c0794db34a9ce8ca070",
+    "verification/section-250/validation.json": "dc4065a2de6f2eb3f7855d2260e62fa09076a68745b7ae93f201dcfdd291d970"
+  },
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "unittest",
+      "tests.test_bounded_calibration"
+    ],
+    "tests_run": 28,
+    "passed": 28,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "platform": "Linux",
+    "qt_scope": "real offscreen widgets; not native Windows or game verification"
+  },
+  "native_game_or_chat_verified": false,
+  "next_full_validation_after": 260
+}

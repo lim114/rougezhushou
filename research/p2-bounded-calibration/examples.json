@@ -1,0 +1,487 @@
+{
+  "scope": "literal_formula_degenerate_bounds_not_game_precision",
+  "cases": [
+    {
+      "id": "kaltsit",
+      "payload": {
+        "panel": {
+          "before": {
+            "scenario": {
+              "operator": "kaltsit",
+              "skill": 2,
+              "relic_ids": []
+            },
+            "observation": {
+              "context_token": "0d209b2cdd6dcd415f53bea5b3eaa5b49a1a4378c0b4b3718e5a6bd91a16356a",
+              "panel": "已覆盖常态天赋与效果",
+              "evidence_kind": "formula_reference",
+              "source": "固定培养表凯尔希·思衡托精二90/满信赖/潜能1；生命符文50%写回后再乘常态生命天赋25%：2650→3975。 / 前组公式参考",
+              "values": {
+                "hp": [
+                  2650,
+                  2650
+                ],
+                "attack": [
+                  510,
+                  510
+                ]
+              }
+            }
+          },
+          "after": {
+            "scenario": {
+              "operator": "kaltsit",
+              "skill": 2,
+              "relic_ids": [
+                "rogue_6_relic_legacy_90"
+              ]
+            },
+            "observation": {
+              "context_token": "0e2c30e892e937eda1b1da8b5b88209bde0fd1b0103e889067963a80466651d2",
+              "panel": "已覆盖常态天赋与效果",
+              "evidence_kind": "formula_reference",
+              "source": "固定培养表凯尔希·思衡托精二90/满信赖/潜能1；生命符文50%写回后再乘常态生命天赋25%：2650→3975。 / 后组公式参考",
+              "values": {
+                "hp": [
+                  3975,
+                  3975
+                ],
+                "attack": [
+                  510,
+                  510
+                ]
+              }
+            }
+          }
+        },
+        "timing": {
+          "scenario": {
+            "operator": "kaltsit",
+            "skill": 1
+          },
+          "observation": {
+            "context_token": "deb8462f3c182f5028b936be6a668d4522ae590af14761cf506be13515386852",
+            "operator": "kaltsit",
+            "skill_id": "skchr_kalts2_1",
+            "evidence_kind": "formula_reference",
+            "source": "固定表初动/名义持续/回转算式参考；另声明首次等待2秒、第二次等待3秒。首末释放与解除阻回未提供；不是游戏事件。",
+            "clock": {
+              "id": "literal-formula-clock",
+              "unit": "seconds",
+              "origin_event": "deployment",
+              "origin_stamp": [
+                100,
+                100
+              ]
+            },
+            "first_cycle_is_initial": true,
+            "release_kind": "unknown",
+            "cycles": [
+              {
+                "id": "A",
+                "ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    107,
+                    107
+                  ]
+                },
+                "start": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    109,
+                    109
+                  ]
+                },
+                "first_release": null,
+                "last_release": null,
+                "release_stamps": [],
+                "end": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    144,
+                    144
+                  ]
+                },
+                "unblocked": null,
+                "next_ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    179,
+                    179
+                  ]
+                },
+                "recharge_basis": "model_depleted_requirement",
+                "release_recording": "unknown"
+              },
+              {
+                "id": "B",
+                "ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    179,
+                    179
+                  ]
+                },
+                "start": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    182,
+                    182
+                  ]
+                },
+                "first_release": null,
+                "last_release": null,
+                "release_stamps": [],
+                "end": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    217,
+                    217
+                  ]
+                },
+                "unblocked": null,
+                "next_ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    252,
+                    252
+                  ]
+                },
+                "recharge_basis": "model_depleted_requirement",
+                "release_recording": "unknown"
+              }
+            ],
+            "attack_speed_attribute": [
+              150,
+              150
+            ],
+            "ordering_protocol": "declared_normal_chain",
+            "ordering_constraints": []
+          }
+        },
+        "panel_tolerance": 0,
+        "timing_tolerance_seconds": 0
+      }
+    },
+    {
+      "id": "silverash",
+      "payload": {
+        "panel": {
+          "before": {
+            "scenario": {
+              "operator": "silverash",
+              "skill": 2,
+              "deployment_elapsed_seconds": 14.9
+            },
+            "observation": {
+              "context_token": "de91f3d10be74f8eb2b6d27da7b962141001d039e847e223ea74ba2872850001",
+              "panel": "已覆盖常态天赋与效果",
+              "evidence_kind": "formula_reference",
+              "source": "固定培养表凛御银灰精二90/满信赖/潜能1；声明在场14.9→15秒的常态防御天赋参考：497→557。 / 前组公式参考",
+              "values": {
+                "defense": [
+                  497,
+                  497
+                ]
+              }
+            }
+          },
+          "after": {
+            "scenario": {
+              "operator": "silverash",
+              "skill": 2,
+              "deployment_elapsed_seconds": 15
+            },
+            "observation": {
+              "context_token": "5f16e0aa0126b2237668490986e882777b4e611bbfda402ae623f20d94f977e7",
+              "panel": "已覆盖常态天赋与效果",
+              "evidence_kind": "formula_reference",
+              "source": "固定培养表凛御银灰精二90/满信赖/潜能1；声明在场14.9→15秒的常态防御天赋参考：497→557。 / 后组公式参考",
+              "values": {
+                "defense": [
+                  557,
+                  557
+                ]
+              }
+            }
+          }
+        },
+        "timing": {
+          "scenario": {
+            "operator": "silverash",
+            "skill": 3
+          },
+          "observation": {
+            "context_token": "19be398cf909fa0240de655e52d279efaf70910503883a573a8283873a812ceb",
+            "operator": "silverash",
+            "skill_id": "skchr_svash2_3",
+            "evidence_kind": "formula_reference",
+            "source": "固定表初动/名义持续/回转算式参考；另声明首次等待2秒、第二次等待3秒。首末释放与解除阻回未提供；不是游戏事件。",
+            "clock": {
+              "id": "literal-formula-clock",
+              "unit": "seconds",
+              "origin_event": "deployment",
+              "origin_stamp": [
+                100,
+                100
+              ]
+            },
+            "first_cycle_is_initial": true,
+            "release_kind": "unknown",
+            "cycles": [
+              {
+                "id": "A",
+                "ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    105,
+                    105
+                  ]
+                },
+                "start": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    107,
+                    107
+                  ]
+                },
+                "first_release": null,
+                "last_release": null,
+                "release_stamps": [],
+                "end": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    155,
+                    155
+                  ]
+                },
+                "unblocked": null,
+                "next_ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    210,
+                    210
+                  ]
+                },
+                "recharge_basis": "model_depleted_requirement",
+                "release_recording": "unknown"
+              },
+              {
+                "id": "B",
+                "ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    210,
+                    210
+                  ]
+                },
+                "start": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    213,
+                    213
+                  ]
+                },
+                "first_release": null,
+                "last_release": null,
+                "release_stamps": [],
+                "end": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    261,
+                    261
+                  ]
+                },
+                "unblocked": null,
+                "next_ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    316,
+                    316
+                  ]
+                },
+                "recharge_basis": "model_depleted_requirement",
+                "release_recording": "unknown"
+              }
+            ],
+            "attack_speed_attribute": [
+              100,
+              100
+            ],
+            "ordering_protocol": "declared_normal_chain",
+            "ordering_constraints": []
+          }
+        },
+        "panel_tolerance": 0,
+        "timing_tolerance_seconds": 0
+      }
+    },
+    {
+      "id": "mechanist",
+      "payload": {
+        "panel": {
+          "before": {
+            "scenario": {
+              "operator": "mechanist",
+              "skill": 3,
+              "charge_count": 0,
+              "relic_ids": []
+            },
+            "observation": {
+              "context_token": "a42c7f49dbe34b15e278b18b4063c8d0126463455d3409d1ed44facdd77ff2ae",
+              "panel": "藏品与分队符文写回",
+              "evidence_kind": "formula_reference",
+              "source": "固定培养表机械师精二90/满信赖/潜能1/无模组；攻击符文25%写回取整：573→716。 / 前组公式参考",
+              "values": {
+                "attack": [
+                  573,
+                  573
+                ],
+                "defense": [
+                  765,
+                  765
+                ]
+              }
+            }
+          },
+          "after": {
+            "scenario": {
+              "operator": "mechanist",
+              "skill": 3,
+              "charge_count": 0,
+              "relic_ids": [
+                "rogue_6_relic_legacy_16"
+              ]
+            },
+            "observation": {
+              "context_token": "d85b17a9b4c92ba28897eebc0fd064f1cd5815643f0631d3a81d21113cdd6e5c",
+              "panel": "藏品与分队符文写回",
+              "evidence_kind": "formula_reference",
+              "source": "固定培养表机械师精二90/满信赖/潜能1/无模组；攻击符文25%写回取整：573→716。 / 后组公式参考",
+              "values": {
+                "attack": [
+                  716,
+                  716
+                ],
+                "defense": [
+                  765,
+                  765
+                ]
+              }
+            }
+          }
+        },
+        "timing": {
+          "scenario": {
+            "operator": "mechanist",
+            "skill": 3,
+            "charge_count": 0
+          },
+          "observation": {
+            "context_token": "0b41bde37f403af6a4e2058ca9d201b867febfa170c06b6953a3bc6c4e919d2c",
+            "operator": "mechanist",
+            "skill_id": "skchr_mcnist_3",
+            "evidence_kind": "formula_reference",
+            "source": "固定表初动/名义持续/回转算式参考；另声明首次等待2秒、第二次等待3秒。首末释放与解除阻回未提供；不是游戏事件。",
+            "clock": {
+              "id": "literal-formula-clock",
+              "unit": "seconds",
+              "origin_event": "deployment",
+              "origin_stamp": [
+                100,
+                100
+              ]
+            },
+            "first_cycle_is_initial": true,
+            "release_kind": "unknown",
+            "cycles": [
+              {
+                "id": "A",
+                "ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    110,
+                    110
+                  ]
+                },
+                "start": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    112,
+                    112
+                  ]
+                },
+                "first_release": null,
+                "last_release": null,
+                "release_stamps": [],
+                "end": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    152,
+                    152
+                  ]
+                },
+                "unblocked": null,
+                "next_ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    187,
+                    187
+                  ]
+                },
+                "recharge_basis": "model_depleted_requirement",
+                "release_recording": "unknown"
+              },
+              {
+                "id": "B",
+                "ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    187,
+                    187
+                  ]
+                },
+                "start": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    190,
+                    190
+                  ]
+                },
+                "first_release": null,
+                "last_release": null,
+                "release_stamps": [],
+                "end": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    230,
+                    230
+                  ]
+                },
+                "unblocked": null,
+                "next_ready": {
+                  "clock_id": "literal-formula-clock",
+                  "bounds": [
+                    265,
+                    265
+                  ]
+                },
+                "recharge_basis": "model_depleted_requirement",
+                "release_recording": "unknown"
+              }
+            ],
+            "attack_speed_attribute": [
+              100,
+              100
+            ],
+            "ordering_protocol": "declared_normal_chain",
+            "ordering_constraints": []
+          }
+        },
+        "panel_tolerance": 0,
+        "timing_tolerance_seconds": 0
+      }
+    }
+  ]
+}
