@@ -1,0 +1,4984 @@
+{
+  "scope": "Limited implementation review of the explicitly restricted exactSingle and source-accurate cost-write/update prefix group. No RC interval expansion or broad test repetition.",
+  "core_sha256": "7cd8eee14c217c46419b5ac70bbcfe14f63e67a5687b7974d8718ae60618077a",
+  "manifest_sha256": "f364880423bd7aebc707c0cee231287dfa3b4772306a97468bd75e5c73c1742d",
+  "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+  "source_binding": {
+    "valid": true,
+    "status": "pinned_file_source_reference",
+    "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+    "method_count": 32,
+    "byte_span_count": 4034
+  },
+  "source_injection_rejected": true,
+  "prior_fresh_independent_source_review_sha256": "dfa2ec614fae870eb0be471f616fd605ce12d25ea446d1a917086e68a99f09f7",
+  "prior_fresh_source_methods": 9,
+  "prior_fresh_source_instructions": 689,
+  "probe_count": 23,
+  "check_count": 97,
+  "cases": [
+    {
+      "name": "exact fractional positive tie even",
+      "input": {
+        "operation": "mul",
+        "cost": 3,
+        "modifier_bits": 1069547520
+      },
+      "actual_output": {
+        "operation": "mul",
+        "cost_int32": 3,
+        "modifier_bits": 1069547520,
+        "status": "exact_single_half_even_reference",
+        "cost_single_exact": true,
+        "binary_operation_exact": true,
+        "mathematical_numerator": 9,
+        "mathematical_denominator": 2,
+        "result_single_bits": 1083179008,
+        "rounded_int32_reference": 4
+      },
+      "scope": "isolated arithmetic only",
+      "checks": [
+        {
+          "path": "cost_single_exact",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "binary_operation_exact",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rounded_int32_reference",
+          "expected": 4,
+          "actual": 4,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "exact fractional negative tie even without clamp",
+      "input": {
+        "operation": "mul",
+        "cost": -3,
+        "modifier_bits": 1069547520
+      },
+      "actual_output": {
+        "operation": "mul",
+        "cost_int32": -3,
+        "modifier_bits": 1069547520,
+        "status": "exact_single_half_even_reference",
+        "cost_single_exact": true,
+        "binary_operation_exact": true,
+        "mathematical_numerator": -9,
+        "mathematical_denominator": 2,
+        "result_single_bits": 3230662656,
+        "rounded_int32_reference": -4
+      },
+      "scope": "isolated arithmetic only",
+      "checks": [
+        {
+          "path": "binary_operation_exact",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rounded_int32_reference",
+          "expected": -4,
+          "actual": -4,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "large exactly representable Int32 outside24bit blanket bound",
+      "input": {
+        "operation": "mul",
+        "cost": 2147483520,
+        "modifier_bits": 1065353216
+      },
+      "actual_output": {
+        "operation": "mul",
+        "cost_int32": 2147483520,
+        "modifier_bits": 1065353216,
+        "status": "exact_single_half_even_reference",
+        "cost_single_exact": true,
+        "binary_operation_exact": true,
+        "mathematical_numerator": 2147483520,
+        "mathematical_denominator": 1,
+        "result_single_bits": 1325400063,
+        "rounded_int32_reference": 2147483520
+      },
+      "scope": "isolated arithmetic only",
+      "checks": [
+        {
+          "path": "cost_single_exact",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rounded_int32_reference",
+          "expected": 2147483520,
+          "actual": 2147483520,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "MAX32 conversion stays unknown without defaultRN",
+      "input": {
+        "operation": "mul",
+        "cost": 2147483647,
+        "modifier_bits": 1065353216
+      },
+      "actual_output": {
+        "operation": "mul",
+        "cost_int32": 2147483647,
+        "modifier_bits": 1065353216,
+        "status": "int32_to_single_rounding_unknown",
+        "cost_single_exact": false,
+        "binary_operation_exact": null,
+        "mathematical_numerator": null,
+        "mathematical_denominator": null,
+        "result_single_bits": null,
+        "rounded_int32_reference": null
+      },
+      "scope": "isolated arithmetic only",
+      "checks": [
+        {
+          "path": "status",
+          "expected": "int32_to_single_rounding_unknown",
+          "actual": "int32_to_single_rounding_unknown",
+          "passed": true
+        },
+        {
+          "path": "rounded_int32_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "inexact multiplication RC-disagreement example stays unknown",
+      "input": {
+        "operation": "mul",
+        "cost": 10,
+        "modifier_bits": 1028443341
+      },
+      "actual_output": {
+        "operation": "mul",
+        "cost_int32": 10,
+        "modifier_bits": 1028443341,
+        "status": "single_arithmetic_environment_or_rounding_unknown",
+        "cost_single_exact": true,
+        "binary_operation_exact": false,
+        "mathematical_numerator": 67108865,
+        "mathematical_denominator": 134217728,
+        "result_single_bits": null,
+        "rounded_int32_reference": null
+      },
+      "scope": "isolated arithmetic only",
+      "checks": [
+        {
+          "path": "status",
+          "expected": "single_arithmetic_environment_or_rounding_unknown",
+          "actual": "single_arithmetic_environment_or_rounding_unknown",
+          "passed": true
+        },
+        {
+          "path": "binary_operation_exact",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "result_single_bits",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rounded_int32_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "subnormal modifier stays outside supported domain",
+      "input": {
+        "operation": "mul",
+        "cost": 1,
+        "modifier_bits": 1
+      },
+      "actual_output": {
+        "operation": "mul",
+        "cost_int32": 1,
+        "modifier_bits": 1,
+        "status": "modifier_subnormal_environment_unknown",
+        "cost_single_exact": true,
+        "binary_operation_exact": null,
+        "mathematical_numerator": null,
+        "mathematical_denominator": null,
+        "result_single_bits": null,
+        "rounded_int32_reference": null
+      },
+      "scope": "isolated arithmetic only",
+      "checks": [
+        {
+          "path": "status",
+          "expected": "modifier_subnormal_environment_unknown",
+          "actual": "modifier_subnormal_environment_unknown",
+          "passed": true
+        },
+        {
+          "path": "rounded_int32_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "negativezero final integer common without claiming sign bits",
+      "input": {
+        "operation": "mul",
+        "cost": 3,
+        "modifier_bits": 2147483648
+      },
+      "actual_output": {
+        "operation": "mul",
+        "cost_int32": 3,
+        "modifier_bits": 2147483648,
+        "status": "exact_single_half_even_reference",
+        "cost_single_exact": true,
+        "binary_operation_exact": true,
+        "mathematical_numerator": 0,
+        "mathematical_denominator": 1,
+        "result_single_bits": null,
+        "rounded_int32_reference": 0
+      },
+      "scope": "isolated arithmetic only",
+      "checks": [
+        {
+          "path": "rounded_int32_reference",
+          "expected": 0,
+          "actual": 0,
+          "passed": true
+        },
+        {
+          "path": "result_single_bits",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "exact positive2^31 does not wrap final conversion",
+      "input": {
+        "operation": "mul",
+        "cost": -2147483648,
+        "modifier_bits": 3212836864
+      },
+      "actual_output": {
+        "operation": "mul",
+        "cost_int32": -2147483648,
+        "modifier_bits": 3212836864,
+        "status": "rounded_int32_conversion_domain_unknown",
+        "cost_single_exact": true,
+        "binary_operation_exact": true,
+        "mathematical_numerator": 2147483648,
+        "mathematical_denominator": 1,
+        "result_single_bits": 1325400064,
+        "rounded_int32_reference": null
+      },
+      "scope": "isolated arithmetic only",
+      "checks": [
+        {
+          "path": "status",
+          "expected": "rounded_int32_conversion_domain_unknown",
+          "actual": "rounded_int32_conversion_domain_unknown",
+          "passed": true
+        },
+        {
+          "path": "rounded_int32_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "low32 integer scaling does not saturate",
+      "input": {
+        "cost": 2147483647,
+        "scale": 2
+      },
+      "actual_output": {
+        "cost_int32": 2147483647,
+        "scale_int32": 2,
+        "product_int32_reference": -2
+      },
+      "scope": "isolated low32 arithmetic only",
+      "checks": [
+        {
+          "path": "product_int32_reference",
+          "expected": -2,
+          "actual": -2,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "replacement encode failure precedes knownNULL test",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.null_sp_after_encode",
+            "kind": "replace_cost",
+            "ordinary_native_path": true,
+            "new_cost": 50,
+            "modify_type_read": {
+              "id": "public.null_sp_after_encode.modify",
+              "normal": true,
+              "value": false
+            },
+            "type_value_read": {
+              "id": "public.null_sp_after_encode.type",
+              "normal": true,
+              "value": 6
+            },
+            "unity_truth_read": {
+              "id": "public.null_sp_after_encode.unity",
+              "normal": true,
+              "value": true
+            },
+            "encode_normally": false,
+            "store_normally": true,
+            "type_store_normally": true,
+            "update_normally": true,
+            "encoded_payload_identity": "declared.payload.public.null_sp_after_encode",
+            "update_sp_data_identity": "declared.update.data3",
+            "first_data_read": {
+              "id": "public.null_sp_after_encode.first_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_data_read"
+            },
+            "first_sp_data_read": {
+              "id": "public.null_sp_after_encode.first_sp_data_read",
+              "normal": true,
+              "exists": false,
+              "identity": "declared.first_sp_data_read"
+            },
+            "second_data_read": {
+              "id": "public.null_sp_after_encode.second_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_data_read"
+            },
+            "second_sp_data_read": {
+              "id": "public.null_sp_after_encode.second_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_sp_data_read"
+            },
+            "first_owner_read": {
+              "id": "public.null_sp_after_encode.first_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_owner_read"
+            },
+            "second_owner_read": {
+              "id": "public.null_sp_after_encode.second_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_owner_read"
+            },
+            "third_data_read": {
+              "id": "public.null_sp_after_encode.third_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.third_data_read"
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.null_sp_after_encode",
+              "kind": "replace_cost",
+              "ordinary_native_path": true,
+              "new_cost": 50,
+              "modify_type_read": {
+                "id": "public.null_sp_after_encode.modify",
+                "normal": true,
+                "value": false
+              },
+              "type_value_read": {
+                "id": "public.null_sp_after_encode.type",
+                "normal": true,
+                "value": 6
+              },
+              "unity_truth_read": {
+                "id": "public.null_sp_after_encode.unity",
+                "normal": true,
+                "value": true
+              },
+              "encode_normally": false,
+              "store_normally": true,
+              "type_store_normally": true,
+              "update_normally": true,
+              "encoded_payload_identity": "declared.payload.public.null_sp_after_encode",
+              "update_sp_data_identity": "declared.update.data3",
+              "first_data_read": {
+                "id": "public.null_sp_after_encode.first_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_data_read"
+              },
+              "first_sp_data_read": {
+                "id": "public.null_sp_after_encode.first_sp_data_read",
+                "normal": true,
+                "exists": false,
+                "identity": "declared.first_sp_data_read"
+              },
+              "second_data_read": {
+                "id": "public.null_sp_after_encode.second_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_data_read"
+              },
+              "second_sp_data_read": {
+                "id": "public.null_sp_after_encode.second_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_sp_data_read"
+              },
+              "first_owner_read": {
+                "id": "public.null_sp_after_encode.first_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_owner_read"
+              },
+              "second_owner_read": {
+                "id": "public.null_sp_after_encode.second_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_owner_read"
+              },
+              "third_data_read": {
+                "id": "public.null_sp_after_encode.third_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.third_data_read"
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.null_sp_after_encode",
+            "kind": "replace_cost",
+            "called": true,
+            "normal": false,
+            "status": "prefix_failed",
+            "stages": [
+              {
+                "name": "first_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.null_sp_after_encode.first_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_data_read"
+                }
+              },
+              {
+                "name": "first_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.null_sp_after_encode.first_sp_data_read",
+                  "normal": true,
+                  "exists": false,
+                  "identity": "declared.first_sp_data_read"
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": false,
+                "reference": null
+              },
+              {
+                "name": "first_sp_data_check",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "store",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "modify_type_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_sp_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_value_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_store",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "first_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "unity_truth_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "third_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "update",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "arithmetic_reference": null,
+            "encoder_argument_reference": 50,
+            "stored_prefixes": [],
+            "update_arguments": null,
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.stages.2.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.2.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.3.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.4.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.encoder_argument_reference",
+          "expected": 50,
+          "actual": 50,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stored_prefixes",
+          "expected": [],
+          "actual": [],
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "replacement normal encode precedes completed comparison andNULL failure",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.null_sp_after_encode",
+            "kind": "replace_cost",
+            "ordinary_native_path": true,
+            "new_cost": 50,
+            "modify_type_read": {
+              "id": "public.null_sp_after_encode.modify",
+              "normal": true,
+              "value": false
+            },
+            "type_value_read": {
+              "id": "public.null_sp_after_encode.type",
+              "normal": true,
+              "value": 6
+            },
+            "unity_truth_read": {
+              "id": "public.null_sp_after_encode.unity",
+              "normal": true,
+              "value": true
+            },
+            "encode_normally": true,
+            "store_normally": true,
+            "type_store_normally": true,
+            "update_normally": true,
+            "encoded_payload_identity": "declared.payload.public.null_sp_after_encode",
+            "update_sp_data_identity": "declared.update.data3",
+            "first_data_read": {
+              "id": "public.null_sp_after_encode.first_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_data_read"
+            },
+            "first_sp_data_read": {
+              "id": "public.null_sp_after_encode.first_sp_data_read",
+              "normal": true,
+              "exists": false,
+              "identity": "declared.first_sp_data_read"
+            },
+            "second_data_read": {
+              "id": "public.null_sp_after_encode.second_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_data_read"
+            },
+            "second_sp_data_read": {
+              "id": "public.null_sp_after_encode.second_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_sp_data_read"
+            },
+            "first_owner_read": {
+              "id": "public.null_sp_after_encode.first_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_owner_read"
+            },
+            "second_owner_read": {
+              "id": "public.null_sp_after_encode.second_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_owner_read"
+            },
+            "third_data_read": {
+              "id": "public.null_sp_after_encode.third_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.third_data_read"
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.null_sp_after_encode",
+              "kind": "replace_cost",
+              "ordinary_native_path": true,
+              "new_cost": 50,
+              "modify_type_read": {
+                "id": "public.null_sp_after_encode.modify",
+                "normal": true,
+                "value": false
+              },
+              "type_value_read": {
+                "id": "public.null_sp_after_encode.type",
+                "normal": true,
+                "value": 6
+              },
+              "unity_truth_read": {
+                "id": "public.null_sp_after_encode.unity",
+                "normal": true,
+                "value": true
+              },
+              "encode_normally": true,
+              "store_normally": true,
+              "type_store_normally": true,
+              "update_normally": true,
+              "encoded_payload_identity": "declared.payload.public.null_sp_after_encode",
+              "update_sp_data_identity": "declared.update.data3",
+              "first_data_read": {
+                "id": "public.null_sp_after_encode.first_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_data_read"
+              },
+              "first_sp_data_read": {
+                "id": "public.null_sp_after_encode.first_sp_data_read",
+                "normal": true,
+                "exists": false,
+                "identity": "declared.first_sp_data_read"
+              },
+              "second_data_read": {
+                "id": "public.null_sp_after_encode.second_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_data_read"
+              },
+              "second_sp_data_read": {
+                "id": "public.null_sp_after_encode.second_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_sp_data_read"
+              },
+              "first_owner_read": {
+                "id": "public.null_sp_after_encode.first_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_owner_read"
+              },
+              "second_owner_read": {
+                "id": "public.null_sp_after_encode.second_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_owner_read"
+              },
+              "third_data_read": {
+                "id": "public.null_sp_after_encode.third_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.third_data_read"
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.null_sp_after_encode",
+            "kind": "replace_cost",
+            "called": true,
+            "normal": false,
+            "status": "pointer_missing",
+            "stages": [
+              {
+                "name": "first_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.null_sp_after_encode.first_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_data_read"
+                }
+              },
+              {
+                "name": "first_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.null_sp_after_encode.first_sp_data_read",
+                  "normal": true,
+                  "exists": false,
+                  "identity": "declared.first_sp_data_read"
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "argument": 50,
+                  "returned_payload": null
+                }
+              },
+              {
+                "name": "first_sp_data_check",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "exists": false
+                }
+              },
+              {
+                "name": "store",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "modify_type_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_sp_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_value_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_store",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "first_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "unity_truth_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "third_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "update",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "arithmetic_reference": null,
+            "encoder_argument_reference": 50,
+            "stored_prefixes": [],
+            "update_arguments": null,
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.stages.2.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.3.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.3.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.3.reference.exists",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.4.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "replacement pointerUnknown retains encode/comparison normality",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.onlycost",
+            "kind": "replace_cost",
+            "ordinary_native_path": true,
+            "new_cost": 30,
+            "modify_type_read": {
+              "id": "public.onlycost.modify",
+              "normal": true,
+              "value": false
+            },
+            "type_value_read": {
+              "id": "public.onlycost.type",
+              "normal": true,
+              "value": 6
+            },
+            "unity_truth_read": {
+              "id": "public.onlycost.unity",
+              "normal": true,
+              "value": true
+            },
+            "encode_normally": true,
+            "store_normally": true,
+            "type_store_normally": true,
+            "update_normally": true,
+            "encoded_payload_identity": "declared.payload.public.onlycost",
+            "update_sp_data_identity": "declared.update.data3",
+            "first_data_read": {
+              "id": "public.onlycost.first_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_data_read"
+            },
+            "first_sp_data_read": {
+              "id": "public.onlycost.first_sp_data_read",
+              "normal": true,
+              "exists": null,
+              "identity": "declared.first_sp_data_read"
+            },
+            "second_data_read": {
+              "id": "public.onlycost.second_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_data_read"
+            },
+            "second_sp_data_read": {
+              "id": "public.onlycost.second_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_sp_data_read"
+            },
+            "first_owner_read": {
+              "id": "public.onlycost.first_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_owner_read"
+            },
+            "second_owner_read": {
+              "id": "public.onlycost.second_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_owner_read"
+            },
+            "third_data_read": {
+              "id": "public.onlycost.third_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.third_data_read"
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.onlycost",
+              "kind": "replace_cost",
+              "ordinary_native_path": true,
+              "new_cost": 30,
+              "modify_type_read": {
+                "id": "public.onlycost.modify",
+                "normal": true,
+                "value": false
+              },
+              "type_value_read": {
+                "id": "public.onlycost.type",
+                "normal": true,
+                "value": 6
+              },
+              "unity_truth_read": {
+                "id": "public.onlycost.unity",
+                "normal": true,
+                "value": true
+              },
+              "encode_normally": true,
+              "store_normally": true,
+              "type_store_normally": true,
+              "update_normally": true,
+              "encoded_payload_identity": "declared.payload.public.onlycost",
+              "update_sp_data_identity": "declared.update.data3",
+              "first_data_read": {
+                "id": "public.onlycost.first_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_data_read"
+              },
+              "first_sp_data_read": {
+                "id": "public.onlycost.first_sp_data_read",
+                "normal": true,
+                "exists": null,
+                "identity": "declared.first_sp_data_read"
+              },
+              "second_data_read": {
+                "id": "public.onlycost.second_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_data_read"
+              },
+              "second_sp_data_read": {
+                "id": "public.onlycost.second_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_sp_data_read"
+              },
+              "first_owner_read": {
+                "id": "public.onlycost.first_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_owner_read"
+              },
+              "second_owner_read": {
+                "id": "public.onlycost.second_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_owner_read"
+              },
+              "third_data_read": {
+                "id": "public.onlycost.third_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.third_data_read"
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.onlycost",
+            "kind": "replace_cost",
+            "called": true,
+            "normal": null,
+            "status": "pointer_existence_unknown",
+            "stages": [
+              {
+                "name": "first_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_data_read"
+                }
+              },
+              {
+                "name": "first_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_sp_data_read",
+                  "normal": true,
+                  "exists": null,
+                  "identity": "declared.first_sp_data_read"
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "argument": 30,
+                  "returned_payload": null
+                }
+              },
+              {
+                "name": "first_sp_data_check",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "exists": null
+                }
+              },
+              {
+                "name": "store",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "modify_type_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_data_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_sp_data_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_value_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_store",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "first_owner_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "unity_truth_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_owner_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "third_data_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "update",
+                "called": null,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "arithmetic_reference": null,
+            "encoder_argument_reference": 30,
+            "stored_prefixes": [],
+            "update_arguments": null,
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.stages.2.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.3.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.4.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "scale missing owner still reads secondData before raw check",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.low32_min",
+            "kind": "scale_cost",
+            "ordinary_native_path": true,
+            "cost_decode": {
+              "id": "public.low32_min.cost",
+              "normal": true,
+              "value": -2147483648
+            },
+            "scale_read": {
+              "id": "public.low32_min.factor",
+              "normal": true,
+              "value": -1
+            },
+            "cost_copy_normally": true,
+            "encode_normally": true,
+            "store_normally": true,
+            "update_normally": true,
+            "encoded_payload_identity": "declared.payload.public.low32_min",
+            "update_sp_data_identity": "declared.update.data2",
+            "first_data_read": {
+              "id": "public.low32_min.first_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_data_read"
+            },
+            "first_sp_data_read": {
+              "id": "public.low32_min.first_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_sp_data_read"
+            },
+            "owner_read": {
+              "id": "public.low32_min.owner_read",
+              "normal": true,
+              "exists": false,
+              "identity": "declared.owner_read"
+            },
+            "second_data_read": {
+              "id": "public.low32_min.second_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_data_read"
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.low32_min",
+              "kind": "scale_cost",
+              "ordinary_native_path": true,
+              "cost_decode": {
+                "id": "public.low32_min.cost",
+                "normal": true,
+                "value": -2147483648
+              },
+              "scale_read": {
+                "id": "public.low32_min.factor",
+                "normal": true,
+                "value": -1
+              },
+              "cost_copy_normally": true,
+              "encode_normally": true,
+              "store_normally": true,
+              "update_normally": true,
+              "encoded_payload_identity": "declared.payload.public.low32_min",
+              "update_sp_data_identity": "declared.update.data2",
+              "first_data_read": {
+                "id": "public.low32_min.first_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_data_read"
+              },
+              "first_sp_data_read": {
+                "id": "public.low32_min.first_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_sp_data_read"
+              },
+              "owner_read": {
+                "id": "public.low32_min.owner_read",
+                "normal": true,
+                "exists": false,
+                "identity": "declared.owner_read"
+              },
+              "second_data_read": {
+                "id": "public.low32_min.second_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_data_read"
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.low32_min",
+            "kind": "scale_cost",
+            "called": true,
+            "normal": false,
+            "status": "pointer_missing",
+            "stages": [
+              {
+                "name": "first_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.first_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_data_read"
+                }
+              },
+              {
+                "name": "first_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.first_sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_sp_data_read"
+                }
+              },
+              {
+                "name": "cost_copy",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20,
+                  "fields": null
+                }
+              },
+              {
+                "name": "cost_decode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.cost",
+                  "normal": true,
+                  "value": -2147483648
+                }
+              },
+              {
+                "name": "scale_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.factor",
+                  "normal": true,
+                  "value": -1
+                }
+              },
+              {
+                "name": "imul",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "cost_int32": -2147483648,
+                  "scale_int32": -1,
+                  "product_int32_reference": -2147483648
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "argument": -2147483648,
+                  "returned_payload": null
+                }
+              },
+              {
+                "name": "store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20
+                }
+              },
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.owner_read",
+                  "normal": true,
+                  "exists": false,
+                  "identity": "declared.owner_read"
+                }
+              },
+              {
+                "name": "second_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.second_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.second_data_read"
+                }
+              },
+              {
+                "name": "update",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "arithmetic_reference": {
+              "cost_int32": -2147483648,
+              "scale_int32": -1,
+              "product_int32_reference": -2147483648
+            },
+            "encoder_argument_reference": -2147483648,
+            "stored_prefixes": [
+              {
+                "field": "spCost",
+                "byte_count": 20,
+                "payload_identity": "declared.payload.public.low32_min",
+                "decoded_value": null
+              }
+            ],
+            "update_arguments": null,
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.stages.8.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.8.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.9.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.9.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.10.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stored_prefixes.0.byte_count",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stored_prefixes.0.decoded_value",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "scale update uses independent latest identity and onlycostTrue",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.low32_min",
+            "kind": "scale_cost",
+            "ordinary_native_path": true,
+            "cost_decode": {
+              "id": "public.low32_min.cost",
+              "normal": true,
+              "value": -2147483648
+            },
+            "scale_read": {
+              "id": "public.low32_min.factor",
+              "normal": true,
+              "value": -1
+            },
+            "cost_copy_normally": true,
+            "encode_normally": true,
+            "store_normally": true,
+            "update_normally": true,
+            "encoded_payload_identity": "declared.payload.public.low32_min",
+            "update_sp_data_identity": "第二data的独立spData参数",
+            "first_data_read": {
+              "id": "public.low32_min.first_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_data_read"
+            },
+            "first_sp_data_read": {
+              "id": "public.low32_min.first_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_sp_data_read"
+            },
+            "owner_read": {
+              "id": "public.low32_min.owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner_read"
+            },
+            "second_data_read": {
+              "id": "public.low32_min.second_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "独立第二data"
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.low32_min",
+              "kind": "scale_cost",
+              "ordinary_native_path": true,
+              "cost_decode": {
+                "id": "public.low32_min.cost",
+                "normal": true,
+                "value": -2147483648
+              },
+              "scale_read": {
+                "id": "public.low32_min.factor",
+                "normal": true,
+                "value": -1
+              },
+              "cost_copy_normally": true,
+              "encode_normally": true,
+              "store_normally": true,
+              "update_normally": true,
+              "encoded_payload_identity": "declared.payload.public.low32_min",
+              "update_sp_data_identity": "第二data的独立spData参数",
+              "first_data_read": {
+                "id": "public.low32_min.first_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_data_read"
+              },
+              "first_sp_data_read": {
+                "id": "public.low32_min.first_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_sp_data_read"
+              },
+              "owner_read": {
+                "id": "public.low32_min.owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner_read"
+              },
+              "second_data_read": {
+                "id": "public.low32_min.second_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "独立第二data"
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.low32_min",
+            "kind": "scale_cost",
+            "called": true,
+            "normal": true,
+            "status": "cost_data_update_call_prefix_complete",
+            "stages": [
+              {
+                "name": "first_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.first_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_data_read"
+                }
+              },
+              {
+                "name": "first_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.first_sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_sp_data_read"
+                }
+              },
+              {
+                "name": "cost_copy",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20,
+                  "fields": null
+                }
+              },
+              {
+                "name": "cost_decode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.cost",
+                  "normal": true,
+                  "value": -2147483648
+                }
+              },
+              {
+                "name": "scale_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.factor",
+                  "normal": true,
+                  "value": -1
+                }
+              },
+              {
+                "name": "imul",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "cost_int32": -2147483648,
+                  "scale_int32": -1,
+                  "product_int32_reference": -2147483648
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "argument": -2147483648,
+                  "returned_payload": null
+                }
+              },
+              {
+                "name": "store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20
+                }
+              },
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.owner_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner_read"
+                }
+              },
+              {
+                "name": "second_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.low32_min.second_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "独立第二data"
+                }
+              },
+              {
+                "name": "update",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "owner_identity": "declared.owner_read",
+                  "sp_data_identity": "第二data的独立spData参数",
+                  "only_update_sp_cost": true
+                }
+              }
+            ],
+            "arithmetic_reference": {
+              "cost_int32": -2147483648,
+              "scale_int32": -1,
+              "product_int32_reference": -2147483648
+            },
+            "encoder_argument_reference": -2147483648,
+            "stored_prefixes": [
+              {
+                "field": "spCost",
+                "byte_count": 20,
+                "payload_identity": "declared.payload.public.low32_min",
+                "decoded_value": null
+              }
+            ],
+            "update_arguments": {
+              "owner_identity": "declared.owner_read",
+              "sp_data_identity": "第二data的独立spData参数",
+              "only_update_sp_cost": true
+            },
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.update_arguments.sp_data_identity",
+          "expected": "第二data的独立spData参数",
+          "actual": "第二data的独立spData参数",
+          "passed": true
+        },
+        {
+          "path": "rows.0.update_arguments.only_update_sp_cost",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.encoder_argument_reference",
+          "expected": -2147483648,
+          "actual": -2147483648,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "unknown direct type store keeps prefix and onlycostFalse",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.type_update",
+            "kind": "replace_cost",
+            "ordinary_native_path": true,
+            "new_cost": 40,
+            "modify_type_read": {
+              "id": "public.type_update.modify",
+              "normal": true,
+              "value": true
+            },
+            "type_value_read": {
+              "id": "public.type_update.type",
+              "normal": true,
+              "value": null
+            },
+            "unity_truth_read": {
+              "id": "public.type_update.unity",
+              "normal": true,
+              "value": true
+            },
+            "encode_normally": true,
+            "store_normally": true,
+            "type_store_normally": true,
+            "update_normally": true,
+            "encoded_payload_identity": "declared.payload.public.type_update",
+            "update_sp_data_identity": "declared.update.data3",
+            "first_data_read": {
+              "id": "public.type_update.first_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_data_read"
+            },
+            "first_sp_data_read": {
+              "id": "public.type_update.first_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_sp_data_read"
+            },
+            "second_data_read": {
+              "id": "public.type_update.second_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_data_read"
+            },
+            "second_sp_data_read": {
+              "id": "public.type_update.second_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_sp_data_read"
+            },
+            "first_owner_read": {
+              "id": "public.type_update.first_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_owner_read"
+            },
+            "second_owner_read": {
+              "id": "public.type_update.second_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_owner_read"
+            },
+            "third_data_read": {
+              "id": "public.type_update.third_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.third_data_read"
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.type_update",
+              "kind": "replace_cost",
+              "ordinary_native_path": true,
+              "new_cost": 40,
+              "modify_type_read": {
+                "id": "public.type_update.modify",
+                "normal": true,
+                "value": true
+              },
+              "type_value_read": {
+                "id": "public.type_update.type",
+                "normal": true,
+                "value": null
+              },
+              "unity_truth_read": {
+                "id": "public.type_update.unity",
+                "normal": true,
+                "value": true
+              },
+              "encode_normally": true,
+              "store_normally": true,
+              "type_store_normally": true,
+              "update_normally": true,
+              "encoded_payload_identity": "declared.payload.public.type_update",
+              "update_sp_data_identity": "declared.update.data3",
+              "first_data_read": {
+                "id": "public.type_update.first_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_data_read"
+              },
+              "first_sp_data_read": {
+                "id": "public.type_update.first_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_sp_data_read"
+              },
+              "second_data_read": {
+                "id": "public.type_update.second_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_data_read"
+              },
+              "second_sp_data_read": {
+                "id": "public.type_update.second_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_sp_data_read"
+              },
+              "first_owner_read": {
+                "id": "public.type_update.first_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_owner_read"
+              },
+              "second_owner_read": {
+                "id": "public.type_update.second_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_owner_read"
+              },
+              "third_data_read": {
+                "id": "public.type_update.third_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.third_data_read"
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.type_update",
+            "kind": "replace_cost",
+            "called": true,
+            "normal": true,
+            "status": "cost_data_update_call_prefix_complete",
+            "stages": [
+              {
+                "name": "first_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.first_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_data_read"
+                }
+              },
+              {
+                "name": "first_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.first_sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_sp_data_read"
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "argument": 40,
+                  "returned_payload": null
+                }
+              },
+              {
+                "name": "first_sp_data_check",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "exists": true
+                }
+              },
+              {
+                "name": "store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20
+                }
+              },
+              {
+                "name": "modify_type_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.modify",
+                  "normal": true,
+                  "value": true
+                }
+              },
+              {
+                "name": "second_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.second_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.second_data_read"
+                }
+              },
+              {
+                "name": "second_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.second_sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.second_sp_data_read"
+                }
+              },
+              {
+                "name": "type_value_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.type",
+                  "normal": true,
+                  "value": null
+                }
+              },
+              {
+                "name": "type_store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "value": null
+                }
+              },
+              {
+                "name": "first_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.first_owner_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_owner_read"
+                }
+              },
+              {
+                "name": "unity_truth_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.unity",
+                  "normal": true,
+                  "value": true
+                }
+              },
+              {
+                "name": "second_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.second_owner_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.second_owner_read"
+                }
+              },
+              {
+                "name": "third_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.third_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.third_data_read"
+                }
+              },
+              {
+                "name": "update",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "owner_identity": "declared.second_owner_read",
+                  "sp_data_identity": "declared.update.data3",
+                  "only_update_sp_cost": false
+                }
+              }
+            ],
+            "arithmetic_reference": null,
+            "encoder_argument_reference": 40,
+            "stored_prefixes": [
+              {
+                "field": "spCost",
+                "byte_count": 20,
+                "payload_identity": "declared.payload.public.type_update",
+                "decoded_value": null
+              },
+              {
+                "field": "spType",
+                "value": null
+              }
+            ],
+            "update_arguments": {
+              "owner_identity": "declared.second_owner_read",
+              "sp_data_identity": "declared.update.data3",
+              "only_update_sp_cost": false
+            },
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.stored_prefixes.0.field",
+          "expected": "spCost",
+          "actual": "spCost",
+          "passed": true
+        },
+        {
+          "path": "rows.0.stored_prefixes.1.field",
+          "expected": "spType",
+          "actual": "spType",
+          "passed": true
+        },
+        {
+          "path": "rows.0.stored_prefixes.1.value",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.9.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.9.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.update_arguments.only_update_sp_cost",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "type-store exception retains completed cost prefix only",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.type_update",
+            "kind": "replace_cost",
+            "ordinary_native_path": true,
+            "new_cost": 40,
+            "modify_type_read": {
+              "id": "public.type_update.modify",
+              "normal": true,
+              "value": true
+            },
+            "type_value_read": {
+              "id": "public.type_update.type",
+              "normal": true,
+              "value": 6
+            },
+            "unity_truth_read": {
+              "id": "public.type_update.unity",
+              "normal": true,
+              "value": true
+            },
+            "encode_normally": true,
+            "store_normally": true,
+            "type_store_normally": false,
+            "update_normally": true,
+            "encoded_payload_identity": "declared.payload.public.type_update",
+            "update_sp_data_identity": "declared.update.data3",
+            "first_data_read": {
+              "id": "public.type_update.first_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_data_read"
+            },
+            "first_sp_data_read": {
+              "id": "public.type_update.first_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_sp_data_read"
+            },
+            "second_data_read": {
+              "id": "public.type_update.second_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_data_read"
+            },
+            "second_sp_data_read": {
+              "id": "public.type_update.second_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_sp_data_read"
+            },
+            "first_owner_read": {
+              "id": "public.type_update.first_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_owner_read"
+            },
+            "second_owner_read": {
+              "id": "public.type_update.second_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_owner_read"
+            },
+            "third_data_read": {
+              "id": "public.type_update.third_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.third_data_read"
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.type_update",
+              "kind": "replace_cost",
+              "ordinary_native_path": true,
+              "new_cost": 40,
+              "modify_type_read": {
+                "id": "public.type_update.modify",
+                "normal": true,
+                "value": true
+              },
+              "type_value_read": {
+                "id": "public.type_update.type",
+                "normal": true,
+                "value": 6
+              },
+              "unity_truth_read": {
+                "id": "public.type_update.unity",
+                "normal": true,
+                "value": true
+              },
+              "encode_normally": true,
+              "store_normally": true,
+              "type_store_normally": false,
+              "update_normally": true,
+              "encoded_payload_identity": "declared.payload.public.type_update",
+              "update_sp_data_identity": "declared.update.data3",
+              "first_data_read": {
+                "id": "public.type_update.first_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_data_read"
+              },
+              "first_sp_data_read": {
+                "id": "public.type_update.first_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_sp_data_read"
+              },
+              "second_data_read": {
+                "id": "public.type_update.second_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_data_read"
+              },
+              "second_sp_data_read": {
+                "id": "public.type_update.second_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_sp_data_read"
+              },
+              "first_owner_read": {
+                "id": "public.type_update.first_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_owner_read"
+              },
+              "second_owner_read": {
+                "id": "public.type_update.second_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_owner_read"
+              },
+              "third_data_read": {
+                "id": "public.type_update.third_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.third_data_read"
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.type_update",
+            "kind": "replace_cost",
+            "called": true,
+            "normal": false,
+            "status": "prefix_failed",
+            "stages": [
+              {
+                "name": "first_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.first_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_data_read"
+                }
+              },
+              {
+                "name": "first_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.first_sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_sp_data_read"
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "argument": 40,
+                  "returned_payload": null
+                }
+              },
+              {
+                "name": "first_sp_data_check",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "exists": true
+                }
+              },
+              {
+                "name": "store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20
+                }
+              },
+              {
+                "name": "modify_type_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.modify",
+                  "normal": true,
+                  "value": true
+                }
+              },
+              {
+                "name": "second_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.second_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.second_data_read"
+                }
+              },
+              {
+                "name": "second_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.second_sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.second_sp_data_read"
+                }
+              },
+              {
+                "name": "type_value_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.type_update.type",
+                  "normal": true,
+                  "value": 6
+                }
+              },
+              {
+                "name": "type_store",
+                "called": true,
+                "normal": false,
+                "reference": null
+              },
+              {
+                "name": "first_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "unity_truth_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "third_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "update",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "arithmetic_reference": null,
+            "encoder_argument_reference": 40,
+            "stored_prefixes": [
+              {
+                "field": "spCost",
+                "byte_count": 20,
+                "payload_identity": "declared.payload.public.type_update",
+                "decoded_value": null
+              }
+            ],
+            "update_arguments": null,
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.stored_prefixes.0.field",
+          "expected": "spCost",
+          "actual": "spCost",
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.9.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.9.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.10.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.14.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "unknown modify flag leaves future callsUnknown and cost prefix intact",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.onlycost",
+            "kind": "replace_cost",
+            "ordinary_native_path": true,
+            "new_cost": 30,
+            "modify_type_read": {
+              "id": "public.onlycost.modify",
+              "normal": true,
+              "value": null
+            },
+            "type_value_read": {
+              "id": "public.onlycost.type",
+              "normal": true,
+              "value": 6
+            },
+            "unity_truth_read": {
+              "id": "public.onlycost.unity",
+              "normal": true,
+              "value": true
+            },
+            "encode_normally": true,
+            "store_normally": true,
+            "type_store_normally": true,
+            "update_normally": true,
+            "encoded_payload_identity": "declared.payload.public.onlycost",
+            "update_sp_data_identity": "declared.update.data3",
+            "first_data_read": {
+              "id": "public.onlycost.first_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_data_read"
+            },
+            "first_sp_data_read": {
+              "id": "public.onlycost.first_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_sp_data_read"
+            },
+            "second_data_read": {
+              "id": "public.onlycost.second_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_data_read"
+            },
+            "second_sp_data_read": {
+              "id": "public.onlycost.second_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_sp_data_read"
+            },
+            "first_owner_read": {
+              "id": "public.onlycost.first_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_owner_read"
+            },
+            "second_owner_read": {
+              "id": "public.onlycost.second_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_owner_read"
+            },
+            "third_data_read": {
+              "id": "public.onlycost.third_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.third_data_read"
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.onlycost",
+              "kind": "replace_cost",
+              "ordinary_native_path": true,
+              "new_cost": 30,
+              "modify_type_read": {
+                "id": "public.onlycost.modify",
+                "normal": true,
+                "value": null
+              },
+              "type_value_read": {
+                "id": "public.onlycost.type",
+                "normal": true,
+                "value": 6
+              },
+              "unity_truth_read": {
+                "id": "public.onlycost.unity",
+                "normal": true,
+                "value": true
+              },
+              "encode_normally": true,
+              "store_normally": true,
+              "type_store_normally": true,
+              "update_normally": true,
+              "encoded_payload_identity": "declared.payload.public.onlycost",
+              "update_sp_data_identity": "declared.update.data3",
+              "first_data_read": {
+                "id": "public.onlycost.first_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_data_read"
+              },
+              "first_sp_data_read": {
+                "id": "public.onlycost.first_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_sp_data_read"
+              },
+              "second_data_read": {
+                "id": "public.onlycost.second_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_data_read"
+              },
+              "second_sp_data_read": {
+                "id": "public.onlycost.second_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_sp_data_read"
+              },
+              "first_owner_read": {
+                "id": "public.onlycost.first_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_owner_read"
+              },
+              "second_owner_read": {
+                "id": "public.onlycost.second_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_owner_read"
+              },
+              "third_data_read": {
+                "id": "public.onlycost.third_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.third_data_read"
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.onlycost",
+            "kind": "replace_cost",
+            "called": true,
+            "normal": null,
+            "status": "independent_value_unknown",
+            "stages": [
+              {
+                "name": "first_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_data_read"
+                }
+              },
+              {
+                "name": "first_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_sp_data_read"
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "argument": 30,
+                  "returned_payload": null
+                }
+              },
+              {
+                "name": "first_sp_data_check",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "exists": true
+                }
+              },
+              {
+                "name": "store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20
+                }
+              },
+              {
+                "name": "modify_type_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.modify",
+                  "normal": true,
+                  "value": null
+                }
+              },
+              {
+                "name": "second_data_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_sp_data_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_value_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_store",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "first_owner_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "unity_truth_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_owner_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "third_data_read",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "update",
+                "called": null,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "arithmetic_reference": null,
+            "encoder_argument_reference": 30,
+            "stored_prefixes": [
+              {
+                "field": "spCost",
+                "byte_count": 20,
+                "payload_identity": "declared.payload.public.onlycost",
+                "decoded_value": null
+              }
+            ],
+            "update_arguments": null,
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.stored_prefixes.0.byte_count",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.6.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.10.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.14.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.update_arguments",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "Unity false returns normally after cost-only store",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.onlycost",
+            "kind": "replace_cost",
+            "ordinary_native_path": true,
+            "new_cost": 30,
+            "modify_type_read": {
+              "id": "public.onlycost.modify",
+              "normal": true,
+              "value": false
+            },
+            "type_value_read": {
+              "id": "public.onlycost.type",
+              "normal": true,
+              "value": 6
+            },
+            "unity_truth_read": {
+              "id": "public.onlycost.unity",
+              "normal": true,
+              "value": false
+            },
+            "encode_normally": true,
+            "store_normally": true,
+            "type_store_normally": true,
+            "update_normally": true,
+            "encoded_payload_identity": "declared.payload.public.onlycost",
+            "update_sp_data_identity": "declared.update.data3",
+            "first_data_read": {
+              "id": "public.onlycost.first_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_data_read"
+            },
+            "first_sp_data_read": {
+              "id": "public.onlycost.first_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_sp_data_read"
+            },
+            "second_data_read": {
+              "id": "public.onlycost.second_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_data_read"
+            },
+            "second_sp_data_read": {
+              "id": "public.onlycost.second_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_sp_data_read"
+            },
+            "first_owner_read": {
+              "id": "public.onlycost.first_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_owner_read"
+            },
+            "second_owner_read": {
+              "id": "public.onlycost.second_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_owner_read"
+            },
+            "third_data_read": {
+              "id": "public.onlycost.third_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.third_data_read"
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.onlycost",
+              "kind": "replace_cost",
+              "ordinary_native_path": true,
+              "new_cost": 30,
+              "modify_type_read": {
+                "id": "public.onlycost.modify",
+                "normal": true,
+                "value": false
+              },
+              "type_value_read": {
+                "id": "public.onlycost.type",
+                "normal": true,
+                "value": 6
+              },
+              "unity_truth_read": {
+                "id": "public.onlycost.unity",
+                "normal": true,
+                "value": false
+              },
+              "encode_normally": true,
+              "store_normally": true,
+              "type_store_normally": true,
+              "update_normally": true,
+              "encoded_payload_identity": "declared.payload.public.onlycost",
+              "update_sp_data_identity": "declared.update.data3",
+              "first_data_read": {
+                "id": "public.onlycost.first_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_data_read"
+              },
+              "first_sp_data_read": {
+                "id": "public.onlycost.first_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_sp_data_read"
+              },
+              "second_data_read": {
+                "id": "public.onlycost.second_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_data_read"
+              },
+              "second_sp_data_read": {
+                "id": "public.onlycost.second_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_sp_data_read"
+              },
+              "first_owner_read": {
+                "id": "public.onlycost.first_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_owner_read"
+              },
+              "second_owner_read": {
+                "id": "public.onlycost.second_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_owner_read"
+              },
+              "third_data_read": {
+                "id": "public.onlycost.third_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.third_data_read"
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.onlycost",
+            "kind": "replace_cost",
+            "called": true,
+            "normal": true,
+            "status": "unity_owner_false_normal_return",
+            "stages": [
+              {
+                "name": "first_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_data_read"
+                }
+              },
+              {
+                "name": "first_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_sp_data_read"
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "argument": 30,
+                  "returned_payload": null
+                }
+              },
+              {
+                "name": "first_sp_data_check",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "exists": true
+                }
+              },
+              {
+                "name": "store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20
+                }
+              },
+              {
+                "name": "modify_type_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.modify",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "second_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_sp_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_value_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_store",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "first_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_owner_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_owner_read"
+                }
+              },
+              {
+                "name": "unity_truth_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.unity",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "second_owner_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "third_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "update",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "arithmetic_reference": null,
+            "encoder_argument_reference": 30,
+            "stored_prefixes": [
+              {
+                "field": "spCost",
+                "byte_count": 20,
+                "payload_identity": "declared.payload.public.onlycost",
+                "decoded_value": null
+              }
+            ],
+            "update_arguments": null,
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.stages.10.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.11.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.12.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.13.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.14.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "replacement missing second owner still reads thirdData",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.onlycost",
+            "kind": "replace_cost",
+            "ordinary_native_path": true,
+            "new_cost": 30,
+            "modify_type_read": {
+              "id": "public.onlycost.modify",
+              "normal": true,
+              "value": false
+            },
+            "type_value_read": {
+              "id": "public.onlycost.type",
+              "normal": true,
+              "value": 6
+            },
+            "unity_truth_read": {
+              "id": "public.onlycost.unity",
+              "normal": true,
+              "value": true
+            },
+            "encode_normally": true,
+            "store_normally": true,
+            "type_store_normally": true,
+            "update_normally": true,
+            "encoded_payload_identity": "declared.payload.public.onlycost",
+            "update_sp_data_identity": "declared.update.data3",
+            "first_data_read": {
+              "id": "public.onlycost.first_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_data_read"
+            },
+            "first_sp_data_read": {
+              "id": "public.onlycost.first_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_sp_data_read"
+            },
+            "second_data_read": {
+              "id": "public.onlycost.second_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_data_read"
+            },
+            "second_sp_data_read": {
+              "id": "public.onlycost.second_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_sp_data_read"
+            },
+            "first_owner_read": {
+              "id": "public.onlycost.first_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_owner_read"
+            },
+            "second_owner_read": {
+              "id": "public.onlycost.second_owner_read",
+              "normal": true,
+              "exists": false,
+              "identity": "declared.second_owner_read"
+            },
+            "third_data_read": {
+              "id": "public.onlycost.third_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.third_data_read"
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.onlycost",
+              "kind": "replace_cost",
+              "ordinary_native_path": true,
+              "new_cost": 30,
+              "modify_type_read": {
+                "id": "public.onlycost.modify",
+                "normal": true,
+                "value": false
+              },
+              "type_value_read": {
+                "id": "public.onlycost.type",
+                "normal": true,
+                "value": 6
+              },
+              "unity_truth_read": {
+                "id": "public.onlycost.unity",
+                "normal": true,
+                "value": true
+              },
+              "encode_normally": true,
+              "store_normally": true,
+              "type_store_normally": true,
+              "update_normally": true,
+              "encoded_payload_identity": "declared.payload.public.onlycost",
+              "update_sp_data_identity": "declared.update.data3",
+              "first_data_read": {
+                "id": "public.onlycost.first_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_data_read"
+              },
+              "first_sp_data_read": {
+                "id": "public.onlycost.first_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_sp_data_read"
+              },
+              "second_data_read": {
+                "id": "public.onlycost.second_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_data_read"
+              },
+              "second_sp_data_read": {
+                "id": "public.onlycost.second_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_sp_data_read"
+              },
+              "first_owner_read": {
+                "id": "public.onlycost.first_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_owner_read"
+              },
+              "second_owner_read": {
+                "id": "public.onlycost.second_owner_read",
+                "normal": true,
+                "exists": false,
+                "identity": "declared.second_owner_read"
+              },
+              "third_data_read": {
+                "id": "public.onlycost.third_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.third_data_read"
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.onlycost",
+            "kind": "replace_cost",
+            "called": true,
+            "normal": false,
+            "status": "pointer_missing",
+            "stages": [
+              {
+                "name": "first_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_data_read"
+                }
+              },
+              {
+                "name": "first_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_sp_data_read"
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "argument": 30,
+                  "returned_payload": null
+                }
+              },
+              {
+                "name": "first_sp_data_check",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "exists": true
+                }
+              },
+              {
+                "name": "store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20
+                }
+              },
+              {
+                "name": "modify_type_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.modify",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "second_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_sp_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_value_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_store",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "first_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_owner_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_owner_read"
+                }
+              },
+              {
+                "name": "unity_truth_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.unity",
+                  "normal": true,
+                  "value": true
+                }
+              },
+              {
+                "name": "second_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.second_owner_read",
+                  "normal": true,
+                  "exists": false,
+                  "identity": "declared.second_owner_read"
+                }
+              },
+              {
+                "name": "third_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.third_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.third_data_read"
+                }
+              },
+              {
+                "name": "update",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "arithmetic_reference": null,
+            "encoder_argument_reference": 30,
+            "stored_prefixes": [
+              {
+                "field": "spCost",
+                "byte_count": 20,
+                "payload_identity": "declared.payload.public.onlycost",
+                "decoded_value": null
+              }
+            ],
+            "update_arguments": null,
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.stages.12.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.13.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.13.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.14.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "replacement cost-only latest data argument",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.onlycost",
+            "kind": "replace_cost",
+            "ordinary_native_path": true,
+            "new_cost": 30,
+            "modify_type_read": {
+              "id": "public.onlycost.modify",
+              "normal": true,
+              "value": false
+            },
+            "type_value_read": {
+              "id": "public.onlycost.type",
+              "normal": true,
+              "value": 6
+            },
+            "unity_truth_read": {
+              "id": "public.onlycost.unity",
+              "normal": true,
+              "value": true
+            },
+            "encode_normally": true,
+            "store_normally": true,
+            "type_store_normally": true,
+            "update_normally": true,
+            "encoded_payload_identity": "declared.payload.public.onlycost",
+            "update_sp_data_identity": "第三data独立spData",
+            "first_data_read": {
+              "id": "public.onlycost.first_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_data_read"
+            },
+            "first_sp_data_read": {
+              "id": "public.onlycost.first_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_sp_data_read"
+            },
+            "second_data_read": {
+              "id": "public.onlycost.second_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_data_read"
+            },
+            "second_sp_data_read": {
+              "id": "public.onlycost.second_sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_sp_data_read"
+            },
+            "first_owner_read": {
+              "id": "public.onlycost.first_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.first_owner_read"
+            },
+            "second_owner_read": {
+              "id": "public.onlycost.second_owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.second_owner_read"
+            },
+            "third_data_read": {
+              "id": "public.onlycost.third_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.third_data_read"
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.onlycost",
+              "kind": "replace_cost",
+              "ordinary_native_path": true,
+              "new_cost": 30,
+              "modify_type_read": {
+                "id": "public.onlycost.modify",
+                "normal": true,
+                "value": false
+              },
+              "type_value_read": {
+                "id": "public.onlycost.type",
+                "normal": true,
+                "value": 6
+              },
+              "unity_truth_read": {
+                "id": "public.onlycost.unity",
+                "normal": true,
+                "value": true
+              },
+              "encode_normally": true,
+              "store_normally": true,
+              "type_store_normally": true,
+              "update_normally": true,
+              "encoded_payload_identity": "declared.payload.public.onlycost",
+              "update_sp_data_identity": "第三data独立spData",
+              "first_data_read": {
+                "id": "public.onlycost.first_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_data_read"
+              },
+              "first_sp_data_read": {
+                "id": "public.onlycost.first_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_sp_data_read"
+              },
+              "second_data_read": {
+                "id": "public.onlycost.second_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_data_read"
+              },
+              "second_sp_data_read": {
+                "id": "public.onlycost.second_sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_sp_data_read"
+              },
+              "first_owner_read": {
+                "id": "public.onlycost.first_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.first_owner_read"
+              },
+              "second_owner_read": {
+                "id": "public.onlycost.second_owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.second_owner_read"
+              },
+              "third_data_read": {
+                "id": "public.onlycost.third_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.third_data_read"
+              }
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.onlycost",
+            "kind": "replace_cost",
+            "called": true,
+            "normal": true,
+            "status": "cost_data_update_call_prefix_complete",
+            "stages": [
+              {
+                "name": "first_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_data_read"
+                }
+              },
+              {
+                "name": "first_sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_sp_data_read"
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "argument": 30,
+                  "returned_payload": null
+                }
+              },
+              {
+                "name": "first_sp_data_check",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "exists": true
+                }
+              },
+              {
+                "name": "store",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20
+                }
+              },
+              {
+                "name": "modify_type_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.modify",
+                  "normal": true,
+                  "value": false
+                }
+              },
+              {
+                "name": "second_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "second_sp_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_value_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "type_store",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "first_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.first_owner_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.first_owner_read"
+                }
+              },
+              {
+                "name": "unity_truth_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.unity",
+                  "normal": true,
+                  "value": true
+                }
+              },
+              {
+                "name": "second_owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.second_owner_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.second_owner_read"
+                }
+              },
+              {
+                "name": "third_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.onlycost.third_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.third_data_read"
+                }
+              },
+              {
+                "name": "update",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "owner_identity": "declared.second_owner_read",
+                  "sp_data_identity": "第三data独立spData",
+                  "only_update_sp_cost": true
+                }
+              }
+            ],
+            "arithmetic_reference": null,
+            "encoder_argument_reference": 30,
+            "stored_prefixes": [
+              {
+                "field": "spCost",
+                "byte_count": 20,
+                "payload_identity": "declared.payload.public.onlycost",
+                "decoded_value": null
+              }
+            ],
+            "update_arguments": {
+              "owner_identity": "declared.second_owner_read",
+              "sp_data_identity": "第三data独立spData",
+              "only_update_sp_cost": true
+            },
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.update_arguments.sp_data_identity",
+          "expected": "第三data独立spData",
+          "actual": "第三data独立spData",
+          "passed": true
+        },
+        {
+          "path": "rows.0.update_arguments.only_update_sp_cost",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "TryGetFloat false skips SPdata and numerical body",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.tie_even_down",
+            "kind": "rune_mul",
+            "ordinary_native_path": true,
+            "cost_decode": {
+              "id": "public.tie_even_down.cost",
+              "normal": true,
+              "value": 25
+            },
+            "modifier_read": {
+              "id": "public.tie_even_down.modifier",
+              "normal": true,
+              "bits": 1056964608,
+              "found": false
+            },
+            "encoded_payload_identity": "declared.payload.public.tie_even_down",
+            "owner_read": {
+              "id": "public.tie_even_down.owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner_read"
+            },
+            "character_data_read": {
+              "id": "public.tie_even_down.character_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.character_data_read"
+            },
+            "skill_data_read": {
+              "id": "public.tie_even_down.skill_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.skill_data_read"
+            },
+            "blackboard_read": {
+              "id": "public.tie_even_down.blackboard_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.blackboard_read"
+            },
+            "sp_data_read": {
+              "id": "public.tie_even_down.sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.sp_data_read"
+            },
+            "cost_copy_normally": true,
+            "single_conversion_normally": true,
+            "single_arithmetic_normally": true,
+            "round_normally": true,
+            "encode_normally": true,
+            "store_normally": true
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.tie_even_down",
+              "kind": "rune_mul",
+              "ordinary_native_path": true,
+              "cost_decode": {
+                "id": "public.tie_even_down.cost",
+                "normal": true,
+                "value": 25
+              },
+              "modifier_read": {
+                "id": "public.tie_even_down.modifier",
+                "normal": true,
+                "bits": 1056964608,
+                "found": false
+              },
+              "encoded_payload_identity": "declared.payload.public.tie_even_down",
+              "owner_read": {
+                "id": "public.tie_even_down.owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner_read"
+              },
+              "character_data_read": {
+                "id": "public.tie_even_down.character_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.character_data_read"
+              },
+              "skill_data_read": {
+                "id": "public.tie_even_down.skill_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.skill_data_read"
+              },
+              "blackboard_read": {
+                "id": "public.tie_even_down.blackboard_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.blackboard_read"
+              },
+              "sp_data_read": {
+                "id": "public.tie_even_down.sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.sp_data_read"
+              },
+              "cost_copy_normally": true,
+              "single_conversion_normally": true,
+              "single_arithmetic_normally": true,
+              "round_normally": true,
+              "encode_normally": true,
+              "store_normally": true
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.tie_even_down",
+            "kind": "rune_mul",
+            "called": true,
+            "normal": true,
+            "status": "modifier_key_missing_normal_return",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.owner_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner_read"
+                }
+              },
+              {
+                "name": "character_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.character_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.character_data_read"
+                }
+              },
+              {
+                "name": "skill_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.skill_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.skill_data_read"
+                }
+              },
+              {
+                "name": "blackboard_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.blackboard_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.blackboard_read"
+                }
+              },
+              {
+                "name": "modifier_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.modifier",
+                  "normal": true,
+                  "bits": 1056964608,
+                  "found": false
+                }
+              },
+              {
+                "name": "sp_data_read",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "cost_copy",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "cost_decode",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "single_conversion",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "single_arithmetic",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "round",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "encode",
+                "called": false,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "store",
+                "called": false,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "arithmetic_reference": null,
+            "encoder_argument_reference": null,
+            "stored_prefixes": [],
+            "update_arguments": null,
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.stages.4.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.5.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.7.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.11.called",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "unknown rounding call normality leaves encode/storeUnknown",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.tie_even_down",
+            "kind": "rune_mul",
+            "ordinary_native_path": true,
+            "cost_decode": {
+              "id": "public.tie_even_down.cost",
+              "normal": true,
+              "value": 25
+            },
+            "modifier_read": {
+              "id": "public.tie_even_down.modifier",
+              "normal": true,
+              "bits": 1056964608,
+              "found": true
+            },
+            "encoded_payload_identity": "declared.payload.public.tie_even_down",
+            "owner_read": {
+              "id": "public.tie_even_down.owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner_read"
+            },
+            "character_data_read": {
+              "id": "public.tie_even_down.character_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.character_data_read"
+            },
+            "skill_data_read": {
+              "id": "public.tie_even_down.skill_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.skill_data_read"
+            },
+            "blackboard_read": {
+              "id": "public.tie_even_down.blackboard_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.blackboard_read"
+            },
+            "sp_data_read": {
+              "id": "public.tie_even_down.sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.sp_data_read"
+            },
+            "cost_copy_normally": true,
+            "single_conversion_normally": true,
+            "single_arithmetic_normally": true,
+            "round_normally": null,
+            "encode_normally": true,
+            "store_normally": true
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.tie_even_down",
+              "kind": "rune_mul",
+              "ordinary_native_path": true,
+              "cost_decode": {
+                "id": "public.tie_even_down.cost",
+                "normal": true,
+                "value": 25
+              },
+              "modifier_read": {
+                "id": "public.tie_even_down.modifier",
+                "normal": true,
+                "bits": 1056964608,
+                "found": true
+              },
+              "encoded_payload_identity": "declared.payload.public.tie_even_down",
+              "owner_read": {
+                "id": "public.tie_even_down.owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner_read"
+              },
+              "character_data_read": {
+                "id": "public.tie_even_down.character_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.character_data_read"
+              },
+              "skill_data_read": {
+                "id": "public.tie_even_down.skill_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.skill_data_read"
+              },
+              "blackboard_read": {
+                "id": "public.tie_even_down.blackboard_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.blackboard_read"
+              },
+              "sp_data_read": {
+                "id": "public.tie_even_down.sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.sp_data_read"
+              },
+              "cost_copy_normally": true,
+              "single_conversion_normally": true,
+              "single_arithmetic_normally": true,
+              "round_normally": null,
+              "encode_normally": true,
+              "store_normally": true
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.tie_even_down",
+            "kind": "rune_mul",
+            "called": true,
+            "normal": null,
+            "status": "prefix_normality_unknown",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.owner_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner_read"
+                }
+              },
+              {
+                "name": "character_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.character_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.character_data_read"
+                }
+              },
+              {
+                "name": "skill_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.skill_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.skill_data_read"
+                }
+              },
+              {
+                "name": "blackboard_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.blackboard_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.blackboard_read"
+                }
+              },
+              {
+                "name": "modifier_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.modifier",
+                  "normal": true,
+                  "bits": 1056964608,
+                  "found": true
+                }
+              },
+              {
+                "name": "sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.sp_data_read"
+                }
+              },
+              {
+                "name": "cost_copy",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20,
+                  "fields": null
+                }
+              },
+              {
+                "name": "cost_decode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.cost",
+                  "normal": true,
+                  "value": 25
+                }
+              },
+              {
+                "name": "single_conversion",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "input": 25,
+                  "exact": true
+                }
+              },
+              {
+                "name": "single_arithmetic",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "exact": true,
+                  "bits": 1095237632
+                }
+              },
+              {
+                "name": "round",
+                "called": true,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "encode",
+                "called": null,
+                "normal": null,
+                "reference": null
+              },
+              {
+                "name": "store",
+                "called": null,
+                "normal": null,
+                "reference": null
+              }
+            ],
+            "arithmetic_reference": {
+              "operation": "mul",
+              "cost_int32": 25,
+              "modifier_bits": 1056964608,
+              "status": "exact_single_half_even_reference",
+              "cost_single_exact": true,
+              "binary_operation_exact": true,
+              "mathematical_numerator": 25,
+              "mathematical_denominator": 2,
+              "result_single_bits": 1095237632,
+              "rounded_int32_reference": 12
+            },
+            "encoder_argument_reference": null,
+            "stored_prefixes": [],
+            "update_arguments": null,
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.stages.10.called",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.10.normal",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.11.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.12.called",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "failed20byte store does not claim completed field prefix",
+      "input": {
+        "receiver_exists": true,
+        "actions": [
+          {
+            "id": "public.tie_even_down",
+            "kind": "rune_mul",
+            "ordinary_native_path": true,
+            "cost_decode": {
+              "id": "public.tie_even_down.cost",
+              "normal": true,
+              "value": 25
+            },
+            "modifier_read": {
+              "id": "public.tie_even_down.modifier",
+              "normal": true,
+              "bits": 1056964608,
+              "found": true
+            },
+            "encoded_payload_identity": "declared.payload.public.tie_even_down",
+            "owner_read": {
+              "id": "public.tie_even_down.owner_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.owner_read"
+            },
+            "character_data_read": {
+              "id": "public.tie_even_down.character_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.character_data_read"
+            },
+            "skill_data_read": {
+              "id": "public.tie_even_down.skill_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.skill_data_read"
+            },
+            "blackboard_read": {
+              "id": "public.tie_even_down.blackboard_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.blackboard_read"
+            },
+            "sp_data_read": {
+              "id": "public.tie_even_down.sp_data_read",
+              "normal": true,
+              "exists": true,
+              "identity": "declared.sp_data_read"
+            },
+            "cost_copy_normally": true,
+            "single_conversion_normally": true,
+            "single_arithmetic_normally": true,
+            "round_normally": true,
+            "encode_normally": true,
+            "store_normally": false
+          }
+        ]
+      },
+      "actual_output": {
+        "kind": "skill_data_cost_reference",
+        "source": {
+          "valid": true,
+          "status": "pinned_file_source_reference",
+          "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+          "method_count": 32,
+          "byte_span_count": 4034
+        },
+        "payload": {
+          "receiver_exists": true,
+          "actions": [
+            {
+              "id": "public.tie_even_down",
+              "kind": "rune_mul",
+              "ordinary_native_path": true,
+              "cost_decode": {
+                "id": "public.tie_even_down.cost",
+                "normal": true,
+                "value": 25
+              },
+              "modifier_read": {
+                "id": "public.tie_even_down.modifier",
+                "normal": true,
+                "bits": 1056964608,
+                "found": true
+              },
+              "encoded_payload_identity": "declared.payload.public.tie_even_down",
+              "owner_read": {
+                "id": "public.tie_even_down.owner_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.owner_read"
+              },
+              "character_data_read": {
+                "id": "public.tie_even_down.character_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.character_data_read"
+              },
+              "skill_data_read": {
+                "id": "public.tie_even_down.skill_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.skill_data_read"
+              },
+              "blackboard_read": {
+                "id": "public.tie_even_down.blackboard_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.blackboard_read"
+              },
+              "sp_data_read": {
+                "id": "public.tie_even_down.sp_data_read",
+                "normal": true,
+                "exists": true,
+                "identity": "declared.sp_data_read"
+              },
+              "cost_copy_normally": true,
+              "single_conversion_normally": true,
+              "single_arithmetic_normally": true,
+              "round_normally": true,
+              "encode_normally": true,
+              "store_normally": false
+            }
+          ]
+        },
+        "rows": [
+          {
+            "id": "public.tie_even_down",
+            "kind": "rune_mul",
+            "called": true,
+            "normal": false,
+            "status": "prefix_failed",
+            "stages": [
+              {
+                "name": "owner_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.owner_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.owner_read"
+                }
+              },
+              {
+                "name": "character_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.character_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.character_data_read"
+                }
+              },
+              {
+                "name": "skill_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.skill_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.skill_data_read"
+                }
+              },
+              {
+                "name": "blackboard_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.blackboard_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.blackboard_read"
+                }
+              },
+              {
+                "name": "modifier_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.modifier",
+                  "normal": true,
+                  "bits": 1056964608,
+                  "found": true
+                }
+              },
+              {
+                "name": "sp_data_read",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.sp_data_read",
+                  "normal": true,
+                  "exists": true,
+                  "identity": "declared.sp_data_read"
+                }
+              },
+              {
+                "name": "cost_copy",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "byte_count": 20,
+                  "fields": null
+                }
+              },
+              {
+                "name": "cost_decode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "id": "public.tie_even_down.cost",
+                  "normal": true,
+                  "value": 25
+                }
+              },
+              {
+                "name": "single_conversion",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "input": 25,
+                  "exact": true
+                }
+              },
+              {
+                "name": "single_arithmetic",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "exact": true,
+                  "bits": 1095237632
+                }
+              },
+              {
+                "name": "round",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "integer_reference": 12
+                }
+              },
+              {
+                "name": "encode",
+                "called": true,
+                "normal": true,
+                "reference": {
+                  "argument": 12,
+                  "returned_payload": null
+                }
+              },
+              {
+                "name": "store",
+                "called": true,
+                "normal": false,
+                "reference": null
+              }
+            ],
+            "arithmetic_reference": {
+              "operation": "mul",
+              "cost_int32": 25,
+              "modifier_bits": 1056964608,
+              "status": "exact_single_half_even_reference",
+              "cost_single_exact": true,
+              "binary_operation_exact": true,
+              "mathematical_numerator": 25,
+              "mathematical_denominator": 2,
+              "result_single_bits": 1095237632,
+              "rounded_int32_reference": 12
+            },
+            "encoder_argument_reference": 12,
+            "stored_prefixes": [],
+            "update_arguments": null,
+            "actual_cost_after": null,
+            "actual_sp_after": null,
+            "complete_cycle": null
+          }
+        ],
+        "actual_cost_after": null,
+        "actual_sp_after": null,
+        "complete_cycle": null
+      },
+      "scope": "public source-control declaration",
+      "checks": [
+        {
+          "path": "rows.0.encoder_argument_reference",
+          "expected": 12,
+          "actual": 12,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.11.normal",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stages.12.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.stored_prefixes",
+          "expected": [],
+          "actual": [],
+          "passed": true
+        },
+        {
+          "path": "rows.0.normal",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "core_unchanged_during_review": true,
+  "passed": true,
+  "substantive_findings": [],
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "qt_started": false,
+  "private_state_read": false,
+  "game_or_chat_operated": false,
+  "limitations": [
+    "Inexact or subnormal/nonfinite Single remains unknown by the supported contract.",
+    "Integer or encoded argument is not protected later decode or actualcost/SP/cycle.",
+    "Does not repeat92 related checks or the root-owned Windows fixture."
+  ]
+}

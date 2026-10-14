@@ -1,0 +1,36 @@
+{
+  "kind": "SECTION278_ORIGINAL_REAL_TEST_FAILURE_CONTRACT_CLASSIFICATION",
+  "original_actual_receipt": "first-real-44/process.json",
+  "original_test_bytes": "first-real-44/test-source.py",
+  "original_core_bytes": "first-real-44/core-source.py",
+  "original_stdout": "first-real-44/stdout.log",
+  "original_stderr": "first-real-44/stderr.log",
+  "original_actual_exit": 1,
+  "original_actual_methods_run": 44,
+  "original_actual_failures": 2,
+  "original_test_sha256": "255a8ce076feb1a8e3c8b20e5fbfc689efc5975964e5ee6241eed4f5a58a3266",
+  "unchanged_core_sha256": "7cd8eee14c217c46419b5ac70bbcfe14f63e67a5687b7974d8718ae60618077a",
+  "classification": "Both failures were incorrect test expectations; no numerical or caller implementation was changed to satisfy them.",
+  "failures": [
+    {
+      "test": "test_replace_first_spdata_null_does_not_skip_encoder",
+      "incorrect_expectation": "A pointer check's normal flag should be false when existence is false.",
+      "source_backed_contract": "The compare itself completes normally with exists=false; its branch then makes row.normal=false and skips the store. Keep the already executed encoder prefix.",
+      "correction": "Assert check.normal=true and check.reference={exists:false}, and retain row.normal=false plus encode-called and store-skipped assertions."
+    },
+    {
+      "test": "test_replace_type_value_unknown_preserves_cost_write",
+      "incorrect_expectation": "A normally read unknown type value prevents a separately qualified normal direct store and all future calls.",
+      "source_backed_contract": "A direct Int32 field store does not branch on its numerical value. With read.normal=true and type_store_normally=true, retain a spType write prefix with value=null, then honor independent later read/update qualifications. Actual type effects remain unknown.",
+      "correction": "Rename the same case to test_replace_unknown_type_value_keeps_qualified_direct_write, assert the cost prefix and unknown-valued type prefix, normal direct store and independent update parameters; actual cost/SP/cycle stay null."
+    }
+  ],
+  "fresh_primary_clarification": "direct-store-source-clarification.json",
+  "fresh_primary_clarification_instructions": 7,
+  "scope_removed": false,
+  "test_method_count_after": 44,
+  "production_modified": false,
+  "candidate_core_modified": false,
+  "game_or_chat_actions": 0,
+  "private_state_used": false
+}
