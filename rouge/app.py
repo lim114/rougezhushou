@@ -77,6 +77,12 @@ def number(value=0, maximum=100000, decimals=2):
     return control
 
 class MainWindow(QMainWindow):
+    def show_barrier_ledger(self):
+        panel=self.offline_tools
+        panel.family.setCurrentIndex(panel.family.findData('calibration'))
+        panel.query.setCurrentIndex(panel.query.findData('barrier-ledger'))
+        self.centralWidget().setCurrentWidget(panel)
+
     def __init__(self):
         super().__init__()
         self.setWindowTitle('黑流树海助手 0.91 · 局外计算与节点测试（234）')
@@ -754,6 +760,9 @@ class MainWindow(QMainWindow):
         self.shield_breaks.setRange(0,100)
         form.addRow('机械师 S2 本次实际/预计总破屏次数',self.shield_breaks)
         self.shield_breaks.setToolTip('本体与结构性原理的爆炸中，命中当前目标的总次数。用于条件估算，不自动推断弹药消耗。')
+        self.barrier_ledger_button=QPushButton('打开有序入伤屏障账本（局外声明）')
+        self.barrier_ledger_button.clicked.connect(self.show_barrier_ledger)
+        form.addRow('机械师 S2',self.barrier_ledger_button)
         self.shield_duration_known=QCheckBox('指定本次技能结束时间（含手动停止）')
         self.shield_duration=number(30,3600,2)
         self.shield_duration.setMinimum(.01)
@@ -1524,6 +1533,7 @@ class MainWindow(QMainWindow):
                     (self.fragile,op=='silverash' and skill==3),
                     (self.charge_count,op=='mechanist' and skill==3),
                     (self.shield_breaks,op=='mechanist' and skill==2),
+                    (self.barrier_ledger_button,op=='mechanist' and skill==2),
                     (self.shield_duration,op=='mechanist' and skill==2),
                     *[(w,op=='silverash' and skill==2) for w in (self.activation_count,self.companion_attack,self.stacks)]]
         for widget,visible in conditions:self.damage_form.setRowVisible(widget,visible)

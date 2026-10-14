@@ -415,3 +415,11 @@ def calibration_worksheets(cases=None):
             '每份工作表仅覆盖列出的字段和固定来源版本；未证明动作时钟或当前热更新。']}
 
 COMMANDS['worksheets']=calibration_worksheets
+
+
+def barrier_packet_ledger(ledger):
+    from .mechanist_barrier_ledger import mechanist_barrier_ledger
+    return mechanist_barrier_ledger(ledger)
+
+
+COMMANDS['barrier-ledger'] = barrier_packet_ledger
