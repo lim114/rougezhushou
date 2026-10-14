@@ -20,6 +20,7 @@ from .catalog import catalog
 from .battle_preview import battle_data
 from .base_settlement_planning import gold_reference_text
 from .node_arrival import arrival_lines
+from .information_scope import HISTORICAL_ROUTE_QUERIES,require_query_scope
 
 
 CALIBRATION_QUERIES = (
@@ -52,6 +53,8 @@ EXPLORATION_QUERIES = (
     ('search-routes','有限声明图的路线候选构造'),
 )
 QUERIES = {'calibration': CALIBRATION_QUERIES, 'battle': BATTLE_QUERIES,'exploration':EXPLORATION_QUERIES}
+PRODUCT_QUERIES={family:tuple(row for row in rows if family!='exploration' or row[0] not in HISTORICAL_ROUTE_QUERIES)
+                 for family,rows in QUERIES.items()}
 BATTLE_COMMANDS = {
     'actions': battle_planning.action_catalog,
     'activations': battle_planning.predefined_activations,
@@ -164,7 +167,8 @@ def _finite_tree(value):
         for item in value: _finite_tree(item)
 
 
-def run_offline_query(family, command, payload):
+def run_offline_query(family, command, payload, *, include_historical_route_diagnostics=False):
+    require_query_scope(family,command,include_historical_route_diagnostics)
     """Public synchronous entry point used by a worker and public-fixture tests."""
     if not isinstance(payload, dict): raise ValueError('条件必须是 JSON 对象。')
     _finite_tree(payload)
@@ -703,13 +707,16 @@ class _WorkerSignals(QObject):
 
 
 class _QueryWorker(QRunnable):
-    def __init__(self, serial, family, command, payload):
+    def __init__(self, serial, family, command, payload, *, include_historical_route_diagnostics=False):
         super().__init__()
         self.serial,self.family,self.command,self.payload=serial,family,command,payload
+        self.include_historical_route_diagnostics=include_historical_route_diagnostics
         self.signals = _WorkerSignals()
 
     def run(self):
-        try: result=run_offline_query(self.family,self.command,self.payload);error=''
+        try:
+            result=run_offline_query(self.family,self.command,self.payload,
+                include_historical_route_diagnostics=self.include_historical_route_diagnostics);error=''
         except Exception as exc: result=None;error='离线查询失败：'+str(exc)
         self.signals.finished.emit(self.serial,self.family,self.command,result,error)
 
@@ -719,8 +726,11 @@ class OfflineToolsPanel(QWidget):
     resultChanged = Signal(object)
     mapNodeSelected = Signal(str,object)
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, *, include_historical_route_diagnostics=False):
         super().__init__(parent)
+        require_query_scope('exploration',None,include_historical_route_diagnostics)
+        self.include_historical_route_diagnostics=include_historical_route_diagnostics
+        self.queries=QUERIES if include_historical_route_diagnostics else PRODUCT_QUERIES
         self._scenario=None; self._stage=None; self._buffers={};self._views={};self._active_key=None;self._family_queries={}
         self._serial=0; self._workers={}; self._result=None; self._rendered=''
         self._graph_cache=None;self._graph_import=None;self._origin='公开声明示例；不是本局状态'
@@ -728,7 +738,7 @@ class OfflineToolsPanel(QWidget):
         self._changing=False
         layout=QVBoxLayout(self)
         row=QHBoxLayout()
-        self.family=QComboBox();self.family.addItem('干员校准','calibration');self.family.addItem('固定关卡规划','battle');self.family.addItem('探索与路线','exploration')
+        self.family=QComboBox();self.family.addItem('干员校准','calibration');self.family.addItem('固定关卡规划','battle');self.family.addItem('探索节点信息','exploration')
         self.query=QComboBox();row.addWidget(self.family);row.addWidget(self.query,1)
         layout.addLayout(row)
         row=QHBoxLayout();self.preset=QComboBox();self.preset.setAccessibleName('探索公开场景预置')
@@ -776,8 +786,9 @@ class OfflineToolsPanel(QWidget):
 
     def select_query(self, family, command):
         """Select a public query, preserving each declaration and reading state."""
+        require_query_scope(family,command,self.include_historical_route_diagnostics)
         index=self.family.findData(family)
-        if index<0 or command not in dict(QUERIES[family]):raise ValueError('没有这个查询。')
+        if index<0 or command not in dict(self.queries[family]):raise ValueError('没有这个查询。')
         self.family.setCurrentIndex(index)
         self.query.setCurrentIndex(self.query.findData(command))
 
@@ -820,7 +831,7 @@ class OfflineToolsPanel(QWidget):
     def _family_changed(self):
         self._changing=True
         self.query.clear()
-        for command,label in QUERIES[self.family.currentData()]:self.query.addItem(label,command)
+        for command,label in self.queries[self.family.currentData()]:self.query.addItem(label,command)
         remembered=self._family_queries.get(self.family.currentData())
         if remembered:self.query.setCurrentIndex(self.query.findData(remembered))
         self._changing=False
@@ -1031,13 +1042,16 @@ class OfflineToolsPanel(QWidget):
         self.mapNodeSelected.emit(key,deepcopy(binding))
 
     def _run(self):
-        try:payload=self._payload()
+        try:
+            require_query_scope(*self.current_query(),self.include_historical_route_diagnostics)
+            payload=self._payload()
         except Exception as exc:
             self._invalidate('不能运行：'+str(exc));return
         self._invalidate('正在运行局外查询……')
         serial=self._serial;family,command=self.current_query()
         if family=='exploration':self._refresh_graph_choices(self.graph_node.currentData());self._update_buttons()
-        worker=_QueryWorker(serial,family,command,payload)
+        worker=_QueryWorker(serial,family,command,payload,
+            include_historical_route_diagnostics=self.include_historical_route_diagnostics)
         self._worker_context[serial]={'payload':deepcopy(payload),'origin':self._origin,'bindings':self._bindings_for_payload(payload) if family=='exploration' else {}}
         worker.signals.finished.connect(self._finished)
         self._workers[serial]=worker;self.run_button.setEnabled(False)

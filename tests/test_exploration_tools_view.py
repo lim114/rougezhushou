@@ -13,7 +13,7 @@ class ExplorationToolsTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.qt=QApplication.instance() or QApplication([])
     def setUp(self):
-        self.panel=OfflineToolsPanel();self.panel.resize(1000,750);self.panel.show();self.qt.processEvents()
+        self.panel=OfflineToolsPanel(include_historical_route_diagnostics=True);self.panel.resize(1000,750);self.panel.show();self.qt.processEvents()
     def tearDown(self):self.panel.close();self.panel.deleteLater();self.qt.processEvents()
     def done(self):
         end=time.monotonic()+8
@@ -38,7 +38,7 @@ class ExplorationToolsTests(unittest.TestCase):
         for command,title in QUERIES['exploration']:
             with self.subTest(command=command):
                 payload=public_payload('exploration',command);before=deepcopy(payload)
-                result=run_offline_query('exploration',command,payload)
+                result=run_offline_query('exploration',command,payload,include_historical_route_diagnostics=True)
                 self.assertEqual(payload,before);self.assertFalse(result['inventory_updated'])
                 rendered=render_offline_result('exploration',command,result,graph=payload.get('graph'))
                 self.assertIn(title,rendered);self.assertIn('技术详情',rendered)

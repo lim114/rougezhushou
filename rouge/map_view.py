@@ -10,8 +10,11 @@ from .exploration_routes import route_reference
 class MapView(QWidget):
     nodeSelected = Signal(str)
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, *, include_historical_route_diagnostics=False):
         super().__init__(parent)
+        from .information_scope import require_query_scope
+        require_query_scope('exploration',None,include_historical_route_diagnostics)
+        self.include_historical_route_diagnostics=include_historical_route_diagnostics
         self.setMinimumSize(360, 260)
         self.setAccessibleName('探索地图位置预览')
         self.setMouseTracking(True)
@@ -59,6 +62,9 @@ class MapView(QWidget):
         return min(200, max(28, gap*.92))
 
     def route(self):
+        if not self.include_historical_route_diagnostics:
+            return {'status':'information_only','display_path':[],'corridor':None,'topology':None,
+                    'reason':'route_advice_disabled'}
         return route_reference(self.graph, self.selected, historical=self.historical)
 
     def paintEvent(self, event):
@@ -78,11 +84,12 @@ class MapView(QWidget):
         for a, b in self.graph.get('edges', []):
             if a in points and b in points:
                 painter.drawLine(points[a], points[b])
-        route = self.route()
-        painter.setPen(QPen(QColor('#6ee7df') if route['corridor'] else QColor('#ffcb75'), 3,
-                            Qt.PenStyle.SolidLine if route['corridor'] else Qt.PenStyle.DashLine))
-        for a,b in zip(route['display_path'],route['display_path'][1:]):
-            painter.drawLine(points[a],points[b])
+        if self.include_historical_route_diagnostics:
+            route = self.route()
+            painter.setPen(QPen(QColor('#6ee7df') if route['corridor'] else QColor('#ffcb75'), 3,
+                                Qt.PenStyle.SolidLine if route['corridor'] else Qt.PenStyle.DashLine))
+            for a,b in zip(route['display_path'],route['display_path'][1:]):
+                painter.drawLine(points[a],points[b])
         width = self._badge_width(points)
         font = self.font(); font.setPointSize(9); painter.setFont(font)
         for node in self.graph['nodes']:

@@ -1,3 +1,7 @@
+<!-- current-product-scope:start -->
+当前产品范围（2026-10-14）：探索地图只提供节点、候选事件及条件、历史状态和相邻连接信息，保留分类/展开收起、地图定位与作战预览跳转。不提供探索路线推荐、排序、方案比较或自动选路。下文0.49等路线能力为历史记录，代码与原验收保留为显式诊断；固定战斗地图中的敌人路径仍正常提供。
+<!-- current-product-scope:end -->
+
 # rougezhushou 云端开发副本
 
 当前源代码版本为 0.70.0。本机 rouge 与 GitHub 的 codex/p2-development 已同步开发；私人配置、本局记忆和个人游戏截图不进入仓库。云端接续说明见 [CLOUD_HANDOFF.md](CLOUD_HANDOFF.md)，最新待办见 [PROJECT_PROGRESS.md](PROJECT_PROGRESS.md)。

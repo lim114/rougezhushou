@@ -9,7 +9,7 @@ class RouteSearchViewTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.qt=QApplication.instance() or QApplication([])
     def setUp(self):
-        self.p=OfflineToolsPanel();self.p.resize(1050,750);self.p.show()
+        self.p=OfflineToolsPanel(include_historical_route_diagnostics=True);self.p.resize(1050,750);self.p.show()
         self.p.select_query('exploration','search-routes');self.qt.processEvents()
     def tearDown(self):self.p.close();self.p.deleteLater();self.qt.processEvents()
     def execute(self):

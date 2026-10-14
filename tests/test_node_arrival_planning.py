@@ -139,7 +139,7 @@ class NodeArrivalPlanningTests(unittest.TestCase):
 class NodeArrivalPlanningViewTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.app=QApplication.instance() or QApplication([])
-    def setUp(self):self.panel=OfflineToolsPanel();self.panel.resize(1100,760);self.panel.show();self.app.processEvents()
+    def setUp(self):self.panel=OfflineToolsPanel(include_historical_route_diagnostics=True);self.panel.resize(1100,760);self.panel.show();self.app.processEvents()
     def tearDown(self):self.panel.close();self.panel.deleteLater();self.app.processEvents()
     def finish(self):
         until=time.monotonic()+8

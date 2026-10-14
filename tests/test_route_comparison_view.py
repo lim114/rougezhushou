@@ -16,7 +16,7 @@ class RouteComparisonViewTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.qt=QApplication.instance() or QApplication([])
     def setUp(self):
-        self.panel=OfflineToolsPanel();self.panel.resize(1050,750);self.panel.show()
+        self.panel=OfflineToolsPanel(include_historical_route_diagnostics=True);self.panel.resize(1050,750);self.panel.show()
         self.panel.select_query('exploration','compare-routes');self.qt.processEvents()
     def tearDown(self):self.panel.close();self.panel.deleteLater();self.qt.processEvents()
     def execute(self):
@@ -85,7 +85,7 @@ class RouteComparisonViewTests(unittest.TestCase):
         for route in payload['routes']:
             battle=next(step['battle'] for step in route['steps'] if 'battle' in step)
             battle.update(stage_id='ro6_t_1',battle_floor=None,entry_context='event_battle')
-        result=run_offline_query('exploration','compare-routes',payload)
+        result=run_offline_query('exploration','compare-routes',payload,include_historical_route_diagnostics=True)
         text=render_offline_result('exploration','compare-routes',result,graph=payload['graph'])
         self.assertIn('2–3',text);self.assertIn('不取平均或赋概率',text)
         self.assertEqual(result['source']['base_rewards']['revision'],'433770')
