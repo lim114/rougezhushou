@@ -1,0 +1,5303 @@
+{
+  "scope": "Independent necessary276 readonly repair/source review; schema migrations are labeled separately from genuine same-input checks.",
+  "core_sha256": "1a6bf535ea344b29dda5f6a15862c0eac07ab37ae4490d28f82ceb16ea215edb",
+  "manifest_sha256": "a69fdc624e492e5c51f1ef60ff25fc7596491d56b6f861a7ad57c9808f5a5cd6",
+  "review_script_sha256": "9ecbc88a3159261f832f9aa4385e1cff375afc03ecec4ed39f94758207dc9109",
+  "source_artifacts_sha256": {
+    "research/p2-regeneration-clock-272/metadata-proof.json": "8c5691c1c174720e2ffe05242d40bea1634487d46746c79b129a46831bf281b2",
+    "research/p2-regeneration-clock-272/native-proof.json": "95c62b843a7a0cc2ef0cc109cb7ec0828396359613bc5da735a2e68beac9d76c",
+    "research/p2-sp-initialization-276/README.md": "0486960fdaacf90129da7e1c7c256a8f599bcc08d98d749fe41db003dc5bc137",
+    "research/p2-sp-initialization-276/fresh-source-guard.json": "6c0bf48beee91a36f875d52e2f023727a542ff13ba0fe6589fa3f5be9cfbf83f",
+    "research/p2-sp-initialization-276/max-proof.json": "fcc676491e5e30cdc85cb8e6b823b8ed1ea0620c0f0f4261c7b7d5c87103a38d",
+    "research/p2-sp-initialization-276/source-proof.json": "04c0b97dc8294346e19c7068d58a6cdf00ec1c88a1bd61e510afb2347a04d873",
+    "research/p2-sp-recovery-clock-274/source-proof.json": "aac95f6a6c284868d25d73a89fc126f27ba827609dae327938d7b0f280bf7557",
+    "research/p2-sp-setter-275/source-proof.json": "a5899e400b38b6a336f0a13f5b923c9508687ae791954d7d71a94cfdb8106e52",
+    "rouge/data/regeneration-clock-source.json": "9a1ee36d224dae223d7acf992385c226371fcb7c14284491d983f9f46cdd6d6b",
+    "rouge/data/sp-recovery-clock-source.json": "97eca07c12681f6d1b14239fe560d15f7bed60772c1d2a9b4c99d8202181a620",
+    "rouge/data/sp-setter-source.json": "66fb85a986c9fec6335bfe6879a6a8b72df607521950dc726a1128c63315033a",
+    "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19",
+    "rouge/regeneration_clock.py": "55e84eaa2d6de1cfa16c2762a0f33ac1460562721127cf27d907f8bccf3ff1ff",
+    "rouge/sp_recovery_clock.py": "c19124aaaddf04774ae54c193c4bd0cd49199ad1a90eba3883d1d29b4226084f",
+    "rouge/sp_setter_reference.py": "1f489e8078e12825ca9c6ef37b6b40a91303e63df9aaf2308bf5c3739638ba52",
+    "research/p2-sp-initialization-276/protected-integer-conditional-cases.json": "ab5a4779b064fa67db5005111fbb085af0f8e51e810ab65ea71511fb4b62fdee",
+    "research/p2-sp-initialization-276/protected-integer-proof.json": "a80b9635ff6f434c76a54634d70889d9c0081a08173ee0fad2104b75e2df06f6",
+    "research/p2-sp-initialization-276/PROTECTED_INTEGER_BOUNDARY.md": "9b9888d8706c04c0f463e6874cdb69ca5df22b2d5d333d08df21a5b60bf1f712",
+    "research/p2-sp-initialization-276/SCHEMA.md": "f56e3da4dfd7abb14334d3be2f2446aea0c430eec0ec42446f7b483ca37a1469"
+  },
+  "primary_file_guard": {
+    "available": true,
+    "passed": true,
+    "status": "fresh_all_47_plus_inherited_max_file_guard",
+    "sha256": {
+      "dll": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+      "metadata": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f"
+    },
+    "checked_spans": 6373,
+    "method_count": 47,
+    "primary_span_count": 6351,
+    "inherited_max_instruction_spans": 22,
+    "game_dll_executed": false,
+    "process_memory_read": false
+  },
+  "supplemental_fresh_file_guard": {
+    "supplemental_method_count": 11,
+    "supplemental_unique_instruction_count": 305,
+    "supplemental_checked_spans": 452,
+    "file_hashes": {
+      "dll": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+      "metadata": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f"
+    },
+    "passed": true
+  },
+  "probe_count": 14,
+  "check_count": 60,
+  "probes": [
+    {
+      "name": "original unknown allocation exact same input",
+      "basis": "genuine same input as c2 original",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "actions": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "ordinary_native_path": true,
+            "increments_allocate_normally": true,
+            "increments_assign_normally": true,
+            "timer_allocate_normally": null,
+            "timer_constructor_normally": true,
+            "timer_assign_normally": true,
+            "base_constructor_normally": true,
+            "post_ctor_hotfix": {
+              "present": false,
+              "returns_normally": null
+            }
+          }
+        ]
+      },
+      "original_input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "actions": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "ordinary_native_path": true,
+            "increments_allocate_normally": true,
+            "increments_assign_normally": true,
+            "timer_allocate_normally": null,
+            "timer_constructor_normally": true,
+            "timer_assign_normally": true,
+            "base_constructor_normally": true,
+            "post_ctor_hotfix": {
+              "present": false,
+              "returns_normally": null
+            }
+          }
+        ]
+      },
+      "input_exactly_same_as_original": true,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "rows": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "status": "unqualified_construct.timer_allocate",
+            "stages": [
+              {
+                "name": "controller_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_allocate",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_assign",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.timer_allocate",
+                "called_reference": true,
+                "normal_return_reference": null,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": null,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": null,
+          "max_sp": 4,
+          "timer": {
+            "exists": null,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": null,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "normal_return_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.known_prefix_state_reference.timer.exists",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "state_after_reference.timer.exists",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "cost unknown continuation with explicit schema migration",
+      "basis": "schema migrated c2 input",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": null,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "getter_returns_normally": true,
+              "max_decode_read": {
+                "id": "第一上限-review独立解码",
+                "normal": true,
+                "value": 20
+              }
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "getter_returns_normally": true,
+              "max_decode_read": {
+                "id": "第二上限-review独立解码",
+                "normal": true,
+                "value": 21
+              }
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "original_input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": null,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_normally": true,
+              "getter_returns_normally": true
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_normally": true,
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "input_exactly_same_as_original": false,
+      "schema_migration": [
+        {
+          "capacity": "first_max_read",
+          "removed": "max_decode_normally",
+          "added_independent_read": {
+            "id": "第一上限-review独立解码",
+            "normal": true,
+            "value": 20
+          },
+          "qualification": "New explicit public literal; not an observation, an inferred roundtrip, or same-schema input."
+        },
+        {
+          "capacity": "second_max_read",
+          "removed": "max_decode_normally",
+          "added_independent_read": {
+            "id": "第二上限-review独立解码",
+            "normal": true,
+            "value": 21
+          },
+          "qualification": "New explicit public literal; not an observation, an inferred roundtrip, or same-schema input."
+        }
+      ],
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "status": "unqualified_first_max.cost_decode",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": null,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "read_id": "第一上限-cost"
+                }
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": true,
+                "period_raw": 4294967296,
+                "remaining_raw": 4294967296
+              }
+            },
+            "state_after_reference": {
+              "owner_id": null,
+              "sp_type": null,
+              "cost_payload_id": null,
+              "increments_payload_id": null,
+              "max_sp": null,
+              "timer": {
+                "exists": true,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": null,
+                "returned_max_sp_reference": null,
+                "normal_return_reference": null,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": null,
+                "max_encode_called_reference": null,
+                "max_decode_called_reference": null,
+                "getter_return_called_reference": null,
+                "status": "unqualified_capacity"
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": null,
+          "sp_type": null,
+          "cost_payload_id": null,
+          "increments_payload_id": null,
+          "max_sp": null,
+          "timer": {
+            "exists": true,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": null,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "normal_return_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.cost_decode_called_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.charges_decode_called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.max_encode_called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.getter_return_called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.max_decode_called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "capacity path unknown with explicit schema migration",
+      "basis": "schema migrated c2 input",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": null,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": true,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "getter_returns_normally": true,
+              "max_decode_read": {
+                "id": "第一上限-review独立解码",
+                "normal": true,
+                "value": 20
+              }
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "getter_returns_normally": true,
+              "max_decode_read": {
+                "id": "第二上限-review独立解码",
+                "normal": true,
+                "value": 21
+              }
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "original_input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": null,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": true,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_normally": true,
+              "getter_returns_normally": true
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_normally": true,
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "input_exactly_same_as_original": false,
+      "schema_migration": [
+        {
+          "capacity": "first_max_read",
+          "removed": "max_decode_normally",
+          "added_independent_read": {
+            "id": "第一上限-review独立解码",
+            "normal": true,
+            "value": 20
+          },
+          "qualification": "New explicit public literal; not an observation, an inferred roundtrip, or same-schema input."
+        },
+        {
+          "capacity": "second_max_read",
+          "removed": "max_decode_normally",
+          "added_independent_read": {
+            "id": "第二上限-review独立解码",
+            "normal": true,
+            "value": 21
+          },
+          "qualification": "New explicit public literal; not an observation, an inferred roundtrip, or same-schema input."
+        }
+      ],
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "status": "unqualified_first_max.ordinary_path",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.ordinary_path",
+                "called_reference": true,
+                "normal_return_reference": null,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "state_after_reference": {
+              "owner_id": null,
+              "sp_type": null,
+              "cost_payload_id": null,
+              "increments_payload_id": null,
+              "max_sp": null,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": null,
+                "returned_max_sp_reference": null,
+                "normal_return_reference": null,
+                "cost_decode_called_reference": null,
+                "charges_decode_called_reference": null,
+                "max_encode_called_reference": null,
+                "max_decode_called_reference": null,
+                "getter_return_called_reference": null,
+                "status": "unqualified_capacity"
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": null,
+          "sp_type": null,
+          "cost_payload_id": null,
+          "increments_payload_id": null,
+          "max_sp": null,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": null,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "normal_return_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.cost_decode_called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.charges_decode_called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.max_encode_called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.getter_return_called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.max_decode_called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "original later conditional construction exact same input",
+      "basis": "genuine same input as c2 original",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "actions": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "ordinary_native_path": true,
+            "increments_allocate_normally": true,
+            "increments_assign_normally": true,
+            "timer_allocate_normally": null,
+            "timer_constructor_normally": true,
+            "timer_assign_normally": true,
+            "base_constructor_normally": true,
+            "post_ctor_hotfix": {
+              "present": false,
+              "returns_normally": null
+            }
+          },
+          {
+            "id": "第二个未qualified构造",
+            "kind": "construct",
+            "ordinary_native_path": true,
+            "increments_allocate_normally": true,
+            "increments_assign_normally": true,
+            "timer_allocate_normally": true,
+            "timer_constructor_normally": true,
+            "timer_assign_normally": true,
+            "base_constructor_normally": true,
+            "post_ctor_hotfix": {
+              "present": false,
+              "returns_normally": null
+            }
+          }
+        ]
+      },
+      "original_input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "actions": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "ordinary_native_path": true,
+            "increments_allocate_normally": true,
+            "increments_assign_normally": true,
+            "timer_allocate_normally": null,
+            "timer_constructor_normally": true,
+            "timer_assign_normally": true,
+            "base_constructor_normally": true,
+            "post_ctor_hotfix": {
+              "present": false,
+              "returns_normally": null
+            }
+          },
+          {
+            "id": "第二个未qualified构造",
+            "kind": "construct",
+            "ordinary_native_path": true,
+            "increments_allocate_normally": true,
+            "increments_assign_normally": true,
+            "timer_allocate_normally": true,
+            "timer_constructor_normally": true,
+            "timer_assign_normally": true,
+            "base_constructor_normally": true,
+            "post_ctor_hotfix": {
+              "present": false,
+              "returns_normally": null
+            }
+          }
+        ]
+      },
+      "input_exactly_same_as_original": true,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "rows": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "status": "unqualified_construct.timer_allocate",
+            "stages": [
+              {
+                "name": "controller_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_allocate",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_assign",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.timer_allocate",
+                "called_reference": true,
+                "normal_return_reference": null,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": null,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [],
+            "conditional_branches": []
+          },
+          {
+            "id": "第二个未qualified构造",
+            "kind": "construct",
+            "called_reference": null,
+            "normal_return_reference": null,
+            "status": "not_called_after_unqualified_chain",
+            "stages": [],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": null,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": null,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": null,
+          "max_sp": 4,
+          "timer": {
+            "exists": null,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": null,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "normal_return_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.1.called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "state_after_reference.timer.exists",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "formal encoder unknown copy invocation exact same input",
+      "basis": "genuine same input as first formal276 counterexample",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": true,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第一上限-独立容量解码",
+                "normal": true,
+                "value": 20
+              },
+              "getter_returns_normally": true
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": null,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第二上限-独立容量解码",
+                "normal": true,
+                "value": 21
+              },
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "original_input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": true,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第一上限-独立容量解码",
+                "normal": true,
+                "value": 20
+              },
+              "getter_returns_normally": true
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": null,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第二上限-独立容量解码",
+                "normal": true,
+                "value": 21
+              },
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "input_exactly_same_as_original": true,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "status": "unqualified_single_encoder",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 10,
+                "detail": {
+                  "read_id": "第一上限-cost"
+                }
+              },
+              {
+                "name": "first_max.charges_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 2,
+                "detail": {
+                  "read_id": "第一上限-charges"
+                }
+              },
+              {
+                "name": "first_max.max_encode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 20,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.getter_return",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.max_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 20,
+                "detail": {
+                  "read_id": "第一上限-独立容量解码"
+                }
+              },
+              {
+                "name": "init_sp_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 30,
+                "detail": {
+                  "read_id": "独立初始技力"
+                }
+              },
+              {
+                "name": "single_encoder",
+                "called_reference": true,
+                "normal_return_reference": null,
+                "argument_reference": 85899345920,
+                "value_reference": null,
+                "detail": {
+                  "input_kind": "System.Single",
+                  "cipher_payload_reference": null
+                }
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": true,
+                "period_raw": 4294967296,
+                "remaining_raw": 4294967296
+              }
+            },
+            "state_after_reference": {
+              "owner_id": null,
+              "sp_type": null,
+              "cost_payload_id": null,
+              "increments_payload_id": null,
+              "max_sp": null,
+              "timer": {
+                "exists": true,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": {
+              "signed_min_reference": 20,
+              "single_exact_reference": true,
+              "scaled_signed64_eligible_reference": true,
+              "encoder_constructor_argument_raw_reference": 85899345920,
+              "actual_initial_sp": null,
+              "source_valid": true,
+              "encoder_called_reference": true,
+              "encoder_normal_reference": null,
+              "sp_payload_copy_called_reference": null,
+              "sp_payload_copy_normal_reference": null,
+              "copied_byte_count_reference": null,
+              "source_copy_size_bytes": 40
+            },
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": 20,
+                "returned_max_sp_reference": 20,
+                "normal_return_reference": true,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": true,
+                "max_encode_called_reference": true,
+                "max_decode_called_reference": true,
+                "getter_return_called_reference": true,
+                "status": "qualified_capacity_return",
+                "roundtrip_equality_reference": null
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": null,
+          "sp_type": null,
+          "cost_payload_id": null,
+          "increments_payload_id": null,
+          "max_sp": null,
+          "timer": {
+            "exists": true,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": null,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "normal_return_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.initial_sp_prefix.encoder_called_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.initial_sp_prefix.encoder_normal_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.initial_sp_prefix.sp_payload_copy_called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.initial_sp_prefix.copied_byte_count_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "encoder qualification control False",
+      "basis": "new public literal",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": true,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第一上限-独立容量解码",
+                "normal": true,
+                "value": 20
+              },
+              "getter_returns_normally": true
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": false,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第二上限-独立容量解码",
+                "normal": true,
+                "value": 21
+              },
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "original_input": null,
+      "input_exactly_same_as_original": null,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": false,
+            "status": "unqualified_single_encoder",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 10,
+                "detail": {
+                  "read_id": "第一上限-cost"
+                }
+              },
+              {
+                "name": "first_max.charges_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 2,
+                "detail": {
+                  "read_id": "第一上限-charges"
+                }
+              },
+              {
+                "name": "first_max.max_encode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 20,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.getter_return",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.max_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 20,
+                "detail": {
+                  "read_id": "第一上限-独立容量解码"
+                }
+              },
+              {
+                "name": "init_sp_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 30,
+                "detail": {
+                  "read_id": "独立初始技力"
+                }
+              },
+              {
+                "name": "single_encoder",
+                "called_reference": true,
+                "normal_return_reference": false,
+                "argument_reference": 85899345920,
+                "value_reference": null,
+                "detail": {
+                  "input_kind": "System.Single",
+                  "cipher_payload_reference": null
+                }
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": true,
+                "period_raw": 4294967296,
+                "remaining_raw": 4294967296
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": true,
+                "period_raw": 4294967296,
+                "remaining_raw": 4294967296
+              }
+            },
+            "initial_sp_prefix": {
+              "signed_min_reference": 20,
+              "single_exact_reference": true,
+              "scaled_signed64_eligible_reference": true,
+              "encoder_constructor_argument_raw_reference": 85899345920,
+              "actual_initial_sp": null,
+              "source_valid": true,
+              "encoder_called_reference": true,
+              "encoder_normal_reference": false,
+              "sp_payload_copy_called_reference": false,
+              "sp_payload_copy_normal_reference": null,
+              "copied_byte_count_reference": null,
+              "source_copy_size_bytes": 40
+            },
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": 20,
+                "returned_max_sp_reference": 20,
+                "normal_return_reference": true,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": true,
+                "max_encode_called_reference": true,
+                "max_decode_called_reference": true,
+                "getter_return_called_reference": true,
+                "status": "qualified_capacity_return",
+                "roundtrip_equality_reference": null
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "normal_return_reference": false,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "rows.0.initial_sp_prefix.sp_payload_copy_called_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.initial_sp_prefix.copied_byte_count_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "normal_return_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "encoder qualification control True",
+      "basis": "new public literal",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": true,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第一上限-独立容量解码",
+                "normal": true,
+                "value": 20
+              },
+              "getter_returns_normally": true
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第二上限-独立容量解码",
+                "normal": true,
+                "value": 21
+              },
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "original_input": null,
+      "input_exactly_same_as_original": null,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "status": "controller_reset_qualified_native_prefix",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 10,
+                "detail": {
+                  "read_id": "第一上限-cost"
+                }
+              },
+              {
+                "name": "first_max.charges_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 2,
+                "detail": {
+                  "read_id": "第一上限-charges"
+                }
+              },
+              {
+                "name": "first_max.max_encode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 20,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.getter_return",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.max_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 20,
+                "detail": {
+                  "read_id": "第一上限-独立容量解码"
+                }
+              },
+              {
+                "name": "init_sp_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 30,
+                "detail": {
+                  "read_id": "独立初始技力"
+                }
+              },
+              {
+                "name": "single_encoder",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 85899345920,
+                "value_reference": null,
+                "detail": {
+                  "input_kind": "System.Single",
+                  "cipher_payload_reference": null
+                }
+              },
+              {
+                "name": "sp_payload_copy",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 40,
+                "value_reference": null,
+                "detail": {
+                  "stores_bytes": [
+                    16,
+                    16,
+                    8
+                  ],
+                  "actual_decoded_sp_reference": null
+                }
+              },
+              {
+                "name": "second_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "second_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 7,
+                "detail": {
+                  "read_id": "第二上限-cost"
+                }
+              },
+              {
+                "name": "second_max.charges_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 3,
+                "detail": {
+                  "read_id": "第二上限-charges"
+                }
+              },
+              {
+                "name": "second_max.max_encode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 21,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "second_max.getter_return",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "second_max.max_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 21,
+                "detail": {
+                  "read_id": "第二上限-独立容量解码"
+                }
+              },
+              {
+                "name": "max_sp_store",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 21,
+                "value_reference": 21,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.controller_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.owner_write",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": "声明的Entity甲",
+                "value_reference": "声明的Entity甲",
+                "detail": null
+              },
+              {
+                "name": "controller_reset.data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.sp_type_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 1,
+                "detail": {
+                  "read_id": "初始化控制器-type"
+                }
+              },
+              {
+                "name": "controller_reset.sp_type_store",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 1,
+                "value_reference": 1,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.cost_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": "不解码的cost甲",
+                "detail": {
+                  "read_id": "初始化控制器-opaque-cost"
+                }
+              },
+              {
+                "name": "controller_reset.cost_copy",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": "不解码的cost甲",
+                "value_reference": "不解码的cost甲",
+                "detail": {
+                  "opaque_payload_size_bytes": 20,
+                  "decoded_cost_reference": null
+                }
+              },
+              {
+                "name": "controller_reset.increments_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": "初始化控制器-declared-segment",
+                "detail": {
+                  "read_id": "初始化控制器-increments"
+                }
+              },
+              {
+                "name": "controller_reset.increments_destination",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.increments_length",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.increments_copy",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": "初始化控制器-declared-segment",
+                "value_reference": "初始化控制器-declared-segment",
+                "detail": {
+                  "copied_count_reference": 4,
+                  "actual_elements_reference": null,
+                  "partial_elements_on_failed_copy_reference": null
+                }
+              },
+              {
+                "name": "controller_reset.can_recover_read.access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "read_id": "初始化控制器-eligibility"
+                }
+              },
+              {
+                "name": "controller_reset.can_recover_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": true,
+                "detail": {
+                  "read_id": "初始化控制器-eligibility"
+                }
+              },
+              {
+                "name": "controller_reset.second_rate_read.access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "read_id": "初始化控制器-second-rate"
+                }
+              },
+              {
+                "name": "controller_reset.second_rate_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 17179869184,
+                "detail": {
+                  "read_id": "初始化控制器-second-rate"
+                }
+              },
+              {
+                "name": "controller_reset.timer_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.periodic_reset",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 1073741824,
+                "value_reference": {
+                  "exists": true,
+                  "period_raw": 1073741824,
+                  "remaining_raw": 1073741824
+                },
+                "detail": {
+                  "wait_first_period_reference": true,
+                  "precise_timer_qualified_reference": true
+                }
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "声明的Entity甲",
+              "sp_type": 1,
+              "cost_payload_id": "不解码的cost甲",
+              "increments_payload_id": "初始化控制器-declared-segment",
+              "max_sp": 21,
+              "timer": {
+                "exists": true,
+                "period_raw": 1073741824,
+                "remaining_raw": 1073741824
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "声明的Entity甲",
+              "sp_type": 1,
+              "cost_payload_id": "不解码的cost甲",
+              "increments_payload_id": "初始化控制器-declared-segment",
+              "max_sp": 21,
+              "timer": {
+                "exists": true,
+                "period_raw": 1073741824,
+                "remaining_raw": 1073741824
+              }
+            },
+            "initial_sp_prefix": {
+              "signed_min_reference": 20,
+              "single_exact_reference": true,
+              "scaled_signed64_eligible_reference": true,
+              "encoder_constructor_argument_raw_reference": 85899345920,
+              "actual_initial_sp": null,
+              "source_valid": true,
+              "encoder_called_reference": true,
+              "encoder_normal_reference": true,
+              "sp_payload_copy_called_reference": true,
+              "sp_payload_copy_normal_reference": true,
+              "copied_byte_count_reference": 40,
+              "source_copy_size_bytes": 40
+            },
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": 20,
+                "returned_max_sp_reference": 20,
+                "normal_return_reference": true,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": true,
+                "max_encode_called_reference": true,
+                "max_decode_called_reference": true,
+                "getter_return_called_reference": true,
+                "status": "qualified_capacity_return",
+                "roundtrip_equality_reference": null
+              },
+              {
+                "role": "second_max",
+                "read_id": "第二上限",
+                "signed32_product_reference": 21,
+                "returned_max_sp_reference": 21,
+                "normal_return_reference": true,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": true,
+                "max_encode_called_reference": true,
+                "max_decode_called_reference": true,
+                "getter_return_called_reference": true,
+                "status": "qualified_capacity_return",
+                "roundtrip_equality_reference": null
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "声明的Entity甲",
+          "sp_type": 1,
+          "cost_payload_id": "不解码的cost甲",
+          "increments_payload_id": "初始化控制器-declared-segment",
+          "max_sp": 21,
+          "timer": {
+            "exists": true,
+            "period_raw": 1073741824,
+            "remaining_raw": 1073741824
+          }
+        },
+        "normal_return_reference": true,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "rows.0.initial_sp_prefix.sp_payload_copy_called_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.initial_sp_prefix.copied_byte_count_reference",
+          "expected": 40,
+          "actual": 40,
+          "passed": true
+        },
+        {
+          "path": "normal_return_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "independent decoded capacities differ from product",
+      "basis": "new public literal",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": true,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第一上限-独立容量解码",
+                "normal": true,
+                "value": 23
+              },
+              "getter_returns_normally": true
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第二上限-独立容量解码",
+                "normal": true,
+                "value": 17
+              },
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "original_input": null,
+      "input_exactly_same_as_original": null,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "status": "controller_reset_qualified_native_prefix",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 10,
+                "detail": {
+                  "read_id": "第一上限-cost"
+                }
+              },
+              {
+                "name": "first_max.charges_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 2,
+                "detail": {
+                  "read_id": "第一上限-charges"
+                }
+              },
+              {
+                "name": "first_max.max_encode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 20,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.getter_return",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.max_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 23,
+                "detail": {
+                  "read_id": "第一上限-独立容量解码"
+                }
+              },
+              {
+                "name": "init_sp_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 30,
+                "detail": {
+                  "read_id": "独立初始技力"
+                }
+              },
+              {
+                "name": "single_encoder",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 98784247808,
+                "value_reference": null,
+                "detail": {
+                  "input_kind": "System.Single",
+                  "cipher_payload_reference": null
+                }
+              },
+              {
+                "name": "sp_payload_copy",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 40,
+                "value_reference": null,
+                "detail": {
+                  "stores_bytes": [
+                    16,
+                    16,
+                    8
+                  ],
+                  "actual_decoded_sp_reference": null
+                }
+              },
+              {
+                "name": "second_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "second_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 7,
+                "detail": {
+                  "read_id": "第二上限-cost"
+                }
+              },
+              {
+                "name": "second_max.charges_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 3,
+                "detail": {
+                  "read_id": "第二上限-charges"
+                }
+              },
+              {
+                "name": "second_max.max_encode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 21,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "second_max.getter_return",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "second_max.max_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 17,
+                "detail": {
+                  "read_id": "第二上限-独立容量解码"
+                }
+              },
+              {
+                "name": "max_sp_store",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 17,
+                "value_reference": 17,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.controller_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.owner_write",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": "声明的Entity甲",
+                "value_reference": "声明的Entity甲",
+                "detail": null
+              },
+              {
+                "name": "controller_reset.data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.sp_type_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 1,
+                "detail": {
+                  "read_id": "初始化控制器-type"
+                }
+              },
+              {
+                "name": "controller_reset.sp_type_store",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 1,
+                "value_reference": 1,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.cost_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": "不解码的cost甲",
+                "detail": {
+                  "read_id": "初始化控制器-opaque-cost"
+                }
+              },
+              {
+                "name": "controller_reset.cost_copy",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": "不解码的cost甲",
+                "value_reference": "不解码的cost甲",
+                "detail": {
+                  "opaque_payload_size_bytes": 20,
+                  "decoded_cost_reference": null
+                }
+              },
+              {
+                "name": "controller_reset.increments_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": "初始化控制器-declared-segment",
+                "detail": {
+                  "read_id": "初始化控制器-increments"
+                }
+              },
+              {
+                "name": "controller_reset.increments_destination",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.increments_length",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.increments_copy",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": "初始化控制器-declared-segment",
+                "value_reference": "初始化控制器-declared-segment",
+                "detail": {
+                  "copied_count_reference": 4,
+                  "actual_elements_reference": null,
+                  "partial_elements_on_failed_copy_reference": null
+                }
+              },
+              {
+                "name": "controller_reset.can_recover_read.access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "read_id": "初始化控制器-eligibility"
+                }
+              },
+              {
+                "name": "controller_reset.can_recover_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": true,
+                "detail": {
+                  "read_id": "初始化控制器-eligibility"
+                }
+              },
+              {
+                "name": "controller_reset.second_rate_read.access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "read_id": "初始化控制器-second-rate"
+                }
+              },
+              {
+                "name": "controller_reset.second_rate_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 17179869184,
+                "detail": {
+                  "read_id": "初始化控制器-second-rate"
+                }
+              },
+              {
+                "name": "controller_reset.timer_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.periodic_reset",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 1073741824,
+                "value_reference": {
+                  "exists": true,
+                  "period_raw": 1073741824,
+                  "remaining_raw": 1073741824
+                },
+                "detail": {
+                  "wait_first_period_reference": true,
+                  "precise_timer_qualified_reference": true
+                }
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "声明的Entity甲",
+              "sp_type": 1,
+              "cost_payload_id": "不解码的cost甲",
+              "increments_payload_id": "初始化控制器-declared-segment",
+              "max_sp": 17,
+              "timer": {
+                "exists": true,
+                "period_raw": 1073741824,
+                "remaining_raw": 1073741824
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "声明的Entity甲",
+              "sp_type": 1,
+              "cost_payload_id": "不解码的cost甲",
+              "increments_payload_id": "初始化控制器-declared-segment",
+              "max_sp": 17,
+              "timer": {
+                "exists": true,
+                "period_raw": 1073741824,
+                "remaining_raw": 1073741824
+              }
+            },
+            "initial_sp_prefix": {
+              "signed_min_reference": 23,
+              "single_exact_reference": true,
+              "scaled_signed64_eligible_reference": true,
+              "encoder_constructor_argument_raw_reference": 98784247808,
+              "actual_initial_sp": null,
+              "source_valid": true,
+              "encoder_called_reference": true,
+              "encoder_normal_reference": true,
+              "sp_payload_copy_called_reference": true,
+              "sp_payload_copy_normal_reference": true,
+              "copied_byte_count_reference": 40,
+              "source_copy_size_bytes": 40
+            },
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": 20,
+                "returned_max_sp_reference": 23,
+                "normal_return_reference": true,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": true,
+                "max_encode_called_reference": true,
+                "max_decode_called_reference": true,
+                "getter_return_called_reference": true,
+                "status": "qualified_capacity_return",
+                "roundtrip_equality_reference": null
+              },
+              {
+                "role": "second_max",
+                "read_id": "第二上限",
+                "signed32_product_reference": 21,
+                "returned_max_sp_reference": 17,
+                "normal_return_reference": true,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": true,
+                "max_encode_called_reference": true,
+                "max_decode_called_reference": true,
+                "getter_return_called_reference": true,
+                "status": "qualified_capacity_return",
+                "roundtrip_equality_reference": null
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "声明的Entity甲",
+          "sp_type": 1,
+          "cost_payload_id": "不解码的cost甲",
+          "increments_payload_id": "初始化控制器-declared-segment",
+          "max_sp": 17,
+          "timer": {
+            "exists": true,
+            "period_raw": 1073741824,
+            "remaining_raw": 1073741824
+          }
+        },
+        "normal_return_reference": true,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "rows.0.capacity_reads.0.signed32_product_reference",
+          "expected": 20,
+          "actual": 20,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.returned_max_sp_reference",
+          "expected": 23,
+          "actual": 23,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.roundtrip_equality_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.initial_sp_prefix.signed_min_reference",
+          "expected": 23,
+          "actual": 23,
+          "passed": true
+        },
+        {
+          "path": "rows.0.initial_sp_prefix.encoder_constructor_argument_raw_reference",
+          "expected": 98784247808,
+          "actual": 98784247808,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.1.signed32_product_reference",
+          "expected": 21,
+          "actual": 21,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.1.returned_max_sp_reference",
+          "expected": 17,
+          "actual": 17,
+          "passed": true
+        },
+        {
+          "path": "state_after_reference.max_sp",
+          "expected": 17,
+          "actual": 17,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "zero encoded input is not unknown decoded return zero",
+      "basis": "new public literal",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": true,
+                "value": 0
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第一上限-独立容量解码",
+                "normal": true,
+                "value": null
+              },
+              "getter_returns_normally": true
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第二上限-独立容量解码",
+                "normal": true,
+                "value": 21
+              },
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "original_input": null,
+      "input_exactly_same_as_original": null,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "status": "controller_reset_qualified_native_prefix",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 0,
+                "detail": {
+                  "read_id": "第一上限-cost"
+                }
+              },
+              {
+                "name": "first_max.charges_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 2,
+                "detail": {
+                  "read_id": "第一上限-charges"
+                }
+              },
+              {
+                "name": "first_max.max_encode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 0,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.getter_return",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.max_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "read_id": "第一上限-独立容量解码"
+                }
+              },
+              {
+                "name": "init_sp_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 30,
+                "detail": {
+                  "read_id": "独立初始技力"
+                }
+              },
+              {
+                "name": "single_encoder",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "input_kind": "System.Single",
+                  "cipher_payload_reference": null
+                }
+              },
+              {
+                "name": "sp_payload_copy",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 40,
+                "value_reference": null,
+                "detail": {
+                  "stores_bytes": [
+                    16,
+                    16,
+                    8
+                  ],
+                  "actual_decoded_sp_reference": null
+                }
+              },
+              {
+                "name": "second_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "second_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 7,
+                "detail": {
+                  "read_id": "第二上限-cost"
+                }
+              },
+              {
+                "name": "second_max.charges_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 3,
+                "detail": {
+                  "read_id": "第二上限-charges"
+                }
+              },
+              {
+                "name": "second_max.max_encode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 21,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "second_max.getter_return",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "second_max.max_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 21,
+                "detail": {
+                  "read_id": "第二上限-独立容量解码"
+                }
+              },
+              {
+                "name": "max_sp_store",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 21,
+                "value_reference": 21,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.controller_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.owner_write",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": "声明的Entity甲",
+                "value_reference": "声明的Entity甲",
+                "detail": null
+              },
+              {
+                "name": "controller_reset.data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.sp_type_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 1,
+                "detail": {
+                  "read_id": "初始化控制器-type"
+                }
+              },
+              {
+                "name": "controller_reset.sp_type_store",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 1,
+                "value_reference": 1,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.cost_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": "不解码的cost甲",
+                "detail": {
+                  "read_id": "初始化控制器-opaque-cost"
+                }
+              },
+              {
+                "name": "controller_reset.cost_copy",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": "不解码的cost甲",
+                "value_reference": "不解码的cost甲",
+                "detail": {
+                  "opaque_payload_size_bytes": 20,
+                  "decoded_cost_reference": null
+                }
+              },
+              {
+                "name": "controller_reset.increments_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": "初始化控制器-declared-segment",
+                "detail": {
+                  "read_id": "初始化控制器-increments"
+                }
+              },
+              {
+                "name": "controller_reset.increments_destination",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.increments_length",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.increments_copy",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": "初始化控制器-declared-segment",
+                "value_reference": "初始化控制器-declared-segment",
+                "detail": {
+                  "copied_count_reference": 4,
+                  "actual_elements_reference": null,
+                  "partial_elements_on_failed_copy_reference": null
+                }
+              },
+              {
+                "name": "controller_reset.can_recover_read.access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "read_id": "初始化控制器-eligibility"
+                }
+              },
+              {
+                "name": "controller_reset.can_recover_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": true,
+                "detail": {
+                  "read_id": "初始化控制器-eligibility"
+                }
+              },
+              {
+                "name": "controller_reset.second_rate_read.access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "read_id": "初始化控制器-second-rate"
+                }
+              },
+              {
+                "name": "controller_reset.second_rate_read",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 17179869184,
+                "detail": {
+                  "read_id": "初始化控制器-second-rate"
+                }
+              },
+              {
+                "name": "controller_reset.timer_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "controller_reset.periodic_reset",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 1073741824,
+                "value_reference": {
+                  "exists": true,
+                  "period_raw": 1073741824,
+                  "remaining_raw": 1073741824
+                },
+                "detail": {
+                  "wait_first_period_reference": true,
+                  "precise_timer_qualified_reference": true
+                }
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "声明的Entity甲",
+              "sp_type": 1,
+              "cost_payload_id": "不解码的cost甲",
+              "increments_payload_id": "初始化控制器-declared-segment",
+              "max_sp": 21,
+              "timer": {
+                "exists": true,
+                "period_raw": 1073741824,
+                "remaining_raw": 1073741824
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "声明的Entity甲",
+              "sp_type": 1,
+              "cost_payload_id": "不解码的cost甲",
+              "increments_payload_id": "初始化控制器-declared-segment",
+              "max_sp": 21,
+              "timer": {
+                "exists": true,
+                "period_raw": 1073741824,
+                "remaining_raw": 1073741824
+              }
+            },
+            "initial_sp_prefix": {
+              "signed_min_reference": null,
+              "single_exact_reference": null,
+              "scaled_signed64_eligible_reference": null,
+              "encoder_constructor_argument_raw_reference": null,
+              "actual_initial_sp": null,
+              "source_valid": true,
+              "encoder_called_reference": true,
+              "encoder_normal_reference": true,
+              "sp_payload_copy_called_reference": true,
+              "sp_payload_copy_normal_reference": true,
+              "copied_byte_count_reference": 40,
+              "source_copy_size_bytes": 40
+            },
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": 0,
+                "returned_max_sp_reference": null,
+                "normal_return_reference": true,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": true,
+                "max_encode_called_reference": true,
+                "max_decode_called_reference": true,
+                "getter_return_called_reference": true,
+                "status": "qualified_capacity_return",
+                "roundtrip_equality_reference": null
+              },
+              {
+                "role": "second_max",
+                "read_id": "第二上限",
+                "signed32_product_reference": 21,
+                "returned_max_sp_reference": 21,
+                "normal_return_reference": true,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": true,
+                "max_encode_called_reference": true,
+                "max_decode_called_reference": true,
+                "getter_return_called_reference": true,
+                "status": "qualified_capacity_return",
+                "roundtrip_equality_reference": null
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "声明的Entity甲",
+          "sp_type": 1,
+          "cost_payload_id": "不解码的cost甲",
+          "increments_payload_id": "初始化控制器-declared-segment",
+          "max_sp": 21,
+          "timer": {
+            "exists": true,
+            "period_raw": 1073741824,
+            "remaining_raw": 1073741824
+          }
+        },
+        "normal_return_reference": true,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "rows.0.capacity_reads.0.signed32_product_reference",
+          "expected": 0,
+          "actual": 0,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.returned_max_sp_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.initial_sp_prefix.signed_min_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.initial_sp_prefix.encoder_constructor_argument_raw_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "opaque getter return blocks or conditionally precedes decode False",
+      "basis": "new public literal",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": true,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第一上限-独立容量解码",
+                "normal": true,
+                "value": 20
+              },
+              "getter_returns_normally": false
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第二上限-独立容量解码",
+                "normal": true,
+                "value": 21
+              },
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "original_input": null,
+      "input_exactly_same_as_original": null,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": false,
+            "status": "unqualified_first_max.getter_return",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 10,
+                "detail": {
+                  "read_id": "第一上限-cost"
+                }
+              },
+              {
+                "name": "first_max.charges_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 2,
+                "detail": {
+                  "read_id": "第一上限-charges"
+                }
+              },
+              {
+                "name": "first_max.max_encode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 20,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.getter_return",
+                "called_reference": true,
+                "normal_return_reference": false,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": true,
+                "period_raw": 4294967296,
+                "remaining_raw": 4294967296
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": true,
+                "period_raw": 4294967296,
+                "remaining_raw": 4294967296
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": 20,
+                "returned_max_sp_reference": null,
+                "normal_return_reference": false,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": true,
+                "max_encode_called_reference": true,
+                "max_decode_called_reference": false,
+                "getter_return_called_reference": true,
+                "status": "unqualified_capacity"
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "normal_return_reference": false,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "rows.0.capacity_reads.0.max_encode_called_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.getter_return_called_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.max_decode_called_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "normal_return_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "opaque getter return blocks or conditionally precedes decode None",
+      "basis": "new public literal",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": true,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第一上限-独立容量解码",
+                "normal": true,
+                "value": 20
+              },
+              "getter_returns_normally": null
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第二上限-独立容量解码",
+                "normal": true,
+                "value": 21
+              },
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "original_input": null,
+      "input_exactly_same_as_original": null,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "status": "unqualified_first_max.getter_return",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 10,
+                "detail": {
+                  "read_id": "第一上限-cost"
+                }
+              },
+              {
+                "name": "first_max.charges_decode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": 2,
+                "detail": {
+                  "read_id": "第一上限-charges"
+                }
+              },
+              {
+                "name": "first_max.max_encode",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 20,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              },
+              {
+                "name": "first_max.getter_return",
+                "called_reference": true,
+                "normal_return_reference": null,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "protected_payload_value_reference": null
+                }
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": true,
+                "period_raw": 4294967296,
+                "remaining_raw": 4294967296
+              }
+            },
+            "state_after_reference": {
+              "owner_id": null,
+              "sp_type": null,
+              "cost_payload_id": null,
+              "increments_payload_id": null,
+              "max_sp": null,
+              "timer": {
+                "exists": true,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": 20,
+                "returned_max_sp_reference": null,
+                "normal_return_reference": null,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": true,
+                "max_encode_called_reference": true,
+                "max_decode_called_reference": null,
+                "getter_return_called_reference": true,
+                "status": "unqualified_capacity"
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": null,
+          "sp_type": null,
+          "cost_payload_id": null,
+          "increments_payload_id": null,
+          "max_sp": null,
+          "timer": {
+            "exists": true,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": null,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "rows.0.capacity_reads.0.max_encode_called_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.getter_return_called_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.max_decode_called_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "normal_return_reference",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "known first decode exception blocks later calls",
+      "basis": "new public literal",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": false,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第一上限-独立容量解码",
+                "normal": true,
+                "value": 20
+              },
+              "getter_returns_normally": true
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_read": {
+                "id": "第二上限-独立容量解码",
+                "normal": true,
+                "value": 21
+              },
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "original_input": null,
+      "input_exactly_same_as_original": null,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": false,
+            "status": "unqualified_first_max.cost_decode",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": false,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "read_id": "第一上限-cost"
+                }
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": true,
+                "period_raw": 4294967296,
+                "remaining_raw": 4294967296
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": true,
+                "period_raw": 4294967296,
+                "remaining_raw": 4294967296
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": null,
+                "returned_max_sp_reference": null,
+                "normal_return_reference": false,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": false,
+                "max_encode_called_reference": false,
+                "max_decode_called_reference": false,
+                "getter_return_called_reference": false,
+                "status": "unqualified_capacity"
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "normal_return_reference": false,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "rows.0.capacity_reads.0.cost_decode_called_reference",
+          "expected": true,
+          "actual": true,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.charges_decode_called_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.max_encode_called_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.getter_return_called_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.capacity_reads.0.max_decode_called_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "failed timer assignment cannot prove final pointer",
+      "basis": "new public literal",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "actions": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "ordinary_native_path": true,
+            "increments_allocate_normally": true,
+            "increments_assign_normally": true,
+            "timer_allocate_normally": true,
+            "timer_constructor_normally": true,
+            "timer_assign_normally": false,
+            "base_constructor_normally": true,
+            "post_ctor_hotfix": {
+              "present": false,
+              "returns_normally": null
+            }
+          }
+        ]
+      },
+      "original_input": null,
+      "input_exactly_same_as_original": null,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "rows": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "called_reference": true,
+            "normal_return_reference": false,
+            "status": "unqualified_construct.timer_assign",
+            "stages": [
+              {
+                "name": "controller_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_allocate",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_assign",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.timer_allocate",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "construct.timer_constructor",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": {
+                  "period_raw": 0,
+                  "remaining_raw": 0
+                },
+                "detail": null
+              },
+              {
+                "name": "construct.timer_assign",
+                "called_reference": true,
+                "normal_return_reference": false,
+                "argument_reference": {
+                  "exists": true,
+                  "period_raw": 0,
+                  "remaining_raw": 0
+                },
+                "value_reference": null,
+                "detail": null
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": null,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": null,
+          "max_sp": 4,
+          "timer": {
+            "exists": null,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": false,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "normal_return_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "state_after_reference.timer.exists",
+          "expected": null,
+          "actual": null,
+          "passed": true
+        },
+        {
+          "path": "rows.0.known_prefix_state_reference.timer.exists",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "known allocation failure keeps old pointer",
+      "basis": "new public literal",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "actions": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "ordinary_native_path": true,
+            "increments_allocate_normally": true,
+            "increments_assign_normally": true,
+            "timer_allocate_normally": false,
+            "timer_constructor_normally": true,
+            "timer_assign_normally": true,
+            "base_constructor_normally": true,
+            "post_ctor_hotfix": {
+              "present": false,
+              "returns_normally": null
+            }
+          }
+        ]
+      },
+      "original_input": null,
+      "input_exactly_same_as_original": null,
+      "schema_migration": null,
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "rows": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "called_reference": true,
+            "normal_return_reference": false,
+            "status": "unqualified_construct.timer_allocate",
+            "stages": [
+              {
+                "name": "controller_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_allocate",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_assign",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.timer_allocate",
+                "called_reference": true,
+                "normal_return_reference": false,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": null,
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": false,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "checks": [
+        {
+          "path": "normal_return_reference",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "state_after_reference.timer.exists",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        },
+        {
+          "path": "rows.0.known_prefix_state_reference.timer.exists",
+          "expected": false,
+          "actual": false,
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "prior_source_and_counterexamples_sha256": {
+    ".cache\\section276-review-original\\core-before.py": "c2c7286da513ed549bea7e8e6752a08ec2f0b52f7117e8958349ada95226f648",
+    ".cache\\section276-review-original\\original-probes.json": "42b61bda76749c1ad77a0583950aa044baaaedb8890785dfacb38f0313bd798f",
+    ".cache\\section276-review-formal-before\\core-before.py": "50fa9e751f9b100ed098037371d3ce61c343117758e5df6a806bf398f407f116",
+    ".cache\\section276-review-formal-before\\new-copy-unknown-original.json": "0f09bbf994d32463b142038b0a51e08bc691902f1722509c550fe92ebeea47c5"
+  },
+  "prior_source_and_counterexamples_unchanged": true,
+  "core_unchanged_during_review": true,
+  "passed": true,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_state_used": false,
+  "game_or_chat_operated": false,
+  "window_run": false,
+  "remaining_unknown": [
+    "Actual SP/codec keys/protected payloads and live callbacks",
+    "Full initialization/skill clock and real game observations"
+  ],
+  "substantive_findings": []
+}

@@ -1,0 +1,820 @@
+{
+  "scope": "Synthetic file-only first review findings; no product edits, DLL execution, game/memory/chat or window use.",
+  "core_sha256": "c2c7286da513ed549bea7e8e6752a08ec2f0b52f7117e8958349ada95226f648",
+  "source_valid": true,
+  "cases": [
+    {
+      "name": "unknown timer allocation retains false final pointer existence",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "actions": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "ordinary_native_path": true,
+            "increments_allocate_normally": true,
+            "increments_assign_normally": true,
+            "timer_allocate_normally": null,
+            "timer_constructor_normally": true,
+            "timer_assign_normally": true,
+            "base_constructor_normally": true,
+            "post_ctor_hotfix": {
+              "present": false,
+              "returns_normally": null
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "rows": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "status": "unqualified_construct.timer_allocate",
+            "stages": [
+              {
+                "name": "controller_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_allocate",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_assign",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.timer_allocate",
+                "called_reference": true,
+                "normal_return_reference": null,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": null,
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": null,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "source_reason": "Constructor66753 normal allocation/constructor/assignment can produce exists=True; exception path can retainFalse. PrefixFalse may be preserved, finalFalse is not common to both paths."
+    },
+    {
+      "name": "unknown cost return marks later capacity calls false",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": null,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_normally": true,
+              "getter_returns_normally": true
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_normally": true,
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": true,
+            "period_raw": 4294967296,
+            "remaining_raw": 4294967296
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "status": "unqualified_first_max.cost_decode",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.sp_data_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.cost_decode",
+                "called_reference": true,
+                "normal_return_reference": null,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": {
+                  "read_id": "第一上限-cost"
+                }
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": true,
+                "period_raw": 4294967296,
+                "remaining_raw": 4294967296
+              }
+            },
+            "state_after_reference": {
+              "owner_id": null,
+              "sp_type": null,
+              "cost_payload_id": null,
+              "increments_payload_id": null,
+              "max_sp": null,
+              "timer": {
+                "exists": true,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": null,
+                "returned_max_sp_reference": null,
+                "normal_return_reference": null,
+                "cost_decode_called_reference": true,
+                "charges_decode_called_reference": false,
+                "max_encode_called_reference": false,
+                "max_decode_called_reference": false,
+                "getter_return_called_reference": false,
+                "status": "unqualified_capacity"
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": null,
+          "sp_type": null,
+          "cost_payload_id": null,
+          "increments_payload_id": null,
+          "max_sp": null,
+          "timer": {
+            "exists": true,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": null,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "source_reason": "SpData32849 has charges decode/IMUL/encoder after normally returned first decode; unknown first normal can continue or throw. Only false normal guarantees later callsFalse."
+    },
+    {
+      "name": "unknown capacity path marks all capacity calls false",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "actions": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "ordinary_native_path": true,
+            "first_max_read": {
+              "id": "第一上限",
+              "ordinary_native_path": null,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第一上限-cost",
+                "normal": true,
+                "value": 10
+              },
+              "charges_decode": {
+                "id": "第一上限-charges",
+                "normal": true,
+                "value": 2
+              },
+              "max_encode_normally": true,
+              "max_decode_normally": true,
+              "getter_returns_normally": true
+            },
+            "init_sp_read": {
+              "id": "独立初始技力",
+              "normal": true,
+              "value": 30
+            },
+            "single_encoder_normally": true,
+            "sp_payload_copy_normally": true,
+            "second_max_read": {
+              "id": "第二上限",
+              "ordinary_native_path": true,
+              "sp_data_exists": true,
+              "cost_decode": {
+                "id": "第二上限-cost",
+                "normal": true,
+                "value": 7
+              },
+              "charges_decode": {
+                "id": "第二上限-charges",
+                "normal": true,
+                "value": 3
+              },
+              "max_encode_normally": true,
+              "max_decode_normally": true,
+              "getter_returns_normally": true
+            },
+            "max_sp_write_normally": true,
+            "controller_reset": {
+              "id": "初始化控制器",
+              "kind": "reset",
+              "ordinary_native_path": true,
+              "owner_id": "声明的Entity甲",
+              "owner_write_normally": true,
+              "data": {
+                "exists": true,
+                "sp_type_read": {
+                  "id": "初始化控制器-type",
+                  "normal": true,
+                  "value": 1
+                },
+                "sp_type_store_normally": true,
+                "cost_read": {
+                  "id": "初始化控制器-opaque-cost",
+                  "normal": true,
+                  "payload_id": "不解码的cost甲"
+                },
+                "cost_copy_normally": true,
+                "increments_read": {
+                  "id": "初始化控制器-increments",
+                  "normal": true,
+                  "payload_id": "初始化控制器-declared-segment"
+                },
+                "increments_destination_exists": true,
+                "increments_length_read_normally": true,
+                "increments_destination_length": 4,
+                "increments_copy_normally": true
+              },
+              "can_recover_read": {
+                "id": "初始化控制器-eligibility",
+                "exists": true,
+                "normal": true,
+                "value": true
+              },
+              "second_rate_read": {
+                "id": "初始化控制器-second-rate",
+                "exists": true,
+                "normal": true,
+                "raw": 17179869184
+              },
+              "timer_call_returns_normally": true
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "rows": [
+          {
+            "id": "两次独立上限与初始编码前缀",
+            "kind": "entity_init",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "status": "unqualified_first_max.ordinary_path",
+            "stages": [
+              {
+                "name": "entity_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "first_max.ordinary_path",
+                "called_reference": true,
+                "normal_return_reference": null,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": "旧segment",
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "state_after_reference": {
+              "owner_id": null,
+              "sp_type": null,
+              "cost_payload_id": null,
+              "increments_payload_id": null,
+              "max_sp": null,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [
+              {
+                "role": "first_max",
+                "read_id": "第一上限",
+                "signed32_product_reference": null,
+                "returned_max_sp_reference": null,
+                "normal_return_reference": null,
+                "cost_decode_called_reference": false,
+                "charges_decode_called_reference": false,
+                "max_encode_called_reference": false,
+                "max_decode_called_reference": false,
+                "getter_return_called_reference": false,
+                "status": "unqualified_capacity"
+              }
+            ],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": null,
+          "sp_type": null,
+          "cost_payload_id": null,
+          "increments_payload_id": null,
+          "max_sp": null,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": null,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "source_reason": "Neither ordinary versus hotfix eligibility nor future calls are proved when path qualifier isNone; omitted modeled stages are distinct from confirmed never-called."
+    },
+    {
+      "name": "subsequent conditionally invoked constructor retains false pointer existence",
+      "input": {
+        "entity_exists": true,
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_state_changes": true,
+        "state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "actions": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "ordinary_native_path": true,
+            "increments_allocate_normally": true,
+            "increments_assign_normally": true,
+            "timer_allocate_normally": null,
+            "timer_constructor_normally": true,
+            "timer_assign_normally": true,
+            "base_constructor_normally": true,
+            "post_ctor_hotfix": {
+              "present": false,
+              "returns_normally": null
+            }
+          },
+          {
+            "id": "第二个未qualified构造",
+            "kind": "construct",
+            "ordinary_native_path": true,
+            "increments_allocate_normally": true,
+            "increments_assign_normally": true,
+            "timer_allocate_normally": true,
+            "timer_constructor_normally": true,
+            "timer_assign_normally": true,
+            "base_constructor_normally": true,
+            "post_ctor_hotfix": {
+              "present": false,
+              "returns_normally": null
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-initialization-source.json",
+        "declared_initial_state": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": "旧segment",
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "rows": [
+          {
+            "id": "构造0比0计时器",
+            "kind": "construct",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "status": "unqualified_construct.timer_allocate",
+            "stages": [
+              {
+                "name": "controller_access",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_allocate",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.increment_assign",
+                "called_reference": true,
+                "normal_return_reference": true,
+                "argument_reference": 4,
+                "value_reference": 4,
+                "detail": null
+              },
+              {
+                "name": "construct.timer_allocate",
+                "called_reference": true,
+                "normal_return_reference": null,
+                "argument_reference": null,
+                "value_reference": null,
+                "detail": null
+              }
+            ],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [],
+            "conditional_branches": []
+          },
+          {
+            "id": "第二个未qualified构造",
+            "kind": "construct",
+            "called_reference": null,
+            "normal_return_reference": null,
+            "status": "not_called_after_unqualified_chain",
+            "stages": [],
+            "known_prefix_state_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "state_after_reference": {
+              "owner_id": "构造前独立owner",
+              "sp_type": 7,
+              "cost_payload_id": "构造前opaque-cost",
+              "increments_payload_id": null,
+              "max_sp": 4,
+              "timer": {
+                "exists": false,
+                "period_raw": null,
+                "remaining_raw": null
+              }
+            },
+            "initial_sp_prefix": null,
+            "capacity_reads": [],
+            "conditional_branches": []
+          }
+        ],
+        "state_after_reference": {
+          "owner_id": "构造前独立owner",
+          "sp_type": 7,
+          "cost_payload_id": "构造前opaque-cost",
+          "increments_payload_id": null,
+          "max_sp": 4,
+          "timer": {
+            "exists": false,
+            "period_raw": null,
+            "remaining_raw": null
+          }
+        },
+        "normal_return_reference": null,
+        "actual_current_sp": null,
+        "complete_cycle": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Ordinary native SP prefixes over independent declarations; encoded input/copy and timer references are not actual SP or a whole initialization/cycle.",
+        "remaining_unknown": [
+          "protected encoding/next decode",
+          "actual owner/data/timer/attribute reads",
+          "later Entity/Character/BasicSkill callbacks and modifiers",
+          "actual skill activation, first/cast/recovery cycle"
+        ]
+      },
+      "source_reason": "After unknown first normal, second construct may be invoked and installTrue timer; known oldFalse is not a final common value."
+    }
+  ],
+  "core_unchanged_during_probes": true
+}

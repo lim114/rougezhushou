@@ -1,3 +1,7 @@
+## 功能第276节 · 初始技力双容量、数据切换与控制器重置参考
+
+2026-10-14T23:53:34.144907+08:00。新增两次独立容量解码、signed32编码前乘积与signed min/精确Single参数、40字节直接初始SP复制，默认0/0与Controller Reset/UpdateData/成本only/KeepPast及独立274链接。实际SP/完整初始化/周期未知。47方法/4866指令/6351 span+继承MAX22，补受保护整数11方法/305指令/452片段，fresh6825均匹配；cryptoKey读点不保证相同，独立decoded value替代未证roundtrip。43新增方法及148相关检查、14探针/60源审与实际Windows四字面量主窗通过，原18560窗口正常更新可见，3私人JSON未变。原构造指针/未来called/encoder-copy未知反例与source-before保留；真同输入及schema迁移分列，35/36准备、42/147旧绿日志不重计。全量275原件保持，不重复未变范围；其权限/原Linux-Wine/历史私样本/游戏聊天仍未通过。P2未完成；回执verification/sections/276.json。后续277，目标300、定期290/最终300全量。
+
 ## 功能第275节 · SP写入存活条件、独立上限与public返回/完整复制资格
 
 2026-10-14T23:14:35.608168+08:00。新增独立存活/force/上限、signed FP限幅与编码/40字节复制资格，public void正常与internal false分离；接274独立请求，不推实际SP/完整周期。55方法/2599原指令/11190字节/3971 span，32新方法、191相关检查及32探针/163独立核对通过。收尾原件核验发现274 restart遗漏Max(0,newP)，同输入修正P/R为0/0；保留负KeepPast及MarkInvalid区别、原反例/失败/旧源码与A1/A2。完整A3保持408选择器/1160源码：Windows4331项、4252通过、73声明跳过、16真权限不可用，零失败错误。A3旧窗口4283记录/52状态/156请求/42投影/10桥接及typed读回、862 AST/552原主流程通过，current29通过；current30真实1314不计通过。047/060真实原件恢复及合同维护有证，未恢复旧完整总量的错误确定性。修复后公共Windows窗口与原24132测试窗口实际可见，3私人JSON未变。原Linux/Wine、历史私样本/游戏聊天未计通过；P2未完成。回执verification/sections/275.json与verification/full-275/summary.json；下一276，目标300，定期290/最终300全量。

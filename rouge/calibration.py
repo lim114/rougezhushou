@@ -487,3 +487,11 @@ def sp_setter_values(sp_writes):
 
 
 COMMANDS['sp-setter'] = sp_setter_values
+
+
+def sp_initialization_values(sp_initialization):
+    from .sp_initialization_reference import sp_initialization_reference
+    return sp_initialization_reference(sp_initialization)
+
+
+COMMANDS['sp-init'] = sp_initialization_values

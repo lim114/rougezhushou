@@ -39,6 +39,7 @@ CALIBRATION_QUERIES = (
     ('regen-attributes', '常态生命回复 · 属性缓存与藏品求值'),
     ('sp-clock', '自然技力 · 批量时钟与恢复请求'),
     ('sp-setter', 'SP写入 · 存活门与上限'),
+    ('sp-init', '技力初始化 · 容量与数据切换'),
 )
 BATTLE_QUERIES = (
     ('actions', '完整关卡动作清单'), ('activations', '预置实体激活对应'),
@@ -110,6 +111,7 @@ INPUT_GUIDANCE = {
     'compare': 'left_stage/right_stage 与 left_level/right_level 分别指定两组条件；run_config/right_run_config 为局外环境。比较已支持环境小计，完整有效面板仍未知。',
 }
 INPUT_GUIDANCE.update({
+    'sp-init':'sp_initialization逐次声明构造、初始化或数据切换。两次容量读取与独立解码值不能复用；乘积仅为编码前参数，不作为实际容量。初始化直接复制SP字段，不借公共setter的存活门或零下限。true/false/null分别为正常/异常/未知；前缀与最终未知分开。仅成本更新仍先写Entity容量；Reset和保留经过时间的更新采用不同定时器规则。实际SP、完整初始化和技能周期未知。',
     'items':'列固定原件全部30零件。kind可选MOVE、GOODS、PASSIVE；目录不代表实际持有。',
     'targets':'graph为声明地图，item_id为加工品；remaining_uses可声明余次数。未知资格仍保留候选，无生成概率。',
     'effects':'明确target后逐项显示移动资源与passive_items概念体条件。结果不更新实际持有或战斗数值。',
@@ -194,6 +196,9 @@ def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
     if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
+        if command == 'sp-init':
+            from .sp_initialization_reference import public_example
+            return {'sp_initialization':public_example()}
         if command == 'sp-setter':
             from .sp_setter_reference import public_example
             return {'sp_writes':public_example()}
@@ -310,6 +315,34 @@ def _explosion_tables(data):
         '；所声明调用总参考：'+amount(data['declared_calls_scaled_damage_raw_total'])),
         _p('≈表示仅显示到8位小数；完整定点原值保留在技术详情。'),
         _p('采用原值定点顺序与单精度常量；这些数值不代表全爆炸伤害、实际目标数或实机时钟。')]
+    return parts
+
+
+def _sp_initialization_tables(data):
+    amount=lambda raw:_fp_amount(raw,8)
+    names={'construct':'构造控制器','entity_init':'初始化技力与容量',
+           'entity_update':'切换技力数据','reset':'重置控制器',
+           'update_data':'更新控制器数据','reset_timer':'重置当前周期'}
+    parts=[_p('来源核验：'+_text(data['source_valid'])+'；每次解码值与正常性均为独立声明。'),
+           _p('编码前乘积不等于解码后的容量。前缀算式不证明实际SP、完整初始化或技能周期。')]
+    for row in data['rows']:
+        timer=row['state_after_reference']['timer']
+        parts += [_h(row['id']+' · '+names[row['kind']]),
+            _table(['调用参考','正常返回参考','容量写入参考','周期秒数参考','剩余秒数参考'],
+                [(row['called_reference'],row['normal_return_reference'],row['state_after_reference']['max_sp'],
+                  amount(timer['period_raw']),amount(timer['remaining_raw']))])]
+        if row['capacity_reads']:
+            parts += [_h('独立容量读取'),_table(['读点','编码前有符号乘积','独立解码容量','全部读取正常'],
+                [(r['read_id'],r['signed32_product_reference'],r['returned_max_sp_reference'],
+                  r['normal_return_reference']) for r in row['capacity_reads']])]
+        prefix=row['initial_sp_prefix']
+        if prefix:
+            parts += [_h('初始字段复制前缀'),_table(['限制后初始整数','可证编码参数参考','参数精确原值','复制字节数参考'],
+                [(prefix['signed_min_reference'],amount(prefix['encoder_constructor_argument_raw_reference']),
+                  prefix['encoder_constructor_argument_raw_reference'],prefix.get('copied_byte_count_reference'))]),
+                _p('初始值直接复制，不经过公共SP写入的存活门与零下限；不精确的单精度转换仍未知。')]
+    parts += [_p('默认计时器为0/0；重启取新周期与0的最大值。保留已过时间时不把负周期截零。'),
+              _p('实际技力、实际读点、完整技能周期与回调后的状态：未知。')]
     return parts
 
 
@@ -546,7 +579,9 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
     if data.get('stage_name'): parts.append(_p('关卡：'+data['stage_name']))
     if input_source:parts.append(_p('此次输入来源：'+input_source))
     if family == 'calibration':
-        if command == 'sp-setter':
+        if command == 'sp-init':
+            parts += _sp_initialization_tables(data)
+        elif command == 'sp-setter':
             parts += _sp_setter_tables(data)
         elif command == 'sp-clock':
             parts += _sp_recovery_tables(data)
@@ -1014,7 +1049,7 @@ class OfflineToolsPanel(QWidget):
 
     def _update_buttons(self):
         family,command=self.current_query()
-        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter') and self._scenario is not None)
+        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init') and self._scenario is not None)
         self.import_stage.setEnabled((family=='battle' or family=='exploration' and command=='settlements') and self._stage is not None)
         exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes','search-routes')
         self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
@@ -1122,7 +1157,7 @@ class OfflineToolsPanel(QWidget):
     def _import_scenario(self):
         try:
             family,command=self.current_query()
-            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
+            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
             payload=self._payload();scenario=deepcopy(self._scenario)
             if scenario.get('operator') not in calibration.OPERATORS:raise ValueError('校准工具目前仅支持凯尔希·思衡托、凛御银灰、机械师。')
             if command=='recipient-events' and (scenario.get('operator')!='silverash' or scenario.get('skill')!=2):

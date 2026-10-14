@@ -179,9 +179,9 @@ class BaseSettlementViewTests(unittest.TestCase):
     def test_new_query_all_eight_public_scenarios_run_and_render_in_qt(self):
         # Keep the original coverage and the four subsequent mechanical queries;
         # historical exploration catalog still includes all13 original entries.
-        self.assertEqual(len(QUERIES['calibration'])+len(QUERIES['battle']),30)
+        self.assertEqual(len(QUERIES['calibration'])+len(QUERIES['battle']),31)
         self.assertIn(('relic-panels','藏品组合与面板差值诊断'),QUERIES['calibration'])
-        for command in ('barrier-ledger','shield-grants','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter'):
+        for command in ('barrier-ledger','shield-grants','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init'):
             self.assertIn(command,dict(QUERIES['calibration']))
         self.assertEqual(len(QUERIES['exploration']),13)
         self.panel.select_query('exploration','settlements');presets=exploration_presets('settlements')
