@@ -136,6 +136,8 @@ class PairedCalibrationPanel(QWidget):
         self.before_layers_button, self.after_layers_button = QPushButton('读取前组条件分层与标识'), QPushButton('读取后组条件分层与标识')
         self.before_bind_button, self.after_bind_button = QPushButton('确认前组声明条件并填写标识'), QPushButton('确认后组声明条件并填写标识')
         self.before_import_button, self.after_import_button = QPushButton('导入当前干员条件到前组'), QPushButton('导入当前干员条件到后组')
+        self.before_levels_button = QPushButton('按等级排查前组面板偏差')
+        self.after_levels_button = QPushButton('按等级排查后组面板偏差')
         for name, editor, inspect_button, bind_button, import_button in (
                 ('前组', self.before_editor, self.before_layers_button, self.before_bind_button, self.before_import_button),
                 ('后组', self.after_editor, self.after_layers_button, self.after_bind_button, self.after_import_button)):
@@ -145,6 +147,7 @@ class PairedCalibrationPanel(QWidget):
             page_layout.addWidget(inspect_button)
             page_layout.addWidget(bind_button)
             page_layout.addWidget(import_button)
+            page_layout.addWidget(self.before_levels_button if name == '前组' else self.after_levels_button)
             import_button.setEnabled(False)
             self.tabs.addTab(page, name)
         workspace_layout.addWidget(self.tabs, 1)
@@ -179,6 +182,8 @@ class PairedCalibrationPanel(QWidget):
         self.splitter.setSizes([320, 500])
         self.load_template.clicked.connect(self.load_public_template)
         self.run_button.clicked.connect(self.execute)
+        self.before_levels_button.clicked.connect(lambda: self.inspect_levels(self.before_editor, '前组'))
+        self.after_levels_button.clicked.connect(lambda: self.inspect_levels(self.after_editor, '后组'))
         for editor, inspect_button, bind_button, import_button, name in (
                 (self.before_editor, self.before_layers_button, self.before_bind_button, self.before_import_button, '前组'),
                 (self.after_editor, self.after_layers_button, self.after_bind_button, self.after_import_button, '后组')):
@@ -265,3 +270,19 @@ class PairedCalibrationPanel(QWidget):
 
     def result_snapshot(self):
         return deepcopy(self._result)
+
+    def inspect_levels(self, editor, name):
+        from .level_panel_diagnostics import diagnose_panel_levels
+        from .level_panel_view import LevelPanelDialog
+        try:
+            record = self._parse(editor)
+            result = diagnose_panel_levels(record['scenario'], record['observation'], self.tolerance.value())
+        except (ValueError, TypeError, KeyError, IndexError, OverflowError) as error:
+            self.status.setText(name + '等级排查未完成：' + str(error))
+            return
+        previous = getattr(self, 'level_dialog', None)
+        if previous is not None:
+            previous.close()
+        self.level_dialog = LevelPanelDialog(result, self)
+        self.level_dialog.show()
+        self.status.setText(name + '等级排查已打开；仅为声明模型假设，原观察及前后比较保持原记录。')
