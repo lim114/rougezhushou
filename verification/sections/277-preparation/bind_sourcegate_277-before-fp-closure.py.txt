@@ -1,0 +1,148 @@
+"""Prepare a file-only source proof. Never execute the target game DLL."""
+import hashlib
+import json
+import struct
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+BASE = ROOT / '.cache/research/p2-native-current-263'
+reader = BASE / 'read_metadata_static.py'
+ns = {'__file__': str(reader)}
+exec(compile(reader.read_text(encoding='utf8').split('selected=[]\n')[0], str(reader), 'exec'), ns)
+sha = lambda b: hashlib.sha256(b).hexdigest()
+primary = json.loads((BASE / 'mapping-verification.json').read_bytes())
+assert sha(ns['binary']) == primary['game_dll_sha256']
+assert sha(ns['meta']) == primary['metadata_sha256']
+spans = []
+artifacts = {}
+methods = {}
+instructions = {}
+
+
+def bind(source, offset, raw, label):
+    offset = int(offset, 0) if isinstance(offset, str) else offset
+    actual = ns['binary'] if source == 'dll' else ns['meta']
+    assert actual[offset:offset + len(raw)] == raw, label
+    spans.append({'source': source, 'physical_offset': offset, 'raw_hex': raw.hex(), 'label': label})
+
+
+def read(path):
+    raw = path.read_bytes()
+    artifacts[path.relative_to(ROOT).as_posix()] = sha(raw)
+    return json.loads(raw)
+
+
+old = read(ROOT / '.cache/research/p2-sp-sourcegate-276/source-proof-preparation-276.json')
+selected_old = {76049, 76055, 76057, 72662, 72666, 72667, 72675, 72702, 72712, 220527, 66409}
+for item in old['methods']:
+    if item['method'].get('metadata_method_index') in selected_old:
+        methods[(item['method']['Address'], item['method']['metadata_method_index'])] = item
+for name in ('extra-skill-sp', 'cost-and-admission-dependencies',
+             'new-sp-and-initial-int-dependencies', 'signed-cost-arithmetic-closure',
+             'apply-modifier-complete'):
+    data = read(HERE / (name + '.json'))
+    assert data['dll_sha256'] == primary['game_dll_sha256']
+    assert data['metadata_sha256'] == primary['metadata_sha256']
+    for item in data['methods']:
+        key = (item['method']['Address'], item['method']['metadata_method_index'])
+        if key in methods:
+            assert methods[key]['reachable_bytes_sha256'] == item['reachable_bytes_sha256']
+        methods[key] = item
+for item in methods.values():
+    assert item['cfg_bounded_traversal_finished'] and not item['limits']
+    for ins in item['instructions']:
+        raw = bytes.fromhex(ins['bytes'])
+        bind('dll', ins['physical_offset'], raw, item['method']['Name'] + '@' + ins['address'])
+        assert instructions.setdefault(ins['address'], raw) == raw
+        for rip in ins.get('rip_data', []):
+            bind('dll', ns['offset'](int(rip['address'], 16)), bytes.fromhex(rip['bytes8']), 'RIP ' + rip['address'])
+
+parameters = ns['records']('parameters', 'Iii')
+metadata = []
+for index in sorted({key[1] for key in methods}):
+    row = ns['methods'][index]
+    name = ns['type_def_name'](row[1]) + '$$' + ns['string'](row[0])
+    bind('metadata', ns['header']['methods'][0] + index * 32, struct.pack('<IiiiiI4H', *row), name + ' metadata')
+    pos = ns['offset'](ns['reg']['types'][row[2]])
+    bind('dll', pos, ns['binary'][pos:pos + 12], name + ' return native type')
+    params = []
+    for pi in range(row[3], row[3] + row[9]):
+        param = parameters[pi]
+        pname = ns['string'](param[0])
+        bind('metadata', ns['header']['parameters'][0] + pi * 12, struct.pack('<Iii', *param), name + ':' + pname)
+        pos = ns['offset'](ns['reg']['types'][param[2]])
+        bind('dll', pos, ns['binary'][pos:pos + 12], name + ':' + pname + ' native type')
+        params.append({'name': pname, 'type': ns['typename'](param[2])})
+    metadata.append({'index': index, 'name': name, 'return_type': ns['typename'](row[2]),
+                     'parameters': params, 'slot': row[8], 'flags': row[6], 'declaring_type': row[1]})
+
+layouts = []
+enum_fields = []
+wanted = {'Torappu.Battle.BasicSkill', 'Torappu.SkillData', 'Torappu.SpData',
+          'Torappu.Battle.Modifier', 'Torappu.Battle.Modifier+DeltaType',
+          'Torappu.Battle.Modifier+TargetType', 'Torappu.Battle.Modifier+CancelReasonMask',
+          'Torappu.PlayerSide', 'Torappu.Battle.PlayerSide', 'Torappu.MathUtil', 'TrueSync.FP'}
+for index, td in enumerate(ns['types']):
+    name = ns['type_def_name'](index)
+    if name not in wanted:
+        continue
+    bind('metadata', ns['header']['typeDefinitions'][0] + index * 92,
+         struct.pack('<IIiiiiiIiiiiiiiii8HII', *td), name + ' typedef')
+    fields = []
+    pointer = ns['reg']['fields'][index]
+    for ordinal, fi in enumerate(range(td[8], td[8] + td[19])):
+        row = ns['fields'][fi]
+        field_name = ns['string'](row[0])
+        bind('metadata', ns['header']['fields'][0] + fi * 12, struct.pack('<IiI', *row), name + '.' + field_name)
+        pos = ns['offset'](ns['reg']['types'][row[1]])
+        bind('dll', pos, ns['binary'][pos:pos + 12], name + '.' + field_name + ' native type')
+        value_offset = None
+        if pointer:
+            pos = ns['offset'](pointer) + ordinal * 4
+            bind('dll', pos, ns['binary'][pos:pos + 4], name + '.' + field_name + ' field offset')
+            value_offset = struct.unpack_from('<I', ns['binary'], pos)[0]
+        field = {'name': field_name, 'type': ns['typename'](row[1]), 'field_index': fi, 'offset': value_offset}
+        if fi in ns['defaults'] and td[25] & 2:
+            default_row = ns['defaults'][fi]
+            default_index = list(ns['records']('fieldDefaultValues', 'iii')).index(default_row)
+            bind('metadata', ns['header']['fieldDefaultValues'][0] + default_index * 12,
+                 struct.pack('<iii', *default_row), name + '.' + field_name + ' compressed default row')
+            value = ns['default_value'](fi)
+            # default_value returns the exact compressed span along with its decoded value.
+            field['enum_default'] = value
+            enum_fields.append({'type': name, 'field': field_name, 'field_index': fi, 'value': value})
+            pos = ns['header']['fieldAndParameterDefaultValueData'][0] + default_row[2]
+            bind('metadata', pos, ns['meta'][pos:pos + 5], name + '.' + field_name + ' compressed default bytes')
+        fields.append(field)
+    layouts.append({'name': name, 'type_index': index, 'fields': fields})
+
+for path in (reader, BASE / 'mapping-verification.json', BASE / 'script.json', BASE / 'supplement-map.json',
+             HERE / 'extract_skill_sp_277.py', Path(__file__)):
+    artifacts[path.relative_to(ROOT).as_posix()] = sha(path.read_bytes())
+result = {
+    'kind': 'SECTION277_PURE_FILE_SOURCE_GATE_PREPARATION_NOT_IMPLEMENTED',
+    'dll_sha256': primary['game_dll_sha256'], 'metadata_sha256': primary['metadata_sha256'],
+    'source_game_dll': primary['source_game_dll'], 'source_metadata': str(ns['META']),
+    'file_only': True, 'game_dll_executed': False, 'process_memory_read': False,
+    'production_or_tests_modified': False, 'current_hotfix_equivalence_proven': False,
+    'method_count': len(methods), 'unique_instruction_count': len(instructions),
+    'byte_span_count': len(spans), 'methods': list(methods.values()), 'method_metadata': metadata,
+    'layouts': layouts, 'enum_defaults': enum_fields, 'byte_spans': spans,
+    'all_spans_rechecked_against_fresh_primary_files': True, 'source_artifacts_sha256': artifacts,
+    'source_facts': {
+        'ApplyModifier': '66665 returns System.Boolean, parameters Modifier and System.Boolean. A normal return is not proof of actual SP change/payment.',
+        'threshold': 'first m_costMinSp selects branch; nonnegative path reads m_costMinSp again after SP. Negative path may free-cast or read independent decoded cost.',
+        'GE': 'signed FP SP > wrap64(thresholdQ - EPS); EPS cctor source value is 42950.',
+        'debit': 'ReduceSp delta is independent of threshold/cost/maxcharge; low32 NEG then Int32ToFP, independent owner for NewSp, second owner for Apply.',
+        'NewSp': 'SP target1; ADD1 for raw >=0, MINUS2 otherwise; magnitude Abs with MIN64 -> FP.MaxValue (MAX64-1). ctor result/callback fields opaque.',
+        'unknown': 'Actual decoded payload, virtual/hotfix runtime identity, modifier effects, paid cost, current SP, cast success and full cycle unknown.',
+    },
+}
+target = HERE / 'source-proof-preparation-277.json'
+raw = (json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf8')
+target.write_bytes(raw)
+print(json.dumps({'path': target.relative_to(ROOT).as_posix(), 'sha256': sha(raw),
+                  'methods': len(methods), 'instructions': len(instructions), 'spans': len(spans),
+                  'apply': next(m for m in metadata if m['index'] == 66665),
+                  'enum_defaults': enum_fields}, ensure_ascii=False))

@@ -24,6 +24,7 @@ NEW_MODULES = (
     'tests.test_sp_recovery_clock',
     'tests.test_sp_setter_reference',
     'tests.test_sp_initialization_reference',
+    'tests.test_skill_sp_cost_independent_277',
     'tests.test_regeneration_clock',
     'tests.test_modifier_packet_reference',
     'tests.test_route_information_scope',

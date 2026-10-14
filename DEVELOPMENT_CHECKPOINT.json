@@ -51,7 +51,7 @@
     "batch_target_section": 300
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 276,
+  "completed_sections": 277,
   "sections": [
     {
       "number": 1,
@@ -1696,10 +1696,16 @@
       "kind": "functional_section",
       "topic": "初始技力双容量、数据切换与控制器重置参考",
       "verification": "verification/sections/276.json"
+    },
+    {
+      "number": 277,
+      "kind": "functional_section",
+      "topic": "技能技力门槛覆盖、独立扣费意图与返回资格",
+      "verification": "verification/sections/277.json"
     }
   ],
-  "next_section": 277,
-  "next_action": "277有证技能门槛覆盖与独立扣费意图分离，先查BasicSkill/Modifier/成本来源；门槛不是cost floor，资格通过不能推实际扣费/施放/时钟。继续300，定期290/最终300完整全量；仅节点信息，无推荐。",
+  "next_section": 278,
+  "next_action": "278优先有证费用Single乘加/round或signed32缩放与独立更新、SP增量4槽初始化。先核MXCSR/round/callback/枚举与正常资格；实际实例费用仍独立decode，不编造激活/周期。继续300；定期290与最终300完整全量，探索仅节点信息。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 275,
@@ -1827,16 +1833,16 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 276,
-    "verification": "verification/sections/276.json",
+    "section": 277,
+    "verification": "verification/sections/277.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit",
-    "commit_reference": "the commit containing276 functional source, requirements and index",
+    "commit_reference": "the commit containing277 source/receipt/requirements/index",
     "batch_closed": false
   },
   "last_verified_cloud_save": {
     "section": 276,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "1893ed5531cbedaf26b9e91389fbaf2dcab60902",
     "proof": "verification/sections/276-publication.json",
@@ -2092,7 +2098,7 @@
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": 300,
-  "batch_status": "ACTIVE_BATCH_262_300_SECTION276_PUBLISHED",
+  "batch_status": "ACTIVE_BATCH_262_300_SECTION277_LOCAL_VALIDATED",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2126,16 +2132,17 @@
     273,
     274,
     275,
-    276
+    276,
+    277
   ],
   "current_batch": {
     "start": 262,
     "end": 300,
-    "status": "ACTIVE_BATCH_262_300_SECTION276_PUBLISHED",
-    "next_section": 277,
+    "status": "ACTIVE_BATCH_262_300_SECTION277_LOCAL_VALIDATED",
+    "next_section": 278,
     "next_section_started": false,
     "next_full_validation_after": 290,
-    "receipt": "verification/sections/276.json",
+    "receipt": "verification/sections/277.json",
     "batch_closed": false
   },
   "current_full140_checkpoint": {
@@ -2280,8 +2287,8 @@
     "continuous_work_authorized": true
   },
   "latest_section_environment": {
-    "section": 276,
-    "native_windows": "148 necessary checks, public initialization MainWindow4 literals plus original18560 window visible/responding/private3 unchanged",
+    "section": 277,
+    "native_windows": "196 related checks, actual public32-query MainWindow10 literals and original12740 visible/responding/private3 unchanged",
     "native_game_or_chat_verified": false,
     "new_Linux_Wine_full_run": false,
     "historical_full_reference": "verification/full-275/summary.json",
@@ -2424,7 +2431,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 276,
+  "latest_functional_section": 277,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -2926,7 +2933,7 @@
     "proof": "verification/sections/275-publication.json",
     "proof_sha256": "d0df66553575575afe24f3e75b10652e20c6fdf862fe69a7b2bfec205c6fd0ae"
   },
-  "cloud_publication_closeout": {
+  "historical_before277_cloud_publication_closeout": {
     "section": 276,
     "functional_commit": "1893ed5531cbedaf26b9e91389fbaf2dcab60902",
     "functional_source_bytes_unchanged": true,
@@ -2934,5 +2941,10 @@
     "current_commit_kind": "publication metadata; no additional functional section",
     "goal_target_section": 300,
     "next_section": 277
+  },
+  "native_section277_validation": {
+    "receipt": "verification/sections/277-main-window.json",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
   }
 }

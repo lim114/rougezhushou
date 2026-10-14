@@ -495,3 +495,11 @@ def sp_initialization_values(sp_initialization):
 
 
 COMMANDS['sp-init'] = sp_initialization_values
+
+
+def skill_sp_cost_values(sp_cost):
+    from .skill_sp_cost_reference import skill_sp_cost_reference
+    return skill_sp_cost_reference(sp_cost)
+
+
+COMMANDS['sp-cost'] = skill_sp_cost_values

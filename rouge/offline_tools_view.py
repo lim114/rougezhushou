@@ -40,6 +40,7 @@ CALIBRATION_QUERIES = (
     ('sp-clock', '自然技力 · 批量时钟与恢复请求'),
     ('sp-setter', 'SP写入 · 存活门与上限'),
     ('sp-init', '技力初始化 · 容量与数据切换'),
+    ('sp-cost', '技能技力 · 门槛与消耗意图'),
 )
 BATTLE_QUERIES = (
     ('actions', '完整关卡动作清单'), ('activations', '预置实体激活对应'),
@@ -111,6 +112,7 @@ INPUT_GUIDANCE = {
     'compare': 'left_stage/right_stage 与 left_level/right_level 分别指定两组条件；run_config/right_run_config 为局外环境。比较已支持环境小计，完整有效面板仍未知。',
 }
 INPUT_GUIDANCE.update({
+    'sp-cost':'sp_cost分别声明门槛参数、技力资格读取和消耗请求。非负最小技力是门槛覆盖，不能与技能费用取最大值；SP读取后的第二门槛也须独立。Unity判空不等于存活，费用、无技力开关、虚调用跳费及两次owner都不复用。Apply布尔值只是调用返回参考，实际支付、SP变化和完整施放未知。仅供局外条件算例。',
     'sp-init':'sp_initialization逐次声明构造、初始化或数据切换。两次容量读取与独立解码值不能复用；乘积仅为编码前参数，不作为实际容量。初始化直接复制SP字段，不借公共setter的存活门或零下限。true/false/null分别为正常/异常/未知；前缀与最终未知分开。仅成本更新仍先写Entity容量；Reset和保留经过时间的更新采用不同定时器规则。实际SP、完整初始化和技能周期未知。',
     'items':'列固定原件全部30零件。kind可选MOVE、GOODS、PASSIVE；目录不代表实际持有。',
     'targets':'graph为声明地图，item_id为加工品；remaining_uses可声明余次数。未知资格仍保留候选，无生成概率。',
@@ -196,6 +198,9 @@ def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
     if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
+        if command == 'sp-cost':
+            from .skill_sp_cost_reference import public_example
+            return {'sp_cost':public_example()}
         if command == 'sp-init':
             from .sp_initialization_reference import public_example
             return {'sp_initialization':public_example()}
@@ -315,6 +320,44 @@ def _explosion_tables(data):
         '；所声明调用总参考：'+amount(data['declared_calls_scaled_damage_raw_total'])),
         _p('≈表示仅显示到8位小数；完整定点原值保留在技术详情。'),
         _p('采用原值定点顺序与单精度常量；这些数值不代表全爆炸伤害、实际目标数或实机时钟。')]
+    return parts
+
+
+def _skill_sp_cost_tables(data):
+    amount=lambda raw:_fp_amount(raw,8)
+    kinds={'assign_min':'黑板门槛参数写入','modify_min':'门槛覆盖参数','modify_free':'无技力参数',
+           'admission':'独立技力资格检查','reduce':'独立消耗请求'}
+    public_names={'public.assign':'黑板声明初值','public.set5':'覆盖门槛5','public.override':'门槛5与费用20分开',
+        'public.debit20':'费用20的独立请求','public.changed_second':'第二门槛改为7',
+        'public.set_negative':'改回技能费用分支','public.free_admission':'无技力资格声明',
+        'public.independent_debit':'独立消耗不沿用前次豁免','public.free_debit':'本次消耗豁免',
+        'public.min32':'最小整数的原生回绕'}
+    parts=[_p('来源核验：'+_text(data['source']['valid'])+'；这里只判断技力分项，不能据此断定技能可施放。'),
+        _p('门槛覆盖、技能费用及最大充能容量是不同数值。正常返回与实际支付成功分开。')]
+    for row in data['rows']:
+        parts += [_h(public_names.get(row['id'],row['id'])+' · '+kinds[row['kind']]),
+            _table(['调用参考','正常完成参考','此分项布尔返回'],
+                [(row['called'],row['normal'],row['result_reference'])])]
+        if row['state_after'] is not None and row['kind'] in ('assign_min','modify_min','modify_free'):
+            state=row['state_after']
+            parts += [_table(['门槛参数参考','无技力参数参考'],[(state['cost_min_sp'],state['cast_with_no_sp'])])]
+        arithmetic=row['arithmetic_reference']
+        if arithmetic and row['kind']=='admission':
+            parts += [_table(['独立SP参考','本次门槛整数','严格比较右边界（精确原值）','比较参考'],
+                [(amount(arithmetic['sp_raw']),arithmetic['threshold_int32'],arithmetic['comparison_rhs_raw'],arithmetic['result'])]),
+                _p('使用严格大于比较；等于误差下边界时不通过。首次门槛与SP读取后的门槛不可互换。')]
+        if arithmetic and row['kind']=='reduce':
+            args=row['modifier_constructor_arguments']
+            parts += [_table(['独立传入费用','32位取负参考','NewSp传入参数参考'],
+                [(arithmetic['delta_int32'],arithmetic['negated_int32'],amount(arithmetic['input_raw']))])]
+            if args:
+                direction={'ADD':'增加技力参数','MINUS':'减少技力参数'}.get(args['delta_type_name'],'未确认')
+                parts += [_table(['构造方向参考','构造幅度参考','幅度精确原值'],
+                    [(direction,amount(args['magnitude_raw']),args['magnitude_raw'])])]
+            parts += [_p('构造参数与返回修饰包实际字段分开；包内容和实际支付仍未知。')]
+        if row['apply_arguments']:
+            parts += [_p('Apply调用force参考：'+_text(row['apply_arguments']['force'])+'；其布尔返回不证明SP变化。')]
+    parts += [_p('实际技力、实际支付、施放成功和完整技能周期：未知。不改变本局状态，也不操作游戏。')]
     return parts
 
 
@@ -579,7 +622,9 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
     if data.get('stage_name'): parts.append(_p('关卡：'+data['stage_name']))
     if input_source:parts.append(_p('此次输入来源：'+input_source))
     if family == 'calibration':
-        if command == 'sp-init':
+        if command == 'sp-cost':
+            parts += _skill_sp_cost_tables(data)
+        elif command == 'sp-init':
             parts += _sp_initialization_tables(data)
         elif command == 'sp-setter':
             parts += _sp_setter_tables(data)
@@ -1049,7 +1094,7 @@ class OfflineToolsPanel(QWidget):
 
     def _update_buttons(self):
         family,command=self.current_query()
-        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init') and self._scenario is not None)
+        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost') and self._scenario is not None)
         self.import_stage.setEnabled((family=='battle' or family=='exploration' and command=='settlements') and self._stage is not None)
         exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes','search-routes')
         self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
@@ -1157,7 +1202,7 @@ class OfflineToolsPanel(QWidget):
     def _import_scenario(self):
         try:
             family,command=self.current_query()
-            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
+            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
             payload=self._payload();scenario=deepcopy(self._scenario)
             if scenario.get('operator') not in calibration.OPERATORS:raise ValueError('校准工具目前仅支持凯尔希·思衡托、凛御银灰、机械师。')
             if command=='recipient-events' and (scenario.get('operator')!='silverash' or scenario.get('skill')!=2):
