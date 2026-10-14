@@ -33,7 +33,7 @@ class BarrierLedgerTests(unittest.TestCase):
 
     def test_native_near_zero_entry_and_block_residual_boundaries(self):
         vectors=[(42949,100*ONE,0,100*ONE,42949,False),
-            (42950,100*ONE,42950,429496686650,0,False),
+            (42950,100*ONE,42950,429496696832,0,False),
             (ONE+42949,ONE,ONE,0,0,True),
             (ONE+42950,ONE,ONE,0,42950,True),
             (-ONE,100*ONE,0,100*ONE,0,False)]

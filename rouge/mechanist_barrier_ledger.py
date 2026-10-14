@@ -11,6 +11,7 @@ import json
 
 from .ammo_counter import AmmoCounter, AmmoConsumption
 from .catalog import catalog
+from .barrier_blackboard import blackboard_storage_reference, ROUNDING_MODES, source_valid as blackboard_source_valid
 
 ONE = 1 << 32
 EPSILON = 42950
@@ -84,8 +85,11 @@ def mechanist_barrier_ledger(payload):
     required = {'operator', 'skill', 'skill_rank', 'ordinary_native_path',
         'no_external_ammunition_changes', 'maximum_ammunition',
         'consumed_ammunition', 'initial_barriers', 'packets'}
-    if type(payload) is not dict or set(payload) != required:
+    if type(payload) is not dict or not required <= set(payload) or set(payload)-required-{'float_rounding'}:
         raise ValueError('请使用完整的机械师二技能屏障账本声明模板。')
+    rounding = payload.get('float_rounding')
+    if rounding is not None and rounding not in ROUNDING_MODES:
+        raise ValueError('float_rounding需要明确单精度舍入环境，或null（未知）。')
     if payload['operator'] != 'mechanist' or type(payload['skill']) is not int or payload['skill'] != 2:
         raise ValueError('入伤屏障账本只适用于机械师二技能。')
     rank = _integer(payload['skill_rank'], '技能等级', 1, 10)
@@ -137,6 +141,7 @@ def mechanist_barrier_ledger(payload):
             'recipient_name': RECIPIENTS[recipient], 'input_raw': value,
             'entry_gate': entry, 'near_zero_modifier_cancelled': near_zero,
             'barrier_before_raw': barrier['dynamic_raw'], 'absorbed_raw': None,
+            'barrier_after_subtraction_raw': None, 'barrier_storage_reference': None,
             'barrier_after_block_raw': None, 'modifier_after_subtraction_raw': None,
             'modifier_after_block_raw': None, 'block_cancel_requested': None,
             'depletion_gate': None, 'overflow_cancel_requested': None,
@@ -148,7 +153,7 @@ def mechanist_barrier_ledger(payload):
             'independent_following_barrier': deepcopy(packet['following_barrier'])}
         if entry is False:
             row.update(status='filtered', absorbed_raw=0,
-                barrier_after_block_raw=barrier['dynamic_raw'],
+                barrier_after_subtraction_raw=barrier['dynamic_raw'], barrier_after_block_raw=barrier['dynamic_raw'],
                 modifier_after_subtraction_raw=value, modifier_after_block_raw=value,
                 block_cancel_requested=False, depletion_gate=False,
                 overflow_cancel_requested=False, explosion_requested=False,
@@ -161,28 +166,46 @@ def mechanist_barrier_ledger(payload):
         else:
             absorbed = min(max(0, value), barrier['dynamic_raw'])
             after = barrier['dynamic_raw'] - absorbed
+            storage = blackboard_storage_reference(after, rounding)
+            readback = storage['readback_raw']
             intermediate = value - absorbed
             block_cancel = intermediate < EPSILON
             row.update(status='conditional_reference', absorbed_raw=absorbed,
-                barrier_after_block_raw=after, modifier_after_subtraction_raw=intermediate,
+                barrier_after_subtraction_raw=after, barrier_storage_reference=storage,
+                barrier_after_block_raw=readback, modifier_after_subtraction_raw=intermediate,
                 modifier_after_block_raw=0 if block_cancel else intermediate,
                 block_cancel_requested=block_cancel)
             unchanged = packet['no_intervening_barrier_changes'] is True
+            if not unchanged:
+                # The storage arithmetic is a reference before intervening
+                # callbacks; it cannot stand in for their later BB read.
+                row['barrier_after_block_raw'] = None
             cancel_all = barrier['cancel_all_raw']
             branch = None if not unchanged or cancel_all is None else cancel_all < EPSILON
-            depleted = None if branch is None else branch and after < EPSILON
+            dynamic_gate = None if not unchanged or readback is None else readback < EPSILON
+            depleted = _all(branch, dynamic_gate)
             row['depletion_gate'] = depleted
-            if branch is False:
+            if not unchanged:
+                barriers[recipient] = {'available': None, 'dynamic_raw': None, 'cancel_all_raw': None}
+                count_known = False
+            elif branch is False:
                 row.update(overflow_cancel_requested=True, explosion_requested=False,
                     manual_count_requested=False, ammunition_consumed_reference=0,
                     replenishment_requested=False, finish_old_barrier_requested=False)
                 # Outer fail branch cancels the modifier and leaves this barrier.
-                barriers[recipient]['dynamic_raw'] = after
+                barriers[recipient]['dynamic_raw'] = readback
+            elif branch is None and dynamic_gate is False:
+                # Neither possible cancel_all branch explodes or counts here,
+                # but only the outer-fail path cancels the modifier.
+                row.update(overflow_cancel_requested=None, explosion_requested=False,
+                    manual_count_requested=False, ammunition_consumed_reference=0,
+                    replenishment_requested=False, finish_old_barrier_requested=False)
+                barriers[recipient]['dynamic_raw'] = readback
             elif depleted is False:
                 row.update(overflow_cancel_requested=False, explosion_requested=False,
                     manual_count_requested=False, ammunition_consumed_reference=0,
                     replenishment_requested=False, finish_old_barrier_requested=False)
-                barriers[recipient]['dynamic_raw'] = after
+                barriers[recipient]['dynamic_raw'] = readback
             elif depleted is None:
                 barriers[recipient] = {'available': None, 'dynamic_raw': None, 'cancel_all_raw': None}
                 count_known = False
@@ -224,11 +247,14 @@ def mechanist_barrier_ledger(payload):
         'ammunition_consumed_reference': counter.consumed - consumed if count_known else None,
         'ammunition_remaining_reference': counter.raw_remaining if count_known else None,
         'nominal_maximum_parameter': int(parameters['trigger_time']),
-        'source_valid': source_valid, 'source': SOURCE, 'source_sha256': SOURCE_SHA256,
+        'source_valid': source_valid and blackboard_source_valid(),
+        'entry_math_source_valid': source_valid, 'blackboard_source_valid': blackboard_source_valid(),
+        'source': SOURCE, 'source_sha256': SOURCE_SHA256,
         'actual_hp_loss': None, 'actual_end_seconds': None, 'actual_total_damage': None,
         'events_scheduled': False, 'current_hotfix_equivalence_proven': False,
         'notes': ['顺序及所有节点条件为独立声明；FP原值单位为2^32，不读取或修改本局状态。',
             '本工具仅支持非负屏障黑板原值；负值声明直接拒绝，不静默夹成0。',
+            '扣盾即时差与单精度写入/FP读回分列；后续耗尽门及下一包使用读回值。舍入环境未声明则读回与相关依赖未知，不假定当前游戏MXCSR。',
             '未声明中间屏障无变化时，只保留即时吸收算式，后续破屏门未知。',
             '屏障筛选只计受击者身上来自机械师与自身的盾，不包含第三方来源；缺筛选来源可通过，缺受击实例不可通过。',
             '取消伤害修改器不会抹去它的数值；中间剩余值不是实际生命损失。',
@@ -250,6 +276,7 @@ def public_example():
     second['following_barrier'] = deepcopy(barrier)
     return {'operator': 'mechanist', 'skill': 2, 'skill_rank': 10,
         'ordinary_native_path': True, 'no_external_ammunition_changes': True,
+        'float_rounding': 'nearest_even',
         'maximum_ammunition': 8, 'consumed_ammunition': 0,
         'initial_barriers': {'owner': deepcopy(barrier), 'structure': deepcopy(barrier)},
         'packets': [first, second, third]}

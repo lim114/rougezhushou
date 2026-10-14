@@ -423,3 +423,11 @@ def barrier_packet_ledger(ledger):
 
 
 COMMANDS['barrier-ledger'] = barrier_packet_ledger
+
+
+def shield_grant_snapshots(scenario, snapshots, ordinary_native_path, float_rounding=None):
+    from .mechanist_shield_grants import mechanist_shield_grants
+    return mechanist_shield_grants(scenario,snapshots,ordinary_native_path,float_rounding)
+
+
+COMMANDS['shield-grants'] = shield_grant_snapshots

@@ -30,6 +30,7 @@ CALIBRATION_QUERIES = (
     ('relic-panels', '藏品组合与面板差值诊断'),
     ('packets', '单包伤害与治疗算式'), ('worksheets', '公开培养公式算例'),
     ('barrier-ledger', '机械师二技能 · 入伤与屏障账本'),
+    ('shield-grants', '机械师二技能 · 初始屏障与藏品'),
 )
 BATTLE_QUERIES = (
     ('actions', '完整关卡动作清单'), ('activations', '预置实体激活对应'),
@@ -64,6 +65,7 @@ BATTLE_COMMANDS = {
 EVIDENCE_NAMES = {'game_panel': '调用方声明的游戏面板',
     'public_case': '调用方声明的公开算例', 'formula_reference': '公式参考算例'}
 INPUT_GUIDANCE = {
+    'shield-grants':'仅机械师二技能。scenario为当前等级、模组、藏品等培养条件；snapshots逐受益对象声明创建时MAX_HP或本体模型小计。结构性原理不得借本体HP。分别列倍率、FP乘积、单精度写入与读回；null为未知，成功读取0不改用默认1。仅数值参考，不证明新盾已建立。',
     'barrier-ledger':'仅机械师二技能。按声明顺序计算本体和结构性原理的吸收、破屏及共享耗弹参考。原值单位2^32；各门条件true/false/null分别表示声明成立/不成立/未知。两次主buff门独立；后续屏障须独立声明，不凭补盾请求推定已建立。输入为公共条件算例，不能代替实机观察。',
     'relic-panels':'scenario声明当前培养、技能和藏品。relic_ids选择其中1–12件审计，留空审计全部；未选来源作为共同背景。并列移除单件/仅保留单件的模型差值，定向强化独立保留。零差值与非相加残差不证明实际机制或偏差原因。',
     'search-routes':'goal为声明终点，逐边步行并列举加工品候选；max_steps/max_results/max_transitions控制有限搜索。battle_declarations按节点声明独立关卡和胜利。随机落点、未知资格和AP到零保留停止前沿，不补完整收益或真实最优。',
@@ -174,6 +176,10 @@ def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
     if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
+        if command == 'shield-grants':
+            from .mechanist_shield_grants import public_snapshots
+            return {'scenario':{'operator':'mechanist','skill':2,'relic_ids':['rogue_6_relic_legacy_27']},'snapshots':public_snapshots(),
+                'ordinary_native_path':True,'float_rounding':'nearest_even'}
         if command == 'barrier-ledger':
             from .mechanist_barrier_ledger import public_example
             return {'ledger': public_example()}
@@ -295,6 +301,21 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
                       r['ammunition_consumed_reference'],r['ammunition_remaining_reference'],r['finish_old_barrier_requested']) for r in data['rows']]),
                 _p('已证吸收分项：'+amount(data['known_absorbed_raw_subtotal'])+'；全部吸收参考：'+amount(data['absorbed_raw_total'])),
                 _p('实际生命损失、爆炸命中、新盾创建与技能结束时刻：未知。')]
+        elif command == 'shield-grants':
+            from .barrier_blackboard import ONE
+            def amount(value):return '未知' if value is None else format(value/ONE,'.12g')
+            parts += [_p('来源核验：'+_text(data['source_valid'])+'；技能等级：'+str(data['skill_rank'])),
+                _h('创建节点数值参考'),
+                _table(['快照','受益对象','生命输入依据','MAX_HP参考','倍率参考','FP即时乘积','黑板读回屏障'],
+                    [(r['id'],r['recipient_name'],'本体已覆盖模型小计' if r['basis']=='owner_model_known_subtotal' else '独立FP快照声明',
+                      amount(r['max_hp_snapshot_raw_reference']),amount(r['ratio_raw_reference']),
+                      amount((r['numeric_reference'] or {}).get('product_raw')),amount(r['shield_readback_raw_reference'])) for r in data['rows']]),
+                _h('单精度写回与资格'),
+                _table(['快照','初始化门','明确读取失败采用1','单精度写入值','读回减即时乘积（FP原值）'],
+                    [(r['id'],r['initialization_gate'],r['default_one_used_reference'],
+                      (((r['numeric_reference'] or {}).get('storage') or {}).get('stored_float32')),
+                      (((r['numeric_reference'] or {}).get('storage') or {}).get('readback_minus_math_raw'))) for r in data['rows']]),
+                _p('实际创建屏障、实例初始化完成与创建时刻：未知。')]
         elif command == 'panel':
             parts += [_p('分层差值用于排查，不能把跨层效果再次相加。'),
                 _table(['属性','培养与模组','符文写回','常态天赋与效果','技能期间参考'],
