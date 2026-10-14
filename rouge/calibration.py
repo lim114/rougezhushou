@@ -431,3 +431,11 @@ def shield_grant_snapshots(scenario, snapshots, ordinary_native_path, float_roun
 
 
 COMMANDS['shield-grants'] = shield_grant_snapshots
+
+
+def source_shield_inventory(inventory):
+    from .shield_source_inventory import mechanist_shield_inventory
+    return mechanist_shield_inventory(inventory)
+
+
+COMMANDS['shield-inventory'] = source_shield_inventory

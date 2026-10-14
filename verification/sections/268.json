@@ -1,0 +1,158 @@
+{
+  "section": 268,
+  "kind": "functional_section",
+  "title": "机械师S2逐实例来源屏障聚合、有序筛选与异常依赖",
+  "at_Beijing": "2026-10-14T11:17:17.813516+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "3ad2d9b1748181a26cc3154ddac4f2b13416ecdc",
+  "remaining_item": "P2 mechanical S2 barrier/source arithmetic and qualified downstream event/counter references",
+  "new_capability": [
+    "aggregate independently declared instances by source without hand-filled totals",
+    "qualification, signed64 wrapping sum and signed epsilon comparison, complete/partial distinction",
+    "signed float32 BB read and explicit failed numeric lookup default zero, missing-object exception distinction",
+    "ordered caster/recipient short circuit and normal-return qualification govern downstream ledger requests",
+    "mutually exclusive per-packet inventory mode, S2-only entry and readable Chinese exact-value output"
+  ],
+  "files": [
+    "rouge/shield_source_inventory.py",
+    "rouge/data/shield-source-inventory-source.json",
+    "rouge/mechanist_barrier_ledger.py",
+    "rouge/app.py",
+    "rouge/calibration.py",
+    "rouge/offline_tools_view.py",
+    "tests/test_shield_source_inventory.py",
+    "tests/test_offline_tools_view.py",
+    "scripts/verify_full_available.py",
+    "scripts/verify_shield_inventory_window_268.py",
+    "research/p2-shield-source-inventory-268/README.md",
+    "research/p2-shield-source-inventory-268/native-proof.json",
+    "verification/sections/268-review-findings.json",
+    "verification/sections/268-window-first.json",
+    "verification/sections/268-window.json",
+    "verification/sections/268-main-window.json"
+  ],
+  "required_raw_sha256": {
+    "rouge/shield_source_inventory.py": "cd0658270daaf237568f142d50b8818618d5d2971d133fbe71c913509bbe28e5",
+    "rouge/data/shield-source-inventory-source.json": "fe2bee9c8c83b68e494be440faca3b132ab1de9a7d8c4b13f9786a2492bfbfc5",
+    "rouge/mechanist_barrier_ledger.py": "703563f4e257b17b231bda77c1ecb2cd83b280e8ad81adf6fb28e6f60751c7ed",
+    "rouge/app.py": "424a179938fe040fc836ded71a492058bb9ddaec1f3050fe7cabf8d2bbb7f74d",
+    "rouge/calibration.py": "2d9d817ce559e0567d20d43fa7de9730bd4699de9430348150780441d18594b2",
+    "rouge/offline_tools_view.py": "8bcf6d358476008f4f678eb5aee68af2a17987be79d7a420d9c5e70897214d88",
+    "tests/test_shield_source_inventory.py": "8c8221dc8a371744a529090d1950f6cbdecdd44ee82aba294b706e7d8126e451",
+    "tests/test_offline_tools_view.py": "c285af5cb4f4852d54ead98972e602882a0b65011728a15a90be1a872a9d0d6a",
+    "scripts/verify_full_available.py": "1cf5b46b7e59f4dfd1e3525354332c15f4cb257901161fcd873e47140723d374",
+    "scripts/verify_shield_inventory_window_268.py": "f8190aa89c43e1fa9cb5145cb66e487c8e7ca52995610a29481b49e8de1ec83c",
+    "research/p2-shield-source-inventory-268/README.md": "d95bbe4fc8cf24b41d9e148bfd7498b4b19bde7fb555cbfcf85d2f6d2d997921",
+    "research/p2-shield-source-inventory-268/native-proof.json": "fd8c155bea6ae306e0a60baffb97a283e7c9f5899387d79ed7ec1855b1fc73a0",
+    "verification/sections/268-review-findings.json": "91c7e0867cf4b843a3f571c8748f0aff3d5d03b7420dbc550f88b8a01d8681e5",
+    "verification/sections/268-window-first.json": "b6857856de83d62d6481708e4daf9c4593f8e5dcbe41d4e8213a189e82a28401",
+    "verification/sections/268-window.json": "3499510ea275d18c8ed45ade212579abbaf494fbdac2d1a1fd9dbce2576975f7",
+    "verification/sections/268-main-window.json": "5f21ee13405d6ecebc1e54a4ab68f979d6198db4cbe4b2da55eb68df75abc07c"
+  },
+  "reused_source_sha256": {
+    "rouge/data/mechanist-barrier-native-source.json": "bd8d4b11552c43de9d5a321aaa85a06442105e13ba442b865f95fdaa01dca8db",
+    "research/p2-mechanist-incoming-266/native-proof.json": "bda42a2daba0ea695e26b3932b6db5435a4c7f691cda57d6f6490541965cdac9",
+    "research/p2-mechanist-s2-shared-barrier-current/buff-template-binding.json": "6f1de25c15e343592a6d2020c8dbbc33e32e1c211e3f42f3149ad0428244bac2",
+    "rouge/data/barrier-blackboard-source.json": "420d761a6364e5d840b5965aa751c0f76a39016d298cc17ae6b1989fdc35347e",
+    "research/p2-mechanist-grant-267/native-proof.json": "c2fca4cd5a9908c16285ee85f40fe2009deaa6dc173e83cd716f7d658e34615b",
+    "rouge/barrier_blackboard.py": "39d8d22e937a6870fd485faa3d70da21a046b2988710ec08a8aec1f1dc456bd1"
+  },
+  "validation": {
+    "native_file_proof": {
+      "methods": 15,
+      "unique_instructions": 1028,
+      "all_bytes_rechecked": true,
+      "game_dll_executed": false,
+      "process_memory_read": false
+    },
+    "related_checks": {
+      "count": 59,
+      "new_test_methods": 20,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "command": "python -X utf8 -m unittest tests.test_shield_source_inventory tests.test_mechanist_barrier_ledger tests.test_mechanist_shield_grants tests.test_offline_tools_view -v",
+      "log": "verification/sections/268-final-reviewed-check.log",
+      "first56_and_intermediate58_are_not_additional_passes": true
+    },
+    "native_main_window": {
+      "qpa": "windows",
+      "visible": true,
+      "main_window_route_verified": true,
+      "mechanist_S2_button_visible": true,
+      "other_operator_button_hidden": true,
+      "query": [
+        "calibration",
+        "shield-inventory"
+      ],
+      "instance_count": 4,
+      "source_totals_raw": [
+        85899345920,
+        0
+      ],
+      "both_filters_pass_reference": false,
+      "actual_inventory_and_cancel_unknown": true,
+      "refresh_preserved_editor_result_selection": true,
+      "loaded_source_sha256": {
+        "rouge/app.py": "424a179938fe040fc836ded71a492058bb9ddaec1f3050fe7cabf8d2bbb7f74d",
+        "rouge/calibration.py": "2d9d817ce559e0567d20d43fa7de9730bd4699de9430348150780441d18594b2",
+        "rouge/offline_tools_view.py": "8bcf6d358476008f4f678eb5aee68af2a17987be79d7a420d9c5e70897214d88",
+        "rouge/shield_source_inventory.py": "cd0658270daaf237568f142d50b8818618d5d2971d133fbe71c913509bbe28e5",
+        "rouge/mechanist_barrier_ledger.py": "703563f4e257b17b231bda77c1ecb2cd83b280e8ad81adf6fb28e6f60751c7ed",
+        "rouge/data/shield-source-inventory-source.json": "fe2bee9c8c83b68e494be440faca3b132ab1de9a7d8c4b13f9786a2492bfbfc5"
+      },
+      "private_state_read": false,
+      "temporary_state_root": true,
+      "game_operated": false,
+      "chat_sent": false,
+      "scope": "Actual Windows changed MainWindow route and public source inventory; not full game or original historic Windows validation",
+      "desktop_visually_inspected_with": "Windows-mcp"
+    },
+    "native_original_startup": {
+      "section": 268,
+      "parent_pid": 18600,
+      "main_pid": [
+        420
+      ],
+      "visible_window_handles": [
+        986106
+      ],
+      "responding": [
+        true
+      ],
+      "caption": [
+        "黑流树海助手 0.91 · 局外计算与节点测试（234）"
+      ],
+      "caption_is_legacy_not_authoritative_section_count": true,
+      "native_original_window_startup": true,
+      "game_operated": false,
+      "chat_sent": false,
+      "scope": "Original app restarted; public changed MainWindow fixture separately source-bound. Not full game/private/native-history integration.",
+      "private_json_files_checked": 3,
+      "private_json_files_changed": 0,
+      "private_json_new_files": 0,
+      "desktop_visually_inspected_with": "Windows-mcp"
+    },
+    "read_only_source_review": "two uncovered dependency defects fixed, final limited review accepted; no duplicate test count"
+  },
+  "log_sha256": {
+    "verification/sections/268-first-check.log": "47ae253fb345e6a9bf11199f17690aed0d3b51a899460b7ba4a252710ecf0c9d",
+    "verification/sections/268-final-check.log": "4d5068880095b799aa6e3c294b8f7f1720e842ad3bc6473dae0a6f7649d1d017",
+    "verification/sections/268-reviewed-check.log": "691fc9e2779be8013d10365ed3d93a78986ad56ba87a3d606a57929a61b5f41a",
+    "verification/sections/268-final-reviewed-check.log": "737c5de16f9f5021b30c27fff79beef7a02297dbc5a139b2a7d0abdc4a8ee7c9"
+  },
+  "review_findings": "verification/sections/268-review-findings.json",
+  "limits": [
+    "Caller declarations, not actual runtime inventory, attachment or current server equivalence.",
+    "No automatic creation/removal from requests; no game operation, chat sends, private-state reset or writes.",
+    "Read point is post-BlockDamage and unchanged between filters; actual snapshots and callbacks unknown.",
+    "Unknown/incomplete inventory does not prove total or lower bound, nor whole filter normal return.",
+    "Legacy totals remain normal-return conditional references; negative totals do not extend positive absorption/creation domain.",
+    "Indirect interface/XLua, klass+0x11c meaning, actual MAX_HP/BB source and creation/removal/end times remain unknown.",
+    "Original old probe full stdout/source bytes unavailable; recorded summaries do not impersonate originals.",
+    "Full available maintained scope due275/final280; missing original Windows/private samples not PASS."
+  ],
+  "next_section": 269,
+  "next_full_validation_after": 275,
+  "goal_target_section": 280
+}

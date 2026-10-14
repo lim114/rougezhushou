@@ -1,0 +1,284 @@
+{
+  "section": 268,
+  "kind": "source_review_findings_not_an_original_failed_unit_log",
+  "initial_green_tests_did_not_cover_these_cases": true,
+  "initial_window_receipt": "verification/sections/268-window-first.json",
+  "prior_source_bytes_not_archived": true,
+  "cases": [
+    {
+      "id": "active_matching_shield_BB_missing",
+      "input": {
+        "operator": "mechanist",
+        "skill": 2,
+        "skill_rank": 10,
+        "ordinary_native_path": true,
+        "no_external_ammunition_changes": true,
+        "float_rounding": "nearest_even",
+        "maximum_ammunition": 8,
+        "consumed_ammunition": 0,
+        "initial_barriers": {
+          "owner": {
+            "available": true,
+            "dynamic_raw": 429496729600,
+            "cancel_all_raw": 0
+          },
+          "structure": {
+            "available": true,
+            "dynamic_raw": 429496729600,
+            "cancel_all_raw": 0
+          }
+        },
+        "packets": [
+          {
+            "id": "结构性原理110",
+            "recipient": "structure",
+            "value_raw": 472446402560,
+            "is_damage": true,
+            "cancelled": false,
+            "ignore_blocked": false,
+            "no_intervening_barrier_changes": true,
+            "main_buff_for_explosion": true,
+            "main_buff_for_replenish": true,
+            "ammunition_read_ok": true,
+            "manual_count_node_success": true,
+            "progress_source_available": true,
+            "counting_is_affecting": true,
+            "counting_ignore_until_cast_end": false,
+            "counting_not_count_next": false,
+            "following_barrier": null,
+            "source_shield_inventory": {
+              "operator": "mechanist",
+              "skill": 2,
+              "recipient_role": "structure",
+              "snapshot_id": "公开受击后库存",
+              "read_point": "post_block_damage_source_filters",
+              "ordinary_native_path": true,
+              "no_changes_between_filters": true,
+              "caster": {
+                "identity": "机械师本体·声明",
+                "available": true
+              },
+              "recipient": {
+                "identity": "结构性原理·声明",
+                "available": true
+              },
+              "recipient_container_available": true,
+              "inventory_complete": true,
+              "shields": [
+                {
+                  "id": "刚耗尽的本技能盾",
+                  "buff_reference_present": true,
+                  "finished_or_disabled": false,
+                  "source_reference_present": true,
+                  "source_identity": "机械师本体·声明",
+                  "has_shield": true,
+                  "damage_mask_bits": 0,
+                  "value": {
+                    "kind": "getter_fp_snapshot",
+                    "getter_returned": true,
+                    "raw": 0
+                  }
+                },
+                {
+                  "id": "同来源另一块20盾",
+                  "buff_reference_present": true,
+                  "finished_or_disabled": false,
+                  "source_reference_present": true,
+                  "source_identity": "机械师本体·声明",
+                  "has_shield": true,
+                  "damage_mask_bits": 0,
+                  "value": {
+                    "kind": "blackboard_number",
+                    "ordinary_direct_data_path": true,
+                    "blackboard_available": false,
+                    "number_readable": false,
+                    "float32_bits": null
+                  }
+                },
+                {
+                  "id": "受击者自身来源0盾",
+                  "buff_reference_present": true,
+                  "finished_or_disabled": false,
+                  "source_reference_present": true,
+                  "source_identity": "结构性原理·声明",
+                  "has_shield": true,
+                  "damage_mask_bits": 0,
+                  "value": {
+                    "kind": "getter_fp_snapshot",
+                    "getter_returned": true,
+                    "raw": 0
+                  }
+                },
+                {
+                  "id": "第三方100盾",
+                  "buff_reference_present": true,
+                  "finished_or_disabled": false,
+                  "source_reference_present": true,
+                  "source_identity": "第三方·声明",
+                  "has_shield": true,
+                  "damage_mask_bits": 0,
+                  "value": {
+                    "kind": "getter_fp_snapshot",
+                    "getter_returned": true,
+                    "raw": 429496729600
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "prior_observation_kind": "read-only reviewer runtime probe summary; exact original stdout is unavailable",
+      "prior_reported_subset": {
+        "overflow_cancel_requested": null,
+        "explosion_requested": true,
+        "manual_count_requested": true,
+        "replenishment_requested": true,
+        "finish_old_barrier_requested": true,
+        "ammunition_consumed_reference": 1
+      },
+      "current_output_subset": {
+        "overflow_cancel_requested": null,
+        "explosion_requested": null,
+        "manual_count_requested": null,
+        "replenishment_requested": null,
+        "finish_old_barrier_requested": null,
+        "ammunition_consumed_reference": null,
+        "ammunition_remaining_reference": null
+      }
+    },
+    {
+      "id": "incomplete_inventory_return_qualification",
+      "input": {
+        "operator": "mechanist",
+        "skill": 2,
+        "skill_rank": 10,
+        "ordinary_native_path": true,
+        "no_external_ammunition_changes": true,
+        "float_rounding": "nearest_even",
+        "maximum_ammunition": 8,
+        "consumed_ammunition": 0,
+        "initial_barriers": {
+          "owner": {
+            "available": true,
+            "dynamic_raw": 429496729600,
+            "cancel_all_raw": 0
+          },
+          "structure": {
+            "available": true,
+            "dynamic_raw": 429496729600,
+            "cancel_all_raw": 0
+          }
+        },
+        "packets": [
+          {
+            "id": "结构性原理110",
+            "recipient": "structure",
+            "value_raw": 472446402560,
+            "is_damage": true,
+            "cancelled": false,
+            "ignore_blocked": false,
+            "no_intervening_barrier_changes": true,
+            "main_buff_for_explosion": true,
+            "main_buff_for_replenish": true,
+            "ammunition_read_ok": true,
+            "manual_count_node_success": true,
+            "progress_source_available": true,
+            "counting_is_affecting": true,
+            "counting_ignore_until_cast_end": false,
+            "counting_not_count_next": false,
+            "following_barrier": null,
+            "source_shield_inventory": {
+              "operator": "mechanist",
+              "skill": 2,
+              "recipient_role": "structure",
+              "snapshot_id": "公开受击后库存",
+              "read_point": "post_block_damage_source_filters",
+              "ordinary_native_path": true,
+              "no_changes_between_filters": true,
+              "caster": {
+                "identity": "机械师本体·声明",
+                "available": true
+              },
+              "recipient": {
+                "identity": "结构性原理·声明",
+                "available": true
+              },
+              "recipient_container_available": true,
+              "inventory_complete": false,
+              "shields": [
+                {
+                  "id": "刚耗尽的本技能盾",
+                  "buff_reference_present": true,
+                  "finished_or_disabled": false,
+                  "source_reference_present": true,
+                  "source_identity": "机械师本体·声明",
+                  "has_shield": true,
+                  "damage_mask_bits": 0,
+                  "value": {
+                    "kind": "getter_fp_snapshot",
+                    "getter_returned": true,
+                    "raw": 0
+                  }
+                },
+                {
+                  "id": "同来源另一块20盾",
+                  "buff_reference_present": true,
+                  "finished_or_disabled": false,
+                  "source_reference_present": true,
+                  "source_identity": "机械师本体·声明",
+                  "has_shield": true,
+                  "damage_mask_bits": 0,
+                  "value": {
+                    "kind": "getter_fp_snapshot",
+                    "getter_returned": true,
+                    "raw": 85899345920
+                  }
+                },
+                {
+                  "id": "受击者自身来源0盾",
+                  "buff_reference_present": true,
+                  "finished_or_disabled": false,
+                  "source_reference_present": true,
+                  "source_identity": "结构性原理·声明",
+                  "has_shield": true,
+                  "damage_mask_bits": 0,
+                  "value": {
+                    "kind": "getter_fp_snapshot",
+                    "getter_returned": true,
+                    "raw": 0
+                  }
+                },
+                {
+                  "id": "第三方100盾",
+                  "buff_reference_present": true,
+                  "finished_or_disabled": false,
+                  "source_reference_present": true,
+                  "source_identity": "第三方·声明",
+                  "has_shield": true,
+                  "damage_mask_bits": 0,
+                  "value": {
+                    "kind": "getter_fp_snapshot",
+                    "getter_returned": true,
+                    "raw": 429496729600
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "prior_observation_kind": "source review counterexample, not an archived runtime observation",
+      "reason": "omitted qualifying shield can throw, so listed normal returns do not prove whole filter returns",
+      "current_output_subset": {
+        "overflow_cancel_requested": null,
+        "explosion_requested": null,
+        "manual_count_requested": null,
+        "replenishment_requested": null,
+        "finish_old_barrier_requested": null,
+        "ammunition_consumed_reference": null,
+        "ammunition_remaining_reference": null
+      }
+    }
+  ]
+}

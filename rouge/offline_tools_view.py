@@ -31,6 +31,7 @@ CALIBRATION_QUERIES = (
     ('packets', '单包伤害与治疗算式'), ('worksheets', '公开培养公式算例'),
     ('barrier-ledger', '机械师二技能 · 入伤与屏障账本'),
     ('shield-grants', '机械师二技能 · 初始屏障与藏品'),
+    ('shield-inventory', '机械师二技能 · 按来源汇总屏障'),
 )
 BATTLE_QUERIES = (
     ('actions', '完整关卡动作清单'), ('activations', '预置实体激活对应'),
@@ -66,6 +67,7 @@ EVIDENCE_NAMES = {'game_panel': '调用方声明的游戏面板',
     'public_case': '调用方声明的公开算例', 'formula_reference': '公式参考算例'}
 INPUT_GUIDANCE = {
     'shield-grants':'仅机械师二技能。scenario为当前等级、模组、藏品等培养条件；snapshots逐受益对象声明创建时MAX_HP或本体模型小计。结构性原理不得借本体HP。分别列倍率、FP乘积、单精度写入与读回；null为未知，成功读取0不改用默认1。仅数值参考，不证明新盾已建立。',
+    'shield-inventory':'仅机械师二技能。inventory逐实例声明读取点、身份、结束/来源/hasShield资格与独立FP值或黑板float32。自动计算本体来源及受击者自身来源总原值与双筛选门；mask不参与。未读全、黑板对象缺失或读值未知则完整总量未知。已证分项不是下界，不操作游戏、不自动建立或删除盾。',
     'barrier-ledger':'仅机械师二技能。按声明顺序计算本体和结构性原理的吸收、破屏及共享耗弹参考。原值单位2^32；各门条件true/false/null分别表示声明成立/不成立/未知。两次主buff门独立；后续屏障须独立声明，不凭补盾请求推定已建立。输入为公共条件算例，不能代替实机观察。',
     'relic-panels':'scenario声明当前培养、技能和藏品。relic_ids选择其中1–12件审计，留空审计全部；未选来源作为共同背景。并列移除单件/仅保留单件的模型差值，定向强化独立保留。零差值与非相加残差不证明实际机制或偏差原因。',
     'search-routes':'goal为声明终点，逐边步行并列举加工品候选；max_steps/max_results/max_transitions控制有限搜索。battle_declarations按节点声明独立关卡和胜利。随机落点、未知资格和AP到零保留停止前沿，不补完整收益或真实最优。',
@@ -176,6 +178,9 @@ def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
     if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
+        if command == 'shield-inventory':
+            from .shield_source_inventory import public_example
+            return {'inventory': public_example()}
         if command == 'shield-grants':
             from .mechanist_shield_grants import public_snapshots
             return {'scenario':{'operator':'mechanist','skill':2,'relic_ids':['rogue_6_relic_legacy_27']},'snapshots':public_snapshots(),
@@ -241,6 +246,39 @@ def _attributes(stats):
     return _table(['属性', '条件参考值'], [(LABELS.get(k,k),v) for k,v in (stats or {}).items()])
 
 
+def _shield_inventory_tables(data):
+    from decimal import Decimal, localcontext
+    def amount(raw):
+        if raw is None:return '未知'
+        with localcontext() as ctx:
+            ctx.prec=80
+            text=format(Decimal(raw)/Decimal(1<<32),'f')
+        return text.rstrip('0').rstrip('.') if '.' in text else text
+    status_names = {'declared_getter_result':'独立getter返回声明', 'unknown_getter_result':'getter结果未知',
+        'unknown_blackboard_read':'黑板读取未知', 'unqualified_data_path':'直接分支未核准',
+        'missing_blackboard_exception_path':'黑板对象缺失，异常路径',
+        'explicit_failed_numeric_lookup_default_zero':'明确数字读取失败，采用0',
+        'numeric_reference':'单精度数值转FP', 'unqualified_or_missing_float32_value':'单精度值缺失或超出支持域'}
+    filters = data['source_filters']
+    parts = [_p('快照：'+data['snapshot_id']+'；读取点：受击处理后的来源筛选；声明读全：'+_text(data['inventory_complete_declaration'])),
+        _h('按来源汇总与双筛选门'),
+        _table(['筛选来源','完整屏障值','已证分项（回绕后）','完整总原值对照','发生回绕','小于零阈值','正常返回'],
+            [('机械师来源' if role=='caster' else '受击者自身来源', amount(row['total_raw_reference']),
+              amount(row['known_wrapped_raw_subtotal']),row['total_raw_reference'],row['signed_wrap_occurred'],
+              row['filter_le_zero_reference'],row['normal_return_reference']) for role,row in filters.items()]),
+        _p('双筛选通过参考：'+_text(data['both_filters_pass_reference'])+'；零阈值FP原值42950，严格小于才通过。'),
+        _p('第二道筛选被调用：'+_text(data['recipient_filter_called_reference'])+'；筛选链正常返回：'+_text(data['ordered_filters_returned_reference'])),
+        _p('已证分项不是下界；库存不完整或贡献未知时，完整总量保留未知。')]
+    for role, row in filters.items():
+        parts += [_h(('机械师来源' if role=='caster' else '受击者自身来源')+' · 逐实例资格与贡献'),
+            _table(['实例','来源相同','实例存在','结束或禁用','屏障标志','计入资格','独立屏障值','本项贡献','读取说明'],
+                [(r['id'],r['source_matches'],r['buff_reference_present'],r['finished_or_disabled'],r['has_shield'],
+                  r['eligible_reference'],amount(r['value_reference']['raw_reference']),amount(r['contribution_raw_reference']),
+                  status_names[r['value_reference']['status']]) for r in row['rows']])]
+    parts += [_p('伤害类型mask不参与来源筛选；补盾与结束请求不改变本库存。实际库存、取消结果与时钟：未知。')]
+    return parts
+
+
 def _node_label(graph,node_id):
     node=next((n for n in (graph or {}).get('nodes',[]) if isinstance(n,dict) and n.get('id')==node_id),None)
     if node is None:return str(node_id)+'（位置未绑定）'
@@ -286,7 +324,9 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
     if data.get('stage_name'): parts.append(_p('关卡：'+data['stage_name']))
     if input_source:parts.append(_p('此次输入来源：'+input_source))
     if family == 'calibration':
-        if command == 'barrier-ledger':
+        if command == 'shield-inventory':
+            parts += _shield_inventory_tables(data)
+        elif command == 'barrier-ledger':
             from .mechanist_barrier_ledger import ONE
             def amount(value):return '未知' if value is None else format(value / ONE, '.10g')
             parts += [_p('来源核验：'+_text(data['source_valid'])+'；各数值为声明条件下的参考。'),
@@ -301,6 +341,9 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
                       r['ammunition_consumed_reference'],r['ammunition_remaining_reference'],r['finish_old_barrier_requested']) for r in data['rows']]),
                 _p('已证吸收分项：'+amount(data['known_absorbed_raw_subtotal'])+'；全部吸收参考：'+amount(data['absorbed_raw_total'])),
                 _p('实际生命损失、爆炸命中、新盾创建与技能结束时刻：未知。')]
+            for row in data['rows']:
+                if row['source_shield_inventory_reference'] is not None:
+                    parts += [_h(row['id']+' · 独立受击后库存')] + _shield_inventory_tables(row['source_shield_inventory_reference'])
         elif command == 'shield-grants':
             from .barrier_blackboard import ONE
             def amount(value):return '未知' if value is None else format(value/ONE,'.12g')
@@ -728,7 +771,7 @@ class OfflineToolsPanel(QWidget):
 
     def _update_buttons(self):
         family,command=self.current_query()
-        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger') and self._scenario is not None)
+        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory') and self._scenario is not None)
         self.import_stage.setEnabled((family=='battle' or family=='exploration' and command=='settlements') and self._stage is not None)
         exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes','search-routes')
         self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
@@ -836,7 +879,7 @@ class OfflineToolsPanel(QWidget):
     def _import_scenario(self):
         try:
             family,command=self.current_query()
-            if family!='calibration' or command=='worksheets' or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
+            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
             payload=self._payload();scenario=deepcopy(self._scenario)
             if scenario.get('operator') not in calibration.OPERATORS:raise ValueError('校准工具目前仅支持凯尔希·思衡托、凛御银灰、机械师。')
             if command=='recipient-events' and (scenario.get('operator')!='silverash' or scenario.get('skill')!=2):

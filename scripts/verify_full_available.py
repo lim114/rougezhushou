@@ -22,6 +22,7 @@ NEW_MODULES = (
     'tests.test_branch_position_overview',
     'tests.test_mechanist_barrier_ledger',
     'tests.test_mechanist_shield_grants',
+    'tests.test_shield_source_inventory',
     'tests.test_ling_fusion_reference',
     'tests.test_original_destinations',
     'tests.test_relic_panel_diagnostics_view',

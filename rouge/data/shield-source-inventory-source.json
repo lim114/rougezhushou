@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "native_proof": "research/p2-shield-source-inventory-268/native-proof.json",
+  "native_proof_sha256": "fd8c155bea6ae306e0a60baffb97a283e7c9f5899387d79ed7ec1855b1fc73a0",
+  "fp_one_raw": 4294967296,
+  "epsilon_raw": 42950,
+  "addition": "native signed64 wrap; not float storage, not clamp",
+  "methods": [
+    {
+      "index": 65063,
+      "name": "Torappu.Battle.Buff$$get_source",
+      "address": "0x18068f8b0",
+      "instructions": 52,
+      "reachable_bytes_sha256": "54ee61449eee7a28e7257b1e7479b2e9d67d382b50b38a566fa17d23802af7a3"
+    },
+    {
+      "index": 65103,
+      "name": "Torappu.Battle.Buff$$get_isFinishedOrDisabled",
+      "address": "0x18068edb0",
+      "instructions": 39,
+      "reachable_bytes_sha256": "5b1264852e87181361c897466e916858c49f181013c02080498e4e1945efb1c4"
+    },
+    {
+      "index": 65279,
+      "name": "Torappu.Battle.Buff$$CalculateShieldData",
+      "address": "0x180680510",
+      "instructions": 66,
+      "reachable_bytes_sha256": "d2db0b3dc1730507fff9e066c752c55c1f2764e5ce3b5d5d217d069abb083478"
+    },
+    {
+      "index": 220464,
+      "name": "Torappu.FP$$op_Addition",
+      "address": "0x184624db0",
+      "instructions": 2,
+      "reachable_bytes_sha256": "6fb4c168d1124c971be2282d198b27329d727facb694b21661aa8a7f43a9c4b1"
+    },
+    {
+      "index": 220482,
+      "name": "Torappu.FP$$op_LessThan",
+      "address": "0x185ed91f0",
+      "instructions": 3,
+      "reachable_bytes_sha256": "e9fa37138e4c049576d240c5987a4f26e076fa9e2210824268b880fd0fda561a"
+    },
+    {
+      "index": null,
+      "name": "unmapped_0x180662420",
+      "address": "0x180662420",
+      "instructions": 84,
+      "reachable_bytes_sha256": "622d2a6acef89549eb1658a33f4c062e26fcdb3d83cd832e3ea8b4ca1870e72a"
+    },
+    {
+      "index": null,
+      "name": "unmapped_0x180662260",
+      "address": "0x180662260",
+      "instructions": 108,
+      "reachable_bytes_sha256": "b9a17fe0bd3d9b04feb969ba21cbeea95fd4164e6d321b5dc4c9fed142a0dcf6"
+    },
+    {
+      "index": null,
+      "name": "unmapped_0x186b63a70",
+      "address": "0x186b63a70",
+      "instructions": 71,
+      "reachable_bytes_sha256": "203160b9df959b491f46cda769df097f7b423c3b89c3c7e2c90bd5ba12126c86"
+    },
+    {
+      "index": 65471,
+      "name": "BuffContainer$$CalculateShieldValueByTarget",
+      "address": "0x180663600",
+      "instructions": 182,
+      "reachable_bytes_sha256": "bb5b8feab6bee79ad5463f56892b99ef8fc7fe43fca1a14337c55ac300778b5c"
+    },
+    {
+      "index": 99029,
+      "name": "FilterByShieldValue$$Execute",
+      "address": "0x18112e7d0",
+      "instructions": 191,
+      "reachable_bytes_sha256": "753dca381863937f574bdb401e58b8fe57c4aab67b0dd39ed147b0de1d2cfd5a"
+    },
+    {
+      "index": 220333,
+      "name": "Torappu.MathUtil$$LE",
+      "address": "0x1866e5700",
+      "instructions": 37,
+      "reachable_bytes_sha256": "4b9ae63cffd2cbb268d940e2387a80739b5fbece7f333f0915c2ee71edbd828c"
+    },
+    {
+      "index": 65277,
+      "name": "Torappu.Battle.Buff$$get_hasShield",
+      "address": "0x18068ec40",
+      "instructions": 27,
+      "reachable_bytes_sha256": "53c1029c2c25a9c82cf3ed01881d8623f34bce8e25378ca8ee6a0dd9cc5e209e"
+    },
+    {
+      "index": 30833,
+      "name": "Torappu.Blackboard$$GetFpOrDefault",
+      "address": "0x18231f530",
+      "instructions": 73,
+      "reachable_bytes_sha256": "e98b26daaa946eb1191e77c7706b542cc63b3d75e6af583d8afc44edb71c7b58"
+    },
+    {
+      "index": 30847,
+      "name": "Torappu.Blackboard$$_TryGetNumber",
+      "address": "0x182320780",
+      "instructions": 90,
+      "reachable_bytes_sha256": "004c4204ccc0ceddaa034b5df900603bad6110ac39f907e889e154cc470c30b5"
+    },
+    {
+      "index": 220498,
+      "name": "Torappu.FP$$op_Implicit",
+      "address": "0x1866fdad0",
+      "instructions": 3,
+      "reachable_bytes_sha256": "1d7260c4d6aeb1c9df8c17c4aa3474bf1756eef4bca74b2e55edab9130be0947"
+    }
+  ],
+  "facts": [
+    "ordinary aggregation excludes null, finished/disabled, source mismatch and hasShield false",
+    "both non-null source references compare identity; null/destroyed comparison paths are not substituted by identity strings",
+    "shield tuple value is summed, damage mask is not consulted",
+    "direct data branch reads dynamic from existing BB, explicitly failed numeric lookup returns default FP zero",
+    "missing BB on a contributing direct-data branch throws/traps, never returns a default zero tuple",
+    "FP Add is raw 64-bit LEA; FP LE at zero compares signed raw sum strictly below 42950",
+    "target invalid fails the filter; missing source passes in the bound template"
+  ],
+  "limitations": [
+    "caller declarations, not actual instance snapshots or complete runtime inventory",
+    "klass+0x11c compared to 0x77 has unproven field meaning; internal helper indices remain null",
+    "indirect interface dispatch, XLua, current hotfix and actual creation/removal callbacks are unproven",
+    "filter snapshots are declared at post-BlockDamage source-filter read points, not copied from pre-hit inventory",
+    "incomplete/unknown contributing inventory cannot prove total or a lower bound; signed values and wrap can reverse predicates"
+  ]
+}

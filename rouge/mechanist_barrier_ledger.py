@@ -64,7 +64,7 @@ def _filter(value):
         raise ValueError('来源屏障筛选声明需要source_available和total_raw。')
     _boolean(value['source_available'], '筛选来源有效性')
     if value['total_raw'] is not None:
-        _integer(value['total_raw'], '此来源的屏障总原值')
+        _integer(value['total_raw'], '此来源的屏障总原值', -(1 << 63), MAX_RAW)
     # The template passes a missing filter source, not a missing recipient.
     if value['source_available'] is False:
         return True
@@ -79,6 +79,7 @@ PACKET_FLAGS = ('is_damage', 'cancelled', 'ignore_blocked',
     'counting_is_affecting', 'counting_ignore_until_cast_end', 'counting_not_count_next')
 PACKET_KEYS = {'id', 'recipient', 'value_raw', 'caster_shields',
     'recipient_shields', 'following_barrier', *PACKET_FLAGS}
+INVENTORY_PACKET_KEYS = PACKET_KEYS - {'caster_shields', 'recipient_shields'} | {'source_shield_inventory'}
 
 
 def mechanist_barrier_ledger(payload):
@@ -105,8 +106,9 @@ def mechanist_barrier_ledger(payload):
     if type(packets) is not list or not 1 <= len(packets) <= 200:
         raise ValueError('有序入伤需要1–200项。顺序为调用方声明，不推断同帧先后。')
     names = set()
+    inventory_reports = {}
     for packet in packets:
-        if type(packet) is not dict or set(packet) != PACKET_KEYS:
+        if type(packet) is not dict or set(packet) not in (PACKET_KEYS, INVENTORY_PACKET_KEYS):
             raise ValueError('每项入伤须保留完整声明字段；null代表未知。')
         name = _label(packet['id'])
         if name in names:
@@ -117,11 +119,18 @@ def mechanist_barrier_ledger(payload):
         _integer(packet['value_raw'], '入伤FP原值', -MAX_RAW, MAX_RAW)
         for flag in PACKET_FLAGS:
             _boolean(packet[flag], flag)
-        for key in ('caster_shields', 'recipient_shields'):
-            _filter(packet[key])
+        if 'source_shield_inventory' in packet:
+            from .shield_source_inventory import mechanist_shield_inventory
+            inventory = packet['source_shield_inventory']
+            inventory_reports[name] = mechanist_shield_inventory(inventory)
+            if inventory['recipient_role'] != packet['recipient']:
+                raise ValueError('筛选库存的受击角色须与本项入伤一致。')
+        else:
+            for key in ('caster_shields', 'recipient_shields'):
+                _filter(packet[key])
         if packet['following_barrier'] is not None:
             _barrier(packet['following_barrier'])
-        if (packet['recipient'] == 'owner' and packet['no_intervening_barrier_changes'] is True
+        if ('source_shield_inventory' not in packet and packet['recipient'] == 'owner' and packet['no_intervening_barrier_changes'] is True
                 and packet['caster_shields'] != packet['recipient_shields']):
             raise ValueError('本体两个来源筛选是同一身份；无中间变更声明下不能给出不同快照。')
     source_valid = _source_valid()
@@ -150,7 +159,8 @@ def mechanist_barrier_ledger(payload):
             'replenishment_requested': None, 'finish_old_barrier_requested': None,
             'actual_hp_loss': None, 'actual_explosion_hits': None,
             'actual_replenishment_created': None, 'actual_finish_seconds': None,
-            'independent_following_barrier': deepcopy(packet['following_barrier'])}
+            'independent_following_barrier': deepcopy(packet['following_barrier']),
+            'source_shield_inventory_reference': deepcopy(inventory_reports.get(packet['id']))}
         if entry is False:
             row.update(status='filtered', absorbed_raw=0,
                 barrier_after_subtraction_raw=barrier['dynamic_raw'], barrier_after_block_raw=barrier['dynamic_raw'],
@@ -210,25 +220,32 @@ def mechanist_barrier_ledger(payload):
                 barriers[recipient] = {'available': None, 'dynamic_raw': None, 'cancel_all_raw': None}
                 count_known = False
             else:
-                row['overflow_cancel_requested'] = _all(_filter(packet['caster_shields']), _filter(packet['recipient_shields']))
-                row['explosion_requested'] = packet['main_buff_for_explosion']
-                read_ok = packet['ammunition_read_ok']
-                positive = counter.raw_remaining > 0 if count_known else None
-                request = _all(read_ok, positive, packet['main_buff_for_replenish'])
-                row['manual_count_requested'] = request
-                row['replenishment_requested'] = _all(request, packet['manual_count_node_success'])
-                row['finish_old_barrier_requested'] = read_ok
-                if request is False:
-                    row['ammunition_consumed_reference'] = 0
+                row['overflow_cancel_requested'] = (inventory_reports[packet['id']]['both_filters_pass_reference']
+                    if packet['id'] in inventory_reports else _all(_filter(packet['caster_shields']), _filter(packet['recipient_shields'])))
+                filters_returned = (inventory_reports[packet['id']]['ordered_filters_returned_reference']
+                    if packet['id'] in inventory_reports else True)
+                if filters_returned is not True:
+                    row['status'] = 'unknown_after_source_filter'
+                    count_known = False
                 else:
-                    count_gate = _all(request, packet['manual_count_node_success'], packet['progress_source_available'], packet['counting_is_affecting'],
-                        None if packet['counting_ignore_until_cast_end'] is None else not packet['counting_ignore_until_cast_end'])
-                    if count_gate is False or packet['counting_not_count_next'] is True:
+                    row['explosion_requested'] = packet['main_buff_for_explosion']
+                    read_ok = packet['ammunition_read_ok']
+                    positive = counter.raw_remaining > 0 if count_known else None
+                    request = _all(read_ok, positive, packet['main_buff_for_replenish'])
+                    row['manual_count_requested'] = request
+                    row['replenishment_requested'] = _all(request, packet['manual_count_node_success'])
+                    row['finish_old_barrier_requested'] = read_ok
+                    if request is False:
                         row['ammunition_consumed_reference'] = 0
-                    elif count_gate is True and packet['counting_not_count_next'] is False and count_known:
-                        row['ammunition_consumed_reference'] = consumption.on_event(7)
                     else:
-                        count_known = False
+                        count_gate = _all(request, packet['manual_count_node_success'], packet['progress_source_available'], packet['counting_is_affecting'],
+                            None if packet['counting_ignore_until_cast_end'] is None else not packet['counting_ignore_until_cast_end'])
+                        if count_gate is False or packet['counting_not_count_next'] is True:
+                            row['ammunition_consumed_reference'] = 0
+                        elif count_gate is True and packet['counting_not_count_next'] is False and count_known:
+                            row['ammunition_consumed_reference'] = consumption.on_event(7)
+                        else:
+                            count_known = False
                 # MarkFinish/AddBuff requests prove no instance for the next packet.
                 barriers[recipient] = {'available': None, 'dynamic_raw': None, 'cancel_all_raw': None}
         following = packet['following_barrier']
@@ -247,7 +264,7 @@ def mechanist_barrier_ledger(payload):
         'ammunition_consumed_reference': counter.consumed - consumed if count_known else None,
         'ammunition_remaining_reference': counter.raw_remaining if count_known else None,
         'nominal_maximum_parameter': int(parameters['trigger_time']),
-        'source_valid': source_valid and blackboard_source_valid(),
+        'source_valid': source_valid and blackboard_source_valid() and all(r['source_valid'] for r in inventory_reports.values()),
         'entry_math_source_valid': source_valid, 'blackboard_source_valid': blackboard_source_valid(),
         'source': SOURCE, 'source_sha256': SOURCE_SHA256,
         'actual_hp_loss': None, 'actual_end_seconds': None, 'actual_total_damage': None,
@@ -257,6 +274,8 @@ def mechanist_barrier_ledger(payload):
             '扣盾即时差与单精度写入/FP读回分列；后续耗尽门及下一包使用读回值。舍入环境未声明则读回与相关依赖未知，不假定当前游戏MXCSR。',
             '未声明中间屏障无变化时，只保留即时吸收算式，后续破屏门未知。',
             '屏障筛选只计受击者身上来自机械师与自身的盾，不包含第三方来源；缺筛选来源可通过，缺受击实例不可通过。',
+            '可用source_shield_inventory替代两个手填总量；两模式互斥。库存只在受击后独立读取点计算，不从创建/结束请求自动更新。来源总量允许signed64负值及回绕，不扩大非负吸收屏障的支持域。',
+            '库存模式另列筛选正常返回资格：异常/未证明返回不会推定后续爆炸/计数/结束节点执行。旧手填总量模式是筛选正常返回下的独立数值条件参考。',
             '取消伤害修改器不会抹去它的数值；中间剩余值不是实际生命损失。',
             '爆炸前与补盾前主buff门分别声明；补盾请求与计数成功分开，计数门关闭仍可能请求补盾。',
             'manual_count_node_success声明计数节点的外层返回；progress_source_available单独声明计数源存在。计数源缺失可使耗弹0，而不阻止补盾请求。',
