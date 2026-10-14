@@ -35,6 +35,7 @@ CALIBRATION_QUERIES = (
     ('shield-inventory', '机械师二技能 · 按来源汇总屏障'),
     ('explosion-values', '机械师二技能 · 爆炸双分支定点计算'),
     ('modifier-values', '藏品逐包定点修饰与顺序差异'),
+    ('regen-clock', '常态生命回复 · 逐点周期与改速'),
 )
 BATTLE_QUERIES = (
     ('actions', '完整关卡动作清单'), ('activations', '预置实体激活对应'),
@@ -71,6 +72,7 @@ BATTLE_COMMANDS = {
 EVIDENCE_NAMES = {'game_panel': '调用方声明的游戏面板',
     'public_case': '调用方声明的公开算例', 'formula_reference': '公式参考算例'}
 INPUT_GUIDANCE = {
+    'regen-clock':'recovery独立声明Precise定时器与FP读点；update按声明delta推进，dirty仅13/19，先结旧定时器，再分别读取能否回复与新周期的快照。每次HP读点独立，不由上次请求推后续HP；正常返回资格、周期与剩余数值不证明实际时钟或最终回血。属性13/19来自独立读取，不借既有double藏品倍率推定。',
     'modifier-values':'packet声明一种family的固定藏品、独立入链值与实际包类型/目标/方向/不可改值标记。base_one先合并成一个模块，normal逐模块乘；预处理与修饰顺序分开，留空列有限声明组合，不赋概率。BB对象缺失与数字失败分开，成功0/负值不夹正。接爆炸返回须独立声明修饰器存在及入链值未变；不是实际命中或生命结算。',
     'shield-grants':'仅机械师二技能。scenario为当前等级、模组、藏品等培养条件；snapshots逐受益对象声明创建时MAX_HP或本体模型小计。结构性原理不得借本体HP。分别列倍率、FP乘积、单精度写入与读回；null为未知，成功读取0不改用默认1。仅数值参考，不证明新盾已建立。',
     'shield-inventory':'仅机械师二技能。inventory逐实例声明读取点、身份、结束/来源/hasShield资格与独立FP值或黑板float32。自动计算本体来源及受击者自身来源总原值与双筛选门；mask不参与。未读全、黑板对象缺失或读值未知则完整总量未知。已证分项不是下界，不操作游戏、不自动建立或删除盾。',
@@ -186,6 +188,9 @@ def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
     if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
+        if command == 'regen-clock':
+            from .regeneration_clock import public_example
+            return {'recovery':public_example()}
         if command == 'modifier-values':
             from .modifier_packet_reference import public_example
             return {'packet':public_example()}
@@ -293,6 +298,39 @@ def _explosion_tables(data):
     return parts
 
 
+def _regeneration_tables(data):
+    amount=lambda raw:_fp_amount(raw,8)
+    statuses={'invalid_timer_skipped':'旧定时器无效，保留状态','unknown_timer_validity':'定时器有效性未知',
+        'declared_timer_reference':'声明条件下的定时器参考','unknown_ready_gate':'到期门未知',
+        'missing_independent_hp_access':'缺独立HP读取/返回资格，未补造后续请求',
+        'unqualified_hp_access':'HP访问未证正常返回，停止后续链','marked_invalid':'资格不成立，标记无效',
+        'reset_keep_past':'保留已过时间后改速','unqualified_period_read_or_division_domain':'周期读点或除法域未核准',
+        'unknown_can_recover_gate':'回复资格未知','unqualified_attribute_reads':'属性读取未证正常返回',
+        'not_called_after_unqualified_chain':'前序或来源资格未核准，未继续'}
+    parts=[_p('来源核验：'+_text(data['source_valid'])+'；定时器使用Precise类型，保留逾期量，逐点请求HP+1。'),
+        _p('声明链完整：'+_text(data['declared_chain_complete'])+'；声明范围请求次数：'+_text(data['declared_complete_request_count'])),
+        _p('最终周期参考：'+amount(data['final_period_raw_reference'])+'秒；最终剩余参考：'+amount(data['final_remaining_raw_reference'])+'秒。实际生命值、实际回复总量及实机时钟：未知。')]
+    for row in data['rows']:
+        parts += [_h(row['id']),_p(statuses[row['status']]+'；正常返回：'+_text(row['normal_return_reference'])),
+            _table(['定时器','周期（秒）','剩余（秒）'],[(label,amount(row[p]),amount(row[r])) for label,p,r in
+                [('操作前','period_before_raw_reference','remaining_before_raw_reference'),('操作后','period_after_raw_reference','remaining_after_raw_reference')]])]
+        if row['can_recover'] is not None:
+            parts += [_table(['独立读取用途','每秒回复FP参考','最大生命比例分项','正常返回'],
+                [(label,amount(ref['rate_raw_reference']),amount(ref['ratio_part_raw_reference']),ref['normal_return_reference'])
+                 for label,ref in [('能否回复',row['can_recover']),('新周期',row['period_rate'])] if ref is not None]),
+                _p('能否回复：'+_text(row['can_recover_hp_reference'])+'；第二次读取不借用第一次数值。')]
+        reset=row['reset_keep_past_reference']
+        if reset is not None:parts += [_p('旧周期已过时间：'+amount(reset['past_raw_reference'])+'秒；新剩余先减后夹零：'+amount(reset['clamped_remaining_raw_reference'])+'秒。')]
+        drain=row['drain']
+        if drain is not None:
+            parts += [_table(['读点','独立HP读值','HP+1请求参数','请求参数精确原值','Next后剩余秒','HP访问正常返回'],
+                [(s['index']+1,amount(s['hp_read_raw_reference']),amount(s['setter_value_argument_raw_reference']),
+                  _text(s['setter_value_argument_raw_reference']),amount(s['remaining_after_next_raw_reference']),s['hp_access_normal_return_reference']) for s in drain['requests']]),
+                _p('本操作完整请求次数：'+_text(drain['declared_complete_request_count'])+'；请求参数不是最终HP。')]
+    parts += [_p('仅属性13/19脏标分支；其它属性、藏品实际FP组合、运行实例/热更新及实际HP接受仍未知。未安排事件或操作游戏。')]
+    return parts
+
+
 def _modifier_tables(data):
     families={'healing':'受治疗修饰','physical':'物理承伤修饰','magic':'法术承伤修饰','true':'真实承伤修饰','elemental':'元素伤害修饰'}
     source_names={r['relic_id']:r['name'] for r in data['selected_sources']}
@@ -393,7 +431,9 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
     if data.get('stage_name'): parts.append(_p('关卡：'+data['stage_name']))
     if input_source:parts.append(_p('此次输入来源：'+input_source))
     if family == 'calibration':
-        if command == 'modifier-values':
+        if command == 'regen-clock':
+            parts += _regeneration_tables(data)
+        elif command == 'modifier-values':
             parts += _modifier_tables(data)
         elif command == 'explosion-values':
             parts += _explosion_tables(data)
@@ -853,7 +893,7 @@ class OfflineToolsPanel(QWidget):
 
     def _update_buttons(self):
         family,command=self.current_query()
-        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values') and self._scenario is not None)
+        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock') and self._scenario is not None)
         self.import_stage.setEnabled((family=='battle' or family=='exploration' and command=='settlements') and self._stage is not None)
         exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes','search-routes')
         self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
@@ -961,7 +1001,7 @@ class OfflineToolsPanel(QWidget):
     def _import_scenario(self):
         try:
             family,command=self.current_query()
-            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
+            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
             payload=self._payload();scenario=deepcopy(self._scenario)
             if scenario.get('operator') not in calibration.OPERATORS:raise ValueError('校准工具目前仅支持凯尔希·思衡托、凛御银灰、机械师。')
             if command=='recipient-events' and (scenario.get('operator')!='silverash' or scenario.get('skill')!=2):

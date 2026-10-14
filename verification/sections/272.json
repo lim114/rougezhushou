@@ -1,0 +1,212 @@
+{
+  "section": 272,
+  "kind": "functional_section",
+  "title": "常态生命回复FP率、Precise逐点周期与独立改速读取",
+  "at_Beijing": "2026-10-14T17:29:19.525851+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "e8cee6185fe2c654ded0c91c65cd35def0ccc691",
+  "remaining_item": "P2常态生命回复数值精度与周期，独立FP属性和定时器参考；实际组合/时钟/HP未完成",
+  "new_capability": [
+    "FP rate is attr13 + FPmultiply(maxHP,attr19), with independent normal typed reads and local zero-product closure",
+    "Precise timer strict valid/ready EPS gates, wrapped delta/update, catch-up Next before each independent HP getter and +ONE setter argument",
+    "dirty13/19 drains old timer with delta0, separately reads canRecover and period rates, then ResetButKeepPastTime or MarkInvalid(-ONE,-ONE)",
+    "source-safe signed reciprocal domain plus native zero denominator; tiny nonzero denominator excluded rather than guessed",
+    "separate known prefix versus final timer state and normal/failed/unknown access; dependent later operations stop after unqualified chain",
+    "Chinese regen-clock query, exact raw request arguments, independent scenario import disabled, refresh retains selection/input/result/scroll"
+  ],
+  "files": [
+    "rouge/regeneration_clock.py",
+    "rouge/data/regeneration-clock-source.json",
+    "rouge/calibration.py",
+    "rouge/offline_tools_view.py",
+    "scripts/verify_full_available.py",
+    "scripts/verify_regeneration_window_272.py",
+    "tests/test_regeneration_clock.py",
+    "tests/test_offline_tools_view.py",
+    "tests/test_base_settlement_planning.py",
+    "research/p2-regeneration-clock-272/README.md",
+    "verification/sections/272-review-findings.json",
+    "verification/sections/272-review-before-module.py",
+    "verification/sections/272-child-test-before.py",
+    "verification/sections/272-child-intermediate-test.py",
+    "verification/sections/272-child-third-test.py",
+    "verification/sections/272-window.json",
+    "verification/sections/272-main-window.json"
+  ],
+  "required_raw_sha256": {
+    "rouge/regeneration_clock.py": "55e84eaa2d6de1cfa16c2762a0f33ac1460562721127cf27d907f8bccf3ff1ff",
+    "rouge/data/regeneration-clock-source.json": "9a1ee36d224dae223d7acf992385c226371fcb7c14284491d983f9f46cdd6d6b",
+    "rouge/calibration.py": "5320c9440bd2ade654666336163efdb98e7f4c3ce935151068d9154c3e68e51d",
+    "rouge/offline_tools_view.py": "ae77cfd791ea85acaed5909d517d4608a022ce14c5f13e76a1c0c862491cda0a",
+    "scripts/verify_full_available.py": "e9e6c8cee1c902b7b7135275a0a1936ff1eac8db54836265fb715890a1b99972",
+    "scripts/verify_regeneration_window_272.py": "9e808203021eb2a1ba4658894d73c38b80ebb07cd6d3dec11a4d676ce2ec77a7",
+    "tests/test_regeneration_clock.py": "bee296fe632c4226aa5496cfbd187b5918c4007cc4bc8e05b76f3b5377ca36db",
+    "tests/test_offline_tools_view.py": "0dda18dd32d06cb9f1920053968bc7cb2560314d36bfa744f9ff3bb93c5e5c71",
+    "tests/test_base_settlement_planning.py": "623b58949d5106ed9531ddcefe58693775ac9abec6af0ff2a84f2c8c33517d33",
+    "research/p2-regeneration-clock-272/README.md": "99c80ee67feaaa467659fa65926b8f484cfc9c7cec71bce85a904962c93206b7",
+    "verification/sections/272-review-findings.json": "bb1188b1919dadcff7511a16c046e93cd0888e9b56149205128d410447115144",
+    "verification/sections/272-review-before-module.py": "a85045b47ccc9f346637a1e2be90bb0e65ba7fa1654f260d0464212b4111b3fb",
+    "verification/sections/272-child-test-before.py": "0c38b069857be5b26f813d663039eef2d71abee1088e7fae572d5cb536279a99",
+    "verification/sections/272-child-intermediate-test.py": "cc3f7416139d1e69d8a1e08123688d276d1bbb30c98e56977040abbeb072d478",
+    "verification/sections/272-child-third-test.py": "20982dcc690ab43c5a4aa0693ebac46ed4d656cc4236bd879b03fc65b1bed5c1",
+    "verification/sections/272-window.json": "54c826861b8b52d0024656f3b80e2b337c21a4af9a92b1c0a2cedd6f64d9f507",
+    "verification/sections/272-main-window.json": "72e408793f1d9edd1979f2d6771b0ef1dbf7bd555078417e22cc95b33165676c"
+  },
+  "reused_source_sha256": {
+    "research/p2-regeneration-clock-272/native-proof.json": "95c62b843a7a0cc2ef0cc109cb7ec0828396359613bc5da735a2e68beac9d76c",
+    "research/p2-regeneration-clock-272/metadata-proof.json": "8c5691c1c174720e2ffe05242d40bea1634487d46746c79b129a46831bf281b2",
+    "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19",
+    "rouge/app.py": "fc194abd3641659f5159b620abfcadb8a27df15404b75a442afb8d0912e3000a",
+    "rouge/information_scope.py": "ded5d6a6fe2b29aa8284d6787593e0f211fc24c948f078af53842431baacb802",
+    "rouge/supplemental_healing.py": "5818fd1a82234d98abfcb75c0e8d18eb93a68f7638dfc966ddb1a1d1be327612",
+    "rouge/healing_budget.py": "d8e6fb7d89c9f0d13bfbffc1ee75cbae42d78907af48cae9e0ed7dadc3f24a02",
+    "tests/test_route_information_scope.py": "1b0f9044bdc8e39cebe5be6704a21a946bfd88a9e9cd6492bae97cd93acbdef0",
+    "tests/test_supplemental_healing_145.py": "1c85bcbde9e86a2414d7e00183b5a9be8c8facba4e202127203d70cfb6a34c79",
+    "tests/test_healing_budget_132.py": "0de1758b2f1f6e52b8bc98b4e5519e9922486d8b9e42b8c2312e2bd8b895148c"
+  },
+  "log_sha256": {
+    "verification/sections/272-child-first-check.log": "ee719e085ee3d4007c3ee9143bcfe14dc46cbc8a4f8aa2b0f25e6b608c8b4a43",
+    "verification/sections/272-child-fourth-check.log": "5f51fa981c7deb3b48e707a4002bda7944b1f0410620c280a8e88dba187f80f0",
+    "verification/sections/272-child-second-check.log": "b98f0583ab2a5239f0a6134d59ebb8c1a2b4c4a986256a9b122b1fcb0aefefa9",
+    "verification/sections/272-child-third-check.log": "366fae94b58f4b2ac2269e49937e7e077dbf82996b3f0872c396c7af7c72d65e",
+    "verification/sections/272-final-check.log": "627d63a900d2f6e779508246b062dd7275e6475b40e094780fca502c4c8851af"
+  },
+  "validation": {
+    "related_checks": {
+      "count": 83,
+      "new_test_methods": 25,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "command": "python -X utf8 -m unittest tests.test_regeneration_clock tests.test_offline_tools_view tests.test_base_settlement_planning tests.test_route_information_scope tests.test_supplemental_healing_145 tests.test_healing_budget_132 -v",
+      "log": "verification/sections/272-final-check.log",
+      "child25_is_not_an_additional_pass_count": true
+    },
+    "candidate_original_file": {
+      "methods": 26,
+      "unique_reachable_instructions": 1589,
+      "raw_metadata_spans_rechecked": 277,
+      "game_dll_executed": false,
+      "process_memory_read": false,
+      "current_hotfix_equivalence_proven": false
+    },
+    "native_public_window": {
+      "passed": true,
+      "qpa": "windows",
+      "visible": true,
+      "main_window_public_query": [
+        "calibration",
+        "regen-clock"
+      ],
+      "calibration_and_battle_query_count": 27,
+      "current_product_exploration_query_count": 9,
+      "final_period_and_remaining_raw_reference": 1073741824,
+      "independent_setter_argument_raw_references": [
+        3869765533696,
+        3874060500992,
+        3878355468288,
+        3882650435584
+      ],
+      "declared_complete_request_count": 4,
+      "actual_clock_hp_and_complete_healing_unknown": true,
+      "scenario_import_disabled_for_independent_clock": true,
+      "refresh_preserved_editor_result_selection_and_scroll": true,
+      "loaded_source_sha256": {
+        "research/p2-regeneration-clock-272/metadata-proof.json": "8c5691c1c174720e2ffe05242d40bea1634487d46746c79b129a46831bf281b2",
+        "research/p2-regeneration-clock-272/native-proof.json": "95c62b843a7a0cc2ef0cc109cb7ec0828396359613bc5da735a2e68beac9d76c",
+        "rouge/app.py": "fc194abd3641659f5159b620abfcadb8a27df15404b75a442afb8d0912e3000a",
+        "rouge/calibration.py": "5320c9440bd2ade654666336163efdb98e7f4c3ce935151068d9154c3e68e51d",
+        "rouge/data/regeneration-clock-source.json": "9a1ee36d224dae223d7acf992385c226371fcb7c14284491d983f9f46cdd6d6b",
+        "rouge/information_scope.py": "ded5d6a6fe2b29aa8284d6787593e0f211fc24c948f078af53842431baacb802",
+        "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19",
+        "rouge/offline_tools_view.py": "ae77cfd791ea85acaed5909d517d4608a022ce14c5f13e76a1c0c862491cda0a",
+        "rouge/regeneration_clock.py": "55e84eaa2d6de1cfa16c2762a0f33ac1460562721127cf27d907f8bccf3ff1ff",
+        "scripts/verify_regeneration_window_272.py": "9e808203021eb2a1ba4658894d73c38b80ebb07cd6d3dec11a4d676ce2ec77a7",
+        "tests/test_regeneration_clock.py": "bee296fe632c4226aa5496cfbd187b5918c4007cc4bc8e05b76f3b5377ca36db"
+      },
+      "source_sha256_after": {
+        "research/p2-regeneration-clock-272/metadata-proof.json": "8c5691c1c174720e2ffe05242d40bea1634487d46746c79b129a46831bf281b2",
+        "research/p2-regeneration-clock-272/native-proof.json": "95c62b843a7a0cc2ef0cc109cb7ec0828396359613bc5da735a2e68beac9d76c",
+        "rouge/app.py": "fc194abd3641659f5159b620abfcadb8a27df15404b75a442afb8d0912e3000a",
+        "rouge/calibration.py": "5320c9440bd2ade654666336163efdb98e7f4c3ce935151068d9154c3e68e51d",
+        "rouge/data/regeneration-clock-source.json": "9a1ee36d224dae223d7acf992385c226371fcb7c14284491d983f9f46cdd6d6b",
+        "rouge/information_scope.py": "ded5d6a6fe2b29aa8284d6787593e0f211fc24c948f078af53842431baacb802",
+        "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19",
+        "rouge/offline_tools_view.py": "ae77cfd791ea85acaed5909d517d4608a022ce14c5f13e76a1c0c862491cda0a",
+        "rouge/regeneration_clock.py": "55e84eaa2d6de1cfa16c2762a0f33ac1460562721127cf27d907f8bccf3ff1ff",
+        "scripts/verify_regeneration_window_272.py": "9e808203021eb2a1ba4658894d73c38b80ebb07cd6d3dec11a4d676ce2ec77a7",
+        "tests/test_regeneration_clock.py": "bee296fe632c4226aa5496cfbd187b5918c4007cc4bc8e05b76f3b5377ca36db"
+      },
+      "private_state_read": false,
+      "temporary_state_root": true,
+      "game_operated": false,
+      "game_captures": 0,
+      "chat_sent": false,
+      "scope": "Actual changed MainWindow/public timer declarations only; not complete game/private/native-history validation"
+    },
+    "native_original_startup": {
+      "section": 272,
+      "parent_pid": 25836,
+      "main_pid": [
+        12972
+      ],
+      "visible_window_handles": [
+        3802518
+      ],
+      "responding": [
+        true
+      ],
+      "caption": [
+        "黑流树海助手 0.91 · 局外计算与节点测试（234）"
+      ],
+      "caption_is_legacy_not_authoritative_section_count": true,
+      "prior_owned_main_pid": 15080,
+      "prior_owned_main_exit_confirmed_before_launch": true,
+      "native_original_window_startup": true,
+      "game_operated": false,
+      "chat_sent": false,
+      "scope": "Original app restarted; changed public MainWindow independently verified. Not complete game/private/native-history integration.",
+      "private_json_files_checked": 3,
+      "private_json_files_changed": 0,
+      "private_json_new_files": 0,
+      "desktop_visually_inspected_with": "Windows-mcp"
+    },
+    "same_input_current_counterexamples": 7,
+    "literal_public_gold": {
+      "setter_argument_values": [
+        901,
+        902,
+        903,
+        904
+      ],
+      "request_count": 4,
+      "final_period_raw": 1073741824,
+      "final_remaining_raw": 1073741824,
+      "actual_hp": null
+    },
+    "readonly_review": "Initial source audit identified four qualification/zero-closure gaps; same-input root probes and test-author limited readonly repair review verified current fixes. A separate final source-agent review failed at model capacity and was not counted as passed."
+  },
+  "failure_and_preparation_records": {
+    "before_source_and_probes": "verification/sections/272-review-findings.json",
+    "first20": "Two real second-read normal-return failures plus invalid-source fixture patched public instead of private loader; first source and actual log retained.",
+    "second24": "Two former incorrect final-R assertions retained in original test source/log; exact raw assertions moved to prefix/current row and final-unknown assertions added, not dropped.",
+    "third25": "Test author used overbroad patch context and misplaced one prefix assertion, causing a KeyError plus remaining old final-R assertion; original test/log retained, corrected by method-specific edits.",
+    "fourth25": "All dedicated methods passed before merged83, not counted twice.",
+    "root_preparation_errors_full_original_not_archived": [
+      "metadata summary initially requested raw_spans instead of byte_spans",
+      "first renderer probe imported nonexistent render_result; corrected to existing renderer"
+    ],
+    "failed_source_review": "Model at capacity, no final review result; alternative limited review and tests recorded separately."
+  },
+  "limits": [
+    "Independent FP snapshots only; actual current attribute getter/cache/modifier combination not inferred from old double factors.",
+    "Dirty13/19 only; MAX_HP extra preprocessing and other dirty branches excluded.",
+    "No actual timer creation, placement, native clock, callbacks, server/hotfix equivalence or final HP acceptance.",
+    "Requests and known prefixes are not complete healing or final HP; canRecover and period snapshots are separate.",
+    "Nonzero abs divisor below42950 outside supported numerical domain; preserves unknown, not claimed exception.",
+    "Private state preserved, no game operation/chat sends; P2 incomplete, full maintained available validation due275/final280, missing originals/private not PASS."
+  ],
+  "next_section": 273,
+  "next_full_validation_after": 275,
+  "goal_target_section": 280
+}

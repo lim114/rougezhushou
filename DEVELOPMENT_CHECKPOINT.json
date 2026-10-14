@@ -50,7 +50,7 @@
     "historical_accuracy_validation_after_section_before261": 115
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 271,
+  "completed_sections": 272,
   "sections": [
     {
       "number": 1,
@@ -1665,10 +1665,16 @@
       "kind": "functional_section",
       "topic": "藏品逐包FP修饰、独立模块与有限顺序数值参考",
       "verification": "verification/sections/271.json"
+    },
+    {
+      "number": 272,
+      "kind": "functional_section",
+      "topic": "常态生命回复FP率、Precise逐点周期与独立改速读取",
+      "verification": "verification/sections/272.json"
     }
   ],
-  "next_section": 272,
-  "next_action": "272优先核验原生常态生命回复多来源FP率、每点周期及PrecisePeriodicTimer保留已过时间的改速参考；来源准备不计完成。P2优先，275/最终280完整可用全量。探索仅节点/条件/连接信息，无路线建议。",
+  "next_section": 273,
+  "next_action": "273优先核验属性GetValue缓存脏标与13/19修饰FP来源，候选原件/已有三花原参数先查证；准备不计完成。实际实例/时钟/HP保留未知。P2优先，探索仅节点信息，275/最终280完整可用全量。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 261,
@@ -1796,16 +1802,16 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 271,
-    "verification": "verification/sections/271.json",
+    "section": 272,
+    "verification": "verification/sections/272.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit",
-    "commit_reference": "the commit containing271 function/source/receipt/requirements/index",
+    "commit_reference": "the commit containing272 function/source/receipt/requirements/index",
     "batch_closed": false
   },
   "last_verified_cloud_save": {
     "section": 271,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "c17936612f3c1ea862457513a2b24439f9091645",
     "proof": "verification/sections/271-publication.json",
@@ -2061,7 +2067,7 @@
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": 280,
-  "batch_status": "ACTIVE_BATCH_262_280_SECTION271_PUBLISHED",
+  "batch_status": "ACTIVE_BATCH_262_280_SECTION272_LOCAL_VALIDATED",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2090,16 +2096,17 @@
     268,
     269,
     270,
-    271
+    271,
+    272
   ],
   "current_batch": {
     "start": 262,
     "end": 280,
-    "status": "ACTIVE_BATCH_262_280_SECTION271_PUBLISHED",
-    "next_section": 272,
+    "status": "ACTIVE_BATCH_262_280_SECTION272_LOCAL_VALIDATED",
+    "next_section": 273,
     "next_section_started": false,
     "next_full_validation_after": 275,
-    "receipt": "verification/sections/271.json",
+    "receipt": "verification/sections/272.json",
     "batch_closed": false
   },
   "current_full140_checkpoint": {
@@ -2244,8 +2251,8 @@
     "continuous_work_authorized": true
   },
   "latest_section_environment": {
-    "section": 271,
-    "native_windows": "103 related checks, Windows public MainWindow packet-reference fixture and original app updated/visible",
+    "section": 272,
+    "native_windows": "83 related checks, Windows public MainWindow regeneration-clock fixture and original app updated/visible",
     "native_game_or_chat_verified": false,
     "new_Linux_Wine_full_run": false,
     "historical_full_reference": "verification/full-261/summary.json"
@@ -2387,7 +2394,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 271,
+  "latest_functional_section": 272,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -2753,7 +2760,7 @@
     "proof": "verification/sections/270-publication.json",
     "proof_sha256": "fb9abea311fb24ef68dfe6201f743627dbd6029a902d0075a774bc36728b6d50"
   },
-  "cloud_publication_closeout": {
+  "historical_before272_cloud_publication_closeout": {
     "section": 271,
     "functional_commit": "c17936612f3c1ea862457513a2b24439f9091645",
     "functional_source_bytes_unchanged": true,
@@ -2761,5 +2768,12 @@
     "current_commit_kind": "publication metadata; no additional functional section",
     "goal_target_section": 280,
     "next_section": 272
+  },
+  "native_section272_validation": {
+    "receipt": "verification/sections/272-main-window.json",
+    "native_original_window_startup": true,
+    "scope": "Original app restarted; changed public MainWindow independently verified. Not complete game/private/native-history integration.",
+    "private_json_files_checked": 3,
+    "private_json_files_changed": 0
   }
 }

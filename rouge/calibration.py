@@ -455,3 +455,11 @@ def modifier_values(packet):
 
 
 COMMANDS['modifier-values'] = modifier_values
+
+
+def regeneration_clock(recovery):
+    from .regeneration_clock import regeneration_clock_reference
+    return regeneration_clock_reference(recovery)
+
+
+COMMANDS['regen-clock'] = regeneration_clock
