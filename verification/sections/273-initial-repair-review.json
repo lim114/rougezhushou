@@ -1,0 +1,1248 @@
+{
+  "scope": "Limited readonly source re-review; actual bound source loader; pure Python independent declaration probes only",
+  "source_valid": true,
+  "module_sha256": "43bbda3763379df8eb1cafd1b2d2ac02e84db4a098e9893b28f1c5a98c7cbd6a",
+  "source_sha256": "b4f230db97d41b8784f0fb9beab2b8a62a14560298e4878dcae9ccde257d2824",
+  "probes": [
+    {
+      "name": "inverted_known",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": true,
+              "modifiers": [],
+              "raw_read": {
+                "normal": true,
+                "raw": 12884901888
+              },
+              "range_read": {
+                "normal": true,
+                "override": true,
+                "metadata_range_matches": null,
+                "lower_raw": 8589934592,
+                "upper_raw": 4294967296
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": true,
+            "getter_raw_reference": 8589934592,
+            "dirty_cleared_reference": true,
+            "cache_write_value_argument_raw_reference": 8589934592,
+            "status": "recomputed",
+            "computed_clamped_raw_reference": 8589934592,
+            "cache_store_normal_reference": true,
+            "buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "steps": [],
+            "raw_read_called_reference": true,
+            "range_read_called_reference": true,
+            "listed_buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "listed_pre_clamp_raw_reference": 12884901888,
+            "pre_clamp_raw_reference": 12884901888,
+            "lower_raw_reference": 8589934592,
+            "upper_raw_reference": 4294967296
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      }
+    },
+    {
+      "name": "inverted_unknown_raw",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": true,
+              "modifiers": [],
+              "raw_read": {
+                "normal": true,
+                "raw": null
+              },
+              "range_read": {
+                "normal": true,
+                "override": true,
+                "metadata_range_matches": null,
+                "lower_raw": 8589934592,
+                "upper_raw": 4294967296
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": true,
+            "getter_raw_reference": 8589934592,
+            "dirty_cleared_reference": true,
+            "cache_write_value_argument_raw_reference": 8589934592,
+            "status": "recomputed",
+            "computed_clamped_raw_reference": 8589934592,
+            "cache_store_normal_reference": true,
+            "buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "steps": [],
+            "raw_read_called_reference": true,
+            "range_read_called_reference": true,
+            "listed_buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "listed_pre_clamp_raw_reference": null,
+            "pre_clamp_raw_reference": null,
+            "lower_raw_reference": 8589934592,
+            "upper_raw_reference": 4294967296
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      }
+    },
+    {
+      "name": "incomplete_inventory",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": false,
+              "enumeration_normal": true,
+              "modifiers": [],
+              "raw_read": {
+                "normal": true,
+                "raw": 12884901888
+              },
+              "range_read": {
+                "normal": true,
+                "override": true,
+                "metadata_range_matches": null,
+                "lower_raw": 0,
+                "upper_raw": 9223372036854775806
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": true,
+            "getter_raw_reference": null,
+            "dirty_cleared_reference": true,
+            "cache_write_value_argument_raw_reference": null,
+            "status": "recomputed",
+            "computed_clamped_raw_reference": null,
+            "cache_store_normal_reference": true,
+            "buckets_reference": {
+              "addition": null,
+              "multiplier_delta": null,
+              "final_addition": null,
+              "final_scaler": null
+            },
+            "steps": [],
+            "raw_read_called_reference": true,
+            "range_read_called_reference": true,
+            "listed_buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "listed_pre_clamp_raw_reference": 12884901888,
+            "pre_clamp_raw_reference": null,
+            "lower_raw_reference": 0,
+            "upper_raw_reference": 9223372036854775806
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      }
+    },
+    {
+      "name": "not_called_getter_reported_normal",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": true,
+              "modifiers": [
+                {
+                  "id": "unregistered",
+                  "registered": false,
+                  "exists": false,
+                  "get_value_normal": false,
+                  "included": true,
+                  "basis": "independent_cache",
+                  "cache_values": {
+                    "addition": 0,
+                    "multiplier_delta": 0,
+                    "final_addition": 0,
+                    "final_scaler": 4294967296
+                  },
+                  "flower_load": null
+                }
+              ],
+              "raw_read": {
+                "normal": true,
+                "raw": 4294967296
+              },
+              "range_read": {
+                "normal": true,
+                "override": true,
+                "metadata_range_matches": null,
+                "lower_raw": 0,
+                "upper_raw": 8589934592
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": true,
+            "getter_raw_reference": 4294967296,
+            "dirty_cleared_reference": true,
+            "cache_write_value_argument_raw_reference": 4294967296,
+            "status": "recomputed",
+            "computed_clamped_raw_reference": 4294967296,
+            "cache_store_normal_reference": true,
+            "buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "steps": [
+              {
+                "id": "unregistered",
+                "status": "not_registered",
+                "get_value_called_reference": false,
+                "get_value_normal_reference": null,
+                "member_processing_normal_reference": true,
+                "flower_load": null,
+                "cached_values_reference": {
+                  "addition": 0,
+                  "multiplier_delta": 0,
+                  "final_addition": 0,
+                  "final_scaler": 4294967296
+                },
+                "buckets_after_reference": {
+                  "addition": 0,
+                  "multiplier_delta": 4294967296,
+                  "final_addition": 0,
+                  "final_scaler": 4294967296
+                }
+              }
+            ],
+            "raw_read_called_reference": true,
+            "range_read_called_reference": true,
+            "listed_buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "listed_pre_clamp_raw_reference": 4294967296,
+            "pre_clamp_raw_reference": 4294967296,
+            "lower_raw_reference": 0,
+            "upper_raw_reference": 8589934592
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      }
+    },
+    {
+      "name": "enumeration_known_failed",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": false,
+              "modifiers": [],
+              "raw_read": {
+                "normal": true,
+                "raw": 12884901888
+              },
+              "range_read": {
+                "normal": true,
+                "override": false,
+                "metadata_range_matches": true,
+                "lower_raw": null,
+                "upper_raw": null
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": false,
+            "getter_raw_reference": null,
+            "dirty_cleared_reference": false,
+            "cache_write_value_argument_raw_reference": null,
+            "status": "unqualified_enumeration",
+            "computed_clamped_raw_reference": null,
+            "cache_store_normal_reference": null,
+            "buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "steps": [],
+            "raw_read_called_reference": false,
+            "range_read_called_reference": false,
+            "listed_buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            }
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      }
+    },
+    {
+      "name": "registered_getter_known_failed",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": true,
+              "modifiers": [
+                {
+                  "id": "null-or-failed",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": false,
+                  "included": null,
+                  "basis": "independent_cache",
+                  "cache_values": {
+                    "addition": null,
+                    "multiplier_delta": null,
+                    "final_addition": null,
+                    "final_scaler": null
+                  },
+                  "flower_load": null
+                }
+              ],
+              "raw_read": {
+                "normal": true,
+                "raw": 12884901888
+              },
+              "range_read": {
+                "normal": true,
+                "override": false,
+                "metadata_range_matches": true,
+                "lower_raw": null,
+                "upper_raw": null
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": false,
+            "getter_raw_reference": null,
+            "dirty_cleared_reference": false,
+            "cache_write_value_argument_raw_reference": null,
+            "status": "unqualified_enumeration",
+            "computed_clamped_raw_reference": null,
+            "cache_store_normal_reference": null,
+            "buckets_reference": {
+              "addition": null,
+              "multiplier_delta": null,
+              "final_addition": null,
+              "final_scaler": null
+            },
+            "steps": [
+              {
+                "id": "null-or-failed",
+                "status": "unqualified_get_value",
+                "get_value_called_reference": true,
+                "get_value_normal_reference": false,
+                "member_processing_normal_reference": false,
+                "flower_load": null,
+                "cached_values_reference": {
+                  "addition": null,
+                  "multiplier_delta": null,
+                  "final_addition": null,
+                  "final_scaler": null
+                },
+                "buckets_after_reference": {
+                  "addition": null,
+                  "multiplier_delta": null,
+                  "final_addition": null,
+                  "final_scaler": null
+                }
+              }
+            ],
+            "raw_read_called_reference": false,
+            "range_read_called_reference": false,
+            "listed_buckets_reference": {
+              "addition": null,
+              "multiplier_delta": null,
+              "final_addition": null,
+              "final_scaler": null
+            }
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      }
+    },
+    {
+      "name": "unknown_dirty_both_preclear_fail",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": null,
+            "decoded_cache": {
+              "normal": false,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": false,
+              "modifiers": [],
+              "raw_read": {
+                "normal": true,
+                "raw": 12884901888
+              },
+              "range_read": {
+                "normal": true,
+                "override": false,
+                "metadata_range_matches": true,
+                "lower_raw": null,
+                "upper_raw": null
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": false,
+            "getter_raw_reference": null,
+            "dirty_cleared_reference": false,
+            "cache_write_value_argument_raw_reference": null,
+            "status": "unknown_dirty_branch",
+            "clean_reference": {
+              "normal_return_reference": false,
+              "getter_raw_reference": null,
+              "dirty_cleared_reference": false,
+              "cache_write_value_argument_raw_reference": null,
+              "status": "independent_decoded_cache"
+            },
+            "recompute_reference": {
+              "normal_return_reference": false,
+              "getter_raw_reference": null,
+              "computed_clamped_raw_reference": null,
+              "dirty_cleared_reference": false,
+              "cache_write_value_argument_raw_reference": null,
+              "cache_store_normal_reference": null,
+              "buckets_reference": {
+                "addition": 0,
+                "multiplier_delta": 4294967296,
+                "final_addition": 0,
+                "final_scaler": 4294967296
+              },
+              "steps": [],
+              "raw_read_called_reference": false,
+              "range_read_called_reference": false,
+              "status": "unqualified_enumeration",
+              "listed_buckets_reference": {
+                "addition": 0,
+                "multiplier_delta": 4294967296,
+                "final_addition": 0,
+                "final_scaler": 4294967296
+              }
+            }
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      }
+    },
+    {
+      "name": "known_input_below_known_lower_unknown_upper",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": true,
+              "modifiers": [],
+              "raw_read": {
+                "normal": true,
+                "raw": -4294967296
+              },
+              "range_read": {
+                "normal": true,
+                "override": true,
+                "metadata_range_matches": null,
+                "lower_raw": 0,
+                "upper_raw": null
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": true,
+            "getter_raw_reference": null,
+            "dirty_cleared_reference": true,
+            "cache_write_value_argument_raw_reference": null,
+            "status": "recomputed",
+            "computed_clamped_raw_reference": null,
+            "cache_store_normal_reference": true,
+            "buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "steps": [],
+            "raw_read_called_reference": true,
+            "range_read_called_reference": true,
+            "listed_buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "listed_pre_clamp_raw_reference": -4294967296,
+            "pre_clamp_raw_reference": -4294967296,
+            "lower_raw_reference": 0,
+            "upper_raw_reference": null
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      },
+      "expected_getter_raw_reference": 0
+    },
+    {
+      "name": "incomplete_inventory_constant_range",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": false,
+              "enumeration_normal": true,
+              "modifiers": [],
+              "raw_read": {
+                "normal": true,
+                "raw": 12884901888
+              },
+              "range_read": {
+                "normal": true,
+                "override": true,
+                "metadata_range_matches": null,
+                "lower_raw": 0,
+                "upper_raw": 0
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": true,
+            "getter_raw_reference": 0,
+            "dirty_cleared_reference": true,
+            "cache_write_value_argument_raw_reference": 0,
+            "status": "recomputed",
+            "computed_clamped_raw_reference": 0,
+            "cache_store_normal_reference": true,
+            "buckets_reference": {
+              "addition": null,
+              "multiplier_delta": null,
+              "final_addition": null,
+              "final_scaler": null
+            },
+            "steps": [],
+            "raw_read_called_reference": true,
+            "range_read_called_reference": true,
+            "listed_buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "listed_pre_clamp_raw_reference": 12884901888,
+            "pre_clamp_raw_reference": null,
+            "lower_raw_reference": 0,
+            "upper_raw_reference": 0
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      },
+      "expected_getter_raw_reference": 0
+    },
+    {
+      "name": "bridge_duplicate_read_rejected",
+      "input": {
+        "readings": [
+          {
+            "id": "first13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": true,
+              "modifiers": [
+                {
+                  "id": "first13藏品81",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_81",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                },
+                {
+                  "id": "first13藏品82",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_82",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                },
+                {
+                  "id": "first13藏品83",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_83",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                }
+              ],
+              "raw_read": {
+                "normal": true,
+                "raw": 42949672960
+              },
+              "range_read": {
+                "normal": true,
+                "override": false,
+                "metadata_range_matches": true,
+                "lower_raw": null,
+                "upper_raw": null
+              },
+              "cache_store_normal": true
+            }
+          },
+          {
+            "id": "first19",
+            "attribute": 19,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": true,
+              "modifiers": [
+                {
+                  "id": "first19藏品81",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_81",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                },
+                {
+                  "id": "first19藏品82",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_82",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                },
+                {
+                  "id": "first19藏品83",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_83",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                }
+              ],
+              "raw_read": {
+                "normal": true,
+                "raw": 268435456
+              },
+              "range_read": {
+                "normal": true,
+                "override": false,
+                "metadata_range_matches": true,
+                "lower_raw": null,
+                "upper_raw": null
+              },
+              "cache_store_normal": true
+            }
+          },
+          {
+            "id": "period13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": true,
+              "modifiers": [
+                {
+                  "id": "period13藏品81",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_81",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                },
+                {
+                  "id": "period13藏品82",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_82",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                },
+                {
+                  "id": "period13藏品83",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_83",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                }
+              ],
+              "raw_read": {
+                "normal": true,
+                "raw": 42949672960
+              },
+              "range_read": {
+                "normal": true,
+                "override": false,
+                "metadata_range_matches": true,
+                "lower_raw": null,
+                "upper_raw": null
+              },
+              "cache_store_normal": true
+            }
+          },
+          {
+            "id": "period19",
+            "attribute": 19,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": true,
+              "modifiers": [
+                {
+                  "id": "period19藏品81",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_81",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                },
+                {
+                  "id": "period19藏品82",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_82",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                },
+                {
+                  "id": "period19藏品83",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": true,
+                  "included": true,
+                  "basis": "flower_load",
+                  "cache_values": null,
+                  "flower_load": {
+                    "relic_id": "rogue_6_relic_legacy_83",
+                    "recipe_matches_bound": true,
+                    "blackboard_exists": true,
+                    "try_returns_normally": true,
+                    "number_found": true,
+                    "number_basis": "nominal_bound_float",
+                    "number_matches_bound_parameter": true,
+                    "number_raw": null,
+                    "stack_count": 1,
+                    "cache_matches_completed_load": true,
+                    "load_accesses_normal": true
+                  }
+                }
+              ],
+              "raw_read": {
+                "normal": true,
+                "raw": 268435456
+              },
+              "range_read": {
+                "normal": true,
+                "override": false,
+                "metadata_range_matches": true,
+                "lower_raw": null,
+                "upper_raw": null
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": {
+          "input": {
+            "ordinary_native_path": true,
+            "precise_timer_identity": true,
+            "no_intervening_timer_changes": true,
+            "timer": {
+              "exists": true,
+              "period_raw": 2147483648,
+              "remaining_raw": 1073741824
+            },
+            "actions": [
+              {
+                "id": "独立两次读取后改为每秒四点",
+                "kind": "reconfigure",
+                "dirty_attribute": 13,
+                "can_recover_snapshot": null,
+                "period_snapshot": null,
+                "hp_reads_raw": [],
+                "hp_access_returns_normally": []
+              }
+            ]
+          },
+          "links": [
+            {
+              "action_id": "独立两次读取后改为每秒四点",
+              "point": "can_recover_snapshot",
+              "flat_read_id": "first13",
+              "ratio_read_id": "first19",
+              "max_hp_raw": 429496729600,
+              "max_hp_read_normal": true,
+              "same_entity": true,
+              "unchanged_to_point": true
+            },
+            {
+              "action_id": "独立两次读取后改为每秒四点",
+              "point": "period_snapshot",
+              "flat_read_id": "first13",
+              "ratio_read_id": "period19",
+              "max_hp_raw": 429496729600,
+              "max_hp_read_normal": true,
+              "same_entity": true,
+              "unchanged_to_point": true
+            }
+          ]
+        }
+      },
+      "error": "每次getter访问需要独立读取身份，数值未变不能替代另一次正常返回资格。"
+    }
+  ]
+}

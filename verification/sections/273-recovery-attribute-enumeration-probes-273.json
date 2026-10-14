@@ -1,0 +1,287 @@
+{
+  "review_scope": "Read-only source review; loader patched to explicit independent contract while source manifest pending; not runtime source validation",
+  "module_sha256": "f807f9f08113eff89ba7fde6a71d8b13afa73d6878e29562d428e67f6881bd28",
+  "patched_source": {
+    "flower_channels": [],
+    "default_ranges": {
+      "13": {
+        "min_raw": 0,
+        "max_raw": 9223372036854775806
+      },
+      "19": {
+        "min_raw": 0,
+        "max_raw": 4294967296
+      }
+    }
+  },
+  "probes": [
+    {
+      "name": "enumeration_known_failed",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": false,
+              "modifiers": [],
+              "raw_read": {
+                "normal": true,
+                "raw": 12884901888
+              },
+              "range_read": {
+                "normal": true,
+                "override": false,
+                "metadata_range_matches": true,
+                "lower_raw": null,
+                "upper_raw": null
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": false,
+            "getter_raw_reference": null,
+            "dirty_cleared_reference": null,
+            "cache_write_value_argument_raw_reference": null,
+            "status": "unqualified_enumeration",
+            "computed_clamped_raw_reference": null,
+            "cache_store_normal_reference": null,
+            "buckets_reference": {
+              "addition": 0,
+              "multiplier_delta": 4294967296,
+              "final_addition": 0,
+              "final_scaler": 4294967296
+            },
+            "steps": [],
+            "raw_read_called_reference": false,
+            "range_read_called_reference": false
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      },
+      "expected_normal_return_reference": false,
+      "expected_dirty_cleared_reference": false
+    },
+    {
+      "name": "registered_getter_known_failed",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": true,
+            "decoded_cache": {
+              "normal": null,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": true,
+              "modifiers": [
+                {
+                  "id": "null-or-failed",
+                  "registered": true,
+                  "exists": true,
+                  "get_value_normal": false,
+                  "included": null,
+                  "basis": "independent_cache",
+                  "cache_values": {
+                    "addition": null,
+                    "multiplier_delta": null,
+                    "final_addition": null,
+                    "final_scaler": null
+                  },
+                  "flower_load": null
+                }
+              ],
+              "raw_read": {
+                "normal": true,
+                "raw": 12884901888
+              },
+              "range_read": {
+                "normal": true,
+                "override": false,
+                "metadata_range_matches": true,
+                "lower_raw": null,
+                "upper_raw": null
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": false,
+            "getter_raw_reference": null,
+            "dirty_cleared_reference": null,
+            "cache_write_value_argument_raw_reference": null,
+            "status": "unqualified_enumeration",
+            "computed_clamped_raw_reference": null,
+            "cache_store_normal_reference": null,
+            "buckets_reference": {
+              "addition": null,
+              "multiplier_delta": null,
+              "final_addition": null,
+              "final_scaler": null
+            },
+            "steps": [
+              {
+                "id": "null-or-failed",
+                "status": "unqualified_get_value",
+                "get_value_normal_reference": false,
+                "flower_load": null,
+                "cached_values_reference": {
+                  "addition": null,
+                  "multiplier_delta": null,
+                  "final_addition": null,
+                  "final_scaler": null
+                },
+                "buckets_after_reference": {
+                  "addition": null,
+                  "multiplier_delta": null,
+                  "final_addition": null,
+                  "final_scaler": null
+                }
+              }
+            ],
+            "raw_read_called_reference": false,
+            "range_read_called_reference": false
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      },
+      "expected_normal_return_reference": false,
+      "expected_dirty_cleared_reference": false
+    },
+    {
+      "name": "unknown_dirty_both_preclear_fail",
+      "input": {
+        "readings": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "ordinary_native_path": true,
+            "attributes_exist": true,
+            "dirty": null,
+            "decoded_cache": {
+              "normal": false,
+              "raw": null
+            },
+            "calculation": {
+              "inventory_complete": true,
+              "enumeration_normal": false,
+              "modifiers": [],
+              "raw_read": {
+                "normal": true,
+                "raw": 12884901888
+              },
+              "range_read": {
+                "normal": true,
+                "override": false,
+                "metadata_range_matches": true,
+                "lower_raw": null,
+                "upper_raw": null
+              },
+              "cache_store_normal": true
+            }
+          }
+        ],
+        "clock_bridge": null
+      },
+      "output": {
+        "source_valid": true,
+        "rows": [
+          {
+            "id": "test13",
+            "attribute": 13,
+            "normal_return_reference": false,
+            "getter_raw_reference": null,
+            "dirty_cleared_reference": null,
+            "cache_write_value_argument_raw_reference": null,
+            "status": "unknown_dirty_branch",
+            "clean_reference": {
+              "normal_return_reference": false,
+              "getter_raw_reference": null,
+              "dirty_cleared_reference": false,
+              "cache_write_value_argument_raw_reference": null,
+              "status": "independent_decoded_cache"
+            },
+            "recompute_reference": {
+              "normal_return_reference": false,
+              "getter_raw_reference": null,
+              "computed_clamped_raw_reference": null,
+              "dirty_cleared_reference": null,
+              "cache_write_value_argument_raw_reference": null,
+              "cache_store_normal_reference": null,
+              "buckets_reference": {
+                "addition": 0,
+                "multiplier_delta": 4294967296,
+                "final_addition": 0,
+                "final_scaler": 4294967296
+              },
+              "steps": [],
+              "raw_read_called_reference": false,
+              "range_read_called_reference": false,
+              "status": "unqualified_enumeration"
+            }
+          }
+        ],
+        "clock_links": [],
+        "clock_reference": null,
+        "actual_attribute_values": null,
+        "actual_cache_or_dirty_state": null,
+        "actual_clock": null,
+        "actual_hp_after": null,
+        "actual_complete_healing": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent FP getter/source/cache/range declarations; no actual inventory, next cache decoding, callbacks, clock or HP settlement."
+      },
+      "expected_normal_return_reference": false,
+      "expected_dirty_cleared_reference": false
+    }
+  ]
+}

@@ -463,3 +463,11 @@ def regeneration_clock(recovery):
 
 
 COMMANDS['regen-clock'] = regeneration_clock
+
+
+def recovery_attributes(attributes):
+    from .recovery_attributes import recovery_attribute_reference
+    return recovery_attribute_reference(attributes)
+
+
+COMMANDS['regen-attributes'] = recovery_attributes
