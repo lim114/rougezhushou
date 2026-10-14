@@ -439,3 +439,11 @@ def source_shield_inventory(inventory):
 
 
 COMMANDS['shield-inventory'] = source_shield_inventory
+
+
+def explosion_values(explosion):
+    from .mechanist_explosion_math import mechanist_explosion_reference
+    return mechanist_explosion_reference(explosion)
+
+
+COMMANDS['explosion-values'] = explosion_values

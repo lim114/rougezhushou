@@ -91,6 +91,10 @@ class MainWindow(QMainWindow):
         self.offline_tools.select_query('calibration','shield-inventory')
         self.centralWidget().setCurrentWidget(self.offline_tools)
 
+    def show_explosion_values(self):
+        self.offline_tools.select_query('calibration','explosion-values')
+        self.centralWidget().setCurrentWidget(self.offline_tools)
+
     def __init__(self):
         super().__init__()
         self.setWindowTitle('黑流树海助手 0.91 · 局外计算与节点测试（234）')
@@ -777,6 +781,9 @@ class MainWindow(QMainWindow):
         self.shield_inventory_button=QPushButton('按来源汇总屏障与溢出门（局外声明）')
         self.shield_inventory_button.clicked.connect(self.show_shield_inventory)
         form.addRow('机械师 S2',self.shield_inventory_button)
+        self.explosion_values_button=QPushButton('爆炸双分支定点计算（独立快照）')
+        self.explosion_values_button.clicked.connect(self.show_explosion_values)
+        form.addRow('机械师 S2',self.explosion_values_button)
         self.shield_duration_known=QCheckBox('指定本次技能结束时间（含手动停止）')
         self.shield_duration=number(30,3600,2)
         self.shield_duration.setMinimum(.01)
@@ -1550,6 +1557,7 @@ class MainWindow(QMainWindow):
                     (self.barrier_ledger_button,op=='mechanist' and skill==2),
                     (self.shield_grant_button,op=='mechanist' and skill==2),
                     (self.shield_inventory_button,op=='mechanist' and skill==2),
+                    (self.explosion_values_button,op=='mechanist' and skill==2),
                     (self.shield_duration,op=='mechanist' and skill==2),
                     *[(w,op=='silverash' and skill==2) for w in (self.activation_count,self.companion_attack,self.stacks)]]
         for widget,visible in conditions:self.damage_form.setRowVisible(widget,visible)

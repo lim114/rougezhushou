@@ -107,8 +107,9 @@ def mechanist_barrier_ledger(payload):
         raise ValueError('有序入伤需要1–200项。顺序为调用方声明，不推断同帧先后。')
     names = set()
     inventory_reports = {}
+    explosion_reports = {}
     for packet in packets:
-        if type(packet) is not dict or set(packet) not in (PACKET_KEYS, INVENTORY_PACKET_KEYS):
+        if type(packet) is not dict or set(packet)-{'explosion_math'} not in (PACKET_KEYS, INVENTORY_PACKET_KEYS):
             raise ValueError('每项入伤须保留完整声明字段；null代表未知。')
         name = _label(packet['id'])
         if name in names:
@@ -119,6 +120,11 @@ def mechanist_barrier_ledger(payload):
         _integer(packet['value_raw'], '入伤FP原值', -MAX_RAW, MAX_RAW)
         for flag in PACKET_FLAGS:
             _boolean(packet[flag], flag)
+        if 'explosion_math' in packet:
+            from .mechanist_explosion_math import mechanist_explosion_reference
+            explosion_reports[name] = mechanist_explosion_reference(packet['explosion_math'])
+            if packet['explosion_math']['skill_rank'] != rank:
+                raise ValueError('爆炸计算的技能等级须与该账本一致。')
         if 'source_shield_inventory' in packet:
             from .shield_source_inventory import mechanist_shield_inventory
             inventory = packet['source_shield_inventory']
@@ -253,6 +259,9 @@ def mechanist_barrier_ledger(payload):
             barriers[recipient] = _barrier(following)
         row['following_barrier_state'] = deepcopy(barriers[recipient])
         row['ammunition_remaining_reference'] = counter.raw_remaining if count_known else None
+        row['explosion_fp_reference'] = deepcopy(explosion_reports.get(packet['id'])) if row['explosion_requested'] is True else None
+        row['declared_explosion_base_raw_reference'] = (0 if row['explosion_requested'] is False else
+            row['explosion_fp_reference']['declared_calls_scaled_damage_raw_total'] if row['explosion_fp_reference'] is not None else None)
         rows.append(row)
     parameters = catalog()['operators']['mechanist']['skills'][1]['levels'][rank-1]['values']
     known = [row for row in rows if row['absorbed_raw'] is not None]
@@ -260,11 +269,14 @@ def mechanist_barrier_ledger(payload):
         'known_absorbed_raw_subtotal': sum(row['absorbed_raw'] for row in known),
         'absorbed_raw_total': sum(row['absorbed_raw'] for row in rows) if len(known) == len(rows) else None,
         'known_packets': len(known), 'packet_count': len(rows), 'final_barriers': deepcopy(barriers),
+        'known_declared_explosion_base_raw_subtotal': sum(r['declared_explosion_base_raw_reference'] for r in rows if r['declared_explosion_base_raw_reference'] is not None),
+        'declared_explosion_base_raw_total': sum(r['declared_explosion_base_raw_reference'] for r in rows) if all(r['declared_explosion_base_raw_reference'] is not None for r in rows) else None,
         'maximum_ammunition_reference': maximum,
         'ammunition_consumed_reference': counter.consumed - consumed if count_known else None,
         'ammunition_remaining_reference': counter.raw_remaining if count_known else None,
         'nominal_maximum_parameter': int(parameters['trigger_time']),
-        'source_valid': source_valid and blackboard_source_valid() and all(r['source_valid'] for r in inventory_reports.values()),
+        'source_valid': source_valid and blackboard_source_valid() and all(r['source_valid'] for r in inventory_reports.values())
+            and all(r['source_valid'] for r in explosion_reports.values()),
         'entry_math_source_valid': source_valid, 'blackboard_source_valid': blackboard_source_valid(),
         'source': SOURCE, 'source_sha256': SOURCE_SHA256,
         'actual_hp_loss': None, 'actual_end_seconds': None, 'actual_total_damage': None,
@@ -276,6 +288,7 @@ def mechanist_barrier_ledger(payload):
             '屏障筛选只计受击者身上来自机械师与自身的盾，不包含第三方来源；缺筛选来源可通过，缺受击实例不可通过。',
             '可用source_shield_inventory替代两个手填总量；两模式互斥。库存只在受击后独立读取点计算，不从创建/结束请求自动更新。来源总量允许signed64负值及回绕，不扩大非负吸收屏障的支持域。',
             '库存模式另列筛选正常返回资格：异常/未证明返回不会推定后续爆炸/计数/结束节点执行。旧手填总量模式是筛选正常返回下的独立数值条件参考。',
+            '可选explosion_math逐目标保留两次攻击/事件后/法抗及晚期originAtk快照；只有爆炸请求明确true才接入FP参考，计算返回不等于实际命中或生命损失。',
             '取消伤害修改器不会抹去它的数值；中间剩余值不是实际生命损失。',
             '爆炸前与补盾前主buff门分别声明；补盾请求与计数成功分开，计数门关闭仍可能请求补盾。',
             'manual_count_node_success声明计数节点的外层返回；progress_source_available单独声明计数源存在。计数源缺失可使耗弹0，而不阻止补盾请求。',

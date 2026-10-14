@@ -1,0 +1,160 @@
+{
+  "section": 269,
+  "kind": "functional_section",
+  "title": "机械师S2爆炸双分支FP基础计算与独立晚期快照",
+  "at_Beijing": "2026-10-14T12:21:07.653029+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "ef0af139d9f2a82f1ee5944d16ad306c26df6673",
+  "remaining_item": "P2机械师S2爆炸原生数值、攻击快照与账本分项；实际接受/命中/生命扣减及时钟仍未知",
+  "new_capability": [
+    "signed64 FP multiplication/addition/subtraction wrapping, strict42950 addition gate and clamp",
+    "native MAGICAL fixed-then-ratio penetration, native0.01f/0.05f multiplication order and damage floor",
+    "independent two ATK reads, two event-prepared CalculateDamage inputs, null-source baseline and late originAtk",
+    "explicit failed BB read defaults, successful zero and unknown distinctions for scale and radius",
+    "optional per-packet explosion_math behind definite true request, known subtotal and declared-scope total",
+    "mechanist S2-only Chinese entry with approx8-decimal display, exact raw detail and refresh preservation"
+  ],
+  "files": [
+    "rouge/mechanist_explosion_math.py",
+    "rouge/data/mechanist-explosion-source.json",
+    "rouge/mechanist_barrier_ledger.py",
+    "rouge/app.py",
+    "rouge/calibration.py",
+    "rouge/offline_tools_view.py",
+    "tests/test_mechanist_explosion_math.py",
+    "tests/test_offline_tools_view.py",
+    "scripts/verify_full_available.py",
+    "scripts/verify_explosion_window_269.py",
+    "research/p2-mechanist-explosion-269/README.md",
+    "research/p2-mechanist-explosion-269/native-proof.json",
+    "verification/sections/269-window-first.json",
+    "verification/sections/269-window.json",
+    "verification/sections/269-main-window.json"
+  ],
+  "required_raw_sha256": {
+    "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19",
+    "rouge/data/mechanist-explosion-source.json": "116eda3956f41c5e662c8c93d0d38b66765629743c2383cd2279e9ded6364ab6",
+    "rouge/mechanist_barrier_ledger.py": "bcd120c03ac5e7f90621cb6e323f919ca43efc5550e94183a19a2599bd39bb0d",
+    "rouge/app.py": "791d737ef8e4d639104256e6b227e863678f021b04466bd33f8c9e5620750d22",
+    "rouge/calibration.py": "6ad92b5feb5d75a5f5d8c0913b3ffdc5cbb6f58584fb6c3a3053b4db3e0f7659",
+    "rouge/offline_tools_view.py": "8dbddf35a762b804ffe7c615b064d854816e37080d01cb2c21b5e058c72617ac",
+    "tests/test_mechanist_explosion_math.py": "dcef03c40d6b0d132c36df12896adefbf619cc3c0fb5eb73ac90f1e7a250deda",
+    "tests/test_offline_tools_view.py": "499a4e2dad4243fccaa470084e8584e37e7a59b49be2b0efccb068a9236bb43c",
+    "scripts/verify_full_available.py": "f4bca6cab4d107d956386216ceb62f5f7ce6925b030fde93eda88beca131a807",
+    "scripts/verify_explosion_window_269.py": "945c3a48bf15de31eaa801607d01c7624b6963ea788dae6db5b0b0afaa1020f7",
+    "research/p2-mechanist-explosion-269/README.md": "fce4e52c19f8651be180c8b276a7cfb2ba2f9d7d5bbbac6a6032541869cd577e",
+    "research/p2-mechanist-explosion-269/native-proof.json": "8977e62208514ce838f20bd3659fc3a9ade603c54adad8565f58a875fc003cf5",
+    "verification/sections/269-window-first.json": "7f47adf3b3fc19b9197bc3d9bb320b17ebb474b1389ce83a529bca291e529953",
+    "verification/sections/269-window.json": "0260ca2a605d2260945e2a461a15b1bef8bbfbd108e5a9206782f461be346459",
+    "verification/sections/269-main-window.json": "862a661a5427a0493004b45dd785dda249929edfbb39913dcaf81aed495b8a63"
+  },
+  "reused_source_sha256": {
+    "rouge/data/catalog.json": "061079249952deda98d6b391f577cec7fa2c67a018599155df1ea11d2205a01b",
+    "rouge/catalog.py": "92acb14e3235b06eb48556bb40d0c04e7519674f7233c15a9c5169c5beea2bb2",
+    "rouge/shield_source_inventory.py": "cd0658270daaf237568f142d50b8818618d5d2971d133fbe71c913509bbe28e5",
+    "rouge/data/shield-source-inventory-source.json": "fe2bee9c8c83b68e494be440faca3b132ab1de9a7d8c4b13f9786a2492bfbfc5",
+    "research/p2-shield-source-inventory-268/native-proof.json": "fd8c155bea6ae306e0a60baffb97a283e7c9f5899387d79ed7ec1855b1fc73a0",
+    "research/p2-mechanist-s2-shared-barrier-current/buff-template-binding.json": "6f1de25c15e343592a6d2020c8dbbc33e32e1c211e3f42f3149ad0428244bac2",
+    "rouge/data/mechanist-barrier-native-source.json": "bd8d4b11552c43de9d5a321aaa85a06442105e13ba442b865f95fdaa01dca8db",
+    "research/p2-mechanist-incoming-266/native-proof.json": "bda42a2daba0ea695e26b3932b6db5435a4c7f691cda57d6f6490541965cdac9",
+    "rouge/data/barrier-blackboard-source.json": "420d761a6364e5d840b5965aa751c0f76a39016d298cc17ae6b1989fdc35347e",
+    "research/p2-mechanist-grant-267/native-proof.json": "c2fca4cd5a9908c16285ee85f40fe2009deaa6dc173e83cd716f7d658e34615b",
+    "tests/test_shield_source_inventory.py": "8c8221dc8a371744a529090d1950f6cbdecdd44ee82aba294b706e7d8126e451",
+    "tests/test_mechanist_barrier_ledger.py": "21ab9ac8ebeec9973f55baef5edcb23b656cd04da8c802ba383f4b8300994a1a",
+    "tests/test_mechanist_shield_grants.py": "dfccb98c9df52c28e7749dc4b2459e771afae43b6cdf3ed8d7f2c5533badcbbc"
+  },
+  "log_sha256": {
+    "verification/sections/269-first-check.log": "712071550b0c6752d034f45b8b736900da3d85d7499144a7aa31d839c7e3229e",
+    "verification/sections/269-display-check.log": "26e78cc7b6ef48cf08696d507de5877091061a210eb404a05920d1696d45687a"
+  },
+  "validation": {
+    "native_file_proof": {
+      "methods": 29,
+      "unique_instructions": 3172,
+      "all_bytes_rechecked": true,
+      "game_dll_executed": false,
+      "process_memory_read": false
+    },
+    "related_checks": {
+      "count": 74,
+      "new_test_methods": 15,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "command": "python -X utf8 -m unittest tests.test_mechanist_explosion_math tests.test_shield_source_inventory tests.test_mechanist_barrier_ledger tests.test_mechanist_shield_grants tests.test_offline_tools_view -v",
+      "log": "verification/sections/269-display-check.log",
+      "first74_and_final74_are_not_additional_passes": true
+    },
+    "native_main_window": {
+      "qpa": "windows",
+      "visible": true,
+      "main_window_route_verified": true,
+      "mechanist_S2_button_visible": true,
+      "other_operator_button_hidden": true,
+      "query": [
+        "calibration",
+        "explosion-values"
+      ],
+      "scaled_calculate_damage_raw": 6012954080000,
+      "baseline_calculate_damage_raw": 3006477040000,
+      "late_origin_atk_and_actual_damage_unknown": true,
+      "refresh_preserved_editor_result_selection": true,
+      "loaded_source_sha256": {
+        "rouge/app.py": "791d737ef8e4d639104256e6b227e863678f021b04466bd33f8c9e5620750d22",
+        "rouge/calibration.py": "6ad92b5feb5d75a5f5d8c0913b3ffdc5cbb6f58584fb6c3a3053b4db3e0f7659",
+        "rouge/offline_tools_view.py": "8dbddf35a762b804ffe7c615b064d854816e37080d01cb2c21b5e058c72617ac",
+        "rouge/mechanist_barrier_ledger.py": "bcd120c03ac5e7f90621cb6e323f919ca43efc5550e94183a19a2599bd39bb0d",
+        "rouge/mechanist_explosion_math.py": "e2f7e5ec412248f2e62a58333936c0c8e2d50536a443a095ccb77e54fc098f19",
+        "rouge/data/mechanist-explosion-source.json": "116eda3956f41c5e662c8c93d0d38b66765629743c2383cd2279e9ded6364ab6",
+        "rouge/shield_source_inventory.py": "cd0658270daaf237568f142d50b8818618d5d2971d133fbe71c913509bbe28e5"
+      },
+      "private_state_read": false,
+      "temporary_state_root": true,
+      "game_operated": false,
+      "chat_sent": false,
+      "scope": "Actual Windows changed MainWindow/public explosion snapshots only; not complete game/private/native-history validation",
+      "desktop_visually_inspected_with": "Windows-mcp"
+    },
+    "native_original_startup": {
+      "section": 269,
+      "parent_pid": 19688,
+      "main_pid": [
+        25932
+      ],
+      "visible_window_handles": [
+        3279982
+      ],
+      "responding": [
+        true
+      ],
+      "caption": [
+        "黑流树海助手 0.91 · 局外计算与节点测试（234）"
+      ],
+      "caption_is_legacy_not_authoritative_section_count": true,
+      "prior_owned_main_pid": 420,
+      "prior_owned_main_exit_confirmed_before_launch": true,
+      "native_original_window_startup": true,
+      "game_operated": false,
+      "chat_sent": false,
+      "scope": "Original app restarted; public changed MainWindow fixture separately source-bound. Not full game/private/native-history integration.",
+      "private_json_files_checked": 3,
+      "private_json_files_changed": 0,
+      "private_json_new_files": 0,
+      "desktop_visually_inspected_with": "Windows-mcp"
+    },
+    "read_only_source_review": "limited independent audit found no substantive defect; manifest/proof/template hashes and zero/unknown/late snapshot counterexamples rechecked"
+  },
+  "limits": [
+    "Independent declarations and ordinary native path, not actual entities, callbacks, runtime inventory or server equivalence.",
+    "Scaled CalculateDamage return may be known when baseline is unknown; this does not prove Modifier creation.",
+    "Late originAtk requires an independent late snapshot or explicit unchanged declaration, not the prior NoEvent input.",
+    "Actual modifier acceptance, hits, HP, target count, collision/end clocks and current XLua/hotfix remain unknown.",
+    "Declared calls total is not complete damage; legacy float per_hit remains separate.",
+    "No game operation, chat sends, private-state reset or configuration writes.",
+    "Preparation name/syntax errors corrected; original full failing output was not archived and is not impersonated.",
+    "Full maintained available scope due275/final280; missing original Windows/private samples not PASS."
+  ],
+  "next_section": 270,
+  "next_full_validation_after": 275,
+  "goal_target_section": 280
+}
