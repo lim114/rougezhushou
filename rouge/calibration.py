@@ -447,3 +447,11 @@ def explosion_values(explosion):
 
 
 COMMANDS['explosion-values'] = explosion_values
+
+
+def modifier_values(packet):
+    from .modifier_packet_reference import modifier_packet_reference
+    return modifier_packet_reference(packet)
+
+
+COMMANDS['modifier-values'] = modifier_values

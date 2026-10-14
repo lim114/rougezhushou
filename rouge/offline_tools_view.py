@@ -34,6 +34,7 @@ CALIBRATION_QUERIES = (
     ('shield-grants', '机械师二技能 · 初始屏障与藏品'),
     ('shield-inventory', '机械师二技能 · 按来源汇总屏障'),
     ('explosion-values', '机械师二技能 · 爆炸双分支定点计算'),
+    ('modifier-values', '藏品逐包定点修饰与顺序差异'),
 )
 BATTLE_QUERIES = (
     ('actions', '完整关卡动作清单'), ('activations', '预置实体激活对应'),
@@ -70,6 +71,7 @@ BATTLE_COMMANDS = {
 EVIDENCE_NAMES = {'game_panel': '调用方声明的游戏面板',
     'public_case': '调用方声明的公开算例', 'formula_reference': '公式参考算例'}
 INPUT_GUIDANCE = {
+    'modifier-values':'packet声明一种family的固定藏品、独立入链值与实际包类型/目标/方向/不可改值标记。base_one先合并成一个模块，normal逐模块乘；预处理与修饰顺序分开，留空列有限声明组合，不赋概率。BB对象缺失与数字失败分开，成功0/负值不夹正。接爆炸返回须独立声明修饰器存在及入链值未变；不是实际命中或生命结算。',
     'shield-grants':'仅机械师二技能。scenario为当前等级、模组、藏品等培养条件；snapshots逐受益对象声明创建时MAX_HP或本体模型小计。结构性原理不得借本体HP。分别列倍率、FP乘积、单精度写入与读回；null为未知，成功读取0不改用默认1。仅数值参考，不证明新盾已建立。',
     'shield-inventory':'仅机械师二技能。inventory逐实例声明读取点、身份、结束/来源/hasShield资格与独立FP值或黑板float32。自动计算本体来源及受击者自身来源总原值与双筛选门；mask不参与。未读全、黑板对象缺失或读值未知则完整总量未知。已证分项不是下界，不操作游戏、不自动建立或删除盾。',
     'explosion-values':'仅机械师二技能。两次来源攻击读取、两次前置事件后的AttackInfo/法抗及晚期originAtk快照独立声明。计算FP攻击加项门、穿透法抗、0.01f顺序和5%下限；技能倍率和ONE基准分列。快照与无变化条件互斥；不是实际modifier接受、命中或生命损失。',
@@ -184,6 +186,9 @@ def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
     if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
+        if command == 'modifier-values':
+            from .modifier_packet_reference import public_example
+            return {'packet':public_example()}
         if command == 'explosion-values':
             from .mechanist_explosion_math import public_example
             return {'explosion':public_example()}
@@ -288,6 +293,34 @@ def _explosion_tables(data):
     return parts
 
 
+def _modifier_tables(data):
+    families={'healing':'受治疗修饰','physical':'物理承伤修饰','magic':'法术承伤修饰','true':'真实承伤修饰','elemental':'元素伤害修饰'}
+    source_names={r['relic_id']:r['name'] for r in data['selected_sources']}
+    definitions=data['module_definitions']
+    amount=lambda raw:_fp_amount(raw,8)
+    statuses={'skipped':'未执行修饰','missing_blackboard_exception':'黑板对象缺失，异常路径',
+        'unknown_execution_or_blackboard':'执行资格或黑板未确认','conditional_reference':'声明条件下的数值',
+        'unknown_numeric_or_setter':'数字或写入门未确认','unqualified_float_conversion':'浮点转换正常返回未核验',
+        'not_called_after_unqualified_chain':'前序未证正常返回，未继续'}
+    known=data['known_discrete_raw_references'];low=known[0] if known else None
+    parts=[_p('类型：'+families[data['family']]+'；来源核验：'+_text(data['source_valid'])),
+        _p('独立修饰模块：'+str(len(definitions))+'；有限声明顺序组合：'+str(data['declared_order_combination_count'])+'。组合数量不是概率，也不证明实际顺序可达。'),
+        _h('离散数值参考'),_table(['定点原值','显示值（8位）','距最小候选的原值差'],
+            [(raw,amount(raw),raw-low) for raw in known]),
+        _p('所有声明组合数值齐全：'+_text(data['all_declared_cases_numeric'])+'；所声明链的唯一参考：'+amount(data['single_declared_chain_raw_reference'])),
+        _p('1个定点原值单位为2⁻³²；≈仅为显示舍入。候选之间不补中间值、不取平均，实际伤害/治疗及生命结算未知。')]
+    for index,case in enumerate(data['cases'],1):
+        acquisition=' → '.join(source_names.get(k,'来源未核验') for k in case['preprocessing_order'])
+        application=' → '.join(definitions[k]['name'] for k in case['application_order'])
+        parts += [_h('声明组合'+str(index)),_p('黑板预处理：'+acquisition+'；修饰应用：'+application),
+            _table(['模块','进入值','倍率','尝试写入','保留值','正常返回','状态'],
+                [(s['name'],amount(s.get('input_raw_reference')),amount(s.get('factor_raw_reference')),
+                  amount(s.get('attempted_raw_reference')),amount(s.get('stored_raw_reference')),
+                  s['normal_return_reference'],statuses[s['status']]) for s in case['steps']]),
+            _p('链正常返回：'+_text(case['normal_return_reference'])+'；声明范围链值：'+amount(case['declared_chain_raw_reference']))]
+    return parts
+
+
 def _shield_inventory_tables(data):
     amount=_fp_amount
     status_names = {'declared_getter_result':'独立getter返回声明', 'unknown_getter_result':'getter结果未知',
@@ -360,7 +393,9 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
     if data.get('stage_name'): parts.append(_p('关卡：'+data['stage_name']))
     if input_source:parts.append(_p('此次输入来源：'+input_source))
     if family == 'calibration':
-        if command == 'explosion-values':
+        if command == 'modifier-values':
+            parts += _modifier_tables(data)
+        elif command == 'explosion-values':
             parts += _explosion_tables(data)
         elif command == 'shield-inventory':
             parts += _shield_inventory_tables(data)
@@ -818,7 +853,7 @@ class OfflineToolsPanel(QWidget):
 
     def _update_buttons(self):
         family,command=self.current_query()
-        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values') and self._scenario is not None)
+        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values') and self._scenario is not None)
         self.import_stage.setEnabled((family=='battle' or family=='exploration' and command=='settlements') and self._stage is not None)
         exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes','search-routes')
         self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
@@ -926,7 +961,7 @@ class OfflineToolsPanel(QWidget):
     def _import_scenario(self):
         try:
             family,command=self.current_query()
-            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
+            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
             payload=self._payload();scenario=deepcopy(self._scenario)
             if scenario.get('operator') not in calibration.OPERATORS:raise ValueError('校准工具目前仅支持凯尔希·思衡托、凛御银灰、机械师。')
             if command=='recipient-events' and (scenario.get('operator')!='silverash' or scenario.get('skill')!=2):
