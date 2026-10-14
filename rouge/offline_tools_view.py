@@ -7,6 +7,7 @@ from copy import deepcopy
 import html
 import json
 import math
+import struct
 from pathlib import Path
 
 from PySide6.QtCore import QObject, QRunnable, QThreadPool, Signal
@@ -42,6 +43,7 @@ CALIBRATION_QUERIES = (
     ('sp-init', '技力初始化 · 容量与数据切换'),
     ('sp-cost', '技能技力 · 门槛与消耗意图'),
     ('sp-data', '技能费用 · 逐次修饰与更新'),
+    ('sp-increments', '技力增量 · 初始化与类型资格'),
 )
 BATTLE_QUERIES = (
     ('actions', '完整关卡动作清单'), ('activations', '预置实体激活对应'),
@@ -113,6 +115,7 @@ INPUT_GUIDANCE = {
     'compare': 'left_stage/right_stage 与 left_level/right_level 分别指定两组条件；run_config/right_run_config 为局外环境。比较已支持环境小计，完整有效面板仍未知。',
 }
 INPUT_GUIDANCE.update({
+    'sp-increments':'sp_increments独立声明四槽初始化、技能初始化或攻击/受伤时的单次回技力参考。黑板指针在入口捕获，各槽查找、mask和数组读取独立；缺bit的默认1.0不代表启用回复渠道。数组非空不证明完整初始化。失败前已写mask/flag/槽值保留，未知数值直接赋值与未知分支条件分开。单精度初始化比较包含相等边界，不套固定点门槛。实际数组、当前SP和完整周期仍未知，不把槽0直接作为自然回复倍率。',
     'sp-data':'sp_data逐次声明符文乘加、藏品倍率、整数缩放或直接费用替换。每次都独立读取成本并取整；不能将全部倍率合并后只取整一次，也不能把编码入参当作实际费用。Single转换或运算不精确、舍入环境未核时保持未知。整数缩放按32位回绕；只更新费用的调用参数与正常性分开。实际SP、解码费用和完整回转仍未知。',
     'sp-cost':'sp_cost分别声明门槛参数、技力资格读取和消耗请求。非负最小技力是门槛覆盖，不能与技能费用取最大值；SP读取后的第二门槛也须独立。Unity判空不等于存活，费用、无技力开关、虚调用跳费及两次owner都不复用。Apply布尔值只是调用返回参考，实际支付、SP变化和完整施放未知。仅供局外条件算例。',
     'sp-init':'sp_initialization逐次声明构造、初始化或数据切换。两次容量读取与独立解码值不能复用；乘积仅为编码前参数，不作为实际容量。初始化直接复制SP字段，不借公共setter的存活门或零下限。true/false/null分别为正常/异常/未知；前缀与最终未知分开。仅成本更新仍先写Entity容量；Reset和保留经过时间的更新采用不同定时器规则。实际SP、完整初始化和技能周期未知。',
@@ -200,6 +203,9 @@ def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
     if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
+        if command == 'sp-increments':
+            from .skill_sp_increment_reference import public_example
+            return {'sp_increments':public_example()}
         if command == 'sp-data':
             from .skill_data_cost_reference import public_example
             return {'sp_data':public_example()}
@@ -325,6 +331,52 @@ def _explosion_tables(data):
         '；所声明调用总参考：'+amount(data['declared_calls_scaled_damage_raw_total'])),
         _p('≈表示仅显示到8位小数；完整定点原值保留在技术详情。'),
         _p('采用原值定点顺序与单精度常量；这些数值不代表全爆炸伤害、实际目标数或实机时钟。')]
+    return parts
+
+
+def _single_bits_value(bits):
+    if bits is None:
+        return None
+    value=struct.unpack('<f',struct.pack('<I',bits))[0]
+    return format(value,'.9g') if math.isfinite(value) else '非有限值（计算未知）'
+
+
+def _skill_sp_increment_tables(data):
+    names={'sp_data_init':'四槽增量初始化','skill_data_init':'技能初始化与持续时间资格',
+           'attack_gain':'攻击类型单次请求','damage_gain':'受伤类型单次请求'}
+    channels={'TIME':'时间索引','ATTACK':'攻击索引','TAKEN_DAMAGE':'受伤索引',
+              'NEVER_USE':'保留索引（非新增回复类型）'}
+    sources={'blackboard':'独立黑板查找','default_one':'未启用位的默认值1.0',
+             'protected_increment':'独立保护值解码','unknown':'来源未确认'}
+    parts=[_p('来源核验：'+_text(data['source']['valid'])+'；数组非空、各槽数值与回复类型是否启用分开。'),
+        _p('默认1.0不自动开启回复；单次请求也不证明实际SP增加或完整技能回转。')]
+    for number,row in enumerate(data['rows'],1):
+        parts += [_h(str(number)+' · '+names[row['kind']]),
+            _table(['调用参考','正常完成参考'],[(row['called'],row['normal'])])]
+        if row['slot_references']:
+            parts += [_table(['槽序号','索引含义','取值来源','本次槽值参考','本次目标数组读点'],
+                [(slot['slot'],channels[slot['index_name']],sources[slot['value_source']],
+                  _single_bits_value(slot['value_bits']),slot['array_identity'])
+                 for slot in row['slot_references']])]
+        if row['stored_prefixes']:
+            parts += [_h('已完成的写入前缀'),_table(['写入字段','槽序号','直接参数参考','本次设置的位'],
+                [('初始化标志' if prefix['field']=='m_inited' else '回复类型' if prefix['field']=='spType' else '增量数组',
+                  prefix.get('index'),_single_bits_value(prefix.get('bits')) if 'bits' in prefix else
+                  '请求4槽' if 'requested_length' in prefix else prefix.get('value'),
+                  prefix.get('known_set_bit')) for prefix in row['stored_prefixes']])]
+        ge=row['duration_ge_reference']
+        if ge:
+            parts += [_table(['持续时间资格参考','比较规则'],[(ge['ge_boolean_reference'],'单精度包含相等边界')])]
+        if row['assign_arguments']:
+            parts += [_p('持续时间赋值与后续初始化各自读取，不沿用首次持续时间或黑板身份。')]
+        if row['sp_init_arguments']:
+            args=row['sp_init_arguments']
+            parts += [_table(['初始化数据读点','黑板参数读点','黑板参数是否存在'],
+                [(args['sp_data_identity'],args['blackboard_identity'],args['blackboard_exists'])])]
+        if row['recover_arguments']:
+            args=row['recover_arguments']
+            parts += [_table(['单次回技力请求参考','强制参数'],[(_fp_amount(args['amount_raw'],8),args['force'])])]
+    parts += [_p('实际增量数组、当前技力和完整技能周期：未知。不同数组读点不自动合并；未观察到的事件次数不补填。')]
     return parts
 
 
@@ -657,7 +709,9 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
     if data.get('stage_name'): parts.append(_p('关卡：'+data['stage_name']))
     if input_source:parts.append(_p('此次输入来源：'+input_source))
     if family == 'calibration':
-        if command == 'sp-data':
+        if command == 'sp-increments':
+            parts += _skill_sp_increment_tables(data)
+        elif command == 'sp-data':
             parts += _skill_data_cost_tables(data)
         elif command == 'sp-cost':
             parts += _skill_sp_cost_tables(data)
@@ -1131,7 +1185,7 @@ class OfflineToolsPanel(QWidget):
 
     def _update_buttons(self):
         family,command=self.current_query()
-        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data') and self._scenario is not None)
+        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data','sp-increments') and self._scenario is not None)
         self.import_stage.setEnabled((family=='battle' or family=='exploration' and command=='settlements') and self._stage is not None)
         exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes','search-routes')
         self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
@@ -1239,7 +1293,7 @@ class OfflineToolsPanel(QWidget):
     def _import_scenario(self):
         try:
             family,command=self.current_query()
-            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
+            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data','sp-increments') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
             payload=self._payload();scenario=deepcopy(self._scenario)
             if scenario.get('operator') not in calibration.OPERATORS:raise ValueError('校准工具目前仅支持凯尔希·思衡托、凛御银灰、机械师。')
             if command=='recipient-events' and (scenario.get('operator')!='silverash' or scenario.get('skill')!=2):

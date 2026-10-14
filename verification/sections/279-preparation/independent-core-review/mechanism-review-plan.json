@@ -1,0 +1,45 @@
+{
+  "scope": "279 fixed v1 mechanism/control review design, preparation only; no product/test edits and no repeated695-span source audit.",
+  "source_artifacts_sha256": {
+    ".cache\\research\\p2-sp-increments-279\\SOURCE_GATE.md": "276090118aa7fd6c9c9f554fd4be2069fd831763338053408b1edf6aebcf4535",
+    ".cache\\research\\p2-sp-increments-279\\SCHEMA.md": "8e285bd0a1962beca071afb4ff3d8772f103695d68754bd0ce64c424f1c5206a",
+    ".cache\\research\\p2-sp-increments-279\\increments-source-279.json": "524a0110cb17a5aa2d965770dec835104f410618c4b12497c6868e8f97e15cb5",
+    ".cache\\research\\p2-sp-increments-279\\increments-consumers-279.json": "6647b36fcc4884c81ed4c902ee3c6f0f58d0da947c6060fa25bd3bf708f0d0a0",
+    ".cache\\research\\p2-sp-increments-279\\channel-index-helper-279.json": "ca70d721ca8582caba6149461bc60272fd582b8ca6a4df62b3c72b7052778352"
+  },
+  "verified_from_existing_original_instruction_flow": [
+    "SpData.Init captures its Blackboard argument once inrbp; each loop tests that same pointer.",
+    "The three per-slot read groups are independent: lookup result, currentmask and currentarray/length.",
+    "BB success writes mask withBTS before reading/guarding array; fallback unknownmask influences branch.",
+    "Default 1.0 is an array literal, not a claim that a correspondingSP type is enabled.",
+    "SkillData.InitIfNot reads firstduration then writesflagTrue beforeSingleGE; successfulcomparison rereads BB andduration forAssign, then rereads SpData andBB forInit.",
+    "SingleGE is inclusive at exactSingle minusEPS and is distinct from priorFP strict EPS comparison.",
+    "Index helper1844dc660 remains unbound metadata, with only mov eax,ecx/ret established."
+  ],
+  "necessary_prototype_review_cases": [
+    "Inited true earlyreturn skips allocation and all slot stores, even if a caller declares downstream failures.",
+    "Inited unknown leaves futurecallsUnknown rather thanFalse.",
+    "One captured BBexistsFalse applies all4slots: no dynamickey/TryGetcalls; eachfallbackmask is still independently read.",
+    "BBfoundTrue +maskvalueNone +normalTrue writesunknownfullmask withknownsetbit; unknownlookupbits can stilldirectstore andcontinue.",
+    "Fallback maskNone +normalTrue leavesbranch-dependent decode/default/storeUnknown; no chosenvalue.",
+    "No bit/foundFalse usesexactbits3f800000=1.0; doesnotenableattack/damagegate.",
+    "Known arrayNULL or unsigned length<=slot fails after preservingmaskstore and earlier completedstores.",
+    "Different array identities acrossslots remain separate, never becomeone actualcompletearray.",
+    "Skill firstdurationnormalTrue/valueNone still writesflagTrue beforeunqualifiedcomparison.",
+    "SkillGEfalse skipsAssign; GEtrue requiresfirstBB but secondBB NULLmay stillpass toSpData.Init.",
+    "Singlebits b727c5ac comparisonTrue atboundary; immediatelymorenegative finitebitpattern False; do not reuseFP >42950 semantics.",
+    "Attack gate useslowbytebit2, damagebit4 plusindependentcancelled/byteflag, not owneralive.",
+    "Consumer arrayread isbeforeindexhelper; rawNULLcheck isafter it, andbounds useunsigned32.",
+    "Unknownamountbits withnormallyreturnedSingleconversion/recovery cancontinueopaque withamountRawNone; knowncallfailure blocksfuturecalls.",
+    "Singleamount cf000000 yieldsMIN64 ifnormallyconverted;4f000000 yieldsout-of-domainunknown, not fabricatedMIN64.",
+    "All finalactualArray/SP/cycle remainNone; no naturalOnTick slot0 multiplier or private/live state import."
+  ],
+  "remaining_unknown": [
+    "Prototype not yet frozen or reviewed",
+    "Dynamickey strings",
+    "Actual decoder/arrays/MXCSR/hotfix/callbacks and SP/fullcycle"
+  ],
+  "game_dll_executed": false,
+  "game_process_memory_read": false,
+  "source_bytes_audit_repeated": false
+}

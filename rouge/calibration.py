@@ -511,3 +511,11 @@ def skill_data_cost_values(sp_data):
 
 
 COMMANDS['sp-data'] = skill_data_cost_values
+
+
+def skill_sp_increment_values(sp_increments):
+    from .skill_sp_increment_reference import skill_sp_increment_reference
+    return skill_sp_increment_reference(sp_increments)
+
+
+COMMANDS['sp-increments'] = skill_sp_increment_values
