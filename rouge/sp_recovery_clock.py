@@ -249,8 +249,10 @@ def sp_recovery_clock_reference(payload):
                         remaining=None if unclamped is None else max(0,unclamped);period=new_period
                         row['period_reset']={'kind':'keep_past','new_period_raw_reference':new_period,'past_raw_reference':past,'unclamped_remaining_raw_reference':unclamped,'remaining_raw_reference':remaining};row['status']='reset_keep_past'
                     else:
-                        period=remaining=new_period
-                        row['period_reset']={'kind':'restart','new_period_raw_reference':new_period,'past_raw_reference':None,'unclamped_remaining_raw_reference':None,'remaining_raw_reference':remaining};row['status']='reset_restart'
+                        # Periodic.Reset(newPeriod, true) first applies TSMath.Max(0,P).
+                        # Its argument remains distinct from the stored period.
+                        period=remaining=max(0,new_period)
+                        row['period_reset']={'kind':'restart','new_period_raw_reference':new_period,'clamped_period_raw_reference':period,'past_raw_reference':None,'unclamped_remaining_raw_reference':None,'remaining_raw_reference':remaining};row['status']='reset_restart'
         row.update(normal_return_reference=normal,period_after_raw_reference=period,remaining_after_raw_reference=remaining);rows.append(row)
     complete=normal is True and all(r['normal_return_reference'] is True for r in rows)
     counts=[r['tick']['declared_request_count_reference'] if r['tick'] is not None else r['recovery']['declared_request_count_reference'] if r['recovery'] is not None else r['drain']['declared_request_count_reference'] if r['drain'] is not None else 0 for r in rows]

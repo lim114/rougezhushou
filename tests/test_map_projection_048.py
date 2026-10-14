@@ -5,9 +5,11 @@ import json
 import math
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from rouge.battle_preview import battle_data, DATA
 from rouge.map_projection import grid_digest, projection_data, projection_for
+from rouge.fixed_landmark_mapping import FixedLandmarkReference
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / '.cache/research/map-projection-048'
@@ -99,7 +101,23 @@ class GroundLandmarkTests(unittest.TestCase):
 
     def test_unaccepted_wood_decorations_and_portal_probes_are_retained(self):
         for sid in ('ro6_n_2_3', 'ro6_n_2_4', 'ro6_t_1', 'ro6_n_3_5'):
-            self.assertIsNone(load(battle_data()['stages'][sid]))
+            stage = battle_data()['stages'][sid]
+            # Rejected plane fits remain unbound. A later independently read
+            # sparse center reference is a distinct mapping with no extrapolation.
+            self.assertNotIn(sid, projection_data()['stages'])
+            with patch('rouge.fixed_landmark_mapping.direct_reference_for', return_value=None):
+                self.assertIsNone(load(stage))
+            actual = load(stage)
+            if sid == 'ro6_n_2_4':
+                self.assertIsInstance(actual, FixedLandmarkReference)
+                self.assertEqual(actual.mapping_mode, 'direct_verified_centers')
+                self.assertEqual(len(actual.points), 8)
+                self.assertFalse(actual.supports_segment_reference)
+                for row, col, x, y in actual.points:
+                    self.assertEqual(actual.project({'row': row, 'col': col}), (x, y))
+                    self.assertIsNone(actual.cell_at(x, y))
+            else:
+                self.assertIsNone(actual)
             rejected = json.loads((BASE / (sid + '-fit.json')).read_text(encoding='utf-8'))
             self.assertFalse(rejected['accepted'])
             self.assertGreater(max(c['error_px'] for c in rejected['checks']), 4)

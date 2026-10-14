@@ -5,9 +5,11 @@ import json
 import math
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from rouge.battle_preview import battle_data, DATA
 from rouge.map_projection import grid_digest, projection_data, projection_for
+from rouge.fixed_landmark_mapping import FixedLandmarkReference
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / '.cache/research/map-projection-049'
@@ -101,7 +103,22 @@ class GroundReferenceTests(unittest.TestCase):
             self.assertFalse(record['accepted_for_runtime'])
             self.assertFalse(probe['accepted'])
             self.assertGreater(max(c['error_px'] for c in probe['checks']), 4)
-            self.assertIsNone(load(battle_data()['stages'][probe['input']['id']]))
+            sid = probe['input']['id']
+            stage = battle_data()['stages'][sid]
+            self.assertNotIn(sid, projection_data()['stages'])
+            with patch('rouge.fixed_landmark_mapping.direct_reference_for', return_value=None):
+                self.assertIsNone(load(stage))
+            actual = load(stage)
+            if sid == 'ro6_n_3_3':
+                self.assertIsInstance(actual, FixedLandmarkReference)
+                self.assertEqual(actual.mapping_mode, 'direct_verified_centers')
+                self.assertEqual(len(actual.points), 7)
+                self.assertFalse(actual.supports_segment_reference)
+                for row, col, x, y in actual.points:
+                    self.assertEqual(actual.project({'row': row, 'col': col}), (x, y))
+                    self.assertIsNone(actual.cell_at(x, y))
+            else:
+                self.assertIsNone(actual)
 
     def test_single_column_ground_holds_do_not_claim_lateral_or_elevated_accuracy(self):
         c = projection_data()['calibrations']['ro6_n_4_3']

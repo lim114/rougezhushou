@@ -1,0 +1,15 @@
+# 第275节：SP写入的存活门、限幅与完整结构复制
+
+候选DLL SHA256为583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5，metadata为d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f。完整准备束55方法、2599唯一指令/11190字节、3971原span及14份来源全部由根重新读原件核对。source-proof.json原字节保留；cache路径只是原始追溯记录，不是产品运行依赖。独立复审另重读public set_sp/SetSpInternal/DoSetSpInternal/Clamp的277指令/1203字节，29探针/116检查符合源语义，不能替代实际运行验收。
+
+Entity与Character的虚槽113均绑定SetSpInternal66628；存活虚槽40分别66349/75822。Character存活还要求非dummy、base alive、非dying，不能用局外生命白值代替独立bool读取。公共set_sp固定传force=false，其void正常返回不提供内部布尔值。274的_RecoverMp.force只跳过恢复暂停门，并不让公共setter越过存活门。直接internal/do调用也始终先读取alive；alive读取异常时，即使force=true也不继续。
+
+alive||force成立后才读取signed32 maxSp，转FP upper=Int32(maxSp)*ONE，再按max(min(value,upper),0)求限幅，无EPS。负maxSp与MIN32属于原类型域，结果可闭合0；未知value且已知upper<=0、未知upper且value<=0同样可闭合0，但maxSp getter正常资格仍不可跳过。未成活且不force时正常返回false，未读取上限或编码/复制；public wrapper仍可正常void返回。
+
+限制后的FP只作为ObscuredFP编码调用参数。编码返回正常后，普通码将返回结构的16+16+8字节按顺序复制到m_sp的40字节区域；AL=true在stores之前准备，只有三store段正常完成才有正常内部true返回。编码失败未到本体复制；复制失败/未知可能已有部分写入，不能记完整40字节或称完全未改。后续解码、当前crypto状态与真实SP保留未知；本节不以编码参数反推最终SP。
+
+有限typed布尔未知分别运行原生两分支，仅相同参考值合流。缺目标在public虚dispatch之前异常；直接internal虽已进入方法，也未调用alive getter。274链接使用外层真实action ID及严格tick/drain/recover相位，不能用nested drain ID替代外层reconfigure。父调用确定未发生时不窥探目标/读取声明；正常资格未知与未调用不同。父setter正常与子public void正常明确冲突时，保留两方声明和冲突，完整声明范围总数未知；内部false不是这种正常资格冲突。不修改原274输入或源回执。
+
+公开gold：274四点批量的独立SP5→请求9，alive=true/maxSp6给编码参数6及完整40字节参考；强制恢复的独立SP9→请求7，alive=false而public force=false，内部false/void正常、复制0。独立internal force=true、alive=false、value=-ONE时仍先读alive，再编码0/完整40。三声明的完整复制计数2，不意味着实际SP最终为0、6或7。实际SP、编码状态、完整回复、初动/回转/技能周期均未知，不操作游戏或发送聊天。
+
+本节根先封存并修正controller已证失败却把链接调用记未知的原输入/输出与core；原件见verification/sections/275-pointer-before.py及275-pointer-review.json。首30与扩展32测试日志/源副本并存，不重计。机制与纯公开声明验收不冒称实机SP或历史Windows/私样本通过。

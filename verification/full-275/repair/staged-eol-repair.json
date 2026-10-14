@@ -1,0 +1,10 @@
+{
+  "kind": "STAGED_RAW_CRLF_PACKAGING_REPAIR",
+  "source_bytes_changed": false,
+  "first_console_raw_saved": false,
+  "first_tool_output_was_truncated": true,
+  "same_staged_failure_reproduction": "verification/full-275/repair/staged-eol-failure-reproduction.log",
+  "reproduction_actual_exit": 2,
+  "cause": "Raw byte preserving -text files include real CRLF; Git default whitespace check counted CR as trailing whitespace. Per-file cr-at-eol preserves frozen source/evidence bytes rather than rewriting them.",
+  "current_source_float_or_mechanism_changed": false
+}

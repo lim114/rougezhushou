@@ -65,6 +65,38 @@ def tick_result(data):
 
 
 class SpRecoveryClockTests(unittest.TestCase):
+    def test_restart_clamps_reciprocal_zero_and_negative_rates_from_each_invalid_timer(self):
+        for old_period in (0, -Q, 1):
+            for input_rate, argument in ((0, -Q), (-Q, -Q), (-Q // 2, -2 * Q), (Q, Q)):
+                with self.subTest(old_period=old_period, input_rate=input_rate):
+                    result = module.sp_recovery_clock_reference(payload(
+                        reconfigure(input_rate=input_rate), period=old_period, remaining=-2 * Q))
+                    row = result['rows'][0]
+                    self.assertEqual(row['status'], 'reset_restart')
+                    self.assertTrue(row['normal_return_reference'])
+                    self.assertIsNone(row['drain'])
+                    self.assertIsNone(row['can_recover'])
+                    self.assertEqual(row['period_reset']['new_period_raw_reference'], argument)
+                    self.assertEqual(row['period_reset']['clamped_period_raw_reference'], max(0, argument))
+                    self.assertEqual((result['final_period_raw_reference'], result['final_remaining_raw_reference']),
+                                     (max(0, argument), max(0, argument)))
+                    self.assertEqual(result['declared_complete_setter_request_count'], 0)
+                    self.assertIsNone(result['actual_sp_after'])
+                    self.assertIsNone(result['actual_skill_cycle'])
+
+    def test_restart_zero_is_distinct_from_invalid_sentinel_and_keep_past_negative_period(self):
+        restarted = module.sp_recovery_clock_reference(payload(
+            reconfigure(input_rate=0), period=0, remaining=0))
+        kept = module.sp_recovery_clock_reference(payload(reconfigure(
+            input_rate=-Q, drain=tick('drain', enabled=False), can_recover=rate()), period=Q, remaining=Q))
+        invalid = module.sp_recovery_clock_reference(payload(reconfigure(
+            input_rate=Q, drain=tick('drain', enabled=False), can_recover=rate(0)), period=Q, remaining=Q))
+        self.assertEqual((restarted['final_period_raw_reference'], restarted['final_remaining_raw_reference']), (0, 0))
+        self.assertEqual((kept['final_period_raw_reference'], kept['final_remaining_raw_reference']), (-Q, 0))
+        self.assertEqual(kept['rows'][0]['status'], 'reset_keep_past')
+        self.assertEqual((invalid['final_period_raw_reference'], invalid['final_remaining_raw_reference']), (-Q, -Q))
+        self.assertEqual(invalid['rows'][0]['status'], 'marked_invalid')
+
     def test_public_three_actions_batch_once_pause_again_and_force_negative_independent_read(self):
         data = module.public_example(); before = deepcopy(data)
         result = module.sp_recovery_clock_reference(data)
@@ -388,8 +420,9 @@ class SpRecoveryClockTests(unittest.TestCase):
                 self.assertEqual(result['final_period_raw_reference'], period)
                 self.assertEqual(result['final_remaining_raw_reference'], 0)
                 direct = module.sp_recovery_clock_reference(payload(reconfigure(input_rate=input_rate), period=0))
-                self.assertEqual(direct['final_period_raw_reference'], period)
-                self.assertEqual(direct['final_remaining_raw_reference'], period)
+                self.assertEqual(direct['rows'][0]['period_reset']['new_period_raw_reference'], period)
+                self.assertEqual(direct['final_period_raw_reference'], max(0, period))
+                self.assertEqual(direct['final_remaining_raw_reference'], max(0, period))
 
     def test_canrecover_rate_strict_epsilon_and_typed_zero_product_closure(self):
         for flat, ratio, active in ((EPS, Q, False), (EPS + 1, Q, True),
@@ -437,8 +470,9 @@ class SpRecoveryClockTests(unittest.TestCase):
                                    (42949, 429503459305445), (-42949, -429503459305445)):
             with self.subTest(input_rate=input_rate):
                 result = module.sp_recovery_clock_reference(payload(reconfigure(input_rate=input_rate), period=0))
-                self.assertEqual(result['final_period_raw_reference'], period)
-                self.assertEqual(result['final_remaining_raw_reference'], period)
+                self.assertEqual(result['rows'][0]['period_reset']['new_period_raw_reference'], period)
+                self.assertEqual(result['final_period_raw_reference'], max(0, period))
+                self.assertEqual(result['final_remaining_raw_reference'], max(0, period))
                 self.assertTrue(result['rows'][0]['normal_return_reference'])
 
     def test_controller_and_timer_absence_are_separate_from_disabled_and_explicit_recovery(self):

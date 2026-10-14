@@ -38,6 +38,7 @@ CALIBRATION_QUERIES = (
     ('regen-clock', '常态生命回复 · 逐点周期与改速'),
     ('regen-attributes', '常态生命回复 · 属性缓存与藏品求值'),
     ('sp-clock', '自然技力 · 批量时钟与恢复请求'),
+    ('sp-setter', 'SP写入 · 存活门与上限'),
 )
 BATTLE_QUERIES = (
     ('actions', '完整关卡动作清单'), ('activations', '预置实体激活对应'),
@@ -74,6 +75,7 @@ BATTLE_COMMANDS = {
 EVIDENCE_NAMES = {'game_panel': '调用方声明的游戏面板',
     'public_case': '调用方声明的公开算例', 'formula_reference': '公式参考算例'}
 INPUT_GUIDANCE = {
+    'sp-setter':'sp_writes逐次声明公共setter或独立internal/do调用。存活读取先于force；公共setter固定force=false，即使上游恢复force=true也不跳存活门。maxSp正常读取后按原生上下限限制，编码与完整40字节复制资格独立；void正常不等于内部true或实际SP。clock_request仅接274独立同目标/参数未变读点，父正常与子正常明确冲突时完整总量未知。',
     'sp-clock':'sp_clock独立声明Precise定时器、自然回复开启与两次暂停/满技力读取。先批量推进剩余，再重新检查暂停并独立读取一次SP；请求值不是实际技力。改速先按旧有效计时器drain(0)，canRecover的14×30与独立传入率分开；无效计时器直接重启。仅明确的FP除法安全域，计数按signed32回绕；未知/失败不补造周期。',
     'regen-attributes':'attributes逐次声明属性13/19读取。未脏直接独立decoded cache；脏值按有序完整注册库存、各getter正常/纳入资格与四桶FP重算，清脏先于raw/范围/缓存写入。名义三花值须独立确认黑板仍为来源参数，失败读取仅正常TryFP后回默认0。每个时钟链接使用独立读取ID，数值未变不替代下一次正常返回；库存不全仅列所提供项，不推完整总量或下界。',
     'regen-clock':'recovery独立声明Precise定时器与FP读点；update按声明delta推进，dirty仅13/19，先结旧定时器，再分别读取能否回复与新周期的快照。每次HP读点独立，不由上次请求推后续HP；正常返回资格、周期与剩余数值不证明实际时钟或最终回血。属性13/19来自独立读取，不借既有double藏品倍率推定。',
@@ -192,6 +194,9 @@ def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
     if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
+        if command == 'sp-setter':
+            from .sp_setter_reference import public_example
+            return {'sp_writes':public_example()}
         if command == 'sp-clock':
             from .sp_recovery_clock import public_example
             return {'sp_clock':public_example()}
@@ -305,6 +310,35 @@ def _explosion_tables(data):
         '；所声明调用总参考：'+amount(data['declared_calls_scaled_damage_raw_total'])),
         _p('≈表示仅显示到8位小数；完整定点原值保留在技术详情。'),
         _p('采用原值定点顺序与单精度常量；这些数值不代表全爆炸伤害、实际目标数或实机时钟。')]
+    return parts
+
+
+def _sp_setter_tables(data):
+    amount=lambda raw:_fp_amount(raw,8)
+    modes={'public':'公共SP写入','internal':'独立内部写入','do_internal':'独立直接内部写入'}
+    statuses={'not_called':'对应SP写入确定未调用','unqualified_source_or_path':'来源、路径或身份未核准',
+        'missing_target_before_getter':'目标不存在，读取前进入异常','alive_read_failed':'存活读取未正常返回',
+        'alive_gate_rejected':'存活门拒绝，内部返回否，未复制','max_sp_read_failed':'上限读取未正常返回',
+        'encoding_failed_before_copy':'编码未正常返回，尚未进入复制','encoded_structure_copied':'声明范围内完整结构复制',
+        'partial_copy_not_closed':'复制未证完整，部分写入仍未知','conditional_native_branches':'按原生两分支分别核验',
+        'conditional_clock_invocation':'对应写入是否调用仍有分支'}
+    parts=[_p('来源核验：'+_text(data['source_valid'])+'；存活门先于force，公共写入固定force=false。'),
+        _p('已证完整复制分项数：'+_text(data['known_full_struct_copies_count'])+'；完整声明范围复制数：'+_text(data['declared_complete_struct_copy_count'])),
+        _p('实际SP、后续解码/编码状态、完整回复与技能周期：未知。公共void正常返回不等于内部true。')]
+    for r in data['rows']:
+        parts += [_h(r['id']+' · '+modes[r['mode']]),_p(statuses[r['status']]),
+            _table(['独立写入步骤','参考'],[
+                ('公共void正常返回',_text(r['public_void_returns_normally_reference'])),('内部布尔返回',_text(r['internal_bool_return_reference'])),
+                ('读取存活',_text(r['alive_called_reference'])),('存活读取正常',_text(r['alive_normal_reference'])),
+                ('读取SP上限',_text(r['max_sp_called_reference'])),('上限读取正常',_text(r['max_sp_normal_reference'])),
+                ('传入SP参数',amount(r['input_value_raw_reference'])),('SP上限FP参考',amount(r['upper_raw_reference'])),
+                ('限制后编码参数',amount(r['encoder_value_argument_raw_reference'])),('编码参数精确原值',_text(r['encoder_value_argument_raw_reference'])),
+                ('编码调用',_text(r['encoder_called_reference'])),('开始结构复制',_text(r['copy_called_reference'])),
+                ('完整结构复制',_text(r['full_struct_copy_completed_reference'])),('本体复制字节数参考',_text(r['struct_copy_bytes_reference']))])]
+    if data['clock_links']:parts += [_h('对应自然技力请求'),_table(['独立写入读点','调用方读点','同身份/参数关联','调用方正常与公共void是否一致'],
+        [(l['body_id'],l['action_id'],_text(l['qualified']),_text(l['normal_return_consistent_reference'])) for l in data['clock_links']]),
+        _p('一致性明确为否时保留双方声明，完整总量未知；不覆盖原周期或SP请求参数。')]
+    parts += [_p('编码或复制失败不能推真实状态完全未变；完整复制也不证明后续解码值。未安排事件，不操作游戏。')]
     return parts
 
 
@@ -512,7 +546,9 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
     if data.get('stage_name'): parts.append(_p('关卡：'+data['stage_name']))
     if input_source:parts.append(_p('此次输入来源：'+input_source))
     if family == 'calibration':
-        if command == 'sp-clock':
+        if command == 'sp-setter':
+            parts += _sp_setter_tables(data)
+        elif command == 'sp-clock':
             parts += _sp_recovery_tables(data)
         elif command == 'regen-attributes':
             parts += _recovery_attribute_tables(data)
@@ -978,7 +1014,7 @@ class OfflineToolsPanel(QWidget):
 
     def _update_buttons(self):
         family,command=self.current_query()
-        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock') and self._scenario is not None)
+        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter') and self._scenario is not None)
         self.import_stage.setEnabled((family=='battle' or family=='exploration' and command=='settlements') and self._stage is not None)
         exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes','search-routes')
         self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
@@ -1086,7 +1122,7 @@ class OfflineToolsPanel(QWidget):
     def _import_scenario(self):
         try:
             family,command=self.current_query()
-            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
+            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
             payload=self._payload();scenario=deepcopy(self._scenario)
             if scenario.get('operator') not in calibration.OPERATORS:raise ValueError('校准工具目前仅支持凯尔希·思衡托、凛御银灰、机械师。')
             if command=='recipient-events' and (scenario.get('operator')!='silverash' or scenario.get('skill')!=2):

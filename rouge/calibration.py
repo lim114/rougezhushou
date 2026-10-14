@@ -479,3 +479,11 @@ def sp_recovery_clock(sp_clock):
 
 
 COMMANDS['sp-clock'] = sp_recovery_clock
+
+
+def sp_setter_values(sp_writes):
+    from .sp_setter_reference import sp_setter_reference
+    return sp_setter_reference(sp_writes)
+
+
+COMMANDS['sp-setter'] = sp_setter_values

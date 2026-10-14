@@ -10,6 +10,8 @@ import json
 import platform
 import re
 import sys
+import tempfile
+import traceback
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,8 +19,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 NEW_MODULES = (
+    'tests.test_full_validation_prerequisites',
     'tests.test_recovery_attributes',
     'tests.test_sp_recovery_clock',
+    'tests.test_sp_setter_reference',
     'tests.test_regeneration_clock',
     'tests.test_modifier_packet_reference',
     'tests.test_route_information_scope',
@@ -124,12 +128,90 @@ def unmigrated_path(path):
                for folder in ('.cache', 'samples/native-client'))
 
 
+SYMLINK_PREREQUISITE_TESTS = frozenset({
+    'tests.test_persistence_temporary_no_clobber_261.TemporaryRecordNoClobberTests.' + name
+    for name in ('test_dangling_temporary_symlink_does_not_create_the_target',
+                 'test_live_temporary_symlink_does_not_write_its_original_target',
+                 'test_private_directory_name_collision_never_enters_an_old_namespace')
+} | {
+    'tests.test_restore_public_validation_inputs_261.PublicSourceIndex261Tests.'
+    'test_unsafe_paths_symlinks_and_existing_receipts_are_preserved',
+    'tests.test_persistence_initial_install.InitialInstallTests.'
+    'test_manual_reset_retains_relative_link_text_and_target_resolution',
+    'tests.test_persistence_initial_install.InitialInstallTests.'
+    'test_raced_dangling_link_after_missing_load_survives_first_save',
+})
+
+
+def probe_windows_symlink_prerequisite():
+    """Actual same-kind prerequisite only; never change privileges or substitute a link."""
+    if sys.platform != 'win32':
+        return {'platform': platform.system(), 'attempted': False, 'available': None}
+    folder = Path(tempfile.mkdtemp(prefix='rouge-public-symlink-prerequisite-')).resolve()
+    assert folder.parent == Path(tempfile.gettempdir()).resolve()
+    link = folder / 'public-link'; target = folder / 'public-absent-target'
+    record = {'platform': 'Windows', 'attempted': True, 'available': None,
+              'system_configuration_changed': False, 'private_state_used': False}
+    try:
+        link.symlink_to(target.name)
+        record['available'] = link.is_symlink() and link.readlink() == Path(target.name)
+    except OSError as exc:
+        record.update(winerror=getattr(exc, 'winerror', None), errno=exc.errno,
+                      reason=str(exc), exception_type=type(exc).__name__)
+        if getattr(exc, 'winerror', None) == 1314:
+            record['available'] = False
+    finally:
+        if link.is_symlink():
+            link.unlink()
+        # Only the two owned leaf names are inspected. No recursive removal.
+        assert not target.exists() and not link.exists()
+        folder.rmdir()
+    return record
+
+
 class AvailableResult(unittest.TextTestResult):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.unavailable = []
         self.passed_count = 0
         self.unavailable_parents = set()
+        self.native_symlink_prerequisite = probe_windows_symlink_prerequisite()
+
+    def symlink_prerequisite_unavailable(self, test, reported_test, err):
+        exc = err[1]
+        proof = self.native_symlink_prerequisite
+        if not (sys.platform == 'win32' and proof.get('available') is False
+                and proof.get('winerror') == 1314
+                and isinstance(exc, OSError) and getattr(exc, 'winerror', None) == 1314
+                and test.id() in SYMLINK_PREREQUISITE_TESTS):
+            return False
+        frames = []
+        tb = err[2]
+        while tb is not None:
+            frames.append(tb.tb_frame)
+            tb = tb.tb_next
+        # A product failure or a merely similar message must remain an error.
+        # Require the actual pathlib→os.symlink creation frame and original test.
+        if not any(f.f_code is Path.symlink_to.__code__ for f in frames):
+            return False
+        if any(Path(f.f_code.co_filename).resolve().is_relative_to(ROOT / 'rouge')
+               for f in frames):
+            return False
+        test_method = test.id().rsplit('.', 1)[-1]
+        if not any(f.f_code.co_name == test_method and
+                   Path(f.f_code.co_filename).resolve().is_relative_to(ROOT / 'tests')
+                   for f in frames):
+            return False
+        self.unavailable_parents.add(test.id())
+        self.unavailable.append({'test': reported_test.id(),
+            'kind': 'native_symlink_privilege_prerequisite', 'reason': str(exc),
+            'winerror': 1314, 'errno': exc.errno,
+            'traceback': ''.join(traceback.format_exception(*err)),
+            'actual_prerequisite_creation_attempted': proof['attempted'],
+            'actual_test_creation_attempted': True, 'counted_as_passed': False})
+        if self.dots:
+            self.stream.write('U'); self.stream.flush()
+        return True
 
     def addSuccess(self, test):
         if test.id() not in self.unavailable_parents:
@@ -137,6 +219,8 @@ class AvailableResult(unittest.TextTestResult):
             super().addSuccess(test)
 
     def addError(self, test, err):
+        if self.symlink_prerequisite_unavailable(test, test, err):
+            return
         exc = err[1]
         missing = getattr(exc, 'filename', None)
         if isinstance(exc, FileNotFoundError) and missing and unmigrated_path(missing):
@@ -160,6 +244,8 @@ class AvailableResult(unittest.TextTestResult):
         super().addError(test, err)
 
     def addSubTest(self, test, subtest, err):
+        if err is not None and self.symlink_prerequisite_unavailable(test, subtest, err):
+            return
         if err is not None and isinstance(err[1], FileNotFoundError):
             missing = getattr(err[1], 'filename', None)
             if missing and unmigrated_path(missing):
@@ -212,6 +298,7 @@ def main():
         'failures': len(result.failures), 'errors': len(result.errors),
         'unavailable_records': len(result.unavailable),
         'unavailable_parent_count': len(unavailable_parents),
+        'native_symlink_prerequisite': result.native_symlink_prerequisite,
         'unavailable': result.unavailable,
         'failed_cases': [{'test': t.id(), 'reason': e.splitlines()[-1]}
                          for t, e in result.failures + result.errors],
