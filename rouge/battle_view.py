@@ -21,11 +21,11 @@ class BattleGrid(QWidget):
     cellSelected=Signal(object)
     def __init__(self,parent=None):
         super().__init__(parent)
-        self.stage=None;self.rows=[];self.selected=None;self.selected_ordinal=1;self.reference_cell=None
+        self.stage=None;self.rows=[];self.selected=None;self.selected_ordinal=1;self.reference_cell=None;self.branch_positions=[]
         self.setMinimumSize(240,150)
 
     def set_reference(self,stage,rows):
-        self.stage=stage;self.rows=rows;self.selected=None;self.reference_cell=None;self.update()
+        self.stage=stage;self.rows=rows;self.selected=None;self.reference_cell=None;self.branch_positions=[];self.update()
 
     def grid_rect(self):
         if not self.stage:return QRectF()
@@ -100,6 +100,11 @@ class BattleGrid(QWidget):
                 painter.drawText(QRectF(8,2,max(0,self.width()-16),22),
                     Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter,
                     f'第{self.selected_ordinal}次：{anchor}开始后 +{offset:g}秒（名义生成）')
+        for marker in self.branch_positions:
+            center=self.cell_center(marker['cell']);radius=max(8,min(size*.28,18))
+            painter.setPen(QPen(QColor('#f0a2ef'),2));painter.setBrush(QColor('#34213b'))
+            painter.drawRect(QRectF(center.x()-radius,center.y()-radius,2*radius,2*radius))
+            painter.drawText(QRectF(center.x()-radius,center.y()-radius,2*radius,2*radius),Qt.AlignmentFlag.AlignCenter,'P'+str(marker['ordinal']))
 
     def mousePressEvent(self,event):
         if event.button()==Qt.MouseButton.LeftButton:
@@ -112,7 +117,7 @@ class MapOriginal(QWidget):
     def __init__(self,parent=None):
         super().__init__(parent);self.pixmap=QPixmap();self.setMinimumSize(220,130)
         self.stage=None;self.rows=[];self.selected=None;self.selected_ordinal=1
-        self.projection=None;self.image_sha256=None;self.reference_cell=None
+        self.projection=None;self.image_sha256=None;self.reference_cell=None;self.branch_positions=[]
 
     def set_file(self,path):
         try:raw=Path(path).read_bytes() if path else b''
@@ -120,11 +125,11 @@ class MapOriginal(QWidget):
         self.pixmap=QPixmap()
         if raw:self.pixmap.loadFromData(raw)
         self.image_sha256=hashlib.sha256(raw).hexdigest() if not self.pixmap.isNull() else None
-        self.stage=None;self.rows=[];self.selected=None;self.projection=None;self.selected_ordinal=1;self.reference_cell=None
+        self.stage=None;self.rows=[];self.selected=None;self.projection=None;self.selected_ordinal=1;self.reference_cell=None;self.branch_positions=[]
         self.update()
 
     def set_reference(self,stage,rows):
-        self.stage=stage;self.rows=rows;self.selected=None;self.selected_ordinal=1;self.reference_cell=None
+        self.stage=stage;self.rows=rows;self.selected=None;self.selected_ordinal=1;self.reference_cell=None;self.branch_positions=[]
         self.projection=projection_for(stage,self.image_sha256,(self.pixmap.width(),self.pixmap.height()))
         self.update()
 
@@ -157,6 +162,22 @@ class MapOriginal(QWidget):
                 cells.setdefault((start['row'],start['col']),set()).add(row['wave'])
         return cells
 
+    def projected_branch_positions(self):
+        if not self.stage or not self.projection:return []
+        result=[]
+        for marker in self.branch_positions:
+            cell=marker['cell'];tile=self.stage['tiles'][self.stage['map'][cell['row']][cell['col']]]
+            if tile.get('heightType')!='LOWLAND':continue
+            center=self.cell_center(cell)
+            if center is not None:result.append((marker,center))
+        return result
+
+    def _paint_branch_positions(self,painter,radius):
+        for marker,center in self.projected_branch_positions():
+            painter.setPen(QPen(QColor('#f0a2ef'),2));painter.setBrush(QColor('#34213b'))
+            painter.drawRect(QRectF(center.x()-radius-3,center.y()-radius-3,2*radius+6,2*radius+6))
+            painter.drawText(QRectF(center.x()-radius-3,center.y()-radius-3,2*radius+6,2*radius+6),Qt.AlignmentFlag.AlignCenter,'P'+str(marker['ordinal']))
+
     def paintEvent(self,event):
         painter=QPainter(self);painter.fillRect(self.rect(),QColor('#18222e'))
         if self.pixmap.isNull():return
@@ -177,7 +198,9 @@ class MapOriginal(QWidget):
             if center is not None:
                 painter.setPen(QPen(QColor('#f0a2ef'),3));painter.setBrush(Qt.BrushStyle.NoBrush)
                 painter.drawRect(QRectF(center.x()-radius-3,center.y()-radius-3,2*radius+6,2*radius+6))
-        if not self.selected:return
+        if not self.selected:
+            self._paint_branch_positions(painter,radius)
+            return
         route=self.selected['route'];points=[self.cell_center(p) for p in route.get('points',[])]
         painter.setPen(QPen(QColor('#ffe17d'),2,Qt.PenStyle.DashLine))
         # Segments only connect source checkpoints. Teleport/disappear records
@@ -203,6 +226,7 @@ class MapOriginal(QWidget):
                 label=QRectF(x,y,width,height)
                 painter.fillRect(label,QColor(24,34,46,220));painter.setPen(QColor('#fff3a0'))
                 painter.drawText(label.adjusted(4,2,-4,-2),Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter,text)
+        self._paint_branch_positions(painter,radius)
 
     def mousePressEvent(self,event):
         if event.button()==Qt.MouseButton.LeftButton:
@@ -277,6 +301,8 @@ class BattlePreviewPanel(QWidget):
         self.reward_combo.currentIndexChanged.connect(self._reward_selected)
         self.reward_summary.clicked.connect(self._reward_summary)
         self.branch_toggle.toggled.connect(self.branch_panel.setVisible)
+        self.branch_toggle.toggled.connect(self._refresh_branch_positions)
+        self.branch_panel.positionsChanged.connect(self._refresh_branch_positions)
         self.branch_panel.referenceCellSelected.connect(self._branch_reference_cell)
         self.technical.toggled.connect(self.branch_panel.set_technical)
         self._load_stage(None)
@@ -438,6 +464,17 @@ class BattlePreviewPanel(QWidget):
             self._reward_selected(preserve=True)
         elif reward_summary_selected:self._reward_selected(preserve=True)
         elif branch_marker:self._branch_reference_cell(branch_marker,preserve=True)
+        self._refresh_branch_positions()
+
+    def _refresh_branch_positions(self,*_):
+        from .branch_position_overview import branch_position_overview
+        rows=[]
+        if (self.current_stage and self.branch_toggle.isChecked() and self.branch_panel.overlay.isChecked()
+                and self.branch_panel.stage_id==self.current_stage):
+            result=branch_position_overview(self.current_stage,self.branch_panel.branch.currentData(),self.branch_panel.phase.currentData())
+            rows=copy.deepcopy(result['rows'])
+        self.grid.branch_positions=copy.deepcopy(rows);self.original.branch_positions=copy.deepcopy(rows)
+        self.grid.update();self.original.update()
 
     def _branch_reference_cell(self,reference,*,preserve=False):
         stage=battle_data()['stages'].get(self.current_stage)
