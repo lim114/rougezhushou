@@ -471,3 +471,11 @@ def recovery_attributes(attributes):
 
 
 COMMANDS['regen-attributes'] = recovery_attributes
+
+
+def sp_recovery_clock(sp_clock):
+    from .sp_recovery_clock import sp_recovery_clock_reference
+    return sp_recovery_clock_reference(sp_clock)
+
+
+COMMANDS['sp-clock'] = sp_recovery_clock

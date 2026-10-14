@@ -1,0 +1,1630 @@
+{
+  "scope": "Limited readonly same-input replay plus conditional count guards. Source-bound pure Python declarations only, no native/game execution.",
+  "module_sha256": "ba8a086ad81784b5f94fbe16e16472b5d4d3768d24f2e8ccaa75a9868bb7cc5a",
+  "source_sha256": "97eca07c12681f6d1b14239fe560d15f7bed60772c1d2a9b4c99d8202181a620",
+  "source_valid": true,
+  "before_receipt_sha256": "552680fc24cca42f02d04270dcaaad22d0e001cf344598b60e061df89af9b2a7",
+  "probes": [
+    {
+      "name": "missing_drain",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 0
+        },
+        "actions": [
+          {
+            "id": "改速",
+            "kind": "reconfigure",
+            "ordinary_native_path": true,
+            "rate_input_raw": 34359738368,
+            "drain": null,
+            "can_recover_rate": {
+              "ordinary_native_path": true,
+              "attributes_exist": true,
+              "reads_return_normally": true,
+              "attr14_raw": 34359738368,
+              "attr30_raw": 4294967296
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "改速",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 0,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "tick": null,
+            "recovery": null,
+            "drain": null,
+            "can_recover": null,
+            "period_reset": null,
+            "status": "missing_independent_drain"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_setter_request_count": null,
+        "final_period_raw_reference": null,
+        "final_remaining_raw_reference": null,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "unknown_drain_getter",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 0
+        },
+        "actions": [
+          {
+            "id": "改速",
+            "kind": "reconfigure",
+            "ordinary_native_path": true,
+            "rate_input_raw": 34359738368,
+            "drain": {
+              "id": "独立drain",
+              "kind": "tick",
+              "ordinary_native_path": true,
+              "delta_raw": 0,
+              "enabled": true,
+              "gate_stop": {
+                "exists": true,
+                "normal": true,
+                "value": false
+              },
+              "full_read": {
+                "normal": true,
+                "value": false
+              },
+              "recovery": {
+                "ordinary_native_path": true,
+                "force": false,
+                "stop_read": {
+                  "exists": true,
+                  "normal": true,
+                  "value": false
+                },
+                "sp_read": {
+                  "exists": true,
+                  "normal": null,
+                  "raw": 21474836480
+                },
+                "setter_returns_normally": true
+              }
+            },
+            "can_recover_rate": {
+              "ordinary_native_path": true,
+              "attributes_exist": true,
+              "reads_return_normally": true,
+              "attr14_raw": 34359738368,
+              "attr30_raw": 4294967296
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "改速",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 0,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "tick": null,
+            "recovery": null,
+            "drain": {
+              "period_after_raw_reference": 1073741824,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "updated_remaining_raw_reference": 0,
+              "division_numerator_raw_reference": 0,
+              "quotient_raw_reference": 0,
+              "floor_count_reference": 0,
+              "batch_count_reference": 1,
+              "next_multiple_called_reference": true,
+              "next_advanced_reference": true,
+              "recovery": {
+                "called_reference": true,
+                "getter_called_reference": true,
+                "getter_normal_reference": null,
+                "stop_read_normal_reference": true,
+                "stop_read_called_reference": true,
+                "sp_read_raw_reference": null,
+                "setter_value_argument_raw_reference": null,
+                "amount_raw_reference": 4294967296,
+                "normal_return_reference": null,
+                "actual_sp_after": null,
+                "status": "conditional_native_branches",
+                "setter_normal_reference": null,
+                "declared_request_count_reference": null,
+                "setter_called_reference": null,
+                "conditional_branches": [
+                  {
+                    "called_reference": true,
+                    "amount_raw_reference": 4294967296,
+                    "normal_return_reference": false,
+                    "stop_read_called_reference": true,
+                    "stop_read_normal_reference": true,
+                    "getter_called_reference": true,
+                    "getter_normal_reference": false,
+                    "sp_read_raw_reference": null,
+                    "setter_called_reference": false,
+                    "setter_normal_reference": null,
+                    "setter_value_argument_raw_reference": null,
+                    "declared_request_count_reference": null,
+                    "actual_sp_after": null,
+                    "status": "unqualified_sp_getter"
+                  },
+                  {
+                    "called_reference": true,
+                    "amount_raw_reference": 4294967296,
+                    "normal_return_reference": true,
+                    "stop_read_called_reference": true,
+                    "stop_read_normal_reference": true,
+                    "getter_called_reference": true,
+                    "getter_normal_reference": true,
+                    "sp_read_raw_reference": 21474836480,
+                    "setter_called_reference": true,
+                    "setter_normal_reference": true,
+                    "setter_value_argument_raw_reference": 25769803776,
+                    "declared_request_count_reference": 1,
+                    "actual_sp_after": null,
+                    "status": "setter_argument_reference"
+                  }
+                ]
+              },
+              "recovery_called_reference": true,
+              "known_prefix_remaining_raw_reference": 1073741824,
+              "remaining_after_raw_reference": 1073741824,
+              "normal_return_reference": null,
+              "declared_request_count_reference": null,
+              "gate_stop_called_reference": true,
+              "full_read_called_reference": true,
+              "status": "batch_conditional_native_branches"
+            },
+            "can_recover": null,
+            "period_reset": null,
+            "status": "batch_conditional_native_branches"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_setter_request_count": null,
+        "final_period_raw_reference": null,
+        "final_remaining_raw_reference": null,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "failed_drain_getter",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 0
+        },
+        "actions": [
+          {
+            "id": "改速",
+            "kind": "reconfigure",
+            "ordinary_native_path": true,
+            "rate_input_raw": 34359738368,
+            "drain": {
+              "id": "独立drain",
+              "kind": "tick",
+              "ordinary_native_path": true,
+              "delta_raw": 0,
+              "enabled": true,
+              "gate_stop": {
+                "exists": true,
+                "normal": true,
+                "value": false
+              },
+              "full_read": {
+                "normal": true,
+                "value": false
+              },
+              "recovery": {
+                "ordinary_native_path": true,
+                "force": false,
+                "stop_read": {
+                  "exists": true,
+                  "normal": true,
+                  "value": false
+                },
+                "sp_read": {
+                  "exists": true,
+                  "normal": false,
+                  "raw": 21474836480
+                },
+                "setter_returns_normally": true
+              }
+            },
+            "can_recover_rate": {
+              "ordinary_native_path": true,
+              "attributes_exist": true,
+              "reads_return_normally": true,
+              "attr14_raw": 34359738368,
+              "attr30_raw": 4294967296
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "改速",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": false,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 0,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 1073741824,
+            "tick": null,
+            "recovery": null,
+            "drain": {
+              "period_after_raw_reference": 1073741824,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "updated_remaining_raw_reference": 0,
+              "division_numerator_raw_reference": 0,
+              "quotient_raw_reference": 0,
+              "floor_count_reference": 0,
+              "batch_count_reference": 1,
+              "next_multiple_called_reference": true,
+              "next_advanced_reference": true,
+              "recovery": {
+                "called_reference": true,
+                "amount_raw_reference": 4294967296,
+                "normal_return_reference": false,
+                "stop_read_called_reference": true,
+                "stop_read_normal_reference": true,
+                "getter_called_reference": true,
+                "getter_normal_reference": false,
+                "sp_read_raw_reference": null,
+                "setter_called_reference": false,
+                "setter_normal_reference": null,
+                "setter_value_argument_raw_reference": null,
+                "declared_request_count_reference": null,
+                "actual_sp_after": null,
+                "status": "unqualified_sp_getter"
+              },
+              "recovery_called_reference": true,
+              "known_prefix_remaining_raw_reference": 1073741824,
+              "remaining_after_raw_reference": 1073741824,
+              "normal_return_reference": false,
+              "declared_request_count_reference": null,
+              "gate_stop_called_reference": true,
+              "full_read_called_reference": true,
+              "status": "batch_unqualified_sp_getter"
+            },
+            "can_recover": null,
+            "period_reset": null,
+            "status": "batch_unqualified_sp_getter"
+          }
+        ],
+        "normal_return_reference": false,
+        "declared_chain_complete": false,
+        "declared_complete_setter_request_count": null,
+        "final_period_raw_reference": 1073741824,
+        "final_remaining_raw_reference": 1073741824,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "failed_can_recover_getter",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 0
+        },
+        "actions": [
+          {
+            "id": "改速",
+            "kind": "reconfigure",
+            "ordinary_native_path": true,
+            "rate_input_raw": 34359738368,
+            "drain": {
+              "id": "独立drain",
+              "kind": "tick",
+              "ordinary_native_path": true,
+              "delta_raw": 0,
+              "enabled": true,
+              "gate_stop": {
+                "exists": true,
+                "normal": true,
+                "value": false
+              },
+              "full_read": {
+                "normal": true,
+                "value": false
+              },
+              "recovery": {
+                "ordinary_native_path": true,
+                "force": false,
+                "stop_read": {
+                  "exists": true,
+                  "normal": true,
+                  "value": false
+                },
+                "sp_read": {
+                  "exists": true,
+                  "normal": true,
+                  "raw": 21474836480
+                },
+                "setter_returns_normally": true
+              }
+            },
+            "can_recover_rate": {
+              "ordinary_native_path": true,
+              "attributes_exist": true,
+              "reads_return_normally": false,
+              "attr14_raw": 34359738368,
+              "attr30_raw": 4294967296
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "改速",
+            "kind": "reconfigure",
+            "called_reference": true,
+            "normal_return_reference": false,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 0,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 1073741824,
+            "tick": null,
+            "recovery": null,
+            "drain": {
+              "period_after_raw_reference": 1073741824,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "updated_remaining_raw_reference": 0,
+              "division_numerator_raw_reference": 0,
+              "quotient_raw_reference": 0,
+              "floor_count_reference": 0,
+              "batch_count_reference": 1,
+              "next_multiple_called_reference": true,
+              "next_advanced_reference": true,
+              "recovery": {
+                "called_reference": true,
+                "amount_raw_reference": 4294967296,
+                "normal_return_reference": true,
+                "stop_read_called_reference": true,
+                "stop_read_normal_reference": true,
+                "getter_called_reference": true,
+                "getter_normal_reference": true,
+                "sp_read_raw_reference": 21474836480,
+                "setter_called_reference": true,
+                "setter_normal_reference": true,
+                "setter_value_argument_raw_reference": 25769803776,
+                "declared_request_count_reference": 1,
+                "actual_sp_after": null,
+                "status": "setter_argument_reference"
+              },
+              "recovery_called_reference": true,
+              "known_prefix_remaining_raw_reference": 1073741824,
+              "remaining_after_raw_reference": 1073741824,
+              "normal_return_reference": true,
+              "declared_request_count_reference": 1,
+              "gate_stop_called_reference": true,
+              "full_read_called_reference": true,
+              "status": "batch_setter_argument_reference"
+            },
+            "can_recover": {
+              "normal_return_reference": false,
+              "rate_raw_reference": null,
+              "can_recover_reference": null
+            },
+            "period_reset": null,
+            "status": "unqualified_can_recover_read"
+          }
+        ],
+        "normal_return_reference": false,
+        "declared_chain_complete": false,
+        "declared_complete_setter_request_count": null,
+        "final_period_raw_reference": 1073741824,
+        "final_remaining_raw_reference": 1073741824,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "unknown_force",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 0
+        },
+        "actions": [
+          {
+            "id": "unknown_force",
+            "kind": "recover",
+            "ordinary_native_path": true,
+            "amount_raw": 4294967296,
+            "recovery": {
+              "ordinary_native_path": true,
+              "force": null,
+              "stop_read": {
+                "exists": true,
+                "normal": true,
+                "value": false
+              },
+              "sp_read": {
+                "exists": true,
+                "normal": true,
+                "raw": 21474836480
+              },
+              "setter_returns_normally": true
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "unknown_force",
+            "kind": "recover",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 0,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 0,
+            "tick": null,
+            "recovery": {
+              "called_reference": true,
+              "getter_called_reference": true,
+              "getter_normal_reference": true,
+              "stop_read_normal_reference": null,
+              "stop_read_called_reference": null,
+              "sp_read_raw_reference": 21474836480,
+              "setter_value_argument_raw_reference": 25769803776,
+              "amount_raw_reference": 4294967296,
+              "normal_return_reference": true,
+              "actual_sp_after": null,
+              "status": "conditional_native_branches",
+              "setter_normal_reference": true,
+              "declared_request_count_reference": 1,
+              "setter_called_reference": true,
+              "conditional_branches": [
+                {
+                  "called_reference": true,
+                  "amount_raw_reference": 4294967296,
+                  "normal_return_reference": true,
+                  "stop_read_called_reference": true,
+                  "stop_read_normal_reference": true,
+                  "getter_called_reference": true,
+                  "getter_normal_reference": true,
+                  "sp_read_raw_reference": 21474836480,
+                  "setter_called_reference": true,
+                  "setter_normal_reference": true,
+                  "setter_value_argument_raw_reference": 25769803776,
+                  "declared_request_count_reference": 1,
+                  "actual_sp_after": null,
+                  "status": "setter_argument_reference"
+                },
+                {
+                  "called_reference": true,
+                  "amount_raw_reference": 4294967296,
+                  "normal_return_reference": true,
+                  "stop_read_called_reference": false,
+                  "stop_read_normal_reference": null,
+                  "getter_called_reference": true,
+                  "getter_normal_reference": true,
+                  "sp_read_raw_reference": 21474836480,
+                  "setter_called_reference": true,
+                  "setter_normal_reference": true,
+                  "setter_value_argument_raw_reference": 25769803776,
+                  "declared_request_count_reference": 1,
+                  "actual_sp_after": null,
+                  "status": "setter_argument_reference"
+                }
+              ]
+            },
+            "drain": null,
+            "can_recover": null,
+            "period_reset": null,
+            "status": "conditional_native_branches"
+          }
+        ],
+        "normal_return_reference": true,
+        "declared_chain_complete": true,
+        "declared_complete_setter_request_count": 1,
+        "final_period_raw_reference": 1073741824,
+        "final_remaining_raw_reference": 0,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "unknown_stop_normal",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 0
+        },
+        "actions": [
+          {
+            "id": "unknown_stop_normal",
+            "kind": "recover",
+            "ordinary_native_path": true,
+            "amount_raw": 4294967296,
+            "recovery": {
+              "ordinary_native_path": true,
+              "force": false,
+              "stop_read": {
+                "exists": true,
+                "normal": null,
+                "value": false
+              },
+              "sp_read": {
+                "exists": true,
+                "normal": true,
+                "raw": 21474836480
+              },
+              "setter_returns_normally": true
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "unknown_stop_normal",
+            "kind": "recover",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 0,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 0,
+            "tick": null,
+            "recovery": {
+              "called_reference": true,
+              "getter_called_reference": null,
+              "getter_normal_reference": null,
+              "stop_read_normal_reference": null,
+              "stop_read_called_reference": true,
+              "sp_read_raw_reference": null,
+              "setter_value_argument_raw_reference": null,
+              "amount_raw_reference": 4294967296,
+              "normal_return_reference": null,
+              "actual_sp_after": null,
+              "status": "conditional_native_branches",
+              "setter_normal_reference": null,
+              "declared_request_count_reference": null,
+              "setter_called_reference": null,
+              "conditional_branches": [
+                {
+                  "called_reference": true,
+                  "amount_raw_reference": 4294967296,
+                  "normal_return_reference": false,
+                  "stop_read_called_reference": true,
+                  "stop_read_normal_reference": false,
+                  "getter_called_reference": false,
+                  "getter_normal_reference": null,
+                  "sp_read_raw_reference": null,
+                  "setter_called_reference": false,
+                  "setter_normal_reference": null,
+                  "setter_value_argument_raw_reference": null,
+                  "declared_request_count_reference": null,
+                  "actual_sp_after": null,
+                  "status": "unqualified_recovery_stop_read"
+                },
+                {
+                  "called_reference": true,
+                  "amount_raw_reference": 4294967296,
+                  "normal_return_reference": true,
+                  "stop_read_called_reference": true,
+                  "stop_read_normal_reference": true,
+                  "getter_called_reference": true,
+                  "getter_normal_reference": true,
+                  "sp_read_raw_reference": 21474836480,
+                  "setter_called_reference": true,
+                  "setter_normal_reference": true,
+                  "setter_value_argument_raw_reference": 25769803776,
+                  "declared_request_count_reference": 1,
+                  "actual_sp_after": null,
+                  "status": "setter_argument_reference"
+                }
+              ]
+            },
+            "drain": null,
+            "can_recover": null,
+            "period_reset": null,
+            "status": "conditional_native_branches"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_setter_request_count": null,
+        "final_period_raw_reference": 1073741824,
+        "final_remaining_raw_reference": 0,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "unknown_stop_value",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 0
+        },
+        "actions": [
+          {
+            "id": "unknown_stop_value",
+            "kind": "recover",
+            "ordinary_native_path": true,
+            "amount_raw": 4294967296,
+            "recovery": {
+              "ordinary_native_path": true,
+              "force": false,
+              "stop_read": {
+                "exists": true,
+                "normal": true,
+                "value": null
+              },
+              "sp_read": {
+                "exists": true,
+                "normal": true,
+                "raw": 21474836480
+              },
+              "setter_returns_normally": true
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "unknown_stop_value",
+            "kind": "recover",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 0,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 0,
+            "tick": null,
+            "recovery": {
+              "called_reference": true,
+              "getter_called_reference": null,
+              "getter_normal_reference": null,
+              "stop_read_normal_reference": true,
+              "stop_read_called_reference": true,
+              "sp_read_raw_reference": null,
+              "setter_value_argument_raw_reference": null,
+              "amount_raw_reference": 4294967296,
+              "normal_return_reference": true,
+              "actual_sp_after": null,
+              "status": "conditional_native_branches",
+              "setter_normal_reference": null,
+              "declared_request_count_reference": null,
+              "setter_called_reference": null,
+              "conditional_branches": [
+                {
+                  "called_reference": true,
+                  "amount_raw_reference": 4294967296,
+                  "normal_return_reference": true,
+                  "stop_read_called_reference": true,
+                  "stop_read_normal_reference": true,
+                  "getter_called_reference": true,
+                  "getter_normal_reference": true,
+                  "sp_read_raw_reference": 21474836480,
+                  "setter_called_reference": true,
+                  "setter_normal_reference": true,
+                  "setter_value_argument_raw_reference": 25769803776,
+                  "declared_request_count_reference": 1,
+                  "actual_sp_after": null,
+                  "status": "setter_argument_reference"
+                },
+                {
+                  "called_reference": true,
+                  "amount_raw_reference": 4294967296,
+                  "normal_return_reference": true,
+                  "stop_read_called_reference": true,
+                  "stop_read_normal_reference": true,
+                  "getter_called_reference": false,
+                  "getter_normal_reference": null,
+                  "sp_read_raw_reference": null,
+                  "setter_called_reference": false,
+                  "setter_normal_reference": null,
+                  "setter_value_argument_raw_reference": null,
+                  "declared_request_count_reference": 0,
+                  "actual_sp_after": null,
+                  "status": "recovery_stopped"
+                }
+              ]
+            },
+            "drain": null,
+            "can_recover": null,
+            "period_reset": null,
+            "status": "conditional_native_branches"
+          }
+        ],
+        "normal_return_reference": true,
+        "declared_chain_complete": true,
+        "declared_complete_setter_request_count": null,
+        "final_period_raw_reference": 1073741824,
+        "final_remaining_raw_reference": 0,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "missing_sp_owner_force_true",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 0
+        },
+        "actions": [
+          {
+            "id": "missing_sp_owner_force_true",
+            "kind": "recover",
+            "ordinary_native_path": true,
+            "amount_raw": 4294967296,
+            "recovery": {
+              "ordinary_native_path": true,
+              "force": true,
+              "stop_read": {
+                "exists": true,
+                "normal": true,
+                "value": false
+              },
+              "sp_read": {
+                "exists": false,
+                "normal": true,
+                "raw": 21474836480
+              },
+              "setter_returns_normally": true
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "missing_sp_owner_force_true",
+            "kind": "recover",
+            "called_reference": true,
+            "normal_return_reference": false,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 0,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 0,
+            "tick": null,
+            "recovery": {
+              "called_reference": true,
+              "amount_raw_reference": 4294967296,
+              "normal_return_reference": false,
+              "stop_read_called_reference": false,
+              "stop_read_normal_reference": null,
+              "getter_called_reference": false,
+              "getter_normal_reference": null,
+              "sp_read_raw_reference": null,
+              "setter_called_reference": false,
+              "setter_normal_reference": null,
+              "setter_value_argument_raw_reference": null,
+              "declared_request_count_reference": null,
+              "actual_sp_after": null,
+              "status": "unqualified_sp_getter"
+            },
+            "drain": null,
+            "can_recover": null,
+            "period_reset": null,
+            "status": "unqualified_sp_getter"
+          }
+        ],
+        "normal_return_reference": false,
+        "declared_chain_complete": false,
+        "declared_complete_setter_request_count": null,
+        "final_period_raw_reference": 1073741824,
+        "final_remaining_raw_reference": 0,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "normal_both_enabled_branches_unknown_request_count",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 536870912
+        },
+        "actions": [
+          {
+            "id": "一次补发四点",
+            "kind": "tick",
+            "ordinary_native_path": true,
+            "delta_raw": 3758096384,
+            "enabled": null,
+            "gate_stop": {
+              "exists": true,
+              "normal": true,
+              "value": false
+            },
+            "full_read": {
+              "normal": true,
+              "value": false
+            },
+            "recovery": {
+              "ordinary_native_path": true,
+              "force": false,
+              "stop_read": {
+                "exists": true,
+                "normal": true,
+                "value": false
+              },
+              "sp_read": {
+                "exists": true,
+                "normal": true,
+                "raw": 21474836480
+              },
+              "setter_returns_normally": true
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "一次补发四点",
+            "kind": "tick",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": null,
+            "tick": {
+              "delta_applied_reference": null,
+              "quotient_raw_reference": null,
+              "full_read_called_reference": null,
+              "normal_return_reference": true,
+              "status": "conditional_native_branches",
+              "floor_count_reference": null,
+              "division_numerator_raw_reference": null,
+              "batch_count_reference": null,
+              "recovery": null,
+              "recovery_called_reference": null,
+              "declared_request_count_reference": null,
+              "remaining_after_raw_reference": null,
+              "valid_reference": null,
+              "period_after_raw_reference": 1073741824,
+              "next_multiple_called_reference": null,
+              "updated_remaining_raw_reference": null,
+              "gate_stop_called_reference": null,
+              "known_prefix_remaining_raw_reference": 536870912,
+              "next_advanced_reference": null,
+              "conditional_branches": [
+                {
+                  "period_after_raw_reference": 1073741824,
+                  "valid_reference": null,
+                  "delta_applied_reference": false,
+                  "updated_remaining_raw_reference": null,
+                  "division_numerator_raw_reference": null,
+                  "quotient_raw_reference": null,
+                  "floor_count_reference": null,
+                  "batch_count_reference": null,
+                  "next_multiple_called_reference": false,
+                  "next_advanced_reference": false,
+                  "recovery": null,
+                  "recovery_called_reference": false,
+                  "known_prefix_remaining_raw_reference": 536870912,
+                  "remaining_after_raw_reference": 536870912,
+                  "normal_return_reference": true,
+                  "declared_request_count_reference": 0,
+                  "gate_stop_called_reference": false,
+                  "full_read_called_reference": false,
+                  "status": "natural_recovery_disabled"
+                },
+                {
+                  "period_after_raw_reference": 1073741824,
+                  "valid_reference": true,
+                  "delta_applied_reference": true,
+                  "updated_remaining_raw_reference": -3221225472,
+                  "division_numerator_raw_reference": 3221225472,
+                  "quotient_raw_reference": 12884901888,
+                  "floor_count_reference": 3,
+                  "batch_count_reference": 4,
+                  "next_multiple_called_reference": true,
+                  "next_advanced_reference": true,
+                  "recovery": {
+                    "called_reference": true,
+                    "amount_raw_reference": 17179869184,
+                    "normal_return_reference": true,
+                    "stop_read_called_reference": true,
+                    "stop_read_normal_reference": true,
+                    "getter_called_reference": true,
+                    "getter_normal_reference": true,
+                    "sp_read_raw_reference": 21474836480,
+                    "setter_called_reference": true,
+                    "setter_normal_reference": true,
+                    "setter_value_argument_raw_reference": 38654705664,
+                    "declared_request_count_reference": 1,
+                    "actual_sp_after": null,
+                    "status": "setter_argument_reference"
+                  },
+                  "recovery_called_reference": true,
+                  "known_prefix_remaining_raw_reference": 1073741824,
+                  "remaining_after_raw_reference": 1073741824,
+                  "normal_return_reference": true,
+                  "declared_request_count_reference": 1,
+                  "gate_stop_called_reference": true,
+                  "full_read_called_reference": true,
+                  "status": "batch_setter_argument_reference"
+                }
+              ]
+            },
+            "recovery": null,
+            "drain": null,
+            "can_recover": null,
+            "period_reset": null,
+            "status": "conditional_native_branches"
+          }
+        ],
+        "normal_return_reference": true,
+        "declared_chain_complete": true,
+        "declared_complete_setter_request_count": null,
+        "final_period_raw_reference": 1073741824,
+        "final_remaining_raw_reference": null,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "normal_force_stop_forks_unknown_count",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 536870912
+        },
+        "actions": [
+          {
+            "id": "conditional force/stop",
+            "kind": "recover",
+            "ordinary_native_path": true,
+            "amount_raw": 4294967296,
+            "recovery": {
+              "ordinary_native_path": true,
+              "force": null,
+              "stop_read": {
+                "exists": true,
+                "normal": true,
+                "value": null
+              },
+              "sp_read": {
+                "exists": true,
+                "normal": true,
+                "raw": 21474836480
+              },
+              "setter_returns_normally": true
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "conditional force/stop",
+            "kind": "recover",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 536870912,
+            "tick": null,
+            "recovery": {
+              "called_reference": true,
+              "getter_called_reference": null,
+              "getter_normal_reference": null,
+              "stop_read_normal_reference": null,
+              "conditional_branches": [
+                {
+                  "called_reference": true,
+                  "getter_called_reference": null,
+                  "getter_normal_reference": null,
+                  "stop_read_normal_reference": true,
+                  "stop_read_called_reference": true,
+                  "sp_read_raw_reference": null,
+                  "setter_value_argument_raw_reference": null,
+                  "amount_raw_reference": 4294967296,
+                  "normal_return_reference": true,
+                  "actual_sp_after": null,
+                  "status": "conditional_native_branches",
+                  "setter_normal_reference": null,
+                  "declared_request_count_reference": null,
+                  "setter_called_reference": null,
+                  "conditional_branches": [
+                    {
+                      "called_reference": true,
+                      "amount_raw_reference": 4294967296,
+                      "normal_return_reference": true,
+                      "stop_read_called_reference": true,
+                      "stop_read_normal_reference": true,
+                      "getter_called_reference": true,
+                      "getter_normal_reference": true,
+                      "sp_read_raw_reference": 21474836480,
+                      "setter_called_reference": true,
+                      "setter_normal_reference": true,
+                      "setter_value_argument_raw_reference": 25769803776,
+                      "declared_request_count_reference": 1,
+                      "actual_sp_after": null,
+                      "status": "setter_argument_reference"
+                    },
+                    {
+                      "called_reference": true,
+                      "amount_raw_reference": 4294967296,
+                      "normal_return_reference": true,
+                      "stop_read_called_reference": true,
+                      "stop_read_normal_reference": true,
+                      "getter_called_reference": false,
+                      "getter_normal_reference": null,
+                      "sp_read_raw_reference": null,
+                      "setter_called_reference": false,
+                      "setter_normal_reference": null,
+                      "setter_value_argument_raw_reference": null,
+                      "declared_request_count_reference": 0,
+                      "actual_sp_after": null,
+                      "status": "recovery_stopped"
+                    }
+                  ]
+                },
+                {
+                  "called_reference": true,
+                  "amount_raw_reference": 4294967296,
+                  "normal_return_reference": true,
+                  "stop_read_called_reference": false,
+                  "stop_read_normal_reference": null,
+                  "getter_called_reference": true,
+                  "getter_normal_reference": true,
+                  "sp_read_raw_reference": 21474836480,
+                  "setter_called_reference": true,
+                  "setter_normal_reference": true,
+                  "setter_value_argument_raw_reference": 25769803776,
+                  "declared_request_count_reference": 1,
+                  "actual_sp_after": null,
+                  "status": "setter_argument_reference"
+                }
+              ],
+              "stop_read_called_reference": null,
+              "sp_read_raw_reference": null,
+              "setter_value_argument_raw_reference": null,
+              "amount_raw_reference": 4294967296,
+              "normal_return_reference": true,
+              "actual_sp_after": null,
+              "status": "conditional_native_branches",
+              "setter_normal_reference": null,
+              "declared_request_count_reference": null,
+              "setter_called_reference": null
+            },
+            "drain": null,
+            "can_recover": null,
+            "period_reset": null,
+            "status": "conditional_native_branches"
+          }
+        ],
+        "normal_return_reference": true,
+        "declared_chain_complete": true,
+        "declared_complete_setter_request_count": null,
+        "final_period_raw_reference": 1073741824,
+        "final_remaining_raw_reference": 536870912,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "same_normal_request_known_count",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 536870912
+        },
+        "actions": [
+          {
+            "id": "conditional force/no stop",
+            "kind": "recover",
+            "ordinary_native_path": true,
+            "amount_raw": 4294967296,
+            "recovery": {
+              "ordinary_native_path": true,
+              "force": null,
+              "stop_read": {
+                "exists": true,
+                "normal": true,
+                "value": false
+              },
+              "sp_read": {
+                "exists": true,
+                "normal": true,
+                "raw": 21474836480
+              },
+              "setter_returns_normally": true
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "conditional force/no stop",
+            "kind": "recover",
+            "called_reference": true,
+            "normal_return_reference": true,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": 1073741824,
+            "remaining_after_raw_reference": 536870912,
+            "tick": null,
+            "recovery": {
+              "called_reference": true,
+              "getter_called_reference": true,
+              "getter_normal_reference": true,
+              "stop_read_normal_reference": null,
+              "stop_read_called_reference": null,
+              "sp_read_raw_reference": 21474836480,
+              "setter_value_argument_raw_reference": 25769803776,
+              "amount_raw_reference": 4294967296,
+              "normal_return_reference": true,
+              "actual_sp_after": null,
+              "status": "conditional_native_branches",
+              "setter_normal_reference": true,
+              "declared_request_count_reference": 1,
+              "setter_called_reference": true,
+              "conditional_branches": [
+                {
+                  "called_reference": true,
+                  "amount_raw_reference": 4294967296,
+                  "normal_return_reference": true,
+                  "stop_read_called_reference": true,
+                  "stop_read_normal_reference": true,
+                  "getter_called_reference": true,
+                  "getter_normal_reference": true,
+                  "sp_read_raw_reference": 21474836480,
+                  "setter_called_reference": true,
+                  "setter_normal_reference": true,
+                  "setter_value_argument_raw_reference": 25769803776,
+                  "declared_request_count_reference": 1,
+                  "actual_sp_after": null,
+                  "status": "setter_argument_reference"
+                },
+                {
+                  "called_reference": true,
+                  "amount_raw_reference": 4294967296,
+                  "normal_return_reference": true,
+                  "stop_read_called_reference": false,
+                  "stop_read_normal_reference": null,
+                  "getter_called_reference": true,
+                  "getter_normal_reference": true,
+                  "sp_read_raw_reference": 21474836480,
+                  "setter_called_reference": true,
+                  "setter_normal_reference": true,
+                  "setter_value_argument_raw_reference": 25769803776,
+                  "declared_request_count_reference": 1,
+                  "actual_sp_after": null,
+                  "status": "setter_argument_reference"
+                }
+              ]
+            },
+            "drain": null,
+            "can_recover": null,
+            "period_reset": null,
+            "status": "conditional_native_branches"
+          }
+        ],
+        "normal_return_reference": true,
+        "declared_chain_complete": true,
+        "declared_complete_setter_request_count": 1,
+        "final_period_raw_reference": 1073741824,
+        "final_remaining_raw_reference": 536870912,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "unknown_tick_path",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 536870912
+        },
+        "actions": [
+          {
+            "id": "一次补发四点",
+            "kind": "tick",
+            "ordinary_native_path": null,
+            "delta_raw": 3758096384,
+            "enabled": true,
+            "gate_stop": {
+              "exists": true,
+              "normal": true,
+              "value": false
+            },
+            "full_read": {
+              "normal": true,
+              "value": false
+            },
+            "recovery": {
+              "ordinary_native_path": true,
+              "force": false,
+              "stop_read": {
+                "exists": true,
+                "normal": true,
+                "value": false
+              },
+              "sp_read": {
+                "exists": true,
+                "normal": true,
+                "raw": 21474836480
+              },
+              "setter_returns_normally": true
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "一次补发四点",
+            "kind": "tick",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "tick": null,
+            "recovery": null,
+            "drain": null,
+            "can_recover": null,
+            "period_reset": null,
+            "status": "unqualified_controller_or_native_path"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_setter_request_count": null,
+        "final_period_raw_reference": null,
+        "final_remaining_raw_reference": null,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    },
+    {
+      "name": "unknown_recovery_path",
+      "input": {
+        "controller_exists": true,
+        "precise_timer_identity": true,
+        "no_intervening_timer_changes": true,
+        "timer": {
+          "exists": true,
+          "period_raw": 1073741824,
+          "remaining_raw": 536870912
+        },
+        "actions": [
+          {
+            "id": "一次补发四点",
+            "kind": "tick",
+            "ordinary_native_path": true,
+            "delta_raw": 3758096384,
+            "enabled": true,
+            "gate_stop": {
+              "exists": true,
+              "normal": true,
+              "value": false
+            },
+            "full_read": {
+              "normal": true,
+              "value": false
+            },
+            "recovery": {
+              "ordinary_native_path": null,
+              "force": false,
+              "stop_read": {
+                "exists": true,
+                "normal": true,
+                "value": false
+              },
+              "sp_read": {
+                "exists": true,
+                "normal": true,
+                "raw": 21474836480
+              },
+              "setter_returns_normally": true
+            }
+          }
+        ]
+      },
+      "actual_output": {
+        "source_valid": true,
+        "source_file": "rouge/data/sp-recovery-clock-source.json",
+        "rows": [
+          {
+            "id": "一次补发四点",
+            "kind": "tick",
+            "called_reference": true,
+            "normal_return_reference": null,
+            "period_before_raw_reference": 1073741824,
+            "remaining_before_raw_reference": 536870912,
+            "period_after_raw_reference": null,
+            "remaining_after_raw_reference": null,
+            "tick": {
+              "period_after_raw_reference": null,
+              "valid_reference": true,
+              "delta_applied_reference": true,
+              "updated_remaining_raw_reference": -3221225472,
+              "division_numerator_raw_reference": 3221225472,
+              "quotient_raw_reference": 12884901888,
+              "floor_count_reference": 3,
+              "batch_count_reference": 4,
+              "next_multiple_called_reference": true,
+              "next_advanced_reference": true,
+              "recovery": {
+                "called_reference": true,
+                "amount_raw_reference": 17179869184,
+                "normal_return_reference": null,
+                "stop_read_called_reference": null,
+                "stop_read_normal_reference": null,
+                "getter_called_reference": null,
+                "getter_normal_reference": null,
+                "sp_read_raw_reference": null,
+                "setter_called_reference": null,
+                "setter_normal_reference": null,
+                "setter_value_argument_raw_reference": null,
+                "declared_request_count_reference": null,
+                "actual_sp_after": null,
+                "status": "unqualified_recovery_path"
+              },
+              "recovery_called_reference": true,
+              "known_prefix_remaining_raw_reference": 1073741824,
+              "remaining_after_raw_reference": null,
+              "normal_return_reference": null,
+              "declared_request_count_reference": null,
+              "gate_stop_called_reference": true,
+              "full_read_called_reference": true,
+              "status": "batch_unqualified_recovery_path"
+            },
+            "recovery": null,
+            "drain": null,
+            "can_recover": null,
+            "period_reset": null,
+            "status": "batch_unqualified_recovery_path"
+          }
+        ],
+        "normal_return_reference": null,
+        "declared_chain_complete": false,
+        "declared_complete_setter_request_count": null,
+        "final_period_raw_reference": null,
+        "final_remaining_raw_reference": null,
+        "actual_sp_after": null,
+        "actual_complete_recovery": null,
+        "actual_skill_cycle": null,
+        "actual_clock": null,
+        "actual_attribute_values": null,
+        "events_scheduled": false,
+        "hotfix_equivalence_proven": false,
+        "scope": "Independent Precise natural-SP declarations; batch advances before one SP request, not accepted SP or an actual skill cycle."
+      }
+    }
+  ],
+  "checks": [
+    {
+      "name": "missing_drain",
+      "passed": true
+    },
+    {
+      "name": "unknown_drain_getter",
+      "passed": true
+    },
+    {
+      "name": "failed_drain_getter",
+      "passed": true
+    },
+    {
+      "name": "failed_can_recover_getter",
+      "passed": true
+    },
+    {
+      "name": "unknown_force",
+      "passed": false
+    },
+    {
+      "name": "unknown_stop_normal",
+      "passed": true
+    },
+    {
+      "name": "unknown_stop_value",
+      "passed": true
+    },
+    {
+      "name": "missing_sp_owner_force_true",
+      "passed": true
+    },
+    {
+      "name": "normal_both_enabled_branches_unknown_request_count",
+      "passed": true
+    },
+    {
+      "name": "normal_force_stop_forks_unknown_count",
+      "passed": true
+    },
+    {
+      "name": "same_normal_request_known_count",
+      "passed": true
+    },
+    {
+      "name": "unknown_tick_path",
+      "passed": true
+    },
+    {
+      "name": "unknown_recovery_path",
+      "passed": true
+    }
+  ],
+  "passed": false
+}

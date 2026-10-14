@@ -37,6 +37,7 @@ CALIBRATION_QUERIES = (
     ('modifier-values', '藏品逐包定点修饰与顺序差异'),
     ('regen-clock', '常态生命回复 · 逐点周期与改速'),
     ('regen-attributes', '常态生命回复 · 属性缓存与藏品求值'),
+    ('sp-clock', '自然技力 · 批量时钟与恢复请求'),
 )
 BATTLE_QUERIES = (
     ('actions', '完整关卡动作清单'), ('activations', '预置实体激活对应'),
@@ -73,6 +74,7 @@ BATTLE_COMMANDS = {
 EVIDENCE_NAMES = {'game_panel': '调用方声明的游戏面板',
     'public_case': '调用方声明的公开算例', 'formula_reference': '公式参考算例'}
 INPUT_GUIDANCE = {
+    'sp-clock':'sp_clock独立声明Precise定时器、自然回复开启与两次暂停/满技力读取。先批量推进剩余，再重新检查暂停并独立读取一次SP；请求值不是实际技力。改速先按旧有效计时器drain(0)，canRecover的14×30与独立传入率分开；无效计时器直接重启。仅明确的FP除法安全域，计数按signed32回绕；未知/失败不补造周期。',
     'regen-attributes':'attributes逐次声明属性13/19读取。未脏直接独立decoded cache；脏值按有序完整注册库存、各getter正常/纳入资格与四桶FP重算，清脏先于raw/范围/缓存写入。名义三花值须独立确认黑板仍为来源参数，失败读取仅正常TryFP后回默认0。每个时钟链接使用独立读取ID，数值未变不替代下一次正常返回；库存不全仅列所提供项，不推完整总量或下界。',
     'regen-clock':'recovery独立声明Precise定时器与FP读点；update按声明delta推进，dirty仅13/19，先结旧定时器，再分别读取能否回复与新周期的快照。每次HP读点独立，不由上次请求推后续HP；正常返回资格、周期与剩余数值不证明实际时钟或最终回血。属性13/19来自独立读取，不借既有double藏品倍率推定。',
     'modifier-values':'packet声明一种family的固定藏品、独立入链值与实际包类型/目标/方向/不可改值标记。base_one先合并成一个模块，normal逐模块乘；预处理与修饰顺序分开，留空列有限声明组合，不赋概率。BB对象缺失与数字失败分开，成功0/负值不夹正。接爆炸返回须独立声明修饰器存在及入链值未变；不是实际命中或生命结算。',
@@ -190,6 +192,9 @@ def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
     if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
+        if command == 'sp-clock':
+            from .sp_recovery_clock import public_example
+            return {'sp_clock':public_example()}
         if command == 'regen-attributes':
             from .recovery_attributes import public_example
             return {'attributes':public_example()}
@@ -300,6 +305,48 @@ def _explosion_tables(data):
         '；所声明调用总参考：'+amount(data['declared_calls_scaled_damage_raw_total'])),
         _p('≈表示仅显示到8位小数；完整定点原值保留在技术详情。'),
         _p('采用原值定点顺序与单精度常量；这些数值不代表全爆炸伤害、实际目标数或实机时钟。')]
+    return parts
+
+
+def _sp_recovery_tables(data):
+    amount=lambda raw:_fp_amount(raw,8)
+    labels={'tick':'自然回复批量推进','recover':'显式恢复请求','reconfigure':'回复率改速'}
+    statuses={'natural_recovery_disabled':'自然回复未开启','invalid_timer_skipped':'计时器无效，未扣减剩余',
+        'conditional_native_branches':'按原生两种分支分别核验','batch_conditional_native_branches':'计时器已推进，恢复分支分别核验',
+        'first_stop_gate':'首个暂停门成立，未扣减剩余','full_gate':'已满技力，未扣减剩余','not_ready':'尚未到期',
+        'nonpositive_batch_count':'计数回绕为非正数，不补发','setter_argument_reference':'独立SP写入参数参考',
+        'recovery_stopped':'第二次暂停门成立，正常跳过恢复','batch_setter_argument_reference':'批量推进后的一次独立SP请求',
+        'batch_recovery_stopped':'已推进计时器，第二次暂停门阻止恢复','reset_keep_past':'保留已过时间改速',
+        'reset_restart':'旧计时器无效，按新周期重启','marked_invalid':'回复资格不成立，标记计时器无效',
+        'unmodeled_count_division_domain':'计数除法超出已核准数值域','unmodeled_period_division_domain':'周期除法未核准',
+        'not_called_after_unqualified_chain':'前序未证正常，未继续声明后续调用'}
+    parts=[_p('来源核验：'+_text(data['source_valid'])+'；自然技力先批量推进，再以一个独立SP读点请求恢复。'),
+        _p('声明链完整：'+_text(data['declared_chain_complete'])+'；声明范围SP写入请求次数：'+_text(data['declared_complete_setter_request_count'])),
+        _p('实际技力、完整回复量、技能回转与周期、当前实机时钟：未知。')]
+    for row in data['rows']:
+        parts += [_h(row['id']+' · '+labels[row['kind']]),
+            _p(statuses.get(row['status'],'读取、前序或分支资格未核准')+'；正常返回：'+_text(row['normal_return_reference'])),
+            _table(['计时器参考','周期（秒）','剩余（秒）'],[(label,amount(row[p]),amount(row[r])) for label,p,r in
+                [('操作前','period_before_raw_reference','remaining_before_raw_reference'),('操作后','period_after_raw_reference','remaining_after_raw_reference')]])]
+        tick=row['tick'] or row['drain']
+        if tick is not None:parts += [_table(['批量原生步骤','结果'],[
+            ('本次减去时间',_text(tick['delta_applied_reference'])),('减时后的剩余（秒）',amount(tick['updated_remaining_raw_reference'])),
+            ('FP商',amount(tick['quotient_raw_reference'])),('取整后数值',_text(tick['floor_count_reference'])),
+            ('signed32批量计数',_text(tick['batch_count_reference'])),('先推进计时器',_text(tick['next_advanced_reference']))]),
+            _p('已证定时器前缀剩余：'+amount(tick['known_prefix_remaining_raw_reference'])+'秒。批量计数不等于实际增加技力。')]
+        recovery=(tick or {}).get('recovery') or row['recovery']
+        if recovery is not None:parts += [_table(['独立SP访问','结果'],[
+            ('重新读取暂停状态',_text(recovery['stop_read_called_reference'])),('读取SP',_text(recovery['getter_called_reference'])),
+            ('SP读取正常',_text(recovery['getter_normal_reference'])),('独立SP读值',amount(recovery['sp_read_raw_reference'])),
+            ('请求增量',amount(recovery['amount_raw_reference'])),('调用SP写入',_text(recovery['setter_called_reference'])),
+            ('SP写入值参数',amount(recovery['setter_value_argument_raw_reference'])),('参数精确原值',_text(recovery['setter_value_argument_raw_reference'])),
+            ('SP写入正常返回',_text(recovery['setter_normal_reference']))])]
+        rate=row['can_recover']
+        if rate is not None:parts += [_p('独立能否回复读点：14×30='+amount(rate['rate_raw_reference'])+'；严格超过EPS：'+_text(rate['can_recover_reference'])+'。此值不替代传入的新回复率。')]
+        reset=row['period_reset']
+        if reset is not None:parts += [_p(('保留已过时间：'+amount(reset['past_raw_reference'])+'秒；' if reset['kind']=='keep_past' else '从新周期重启；')+
+            '剩余参考：'+amount(reset['remaining_raw_reference'])+'秒。')]
+    parts += [_p('读值和正常资格逐点独立；写入参数不会自动成为下一次SP读值。未安排事件，不操作游戏。')]
     return parts
 
 
@@ -465,7 +512,9 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
     if data.get('stage_name'): parts.append(_p('关卡：'+data['stage_name']))
     if input_source:parts.append(_p('此次输入来源：'+input_source))
     if family == 'calibration':
-        if command == 'regen-attributes':
+        if command == 'sp-clock':
+            parts += _sp_recovery_tables(data)
+        elif command == 'regen-attributes':
             parts += _recovery_attribute_tables(data)
         elif command == 'regen-clock':
             parts += _regeneration_tables(data)
@@ -929,7 +978,7 @@ class OfflineToolsPanel(QWidget):
 
     def _update_buttons(self):
         family,command=self.current_query()
-        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes') and self._scenario is not None)
+        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock') and self._scenario is not None)
         self.import_stage.setEnabled((family=='battle' or family=='exploration' and command=='settlements') and self._stage is not None)
         exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes','search-routes')
         self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
@@ -1037,7 +1086,7 @@ class OfflineToolsPanel(QWidget):
     def _import_scenario(self):
         try:
             family,command=self.current_query()
-            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
+            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
             payload=self._payload();scenario=deepcopy(self._scenario)
             if scenario.get('operator') not in calibration.OPERATORS:raise ValueError('校准工具目前仅支持凯尔希·思衡托、凛御银灰、机械师。')
             if command=='recipient-events' and (scenario.get('operator')!='silverash' or scenario.get('skill')!=2):
