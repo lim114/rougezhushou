@@ -1,0 +1,80 @@
+--- a/tests/test_event_preview_filters_292.py
++++ b/tests/test_event_preview_filters_292.py
+@@ -113,25 +113,32 @@
+         self.assertEqual(events,ids)
+ 
+     def test_cave_known_pool_then_missing_context_clears_stage_without_selecting_another(self):
+-        self.choose(self.panel.floor,2);self.select('community_group_017')
+-        self.choose(self.panel.event_choice_filter,'community_group_017:scene:6:choice:0')
+-        self.assertEqual([token[2] for token in self.tokens()],['ro6_n_3_1','ro6_n_3_2','ro6_n_3_3','ro6_n_3_4','ro6_n_3_5','ro6_n_3_6'])
+-        self.panel.event_stage.setCurrentIndex(1)
+-        self.choose(self.panel.floor,None)
+-        self.assertEqual(self.panel.event_choice_filter.currentData(),'community_group_017:scene:6:choice:0')
+-        self.assertEqual(self.panel.event_stage.count(),0);self.assertFalse(self.panel.battle_button.isEnabled())
+-        self.choose(self.panel.floor,3)
+-        self.assertEqual(self.panel.event_stage.count(),7)
+-        self.assertEqual(self.panel.event_stage.currentIndex(),-1);self.assertFalse(self.panel.battle_button.isEnabled())
++        context={'floor':2,'entry_mode':'content','special_region':False}
++        self.assertIsNone(self.panel.floor.currentData())
++        with patch.object(self.panel,'_event_context',return_value=context):
++            self.panel.refresh();self.select('community_group_017')
++            self.choose(self.panel.event_choice_filter,'community_group_017:scene:6:choice:0')
++            self.assertEqual([token[2] for token in self.tokens()],['ro6_n_3_1','ro6_n_3_2','ro6_n_3_3','ro6_n_3_4','ro6_n_3_5','ro6_n_3_6'])
++            self.panel.event_stage.setCurrentIndex(1)
++            context['floor']=None;self.panel.refresh();self.qt.processEvents()
++            self.assertEqual(self.panel.event_choice_filter.currentData(),'community_group_017:scene:6:choice:0')
++            self.assertEqual(self.panel.event_stage.count(),0);self.assertFalse(self.panel.battle_button.isEnabled())
++            context['floor']=3;self.panel.refresh();self.qt.processEvents()
++            self.assertEqual(self.panel.event_stage.count(),7)
++            self.assertEqual(self.panel.event_stage.currentIndex(),-1);self.assertFalse(self.panel.battle_button.isEnabled())
+ 
+     def test_preview_click_revalidates_latest_context_before_emitting(self):
+-        self.choose(self.panel.floor,2);self.select('community_group_017')
+-        self.assertTrue(self.panel.battle_button.isEnabled())
+-        self.panel.runtime_context={'special_region':True}
+-        before=deepcopy(self.panel.runtime_context);events=[];self.panel.stageSelected.connect(events.append)
+-        self.panel.select_stage()
+-        self.assertEqual(events,[]);self.assertEqual(self.panel.event_stage.count(),0)
+-        self.assertFalse(self.panel.battle_button.isEnabled());self.assertEqual(self.panel.runtime_context,before)
++        context={'floor':2,'entry_mode':'content','special_region':False}
++        self.assertIsNone(self.panel.floor.currentData())
++        with patch.object(self.panel,'_event_context',return_value=context):
++            self.panel.refresh();self.select('community_group_017')
++            self.assertTrue(self.panel.battle_button.isEnabled())
++            context['special_region']=True;declaration_before=deepcopy(context)
++            before=deepcopy(self.panel.runtime_context);events=[];self.panel.stageSelected.connect(events.append)
++            self.panel.select_stage()
++            self.assertEqual(events,[]);self.assertEqual(self.panel.event_stage.count(),0)
++            self.assertFalse(self.panel.battle_button.isEnabled());self.assertEqual(self.panel.runtime_context,before)
++            self.assertEqual(context,declaration_before)
+ 
+     def test_changing_event_resets_both_filters_and_never_borrows_choice_title(self):
+         self.select('community_group_014');self.choose(self.panel.event_scene_filter,'community_group_014:scene:2')
+@@ -174,15 +181,18 @@
+         self.assertEqual(events,[expected])
+ 
+     def test_excluded_event_can_still_be_manually_read_as_fixed_battle_reference(self):
+-        self.choose(self.panel.floor,1);self.select('community_group_014')
+-        entry=next(row for row in self.panel.entries if row['key']==self.panel.list.selected_key())
+-        self.assertEqual(entry['qualification']['status'],'excluded')
+-        self.choose(self.panel.event_choice_filter,'community_group_014:scene:2:choice:0')
+-        self.assertEqual(self.tokens(),[['community_group_014:scene:2','community_group_014:scene:2:choice:0','ro6_e_t_3']])
+-        self.panel.event_stage.setCurrentIndex(0)
+-        events=[];self.panel.stageSelected.connect(events.append);self.panel.battle_button.click()
+-        self.assertEqual(events,['ro6_e_t_3'])
+-        self.assertEqual(entry['qualification']['status'],'excluded')
++        context={'floor':1,'entry_mode':'content','special_region':False}
++        self.assertIsNone(self.panel.floor.currentData())
++        with patch.object(self.panel,'_event_context',return_value=context):
++            self.panel.refresh();self.select('community_group_014')
++            entry=next(row for row in self.panel.entries if row['key']==self.panel.list.selected_key())
++            self.assertEqual(entry['qualification']['status'],'excluded')
++            self.choose(self.panel.event_choice_filter,'community_group_014:scene:2:choice:0')
++            self.assertEqual(self.tokens(),[['community_group_014:scene:2','community_group_014:scene:2:choice:0','ro6_e_t_3']])
++            self.panel.event_stage.setCurrentIndex(0)
++            events=[];self.panel.stageSelected.connect(events.append);self.panel.battle_button.click()
++            self.assertEqual(events,['ro6_e_t_3'])
++            self.assertEqual(entry['qualification']['status'],'excluded')
+ 
+ 
+ if __name__=='__main__':unittest.main()

@@ -306,6 +306,7 @@ class NodeCatalogPanel(QWidget):
         self.dossier=None;self.node_context=None;self.entries=[];self.detail_key=None
         self.map_context=None;self.runtime_context={};self._first_tree=True
         self._resident_reference_key=None;self._resident_map_context_valid=True
+        self._event_preview_key=None
         self.destination_window=None;self.destination_origin_key=None
         self.duel_reward_window=None;self.duel_reward_origin_key=None
         self.exchange_window=None;self.exchange_origin_key=None
@@ -341,7 +342,19 @@ class NodeCatalogPanel(QWidget):
         self.reading_tabs.addTab(self.detail,'资料与依据')
         rl.addWidget(self.reading_tabs,1)
         self.battle_button=QPushButton('查看对应固定战斗地图');self.battle_button.setEnabled(False)
-        self.event_stage=QComboBox();self.event_stage.setAccessibleName('事件选项对应作战资料');rl.addWidget(self.event_stage)
+        self.event_preview_filters=QWidget();event_filters=QHBoxLayout(self.event_preview_filters)
+        event_filters.setContentsMargins(0,0,0,0)
+        self.event_scene_filter=QComboBox();self.event_scene_filter.setAccessibleName('作战资料流程场景筛选')
+        self.event_choice_filter=QComboBox();self.event_choice_filter.setAccessibleName('作战资料具体选项筛选')
+        self.event_scene_filter.setToolTip('只筛选下方固定作战资料，不表示本局已进入此场景。')
+        self.event_choice_filter.setToolTip('只筛选下方固定作战资料，不表示本局已执行此选项。')
+        event_filters.addWidget(self.event_scene_filter,1);event_filters.addWidget(self.event_choice_filter,1)
+        rl.addWidget(self.event_preview_filters)
+        self.event_stage=QComboBox();self.event_stage.setAccessibleName('事件选项对应作战资料')
+        self.event_stage.setPlaceholderText('请选择固定作战资料；实际触发仍未知');rl.addWidget(self.event_stage)
+        self.event_stage.currentIndexChanged.connect(lambda *_:self.battle_button.setEnabled(bool(self.event_stage.currentData())))
+        self.event_scene_filter.currentIndexChanged.connect(self._event_preview_filter_changed)
+        self.event_choice_filter.currentIndexChanged.connect(self._event_preview_filter_changed)
         self.destination_choice=QComboBox();self.destination_choice.setAccessibleName('原选项目的地资料候选');rl.addWidget(self.destination_choice)
         self.destination_button=QPushButton('查看选项目的地原文与作战资料');rl.addWidget(self.destination_button)
         self.duel_reward_button=QPushButton('查看狭路相逢档次奖励');rl.addWidget(self.duel_reward_button)
@@ -532,29 +545,11 @@ class NodeCatalogPanel(QWidget):
     def show_selected(self):
         key=self.list.selected_key()
         entry=next((e for e in self.entries if e['key']==key),None)
-        previous=self.event_stage.itemData(self.event_stage.currentIndex(),Qt.ItemDataRole.UserRole+1)
-        previous_location=self.map_location.currentData();self.event_stage.clear()
+        previous_location=self.map_location.currentData()
         previous_destination=self.destination_choice.currentData(Qt.ItemDataRole.UserRole+1);self.destination_choice.clear()
         self.map_location.clear();self.map_jump.setEnabled(False)
         self.map_contents.setEnabled(bool(entry and entry['kind']=='map'))
-        if entry and entry['kind']=='event':
-            result=event_planning.event_battle_links(entry['record']['id'],context=self._event_context(entry['record']))
-            for row in result['rows']:
-                status=QUALIFICATIONS[row['choice_eligibility']['status']]
-                for number,stage in enumerate(row['preview_stage_candidates'],1):
-                    difficulty={'NORMAL':'普通','FOUR_STAR':'紧急'}.get(stage['difficulty'],'难度未确认')
-                    self.event_stage.addItem(f"{row['choice_title']} → {stage['name']} · {difficulty} · {status} · 资料候选{number}",stage['stage_id'])
-                    self.event_stage.setItemData(self.event_stage.count()-1,
-                        [row['scene_key'],row['choice_key'],stage['stage_id']],Qt.ItemDataRole.UserRole+1)
-                pool=row.get('generic_pool_requirement') or {}
-                for number,stage in enumerate(pool.get('fixed_named_pool',[]),1):
-                    difficulty={'NORMAL':'普通','FOUR_STAR':'紧急'}.get(stage['difficulty'],'难度未确认')
-                    self.event_stage.addItem(f"{row['choice_title']} → {stage['title']} · {difficulty} · {status} · 下一主层固定资料候选{number}",stage['id'])
-                    self.event_stage.setItemData(self.event_stage.count()-1,
-                        [row['scene_key'],row['choice_key'],stage['id'],'generic_next_floor'],Qt.ItemDataRole.UserRole+1)
-            if previous:
-                self.event_stage.setCurrentIndex(next((i for i in range(self.event_stage.count())
-                    if self.event_stage.itemData(i,Qt.ItemDataRole.UserRole+1)==previous),0))
+        result=self._refresh_event_previews(entry,key)
         try:
             if entry and entry['kind']=='event':
                 rows=original_destinations.event_destination_choices(entry['record']['id'])['rows']
@@ -579,7 +574,7 @@ class NodeCatalogPanel(QWidget):
             context=self._event_context(entry['record']) if entry and entry['kind']=='event' else self.runtime_context
             self.destination_window.set_context(context)
         self.event_stage.setVisible(bool(entry and entry['kind']=='event'))
-        self.battle_button.setEnabled(bool(entry and (entry['kind']=='battle' or self.event_stage.count())))
+        self.battle_button.setEnabled(bool(entry and (entry['kind']=='battle' or self.event_stage.currentData())))
         duel=bool(entry and ((entry['kind']=='function' and entry['record'].get('node_type')=='狭路相逢')
             or (entry['kind']=='battle' and is_duel_stage(entry['record'].get('id') or entry['record'].get('stage_id')))))
         self.duel_reward_button.setVisible(duel)
@@ -702,6 +697,76 @@ class NodeCatalogPanel(QWidget):
         self._refresh_resident_references(entry,key)
         replace_text(self.player_detail,player_text,preserve=self.detail_key==key)
         replace_text(self.detail,text,preserve=self.detail_key==key);self.detail_key=key
+
+    def _refresh_event_previews(self,entry,key):
+        """Filter fixed references only; never declare a chosen game option or stage."""
+        same=key==self._event_preview_key
+        previous_scene=self.event_scene_filter.currentData() if same else None
+        previous_choice=self.event_choice_filter.currentData() if same else None
+        previous_stage=self.event_stage.itemData(self.event_stage.currentIndex(),Qt.ItemDataRole.UserRole+1) if same else None
+        widgets=(self.event_scene_filter,self.event_choice_filter,self.event_stage)
+        for combo in widgets:combo.blockSignals(True);combo.clear()
+        event=entry['record'] if entry and entry['kind']=='event' else None
+        self.event_preview_filters.setVisible(bool(event))
+        self.event_stage.setVisible(bool(event))
+        self._event_preview_key=key if event else None
+        try:
+            if not event:return {'rows':[]}
+            result=event_planning.event_battle_links(event['id'],context=self._event_context(event))
+            scenes=catalog.event_details(event['id'])['rows']
+            self.event_scene_filter.addItem('全部流程场景（仅资料筛选）',None)
+            for number,scene in enumerate(scenes,1):
+                name=scene.get('attributes',{}).get('data-nav')
+                self.event_scene_filter.addItem(f'场景 {number}'+(' · '+name if name else ''),scene['key'])
+            scene_index=self.event_scene_filter.findData(previous_scene)
+            self.event_scene_filter.setCurrentIndex(scene_index if scene_index>=0 else 0)
+            scene_key=self.event_scene_filter.currentData()
+            self.event_choice_filter.addItem('全部选项（不表示已选择）',None)
+            for number,scene in enumerate(scenes,1):
+                if scene_key is not None and scene['key']!=scene_key:continue
+                for choice in scene['choices']:
+                    self.event_choice_filter.addItem(f"场景 {number} · {choice['title']}",choice['key'])
+            choice_index=self.event_choice_filter.findData(previous_choice)
+            self.event_choice_filter.setCurrentIndex(choice_index if choice_index>=0 else 0)
+            choice_key=self.event_choice_filter.currentData()
+            rows=[row for row in result['rows'] if (scene_key is None or row['scene_key']==scene_key)
+                  and (choice_key is None or row['choice_key']==choice_key)]
+            for row in rows:
+                status=QUALIFICATIONS[row['choice_eligibility']['status']]
+                for number,stage in enumerate(row['preview_stage_candidates'],1):
+                    difficulty={'NORMAL':'普通','FOUR_STAR':'紧急'}.get(stage['difficulty'],'难度未确认')
+                    self.event_stage.addItem(f"{row['choice_title']} → {stage['name']} · {difficulty} · {status} · 资料候选{number}",stage['stage_id'])
+                    self.event_stage.setItemData(self.event_stage.count()-1,
+                        [row['scene_key'],row['choice_key'],stage['stage_id']],Qt.ItemDataRole.UserRole+1)
+                pool=row.get('generic_pool_requirement') or {}
+                for number,stage in enumerate(pool.get('fixed_named_pool',[]),1):
+                    difficulty={'NORMAL':'普通','FOUR_STAR':'紧急'}.get(stage['difficulty'],'难度未确认')
+                    self.event_stage.addItem(f"{row['choice_title']} → {stage['title']} · {difficulty} · {status} · 下一主层固定资料候选{number}",stage['id'])
+                    self.event_stage.setItemData(self.event_stage.count()-1,
+                        [row['scene_key'],row['choice_key'],stage['id'],'generic_next_floor'],Qt.ItemDataRole.UserRole+1)
+            if same:
+                stage_index=next((i for i in range(self.event_stage.count())
+                    if self.event_stage.itemData(i,Qt.ItemDataRole.UserRole+1)==previous_stage),-1)
+                self.event_stage.setCurrentIndex(stage_index)
+            elif self.event_stage.count():
+                self.event_stage.setCurrentIndex(0)
+            if not self.event_stage.count():
+                self.event_stage.setPlaceholderText('此筛选暂无已绑定作战资料；不表示没有战斗')
+            else:self.event_stage.setPlaceholderText('请选择固定作战资料；实际触发仍未知')
+            return result
+        except (ValueError,TypeError,KeyError,OSError) as error:
+            self.event_stage.clear();self.event_stage.setCurrentIndex(-1)
+            self.event_stage.setPlaceholderText('作战资料暂时无法核对；请稍后刷新')
+            self.status.setText('作战资料未通过核对，暂不提供过期入口：'+str(error))
+            return {'rows':[],'preview_error':True}
+        finally:
+            for combo in widgets:combo.blockSignals(False)
+            self.battle_button.setEnabled(bool(event and self.event_stage.currentData()))
+
+    def _event_preview_filter_changed(self,*_):
+        key=self.list.selected_key();entry=next((row for row in self.entries if row['key']==key),None)
+        # Do not replace either reading document, tab, selection or scroll position.
+        self._refresh_event_previews(entry,key)
 
     def open_original_destination(self):
         choice_id=self.destination_choice.currentData()
@@ -854,7 +919,9 @@ class NodeCatalogPanel(QWidget):
         key=self.list.selected_key()
         entry=next((e for e in self.entries if e['key']==key),None)
         if entry and entry['kind']=='battle':self.stageSelected.emit(entry['record'].get('id') or entry['record']['stage_id'])
-        elif entry and entry['kind']=='event' and self.event_stage.currentData():self.stageSelected.emit(self.event_stage.currentData())
+        elif entry and entry['kind']=='event':
+            self._refresh_event_previews(entry,key)
+            if self.event_stage.currentData():self.stageSelected.emit(self.event_stage.currentData())
 
     def select_map_node(self):
         binding=self.map_location.currentData()

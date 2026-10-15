@@ -1,0 +1,59 @@
+{
+  "section": 292,
+  "actual_first_attempt": "verification/sections/292-necessary-first/process.json",
+  "first_attempt_result": {
+    "tests": 79,
+    "failures": 3,
+    "errors": 3,
+    "exit_code": 1
+  },
+  "repair": "New event explicitly selects the first preview. Same-event scope retains exact origin or no selection. Three test contexts declared independently of directory floor filtering.",
+  "files": {
+    "REPAIR_HANDOFF.json": {
+      "sha256": "229e0694a3fa3247db82bc6ca891f85161a85a6ad161c492192f585814a48db6",
+      "bytes": 3924
+    },
+    "node_catalog_view.py.diff": {
+      "sha256": "b4fab5f3b4456dfa817ff7cd43cf9056960556816ef42b86a14450c039733b0d",
+      "bytes": 697
+    },
+    "test_event_preview_filters_292.py.diff": {
+      "sha256": "7b3e983b7b6d8b6bed628c1434a76f6d0b37b570656672d5e29259ec218de31f",
+      "bytes": 5860
+    },
+    "first-real-original/rouge/node_catalog_view.py": {
+      "sha256": "c7398a4ae762c49bd19495f8a0692a917ee5e40a14db250915ca313f03c1506b",
+      "bytes": 69013
+    },
+    "first-real-original/tests/test_event_preview_filters_292.py": {
+      "sha256": "8b910eaa5a8db424c061a4c8d52181778591cca60d481ece1a34eaaf0d5e9216",
+      "bytes": 12911
+    }
+  },
+  "before": [
+    {
+      "path": "rouge\\node_catalog_view.py",
+      "sha256": "c7398a4ae762c49bd19495f8a0692a917ee5e40a14db250915ca313f03c1506b",
+      "bytes": 69013
+    },
+    {
+      "path": "tests\\test_event_preview_filters_292.py",
+      "sha256": "8b910eaa5a8db424c061a4c8d52181778591cca60d481ece1a34eaaf0d5e9216",
+      "bytes": 12911
+    }
+  ],
+  "after": [
+    {
+      "path": ".cache\\p3-292-choice-preview-repair\\candidate\\rouge\\node_catalog_view.py",
+      "sha256": "61c65384c2f9420cf43d134497406cdec0f65d85c507ae8da88403e639ac5791",
+      "bytes": 69108
+    },
+    {
+      "path": ".cache\\p3-292-choice-preview-repair\\candidate\\tests\\test_event_preview_filters_292.py",
+      "sha256": "d66aa2d23cbf8357ff682757716c4229fe603660915a6f31d8d260db7a1a448d",
+      "bytes": 13747
+    }
+  ],
+  "new_functional_test_run_required": true,
+  "source_mechanisms_changed": false
+}

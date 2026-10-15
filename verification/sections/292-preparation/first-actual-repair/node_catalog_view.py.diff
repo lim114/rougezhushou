@@ -1,0 +1,11 @@
+--- a/rouge/node_catalog_view.py
++++ b/rouge/node_catalog_view.py
+@@ -748,6 +748,8 @@
+                 stage_index=next((i for i in range(self.event_stage.count())
+                     if self.event_stage.itemData(i,Qt.ItemDataRole.UserRole+1)==previous_stage),-1)
+                 self.event_stage.setCurrentIndex(stage_index)
++            elif self.event_stage.count():
++                self.event_stage.setCurrentIndex(0)
+             if not self.event_stage.count():
+                 self.event_stage.setPlaceholderText('此筛选暂无已绑定作战资料；不表示没有战斗')
+             else:self.event_stage.setPlaceholderText('请选择固定作战资料；实际触发仍未知')

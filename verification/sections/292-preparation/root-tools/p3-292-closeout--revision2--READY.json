@@ -1,0 +1,65 @@
+{
+  "status": "CACHE292_REVISION2_READY_NOT_EXECUTED",
+  "original_helper_sha256": "29c88b7e05be508acb3701e07256e6305947b93f60f76e1e54984fa00b622809",
+  "helper_sha256": "ff5e8a8b7b6b6382aff7001e0c1d12f326a111f353057a70dbbf3aaa88546f7c",
+  "changes": [
+    {
+      "label": "revision identity",
+      "before": "Unexecuted292 strict closeout draft.",
+      "after": "Unexecuted292 strict closeout revision2."
+    },
+    {
+      "label": "nested repository root",
+      "before": "ROOT=Path(__file__).resolve().parents[2]",
+      "after": "ROOT=Path(__file__).resolve().parents[3]"
+    },
+    {
+      "label": "new exclusive canonical helper",
+      "before": "HERE=ROOT/'.cache/p3-292-closeout'",
+      "after": "HERE=ROOT/'.cache/p3-292-closeout/revision2'"
+    },
+    {
+      "label": "actual final receipt parameters",
+      "before": "def original_window(main_value,focus_value,fixture):",
+      "after": "def original_window(main_value,focus_value,fixture,necessary_data,necessary_value,native_value):"
+    },
+    {
+      "label": "strict292 identity, source and chronological binding",
+      "before": " main,focus=load(main_value),load(focus_value)\n",
+      "after": " main,focus=load(main_value),load(focus_value)\n require(path(main_value).resolve()==(ROOT/'verification/sections/292-main-window.json').resolve()\n  and path(focus_value).resolve()==(ROOT/'verification/sections/292-main-window-focus.json').resolve(),\n  'strict same-section canonical292 main/focus receipt paths')\n require(main['section']==292 and focus['section']==292\n  and main['necessary_receipt_sha256']==digest(necessary_value)\n  and main['native_receipt_sha256']==digest(native_value)\n  and main['native_receipt']==rel(native_value) and main['necessary_receipt']==rel(necessary_value)\n  and focus['main_receipt_sha256']==digest(main_value),\n  'actual292 main binds both final evidence receipts; focus binds exact same main bytes')\n require(main['source_sha256_before']==main['source_sha256_after']==fixture['source_sha256_after']\n  and set(main['source_sha256_after'])==selected_window_sources(),\n  'same final actual native20 source map stable through original window restart')\n check_map(main['source_sha256_after'],'original292 window final native20 sources')\n timestamps={name:datetime.fromisoformat(value.replace('Z','+00:00')) for name,value in {\n  'started':main['started_utc'],'finished':main['finished_utc'],'focus':focus['at_utc'],\n  'necessary_finished':necessary_data['finished_utc'],'native_finished':fixture['finished_at']}.items()}\n require(all(value.tzinfo is not None and value.utcoffset() is not None for value in timestamps.values()),\n  'actual main/focus/final-check timestamps are timezone-aware')\n require(timestamps['started']>timestamps['necessary_finished'] and timestamps['started']>timestamps['native_finished']\n  and timestamps['finished']>=timestamps['started'] and timestamps['focus']>=timestamps['finished'],\n  'original292 restart occurs after both final validations; focus follows completed main receipt')\n"
+    },
+    {
+      "label": "record verified same-section proof without reusing291",
+      "before": "  'private_hash_comparisons':5,'changed_private_paths':0,'visible_responsive_foreground':True,'private_contents_read_by_helper':False}\n",
+      "after": "  'section':292,'necessary_receipt_sha256':digest(necessary_value),'native_receipt_sha256':digest(native_value),\n  'native20_current_source_unchanged':True,'started_after_final_necessary_and_native':True,'focus_after_main_finished':True,\n  'private_hash_comparisons':5,'changed_private_paths':0,'visible_responsive_foreground':True,'private_contents_read_by_helper':False}\n"
+    },
+    {
+      "label": "pass actual final necessary and native references",
+      "before": " main_ref=original_window(args.main_window_receipt,args.focus_receipt,window)",
+      "after": " main_ref=original_window(args.main_window_receipt,args.focus_receipt,window,tests,args.necessary_receipt,args.window_receipt)"
+    },
+    {
+      "label": "preserve original display unknown as actual in-game display",
+      "before": "10条未解析附注的结果/条件分类与来源核验；其余已绑定来源关系及原件明确目的地的真实可达、跳转后状态与完整脚本；",
+      "after": "10条未解析附注的结果/条件分类与来源核验；其余已绑定来源关系及原件明确目的地的真实可达、游戏内实际展示、跳转后状态与完整脚本；"
+    }
+  ],
+  "unchanged_unrelated_gate_AST": true,
+  "existing_main_focus_gate_literals_preserved": true,
+  "actual_helper_Qt_tests_game_chat_or_live_writes": false,
+  "final_native_and_necessary_not_counted_without_actual_receipt_gate": true,
+  "files": {
+    "close_section_292.py": {
+      "sha256": "ff5e8a8b7b6b6382aff7001e0c1d12f326a111f353057a70dbbf3aaa88546f7c",
+      "bytes": 31655
+    },
+    "CONTRACT.md": {
+      "sha256": "8a5cc369a80e41c714c8bdeeb0861e51179780ee7e2d9d42c5bebcfa969ed63f",
+      "bytes": 3997
+    },
+    "prepare_revision2.py": {
+      "sha256": "74865802cc8fa1a2c6167f69b9c14b135f8f7c0ff19e410f82168c5e981cda6a",
+      "bytes": 7285
+    }
+  }
+}

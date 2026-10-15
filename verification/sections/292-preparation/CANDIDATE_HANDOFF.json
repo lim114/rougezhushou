@@ -1,0 +1,64 @@
+{
+  "scope": "Cache-only candidate, not promoted or functionally/UI tested.",
+  "head": "63ec130238dfff0a65b8b648518328834f815725",
+  "candidate_source": {
+    "path": ".cache\\p3-292-choice-preview-candidate\\revision2\\rouge\\node_catalog_view.py",
+    "sha256": "c7398a4ae762c49bd19495f8a0692a917ee5e40a14db250915ca313f03c1506b",
+    "bytes": 69013
+  },
+  "candidate_test": {
+    "path": ".cache\\p3-292-choice-preview-candidate\\revision2\\tests\\test_event_preview_filters_292.py",
+    "sha256": "e7bf4ac736b6a2c2851ab872f4d248df88480b9d274a2c9862622d7891998326",
+    "bytes": 11434
+  },
+  "precondition_live_source": {
+    "path": "rouge\\node_catalog_view.py",
+    "sha256": "ef1793eb70874fc4428ac8b8bab34a06c2cf02b69744a72c71b2b7b14632998f",
+    "bytes": 64348
+  },
+  "before_source": {
+    "path": ".cache\\p3-292-choice-preview-candidate\\before-node_catalog_view.py",
+    "sha256": "ef1793eb70874fc4428ac8b8bab34a06c2cf02b69744a72c71b2b7b14632998f",
+    "bytes": 64348
+  },
+  "diff": {
+    "path": ".cache\\p3-292-choice-preview-candidate\\revision2-node-catalog-view.diff",
+    "sha256": "0b2a959fce9d7b287ea672faaca57f61ea96a41663daf53f7751d9e3379b69c2",
+    "bytes": 12261
+  },
+  "test_methods": [
+    "test_default_all_keeps_original_duck_option_variant_domain",
+    "test_all_catalog_scenes_and_choices_are_available_as_manual_reference_filters",
+    "test_scene_and_option_filters_keep_ordinary_dual_and_emergency_only",
+    "test_exact_choice_filter_works_across_all_scenes_without_scene_inference",
+    "test_nonbattle_choices_and_empty_scene_do_not_fallback_to_event_battles",
+    "test_same_title_and_same_original_choice_are_three_distinct_reading_choices",
+    "test_shared_stage_from_another_option_does_not_restore_the_old_origin",
+    "test_black_birth_six_original_aliases_remain_separate_and_open_exact_ids",
+    "test_cave_known_pool_then_missing_context_clears_stage_without_selecting_another",
+    "test_preview_click_revalidates_latest_context_before_emitting",
+    "test_changing_event_resets_both_filters_and_never_borrows_choice_title",
+    "test_manual_filters_and_refresh_preserve_reading_tabs_cursor_and_nonzero_scroll",
+    "test_source_failure_during_click_clears_old_entry_and_never_emits"
+  ],
+  "test_method_count": 13,
+  "static_checks": {
+    "ast_parse": true,
+    "py_compile": true,
+    "live_source_still_matches_before": true
+  },
+  "functional_tests_executed": false,
+  "gui_executed": false,
+  "no_game_chat_private_state": true,
+  "first_candidate_preserved": {
+    "path": ".cache\\p3-292-choice-preview-candidate\\draft\\rouge\\node_catalog_view.py",
+    "sha256": "5bfbcb8b527252dcbd74db2c785cb5120e7d6f320267085cc5684aa24a4041d3",
+    "bytes": 68618
+  },
+  "revision2_difference": "Adds fail-closed source exception handling to the first cache-only candidate. First core/output unchanged; no first functional run occurred.",
+  "production_promotion_allowlist": [
+    "rouge/node_catalog_view.py",
+    "tests/test_event_preview_filters_292.py"
+  ],
+  "no_source_or_mechanism_change": "No new result helper, annotation role, source catalog or eligibility math; ten unparsed and25/57 origin gaps stay unchanged."
+}

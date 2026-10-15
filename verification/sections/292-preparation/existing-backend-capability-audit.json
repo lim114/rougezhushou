@@ -1,0 +1,426 @@
+{
+  "kind": "READ_ONLY_EVENT_TO_BATTLE_ENTRY_GAP_AUDIT_AFTER_291_NOT_NEW_FEATURE",
+  "current_head": "63ec130238dfff0a65b8b648518328834f815725",
+  "source_sha256": {
+    "rouge/event_planning.py": "f5715822efb181d9b8d84c59eda2667a23e64ca7d341eb63edc2c7eaf834d8ba",
+    "rouge/node_catalog_view.py": "ef1793eb70874fc4428ac8b8bab34a06c2cf02b69744a72c71b2b7b14632998f",
+    "rouge/player_node_information.py": "6f9b5d0172cd2545e31b15756f306b26ee78574b75e73dc1bc5641c25cc013ae",
+    "rouge/app.py": "ae56563b75c9f7f93c4eebb8d73070e37931c09c1e18c29131ee974704e65ab5",
+    "rouge/battle_view.py": "169a33f5161b01ad43040a91422c1dee20aa721900d76c65afd59d6385dfe82e",
+    "rouge/original_destinations.py": "079ddbeedb702a7bacc7f3094cc50775b00ae5550f8b3ebc579be6c52c91e3eb",
+    "rouge/original_destinations_view.py": "795c96cf357210a4b9d8caa996540b329948c7df3aa621712c14e4a05d60c158",
+    "rouge/data/event-planning-reference.json": "b9de2c98dac306eafc40dba8fa3ee5765c6720afa18c907488ff1f4f199e4f14",
+    "rouge/data/node-catalog.json": "7df1d94bb69650eb19fc811af661e54d44bf07d72b1c0793de511adc1b2e915d",
+    "tests/test_event_planning.py": "34a452443b71be975bc1d1e5b2d6625f126c8799b30ff8462baff99c975b9409",
+    "tests/test_node_map_navigation.py": "f60920a269873caa43951b739070cfe8a843b4af56ee88b9ff5afd4553786843",
+    "tests/test_player_node_information_286.py": "89506c41396f948cac5aba992bb6e4330038f7eb634d7a7369fa61d1dabc30f5",
+    "tests/test_original_destinations.py": "40f7760864ab36603ba98f953ffeabd74ce8bfb0f5fb389a79e68ecf47c3fa58"
+  },
+  "function_locations": {
+    "rouge/event_planning.py::def event_battle_links": [
+      249
+    ],
+    "rouge/event_planning.py::emergency=": [
+      264
+    ],
+    "rouge/event_planning.py::excluded_stage_candidates=": [
+      279
+    ],
+    "rouge/event_planning.py::generic_pool_requirement": [
+      280,
+      286
+    ],
+    "rouge/node_catalog_view.py::def show_selected": [
+      532
+    ],
+    "rouge/node_catalog_view.py::event_battle_links(entry": [
+      541
+    ],
+    "rouge/node_catalog_view.py::stageSelected = Signal": [],
+    "rouge/node_catalog_view.py::stageSelected=Signal": [
+      301
+    ],
+    "rouge/node_catalog_view.py::def select_stage": [
+      853
+    ],
+    "rouge/player_node_information.py::def _battle_choice_lines": [
+      107
+    ],
+    "rouge/player_node_information.py::def _event_lines": [
+      123
+    ],
+    "rouge/player_node_information.py::if condition.get('unparsed_condition_text')": [
+      200
+    ],
+    "rouge/app.py::def show_catalog_battle": [
+      986
+    ],
+    "rouge/battle_view.py::def set_stage": [
+      310
+    ],
+    "rouge/battle_view.py::def set_context": [
+      318
+    ],
+    "rouge/original_destinations.py::def destination_reference": [
+      51
+    ],
+    "rouge/original_destinations.py::def event_destination_choices": [
+      92
+    ],
+    "rouge/original_destinations_view.py::def refresh": [
+      34
+    ],
+    "rouge/original_destinations_view.py::def select_stage": [
+      62
+    ]
+  },
+  "five_event_matrix": [
+    {
+      "event_id": "community_group_008",
+      "title": "黑诞",
+      "already_supported_battle_links": [
+        {
+          "scene_key": "community_group_008:scene:0",
+          "choice_key": "community_group_008:scene:0:choice:1",
+          "choice_title": "和猎狗战斗到底",
+          "source_conditional_text": "随机出现以下追猎可遭遇关卡的一个：ISW-NO “闹乐” / ISW-NO “纵怒” / ISW-NO “灭身”",
+          "game_choice_ids": [
+            "choice_ro6_normal2_2"
+          ],
+          "community_choice_to_page_verified": true,
+          "static_source_rule_retained_stages": [
+            {
+              "stage_id": "ro6_t_13",
+              "name": "“闹乐”",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-5"
+            },
+            {
+              "stage_id": "ro6_c_5",
+              "name": "“闹乐”",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-5"
+            },
+            {
+              "stage_id": "ro6_t_14",
+              "name": "“纵怒”",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-6"
+            },
+            {
+              "stage_id": "ro6_c_6",
+              "name": "“纵怒”",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-6"
+            },
+            {
+              "stage_id": "ro6_t_15",
+              "name": "“灭身”",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-7"
+            },
+            {
+              "stage_id": "ro6_c_7",
+              "name": "“灭身”",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_c-7"
+            }
+          ],
+          "static_source_rule_excluded_stages": [],
+          "actual_stage_id": null,
+          "generic_next_floor_pool_reference": false
+        }
+      ]
+    },
+    {
+      "event_id": "community_group_014",
+      "title": "鸭托邦",
+      "already_supported_battle_links": [
+        {
+          "scene_key": "community_group_014:scene:1",
+          "choice_key": "community_group_014:scene:1:choice:0",
+          "choice_title": "区区打手！",
+          "source_conditional_text": null,
+          "game_choice_ids": [
+            "choice_ro6_bat3_3"
+          ],
+          "community_choice_to_page_verified": true,
+          "static_source_rule_retained_stages": [
+            {
+              "stage_id": "ro6_t_3",
+              "name": "开业剪彩",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-3"
+            },
+            {
+              "stage_id": "ro6_e_t_3",
+              "name": "开业剪彩",
+              "difficulty": "FOUR_STAR",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-3"
+            }
+          ],
+          "static_source_rule_excluded_stages": [],
+          "actual_stage_id": null,
+          "generic_next_floor_pool_reference": false
+        },
+        {
+          "scene_key": "community_group_014:scene:2",
+          "choice_key": "community_group_014:scene:2:choice:0",
+          "choice_title": "区区商人！",
+          "source_conditional_text": "升级为紧急作战",
+          "game_choice_ids": [
+            "choice_ro6_bat3_5"
+          ],
+          "community_choice_to_page_verified": true,
+          "static_source_rule_retained_stages": [
+            {
+              "stage_id": "ro6_e_t_3",
+              "name": "开业剪彩",
+              "difficulty": "FOUR_STAR",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-3"
+            }
+          ],
+          "static_source_rule_excluded_stages": [
+            {
+              "stage_id": "ro6_t_3",
+              "name": "开业剪彩",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-3"
+            }
+          ],
+          "actual_stage_id": null,
+          "generic_next_floor_pool_reference": false
+        }
+      ]
+    },
+    {
+      "event_id": "community_group_015",
+      "title": "传奇团伙",
+      "already_supported_battle_links": [
+        {
+          "scene_key": "community_group_015:scene:1",
+          "choice_key": "community_group_015:scene:1:choice:0",
+          "choice_title": "阻拦到底",
+          "source_conditional_text": null,
+          "game_choice_ids": [
+            "choice_ro6_bat4_3"
+          ],
+          "community_choice_to_page_verified": true,
+          "static_source_rule_retained_stages": [
+            {
+              "stage_id": "ro6_t_4",
+              "name": "合伙人会议",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-4"
+            },
+            {
+              "stage_id": "ro6_e_t_4",
+              "name": "合伙人会议",
+              "difficulty": "FOUR_STAR",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-4"
+            }
+          ],
+          "static_source_rule_excluded_stages": [],
+          "actual_stage_id": null,
+          "generic_next_floor_pool_reference": false
+        },
+        {
+          "scene_key": "community_group_015:scene:2",
+          "choice_key": "community_group_015:scene:2:choice:0",
+          "choice_title": "就挑衅，怎么了？",
+          "source_conditional_text": "升级为紧急作战",
+          "game_choice_ids": [
+            "choice_ro6_bat4_5"
+          ],
+          "community_choice_to_page_verified": true,
+          "static_source_rule_retained_stages": [
+            {
+              "stage_id": "ro6_e_t_4",
+              "name": "合伙人会议",
+              "difficulty": "FOUR_STAR",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-4"
+            }
+          ],
+          "static_source_rule_excluded_stages": [
+            {
+              "stage_id": "ro6_t_4",
+              "name": "合伙人会议",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-4"
+            }
+          ],
+          "actual_stage_id": null,
+          "generic_next_floor_pool_reference": false
+        }
+      ]
+    },
+    {
+      "event_id": "community_group_016",
+      "title": "湖中仙女",
+      "already_supported_battle_links": [
+        {
+          "scene_key": "community_group_016:scene:3",
+          "choice_key": "community_group_016:scene:3:choice:0",
+          "choice_title": "到此为止了！",
+          "source_conditional_text": null,
+          "game_choice_ids": [
+            "choice_ro6_bat5_5"
+          ],
+          "community_choice_to_page_verified": true,
+          "static_source_rule_retained_stages": [
+            {
+              "stage_id": "ro6_t_5",
+              "name": "湖中魇",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-5"
+            },
+            {
+              "stage_id": "ro6_e_t_5",
+              "name": "湖中魇",
+              "difficulty": "FOUR_STAR",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-5"
+            }
+          ],
+          "static_source_rule_excluded_stages": [],
+          "actual_stage_id": null,
+          "generic_next_floor_pool_reference": false
+        },
+        {
+          "scene_key": "community_group_016:scene:8",
+          "choice_key": "community_group_016:scene:8:choice:0",
+          "choice_title": "我不要困在这里！",
+          "source_conditional_text": "升级为紧急作战",
+          "game_choice_ids": [
+            "choice_ro6_bat5_9"
+          ],
+          "community_choice_to_page_verified": true,
+          "static_source_rule_retained_stages": [
+            {
+              "stage_id": "ro6_e_t_5",
+              "name": "湖中魇",
+              "difficulty": "FOUR_STAR",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-5"
+            }
+          ],
+          "static_source_rule_excluded_stages": [
+            {
+              "stage_id": "ro6_t_5",
+              "name": "湖中魇",
+              "difficulty": "NORMAL",
+              "level_id": "Obt/Roguelike/RO6/level_rogue6_t-5"
+            }
+          ],
+          "actual_stage_id": null,
+          "generic_next_floor_pool_reference": false
+        }
+      ]
+    },
+    {
+      "event_id": "community_group_017",
+      "title": "洞中宝",
+      "already_supported_battle_links": [
+        {
+          "scene_key": "community_group_017:scene:6",
+          "choice_key": "community_group_017:scene:6:choice:0",
+          "choice_title": "放开我！",
+          "source_conditional_text": "随机出现下一层的普通作战中的一个",
+          "game_choice_ids": [
+            "choice_ro6_bat6_6",
+            "choice_ro6_bat6_12",
+            "choice_ro6_bat6_17",
+            "choice_ro6_bat6_22",
+            "choice_ro6_bat6b_6",
+            "choice_ro6_bat6b_12",
+            "choice_ro6_bat6b_17",
+            "choice_ro6_bat6b_22"
+          ],
+          "community_choice_to_page_verified": false,
+          "static_source_rule_retained_stages": [],
+          "static_source_rule_excluded_stages": [],
+          "actual_stage_id": null,
+          "generic_next_floor_pool_reference": true
+        }
+      ]
+    }
+  ],
+  "already_supported": [
+    "event_battle_links accepts exact scene_key/choice_key, rejects cross-event and cross-scene choice IDs, preserves original source IDs and actual_stage_id=None.",
+    "014/015/016 explicit emergency result text already excludes NORMAL and preserves only FOUR_STAR for those three exact battle options.",
+    "Non-explicit-emergency siblings deliberately retain NORMAL and FOUR_STAR; current source does not prove exclusion. The old test expressly protects this uncertainty.",
+    "008 has 3 linked original levels and all6 event/pursuit stage aliases; fixed_level_groups already groups aliases in model, while panel renders all precise IDs.",
+    "017 has a next-main-floor fixed NORMAL preview pool when a supported main floor is known. Unknown/floor6/special region does not fabricate a pool; server completeness and actual selection remain unknown.",
+    "NodeCatalogPanel event_stage contains option title, stage name, difficulty and exact UserRole+1 scene/choice/stage tuple; its button already emits the exact selected stage ID into MainWindow.show_catalog_battle.",
+    "OriginalDestinationPanel independently supports explicit nextSceneId -> catalog scene -> own battle links -> fixed stage button, with exact tuple preservation and no source/actual-reachability inference.",
+    "Player text already places matching battle names and next-floor names under exact source scene/choice, with candidate/actual unknown warnings."
+  ],
+  "existing_evidence_read_not_executed_here": {
+    "tests/test_event_planning.py": [
+      "test_exact_choice_page_links_and_source_coverage",
+      "test_emergency_filter_keeps_unproved_ordinary_variants",
+      "test_event_pursuit_aliases_and_generic_next_floor_pool"
+    ],
+    "tests/test_node_map_navigation.py": [
+      "test_exact_event_choice_previews_and_emergency_variants",
+      "test_next_main_floor_source_pool_provides_all_fixed_preview_entrances",
+      "test_unknown_or_special_next_main_floor_never_fabricates_preview_pool",
+      "test_actual_window_event_to_battle_and_node_to_map"
+    ],
+    "tests/test_original_destinations.py": [
+      "test_event_pointer_opens_independent_battle_map_and_keeps_condition_unknown",
+      "test_refresh_retains_choice_dialog_stage_and_reading_with_context_update",
+      "test_same_original_id_in_separate_community_branches_keeps_exact_picker_row",
+      "test_destination_reference_does_not_bind_future_scene_to_current_map_or_write_state"
+    ],
+    "tests/test_player_node_information_286.py": [
+      "test_exact_choice_battle_name_and_followup_remain_available_without_raw_ids",
+      "test_next_floor_pool_uses_all_fixed_names_and_does_not_fill_unknown_region"
+    ]
+  },
+  "genuine_interface_gaps": [
+    {
+      "gap": "Preview origin identity is dropped at the last hop",
+      "evidence": "NodeCatalogPanel/OriginalDestinationPanel store full source tuples but stageSelected emits only str(stage_id). MainWindow.show_catalog_battle and BattlePreviewPanel.set_stage only accept stage_id. BattlePreviewPanel.set_context is enemy environment, not event origin.",
+      "user_impact": "Two options may lead to the same emergency stage ID, but once opened the battle page cannot show/revalidate which exact option, source condition or historical reference led there, or directly return to that branch.",
+      "safe_new_capability": "A source-qualified battle-reference request carrying full event/scene/choice/variant identity, visible origin explanation, and explicit return-to-source option. Keep the existing bare-stage API for ordinary stage browsing.",
+      "not_yet_claimed": "No implementation or runtime acceptance in this audit."
+    },
+    {
+      "gap": "No independent scene/choice reading selection in the node panel",
+      "evidence": "show_selected calls event_battle_links(event_id) across all scenes. The model already has optional scene_key/choice_key filters, but only one flattened stage combo consumes them; player text shows every scene.",
+      "user_impact": "014/015/016 expose normal/urgent sibling results together, and 008 duplicates same names for two aliases. The user cannot narrow a branch without manually finding it in the complete event text/global combo.",
+      "safe_new_capability": "Optional manual scene/choice reference selector or grouped result cards with full stable tuples, no automatic claim about actual current scene. Put prerequisites and outcomes in separate fields, keep all alias IDs reachable, and provide exact battle actions from the selected card.",
+      "scope_note": "Grouping by itself is presentation maintenance; count a functional section only if it adds usable branch-specific navigation/result/source handling rather than repeating the existing jump."
+    },
+    {
+      "gap": "Documented battle result annotations remain classified as unparsed conditions",
+      "evidence": "choice_eligibility only has verified recruitment/MOVE annotation roles; these five battle-choice texts remain unparsed_condition_text, and player text labels them conditions. Emergency filtering already works independently in event_battle_links.",
+      "user_impact": "Players can confuse result mechanics such as upgrading the battle or selecting a random next-floor battle with requirements for an option to appear.",
+      "safe_new_capability": "After the other source audit validates exact original/community content, classify only exact supported battle-result texts and consume that result object in branch-specific previews; preserve every actual outcome/instance unknown.",
+      "scope_note": "A label-only classification correction is insufficient as a standalone functional milestone."
+    }
+  ],
+  "preferred_next_group": {
+    "proposal": "Source-qualified battle-result cards plus an origin-preserving exact preview/return action for all five events; reuse existing filtering and original-destination machinery instead of rebuilding them.",
+    "minimum_source_gate": "Other agent must finish exact choice/scene/full source checks for the five result texts. Absence of emergency wording is not evidence that ordinary siblings exclude FOUR_STAR.",
+    "minimum_acceptance": [
+      "Same e_t_3 stage ID reached via different source options retains distinct full origin identity.",
+      "User-selected branch/variant, collapsed groups and reading state survive unchanged refresh; manual battle-stage switch clears stale event origin.",
+      "All existing source stage IDs and generic fixed pools remain accessible; unknown region never invents a pool.",
+      "Fresh source invalidation suppresses only new result enrichment, retaining original text and existing safe source-reference entry behavior.",
+      "Explicit source/preview navigation never writes actual scene/choice, current run memory, map completion or actual stage selection.",
+      "A prior-step condition such as 015 gold>50 is shown as that documented predecessor option condition, not applied retroactively as a current battle gate without origin/entry snapshot proof."
+    ]
+  },
+  "do_not_repeat_or_infer": [
+    "Do not report first-time event-to-battle jump support: it already exists.",
+    "Do not report first-time emergency filtering or next-floor pool support: both already exist.",
+    "Do not drop ordinary siblings or choose a canonical alias without new evidence.",
+    "Same level file does not prove same actual stage/rune context; retain all aliases.",
+    "Original nextSceneId or suffixes do not prove source-scene or runtime reachability.",
+    "Do not infer actual pool weights/probabilities, current scene, actual reward or floor completion from this source graph."
+  ],
+  "live_files_edited": false,
+  "tests_or_GUI_executed": false,
+  "game_or_chat_operations": 0,
+  "new_progress_section_claimed": false
+}
