@@ -44,6 +44,7 @@ CALIBRATION_QUERIES = (
     ('sp-cost', '技能技力 · 门槛与消耗意图'),
     ('sp-data', '技能费用 · 逐次修饰与更新'),
     ('sp-increments', '技力增量 · 初始化与类型资格'),
+    ('sp-cost-consensus', '技能费用 · 舍入相容结果'),
 )
 BATTLE_QUERIES = (
     ('actions', '完整关卡动作清单'), ('activations', '预置实体激活对应'),
@@ -115,6 +116,7 @@ INPUT_GUIDANCE = {
     'compare': 'left_stage/right_stage 与 left_level/right_level 分别指定两组条件；run_config/right_run_config 为局外环境。比较已支持环境小计，完整有效面板仍未知。',
 }
 INPUT_GUIDANCE.update({
+    'sp-cost-consensus':'sp_cost_consensus逐行声明独立费用、Single系数原位型及转换/运算/取整正常资格。枚举16种正常舍入组合的保守超集，只有全部有效且最终整数相同才给条件编码参数；候选有分歧或存在未闭合分支时保持未知。相容组合不是游戏实际环境、均匀概率或真实切换记录；不从上一条参数推下一条解码费用，也不声明编码/写入已完成。原精确域查询仍保留，实际费用/SP/完整周期未知。',
     'sp-increments':'sp_increments独立声明四槽初始化、技能初始化或攻击/受伤时的单次回技力参考。黑板指针在入口捕获，各槽查找、mask和数组读取独立；缺bit的默认1.0不代表启用回复渠道。数组非空不证明完整初始化。失败前已写mask/flag/槽值保留，未知数值直接赋值与未知分支条件分开。单精度初始化比较包含相等边界，不套固定点门槛。实际数组、当前SP和完整周期仍未知，不把槽0直接作为自然回复倍率。',
     'sp-data':'sp_data逐次声明符文乘加、藏品倍率、整数缩放或直接费用替换。每次都独立读取成本并取整；不能将全部倍率合并后只取整一次，也不能把编码入参当作实际费用。Single转换或运算不精确、舍入环境未核时保持未知。整数缩放按32位回绕；只更新费用的调用参数与正常性分开。实际SP、解码费用和完整回转仍未知。',
     'sp-cost':'sp_cost分别声明门槛参数、技力资格读取和消耗请求。非负最小技力是门槛覆盖，不能与技能费用取最大值；SP读取后的第二门槛也须独立。Unity判空不等于存活，费用、无技力开关、虚调用跳费及两次owner都不复用。Apply布尔值只是调用返回参考，实际支付、SP变化和完整施放未知。仅供局外条件算例。',
@@ -203,6 +205,9 @@ def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
     if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
+        if command == 'sp-cost-consensus':
+            from .skill_cost_rounding_consensus import public_example
+            return {'sp_cost_consensus':public_example()}
         if command == 'sp-increments':
             from .skill_sp_increment_reference import public_example
             return {'sp_increments':public_example()}
@@ -331,6 +336,30 @@ def _explosion_tables(data):
         '；所声明调用总参考：'+amount(data['declared_calls_scaled_damage_raw_total'])),
         _p('≈表示仅显示到8位小数；完整定点原值保留在技术详情。'),
         _p('采用原值定点顺序与单精度常量；这些数值不代表全爆炸伤害、实际目标数或实机时钟。')]
+    return parts
+
+
+def _skill_cost_consensus_tables(data):
+    kinds={'rune_add':'符文费用加值','rune_mul':'符文费用倍率','relic_mul':'藏品费用倍率'}
+    statuses={'all16_normal_RC_pairs_integer_consensus':'全部相容结果的整数一致',
+        'RC_integer_outcomes_disagree':'相容整数有分歧',
+        'incomplete_numeric_domain_consensus_unknown':'存在未闭合的数值分支',
+        'cost_value_unknown':'独立费用未知','modifier_value_unknown':'系数未知',
+        'modifier_nonfinite_environment_unknown':'系数非有限，结果未核',
+        'modifier_subnormal_environment_unknown':'系数极小，环境未核'}
+    parts=[_p('来源核验：'+_text(data['source']['valid'])+'；所有允许的正常舍入结果一致时才给整数参考。'),
+        _p('16种组合是保守相容范围，不表示游戏实际切换了舍入模式，也不是概率分布。')]
+    for number,row in enumerate(data['rows'],1):
+        parts += [_h(str(number)+' · '+kinds[row['kind']]),
+            _table(['数字前缀调用参考','正常完成参考','条件编码参数参考'],
+                [(row['called'],row['normal'],row['encoder_argument_reference'])])]
+        ref=row['consensus_reference']
+        if ref:
+            candidates='、'.join(map(str,ref['integer_candidates'])) or '暂无支持域内的可证整数'
+            parts += [_table(['独立费用整数','支持域内整数候选','全部分支的整数共识','超出原精确域的新闭合结果'],
+                [(ref['cost_int32'],candidates,ref['integer_consensus_reference'],ref['expanded_beyond_exact_only'])]),
+                _p('核验状态：'+statuses[ref['status']])]
+    parts += [_p('此查询仅提供数字前缀；对象资格、编码和写入需要独立核对。实际费用、当前技力与完整周期：未知。')]
     return parts
 
 
@@ -709,7 +738,9 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
     if data.get('stage_name'): parts.append(_p('关卡：'+data['stage_name']))
     if input_source:parts.append(_p('此次输入来源：'+input_source))
     if family == 'calibration':
-        if command == 'sp-increments':
+        if command == 'sp-cost-consensus':
+            parts += _skill_cost_consensus_tables(data)
+        elif command == 'sp-increments':
             parts += _skill_sp_increment_tables(data)
         elif command == 'sp-data':
             parts += _skill_data_cost_tables(data)
@@ -1185,7 +1216,7 @@ class OfflineToolsPanel(QWidget):
 
     def _update_buttons(self):
         family,command=self.current_query()
-        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data','sp-increments') and self._scenario is not None)
+        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data','sp-increments','sp-cost-consensus') and self._scenario is not None)
         self.import_stage.setEnabled((family=='battle' or family=='exploration' and command=='settlements') and self._stage is not None)
         exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes','search-routes')
         self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
@@ -1293,7 +1324,7 @@ class OfflineToolsPanel(QWidget):
     def _import_scenario(self):
         try:
             family,command=self.current_query()
-            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data','sp-increments') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
+            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data','sp-increments','sp-cost-consensus') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
             payload=self._payload();scenario=deepcopy(self._scenario)
             if scenario.get('operator') not in calibration.OPERATORS:raise ValueError('校准工具目前仅支持凯尔希·思衡托、凛御银灰、机械师。')
             if command=='recipient-events' and (scenario.get('operator')!='silverash' or scenario.get('skill')!=2):

@@ -519,3 +519,11 @@ def skill_sp_increment_values(sp_increments):
 
 
 COMMANDS['sp-increments'] = skill_sp_increment_values
+
+
+def skill_cost_consensus_values(sp_cost_consensus):
+    from .skill_cost_rounding_consensus import skill_cost_rounding_consensus
+    return skill_cost_rounding_consensus(sp_cost_consensus)
+
+
+COMMANDS['sp-cost-consensus'] = skill_cost_consensus_values
