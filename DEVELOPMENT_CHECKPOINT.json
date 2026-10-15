@@ -43,7 +43,7 @@
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
     "repair_full_validation_after_functional_260": true,
-    "new_functional_sections_paused": false,
+    "new_functional_sections_paused": true,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
@@ -1889,12 +1889,12 @@
     "batch_closed": true
   },
   "last_verified_cloud_save": {
-    "section": 284,
-    "scope": "previous_functional_section",
+    "section": 285,
+    "scope": "current_functional_section",
     "binding": "verified_remote_commit",
-    "commit": "748cda1ac194cc2b06ee36d78bf85a03eaafcfb2",
-    "proof": "verification/sections/284-publication.json",
-    "proof_sha256": "11313045c8c1c3884a9329f1d1939a5246873363a6af175239493fe1d558f463"
+    "commit": "064687c3d7408f8544e00717486f2b09c16fdca8",
+    "proof": "verification/sections/285-publication.json",
+    "proof_sha256": "f7237f095fbb50515b2e2f18dbfabee50832990159b3b6218442e276a1547f02"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -2146,7 +2146,7 @@
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": 285,
-  "batch_status": "BATCH_262_285_FUNCTIONAL_AND_AVAILABLE_FULL_VALIDATED_PENDING_PUBLICATION",
+  "batch_status": "BATCH_262_285_COMPLETED_PUBLISHED",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2194,7 +2194,7 @@
   "current_batch": {
     "start": 262,
     "end": 285,
-    "status": "BATCH_262_285_FUNCTIONAL_AND_AVAILABLE_FULL_VALIDATED_PENDING_PUBLICATION",
+    "status": "BATCH_262_285_COMPLETED_PUBLISHED",
     "next_section": 286,
     "next_section_started": false,
     "next_full_validation_after": null,
@@ -3268,5 +3268,24 @@
       "native_windows_game_chat_verified": false
     }
   },
-  "next_periodic_full_validation_only_if_resumed": 290
+  "next_periodic_full_validation_only_if_resumed": 290,
+  "historical_before285_publication": {
+    "section": 284,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "748cda1ac194cc2b06ee36d78bf85a03eaafcfb2",
+    "proof": "verification/sections/284-publication.json",
+    "proof_sha256": "11313045c8c1c3884a9329f1d1939a5246873363a6af175239493fe1d558f463"
+  },
+  "cloud_publication_closeout": {
+    "section": 285,
+    "functional_commit": "064687c3d7408f8544e00717486f2b09c16fdca8",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/285-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 285,
+    "next_section": 286,
+    "batch_closed": true,
+    "next_section_started": false
+  }
 }
