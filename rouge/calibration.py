@@ -535,3 +535,11 @@ def skill_data_cost_consensus_values(sp_data_consensus):
 
 
 COMMANDS['sp-data-consensus'] = skill_data_cost_consensus_values
+
+
+def sp_recovery_attribute_values(sp_attributes):
+    from .sp_recovery_attribute_reference import sp_recovery_attribute_reference
+    return sp_recovery_attribute_reference(sp_attributes)
+
+
+COMMANDS['sp-attributes'] = sp_recovery_attribute_values

@@ -25,7 +25,7 @@ class OfflineToolQueryTests(unittest.TestCase):
                     self.assertIn('技术详情',rendered)
                     json.dumps(result,allow_nan=False)
                     count+=1
-        self.assertEqual(count,36)
+        self.assertEqual(count,37)
 
     def test_skills_keep_complete_totals_unknown_and_conditionals_separate(self):
         result=run_offline_query('calibration','skills',public_payload('calibration','skills'))

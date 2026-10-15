@@ -46,6 +46,7 @@ CALIBRATION_QUERIES = (
     ('sp-increments', '技力增量 · 初始化与类型资格'),
     ('sp-cost-consensus', '技能费用 · 舍入相容结果'),
     ('sp-data-consensus', '技能费用 · 共识与完整写入'),
+    ('sp-attributes', '技力回复 · 属性与变更来源'),
 )
 BATTLE_QUERIES = (
     ('actions', '完整关卡动作清单'), ('activations', '预置实体激活对应'),
@@ -117,6 +118,7 @@ INPUT_GUIDANCE = {
     'compare': 'left_stage/right_stage 与 left_level/right_level 分别指定两组条件；run_config/right_run_config 为局外环境。比较已支持环境小计，完整有效面板仍未知。',
 }
 INPUT_GUIDANCE.update({
+    'sp-attributes':'sp_attributes独立声明属性14/30的缓存或四桶重算、初始化槽0写入和属性变更通知。初始化编码参数不能填作后续解码读值；新回复率与能否回复的读点互相独立。只有普通路径、对象和时钟身份明确时才生成计时器条件参考；不生成实际事件，不推断回调库存、热修复或完整周期。',
     'sp-data-consensus':'sp_data_consensus逐次声明完整费用读取与写入资格。三类Single修饰使用全部合格相容分支的整数共识，仍未确定的整数可在独立正常条件下保留保护值复制前缀；整数缩放/直接替换保留各自更新规则。不能把正常写入当作实际解码费用，不跨方法追加owner更新；旧精确域接口保留，实际SP/完整周期仍未知。',
     'sp-cost-consensus':'sp_cost_consensus逐行声明独立费用、Single系数原位型及转换/运算/取整正常资格。枚举16种正常舍入组合的保守超集，只有全部有效且最终整数相同才给条件编码参数；候选有分歧或存在未闭合分支时保持未知。相容组合不是游戏实际环境、均匀概率或真实切换记录；不从上一条参数推下一条解码费用，也不声明编码/写入已完成。原精确域查询仍保留，实际费用/SP/完整周期未知。',
     'sp-increments':'sp_increments独立声明四槽初始化、技能初始化或攻击/受伤时的单次回技力参考。黑板指针在入口捕获，各槽查找、mask和数组读取独立；缺bit的默认1.0不代表启用回复渠道。数组非空不证明完整初始化。失败前已写mask/flag/槽值保留，未知数值直接赋值与未知分支条件分开。单精度初始化比较包含相等边界，不套固定点门槛。实际数组、当前SP和完整周期仍未知，不把槽0直接作为自然回复倍率。',
@@ -207,6 +209,9 @@ def public_payload(family, command):
     """No private state: defaults come from the pinned public data only."""
     if family=='exploration':return deepcopy(exploration_examples()['examples'][command])
     if family == 'calibration':
+        if command == 'sp-attributes':
+            from .sp_recovery_attribute_reference import public_example
+            return {'sp_attributes':public_example()}
         if command == 'sp-data-consensus':
             from .skill_data_cost_consensus_reference import public_example
             return {'sp_data_consensus':public_example()}
@@ -341,6 +346,43 @@ def _explosion_tables(data):
         '；所声明调用总参考：'+amount(data['declared_calls_scaled_damage_raw_total'])),
         _p('≈表示仅显示到8位小数；完整定点原值保留在技术详情。'),
         _p('采用原值定点顺序与单精度常量；这些数值不代表全爆炸伤害、实际目标数或实机时钟。')]
+    return parts
+
+
+def _sp_recovery_attribute_tables(data):
+    amount=lambda raw:_fp_amount(raw,8)
+    parts=[_p('来源核验：'+_text(data['source_valid'])+'；技力回复属性14/30按独立读点核对。'),
+        _p('初始化写入参数与后续解码读值分开；不从藏品持有推断实际修饰器或回调。')]
+    parts += [_h('属性读取与有序重算'),
+        _table(['读点','属性','读取正常参考','本次读取值参考','缓存编码参数参考','清除脏标步骤参考'],
+        [(str(i), '固定回复值' if row['attribute']==14 else '回复倍率',row['normal_return_reference'],
+          amount(row['getter_raw_reference']),amount(row.get('cache_write_value_argument_raw_reference')),
+          row['dirty_cleared_reference']) for i,row in enumerate(data['readings'],1)])]
+    parts += [_h('独立回复率'),_table(['读点','读取正常参考','身份资格已明确','每秒回复率参考'],
+        [(str(i),row['normal'],row['binding_qualified'],amount(row['rate_raw_reference']))
+         for i,row in enumerate(data['rate_reads'],1)])]
+    for i,row in enumerate(data['rows'],1):
+        initial=row['kind']=='initial_slot0'
+        parts += [_h(str(i)+' · '+('初始化槽值与原始属性写入' if initial else '属性变更与计时器更新')),
+            _p('前缀正常返回参考：'+_text(row['normal']))]
+        if initial:
+            refresh=row['refresh_reference']
+            parts += [_table(['槽值转换后的编码参数','已复制的保护值字节数','后续独立刷新读值'],
+                [(amount(row['slot0_fp_argument_raw_reference']),sum(p['byte_count'] for p in row['stored_prefix']),
+                  amount(refresh['getter_raw_reference']) if refresh else '未知')]),
+                _p('复制不证明解码值相等；内部脏标和委托的部分执行状态仍未确认。')]
+        else:
+            new=row['new_rate_reference']
+            parts += [_p('变更通知生成独立计时器参考；不代表实际安排或执行回调。'),
+                _table(['属性','独立新回复率','生成的计时器声明'],
+                    [(row['attribute'],amount(new['rate_raw_reference']) if new else '未知',row['clock_request'] is not None)])]
+            clock=row['clock_reference']
+            if clock:
+                parts += [_table(['正常返回参考','更新后周期（秒）','更新后剩余（秒）'],
+                    [(c['normal_return_reference'],amount(c['period_after_raw_reference']),
+                      amount(c['remaining_after_raw_reference'])) for c in clock['rows']]),
+                    _p('新率与能否回复的资格读点分开；已有效计时器先按独立声明处理零时长更新。')]
+    parts += [_p('实际属性、当前技力、实际计时器与完整周期：未知。')]
     return parts
 
 
@@ -752,7 +794,9 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
     if data.get('stage_name'): parts.append(_p('关卡：'+data['stage_name']))
     if input_source:parts.append(_p('此次输入来源：'+input_source))
     if family == 'calibration':
-        if command == 'sp-data-consensus':
+        if command == 'sp-attributes':
+            parts += _sp_recovery_attribute_tables(data)
+        elif command == 'sp-data-consensus':
             parts += _skill_data_cost_tables(data)
         elif command == 'sp-cost-consensus':
             parts += _skill_cost_consensus_tables(data)
@@ -1232,7 +1276,7 @@ class OfflineToolsPanel(QWidget):
 
     def _update_buttons(self):
         family,command=self.current_query()
-        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data','sp-increments','sp-cost-consensus','sp-data-consensus') and self._scenario is not None)
+        self.import_scenario.setEnabled(family=='calibration' and command not in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data','sp-increments','sp-cost-consensus','sp-data-consensus','sp-attributes') and self._scenario is not None)
         self.import_stage.setEnabled((family=='battle' or family=='exploration' and command=='settlements') and self._stage is not None)
         exploring=family=='exploration';graph_query=command in ('targets','effects','options','itinerary','residents','settlements','compare-routes','search-routes')
         self.import_graph.setVisible(exploring);self.preset.setVisible(exploring)
@@ -1340,7 +1384,7 @@ class OfflineToolsPanel(QWidget):
     def _import_scenario(self):
         try:
             family,command=self.current_query()
-            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data','sp-increments','sp-cost-consensus','sp-data-consensus') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
+            if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data','sp-increments','sp-cost-consensus','sp-data-consensus','sp-attributes') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
             payload=self._payload();scenario=deepcopy(self._scenario)
             if scenario.get('operator') not in calibration.OPERATORS:raise ValueError('校准工具目前仅支持凯尔希·思衡托、凛御银灰、机械师。')
             if command=='recipient-events' and (scenario.get('operator')!='silverash' or scenario.get('skill')!=2):

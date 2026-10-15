@@ -1,0 +1,943 @@
+{
+  "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+  "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f",
+  "file_only": true,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "entity_dirty_switch": [
+    {
+      "attribute": 7,
+      "address": "0x1806f79bc",
+      "physical_offset": 7302588,
+      "raw_hex": "65746f00",
+      "target": "0x1806f7465"
+    },
+    {
+      "attribute": 8,
+      "address": "0x1806f79c0",
+      "physical_offset": 7302592,
+      "raw_hex": "65746f00",
+      "target": "0x1806f7465"
+    },
+    {
+      "attribute": 9,
+      "address": "0x1806f79c4",
+      "physical_offset": 7302596,
+      "raw_hex": "ea766f00",
+      "target": "0x1806f76ea"
+    },
+    {
+      "attribute": 10,
+      "address": "0x1806f79c8",
+      "physical_offset": 7302600,
+      "raw_hex": "ea766f00",
+      "target": "0x1806f76ea"
+    },
+    {
+      "attribute": 11,
+      "address": "0x1806f79cc",
+      "physical_offset": 7302604,
+      "raw_hex": "ea766f00",
+      "target": "0x1806f76ea"
+    },
+    {
+      "attribute": 12,
+      "address": "0x1806f79d0",
+      "physical_offset": 7302608,
+      "raw_hex": "ea766f00",
+      "target": "0x1806f76ea"
+    },
+    {
+      "attribute": 13,
+      "address": "0x1806f79d4",
+      "physical_offset": 7302612,
+      "raw_hex": "e3736f00",
+      "target": "0x1806f73e3"
+    },
+    {
+      "attribute": 14,
+      "address": "0x1806f79d8",
+      "physical_offset": 7302616,
+      "raw_hex": "01776f00",
+      "target": "0x1806f7701"
+    },
+    {
+      "attribute": 15,
+      "address": "0x1806f79dc",
+      "physical_offset": 7302620,
+      "raw_hex": "6e786f00",
+      "target": "0x1806f786e"
+    }
+  ],
+  "types": [
+    {
+      "type_index": 10030,
+      "name": "Torappu.Battle.Attributes",
+      "fields": [
+        {
+          "index": 69728,
+          "name": "m_attributeModifiers",
+          "type": "System.Collections.Generic.HashSet`1<Torappu.Battle.Attributes+IAttributesModifier>[]",
+          "offset": 24,
+          "default": null
+        },
+        {
+          "index": 69734,
+          "name": "m_abnormalResistanceDirtyMask",
+          "type": "System.Int64",
+          "offset": 72,
+          "default": null
+        },
+        {
+          "index": 69740,
+          "name": "m_dirtyMask",
+          "type": "System.Int64",
+          "offset": 120,
+          "default": null
+        },
+        {
+          "index": 69741,
+          "name": "onAttributeMarkedDirty",
+          "type": "System.Action`2<Torappu.AttributeType,Torappu.FP>",
+          "offset": 128,
+          "default": null
+        },
+        {
+          "index": 69742,
+          "name": "onAbnormalFlagDirty",
+          "type": "System.Action`1<Torappu.AbnormalFlag>",
+          "offset": 136,
+          "default": null
+        },
+        {
+          "index": 69743,
+          "name": "onAbnormalComboDirty",
+          "type": "System.Action`1<Torappu.AbnormalCombo>",
+          "offset": 144,
+          "default": null
+        }
+      ]
+    },
+    {
+      "type_index": 10201,
+      "name": "Torappu.Battle.Entity",
+      "fields": [
+        {
+          "index": 72613,
+          "name": "m_attributes",
+          "type": "Torappu.Battle.Attributes",
+          "offset": 176,
+          "default": null
+        },
+        {
+          "index": 72615,
+          "name": "m_hpRecoverTimer",
+          "type": "Torappu.PrecisePeriodicTimer",
+          "offset": 192,
+          "default": null
+        },
+        {
+          "index": 72618,
+          "name": "m_epRecoverTimer",
+          "type": "Torappu.PrecisePeriodicTimer",
+          "offset": 216,
+          "default": null
+        },
+        {
+          "index": 72620,
+          "name": "m_abilitiesDirtyFlag",
+          "type": "System.Boolean",
+          "offset": 232,
+          "default": null
+        },
+        {
+          "index": 72624,
+          "name": "m_spController",
+          "type": "Torappu.Battle.Entity+SpController",
+          "offset": 248,
+          "default": null
+        },
+        {
+          "index": 72662,
+          "name": "__Hotfix0_get_isInEpBreakRecovery",
+          "type": "XLua.DelegateBridge",
+          "offset": 128,
+          "default": null
+        },
+        {
+          "index": 72663,
+          "name": "__Hotfix0_get_epRecoveryType",
+          "type": "XLua.DelegateBridge",
+          "offset": 136,
+          "default": null
+        },
+        {
+          "index": 72664,
+          "name": "__Hotfix0_get_attributes",
+          "type": "XLua.DelegateBridge",
+          "offset": 144,
+          "default": null
+        },
+        {
+          "index": 72683,
+          "name": "__Hotfix0_get_spController",
+          "type": "XLua.DelegateBridge",
+          "offset": 296,
+          "default": null
+        },
+        {
+          "index": 72704,
+          "name": "__Hotfix0_get_canRecoverHp",
+          "type": "XLua.DelegateBridge",
+          "offset": 464,
+          "default": null
+        },
+        {
+          "index": 72705,
+          "name": "__Hotfix0_get_canRecoverSp",
+          "type": "XLua.DelegateBridge",
+          "offset": 472,
+          "default": null
+        },
+        {
+          "index": 72706,
+          "name": "__Hotfix0_get_canRecoverEp",
+          "type": "XLua.DelegateBridge",
+          "offset": 480,
+          "default": null
+        },
+        {
+          "index": 72765,
+          "name": "__Hotfix0_get_sumUpHpRecoveryPerSec",
+          "type": "XLua.DelegateBridge",
+          "offset": 952,
+          "default": null
+        },
+        {
+          "index": 72766,
+          "name": "__Hotfix0_get_spRecoveryPerSec",
+          "type": "XLua.DelegateBridge",
+          "offset": 960,
+          "default": null
+        },
+        {
+          "index": 72767,
+          "name": "__Hotfix0_get_sumUpEpRecoveryPerSec",
+          "type": "XLua.DelegateBridge",
+          "offset": 968,
+          "default": null
+        },
+        {
+          "index": 72772,
+          "name": "__Hotfix0_get_epBreakRecoverSpeed",
+          "type": "XLua.DelegateBridge",
+          "offset": 1008,
+          "default": null
+        },
+        {
+          "index": 72786,
+          "name": "__Hotfix0_get_spRecoverStopped",
+          "type": "XLua.DelegateBridge",
+          "offset": 1120,
+          "default": null
+        },
+        {
+          "index": 72789,
+          "name": "__Hotfix0_get_spRecoverRatio",
+          "type": "XLua.DelegateBridge",
+          "offset": 1144,
+          "default": null
+        },
+        {
+          "index": 72924,
+          "name": "__Hotfix0__UpdateHpRecovery",
+          "type": "XLua.DelegateBridge",
+          "offset": 2224,
+          "default": null
+        },
+        {
+          "index": 72925,
+          "name": "__Hotfix0__UpdateEpRecovery",
+          "type": "XLua.DelegateBridge",
+          "offset": 2232,
+          "default": null
+        },
+        {
+          "index": 72981,
+          "name": "__Hotfix0_OnAttributeDirty",
+          "type": "XLua.DelegateBridge",
+          "offset": 2680,
+          "default": null
+        },
+        {
+          "index": 72982,
+          "name": "__Hotfix0__OnAbnormalFlagDirty",
+          "type": "XLua.DelegateBridge",
+          "offset": 2688,
+          "default": null
+        },
+        {
+          "index": 72984,
+          "name": "__Hotfix0__OnAbnormalComboDirty",
+          "type": "XLua.DelegateBridge",
+          "offset": 2704,
+          "default": null
+        }
+      ]
+    },
+    {
+      "type_index": 11346,
+      "name": "Torappu.Battle.Character",
+      "fields": [
+        {
+          "index": 85563,
+          "name": "_withdrawCostRecoverRatio",
+          "type": "System.Single",
+          "offset": 824,
+          "default": null
+        },
+        {
+          "index": 85613,
+          "name": "m_withdrawCostRecoverRatio",
+          "type": "System.Single",
+          "offset": 1248,
+          "default": null
+        },
+        {
+          "index": 85847,
+          "name": "__Hotfix0_OnAttributeDirty",
+          "type": "XLua.DelegateBridge",
+          "offset": 1752,
+          "default": null
+        },
+        {
+          "index": 85895,
+          "name": "__Hotfix0_SetWithdrawCostRecoverRatio",
+          "type": "XLua.DelegateBridge",
+          "offset": 2136,
+          "default": null
+        }
+      ]
+    },
+    {
+      "type_index": 11457,
+      "name": "Torappu.Battle.Unit",
+      "fields": [
+        {
+          "index": 87503,
+          "name": "m_attackRangeDirty",
+          "type": "System.Boolean",
+          "offset": 664,
+          "default": null
+        },
+        {
+          "index": 87505,
+          "name": "m_originAttackRangeDirty",
+          "type": "System.Boolean",
+          "offset": 680,
+          "default": null
+        },
+        {
+          "index": 87608,
+          "name": "__Hotfix0_IsAttackRangeDirty",
+          "type": "XLua.DelegateBridge",
+          "offset": 800,
+          "default": null
+        },
+        {
+          "index": 87654,
+          "name": "__Hotfix0_OnAttributeDirty",
+          "type": "XLua.DelegateBridge",
+          "offset": 1168,
+          "default": null
+        }
+      ]
+    },
+    {
+      "type_index": 38168,
+      "name": "Torappu.AttributeType",
+      "fields": [
+        {
+          "index": 316315,
+          "name": "value__",
+          "type": "System.Int32",
+          "offset": 16,
+          "default": null
+        },
+        {
+          "index": 316316,
+          "name": "MAX_HP",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 0,
+            "type": "System.Int32",
+            "data_index": 265749,
+            "raw": "00"
+          }
+        },
+        {
+          "index": 316317,
+          "name": "ATK",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 1,
+            "type": "System.Int32",
+            "data_index": 265750,
+            "raw": "02"
+          }
+        },
+        {
+          "index": 316318,
+          "name": "DEF",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 2,
+            "type": "System.Int32",
+            "data_index": 265751,
+            "raw": "04"
+          }
+        },
+        {
+          "index": 316319,
+          "name": "MAGIC_RESISTANCE",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 3,
+            "type": "System.Int32",
+            "data_index": 265752,
+            "raw": "06"
+          }
+        },
+        {
+          "index": 316320,
+          "name": "COST",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 4,
+            "type": "System.Int32",
+            "data_index": 265753,
+            "raw": "08"
+          }
+        },
+        {
+          "index": 316321,
+          "name": "BLOCK_CNT",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 5,
+            "type": "System.Int32",
+            "data_index": 265754,
+            "raw": "0a"
+          }
+        },
+        {
+          "index": 316322,
+          "name": "MOVE_SPEED",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 6,
+            "type": "System.Int32",
+            "data_index": 265755,
+            "raw": "0c"
+          }
+        },
+        {
+          "index": 316323,
+          "name": "ATTACK_SPEED",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 7,
+            "type": "System.Int32",
+            "data_index": 265756,
+            "raw": "0e"
+          }
+        },
+        {
+          "index": 316324,
+          "name": "BASE_ATTACK_TIME",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 8,
+            "type": "System.Int32",
+            "data_index": 265757,
+            "raw": "10"
+          }
+        },
+        {
+          "index": 316325,
+          "name": "RESERVED_0",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 9,
+            "type": "System.Int32",
+            "data_index": 265758,
+            "raw": "12"
+          }
+        },
+        {
+          "index": 316326,
+          "name": "RESERVED_1",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 10,
+            "type": "System.Int32",
+            "data_index": 265759,
+            "raw": "14"
+          }
+        },
+        {
+          "index": 316327,
+          "name": "RESERVED_2",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 11,
+            "type": "System.Int32",
+            "data_index": 265760,
+            "raw": "16"
+          }
+        },
+        {
+          "index": 316328,
+          "name": "RESERVED_3",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 12,
+            "type": "System.Int32",
+            "data_index": 265761,
+            "raw": "18"
+          }
+        },
+        {
+          "index": 316329,
+          "name": "HP_RECOVERY_PER_SEC",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 13,
+            "type": "System.Int32",
+            "data_index": 265762,
+            "raw": "1a"
+          }
+        },
+        {
+          "index": 316330,
+          "name": "SP_RECOVERY_PER_SEC",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 14,
+            "type": "System.Int32",
+            "data_index": 265763,
+            "raw": "1c"
+          }
+        },
+        {
+          "index": 316331,
+          "name": "ABILITY_RANGE_FORWARD_EXTEND",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 15,
+            "type": "System.Int32",
+            "data_index": 265764,
+            "raw": "1e"
+          }
+        },
+        {
+          "index": 316332,
+          "name": "MAX_DEPLOY_COUNT",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 16,
+            "type": "System.Int32",
+            "data_index": 265765,
+            "raw": "20"
+          }
+        },
+        {
+          "index": 316333,
+          "name": "DEF_PENETRATE",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 17,
+            "type": "System.Int32",
+            "data_index": 265766,
+            "raw": "22"
+          }
+        },
+        {
+          "index": 316334,
+          "name": "MAGIC_RESIST_PENETRATE",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 18,
+            "type": "System.Int32",
+            "data_index": 265767,
+            "raw": "24"
+          }
+        },
+        {
+          "index": 316335,
+          "name": "HP_RECOVERY_PER_SEC_BY_MAX_HP_RATIO",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 19,
+            "type": "System.Int32",
+            "data_index": 265768,
+            "raw": "26"
+          }
+        },
+        {
+          "index": 316336,
+          "name": "TAUNT_LEVEL",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 20,
+            "type": "System.Int32",
+            "data_index": 265769,
+            "raw": "28"
+          }
+        },
+        {
+          "index": 316337,
+          "name": "RESPAWN_TIME",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 21,
+            "type": "System.Int32",
+            "data_index": 265770,
+            "raw": "2a"
+          }
+        },
+        {
+          "index": 316338,
+          "name": "MAX_DECK_STACK_CNT",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 22,
+            "type": "System.Int32",
+            "data_index": 265771,
+            "raw": "2c"
+          }
+        },
+        {
+          "index": 316339,
+          "name": "MASS_LEVEL",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 23,
+            "type": "System.Int32",
+            "data_index": 265772,
+            "raw": "2e"
+          }
+        },
+        {
+          "index": 316340,
+          "name": "BASE_FORCE_LEVEL",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 24,
+            "type": "System.Int32",
+            "data_index": 265773,
+            "raw": "30"
+          }
+        },
+        {
+          "index": 316341,
+          "name": "DEF_PENETRATE_FIXED",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 25,
+            "type": "System.Int32",
+            "data_index": 265774,
+            "raw": "32"
+          }
+        },
+        {
+          "index": 316342,
+          "name": "ONE_MINUS_STATUS_RESISTANCE",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 26,
+            "type": "System.Int32",
+            "data_index": 265775,
+            "raw": "34"
+          }
+        },
+        {
+          "index": 316343,
+          "name": "MAGIC_RESIST_PENETRATE_FIXED",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 27,
+            "type": "System.Int32",
+            "data_index": 265776,
+            "raw": "36"
+          }
+        },
+        {
+          "index": 316344,
+          "name": "MAX_EP",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 28,
+            "type": "System.Int32",
+            "data_index": 265777,
+            "raw": "38"
+          }
+        },
+        {
+          "index": 316345,
+          "name": "EP_RECOVERY_PER_SEC",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 29,
+            "type": "System.Int32",
+            "data_index": 265778,
+            "raw": "3a"
+          }
+        },
+        {
+          "index": 316346,
+          "name": "SP_RECOVER_RATIO",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 30,
+            "type": "System.Int32",
+            "data_index": 265779,
+            "raw": "3c"
+          }
+        },
+        {
+          "index": 316347,
+          "name": "EP_DAMAGE_RESISTANCE",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 31,
+            "type": "System.Int32",
+            "data_index": 265780,
+            "raw": "3e"
+          }
+        },
+        {
+          "index": 316348,
+          "name": "EP_RESISTANCE",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 32,
+            "type": "System.Int32",
+            "data_index": 265781,
+            "raw": "40"
+          }
+        },
+        {
+          "index": 316349,
+          "name": "DAMAGE_HITRATE_PHYSICAL",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 33,
+            "type": "System.Int32",
+            "data_index": 265782,
+            "raw": "42"
+          }
+        },
+        {
+          "index": 316350,
+          "name": "DAMAGE_HITRATE_MAGICAL",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 34,
+            "type": "System.Int32",
+            "data_index": 265783,
+            "raw": "44"
+          }
+        },
+        {
+          "index": 316351,
+          "name": "EP_BREAK_RECOVER_SPEED",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 35,
+            "type": "System.Int32",
+            "data_index": 265784,
+            "raw": "46"
+          }
+        },
+        {
+          "index": 316352,
+          "name": "SLOW_DOWN",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 36,
+            "type": "System.Int32",
+            "data_index": 265785,
+            "raw": "48"
+          }
+        },
+        {
+          "index": 316353,
+          "name": "BLOCK_RADIUS_SCALE",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 37,
+            "type": "System.Int32",
+            "data_index": 265786,
+            "raw": "4a"
+          }
+        },
+        {
+          "index": 316354,
+          "name": "E_NUM",
+          "type": "Torappu.AttributeType",
+          "offset": 0,
+          "default": {
+            "value": 38,
+            "type": "System.Int32",
+            "data_index": 265787,
+            "raw": "4c"
+          }
+        }
+      ]
+    }
+  ],
+  "method_metadata": [
+    {
+      "index": 64269,
+      "name": "Torappu.Battle.Attributes$$OverwriteRawData",
+      "return_type": "System.Void",
+      "slot": 65535,
+      "parameters": [
+        {
+          "index": 64360,
+          "name": "attributeType",
+          "type": "Torappu.AttributeType"
+        },
+        {
+          "index": 64361,
+          "name": "rawValue",
+          "type": "Torappu.FP"
+        },
+        {
+          "index": 64362,
+          "name": "refresh",
+          "type": "System.Boolean"
+        }
+      ]
+    },
+    {
+      "index": 64290,
+      "name": "Torappu.Battle.Attributes$$MarkAttributeDirty",
+      "return_type": "System.Void",
+      "slot": 65535,
+      "parameters": [
+        {
+          "index": 64393,
+          "name": "attributeType",
+          "type": "Torappu.AttributeType"
+        }
+      ]
+    },
+    {
+      "index": 64291,
+      "name": "Torappu.Battle.Attributes$$MarkAttributesDirty",
+      "return_type": "System.Void",
+      "slot": 65535,
+      "parameters": [
+        {
+          "index": 64394,
+          "name": "attributeMask",
+          "type": "System.Int64"
+        }
+      ]
+    },
+    {
+      "index": 66699,
+      "name": "Torappu.Battle.Entity$$OnAttributeDirty",
+      "return_type": "System.Void",
+      "slot": 126,
+      "parameters": [
+        {
+          "index": 66697,
+          "name": "attributeType",
+          "type": "Torappu.AttributeType"
+        },
+        {
+          "index": 66698,
+          "name": "oldValue",
+          "type": "Torappu.FP"
+        }
+      ]
+    },
+    {
+      "index": 76035,
+      "name": "Torappu.Battle.Character$$OnAttributeDirty",
+      "return_type": "System.Void",
+      "slot": 126,
+      "parameters": [
+        {
+          "index": 74751,
+          "name": "attributeType",
+          "type": "Torappu.AttributeType"
+        },
+        {
+          "index": 74752,
+          "name": "oldValue",
+          "type": "Torappu.FP"
+        }
+      ]
+    },
+    {
+      "index": 77706,
+      "name": "Torappu.Battle.Unit$$OnAttributeDirty",
+      "return_type": "System.Void",
+      "slot": 126,
+      "parameters": [
+        {
+          "index": 75874,
+          "name": "attributeType",
+          "type": "Torappu.AttributeType"
+        },
+        {
+          "index": 75875,
+          "name": "oldValue",
+          "type": "Torappu.FP"
+        }
+      ]
+    }
+  ]
+}
