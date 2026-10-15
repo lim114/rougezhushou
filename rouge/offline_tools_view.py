@@ -26,7 +26,7 @@ from .information_scope import HISTORICAL_ROUTE_QUERIES,require_query_scope
 
 CALIBRATION_QUERIES = (
     ('panel', '面板属性分层'), ('pair', '同条件面板对照'),
-    ('skills', '首批三名全部技能'), ('cultivation', '等级与培养贡献'),
+    ('skills', '全部技能与条件分项'), ('cultivation', '等级与培养贡献'),
     ('modules', '模组阶段与门槛'), ('talents', '天赋与在场时间'),
     ('animations', '原动作事件与帧数'), ('recipient-events', '银灰二技能受益包'),
     ('relic-panels', '藏品组合与面板差值诊断'),
@@ -96,9 +96,9 @@ INPUT_GUIDANCE = {
     'search-routes':'goal为声明终点，逐边步行并列举加工品候选；max_steps/max_results/max_transitions控制有限搜索。battle_declarations按节点声明独立关卡和胜利。随机落点、未知资格和AP到零保留停止前沿，不补完整收益或真实最优。',
     'compare-routes':'routes为1–20条带唯一id的明确路线，每条steps只含mode/target和可选battle。battle独立声明精确关卡/入口/胜利；不是胜利预测。共同graph、行动力和库存不随自动刷新覆盖。只比较同终点的已证净AP及基础战斗收益，不穷举概率或替代真实最优。',
     'settlements':'steps每项使用精确stage_id/stage_ids，或graph中的target。battle_floor是战斗所属主层，秘境编号不代替；entry_context需要unknown/map_battle/event_battle/pursuit。仅声明胜利后的基础分项，实际胜利和完整奖励未知。steps留空（null）只列图中当前战斗身份参考；不读取本局库存。',
-    'panel': '编辑 scenario 培养、藏品和技能条件。operator：kaltsit=凯尔希·思衡托，silverash=凛御银灰，mechanist=机械师；trust 为加成进度0–100。结果分层诊断，不是实机认证。',
+    'panel': '编辑 scenario 培养、藏品和技能条件；支持固定资料内32名已适配干员，或显式导入当前干员。trust 为加成进度0–100。结果分层诊断，不是实机认证。',
     'pair': 'scenario 为预测条件；observation 为独立观察记录。先查询“面板属性分层”取得同条件标识。注明观察面板、来源类别、来源与数值，不能将模型输出冒充游戏观察。',
-    'skills': 'scenario 为声明培养条件；默认列首批三名的9个技能，可用 operators 限定干员。完整总量缺证时保持未知，模型条件总量另列参考。',
+    'skills': 'scenario 为声明培养条件。公共默认列首批三名的9个技能；扩展干员默认仅列自身，导入当前条件时固定仅当前干员。各行共用声明skill_rank作条件预览，不代表其他技能实际专精。operators不能将扩展干员条件带给其他人。未开放技能只列名称与原因；完整总量缺证时保持未知，条件总量与主结果原生算式分列。',
     'cultivation': 'scenario 为培养条件；levels 是要对照的等级列表，均须在声明精英阶段内。信赖为加成进度0–100；不含藏品、部署天赋或技能。',
     'modules': 'scenario 为干员与培养条件。列固定资料中的各模组阶段、资格门槛与属性增量；列出候选不等于证实隐藏脚本附着。',
     'talents': 'scenario 为声明条件；elapsed_seconds 可填写在场秒数列表。天赋回复速度与技能治疗分开；实际受益时间、损血和治疗总量未自动取得。',
@@ -884,8 +884,14 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
                     [(r['label'],r['predicted'],r['observed'],r['difference'],r['matches_declared_tolerance'],r['other_stage_matches']) for r in data['rows']]),
                 _p('未比较字段：'+_text([LABELS.get(k,k) for k in data['uncompared_fields']]))]
         elif command == 'skills':
+            selected=data['selected_operator']
+            parts += [_p('当前条件归属：'+selected['name']+'；仅作声明条件下的参考。')]
             for row in data['rows']:
-                parts += [_h(f"{row['operator']} · {row['skill']}技能 {row.get('name','')}"),_p(row['status'])]
+                parts += [_h(f"{row['operator']} · {row['skill']}技能 {row['name']}"),_p(row['status']),
+                    _p('声明技能等级：'+str(row['declared_skill_rank'])+'；其他技能实际专精未由当前导入确认。')]
+                parts.extend(_p(reason) for reason in row['unlock_reasons'])
+                parts.extend(_p(reason) for reason in dict.fromkeys(item['reason'] for item in row['omitted_conditions']))
+                if not row['unlocked']:continue
                 parts.append(_table(['指标','秒数 / 数值'],[
                     ('初动（条件参考）',row.get('initial_seconds_reference')),
                     ('回转（条件参考）',row.get('recharge_seconds_reference')),
@@ -895,6 +901,15 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
                 parts.append(_p(f"原模型条件总伤参考：{_text(reference.get('damage'))}；条件总治疗参考：{_text(reference.get('healing'))}。此项不等于原生完整总量。"))
                 parts.append(_table(['已声明分项','伤害类型','包数参考','每包参考','分项参考合计'],
                     [(r.get('name'),r.get('damage_type'),r.get('hits'),r.get('per_hit'),r.get('total')) for r in row.get('declared_components',[])]))
+                native=row['native_panel_reference']
+                from .panel_native_bridge import LABELS as NATIVE_LABELS,conditional_value
+                parts += [_h('对应主结果 · 技能攻击与攻速'),
+                    _p('来源核验：'+_text(native['source_valid'])+'；完整原生面板与实际技能时钟仍未知。'),
+                    _table(['属性','现有模型值','条件算式参考','数值条件已闭合','完整原生值'],
+                        [(NATIVE_LABELS[r['field']],r['model_value'],conditional_value(r),r['conditional_complete'],None)
+                         for r in native['fields'] if r['phase']=='skill'])]
+                parts.extend(_p(r['primitive_qualification']['reason']) for r in native['fields']
+                    if r['phase']=='skill' and r.get('primitive_qualification',{}).get('reason'))
                 parts.extend(_p(n) for n in row.get('missing_or_conditional_notes',[]))
         elif command == 'cultivation':
             parts += [_p(data['scope']),_p('信赖字段为加成进度0–100；游戏信赖显示范围0–200。')]
@@ -1401,11 +1416,13 @@ class OfflineToolsPanel(QWidget):
             family,command=self.current_query()
             if family!='calibration' or command in ('worksheets','barrier-ledger','shield-inventory','explosion-values','modifier-values','regen-clock','regen-attributes','sp-clock','sp-setter','sp-init','sp-cost','sp-data','sp-increments','sp-cost-consensus','sp-data-consensus','sp-attributes') or self._scenario is None:raise ValueError('此查询没有可导入的干员条件。')
             payload=self._payload();scenario=deepcopy(self._scenario)
-            if scenario.get('operator') not in calibration.OPERATORS:raise ValueError('校准工具目前仅支持凯尔希·思衡托、凛御银灰、机械师。')
+            allowed=catalog()['operators'] if command in ('panel','pair','skills') else calibration.OPERATORS
+            if scenario.get('operator') not in allowed:raise ValueError('此查询仅支持已适配干员。' if command in ('panel','pair','skills') else '此查询仅支持凯尔希·思衡托、凛御银灰、机械师。')
             if command=='recipient-events' and (scenario.get('operator')!='silverash' or scenario.get('skill')!=2):
                 raise ValueError('受益包查询需要凛御银灰二技能；请切换原界面后重新计算。')
             # Internal resolved effects are regenerated by the query, never injected.
             payload['scenario']={k:v for k,v in scenario.items() if not str(k).startswith('_')}
+            if command=='skills':payload['operators']=[scenario['operator']]
             self.editor.setPlainText(json.dumps(payload,ensure_ascii=False,indent=2,allow_nan=False))
             self.status.setText('已显式导入最后计算的干员条件。原观察值和条件标识未更改；成对对照需独立确认观察条件。')
         except Exception as exc:self.status.setText('未导入：'+str(exc))

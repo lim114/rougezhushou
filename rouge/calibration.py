@@ -1,4 +1,4 @@
-"""Read-only, source-qualified calibration worksheets for the first three operators.
+"""Read-only calibration: all-operator panels/skills and scoped legacy worksheets.
 
 These tools explain existing arithmetic and compare declared evidence. They never
 operate a game, mutate run memory, or certify an unobserved native action clock.
@@ -30,10 +30,11 @@ def _integer(value, name, maximum):
         raise ValueError(name+'需要规定范围内的整数。')
     return value
 
-def _scenario(scenario):
+def _scenario(scenario, *, all_operators=False):
     if not isinstance(scenario,dict):raise ValueError('scenario需要JSON对象。')
     out=deepcopy(scenario)
-    if out.get('operator') not in OPERATORS:raise ValueError('校准工具仅支持首批三名干员。')
+    allowed=catalog()['operators'] if all_operators else OPERATORS
+    if out.get('operator') not in allowed:raise ValueError('此查询仅支持固定资料中已适配干员。' if all_operators else '校准工具仅支持首批三名干员。')
     if any(str(key).startswith('_') for key in out):raise ValueError('校准输入不能注入内部字段。')
     out.setdefault('skill',1);out.setdefault('skill_rank',10)
     out.setdefault('elite',2);out.setdefault('level',catalog()['operators'][out['operator']]['phases'][out['elite']]['max_level'] if isinstance(out['elite'],int) and not isinstance(out['elite'],bool) and 0<=out['elite']<=2 else None)
@@ -56,7 +57,7 @@ def _context(s):
 
 def panel_layers(scenario):
     """Expose ordered cultivation/rune/talent/skill stages, without changing math."""
-    s=_scenario(scenario);cult=_cultivated(s)
+    s=_scenario(scenario,all_operators=True);cult=_cultivated(s)
     prepared=_prepare_damage(deepcopy(s));resolved,rune,_,_=prepared
     result=calculate_damage(deepcopy(s));base=result['estimate']['base_stats']
     skill=result['estimate']['skill']
@@ -70,7 +71,9 @@ def panel_layers(scenario):
                  else stats[field]-stages[i-1][1][field]} for i,(name,stats) in enumerate(stages)]
         if any(v['value'] is not None for v in values):rows.append({'field':field,'label':label,'stages':values})
     ctx=_context(s)
-    return {'operator':catalog()['operators'][s['operator']]['name'],'context':ctx,
+    profile=catalog()['operators'][s['operator']]
+    return {'operator':profile['name'],'operator_key':s['operator'],'operator_id':profile['id'],
+            'selected_operator':{'key':s['operator'],'id':profile['id'],'name':profile['name']},'context':ctx,
             'context_token':_fingerprint(ctx),'rows':rows,'panels':{name:deepcopy(stats) for name,stats in stages},
             'rune_sources':deepcopy(resolved.get('_attribute_runes',[])),
             'native_panel_reference':deepcopy(result['panel_native_finalization']),
@@ -122,39 +125,91 @@ COMMANDS['pair']=compare_panel
 
 
 def skill_matrix(scenario, operators=None):
-    """Show all nine skills' known components and missing complete totals."""
-    base=_scenario(scenario);ops=list(OPERATORS) if operators is None else list(operators)
-    if not ops or len(ops)>3 or any(op not in OPERATORS for op in ops):raise ValueError('operators只能选择首批三名。')
+    """Reuse each skill's main result without crossing extended owner conditions."""
+    base=_scenario(scenario,all_operators=True);_cultivated(base)
+    rank=_integer(base['skill_rank'],'技能等级',10)
+    if rank<1:raise ValueError('技能等级需要为1–10。')
+    selected_skill=_integer(base['skill'],'所选技能',len(catalog()['operators'][base['operator']]['skills']))
+    if selected_skill<1:raise ValueError('所选技能需要在当前干员的技能范围内。')
+    from .animation_reference import choices,descriptor
+    options=base.get('timing',{})
+    if not isinstance(options,dict):raise ValueError('时序情景需要是对象。')
+    # Validate the selected context first. An invalid original reference must
+    # never be silently erased while deriving other skill rows.
+    for normal in (False,True):descriptor(base['operator'],selected_skill,options,normal=normal)
+    if operators is None:
+        ops=list(OPERATORS) if base['operator'] in OPERATORS else [base['operator']]
+        selection_mode='legacy_first_three' if base['operator'] in OPERATORS else 'current_operator'
+    else:
+        if not isinstance(operators,list) or not operators or any(not isinstance(op,str) for op in operators):
+            raise ValueError('operators需要非空干员标识列表。')
+        ops=list(dict.fromkeys(operators))
+        if base['operator'] in OPERATORS and all(op in OPERATORS for op in ops) and len(ops)<=3:
+            selection_mode='explicit_first_three'
+        elif ops==[base['operator']]:selection_mode='explicit_current_operator'
+        else:raise ValueError('扩展干员条件只能用于当前干员；不能跨干员复制培养、模组或专属条件。')
     rows=[]
-    for op in dict.fromkeys(ops):
+    for op in ops:
         profile=catalog()['operators'][op]
         for number,entry in enumerate(profile['skills'],1):
             s={**deepcopy(base),'operator':op,'skill':number}
-            # Module IDs and operator-specific event conditions cannot cross owners.
+            omitted=[]
+            # Historical first-three comparison retains its existing owner isolation.
             if op!=base['operator']:
                 for key in ('module_id','module_level','base_attack','activation_count','deployment_stacks',
-                            'companion_attack','shield_break_count','charge_count','cooperative','preexisting_fragile'):
-                    s.pop(key,None)
-            row={'operator':profile['name'],'operator_id':profile['id'],'skill':number,'skill_id':entry['id']}
-            if s['elite']<entry['unlock_elite'] or (s['elite']<2 and s['skill_rank']>7):
-                row.update(status='培养条件未开放',full_skill_damage=None,full_skill_healing=None)
+                            'companion_attack','shield_break_count','charge_count','cooperative','preexisting_fragile',
+                            'char_buff_ids','char_buff_absent_ids','char_buff_pending_ids','char_buffs_complete',
+                            'recruitment_kind'):
+                    if key in s:
+                        s.pop(key)
+                        omitted.append({'field':key,'reason':'原干员的模组、专属条件、个人强化或应急来源未沿用到其他干员；本行未确认该信息。'})
+            if op!=base['operator'] or number!=selected_skill:
+                timing=s.get('timing',{})
+                for key,normal in (('animation_reference',False),('normal_animation_reference',True)):
+                    identity=timing.get(key)
+                    if identity is not None and not any(r['id']==identity for r in choices(op,number,normal=normal)):
+                        timing.pop(key)
+                        omitted.append({'field':'timing.'+key,
+                            'reason':'原干员或原技能的动作参考与本行不兼容，未沿用；通用时序情景仍保留，本行未指定替代动作。'})
+            reasons=[]
+            if s['elite']<entry['unlock_elite']:
+                reasons.append('需要精英'+str(entry['unlock_elite'])+'，当前精英'+str(s['elite'])+'。')
+            if s['elite']<2 and rank>7:
+                reasons.append('专精技能等级需要精英2；当前声明技能等级为'+str(rank)+'。')
+            row={'operator':profile['name'],'operator_key':op,'operator_id':profile['id'],
+                 'skill':number,'skill_id':entry['id'],'name':entry['levels'][rank-1]['name'],
+                 'identity':{'operator_key':op,'operator_id':profile['id'],'skill':number,'skill_id':entry['id']},
+                 'declared_skill_rank':rank,'actual_skill_rank':None,
+                 'unlocked':not reasons,'unlock_reasons':reasons,
+                 'omitted_conditions':omitted,
+                 'native_verified':False,'native_clock_verified':False}
+            if reasons:
+                row.update(status='培养条件未开放',full_skill_damage=None,full_skill_healing=None,
+                           native_panel_reference=None,declared_components=[])
             else:
                 result=calculate_damage(s);skill=result['estimate']['skill']
                 complete=bool(result['estimate'].get('complete',False))
                 row.update(name=skill['name'],status='条件模型参考' if complete else '存在未核验项',
                     initial_seconds_reference=skill.get('initial_seconds'),recharge_seconds_reference=skill.get('recharge_seconds'),
                     cycle_seconds_reference=skill.get('cycle_seconds'),model_complete=complete,
-                    model_complete_definition=result.get('complete_definition'),native_clock_verified=False,
+                    model_complete_definition=result.get('complete_definition'),
                     conditional_total_reference={'damage':skill.get('total_damage'),'healing':skill.get('total_healing')},
                     full_skill_damage=0 if (op=='kaltsit' and number in (1,3)) or (op=='silverash' and number==1) else None,
                     full_skill_healing=0 if op in ('mechanist','silverash') else None,
                     declared_components=deepcopy(result.get('components',[])),
+                    native_panel_reference=deepcopy(result['panel_native_finalization']),
                     window_damage_reference=skill.get('window_damage'),window_healing_reference=skill.get('window_healing'),
-                    missing_or_conditional_notes=deepcopy(result['estimate']['notes']),native_verified=False)
+                    missing_or_conditional_notes=deepcopy(result['estimate']['notes']))
             rows.append(row)
-    return {'rows':rows,'source':_source(),'native_verified':False,'notes':[BOUNDARY,
+    selected=catalog()['operators'][base['operator']]
+    return {'selected_operator':{'key':base['operator'],'id':selected['id'],'name':selected['name']},
+        'selected_skill':selected_skill,'selection_mode':selection_mode,'rows':rows,'source':_source(),'native_verified':False,'notes':[BOUNDARY,
+        '公共默认条件仍列首批三名的9个技能；扩展干员默认仅列自身全部技能。显式导入当前条件时只列当前干员。',
+        '所有行沿用scenario.skill_rank作同等级条件预览，不代表其他技能的实际专精；导入当前条件仅提供所选技能等级。',
         '模型complete不是原生动作时钟核验；非零完整总量保持未知，原模型总量独立标为条件参考。',
-        '调用方所选模组和专属事件条件只用于原干员，不复制到其他干员。']}
+        '各技能原生算式参考复制对应主计算结果，不另外重算；未开放技能不执行计算。',
+        '派生行仅保留与该干员和技能相符的动作参考；个人强化与应急来源只用于原干员，省略原因逐行列出。',
+        '调用方所选模组和专属事件条件只用于原干员；扩展干员不允许跨人复制条件。']}
 
 COMMANDS['skills']=skill_matrix
 
