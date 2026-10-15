@@ -487,7 +487,10 @@ def finish(result,resolution,attributes,scenario):
         result['relic_token_stats'].append({'id':tid,'name':token['name'],'modifier_sources':sources or ['藏品'],**stats})
     result['relic_protection']=protection([r for r in rules if not r.get('token_only')],result['estimate']['base_stats']['hp'])
     result['estimate']['base_stats']['block_count']+=sum(r['value'] for r in rules if r['kind']=='block_add' and not r.get('token_only'))
-    result['estimate']['base_stats']['defense']+=sum(r['value'] for r in rules if r['kind']=='defense_flat' and not r.get('token_only'))
+    defense_flat_reference=sum(r['value'] for r in rules if r['kind']=='defense_flat' and not r.get('token_only'))
+    result['estimate']['base_stats']['defense']+=defense_flat_reference
+    from .panel_native_bridge import add_final_term
+    add_final_term(result['estimate'],'normal','defense','final_addition',defense_flat_reference)
     from .deployment import finish_deployment
     finish_deployment(result,resolution,attributes,profile)
     from .elemental_relics import finish_neural_reference
@@ -530,6 +533,8 @@ def finish(result,resolution,attributes,scenario):
         start=scenario.get('_deployment_skill_start_seconds',0)
         skill_bonus=sum(r['value'] for r in finite_speed if start<r['duration'])
         reference=skill.get('skill_attack_speed_reference',skill['skill_attack_speed'])
+        add_final_term(result['estimate'],'normal','attack_speed','addition',active)
+        add_final_term(result['estimate'],'skill','attack_speed','addition',skill_bonus)
         stats['attack_speed_reference']=permanent+active
         stats['attack_speed']=effective_attack_speed(permanent+active)
         skill['skill_attack_speed_reference']=reference+skill_bonus

@@ -73,6 +73,7 @@ def panel_layers(scenario):
     return {'operator':catalog()['operators'][s['operator']]['name'],'context':ctx,
             'context_token':_fingerprint(ctx),'rows':rows,'panels':{name:deepcopy(stats) for name,stats in stages},
             'rune_sources':deepcopy(resolved.get('_attribute_runes',[])),
+            'native_panel_reference':deepcopy(result['panel_native_finalization']),
             'source':_source(),'model_complete':result['estimate'].get('complete',False),
             'warnings':deepcopy(result.get('warnings',[])),'native_verified':False,
             'notes':[BOUNDARY,'相邻层差值用于定位偏差，不代表把跨层效果相加即可重新得到结果。',

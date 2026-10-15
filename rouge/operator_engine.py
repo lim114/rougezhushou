@@ -137,6 +137,11 @@ class Combat:
             'redeploy_seconds':self.redeploy,'attack_speed':self.base_speed,
             'attack_speed_reference':self.base_speed_reference,
             'block_count':attributes['block_count']}
+        from .panel_native_bridge import normal_terms
+        self.native_normal_terms=normal_terms(attributes,self.base,
+            hp_multiplier=self.hp_bonus,attack_multiplier=self.atk_bonus,attack_flat=self.atk_flat,
+            defense_multiplier=self.def_bonus,resistance_addition=self.res_bonus,
+            attack_speed_addition=self.as_bonus)
 
     @staticmethod
     def value(value,label,maximum=None,integer=False):
@@ -1542,7 +1547,9 @@ class Combat:
             'complete_definition':'complete仅表示所选藏品规则支持；不代表完整战斗模拟。',
             'scope':'单个持续命中目标的明确技能情景；多段逐段结算防御。','timing':shown['timing']}
         result['timing']['recharge_streams']=normal['timing']['streams'] if normal else []
-        result['estimate']={'base_stats':self.stats,**({'sp_events':sp_events} if sp_events else {}),'skill':{
+        from .panel_native_bridge import unknown_skill_terms
+        result['estimate']={'_panel_native_terms':{'normal':self.native_normal_terms,'skill':unknown_skill_terms()},
+            'base_stats':self.stats,**({'sp_events':sp_events} if sp_events else {}),'skill':{
             'name':sp['name'],'initial_seconds':first,'recharge_seconds':recharge,'cycle_seconds':cycle,
             'duration_seconds':duration,'total_damage':total_damage,'total_healing':total_healing,
             'phase_damage':phase_damage,'phase_healing':phase_healing,

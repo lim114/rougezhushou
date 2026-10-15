@@ -243,7 +243,15 @@ def build_estimate(scenario,result,attributes,compute_skill):
             cycle_damage=inside_damage+normal_damage;cycle_healing=inside_healing+normal_healing
         cycle_dps=cycle_damage/cycle;cycle_hps=cycle_healing/cycle
         result.setdefault('timing',normal.output())['recharge_streams']=normal.streams
-    return {'base_stats':stats,**({'sp_events':sp_events} if sp_events else {}),'skill':{
+    from .panel_native_bridge import normal_terms, first_three_skill_terms
+    native_normal=normal_terms(attributes,scenario['base_attack'],
+        hp_multiplier=hp_bonus+total('hp_pct'),attack_multiplier=total('attack_pct'),
+        defense_multiplier=defense_bonus+total('defense_pct'),defense_flat=defense_flat,
+        resistance_addition=total('resistance_flat'),
+        attack_speed_addition=sum(e['value'] for e in effects if e['kind']=='attack_speed'))
+    native_skill=first_three_skill_terms(scenario,attributes,effects)
+    return {'_panel_native_terms':{'normal':native_normal,'skill':native_skill},
+        'base_stats':stats,**({'sp_events':sp_events} if sp_events else {}),'skill':{
         'name':skill['name'],'initial_seconds':initial,'recharge_seconds':recharge,'cycle_seconds':cycle,
         'duration_seconds':duration,'total_damage':damage,'total_healing':healing,
         'phase_damage':phase_damage,'phase_healing':phase_healing,

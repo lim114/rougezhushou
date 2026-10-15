@@ -349,6 +349,20 @@ def _explosion_tables(data):
     return parts
 
 
+def _native_panel_tables(data):
+    from .panel_native_bridge import PHASE_NAMES,LABELS,conditional_value
+    parts=[_h('同一主结果 · 原生算式与精度核验'),
+        _p('来源核验：'+_text(data['source_valid'])+'；各层使用独立名义快照，不推断保护值编码/解码相等。')]
+    for phase,label in PHASE_NAMES.items():
+        rows=[row for row in data['fields'] if row['phase']==phase]
+        if rows:
+            parts += [_h(label),_table(['属性','现有模型值','条件算式/编码前参考','数值条件已闭合','完整原生值'],
+                [(LABELS[row['field']],row['model_value'],conditional_value(row),row['conditional_complete'],None) for row in rows])]
+    parts += [_p('藏品层为类型写回前参考；常态/技能层为固定名义参数的重算参考。'),
+        _p('实际注册与范围覆盖、缓存、反射目标、当前热更新和原生完整面板：未知。')]
+    return parts
+
+
 def _sp_recovery_attribute_tables(data):
     amount=lambda raw:_fp_amount(raw,8)
     parts=[_p('来源核验：'+_text(data['source_valid'])+'；技力回复属性14/30按独立读点核对。'),
@@ -862,6 +876,7 @@ def render_offline_result(family, command, data, *, graph=None, map_link_nodes=N
                 _table(['属性','培养与模组','符文写回','常态天赋与效果','技能期间参考'],
                     [(r['label'],*[s['value'] for s in r['stages']]) for r in data['rows']]),
                 _h('同条件标识（仅证明声明一致）'),_p(data['context_token'])]
+            parts += _native_panel_tables(data['native_panel_reference'])
         elif command == 'pair':
             parts += [_p('来源类型：'+EVIDENCE_NAMES.get(data['evidence_kind'],data['evidence_kind'])),
                 _p('来源：'+data['source']),_p('比较面板：'+data['panel']),

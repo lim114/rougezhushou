@@ -1459,6 +1459,9 @@ def build_report(scenario,result):
              '受疗者比例独立于自身生命、敌人血量和缺失生命；未指定不默认满血或低血。',
              '固定比例只改变已建模直接治疗分项，与已核验受疗因子独立作用。自然生命回复、播种地块回复、物理攻击和技力时钟不乘此倍率。',
              '固定比例不证明实际生命变化、友方获取/资格、范围或技能结束和充能时钟；当前热更新未核验。']))
+    from .panel_native_bridge import report_section as native_panel_section
+    native_panel=native_panel_section(result)
+    if native_panel is not None:sections.append(native_panel)
     sections.extend(current_output_breakdown_sections(result))
     sections.extend(reproducible_context_sections(scenario,result))
     sections.extend(event_clock_reference_sections(scenario,result))
