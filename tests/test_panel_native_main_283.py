@@ -200,11 +200,12 @@ class MainCaller283(unittest.TestCase):
             with self.subTest(name=name), self.assertRaises(ValueError):
                 calibration.panel_layers({**scenario, name: injected[name]})
 
-    def test_extended_skill_native_basis_remains_unknown_while_model_estimate_survives(self):
-        result = damage.calculate_damage({'operator': 'char_151_myrtle', 'skill': 2})
+    def test_special_skill_native_basis_stays_unknown_with_independent_speed_reference(self):
+        # 284 captures generic fields; Yato's extra talent ATK remains unclosed.
+        result = damage.calculate_damage({'operator': 'char_1029_yato2', 'skill': 3})
         self.assertIsInstance(result['estimate']['skill']['skill_attack'], (int, float))
-        self.assertGreater(result['total_healing'], 0)
-        for field in ('attack', 'attack_speed'):
+        self.assertIsNone(result['total_damage'])  # Actual collision clock remains unknown.
+        for field in ('attack',):
             reference = row(result, 'skill', field)
             self.assertIsNotNone(reference['model_value'])
             self.assertIsNone(reference['references']['input_fp_raw'])
@@ -212,6 +213,8 @@ class MainCaller283(unittest.TestCase):
             self.assertFalse(reference['conditional_complete'])
             self.assertIsNone(reference['actual_decoded_value'])
         self.assertEqual(row(result, 'normal', 'attack')['model_value'], result['estimate']['base_stats']['attack'])
+        self.assertTrue(row(result, 'skill', 'attack_speed')['conditional_complete'])
+        self.assertIsNone(row(result, 'skill', 'attack_speed')['actual_decoded_value'])
 
     def test_broken_mother_source_hides_conditional_result_but_preserves_legacy_model(self):
         source_path = ROOT / native.SOURCE

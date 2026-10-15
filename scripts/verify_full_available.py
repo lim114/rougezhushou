@@ -32,6 +32,7 @@ NEW_MODULES = (
     'tests.test_sp_recovery_attribute_independent_282',
     'tests.test_panel_native_finalization_283',
     'tests.test_panel_native_main_283',
+    'tests.test_extended_skill_native_284',
     'tests.test_regeneration_clock',
     'tests.test_modifier_packet_reference',
     'tests.test_route_information_scope',

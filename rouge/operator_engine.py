@@ -296,6 +296,9 @@ class Combat:
         bb={} if normal else self.bb
         attack=self.base*(1+self.atk_bonus+bb.get('atk',0))+self.atk_flat
         speed_reference=self.base_speed_reference+bb.get('attack_speed',0)
+        from .panel_native_bridge import capture_extended_skill_primitives
+        native_skill_terms,native_skill_qualification=(None,None) if normal else capture_extended_skill_primitives(
+            self.s,self.n,self.a,self.base,self.atk_bonus,self.atk_flat,self.as_bonus,bb)
         speed=effective_attack_speed(speed_reference)
         interval=(self.a['interval']+bb.get('base_attack_time',0))*100/speed
         mode='timed';duration=max(0,self.skill['duration']) if not normal else window
@@ -1310,6 +1313,7 @@ class Combat:
         from .amiya_continuous_reference import preserve_plan
         amiya_continuous_reference=preserve_plan(self.s,components,duration)
         return {**({'amiya_continuous_reference':amiya_continuous_reference} if amiya_continuous_reference else {}),
+            'native_skill_terms':native_skill_terms,'native_skill_qualification':native_skill_qualification,
             'attack':attack,'attack_speed':speed,'attack_speed_reference':speed_reference,
             'interval':interval,'duration':duration,'mode':mode,
             'damage':sum(c['total'] for c in components if c['damage_type'] not in ('healing','regeneration','buildup')),
@@ -1547,8 +1551,8 @@ class Combat:
             'complete_definition':'complete仅表示所选藏品规则支持；不代表完整战斗模拟。',
             'scope':'单个持续命中目标的明确技能情景；多段逐段结算防御。','timing':shown['timing']}
         result['timing']['recharge_streams']=normal['timing']['streams'] if normal else []
-        from .panel_native_bridge import unknown_skill_terms
-        result['estimate']={'_panel_native_terms':{'normal':self.native_normal_terms,'skill':unknown_skill_terms()},
+        result['estimate']={'_panel_native_terms':{'normal':self.native_normal_terms,'skill':full['native_skill_terms']},
+            '_panel_native_skill_qualification':full['native_skill_qualification'],
             'base_stats':self.stats,**({'sp_events':sp_events} if sp_events else {}),'skill':{
             'name':sp['name'],'initial_seconds':first,'recharge_seconds':recharge,'cycle_seconds':cycle,
             'duration_seconds':duration,'total_damage':total_damage,'total_healing':total_healing,
