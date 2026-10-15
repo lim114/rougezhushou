@@ -7,8 +7,8 @@
     "windows_compatibility": "Wine authorized; distinct from native Windows verification",
     "scheduled_background_work": false,
     "priority_order": [
-      "P2",
       "P3",
+      "P2",
       "P1"
     ],
     "max_failed_attempts_per_problem": 3,
@@ -48,7 +48,15 @@
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
     "historical_accuracy_validation_after_section_before261": 115,
-    "batch_target_section": 285
+    "batch_target_section": 285,
+    "highest_priority_project_requirements": {
+      "path": "PROJECT_REQUIREMENTS.md",
+      "section": "项目级最高优先要求（2026-10-15）",
+      "agent_entry": "AGENTS.md 顶部同文规则",
+      "scope": "Project-internal highest priority: check premises, exercise independent judgment, verify sources, explain disagreement and surface overlooked variables/costs/biases."
+    },
+    "priority_changed_on_Beijing": "2026-10-15",
+    "player_readability": "Default player output requires no computing terminology: useful result/information first, game Chinese names, conditions/units/unknowns explained; raw IDs, numeric implementation and debug details expandable."
   },
   "baseline_commit": "0015c20",
   "completed_sections": 285,
@@ -1753,7 +1761,7 @@
     }
   ],
   "next_section": 286,
-  "next_action": "目标285已实际功能/可用完整范围验收并结束；完成普通发布核对后等待用户新要求，不自动启动286。P2仍有真实实例/时钟/热更新/实机配对缺口；P1保留、识别最后；探索仅节点信息。",
+  "next_action": "285批次保持结束、286未启动；最新方向优先完成P3节点/事件、固定战斗地图/出怪条件与敌人信息，默认玩家输出无需计算机术语基础即可理解。当前国服固定资料基准并检测版本差异，独立公开算例优先、必要时少量后台只读采样；首批三名校准和其余P2/P1保留，识别最后。按最高优先五条要求先核对前提与证据，不自动恢复历史连续目标。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 285,
@@ -3287,5 +3295,34 @@
     "next_section": 286,
     "batch_closed": true,
     "next_section_started": false
+  },
+  "confirmed_next_stage_direction": {
+    "confirmed_on_Beijing": "2026-10-15",
+    "primary_track": "既有P3全部待办：节点/事件条件与掉落、固定战斗地图/出怪条件、敌人信息",
+    "version_scope": "当前国服；固定资料基准并检测版本差异",
+    "evidence_order": "独立公开算例优先；必要时少量本机后台只读采样",
+    "formula_references_are_independent_observations": false,
+    "next_functional_section_started": false,
+    "new_continuous_batch_target_assigned": false,
+    "deferred_accuracy_track": "首批三名面板与技能准确性闭环；仍未完成",
+    "latest_priority_correction": "用户更正P3优先，替代本次较早的首批三名校准优先选择",
+    "deferred_accuracy_operators": [
+      "kaltsit",
+      "silverash",
+      "mechanist"
+    ]
+  },
+  "last_requirements_maintenance": {
+    "date_Beijing": "2026-10-15",
+    "functional_section_added": false,
+    "scope": "Highest-priority project reasoning rules; latest P3 priority and player-readable output requirements; index generator reflects checkpoint priority.",
+    "necessary_validation": {
+      "selector": "tests.test_cloud_index_sync",
+      "methods_passed": 17,
+      "exit_code": 0,
+      "public_pointer_hashes_match": true
+    },
+    "full_validation_rerun": false,
+    "existing_full_receipt_scope": "verification/full-285/summary.json remains bound to its original frozen source; not a new full check of the maintenance tooling change."
   }
 }

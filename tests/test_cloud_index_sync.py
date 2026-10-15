@@ -63,6 +63,20 @@ class CloudIndexSyncTests(unittest.TestCase):
         changed = json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
         self.assertNotEqual(changed['requirements']['sha256'], expected)
 
+    def test_latest_priority_is_reflected_in_index_and_handoff(self):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        checkpoint = json.loads(path.read_text(encoding='utf-8'))
+        for order in (['P2', 'P3', 'P1'], ['P3', 'P2', 'P1']):
+            with self.subTest(order=order):
+                checkpoint['policy']['priority_order'] = order
+                path.write_text(json.dumps(checkpoint), encoding='utf-8')
+                update(self.root)
+                index = json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+                handoff = (self.root/'CLOUD_HANDOFF.md').read_text(encoding='utf-8')
+                self.assertTrue(index['priority_order'].startswith(' → '.join(order)))
+                self.assertIn(index['priority_order'], handoff)
+                self.assertEqual(index['completed_sections'], 185)
+
     def test_repeated_update_preserves_historical_context_and_excludes_private_state(self):
         private = self.root/'.local'
         private.mkdir()
