@@ -160,12 +160,16 @@ def _event_lines(entry, context):
             recruitment = condition.get('recruitment_result_reference')
             known_recruitment = bool(recruitment and recruitment['status'] == 'documented_reference'
                                      and recruitment['annotation_role'] == 'selection_result')
+            movement = condition.get('movement_result_reference')
+            known_movement = bool(movement and movement['status'] == 'documented_reference'
+                                  and movement['annotation_role'] == 'selection_result')
             label = '选项' if choice['presentation_role'] == 'display_option_reference' else '说明参考（是否为实际按钮未确认）'
             lines.extend(['', f'{label} {index}：{_plain(choice["title"])}',
                           '效果说明：' + ('可招募的职业组合见下方；实际结果尚未确认。' if known_recruitment
+                                      else '前往最近据点的资料说明见下方；实际移动尚未确认。' if known_movement
                                       else _plain(choice.get('description')) or '未知'),
                           '选项条件：' + _status(row['choice_eligibility']['status']) + '；实际可选仍未知。'])
-            if choice.get('conditional') and not known_recruitment:
+            if choice.get('conditional') and not known_recruitment and not known_movement:
                 lines.append('条件原文：' + _plain(choice['conditional']))
             if known_recruitment:
                 lines.append('选择后可能的招募结果：')
@@ -174,10 +178,20 @@ def _event_lines(entry, context):
                 lines.append(f'每种结果的资料参考：获得{recruitment["hope_gain_reference"]}希望，'
                              f'招募{recruitment["recruit_count_reference"]}名{recruitment["rarity_ceiling_reference"]}星及以下的'
                              f'{_plain(recruitment["upgrade_reference_text"])}干员。')
+                if recruitment.get('upgrade_reference_text') == '直升':
+                    lines.append('直升：首次招募即已进阶。本次干员的实际等级、技能及模组等培养信息仍待读取确认。')
                 lines.append('本次职业组合、实际招募、招募费用和直升后的等级/精英阶段：尚未确认。')
                 lines.append('这些是资料列出的不同可能结果，不相加；职业组合说明不作为选项出现条件。')
             elif recruitment is not None:
                 lines.append('补充招募资料暂时无法核对；保留选项原文，具体职业结果仍未确认。')
+            if known_movement:
+                lines.append('选择后的移动说明（原文）：' + _plain(movement['base_action_reference']['description']))
+                lines.append('资料记载：' + _plain(movement['completion_exception_reference']['condition_text']) + '。')
+                lines.append('本层是否已完成、实际目的地和是否移动：尚未确认。')
+                lines.append('这是单向说明：已完成则不移动；未完成不代表一定移动。过去位置不证明据点作战已完成。')
+                lines.append('下方可查看本图已读据点位置和据点固定作战资料；均不代表本次移动结果。')
+            elif movement is not None:
+                lines.append('补充移动资料暂时无法核对；保留原文，本层完成情况和实际移动仍未确认。')
             for check in condition['parsed_special_requirements']:
                 state = '符合' if check['matches'] is True else '不符' if check['matches'] is False else '未知'
                 lines.append(f'条件核对（{state}）：{_plain(check["source_text"])}')

@@ -1,0 +1,99 @@
+--- a/rouge/app.py
++++ b/rouge/app.py
+@@ -349,6 +349,10 @@
+                      include_historical_route_diagnostics=self.include_historical_route_diagnostics),
+                      preserve=self.map_detail_key==key)
+         self.map_detail_key=key
++        if hasattr(self,'node_catalog'):
++            # Viewing availability follows the latest map selection, without binding its dossier.
++            self.node_catalog.bind_button.setEnabled(type(node_id) is str and
++                any(node.get('id')==node_id for node in graph.get('nodes',[])))
+         if update_catalog and hasattr(self,'node_catalog'):
+             from .node_catalog_view import map_conditions
+             self.node_catalog.set_node(graph,node_id,**map_conditions(graph,self.run.state.get('config',{})))
+--- a/tests/test_resident_reference_signals_291.py
++++ b/tests/test_resident_reference_signals_291.py
+@@ -101,6 +101,83 @@
+                 self.assertEqual(calls[-1], ('', {'update_catalog': False}))
+                 self.assertIn('链接已过期', statuses[-1])
+ 
++    def test_directory_reference_enables_explicit_view_without_prior_node_context(self):
++        from contextlib import ExitStack
++        from pathlib import Path
++        import tempfile
++        from unittest.mock import patch
++        from PySide6.QtWidgets import QCheckBox, QComboBox, QLabel, QPlainTextEdit
++        from rouge import app as app_module
++        from rouge.node_catalog_view import NodeCatalogPanel
++
++        def forbidden(*_args, **_kwargs):
++            raise AssertionError('No whole-window, game, chat, credential or private-state construction is needed')
++
++        with tempfile.TemporaryDirectory(prefix='rouge-291-directory-view-') as directory, ExitStack() as stack:
++            temporary = Path(directory)
++            for key, value in {'ROOT': temporary, 'SETTINGS': temporary / 'settings.json',
++                               'OPERATOR_STATE': temporary / 'operators.json', 'RUN_STATE': temporary / 'run.json'}.items():
++                stack.enter_context(patch.object(app_module, key, value))
++            for owner, name in ((app_module.MainWindow, '__init__'), (app_module.RunState, '__init__'),
++                                (app_module.AccountCache, '__init__'), (app_module, 'list_game_windows'),
++                                (app_module.GameCapture, 'connect'), (app_module.GameCapture, 'capture'),
++                                (app_module.GameCapture, 'next_frame'), (app_module.DesktopBackend, 'start'),
++                                (app_module.DesktopBackend, 'request'), (app_module, 'stream_chat'),
++                                (app_module, 'read_key'), (app_module, 'save_key')):
++                stack.enter_context(patch.object(owner, name, side_effect=forbidden))
++            panel = NodeCatalogPanel(); self.addCleanup(panel.close)
++            controls = [QLabel(), QPlainTextEdit(), QCheckBox(), QComboBox()]
++            for control in controls: self.addCleanup(control.close)
++            class CallbackHolder:
++                pass
++            holder = CallbackHolder()
++            holder.__dict__.update(map_view=self.view, node_catalog=panel,
++                include_historical_route_diagnostics=False,
++                run=types.SimpleNamespace(state={'id': 'public-run', 'config': {}}),
++                map_route=controls[0], map_detail=controls[1], map_technical=controls[2],
++                map_nodes=controls[3], map_detail_key=None, exploration_map_tab='isolated-map-tab',
++                centralWidget=lambda:types.SimpleNamespace(setCurrentWidget=lambda _widget:None))
++            for name in ('map_node_selected', 'map_reference_node_selected', 'show_catalog_map_node',
++                         'show_selected_map_node_contents'):
++                setattr(holder, name, types.MethodType(getattr(MainWindow, name), holder))
++            self.view.nodeSelected.connect(holder.map_node_selected)
++            self.view.referenceNodeSelected.connect(holder.map_reference_node_selected)
++            panel.mapNodeSelected.connect(holder.show_catalog_map_node)
++            panel.bind_button.clicked.disconnect(panel.bind_current_node)
++            panel.bind_button.clicked.connect(holder.show_selected_map_node_contents)
++            holder.map_nodes.addItem('请选择地图上的节点', None)
++            for node in self.graph['nodes']: holder.map_nodes.addItem(node['id'], node['id'])
++            panel.set_map_context(self.graph, {'floor': 4}, epoch='public-run', historical=False)
++            panel.search.setText('和平守卫者')
++            panel.list.setCurrentRow(next(index for index, entry in enumerate(panel.entries)
++                if entry['kind']=='event' and entry['record']['id']=='community_group_019'))
++            reading_key = panel.detail_key
++            self.assertIsNone(panel.node_context)
++            self.assertIsNone(panel.dossier)
++            self.assertFalse(panel.bind_button.isEnabled())
++            panel.resident_location.setCurrentIndex(1)
++            panel.resident_map_button.click()
++            self.assertEqual(self.view.selected, '0,2')
++            self.assertTrue(panel.bind_button.isEnabled())
++            self.assertIsNone(panel.node_context)
++            self.assertIsNone(panel.dossier)
++            self.assertEqual(panel.detail_key, reading_key)
++            self.view.set_map(deepcopy(self.graph), historical=False)
++            self.assertTrue(panel.bind_button.isEnabled())
++            self.assertIsNone(panel.node_context)
++            changed = deepcopy(self.graph); changed['nodes'][0]['observed_type'] = '林间空地'
++            self.view.set_map(changed, historical=False)
++            self.assertIsNone(self.view.selected)
++            self.assertFalse(panel.bind_button.isEnabled())
++            self.assertEqual(panel.detail_key, reading_key)
++            self.view.set_map(deepcopy(self.graph), historical=False)
++            panel.resident_map_button.click()
++            self.assertTrue(panel.bind_button.isEnabled())
++            panel.bind_button.click()
++            self.assertEqual(panel.node_context[1], '0,2')
++            self.assertEqual(panel.dossier['position']['node_id'], '0,2')
++            self.assertIsNone(self.view.reference_binding)
++
+     def test_explicit_view_without_current_selection_never_falls_back_to_old_context(self):
+         calls, statuses, tabs = [], [], []
+         panel = types.SimpleNamespace(node_context=(self.graph, '0,2', {}),

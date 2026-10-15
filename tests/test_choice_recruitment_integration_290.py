@@ -55,6 +55,16 @@ class RecruitmentIntegration290Tests(unittest.TestCase):
                     old = previous.choice_eligibility(event['id'],scene['key'],context)
                     current = event_planning.choice_eligibility(event['id'],scene['key'],context)
                     for current_row in current['rows']:
+                        movement=current_row.pop('movement_result_reference',None)
+                        if movement is not None:
+                            self.assertEqual(current_row['choice_key'],'community_group_019:scene:1:choice:0')
+                            self.assertEqual(movement['status'],'documented_reference')
+                            self.assertEqual(movement['annotation_role'],'selection_result')
+                            self.assertEqual(movement['choice_key'],current_row['choice_key'])
+                            self.assertFalse(movement['source_scene_link_verified'])
+                            self.assertIsNone(movement['actual_moved'])
+                            self.assertIsNone(current_row['unparsed_condition_text'])
+                            current_row['unparsed_condition_text']=current_row['conditional_text']
                         if current_row['choice_key'] != CHOICE:
                             continue
                         reference = current_row.pop('recruitment_result_reference')
@@ -101,17 +111,29 @@ class RecruitmentIntegration290Tests(unittest.TestCase):
 
     def test_unparsed_annotations_in_all_other_choices_are_untouched(self):
         previous=previous_planning()
-        remaining=[]
+        remaining=[];movement_annotations=[]
         for event in catalog._data()['events']:
             for scene in event['scenes']:
                 old=previous.choice_eligibility(event['id'],scene['key'])
                 current=event_planning.choice_eligibility(event['id'],scene['key'])
                 for before,after in zip(old['rows'],current['rows']):
                     if before['choice_key']!=CHOICE and before['unparsed_condition_text']:
-                        self.assertEqual(after['unparsed_condition_text'],before['unparsed_condition_text'])
+                        if before['choice_key']=='community_group_019:scene:1:choice:0':
+                            movement=after['movement_result_reference']
+                            self.assertEqual(movement['status'],'documented_reference')
+                            self.assertEqual(movement['annotation_role'],'selection_result')
+                            self.assertIsNone(after['unparsed_condition_text'])
+                            self.assertEqual(after['conditional_text'],before['conditional_text'])
+                            normalized=deepcopy(after);normalized.pop('movement_result_reference')
+                            normalized['unparsed_condition_text']=before['unparsed_condition_text']
+                            self.assertEqual(normalized,before)
+                            movement_annotations.append(before['choice_key'])
+                        else:
+                            self.assertEqual(after['unparsed_condition_text'],before['unparsed_condition_text'])
+                            remaining.append(before['choice_key'])
                         self.assertNotIn('recruitment_result_reference',after)
-                        remaining.append(before['choice_key'])
-        self.assertEqual(len(remaining),11)
+        self.assertEqual(len(remaining),10)
+        self.assertEqual(movement_annotations,['community_group_019:scene:1:choice:0'])
 
     def test_history_and_copies_do_not_create_operator_or_inventory_state(self):
         context={'resources':{'hope':20},'item_quantities':{'rogue_6_scrap_G_12':1}}

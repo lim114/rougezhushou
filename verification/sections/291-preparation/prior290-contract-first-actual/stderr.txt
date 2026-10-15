@@ -1,0 +1,24 @@
+test_all_event_choices_keep_original_eligibility_and_only_target_annotation_changes (tests._prior290_contract_291.RecruitmentIntegration290Tests.test_all_event_choices_keep_original_eligibility_and_only_target_annotation_changes) ... FAIL
+test_unparsed_annotations_in_all_other_choices_are_untouched (tests._prior290_contract_291.RecruitmentIntegration290Tests.test_unparsed_annotations_in_all_other_choices_are_untouched) ... FAIL
+
+======================================================================
+FAIL: test_all_event_choices_keep_original_eligibility_and_only_target_annotation_changes (tests._prior290_contract_291.RecruitmentIntegration290Tests.test_all_event_choices_keep_original_eligibility_and_only_target_annotation_changes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\verification\sections\291-preparation\before-291\tests\test_choice_recruitment_integration_290.py", line 65, in test_all_event_choices_keep_original_eligibility_and_only_target_annotation_changes
+    self.assertEqual(current,old,(event['id'],scene['key'],context))
+AssertionError: {'sou[1920 chars]xt': None, 'game_choice_ids': ['choice_ro6_tas[7219 chars]: {}} != {'sou[1920 chars]xt': '若已完成当前层的【“居民”据点】作战则不会移动', 'game_choice_i[1850 chars]: {}}
+Diff is 25519 characters long. Set self.maxDiff to None to see it. : ('community_group_019', 'community_group_019:scene:1', {})
+
+======================================================================
+FAIL: test_unparsed_annotations_in_all_other_choices_are_untouched (tests._prior290_contract_291.RecruitmentIntegration290Tests.test_unparsed_annotations_in_all_other_choices_are_untouched)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\verification\sections\291-preparation\before-291\tests\test_choice_recruitment_integration_290.py", line 111, in test_unparsed_annotations_in_all_other_choices_are_untouched
+    self.assertEqual(after['unparsed_condition_text'],before['unparsed_condition_text'])
+AssertionError: None != '若已完成当前层的【“居民”据点】作战则不会移动'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.079s
+
+FAILED (failures=2)

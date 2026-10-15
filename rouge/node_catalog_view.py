@@ -17,6 +17,8 @@ from .duel_reward_view import DuelRewardPanel
 from .scrap_exchange_view import ScrapExchangePanel
 from .seed_cultivation_view import SeedCultivationPanel
 from .player_node_information import node_information_text
+from .resident_location_references import resident_location_references,resident_binding_matches
+from .peace_guardian_results import EVENT as _RESIDENT_EVENT,SCENE as _RESIDENT_SCENE,CHOICE as _RESIDENT_CHOICE
 
 KINDS={'event':'事件','battle':'战斗资料','function':'功能节点','original':'未归类原文','map':'本图节点'}
 QUALIFICATIONS={'matched':'已列条件相符','unknown':'资格未确认','excluded':'已列条件不符'}
@@ -189,14 +191,24 @@ def _event_flow_text(event_id,context=None,planning=False):
             recruitment=resources.get(choice['key'],{}).get('choice_eligibility',{}).get('recruitment_result_reference')
             known_recruitment=bool(recruitment and recruitment['status']=='documented_reference'
                                    and recruitment['annotation_role']=='selection_result')
+            movement=resources.get(choice['key'],{}).get('choice_eligibility',{}).get('movement_result_reference')
+            known_movement=bool(movement and movement['status']=='documented_reference'
+                                and movement['annotation_role']=='selection_result')
             lines += [f"  {role}：{choice['title']}",f"    {choice.get('description') or '结果说明未知'}"]
             if choice.get('conditional'):
-                lines.append(('    选择后职业组合说明（原文）：' if known_recruitment else '    条件：')+choice['conditional'])
+                prefix=('    选择后职业组合说明（原文）：' if known_recruitment else
+                        '    选择后移动例外说明（原文）：' if known_movement else '    条件：')
+                lines.append(prefix+choice['conditional'])
             if known_recruitment:
                 lines.append('    四种招募结果的内容依据：不证明原入口、实际招募、费用或培养；各组为不同结果参考。')
                 lines.append('    招募结果来源：'+json.dumps(recruitment,ensure_ascii=False))
             elif recruitment is not None:
                 lines.append('    补充招募来源未通过核对；保留原文和未解析说明，实际结果仍未知。')
+            if known_movement:
+                lines.append('    这是选择后结果的单向资料；不改变资格，不反推未完成必移，不确认实际目标。')
+                lines.append('    移动例外来源：'+json.dumps(movement,ensure_ascii=False))
+            elif movement is not None:
+                lines.append('    补充移动来源未通过核对；保留原文，实际结果仍未知。')
             targets=choice.get('destination_keys',[])
             lines.append('    后续：'+('、'.join(f'场景 {numbers[t]}' for t in targets if t in numbers)
                           if targets else '资料无导航目标，游戏后续未知'))
@@ -293,6 +305,7 @@ class NodeCatalogPanel(QWidget):
         super().__init__(parent)
         self.dossier=None;self.node_context=None;self.entries=[];self.detail_key=None
         self.map_context=None;self.runtime_context={};self._first_tree=True
+        self._resident_reference_key=None;self._resident_map_context_valid=True
         self.destination_window=None;self.destination_origin_key=None
         self.duel_reward_window=None;self.duel_reward_origin_key=None
         self.exchange_window=None;self.exchange_origin_key=None
@@ -337,6 +350,23 @@ class NodeCatalogPanel(QWidget):
         self.exchange_button.hide();self.exchange_button.clicked.connect(self.open_scrap_exchange)
         self.seed_button=QPushButton('核对种子培育与下次探索奖励');rl.addWidget(self.seed_button)
         self.seed_button.hide();self.seed_button.clicked.connect(self.open_seed_cultivation)
+        self.resident_reference_label=QLabel();self.resident_reference_label.setWordWrap(True)
+        self.resident_location=QComboBox();self.resident_location.setAccessibleName('本图已读据点位置参考')
+        self.resident_map_button=QPushButton('在地图查看这个位置')
+        self.resident_stage=QComboBox();self.resident_stage.setAccessibleName('据点固定作战资料，本次关卡未确认')
+        self.resident_stage_button=QPushButton('查看所选据点固定作战资料')
+        for widget in (self.resident_reference_label,self.resident_location,self.resident_map_button,
+                       self.resident_stage,self.resident_stage_button):
+            widget.hide()
+        rl.addWidget(self.resident_reference_label)
+        for choice,button in ((self.resident_location,self.resident_map_button),
+                              (self.resident_stage,self.resident_stage_button)):
+            row=QHBoxLayout();row.addWidget(choice,1);row.addWidget(button);rl.addLayout(row)
+        self.resident_map_button.setEnabled(False);self.resident_stage_button.setEnabled(False)
+        self.resident_location.currentIndexChanged.connect(self._resident_location_selection_changed)
+        self.resident_stage.currentIndexChanged.connect(lambda *_:self.resident_stage_button.setEnabled(type(self.resident_stage.currentData()) is str))
+        self.resident_map_button.clicked.connect(self.select_resident_map_node)
+        self.resident_stage_button.clicked.connect(self.select_resident_stage)
         self.map_location=QComboBox();self.map_location.setAccessibleName('该内容对应地图节点');rl.addWidget(self.map_location)
         self.map_jump=QPushButton('在地图预览定位节点');self.map_jump.setEnabled(False);rl.addWidget(self.map_jump)
         self.map_contents=QPushButton('查看此节点事件与作战');self.map_contents.setEnabled(False);rl.addWidget(self.map_contents)
@@ -354,7 +384,10 @@ class NodeCatalogPanel(QWidget):
 
     def set_map_context(self,graph,conditions=None,epoch=None,historical=True,runtime_context=None):
         incoming=(deepcopy(graph),deepcopy(conditions or {}),epoch,bool(historical)) if graph else None
-        changed=incoming!=self.map_context or (runtime_context or {})!=self.runtime_context
+        valid_resident_context=type(historical) is bool
+        changed=(incoming!=self.map_context or (runtime_context or {})!=self.runtime_context
+                 or valid_resident_context!=self._resident_map_context_valid)
+        self._resident_map_context_valid=valid_resident_context
         self.map_context=incoming;self.runtime_context=deepcopy(runtime_context or {})
         self.map_button.setEnabled(bool(incoming))
         if changed:self.refresh()
@@ -577,6 +610,9 @@ class NodeCatalogPanel(QWidget):
                         recruitment=choice.get('recruitment_result_reference')
                         if recruitment and recruitment['status']=='documented_reference' and recruitment['annotation_role']=='selection_result':
                             text+='\n选择后职业组合资料 '+choice['choice_title']+'：'+choice['conditional_text']+'；实际结果未知。'
+                        elif ((choice.get('movement_result_reference') or {}).get('status')=='documented_reference'
+                                and choice['movement_result_reference'].get('annotation_role')=='selection_result'):
+                            text+='\n选择后移动例外资料 '+choice['choice_title']+'：'+choice['conditional_text']+'；实际结果未知。'
                         else:
                             text+='\n选项 '+choice['choice_title']+'：'+QUALIFICATIONS[choice['status']]+'；'+choice['conditional_text']
             if self.event_stage.count():text+='\n作战入口见下方选择：仅固定资料预览，不代表实际触发或确定选中该变体。'
@@ -663,6 +699,7 @@ class NodeCatalogPanel(QWidget):
         context=self._event_context(entry['record'] if entry and entry['kind']=='event' else None)
         player_entry=({**entry,'history_context_reference':True} if entry and self._bound_historical_map() else entry)
         player_text=node_information_text(player_entry,context=context,dossier=self.dossier,map_context=self.map_context)
+        self._refresh_resident_references(entry,key)
         replace_text(self.player_detail,player_text,preserve=self.detail_key==key)
         replace_text(self.detail,text,preserve=self.detail_key==key);self.detail_key=key
 
@@ -718,6 +755,100 @@ class NodeCatalogPanel(QWidget):
         self.duel_reward_origin_key=key
         self.duel_reward_window.set_reference(sid,self._event_context())
         self.duel_reward_window.show();self.duel_reward_window.raise_()
+
+    def _resident_movement_reference(self,entry=None):
+        if entry is None:
+            key=self.list.selected_key()
+            entry=next((row for row in self.entries if row['key']==key),None)
+        if not entry or entry['kind']!='event' or entry['record'].get('id')!=_RESIDENT_EVENT:return None
+        try:
+            result=event_planning.choice_eligibility(_RESIDENT_EVENT,_RESIDENT_SCENE,
+                self._event_context(entry['record']))
+            row=next((row for row in result['rows'] if row['choice_key']==_RESIDENT_CHOICE),None)
+            reference=row.get('movement_result_reference') if row else None
+        except (ValueError,TypeError,KeyError):return None
+        return reference if (reference and reference.get('status')=='documented_reference'
+            and reference.get('annotation_role')=='selection_result'
+            and reference.get('choice_key')==_RESIDENT_CHOICE) else None
+
+    def _resident_stage_rows(self):
+        try:
+            result=catalog.battle_candidates('“居民”据点',floor=None,context='all',entry_mode='content')
+            return [row for row in result['rows'] if row['id'] in ('ro6_t_10','ro6_t_11')]
+        except (ValueError,TypeError,KeyError):return []
+
+    def _refresh_resident_references(self,entry,key):
+        previous_key=self._resident_reference_key
+        previous_location=deepcopy(self.resident_location.currentData())
+        previous_stage=self.resident_stage.currentData()
+        widgets=(self.resident_reference_label,self.resident_location,self.resident_map_button,
+                 self.resident_stage,self.resident_stage_button)
+        for combo in (self.resident_location,self.resident_stage):
+            combo.blockSignals(True);combo.clear()
+        for widget in widgets:widget.hide()
+        self.resident_reference_label.clear()
+        self.resident_map_button.setEnabled(False);self.resident_stage_button.setEnabled(False)
+        self._resident_reference_key=None
+        try:
+            reference=self._resident_movement_reference(entry) if entry else None
+            if reference is None:return
+            self._resident_reference_key=key
+            for widget in widgets:widget.show()
+            self.resident_location.addItem('请选择一个位置查看',None)
+            self.resident_stage.addItem('请选择据点固定作战资料（本次关卡未确认）',None)
+            notice='尚无可核对的本图记录；不据此判断是否存在据点。'
+            if self.map_context and self._resident_map_context_valid:
+                graph,conditions,epoch,historical=self.map_context
+                locations=resident_location_references(graph,epoch=epoch,historical=historical)
+                notice=locations['notice']
+                for row in locations['rows']:
+                    self.resident_location.addItem(row['label'],deepcopy(row['binding']))
+                if type(conditions.get('floor')) is not int:
+                    notice+=' 地图层数尚未确认，以下不是本次事件目的地。'
+                if previous_key==key and previous_location and resident_binding_matches(
+                        graph,previous_location,epoch=epoch,historical=historical):
+                    index=next((index for index in range(1,self.resident_location.count())
+                        if self.resident_location.itemData(index)==previous_location),0)
+                    self.resident_location.setCurrentIndex(index)
+            self.resident_reference_label.setText('“守卫和平！”的据点资料（仅位置参考）\n'+notice+
+                '\n下列固定作战资料也不代表本选项会触发的关卡。')
+            for stage in self._resident_stage_rows():
+                self.resident_stage.addItem(stage['title']+' · 据点固定资料（本次关卡未确认）',stage['id'])
+            if previous_key==key and type(previous_stage) is str:
+                index=next((index for index in range(1,self.resident_stage.count())
+                    if self.resident_stage.itemData(index)==previous_stage),0)
+                self.resident_stage.setCurrentIndex(index)
+        finally:
+            for combo in (self.resident_location,self.resident_stage):combo.blockSignals(False)
+            self._resident_location_selection_changed()
+            self.resident_stage_button.setEnabled(type(self.resident_stage.currentData()) is str)
+
+    def _resident_location_selection_changed(self,*_):
+        enabled=False
+        if self.map_context and self._resident_map_context_valid:
+            graph,_,epoch,historical=self.map_context
+            enabled=resident_binding_matches(graph,self.resident_location.currentData(),epoch=epoch,historical=historical)
+        self.resident_map_button.setEnabled(enabled)
+
+    def select_resident_map_node(self):
+        key=self.list.selected_key();entry=next((row for row in self.entries if row['key']==key),None)
+        if (key!=self._resident_reference_key or self._resident_movement_reference(entry) is None
+                or not self.map_context or not self._resident_map_context_valid):
+            self._refresh_resident_references(entry,key);return
+        graph,_,epoch,historical=self.map_context
+        binding=self.resident_location.currentData()
+        if not resident_binding_matches(graph,binding,epoch=epoch,historical=historical):
+            self.status.setText('据点位置链接已过期或证据改变；请重新选择资料位置。')
+            self._refresh_resident_references(entry,key);return
+        self.mapNodeSelected.emit(binding['node_id'],deepcopy(binding))
+
+    def select_resident_stage(self):
+        key=self.list.selected_key();entry=next((row for row in self.entries if row['key']==key),None)
+        if key!=self._resident_reference_key or self._resident_movement_reference(entry) is None:
+            self._refresh_resident_references(entry,key);return
+        stage_id=self.resident_stage.currentData()
+        if type(stage_id) is str and stage_id in {row['id'] for row in self._resident_stage_rows()}:
+            self.stageSelected.emit(stage_id)
 
     def select_stage(self):
         key=self.list.selected_key()

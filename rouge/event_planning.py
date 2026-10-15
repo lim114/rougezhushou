@@ -10,6 +10,7 @@ from pathlib import Path
 from . import node_catalog as catalog
 from . import choice_held_requirements
 from . import choice_recruitment_results
+from . import peace_guardian_results
 
 
 @lru_cache(maxsize=1)
@@ -229,15 +230,19 @@ def choice_eligibility(event_id,scene_key,context=None):
                                      'reason':current_observation()['delta'],
                                      'query':'scene-outcomes','actual_server_rule_verified':False})
         recruitment=choice_recruitment_results.choice_reference(event_id,choice,scene_key=scene_key)
-        result_annotation=bool(recruitment and recruitment['status']=='documented_reference'
+        movement=peace_guardian_results.choice_result_reference(event,scene,choice)
+        result_annotation=bool((recruitment and recruitment['status']=='documented_reference'
                                and recruitment['annotation_role']=='selection_result')
+            or (movement and movement['status']=='documented_reference'
+                and movement['annotation_role']=='selection_result'))
         rows.append({'choice_key':choice['key'],'choice_title':choice['title'],'presentation_role':choice['presentation_role'],
                      'status':_status(checks),'checks':checks,'parsed_special_requirements':parsed,
                      'conditional_text':choice['conditional'],'unparsed_condition_text':text if text and not parsed and not result_annotation else None,
                      'game_choice_ids':deepcopy(choice['game_choice_ids']),'original_choice_records':mapped,
                      'actual_selectable':None,'full_server_conditions_known':False,
                      'source_origin_scene_binding_verified':False,'edition_warnings':edition_warnings,
-                     **({'recruitment_result_reference':recruitment} if recruitment is not None else {})})
+                     **({'recruitment_result_reference':recruitment} if recruitment is not None else {}),
+                     **({'movement_result_reference':movement} if movement is not None else {})})
     return _result(event=catalog._summary(event),scene_key=scene_key,rows=rows,context=context)
 
 

@@ -9,6 +9,7 @@ from .exploration_routes import route_reference
 
 class MapView(QWidget):
     nodeSelected = Signal(str)
+    referenceNodeSelected = Signal(str)
 
     def __init__(self, parent=None, *, include_historical_route_diagnostics=False):
         super().__init__(parent)
@@ -21,9 +22,12 @@ class MapView(QWidget):
         self.graph = None
         self.image = None
         self.selected = None
+        self._reference_selection = False
+        self.reference_binding = None
         self.historical = False
 
     def set_map(self, graph, image=None, *, historical=False):
+        was_reference = self._reference_selection
         old_key = (self.graph or {}).get('template_id'), (self.graph or {}).get('zone_id')
         new_key = (graph or {}).get('template_id'), (graph or {}).get('zone_id')
         self.graph = copy.deepcopy(graph)
@@ -31,14 +35,27 @@ class MapView(QWidget):
         self.historical = historical
         if old_key != new_key or not graph or self.selected not in {n['id'] for n in graph['nodes']}:
             self.selected = None
+            self._reference_selection = False
+            self.reference_binding = None
         self.update()
-        self.nodeSelected.emit(self.selected or '')
+        if was_reference or self._reference_selection:self.referenceNodeSelected.emit(self.selected or '')
+        else:self.nodeSelected.emit(self.selected or '')
 
-    def select_node(self, node_id):
+    def select_node(self, node_id, *, emit_selected=True, reference_binding=None):
         if self.graph and node_id in {n['id'] for n in self.graph['nodes']}:
             self.selected = node_id
+            self._reference_selection = not emit_selected
+            self.reference_binding = copy.deepcopy(reference_binding) if not emit_selected else None
             self.update()
-            self.nodeSelected.emit(node_id)
+            if emit_selected:self.nodeSelected.emit(node_id)
+            else:self.referenceNodeSelected.emit(node_id)
+
+    def clear_reference_selection(self):
+        """Expire only local reference-view intent; never bind a replacement node."""
+        self.reference_binding = None
+        self._reference_selection = False
+        self.selected = None
+        self.update()
 
     def _positions(self):
         canvas = QRectF(self.contentsRect())

@@ -1,0 +1,27 @@
+{
+  "section": 291,
+  "kind": "actual_nonpassing_window_attempt_classification_not_relabelled_pass",
+  "attempts": {
+    "1": {
+      "actual_exit": 1,
+      "reason": "Verifier wrongly assumed original game_choice_ids empty; pinned original is choice_ro6_task1_3. Corrected to exact original and fixed ID equality; production IDs preserved."
+    },
+    "2": {
+      "actual_exit": 1,
+      "reason": "Verifier fixture did not populate map position selector as render_map does. Also observed requested720 became764, so partial old layout records do not prove720."
+    },
+    "3": {
+      "actual_exit": 1,
+      "reason": "New exact size check correctly rejected764 instead of720. Public independent diagnosis found existing sampling page imposes cross-tab minimum; scroll wrapper fixes this without cutting contents."
+    },
+    "4": {
+      "actual_exit": 1,
+      "reason": "Expired-reference button is correctly disabled. Verifier wrongly expected disabled click to emit status. Revised to verify disabled click is inert and separately call handler to test stale rejection."
+    }
+  },
+  "same_unresolved_problem_attempt_count_reached_three": false,
+  "next_attempt5_is_not_yet_a_pass": true,
+  "past_raw_attempts_unchanged": true,
+  "all_initial_tests_and_later135_runs_are_separate_not_summed": true,
+  "additional_root_source_maintenance": "MapView line endings restored to original CRLF; no logic change from that normalization."
+}

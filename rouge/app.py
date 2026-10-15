@@ -153,6 +153,8 @@ class MainWindow(QMainWindow):
         tabs.addTab(self.battle_preview,'战斗预览')
         from .node_catalog_view import NodeCatalogPanel
         self.node_catalog=NodeCatalogPanel()
+        self.node_catalog.bind_button.clicked.disconnect(self.node_catalog.bind_current_node)
+        self.node_catalog.bind_button.clicked.connect(self.show_selected_map_node_contents)
         self.node_catalog.stageSelected.connect(self.show_catalog_battle)
         self.node_catalog.mapNodeSelected.connect(self.show_catalog_map_node)
         tabs.addTab(self.node_catalog,'节点事件')
@@ -298,7 +300,8 @@ class MainWindow(QMainWindow):
         notice = QLabel('地图预测页提供模板匹配、隐藏节点候选及已揭示内容的奖励资料。具名事件奖励保留条件；宝箱与特殊敌人只列资料候选，完整掉落池和概率仍待核验。伤害页可选关卡敌人套用已支持的本局修正。')
         notice.setWordWrap(True)
         layout.addWidget(notice)
-        return tab
+        scroll=QScrollArea();scroll.setWidgetResizable(True);scroll.setWidget(tab)
+        return scroll
 
     def make_map_tab(self):
         tab=QWidget();layout=QVBoxLayout(tab)
@@ -316,6 +319,7 @@ class MainWindow(QMainWindow):
         self.map_content=QLabel();self.map_content.setWordWrap(True);layout.addWidget(self.map_content)
         self.map_view=MapView(include_historical_route_diagnostics=self.include_historical_route_diagnostics)
         self.map_view.nodeSelected.connect(self.map_node_selected)
+        self.map_view.referenceNodeSelected.connect(self.map_reference_node_selected)
         layout.addWidget(self.map_view,4)
         self.map_nodes=QComboBox();self.map_nodes.setAccessibleName('按地图位置选择节点')
         self.map_nodes.currentIndexChanged.connect(lambda: self.map_view.select_node(self.map_nodes.currentData()))
@@ -328,11 +332,12 @@ class MainWindow(QMainWindow):
         self.map_technical=QCheckBox('显示技术资料（全部节点、原始标识与来源）');layout.addWidget(self.map_technical)
         self.map_text=QPlainTextEdit();self.map_text.setReadOnly(True)
         self.map_text.setVisible(False);self.map_technical.toggled.connect(self.map_text.setVisible)
-        self.map_technical.toggled.connect(lambda:self.map_node_selected(self.map_view.selected))
+        self.map_technical.toggled.connect(lambda:self.map_reference_node_selected(self.map_view.selected)
+            if self.map_view.reference_binding is not None else self.map_node_selected(self.map_view.selected))
         layout.addWidget(self.map_text,1)
         return tab
 
-    def map_node_selected(self, node_id):
+    def map_node_selected(self, node_id, *, update_catalog=True):
         graph=self.map_view.graph or {}
         if self.include_historical_route_diagnostics:
             self.map_route.setText(format_route(self.map_view.graph,node_id,historical=self.map_view.historical,compact=True)
@@ -346,6 +351,10 @@ class MainWindow(QMainWindow):
                      preserve=self.map_detail_key==key)
         self.map_detail_key=key
         if hasattr(self,'node_catalog'):
+            # Viewing availability follows the latest map selection, without binding its dossier.
+            self.node_catalog.bind_button.setEnabled(type(node_id) is str and
+                any(node.get('id')==node_id for node in graph.get('nodes',[])))
+        if update_catalog and hasattr(self,'node_catalog'):
             from .node_catalog_view import map_conditions
             self.node_catalog.set_node(graph,node_id,**map_conditions(graph,self.run.state.get('config',{})))
         self.map_nodes.blockSignals(True)
@@ -982,6 +991,10 @@ class MainWindow(QMainWindow):
     def show_catalog_map_node(self,node_id,binding):
         """Navigate the assistant only, rejecting stale run/template/position links."""
         graph=self.map_view.graph or {}
+        if isinstance(binding,dict) and binding.get('reference_kind')=='resident_location_reference':
+            from .resident_location_references import resident_binding_matches
+            if not resident_binding_matches(graph,binding,epoch=self.run.state['id'],historical=self.map_view.historical):
+                self.node_catalog.status.setText('据点位置链接已过期或证据改变；请重新选择资料位置。');return
         node=next((n for n in graph.get('nodes',[]) if n['id']==node_id),None)
         valid=(isinstance(binding,dict) and isinstance(binding.get('epoch'),str) and bool(binding['epoch'])
             and binding['epoch']==self.run.state['id']
@@ -991,8 +1004,32 @@ class MainWindow(QMainWindow):
             and binding['row']==node['row'] and binding['col']==node['col'])
         if not valid:
             self.node_catalog.status.setText('节点链接已过期或位置不符；请使用本局当前地图记录。');return
-        self.map_view.select_node(node_id)
+        if isinstance(binding,dict) and binding.get('reference_kind')=='resident_location_reference':
+            self.map_view.select_node(node_id,emit_selected=False,reference_binding=binding)
+        else:self.map_view.select_node(node_id)
         self.centralWidget().setCurrentWidget(self.exploration_map_tab)
+
+    def map_reference_node_selected(self,node_id):
+        """Revalidate UI reference origin against the latest graph, run and historical context."""
+        from .resident_location_references import resident_binding_matches
+        graph=self.map_view.graph or {};binding=self.map_view.reference_binding
+        if (not isinstance(binding,dict) or binding.get('node_id')!=node_id
+                or not resident_binding_matches(graph,binding,epoch=self.run.state['id'],historical=self.map_view.historical)):
+            self.map_view.clear_reference_selection()
+            self.map_node_selected('',update_catalog=False)
+            self.node_catalog.status.setText('据点位置链接已过期或证据改变；请重新选择资料位置。');return False
+        self.map_node_selected(node_id,update_catalog=False)
+        return True
+
+    def show_selected_map_node_contents(self):
+        """An explicit map action reads the latest selection, not the saved reading binding."""
+        graph=self.map_view.graph or {};node_id=self.map_view.selected
+        if self.map_view.reference_binding is not None and not self.map_reference_node_selected(node_id):return
+        if type(node_id) is not str or not any(node.get('id')==node_id for node in graph.get('nodes',[])):
+            self.node_catalog.status.setText('地图当前没有可查看的选中节点；请先选择地图位置。');return
+        self.map_view.select_node(node_id)
+        self.node_catalog.bind_current_node()
+        self.centralWidget().setCurrentWidget(self.node_catalog)
 
     def select_battle_stage(self,sid):
         self.target_stage_choices.select_value(sid)
