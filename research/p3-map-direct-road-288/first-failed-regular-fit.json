@@ -1,0 +1,559 @@
+{
+  "kind": "FIRST_ACTUAL_CACHE_CANDIDATE_FIT_287_PREPARATION_FOR_288",
+  "observation_sha256": "b3f35ea69f6bf7f1fabb90fd69f05c30581f771474510c3182ae5bfa26027be7",
+  "fit_script_sha256": "55c8521261414e9b10b29628bb4b2bf3a7cb0d8c39edc9d102ff6ca817cc2113",
+  "actual_process_scope": "Read-only fixed public data and manual source-image observations; no game/UI/chat/private state",
+  "fit_method": "cv2.findHomography method=0, all four frozen seam anchors; no RANSAC, exclusion, tuning or center feedback",
+  "pixel_tolerance": 4,
+  "second_reader_not_yet_available": true,
+  "public_source_before_sha256": {
+    "rouge\\data\\battle-previews.json": "f0155647af8766eb2f01e84295f85b7300264fc49b40ffc82e89800837d274f3",
+    "rouge\\data\\battle-map-projections.json": "b36710dbc381de0ded802d6edc4ef4eafe192432818180bf608a5fded3cf843c",
+    "rouge\\data\\fixed-landmark-references.json": "9ab3d53c16601a2772544741199452501aaad0cc4df6f440c997c3a4d1a32198"
+  },
+  "public_source_after_sha256": {
+    "rouge\\data\\battle-previews.json": "f0155647af8766eb2f01e84295f85b7300264fc49b40ffc82e89800837d274f3",
+    "rouge\\data\\battle-map-projections.json": "b36710dbc381de0ded802d6edc4ef4eafe192432818180bf608a5fded3cf843c",
+    "rouge\\data\\fixed-landmark-references.json": "9ab3d53c16601a2772544741199452501aaad0cc4df6f440c997c3a4d1a32198"
+  },
+  "public_sources_unchanged": true,
+  "results": [
+    {
+      "id": "ro6_t_1",
+      "aliases": [],
+      "bitmap_sha256": "f0514fd94588d874e46761401d62c88987c35d28b23f9e74b02528ed0e14512b",
+      "grid_sha256": "2c13a7ecc17d713fb9c9fc8ad64113fcc3ed441100a54ac560d7eb791ff26942",
+      "rows": 6,
+      "cols": 10,
+      "width": 512,
+      "height": 286,
+      "matrix": [
+        33.977528089887606,
+        -10.816479400749088,
+        101.25842696629229,
+        -3.796493498263071e-15,
+        22.35205992509358,
+        56.35955056179784,
+        -3.9387070572202773e-17,
+        -0.04244694132334591,
+        1.0
+      ],
+      "inverse": [
+        0.029431216931216957,
+        0.007753023431594891,
+        -3.4171156462585124,
+        1.875292785587561e-18,
+        0.04041326530612252,
+        -2.2776734693877625,
+        1.2388098611295805e-18,
+        0.0017154195011337937,
+        0.9033197278911557
+      ],
+      "anchors": [
+        [
+          0.5,
+          1.5,
+          150,
+          69,
+          "Upper wood-road row north edge meets its left internal c1/c2 seam; not the elevated red entrance frame"
+        ],
+        [
+          0.5,
+          8.5,
+          393,
+          69,
+          "Upper wood-road row north edge meets right end seam beyond c8"
+        ],
+        [
+          4.5,
+          3.5,
+          212,
+          194,
+          "Lower exposed wood path south edge at plant-square/road internal column seam"
+        ],
+        [
+          4.5,
+          7.5,
+          380,
+          194,
+          "Lower wood path south edge at c7/c8 seam to left of blue entrance frame"
+        ]
+      ],
+      "checks": [
+        {
+          "row": 1,
+          "col": 2,
+          "observed_pixel": [
+            166,
+            82
+          ],
+          "projected_pixel": [
+            165.41851368970023,
+            82.20078226857893
+          ],
+          "error_px": 0.6151746487313494,
+          "cue": "Upper-left exposed wood road tile center, independently read"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "observed_pixel": [
+            237,
+            82
+          ],
+          "projected_pixel": [
+            236.38591916558022,
+            82.20078226857892
+          ],
+          "error_px": 0.6460718153405174,
+          "cue": "Upper central light plank tile center, independently read"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "observed_pixel": [
+            306,
+            82
+          ],
+          "projected_pixel": [
+            307.3533246414603,
+            82.20078226857892
+          ],
+          "error_px": 1.3681378236710364,
+          "cue": "Upper-right exposed wood road tile center, independently read"
+        },
+        {
+          "row": 1,
+          "col": 8,
+          "observed_pixel": [
+            375,
+            82
+          ],
+          "projected_pixel": [
+            378.3207301173403,
+            82.20078226857892
+          ],
+          "error_px": 3.3267945580673666,
+          "cue": "Upper far-right wood road tile center, independently read"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "observed_pixel": [
+            237,
+            144
+          ],
+          "projected_pixel": [
+            234.59227467811166,
+            141.42489270386264
+          ],
+          "error_px": 3.525382080325785,
+          "cue": "Middle exposed light plank tile center immediately right of plant squares"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "observed_pixel": [
+            277,
+            144
+          ],
+          "projected_pixel": [
+            273.5278969957082,
+            141.42489270386264
+          ],
+          "error_px": 4.322808908456628,
+          "cue": "Middle central wood tile center"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "observed_pixel": [
+            317,
+            144
+          ],
+          "projected_pixel": [
+            312.46351931330474,
+            141.4248927038626
+          ],
+          "error_px": 5.216400541309983,
+          "cue": "Middle exposed right wood tile center before vegetation"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "observed_pixel": [
+            234,
+            178
+          ],
+          "projected_pixel": [
+            233.55789473684214,
+            175.578947368421
+          ],
+          "error_px": 2.461087749062885,
+          "cue": "Bottom exposed light plank tile center"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "observed_pixel": [
+            275,
+            178
+          ],
+          "projected_pixel": [
+            274.48421052631585,
+            175.578947368421
+          ],
+          "error_px": 2.475385752976476,
+          "cue": "Bottom central wood tile center"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "observed_pixel": [
+            316,
+            178
+          ],
+          "projected_pixel": [
+            315.4105263157895,
+            175.57894736842098
+          ],
+          "error_px": 2.4917815051188477,
+          "cue": "Bottom right-central wood tile center"
+        },
+        {
+          "row": 4,
+          "col": 7,
+          "observed_pixel": [
+            357,
+            178
+          ],
+          "projected_pixel": [
+            356.33684210526314,
+            175.57894736842098
+          ],
+          "error_px": 2.510233901099158,
+          "cue": "Bottom road tile center immediately left of entrance cell"
+        }
+      ],
+      "max_error_px": 5.216400541309983,
+      "pixel_tolerance": 4,
+      "author_fit_gate_pass": false,
+      "independent_reader_pass": null,
+      "accepted_for_production": false,
+      "sources": [
+        {
+          "stage_id": "ro6_t_1",
+          "image": {
+            "file": "battle-maps/ro6_t_1.png",
+            "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/mapreview/ro6_t_1.png",
+            "source_blob_sha1": "9ce56836a9bb94c2ce8e0888538b50d48531d4d0",
+            "sha256": "f0514fd94588d874e46761401d62c88987c35d28b23f9e74b02528ed0e14512b",
+            "bytes": 335322,
+            "width": 512,
+            "height": 286
+          },
+          "level_source": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/levels/obt/roguelike/ro6/level_rogue6_t-1.json",
+            "sha256": "d922f82be814216bcf09cfb4e8252457f8329582e5a987e25db505b2f75ab9e7",
+            "bytes": 38834
+          },
+          "grid_sha256": "2c13a7ecc17d713fb9c9fc8ad64113fcc3ed441100a54ac560d7eb791ff26942"
+        }
+      ],
+      "raw_level_local_file": ".cache\\game-data\\levels\\obt\\roguelike\\ro6\\level_rogue6_t-1.json",
+      "scope": "Visible LOWLAND road/floor surface plane only. High platforms, vegetation-obscured cells, 3D portal frame tops/footing, off-grid positions, actual spawn offsets, random ranges and actual movement timing are not established.",
+      "unmeasured_or_ambiguous": [
+        "Plant-square interior centers in columns1..3",
+        "All six highland top surfaces in row2",
+        "Both red and blue 3D frame ground footings",
+        "Unobserved road edges"
+      ]
+    },
+    {
+      "id": "ro6_t_3",
+      "aliases": [
+        "ro6_e_t_3"
+      ],
+      "bitmap_sha256": "3f6307be8408345a78436a5274305b321989a0477cec6b52360bf5d41a1b1a92",
+      "grid_sha256": "4a582e37d9ad156f4f913c9fa64bd0f85886acad75ddd934d427f57c13a47f96",
+      "rows": 8,
+      "cols": 11,
+      "width": 512,
+      "height": 286,
+      "matrix": [
+        32.7592954990215,
+        -8.89462592202319,
+        91.52544031311173,
+        -3.1028514654059838e-15,
+        21.66596417281347,
+        35.22602739726034,
+        -2.1774396248463044e-17,
+        -0.04004214963119075,
+        1.0
+      ],
+      "inverse": [
+        0.030525686977299904,
+        0.0069179380359924245,
+        -3.0375684162460126,
+        3.0898413406507466e-18,
+        0.04333414650928587,
+        -1.5264898321729978,
+        7.884022932992524e-19,
+        0.0017351923786647673,
+        0.9388760657296374
+      ],
+      "anchors": [
+        [
+          0.5,
+          1.5,
+          139,
+          47,
+          "Upper purple ground row north edge at c1/c2 floor seam"
+        ],
+        [
+          0.5,
+          8.5,
+          373,
+          47,
+          "Upper purple ground row north edge at c8/c9 floor seam"
+        ],
+        [
+          6.5,
+          1.5,
+          112,
+          238,
+          "Bottom purple ground row south edge at c1/c2 floor seam, excluding front cliff decoration"
+        ],
+        [
+          6.5,
+          8.5,
+          422,
+          238,
+          "Bottom purple ground row south edge at c8/c9 floor seam, excluding right red portal frame"
+        ]
+      ],
+      "checks": [
+        {
+          "row": 1,
+          "col": 2,
+          "observed_pixel": [
+            156,
+            57
+          ],
+          "projected_pixel": [
+            154.3290732319274,
+            59.265093304061516
+          ],
+          "error_px": 2.8147191583470406,
+          "cue": "Upper purple floor motif center below top entrance"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "observed_pixel": [
+            223,
+            57
+          ],
+          "projected_pixel": [
+            222.58060216402706,
+            59.265093304061516
+          ],
+          "error_px": 2.3035933280253924,
+          "cue": "Upper central-left purple floor motif center"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "observed_pixel": [
+            290,
+            57
+          ],
+          "projected_pixel": [
+            290.8321310961268,
+            59.265093304061516
+          ],
+          "error_px": 2.4131079207622395,
+          "cue": "Upper central-right purple floor motif center"
+        },
+        {
+          "row": 1,
+          "col": 8,
+          "observed_pixel": [
+            357,
+            57
+          ],
+          "projected_pixel": [
+            359.08366002822646,
+            59.26509330406151
+          ],
+          "error_px": 3.0777080416005966,
+          "cue": "Upper-right purple floor motif center"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "observed_pixel": [
+            145,
+            144
+          ],
+          "projected_pixel": [
+            144.6308478221905,
+            145.1361355081556
+          ],
+          "error_px": 1.1946033748794982,
+          "cue": "Exposed central red-road left tile center"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "observed_pixel": [
+            220,
+            144
+          ],
+          "projected_pixel": [
+            222.6448288223697,
+            145.13613550815558
+          ],
+          "error_px": 2.878527990575989,
+          "cue": "Exposed central red-road central-left tile center"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "observed_pixel": [
+            297,
+            144
+          ],
+          "projected_pixel": [
+            300.6588098225489,
+            145.1361355081556
+          ],
+          "error_px": 3.831147766723744,
+          "cue": "Exposed central red-road central-right tile center"
+        },
+        {
+          "row": 4,
+          "col": 8,
+          "observed_pixel": [
+            374,
+            144
+          ],
+          "projected_pixel": [
+            378.67279082272813,
+            145.1361355081556
+          ],
+          "error_px": 4.808926903776376,
+          "cue": "Exposed central red-road right tile center"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "observed_pixel": [
+            133,
+            217
+          ],
+          "projected_pixel": [
+            136.4615613235587,
+            217.46948682385576
+          ],
+          "error_px": 3.493254166895334,
+          "cue": "Lower purple floor motif center, left"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "observed_pixel": [
+            218,
+            217
+          ],
+          "projected_pixel": [
+            222.69893005745993,
+            217.46948682385576
+          ],
+          "error_px": 4.7223258636687255,
+          "cue": "Lower purple floor motif center, central-left"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "observed_pixel": [
+            304,
+            217
+          ],
+          "projected_pixel": [
+            308.93629879136125,
+            217.46948682385573
+          ],
+          "error_px": 4.958574758473317,
+          "cue": "Lower purple floor motif center, central-right"
+        },
+        {
+          "row": 6,
+          "col": 8,
+          "observed_pixel": [
+            391,
+            217
+          ],
+          "projected_pixel": [
+            395.1736675252626,
+            217.46948682385573
+          ],
+          "error_px": 4.199990296322813,
+          "cue": "Lower purple floor motif center, right"
+        }
+      ],
+      "max_error_px": 4.958574758473317,
+      "pixel_tolerance": 4,
+      "author_fit_gate_pass": false,
+      "independent_reader_pass": null,
+      "accepted_for_production": false,
+      "sources": [
+        {
+          "stage_id": "ro6_t_3",
+          "image": {
+            "file": "battle-maps/ro6_t_3.png",
+            "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/mapreview/ro6_t_3.png",
+            "source_blob_sha1": "6d47c4ccc069d3c7fab5cea737fd6e1785f98620",
+            "sha256": "3f6307be8408345a78436a5274305b321989a0477cec6b52360bf5d41a1b1a92",
+            "bytes": 343003,
+            "width": 512,
+            "height": 286
+          },
+          "level_source": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/levels/obt/roguelike/ro6/level_rogue6_t-3.json",
+            "sha256": "2f637de071447b5a1ad8beeb4fbe42493887371d101417712bd109d32e3f57b3",
+            "bytes": 76623
+          },
+          "grid_sha256": "4a582e37d9ad156f4f913c9fa64bd0f85886acad75ddd934d427f57c13a47f96"
+        },
+        {
+          "stage_id": "ro6_e_t_3",
+          "image": {
+            "file": "battle-maps/ro6_e_t_3.png",
+            "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/mapreview/ro6_e_t_3.png",
+            "source_blob_sha1": "6d47c4ccc069d3c7fab5cea737fd6e1785f98620",
+            "sha256": "3f6307be8408345a78436a5274305b321989a0477cec6b52360bf5d41a1b1a92",
+            "bytes": 343003,
+            "width": 512,
+            "height": 286
+          },
+          "level_source": {
+            "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/levels/obt/roguelike/ro6/level_rogue6_t-3.json",
+            "sha256": "2f637de071447b5a1ad8beeb4fbe42493887371d101417712bd109d32e3f57b3",
+            "bytes": 76623
+          },
+          "grid_sha256": "4a582e37d9ad156f4f913c9fa64bd0f85886acad75ddd934d427f57c13a47f96"
+        }
+      ],
+      "raw_level_local_file": ".cache\\game-data\\levels\\obt\\roguelike\\ro6\\level_rogue6_t-3.json",
+      "scope": "Visible LOWLAND road/floor surface plane only. High platforms, vegetation-obscured cells, 3D portal frame tops/footing, off-grid positions, actual spawn offsets, random ranges and actual movement timing are not established.",
+      "unmeasured_or_ambiguous": [
+        "Both gray highland top rows",
+        "Plant-covered row5 except left passage",
+        "Teleport object footings",
+        "Central blue frame on highland-height cell",
+        "Unobserved east-edge ground rows2..3"
+      ]
+    }
+  ]
+}

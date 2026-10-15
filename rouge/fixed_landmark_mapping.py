@@ -83,7 +83,11 @@ def direct_reference_for(stage, image_sha256, image_size):
         if math.dist(pixel, peer) > 4:
             return None
         tile = stage['tiles'][stage['map'][row][col]]
-        if tile['tileKey'] != 'tile_floor' or tile['heightType'] != 'LOWLAND':
+        # Old source packs contain floor centers without a tag. Road centers
+        # need their own explicit, matching tag; do not infer a new surface.
+        tile_key = point.get('tile_key', 'tile_floor')
+        if (not isinstance(tile_key, str) or tile_key not in ('tile_floor', 'tile_road')
+                or tile.get('tileKey') != tile_key or tile.get('heightType') != 'LOWLAND'):
             return None
         seen.add((row, col)); points.append((row, col, *pixel))
     if not points:

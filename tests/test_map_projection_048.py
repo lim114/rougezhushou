@@ -108,7 +108,7 @@ class GroundLandmarkTests(unittest.TestCase):
             with patch('rouge.fixed_landmark_mapping.direct_reference_for', return_value=None):
                 self.assertIsNone(load(stage))
             actual = load(stage)
-            if sid == 'ro6_n_2_4':
+            if sid in ('ro6_n_2_4', 'ro6_t_1'):
                 self.assertIsInstance(actual, FixedLandmarkReference)
                 self.assertEqual(actual.mapping_mode, 'direct_verified_centers')
                 self.assertEqual(len(actual.points), 8)

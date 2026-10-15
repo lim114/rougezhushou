@@ -578,10 +578,8 @@ class BattlePreviewPanel(QWidget):
         self.original.reference_cell=copy.deepcopy(cell) if self.original.cell_center(cell) is not None else None
         self.original.selected=None;self.original.selected_ordinal=1;self.original.update()
         key=(self.current_stage,'tile',cell['row'],cell['col'])
-        replace_text(self.spawn_detail,f"格图第{cell['row']+1}行、第{cell['col']+1}列\n"+
-            '地形：'+tile['tileKey']+'\n高度：'+str(tile.get('heightType'))+
-            '\n可部署类型：'+str(tile.get('buildableType'))+'\n通行类型：'+str(tile.get('passableMask'))+
-            '\n当前筛选下没有映射到此格的主波次出生条目。'+
-            ('\n固定原图：已标出本格近似中心。' if self.original.reference_cell else '\n固定原图：本格位置尚未核对。'),
+        from .player_tile_information import tile_information_text
+        replace_text(self.spawn_detail,tile_information_text(cell,tile,
+            mapped=self.original.reference_cell is not None,technical=self.technical.isChecked()),
             preserve=preserve and self._detail_key==key)
         self._detail_key=key

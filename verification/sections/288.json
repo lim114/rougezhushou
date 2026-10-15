@@ -1,0 +1,106 @@
+{
+  "section": 288,
+  "kind": "functional_section",
+  "title": "固定地图道路与地面逐格参考、中文地块说明",
+  "at_Beijing": "2026-10-16T00:34:57.561323+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "63e6937104908b6cbbe99f10ef4d61258888921e",
+  "remaining_item": "P3固定战斗地图映射与玩家可读地块信息",
+  "new_capability": "陌生旅伴与开业剪彩（含紧急同源变体）新增12格独立读点参考；10道路/2地板严格绑定低地类型，原28点及全部12整图模型不变。左侧格图选中后可标出已证原图近似中心，未知格继续留空；默认地形/高度/部署/通行标记中文显示，原字段只在技术资料保留。",
+  "files": [
+    "rouge/fixed_landmark_mapping.py",
+    "rouge/data/fixed-landmark-references.json",
+    "rouge/player_tile_information.py",
+    "rouge/battle_view.py",
+    "scripts/extend_direct_landmark_288.py",
+    "scripts/verify_direct_map_window_288.py",
+    "scripts/verify_full_available.py",
+    "tests/test_direct_landmark_288.py",
+    "tests/test_player_tile_information_288.py",
+    "tests/test_direct_landmark_mapping.py",
+    "tests/test_direct_landmark_extension.py",
+    "tests/test_map_projection_048.py"
+  ],
+  "source_sha256": {
+    "rouge/fixed_landmark_mapping.py": "b5b9e52f6342a81c72cac2e2410ecc1819202ff5ae1c75f9a6117f817778622b",
+    "rouge/data/fixed-landmark-references.json": "b7ef0f2165598b4b8f414b5b4f0f2601f94f114499443b6e5ee0235af5f6b8e0",
+    "rouge/player_tile_information.py": "eab30e22b107da099e1c3423fdda3d4af406e1e9fd38ad8c51e25f7da2d15cbc",
+    "rouge/battle_view.py": "169a33f5161b01ad43040a91422c1dee20aa721900d76c65afd59d6385dfe82e",
+    "scripts/extend_direct_landmark_288.py": "51657f1a0dc93101f3fc7eac70c99dad36b997a87b8560ee02fffe61936ec185",
+    "scripts/verify_direct_map_window_288.py": "4d60f741a7ef3fa4b4ca9473021c3f6f9ac3974693c05110d2319a6d3b981517",
+    "scripts/verify_full_available.py": "064c5a7031a3f410d21d2b4bacfd08110a2cb83805b14053cb3ae958e963136c",
+    "tests/test_direct_landmark_288.py": "610e8eb811da9ffc8727611676b6ba53c592f1892600bbff0496b2d4bcf33aee",
+    "tests/test_player_tile_information_288.py": "59c0572d33239a189f12e8eb57ff0cc6bfb3d6a133726e25902a4ca0ef72e614",
+    "tests/test_direct_landmark_mapping.py": "ceaa9128f4ec0556b658b6f2634d521e60425b78bcdeea70459c371e7cf2a19b",
+    "tests/test_direct_landmark_extension.py": "d915706bd51e8034b328e30b6949a985dd5f0c292374f7043df4086650587b6e",
+    "tests/test_map_projection_048.py": "c9055a58b2d02014c2e12c360e061c0cd7164cee7f4405e354bb7b2892625b2c"
+  },
+  "source_evidence": {
+    "packet": "research/p3-map-direct-road-288",
+    "source_manifest_sha256": "015f18ec8a0f5f8a6360ee66e022dddf5df8a0bf56e768f1febe397bf353c958",
+    "original_requested_points": 23,
+    "accepted_points": 12,
+    "rejected_points": 11,
+    "original_pixels_adjusted_or_averaged": false,
+    "tolerance_original_pixels": 4,
+    "new_partial_images": 2,
+    "new_partial_stage_ids": [
+      "ro6_t_1",
+      "ro6_t_3",
+      "ro6_e_t_3"
+    ],
+    "partial_totals": {
+      "images": 8,
+      "stage_ids": 14,
+      "points": 40
+    },
+    "complete_map_calibrations_added": 0,
+    "regular_unbound_stage_ids": 81,
+    "regular_unbound_images": 59,
+    "two_original_plane_failures_preserved": true,
+    "prior_direct_points_unchanged": 28,
+    "absolute_physical_pixel_or_spawn_accuracy_verified": false
+  },
+  "necessary_validation": {
+    "receipt": "verification/sections/288-validation/process.json",
+    "methods_run": 165,
+    "methods_passed": 165,
+    "source_unchanged": true,
+    "first_run": "verification/sections/288-validation-first/process.json",
+    "first_failed_methods": 1,
+    "resolution": "Old rejected-plane test now allows the newly evidenced eight sparse t1 centers; original failed-plane, no-inverse and no-segment assertions retained.",
+    "two_old_caption_expectations_migrated_to_existing_286_player_wording": true,
+    "original_tests_archived_without_claiming_they_passed_unchanged": true,
+    "author14_is_subset_not_added": true
+  },
+  "native_windows_validation": {
+    "receipt": "verification/sections/288-window-first.json",
+    "unique_checks": 116,
+    "visible_stages": 3,
+    "distinct_real_window_sizes": 3,
+    "actual_qtest_grid_clicks_and_unknown_point_clear": true,
+    "refresh_nonzero_scroll_and_selection_preserved": true,
+    "game_captures": 0,
+    "chat_sends": 0,
+    "private_state_loaded": false,
+    "original_project_window": "verification/sections/288-main-window.json",
+    "original_window_focus": "verification/sections/288-main-window-focus.json",
+    "normal_restart_private_paths_compared": 5,
+    "normal_restart_private_paths_changed": 0
+  },
+  "full_validation": {
+    "rerun": false,
+    "last_receipt_unchanged": "verification/full-285/summary.json",
+    "next_periodic_section": 290,
+    "scope_not_reduced": true
+  },
+  "limits": [
+    "两位读者相近只证明保守的图片位置参考，不证明绝对中心、当前游戏或实际出生偏移。",
+    "11个拒绝点、未列地块、小数坐标和反向点击仍未知；不外推、不连路线。",
+    "81关/59原图的完整校准缺口不因本次局部参考减少；高台/入口脚点与完整出怪时钟仍未完成。",
+    "中文部署/通行仅翻译固定地块标记，不预测实时部署、敌人经过或特殊限制。",
+    "P3/P2/P1仍未完成，无连续数字终点，识别最后。"
+  ],
+  "next_section": 289,
+  "cloud_publication_binding": "enclosing_commit"
+}

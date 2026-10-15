@@ -88,7 +88,7 @@ class DirectLandmarkExtensionWidgetTests(unittest.TestCase):
    ordinary=[cell for cell in cells if not any(row['route']['start']==cell for row in p.rows)]
    cell=ordinary[0] if ordinary else cells[0]
    QTest.mouseClick(p.grid,Qt.MouseButton.LeftButton,pos=p.grid.cell_center(cell).toPoint());self.app.processEvents()
-   self.assertIsNotNone(p.original.cell_center(cell));self.assertIn('不外推、不连路线',p.map_caption.text())
+   self.assertIsNotNone(p.original.cell_center(cell));self.assertIn('其他位置尚未核对，不据此猜测或延伸路线',p.map_caption.text())
    if ordinary:
     self.assertEqual(p._tile_cell,cell);self.assertEqual(p.original.reference_cell,cell);text=p.spawn_detail.toPlainText();p.render_rows()
     self.assertEqual(p._tile_cell,cell);self.assertEqual(p.original.reference_cell,cell);self.assertEqual(p.spawn_detail.toPlainText(),text)

@@ -105,7 +105,7 @@ class DirectLandmarkWidgetTests(unittest.TestCase):
    p=BattlePreviewPanel();p.resize(1450,1000);p._load_stage(sid);p.show();self.app.processEvents();cell={'row':3 if sid.endswith('6_2') else 1,'col':5}
    QTest.mouseClick(p.grid,Qt.MouseButton.LeftButton,pos=p.grid.cell_center(cell).toPoint());self.app.processEvents()
    self.assertEqual(p._tile_cell,cell);self.assertEqual(p.grid.reference_cell,cell);self.assertEqual(p.original.reference_cell,cell)
-   self.assertIn('已标出',p.spawn_detail.toPlainText());self.assertIn('不外推、不连路线',p.map_caption.text());self.assertNotIn('其他列为外推',p.map_caption.text())
+   self.assertIn('已标出',p.spawn_detail.toPlainText());self.assertIn('其他位置尚未核对，不据此猜测或延伸路线',p.map_caption.text());self.assertNotIn('其他列为外推',p.map_caption.text())
    text=p.spawn_detail.toPlainText();p.render_rows();self.app.processEvents();self.assertEqual(p._tile_cell,cell);self.assertEqual(p.original.reference_cell,cell);self.assertEqual(p.spawn_detail.toPlainText(),text)
    p.set_context({'security_level':1});self.app.processEvents();self.assertEqual(p.original.reference_cell,cell);p.close()
  def test_rejected_cell_clears_old_point_and_never_gets_a_pixel(self):
