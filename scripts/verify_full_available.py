@@ -28,6 +28,7 @@ NEW_MODULES = (
     'tests.test_skill_data_cost_independent_278',
     'tests.test_skill_sp_increment_independent_279',
     'tests.test_skill_cost_rounding_consensus_independent_280',
+    'tests.test_skill_data_cost_consensus_independent_281',
     'tests.test_regeneration_clock',
     'tests.test_modifier_packet_reference',
     'tests.test_route_information_scope',

@@ -1,0 +1,178 @@
+{
+  "kind": "SECTION281_REUSED_PUBLIC_SOURCE_BINDING_NOT_NEW_NATIVE_FRESH_AUDIT",
+  "components": {
+    "legacy": {
+      "core_sha256": "7cd8eee14c217c46419b5ac70bbcfe14f63e67a5687b7974d8718ae60618077a",
+      "source_directory": "p2-skill-data-cost-278",
+      "proof_sha256": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+      "source_files_sha256": {
+        "intel-arithmetic-source.json": "b7b5467b16d939c4038046886f0b90f294fb71800764f3035dfd6455ecc3e300",
+        "preliminary-label-corrections.md": "76a2e3278fc3e03133fa04bdb9819b34a70357bbf58cb28f2b21c2382cd98e04",
+        "public-example-reference.json": "a45823e358a6b638419627e2d5c6415af775f3dc1aed1bb9912da6a73de5973c",
+        "public-example.json": "8b388657c501d4a30f96c0ac746bea7c84949d01d974f7f4f3949d2c1bf9263c",
+        "README.md": "cd569946ec9b1f30608114d227df7b2854fc7d338644c4b19ebefc06413e7c28",
+        "SCHEMA.md": "26175a0bfdbaeeaa88365dafd947a56044cb56a00cd0a762493518df8c9ba882",
+        "source-proof.json": "823f5e9fca98291bba30336b2836f9167bbc4242c774c1fb93695cd0d17c7f30",
+        "SOURCE_GATE.md": "4ef947b5613b02a63d01084d55f4b7925084556d414840e1440791b1ac65420b",
+        "source_manifest.json": "f364880423bd7aebc707c0cee231287dfa3b4772306a97468bd75e5c73c1742d"
+      },
+      "existing_method_count": 32,
+      "existing_byte_span_count": 4034
+    },
+    "consensus": {
+      "core_sha256": "86853e05e770e17d8cdbaabe14d4fb9f13e576efea378333b5470a39ec78aa77",
+      "source_directory": "p2-cost-rounding-consensus-280",
+      "proof_sha256": "67455e993a068f538bda96bb45d6c5e6b33fb1357894c873bc73c39d691a5bc6",
+      "source_files_sha256": {
+        "intel-rounding-source-inspection-v2-280.json": "0fb3b34050ab51e70822a7c697b7b994d41e51367f7f598058d34d125233c617",
+        "public-example-reference.json": "958b79f7d8800ae92d7a70e42d29068276c28cc65d2ed8f670cc2badd3e50d56",
+        "public-example.json": "4a51de51c8090f5eb30aa3963128ec77645ca1b1bd2de1d1ffaa273ddae196a7",
+        "README.md": "1b01b1f36495fae5c58b2f91d07e99a31ba7df526a3beefc17e68091608082b0",
+        "SCHEMA.md": "ec62e9de34b7b438163d3dbe298eeb031a12f2a1bcd62abd71a714ac60a26aca",
+        "source-proof.json": "67455e993a068f538bda96bb45d6c5e6b33fb1357894c873bc73c39d691a5bc6",
+        "SOURCE_GATE.md": "6c8cd9c3d2249a0c69ebaa5912c00e61b574d837acccaf85d91d4fa193dda428",
+        "SOURCE_INSPECTION_CORRECTION.md": "fd247794a38a893a1a0ad50227b89243a7fc06a868fb7cfc46b740f7628ad194",
+        "source_manifest.json": "e33d2e344bc4838662da9314bd87190f0a518891d64be2f1a1aaece163b42bd5"
+      },
+      "existing_method_count": 9,
+      "existing_byte_span_count": 759
+    }
+  },
+  "source_method_mapping": {
+    "rune_mul": {
+      "metadata_method_index": 85326,
+      "method_name": "Torappu.Battle.Runes.Internal.CSkillCdMul$$DoPreprocessChar",
+      "reachable_bytes_sha256": "b6aad98bcbad182001e3543b2a24f75b9ab24718d8ad7ebb77bff8fd14c2409c",
+      "stage_instruction_addresses": {
+        "owner_read": "0x180cf701f",
+        "character_data_read": "0x180cf702d",
+        "skill_data_read": "0x180cf703b",
+        "blackboard_read": "0x180cf7050",
+        "modifier_read": "0x180cf7070",
+        "sp_data_read": "0x180cf707d",
+        "cost_copy": "0x180cf7091",
+        "cost_decode": "0x180cf70bb",
+        "single_conversion": "0x180cf70c6",
+        "single_arithmetic": "0x180cf70c9",
+        "round": "0x180cf70cf",
+        "encode": "0x180cf70de",
+        "store": "0x180cf70ee"
+      },
+      "stage_instruction_bytes": {
+        "owner_read": "4885db",
+        "character_data_read": "e89e2dd4ff",
+        "skill_data_read": "488b9808010000",
+        "blackboard_read": "e83b50ffff",
+        "modifier_read": "e85b906201",
+        "sp_data_read": "488b7b48",
+        "cost_copy": "8b5f44",
+        "cost_decode": "e880499105",
+        "single_conversion": "0f5bc0",
+        "single_arithmetic": "f30f59442430",
+        "round": "e8bc718aff",
+        "encode": "e86d489105",
+        "store": "0f114734"
+      },
+      "normal_after_cost_store": "return; no owner reread or UpdateSpData appended"
+    },
+    "rune_add": {
+      "metadata_method_index": 85329,
+      "method_name": "Torappu.Battle.Runes.Internal.CSkillCdAdd$$DoPreprocessChar",
+      "reachable_bytes_sha256": "bbc380e29b499f9f609892608f7459ccbecd7f1ba6246d5276404255edffa6a4",
+      "stage_instruction_addresses": {
+        "owner_read": "0x180cf6dee",
+        "character_data_read": "0x180cf6dfc",
+        "skill_data_read": "0x180cf6e0a",
+        "blackboard_read": "0x180cf6e1f",
+        "modifier_read": "0x180cf6e3f",
+        "sp_data_read": "0x180cf6e4c",
+        "cost_copy": "0x180cf6e60",
+        "cost_decode": "0x180cf6e8a",
+        "single_conversion": "0x180cf6e95",
+        "single_arithmetic": "0x180cf6e98",
+        "round": "0x180cf6e9e",
+        "encode": "0x180cf6ead",
+        "store": "0x180cf6ebd"
+      },
+      "stage_instruction_bytes": {
+        "owner_read": "4885db",
+        "character_data_read": "e8cf2fd4ff",
+        "skill_data_read": "488b9808010000",
+        "blackboard_read": "e86c52ffff",
+        "modifier_read": "e88c926201",
+        "sp_data_read": "488b7b48",
+        "cost_copy": "8b5f44",
+        "cost_decode": "e8b14b9105",
+        "single_conversion": "0f5bc0",
+        "single_arithmetic": "f30f58442430",
+        "round": "e8ed738aff",
+        "encode": "e89e4a9105",
+        "store": "0f114734"
+      },
+      "normal_after_cost_store": "return; no owner reread or UpdateSpData appended"
+    },
+    "relic_mul": {
+      "metadata_method_index": 85835,
+      "method_name": "Torappu.Battle.Roguelike.Internal.CSkillCostMul$$DoPreProcess",
+      "reachable_bytes_sha256": "2d68647852f4563ce7411abdf23e7ea9a19963024c1b00f9a8191a631477e062",
+      "stage_instruction_addresses": {
+        "owner_read": "0x180d0f203",
+        "character_data_read": "0x180d0f212",
+        "skill_data_read": "0x180d0f220",
+        "blackboard_read": "0x180d0f235",
+        "modifier_read": "0x180d0f250",
+        "sp_data_read": "0x180d0f255",
+        "cost_copy": "0x180d0f26c",
+        "cost_decode": "0x180d0f296",
+        "single_conversion": "0x180d0f2a6",
+        "single_arithmetic": "0x180d0f2a9",
+        "round": "0x180d0f2d7",
+        "encode": "0x180d0f376",
+        "store": "0x180d0f386"
+      },
+      "stage_instruction_bytes": {
+        "owner_read": "488b4b08",
+        "character_data_read": "e8b9abd2ff",
+        "skill_data_read": "488b9808010000",
+        "blackboard_read": "e8c6d5ffff",
+        "modifier_read": "e8eb016101",
+        "sp_data_read": "488b7b48",
+        "cost_copy": "8b5f44",
+        "cost_decode": "e8a5c78f05",
+        "single_conversion": "0f5bf6",
+        "single_arithmetic": "f30f59f7",
+        "round": "0f5af6",
+        "encode": "e8d5c58f05",
+        "store": "0f114734"
+      },
+      "normal_after_cost_store": "return; no owner reread or UpdateSpData appended"
+    },
+    "scale_cost": {
+      "metadata_method_index": 84998,
+      "method_name": "Torappu.Battle.Skills.SpScaleAfterSkillCast$$_ScaleSpCost",
+      "reachable_bytes_sha256": "30c8edf2a90daccc14ed6dd520818fa8e7bb2cdce6dfb4243b3685c8439ff870",
+      "reuse": "unchanged public278 complete result including deferred owner/data and UpdateSpData arguments",
+      "new_numeric_evaluator_used": false
+    },
+    "replace_cost": {
+      "metadata_method_index": 84880,
+      "method_name": "Torappu.Battle.Skills.ModifySpDataAfterSkillCast$$_ModifySpData",
+      "reachable_bytes_sha256": "966dca92e9c2799b62afb752460d4606c38e2a9b0611839068d86a419a0d46ab",
+      "reuse": "unchanged public278 complete result including deferred owner/data and UpdateSpData arguments",
+      "new_numeric_evaluator_used": false
+    }
+  },
+  "unique_native_method_count": 32,
+  "original_byte_span_count": 4034,
+  "consensus9_methods_are_subset_of_legacy32": true,
+  "fresh_native_method_count_this_preparation": 0,
+  "fresh_native_span_count_this_preparation": 0,
+  "original_file_hashes": {
+    "dll_sha256": "583b04ff4d1b1a4b35eaf09d77d936408c25447c9e345ef0463d814b6a123fc5",
+    "metadata_sha256": "d3fede171f92740a6f5dc053c58c7013d3c962db764ad1f05cbe977c074fcd1f"
+  },
+  "public_evaluator_or_source_injection": false,
+  "production_monkeypatch": false,
+  "actual_cost_sp_complete_cycle_proven": false,
+  "source_scope_correction": "Single store-return is separate from scale/replace owner-Update workflow"
+}

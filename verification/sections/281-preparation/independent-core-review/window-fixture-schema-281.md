@@ -1,0 +1,25 @@
+# 281固定合同v1
+
+模块skill_data_cost_consensus_reference.py；公开API skill_data_cost_consensus_reference(payload)、source_data()、public_example()。输入**完整沿用278**的receiver_exists/actions与五kind exact keys、read shapes、normal flags及全局ID唯一合同，拒绝额外RC/source/evaluator/mode keys。没有data/source参数或可调用对象。
+
+绑定278 core SHA `7cd8eee14c217c46419b5ac70bbcfe14f63e67a5687b7974d8718ae60618077a` 与280 core SHA `86853e05e770e17d8cdbaabe14d4fb9f13e576efea378333b5470a39ec78aa77`。固定source包分别p2-skill-data-cost-278、p2-cost-rounding-consensus-280；新包p2-skill-data-cost-consensus-281。来源links列精确proof/manifest/core SHA与源method映射，不将既有来源复用计成新fresh查证。
+
+top result exact keys=`kind,source,payload,rows,actual_cost_after,actual_sp_after,complete_cycle`，kind=skill_data_cost_consensus_reference。actual三项恒null。
+
+source keys=`valid,status,proof_sha256,method_count,byte_span_count,components`。proof_sha256为本组source-links.json SHA；method_count32、byte_span_count4034来自278原闭合范围，280九方法是其中子集，不相加成41。components含legacy与consensus公共source_data结果，仅明确这两组件各自valid后才全组valid。
+
+每row保持278全部原字段，并增加`calculation_route,consensus_reference`。route为`single_consensus_numeric_tail`或`legacy_non_single_reference`或`source_unqualified`。非Single的原字段值与278逐项完全相同，consensus_reference:null。Single继承完整已资格prelude；仅cost_decode called/normal都true才重建numeric tail。
+
+Single完整stage顺序仍为278的13项：owner_read,character_data_read,skill_data_read,blackboard_read,modifier_read,sp_data_read,cost_copy,cost_decode,single_conversion,single_arithmetic,round,encode,store。不得加owner/Update。skillData null或Rune modifier found=false仍正常早return；未知资格不冒称future false。
+
+Single重建尾阶段：
+
+- single_conversion normal=true时reference仅cost候选与exact标记；没有选择真实RC。
+- single_arithmetic normal=true时reference仅operation位型候选/精确数学值/操作域状态，未提前给qualified integer。
+- round normal=true后consensus_reference为280完整dict；integer_consensus_reference有值才encoder_argument_reference有整数。没有共识仍可独立正常round，不能造参数0。
+- encode normal=true时reference=`argument,argument_known,argument_candidates,returned_payload`；argument为整数或null，argument_known bool，argument_candidates是已知候选而非保证完整参数全集，returned_payload:null。该阶段不声明protected roundtrip。
+- store normal=true时原prefix=`field:spCost,byte_count:20,payload_identity,decoded_value:null`；参数未知不阻断独立正常store，前缀只记录opaque payload。store false/unknown不保存写前缀。
+
+arithmetic_reference保存数值过程的阶段性引用；完整consensus_reference只在round正常后给出。normal flags未知→未来called:null，failed→未来false。source失效不执行legacy/evaluator、不输出derived refs。输入数值unknown本身不等于控制条件未知：source prelude的found/pointer条件仍须闭合，但其后无条件正常调用可保留opaque值继续。
+
+每行decoded cost独立，不复用旧decoder或前行参数。只有scale/replace有其原owner/Update参数；三Single的update_arguments恒null。完整actual三项始终null，row正常仅描述声明的普通前缀正常完成，不是游戏实测。

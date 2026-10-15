@@ -527,3 +527,11 @@ def skill_cost_consensus_values(sp_cost_consensus):
 
 
 COMMANDS['sp-cost-consensus'] = skill_cost_consensus_values
+
+
+def skill_data_cost_consensus_values(sp_data_consensus):
+    from .skill_data_cost_consensus_reference import skill_data_cost_consensus_reference
+    return skill_data_cost_consensus_reference(sp_data_consensus)
+
+
+COMMANDS['sp-data-consensus'] = skill_data_cost_consensus_values
