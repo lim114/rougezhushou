@@ -144,7 +144,10 @@ def _event_lines(entry, context):
             lines.append(f'前置条件（{state}）：{_plain(check["source_text"])}')
     scenes = result['rows']
     numbers = {scene['key']: number for number, scene in enumerate(scenes, 1)}
-    rewards = {row['choice_id']: row for row in catalog.event_reward_options(event_id)['rows']}
+    reward_options = catalog.event_reward_options(event_id)
+    rewards = {row['choice_id']: row for row in reward_options['rows']}
+    if reward_options.get('supplemental_reward_reference', {}).get('status') == 'unknown':
+        lines.append('补充奖励资料暂时无法核对；可继续查看选项原文，奖励数量与实际领取仍未确认。')
     battle_rows = event_planning.event_battle_links(event_id, context=context)['rows']
     for number, scene in enumerate(scenes, 1):
         lines.extend(['', f'【场景 {number}】', _plain(scene['description'])])
@@ -177,7 +180,8 @@ def _event_lines(entry, context):
                 reward = reference.get('reward') or {}
                 name = reward.get('name') or reference.get('description') or '名称未确认'
                 quantity = reward.get('quantity')
-                lines.append('具名奖励：' + _plain(name) + (f' × {quantity}' if quantity is not None else '；数量未确认') + '；实际领取未知。')
+                label = '具名奖励（零件）：' if reward.get('type') == 'SCRAP' else '具名奖励：'
+                lines.append(label + _plain(name) + (f' × {quantity}' if quantity is not None else '；数量未确认') + '；实际领取未知。')
             conversion = row.get('ap_conversion_reference')
             if conversion:
                 amount = conversion['hope_gain_reference']

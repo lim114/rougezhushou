@@ -173,7 +173,11 @@ def _event_flow_text(event_id,context=None,planning=False):
     if planning:
         lines += ['资源参考：顶层原文明示数量单独列出；预算与资格分别判断，实际变化未知。',
                   '流程来源：固定旧版427904；较新末舞条件在对应场景标明，不声称当前完整覆盖。']
-    rewards={r['choice_id']:r for r in catalog.event_reward_options(event_id)['rows']}
+    reward_options=catalog.event_reward_options(event_id)
+    rewards={r['choice_id']:r for r in reward_options['rows']}
+    supplemental=reward_options.get('supplemental_reward_reference')
+    if supplemental and supplemental['status']=='unknown':
+        lines.append('补充奖励来源未通过核对；数量、领取和原入口仍未知。')
     scenes=result['rows']; numbers={s['key']:n for n,s in enumerate(scenes,1)}
     for number,scene in enumerate(scenes,1):
         lines += ['',f'场景 {number}',scene['description']]
@@ -195,6 +199,9 @@ def _event_flow_text(event_id,context=None,planning=False):
             reward=rewards.get(choice['key'],{})
             for reference in reward.get('rewards',[]):
                 lines.append('    有证具名奖励：'+str(reference.get('reward',{}).get('name') or reference.get('description') or '见来源原文'))
+                if reference.get('reference_kind')=='documented_choice_content_link':
+                    lines.append('    内容关联依据：完整选项文字和物品指针相符；不证明原入口脚本、按钮可用或实际发放。')
+                    lines.append('    关联来源：'+json.dumps(reference['source_reference'],ensure_ascii=False))
             if reward.get('rewards'):lines.append('    完整奖励池、数量和领取资格尚未核验。')
             if planning:
                 row=resources[choice['key']];qualification=row['choice_eligibility']
