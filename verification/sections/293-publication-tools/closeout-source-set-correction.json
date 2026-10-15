@@ -1,0 +1,81 @@
+{
+  "kind": "SECTION293_CLOSEOUT_INDEPENDENT_STATIC_REVIEW_CORRECTION",
+  "supersedes_scope": "Corrects the prior static no-blocker conclusion only for unchanged_existing_sources. The original report and original6216 helper/READY remain unmodified.",
+  "acknowledgment": "The prior static review missed an erroneous assumption that every old rouge/* source member belonged to this section producer map. Root actual preview exposed the guard failure; static no-blocker was not a successful helper execution.",
+  "actual_failure_authority": {
+    "source": "Root actual tool-output report in the task conversation",
+    "original_helper_sha256": "6216d04ebd2700c350209050aaf7a73b05c073cb54e318ddc439b8a15a84d7de",
+    "actual_exit": 1,
+    "apply_requested": false,
+    "failure_location": "unchanged_existing_sources",
+    "public_raw_process_or_traceback_seen_by_this_review": false,
+    "raw_stdout_stderr_or_process_not_manufactured": true,
+    "product_or_necessary80_failure": false
+  },
+  "independent_source_set_readback": {
+    "previous292_source_count": 356,
+    "current293_source_count": 364,
+    "old_production_python_static_JSON_excluding_intended_UI_count": 345,
+    "old_model_mismatches_in_actual293_map": [],
+    "only_old_nonmodel_reference_missing_from293_map": "rouge/data/battle-maps/ro6_e_t_3.png",
+    "previous_png_sha256": "3f6307be8408345a78436a5274305b321989a0477cec6b52360bf5d41a1b1a92",
+    "current_png_sha256": "3f6307be8408345a78436a5274305b321989a0477cec6b52360bf5d41a1b1a92",
+    "png_bytes": 343003,
+    "png_present_in293_actual_map": false
+  },
+  "revision2_static_assessment": "Matches the intended minimal repair. No new blocking premise found in the changed code; this is not an executed preview/apply PASS.",
+  "revision2_changed_contract": [
+    "Only old production .py and rouge/data/*.json must exist with matching SHA in the exact current producer map. All345 meet this condition by direct JSON readback.",
+    "The only old non-model file is required to be the exact known PNG and its current digest must equal the old292 digest. It is explicitly forbidden to insert that image into the293 actual source map.",
+    "Returned metadata names previous_non_model_reference_current_file_reuse and previous_image_reuse_is_not_a293_producer_source_or_new_execution accurately label this as prior-byte reuse, not current execution.",
+    "Other function source is unchanged in the exact minimal diff; only nested cache ROOT/HERE is adapted. Old helper6216, oldREADY and our prior report remain exact.",
+    "No production model/source/test/native receipt changes are needed, and no80/54 repeated validation is justified by this helper-only guard repair."
+  ],
+  "pins": {
+    ".cache/p3-293-closeout-independent-review/review.json": {
+      "sha256": "e7f41a7d1a65722ed05cfb3b0c05686ff8b75a71244bdb9d04b076a8d2148a57",
+      "bytes": 6351
+    },
+    ".cache/p3-293-closeout/close_section_293.py": {
+      "sha256": "6216d04ebd2700c350209050aaf7a73b05c073cb54e318ddc439b8a15a84d7de",
+      "bytes": 39313
+    },
+    ".cache/p3-293-closeout/READY.json": {
+      "sha256": "d7b8385dcad57ad42540191fbe0dec7c00729d85e18d001f6f9349e86364b0e2",
+      "bytes": 3529
+    },
+    ".cache/p3-293-closeout/revision2/close_section_293.py": {
+      "sha256": "cd40e349ff77db3798f614d5343dedfa2e7273582ea3c745c3f8126e6ffd7346",
+      "bytes": 40042
+    },
+    ".cache/p3-293-closeout/revision2/CONTRACT.md": {
+      "sha256": "d5bcba774e4561058ae0ca2584cfbd1043cb02659479df673265df5755c3784f",
+      "bytes": 5025
+    },
+    ".cache/p3-293-closeout/revision2/minimal-change.diff": {
+      "sha256": "aef7c4d6bc37e08d1817b167c0f4a180dc476a1922d0dc668f2be0e613dc232e",
+      "bytes": 2597
+    },
+    ".cache/p3-293-closeout/revision2/READY.json": {
+      "sha256": "6d171b9552cb8f04fc0dcf2cb484ac3f318a543728c0a5445a1bf45f3fe33f34",
+      "bytes": 1710
+    },
+    "verification/sections/292-necessary-repair/process.json": {
+      "sha256": "72a2e11ac9508a7c3ccc957c773efa1ed203daa49ab18d8c50d6ab15c0880ec1",
+      "bytes": 77208
+    },
+    "verification/sections/293-necessary-first/process.json": {
+      "sha256": "e0c84bf76c9407e1a4ab3a559d2924f72ea1eb755ff2eab64600c5535384b7c6",
+      "bytes": 79006
+    },
+    "rouge/data/battle-maps/ro6_e_t_3.png": {
+      "sha256": "3f6307be8408345a78436a5274305b321989a0477cec6b52360bf5d41a1b1a92",
+      "bytes": 343003
+    }
+  },
+  "limits": [
+    "Did not execute either helper, tests, Qt, GUI or game/chat/private-state operations. Wrote only this supplemental cache report.",
+    "Root must actually preview/apply the revised helper; this audit cannot turn the first preview exit1 into PASS.",
+    "Prior raw tool output remains only in its real conversation origin; do not create synthetic stdout/stderr/process to imitate an original file."
+  ]
+}
