@@ -190,7 +190,7 @@ class EnemyPrefabSkillGateViewTests(unittest.TestCase):
         panel=BattlePreviewPanel();self.addCleanup(panel.close);panel.show();panel.set_stage('ro6_duel_1');self.qt.processEvents()
         i=next(i for i in range(panel.enemy_combo.count()) if (panel.enemy_combo.itemData(i) or (None,))[0]=='enemy_1320_wdrrl_2')
         panel.enemy_combo.setCurrentIndex(i);self.qt.processEvents();text=panel.enemy_detail.toPlainText()
-        self.assertIn('启动次数上限 1',text);self.assertIn('发动时钟仍未知',text);self.assertNotIn('AOEAttack',text)
+        self.assertIn('启动次数上限 1',text);self.assertIn('发动时间仍未知',text);self.assertNotIn('AOEAttack',text)
         panel.technical.setChecked(True);self.qt.processEvents()
         self.assertIn('AOEAttack',panel.enemy_detail.toPlainText());self.assertIn('prefab_key_defined',panel.enemy_detail.toPlainText())
 

@@ -181,7 +181,7 @@ class EnemySkillResourceViewTests(unittest.TestCase):
         panel.set_stage('ro6_n_5_4');self.qt.processEvents()
         index=next(i for i in range(panel.enemy_combo.count()) if (panel.enemy_combo.itemData(i) or (None,))[0]=='enemy_10087_hlchgr_2')
         panel.enemy_combo.setCurrentIndex(index);self.qt.processEvents();text=panel.enemy_detail.toPlainText()
-        self.assertIn('技能技力条件分项',text);self.assertIn('初始化点达到费用',text)
+        self.assertIn('技能技力条件分项',text);self.assertIn('初始时达到费用',text)
         self.assertIn('完整可施放未知',text);self.assertNotIn('ForeverEnhance',text)
         panel.technical.setChecked(True);self.qt.processEvents()
         self.assertIn('ForeverEnhance',panel.enemy_detail.toPlainText())

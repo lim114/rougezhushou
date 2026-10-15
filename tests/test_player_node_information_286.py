@@ -1,4 +1,4 @@
-"""Public fixed-source presentation checks; no Qt, live run, capture or chat."""
+"""Public fixed-source presentation checks; no live run, capture or chat."""
 from copy import deepcopy
 import re
 import unittest
@@ -49,7 +49,12 @@ class PlayerNodeInformationTests(unittest.TestCase):
         self.assertIn('不能据此判断没有事件或奖励', node_information_text({'kind': 'future', 'record': {}}))
 
     def test_every_fixed_event_preserves_each_scene_option_and_conditional_in_source_order(self):
-        for event in node_catalog.all_events(include_indirect=True)['rows']:
+        from rouge.node_catalog_view import event_details_text
+
+        events = node_catalog.all_events(include_indirect=True)['rows']
+        self.assertEqual(len(events), 38)
+        result_annotations = []
+        for event in events:
             with self.subTest(event=event['title'], identity=event['id']):
                 text = node_information_text({'kind': 'event', 'record': event})
                 self.assertNotIn('资料暂时无法整理', text)
@@ -60,9 +65,26 @@ class PlayerNodeInformationTests(unittest.TestCase):
                     previous = current
                     for choice in scene['choices']:
                         self.assertIn(choice['title'], text)
-                        if choice.get('conditional'):
+                        if (event['id'], scene['key'], choice['key']) == (
+                                'community_group_018', 'community_group_018:scene:0',
+                                'community_group_018:scene:0:choice:1'):
+                            result_annotations.append(choice['key'])
+                            section = text.split('选项 2：可靠的中介值得信任', 1)[1].split(
+                                '选项 3：前行的速度更重要', 1)[0]
+                            self.assertIn('选择后可能的招募结果：', section)
+                            for index, pair in enumerate(('先锋或近卫', '重装或辅助', '医疗或狙击', '术师或特种'), 1):
+                                self.assertEqual(section.count(f'职业组合 {index}：{pair}。'), 1)
+                            self.assertEqual(section.count(
+                                '每种结果的资料参考：获得2希望，招募1名5星及以下的直升干员。'), 1)
+                            self.assertIn('本次职业组合、实际招募、招募费用和直升后的等级/精英阶段：尚未确认。', section)
+                            self.assertIn('不同可能结果，不相加；职业组合说明不作为选项出现条件', section)
+                            self.assertNotIn('??', section)
+                            self.assertNotIn('条件原文：' + choice['conditional'], section)
+                            self.assertIn(choice['conditional'], event_details_text(event['id']))
+                        elif choice.get('conditional'):
                             self.assertIn(choice['conditional'], text)
                 self.assertIn('实际领取及本局变化未知', text)
+        self.assertEqual(result_annotations, ['community_group_018:scene:0:choice:1'])
 
     def test_budget_three_states_are_visible_without_changing_event_eligibility(self):
         entry = event_entry('货从口出')

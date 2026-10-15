@@ -186,8 +186,17 @@ def _event_flow_text(event_id,context=None,planning=False):
         if planning:lines.extend(scene_outcome_lines(event_planning.scene_outcomes(event_id,scene['key'],context)))
         for choice in scene['choices']:
             role=ROLES.get(choice['presentation_role'],'展示参考（不是已证按钮）')
+            recruitment=resources.get(choice['key'],{}).get('choice_eligibility',{}).get('recruitment_result_reference')
+            known_recruitment=bool(recruitment and recruitment['status']=='documented_reference'
+                                   and recruitment['annotation_role']=='selection_result')
             lines += [f"  {role}：{choice['title']}",f"    {choice.get('description') or '结果说明未知'}"]
-            if choice.get('conditional'):lines.append(f"    条件：{choice['conditional']}")
+            if choice.get('conditional'):
+                lines.append(('    选择后职业组合说明（原文）：' if known_recruitment else '    条件：')+choice['conditional'])
+            if known_recruitment:
+                lines.append('    四种招募结果的内容依据：不证明原入口、实际招募、费用或培养；各组为不同结果参考。')
+                lines.append('    招募结果来源：'+json.dumps(recruitment,ensure_ascii=False))
+            elif recruitment is not None:
+                lines.append('    补充招募来源未通过核对；保留原文和未解析说明，实际结果仍未知。')
             targets=choice.get('destination_keys',[])
             lines.append('    后续：'+('、'.join(f'场景 {numbers[t]}' for t in targets if t in numbers)
                           if targets else '资料无导航目标，游戏后续未知'))
@@ -565,7 +574,11 @@ class NodeCatalogPanel(QWidget):
             for scene in catalog.event_details(entry['record']['id'])['rows']:
                 for choice in event_planning.choice_eligibility(entry['record']['id'],scene['key'],context)['rows']:
                     if choice['conditional_text']:
-                        text+='\n选项 '+choice['choice_title']+'：'+QUALIFICATIONS[choice['status']]+'；'+choice['conditional_text']
+                        recruitment=choice.get('recruitment_result_reference')
+                        if recruitment and recruitment['status']=='documented_reference' and recruitment['annotation_role']=='selection_result':
+                            text+='\n选择后职业组合资料 '+choice['choice_title']+'：'+choice['conditional_text']+'；实际结果未知。'
+                        else:
+                            text+='\n选项 '+choice['choice_title']+'：'+QUALIFICATIONS[choice['status']]+'；'+choice['conditional_text']
             if self.event_stage.count():text+='\n作战入口见下方选择：仅固定资料预览，不代表实际触发或确定选中该变体。'
             for row in result['rows']:
                 pool=row.get('generic_pool_requirement')

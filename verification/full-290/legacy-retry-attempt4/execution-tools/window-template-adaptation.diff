@@ -1,0 +1,48 @@
+--- original-A2-window.py
++++ retimed-native-platform-template.py
+@@ -76,26 +76,26 @@
+ OUT.mkdir(parents=True, exist_ok=False)
+ (OUT / 'source100-guard-input.json').write_bytes(_guard_bytes100)
+ _started100 = time.perf_counter()
+-_deadline100 = _started100 + 1200
++_deadline100 = _started100 + 3600
+ _restorations100 = []
+ _count_enabled100 = False
+ 
+ def _deadline_check100():
+     if time.perf_counter() >= _deadline100:
+-        raise TimeoutError('Fresh full125 attempt1 deadline of1200 seconds reached')
++        raise TimeoutError('Fresh full125 attempt1 deadline of3600 seconds reached')
+ 
+ def _hard_timeout100():
+     record = {'passed': False, 'scope': 'actual full125 attempt1 hard deadline', 'after_section': 261,
+-              'attempt': 1, 'deadline_seconds': 1200, 'elapsed_seconds': time.perf_counter()-_started100,
++              'attempt': 1, 'deadline_seconds': 3600, 'elapsed_seconds': time.perf_counter()-_started100,
+               'guard_sha256': hashlib.sha256(_guard_bytes100).hexdigest(),
+               'full_function_vector_measured': False}
+     try:
+         (OUT / 'hard-timeout-100.json').write_text(json.dumps(record, indent=2), encoding='utf-8')
+-        print(json.dumps({'passed': False, 'attempt': 1, 'hard_deadline': 1200}), flush=True)
++        print(json.dumps({'passed': False, 'attempt': 1, 'hard_deadline': 3600}), flush=True)
+     finally:
+         os._exit(124)
+ 
+-_timer100 = threading.Timer(1200, _hard_timeout100)
++_timer100 = threading.Timer(3600, _hard_timeout100)
+ _timer100.daemon = True
+ _timer100.start()
+ 
+@@ -1264,11 +1264,11 @@
+          'inherited_full100_runner_sha256':'e7a185ea5eba2d1d4905bbbe8f8cdfff1978c1a25e39b865d5018c00a6ac93f3',
+          'legacy_output_names_preserved':True,'specialist101_125_validation_in_this_runner':False,
+          'native_windows_verified':False,'game_captures':0,'chat_requests':0,
+-         'private_state_isolated':True,'platform':platform.platform(),'python':sys.version,
++         'private_state_isolated':True,'platform':{'source':'sys.platform + sys.getwindowsversion() raw; no WMI metadata query','sys_platform':sys.platform,'windows_version_raw':list(sys.getwindowsversion())},'python':sys.version,
+          'checks':checks,'passed':False,'complete_ui_validation':False,'plain_text_normalization':'QPlainTextEdit converts non-breaking spaces to ordinary spaces',
+          'source100_guard_sha256':hashlib.sha256(_guard_bytes100).hexdigest(),
+          'runner_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+-         'deadline_seconds':1200,'global_profile_or_trace_used':False,
++         'deadline_seconds':3600,'global_profile_or_trace_used':False,
+          'full125_attempt':1,'progress_checkpoint_file':'full125-progress.json',
+          'progress_every_appended_checks':32,'progress_is_partial_observation_only':True,
+          'full105_v1_source_sha256':'98e6cef848ffea73d36f330edb071e28cc884e676838a876a76995d28ea821a5',

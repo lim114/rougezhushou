@@ -1,0 +1,70 @@
+1261: checks=_ProgressChecks105();started=time.perf_counter();window=None;app=None;before=source_hashes()
+1262: receipt={'scope':'Wine Windows binary compatibility; no native Windows or game integration',
+1263:          'after_section':261,'current_maintained_source_count_expected':_SOURCE125_MAINTAINED_COUNT,
+1264:          'inherited_full100_runner_sha256':'e7a185ea5eba2d1d4905bbbe8f8cdfff1978c1a25e39b865d5018c00a6ac93f3',
+1265:          'legacy_output_names_preserved':True,'specialist101_125_validation_in_this_runner':False,
+1266:          'native_windows_verified':False,'game_captures':0,'chat_requests':0,
+1267:          'private_state_isolated':True,'platform':platform.platform(),'python':sys.version,
+1268:          'checks':checks,'passed':False,'complete_ui_validation':False,'plain_text_normalization':'QPlainTextEdit converts non-breaking spaces to ordinary spaces',
+1269:          'source100_guard_sha256':hashlib.sha256(_guard_bytes100).hexdigest(),
+1270:          'runner_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+1271:          'deadline_seconds':3600,'global_profile_or_trace_used':False,
+1272:          'full125_attempt':1,'progress_checkpoint_file':'full125-progress.json',
+1273:          'progress_every_appended_checks':32,'progress_is_partial_observation_only':True,
+
+1307: try:
+1308:     for name in ('PySide6.QtWidgets','numpy','cv2','win32gui','win32process','win32api','httpx','rapidocr_onnxruntime','windows_capture'):
+1309:         importlib.import_module(name)
+1310:         checks.append({'scope':'real_dependency_import','module':name,'passed':True})
+1311:     from PySide6.QtCore import Qt
+1312:     from PySide6.QtWidgets import QApplication,QPushButton
+1313:     _install_narrow_observers100()
+1314:     import rouge.app as module
+1315:     from rouge.reporting import format_report
+1316:     diagnosis_path=ROOT/'research/p2-friendly-scope-report/independent-diagnosis.json'
+1317:     assert diagnosis_path.is_file(),str(diagnosis_path)
+1318:     diagnosis_bytes=diagnosis_path.read_bytes()
+1319:     diagnosis=json.loads(diagnosis_bytes)
+1320:     from rouge.capture import list_game_windows
+1321:     with tempfile.TemporaryDirectory(prefix='rouge-full100-') as folder:
+1322:         isolated=Path(folder)
+1323:         module.RUN_STATE=isolated/'run.json';module.OPERATOR_STATE=isolated/'operators.json';module.SETTINGS=isolated/'settings.json'
+1324:         backend=module.DesktopBackend
+1325:         module.DesktopBackend=lambda _path,callback:backend(isolated/'chat',callback)
+1326:         # BEGIN FINAL090 STARTUP INSTRUMENTATION
+1327:         _count_enabled100=True
+1328:         # END FINAL090 STARTUP INSTRUMENTATION
+1329:         app=QApplication([]);window=module.MainWindow();window.show();app.processEvents()
+1330:         # BEGIN FINAL090 STARTUP SNAPSHOT
+1331:         _count_enabled100=False
+1332:         receipt['actual_startup_runstate_entries_090']=dict(entry_counts090)
+
+3506: finally:
+3507:     if window is not None:
+3508:         window.close()
+3509:         if app is not None:app.processEvents()
+3510:     receipt['elapsed_seconds']=round(time.perf_counter()-started,3)
+3511:     after=source_hashes();drift=[n for n in sorted(set(before)|set(after)) if before.get(n)!=after.get(n)]
+3512:     additional_after100=additional_source100()
+3513:     additional_drift100=[n for n in sorted(set(_additional100)|set(additional_after100))
+3514:                          if _additional100.get(n)!=additional_after100.get(n)]
+3515:     receipt['source_additional_sha256']=_additional100
+3516:     receipt['source_additional_sha256_after']=additional_after100
+3517:     receipt['source_additional_drift']=additional_drift100
+3518:     if additional_drift100:receipt['passed']=False;receipt['complete_ui_validation']=False
+3519:     receipt['source_sha256']=before;receipt['source_sha256_after']=after;receipt['source_drift']=drift
+3520:     if drift:receipt['passed']=False;receipt['complete_ui_validation']=False
+3521:     # BEGIN FINAL090 LOSSLESS NEW STATE OUTPUT
+3522:     import gzip as _gzip090
+3523:     _statebytes090=json.dumps({'format_version':1,'actual_new_window_states':actual_states090,'expected_UI_state_rows':52,'actual_main_window_execution_only':True,'passed':receipt['passed']},ensure_ascii=False,allow_nan=False).encode('utf-8')
+3524:     _statepath090=OUT/'wine-ui-new-states-100.json.gz'
+3525:     _statepath090.write_bytes(_gzip090.compress(_statebytes090,mtime=0))
+3526:     receipt['new_state_archive090']={'file':_statepath090.name,'bytes':_statepath090.stat().st_size,'sha256':hashlib.sha256(_statepath090.read_bytes()).hexdigest(),'decoded_bytes':len(_statebytes090),'decoded_sha256':hashlib.sha256(_statebytes090).hexdigest(),'records':len(actual_states090)}
+3527:     # END FINAL090 LOSSLESS NEW STATE OUTPUT
+3528:     (OUT/'wine-ui-100.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2),encoding='utf-8')
+3529:     for owner100,name100,original100 in reversed(_restorations100):
+3530:         setattr(owner100,name100,original100)
+3531:     _timer100.cancel()
+3532:     print(json.dumps({'passed':receipt['passed'],'total_actual_checks':receipt.get('total_actual_checks'),
+3533:           'elapsed_seconds':receipt['elapsed_seconds'],'receipt':'wine-ui-100.json'},ensure_ascii=False))
+3534:     sys.exit(0 if receipt['passed'] else 1)

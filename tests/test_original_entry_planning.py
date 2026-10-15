@@ -111,10 +111,13 @@ class OriginalEntryViewTests(unittest.TestCase):
                      {'id':'b','row':0,'col':2,'observed_type':'误入奇境','content':{'kind':'event','title':'溯源','original_scene_id':scene}}]}
         self.panel.set_map_context(graph,epoch=123);text=self.select_record(scene)
         self.assertIn('蓝雾',text);self.assertIn('逐字相等',text)
-        self.assertIn(scene,next(e['title'] for e in self.panel.entries if e['kind']=='original' and e['record']['record']['record_id']==scene))
+        entry=next(e for e in self.panel.entries if e['kind']=='original' and e['record']['record']['record_id']==scene)
+        self.assertEqual(entry['record']['record']['record_id'],scene)
+        self.assertIn(scene,text)
+        self.assertNotIn(scene,entry['title'])
         self.assertEqual(self.panel.map_location.count(),1)
         calls=[];self.panel.mapNodeSelected.connect(lambda key,binding:calls.append((key,binding)))
-        self.panel.map_jump.click();self.assertEqual(calls[0][0],'b');self.assertEqual(calls[0][1]['epoch'],123)
+        self.panel.map_jump.click();self.assertEqual(len(calls),1);self.assertEqual(calls[0][0],'b');self.assertEqual(calls[0][1]['epoch'],123)
         self.assertIn('声明原场景ID',self.panel.map_location.currentText())
 
     def test_same_frame_unique_read_contract_maps_without_manual_original_id(self):

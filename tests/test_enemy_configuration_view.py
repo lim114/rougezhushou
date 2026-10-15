@@ -16,7 +16,7 @@ class EnemyConfigurationViewTests(unittest.TestCase):
         index=next(i for i in range(panel.enemy_combo.count()) if (panel.enemy_combo.itemData(i) or (None,))[0]=='enemy_2133_shdopl_lancer')
         panel.enemy_combo.setCurrentIndex(index);self.qt.processEvents()
         text=panel.enemy_detail.toPlainText()
-        self.assertIn('独立构造',text);self.assertIn('预计生命值：未知',text)
+        self.assertIn('本关使用专属敌人资料',text);self.assertIn('预计生命值：未知',text)
         self.assertIn('生命值已证分项：6000',text)
         panel.technical.setChecked(True);self.qt.processEvents()
         self.assertIn('原字段投影',panel.enemy_detail.toPlainText())

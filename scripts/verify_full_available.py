@@ -43,6 +43,8 @@ NEW_MODULES = (
     'tests.test_player_tile_information_288',
     'tests.test_event_named_reward_links_289',
     'tests.test_event_named_reward_integration_289',
+    'tests.test_choice_recruitment_results_290',
+    'tests.test_choice_recruitment_integration_290',
     'tests.test_regeneration_clock',
     'tests.test_modifier_packet_reference',
     'tests.test_route_information_scope',
@@ -284,6 +286,8 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--wine', action='store_true', help='Label Windows binaries run via Wine')
     parser.add_argument('--require-complete', action='store_true')
+    parser.add_argument('--verbosity', type=int, choices=(1, 2), default=1,
+                        help='Use 2 to record each test ID while a long run is in progress')
     args = parser.parse_args()
     before = source_hashes()
     historical = json.loads((ROOT / 'CORE_0.70_VERIFICATION.json').read_text(encoding='utf-8'))
@@ -292,7 +296,7 @@ def main():
     selectors = list(dict.fromkeys(historical['test_modules'] + list(NEW_MODULES) + list(MODULES)))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.with_suffix('.log').open('x', encoding='utf-8') as log:
-        result = unittest.TextTestRunner(stream=log, verbosity=1,
+        result = unittest.TextTestRunner(stream=log, verbosity=args.verbosity,
             resultclass=AvailableResult).run(unittest.defaultTestLoader.loadTestsFromNames(selectors))
     # Explicitly destroy the real Qt application after every assertion has run.
     # Record failure and retain the ordinary process exit; never bypass teardown.
@@ -308,7 +312,8 @@ def main():
     unavailable_parents = result.unavailable_parents
     receipt = {
         'checked_at': datetime.now(timezone.utc).isoformat(),
-        'platform': platform.system(), 'wine_compatibility': args.wine,
+        'platform': ('Windows' if sys.platform == 'win32' else platform.system()), 'wine_compatibility': args.wine,
+        'verbosity': args.verbosity,
         'native_windows_integration_verified': False,
         'available_checks_passed': result.wasSuccessful() and not drift and qt_shutdown_error is None,
         'complete_repository_validation': result.wasSuccessful() and not drift and qt_shutdown_error is None and not result.unavailable,

@@ -1,0 +1,56 @@
+{
+  "kind": "EXPLICIT_ROOT_APPROVED_DEADLINE_COORDINATION_NOT_EXECUTION",
+  "fixture_watchdog_replacements": [
+    {
+      "line": 79,
+      "original": "_deadline100 = _started100 + 1200",
+      "candidate": "_deadline100 = _started100 + 3600"
+    },
+    {
+      "line": 85,
+      "original": "        raise TimeoutError('Fresh full125 attempt1 deadline of1200 seconds reached')",
+      "candidate": "        raise TimeoutError('Fresh full125 attempt1 deadline of3600 seconds reached')"
+    },
+    {
+      "line": 89,
+      "original": "              'attempt': 1, 'deadline_seconds': 1200, 'elapsed_seconds': time.perf_counter()-_started100,",
+      "candidate": "              'attempt': 1, 'deadline_seconds': 3600, 'elapsed_seconds': time.perf_counter()-_started100,"
+    },
+    {
+      "line": 94,
+      "original": "        print(json.dumps({'passed': False, 'attempt': 1, 'hard_deadline': 1200}), flush=True)",
+      "candidate": "        print(json.dumps({'passed': False, 'attempt': 1, 'hard_deadline': 3600}), flush=True)"
+    },
+    {
+      "line": 98,
+      "original": "_timer100 = threading.Timer(1200, _hard_timeout100)",
+      "candidate": "_timer100 = threading.Timer(3600, _hard_timeout100)"
+    },
+    {
+      "line": 1271,
+      "original": "         'deadline_seconds':1200,'global_profile_or_trace_used':False,",
+      "candidate": "         'deadline_seconds':3600,'global_profile_or_trace_used':False,"
+    }
+  ],
+  "original_watchdog_count": 6,
+  "fixture_internal_seconds": 3600,
+  "owned_supervisor_seconds": 3690,
+  "controller_outer_seconds": 3780,
+  "main_supervisor_grace_after_internal_seconds": 90,
+  "controller_grace_after_supervisor_seconds": 90,
+  "supervisor_exact_byte_changes": [
+    "0<args.timeout<=1800 ->0<args.timeout<=3690",
+    "<=1800-second timeout -><=3690-second timeout"
+  ],
+  "supervisor_original_sha256": "a9b0fd75fcf7d5ffa28a7449f050db33a2a72eb7a5fc49c1a052383cd22b2835",
+  "supervisor_candidate_sha256": "b073d86b1ddb6d697278380e34b29fd3887a8ea14448f29ffd8a8852dc4b2309",
+  "raw_ATTEMPT2_label_preserved_not_current_execution_authority": true,
+  "other1200_copies_not_executed": [
+    "original261-window.py",
+    "legacy-preserved-basis-window.py",
+    "bound-prerequisites/05-legacy-preserved-basis-window.py",
+    "supervisor125.py",
+    "observer_import_order_probe.py"
+  ],
+  "complete_retry_or_typed_pass_claimed": false
+}

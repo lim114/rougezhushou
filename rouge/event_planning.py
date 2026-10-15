@@ -9,6 +9,7 @@ import json,re
 from pathlib import Path
 from . import node_catalog as catalog
 from . import choice_held_requirements
+from . import choice_recruitment_results
 
 
 @lru_cache(maxsize=1)
@@ -227,12 +228,16 @@ def choice_eligibility(event_id,scene_key,context=None):
                                      'source':deepcopy(current_observation()['source']),
                                      'reason':current_observation()['delta'],
                                      'query':'scene-outcomes','actual_server_rule_verified':False})
+        recruitment=choice_recruitment_results.choice_reference(event_id,choice,scene_key=scene_key)
+        result_annotation=bool(recruitment and recruitment['status']=='documented_reference'
+                               and recruitment['annotation_role']=='selection_result')
         rows.append({'choice_key':choice['key'],'choice_title':choice['title'],'presentation_role':choice['presentation_role'],
                      'status':_status(checks),'checks':checks,'parsed_special_requirements':parsed,
-                     'conditional_text':choice['conditional'],'unparsed_condition_text':text if text and not parsed else None,
+                     'conditional_text':choice['conditional'],'unparsed_condition_text':text if text and not parsed and not result_annotation else None,
                      'game_choice_ids':deepcopy(choice['game_choice_ids']),'original_choice_records':mapped,
                      'actual_selectable':None,'full_server_conditions_known':False,
-                     'source_origin_scene_binding_verified':False,'edition_warnings':edition_warnings})
+                     'source_origin_scene_binding_verified':False,'edition_warnings':edition_warnings,
+                     **({'recruitment_result_reference':recruitment} if recruitment is not None else {})})
     return _result(event=catalog._summary(event),scene_key=scene_key,rows=rows,context=context)
 
 
@@ -355,6 +360,7 @@ def final_ap_conversion(remaining_ap=None):
 def choice_resources(event_id,scene_key,context=None):
     """Documented top-level resource amounts and independent nominal budgets."""
     context=_context(context);event=catalog._event(event_id);scene=catalog._scene(event_id,scene_key);rows=[]
+    eligibility_by_key=None
     for choice in scene['choices']:
         description=choice['description'] or '';top=_outside_parentheses(description);actions=[]
         pattern=r'(消耗|获得|回复|损失|失去)(\d+)(?:点)?(目标生命值上限|目标生命值|源石锭|希望|护盾|行动力)'
@@ -394,7 +400,13 @@ def choice_resources(event_id,scene_key,context=None):
         conversion=None
         if '等量希望' in top and event['title']=='险路尽头':
             conversion=final_ap_conversion(_resource_value(context,'ap'))
-        eligibility=next(r for r in choice_eligibility(event_id,scene_key,context)['rows'] if r['choice_key']==choice['key'])
+        if eligibility_by_key is None:
+            # One scene result per external query; defer until first needed.
+            eligibility_by_key={}
+            for reference in choice_eligibility(event_id,scene_key,context)['rows']:
+                eligibility_by_key.setdefault(reference['choice_key'],reference)
+        if choice['key'] not in eligibility_by_key:raise StopIteration
+        eligibility=eligibility_by_key[choice['key']]
         rows.append({'choice_key':choice['key'],'choice_title':choice['title'],'presentation_role':choice['presentation_role'],
                      'description':description,'resource_references':actions,'ap_conversion_reference':conversion,
                      'choice_eligibility':eligibility,'complete_resource_effects_known':False,

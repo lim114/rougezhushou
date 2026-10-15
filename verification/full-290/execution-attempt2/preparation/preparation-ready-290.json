@@ -1,0 +1,86 @@
+{
+  "kind": "FULL290_ATTEMPT2_CONTROLLERS_READY_NOT_VALIDATION_PASS",
+  "ready": true,
+  "actual_validation_attempt": 2,
+  "root_freeze_created": false,
+  "root_freeze_to_declare": "verification/full-290/source-freeze-repair.json",
+  "archive_destinations": [
+    "verification/full-290/execution-attempt2",
+    "verification/full-290/p3-supplementary-attempt2"
+  ],
+  "actual_static_exit": 0,
+  "static_checks_passed": 62,
+  "static_receipt": "orchestration-preparation-check-290-final.json",
+  "static_receipt_sha256": "aa1b790af3adaf3fae074083f70f1d73011616fbc0bf34c062feb681b19baaf3",
+  "preparation_tools_sha256": {
+    ".cache/p3-full290-repair-prep/prepare_full290_window.py": "c653fcc03022db925a9607b119eee3b25eb2433de2a517c598e28056968349e2",
+    ".cache/p3-full290-repair-prep/offline290_launcher.py": "6edbf338ee5451f8b68627701a5fe1a420b5c133855716bc0b5edf0934ee1073",
+    ".cache/p3-full290-repair-prep/full290_runtime_common.py": "feebcaafeb93d49b9546fded3665ee977b4959c153cb50270ce12189e4a0e4d1",
+    ".cache/p3-full290-repair-prep/produce_final_freeze_290.py": "606381427a45582c9f548206f4fac655776b97719ef04fef4e2fafc2cfa3b676",
+    ".cache/p3-full290-repair-prep/run_full290_orchestration.py": "3d618147dbdb3b99fcf9f9c5fa2b9f886f0dadf8570259c0304c848eed1ed335",
+    ".cache/p3-full290-repair-prep/archive_full290_outputs.py": "a503272ef09e32802c5878322f0ebe0bec509d71b2400669efdd8a9c4a1d9fe1",
+    ".cache/p3-full290-repair-prep/run_p3_supplementary_windows_290.py": "e55f29ca4c0d8d8aa4b8f92fc6d0d4f4ef77ded8566e3b5172461ecef682c20d",
+    ".cache/p3-full290-repair-prep/supplementary290_launcher.py": "d85ceb860f786699dd84b954d7c14d619b03956c806336fdeaea591194af8651",
+    ".cache/p3-full290-repair-prep/archive_p3_supplementary_290.py": "e6fc5abc85afe00cf1f9098121d29d81a3cd08d58b1434d0cd02c3f0a75e3368"
+  },
+  "scope": {
+    "selectors": 430,
+    "maintained_sources": 1221,
+    "supplemental_public_inputs": 42,
+    "same_complete_ordered_selectors_and_source_paths_as_attempt1": true,
+    "legacy_assertions": 862,
+    "legacy_maintry": 552,
+    "typed_states": 52,
+    "current30_required": true,
+    "separate29_required": true,
+    "seven_original_proofs_already_in_draft": true
+  },
+  "runtime_limits": {
+    "supervisor_timeout_seconds": 1800,
+    "outer_wait_seconds": 1890,
+    "offline_verbosity": 2
+  },
+  "root_runner_optional_verbosity_currently_present": true,
+  "root_freeze_producer_refuses_missing_runner_option": true,
+  "production_changes_owned_by_root": true,
+  "original_attempt1_not_modified": true,
+  "current_environment": {
+    "receipt": "environment-inventory-290.json",
+    "sha256": "bd8390e2cfefa1238dd221c213d4536f96c895d71ccd154f522e8a8b96dfe0dd"
+  },
+  "prepare_phase_tool_failures_preserved": [
+    {
+      "kind": "Shell quoting error before any intended file edit",
+      "product_test_failure": false
+    },
+    {
+      "kind": "Static checker attempted to write existing prior preparation receipt; original kept",
+      "actual_exit": 1,
+      "stdout": "static-check-final.stdout.log",
+      "stderr": "static-check-final.stderr.log",
+      "process_exit": "static-check-final.process.exit",
+      "fix": "Use fresh final receipt filename via apply_patch; no original result or selector overwritten",
+      "product_test_failure": false
+    }
+  ],
+  "actual_final_static_streams": {
+    "static-check-final-corrected.stdout.log": {
+      "sha256": "ed9f0d6a5fd292bc782b92f3310fb1299ab241f2609b6ca36c124414429e5c53",
+      "utf8": "{\n  \"kind\": \"FULL290_ATTEMPT2_STATIC_PREPARATION_NOT_FULL_VALIDATION\",\n  \"passed\": true,\n  \"check_count\": 62,\n  \"inactive_tool_maps\": {\n    \"legacy\": {\n      \"tool_count\": 83,\n      \"draft_sha256\": \"c1200a45c3f797334a6d1d11c14a719bb496938070da5ce7866840f3f5b24cf3\"\n    },\n    \"current\": {\n      \"tool_count\": 17,\n      \"draft_sha256\": \"4b906577ac124f2e5ef46130575ae09750cf1ef5e646a9b18ce43a2cba331b39\"\n    }\n  },\n  \"original_attempt1_freeze_sha256\": \"489a0d4707060e379c8b6c2c6b50db6eea3b597d5c4066989df0713254ce48da\",\n  \"previous_selector_count\": 430,\n  \"current_selector_count\": 430,\n  \"previous_source_count\": 1221,\n  \"current_source_count\": 1221,\n  \"new_selectors\": [],\n  \"supplemental_public_input_count\": 42,\n  \"canonical_supplementary_windows\": {\n    \"p3_286\": \"scripts/verify_player_information_window_286.py\",\n    \"p3_287\": \"scripts/verify_moving_reward_window_287.py\",\n    \"p3_288\": \"scripts/verify_direct_map_window_288.py\",\n    \"p3_289\": \"scripts/verify_event_rewards_window_289.py\",\n    \"p3_290\": \"scripts/verify_recruitment_results_window_290.py\"\n  },\n  \"all_original_862_552_and_current30_29_preserved\": true,\n  \"root_freeze_produced\": false,\n  \"fixture_or_GUI_or_full_suite_executed\": false,\n  \"game_or_chat_or_private_state_used\": false,\n  \"available_full_tests_passed_claimed\": false\n}\n"
+    },
+    "static-check-final-corrected.stderr.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "utf8": ""
+    },
+    "static-check-final-corrected.process.exit": {
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "utf8": "0\n"
+    }
+  },
+  "full_GUI_or_freeze_executed": false,
+  "game_or_chat_or_private_state_used": false,
+  "global_cross_runner_lock": false,
+  "root_must_run_strictly_serial_once": true,
+  "run_plan": "RUN_PLAN.md",
+  "run_plan_sha256": "773e8ce68c6326fde818d4c13a12adaf4c0f797944056e3c8a3570a5b36dd231"
+}
