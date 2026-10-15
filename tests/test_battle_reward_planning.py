@@ -58,14 +58,15 @@ class BattleRewardPlanningTests(unittest.TestCase):
         self.assertIsNone(display_cell({'row':-1,'col':0},7,11))
         self.assertIsNone(display_cell({'row':True,'col':0},7,11))
 
-    def test_unknown_higher_or_multiple_enemy_levels_do_not_inherit_ten(self):
+    def test_incomplete_enemy_references_do_not_inherit_documented_quantity(self):
         import rouge.battle_reward_planning as module
-        for values in ([1],[2],[0,1],[]):
+        for values in ([0],[1],[2],[0,1],[]):
             fake={'moving_enemy_refs':[{'raw':{'level':v}} for v in values]}
             rule=module._rule('enemy_2152_shezlc',fake)
             self.assertFalse(rule['documented_base_level_matches_reference'])
             self.assertTrue(all(o['quantity'] is None for o in rule['outcomes']))
-        zero=module._rule('enemy_2152_shezlc',{'moving_enemy_refs':[{'raw':{'level':0}}]})
+        zero=module._rule('enemy_2152_shezlc',{'moving_enemy_refs':[{'raw':{
+            'id':'enemy_2152_shezlc','useDb':True,'level':0,'overwrittenData':None}}]})
         self.assertEqual([o['quantity'] for o in zero['outcomes']],[10,-10])
 
     def test_public_queries_are_copies_and_invalid_stage_rejected(self):

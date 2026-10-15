@@ -1,0 +1,59 @@
+{
+  "scope": "Independent limited review of frozen section 287 public sources and pure Python outputs; no Qt/window/game/chat/private operations.",
+  "result": "82 checks passed across 12 actual probes; no blocking source/control/quantity defect found in reviewed scope.",
+  "production_source_sha256": {
+    "rouge/moving_reward_reference.py": "44e1015c0be6988721cbaefe274048616b92b48502ec89bcf39f1305703273c3",
+    "rouge/battle_reward_planning.py": "6eb96bc7f1132647f5d3e7cbd4a14a7edd266e1faddbf6e8843d9945a3f37aa1",
+    "rouge/player_node_information.py": "127ec221862ad0fb1d31c8cb8d981ab730ddc2ced7bc9d5f90ac277f89464d5e",
+    "scripts/build_moving_reward_current_reference.py": "0dd1615d43b5f4981f4151b678e7d44f71aa090302eab478f5496726a0d8a93b",
+    "rouge/data/moving-reward-current-reference.json": "929d9acf8cf1615c166ee29aa532748016dc73bb22625407bf21446415bc5580",
+    "tests/test_moving_reward_reference_287.py": "a081ff27e4f9b18614f88dc47d53b235fcbbab4b81bd3613072a32f38f6abd57",
+    "tests/test_moving_reward_integration_287.py": "fc0e3f74f0c5019eb3c66cfb10c1b4d6c8e6c62d65d6aa65b495c77249b83043"
+  },
+  "files": {
+    "review_moving_rewards.py": {
+      "sha256": "6d7dab12585192460026614f79d7ff989f920cc9078663a7f06f6883e2498363",
+      "bytes": 11095
+    },
+    "review_moving_rewards-first-bootstrap.py": {
+      "sha256": "e54b02e03585e7bb9a39f114c3c6b16b8277ad8e1899ab17275b4e7b7df54713",
+      "bytes": 11053
+    },
+    "first-bootstrap-tool-output.txt": {
+      "sha256": "933f4fa65cb487dea9c844947244b693a0294188f16d6540e76b270fe2dab831",
+      "bytes": 259
+    },
+    "review.json": {
+      "sha256": "c71175265c92f2ac91b9a97df8a687736f8f0b196aa2bac92204f700dde2b2a2",
+      "bytes": 2789065
+    }
+  },
+  "original_source_revision": "PRTS 435751, original archived HTTP HTML, not newly fetched by this review.",
+  "source_limits": "Community conditional per-enemy documentation only. Not actual server execution, spawn count, unique action-level binding or total reward.",
+  "findings": [
+    {
+      "severity": "wording_only",
+      "stage": "ro6_n_1_1",
+      "fact": "Player summary shows box conditional10 and moving enemy conditional10, with a global do-not-add notice but no specific box/moving duplicate warning; full source renderer has the explicit warning.",
+      "actual_total_claimed": false
+    }
+  ],
+  "bootstrap_failure": {
+    "phase": "before importing product and before probes/snapshot",
+    "kind": "reviewer import path defect",
+    "actual_tool_chunk": "4ea725",
+    "actual_exit_code": 1,
+    "original_script": "review_moving_rewards-first-bootstrap.py",
+    "output_transcript": "first-bootstrap-tool-output.txt",
+    "transcript_limit": "The file is a literal transcription of actual tool output preserved after failure; original output is also in tool history. No original shell log was redirected.",
+    "fix": "Only reviewer sys.path bootstrap changed; no product file changed."
+  },
+  "final_actual_run": {
+    "actual_tool_chunk": "f551bf",
+    "actual_exit_code": 0,
+    "probe_count": 12,
+    "check_count": 82,
+    "failed_check_count": 0
+  },
+  "not_run": "Full maintained tests or Windows UI; parent owns those separate validations."
+}

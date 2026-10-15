@@ -37,6 +37,8 @@ NEW_MODULES = (
     'tests.test_player_node_information_286',
     'tests.test_player_battle_information_286',
     'tests.test_player_information_view_286',
+    'tests.test_moving_reward_reference_287',
+    'tests.test_moving_reward_integration_287',
     'tests.test_regeneration_clock',
     'tests.test_modifier_packet_reference',
     'tests.test_route_information_scope',

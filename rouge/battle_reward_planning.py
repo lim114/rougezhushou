@@ -6,6 +6,7 @@ from pathlib import Path
 from .battle_preview import battle_data, display_cell
 from .base_settlement_planning import stage_base_rewards,stage_reward_text
 from .rare_reward_sources import rare_stage_reward_sources
+from .moving_reward_reference import moving_reward_rule
 
 MOVING='enemy_2152_shezlc'
 
@@ -14,16 +15,9 @@ def reward_data():
     return json.loads((Path(__file__).with_name('data')/'battle-reward-reference.json').read_text(encoding='utf8'))
 
 def _rule(entity,level):
-    rule=deepcopy(reward_data()['rules'][entity])
     if entity==MOVING:
-        refs=level['moving_enemy_refs'];values={r['raw'].get('level') for r in refs}
-        rule['referenced_levels']=sorted(v for v in values if type(v) is int)
-        rule['documented_base_level_matches_reference']=values=={0}
-        rule['action_level_binding_unique']=len(values)==1
-        if values!={0}:
-            for outcome in rule['outcomes']:outcome['quantity']=None
-            rule['quantity_scope_notice']='该关卡引用级别不是唯一0；级别1/2或多级别奖励数量未证。'
-    return rule
+        return moving_reward_rule(level.get('moving_enemy_refs'))
+    return deepcopy(reward_data()['rules'][entity])
 
 def stage_reward_sources(stage_id):
     if not isinstance(stage_id,str) or not stage_id:raise ValueError('固定关卡ID需要非空文本。')
@@ -98,6 +92,8 @@ def reward_source_text(result,row=None,technical=False):
                 names=[m.get('name') or ('空候选' if m['is_empty_key'] else '其他原配置候选') for m in group['members']]
                 lines.append('同一配置组全部候选：'+' / '.join(names)+'；这些不是同时出现的证明，不能相加为实际收藏品数。')
             lines.append('数量为单个敌人的文档条件参考；原路线位置也只是固定资料，不表示当前已生成或实际移动路径。')
+        if reference['kind']=='moving_enemy_action':
+            lines.append('两个结果互斥：击倒获得与漏过损失不能相加，也不能按出现条件的记录条数当成敌人数量。')
         if reference['kind']=='predefined_device':
             if technical:
                 labels={'predefines':'普通预置容器','hardPredefines':'额外预置容器（实际适用未知）'}
@@ -112,7 +108,12 @@ def reward_source_text(result,row=None,technical=False):
         if technical:
             lines += ['原实体：'+reference['entity_id'],'原件位置：'+reference['source_selector']]
             if reference.get('explicit_branch_id'):lines.append('原branch_id：'+reference['explicit_branch_id'])
-            source=rule['quantity_source'];lines.append('数量来源：'+source['url'])
+            source=rule['quantity_source']
+            if source:
+                lines.append('数量来源：'+source['url'])
+                if reference['entity_id']==MOVING:
+                    lines.append('已核对文档版本：'+source['fixed_url'])
+            else:lines.append('数量来源：固定来源未通过核对；数量未知。')
     if not rows:lines.append('固定来源中未找到已接入的奖励实体；不代表当前关卡没有奖励或动态生成。')
     base_text=stage_reward_text(stage_base_rewards(result['stage_id']))
     if not technical:

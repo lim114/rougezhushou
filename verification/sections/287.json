@@ -1,0 +1,103 @@
+{
+  "section": 287,
+  "kind": "functional_section",
+  "title": "移动恶笼草各等级条件奖励与箱型关联去重说明",
+  "at_Beijing": "2026-10-16T00:17:47.624882+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "182433ed7922acb5d180c4218ba75d72109cf4ce",
+  "remaining_item": "P3节点事件与掉落：移动恶笼草高级别数量参考",
+  "new_capability": "PRTS435751原HTML逐级支持0/1/2移动恶笼草的战后击倒+10/漏过−10源石锭；8个高等级固定关卡补齐数量参考，严格身份/数据库/等级/显式空覆盖资格。多级同值只给条件共识，实际等级、出现、领取、总量和概率仍未知；默认节点与战斗说明明确箱型关联不重复计奖，两结果不相加。",
+  "files": [
+    "rouge/moving_reward_reference.py",
+    "rouge/data/moving-reward-current-reference.json",
+    "rouge/battle_reward_planning.py",
+    "rouge/player_node_information.py",
+    "scripts/build_moving_reward_current_reference.py",
+    "scripts/verify_moving_reward_window_287.py",
+    "scripts/verify_full_available.py",
+    "tests/test_moving_reward_reference_287.py",
+    "tests/test_moving_reward_integration_287.py",
+    "tests/test_battle_reward_planning.py",
+    "tests/test_player_battle_information_286.py"
+  ],
+  "source_sha256": {
+    "rouge/moving_reward_reference.py": "44e1015c0be6988721cbaefe274048616b92b48502ec89bcf39f1305703273c3",
+    "rouge/data/moving-reward-current-reference.json": "929d9acf8cf1615c166ee29aa532748016dc73bb22625407bf21446415bc5580",
+    "rouge/battle_reward_planning.py": "6eb96bc7f1132647f5d3e7cbd4a14a7edd266e1faddbf6e8843d9945a3f37aa1",
+    "rouge/player_node_information.py": "867af2d4a1fff0edb47052e5343bc58d097a486f8be2012c9b7808c66fbc160e",
+    "scripts/build_moving_reward_current_reference.py": "0dd1615d43b5f4981f4151b678e7d44f71aa090302eab478f5496726a0d8a93b",
+    "scripts/verify_moving_reward_window_287.py": "aa92c389029be66a039cda8b0bb2f306e86916bcd60506f7a759f9e933f5fcb9",
+    "scripts/verify_full_available.py": "c6f8ff890097e29546608eb448789ff8a25ed2b16b7cc511757562bc58ac97fd",
+    "tests/test_moving_reward_reference_287.py": "a081ff27e4f9b18614f88dc47d53b235fcbbab4b81bd3613072a32f38f6abd57",
+    "tests/test_moving_reward_integration_287.py": "f8fe6646e0c820cef8237edf59ab458cd204506c146e179f807ec959b11f4285",
+    "tests/test_battle_reward_planning.py": "86a31e2568d12f509fa512ce799e143b1750508976801db040c98a473311e8d7",
+    "tests/test_player_battle_information_286.py": "cf4ec8645a18ff1dd14c1a5d5ff51eeeaa8ee164d95db815f99217bd138de22e"
+  },
+  "source_document": {
+    "revision": "435751",
+    "archive": "research/p3-moving-reward-current/moving-mobile-response.html",
+    "sha256": "ac67db472d7cbfe9caef105b9ab17eb4fda43f0b09a8a229e61eeca8392c2430",
+    "bytes": 106062,
+    "community_documentation_not_server_observation": true,
+    "independent_root_web_extract_also_saved": true
+  },
+  "new_higher_level_stage_ids": [
+    "ro6_n_4_3",
+    "ro6_e_4_3",
+    "ro6_n_4_6",
+    "ro6_e_4_6",
+    "ro6_n_5_3",
+    "ro6_e_5_3",
+    "ro6_n_6_1",
+    "ro6_e_6_1"
+  ],
+  "necessary_validation": {
+    "receipt": "verification/sections/287-validation-final/process.json",
+    "methods_run": 120,
+    "methods_passed": 120,
+    "source_unchanged": true,
+    "first_attempt": "verification/sections/287-validation-first/process.json",
+    "first_attempt_failed_methods": 1,
+    "failure_resolution": "Preserve existing nonmoving technical URLs; moving-only fixed revision appendix. No rare-reward assertions weakened.",
+    "intermediate_green_before_wording": "verification/sections/287-validation/process.json",
+    "author_17_is_subset_not_added": true
+  },
+  "independent_limited_review": {
+    "receipt": "verification/sections/287-preparation/independent-review/review.json",
+    "probes": 12,
+    "checks": 82,
+    "additional_wording_resolution_probes": 1,
+    "additional_wording_resolution_checks": 6,
+    "original_review_source_binding_preserved": true,
+    "is_full_suite": false
+  },
+  "windows_validation": {
+    "receipt": "verification/sections/287-window-final.json",
+    "actual_windows_mainwindow": true,
+    "unique_checks": 32,
+    "visible_stages": 2,
+    "game_captures": 0,
+    "chat_sends": 0,
+    "prior_31_check_receipt_preserved": "verification/sections/287-window.json",
+    "normal_original_window": "verification/sections/287-main-window-final.json",
+    "normal_window_visible_and_responsive": true,
+    "normal_restart_private_paths_compared": 5,
+    "normal_restart_private_paths_changed": 0,
+    "first_helper_wrong_cwd_failure_preserved": "verification/sections/287-preparation/restart-first/failure-summary.json",
+    "failed_app_switch_stale_handle_then_exact_win32_focus_succeeded": true
+  },
+  "full_validation": {
+    "rerun": false,
+    "last_receipt_unchanged": "verification/full-285/summary.json",
+    "next_periodic_section": 290,
+    "scope_not_reduced": true
+  },
+  "limits": [
+    "社区文档不是当前服务器或实际游戏结算验收。",
+    "未支持或改写过的敌人引用与失效来源仍未知；不借用等级0。",
+    "实际宝箱触发/动态生成、完整池与领取总量仍未完成。",
+    "P3/P2/P1仍未完成；无新的数字终点，不恢复历史300/400。"
+  ],
+  "next_section": 288,
+  "cloud_publication_binding": "enclosing_commit"
+}

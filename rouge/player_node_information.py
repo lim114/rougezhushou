@@ -246,6 +246,9 @@ def _battle_lines(record):
     if not base['rows']:
         lines.append('基础结算资料尚未绑定；不等于奖励为零。')
     lines.extend(['', '【可能获得的额外奖励】'])
+    reward_entities = {row['entity_id'] for row in result['rows']}
+    if {'trap_323_shsbox', 'enemy_2152_shezlc'} <= reward_entities:
+        lines.append('箱型装置与它召出的移动恶笼草是关联资料；同一移动敌人的奖励只能算一次，不能各加10源石锭。')
     if record.get('entry_condition_excluded_reference'):
         lines.append('这项资料不符合当前已列入口条件，仍可查看原图；不当作当前可进入的作战。')
     for row in result['rows']:
@@ -263,6 +266,8 @@ def _battle_lines(record):
             lines.append(f'条件：{_plain(outcome["condition_label"])}；数量参考：{amount}。')
             if outcome.get('cost_quantity') is not None:
                 lines.append(f'开启费用参考：{outcome["cost_quantity"]}点部署费用；不是源石锭或行动力。')
+        if row.get('kind') == 'moving_enemy_action':
+            lines.append('击倒收益和漏过损失是两种不同结果，不能同时相加，也不能用记录条数代替出现数量。')
         if row['rule'].get('quantity_scope_notice'):
             lines.append(_plain(row['rule']['quantity_scope_notice']))
     if not result['rows']:

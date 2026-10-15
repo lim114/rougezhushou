@@ -24,15 +24,21 @@ class PlayerBattleInformation286Tests(unittest.TestCase):
                 self.assertNotIn('基础表来源：',text)
                 self.assertIn(result['source']['url'],reward_source_text(result,technical=True))
 
-    def test_01_only_the_three_authorized_renderers_change(self):
+    def test_01_original_nonrendering_scope_except_evidenced_287_reward_rule_is_unchanged(self):
         guards={
           'rouge/battle_preview.py':(('enemy_text','spawn_text'),
             'f94464de55ab66219b09258bcb91c1c74516274635398c409ebf2922cf8bdb20'),
-          'rouge/battle_reward_planning.py':(('reward_source_text',),
-            '5cf75322db27997eaaa130c8b8183e265b1135607b34ad9f190a360566525dc3')}
+          # Section287 replaces only _rule and adds its evidence-backed import.
+          # Keep the remainder of the original286 AST frozen; the new rule has
+          # separate level, source and malformed-reference acceptance tests.
+          'rouge/battle_reward_planning.py':(('reward_source_text','_rule'),
+            '7251a6d340d9549119321cd6845ed125252f7fd4ec84d746908c9285a7a482ff')}
         for relative,(names,expected) in guards.items():
             tree=ast.parse((ROOT/relative).read_text(encoding='utf-8'))
             tree.body=[node for node in tree.body if not isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)) or node.name not in names]
+            if relative=='rouge/battle_reward_planning.py':
+                tree.body=[node for node in tree.body if not isinstance(node,ast.ImportFrom)
+                           or node.module!='moving_reward_reference']
             actual=sha256(ast.dump(tree,include_attributes=False).encode()).hexdigest()
             self.assertEqual(actual,expected,relative)
 
