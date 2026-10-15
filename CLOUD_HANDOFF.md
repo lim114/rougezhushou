@@ -1,7 +1,7 @@
 <!-- live-cloud-index:start -->
 # 当前云端续接索引 · 第284节
 
-已完成至284，后续285；本批状态 `ACTIVE_BATCH_262_285_SECTION284_LOCAL_VALIDATED`。批次目标285。下次定期全量285。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至284，后续285；本批状态 `ACTIVE_BATCH_262_285_SECTION284_PUBLISHED`。批次目标285。下次定期全量285。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
