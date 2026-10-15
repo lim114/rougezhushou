@@ -124,12 +124,12 @@ class ReadableBattleTests(unittest.TestCase):
         text=spawn_text(spawn_rows(SID)[0],SID)
         headings=['【出场条目】','【出场条件】','【局部时间计划】','【调度参考】','【路线检查点】']
         self.assertEqual([text.index(h) for h in headings],sorted(text.index(h) for h in headings))
-        self.assertIn('本波开始前延迟',text);self.assertIn('同条目相邻生成间隔',text)
-        self.assertIn('原地等待：100秒（配置）',text)
+        self.assertIn('本波开始前等待',text);self.assertIn('本条计划相邻两次出场间隔',text)
+        self.assertIn('原地等待：100秒（资料设定）',text)
         for raw in ('preDelay','interval','count','WAIT_FOR_SECONDS','routeIndex','time=','https://'):
             self.assertNotIn(raw,text)
-        self.assertIn('绝对出场时刻：未知',text);self.assertIn('不直接相加为全局时间',text)
-        self.assertIn('名义偏移不是开局绝对时刻',text)
+        self.assertIn('绝对出场时刻：未知',text);self.assertIn('不能直接相加当作开战倒计时',text)
+        self.assertIn('出场时间差不是开战后的实际时刻',text)
 
     def test_spawn_technical_mode_keeps_all_raw_action_keys_and_values(self):
         r=spawn_rows(SID)[0];text=spawn_text(r,SID,technical=True)
@@ -142,7 +142,7 @@ class ReadableBattleTests(unittest.TestCase):
         r=next(x for x in spawn_rows(SID) if x['branch']);text=spawn_text(r,SID)
         self.assertIn('出生位置：未知/未映射',text)
         self.assertIn('条件分支 · 第',text)
-        self.assertIn('基础/额外路线选择信息',text)
+        self.assertIn('尚未确认使用哪条路径',text)
         self.assertNotIn(r['branch'],text);self.assertNotIn('useExtraRoute',text)
         raw=spawn_text(r,SID,technical=True)
         self.assertIn(r['branch'],raw);self.assertIn('useExtraRoute',raw)
@@ -150,7 +150,10 @@ class ReadableBattleTests(unittest.TestCase):
     def test_random_weight_remains_a_reference_and_is_not_normalized(self):
         r=next(x for x in spawn_rows(SID) if x['action'].get('randomSpawnGroupKey'))
         text=spawn_text(r,SID)
-        self.assertIn('原始权重',text);self.assertIn('非概率',text)
+        self.assertNotIn('原始权重',text)
+        self.assertIn('不保证出现',text);self.assertIn('不提供生成概率',text)
+        technical=spawn_text(r,SID,technical=True)
+        self.assertIn('原始权重',technical);self.assertIn('非概率',technical)
         self.assertIsNone(r['probability'])
         self.assertNotIn(r['action']['randomSpawnGroupKey'],text)
 

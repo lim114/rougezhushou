@@ -96,10 +96,10 @@ class BattleGrid(QWidget):
                 # Local queue anchor stays explicit; this label is not an
                 # absolute/live spawn timestamp or an actual movement ETA.
                 painter.setPen(QColor('#fff3a0'))
-                anchor='阶段队列' if self.selected.get('branch') else '片段队列'
+                anchor='本阶段出场计划' if self.selected.get('branch') else '本段出场计划'
                 painter.drawText(QRectF(8,2,max(0,self.width()-16),22),
                     Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter,
-                    f'第{self.selected_ordinal}次：{anchor}开始后 +{offset:g}秒（名义生成）')
+                    f'第{self.selected_ordinal}次：{anchor}启动后 +{offset:g}秒（非开战计时）')
         for marker in self.branch_positions:
             center=self.cell_center(marker['cell']);radius=max(8,min(size*.28,18))
             painter.setPen(QPen(QColor('#f0a2ef'),2));painter.setBrush(QColor('#34213b'))
@@ -251,26 +251,26 @@ class BattlePreviewPanel(QWidget):
             combo.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
         layout.addLayout(controls)
         layout.addWidget(self.enemy_choices)
-        self.include_branches=QCheckBox('显示条件分支参考（位置未核验）');self.include_branches.setChecked(True)
+        self.include_branches=QCheckBox('包含特定条件下才可能出现的敌人（不保证本局出现）');self.include_branches.setChecked(True)
         layout.addWidget(self.include_branches)
         self.technical=QCheckBox('显示技术资料（原始参数、标识与来源）');layout.addWidget(self.technical)
         self.occurrence_bar=QWidget();occurrence_layout=QHBoxLayout(self.occurrence_bar)
         occurrence_layout.setContentsMargins(0,0,0,0)
-        occurrence_layout.addWidget(QLabel('条目内生成序号'))
+        occurrence_layout.addWidget(QLabel('这一组的第几名敌人'))
         self.occurrence=QSpinBox();self.occurrence.setRange(1,1)
         occurrence_layout.addWidget(self.occurrence)
         self.occurrence_label=QLabel();occurrence_layout.addWidget(self.occurrence_label,1)
         layout.addWidget(self.occurrence_bar);self.occurrence_bar.hide()
         self.summary=QLabel();self.summary.setWordWrap(True);layout.addWidget(self.summary)
-        rewards=QHBoxLayout();rewards.addWidget(QLabel('条件奖励来源'))
+        rewards=QHBoxLayout();rewards.addWidget(QLabel('可能获得的额外奖励'))
         self.reward_combo=QComboBox();rewards.addWidget(self.reward_combo,1);layout.addLayout(rewards)
-        self.reward_summary=QPushButton('基础结算与全部奖励来源');rewards.addWidget(self.reward_summary)
+        self.reward_summary=QPushButton('查看结算与全部奖励说明');rewards.addWidget(self.reward_summary)
         self.duel_reward_button=QPushButton('左中右档次奖励');rewards.addWidget(self.duel_reward_button)
         self.duel_reward_window=None
         self.duel_reward_button.clicked.connect(self.open_duel_rewards)
         self.highland_top_button=QPushButton('高台名义表面资料');rewards.addWidget(self.highland_top_button)
         self.highland_top_dialog=None;self.highland_top_button.clicked.connect(self.open_highland_top)
-        self.branch_toggle=QCheckBox('条件分支来源与全部动作');layout.addWidget(self.branch_toggle)
+        self.branch_toggle=QCheckBox('展开特殊出怪条件与位置');layout.addWidget(self.branch_toggle)
         self.branch_panel=BranchReferencePanel();layout.addWidget(self.branch_panel);self.branch_panel.hide()
         maps=QSplitter(Qt.Orientation.Horizontal)
         left=QWidget();l=QVBoxLayout(left);l.setContentsMargins(0,0,0,0)
@@ -341,6 +341,7 @@ class BattlePreviewPanel(QWidget):
 
     def _technical_changed(self):
         """Change detail presentation without rebuilding choices or occurrences."""
+        self.source_label.setVisible(self.technical.isChecked())
         if self._branch_marker and self._detail_key and self._detail_key[1]=='branch_reference':
             self._branch_reference_cell(self._branch_marker,preserve=True)
             if self._shown_enemy:self._render_enemy(*self._shown_enemy[1:],preserve=False)
@@ -382,6 +383,7 @@ class BattlePreviewPanel(QWidget):
         source=battle_data()['source']
         self.source_label.setText('资料版本：游戏 '+source['game_commit'][:10]+'；原图 '+source['resource_commit'][:10]+
             '。地图素材版权归鹰角网络。完整来源见条目详情及本项目验收记录。')
+        self.source_label.setVisible(self.technical.isChecked())
         self.render_rows()
 
     def render_rows(self,*_):
@@ -407,23 +409,23 @@ class BattlePreviewPanel(QWidget):
             if row['branch']:flags.append('条件分支')
             if a.get('hiddenGroup'):flags.append('隐藏组')
             if a.get('randomSpawnGroupKey') or a.get('randomSpawnGroupPackKey'):flags.append('随机候选')
-            prefix='波'+str(row['wave']) if row['wave'] else '分支'
+            prefix=(f"第{row['wave']}波·第{row['fragment']}段" if row['wave'] else f"条件出怪·第{row['phase']}阶段")
             seq=local_sequence(row,limit=0)
-            local=('队列后 +'+format(seq['first_offset'],'g')+'～'+format(seq['last_offset'],'g')+'秒'
+            local=('本段出场计划 +'+format(seq['first_offset'],'g')+'～'+format(seq['last_offset'],'g')+'秒'
                 if seq['first_offset'] is not None else '局部时间未知')
-            item=QListWidgetItem(prefix+' '+names.get(a['key'],a['key'])+' ×'+str(a['count'])+
+            item=QListWidgetItem(prefix+' '+names.get(a['key'],'名称待确认的敌人')+' ×'+str(a['count'])+
                 ' · '+local+(' ['+'/'.join(flags)+']' if flags else ''))
             item.setData(Qt.ItemDataRole.UserRole,row);self.spawn_list.addItem(item)
         self.spawn_list.blockSignals(False);self.grid.set_reference(stage,self.rows)
         self.original.set_reference(stage,self.rows)
-        self.map_caption.setText('固定原图 · 地面参考标记（近似校准；检查点连线非实际寻路）'
-            if self.original.projection else '固定原图参考（本图坐标尚未校准或版本不匹配）')
+        self.map_caption.setText('固定原图 · 近似地面位置；连线只表示资料中的途经点，不代表实际行进路径'
+            if self.original.projection else '原图位置尚未核对：请看左侧方格图；不会把未核对的位置画到原图上。')
         direct=getattr(self.original.projection,'mapping_mode',None)=='direct_verified_centers'
         if direct:
             count=len(self.original.projection.points)
             self.map_caption.setText(f'固定原图 · {count}个已核对的地面格中心（近似参考）\n'
-                '只显示这些格的点；其他位置未知，不外推、不连路线，也不从原图反算格。'
-                '独立读数相差不超过4源像素，不代表实际战斗位置误差。')
+                '只显示这些格的点；其他位置尚未核对，不据此猜测或延伸路线。'
+                '标记为资料中的近似地面位置，实际出生位置可能有偏移。')
         elif self.original.projection:
             data=projection_data();binding=data['stages'][stage['id']]
             columns={check['col'] for check in data['calibrations'][binding['calibration']]['checks']}
@@ -431,8 +433,8 @@ class BattlePreviewPanel(QWidget):
                       if len(columns)==1 else '独立地标仅核验记录的部分地面格，其余位置为外推参考。')
             self.map_caption.setText(self.map_caption.text()+'\n'+coverage+'高台、入口立体图标及实际出生偏移未核验。')
         if stage:
-            self.summary.setText(stage['name']+'：'+str(len(self.rows))+'个调度条目（含候选，并非实际敌人数）。'
-                '点击出生标记或条目查看位置、局部计划和条件；绝对时刻、分支触发和实际寻路尚未核验。')
+            self.summary.setText(stage['name']+'：'+str(len(self.rows))+'组出怪资料（含可能不出现的候选，并非实际敌人数）。'
+                '点选一组或地图标记，可查看敌人、出生位置与出现条件。+秒数从本段出场计划启动时计算，既不是开战倒计时，也不是从首只敌人出现计时；计划启动前的等待另列。实际出场时刻与行进路径尚未确认。')
             from .stage_floor_reference import sixth_floor_reference,floor_reference_text
             reference=sixth_floor_reference(stage['id'],stage)
             if reference:self.summary.setText(self.summary.text()+'\n'+floor_reference_text(reference))
@@ -555,7 +557,7 @@ class BattlePreviewPanel(QWidget):
         self.grid.selected_ordinal=ordinal;self.grid.update()
         self.original.selected_ordinal=ordinal;self.original.update()
         offset=ordinal_offset(row,ordinal)
-        anchor='所选阶段动作队列开始' if row.get('branch') else '本片段动作队列开始'
+        anchor='本分支阶段的出场计划启动' if row.get('branch') else '本段出场计划启动'
         self.occurrence_label.setText('以'+anchor+'为0秒：+'+format(offset,'g')+'秒；绝对时刻/可见入场未核验。'
             if offset is not None else '此条目局部时间无法确认。')
 

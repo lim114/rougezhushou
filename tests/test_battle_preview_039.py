@@ -82,7 +82,7 @@ class BattlePreviewTests(unittest.TestCase):
                 self.assertIsNone(row['absolute_time']);self.assertIsNone(row['probability'])
         text=spawn_text(spawn_rows(SID)[0],SID)
         self.assertIn('绝对出场时刻：未知',text)
-        self.assertIn('不直接相加为全局时间',text)
+        self.assertIn('不能直接相加当作开战倒计时',text)
 
     def test_hidden_group_differs_by_variant(self):
         stages=battle_data()['stages'];urgent=next(sid for sid,s in stages.items()
@@ -93,7 +93,10 @@ class BattlePreviewTests(unittest.TestCase):
 
     def test_raw_random_weights_are_preserved_not_normalized(self):
         row=next(r for r in spawn_rows(SID) if r['action'].get('randomSpawnGroupKey'))
-        self.assertIn('原始权重',spawn_text(row,SID));self.assertIn('非概率',spawn_text(row,SID))
+        ordinary=spawn_text(row,SID);technical=spawn_text(row,SID,technical=True)
+        self.assertNotIn('原始权重',ordinary)
+        self.assertIn('不保证出现',ordinary);self.assertIn('不提供生成概率',ordinary)
+        self.assertIn('原始权重',technical);self.assertIn('非概率',technical)
         self.assertIsNone(row['probability'])
 
     def test_enemy_base_matches_existing_calculation(self):

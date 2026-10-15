@@ -22,20 +22,20 @@
     "push_after_batch_commit": true,
     "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
-    "stop_after_section": 285,
+    "stop_after_section": null,
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
     "full_validation_anchor_section": 125,
-    "next_full_validation_after": null,
+    "next_full_validation_after": 290,
     "validation_per_section": "Necessary checks tied to changed behavior only; omit when unnecessary. Full available suite unchanged.",
     "each_section_window_required": false,
     "each_section_requires_meaningful_project_advancement": true,
     "bugfix_only_counts_as_functional_section": false,
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
-    "current_user_batch_target_section": 285,
-    "current_user_batch_completed": true,
+    "current_user_batch_target_section": null,
+    "current_user_batch_completed": false,
     "requirements_synced_each_section": true,
     "long_term_target_section": 400,
     "atomic_section_source_receipt_status_commit": true,
@@ -43,12 +43,12 @@
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
     "repair_full_validation_after_functional_260": true,
-    "new_functional_sections_paused": true,
+    "new_functional_sections_paused": false,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
     "historical_accuracy_validation_after_section_before261": 115,
-    "batch_target_section": 285,
+    "batch_target_section": null,
     "highest_priority_project_requirements": {
       "path": "PROJECT_REQUIREMENTS.md",
       "section": "项目级最高优先要求（2026-10-15）",
@@ -59,7 +59,7 @@
     "player_readability": "Default player output requires no computing terminology: useful result/information first, game Chinese names, conditions/units/unknowns explained; raw IDs, numeric implementation and debug details expandable."
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 285,
+  "completed_sections": 286,
   "sections": [
     {
       "number": 1,
@@ -1758,10 +1758,16 @@
       "kind": "functional_section",
       "topic": "32档案的同源四层面板、所选全部技能与条件隔离",
       "verification": "verification/sections/285.json"
+    },
+    {
+      "number": 286,
+      "completion_ref": "p3-section-286",
+      "topic": "节点玩家说明、条件奖励与可读战斗预览",
+      "verification": "verification/sections/286.json"
     }
   ],
-  "next_section": 286,
-  "next_action": "285批次保持结束、286未启动；最新方向优先完成P3节点/事件、固定战斗地图/出怪条件与敌人信息，默认玩家输出无需计算机术语基础即可理解。当前国服固定资料基准并检测版本差异，独立公开算例优先、必要时少量后台只读采样；首批三名校准和其余P2/P1保留，识别最后。按最高优先五条要求先核对前提与证据，不自动恢复历史连续目标。",
+  "next_section": 287,
+  "next_action": "从287继续P3：补齐节点/事件与掉落的有证条件链和固定地图预览缺口，按普通玩家可理解的方式展示；每节源码/验收/要求/索引普通推送并核对远端，无新的数字终点。P2/P1保留，识别最后；下一定期全量290。",
   "full_validation_due": false,
   "last_full_validation": {
     "after_section": 285,
@@ -1865,7 +1871,7 @@
     "commit_interval": 1,
     "push_after_each_section": true,
     "full_validation_interval": 15,
-    "next_full_validation_after": null,
+    "next_full_validation_after": 290,
     "requirements_synced_each_section": true
   },
   "pending_batch_sections": [],
@@ -1889,16 +1895,15 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 285,
-    "verification": "verification/sections/285.json",
+    "section": 286,
+    "verification": "verification/sections/286.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit",
-    "commit_reference": "commit containing285 source/finalfull/requirements/index",
-    "batch_closed": true
+    "commit_reference": "commit containing 286 code, required verification, project requirements and cloud index"
   },
   "last_verified_cloud_save": {
     "section": 285,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "064687c3d7408f8544e00717486f2b09c16fdca8",
     "proof": "verification/sections/285-publication.json",
@@ -2093,7 +2098,7 @@
     "full095_deferred_preserved": true,
     "scope": "Current239 maintained available selector union plus inherited bounded healthy functional MainWindow suite. Specialist101–104 receipts separately archived. Missing evidence, original skips and3 actual Wine capability bodies are not PASS."
   },
-  "next_full_validation_after": null,
+  "next_full_validation_after": 290,
   "user_requested_wrap": false,
   "current_full110_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -2154,7 +2159,7 @@
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": 285,
-  "batch_status": "BATCH_262_285_COMPLETED_PUBLISHED",
+  "batch_status": "P3_CONTINUATION_READY",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2200,14 +2205,15 @@
     285
   ],
   "current_batch": {
-    "start": 262,
-    "end": 285,
-    "status": "BATCH_262_285_COMPLETED_PUBLISHED",
-    "next_section": 286,
+    "start": 286,
+    "end": null,
+    "status": "P3_CONTINUATION_READY",
+    "next_section": 287,
     "next_section_started": false,
-    "next_full_validation_after": null,
-    "receipt": "verification/sections/285.json",
-    "batch_closed": true
+    "next_full_validation_after": 290,
+    "batch_closed": false,
+    "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+    "receipt": "verification/sections/286.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -2340,8 +2346,8 @@
     "full_validation_interval": 5,
     "next_full_validation_after": 120
   },
-  "batch_start_section": 262,
-  "batch_target_section": 285,
+  "batch_start_section": 286,
+  "batch_target_section": null,
   "suspended_target_section": 400,
   "latest_user_resume": {
     "at_Beijing": "2026-10-15T13:45:18.622460+08:00",
@@ -3285,17 +3291,6 @@
     "proof": "verification/sections/284-publication.json",
     "proof_sha256": "11313045c8c1c3884a9329f1d1939a5246873363a6af175239493fe1d558f463"
   },
-  "cloud_publication_closeout": {
-    "section": 285,
-    "functional_commit": "064687c3d7408f8544e00717486f2b09c16fdca8",
-    "functional_source_bytes_unchanged": true,
-    "proof": "verification/sections/285-publication.json",
-    "current_commit_kind": "publication metadata; no additional functional section",
-    "goal_target_section": 285,
-    "next_section": 286,
-    "batch_closed": true,
-    "next_section_started": false
-  },
   "confirmed_next_stage_direction": {
     "confirmed_on_Beijing": "2026-10-15",
     "primary_track": "既有P3全部待办：节点/事件条件与掉落、固定战斗地图/出怪条件、敌人信息",
@@ -3310,7 +3305,8 @@
       "kaltsit",
       "silverash",
       "mechanist"
-    ]
+    ],
+    "last_completed_functional_section": 286
   },
   "last_requirements_maintenance": {
     "date_Beijing": "2026-10-15",
@@ -3324,5 +3320,23 @@
     },
     "full_validation_rerun": false,
     "existing_full_receipt_scope": "verification/full-285/summary.json remains bound to its original frozen source; not a new full check of the maintenance tooling change."
+  },
+  "historical_cloud_publication_closeout_through_285": {
+    "section": 285,
+    "functional_commit": "064687c3d7408f8544e00717486f2b09c16fdca8",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/285-publication.json",
+    "current_commit_kind": "publication metadata; no additional functional section",
+    "goal_target_section": 285,
+    "next_section": 286,
+    "batch_closed": true,
+    "next_section_started": false
+  },
+  "current_section_validation": {
+    "section": 286,
+    "receipt": "verification/sections/286.json",
+    "necessary_methods_passed": 166,
+    "native_isolated_window_checks": 82,
+    "full_suite_rerun": false
   }
 }

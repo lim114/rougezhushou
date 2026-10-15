@@ -207,7 +207,7 @@ def update(root=ROOT):
         old = before + after.lstrip('\n')
     block = (f'{START}\n# 当前云端续接索引 · 第{completed}节\n\n'
              f'已完成至{completed}，后续{checkpoint["next_section"]}；本批状态 `{checkpoint.get("batch_status")}`。'
-             f'批次目标{index["current_batch_target_section"]}。'
+             f'推进终点：{index["current_batch_target_section"] if index["current_batch_target_section"] is not None else "未指定数字终点"}。'
              f'下次定期全量{checkpoint["next_full_validation_after"]}。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。\n\n'
              '恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。'
              '当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。'

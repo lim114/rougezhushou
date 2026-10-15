@@ -1,0 +1,167 @@
+{
+  "section": 286,
+  "kind": "functional_section",
+  "title": "节点玩家说明、条件奖励与可读战斗预览",
+  "at_Beijing": "2026-10-15T23:21:12.281025+08:00",
+  "branch": "codex/p2-development",
+  "prior_commit": "6d4b83d3dfdc139c03fa0a4af8869df98b108bbc",
+  "remaining_item": "P3节点/事件/掉落与固定战斗预览的玩家可读性、历史条件隔离",
+  "new_capability": [
+    "默认玩家说明与资料依据两页；五类内容按作用、场景/选项、费用/奖励、后续与条件分别展示",
+    "全部固定事件按来源顺序保留场景/选项；同名分组不合并、历史资源不借当前、功能已知条件不被无关资源覆盖",
+    "战后基础奖励与额外条件奖励分开；部署费用/源石锭/行动力区分，未知池/数量/实际领取不补值、不相加为总量",
+    "出怪计划起点、条件候选、出生位置和预计敌人面板用中文解释；原始权重/字段/来源在技术资料保留",
+    "原有事件到固定作战与精确地图返回入口、页签/选区/滚动/筛选刷新保持"
+  ],
+  "fixed_reference_event_groups": 38,
+  "fixed_battle_stages": 105,
+  "files": [
+    "rouge/player_node_information.py",
+    "rouge/node_catalog_view.py",
+    "rouge/battle_preview.py",
+    "rouge/battle_reward_planning.py",
+    "rouge/battle_view.py",
+    "tests/test_player_node_information_286.py",
+    "tests/test_player_battle_information_286.py",
+    "tests/test_player_information_view_286.py",
+    "tests/test_battle_preview_039.py",
+    "tests/test_readable_battle_047.py",
+    "scripts/verify_player_information_window_286.py",
+    "scripts/verify_full_available.py",
+    "scripts/update_cloud_index.py",
+    ".gitattributes",
+    "scripts/verify_battle_widgets_040.py",
+    "scripts/verify_battle_widgets_041.py",
+    "scripts/verify_battle_widgets_042.py",
+    "scripts/verify_battle_widgets_043.py",
+    "scripts/verify_battle_widgets_044.py",
+    "scripts/verify_battle_widgets_045.py",
+    "scripts/verify_battle_widgets_046.py",
+    "scripts/verify_battle_widgets_047.py",
+    "scripts/verify_battle_widgets_048.py",
+    "scripts/verify_battle_widgets_049.py",
+    "scripts/verify_battle_widgets_051.py"
+  ],
+  "source_sha256": {
+    "rouge/player_node_information.py": "8f9f419713b5f9a672309a1bc1a97479639d4ec9784867c1cbbab7d662efcf49",
+    "rouge/node_catalog_view.py": "9b8506f6c5d4db09e3860b098ce25e582b3c9f29986c9a4990d675fe78e9415c",
+    "rouge/battle_preview.py": "34241004e4452be2b7cb10f2f02ae4042c816efe9adef65347c9430d9f30032e",
+    "rouge/battle_reward_planning.py": "efc93656066b5bf79ac30b4fddc08040a5980123c0ff7c2c0d806261c94f288b",
+    "rouge/battle_view.py": "d1e9f5a3439caacf478642b54ce5f4c3eb90ca322f0a6250eb3abead003f4beb",
+    "tests/test_player_node_information_286.py": "42bc2aebbe064408ac962f7aafb77bfe261905bb7903848914a6e83650221f4d",
+    "tests/test_player_battle_information_286.py": "0b0e53274c6363fb550cb524e7d9bfd48cab737e0f466bd8a0af9267c11cbd32",
+    "tests/test_player_information_view_286.py": "f40f412de0e8444929dfc4f1e17aa49b47b71e608decfdb7b10326a94c98e011",
+    "tests/test_battle_preview_039.py": "86918e9967272c08453ba5a61a9d9d41386f7d4fc6307e181691777afd5ac4a7",
+    "tests/test_readable_battle_047.py": "68b77aec12bf2a469e9ffebff38b9f9c1c1bd968fd6603f944c9294f30194d15",
+    "scripts/verify_player_information_window_286.py": "60fb3674c2cfb0c99054518e88750e1637051eb3ccc69e8b6d06bca2382a3386",
+    "scripts/verify_full_available.py": "6968820df00b0baccff440d163a5a77072618a91779ba07c5a8a1debda1c50c2",
+    "scripts/update_cloud_index.py": "0fb9f5d135ee376aef724b018cf04cfe26adab9529100c6167bdf6fe4ced3b15",
+    ".gitattributes": "3a75a4d961966e2f35234bd488ed2cfaf3f53bcaba05e529817114af40623549",
+    "scripts/verify_battle_widgets_040.py": "02c00776c0f349ce85f28f6269d7d2db1abc2add7b40793a9ca2d3b30c4b8dba",
+    "scripts/verify_battle_widgets_041.py": "533eb7c762b478747025bb46fdb1817de3c9edea24cba38187f566539a6a6cc3",
+    "scripts/verify_battle_widgets_042.py": "a2b73b78873b06bc3227bc7d08764b7ca5fdbe34063e6da2c519445a2ab64d0f",
+    "scripts/verify_battle_widgets_043.py": "49c3071055ecf9c4bc93e4542710aa86bcfec1a12bd319f74904392ffc608f04",
+    "scripts/verify_battle_widgets_044.py": "023d18a2672ff61b330dbb064addb47cf5cd8d71d6bcfb8be34576aa06ce7e8d",
+    "scripts/verify_battle_widgets_045.py": "5dfd11d72e957c8d951f902e975e5f0cfb5f330c3eb2bb8b055ecf6295c3c586",
+    "scripts/verify_battle_widgets_046.py": "32428eaea73280191282fe8e8501dbb617f12f78cd97b9179df62e54209d19a0",
+    "scripts/verify_battle_widgets_047.py": "19da362db6495aa9568f9cee3d3d48972bbe97680ee669ae24440bbace528412",
+    "scripts/verify_battle_widgets_048.py": "48c63f07e560a26d95112ffb4992a0d2ddec345c5a7c8eebe28642d9f3864b9a",
+    "scripts/verify_battle_widgets_049.py": "41da5ac7c4894685d3a09e5735796f1d4989e728460042ba0d5863492573f2e1",
+    "scripts/verify_battle_widgets_051.py": "9657a8da317ee7bdd0d8ae42ffe5fbf51cca6f6143b3dbd9c985804e2da8a232"
+  },
+  "fixed_source_data": {
+    "rouge/data/node-catalog.json": {
+      "sha256": "7df1d94bb69650eb19fc811af661e54d44bf07d72b1c0793de511adc1b2e915d",
+      "unchanged_from_prior_commit": true
+    },
+    "rouge/data/node-events.json": {
+      "sha256": "dfe67e7e46ac782e75a9444341a5e1ced9c1252b1d7a26682ebfd127a1c4553b",
+      "unchanged_from_prior_commit": true
+    },
+    "rouge/data/event-planning-reference.json": {
+      "sha256": "b9de2c98dac306eafc40dba8fa3ee5765c6720afa18c907488ff1f4f199e4f14",
+      "unchanged_from_prior_commit": true
+    },
+    "rouge/data/event-current-observation.json": {
+      "sha256": "84887a2b2d155c80298a9730e9f0b537e8ea8dcff004b75b811fbb17d77c0a3d",
+      "unchanged_from_prior_commit": true
+    },
+    "rouge/data/battle-reward-reference.json": {
+      "sha256": "108c58a3df437628c14b327e3fc085f07c8b54d4d2aeced7ddefad4604f215f9",
+      "unchanged_from_prior_commit": true
+    },
+    "rouge/data/base-settlement-reference.json": {
+      "sha256": "9921a3707e1b0a6aca19fd5644cc5653be095d3a0b43d44ca93ba308531d69ce",
+      "unchanged_from_prior_commit": true
+    }
+  },
+  "mechanism_or_numerical_calculation_changed": false,
+  "new_mechanism_claims": false,
+  "verification": {
+    "targeted": {
+      "receipt": "verification/sections/286-validation/process.json",
+      "methods": 166,
+      "exit_code": 0,
+      "source_unchanged": true,
+      "full_suite": false
+    },
+    "native_isolated_window": {
+      "receipt": "verification/sections/286-window.json",
+      "passed": true,
+      "qpa": "windows",
+      "visible_stages": 4,
+      "unique_completed_checks": 82,
+      "zero_game_captures": true,
+      "chat_sent": false
+    },
+    "original_test_window": {
+      "receipt": "verification/sections/286-main-window.json",
+      "passed": true,
+      "visible_responding_pid": 28588,
+      "existing_private_jsons_unchanged": 3
+    },
+    "historical_widget_label_migration": {
+      "receipt": "verification/sections/286-preparation/historical-label-migration.json",
+      "scripts": 11,
+      "assertion_count_and_nonstring_ast_preserved": true,
+      "full_legacy_window_rerun": false
+    }
+  },
+  "original_failures_preserved": [
+    "verification/sections/286-preparation/first-node-18/receipt.json",
+    "verification/sections/286-preparation/first-battle-refinement/process.json",
+    "verification/sections/286-preparation/first-targeted-101.log",
+    "verification/sections/286-preparation/first-related/process.json",
+    "verification/sections/286-window-first.json"
+  ],
+  "failure_resolution": "Same-name display grouping, nested multi-line terminology conversion and ordinary reward source-link leak corrected; old exact UI labels updated to current player presentation without deleting tests/assertions; floor-context and historical-resource counterexamples covered. First launch probe checked only the venv redirector; actual child window was subsequently verified.",
+  "screenshot_relocations": [
+    {
+      "public_path": "verification/sections/286-window-01-node-player.png",
+      "original_receipt_path": ".cache/p3-286-root/window-corrected-01-node-player.png"
+    },
+    {
+      "public_path": "verification/sections/286-window-02-node-evidence.png",
+      "original_receipt_path": ".cache/p3-286-root/window-corrected-02-node-evidence.png"
+    },
+    {
+      "public_path": "verification/sections/286-window-03-battle-rewards.png",
+      "original_receipt_path": ".cache/p3-286-root/window-corrected-03-battle-rewards.png"
+    },
+    {
+      "public_path": "verification/sections/286-window-04-battle-technical.png",
+      "original_receipt_path": ".cache/p3-286-root/window-corrected-04-battle-technical.png"
+    }
+  ],
+  "limits": [
+    "Fixed reference coverage is not the complete current-server event set; no new server eligibility or mechanism claims.",
+    "25 original scenes/57 original option entry-condition chains, remaining reward pools/quantities and hotfix applicability remain open.",
+    "81 stage IDs/59 original images whole-map calibration gaps and absolute spawn-time/actual branch binding remain open.",
+    "Existing full-285 receipt describes its original frozen scope; this section ran necessary checks only. Next scheduled full validation is 290.",
+    "P3, P2 and P1 are not complete; recognition optimization remains last."
+  ],
+  "game_operated": false,
+  "chat_sent": false,
+  "private_state_cleared_copied_or_restored": false,
+  "evidence_byte_preservation": "Existing CRLF widget scripts and raw verification archives remain byte-preserved; scoped Git attributes recognize CR at end of line without changing source bytes or test assertions."
+}

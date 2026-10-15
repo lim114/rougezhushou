@@ -1,0 +1,23 @@
+test_01_only_the_three_authorized_renderers_change (tests.test_player_battle_information_286.PlayerBattleInformation286Tests.test_01_only_the_three_authorized_renderers_change) ... ok
+test_02_spawn_first_screen_names_enemy_position_and_correct_local_clock (tests.test_player_battle_information_286.PlayerBattleInformation286Tests.test_02_spawn_first_screen_names_enemy_position_and_correct_local_clock) ... ok
+test_03_random_candidates_hide_raw_weights_but_not_uncertainty (tests.test_player_battle_information_286.PlayerBattleInformation286Tests.test_03_random_candidates_hide_raw_weights_but_not_uncertainty) ... ok
+test_04_branch_clock_and_unknown_route_are_never_promoted_to_live_spawn (tests.test_player_battle_information_286.PlayerBattleInformation286Tests.test_04_branch_clock_and_unknown_route_are_never_promoted_to_live_spawn) ... ok
+test_05_enemy_predictions_keep_results_first_and_explain_their_scope (tests.test_player_battle_information_286.PlayerBattleInformation286Tests.test_05_enemy_predictions_keep_results_first_and_explain_their_scope) ... ok
+test_06_unknown_enemy_panel_does_not_fall_back_to_raw_white_values (tests.test_player_battle_information_286.PlayerBattleInformation286Tests.test_06_unknown_enemy_panel_does_not_fall_back_to_raw_white_values) ... FAIL
+test_07_reward_outcome_appears_before_activation_and_keeps_currency_types (tests.test_player_battle_information_286.PlayerBattleInformation286Tests.test_07_reward_outcome_appears_before_activation_and_keeps_currency_types) ... ok
+test_08_reward_technical_mode_retains_container_identity_and_source (tests.test_player_battle_information_286.PlayerBattleInformation286Tests.test_08_reward_technical_mode_retains_container_identity_and_source) ... ok
+test_09_reward_candidates_and_related_targets_are_not_added_as_actual_totals (tests.test_player_battle_information_286.PlayerBattleInformation286Tests.test_09_reward_candidates_and_related_targets_are_not_added_as_actual_totals) ... ok
+test_10_missing_reward_quantity_and_position_stay_unknown (tests.test_player_battle_information_286.PlayerBattleInformation286Tests.test_10_missing_reward_quantity_and_position_stay_unknown) ... ok
+
+======================================================================
+FAIL: test_06_unknown_enemy_panel_does_not_fall_back_to_raw_white_values (tests.test_player_battle_information_286.PlayerBattleInformation286Tests.test_06_unknown_enemy_panel_does_not_fall_back_to_raw_white_values)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_player_battle_information_286.py", line 93, in test_06_unknown_enemy_panel_does_not_fall_back_to_raw_white_values
+    self.assertNotIn(term,text)
+AssertionError: '基包' unexpectedly found in '提亚卡乌战士\n\n【预计面板】\n预计生命值：未知\n预计攻击力：未知\n预计防御：未知\n预计法抗：未知\n适用范围：当前固定关卡与已确认的本局环境；不含藏品，也不跟踪战斗中的技能或阶段变化。\n面板尚有条件未确认，未知不等于0；原因见下方“面板待确认”。\n预计攻速：未知（技能/阶段/其他修正未核验）\n预计攻击间隔：未知（技能/阶段/动画未核验）\n预计有效移速：未知（未推算移动入场时间）\n\n部分额外属性已有资料可查，但不能直接当作本局完整数值；详细记录见技术资料。\n\n【面板待确认】\n• 本局保密等级尚未确认，未套用难度修正。\n\n【作战特征】\n攻击方式：近战；移动方式：地面\n图鉴伤害类型：物理\n以上方式为图鉴分类；具体阶段和行为见机制资料。\n\n【机制资料】\n以下为图鉴与已核验的条件资料；请与上方预计面板分开阅读，不代表所有机制已模拟。\n阿卡胡拉中最常见的战士，被阻挡后防御提升\n• 被阻挡时防御提升\n\n【技能状态】\n实际首次发动时刻：未知；完整技能伤害：未知。\n资料中记载：仅包含待核验机制参数。\n另有1项机制资料尚未确认；详细记录见技术资料。\n不同等级和本关的招式资料还未全部核对，不能据此确定实际发动时刻、次数或伤害。\n已核对资料中的初始设置；当前游戏中是否生效仍未知。\n\n基包配置分项：0条招式、1项机制参数已按来源构建规则解析。\n这些是固定版本的招式资料；当前游戏实际采用哪些、发动时间和完整回转仍未知。\n\n【异常免疫】\n只有明确记载的免疫状态才显示“是/否”；没有记录的保持未知。\n眩晕：未知；沉默：是；沉睡：未知\n冻结：未知；浮空：未知；缴械：未知\n恐惧：未知；麻痹：未知；吸引：未知\n传送：未知；束缚：未知\n\n【预测范围】\n预计面板只覆盖已核验的本局环境；不代表所有敌人技能或阶段均已模拟。\n含藏品的目标预测结果请在伤害测试页查看。'
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.211s
+
+FAILED (failures=1)

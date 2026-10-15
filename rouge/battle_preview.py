@@ -134,6 +134,9 @@ def enemy_text(entry,technical=False):
     env=entry['environment']
     confirmed=env and not entry['context_pending']
     for key,label in labels:lines.append('预计'+label+'：'+value_text(env['stats'].get(key) if confirmed else None))
+    if not technical:
+        lines.append('适用范围：当前固定关卡与已确认的本局环境；不含藏品，也不跟踪战斗中的技能或阶段变化。')
+        if not confirmed:lines.append('面板尚有条件未确认，未知不等于0；原因见下方“面板待确认”。')
     if env and not confirmed and entry['fixed_panel_reference']['construction_reference']['mode']=='stage_constructor':
         lines.extend(['','【已证环境分项】','以下仅含已绑定构造值和已证环境修正，未含待确认修正；不能当完整预计面板。'])
         for key,label in labels:lines.append(label+'已证分项：'+value_text(env['stats'].get(key)))
@@ -165,6 +168,7 @@ def enemy_text(entry,technical=False):
         for x in entry['damage_types']) or '未知'))
     lines.append('以上方式为图鉴分类；具体阶段和行为见机制资料。')
     lines.extend(['','【机制资料】'])
+    if not technical:lines.append('以下为图鉴与已核验的条件资料；请与上方预计面板分开阅读，不代表所有机制已模拟。')
     lines.append(entry['description'] or entry['handbook_description'] or '未取得描述。')
     lines.extend('• '+text for text in entry['abilities'])
     reward=entry.get('conditional_reward_reference')
@@ -215,20 +219,68 @@ def enemy_text(entry,technical=False):
         source=battle_data()['source']
         for key,label in (('enemy_database','敌人原始数据'),('handbook','中文图鉴')):
             if source.get(key,{}).get('url'):lines.append(label+'：'+source[key]['url'])
+    else:
+        # The detailed helpers retain their source terminology in technical
+        # mode. Ordinary readers need the meaning and uncertainty instead.
+        readable=[]
+        for line in '\n'.join(lines).splitlines():
+            if '项扩展字段已有明确来源，完整值仍未知' in line:
+                line='部分额外属性已有资料可查，但不能直接当作本局完整数值；详细记录见技术资料。'
+            elif line.startswith('基包配置分项：'):
+                line='固定资料中记载了一些招式和机制；完整记录见技术资料，不能据此断定当前全部生效。'
+            readable.append(line)
+        lines=readable
+        replacements={
+            '该引用要求数据库精确等级而条目缺失；不能以别名或默认路径替代所选构造模式。':'缺少当前敌人等级的完整资料，不能套用其他等级或同名敌人的数值。',
+            '原始等级定义与本关卡覆盖分别保留，未推定合并为当前实战技能；配置不等于实际首发、轮次或技能伤害。':'不同等级和本关的招式资料还未全部核对，不能据此确定实际发动时刻、次数或伤害。',
+            '本关卡采用独立构造，不使用数据库等级定义；资源标识与关卡别名分开。':'本关使用专属敌人资料，不能直接套用普通图鉴等级。',
+            '当前引用等级没有独立定义；低等级资料不能当作已确认的有效继承。':'没有当前敌人等级的独立资料，不能直接使用较低等级的数值。',
+            '固定数据库缺少精确等级；默认/别名构建路径未核验，未借用较低等级技力配置。':'缺少该敌人等级的完整资料，技力数值保持未知，不借用较低等级数据。',
+            '未见非空技力覆盖，构造空指针分配基线尚未闭合；完整技力配置保持未知，不借用数据库。':'本关专属技力资料不完整，完整技力数值保持未知，不借用普通图鉴数据。',
+            '技力配置分项已按基包非空整记录规则解析；实际控制器、首次发动与完整回转仍未知。':'已有可参考的技力资料；实际首次发动和完整回转仍未知。',
+            '默认或显式初始化来源已核验到基包条件分支；当前热更新和实际控制器仍未知。':'已核对资料中的初始设置；当前游戏中是否生效仍未知。',
+            '未合并资料：':'资料中记载：',
+            '条招式配置':'项招式资料','组技力配置':'项技力资料',
+            '部分技能字段为空，不证明没有默认/隐藏技能。':'缺少部分招式资料，不代表敌人没有其他招式。',
+            '未取得非空技能/技力配置；这不证明没有默认或隐藏技能。':'没有取得完整招式和技力资料，不能断定它没有其他能力。',
+            '部分参数格式未确认，保留原文并等待核验。':'部分机制资料尚未核对，详细记录留在技术资料中。',
+            '项未核验参数；原文可在技术资料中查看。':'项机制资料尚未确认；详细记录见技术资料。',
+            '下列“是/否”仅来自明确字段；未定义项保持未知。':'只有明确记载的免疫状态才显示“是/否”；没有记录的保持未知。',
+            '基包招式与机制参数：精确等级不可用；未借用旧等级或默认/别名构建结果。':'当前敌人等级的招式资料不完整；不套用其他等级或同名敌人的数据。',
+            '基包招式与机制参数：存在未覆盖的来源格式，完整配置参考保持未知。':'部分招式资料暂时无法读取，完整效果保持未知。',
+            '关卡独立构造的原招式覆写已保留；构造器未写空指针的分配基线仍未闭合，完整配置未知，未继承数据库条目。':'已保留本关专属招式资料；缺失部分不能用普通图鉴数据补齐，完整效果保持未知。',
+            '此处解析的是固定配置；未推定合并为当前实战技能，当前热更新、控制器、实际发动与完整回转仍未知。':'这些是固定版本的招式资料；当前游戏实际采用哪些、发动时间和完整回转仍未知。',
+            '招式构造基线仍未知；不借用数据库费用或宣称可施放。实际控制器和当前池未知。':'招式资料仍不完整；不能套用普通图鉴费用或断定可以发动，当前实际技力仍未知。',
+            '技能技力数值门：来源或独立构造基线未闭合，不能借用数据库/默认共享池。':'敌人技力资料不完整，不能借用其他资料来判断招式能否发动。',
+            '基础初始化点共享技力':'固定条件下的初始共享技力','基础初始化点技力':'固定条件下的初始技力',
+            '这里只检视独立技力数值门；实际附着、其他可用门和首次发动时刻仍未知。':'以下只判断技力是否足够；其他发动条件和首次发动时刻仍未知。',
+            '【固定预制体技能条件】':'【招式额外使用条件】',
+            '这些是同身份基包组件分项；实际附着、完整可施放及所有发动时钟仍未知。':'以下条件来自该敌人的固定资料；是否实际生效、能否发动和发动时间仍未知。',
+            '基础初始化计数0':'固定条件下从0次开始','初始化点':'初始时',
+        }
+        text='\n'.join(lines)
+        for old,new in replacements.items():text=text.replace(old,new)
+        return text
     return '\n'.join(lines)
 
 def spawn_text(row,stage_id,technical=False):
     a=row['action'];route=row['route'];cell=route['start']
-    lines=['【出场条目】',('第'+str(row['wave'])+'波 · 第'+str(row['fragment'])+'片段' if row['wave'] else
+    names={entry['id']:entry['name'] for entry in battle_data()['stages'][stage_id]['enemies']}
+    lines=['【出场条目】',names.get(a.get('key'),'敌人名称未确认'),('第'+str(row['wave'])+'波 · 第'+str(row['fragment'])+'片段' if row['wave'] else
         '条件分支 · 第'+str(row['phase'])+'阶段'),
         '出生位置：'+(f"格图自上第{cell['row']+1}行、第{cell['col']+1}列" if cell else '未知/未映射'),
         '绝对出场时刻：未知（调度起点、阻塞及脚本条件未核验）']
+    if not technical:
+        anchor='本分支阶段' if row.get('branch') else '本片段'
+        lines.append('时间口径：+'+'秒数从'+anchor+'的出场计划启动时计时，启动前的等待另列；不是开战倒计时，也不是从首只敌人出现计时。')
     lines.extend(['','【出场条件】','本条目生成数量：'+value_text(a.get('count'))])
+    if not technical:lines.append('数量仅在本条出场计划实际启用时适用；资料条目数不是实际敌人数。')
     if row.get('branch'):lines.append('此条目属于条件分支；触发时刻和阶段选择仍待核验。')
     if a.get('hiddenGroup'):
         lines.append('隐藏组：'+('本关卡变体符文声明启用' if row['hidden']['enabled_by_stage_rune'] else '启用条件待核验'))
     if a.get('randomSpawnGroupKey') or a.get('randomSpawnGroupPackKey'):
-        lines.append('此条目属于随机候选；原始权重：'+value_text(a.get('weight'))+'（非概率）。')
+        if technical:lines.append('此条目属于随机候选；原始权重：'+value_text(a.get('weight'))+'（非概率）。')
+        else:lines.append('随机候选：本条目不保证出现；候选不能相加为实际敌人数，也不提供生成概率。')
     lines.append('资料条目不保证实际出场；生成数量不跨随机候选相加。')
     lines.extend(['','【局部时间计划】',sequence_text(row)])
     lines.extend(['','【调度参考】','以下是配置参数，不直接相加为全局时间。'])
@@ -264,4 +316,35 @@ def spawn_text(row,stage_id,technical=False):
             '来源：'+battle_data()['stages'][stage_id]['level_source']['url']])
         reference=battle_data()['source'].get('scheduling_reference')
         if reference:lines.append('局部调度资料：'+reference['url'])
-    return '\n'.join(lines)
+    text='\n'.join(lines)
+    if not technical:
+        replacements={
+            '调度起点、阻塞及脚本条件未核验':'出场计划的开始时间和等待条件尚未确认',
+            '本波本片段动作队列开始':'本段出场计划启动',
+            '所选分支阶段动作队列开始':'本阶段出场计划启动',
+            '局部生成计划':'出场时间差',
+            '锚点已在片段/阶段开始前延迟之后；不重复加此前延迟，不跨片段使用同一个0秒。':'计时起点位于本段/本阶段开始前的等待之后；不要重复加此前等待，不同段也不能共用同一个0秒。',
+            '名义偏移不是开局绝对时刻；帧执行、生成回调和可见入场延迟尚未校准。':'出场时间差不是开战后的实际时刻；画面上真正出现的时间仍未确认。',
+            '此条目含条件或随机候选；序列仅在该条目实际启用/入选时适用。':'本条计划含额外条件或随机候选；只有本条计划实际生效时，这些时间差才适用。',
+            '以下是配置参数，不直接相加为全局时间。':'下面是出场前可能发生的等待，不能直接相加当作开战倒计时。',
+            '本波开始前延迟':'本波开始前等待','本波清场后的延迟':'本波清场后等待',
+            '本片段开始前延迟':'本段开始前等待','分支阶段开始前延迟':'本阶段开始前等待',
+            '无上限（原始配置为负一）':'无上限',
+            '秒（配置；实际清场等待仍未知）':'秒（资料设定；实际清场等待仍未知）',
+            '本条目首次生成前延迟':'本条计划首次出场前等待',
+            '同条目相邻生成间隔':'本条计划相邻两次出场间隔',
+            '以下是路线配置参考，不推算移动到达时刻。':'下面是资料中记载的途经位置和等待；不估算实际到达时刻。',
+            '等待当前片段计时至指定时点':'等待本段计时到指定时刻',
+            '（配置）':'（资料设定）',
+            '条目生成数量缺失/无效，不推定为1。':'出场数量未确认，不能当作1。',
+            '条目延迟/间隔缺失或无效，不推定为0。':'出场等待或间隔未确认，不能当作0。',
+            '生成偏移超出有限数值范围。':'出场时间差超出可显示范围。',
+            '本条目生成数量为0，无计划生成项。':'本条计划出场数量为0，没有安排出场。',
+            '条件分支缺少基础/额外路线选择信息，不能借用其他路线定位。':'本额外计划尚未确认使用哪条路径，不能借用其他路径标出出生位置。',
+            '路线存在地图外端点；不裁剪为地图内出生格。':'路径起点或终点不在地图格内；位置保留未知，不挪到地图边缘。',
+            '存在出生偏移/随机范围，图上标记仅为名义格。':'出生位置有偏移或随机范围，图上点仅作位置参考。',
+            '包含消失/再出现检查点；不连接为连续寻路轨迹。':'路径有消失或重新出现，不把两端连成连续行走路线。',
+            '路线移动类型未定义，不能将序列化占位坐标当出生格。':'移动方式尚未确认，不能使用占位坐标标出生位置。',
+        }
+        for old,new in replacements.items():text=text.replace(old,new)
+    return text

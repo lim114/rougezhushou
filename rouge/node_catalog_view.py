@@ -4,7 +4,7 @@ from functools import lru_cache
 import json
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QComboBox,QLineEdit,
-    QLabel,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QSplitter,QPushButton,QCheckBox)
+    QLabel,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QSplitter,QPushButton,QCheckBox,QTabWidget)
 from . import node_catalog as catalog
 from . import event_planning
 from . import original_destinations
@@ -16,6 +16,7 @@ from .duel_reward_planning import is_duel_stage
 from .duel_reward_view import DuelRewardPanel
 from .scrap_exchange_view import ScrapExchangePanel
 from .seed_cultivation_view import SeedCultivationPanel
+from .player_node_information import node_information_text
 
 KINDS={'event':'事件','battle':'战斗资料','function':'功能节点','original':'未归类原文','map':'本图节点'}
 QUALIFICATIONS={'matched':'已列条件相符','unknown':'资格未确认','excluded':'已列条件不符'}
@@ -27,6 +28,7 @@ RESOURCE_NAMES={'hp':'目标生命值','max_hp':'目标生命值上限','gold':'
                 'hope':'希望','shield':'护盾','ap':'行动力'}
 BUDGETS={True:'覆盖已列费用',False:'不足已列费用',None:'预算未知'}
 SCRAP_CATEGORIES={'MOVE':'加工品','GOODS':'自然物','PASSIVE':'概念体',None:'零件'}
+DIRECTORY_NOTICE='可查看已收录的节点、事件、奖励与作战资料；出现条件不完整的内容会标注待确认，不表示本局一定会遇到。'
 
 
 def resource_reference_lines(reference):
@@ -280,7 +282,7 @@ class NodeCatalogPanel(QWidget):
         self.exchange_window=None;self.exchange_origin_key=None
         self.seed_window=None;self.seed_origin_key=None
         layout=QVBoxLayout(self)
-        self.context_label=QLabel('公开目录以自然入口核对已列条件；特殊事件原文仍保留，不代表当前可进入，不提供生成概率。')
+        self.context_label=QLabel(DIRECTORY_NOTICE)
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
         controls=QHBoxLayout()
         self.kind=QComboBox();self.kind.addItem('全部公开内容',None)
@@ -302,7 +304,13 @@ class NodeCatalogPanel(QWidget):
         self.status=QLabel();self.status.setWordWrap(True);actions.addWidget(self.status,1);layout.addLayout(actions)
         split=QSplitter();self.list=CatalogTree();self.list.setAccessibleName('节点类型与资格分支')
         split.addWidget(self.list);right=QWidget();rl=QVBoxLayout(right)
-        self.detail=QPlainTextEdit();self.detail.setReadOnly(True);rl.addWidget(self.detail,1)
+        self.reading_tabs=QTabWidget();self.reading_tabs.setAccessibleName('节点说明与资料依据')
+        self.player_detail=QPlainTextEdit();self.player_detail.setReadOnly(True)
+        self.player_detail.setAccessibleName('玩家节点说明')
+        self.detail=QPlainTextEdit();self.detail.setReadOnly(True)
+        self.reading_tabs.addTab(self.player_detail,'玩家说明')
+        self.reading_tabs.addTab(self.detail,'资料与依据')
+        rl.addWidget(self.reading_tabs,1)
         self.battle_button=QPushButton('查看对应固定战斗地图');self.battle_button.setEnabled(False)
         self.event_stage=QComboBox();self.event_stage.setAccessibleName('事件选项对应作战资料');rl.addWidget(self.event_stage)
         self.destination_choice=QComboBox();self.destination_choice.setAccessibleName('原选项目的地资料候选');rl.addWidget(self.destination_choice)
@@ -339,17 +347,22 @@ class NodeCatalogPanel(QWidget):
         self.dossier=None;self.kind.setCurrentIndex(self.kind.findData('map'))
         self.context_label.setText('本图节点按类型分类；当前读取与历史分开，定位只改变助手预览。');self.refresh()
 
+    def _bound_historical_map(self):
+        return bool(self.dossier is not None and self.node_context and self.map_context
+            and self.map_context[3] and self.node_context[0]==self.map_context[0])
+
     def _event_context(self,event=None):
         context=deepcopy(self.runtime_context)
         context.update(node_type=self.node_type.currentData(),floor=self.floor.currentData(),entry_mode='natural')
         if self.dossier and self.node_context:
             graph,key,conditions=self.node_context;context.update(conditions)
             node=next((n for n in graph.get('nodes',[]) if n['id']==key),{})
-            if event and event.get('historical_read_reference'):
+            if event and (event.get('historical_read_reference') or self._bound_historical_map()):
                 # Today's inventory/gold and a passed clearing cannot establish
                 # what was owned, paid, or selectable at this historical reading.
                 context=deepcopy(conditions)
-                previous=known_node_type(node.get('remembered_type'))
+                previous=known_node_type(node.get('remembered_type') if event.get('historical_read_reference')
+                    else node.get('observed_type'))
                 context.update(node_type=previous if previous in event['node_types'] else None,
                     entry_mode='content',reference_context_scope='historical_title_reference_only')
                 return context
@@ -384,7 +397,7 @@ class NodeCatalogPanel(QWidget):
         self.dossier=None
         if self.kind.currentData()=='map':
             self.kind.blockSignals(True);self.kind.setCurrentIndex(0);self.kind.blockSignals(False)
-        self.context_label.setText('公开目录以自然入口核对已列条件；特殊事件原文仍保留，不代表当前可进入，不提供生成概率。');self.refresh()
+        self.context_label.setText(DIRECTORY_NOTICE);self.refresh()
 
     def _entries(self):
         nt=self.node_type.currentData();floor=self.floor.currentData();kind=self.kind.currentData()
@@ -414,7 +427,7 @@ class NodeCatalogPanel(QWidget):
             battles=[*battle_result['rows'],*({**r,'entry_condition_excluded_reference':True} for r in battle_result['excluded'])]
             functions=catalog.function_nodes(node_type=nt)['rows']
             originals=[{'id':str(item.get('id') or index),
-                        'title':f"原文 · {item.get('title') or item.get('id') or index} · {item['record_id']}",
+                        'title':f"待归类资料 · {item.get('title') or '名称未确认'} · 第{index+1}项",
                         'record':item} for index,item in enumerate(catalog.original_references()['rows'])]
         entries=[]
         for category,rows in (('event',events),('battle',battles),('function',functions),('original',originals)):
@@ -536,6 +549,9 @@ class NodeCatalogPanel(QWidget):
             if entry.get('history_read'):
                 text=('历史已读取内容；不证明当时已进入或选择了某个选项。\n'
                     '当前持有与资源不用于推定当时资格/费用；下方为固定选项及作战预览。\n\n'+text)
+            elif self._bound_historical_map():
+                text=('历史地图节点的资料参考；不证明当时实际进入或发生了该事件。\n'
+                    '当前持有与资源不用于推定当时资格/费用。\n\n'+text)
             text+='\n\n资料出现条件：'+QUALIFICATIONS[q['status']]+'；当前服务器资格仍未知。'
             text+='\n'+'\n'.join(('相符' if c['matches'] is True else '不符' if c['matches'] is False else '未知')+'：'+c['source_text'] for c in q['checks'])
             context=self._event_context(entry['record'])
@@ -590,7 +606,7 @@ class NodeCatalogPanel(QWidget):
         else:
             raw=entry['record']['record']
             text=special_original_text(raw['record_id'],self.runtime_context)+'\n\n完整原文与字段：\n'+json.dumps(raw,ensure_ascii=False,indent=2)
-        if entry and entry.get('history_read') and entry['kind']!='event':
+        if entry and (entry.get('history_read') or self._bound_historical_map()) and entry['kind'] not in ('event','map'):
             text='历史已读取内容或类型；以下仅原件参考，不代表当前节点仍有此功能或作战。\n\n'+text
         if entry and entry['kind']!='map' and self.map_context:
             graph,_,epoch,_=self.map_context
@@ -624,6 +640,10 @@ class NodeCatalogPanel(QWidget):
                 if value:text+=f'\n{label}：'+str(value.get('title') or value.get('identity_status') or '有资料但身份未知')
             hist=self.dossier.get('history_events',[])
             if hist:text+='\n过去类型的候选：'+'、'.join(e['title'] for e in hist)
+        context=self._event_context(entry['record'] if entry and entry['kind']=='event' else None)
+        player_entry=({**entry,'history_context_reference':True} if entry and self._bound_historical_map() else entry)
+        player_text=node_information_text(player_entry,context=context,dossier=self.dossier,map_context=self.map_context)
+        replace_text(self.player_detail,player_text,preserve=self.detail_key==key)
         replace_text(self.detail,text,preserve=self.detail_key==key);self.detail_key=key
 
     def open_original_destination(self):
