@@ -150,6 +150,7 @@ class MainWindow(QMainWindow):
         tabs.addTab(self.exploration_map_tab, '地图预览')
         self.battle_preview=BattlePreviewPanel()
         self.battle_preview.stageSelected.connect(self.select_battle_stage)
+        self.battle_preview.entryEventSelected.connect(self.show_battle_event_reference)
         tabs.addTab(self.battle_preview,'战斗预览')
         from .node_catalog_view import NodeCatalogPanel
         self.node_catalog=NodeCatalogPanel()
@@ -1065,6 +1066,15 @@ class MainWindow(QMainWindow):
         self.movement_source_dialog.set_map_context(cached[0] if live else None,
             context=self.node_catalog.runtime_context if live else {},epoch=self.run.state['id'])
         self.movement_source_dialog.show()
+
+    def show_battle_event_reference(self,token):
+        from .battle_event_references import resolve_stage_event_reference
+        stage_id=self.battle_preview.current_stage
+        if not resolve_stage_event_reference(stage_id,token):return False
+        if not self.node_catalog.open_battle_event_reference(stage_id,token):return False
+        self.centralWidget().setCurrentWidget(self.node_catalog)
+        if self.battle_preview.entry_reference_window:self.battle_preview.entry_reference_window.hide()
+        return True
 
     def show_source_catalog_event(self,event_id):
         panel=self.node_catalog;panel.show_directory()

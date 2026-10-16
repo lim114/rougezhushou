@@ -10,6 +10,7 @@ import re
 
 from . import event_planning
 from .documented_choice_items import event_item_references
+from .stage_entry_reference import stage_entry_reference
 from . import node_catalog as catalog
 from .battle_reward_planning import stage_reward_sources
 from .base_settlement_planning import stage_base_rewards, gold_reference_text
@@ -273,6 +274,17 @@ def _battle_lines(record):
     lines = [_plain(result['stage_name']), '类别：' + ('、'.join(BATTLE_KINDS.get(kind, '类别未确认') for kind in record.get('categories', [])) or '未确认'),
              '资料层数：' + _floors(record.get('floors')), '可用下方入口查看固定战斗地图、敌人和出场资料。',
              '【战后基础奖励】', '以下需要战斗胜利，按资料中的入口分别列出；不含额外加成，不代表本局已领取。']
+    entry_reference = stage_entry_reference(stage_id)
+    if entry_reference is not None:
+        reward_heading = lines[-2:]; lines = lines[:-2]
+        if entry_reference.get('status') == 'documented_reference':
+            floors = '、'.join(str(r['main_floor_reference']) for r in entry_reference['rows'] if type(r['main_floor_reference']) is int)
+            lines.extend(['', '【资料记录的关联入口】', '原始资料列出第' + floors + '层普通作战上的关联标记，另有原资料称为“假层”的单独记录。',
+                '可在战斗预览中点击“查看对应节点与进入方式资料”，阅读完整标记及相关藏品说明。',
+                '这不保证本局出现；假层不归到某个主层或秘境，实际标记位置和全部进入方式仍未确认。'])
+        else:
+            lines.append('补充进入方式资料暂时无法核对；保留关卡原说明，不把资料失效当作没有入口。')
+        lines.extend(['', *reward_heading])
     base = stage_base_rewards(stage_id)
     for reference in base['rows']:
         if reference['status'] == 'excluded':

@@ -16,6 +16,7 @@ from .branch_reference_view import BranchReferencePanel
 from .duel_reward_planning import is_duel_stage
 from .duel_reward_view import DuelRewardPanel
 from .highland_top_view import HighlandTopDialog
+from .battle_entry_reference_view import BattleEntryReferencePanel,entry_packet
 
 class BattleGrid(QWidget):
     cellSelected=Signal(object)
@@ -235,6 +236,7 @@ class MapOriginal(QWidget):
 
 class BattlePreviewPanel(QWidget):
     stageSelected=Signal(object)
+    entryEventSelected=Signal(object)
     def __init__(self,parent=None):
         super().__init__(parent);self.context={};self.current_stage=None;self.rows=[]
         self._rows_stage=None;self._shown_enemy=None;self._tile_cell=None;self._detail_key=None;self.reward_result=None;self._branch_marker=None
@@ -270,6 +272,9 @@ class BattlePreviewPanel(QWidget):
         self.duel_reward_button.clicked.connect(self.open_duel_rewards)
         self.highland_top_button=QPushButton('高台名义表面资料');rewards.addWidget(self.highland_top_button)
         self.highland_top_dialog=None;self.highland_top_button.clicked.connect(self.open_highland_top)
+        self.entry_reference_button=QPushButton("查看对应节点与进入方式资料");layout.addWidget(self.entry_reference_button)
+        self.entry_reference_button.hide();self.entry_reference_window=None
+        self.entry_reference_button.clicked.connect(self.open_entry_references)
         self.branch_toggle=QCheckBox('展开特殊出怪条件与位置');layout.addWidget(self.branch_toggle)
         self.branch_panel=BranchReferencePanel();layout.addWidget(self.branch_panel);self.branch_panel.hide()
         maps=QSplitter(Qt.Orientation.Horizontal)
@@ -322,6 +327,32 @@ class BattlePreviewPanel(QWidget):
         self.context=context
         if self._shown_enemy:
             self._render_enemy(*self._shown_enemy[1:],preserve=True)
+
+    def _refresh_entry_reference(self):
+        try:packet=entry_packet(self.current_stage)
+        except (OSError,ValueError,KeyError,TypeError):packet=None
+        self.entry_reference_button.setVisible(packet is not None)
+        self.entry_reference_button.setEnabled(bool(packet and packet['result'].get('status')=='documented_reference'))
+        if self.entry_reference_window:self.entry_reference_window.set_stage(self.current_stage)
+
+    def open_entry_references(self):
+        try:packet=entry_packet(self.current_stage)
+        except (OSError,ValueError,KeyError,TypeError):packet=None
+        if not packet or packet['result'].get('status')!='documented_reference':
+            if self.entry_reference_window:self.entry_reference_window.set_stage(None)
+            return False
+        if self.entry_reference_window is None:
+            self.entry_reference_window=BattleEntryReferencePanel(self)
+            self.entry_reference_window.eventReferenceSelected.connect(self._request_entry_event)
+        self.entry_reference_window.set_stage(self.current_stage)
+        self.entry_reference_window.show();self.entry_reference_window.raise_();self.entry_reference_window.activateWindow()
+        return True
+
+    def _request_entry_event(self,token):
+        from .battle_event_references import resolve_stage_event_reference
+        row=resolve_stage_event_reference(self.current_stage,token)
+        if not row:return False
+        self.entryEventSelected.emit(copy.deepcopy(row['token']));return True
 
     def open_highland_top(self):
         if not self.current_stage:return
@@ -387,6 +418,7 @@ class BattlePreviewPanel(QWidget):
         self.render_rows()
 
     def render_rows(self,*_):
+        self._refresh_entry_reference()
         stage=battle_data()['stages'].get(self.current_stage)
         same_stage=self._rows_stage==self.current_stage
         branch_marker=copy.deepcopy(self._branch_marker) if same_stage else None

@@ -788,6 +788,52 @@ class NodeCatalogPanel(QWidget):
         # Do not replace either reading document, tab, selection or scroll position.
         self._refresh_event_previews(entry,key)
 
+    def open_battle_event_reference(self,stage_id,token):
+        from .battle_event_references import resolve_stage_event_reference
+        reference=resolve_stage_event_reference(stage_id,token)
+        if not reference:return False
+        event_id=reference['event_id']
+        event=next((e for e in catalog.all_events(include_indirect=True)['rows'] if e['id']==event_id),None)
+        if event is None:return False
+        details=catalog.event_details(event_id)
+        scene=next((s for s in details['rows'] if s['key']==reference['scene_key']),None)
+        if not scene or not any(c['key']==reference['choice_key'] for c in scene['choices']):return False
+        self.show_directory()
+        for control,value in ((self.kind,'event'),(self.floor,None),(self.node_type,None)):
+            index=control.findData(value)
+            if index<0:return False
+            control.setCurrentIndex(index)
+        self.search.setText(event['title']);self.refresh()
+        index=next((i for i,e in enumerate(self.entries) if e['kind']=='event' and e['record']['id']==event_id),None)
+        if index is None:return False
+        self.list.setCurrentRow(index)
+        for control,value in ((self.event_scene_filter,reference['scene_key']),
+                              (self.event_choice_filter,reference['choice_key'])):
+            index=control.findData(value)
+            if index<0:return False
+            control.setCurrentIndex(index)
+        from .player_node_information import _plain
+        reader=self.player_detail;document=reader.document()
+        scene_number=reference['scene_number'];choice_number=reference['choice_number']
+        scene_heading=f'【场景 {scene_number}】'
+        choice_heading=f'选项 {choice_number}：{_plain(reference["choice_title"])}'
+        scene_cursor=document.find(scene_heading)
+        if scene_cursor.isNull() or scene_cursor.block().text()!=scene_heading:return False
+        choice_cursor=document.find(choice_heading,scene_cursor)
+        if choice_cursor.isNull() or choice_cursor.block().text()!=choice_heading:return False
+        next_scene=document.find(f'【场景 {scene_number+1}】',scene_cursor)
+        if not next_scene.isNull() and choice_cursor.selectionEnd()>next_scene.selectionStart():return False
+        # Only this explicit manual jump moves the reader; periodic filter refresh does not.
+        self.reading_tabs.setCurrentWidget(reader)
+        reader.setTextCursor(choice_cursor);reader.ensureCursorVisible()
+        # The parent app changes its outer tab after this method returns.
+        # Re-check after that layout settles, using the reader as timer context.
+        from PySide6.QtCore import QTimer
+        QTimer.singleShot(0,reader,reader.ensureCursorVisible)
+        self.context_label.setText(f'资料对应：{event["title"]} · 场景 {scene_number} · 选项 {choice_number}：'
+            +_plain(reference['choice_title'])+'。不表示本局已进入或已选择。')
+        return True
+
     def open_original_destination(self):
         choice_id=self.destination_choice.currentData()
         if not choice_id:return
