@@ -25,6 +25,8 @@ from . import future_region_effects
 from .future_region_effects_view import FutureRegionEffectsPanel
 from . import named_reward_items
 from .named_reward_items_view import NamedRewardItemsPanel
+from . import ritual_weakening
+from .ritual_weakening_view import RitualWeakeningPanel
 from .player_node_information import node_information_text
 from .resident_location_references import resident_location_references,resident_binding_matches
 from .peace_guardian_results import EVENT as _RESIDENT_EVENT,SCENE as _RESIDENT_SCENE,CHOICE as _RESIDENT_CHOICE
@@ -325,6 +327,7 @@ class NodeCatalogPanel(QWidget):
         self.expedition_window=None
         self.future_region_window=None
         self.named_reward_window=None
+        self.ritual_weakening_window=None
         layout=QVBoxLayout(self)
         self.context_label=QLabel(DIRECTORY_NOTICE)
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
@@ -390,6 +393,9 @@ class NodeCatalogPanel(QWidget):
         self.named_reward_button=QPushButton("查看具名奖励图文");rl.addWidget(self.named_reward_button)
         self.named_reward_button.setToolTip("按具体选项查阅物品图标与完整说明；不代表本局已领取或生效。")
         self.named_reward_button.hide();self.named_reward_button.clicked.connect(self.open_named_reward_items)
+        self.ritual_weakening_button=QPushButton("查看仪式条件与首领弱化");rl.addWidget(self.ritual_weakening_button)
+        self.ritual_weakening_button.setToolTip("逐项查阅条件效果，可手动打开相关作战；不代表本局已经提交或生效。")
+        self.ritual_weakening_button.hide();self.ritual_weakening_button.clicked.connect(self.open_ritual_weakening)
         self.resident_reference_label=QLabel();self.resident_reference_label.setWordWrap(True)
         self.resident_location=QComboBox();self.resident_location.setAccessibleName('本图已读据点位置参考')
         self.resident_map_button=QPushButton('在地图查看这个位置')
@@ -648,6 +654,12 @@ class NodeCatalogPanel(QWidget):
         self.named_reward_button.setEnabled(bool(named and named_packet.get("source_valid") is True))
         if self.named_reward_window:
             self.named_reward_window.set_reference(entry["record"]["id"] if named else None,scope_key=key if named else None)
+        ritual_packet=ritual_weakening.event_reference(entry["record"].get("id")) if entry and entry["kind"]=="event" else None
+        ritual=bool(ritual_packet and ritual_packet.get("target") is True)
+        self.ritual_weakening_button.setVisible(ritual)
+        self.ritual_weakening_button.setEnabled(bool(ritual and ritual_packet.get("source_valid") is True))
+        if self.ritual_weakening_window:
+            self.ritual_weakening_window.set_reference(entry["record"]["id"] if ritual else None,scope_key=key if ritual else None)
         if not entry:text='没有符合筛选的资料。不能把资料缺失视为不可能出现。'
         elif entry['kind']=='event':
             q=entry['qualification'];text=event_details_text(entry['record']['id'],self._event_context(entry['record']))
@@ -898,6 +910,18 @@ class NodeCatalogPanel(QWidget):
         if self.documented_item_window is None:self.documented_item_window=DocumentedChoiceItemPanel(self)
         self.documented_item_window.set_reference(documented_choice_items.EVENT,scope_key=key)
         self.documented_item_window.show();self.documented_item_window.raise_();self.documented_item_window.activateWindow()
+
+    def open_ritual_weakening(self):
+        key=self.list.selected_key();entry=next((e for e in self.entries if e["key"]==key),None)
+        if not entry or entry["kind"]!="event":return
+        identity=entry["record"].get("id");packet=ritual_weakening.event_reference(identity)
+        if not packet or packet.get("target") is not True or packet.get("source_valid") is not True:
+            self.ritual_weakening_button.setEnabled(False)
+            if self.ritual_weakening_window:self.ritual_weakening_window.set_reference(None)
+            return
+        if self.ritual_weakening_window is None:self.ritual_weakening_window=RitualWeakeningPanel(self)
+        self.ritual_weakening_window.set_reference(identity,scope_key=key)
+        self.ritual_weakening_window.show();self.ritual_weakening_window.raise_();self.ritual_weakening_window.activateWindow()
 
     def open_named_reward_items(self):
         key=self.list.selected_key();entry=next((e for e in self.entries if e["key"]==key),None)

@@ -1,0 +1,23 @@
+--- first-actual-test
++++ corrected-test
+@@ -299,11 +299,17 @@
+     def test_complete_two_event_doms_and_fixed_ending_not_tool_snippet(self):
+         authority = json.loads((self.subject.ROOT / self.subject.SELECTED_AUTHORITY).read_bytes())
+         self.assertEqual(set(authority['event_complete_DOMs']), {'427904', '440271'})
++        def choice_titles(node):
++            if isinstance(node, str): return []
++            return [node['attributes'].get('data-title')] + [title for child in node['children'] for title in choice_titles(child)]
+         for dom in authority['event_complete_DOMs'].values():
+             self.assertEqual(dom['complete_DOM']['tag'], 'div')
+-            self.assertIn('建立信仰抵御黑风', dom['text'])
+-            self.assertIn('建立文化抵御黑焰', dom['text'])
+-            self.assertIn('建立认同抵御黑流', dom['text'])
++            self.assertIn('建立信仰抵御黑风', choice_titles(dom['complete_DOM']))
++            self.assertIn('建立文化抵御黑焰', choice_titles(dom['complete_DOM']))
++            self.assertIn('建立认同抵御黑流', choice_titles(dom['complete_DOM']))
++            self.assertIn('交出击坠“神明”', dom['text'])
++            self.assertIn('交出焚毁“文明”', dom['text'])
++            self.assertIn('交出湮没“光明”', dom['text'])
+         ending = authority['main_complete_ending_block']
+         self.assertEqual(ending['revision'], '433770')
+         self.assertTrue(ending['complete_DOM']['children'])

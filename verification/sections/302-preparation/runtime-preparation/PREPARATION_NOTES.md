@@ -1,0 +1,1 @@
+本目录没有执行Qt、测试、来源API或原生窗口。一次仅用于检查源路径的stdin AST小工具首先错误地只识别literal，漏掉MANIFEST字符串拼接，实际工具exit1并输出KeyError: MANIFEST；这是准备工具错误，不是候选/产品失败。随后工具识别已知字符串拼接，实际exit0；static-preparation.json为修后静态结果，未伪造首工具原process日志。探索时不存在的旧文件名view-assets.json已按实际view_catalog.py修正为view-catalog.json；所有最终选定文件均按公开来源存在性核对。READY前没有已执行的原生版本。
