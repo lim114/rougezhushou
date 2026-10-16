@@ -21,6 +21,8 @@ from .documented_choice_item_view import DocumentedChoiceItemPanel
 from . import documented_choice_items
 from . import expedition_results
 from .expedition_results_view import ExpeditionResultsPanel
+from . import future_region_effects
+from .future_region_effects_view import FutureRegionEffectsPanel
 from .player_node_information import node_information_text
 from .resident_location_references import resident_location_references,resident_binding_matches
 from .peace_guardian_results import EVENT as _RESIDENT_EVENT,SCENE as _RESIDENT_SCENE,CHOICE as _RESIDENT_CHOICE
@@ -319,6 +321,7 @@ class NodeCatalogPanel(QWidget):
         self.resting_window=None
         self.documented_item_window=None
         self.expedition_window=None
+        self.future_region_window=None
         layout=QVBoxLayout(self)
         self.context_label=QLabel(DIRECTORY_NOTICE)
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
@@ -378,6 +381,9 @@ class NodeCatalogPanel(QWidget):
         self.documented_item_button.hide();self.documented_item_button.clicked.connect(self.open_documented_items)
         self.expedition_button=QPushButton("查看派出、归来与休息结果");rl.addWidget(self.expedition_button)
         self.expedition_button.hide();self.expedition_button.clicked.connect(self.open_expedition_results)
+        self.future_region_button=QPushButton("查看下一地区的影响");rl.addWidget(self.future_region_button)
+        self.future_region_button.setToolTip("分开查看两个选项记载的后续效果；不表示本局已选择或下一地区一定生效。")
+        self.future_region_button.hide();self.future_region_button.clicked.connect(self.open_future_region_effects)
         self.resident_reference_label=QLabel();self.resident_reference_label.setWordWrap(True)
         self.resident_location=QComboBox();self.resident_location.setAccessibleName('本图已读据点位置参考')
         self.resident_map_button=QPushButton('在地图查看这个位置')
@@ -620,6 +626,16 @@ class NodeCatalogPanel(QWidget):
         self.expedition_button.setEnabled(bool(expedition_packet and expedition_packet.get('source_valid')))
         if self.expedition_window:
             self.expedition_window.set_reference(expedition_results.EVENT if expedition else None,scope_key=key if expedition else None)
+        future=bool(entry and entry["kind"]=="event" and entry["record"].get("id")==future_region_effects.EVENT_ID)
+        self.future_region_button.setVisible(future)
+        future_context=self._event_context(entry["record"]) if future else {}
+        future_packet=future_region_effects.event_reference(future_region_effects.EVENT_ID,
+            mode=future_context.get("exploration_mode"),difficulty=future_context.get("difficulty")) if future else None
+        self.future_region_button.setEnabled(bool(future_packet and future_packet.get("source_valid")))
+        if self.future_region_window:
+            self.future_region_window.set_reference(future_region_effects.EVENT_ID if future else None,
+                mode=future_context.get("exploration_mode"),difficulty=future_context.get("difficulty"),
+                scope_key=key if future else None)
         if not entry:text='没有符合筛选的资料。不能把资料缺失视为不可能出现。'
         elif entry['kind']=='event':
             q=entry['qualification'];text=event_details_text(entry['record']['id'],self._event_context(entry['record']))
@@ -870,6 +886,21 @@ class NodeCatalogPanel(QWidget):
         if self.documented_item_window is None:self.documented_item_window=DocumentedChoiceItemPanel(self)
         self.documented_item_window.set_reference(documented_choice_items.EVENT,scope_key=key)
         self.documented_item_window.show();self.documented_item_window.raise_();self.documented_item_window.activateWindow()
+
+    def open_future_region_effects(self):
+        key=self.list.selected_key();entry=next((e for e in self.entries if e["key"]==key),None)
+        if not entry or entry["kind"]!="event" or entry["record"].get("id")!=future_region_effects.EVENT_ID:return
+        context=self._event_context(entry["record"])
+        packet=future_region_effects.event_reference(future_region_effects.EVENT_ID,
+            mode=context.get("exploration_mode"),difficulty=context.get("difficulty"))
+        if not packet or packet.get("source_valid") is not True:
+            self.future_region_button.setEnabled(False)
+            if self.future_region_window:self.future_region_window.set_reference(None)
+            return
+        if self.future_region_window is None:self.future_region_window=FutureRegionEffectsPanel(self)
+        self.future_region_window.set_reference(future_region_effects.EVENT_ID,
+            mode=context.get("exploration_mode"),difficulty=context.get("difficulty"),scope_key=key)
+        self.future_region_window.show();self.future_region_window.raise_();self.future_region_window.activateWindow()
 
     def open_expedition_results(self):
         key=self.list.selected_key();entry=next((e for e in self.entries if e['key']==key),None)
