@@ -23,6 +23,8 @@ from . import expedition_results
 from .expedition_results_view import ExpeditionResultsPanel
 from . import future_region_effects
 from .future_region_effects_view import FutureRegionEffectsPanel
+from . import named_reward_items
+from .named_reward_items_view import NamedRewardItemsPanel
 from .player_node_information import node_information_text
 from .resident_location_references import resident_location_references,resident_binding_matches
 from .peace_guardian_results import EVENT as _RESIDENT_EVENT,SCENE as _RESIDENT_SCENE,CHOICE as _RESIDENT_CHOICE
@@ -322,6 +324,7 @@ class NodeCatalogPanel(QWidget):
         self.documented_item_window=None
         self.expedition_window=None
         self.future_region_window=None
+        self.named_reward_window=None
         layout=QVBoxLayout(self)
         self.context_label=QLabel(DIRECTORY_NOTICE)
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
@@ -384,6 +387,9 @@ class NodeCatalogPanel(QWidget):
         self.future_region_button=QPushButton("查看下一地区的影响");rl.addWidget(self.future_region_button)
         self.future_region_button.setToolTip("分开查看两个选项记载的后续效果；不表示本局已选择或下一地区一定生效。")
         self.future_region_button.hide();self.future_region_button.clicked.connect(self.open_future_region_effects)
+        self.named_reward_button=QPushButton("查看具名奖励图文");rl.addWidget(self.named_reward_button)
+        self.named_reward_button.setToolTip("按具体选项查阅物品图标与完整说明；不代表本局已领取或生效。")
+        self.named_reward_button.hide();self.named_reward_button.clicked.connect(self.open_named_reward_items)
         self.resident_reference_label=QLabel();self.resident_reference_label.setWordWrap(True)
         self.resident_location=QComboBox();self.resident_location.setAccessibleName('本图已读据点位置参考')
         self.resident_map_button=QPushButton('在地图查看这个位置')
@@ -636,6 +642,12 @@ class NodeCatalogPanel(QWidget):
             self.future_region_window.set_reference(future_region_effects.EVENT_ID if future else None,
                 mode=future_context.get("exploration_mode"),difficulty=future_context.get("difficulty"),
                 scope_key=key if future else None)
+        named_packet=named_reward_items.event_reference(entry["record"].get("id")) if entry and entry["kind"]=="event" else None
+        named=bool(named_packet and named_packet.get("target") is True)
+        self.named_reward_button.setVisible(named)
+        self.named_reward_button.setEnabled(bool(named and named_packet.get("source_valid") is True))
+        if self.named_reward_window:
+            self.named_reward_window.set_reference(entry["record"]["id"] if named else None,scope_key=key if named else None)
         if not entry:text='没有符合筛选的资料。不能把资料缺失视为不可能出现。'
         elif entry['kind']=='event':
             q=entry['qualification'];text=event_details_text(entry['record']['id'],self._event_context(entry['record']))
@@ -886,6 +898,18 @@ class NodeCatalogPanel(QWidget):
         if self.documented_item_window is None:self.documented_item_window=DocumentedChoiceItemPanel(self)
         self.documented_item_window.set_reference(documented_choice_items.EVENT,scope_key=key)
         self.documented_item_window.show();self.documented_item_window.raise_();self.documented_item_window.activateWindow()
+
+    def open_named_reward_items(self):
+        key=self.list.selected_key();entry=next((e for e in self.entries if e["key"]==key),None)
+        if not entry or entry["kind"]!="event":return
+        identity=entry["record"].get("id");packet=named_reward_items.event_reference(identity)
+        if not packet or packet.get("target") is not True or packet.get("source_valid") is not True:
+            self.named_reward_button.setEnabled(False)
+            if self.named_reward_window:self.named_reward_window.set_reference(None)
+            return
+        if self.named_reward_window is None:self.named_reward_window=NamedRewardItemsPanel(self)
+        self.named_reward_window.set_reference(identity,scope_key=key)
+        self.named_reward_window.show();self.named_reward_window.raise_();self.named_reward_window.activateWindow()
 
     def open_future_region_effects(self):
         key=self.list.selected_key();entry=next((e for e in self.entries if e["key"]==key),None)

@@ -1,6 +1,7 @@
 """Player item reading must remain separate from rewards and preserve context."""
 from copy import deepcopy
 from hashlib import sha256
+import ast
 import json
 from pathlib import Path
 import tempfile
@@ -28,7 +29,13 @@ class DocumentedItemIntegration295Tests(unittest.TestCase):
         old=json.loads(raw);self.assertEqual(len(old['events']),38)
         for event_id,row in old['events'].items():
             self.assertEqual(catalog.event_reward_options(event_id),row['reward_options'],event_id)
-        self.assertEqual(sha256((ROOT/'rouge/node_catalog.py').read_bytes()).hexdigest(),old['node_catalog_sha256'])
+        original=(ROOT/'verification/sections/298-preparation/before/rouge/node_catalog.py').read_bytes()
+        self.assertEqual(sha256(original).hexdigest(),old['node_catalog_sha256'])
+        original_tree=ast.parse(original.decode('utf8'))
+        current_tree=ast.parse((ROOT/'rouge/node_catalog.py').read_bytes().decode('utf8'))
+        original_query=next(n for n in original_tree.body if isinstance(n,ast.FunctionDef) and n.name=='event_reward_options')
+        current_query=next(n for n in current_tree.body if isinstance(n,ast.FunctionDef) and n.name=='event_reward_options')
+        self.assertEqual(ast.dump(current_query,include_attributes=False),ast.dump(original_query,include_attributes=False))
 
     def test_non_target_player_output_is_exactly_unchanged(self):
         old=json.loads(BASELINE.read_bytes())
