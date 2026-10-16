@@ -1,0 +1,11 @@
+--- .cache/p3-303-publication-prep/verify_publication_303.py before
++++ .cache/p3-303-publication-prep/verify_publication_303.py current
+@@ -82,7 +82,7 @@
+ write('DEVELOPMENT_CHECKPOINT.json',cp)
+ note=('发布核对：功能提交'+head+'已普通推送并核对实际远端；'+str(len(changed))+'份变更公开文件及最终必要/窗口来源与提交逐字节一致，证明'+proof_path+'。仅追加发布元数据，不增加功能节数。\n\n')
+ for name in('WORK_IN_PROGRESS.md','PROJECT_COMPLETED.md'):
+- p=ROOT/name;text=p.read_text(encoding='utf8');index=text.index('## 功能第301节');current=text[:index];assert current.count('待普通推送核对。')==1
++ p=ROOT/name;text=p.read_text(encoding='utf8');index=text.index('## 功能第302节');current=text[:index];assert current.count('待普通推送核对。')==1
+  current=current.replace('待普通推送核对。','已普通推送并核对实际远端，详见下方发布证明。',1);p.write_bytes((current+note+text[index:]).encode('utf8'))
+ updates={'PROJECT_REQUIREMENTS.md':('待普通推送核对。','303功能提交'+head+'已普通推送并核对实际远端，公开证明'+proof_path+'；源码/要求/回执/索引一并保存。'),
+  'AGENTS.md':('待普通推送核对，源码/要求/验收/索引同提交。','303功能提交'+head+'已普通推送并核对实际远端，发布证明'+proof_path+'；源码/要求/验收/索引一并保存。')}

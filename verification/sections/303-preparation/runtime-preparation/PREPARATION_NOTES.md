@@ -1,0 +1,1 @@
+本代理没有执行Qt、tests、native source_contract或产品API、Git、原窗口操作。唯一准备工具错误发生在写完完整10bindings manifest之后的统计打印：WindowsPath误用下标，实际工具exit1/TypeError: WindowsPath object is not subscriptable。随后只读回同一完整manifest，修正打印表达式后实际exit0（10绑定、8待copy、2复用）；原对话工具输出未导出为进程原件，本说明是事实摘要而非伪造raw stdout。根随后已实际核准并复制8原JSON/复用2level，公开manifest保持原df86 SHA。此错误不是源码builder、测试或原生产品失败。

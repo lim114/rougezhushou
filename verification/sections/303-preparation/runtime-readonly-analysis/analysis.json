@@ -1,0 +1,140 @@
+{
+  "kind": "SECTION303_READ_ONLY_APPEND_COMPATIBILITY_AND_NATIVE_PLAN_NOT_ACCEPTANCE",
+  "head": "c2b78e4aa4136fe739067b5ccf9d13b595142320",
+  "source_pins": {
+    "rouge/fixed_landmark_mapping.py": {
+      "sha256": "b5b9e52f6342a81c72cac2e2410ecc1819202ff5ae1c75f9a6117f817778622b",
+      "bytes": 3741
+    },
+    "rouge/map_projection.py": {
+      "sha256": "662c74622223db68f717b3ed48e2045bd23d6c6848b10b7440567d3efbc736b0",
+      "bytes": 3374
+    },
+    "rouge/battle_view.py": {
+      "sha256": "a865bb46b7ed304d294a3af758bd880e8efdb25dd8925fbecd0044999a956ce0",
+      "bytes": 46879
+    },
+    "rouge/data/fixed-landmark-references.json": {
+      "sha256": "63ec9488f8f905d2ced1a4e349413e9c92d78125b9f1c94c00293cafa4d348f5",
+      "bytes": 25456
+    },
+    "rouge/data/battle-map-projections.json": {
+      "sha256": "b36710dbc381de0ded802d6edc4ef4eafe192432818180bf608a5fded3cf843c",
+      "bytes": 69404
+    },
+    "rouge/data/battle-previews.json": {
+      "sha256": "f0155647af8766eb2f01e84295f85b7300264fc49b40ffc82e89800837d274f3",
+      "bytes": 9920110
+    },
+    "tests/test_direct_landmark_294.py": {
+      "sha256": "447b1d84f2eb40fce01e90a9145ce056ea85d21a1f2e399aab060bc2d7ebdfa0",
+      "bytes": 17935
+    },
+    "tests/test_direct_landmark_288.py": {
+      "sha256": "610e8eb811da9ffc8727611676b6ba53c592f1892600bbff0496b2d4bcf33aee",
+      "bytes": 15615
+    },
+    "tests/test_direct_landmark_mapping.py": {
+      "sha256": "ceaa9128f4ec0556b658b6f2634d521e60425b78bcdeea70459c371e7cf2a19b",
+      "bytes": 10668
+    },
+    "tests/test_map_projection_048.py": {
+      "sha256": "c9055a58b2d02014c2e12c360e061c0cd7164cee7f4405e354bb7b2892625b2c",
+      "bytes": 7807
+    },
+    "scripts/extend_direct_landmark_294.py": {
+      "sha256": "117a9b6c08d2872c9e468a51444be7d721abdc824451d64afb340e20cf64086d",
+      "bytes": 18868
+    },
+    "scripts/verify_direct_map_window_294.py": {
+      "sha256": "6e988201f1a361fe30d77358e0ce5377a02b0d9a32128f2f1a924c0ef9aa5678",
+      "bytes": 33522
+    },
+    "scripts/verify_direct_map_window_288.py": {
+      "sha256": "4d60f741a7ef3fa4b4ca9473021c3f6f9ac3974693c05110d2319a6d3b981517",
+      "bytes": 25545
+    }
+  },
+  "current_direct_reference_scope": {
+    "images": 10,
+    "stage_bindings": 18,
+    "points": 58
+  },
+  "current_regular_scope": {
+    "images": 12,
+    "stage_bindings": 24
+  },
+  "whole_map_gaps_not_changed": {
+    "stage_ids": 81,
+    "distinct_images": 59
+  },
+  "candidate_ids": [
+    "ro6_b_6",
+    "ro6_n_2_3",
+    "ro6_e_2_3"
+  ],
+  "candidate_binding_status": {
+    "direct": false,
+    "regular": false
+  },
+  "known_static_conflicts": [
+    {
+      "file": "scripts/extend_direct_landmark_294.py",
+      "lines": [
+        259,
+        260
+      ],
+      "kind": "readonly_replay_current_whole_document_equality",
+      "fact": "build(public_data=...) compares current fixed data to its historical40-or58 output even without write",
+      "prediction": "any appended current303 document causes old294 class setUp/build to reject unless replay is explicitly isolated or source-verified append compatibility is added",
+      "actual_failure_executed": false
+    },
+    {
+      "file": "tests/test_map_projection_048.py",
+      "lines": [
+        102,
+        120
+      ],
+      "kind": "historical_n2_3_no_direct_assertion",
+      "fact": "rejected regular plane remains unbound and patched fallback returnsNone; final else also expects actualNone for n2_3",
+      "prediction": "if n2_3 direct points are accepted, exact only-this-stage direct expectation requires documented maintenance; keep old plane-rejection/no-fallback assertions",
+      "actual_failure_executed": false
+    },
+    {
+      "file": "scripts/verify_direct_map_window_294.py",
+      "lines": [
+        41,
+        43
+      ],
+      "kind": "old_native_receipt_exact_runtime_sha",
+      "fact": "source_contract compares full current JSON SHA to old294 build output SHA",
+      "boundary": "keep historical script/receipt unchanged; new303 native must bind current accepted303 packet, not relabel old294 PASS"
+    }
+  ],
+  "runtime_contract": {
+    "allowed_surfaces": [
+      "LOWLAND tile_floor",
+      "LOWLAND tile_road"
+    ],
+    "other_ground_or_highland_in_scope": false,
+    "regular_preferred_over_direct": true,
+    "only_listed_centers": true,
+    "inverse": false,
+    "segments": false,
+    "image_filename_level_sha_bitmap_sha_dimensions_grid_digest_tolerance": true,
+    "tolerance_px": 4,
+    "same_bitmap_alias_must_have_independent_explicit_binding": true,
+    "agreement_not_absolute_accuracy": true,
+    "source_hot_reload": "landmark_data() is lru_cache(maxsize=1); do not promise running-window hot reload/fresh source invalidation; new native and final restarted project processes load new bytes"
+  },
+  "necessary_modules_suggested": [
+    "tests.test_direct_landmark_303 (provisional canonical newtest name)",
+    "tests.test_direct_landmark_294 (strict historical replay compatibility first)",
+    "tests.test_direct_landmark_288",
+    "tests.test_direct_landmark_mapping"
+  ],
+  "conditional_module_if_n2_3_promoted": "tests.test_map_projection_048 (exact historical assertion migration, no whole-map approval)",
+  "scope_extractions_not_test_runs": true,
+  "Qt_tests_native_builder_API_or_Git_mutation": false,
+  "new_accepted_points_or_completion_claimed": false
+}

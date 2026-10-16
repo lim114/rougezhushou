@@ -27,6 +27,29 @@ def projected(stage):
 class DirectCheckpoints294Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        # Replay the unchanged historical294 builder against its exact public58
+        # input. Actual current appended values remain checked via landmark_data
+        # below and the separate303 suite; no runtime source is replaced.
+        snapshot = builder.ROOT / 'research/p3-map-direct-ground-303/prior-direct-references.json'
+        raw = snapshot.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != '63ec9488f8f905d2ced1a4e349413e9c92d78125b9f1c94c00293cafa4d348f5':
+            raise ValueError('Historical294 public58 input changed.')
+        temporary = tempfile.TemporaryDirectory(prefix='rouge-public294-replay-')
+        cls.addClassCleanup(temporary.cleanup)
+        history = Path(temporary.name)
+        original = DATA
+        names = ['battle-previews.json', 'battle-map-projections.json']
+        records = builder.read(builder.BASE / 'source-records.json')['stages']
+        names += sorted({row['image']['file'] for row in records.values()})
+        for name in names:
+            target = history / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(original / name, target)
+        (history / 'fixed-landmark-references.json').write_bytes(raw)
+        for owner in (builder, sys.modules[__name__]):
+            fixture = patch.object(owner, 'DATA', history)
+            fixture.start()
+            cls.addClassCleanup(fixture.stop)
         cls.output, cls.receipt = builder.build()
 
     def test_01_append_eighteen_centers_and_preserve_all_forty_prior_values(self):

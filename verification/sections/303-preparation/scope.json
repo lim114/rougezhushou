@@ -1,0 +1,56 @@
+{
+  "section": 303,
+  "status": "implementation_started_not_completed",
+  "parent_commit": "c2b78e4aa4136fe739067b5ccf9d13b595142320",
+  "at_utc": "2026-10-16T12:44:26.264467+00:00",
+  "remaining_todo": "P3 fixed battle map location correspondence and independent landmark verification",
+  "new_player_capability": "Show independently readable exact LOWLAND floor/road cells from 畸症 and 本性难移 on their fixed original maps, including supported MOVE checkpoints; unreadable or disagreeing positions remain unmarked.",
+  "requested_scope": {
+    "original_images": 2,
+    "stage_ids": [
+      "ro6_b_6",
+      "ro6_n_2_3",
+      "ro6_e_2_3"
+    ],
+    "all_source_eligible_cells": 89,
+    "cells_by_image": {
+      "ro6_b_6": 55,
+      "ro6_n_2_3": 34
+    },
+    "accepted_cells": null
+  },
+  "evidence": {
+    "source_request": ".cache/p3-303-map-candidates/logical-reader-requests-all-lowland.json",
+    "source_request_sha256": "c5a5ca22b11b36875c8890e8cce3a1f7d465925c7ddb7320de3963bd0b35854a",
+    "source_inventory": ".cache/p3-303-map-candidates/candidate-inventory.json",
+    "source_ready": ".cache/p3-303-map-candidates/ALL_LOWLAND_READY.json"
+  },
+  "acceptance": [
+    "Two separate fresh-context visual readers inspect original PNGs and full original grid; freeze all89 rows before comparison. No old projection/readings or coordinate exchange.",
+    "Retain both first complete readings, all nulls and every comparison. Accept only finite matching floor/road direct observations within the existing exact4 original-pixel gate. Keep A point without adjustment/averaging.",
+    "Preserve all prior58 exact records, explicit alias image filename/PNG SHA/Git blob/level/grid/dimensions and existing LOWLAND type restrictions.",
+    "Only accepted exact integer cells project; rejected/unlisted/noninteger/out-of-range/raised surfaces do not inherit markers, inverse or segments.",
+    "Real native tests across actual three stage aliases and three sizes, map click/accepted MOVE correspondence where source supports it, same-geometry pixel evidence, real reading/selection refresh preservation; no actual game or chat.",
+    "Historical294 replay and048 unaccepted-plane guards stay meaningful; archive original assertions and any precise compatibility change, do not skip modules or weaken current gates.",
+    "Update original visible responsive test app, keep private5 paths; publish sources, original readings, real receipts, requirements and index together, ordinary push and actual remote blobs verified."
+  ],
+  "not_claimed": [
+    "Whole-map or all-terrain calibration",
+    "Highland surface, portal footpoints, spawn offsets or actual enemy positions",
+    "Inverse or route segments from sparse centers",
+    "New game采样 or chat",
+    "P3/P2/P1 completion"
+  ],
+  "whole_map_remaining_scope_unchanged": [
+    81,
+    59
+  ],
+  "prior_direct_scope": [
+    10,
+    18,
+    58
+  ],
+  "historical_full_validation": 290,
+  "next_periodic_full": 305,
+  "numeric_continuation_target": null
+}
