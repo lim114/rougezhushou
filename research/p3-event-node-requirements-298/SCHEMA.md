@@ -1,0 +1,13 @@
+# 独立接口合同
+
+`source_data()`返回完整刚核验的deepcopy包；source不可用时None。
+
+`event_requirements(event_id, *, floor=None, entry_mode='unknown', special_region=False, historical=False)`只接受内置六个精确event id。其它值（含str子类）立即None、不扫来源；目标上下文非法则ValueError。入口可为unknown/natural/content/processed_item/history。floor严格为1–6整数或None，bool/float不是整数主层，两个flag必须是bool。
+
+有效返回status=documented_reference/source_valid=True、event_id/event_name/node_type、完整expected_event、source、source_reference（完整事件DOM及绑定）、documented_excluded_main_floors、technology_enabling_reference、context/context_applicable、documented_floor_match和check。
+
+只有entry_mode=natural、floor已知整数、special_region=False、historical=False时context_applicable=True，documented_floor_match及check.matches才是bool；其它范围两者为None且context_applicable=False。False仅表示这条明确文献禁区排除，qualification_status_reference=excluded；True或None时整体仍unknown。check.key=documented_node_natural_main_floor，kind=source_node_floor_requirement，source_text保留准确负句、source_revision=433770。
+
+source_unavailable时status同名/source_valid=False、source/expected_event/source_reference/check/technology为None，documented_floor_match=None、documented_excluded_main_floors空、qualification_status_reference=unknown；不得借旧缓存继续排除。actual_server_eligible/actual_node/probability始终None，inventory_updated/current_server_verified/original_entry_restored为False。
+
+科技引用只有known_enabling_path_only角色，necessary_negative_gate_proven与inactive_hard_exclusion_supported均False，actual_account_active=None；没有科技状态输入，不把预设或用户配置当账号实际读取。模型没有data/evaluator覆盖入口，也不import catalog，避免循环依赖。

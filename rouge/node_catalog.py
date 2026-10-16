@@ -3,6 +3,7 @@ from copy import deepcopy
 from functools import lru_cache
 from pathlib import Path
 from .stage_context import stage_context
+from . import event_node_requirements as natural_requirements
 import json,re
 
 NOTICE='固定资料候选与原文引用；未知资格仍保留，不表示必然出现，不提供生成概率。'
@@ -48,13 +49,33 @@ def all_events(node_type=None,include_indirect=False):
                    original_uncataloged=deepcopy(_data()['uncataloged_original_titles']),
                    known_node_types=_all_node_types())
 COMMANDS={'events':all_events}
-def event_candidates(node_type=None,floor=None,special_region=False,include_indirect=False):
+def natural_event_requirements(event,*,floor=None,entry_mode='unknown',special_region=False,historical=False):
+    """Bind independent rules to the complete actual reading object too."""
+    result=natural_requirements.event_requirements(event['id'],floor=floor,entry_mode=entry_mode,
+        special_region=special_region,historical=historical)
+    if result and result['source_valid'] and not natural_requirements._same_json(event,result['expected_event']):
+        return {'status':'source_unavailable','source_valid':False,'event_id':event['id'],
+            'context_applicable':result['context_applicable'],'context':result['context'],
+            'documented_floor_match':None,'documented_excluded_main_floors':[],
+            'check':None,'source':None,'source_reference':None,'technology_enabling_reference':None,
+            'actual_server_eligible':None,'probability':None,
+            'notice':'节点主层资料与当前阅读内容不一致；不能沿用旧禁区排除事件。'}
+    return result
+
+def event_candidates(node_type=None,floor=None,special_region=False,include_indirect=False,*,entry_mode='natural',historical=False):
     _floor(floor,special_region)
+    if entry_mode not in ('unknown','natural','content','processed_item','history') or type(historical) is not bool:
+        raise ValueError('入口范围或历史标记不正确。')
     rows=[];excluded=[]
     for e in all_events(node_type,include_indirect)['rows']:
-        natural_context=e['natural'] is not False
+        natural_context=e['natural'] is not False and entry_mode=='natural' and not historical
         if floor is not None and not special_region and natural_context and e['floors'] and floor not in e['floors']:
             excluded.append({**e,'reason':'固定社区目录的主层范围不包含所选层'});continue
+        reference=natural_event_requirements(_event(e['id']),floor=floor,entry_mode=entry_mode,
+            special_region=special_region,historical=historical) if natural_context and floor is not None and not special_region else None
+        if reference and reference['documented_floor_match'] is False:
+            excluded.append({**e,'reason':reference['check']['source_text'],
+                'entry_condition_excluded_reference':True,'natural_requirement_reference':reference});continue
         e['floor_status']='目录主层条件相符' if floor is not None and not special_region and natural_context and e['floors'] else '层数或特殊区域资格未知'
         e['server_eligibility']='未知';rows.append(e)
     return _result(rows,excluded=excluded,floor=floor,special_region=special_region,
@@ -88,10 +109,12 @@ def node_events(node,floor=None,special_region=False):
         types=(node.get('prediction') or {}).get('candidates') or []
         if not types:types=_all_node_types()
         basis='模板类型候选' if (node.get('prediction') or {}).get('candidates') else '类型未确认，全部已证节点类别联合'
-    by_id={}
+    by_id={};excluded={}
     for t in types:
-        for e in event_candidates(t,floor,special_region)['rows']:by_id[e['id']]=e
-    return _result(list(by_id.values()),history_candidates=history,type_candidates=deepcopy(types),
+        candidates=event_candidates(t,floor,special_region)
+        for e in candidates['rows']:by_id[e['id']]=e
+        for e in candidates['excluded']:excluded[e['id']]=e
+    return _result(list(by_id.values()),excluded=list(excluded.values()),history_candidates=history,type_candidates=deepcopy(types),
                    remembered_type=remembered,node_id=node.get('id'),type_basis=basis)
 COMMANDS['node']=node_events
 def original_references(query='',title=None,record_type='all',record_id=None):
@@ -425,6 +448,7 @@ def node_dossier(graph,node_id,floor=None,special_region=False,difficulty=None):
     return _result(list(by_id.values()),history_events=list(past.values()),battle_rows=list(battles.values()),function_rows=functions,
         position={'node_id':node_id,'row':node.get('row'),'col':node.get('col'),'template_id':graph.get('template_id'),'zone_id':graph.get('zone_id')},
         generic_event_candidates=deepcopy(events['rows']),generic_battle_candidates=generic_battles,
+        excluded_event_candidates=deepcopy(events.get('excluded',[])) if not observed_refs and not pass_through else [],
         revealed_content=deepcopy(current or history),current_content=current,history_content=history,
         content_history=deepcopy(node.get('content_history') or []),
         observed_event_rows=observed_refs,history_event_rows=history_refs,

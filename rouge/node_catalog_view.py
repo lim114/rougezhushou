@@ -493,7 +493,9 @@ class NodeCatalogPanel(QWidget):
                         'row':node['row'],'col':node['col'],'node_id':node['id']}})
             return rows
         if self.dossier is not None:
-            events=[*self.dossier['rows'],*self.dossier.get('history_observed_event_rows',[])]
+            current_ids={e['id'] for e in self.dossier['rows']}
+            excluded=[e for e in self.dossier.get('excluded_event_candidates',[]) if e['id'] not in current_ids]
+            events=[*self.dossier['rows'],*excluded,*self.dossier.get('history_observed_event_rows',[])]
             battles=[*self.dossier.get('battle_rows',[]),*self.dossier.get('history_observed_battle_rows',[])]
             functions=[*self.dossier.get('function_rows',[]),*self.dossier.get('history_observed_function_rows',[])]
             originals=[]

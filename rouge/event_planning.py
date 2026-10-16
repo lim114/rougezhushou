@@ -146,6 +146,14 @@ def _event_checks(event,context):
     checks.append(_check('documented_main_floor',matches,'目录主层范围：'+str(event['floors']),kind='catalog_scope',
                          special_region_not_filtered=context.get('special_region',False)))
     mode=context.get('entry_mode','unknown')
+    historical=context.get('reference_context_scope')=='historical_title_reference_only'
+    reference=catalog.natural_event_requirements(event,floor=floor,entry_mode=mode,
+        special_region=False,historical=False) if mode=='natural' and floor is not None and not (
+            context.get('special_region',False) or historical) else None
+    if reference and reference['context_applicable']:
+        checks.append(deepcopy(reference['check']) if reference['source_valid'] else
+            _check('documented_node_natural_main_floor',None,
+                '自然主层限制资料暂时无法核对；不能据此排除。',kind='source_node_floor_requirement',source_valid=False))
     if event['natural'] is False:
         move=context.get('movement_item_id')
         match=False if mode=='natural' else True if mode=='content' else (

@@ -24,7 +24,10 @@ class NodeCatalogTests(unittest.TestCase):
         self.assertIn('桑尼的邀请',[e['title'] for e in a['rows']])
         self.assertNotIn('桑尼的邀请',[e['title'] for e in b['rows']])
         self.assertIn('桑尼的邀请',[e['title'] for e in c.event_candidates('不期而遇',floor=3,special_region=True)['rows']])
-        self.assertTrue(c.event_candidates('先行一步',floor=6)['rows'])
+        r=c.event_candidates('先行一步',floor=6)
+        self.assertFalse(r['rows'])
+        self.assertEqual([e['id'] for e in r['excluded']],['community_group_024'])
+        self.assertFalse(r['excluded'][0]['natural_requirement_reference']['documented_floor_match'])
         with self.assertRaises(ValueError):c.event_candidates(floor=True)
     def test_172_indirect_not_main_floor_filtered(self):
         r=c.event_candidates(floor=6,include_indirect=True)
@@ -230,7 +233,8 @@ class NodeCatalogTests(unittest.TestCase):
     def test_183(self):
         g={'nodes':[{'id':'a','row':0,'col':0,'observed_type':'不期而遇'},{'id':'b','row':0,'col':1,'observed_type':'失与得'}],'edges':[['a','b']]}
         r=c.route_events(g,['a','b'],floor=1)
-        self.assertIn('回滚文明',[e['title'] for e in r['event_union']]);self.assertFalse(r['common_event_references'])
+        self.assertNotIn('回滚文明',[e['title'] for e in r['event_union']]);self.assertFalse(r['common_event_references'])
+        self.assertIn('回滚文明',[e['title'] for e in c.route_events(g,['a','b'],floor=3)['event_union']])
         self.assertFalse(r['actual_entry_or_rewards_confirmed'])
         with self.assertRaises(ValueError):c.route_events({**g,'edges':[]},['a','b'])
     def test_183_history_function_route_and_input_errors(self):

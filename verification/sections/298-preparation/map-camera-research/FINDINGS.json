@@ -1,0 +1,470 @@
+{
+  "kind": "SECTION298_MAP_CAMERA_SOURCE_RESEARCH_ONLY_NO_FUNCTIONAL_COMPLETION",
+  "at_utc": "2026-10-16T08:47:50.249694+00:00",
+  "conclusion": "现有原件不足以安全建立固定mapreview原图的通用投影。找到独立的预览图资源加载链和战斗相机/地面世界坐标链，但未取得两者到同一原图生成过程的绑定。不是证明通用投影不可能。",
+  "can_implement_universal_mapping_from_current_evidence": false,
+  "new_calibration_or_product_capability_delivered": false,
+  "existing_scope_unchanged": {
+    "regular": [
+      12,
+      24
+    ],
+    "direct": [
+      10,
+      18,
+      58
+    ],
+    "whole_map_gaps": [
+      81,
+      59
+    ]
+  },
+  "existing_rejected_first_fits": [
+    {
+      "id": "ro6_c_2",
+      "max_error_px": 5.251894793993438,
+      "accepted": false,
+      "threshold_px": 4
+    },
+    {
+      "id": "ro6_c_4",
+      "max_error_px": 8.931892780491939,
+      "accepted": false,
+      "threshold_px": 4
+    }
+  ],
+  "verified_facts": [
+    {
+      "fact": "105条固定作战引用68个唯一原level URL；68份缓存原件全部存在，按每条stage引用逐SHA匹配。",
+      "evidence": "level-coverage.json; original-input-inventory.json/source_pins"
+    },
+    {
+      "fact": "这68份level的cameraPlugin均为空字符串；mapData键为map/tiles/blockEdges/tags/effects/layerRects，不直接含camera/view/projection参数。",
+      "scope": "已解析原level的顶层与mapData，不把这一点扩成所有资源中不存在相机。",
+      "evidence": "compact-inventory.json; original-input-inventory.json/levels"
+    },
+    {
+      "fact": "已保存的map_camera_views源码说明是MAA作战定位用途；已有044研究已明确预览FOV/crop未证，FOV38探测未作为默认。",
+      "evidence": ".cache/research/map-projection-044/resource-readme.md note5; evidence.json/remaining_unknown"
+    },
+    {
+      "fact": "旧MAA TileCalc2在其作战定位函数用1280×720、默认垂直半视场20度及特定宽高比位置修正；这些不是固定mapreview PNG捕获参数的证据。",
+      "evidence": ".cache/research/map-projection-044/maa-TileCalc2.hpp: camera_pos/camera_matrix_from_trans/world_to_screen"
+    },
+    {
+      "fact": "实际安装DLL及metadata SHA与原索引固定来源相同；11个具名方法进行了纯文件CFG及签名读取，1531行方法指令重新对原DLL字节校验。",
+      "evidence": "cfg-process.json; preview-camera-cfg.json; preview-signatures-fields.json",
+      "not_claimed": "未证明当前热更新、动态分支、场景对象、所有被调函数或任何游戏运行结果。"
+    },
+    {
+      "fact": "StageDataUtil.LoadStagePreviewMap(string stageId, ILoadAsset assetLoader)返回UnityEngine.Sprite；CommonMapPreviewDlg._imgMapPreview为UnityEngine.UI.Image。",
+      "evidence": "preview-signatures-fields.json methods34265/typeCommonMapPreviewDlg"
+    },
+    {
+      "fact": "CommonMapPreviewDlg.OnRender、RoguelikeFocusView.LoadPreviewMap及RL06FocusViewPlugin._LoadPreviewMap直接调用GetStageMapPreviewPath，并可走UIAssetLoader.get_missingSprite回退。",
+      "evidence": "preview-camera-cfg.txt lines528..606,918..1027,1247..1356",
+      "interpretation": "支持固定资源展示链，不提供生成这张资源时采用的相机矩阵或裁切。"
+    },
+    {
+      "fact": "Battle.Map.MapToWorldPosition的普通分支先取get_anchorTransform；MapGraphic.GetCameraConfig返回的类型仅有focus:Transform与cameraOffset:Vector3两个字段。",
+      "evidence": "preview-camera-cfg.txt lines254..310/314..401; camera-config-value-type.json",
+      "not_claimed": "没有取得实际focus/anchor Transform矩阵，也不把WorldToMap输入输出等同PNG像素。"
+    },
+    {
+      "fact": "固定相机摘要对ro6_c_2/c_4记highlandHeight约0.3、cameraView3及各自focus/offset；这些是相机资产线索，未包含mapreview捕获FOV、viewport、裁切、后处理和原图blob绑定。",
+      "evidence": "ro6-resource-camera-records.json exact ro6_c-2/ro6_c-4"
+    },
+    {
+      "fact": "官方Unity API说明屏幕点依赖相机，fieldOfView为垂直角度，pixelRect为渲染像素矩形，修改projectionMatrix可脱离fieldOfView。",
+      "evidence": "Camera.WorldToScreenPoint.html; Camera-fieldOfView.html; Camera-pixelRect.html; Camera-projectionMatrix.html",
+      "scope": "2023.2官方通用API，不是本游戏或该PNG导出环境的版本/数值证明。"
+    }
+  ],
+  "missing_evidence": [
+    "固定mapreview PNG的原始生成或导出脚本，以及与当前原图blob一致的资产版本。",
+    "该生成过程实际使用的camera worldToCamera/projection matrix或可唯一重建的Transform/FOV/aspect/orthographic/near/far及任何自定义矩阵。",
+    "捕获viewport/render target、缩放、裁切/填边与输出PNG尺寸的精确关系。",
+    "逻辑网格中心与场景anchor/地面层的世界变换；高台高度、表面和立体入口不能借同一零高平面。",
+    "旧公开资源版本与当前安装、热更新的适用关系，不能只凭相同stage名称借用。"
+  ],
+  "risk_and_alternative_explanations": [
+    "512×286原图不是1280×720的等比例512×288输出；不能凭2px之差断定上下裁切。",
+    "仅有相机位置或focus/offset不足以唯一确定屏幕投影；直接套MAA40度会把未知当已知。",
+    "两次首拟合失败只能说明既定观测/模型未过4px门，不证明地图不存在平面投影，也不证明必为原点/透视/人工读数中的某一原因。",
+    "若为追求过门重新调读点或用拟合输出作验证，会产生泄漏；本轮没有进行这些操作。",
+    "扩大原生调用正常性证明但仍无导出camera资产，不会实质减少固定原图的81/59缺口。"
+  ],
+  "next_actions": [
+    {
+      "priority": 1,
+      "scope": "恢复此地图路线的确切条件",
+      "action": "取得原mapreview导出工具或固定相机prefab/截图配置与PNG blob的唯一绑定，再静态重建；不做新手工调点。",
+      "acceptance": "使用原始参数直接给出投影；既有独立holdout不参与重建，保持4px门；高台/偏移另有证才扩域。",
+      "currently_ready": false
+    },
+    {
+      "priority": 2,
+      "scope": "可独立推进的P3候选",
+      "action": "转到PROJECT_PROGRESS的4个辅助实体图片精确ID/原图来源关联；仅在官方资源表与图像blob唯一绑定后接入玩家信息。",
+      "acceptance": "实际实体身份、原始图像字节和用途对应清楚；未知档次/实例资格保持未知，不通过名字相似配图。",
+      "currently_ready": false,
+      "reason": "这是建议的下一研究入口，尚未在本审计查证，不能预报为可完成298功能。"
+    }
+  ],
+  "preparation_failures_and_limits": [
+    "初次过宽rg查询输出被截断；之后改为具体缓存目录/机器JSON筛选，没有以截断输出证明不存在。",
+    "初次Windows rg glob目录写法返回123、读不存在的battle_projection.py；实际实现为map_projection.py。",
+    "一次PowerShell -c内字符串$$被扩展，summary helper报empty separator；改为独立.py文件后成功，不是产品测试失败。",
+    "三个官方property URL初误用方法点号语法，真实HTTP404保留unity-reference-fetch.json；改用已查证的连字符property URL后200原件另存，不将404当API缺失。"
+  ],
+  "source_pins": {
+    ".cache/research/map-projection-044/evidence.json": {
+      "sha256": "7e44d20296a7d870030cb393b91dd03b58ac1ada8762ecead2c1ab3cbbac1d64",
+      "bytes": 2091
+    },
+    ".cache/research/p2-native-current-263/script.json": {
+      "sha256": "b066561a4397e57613183b26800f52650a72e8d75d95ff65726e7a196cf2e41b",
+      "bytes": 54882318
+    },
+    ".cache/research/map-projection-044/resource-readme.md": {
+      "sha256": "91d697eea7a70d007a80876663f95b7c30d7e804f1a36c1e66608d5d01016608",
+      "bytes": 4212
+    },
+    ".cache/research/map-projection-044/resource-maps.json": {
+      "sha256": "9764a14831b79f17d703ec3a1b3baf643449d0248c5007ebbbce13f87a1c36b3",
+      "bytes": 478714
+    },
+    ".cache/research/map-projection-044/resource-summary.json": {
+      "sha256": "7458a76d7da3442b8b5c75b0c9bc4ede7ece116542aeff73eb702077e8222429",
+      "bytes": 1643781
+    },
+    "rouge/data/battle-previews.json": {
+      "sha256": "f0155647af8766eb2f01e84295f85b7300264fc49b40ffc82e89800837d274f3",
+      "bytes": 9920110
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_1-1.json": {
+      "sha256": "b9b632f7cd1c73da5e6cd107eec81c5d45d44b8cb934e6989db73095ec44c0a8",
+      "bytes": 133058
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_1-2.json": {
+      "sha256": "515ce265270513ef0b0e1cfd3303f4234070b3b871e5b4a9640468d31b62d96d",
+      "bytes": 86545
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_1-3.json": {
+      "sha256": "87c4a4a7518a590715b1262ac354baa76b90bc96b1579dbda0e230a8b145a598",
+      "bytes": 157767
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_1-4.json": {
+      "sha256": "750655b2222f6363ff18329c0b27411eeab30e22da57458d325baa03f695e3f1",
+      "bytes": 134552
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_2-1.json": {
+      "sha256": "d067c73d052167dbe57f78693dc46d8a5e337c7f63f0f68ca1e5b1fd727c7d1b",
+      "bytes": 287793
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_2-2.json": {
+      "sha256": "cde8dca0e1313091835e425c1f7c6e5ff30d17bfdeaf031f2966ca75421904bc",
+      "bytes": 139517
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_2-3.json": {
+      "sha256": "b68d3e2163e87d4b5da63004768f6cb3f8eaa5b5c66bcf56b72732c1a42f3dda",
+      "bytes": 166996
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_2-4.json": {
+      "sha256": "c9ac2c40ab2ba5390168b9b6ce716efa13a11ad4005247307b6edbb146784ee0",
+      "bytes": 91374
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_2-5.json": {
+      "sha256": "51d6d29e57339bb5f9b3b5af0aff4fbe08e4e2e1c8b56e2e5b47db653261c8f9",
+      "bytes": 124541
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_3-1.json": {
+      "sha256": "e6839a3624e06f5b18aa103889d734f2657ee69e75c6b55effd70d0649cb35e3",
+      "bytes": 153005
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_3-2.json": {
+      "sha256": "0d96b5280f05c8fdb111d9eb5320cd483f04867d220497de5a457cbb3c87767b",
+      "bytes": 143356
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_3-3.json": {
+      "sha256": "5b3abb43a10bf35f27729e2fa3cd25edd5b47cb7575239e9df7b3c0c1bf8f79d",
+      "bytes": 237853
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_3-4.json": {
+      "sha256": "a890d1b5061475e594844c9275510631256b00c97f852717f8750fdc696659c7",
+      "bytes": 109196
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_3-5.json": {
+      "sha256": "34263f7e99c16431ef78090352602609a2b29a1a2fcdf47c342b4c85b1cac927",
+      "bytes": 125772
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_3-6.json": {
+      "sha256": "2d2e89306c3d3c4a2a6c21f71b3828f66cb7a7996ab149faaad043d4867e8296",
+      "bytes": 233958
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_4-1.json": {
+      "sha256": "c7d12620b5c35e05ecb3c46ba6f509571f4c3eaaa64be2179d5f172e84d65e27",
+      "bytes": 203490
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_4-2.json": {
+      "sha256": "0342120cd121edd22aba49b2c969d4c677c0243a7e573d51e56cc1ce11e50819",
+      "bytes": 175120
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_4-3.json": {
+      "sha256": "f4d7e6e48b7e3985b8ef1831e4f5d45ccd4571c139a9661893fe6fea9f4ac711",
+      "bytes": 126452
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_4-4.json": {
+      "sha256": "8a1cf98be7be97db5b001b052b8524a1dcd94ca6a22208230cf758b6ed3d9a7d",
+      "bytes": 240314
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_4-5.json": {
+      "sha256": "3f9c1d1d3520c871a954baf17d2ebf8e68f615e7279c94a04d057ff33cdfd7f5",
+      "bytes": 171779
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_4-6.json": {
+      "sha256": "2cbd2cdc0cf67ddc32de19f06de4c4e39fe795c0428f2f1a411916e2ad095f51",
+      "bytes": 168952
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_4-7.json": {
+      "sha256": "4ea155942db0eb11241a7231b711d28b1517b85449d3f80a29163a4e40793b37",
+      "bytes": 231041
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_5-1.json": {
+      "sha256": "44a2a0e5fab2ddcc3b0b17182a01ce1b045c57bad998e9b696cf0ef0e8364c3a",
+      "bytes": 281649
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_5-2.json": {
+      "sha256": "65b0b5885f31aefd4acab5f45d59ac2e49828579db7b42f1868cce446692872f",
+      "bytes": 166569
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_5-3.json": {
+      "sha256": "fb96ab9d96f8e01c84bfde840a2bee113f283c6082fa336b55ef14a7fa0b96ed",
+      "bytes": 253997
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_5-4.json": {
+      "sha256": "bfdcd0edb38d9dcb835ce89d02dc05a3af3f1b3be9b54a384aaf3c52c154924b",
+      "bytes": 141415
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_5-5.json": {
+      "sha256": "a9b22a2d490fabdbd8eee919eb3f10a9e2076667d9132095e4fafeb19cd118d2",
+      "bytes": 224530
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_5-6.json": {
+      "sha256": "9ff1d5dc02311a17075cf6c3cb332d1152a1a2bc349b97c61462d8967cf8de8e",
+      "bytes": 378108
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_5-7.json": {
+      "sha256": "5656c1e79803400732a8c7b4ade6701fc5a2b349e4ce7e529e6113e9f93b5d65",
+      "bytes": 231365
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_6-1.json": {
+      "sha256": "f92540d4d95d6a95ec2a02d330b0af0afb8212fe141c737b83b8c9e2f234661a",
+      "bytes": 464523
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_6-2.json": {
+      "sha256": "dd7dcd12968544f1057f6680af4022c4dd2412c4a21e4f04d32afe9c75e9da5c",
+      "bytes": 475307
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-1-b.json": {
+      "sha256": "5187c6584d5868eb1f7932987d0615f9508854dc5ecdb6cceefcc4e16d14fe67",
+      "bytes": 83871
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-1.json": {
+      "sha256": "9a63a3f875fd839b7f9357b2940cd12dd251ac277c8961af06007b87f3fbe168",
+      "bytes": 95998
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-2-b.json": {
+      "sha256": "d101cfcdef63112ad9a1cf516cf5f2c3b3fae7d36fa4252a008cb8e47df17121",
+      "bytes": 76620
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-2.json": {
+      "sha256": "eae651b01336daf55b10cf73e983b48f435cc433c42c9ed471679929ead191ed",
+      "bytes": 89706
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-3-b.json": {
+      "sha256": "3246478cd20b79c6507df8074f540e5993ac1554bc21ee02ccf8ea82f596867b",
+      "bytes": 82615
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-3.json": {
+      "sha256": "687f643cd1b5f6ec5279ff5a7bd63b3b185b6880cc2648fdcad35788944a9f1d",
+      "bytes": 67546
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-4-b.json": {
+      "sha256": "fc2f7ae7371829259bd445a45704d79f30f84094f8eedbfa74b026fe075c51ea",
+      "bytes": 202372
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-4.json": {
+      "sha256": "1161795429a9dd4f36b6fcf4e6cf5b6300e2bcce6f04a860e9f7b31e6619d292",
+      "bytes": 207445
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-5.json": {
+      "sha256": "aec26f5d1146281bdc50b73d0c88ce99c37c07c3bd6361ed2af8980ce53c1faf",
+      "bytes": 205518
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_b-6.json": {
+      "sha256": "57db7782a27808e0187f1fbaf41c3886a85e7687d40dc451281846d4297efad9",
+      "bytes": 165191
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_c-1-b.json": {
+      "sha256": "176ff0d99c9e47c03ae1a0225d2abeff1793ab5839199d1ad0e7bd8e274d55e9",
+      "bytes": 35338
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_c-1-c.json": {
+      "sha256": "c36dea3a5faa67776d5bc113d7322544959337bf364582e61e31a60e2d1809ea",
+      "bytes": 45195
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_c-1.json": {
+      "sha256": "06c812156a6fd8b9aa692fefacca9a336d2fb2ed73ee2d303f37d737da23c494",
+      "bytes": 55106
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_c-2.json": {
+      "sha256": "f5b7fb93103c06e9a956c0ab01f648416fb604f262d802efd99be5c3f5fc20d7",
+      "bytes": 75061
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_c-3.json": {
+      "sha256": "7a31eef6c7a7be924cace5c195fffcdfa2109129407eaf849a6f4514183e34d4",
+      "bytes": 95145
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_c-4.json": {
+      "sha256": "c1a2bdc44766bb2ff949f2ea549a835f936c7010e8ca78bac279841dc33fd50b",
+      "bytes": 67152
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_c-5.json": {
+      "sha256": "acd2e687e61df3a9ecffad8a771e8078668380e0e7faef1273b6ebf9d879c5f7",
+      "bytes": 81195
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_c-6.json": {
+      "sha256": "bc395c8d503797e99af3b7940ef246294a83ed63da33e1b94e5f7ebd2a1f4e15",
+      "bytes": 110885
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_c-7.json": {
+      "sha256": "53a888f7da5686a38b8dff4adccc1b6206cc15e84cdaaa2803889aa56cfa4131",
+      "bytes": 126994
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_d-1.json": {
+      "sha256": "baa96c5e59f02a02361b78335abfba5a46e3c519f61eacfde6978ee1bc392c5a",
+      "bytes": 185692
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_d-2.json": {
+      "sha256": "c3e60435f45b0f4df94f0b9f11396a9bebc9b9c9223154c326084d6ef35b9052",
+      "bytes": 267002
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-1.json": {
+      "sha256": "d922f82be814216bcf09cfb4e8252457f8329582e5a987e25db505b2f75ab9e7",
+      "bytes": 38834
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-10.json": {
+      "sha256": "f68874f4333b34cf9b4ca53e483c486622dafb94d291a2dc3913dbbee7d5d672",
+      "bytes": 58154
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-11.json": {
+      "sha256": "86c94c4386a8bc19ef9c114c0c894861fe97523bfff84452994a152eeecca477",
+      "bytes": 84968
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-12.json": {
+      "sha256": "9a5a8db752868ff1dd9e436c7143bb2e599e3d43906f539e42b84add26c2c1ba",
+      "bytes": 173520
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-2.json": {
+      "sha256": "6038e969dfa9793974f979ac1961423df93a4eb1a02c2ff3f5ee54c13c22387d",
+      "bytes": 98083
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-3.json": {
+      "sha256": "2f637de071447b5a1ad8beeb4fbe42493887371d101417712bd109d32e3f57b3",
+      "bytes": 76623
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-4.json": {
+      "sha256": "3f41c5ca3f720992e8fee2c4f46c7c0d07f4c24f4ffed396631ddbdb480c1e16",
+      "bytes": 206810
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-5.json": {
+      "sha256": "33f055773756e90cd1253ba920c542290a05f34501ae491635ed4bacc7c9ea5c",
+      "bytes": 133180
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-6.json": {
+      "sha256": "00a93ba365166a7f92d18210fc5bde8232f19c739d9a7beffd70cf8582db9a9e",
+      "bytes": 79395
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-7.json": {
+      "sha256": "bd0863225461ff9defd5ccbc1f9a8573999ce3bec1cf0fe859415cdf9b3de91d",
+      "bytes": 168844
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-8-b.json": {
+      "sha256": "17f4208d48d3417405af063debc174bcf94c6872b1112dbe9311175edccd148f",
+      "bytes": 42656
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-8-c.json": {
+      "sha256": "5ebb433ed9a26332abb2a6bba394c849b8df8490e5d4c887769263521797ccd6",
+      "bytes": 45889
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-8.json": {
+      "sha256": "7d83f95dab5bc5bbabb9c9d48ff1f4b77cf91c904db60a83e7672e38ab80c011",
+      "bytes": 50768
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-9-b.json": {
+      "sha256": "bc6f687fc753b3414c31e29d5011d9da7af389cc2c8b6d3787cdf366acb74aa4",
+      "bytes": 92253
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-9-c.json": {
+      "sha256": "05de3139eed94d978441fbb897802283f795d2ca333ac4351b15201602c658f3",
+      "bytes": 91001
+    },
+    ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-9.json": {
+      "sha256": "263407e1abd537db70217838d5c242da467e231f728f450ba60eca6a6a85f24b",
+      "bytes": 74746
+    },
+    ".cache/research/map-projection-044/maa-TileCalc2.hpp": {
+      "sha256": "a3f8230bd168fedb8f3629d96d1c7c06f3ceceb2a90037df4a1eb3531136a245",
+      "bytes": 4246
+    },
+    ".cache/research/map-projection-044/source-receipts.json": {
+      "sha256": "e5eb6c848263b59eadaefa815abefb65d589f8c5f85707540a87e5ba2b388603",
+      "bytes": 2587
+    },
+    ".cache/research/p2-native-current-263/mapping-verification.json": {
+      "sha256": "b9aeb79762cf2e2128936cfa5591ade47a3ebb123e198adaf1531e7e65894593",
+      "bytes": 3290
+    },
+    ".cache/research/p2-native-current-263/read_metadata_static.py": {
+      "sha256": "6c135e71444f8cceaa1797ebf25abbbf98d541b81159bd8f57b2fcc51ace3ce5",
+      "bytes": 11333
+    },
+    "rouge/map_projection.py": {
+      "sha256": "662c74622223db68f717b3ed48e2045bd23d6c6848b10b7440567d3efbc736b0",
+      "bytes": 3374
+    },
+    "rouge/data/battle-map-projections.json": {
+      "sha256": "b36710dbc381de0ded802d6edc4ef4eafe192432818180bf608a5fded3cf843c",
+      "bytes": 69404
+    },
+    "rouge/data/fixed-landmark-references.json": {
+      "sha256": "63ec9488f8f905d2ced1a4e349413e9c92d78125b9f1c94c00293cafa4d348f5",
+      "bytes": 25456
+    },
+    "PROJECT_PROGRESS.md": {
+      "sha256": "111962b1622515c494ae81a06ac19b915db797211e926165a9947b80fade8a0b",
+      "bytes": 12828
+    },
+    "verification/sections/297-preparation/map-first-fit/initial-fit-results.json": {
+      "sha256": "a76a1d3dc60a0b7a232b0f1d2886890f06248e3ffde03f4662ca20dde3425d92",
+      "bytes": 12484
+    },
+    ".cache/batch186-285/p2-units/research/public-enemy-hotfix/cameracontrollerhotfixer.lua": {
+      "sha256": "01e515011d5cbf1c20d4f88d7f0e2e44b3d9ff4718e5a05da9b8c250195044b2",
+      "bytes": 895
+    },
+    ".cache/batch186-285/p2-units/research/public-enemy-hotfix/vcameracontrollerhotfixer.lua": {
+      "sha256": "9adbfa6479f7a78990bbc411438965b8fece5aeb7235357c52f606d4b6fcff17",
+      "bytes": 1702
+    }
+  },
+  "file_only": true,
+  "game_dll_executed": false,
+  "process_memory_read": false,
+  "private_state_read": false,
+  "new_manual_points_or_fit_executed": false,
+  "Qt_or_product_tests_executed": false,
+  "production_or_Git_modified": false,
+  "section298_completed": false
+}

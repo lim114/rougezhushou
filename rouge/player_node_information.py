@@ -147,6 +147,27 @@ def _event_lines(entry, context):
             state = '符合' if check['matches'] is True else '不符' if check['matches'] is False else '未知'
             lines.append(f'前置条件（{state}）：{_plain(check["source_text"])}')
     scenes = result['rows']
+    if context.get('entry_mode') in ('natural','content','processed_item'):
+        reading=deepcopy(catalog._event(event_id));reading['scenes']=deepcopy(scenes)
+        reference=catalog.natural_event_requirements(reading,floor=context.get('floor'),
+            entry_mode=context['entry_mode'],special_region=context.get('special_region',False),
+            historical=historical or context.get('reference_context_scope')=='historical_title_reference_only')
+        if reference:
+            lines+=['','【自然出现的已知条件】']
+            if not reference['source_valid']:
+                lines.append('节点主层资料暂时无法核对；不沿用旧限制，保留原文与资格未知。')
+            else:
+                floors='、'.join('第'+str(n)+'层' for n in reference['documented_excluded_main_floors'])
+                lines.append('资料记载：'+reference['node_type']+'不会自然出现在'+floors+'。')
+                match=reference['documented_floor_match']
+                lines.append('当前主层不在上述自然出现范围内；下方仍可查阅完整事件资料。' if match is False else
+                    '当前主层未被这条限制排除；其它出现条件和实际生成仍未知。' if match is True else
+                    '本次为已读、历史、特殊区域或条件未齐的参考；不据此删除内容或判定不能进入。')
+                tech=reference['technology_enabling_reference']
+                if tech:
+                    lines.append('已知开启途径：生命游戏中的“'+tech['name']+'”。')
+                    lines.append('这是一条已知开启途径；本账号是否点亮尚未确认，不能据未点亮就认定绝不出现。')
+                lines.append('以上为固定版本的资料范围，未证明当前服务器的全部出现条件。')
     numbers = {scene['key']: number for number, scene in enumerate(scenes, 1)}
     expedition=expedition_results.event_reference(event_id)
     if expedition and expedition.get('source_valid'):
