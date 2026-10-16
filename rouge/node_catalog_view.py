@@ -17,6 +17,8 @@ from .duel_reward_view import DuelRewardPanel
 from .scrap_exchange_view import ScrapExchangePanel
 from .seed_cultivation_view import SeedCultivationPanel
 from .resting_corner_view import RestingCornerPanel
+from .documented_choice_item_view import DocumentedChoiceItemPanel
+from . import documented_choice_items
 from .player_node_information import node_information_text
 from .resident_location_references import resident_location_references,resident_binding_matches
 from .peace_guardian_results import EVENT as _RESIDENT_EVENT,SCENE as _RESIDENT_SCENE,CHOICE as _RESIDENT_CHOICE
@@ -313,6 +315,7 @@ class NodeCatalogPanel(QWidget):
         self.exchange_window=None;self.exchange_origin_key=None
         self.seed_window=None;self.seed_origin_key=None
         self.resting_window=None
+        self.documented_item_window=None
         layout=QVBoxLayout(self)
         self.context_label=QLabel(DIRECTORY_NOTICE)
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
@@ -367,6 +370,9 @@ class NodeCatalogPanel(QWidget):
         self.seed_button.hide();self.seed_button.clicked.connect(self.open_seed_cultivation)
         self.resting_button=QPushButton("查看随机选择的后续资料");rl.addWidget(self.resting_button)
         self.resting_button.hide();self.resting_button.clicked.connect(self.open_resting_results)
+        self.documented_item_button=QPushButton("查看选项中的物品说明");rl.addWidget(self.documented_item_button)
+        self.documented_item_button.setToolTip("查看该事件资料明确记载的物品；不代表当前筛选的选项或本局领取。")
+        self.documented_item_button.hide();self.documented_item_button.clicked.connect(self.open_documented_items)
         self.resident_reference_label=QLabel();self.resident_reference_label.setWordWrap(True)
         self.resident_location=QComboBox();self.resident_location.setAccessibleName('本图已读据点位置参考')
         self.resident_map_button=QPushButton('在地图查看这个位置')
@@ -595,6 +601,12 @@ class NodeCatalogPanel(QWidget):
         self.resting_button.setVisible(resting)
         if self.resting_window:
             self.resting_window.set_reference('community_group_023' if resting else None,scope_key=key if resting else None)
+        documented=bool(entry and entry['kind']=='event' and entry['record'].get('id')==documented_choice_items.EVENT)
+        self.documented_item_button.setVisible(documented)
+        item_packet=documented_choice_items.event_item_references(documented_choice_items.EVENT) if documented else None
+        self.documented_item_button.setEnabled(bool(item_packet and item_packet.get('status')=='documented_reference'))
+        if self.documented_item_window:
+            self.documented_item_window.set_reference(documented_choice_items.EVENT if documented else None,scope_key=key if documented else None)
         if not entry:text='没有符合筛选的资料。不能把资料缺失视为不可能出现。'
         elif entry['kind']=='event':
             q=entry['qualification'];text=event_details_text(entry['record']['id'],self._event_context(entry['record']))
@@ -788,6 +800,17 @@ class NodeCatalogPanel(QWidget):
         self.destination_origin_key=key
         self.destination_window.set_reference(choice_id,context)
         self.destination_window.show();self.destination_window.raise_();self.destination_window.activateWindow()
+
+    def open_documented_items(self):
+        key=self.list.selected_key();entry=next((row for row in self.entries if row['key']==key),None)
+        if not entry or entry['kind']!='event' or entry['record'].get('id')!=documented_choice_items.EVENT:return
+        packet=documented_choice_items.event_item_references(documented_choice_items.EVENT)
+        if not packet or packet.get('status')!='documented_reference':
+            if self.documented_item_window:self.documented_item_window.set_reference(None)
+            return
+        if self.documented_item_window is None:self.documented_item_window=DocumentedChoiceItemPanel(self)
+        self.documented_item_window.set_reference(documented_choice_items.EVENT,scope_key=key)
+        self.documented_item_window.show();self.documented_item_window.raise_();self.documented_item_window.activateWindow()
 
     def open_resting_results(self):
         key=self.list.selected_key();entry=next((row for row in self.entries if row['key']==key),None)

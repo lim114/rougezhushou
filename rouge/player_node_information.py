@@ -9,6 +9,7 @@ from html import unescape
 import re
 
 from . import event_planning
+from .documented_choice_items import event_item_references
 from . import node_catalog as catalog
 from .battle_reward_planning import stage_reward_sources
 from .base_settlement_planning import stage_base_rewards, gold_reference_text
@@ -146,6 +147,10 @@ def _event_lines(entry, context):
     numbers = {scene['key']: number for number, scene in enumerate(scenes, 1)}
     reward_options = catalog.event_reward_options(event_id)
     rewards = {row['choice_id']: row for row in reward_options['rows']}
+    documented_items = event_item_references(event_id)
+    item_references = (documented_items or {}).get('items', [])
+    if documented_items and documented_items.get('status') == 'unknown':
+        lines.append('补充物品资料暂时无法核对；可继续阅读选项原文，不表示该选项没有物品。')
     if reward_options.get('supplemental_reward_reference', {}).get('status') == 'unknown':
         lines.append('补充奖励资料暂时无法核对；可继续查看选项原文，奖励数量与实际领取仍未确认。')
     battle_rows = event_planning.event_battle_links(event_id, context=context)['rows']
@@ -211,6 +216,11 @@ def _event_lines(entry, context):
                 quantity = reward.get('quantity')
                 label = '具名奖励（零件）：' if reward.get('type') == 'SCRAP' else '具名奖励：'
                 lines.append(label + _plain(name) + (f' × {quantity}' if quantity is not None else '；数量未确认') + '；实际领取未知。')
+            for reference in item_references:
+                if (reference.get('event_id') == event_id and reference.get('scene_key') == scene['key']
+                        and reference.get('choice_key') == choice['key']):
+                    lines.append('资料写明的物品：' + _plain(reference['name']) + '（收藏品）；数量与本局实际领取尚未确认。')
+                    lines.append('可通过下方“查看选项中的物品说明”入口阅读图标与用途；这不会选择游戏中的选项。')
             conversion = row.get('ap_conversion_reference')
             if conversion:
                 amount = conversion['hope_gain_reference']

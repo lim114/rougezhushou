@@ -1,0 +1,403 @@
+{
+  "schema_version": 1,
+  "event_id": "community_group_021",
+  "scope": "documented_named_item_not_grant",
+  "expected_event": {
+    "id": "community_group_021",
+    "title": "线人",
+    "node_types": [
+      "不期而遇"
+    ],
+    "floors": [
+      2,
+      3,
+      4
+    ],
+    "natural": null,
+    "natural_reason": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+    "entry": [
+      "community_group_021:scene:0"
+    ],
+    "source_group_id": "community_group_021",
+    "scenes": [
+      {
+        "key": "community_group_021:scene:0",
+        "game_scene_ids": [
+          "scene_ro6_bomb1_enter"
+        ],
+        "description": "绕过树丛，一座营地出现在你面前，令人匪夷所思的是，它似乎正在将自己折叠和打包起来，并未借助任何外力。就在你看得入迷时，一只目光锐利的鸟悄然来到你身旁，用一台你不曾见过的小型手持仪器抵着你的脖颈。“能否告诉我，你为谁服务？”",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "开始",
+          "data-image": "Avg_pic_rogue_6_35",
+          "data-name": "线人",
+          "data-ename": "",
+          "data-efloor": "II,III,IV",
+          "data-index": "111",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [
+          "本事件在未进入时会在同一局探索中重复出现。"
+        ],
+        "choices": [
+          {
+            "key": "community_group_021:scene:0:choice:0",
+            "title": "我受雇于梅兰德",
+            "description": "获得收藏品沙盘α（我方单位部署费用+2，让探索开启不同的方向，同时持有【沙盘β】可以揭示源阶方的所在位置）",
+            "destination_keys": [
+              "community_group_021:scene:1"
+            ],
+            "game_choice_ids": [],
+            "source_type": "collection2",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "collection2",
+              "data-title": "我受雇于梅兰德",
+              "data-icon": "225",
+              "data-dest": "1",
+              "data-iconid": "rogue_6_relic_final_1",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": null,
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_021:scene:0:choice:1",
+            "title": "我是一名独立探险家",
+            "description": "获得1件珍贵的加工品",
+            "destination_keys": [
+              "community_group_021:scene:2"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_bomb1_2"
+            ],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "我是一名独立探险家",
+              "data-icon": "scrap_drop",
+              "data-dest": "2",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          },
+          {
+            "key": "community_group_021:scene:0:choice:2",
+            "title": "我是联合政府派来的",
+            "description": "多一事不如少一事",
+            "destination_keys": [
+              "community_group_021:scene:3"
+            ],
+            "game_choice_ids": [
+              "choice_ro6_bomb1_3"
+            ],
+            "source_type": "simple",
+            "conditional": null,
+            "nested": false,
+            "subchoices": [],
+            "attributes": {
+              "class": "choose",
+              "data-type": "simple",
+              "data-title": "我是联合政府派来的",
+              "data-icon": "leave",
+              "data-dest": "3",
+              "data-iconid": "",
+              "data-subchoose": ""
+            },
+            "presentation_role": "display_option_reference",
+            "destination_status": "community_group_local_navigation",
+            "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+            "server_option_availability_verified": false
+          }
+        ]
+      },
+      {
+        "key": "community_group_021:scene:1",
+        "game_scene_ids": [
+          "scene_ro6_bomb1_1"
+        ],
+        "description": "“看来确实如此。”它手中的仪器亮起了绿色的灯光，“抱歉，我用自制的测谎装置试探了你，朋友。我和你一样在追查不明的电信号来源，但我携带的补给已经不足，只能先撤退了。我会把掌握的线索全都交给你，希望你可以替我完成任务。”",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "结束",
+          "data-image": "Avg_pic_rogue_6_35",
+          "data-name": "线人",
+          "data-ename": "",
+          "data-index": "112",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": []
+      },
+      {
+        "key": "community_group_021:scene:2",
+        "game_scene_ids": [
+          "scene_ro6_bomb1_2"
+        ],
+        "description": "“能走到这里很不容易。”它似乎露出了一丝不易察觉的笑容，“再往前走，你或许会面对难以想象的危险，但对探险家来说，这也可能是难得的机遇。我这里有一些没法打包带走的物资，就留给你吧。”",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "结束",
+          "data-image": "Avg_pic_rogue_6_35",
+          "data-name": "线人",
+          "data-ename": "",
+          "data-index": "113",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": []
+      },
+      {
+        "key": "community_group_021:scene:3",
+        "game_scene_ids": [
+          "scene_ro6_bomb1_3"
+        ],
+        "description": "“你不应该来这里。”它严肃地看着你，“你并不理解他们究竟将你置于怎样的险境。早些回头吧，我不会为难你。”",
+        "attributes": {
+          "class": "scene",
+          "data-nav": "结束",
+          "data-image": "Avg_pic_rogue_6_35",
+          "data-name": "线人",
+          "data-ename": "",
+          "data-index": "114",
+          "data-prtsinfo": ""
+        },
+        "edesc_texts": [],
+        "choices": []
+      }
+    ]
+  },
+  "reference": {
+    "reference_id": "community_group_021:scene:0:choice:0:documented-item:rogue_6_relic_final_1",
+    "event_id": "community_group_021",
+    "scene_key": "community_group_021:scene:0",
+    "choice_key": "community_group_021:scene:0:choice:0",
+    "choice_title": "我受雇于梅兰德",
+    "choice_description": "获得收藏品沙盘α（我方单位部署费用+2，让探索开启不同的方向，同时持有【沙盘β】可以揭示源阶方的所在位置）",
+    "name": "沙盘α",
+    "item_id": "rogue_6_relic_final_1",
+    "item_type": "RELIC",
+    "item_kind_name": "收藏品",
+    "icon_reference": {
+      "file": "rouge/data/relic-icons/rogue_6_relic_final_1.png",
+      "item_id": "rogue_6_relic_final_1",
+      "icon_id": "rogue_6_relic_final_1",
+      "sha256": "1d07a123253172ede9a4585abdcd1b301350e096b245bc046539c48f6c6fb825",
+      "bytes": 36076,
+      "git_blob_sha1": "874eb15d491afc7cd4c292816bff9e334eb2dab6",
+      "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/rogueitem/rogue_6_relic_final_1.png",
+      "resource_commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd"
+    },
+    "reference_kind": "documented_named_item",
+    "quantity_reference": null,
+    "actual_reward": null,
+    "actual_selectable": null,
+    "source_scene_link_verified": false,
+    "original_choice_content_reference": "choice_ro6_bomb1_1",
+    "original_item_pointer_present": false,
+    "original_choice_entry_bound": false,
+    "scope_notice": "资料写明可获得该收藏品；数量、本局实际领取与可选状态未确认。"
+  },
+  "item": {
+    "id": "rogue_6_relic_final_1",
+    "name": "沙盘α",
+    "description": "来自梅兰德基金会的特殊信息，保密等级相当高。沙盘上显示的区域似乎极难深入，或许只能根据另一方的线索二次定位后找到她。",
+    "usage": "我方单位部署费用+2，让探索开启不同的方向，同时持有【沙盘β】可以揭示源阶方的所在位置",
+    "obtainApproach": "在集成战略模式中获得",
+    "iconId": "rogue_6_relic_final_1",
+    "itemIconGroupId": null,
+    "type": "RELIC",
+    "subType": "NONE",
+    "rarity": "SUPER_RARE",
+    "sortId": 999,
+    "canSacrifice": false,
+    "tinyIconColor": null,
+    "unlockCondDesc": "完成游戏结局",
+    "shortUsage": null
+  },
+  "sources": {
+    "original_game": {
+      "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "bytes": 17943244,
+      "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+    },
+    "documents": [
+      {
+        "revision": "427904",
+        "url": "https://m.prts.wiki/index.php?title=沉沦者的黑流树海/事件一览&oldid=427904",
+        "file": "research/p3-documented-choice-items-295/prts-events-427904.html",
+        "sha256": "faa088b0474e75806b357df8648c6a59b1be6dcbc9be749db7c934ca9e6307e9",
+        "bytes": 183007
+      },
+      {
+        "revision": "440271",
+        "url": "https://m.prts.wiki/index.php?title=沉沦者的黑流树海/事件一览&oldid=440271",
+        "file": "research/p3-documented-choice-items-295/prts-events-440271.html",
+        "sha256": "e04971ad361436e5bb3721883423d98ad66636d5156794dd6221a977ffd6dac8",
+        "bytes": 183838
+      },
+      {
+        "revision": "349818",
+        "url": "https://wiki.biligame.com/arknights/沉沦者的黑流树海/调查记录",
+        "file": "research/p3-documented-choice-items-295/bwiki-investigation.html",
+        "sha256": "26b7768bf3556cf73c24529659c2c92f4095059476f782130bf3fa768422b908",
+        "bytes": 270353
+      }
+    ],
+    "icon": {
+      "file": "rouge/data/relic-icons/rogue_6_relic_final_1.png",
+      "item_id": "rogue_6_relic_final_1",
+      "icon_id": "rogue_6_relic_final_1",
+      "sha256": "1d07a123253172ede9a4585abdcd1b301350e096b245bc046539c48f6c6fb825",
+      "bytes": 36076,
+      "git_blob_sha1": "874eb15d491afc7cd4c292816bff9e334eb2dab6",
+      "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/rogueitem/rogue_6_relic_final_1.png",
+      "resource_commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd"
+    }
+  },
+  "source_reference": {
+    "community_scene_key": "community_group_021:scene:0",
+    "community_choice_key": "community_group_021:scene:0:choice:0",
+    "dom_bindings": [
+      {
+        "revision": "427904",
+        "full_source_sha256": "faa088b0474e75806b357df8648c6a59b1be6dcbc9be749db7c934ca9e6307e9",
+        "original_byte_start": 110045,
+        "original_byte_end": 113286,
+        "span_sha256": "d9928e8df26199c57c2ed71d90f95decdb655355706c1f74840cd27964dc72c9",
+        "evidence": {
+          "scene_attributes": {
+            "class": "scene",
+            "data-nav": "开始",
+            "data-image": "Avg_pic_rogue_6_35",
+            "data-name": "线人",
+            "data-ename": "",
+            "data-efloor": "II,III,IV",
+            "data-index": "111",
+            "data-prtsinfo": ""
+          },
+          "entry_prose": "绕过树丛，一座营地出现在你面前，令人匪夷所思的是，它似乎正在将自己折叠和打包起来，并未借助任何外力。就在你看得入迷时，一只目光锐利的鸟悄然来到你身旁，用一台你不曾见过的小型手持仪器抵着你的脖颈。“能否告诉我，你为谁服务？”",
+          "event_notes": [
+            "本事件在未进入时会在同一局探索中重复出现。"
+          ],
+          "choice_attributes": {
+            "class": "choose",
+            "data-type": "collection2",
+            "data-title": "我受雇于梅兰德",
+            "data-icon": "225",
+            "data-dest": "1",
+            "data-iconid": "rogue_6_relic_final_1",
+            "data-subchoose": ""
+          },
+          "choice_description": "获得收藏品沙盘α（我方单位部署费用+2，让探索开启不同的方向，同时持有【沙盘β】可以揭示源阶方的所在位置）",
+          "choice_condition": null,
+          "full_game_and_prts_descriptions_identical": false
+        },
+        "source_scene_link_verified": false
+      },
+      {
+        "revision": "440271",
+        "full_source_sha256": "e04971ad361436e5bb3721883423d98ad66636d5156794dd6221a977ffd6dac8",
+        "original_byte_start": 110816,
+        "original_byte_end": 114073,
+        "span_sha256": "e9c3c7b1ba0494827888a9b1cf512cc2c32c376ee2736d27e2e5cf45cf124b81",
+        "evidence": {
+          "scene_attributes": {
+            "class": "scene",
+            "data-nav": "开始",
+            "data-image": "Avg_pic_rogue_6_35",
+            "data-name": "线人",
+            "data-ename": "",
+            "data-efloor": "II,III,IV",
+            "data-index": "111",
+            "data-prtsinfo": ""
+          },
+          "entry_prose": "绕过树丛，一座营地出现在你面前，令人匪夷所思的是，它似乎正在将自己折叠和打包起来，并未借助任何外力。就在你看得入迷时，一只目光锐利的鸟悄然来到你身旁，用一台你不曾见过的小型手持仪器抵着你的脖颈。“能否告诉我，你为谁服务？”",
+          "event_notes": [
+            "本事件在未进入时会在同一局探索中重复出现。"
+          ],
+          "choice_attributes": {
+            "class": "choose",
+            "data-type": "collection2",
+            "data-title": "我受雇于梅兰德",
+            "data-icon": "225",
+            "data-dest": "1",
+            "data-iconid": "rogue_6_relic_final_1",
+            "data-subchoose": ""
+          },
+          "choice_description": "获得收藏品沙盘α（我方单位部署费用+2，让探索开启不同的方向，同时持有【沙盘β】可以揭示源阶方的所在位置）",
+          "choice_condition": null,
+          "full_game_and_prts_descriptions_identical": false
+        },
+        "source_scene_link_verified": false
+      },
+      {
+        "revision": "349818",
+        "full_source_sha256": "26b7768bf3556cf73c24529659c2c92f4095059476f782130bf3fa768422b908",
+        "original_byte_start": 244938,
+        "original_byte_end": 247416,
+        "span_sha256": "dad252d543007e1eac1a706076032cd306e8f236d5d79c25957df7223c3341e7",
+        "evidence": {
+          "full_table_rows": [
+            [
+              ""
+            ],
+            [
+              "绕过树丛，一座营地出现在你面前，令人匪夷所思的是，它似乎正在将自己折叠和打包起来，并未借助任何外力。就在你看得入迷时，一只目光锐利的鸟悄然来到你身旁，用一台你不曾见过的小型手持仪器抵着你的脖颈。“能否告诉我，你为谁服务？”"
+            ],
+            [
+              "主选项",
+              "选项一",
+              "我受雇于梅兰德\n获得沙盘α，让探索开启不同的方向"
+            ],
+            [
+              "“看来确实如此。”它手中的仪器亮起了绿色的灯光，“抱歉，我用自制的测谎装置试探了你，朋友。我和你一样在追查不明的电信号来源，但我携带的补给已经不足，只能先撤退了。我会把掌握的线索全都交给你，希望你可以替我完成任务。”"
+            ],
+            [
+              "选项二",
+              "我是一名独立探险家\n获得1件珍贵的加工品"
+            ],
+            [
+              "“能走到这里很不容易。”它似乎露出了一丝不易察觉的笑容，“再往前走，你或许会面对难以想象的危险，但对探险家来说，这也可能是难得的机遇。我这里有一些没法打包带走的物资，就留给你吧。”"
+            ],
+            [
+              "选项三",
+              "我是联合政府派来的\n多一事不如少一事"
+            ],
+            [
+              "“你不应该来这里。”它严肃地看着你，“你并不理解他们究竟将你置于怎样的险境。早些回头吧，我不会为难你。”"
+            ]
+          ],
+          "full_original_title_and_result_match": true
+        },
+        "source_scene_link_verified": false
+      }
+    ],
+    "primary_item_field": "$.details.rogue_6.items.rogue_6_relic_final_1",
+    "original_choice_field": "$.details.rogue_6.choices.choice_ro6_bomb1_1",
+    "content_corroboration_only": true,
+    "source_scene_link_verified": false
+  },
+  "current_server_verified": false,
+  "actual_reward": null,
+  "actual_quantity": null,
+  "actual_selectable": null,
+  "source_scene_link_verified": false,
+  "inventory_updated": false,
+  "notice": "这是资料写明的物品，不是本局领取记录；数量、实际领取、可选状态与原入口仍未确认。",
+  "unlock_notice": "物品条目的解锁说明不等于本事件的完整出现条件；本账号是否解锁仍未确认。"
+}

@@ -1,0 +1,138 @@
+{
+  "source": {
+    "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/excel/roguelike_topic_table.json",
+    "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+    "bytes": 17943244,
+    "commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add"
+  },
+  "field_root": "$.details.rogue_6",
+  "choice": {
+    "id": "choice_ro6_bomb1_1",
+    "title": "我受雇于梅兰德",
+    "description": "获得<@ro6.get>沙盘α</>，让探索开启不同的方向",
+    "lockedCoverDesc": null,
+    "type": "TRADE",
+    "leftDecoType": "NONE",
+    "nextSceneId": "scene_ro6_bomb1_1",
+    "icon": "",
+    "displayData": {
+      "type": "NORMAL",
+      "costHintType": "NONE",
+      "effectHintType": "NONE",
+      "funcIconId": "relic",
+      "itemId": null,
+      "difficultyUpgradeRelicGroupId": null,
+      "taskId": null,
+      "instId": null
+    },
+    "forceShowWhenOnlyLeave": false,
+    "isHiddenChoice": false,
+    "sortId": 0
+  },
+  "item": {
+    "id": "rogue_6_relic_final_1",
+    "name": "沙盘α",
+    "description": "来自梅兰德基金会的特殊信息，保密等级相当高。沙盘上显示的区域似乎极难深入，或许只能根据另一方的线索二次定位后找到她。",
+    "usage": "我方单位部署费用+2，让探索开启不同的方向，同时持有【沙盘β】可以揭示源阶方的所在位置",
+    "obtainApproach": "在集成战略模式中获得",
+    "iconId": "rogue_6_relic_final_1",
+    "itemIconGroupId": null,
+    "type": "RELIC",
+    "subType": "NONE",
+    "rarity": "SUPER_RARE",
+    "sortId": 999,
+    "canSacrifice": false,
+    "tinyIconColor": null,
+    "unlockCondDesc": "完成游戏结局",
+    "shortUsage": null
+  },
+  "relic": {
+    "id": "rogue_6_relic_final_1",
+    "buffs": [
+      {
+        "key": "char_attribute_add",
+        "blackboard": [
+          {
+            "key": "cost",
+            "value": 2.0,
+            "valueStr": null
+          }
+        ]
+      },
+      {
+        "key": "unlock_node",
+        "blackboard": [
+          {
+            "key": "node",
+            "value": 0.0,
+            "valueStr": "STORY,STORY_HIDDEN"
+          }
+        ]
+      },
+      {
+        "key": "immediate_reward_on_collection_complete",
+        "blackboard": [
+          {
+            "key": "ids",
+            "value": 0.0,
+            "valueStr": "rogue_6_relic_final_1,rogue_6_relic_final_2"
+          },
+          {
+            "key": "id",
+            "value": 0.0,
+            "valueStr": "rogue_6_end_2_trigger_1"
+          },
+          {
+            "key": "count",
+            "value": 1.0,
+            "valueStr": null
+          }
+        ]
+      }
+    ]
+  },
+  "relic_parameters": {
+    "id": "rogue_6_relic_final_1",
+    "checkCharBoxTypes": [],
+    "checkCharBoxParams": []
+  },
+  "choiceScenes": {
+    "scene_ro6_bomb1_enter": {
+      "id": "scene_ro6_bomb1_enter",
+      "title": "线人",
+      "description": "绕过树丛，一座营地出现在你面前，令人匪夷所思的是，它似乎正在将自己折叠和打包起来，并未借助任何外力。就在你看得入迷时，一只目光锐利的鸟悄然来到你身旁，用一台你不曾见过的小型手持仪器抵着你的脖颈。“能否告诉我，你为谁服务？”",
+      "background": "pic_rogue_6_35",
+      "titleIcon": null,
+      "subTypeId": 0,
+      "useHiddenMusic": false
+    },
+    "scene_ro6_bomb1_1": {
+      "id": "scene_ro6_bomb1_1",
+      "title": "线人",
+      "description": "“看来确实如此。”它手中的仪器亮起了绿色的灯光，“抱歉，我用自制的测谎装置试探了你，朋友。我和你一样在追查不明的电信号来源，但我携带的补给已经不足，只能先撤退了。我会把掌握的线索全都交给你，希望你可以替我完成任务。”",
+      "background": "pic_rogue_6_35",
+      "titleIcon": null,
+      "subTypeId": 0,
+      "useHiddenMusic": false
+    },
+    "scene_ro6_bomb1_2": {
+      "id": "scene_ro6_bomb1_2",
+      "title": "线人",
+      "description": "“能走到这里很不容易。”它似乎露出了一丝不易察觉的笑容，“再往前走，你或许会面对难以想象的危险，但对探险家来说，这也可能是难得的机遇。我这里有一些没法打包带走的物资，就留给你吧。”",
+      "background": "pic_rogue_6_35",
+      "titleIcon": null,
+      "subTypeId": 0,
+      "useHiddenMusic": false
+    },
+    "scene_ro6_bomb1_3": {
+      "id": "scene_ro6_bomb1_3",
+      "title": "线人",
+      "description": "“你不应该来这里。”它严肃地看着你，“你并不理解他们究竟将你置于怎样的险境。早些回头吧，我不会为难你。”",
+      "background": "pic_rogue_6_35",
+      "titleIcon": null,
+      "subTypeId": 0,
+      "useHiddenMusic": false
+    }
+  },
+  "scope": "Full selected source objects only; no native entry, quantity or current execution recovered."
+}
