@@ -1,0 +1,68 @@
+--- original/tests/test_spawn_candidates_299.py
++++ revision2/tests/test_spawn_candidates_299.py
+@@ -249,6 +249,65 @@
+         self.assertEqual(receipt['counts'], {'stages': 69, 'original_levels': 38, 'groups': 285, 'packages': 215})
+         self.assertEqual(before, {str(p): sha256(p.read_bytes()).hexdigest() for p in files})
+ 
++    def test_22_warm_member_group_and_unexpected_token_mutation_fail_closed(self):
++        for mutation in ('member', 'group', 'token', 'bool_for_int', 'non_json_type', 'nan'):
++            with self.subTest(mutation=mutation):
++                self.subject._CACHE.clear()
++                original = self.action(); token = original['groups'][0]['members'][0]['token']
++                cached = next(iter(self.subject._CACHE.values()))
++                member = cached['stage']['groups'][0]['members'][0]
++                if mutation == 'member': member['display_name'] = '不属于原资料的名称'
++                elif mutation == 'group': cached['stage']['groups'].append(deepcopy(cached['stage']['groups'][0]))
++                elif mutation == 'token': member['token'] = {'kind': 'injected_internal_token'}
++                elif mutation == 'bool_for_int': member['declared_count'] = True
++                elif mutation == 'non_json_type': member['enemy_references'] = tuple(member['enemy_references'])
++                elif mutation == 'nan': member['declared_count'] = float('nan')
++                try:
++                    failed = self.subject.action_reference('ro6_n_2_1', 'w1.f4.a1')
++                    self.assertEqual(failed['status'], 'source_unavailable')
++                    self.assertFalse(failed['source_valid']); self.assertEqual(failed['groups'], [])
++                    self.assertIsNone(self.subject.resolve_reference(token))
++                finally:
++                    self.subject._CACHE.clear()
++        self.assertTrue(self.action()['source_valid'])
++
++    def test_23_expected_stage_and_legacy_together_cannot_detach_from_data(self):
++        self.subject._CACHE.clear()
++        original = self.action(); token = original['groups'][0]['members'][0]['token']
++        cached = next(iter(self.subject._CACHE.values()))
++        actual = deepcopy(self.subject.battle_preview.battle_data())
++        cached['expected_stage']['waves'][0]['fragments'][3]['actions'][0]['action']['count'] = 99
++        actual['stages']['ro6_n_2_1'] = deepcopy(cached['expected_stage'])
++        try:
++            with patch.object(self.subject.battle_preview, 'battle_data', return_value=actual):
++                self.assertFalse(self.subject.stage_reference('ro6_n_2_1')['source_valid'])
++                self.assertIsNone(self.subject.resolve_reference(token))
++        finally:
++            self.subject._CACHE.clear()
++        self.assertEqual(self.action()['groups'][0]['members'][0]['declared_count'], 1)
++
++    def test_24_cached_source_or_manifest_identity_cannot_replace_fresh_source(self):
++        for mutation in ('manifest_identity', 'global_source_with_matching_legacy'):
++            with self.subTest(mutation=mutation):
++                self.subject._CACHE.clear()
++                original = self.action(); token = original['groups'][0]['members'][0]['token']
++                cached = next(iter(self.subject._CACHE.values()))
++                actual = deepcopy(self.subject.battle_preview.battle_data())
++                if mutation == 'manifest_identity':
++                    cached['manifest']['files']['rouge/data/battle-previews.json']['sha256'] = '0' * 64
++                else:
++                    cached['battle']['source']['game_commit'] = 'unbound-global-source'
++                    actual['source'] = deepcopy(cached['battle']['source'])
++                try:
++                    with patch.object(self.subject.battle_preview, 'battle_data', return_value=actual):
++                        failed = self.subject.stage_reference('ro6_n_2_1')
++                        self.assertFalse(failed['source_valid'])
++                        self.assertIsNone(failed['source_identity']); self.assertIsNone(failed['source'])
++                        self.assertIsNone(self.subject.resolve_reference(token))
++                finally:
++                    self.subject._CACHE.clear()
++        self.assertTrue(self.action()['source_valid'])
++
+ if __name__ == '__main__':
+     parser = argparse.ArgumentParser(add_help=False)
+     parser.add_argument('--module-file', type=Path)

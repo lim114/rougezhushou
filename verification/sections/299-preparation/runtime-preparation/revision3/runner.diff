@@ -1,0 +1,12 @@
+--- runner-nine-original
++++ runner-eleven-after-source-compatibility
+@@ -12,7 +12,8 @@
+  'tests.test_spawn_candidates_integration_299','tests.test_battle_planning_161_170',
+  'tests.test_battle_preview_039','tests.test_player_battle_information_286',
+  'tests.test_player_information_view_286','tests.test_battle_entry_integration_296',
+- 'tests.test_event_preview_filters_292']
++ 'tests.test_event_preview_filters_292','tests.test_battle_event_references_296',
++ 'tests.test_battle_entry_compatibility_299']
+ def main(args):
+  if not args.execute:raise RuntimeError('Preparation only. Root must explicitly supply --execute after final promotion.')
+  branch=subprocess.check_output(['git','branch','--show-current'],cwd=ROOT,text=True).strip()

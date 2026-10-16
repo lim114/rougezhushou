@@ -7,8 +7,8 @@ from . import event_planning
 
 ROOT=Path(__file__).resolve().parents[1]
 DATA='rouge/data/battle-event-references.json'
-MANIFEST='research/p3-battle-event-references-296/source-manifest.json'
-MANIFEST_SHA256='c6a7d1294e48b6fec896f736d56baa0c09f25f3365de471cc11c88d74705de21'
+MANIFEST='research/p3-battle-entry-compatibility-299/source-manifest.json'
+MANIFEST_SHA256='26fadacc46fcd890aef672509db414ca3fad1a407b5affc06a18753f45427a3c'
 STAGE_IDS=('ro6_t_1','ro6_t_2','ro6_t_3','ro6_t_4','ro6_t_5','ro6_e_t_3','ro6_e_t_4','ro6_e_t_5')
 EVENT_IDS=('community_group_012','community_group_013','community_group_014','community_group_015','community_group_016')
 _CACHE={}

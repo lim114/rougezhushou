@@ -1,0 +1,46 @@
+{
+  "section": 299,
+  "kind": "source_compatibility_repair_in_functional_section",
+  "first_necessary_receipt": "verification/sections/299-necessary-first/process.json",
+  "actual_first_methods": 135,
+  "actual_first_failures": 1,
+  "actual_first_errors": 5,
+  "cause": "The unchanged296 reverse-link reader still required exact pre298 parser/planning source bytes. Current298 source no longer matched those two pins, so old entry references safely returned unknown. No game record or event link was missing.",
+  "old_manifest": "research/p3-battle-event-references-296/source-manifest.json",
+  "old_manifest_sha256": "c6a7d1294e48b6fec896f736d56baa0c09f25f3365de471cc11c88d74705de21",
+  "new_manifest": "research/p3-battle-entry-compatibility-299/source-manifest.json",
+  "new_manifest_sha256": "26fadacc46fcd890aef672509db414ca3fad1a407b5affc06a18753f45427a3c",
+  "old_controller": "verification/sections/299-preparation/before/rouge/battle_event_references.py",
+  "old_controller_sha256": "ab6149db963dfed0d47083fc725c49d4df6c731e357d70f225f6473cdd540add",
+  "new_controller": "rouge/battle_event_references.py",
+  "new_controller_sha256": "25760d4c5b613bc587c6c46fc8004baa977c2d7f21b916f71d7e2bc369c7e3e5",
+  "only_controller_MANIFEST_and_MANIFEST_SHA_assignments_changed": true,
+  "data_or_game_mechanics_changed": false,
+  "original296_data_catalog_and_forward_reference_bytes_unchanged": true,
+  "all_existing_tests_preserved": true,
+  "changed_source_bindings": {
+    "rouge/event_planning.py": {
+      "old": {
+        "sha256": "f5715822efb181d9b8d84c59eda2667a23e64ca7d341eb63edc2c7eaf834d8ba",
+        "bytes": 37199
+      },
+      "current": {
+        "sha256": "00490a20281c00a54113c69db8fd97635ac191db781ecffde29c907aab6f7249",
+        "bytes": 37887
+      },
+      "historical_original": "verification/sections/298-preparation/before/rouge/event_planning.py"
+    },
+    "rouge/node_catalog.py": {
+      "old": {
+        "sha256": "5fd1d9d839f2d26ee0d1a0c6e99935b0197017dcb491bf9525e5b1081de404c1",
+        "bytes": 34666
+      },
+      "current": {
+        "sha256": "438f393aa5016ea1bb17df7e0489c870d17371d4d478f7c7d6d9f77039cbe5d0",
+        "bytes": 36764
+      },
+      "historical_original": "verification/sections/298-preparation/before/rouge/node_catalog.py"
+    }
+  },
+  "requires_actual_revalidation": true
+}
