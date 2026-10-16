@@ -7,8 +7,10 @@ The complete evidence remains available in the caller's existing detail page.
 from copy import deepcopy
 from html import unescape
 import re
+import json
 
 from . import event_planning
+from . import expedition_results
 from .documented_choice_items import event_item_references
 from .stage_entry_reference import stage_entry_reference
 from . import node_catalog as catalog
@@ -146,6 +148,16 @@ def _event_lines(entry, context):
             lines.append(f'前置条件（{state}）：{_plain(check["source_text"])}')
     scenes = result['rows']
     numbers = {scene['key']: number for number, scene in enumerate(scenes, 1)}
+    expedition=expedition_results.event_reference(event_id)
+    if expedition and expedition.get('source_valid'):
+        # Bind the actual reading graph as well as the fresh on-disk source.
+        original=json.dumps(expedition['expected_event']['scenes'],sort_keys=True,ensure_ascii=False,allow_nan=False)
+        current=json.dumps(scenes,sort_keys=True,ensure_ascii=False,allow_nan=False)
+        if current!=original:expedition={'source_valid':False}
+    expedition_rows={(r['scene_key'],r['choice_key']):r for r in expedition['rows']} if expedition and expedition.get('source_valid') else {}
+    expedition_note=expedition.get('return_explanatory_reference') if expedition and expedition.get('source_valid') else None
+    if expedition and not expedition.get("source_valid"):
+        lines.append('派出与归来资料暂时无法核对；保留原文，奖励时点和实际领取仍待确认。')
     reward_options = catalog.event_reward_options(event_id)
     rewards = {row['choice_id']: row for row in reward_options['rows']}
     documented_items = event_item_references(event_id)
@@ -162,6 +174,12 @@ def _event_lines(entry, context):
         resources = {row['choice_key']: row for row in event_planning.choice_resources(event_id, scene['key'], context)['rows']}
         for index, choice in enumerate(scene['choices'], 1):
             row = resources[choice['key']]
+            expedition_row=expedition_rows.get((scene['key'],choice['key']))
+            if expedition_note and (scene['key'],choice['key'])==(expedition_note['scene_key'],expedition_note['choice_key']):
+                lines+=['','【探索源头的归来说明】',_plain(choice.get('description')),
+                        '归来时（资料）：2希望和怦然信标；该干员不会进阶。',
+                        '这段是归来结果说明，不是另一个可点击的选择，也不是派出时的即时收益。']
+                continue
             condition = row['choice_eligibility']
             recruitment = condition.get('recruitment_result_reference')
             known_recruitment = bool(recruitment and recruitment['status'] == 'documented_reference'
@@ -207,9 +225,12 @@ def _event_lines(entry, context):
                 lines.append('这段附加条件尚未完整解析；保留原文，不当作已满足。')
             if any(check.get('key') == 'hidden_option_unlock' for check in condition['checks']):
                 lines.append('这可能是隐藏选项；解锁条件尚未确认。')
-            for reference in row['resource_references']:
-                lines.extend(_resource_lines(reference))
-            if not row['resource_references']:
+            if expedition_row:
+                lines.extend(_expedition_choice_lines(expedition_row))
+            else:
+                for reference in row['resource_references']:
+                    lines.extend(_resource_lines(reference))
+            if not row['resource_references'] and not expedition_row:
                 lines.append('未整理出明确的即时资源数量；不等于零费用或没有收益。')
             for reference in rewards.get(choice['key'], {}).get('rewards', []):
                 reward = reference.get('reward') or {}
@@ -238,6 +259,26 @@ def _event_lines(entry, context):
     if result.get('unlinked_original_scenes'):
         lines.append('\n另有同名原文尚未找到完整入口关系；不能当作本次一定可到达的流程，详见资料与依据。')
     lines.append('\n以上按资料原顺序列出，不代选选项。完整奖励池、实际领取及本局变化未知；括号内藏品效果未当作节点即时增减。')
+    return lines
+
+
+def _expedition_choice_lines(reference):
+    """Show known phases without applying a resource or a run action."""
+    dispatch=reference.get('dispatch_reference')
+    if not dispatch:
+        return ['选择时（资料）：获得2希望；不派出干员。']
+    lines=[f'派出期间：{dispatch["operator_count_reference"]}名干员暂时不能编入队伍。',
+           '归来时点：原文为本区域结束、进入新区域；社区资料称下一层开始。特殊区域是否相同仍未确认。']
+    item=reference.get('documented_return_item')
+    if item:
+        amounts='、'.join(str(r['quantity_reference'])+RESOURCES[r['resource']]
+                         for r in reference['return_resource_references'])
+        lines+=['归来时（资料）：'+amounts+'和'+_plain(item['name'])+'；不是派出时立即获得。',
+                '进阶结果：这种源头探索不会使派出的干员进阶。',
+                '可在下方派出结果入口中手动查看归来藏品的图标、用途与完整说明。',
+                '科技“喙”与源头“仅获得”的关系尚未核验，不额外加算随机加工品。']
+    else:
+        lines+=['归来物资的具体内容、数量，以及是否进阶：尚未确认。']
     return lines
 
 

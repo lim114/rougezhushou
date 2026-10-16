@@ -1,0 +1,2691 @@
+{
+  "schema_version": 1,
+  "purpose": "第297节独立验收 holdout；仅固定原图普通 LOWLAND 木路地面中心。",
+  "coordinate_convention": {
+    "map_row_col": "0-based map[row][col], row0 为顶部、col0 为左侧；直接使用 battle_data map 索引。",
+    "source_level_row": "rows - 1 - map_row，与 battle_data 现有 coordinate_rule 对应。",
+    "pixel": "原始 512×286 PNG，左上(0,0)，x 向右、y 向下，整数近似图像读数。",
+    "nearest_aid": "PIL NEAREST 放大到1536×858；所有最终 pixel 坐标已换回512×286原图。"
+  },
+  "independence": {
+    "inspected_candidate_fit": false,
+    "inspected_projection_matrix": false,
+    "inspected_other_agents_observations": false,
+    "read_other_cache_directories": false,
+    "fit_run": false,
+    "projection_used_to_adjust_or_average": false,
+    "frozen_before_fit_comparison": true,
+    "statement": "只读取 rouge.battle_preview.battle_data() 原 map/tiles/来源元数据、原 PNG，并在本目录创建/查看 nearest3 原样放大辅助图。所有 pixel 是独立的可见地面近似读数；未接收或查看任何拟合结果/候选矩阵，也不为后续拟合修改点。"
+  },
+  "limits": [
+    "近似图像读数，不代表真实游戏位置、操作位置、人类验收或绝对精度。",
+    "原图分辨率较低，木板纹理和地格边线存在视觉不确定性；读数未给出经实测建立的误差界。",
+    "严格排除高台、石块/装饰遮挡、入口/终点立体表面；本组不混入入口脚点。",
+    "本产物没有运行拟合、测试、生产集成、Qt、游戏或聊天；没有读取私人状态。",
+    "sourcelevels 为 battle_data 中固定来源元数据，本次未另行下载其 URL。"
+  ],
+  "data_source": {
+    "path": "rouge/data/battle-previews.json",
+    "sha256": "f0155647af8766eb2f01e84295f85b7300264fc49b40ffc82e89800837d274f3",
+    "game_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "resource_commit": "d0b5af0b004b044d322397ce5ae79632b6d9fcdd",
+    "coordinate_rule": "display_row = rows - 1 - source_row; display_col = source_col"
+  },
+  "stages": [
+    {
+      "stage_id": "ro6_c_2",
+      "name": "咩的朋友",
+      "rows": 8,
+      "cols": 11,
+      "sourcelevels": {
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/levels/obt/roguelike/ro6/level_rogue6_c-2.json",
+        "sha256": "f5b7fb93103c06e9a956c0ab01f648416fb604f262d802efd99be5c3f5fc20d7",
+        "bytes": 75061
+      },
+      "source_image": {
+        "path": "rouge/data/battle-maps/ro6_c_2.png",
+        "sha256": "9607eac718fe4f95e39551079da61a2f2d7ca0aa97ae3189bb8d900472dea4c0",
+        "size": [
+          512,
+          286
+        ],
+        "metadata": {
+          "file": "battle-maps/ro6_c_2.png",
+          "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/mapreview/ro6_c_2.png",
+          "source_blob_sha1": "7769ea6665fe3f052789edcf5b02f9826b3a3246",
+          "sha256": "9607eac718fe4f95e39551079da61a2f2d7ca0aa97ae3189bb8d900472dea4c0",
+          "bytes": 346404,
+          "width": 512,
+          "height": 286
+        }
+      },
+      "grid_sha256": "4d34a867e715246757a76a4fbbbcf95eab5c272be28815ce48f08eec99ee003e",
+      "grid_sha256_encoding": "UTF-8 JSON {map,tiles}, ensure_ascii=False, sort_keys=True, separators=(comma,colon)",
+      "grid": {
+        "map": [
+          [
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87
+          ],
+          [
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76
+          ],
+          [
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65
+          ],
+          [
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54
+          ],
+          [
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43
+          ],
+          [
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ],
+          [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        ],
+        "tiles": [
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_end",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          }
+        ]
+      },
+      "observations": [
+        {
+          "id": "ro6_c_2-holdout-01",
+          "row": 2,
+          "col": 1,
+          "source_level_row": 5,
+          "tile_index": 56,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            133,
+            92
+          ],
+          "cue": "左上第一条竖向木路，左右为深色边框；木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-02",
+          "row": 2,
+          "col": 3,
+          "source_level_row": 5,
+          "tile_index": 58,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            194,
+            92
+          ],
+          "cue": "上方第二条竖向木路，棕色高台之间的水平木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-03",
+          "row": 2,
+          "col": 5,
+          "source_level_row": 5,
+          "tile_index": 60,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            256,
+            93
+          ],
+          "cue": "中央上方明亮木路，金色格纹下方、下一排格纹上方的木地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-04",
+          "row": 2,
+          "col": 9,
+          "source_level_row": 5,
+          "tile_index": 64,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            379,
+            92
+          ],
+          "cue": "右上竖向木路，右侧装饰之外、棕色高台右邻的木地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-05",
+          "row": 3,
+          "col": 2,
+          "source_level_row": 4,
+          "tile_index": 46,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            161,
+            117
+          ],
+          "cue": "上横排左侧木路，金色地板格之间的清晰水平木板中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-06",
+          "row": 3,
+          "col": 4,
+          "source_level_row": 4,
+          "tile_index": 48,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            224,
+            117
+          ],
+          "cue": "上横排中左木路，两个金色地板格之间的木板中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-07",
+          "row": 3,
+          "col": 6,
+          "source_level_row": 4,
+          "tile_index": 50,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            289,
+            117
+          ],
+          "cue": "上横排中右木路，中央金色地板格与蓝色终点格左侧之间的木板中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-08",
+          "row": 3,
+          "col": 8,
+          "source_level_row": 4,
+          "tile_index": 52,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            354,
+            117
+          ],
+          "cue": "上横排右侧木路，蓝色终点右邻、金色地板格左邻的木板中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-09",
+          "row": 4,
+          "col": 1,
+          "source_level_row": 3,
+          "tile_index": 34,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            124,
+            144
+          ],
+          "cue": "左侧中段竖向木路，棕色高台左邻、上下金色地板格之间的木地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-10",
+          "row": 4,
+          "col": 3,
+          "source_level_row": 3,
+          "tile_index": 36,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            190,
+            144
+          ],
+          "cue": "中左竖向木路，两块棕色高台之间的水平木板中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-11",
+          "row": 4,
+          "col": 5,
+          "source_level_row": 3,
+          "tile_index": 38,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            256,
+            144
+          ],
+          "cue": "中央明亮竖向木路，两块棕色高台之间的水平木板中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-12",
+          "row": 4,
+          "col": 7,
+          "source_level_row": 3,
+          "tile_index": 40,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            324,
+            144
+          ],
+          "cue": "中右竖向木路，蓝色终点下方、两块棕色高台之间的木板中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-13",
+          "row": 4,
+          "col": 9,
+          "source_level_row": 3,
+          "tile_index": 42,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            390,
+            144
+          ],
+          "cue": "右侧中段竖向木路，棕色高台右邻、两排金色格纹之间的木板中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-14",
+          "row": 5,
+          "col": 2,
+          "source_level_row": 2,
+          "tile_index": 24,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            153,
+            174
+          ],
+          "cue": "下横排左侧木路，两个金色地板格之间的水平木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-15",
+          "row": 5,
+          "col": 4,
+          "source_level_row": 2,
+          "tile_index": 26,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            222,
+            174
+          ],
+          "cue": "下横排中左木路，金色地板格之间的明亮水平木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-16",
+          "row": 5,
+          "col": 6,
+          "source_level_row": 2,
+          "tile_index": 28,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            291,
+            174
+          ],
+          "cue": "下横排中右木路，金色地板格之间的棕色水平木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_2-holdout-17",
+          "row": 5,
+          "col": 8,
+          "source_level_row": 2,
+          "tile_index": 30,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            361,
+            174
+          ],
+          "cue": "下横排右侧木路，金色地板格之间的水平木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        }
+      ],
+      "coverage": {
+        "count": 17,
+        "rows": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "cols": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      "rejected": [
+        {
+          "cells": [
+            [
+              2,
+              7
+            ]
+          ],
+          "reason": "蓝色终点立体标记投影遮近；不把标记顶面或脚点当普通木路中心。"
+        },
+        {
+          "cells": [
+            [
+              3,
+              7
+            ]
+          ],
+          "reason": "tile_end 终点格；本独立地面中心组不混入终点立体入口。"
+        },
+        {
+          "cells": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              0,
+              9
+            ],
+            [
+              7,
+              1
+            ],
+            [
+              7,
+              3
+            ],
+            [
+              7,
+              5
+            ],
+            [
+              7,
+              7
+            ],
+            [
+              7,
+              9
+            ]
+          ],
+          "reason": "tile_start 出生入口；排除入口立体顶与脚点。"
+        },
+        {
+          "cells": [
+            [
+              2,
+              2
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              2,
+              8
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              4,
+              8
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              6,
+              8
+            ]
+          ],
+          "reason": "HIGHLAND 高台表面；不属于本次 LOWLAND 地面中心观测。"
+        }
+      ]
+    },
+    {
+      "stage_id": "ro6_c_4",
+      "name": "一视同仁",
+      "rows": 8,
+      "cols": 11,
+      "sourcelevels": {
+        "url": "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/a550f5e048bb94e7cdefc6eb97a4091f0c4c7add/zh_CN/gamedata/levels/obt/roguelike/ro6/level_rogue6_c-4.json",
+        "sha256": "c1a2bdc44766bb2ff949f2ea549a835f936c7010e8ca78bac279841dc33fd50b",
+        "bytes": 67152
+      },
+      "source_image": {
+        "path": "rouge/data/battle-maps/ro6_c_4.png",
+        "sha256": "3cd5b7bc62937f3ac5e8725ffd70dbb78cc860a3c863df1923548b42890a0477",
+        "size": [
+          512,
+          286
+        ],
+        "metadata": {
+          "file": "battle-maps/ro6_c_4.png",
+          "url": "https://raw.githubusercontent.com/fexli/ArknightsResource/d0b5af0b004b044d322397ce5ae79632b6d9fcdd/mapreview/ro6_c_4.png",
+          "source_blob_sha1": "e6776c53755e0c11418de88a134621a7c48f18c4",
+          "sha256": "3cd5b7bc62937f3ac5e8725ffd70dbb78cc860a3c863df1923548b42890a0477",
+          "bytes": 336481,
+          "width": 512,
+          "height": 286
+        }
+      },
+      "grid_sha256": "cd5c7b04181399a8742dda73329678ce15876cf07c403c8bff99a392c299b65d",
+      "grid_sha256_encoding": "UTF-8 JSON {map,tiles}, ensure_ascii=False, sort_keys=True, separators=(comma,colon)",
+      "grid": {
+        "map": [
+          [
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87
+          ],
+          [
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76
+          ],
+          [
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65
+          ],
+          [
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54
+          ],
+          [
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43
+          ],
+          [
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ],
+          [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21
+          ],
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        ],
+        "tiles": [
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_end",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_wall",
+            "heightType": "HIGHLAND",
+            "buildableType": "RANGED",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_road",
+            "heightType": "LOWLAND",
+            "buildableType": "MELEE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_hole",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_floor",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_start",
+            "heightType": "LOWLAND",
+            "buildableType": "NONE",
+            "passableMask": "ALL",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          },
+          {
+            "tileKey": "tile_forbidden",
+            "heightType": "HIGHLAND",
+            "buildableType": "NONE",
+            "passableMask": "FLY_ONLY",
+            "playerSideMask": "ALL",
+            "blackboard": null,
+            "effects": null
+          }
+        ]
+      },
+      "observations": [
+        {
+          "id": "ro6_c_4-holdout-01",
+          "row": 2,
+          "col": 2,
+          "source_level_row": 5,
+          "tile_index": 57,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            159,
+            90
+          ],
+          "cue": "上方横向木路的左侧空隙，左、右石块之间上方可见的木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-02",
+          "row": 2,
+          "col": 4,
+          "source_level_row": 5,
+          "tile_index": 59,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            223,
+            90
+          ],
+          "cue": "上方横向木路的中左空隙，石块之间上方的明亮木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-03",
+          "row": 2,
+          "col": 6,
+          "source_level_row": 5,
+          "tile_index": 61,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            288,
+            90
+          ],
+          "cue": "上方横向木路的中右空隙，两个石块之间上方的木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-04",
+          "row": 2,
+          "col": 8,
+          "source_level_row": 5,
+          "tile_index": 63,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            353,
+            90
+          ],
+          "cue": "上方横向木路右端，第四石块上右侧、洞口左侧的木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-05",
+          "row": 4,
+          "col": 1,
+          "source_level_row": 3,
+          "tile_index": 34,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            113,
+            143
+          ],
+          "cue": "左侧竖向木路的上段，石块下方、棕色高台左邻的木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-06",
+          "row": 4,
+          "col": 3,
+          "source_level_row": 3,
+          "tile_index": 36,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            184,
+            143
+          ],
+          "cue": "中左竖向木路的上段，两块棕色高台之间的木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-07",
+          "row": 4,
+          "col": 5,
+          "source_level_row": 3,
+          "tile_index": 38,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            256,
+            143
+          ],
+          "cue": "中央竖向木路的上段，两块棕色高台之间的明亮木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-08",
+          "row": 4,
+          "col": 7,
+          "source_level_row": 3,
+          "tile_index": 40,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            328,
+            143
+          ],
+          "cue": "中右竖向木路的上段，棕色高台之间的深色木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-09",
+          "row": 5,
+          "col": 1,
+          "source_level_row": 2,
+          "tile_index": 23,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            106,
+            176
+          ],
+          "cue": "左侧竖向木路的下段，棕色高台左邻、底部横向木路上方的木地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-10",
+          "row": 5,
+          "col": 3,
+          "source_level_row": 2,
+          "tile_index": 25,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            181,
+            176
+          ],
+          "cue": "中左竖向木路的下段，棕色高台之间的水平木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-11",
+          "row": 5,
+          "col": 5,
+          "source_level_row": 2,
+          "tile_index": 27,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            256,
+            176
+          ],
+          "cue": "中央竖向木路的下段，棕色高台之间的明亮水平木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-12",
+          "row": 5,
+          "col": 7,
+          "source_level_row": 2,
+          "tile_index": 29,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            332,
+            176
+          ],
+          "cue": "中右竖向木路的下段，棕色高台之间的深色水平木板地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-13",
+          "row": 6,
+          "col": 2,
+          "source_level_row": 1,
+          "tile_index": 13,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            136,
+            211
+          ],
+          "cue": "底部横向木路左部，左侧竖路右邻、棕色高台下方的木地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-14",
+          "row": 6,
+          "col": 4,
+          "source_level_row": 1,
+          "tile_index": 15,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            216,
+            211
+          ],
+          "cue": "底部横向木路中左，棕色高台下方的明亮木地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-15",
+          "row": 6,
+          "col": 6,
+          "source_level_row": 1,
+          "tile_index": 17,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            296,
+            211
+          ],
+          "cue": "底部横向木路中右，棕色高台下方的深色木地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        },
+        {
+          "id": "ro6_c_4-holdout-16",
+          "row": 6,
+          "col": 8,
+          "source_level_row": 1,
+          "tile_index": 19,
+          "tileKey": "tile_road",
+          "heightType": "LOWLAND",
+          "pixel": [
+            377,
+            211
+          ],
+          "cue": "底部横向木路右部，右方宽棕色高台下方、终点左侧的木地面中部。",
+          "kind": "ordinary_lowland_ground_center",
+          "method": "独立逐格查看原 PNG 及其 nearest 三倍放大图后的近似整数像素读数；未看拟合。"
+        }
+      ],
+      "coverage": {
+        "count": 16,
+        "rows": [
+          2,
+          4,
+          5,
+          6
+        ],
+        "cols": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "rejected": [
+        {
+          "cells": [
+            [
+              3,
+              1
+            ],
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              3,
+              7
+            ]
+          ],
+          "reason": "原图对应地格中部有石块等预置物遮挡，不读其顶部为地面。"
+        },
+        {
+          "cells": [
+            [
+              2,
+              9
+            ]
+          ],
+          "reason": "tile_hole 洞口不是普通可见木地面中心。"
+        },
+        {
+          "cells": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              6,
+              10
+            ]
+          ],
+          "reason": "出生或终点入口；排除立体顶与脚点。"
+        },
+        {
+          "cells": [
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              4,
+              8
+            ],
+            [
+              4,
+              9
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              5,
+              4
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              5,
+              9
+            ]
+          ],
+          "reason": "HIGHLAND 高台表面；不属于本次 LOWLAND 地面中心观测。"
+        }
+      ]
+    }
+  ]
+}

@@ -32,10 +32,13 @@ class DocumentedItemIntegration295Tests(unittest.TestCase):
 
     def test_non_target_player_output_is_exactly_unchanged(self):
         old=json.loads(BASELINE.read_bytes())
-        for event_id,row in old['events'].items():
-            if event_id==model.EVENT:continue
-            text=node_information_text(entry(event_id))
-            self.assertEqual(sha256(text.encode()).hexdigest(),row['player_sha256'],event_id)
+        # Replay the295 presentation scope;297 separately verifies all37 current
+        # non-target outputs and the new delayed expedition-result rendering.
+        with patch('rouge.player_node_information.expedition_results.event_reference',return_value=None):
+            for event_id,row in old['events'].items():
+                if event_id==model.EVENT:continue
+                text=node_information_text(entry(event_id))
+                self.assertEqual(sha256(text.encode()).hexdigest(),row['player_sha256'],event_id)
 
     def test_player_reference_is_under_exact_option_and_not_claimed_as_reward(self):
         text=node_information_text(entry());self.assertEqual(text.count('资料写明的物品：沙盘α'),1)
