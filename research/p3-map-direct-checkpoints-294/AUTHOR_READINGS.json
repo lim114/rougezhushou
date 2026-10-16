@@ -1,0 +1,357 @@
+{
+  "schema": "section-294-independent-map-author-readings-v1",
+  "author_role": "independent_original_image_author",
+  "frozen_utc": "2026-10-15T23:22:34.3940784Z",
+  "request_manifest_file": "REQUEST_MANIFEST.json",
+  "request_count": 18,
+  "non_null_count": 18,
+  "coordinate_convention": "All row and column identifiers are zero based. display_row and map_array_row directly index the original JSON mapData.map; source_row and engine_row = map_rows - 1 - display_row use the bottom-origin engine convention. Pixels have original-image top-left origin.",
+  "inspection": "Both unmodified original PNGs were actually inspected through view_image, including original-detail views. Original level mapData was read to verify the requested tile identities.",
+  "method": "Each original-image pixel coordinate was estimated directly from the independently visible ground face and its tile boundaries. No projection, fitted transform, interpolation, extrapolation, automatic center extraction, or other reader output was used. An unreadable or occluded ground face would retain its request row with observed_pixel=null.",
+  "independence_declaration": {
+    "read_other_reader_coordinates": false,
+    "read_other_reader_outputs": false,
+    "read_prior_049_or_051_fits": false,
+    "read_any_projection_results": false,
+    "used_fit_or_interpolation": false,
+    "modified_original_images": false
+  },
+  "limitations": "These are approximate visible-ground-center readings from the original 512x286 images, not absolute in-game position verification. Reader agreement alone cannot establish absolute game accuracy.",
+  "frozen_rule": "Do not modify these readings after the first write. Any later discussion must retain this frozen original.",
+  "images": [
+    {
+      "map_id": "ro6_n_3_2",
+      "name": "生存习性",
+      "original_image_path": "rouge/data/battle-maps/ro6_n_3_2.png",
+      "sha256": "322fb638ea61e38dd928a99cc761e5878c585bb3476a4f6837e05873a30504f2",
+      "width": 512,
+      "height": 286,
+      "bytes": 351502,
+      "original_level_path": ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_3-2.json",
+      "level_sha256": "0d96b5280f05c8fdb111d9eb5320cd483f04867d220497de5a457cbb3c87767b",
+      "map_rows": 7,
+      "map_columns": 12
+    },
+    {
+      "map_id": "ro6_t_5",
+      "name": "湖中魇",
+      "original_image_path": "rouge/data/battle-maps/ro6_t_5.png",
+      "sha256": "e29fee8bc57201a3f0dca085ed752a2150a0aea352ab4544914acfe692b47620",
+      "width": 512,
+      "height": 286,
+      "bytes": 354087,
+      "original_level_path": ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-5.json",
+      "level_sha256": "33f055773756e90cd1253ba920c542290a05f34501ae491635ed4bacc7c9ea5c",
+      "map_rows": 7,
+      "map_columns": 10
+    }
+  ],
+  "readings": [
+    {
+      "map_id": "ro6_n_3_2",
+      "display_row": 3,
+      "display_column": 2,
+      "map_array_row": 3,
+      "source_row": 3,
+      "engine_row": 3,
+      "source_tile_index": 38,
+      "source_tile_key": "tile_road",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        118,
+        129
+      ],
+      "reason": "苔藓地面的上、下与左右分格边缘可辨，取可见地面区域中心。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_n_3_2",
+      "display_row": 3,
+      "display_column": 3,
+      "map_array_row": 3,
+      "source_row": 3,
+      "engine_row": 3,
+      "source_tile_index": 39,
+      "source_tile_key": "tile_road",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        158,
+        129
+      ],
+      "reason": "该格苔藓地面面域及分格边缘可辨，中心未被入口或高台遮盖。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_n_3_2",
+      "display_row": 3,
+      "display_column": 4,
+      "map_array_row": 3,
+      "source_row": 3,
+      "engine_row": 3,
+      "source_tile_index": 40,
+      "source_tile_key": "tile_road",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        199,
+        129
+      ],
+      "reason": "该格地面方块四周接缝可辨，取地面区域中心。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_n_3_2",
+      "display_row": 3,
+      "display_column": 5,
+      "map_array_row": 3,
+      "source_row": 3,
+      "engine_row": 3,
+      "source_tile_index": 41,
+      "source_tile_key": "tile_road",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        239,
+        130
+      ],
+      "reason": "地面方块的上下界与左右接缝可见，中心位于地面纹理内。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_n_3_2",
+      "display_row": 3,
+      "display_column": 6,
+      "map_array_row": 3,
+      "source_row": 3,
+      "engine_row": 3,
+      "source_tile_index": 42,
+      "source_tile_key": "tile_road",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        280,
+        130
+      ],
+      "reason": "红色入口左侧此格地面区域可见，读数取地面面域中心而非入口装饰。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_n_3_2",
+      "display_row": 4,
+      "display_column": 3,
+      "map_array_row": 4,
+      "source_row": 2,
+      "engine_row": 2,
+      "source_tile_index": 27,
+      "source_tile_key": "tile_road",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        155,
+        163
+      ],
+      "reason": "坑格右侧的苔藓地面区域与接缝可辨，中心不在坑或其立面上。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_n_3_2",
+      "display_row": 4,
+      "display_column": 4,
+      "map_array_row": 4,
+      "source_row": 2,
+      "engine_row": 2,
+      "source_tile_index": 28,
+      "source_tile_key": "tile_road",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        196,
+        163
+      ],
+      "reason": "地面区域及其分格边缘可辨，中心未被立体物遮挡。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_n_3_2",
+      "display_row": 4,
+      "display_column": 5,
+      "map_array_row": 4,
+      "source_row": 2,
+      "engine_row": 2,
+      "source_tile_index": 29,
+      "source_tile_key": "tile_road",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        237,
+        163
+      ],
+      "reason": "该格地面接缝及可见面域可辨，直接取面域中心。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_n_3_2",
+      "display_row": 4,
+      "display_column": 6,
+      "map_array_row": 4,
+      "source_row": 2,
+      "engine_row": 2,
+      "source_tile_index": 30,
+      "source_tile_key": "tile_road",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        279,
+        163
+      ],
+      "reason": "红色入口左侧该格地面面域可辨，中心选在可见地面上。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_n_3_2",
+      "display_row": 4,
+      "display_column": 9,
+      "map_array_row": 4,
+      "source_row": 2,
+      "engine_row": 2,
+      "source_tile_index": 33,
+      "source_tile_key": "tile_road",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        406,
+        164
+      ],
+      "reason": "右侧平台内该格苔藓地面及接缝可辨，未使用右缘瀑布或装饰中心。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_t_5",
+      "display_row": 1,
+      "display_column": 4,
+      "map_array_row": 1,
+      "source_row": 5,
+      "engine_row": 5,
+      "source_tile_index": 54,
+      "source_tile_key": "tile_floor",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        237,
+        63
+      ],
+      "reason": "最上排中央紫色地面块的边界与可见面域清楚，未取下方高台顶面。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_t_5",
+      "display_row": 2,
+      "display_column": 3,
+      "map_array_row": 2,
+      "source_row": 4,
+      "engine_row": 4,
+      "source_tile_index": 43,
+      "source_tile_key": "tile_floor",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        195,
+        92
+      ],
+      "reason": "上方中央高台左侧的紫色地面块可辨，取地面块中心。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_t_5",
+      "display_row": 2,
+      "display_column": 5,
+      "map_array_row": 2,
+      "source_row": 4,
+      "engine_row": 4,
+      "source_tile_index": 45,
+      "source_tile_key": "tile_floor",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        277,
+        93
+      ],
+      "reason": "上方中央高台右侧的紫色地面块可辨，读数未落在高台或边缘立面。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_t_5",
+      "display_row": 3,
+      "display_column": 2,
+      "map_array_row": 3,
+      "source_row": 3,
+      "engine_row": 3,
+      "source_tile_index": 32,
+      "source_tile_key": "tile_floor",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        152,
+        128
+      ],
+      "reason": "中排左侧高台外的紫色地面块面域可见，中心位于地面内部。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_t_5",
+      "display_row": 3,
+      "display_column": 6,
+      "map_array_row": 3,
+      "source_row": 3,
+      "engine_row": 3,
+      "source_tile_index": 36,
+      "source_tile_key": "tile_floor",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        320,
+        128
+      ],
+      "reason": "中排右侧高台外的紫色地面块边缘可辨，取可见地面中心。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_t_5",
+      "display_row": 4,
+      "display_column": 3,
+      "map_array_row": 4,
+      "source_row": 2,
+      "engine_row": 2,
+      "source_tile_index": 23,
+      "source_tile_key": "tile_floor",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        190,
+        163
+      ],
+      "reason": "下方中央高台左侧紫色地面块可辨，中心未被高台遮盖。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_t_5",
+      "display_row": 4,
+      "display_column": 5,
+      "map_array_row": 4,
+      "source_row": 2,
+      "engine_row": 2,
+      "source_tile_index": 25,
+      "source_tile_key": "tile_floor",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        279,
+        163
+      ],
+      "reason": "下方中央高台右侧紫色地面块可辨，取地面面域中心。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    },
+    {
+      "map_id": "ro6_t_5",
+      "display_row": 5,
+      "display_column": 4,
+      "map_array_row": 5,
+      "source_row": 1,
+      "engine_row": 1,
+      "source_tile_index": 14,
+      "source_tile_key": "tile_floor",
+      "source_height_type": "LOWLAND",
+      "observed_pixel": [
+        233,
+        205
+      ],
+      "reason": "最下排中央紫色地面块的四周边缘可辨，取地面区域中心。",
+      "method": "Direct manual visual reading of visible ground face in the unmodified original PNG; approximate center, no fit or interpolation."
+    }
+  ]
+}

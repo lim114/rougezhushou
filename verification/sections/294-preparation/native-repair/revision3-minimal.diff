@@ -1,0 +1,60 @@
+--- 1469/verify_direct_map_window_294.py
++++ revision3/verify_direct_map_window_294.py
+@@ -123,6 +123,7 @@
+         import win32gui,win32process
+         from rouge import app as app_module
+         from rouge.battle_preview import battle_data
++        from rouge.branch_choice import OVERVIEW
+         gui=QApplication([]);qpa=gui.platformName()
+         require(qpa=='windows','actual_native_windows_QPA')
+         class PublicWindow(app_module.MainWindow):
+@@ -230,20 +231,44 @@
+                 require(panel.original.image_sha256==stage['image']['sha256'],'actual_bitmap_matches_exact_alias_source')
+                 state.clear();state['stage']=stage;state['size_observations']=[]
+                 panel.include_branches.setChecked(False);panel.technical.setChecked(stage_number!=0)
++                all_waves=panel.wave_combo.findData(None)
++                require(all_waves>=0,'new_stage_all_wave_reference_option_exists')
++                panel.wave_combo.setCurrentIndex(all_waves)
++                require(panel.enemy_choices.select_branch(OVERVIEW)and panel.enemy_choices.select_value(None),
++                    'new_stage_enemy_overview_and_all_enemy_reference_options_exist')
++                panel.render_rows()
++                require(panel.wave_combo.currentData()is None and panel.enemy_choices.branch.currentData()==OVERVIEW
++                    and panel.enemy_combo.currentData()is None and not panel.include_branches.isChecked(),
++                    'new_stage_initial_filters_explicitly_reset_to_all_fixed_references')
++                expected_ids=[row['id']for wave in stage['waves']for fragment in wave['fragments']
++                    for row in fragment['actions']if row['action']['actionType']=='SPAWN']
++                require([row['id']for row in panel.rows]==expected_ids,
++                    'unfiltered_fixed_SPAWN_rows_match_exact_stage_source_ids')
+                 known={(r,c)for r,c,*_ in contract['points'][sid]}
+-                starts={(row['route']['start']['row'],row['route']['start']['col'])for row in panel.rows if row['route']['start']}
+-                candidates=[row for row in panel.rows if row.get('branch')is None and any(
+-                    cp['type']=='MOVE'and cp['cell']and(cp['cell']['row'],cp['cell']['col'])in known
+-                    and(cp['cell']['row'],cp['cell']['col'])not in starts for cp in row['route']['checkpoints'])]
++                source_rows=deepcopy(panel.rows)
++                def eligible(row):
++                    # A MOVE may coincide with another source row's START. The
++                    # same-widget negative paint fixture retains those markers.
++                    moves=[cp for cp in row['route']['checkpoints']if cp['type']=='MOVE'and cp['cell']
++                        and(cp['cell']['row'],cp['cell']['col'])in known and cp['cell']!=row['route']['start']]
++                    filtered=[other for other in source_rows if other['wave']==row['wave']
++                        and other['action']['key']==row['action']['key']]
++                    starts={(other['route']['start']['row'],other['route']['start']['col'])
++                        for other in filtered if other['route']['start']}
++                    return row.get('branch')is None and bool(moves)and bool(known-starts)
++                candidates=[row for row in source_rows if eligible(row)]
+                 require(bool(candidates),'real_main_fixed_SPAWN_row_has_new_accepted_MOVE_checkpoint')
+                 chosen=candidates[0];wave=panel.wave_combo.findData(chosen['wave'])
+                 require(wave>=0,'actual_candidate_wave_option_exists');panel.wave_combo.setCurrentIndex(wave)
+                 enemy_value=next(panel.enemy_combo.itemData(i)for i in range(panel.enemy_combo.count())
+                     if panel.enemy_combo.itemData(i)and panel.enemy_combo.itemData(i)[0]==chosen['action']['key'])
+                 require(panel.enemy_choices.select_value(enemy_value),'actual_manual_enemy_filter_selectable')
++                starts={(row['route']['start']['row'],row['route']['start']['col'])for row in panel.rows if row['route']['start']}
++                require(bool(known-starts)and any(row['id']==chosen['id']for row in panel.rows),
++                    'selected_actual_candidate_filter_leaves_registered_nonspawn_manual_cell')
+                 state['row_id']=chosen['id'];state['MOVE_cell']=deepcopy(next(cp['cell']for cp in chosen['route']['checkpoints']
+                     if cp['type']=='MOVE'and cp['cell']and(cp['cell']['row'],cp['cell']['col'])in known
+-                    and(cp['cell']['row'],cp['cell']['col'])not in starts))
++                    and cp['cell']!=chosen['route']['start']))
+                 later(exercise)
+             def exercise():
+                 sid=STAGES[stage_number];native();stage=state['stage'];points=point_checks()

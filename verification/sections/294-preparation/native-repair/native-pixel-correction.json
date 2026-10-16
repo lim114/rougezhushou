@@ -1,0 +1,51 @@
+{
+  "kind": "SECTION294_INDEPENDENT_NATIVE_PIXEL_NEGATIVE_FIXTURE_STATIC_SUPPLEMENT",
+  "scope": "Only revision2 source/diff and byte-SHA review. No Qt/test/build/native execution, no production edit. Data/core review is not repeated.",
+  "previous_review_preserved": "review.json remains exact SHA10a92cb01f326833a3bded576ba4631bc9a100845538f458d6c927f40f6f1a9d",
+  "original_risk": "Root found before actual native execution that nearby natural yellow pixels could satisfy the old nonempty-yellow positive check. The previous static no-blocker review did not isolate the overlay from that background and is not runtime acceptance.",
+  "actual_native_failure_claimed": false,
+  "verdict": "Revision2 removes the identified positive-only pixel false-positive route. No blocking defect found in this minimal static change; real run is still required.",
+  "review": [
+    "Only MapOriginal.selected is temporarily set to None for the baseline repaint/grab. It does not call render_rows, change controls, resize, change widget/layout, switch image/projection or alter route coordinates.",
+    "The exact selected object is restored in finally and repainted before the after capture. The script verifies identity is the original object, deep value equality, and the complete saved selection/reading state after restoration.",
+    "The baseline/before/after geometry dictionaries must agree: MapOriginal size/image_rect/image SHA/pixmap size/main client size, plus actual capture size and devicePixelRatio equality.",
+    "The same center and same pixel-window function are used on both actual MapOriginal captures; acceptance requires a nonempty set difference yellow_after-yellow_before. Existing natural yellow pixels present in both no longer satisfy the added-pixel requirement.",
+    "Per-stage actual report now records yellow before/after/added counts and geometry. These values are computed by the future run rather than prefilled.",
+    "Source contracts/guards, four-stage PNG flow, twelve requested size observations, temporary4 paths/eight blockers and subsequent reading-state refresh flow remain unchanged in the reviewed minimal diff.",
+    "The promoted canonical file hash equals the reviewed revision2 hash1469bdf02a81b58d43f50436f8fbe4f434268ca07d551c8225eccb2820e77468. Original9806 source and originalREADY remain exact."
+  ],
+  "pins": {
+    ".cache/p3-294-independent-static-review/review.json": {
+      "sha256": "10a92cb01f326833a3bded576ba4631bc9a100845538f458d6c927f40f6f1a9d",
+      "bytes": 12393
+    },
+    ".cache/p3-294-native-window/verify_direct_map_window_294.py": {
+      "sha256": "9806c81b73f4746509093f11b5e2be12a585d2d29521a26bd71c12f6fbec54d3",
+      "bytes": 29099
+    },
+    ".cache/p3-294-native-window/READY.json": {
+      "sha256": "86adea728e57968dafd14cb8941919958f8cfabe1120adba7675010eda7063b9",
+      "bytes": 3761
+    },
+    ".cache/p3-294-native-window/revision2/verify_direct_map_window_294.py": {
+      "sha256": "1469bdf02a81b58d43f50436f8fbe4f434268ca07d551c8225eccb2820e77468",
+      "bytes": 31533
+    },
+    ".cache/p3-294-native-window/revision2/READY.json": {
+      "sha256": "58509c9195f1a572ce7688724983bb349ead7f7ce817d90a7c61b9b6f0a7218c",
+      "bytes": 1666
+    },
+    ".cache/p3-294-native-window/revision2/minimal-change.diff": {
+      "sha256": "814371423c16d70858e7f3403cac6bba88c8c0109cee79e31d624e28bb6e7320",
+      "bytes": 5692
+    },
+    "scripts/verify_direct_map_window_294.py": {
+      "sha256": "1469bdf02a81b58d43f50436f8fbe4f434268ca07d551c8225eccb2820e77468",
+      "bytes": 31533
+    }
+  },
+  "limits": [
+    "This is a static supplement, not proof that pixel diff will pass on Windows or all four PNGs are correct.",
+    "Only the pixel drawing acceptance was reviewed here; no new source observations, absolute coordinate accuracy or actual enemy-position evidence is added."
+  ]
+}

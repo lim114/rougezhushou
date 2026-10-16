@@ -1,0 +1,245 @@
+{
+  "schema": "p3-map-294-independent-blind-readings-v1",
+  "frozen": true,
+  "observed_at_utc": "2026-10-15T23:22:44.9234815Z",
+  "reader": "map_blind_294",
+  "branch_checked": "codex/p2-development",
+  "declarations": {
+    "original_pngs_viewed_with_view_image": true,
+    "original_level_mapData_checked": true,
+    "author_output_seen": false,
+    "other_readings_seen": false,
+    "old_049_051_fits_seen": false,
+    "projection_or_landmark_reference_seen": false,
+    "coordinate_exchange": false,
+    "fit_or_interpolation_used": false,
+    "qt_tests_game_or_chat_run": false,
+    "live_or_private_state_changed": false,
+    "only_this_blind_cache_directory_written": true,
+    "coordinates_frozen_after_this_first_formal_record": true
+  },
+  "indexing": {
+    "display_row_and_column_start": 0,
+    "json_map_array_index": "mapData.map[display_row][column]",
+    "source_row": "rows - 1 - display_row; route-engine row metadata only, not the JSON array index",
+    "clarification_before_freeze": "The first task wording led to a preliminary identity check using source_row as the JSON array index. The root clarified the row semantics before any reading file was frozen: stage map preserves the JSON row order, while source_row is the route-engine row. Rechecking the same 18 requests against JSON display_row establishes all requested tile identities. No author pixels or other readings were supplied."
+  },
+  "method": "Direct visual reading of the two unmodified 512x286 PNGs in view_image at original resolution. Each reported integer pixel is an approximate visual center of the visible ground face, using that tile's own visible seams or ground region. No numerical fit, projection, spacing calculation, point interpolation, image manipulation, elevated platform center, or decorative-object center was used. A severely hidden or unidentifiable ground center would be null. Agreement with another reader does not establish an absolute in-game position; these are image observations with several-pixel manual ambiguity.",
+  "images": [
+    {
+      "stage_name": "生存习性",
+      "stage_id": "ro6_n_3_2",
+      "image_path": "rouge/data/battle-maps/ro6_n_3_2.png",
+      "image_sha256": "322fb638ea61e38dd928a99cc761e5878c585bb3476a4f6837e05873a30504f2",
+      "image_byte_size": 351502,
+      "image_size": [512, 286],
+      "level_path": ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_3-2.json",
+      "level_sha256": "0d96b5280f05c8fdb111d9eb5320cd483f04867d220497de5a457cbb3c87767b",
+      "rows": 7,
+      "columns": 12,
+      "readings": [
+        {
+          "display_row": 3,
+          "column": 2,
+          "json_array_row": 3,
+          "source_row": 3,
+          "tile_key": "tile_road",
+          "height_type": "LOWLAND",
+          "independent_pixel": [115, 128],
+          "reason": "上方道路这一格的地面区域可见，周围地缝可分辨；直接读地面面心，未取前下方传送口或草丛中心。"
+        },
+        {
+          "display_row": 3,
+          "column": 3,
+          "json_array_row": 3,
+          "source_row": 3,
+          "tile_key": "tile_road",
+          "height_type": "LOWLAND",
+          "independent_pixel": [155, 128],
+          "reason": "石质道路可见面与四周接缝可辨，少量苔藓未遮掉地面区域中心；直接目视读数。"
+        },
+        {
+          "display_row": 3,
+          "column": 4,
+          "json_array_row": 3,
+          "source_row": 3,
+          "tile_key": "tile_road",
+          "height_type": "LOWLAND",
+          "independent_pixel": [196, 128],
+          "reason": "灰绿石板地面边界与内部可见，直接取该地面面心；没有使用上方植物或其它格子推点。"
+        },
+        {
+          "display_row": 3,
+          "column": 5,
+          "json_array_row": 3,
+          "source_row": 3,
+          "tile_key": "tile_road",
+          "height_type": "LOWLAND",
+          "independent_pixel": [237, 128],
+          "reason": "地面上、下接缝及侧缘可辨，地面中心直接可见；排除上沿粉色植物装饰。"
+        },
+        {
+          "display_row": 3,
+          "column": 6,
+          "json_array_row": 3,
+          "source_row": 3,
+          "tile_key": "tile_road",
+          "height_type": "LOWLAND",
+          "independent_pixel": [278, 128],
+          "reason": "红色入口左侧这一道路格的可见地面与边缘可辨，直接读地面面心；没有取入口立体线框中心。"
+        },
+        {
+          "display_row": 4,
+          "column": 3,
+          "json_array_row": 4,
+          "source_row": 2,
+          "tile_key": "tile_road",
+          "height_type": "LOWLAND",
+          "independent_pixel": [152, 164],
+          "reason": "左侧传送口右邻道路的地面内部可见，上下与右侧接缝清楚；直接读可见地面中心，排除传送口暗部。"
+        },
+        {
+          "display_row": 4,
+          "column": 4,
+          "json_array_row": 4,
+          "source_row": 2,
+          "tile_key": "tile_road",
+          "height_type": "LOWLAND",
+          "independent_pixel": [194, 164],
+          "reason": "该格道路面和周围石缝可辨，苔藓只覆盖纹理；直接目视地面面心。"
+        },
+        {
+          "display_row": 4,
+          "column": 5,
+          "json_array_row": 4,
+          "source_row": 2,
+          "tile_key": "tile_road",
+          "height_type": "LOWLAND",
+          "independent_pixel": [236, 164],
+          "reason": "亮灰石质地面区域完整可读，四周接缝可分辨；直接取这一地面区域中心。"
+        },
+        {
+          "display_row": 4,
+          "column": 6,
+          "json_array_row": 4,
+          "source_row": 2,
+          "tile_key": "tile_road",
+          "height_type": "LOWLAND",
+          "independent_pixel": [278, 164],
+          "reason": "道路地面可见且不受红色入口立体线框遮住中心；依据本格可见边缘和地面区域直接读数。"
+        },
+        {
+          "display_row": 4,
+          "column": 9,
+          "json_array_row": 4,
+          "source_row": 2,
+          "tile_key": "tile_road",
+          "height_type": "LOWLAND",
+          "independent_pixel": [404, 164],
+          "reason": "右侧道路这一格的石板地面与接缝可见，中心未被边缘深坑遮挡；直接读地面面心。"
+        }
+      ]
+    },
+    {
+      "stage_name": "湖中魇",
+      "stage_id": "ro6_t_5",
+      "image_path": "rouge/data/battle-maps/ro6_t_5.png",
+      "image_sha256": "e29fee8bc57201a3f0dca085ed752a2150a0aea352ab4544914acfe692b47620",
+      "image_byte_size": 354087,
+      "image_size": [512, 286],
+      "level_path": ".cache/game-data/levels/obt/roguelike/ro6/level_rogue6_t-5.json",
+      "level_sha256": "33f055773756e90cd1253ba920c542290a05f34501ae491635ed4bacc7c9ea5c",
+      "rows": 7,
+      "columns": 10,
+      "readings": [
+        {
+          "display_row": 1,
+          "column": 4,
+          "json_array_row": 1,
+          "source_row": 5,
+          "tile_key": "tile_floor",
+          "height_type": "LOWLAND",
+          "independent_pixel": [236, 64],
+          "reason": "最上方中央低地格的紫色地面与外缘可辨，直接读该低地面心；未取下方装置或高台中心。"
+        },
+        {
+          "display_row": 2,
+          "column": 3,
+          "json_array_row": 2,
+          "source_row": 4,
+          "tile_key": "tile_floor",
+          "height_type": "LOWLAND",
+          "independent_pixel": [193, 94],
+          "reason": "左上紫色低地的可见面与边缘可辨，下方高台没有遮掉本格中心；直接读地面区域。"
+        },
+        {
+          "display_row": 2,
+          "column": 5,
+          "json_array_row": 2,
+          "source_row": 4,
+          "tile_key": "tile_floor",
+          "height_type": "LOWLAND",
+          "independent_pixel": [275, 94],
+          "reason": "右上紫色低地面及周围边缘可辨，直接读可见地面面心；没有把下方石质高台当作此格。"
+        },
+        {
+          "display_row": 3,
+          "column": 2,
+          "json_array_row": 3,
+          "source_row": 3,
+          "tile_key": "tile_floor",
+          "height_type": "LOWLAND",
+          "independent_pixel": [149, 129],
+          "reason": "左侧中间紫色低地的地面中心可见，左右邻格材料和上下接缝可分；直接读低地面心。"
+        },
+        {
+          "display_row": 3,
+          "column": 6,
+          "json_array_row": 3,
+          "source_row": 3,
+          "tile_key": "tile_floor",
+          "height_type": "LOWLAND",
+          "independent_pixel": [321, 129],
+          "reason": "右侧中间紫色低地面完整可辨，中心没有被左邻高台遮住；直接目视读地面面心。"
+        },
+        {
+          "display_row": 4,
+          "column": 3,
+          "json_array_row": 4,
+          "source_row": 2,
+          "tile_key": "tile_floor",
+          "height_type": "LOWLAND",
+          "independent_pixel": [188, 164],
+          "reason": "左下紫色低地面及本格外缘可辨，右邻高台边缘另行分开；直接读低地可见面中心。"
+        },
+        {
+          "display_row": 4,
+          "column": 5,
+          "json_array_row": 4,
+          "source_row": 2,
+          "tile_key": "tile_floor",
+          "height_type": "LOWLAND",
+          "independent_pixel": [279, 164],
+          "reason": "右下紫色低地的面心可见，侧边与上下接缝足以区分本格；没有读取左邻高台中心。"
+        },
+        {
+          "display_row": 5,
+          "column": 4,
+          "json_array_row": 5,
+          "source_row": 1,
+          "tile_key": "tile_floor",
+          "height_type": "LOWLAND",
+          "independent_pixel": [233, 205],
+          "reason": "最下方中央紫色低地的地面内部与边缘可辨，底部植物未遮住中心；直接目视读地面面心。"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "requested_count": 18,
+    "preserved_request_count": 18,
+    "non_null_count": 18,
+    "null_count": 0,
+    "absolute_game_position_proven": false
+  }
+}
