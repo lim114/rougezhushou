@@ -1,0 +1,37 @@
+{
+  "kind": "SECTION304_FAILED_NATIVE_REFRESH_READONLY_DIAGNOSIS_AND_CACHE_OPTIONS",
+  "actual_first_receipt": {
+    "path": "verification/sections/304-window-attempt1/actual/window.json",
+    "sha256": "7479aab595c8c495c338b16a09b29d8e50957bad0d3c22a06c8d888dc0c59e75"
+  },
+  "actual_failure": {
+    "type": "AssertionError",
+    "message": "same_scope_refresh_keeps_choice_readers_and_same_independent_battle_state",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\李娜\\Desktop\\lcn\\rouge\\scripts\\verify_curiosity_node_rules_window_304.py\", line 375, in guarded\n    callback()\n  File \"C:\\Users\\李娜\\Desktop\\lcn\\rouge\\scripts\\verify_curiosity_node_rules_window_304.py\", line 530, in selected_refresh\n    require(dialog_state() == dialog_saved and parent_state() == parent_saved\n  File \"C:\\Users\\李娜\\Desktop\\lcn\\rouge\\scripts\\verify_curiosity_node_rules_window_304.py\", line 121, in require\n    raise AssertionError(label)\nAssertionError: same_scope_refresh_keeps_choice_readers_and_same_independent_battle_state\n"
+  },
+  "callback_derived_from_completed_refresh_rows": "selected_parent",
+  "not_proven_from_first_receipt": "Which individual state field changed: the first script did not store state diffs.",
+  "source_supported_fixture_premise_hypothesis": {
+    "parent_filter_only_changes_preview_rows": "rouge/node_catalog_view.py::_event_preview_filter_changed",
+    "source": "It explicitly preserves both reading documents while the preview list is filtered.",
+    "later_full_parent_refresh_rebuilds_source_text": "show_selected conditionally adds the battle-entry sentence only when event_stage.count() is nonzero.",
+    "fixture_sequence": "031 was first rendered with all event choices, then filtered to the temporary-leave choice with no linked battle. No full parent refresh occurred before the saved parent text hash.",
+    "possible_result": "The selected_parent callback legitimately removes the pre-filter battle-entry sentence while preserving cursor/scroll and child. This is a hypothesis, not an observed field diff."
+  },
+  "options": {
+    "diagnostic_only": {
+      "path": ".cache/p3-304-native/revision2/verify_curiosity_node_rules_window_304.py",
+      "sha256": "6dd22dae2f4b2aba1bc01209a742b1370531873edfa558a9d9a7144167fea423",
+      "purpose": "Original assertions remain; record actual before/after state and public parent documents even if failure repeats."
+    },
+    "settled_baseline_with_same_diagnostics": {
+      "path": ".cache/p3-304-native/revision2/verify_curiosity_node_rules_window_304-settled-baseline.py",
+      "sha256": "ce9d53c9bfe08d8b70753aeac62703071df132d99f70148bf7665b43dbfd6f85",
+      "purpose": "Explicitly finish the parent refresh after manual filter changes, before cursor/scroll priming and baseline capture. No state field or assertion removed."
+    }
+  },
+  "all_original_require_AST_identical_in_both_options": true,
+  "production_changed": false,
+  "native_or_Qt_or_tests_executed": false,
+  "classification": "Actual failure confirmed; fixture premise is a source-supported candidate. Product root cause remains unproven without field diagnostics."
+}

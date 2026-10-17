@@ -1,0 +1,300 @@
+{
+  "schema": "curiosity_node_choice_rule_map_v1",
+  "choices": [
+    {
+      "event_id": "community_group_030",
+      "scene_key": "community_group_030:scene:0",
+      "choice_key": "community_group_030:scene:0:choice:0",
+      "choice_title": "修正结果，必须找到目标",
+      "original_choice_ids": [
+        "choice_ro6_end1_1"
+      ],
+      "reference_id": "community_group_030:scene:0:choice:0",
+      "choice_description": "消耗50源石锭，在林间找到投影发出的位置",
+      "condition_text": "若同时持有【沙盘α】和【沙盘β】或访问过【窥视箱中】，则不会出现此选项",
+      "documented_rules": [
+        {
+          "rule_id": "marker_purchase_reference",
+          "title": "标记目标位置",
+          "text": "在文献所述尚未标记的情况下，可花费50源石锭标记位置。",
+          "source_refs": [
+            {
+              "file": "research/p3-curiosity-node-rules-304/selected-authority-records.json",
+              "selector": "exact_five_choice_rows",
+              "choice_key": "community_group_030:scene:0:choice:0"
+            },
+            {
+              "file": "verification/sections/301-preparation/future-notes-and-ritual-research/complete-candidate-originals-and-DOM.json",
+              "selector": "main_complete_ending_blocks.end2.text",
+              "paragraph_index": 8,
+              "text": "若遭遇的是好奇心与死：本次寻找失败，可选择在此处获得1个收藏品；未标记时，可选择消耗50源石锭立即标记。"
+            }
+          ]
+        }
+      ],
+      "related_stage_reference": null
+    },
+    {
+      "event_id": "community_group_030",
+      "scene_key": "community_group_030:scene:0",
+      "choice_key": "community_group_030:scene:0:choice:1",
+      "choice_title": "这是什么戏法？",
+      "original_choice_ids": [
+        "choice_ro6_end1_2"
+      ],
+      "reference_id": "community_group_030:scene:0:choice:1",
+      "choice_description": "获得1件收藏品",
+      "condition_text": null,
+      "documented_rules": [
+        {
+          "rule_id": "unnamed_relic_reward_reference",
+          "title": "取得一件未具名收藏品",
+          "text": "原选项记载获得1件收藏品；具体物品、完整候选池和实际领取未确认。",
+          "source_refs": [
+            {
+              "file": "research/p3-curiosity-node-rules-304/selected-authority-records.json",
+              "selector": "exact_five_choice_rows",
+              "choice_key": "community_group_030:scene:0:choice:1"
+            },
+            {
+              "file": "verification/sections/301-preparation/future-notes-and-ritual-research/complete-candidate-originals-and-DOM.json",
+              "selector": "main_complete_ending_blocks.end2.text",
+              "paragraph_index": 8,
+              "text": "若遭遇的是好奇心与死：本次寻找失败，可选择在此处获得1个收藏品；未标记时，可选择消耗50源石锭立即标记。"
+            }
+          ]
+        }
+      ],
+      "related_stage_reference": null
+    },
+    {
+      "event_id": "community_group_031",
+      "scene_key": "community_group_031:scene:0",
+      "choice_key": "community_group_031:scene:0:choice:0",
+      "choice_title": "保护证据，查缴那些机器！",
+      "original_choice_ids": [
+        "choice_ro6_end2_1",
+        "choice_ro6_end2_4"
+      ],
+      "reference_id": "community_group_031:scene:0:choice:0",
+      "choice_description": "找到传出声音的位置将遭遇险路恶敌",
+      "condition_text": null,
+      "documented_rules": [
+        {
+          "rule_id": "node_becomes_fixed_battle",
+          "title": "节点变化",
+          "text": "固定资料记载：选择后，该节点变为“混沌源阶理论”。",
+          "source_refs": [
+            {
+              "file": "research/p3-curiosity-node-rules-304/selected-authority-records.json",
+              "selector": "exact_five_choice_rows",
+              "choice_key": "community_group_031:scene:0:choice:0"
+            },
+            {
+              "file": "verification/sections/301-preparation/future-notes-and-ritual-research/complete-candidate-originals-and-DOM.json",
+              "selector": "main_complete_ending_blocks.end2.text",
+              "paragraph_index": 10,
+              "text": "窥视箱中：选择【保护证据，查缴那些机器！】，此后该节点变为阻止洛伦茨，扰动之谬及源阶方的险路恶敌【混沌源阶理论】。\n因节点机制影响，对“作战节点”生效的效果不能在这个险路恶敌中生效（如概念体），且节点变化后将无法离开，请在此之前做好所需准备。"
+            }
+          ]
+        },
+        {
+          "rule_id": "cannot_leave_after_conversion",
+          "title": "变化后的离开限制",
+          "text": "固定资料记载：节点变化后不能离开。",
+          "source_refs": [
+            {
+              "file": "research/p3-curiosity-node-rules-304/selected-authority-records.json",
+              "selector": "exact_five_choice_rows",
+              "choice_key": "community_group_031:scene:0:choice:0"
+            },
+            {
+              "file": "verification/sections/301-preparation/future-notes-and-ritual-research/complete-candidate-originals-and-DOM.json",
+              "selector": "main_complete_ending_blocks.end2.text",
+              "paragraph_index": 10,
+              "text": "窥视箱中：选择【保护证据，查缴那些机器！】，此后该节点变为阻止洛伦茨，扰动之谬及源阶方的险路恶敌【混沌源阶理论】。\n因节点机制影响，对“作战节点”生效的效果不能在这个险路恶敌中生效（如概念体），且节点变化后将无法离开，请在此之前做好所需准备。"
+            }
+          ]
+        },
+        {
+          "rule_id": "not_normal_battle_node_effect",
+          "title": "作战节点效果的例外",
+          "text": "固定资料记载：对“作战节点”生效的效果不能在此险路恶敌中生效，资料以概念体举例。",
+          "source_refs": [
+            {
+              "file": "research/p3-curiosity-node-rules-304/selected-authority-records.json",
+              "selector": "exact_five_choice_rows",
+              "choice_key": "community_group_031:scene:0:choice:0"
+            },
+            {
+              "file": "verification/sections/301-preparation/future-notes-and-ritual-research/complete-candidate-originals-and-DOM.json",
+              "selector": "main_complete_ending_blocks.end2.text",
+              "paragraph_index": 10,
+              "text": "窥视箱中：选择【保护证据，查缴那些机器！】，此后该节点变为阻止洛伦茨，扰动之谬及源阶方的险路恶敌【混沌源阶理论】。\n因节点机制影响，对“作战节点”生效的效果不能在这个险路恶敌中生效（如概念体），且节点变化后将无法离开，请在此之前做好所需准备。"
+            }
+          ]
+        }
+      ],
+      "related_stage_reference": {
+        "stage_id": "ro6_b_5",
+        "title": "混沌源阶理论",
+        "reference_only": true,
+        "immediate_transition": null
+      }
+    },
+    {
+      "event_id": "community_group_031",
+      "scene_key": "community_group_031:scene:0",
+      "choice_key": "community_group_031:scene:0:choice:1",
+      "choice_title": "她在说什么疯话？",
+      "original_choice_ids": [
+        "choice_ro6_end2_2"
+      ],
+      "reference_id": "community_group_031:scene:0:choice:1",
+      "choice_description": "多一事不如少一事",
+      "condition_text": "可暂时离开并在之后再次进入该事件",
+      "documented_rules": [
+        {
+          "rule_id": "temporary_leave_completes_node",
+          "title": "暂离",
+          "text": "固定资料记载：暂离并完成该节点。",
+          "source_refs": [
+            {
+              "file": "research/p3-curiosity-node-rules-304/selected-authority-records.json",
+              "selector": "exact_five_choice_rows",
+              "choice_key": "community_group_031:scene:0:choice:1"
+            },
+            {
+              "file": "verification/sections/301-preparation/future-notes-and-ritual-research/complete-candidate-originals-and-DOM.json",
+              "selector": "main_complete_ending_blocks.end2.text",
+              "paragraph_index": 11,
+              "text": "若选择【她在说什么疯话？】，则会暂离并完成该节点。该节点 可重复且会被标记，可在完成准备后再次访问。"
+            }
+          ]
+        },
+        {
+          "rule_id": "documented_revisit",
+          "title": "之后可再访",
+          "text": "固定资料记载：节点可重复且会被标记，之后可再次访问；实际状态仍未知。",
+          "source_refs": [
+            {
+              "file": "research/p3-curiosity-node-rules-304/selected-authority-records.json",
+              "selector": "exact_five_choice_rows",
+              "choice_key": "community_group_031:scene:0:choice:1"
+            },
+            {
+              "file": "verification/sections/301-preparation/future-notes-and-ritual-research/complete-candidate-originals-and-DOM.json",
+              "selector": "main_complete_ending_blocks.end2.text",
+              "paragraph_index": 11,
+              "text": "若选择【她在说什么疯话？】，则会暂离并完成该节点。该节点 可重复且会被标记，可在完成准备后再次访问。"
+            }
+          ]
+        }
+      ],
+      "related_stage_reference": null
+    },
+    {
+      "event_id": "community_group_031",
+      "scene_key": "community_group_031:scene:2",
+      "choice_key": "community_group_031:scene:2:choice:0",
+      "choice_title": "你将见证一场毁灭，抑或新生",
+      "original_choice_ids": [
+        "choice_ro6_end2_3"
+      ],
+      "reference_id": "community_group_031:scene:2:choice:0",
+      "choice_description": "遭遇与当前区域首领的决战",
+      "condition_text": null,
+      "documented_rules": [
+        {
+          "rule_id": "existing_battle_decision_reference",
+          "title": "已有的决战资料入口",
+          "text": "原目录写“遭遇与当前区域首领的决战”，并已关联固定关卡“混沌源阶理论”。这不是本节新增战斗链接，也不证明当前已进入战斗。",
+          "source_refs": [
+            {
+              "file": "research/p3-curiosity-node-rules-304/selected-authority-records.json",
+              "selector": "exact_five_choice_rows",
+              "choice_key": "community_group_031:scene:2:choice:0"
+            }
+          ]
+        }
+      ],
+      "related_stage_reference": {
+        "stage_id": "ro6_b_5",
+        "title": "混沌源阶理论",
+        "reference_only": true,
+        "immediate_transition": null
+      }
+    }
+  ],
+  "node_context_reference": {
+    "title": "两种命运所指的固定资料背景",
+    "texts": [
+      "固定资料记载：完成“强制重启”后解锁相关选项和收藏品；账户实际解锁未知。",
+      "固定资料的第Ⅴ层有3个命运所指：2个“好奇心与死”、1个“窥视箱中”，外观不能区分。不能据此替当前地图指定真节点。",
+      "固定资料记载：同时持有沙盘α与沙盘β，可将对应节点标记为“谜题与谜底”；实际持有与地图标记未知。",
+      "固定资料描述的结局条件还包括：未持有怦然信标，完成相关作战并通过第Ⅴ层；本局是否达成未知。"
+    ],
+    "source_refs": [
+      {
+        "selector": "main_complete_ending_blocks.end2.text",
+        "paragraph_index": 4,
+        "text": "完成游戏结局【强制重启】，解锁本结局的相关选项和收藏品。"
+      },
+      {
+        "selector": "main_complete_ending_blocks.end2.text",
+        "paragraph_index": 7,
+        "text": "抵达第Ⅴ层，此时地图上将刷新3个命运所指并 立即揭示。其中2个为好奇心与死，1个为窥视箱中。\n3个命运所指无法从外观分辨。\n同时持有两个【沙盘】时，为【窥视箱中】的命运所指将被自动标记为<谜题与谜底>。"
+      },
+      {
+        "selector": "main_complete_ending_blocks.end2.text",
+        "paragraph_index": 7,
+        "text": "抵达第Ⅴ层，此时地图上将刷新3个命运所指并 立即揭示。其中2个为好奇心与死，1个为窥视箱中。\n3个命运所指无法从外观分辨。\n同时持有两个【沙盘】时，为【窥视箱中】的命运所指将被自动标记为<谜题与谜底>。"
+      },
+      {
+        "selector": "main_complete_ending_blocks.end2.text",
+        "paragraph_index": 12,
+        "text": "以不持有【怦然信标】的状态完成该作战通过第Ⅴ层，即可完成游戏结局。"
+      }
+    ],
+    "documented_main_floor": 5,
+    "actual_node_ids": null
+  },
+  "source": {
+    "research/p3-future-region-effects-300/game-topic-complete.json": {
+      "sha256": "f5867e55d09472253083486174aa47bd94dd48b07684b74b60a5b29ca00eda86",
+      "bytes": 17943244
+    },
+    "verification/sections/301-preparation/future-notes-and-ritual-research/complete-candidate-originals-and-DOM.json": {
+      "sha256": "db7dd911c0c2ffe7c53de8d26a0b0ccb7bf585ce0c237215aab94b9f8eaa95a1",
+      "bytes": 203530
+    },
+    "research/p3-future-region-effects-300/prts-main-433770.html": {
+      "sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9",
+      "bytes": 954799
+    },
+    "research/p3-future-region-effects-300/prts-events-427904.html": {
+      "sha256": "faa088b0474e75806b357df8648c6a59b1be6dcbc9be749db7c934ca9e6307e9",
+      "bytes": 183007
+    },
+    "research/p3-future-region-effects-300/prts-events-440271.html": {
+      "sha256": "e04971ad361436e5bb3721883423d98ad66636d5156794dd6221a977ffd6dac8",
+      "bytes": 183838
+    }
+  },
+  "source_reference": {
+    "whole_primary": "research/p3-future-region-effects-300/game-topic-complete.json",
+    "whole_main_HTML": "research/p3-future-region-effects-300/prts-main-433770.html",
+    "primary_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "community_revisions": [
+      "427904",
+      "440271",
+      "433770"
+    ]
+  },
+  "notice": "固定资料按完整选项解释，不表示当前已标记、已转换或可再访；不推荐路线，不操作游戏。",
+  "unknowns": [
+    "实际原choice候选、节点身份、标记、变化、再次访问和当前服务器资格未知。",
+    "FEATURE为参数和指针旁证，不证明执行、消费、数量、附着或回调。",
+    "未恢复原来源场景，25/57缺口不变；原有奖励、资格和作战链接不改变。"
+  ]
+}

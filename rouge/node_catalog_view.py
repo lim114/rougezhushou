@@ -27,6 +27,8 @@ from . import named_reward_items
 from .named_reward_items_view import NamedRewardItemsPanel
 from . import ritual_weakening
 from .ritual_weakening_view import RitualWeakeningPanel
+from . import curiosity_node_rules
+from .curiosity_node_rules_view import CuriosityNodeRulesPanel
 from .player_node_information import node_information_text
 from .resident_location_references import resident_location_references,resident_binding_matches
 from .peace_guardian_results import EVENT as _RESIDENT_EVENT,SCENE as _RESIDENT_SCENE,CHOICE as _RESIDENT_CHOICE
@@ -328,6 +330,7 @@ class NodeCatalogPanel(QWidget):
         self.future_region_window=None
         self.named_reward_window=None
         self.ritual_weakening_window=None
+        self.curiosity_node_rules_window=None
         layout=QVBoxLayout(self)
         self.context_label=QLabel(DIRECTORY_NOTICE)
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
@@ -396,6 +399,9 @@ class NodeCatalogPanel(QWidget):
         self.ritual_weakening_button=QPushButton("查看仪式条件与首领弱化");rl.addWidget(self.ritual_weakening_button)
         self.ritual_weakening_button.setToolTip("逐项查阅条件效果，可手动打开相关作战；不代表本局已经提交或生效。")
         self.ritual_weakening_button.hide();self.ritual_weakening_button.clicked.connect(self.open_ritual_weakening)
+        self.curiosity_node_rules_button=QPushButton("查看标记、节点变化与再访说明");rl.addWidget(self.curiosity_node_rules_button)
+        self.curiosity_node_rules_button.setToolTip("按具体选项阅读固定资料；不识别或标记本局目标，不执行游戏操作。")
+        self.curiosity_node_rules_button.hide();self.curiosity_node_rules_button.clicked.connect(self.open_curiosity_node_rules)
         self.resident_reference_label=QLabel();self.resident_reference_label.setWordWrap(True)
         self.resident_location=QComboBox();self.resident_location.setAccessibleName('本图已读据点位置参考')
         self.resident_map_button=QPushButton('在地图查看这个位置')
@@ -660,6 +666,12 @@ class NodeCatalogPanel(QWidget):
         self.ritual_weakening_button.setEnabled(bool(ritual and ritual_packet.get("source_valid") is True))
         if self.ritual_weakening_window:
             self.ritual_weakening_window.set_reference(entry["record"]["id"] if ritual else None,scope_key=key if ritual else None)
+        curiosity_packet=curiosity_node_rules.event_reference(entry["record"].get("id")) if entry and entry["kind"]=="event" else None
+        curiosity=bool(curiosity_packet and curiosity_packet.get("target") is True)
+        self.curiosity_node_rules_button.setVisible(curiosity)
+        self.curiosity_node_rules_button.setEnabled(bool(curiosity and curiosity_packet.get("source_valid") is True))
+        if self.curiosity_node_rules_window:
+            self.curiosity_node_rules_window.set_reference(entry["record"]["id"] if curiosity else None,scope_key=key if curiosity else None)
         if not entry:text='没有符合筛选的资料。不能把资料缺失视为不可能出现。'
         elif entry['kind']=='event':
             q=entry['qualification'];text=event_details_text(entry['record']['id'],self._event_context(entry['record']))
@@ -683,8 +695,11 @@ class NodeCatalogPanel(QWidget):
                             text+='\n选择后移动例外资料 '+choice['choice_title']+'：'+choice['conditional_text']+'；实际结果未知。'
                         else:
                             text+='\n选项 '+choice['choice_title']+'：'+QUALIFICATIONS[choice['status']]+'；'+choice['conditional_text']
-            if self.event_stage.count():text+='\n作战入口见下方选择：仅固定资料预览，不代表实际触发或确定选中该变体。'
-            for row in result['rows']:
+            # This reader shows the complete event flow. Preview-only filters
+            # must not silently change its document on the next full refresh.
+            complete_links=event_planning.event_battle_links(entry['record']['id'],context=context)
+            if complete_links['rows']:text+='\n作战资料可在下方按场景和选项筛选；仅固定资料预览，不代表实际触发或确定选中该变体。'
+            for row in complete_links['rows']:
                 pool=row.get('generic_pool_requirement')
                 if pool:
                     floor=pool['next_main_floor_reference']
@@ -910,6 +925,18 @@ class NodeCatalogPanel(QWidget):
         if self.documented_item_window is None:self.documented_item_window=DocumentedChoiceItemPanel(self)
         self.documented_item_window.set_reference(documented_choice_items.EVENT,scope_key=key)
         self.documented_item_window.show();self.documented_item_window.raise_();self.documented_item_window.activateWindow()
+
+    def open_curiosity_node_rules(self):
+        key=self.list.selected_key();entry=next((r for r in self.entries if r["key"]==key),None)
+        if not entry or entry["kind"]!="event":return
+        identity=entry["record"].get("id");packet=curiosity_node_rules.event_reference(identity)
+        if not packet or packet.get("source_valid") is not True:
+            self.curiosity_node_rules_button.setEnabled(False)
+            if self.curiosity_node_rules_window:self.curiosity_node_rules_window.set_reference(None)
+            return
+        if self.curiosity_node_rules_window is None:self.curiosity_node_rules_window=CuriosityNodeRulesPanel(self)
+        self.curiosity_node_rules_window.set_reference(identity,scope_key=key)
+        self.curiosity_node_rules_window.show();self.curiosity_node_rules_window.raise_();self.curiosity_node_rules_window.activateWindow()
 
     def open_ritual_weakening(self):
         key=self.list.selected_key();entry=next((e for e in self.entries if e["key"]==key),None)
