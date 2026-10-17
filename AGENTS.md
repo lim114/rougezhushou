@@ -10,6 +10,10 @@
 
 执行时明确区分已核实事实、基于证据的推断和主观建议；资料不足或存在冲突时标明来源、适用版本与未决条件，不以假设冒充结论，也不以完成节数或公式自洽代替实际准确性验收。
 
+## 当前用量收尾规则（2026-10-17）
+
+可核验的账户剩余额度严格低于5%时开始收尾，替代原15%阈值。触发后不再开启新小节；完整完成当前小节的实现、必要验证、记录与索引更新、提交、普通推送及实际远端核对后再结束。不得因为低额度赶进度、遗漏步骤、缩减验收或把未完成项标为完成。正好5%不触发此规则；不可用的用量窗口仍记为不可用，不推定为零或充足。下文旧阈值及第303节收尾为历史记录，不能覆盖本规则。
+
 ## 当前续接 · 第303节已完成功能与必要/原生验收
 
 畸症及本性难移普通/紧急的固定原图新增49个独立同意的低地地板/道路中心；两份首次完整读数保留全部89格，37+12通过原4像素门，40个未读清或不同意的格仍不画点。只用第一读者原像素，不平均或调整；原58点完整记录与12图24关规则投影原样保留。当前部分参考为12图21关107格，仍不代表81关59图整图校准、高台/入口/出生偏移或实际敌人位置。来源及实际回执verification/sections/303.json；两项历史测试维护分列，原窗口更新/私人5路径不变。未跑303全量，290完整范围沿用原来源。下一节304/下次305，无数字终点。P3→P2→P1、识别最后，不推荐/排序/自动选路；303功能提交510914520ccc399580f9d8c128c2f63279fba31d已普通推送并核对实际远端，发布证明verification/sections/303-publication.json；源码/要求/验收/索引一并保存。
@@ -73,7 +77,7 @@ Continue development on `codex/p2-development`. The user requested that all subs
 
 The user authorized continuous work without confirmation between sections. Each coherent functional section records its implemented scope, necessary validation (or why none is needed), limitations and next action in DEVELOPMENT_CHECKPOINT.json and WORK_IN_PROGRESS.md, then commits and ordinarily pushes. Reuse unchanged passing evidence; do not require exhaustive native graph comparisons, repeated independent audits, screenshots or broad regression on every section. Run an actual window only when needed to verify the changed UI behavior; full Linux/Wine/window validation keeps its complete available scope. Wine is compatibility validation, not genuine Windows/game/desktop integration.
 
-User instruction on 2026-10-07: after P2 is complete, continue P3. If the same problem remains unresolved after three attempts, defer it with evidence, attempt count and restart conditions; continue independent work. If account usage drops below 15%, finish required validation and checkpoints for the active section, then wrap up. Use the account usage tool when available for a required threshold check; never invent an unavailable percentage.
+User instruction on 2026-10-07: after P2 is complete, continue P3. If the same problem remains unresolved after three attempts, defer it with evidence, attempt count and restart conditions; continue independent work. The former 15% usage rule is superseded by the 2026-10-17 rule above: strictly below 5%, finish the entire active section including validation and verified ordinary publication before wrapping up. Use the account usage tool when available; never invent an unavailable percentage.
 
 User instructions on 2026-10-08: increase the amount of useful work in each section. Group related, source-supported functional improvements with their complete verification into one section; source collection, an isolated assertion, or routine archival preparation is not a separate progress milestone. Keep per-issue original evidence, applicability, boundary input/output checks, failure records and restart conditions. Use only necessary change-specific validation before archiving the group; full validation follows the latest cadence above. Broader scope does not reduce detail control.
 

@@ -12,9 +12,9 @@
       "P1"
     ],
     "max_failed_attempts_per_problem": 3,
-    "wrap_up_below_usage_percent": 15,
+    "wrap_up_below_usage_percent": 5,
     "usage_percent_available": true,
-    "usage_monitoring": "Native account-usage read is available; threshold checked for the active batch. Recheck at batch boundaries; do not infer unavailable windows.",
+    "usage_monitoring": "Use verified available account windows only. Strictly below 5 percent triggers wrap-up; exactly 5 does not. Do not start another section after triggering. Complete the entire active section: implementation, necessary validation, records/requirements/index, commit, ordinary push and actual remote verification. Do not rush, reduce scope or claim incomplete work complete. Unavailable windows remain unavailable.",
     "automatic_next_batch": false,
     "commit_interval": 1,
     "commit_after_full_validation_pass": false,
@@ -56,7 +56,9 @@
     },
     "priority_changed_on_Beijing": "2026-10-15",
     "player_readability": "Default player output requires no computing terminology: useful result/information first, game Chinese names, conditions/units/unknowns explained; raw IDs, numeric implementation and debug details expandable.",
-    "historical_long_term_target_section_before_p3_continuation": 400
+    "historical_long_term_target_section_before_p3_continuation": 400,
+    "usage_threshold_changed_on_Beijing": "2026-10-17",
+    "finish_entire_active_section_before_usage_wrap_up": true
   },
   "baseline_commit": "0015c20",
   "completed_sections": 303,
@@ -4576,15 +4578,6 @@
       "numeric_continuation_target": null
     }
   },
-  "usage_protection_boundary303": {
-    "section": 303,
-    "condition_confirmed_by_live_account_tool": true,
-    "policy": "Finish validation and checkpoint of active section when remaining account usage is below15 percent, then wrap up.",
-    "action": "Finish ordinary publication of303; do not start304 in this batch.",
-    "goal_completion_claimed": false,
-    "user_requested_goal_pause_claimed": false,
-    "private_account_details_published": false
-  },
   "historical_before303_publication": {
     "section": 302,
     "scope": "previous_functional_section",
@@ -4603,5 +4596,26 @@
     "batch_closed": false,
     "next_section_started": false,
     "numeric_continuation_target": null
+  },
+  "historical_usage_protection_boundary303_before_20261017_policy_change": {
+    "section": 303,
+    "condition_confirmed_by_live_account_tool": true,
+    "policy": "Finish validation and checkpoint of active section when remaining account usage is below15 percent, then wrap up.",
+    "action": "Finish ordinary publication of303; do not start304 in this batch.",
+    "goal_completion_claimed": false,
+    "user_requested_goal_pause_claimed": false,
+    "private_account_details_published": false
+  },
+  "usage_policy_adjustment": {
+    "date_Beijing": "2026-10-17",
+    "previous_wrap_up_below_usage_percent": 15,
+    "wrap_up_below_usage_percent": 5,
+    "comparison": "strictly_less_than",
+    "finish_entire_active_section_before_wrap_up": true,
+    "do_not_start_new_section_after_trigger": true,
+    "historical_303_boundary_superseded": true,
+    "functional_section_added": false,
+    "receipt": "verification/maintenance/20261017-usage-threshold.json",
+    "commit_binding": "enclosing maintenance commit; verify actual remote after ordinary push"
   }
 }
