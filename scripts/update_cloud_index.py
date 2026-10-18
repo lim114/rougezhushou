@@ -158,6 +158,14 @@ def update(root=ROOT):
     checkpoint = json.loads((root / 'DEVELOPMENT_CHECKPOINT.json').read_text(encoding='utf-8'))
     completed = checkpoint['completed_sections']
     validate_delivery(root, checkpoint)
+    current_receipt = _public_json(root, f'verification/sections/{completed:03}.json')
+    title = current_receipt.get('title')
+    title = (' '.join(title.split()) if isinstance(title, str) and title.strip()
+             else '历史回执未提供改动标题')
+    change = current_receipt.get('new_capability')
+    change = (change if isinstance(change, str) and change.strip()
+              else '历史回执未提供具体改动摘要，请查阅对应验收回执。')
+    current_label = f'第{completed}节 + {title}'
     fulls = sorted((root / 'verification').glob('full-*/native.json'),
                    key=lambda p: int(p.parent.name.split('-')[1]))
     fulls = [p for p in fulls if int(p.parent.name.split('-')[1]) <= completed]
@@ -180,6 +188,8 @@ def update(root=ROOT):
     index = {
         'project': 'rougezhushou', 'branch': 'codex/p2-development',
         'completed_sections': completed, 'next_section': checkpoint['next_section'],
+        'current_section_label': current_label,
+        'current_completed_change': change,
         'batch_status': checkpoint.get('batch_status'),
         'next_full_validation_after': checkpoint['next_full_validation_after'],
         'commit_reference': 'the commit containing this index; verify Git branch and remote before resuming',
@@ -205,7 +215,9 @@ def update(root=ROOT):
         before, rest = old.split(START, 1)
         _, after = rest.split(END, 1)
         old = before + after.lstrip('\n')
-    block = (f'{START}\n# 当前云端续接索引 · 第{completed}节\n\n'
+    block = (f'{START}\n# 当前云端续接索引 · {current_label}\n\n'
+             f'实际完成的改动：{change}\n\n'
+             f'[本节验收回执](verification/sections/{completed:03}.json)。\n\n'
              f'已完成至{completed}，后续{checkpoint["next_section"]}；本批状态 `{checkpoint.get("batch_status")}`。'
              f'推进终点：{index["current_batch_target_section"] if index["current_batch_target_section"] is not None else "未指定数字终点"}。'
              f'下次定期全量{checkpoint["next_full_validation_after"]}。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。\n\n'

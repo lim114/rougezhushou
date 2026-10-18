@@ -300,6 +300,9 @@ class BattlePreviewPanel(QWidget):
         self.spawn_detail=QPlainTextEdit();self.spawn_detail.setReadOnly(True);details.addWidget(self.spawn_detail)
         enemy_box=QWidget();enemy_layout=QVBoxLayout(enemy_box);enemy_layout.setContentsMargins(0,0,0,0)
         self.enemy_picture=SubjectPicture();enemy_layout.addWidget(self.enemy_picture)
+        self.enemy_form_button=QPushButton('查看伪装与现身资料');enemy_layout.addWidget(self.enemy_form_button)
+        self.enemy_form_button.hide();self.enemy_form_window=None
+        self.enemy_form_button.clicked.connect(self.open_enemy_form)
         self.enemy_detail=QPlainTextEdit();self.enemy_detail.setReadOnly(True);enemy_layout.addWidget(self.enemy_detail,1)
         details.addWidget(enemy_box)
         details.setSizes([260,340,380]);layout.addWidget(details,3)
@@ -490,6 +493,7 @@ class BattlePreviewPanel(QWidget):
         self._clear_candidate_preview()
         if self.spawn_candidates_window is not None:self.spawn_candidates_window.set_reference(None)
         self._rows_stage=None;self._shown_enemy=None;self._tile_cell=None;self._detail_key=None
+        self._refresh_enemy_form()
         self._branch_marker=None;self.branch_panel.set_stage(sid)
         self.current_stage=sid;stage=battle_data()['stages'].get(sid)
         self.duel_reward_button.setVisible(is_duel_stage(sid))
@@ -601,6 +605,8 @@ class BattlePreviewPanel(QWidget):
         self._refresh_branch_positions()
         self._refresh_spawn_candidates()
 
+        self._refresh_enemy_form()
+
     def _refresh_branch_positions(self,*_):
         from .branch_position_overview import branch_position_overview
         rows=[]
@@ -654,18 +660,47 @@ class BattlePreviewPanel(QWidget):
 
     def _render_enemy(self,enemy_id,level=None,*,preserve=False):
         stage=battle_data()['stages'].get(self.current_stage)
-        if not stage:return
+        if not stage:
+            self._shown_enemy=None;self._refresh_enemy_form();return
         choices=[e for e in stage['enemies'] if e['id']==enemy_id and (level is None or e['level']==level)]
         if len(choices)!=1:
             self._shown_enemy=None
             self.enemy_picture.set_subject(None,None,'')
-            replace_text(self.enemy_detail,'敌人引用等级不能唯一确认，请通过敌人筛选选择。',preserve=False);return
+            replace_text(self.enemy_detail,'敌人引用等级不能唯一确认，请通过敌人筛选选择。',preserve=False)
+            self._refresh_enemy_form();return
         key=(self.current_stage,enemy_id,choices[0]['level'])
         keep=preserve and self._shown_enemy==key;self._shown_enemy=key
         entry=choices[0]
         self.enemy_picture.set_subject('enemy',enemy_id,entry['name']+' · '+ENEMY_TIERS.get(entry['level_type'],'类别未确认'))
         text=enemy_text(enemy_preview(self.current_stage,enemy_id,choices[0]['level'],self.context),technical=self.technical.isChecked())
         replace_text(self.enemy_detail,text,preserve=keep)
+        self._refresh_enemy_form()
+
+    def _refresh_enemy_form(self):
+        from .enemy_form_view import target_identity
+        from .enemy_form_reference import disguise_reference
+        key=self._shown_enemy
+        target=target_identity(key)
+        result=disguise_reference(*key)if target else None
+        valid=bool(result and result.get('source_valid')is True)
+        self.enemy_form_button.setVisible(target);self.enemy_form_button.setEnabled(valid)
+        if self.enemy_form_window is not None:
+            if not valid:
+                self.enemy_form_window.clear_reference((result or {}).get('notice','已更换敌人，旧伪装与现身资料已清除。'))
+            elif self.enemy_form_window.identity==key:
+                self.enemy_form_window.set_reference(key,result)
+            else:
+                self.enemy_form_window.clear_reference('已更换敌人；请手动打开当前敌人的伪装与现身资料。')
+        return result
+
+    def open_enemy_form(self):
+        result=self._refresh_enemy_form()
+        if not result or result.get('source_valid')is not True:return False
+        from .enemy_form_view import EnemyFormReferencePanel
+        if self.enemy_form_window is None:self.enemy_form_window=EnemyFormReferencePanel(self)
+        if not self.enemy_form_window.set_reference(self._shown_enemy,result):return False
+        self.enemy_form_window.show();self.enemy_form_window.raise_()
+        return True
 
     def _spawn_selected(self,item,*_,preserve=False):
         if not item:return
