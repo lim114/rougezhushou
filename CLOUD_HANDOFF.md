@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/308.json)。
 
-已完成至308，后续309；本批状态 `P3_SECTION308_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量320。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至308，后续309；本批状态 `P3_SECTION308_PUBLISHED`。推进终点：未指定数字终点。下次定期全量320。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -126,5 +126,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 16格是两个隔离代理上下文对同一原图的读数一致结果，不是两位真人或游戏采样，不证明绝对位置精度。严格4原像素门槛，不平均、不修点、不重读求通过、不拟合、插值或外推。完整81关59图校准、其余格、高台顶面、立体入口脚点、出生偏移、随机范围、反向定位、整段路线及实际敌人位置仍未闭合。旧303/294原生脚本保留，适配当前123数据的full308变体只完成来源合同和静态流程核对，完整窗口执行留到320；不能记成本节额外原生通过。节点事件、掉落及P3/P2/P1其余待办保留。
 
-<!-- section308-publication-pending -->当前为本地验收完成，普通推送与真实远端核对尚待完成。
+第308节功能提交f3aa1686de588bdd87934098f1bcc99c2922eb00已普通推送并核对真实远端及公开文件字节，证明verification/sections/308-publication.json。本次仅保存发布元数据，不增加功能节数；继续P3，309未启动，下一定期全量320。
 <!-- section308-handoff:end -->
