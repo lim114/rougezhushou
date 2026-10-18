@@ -1,0 +1,990 @@
+{
+  "kind": "SECTION311_INDEPENDENT_WHOLE_NATIVE_UI_STATIC_REVIEW",
+  "checks": {
+    "no_undefined_global_or_free_read": true,
+    "exact_native_model_targets": true,
+    "native_paths_match_actual_backend": true,
+    "negative_member_is_actual_runtime_authority": true,
+    "manifest_bytepins_and_data_pin": true,
+    "runtime_set_and_damaged_member_match": true,
+    "nonvacuous_actual_and_false_fields": true,
+    "four_unique_actual_data_topics": true,
+    "all_six_old_reader_methods_ast_unchanged": true,
+    "only_four_old_hook_methods_changed": true,
+    "live_parent_is_known_baseline_or_exact_candidate": true,
+    "first_level_UI_attributes_exist": true,
+    "exact_three_picture_subjects": true,
+    "distinct_picture_catalog_bytepins_exist": true,
+    "model_API_actual_signature": true,
+    "no_stale_310_pack_or_keyS": true
+  },
+  "findings": [],
+  "verdict": "no_static_blocker",
+  "reviewed_files": {
+    ".cache/p3-311-view/candidate/scripts/verify_boss_hunt_window_311.py": {
+      "sha256": "937e16f28d825646c9a89fc0097cb046b3ae1bd361f128ba836c6c2b05415d45",
+      "bytes": 26647
+    },
+    ".cache/p3-311-view/candidate/rouge/boss_hunt_view.py": {
+      "sha256": "f6b5422167c0cd16e37fd6e2db27450a9c5a4d7975bff7da95ad313e737630c3",
+      "bytes": 8771
+    },
+    ".cache/p3-311-view/candidate/rouge/battle_view.py": {
+      "sha256": "803acb2015c10fb8c8d066ce49a87466d39abcf756cf1542c1c67f2a3961d6ae",
+      "bytes": 54968
+    },
+    ".cache/p3-311-view/candidate/tests/test_boss_hunt_view_311.py": {
+      "sha256": "1d21327d9f1c9f39b21eb0b6259aa54c520776eea2c111a7a1183061a8aa98d2",
+      "bytes": 10396
+    },
+    ".cache/p3-311-view/candidate/tests/test_boss_hunt_integration_311.py": {
+      "sha256": "5b9fcee71ec69645c2778f78fbbd7d0f9d8ced71abc6760fe3fc8f15d4471874",
+      "bytes": 6769
+    },
+    ".cache/p3-311-model/candidate/rouge/boss_hunt_reference.py": {
+      "sha256": "cc422c139621e7af35ed1c822dd0d61570875c23dc51f337ffca291da8fba0e1",
+      "bytes": 8529
+    },
+    ".cache/p3-311-model/candidate/research/p3-boss-hunt-311/source-manifest.json": {
+      "sha256": "dc1024855751338d2b4b536c53c83e8cd56e75f548b12296dfa34d3b12335321",
+      "bytes": 5912
+    },
+    ".cache/p3-311-model/candidate/rouge/data/boss-hunt-reference.json": {
+      "sha256": "7d285e9dfd854f0cdd2d7a2085f19226cbb54eb02118cf12d32c0692e83a80d5",
+      "bytes": 2476877
+    }
+  },
+  "source_bytes_stable_during_review": true,
+  "symbol_tables": {
+    ".cache/p3-311-view/candidate/scripts/verify_boss_hunt_window_311.py": {
+      "unresolved_globals": [],
+      "unresolved_free_names": [],
+      "scopes": [
+        {
+          "scope": "top",
+          "line": 0,
+          "type": "module"
+        },
+        {
+          "scope": "genexpr",
+          "line": 15,
+          "type": "function"
+        },
+        {
+          "scope": "read",
+          "line": 28,
+          "type": "function"
+        },
+        {
+          "scope": "sha",
+          "line": 32,
+          "type": "function"
+        },
+        {
+          "scope": "bound_files",
+          "line": 36,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 50,
+          "type": "function"
+        },
+        {
+          "scope": "main",
+          "line": 74,
+          "type": "function"
+        },
+        {
+          "scope": "require",
+          "line": 99,
+          "type": "function"
+        },
+        {
+          "scope": "forbidden",
+          "line": 107,
+          "type": "function"
+        },
+        {
+          "scope": "blocked",
+          "line": 108,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 130,
+          "type": "function"
+        },
+        {
+          "scope": "native",
+          "line": 158,
+          "type": "function"
+        },
+        {
+          "scope": "choose",
+          "line": 169,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 170,
+          "type": "function"
+        },
+        {
+          "scope": "reader",
+          "line": 183,
+          "type": "function"
+        },
+        {
+          "scope": "parent_state",
+          "line": 188,
+          "type": "function"
+        },
+        {
+          "scope": "screenshot",
+          "line": 197,
+          "type": "function"
+        },
+        {
+          "scope": "close_all",
+          "line": 207,
+          "type": "function"
+        },
+        {
+          "scope": "fail",
+          "line": 215,
+          "type": "function"
+        },
+        {
+          "scope": "later",
+          "line": 222,
+          "type": "function"
+        },
+        {
+          "scope": "guarded",
+          "line": 223,
+          "type": "function"
+        },
+        {
+          "scope": "select_identity",
+          "line": 230,
+          "type": "function"
+        },
+        {
+          "scope": "begin",
+          "line": 238,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 262,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 270,
+          "type": "function"
+        },
+        {
+          "scope": "lambda",
+          "line": 276,
+          "type": "function"
+        },
+        {
+          "scope": "topic_case",
+          "line": 278,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 285,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 290,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 291,
+          "type": "function"
+        },
+        {
+          "scope": "lambda",
+          "line": 299,
+          "type": "function"
+        },
+        {
+          "scope": "check_refresh",
+          "line": 303,
+          "type": "function"
+        },
+        {
+          "scope": "lambda",
+          "line": 306,
+          "type": "function"
+        },
+        {
+          "scope": "check_negative",
+          "line": 336,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 361,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 381,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 386,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 388,
+          "type": "function"
+        },
+        {
+          "scope": "finish",
+          "line": 393,
+          "type": "function"
+        },
+        {
+          "scope": "timeout",
+          "line": 399,
+          "type": "function"
+        }
+      ]
+    },
+    ".cache/p3-311-view/candidate/rouge/boss_hunt_view.py": {
+      "unresolved_globals": [],
+      "unresolved_free_names": [],
+      "scopes": [
+        {
+          "scope": "top",
+          "line": 0,
+          "type": "module"
+        },
+        {
+          "scope": "target_identity",
+          "line": 19,
+          "type": "function"
+        },
+        {
+          "scope": "_matches_identity",
+          "line": 25,
+          "type": "function"
+        },
+        {
+          "scope": "_validated",
+          "line": 31,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 44,
+          "type": "function"
+        },
+        {
+          "scope": "BossHuntReferencePanel",
+          "line": 58,
+          "type": "class"
+        },
+        {
+          "scope": "__init__",
+          "line": 59,
+          "type": "function"
+        },
+        {
+          "scope": "clear_reference",
+          "line": 89,
+          "type": "function"
+        },
+        {
+          "scope": "_query",
+          "line": 103,
+          "type": "function"
+        },
+        {
+          "scope": "_scope",
+          "line": 110,
+          "type": "function"
+        },
+        {
+          "scope": "_render",
+          "line": 113,
+          "type": "function"
+        },
+        {
+          "scope": "set_reference",
+          "line": 120,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 133,
+          "type": "function"
+        },
+        {
+          "scope": "_topic_changed",
+          "line": 156,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 169,
+          "type": "function"
+        },
+        {
+          "scope": "refresh_reference",
+          "line": 179,
+          "type": "function"
+        }
+      ]
+    },
+    ".cache/p3-311-view/candidate/rouge/battle_view.py": {
+      "unresolved_globals": [],
+      "unresolved_free_names": [],
+      "scopes": [
+        {
+          "scope": "top",
+          "line": 0,
+          "type": "module"
+        },
+        {
+          "scope": "BattleGrid",
+          "line": 23,
+          "type": "class"
+        },
+        {
+          "scope": "__init__",
+          "line": 25,
+          "type": "function"
+        },
+        {
+          "scope": "set_reference",
+          "line": 30,
+          "type": "function"
+        },
+        {
+          "scope": "grid_rect",
+          "line": 33,
+          "type": "function"
+        },
+        {
+          "scope": "cell_center",
+          "line": 39,
+          "type": "function"
+        },
+        {
+          "scope": "cell_at",
+          "line": 43,
+          "type": "function"
+        },
+        {
+          "scope": "paintEvent",
+          "line": 51,
+          "type": "function"
+        },
+        {
+          "scope": "mousePressEvent",
+          "line": 112,
+          "type": "function"
+        },
+        {
+          "scope": "MapOriginal",
+          "line": 117,
+          "type": "class"
+        },
+        {
+          "scope": "__init__",
+          "line": 120,
+          "type": "function"
+        },
+        {
+          "scope": "set_file",
+          "line": 125,
+          "type": "function"
+        },
+        {
+          "scope": "set_reference",
+          "line": 134,
+          "type": "function"
+        },
+        {
+          "scope": "image_rect",
+          "line": 139,
+          "type": "function"
+        },
+        {
+          "scope": "cell_center",
+          "line": 145,
+          "type": "function"
+        },
+        {
+          "scope": "cell_at",
+          "line": 153,
+          "type": "function"
+        },
+        {
+          "scope": "marker_cells",
+          "line": 159,
+          "type": "function"
+        },
+        {
+          "scope": "projected_branch_positions",
+          "line": 168,
+          "type": "function"
+        },
+        {
+          "scope": "_paint_branch_positions",
+          "line": 178,
+          "type": "function"
+        },
+        {
+          "scope": "paintEvent",
+          "line": 184,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 225,
+          "type": "function"
+        },
+        {
+          "scope": "mousePressEvent",
+          "line": 234,
+          "type": "function"
+        },
+        {
+          "scope": "BattlePreviewPanel",
+          "line": 239,
+          "type": "class"
+        },
+        {
+          "scope": "__init__",
+          "line": 242,
+          "type": "function"
+        },
+        {
+          "scope": "lambda",
+          "line": 286,
+          "type": "function"
+        },
+        {
+          "scope": "set_stage",
+          "line": 337,
+          "type": "function"
+        },
+        {
+          "scope": "_stage_changed",
+          "line": 342,
+          "type": "function"
+        },
+        {
+          "scope": "set_context",
+          "line": 345,
+          "type": "function"
+        },
+        {
+          "scope": "_refresh_entry_reference",
+          "line": 353,
+          "type": "function"
+        },
+        {
+          "scope": "open_entry_references",
+          "line": 360,
+          "type": "function"
+        },
+        {
+          "scope": "_request_entry_event",
+          "line": 373,
+          "type": "function"
+        },
+        {
+          "scope": "_clear_candidate_preview",
+          "line": 379,
+          "type": "function"
+        },
+        {
+          "scope": "_current_main_spawn_id",
+          "line": 387,
+          "type": "function"
+        },
+        {
+          "scope": "_refresh_spawn_candidates",
+          "line": 392,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 398,
+          "type": "function"
+        },
+        {
+          "scope": "open_spawn_candidates",
+          "line": 413,
+          "type": "function"
+        },
+        {
+          "scope": "open_current_spawn_candidates",
+          "line": 429,
+          "type": "function"
+        },
+        {
+          "scope": "_request_spawn_candidate",
+          "line": 433,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 459,
+          "type": "function"
+        },
+        {
+          "scope": "open_highland_top",
+          "line": 467,
+          "type": "function"
+        },
+        {
+          "scope": "open_duel_rewards",
+          "line": 474,
+          "type": "function"
+        },
+        {
+          "scope": "_technical_changed",
+          "line": 483,
+          "type": "function"
+        },
+        {
+          "scope": "_load_stage",
+          "line": 501,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 512,
+          "type": "function"
+        },
+        {
+          "scope": "lambda",
+          "line": 525,
+          "type": "function"
+        },
+        {
+          "scope": "render_rows",
+          "line": 536,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 590,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 611,
+          "type": "function"
+        },
+        {
+          "scope": "_refresh_branch_positions",
+          "line": 625,
+          "type": "function"
+        },
+        {
+          "scope": "_branch_reference_cell",
+          "line": 635,
+          "type": "function"
+        },
+        {
+          "scope": "_reward_summary",
+          "line": 653,
+          "type": "function"
+        },
+        {
+          "scope": "_reward_selected",
+          "line": 657,
+          "type": "function"
+        },
+        {
+          "scope": "_clear_reward_selection",
+          "line": 672,
+          "type": "function"
+        },
+        {
+          "scope": "_render_enemy",
+          "line": 676,
+          "type": "function"
+        },
+        {
+          "scope": "_refresh_enemy_form",
+          "line": 697,
+          "type": "function"
+        },
+        {
+          "scope": "open_enemy_form",
+          "line": 714,
+          "type": "function"
+        },
+        {
+          "scope": "_refresh_boss_phase",
+          "line": 723,
+          "type": "function"
+        },
+        {
+          "scope": "open_boss_phase_reference",
+          "line": 742,
+          "type": "function"
+        },
+        {
+          "scope": "_refresh_boss_cycle",
+          "line": 751,
+          "type": "function"
+        },
+        {
+          "scope": "open_boss_cycle_reference",
+          "line": 770,
+          "type": "function"
+        },
+        {
+          "scope": "_refresh_boss_hunt",
+          "line": 779,
+          "type": "function"
+        },
+        {
+          "scope": "open_boss_hunt_reference",
+          "line": 798,
+          "type": "function"
+        },
+        {
+          "scope": "_spawn_selected",
+          "line": 807,
+          "type": "function"
+        },
+        {
+          "scope": "_occurrence_changed",
+          "line": 825,
+          "type": "function"
+        },
+        {
+          "scope": "_cell_selected",
+          "line": 835,
+          "type": "function"
+        }
+      ]
+    },
+    ".cache/p3-311-view/candidate/tests/test_boss_hunt_view_311.py": {
+      "unresolved_globals": [],
+      "unresolved_free_names": [],
+      "scopes": [
+        {
+          "scope": "top",
+          "line": 0,
+          "type": "module"
+        },
+        {
+          "scope": "BossHuntView311Tests",
+          "line": 17,
+          "type": "class"
+        },
+        {
+          "scope": "setUpClass",
+          "line": 19,
+          "type": "function"
+        },
+        {
+          "scope": "reader",
+          "line": 22,
+          "type": "function"
+        },
+        {
+          "scope": "assert_empty",
+          "line": 30,
+          "type": "function"
+        },
+        {
+          "scope": "test_three_exact_entries_manual_overview_and_three_distinct_original_subjects",
+          "line": 41,
+          "type": "function"
+        },
+        {
+          "scope": "test_each_selected_subject_can_read_all_dynamic_topics_without_identity_substitution",
+          "line": 56,
+          "type": "function"
+        },
+        {
+          "scope": "test_other_stage_custom_and_nonint_identity_are_not_entries",
+          "line": 75,
+          "type": "function"
+        },
+        {
+          "scope": "test_top_and_nested_source_identity_must_both_match_the_selected_tuple",
+          "line": 84,
+          "type": "function"
+        },
+        {
+          "scope": "test_same_identity_source_and_topic_preserve_both_readers_and_real_nonzero_scroll",
+          "line": 94,
+          "type": "function"
+        },
+        {
+          "scope": "lambda",
+          "line": 99,
+          "type": "function"
+        },
+        {
+          "scope": "test_unselected_overview_source_reading_is_also_preserved",
+          "line": 120,
+          "type": "function"
+        },
+        {
+          "scope": "test_switching_three_subjects_discards_old_topic_tab_and_selection",
+          "line": 140,
+          "type": "function"
+        },
+        {
+          "scope": "test_source_loss_clears_all_three_pictures_and_requires_manual_reopen_after_recovery",
+          "line": 154,
+          "type": "function"
+        },
+        {
+          "scope": "test_manual_topic_selection_queries_fresh_not_the_prior_result",
+          "line": 166,
+          "type": "function"
+        },
+        {
+          "scope": "test_new_source_epoch_clears_old_reading_until_manual_reopen",
+          "line": 173,
+          "type": "function"
+        },
+        {
+          "scope": "test_packet_ownership_and_invalid_topic_or_source_metadata_fail_closed",
+          "line": 185,
+          "type": "function"
+        }
+      ]
+    },
+    ".cache/p3-311-view/candidate/tests/test_boss_hunt_integration_311.py": {
+      "unresolved_globals": [],
+      "unresolved_free_names": [],
+      "scopes": [
+        {
+          "scope": "top",
+          "line": 0,
+          "type": "module"
+        },
+        {
+          "scope": "BossHuntIntegration311Tests",
+          "line": 16,
+          "type": "class"
+        },
+        {
+          "scope": "setUpClass",
+          "line": 18,
+          "type": "function"
+        },
+        {
+          "scope": "parent",
+          "line": 21,
+          "type": "function"
+        },
+        {
+          "scope": "cleanup",
+          "line": 25,
+          "type": "function"
+        },
+        {
+          "scope": "show_entry",
+          "line": 33,
+          "type": "function"
+        },
+        {
+          "scope": "snapshot",
+          "line": 38,
+          "type": "function"
+        },
+        {
+          "scope": "test_all_three_exact_entries_open_only_manually_with_selected_identity",
+          "line": 45,
+          "type": "function"
+        },
+        {
+          "scope": "test_other_stage_same_enemy_names_other_boss_and_no_stage_hide_entry_and_clear_old_reader",
+          "line": 59,
+          "type": "function"
+        },
+        {
+          "scope": "test_reader_open_topic_and_refresh_keep_parent_map_filters_context_and_text",
+          "line": 76,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 82,
+          "type": "function"
+        },
+        {
+          "scope": "test_source_loss_and_recovery_do_not_repopulate_or_reopen_old_reader",
+          "line": 94,
+          "type": "function"
+        },
+        {
+          "scope": "test_switching_exact_subject_clears_topic_before_the_next_manual_open",
+          "line": 113,
+          "type": "function"
+        },
+        {
+          "scope": "test_existing_phase_and_cycle_entries_still_open_their_own_readers",
+          "line": 128,
+          "type": "function"
+        }
+      ]
+    },
+    ".cache/p3-311-model/candidate/rouge/boss_hunt_reference.py": {
+      "unresolved_globals": [],
+      "unresolved_free_names": [],
+      "scopes": [
+        {
+          "scope": "top",
+          "line": 0,
+          "type": "module"
+        },
+        {
+          "scope": "_unknown",
+          "line": 28,
+          "type": "function"
+        },
+        {
+          "scope": "_same",
+          "line": 32,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 36,
+          "type": "function"
+        },
+        {
+          "scope": "genexpr",
+          "line": 38,
+          "type": "function"
+        },
+        {
+          "scope": "_file",
+          "line": 42,
+          "type": "function"
+        },
+        {
+          "scope": "_packet",
+          "line": 60,
+          "type": "function"
+        },
+        {
+          "scope": "hunt_reference",
+          "line": 106,
+          "type": "function"
+        },
+        {
+          "scope": "reference_text",
+          "line": 123,
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "missing_UI_attributes": {
+    "panel": [],
+    "dialog": []
+  },
+  "old_methods_AST_equal": {
+    "__init__": false,
+    "set_stage": true,
+    "_stage_changed": true,
+    "set_context": true,
+    "_refresh_entry_reference": true,
+    "open_entry_references": true,
+    "_request_entry_event": true,
+    "_clear_candidate_preview": true,
+    "_current_main_spawn_id": true,
+    "_refresh_spawn_candidates": true,
+    "open_spawn_candidates": true,
+    "open_current_spawn_candidates": true,
+    "_request_spawn_candidate": true,
+    "open_highland_top": true,
+    "open_duel_rewards": true,
+    "_technical_changed": true,
+    "_load_stage": false,
+    "render_rows": false,
+    "_refresh_branch_positions": true,
+    "_branch_reference_cell": true,
+    "_reward_summary": true,
+    "_reward_selected": true,
+    "_clear_reward_selection": true,
+    "_render_enemy": false,
+    "_refresh_enemy_form": true,
+    "open_enemy_form": true,
+    "_refresh_boss_phase": true,
+    "open_boss_phase_reference": true,
+    "_refresh_boss_cycle": true,
+    "open_boss_cycle_reference": true,
+    "_spawn_selected": true,
+    "_occurrence_changed": true,
+    "_cell_selected": true
+  },
+  "actual_data_topic_ids": [
+    "condition_flow",
+    "cadejo",
+    "avatars",
+    "hound"
+  ],
+  "picture_sources": [
+    {
+      "enemy_id": "enemy_2145_cadejo",
+      "file": "rouge/data/portraits/enemy_2145_cadejo.png",
+      "pin": {
+        "sha256": "94af40df527c8092b0b2cca0651a4fafe4245b87141439ca58c6c453822c58e0",
+        "bytes": 40048
+      },
+      "matches_catalog": true
+    },
+    {
+      "enemy_id": "enemy_2146_cadesd",
+      "file": "rouge/data/portraits/enemy_2146_cadesd.png",
+      "pin": {
+        "sha256": "206590ed89bceab68ed55d33a65e0332937de1196220a5d3f0ad1905387677b2",
+        "bytes": 40483
+      },
+      "matches_catalog": true
+    },
+    {
+      "enemy_id": "enemy_2137_shsdgo",
+      "file": "rouge/data/portraits/enemy_2137_shsdgo.png",
+      "pin": {
+        "sha256": "0d43fc31a4c84a4575c43fc2f79813b87d250205a6ca051ea8f8650d0b0a1403",
+        "bytes": 38718
+      },
+      "matches_catalog": true
+    }
+  ],
+  "manual_control_flow_review": [
+    "begin advances exactly three entries; topic_case uses per-invocation index closure and dynamic current source topics, yielding 12 planned manual readings for current four topics without asserting actual counts before execution.",
+    "Two real text readers are exercised for each entry; refresh keeps selected topic, tab, scope, cursor, selection and positive scrollbar. Closures entry_index/identity/topics/saved_parent are initialized before scheduled calls.",
+    "Negative clone includes MANIFEST plus every runtime_file; verifies valid before byte damage, restores bytes in finally, requires cleared content/pictures, then explicit manual reopen. The different 痛苦将息 stage is excluded despite same names/IDs; its encounter classification is not inferred here.",
+    "Temporary four state paths and all eight forbidden operation patches precede BattlePreviewPanel construction. Real QApplication uses windows QPA; native function verifies visible owned HWND/PID.",
+    "guarded callbacks record failure and exit1; watchdog records TimeoutError; final actual return0 requires done, no failure, Qt0 and closed owned widgets. Scope does not claim full MainWindow or descendant-job closure."
+  ],
+  "execution_scope": {
+    "Qt_run": false,
+    "tests_run": false,
+    "native_run": false,
+    "product_imported": false,
+    "Git_or_private_operations": false
+  },
+  "scope_limit": "Static review cannot prove Qt runtime behavior, actual window visibility or real 12 readings; root alone executes canonical after promotion."
+}

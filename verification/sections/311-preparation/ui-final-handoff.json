@@ -1,0 +1,312 @@
+{
+  "schema": "section311_ui_native_preparation_v1",
+  "status": "CACHE_CANDIDATE_READY_PENDING_ROOT_PROMOTION_AND_ACTUAL_VALIDATION",
+  "candidate_root": ".cache/p3-311-view/candidate",
+  "promotion_files": {
+    "rouge/boss_hunt_view.py": {
+      "sha256": "f6b5422167c0cd16e37fd6e2db27450a9c5a4d7975bff7da95ad313e737630c3",
+      "bytes": 8771
+    },
+    "rouge/battle_view.py": {
+      "sha256": "803acb2015c10fb8c8d066ce49a87466d39abcf756cf1542c1c67f2a3961d6ae",
+      "bytes": 54968
+    },
+    "tests/test_boss_hunt_view_311.py": {
+      "sha256": "1d21327d9f1c9f39b21eb0b6259aa54c520776eea2c111a7a1183061a8aa98d2",
+      "bytes": 10396
+    },
+    "tests/test_boss_hunt_integration_311.py": {
+      "sha256": "5b9fcee71ec69645c2778f78fbbd7d0f9d8ced71abc6760fe3fc8f15d4471874",
+      "bytes": 6769
+    },
+    "scripts/verify_boss_hunt_window_311.py": {
+      "sha256": "937e16f28d825646c9a89fc0097cb046b3ae1bd361f128ba836c6c2b05415d45",
+      "bytes": 26647
+    }
+  },
+  "new_files": [
+    "rouge/boss_hunt_view.py",
+    "tests/test_boss_hunt_view_311.py",
+    "tests/test_boss_hunt_integration_311.py",
+    "scripts/verify_boss_hunt_window_311.py"
+  ],
+  "existing_production_changes": {
+    "rouge/battle_view.py": {
+      "before": {
+        "sha256": "ea4e0cf1bb2bf8df91ceca0036d050db2c5fc07241fd6d9bc8485e3bc577a716",
+        "bytes": 52931
+      },
+      "candidate": {
+        "sha256": "803acb2015c10fb8c8d066ce49a87466d39abcf756cf1542c1c67f2a3961d6ae",
+        "bytes": 54968
+      },
+      "scope": "Add one independent manual button, clear/refresh hooks and two new methods only; old six reader method ASTs unchanged."
+    }
+  },
+  "API": {
+    "class": "rouge.boss_hunt_view.BossHuntReferencePanel",
+    "methods": [
+      "set_reference(identity, result=None)",
+      "refresh_reference()",
+      "clear_reference(notice=...)"
+    ],
+    "public_attributes": [
+      "identity",
+      "scope_key",
+      "result",
+      "topic",
+      "tabs",
+      "player",
+      "technical",
+      "boss_picture",
+      "avatar_picture",
+      "hound_picture"
+    ],
+    "parent_attributes": [
+      "boss_hunt_button",
+      "boss_hunt_window"
+    ],
+    "parent_methods": [
+      "_refresh_boss_hunt()",
+      "open_boss_hunt_reference()"
+    ],
+    "target_identities": [
+      [
+        "ro6_b_4",
+        "enemy_2145_cadejo",
+        0
+      ],
+      [
+        "ro6_b_4",
+        "enemy_2146_cadesd",
+        0
+      ],
+      [
+        "ro6_b_4",
+        "enemy_2137_shsdgo",
+        0
+      ]
+    ],
+    "target_boundary": "Only exact string stage/enemy and exact integer level zero; 痛苦将息 (ro6_b_4_b), custom and other enemies are not entries.",
+    "topic_contract": "Overview has combo data None; all further topic IDs and labels come from current reference.topics. Topic selection never changes the entry identity.",
+    "picture_contract": {
+      "boss_picture": {
+        "enemy_id": "enemy_2145_cadejo",
+        "caption_name": "卡德霍，黑流之源",
+        "path": "rouge/data/portraits/enemy_2145_cadejo.png",
+        "pin": {
+          "sha256": "94af40df527c8092b0b2cca0651a4fafe4245b87141439ca58c6c453822c58e0",
+          "bytes": 40048
+        },
+        "dimensions": [
+          158,
+          158
+        ]
+      },
+      "avatar_picture": {
+        "enemy_id": "enemy_2146_cadesd",
+        "caption_name": "痛楚化身",
+        "path": "rouge/data/portraits/enemy_2146_cadesd.png",
+        "pin": {
+          "sha256": "206590ed89bceab68ed55d33a65e0332937de1196220a5d3f0ad1905387677b2",
+          "bytes": 40483
+        },
+        "dimensions": [
+          158,
+          158
+        ]
+      },
+      "hound_picture": {
+        "enemy_id": "enemy_2137_shsdgo",
+        "caption_name": "猎犬proto",
+        "path": "rouge/data/portraits/enemy_2137_shsdgo.png",
+        "pin": {
+          "sha256": "0d43fc31a4c84a4575c43fc2f79813b87d250205a6ca051ea8f8650d0b0a1403",
+          "bytes": 38718
+        },
+        "dimensions": [
+          158,
+          158
+        ]
+      }
+    },
+    "reading_contract": "Same identity/source/topic preserves tab, cursor selection and scroll. Subject/source switch clears reading; bad source clears identity, both texts and all pictures. Recovery requires actual manual reopen."
+  },
+  "backend_dependency": {
+    "handoff_file": ".cache/p3-311-model/HANDOFF_FINAL.json",
+    "handoff_pin": {
+      "sha256": "742f3b96d723129a143f96fff9bdb7f5d27b0c8cd93c8ba15651622aced042cd",
+      "bytes": 22128
+    },
+    "reviewed_final_model_snapshot": {
+      "core": {
+        "sha256": "cc422c139621e7af35ed1c822dd0d61570875c23dc51f337ffca291da8fba0e1",
+        "bytes": 8529
+      },
+      "manifest": {
+        "sha256": "dc1024855751338d2b4b536c53c83e8cd56e75f548b12296dfa34d3b12335321",
+        "bytes": 5912
+      },
+      "data": {
+        "sha256": "7d285e9dfd854f0cdd2d7a2085f19226cbb54eb02118cf12d32c0692e83a80d5",
+        "bytes": 2476877
+      },
+      "runtime_files": {
+        "rouge/data/boss-hunt-reference.json": {
+          "sha256": "7d285e9dfd854f0cdd2d7a2085f19226cbb54eb02118cf12d32c0692e83a80d5",
+          "bytes": 2476877
+        },
+        "research/p3-boss-hunt-311/runtime-selected-authority.json": {
+          "sha256": "64047f54ba1811cdda433119845ba079ef8c1b4c5d52c40177e8b996ff0fce20",
+          "bytes": 472445
+        },
+        "research/p3-boss-hunt-311/boss-complete.html": {
+          "sha256": "cc34ac450a87e8710292ed70f453197f739c3d815e383bab961fb5f2f38fd6dd",
+          "bytes": 124448
+        },
+        "research/p3-boss-hunt-311/avatar-complete.html": {
+          "sha256": "83add8cdd351e22e5cac9ec02755581ac343fa4e24d708082f81370b3d5f18aa",
+          "bytes": 129494
+        },
+        "research/p3-boss-hunt-311/hound-complete.html": {
+          "sha256": "98e6fd6a2fee813f7f2f23c6329a454359e6ab9cc435ad32a9aed835ca7c8273",
+          "bytes": 119535
+        },
+        "research/p3-boss-hunt-311/stage-normal-complete.html": {
+          "sha256": "5f0c5cc8cc0819bc259a02002a20b67db80b3059a0fed6515d80b0f7b6c40982",
+          "bytes": 64298
+        },
+        "research/p3-boss-hunt-311/stage-pursuit-complete.html": {
+          "sha256": "92152a4d0c4116033f4ba2db3722fb3c4687f2c79598cce6faa4fe0da162a30a",
+          "bytes": 83357
+        },
+        "research/p3-boss-hunt-311/http-source-records.json": {
+          "sha256": "a51b031234e4d887b9801ced853e9cbe3f975dd3406a6c2897b9c3f926034f7c",
+          "bytes": 8630
+        },
+        "research/p3-boss-hunt-311/complete-document-cards-with-tooltips.json": {
+          "sha256": "245feeba248133350538415fbc06717a6ccb80a24fd1b306fa973ccbae2bb3af",
+          "bytes": 2176015
+        },
+        "research/p3-boss-hunt-311/player-reading-proposal.json": {
+          "sha256": "4995e08f8f8130baddb6c76a7b7167410b5a9037827162c73fe36a193492bb21",
+          "bytes": 25853
+        },
+        "research/p3-boss-hunt-311/source-differences.json": {
+          "sha256": "bfde34ef51c222d5f3564f135f666446fc499725e739748be121e7e055ab9e81",
+          "bytes": 49312
+        },
+        "research/p3-boss-hunt-311/candidate-assessment.json": {
+          "sha256": "92f696b1f55a12fb28e95e4cbefcd36734a40cbad12a61942842518756ccb1ba",
+          "bytes": 2970
+        }
+      },
+      "constants_match": [
+        "TARGETS",
+        "PACK",
+        "DATA",
+        "MANIFEST",
+        "FALSE_FLAGS/FALSE_FIELDS"
+      ],
+      "actual_fields": [
+        "actual_boss_form",
+        "actual_avatar_form",
+        "actual_hounds",
+        "actual_rest_gate",
+        "actual_skill",
+        "actual_transition",
+        "actual_elapsed_time",
+        "actual_target",
+        "actual_route",
+        "phase_stats",
+        "actual_damage"
+      ],
+      "fresh_damage_member": "research/p3-boss-hunt-311/runtime-selected-authority.json"
+    }
+  },
+  "static_review_file": ".cache/p3-311-view/static-review-final-v2.json",
+  "static_review_pin": {
+    "sha256": "20847d29ef9b92f7bbdc0bc7354d96175ebe7948fabf83b621ac03f3d4da90cd",
+    "bytes": 31643
+  },
+  "parent_diff": ".cache/p3-311-view/integration-final-v2.diff",
+  "parent_diff_pin": {
+    "sha256": "bbb80d64407751305de786325b64f01a64d31c1ded78f77bf70fccef36c80830",
+    "bytes": 4974
+  },
+  "prepared_test_methods_not_executed": {
+    "tests/test_boss_hunt_view_311.py": 11,
+    "tests/test_boss_hunt_integration_311.py": 6
+  },
+  "commands_after_root_promotion_only": {
+    "new_necessary_modules": [
+      ".venv/Scripts/python.exe",
+      "-B",
+      "-X",
+      "utf8",
+      "-m",
+      "unittest",
+      "tests.test_boss_hunt_reference_311",
+      "tests.test_boss_hunt_view_311",
+      "tests.test_boss_hunt_integration_311"
+    ],
+    "native": [
+      ".venv/Scripts/python.exe",
+      "-B",
+      "-X",
+      "utf8",
+      "scripts/verify_boss_hunt_window_311.py",
+      "--receipt",
+      "verification/sections/311-window-attempt1/actual/window.json",
+      "--visible-ms",
+      "120000"
+    ],
+    "related_existing_checks_for_root_scope": [
+      "tests.test_enemy_form_view_306",
+      "tests.test_boss_phase_integration_309",
+      "tests.test_boss_cycle_integration_310",
+      "tests.test_battle_preview_039"
+    ]
+  },
+  "native_contract": {
+    "kind": "isolated_native_windows_boss_hunt_reader",
+    "real_widget": "BattlePreviewPanel (not app.MainWindow)",
+    "default_visible_ms": 120000,
+    "planned_screenshots_not_actual": "Five: three subject overview player pages, one manually selected topic player page, one genuine damaged-source cleared page.",
+    "selected_sources": "Current 311 manifest runtime members, public pack, selected product/model/view/test/build dependencies, three exact portraits, actual stage images and the 309 runtime closure read by the old-entry guard. Local build-only .cache authority files are not claimed as public runtime dependencies.",
+    "guards": "Four app state paths temporary before constructor; eight external operation entry points must have zero calls.",
+    "process_boundary": "Actual QPA/windows, visible owned HWND/fixture PID, Qt.exec return, widget closure and source stability are recorded. Root separately owns process execution/exit evidence; no global descendant closure claim.",
+    "actual_results": null
+  },
+  "original_preparation_preserved": [
+    "before-battle_view.py",
+    "integration.diff",
+    "parent-static-proof.json",
+    "static-correction/before-runtime-member-alignment.py",
+    "static-correction/runtime-member-alignment.diff",
+    "static-correction/correction.json",
+    "revision1-before-player-wording/candidate/rouge/boss_hunt_view.py",
+    "revision1-before-player-wording/candidate/rouge/battle_view.py",
+    "revision1-before-player-wording/candidate/scripts/verify_boss_hunt_window_311.py",
+    "revision1-before-player-wording/static-review-final.json",
+    "static-preparation-actual/process.json",
+    "player-wording-alignment.json",
+    "static-preparation-final-v2/process.json"
+  ],
+  "execution": {
+    "Qt": 0,
+    "unittest": 0,
+    "model_API_queries": 0,
+    "production_changes": 0,
+    "game": 0,
+    "chat": 0,
+    "private_reads": 0,
+    "Git": 0
+  },
+  "actual_necessary_passed": null,
+  "actual_native_passed": null,
+  "limitations": [
+    "Static compilation/name/API/source-path review does not prove actual Windows signals, scroll geometry or Qt execution.",
+    "The reading never applies actual forms, hounds, rest conditions, elapsed time, stats, damage, map changes or inventory."
+  ]
+}

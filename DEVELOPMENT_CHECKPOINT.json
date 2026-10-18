@@ -22,7 +22,7 @@
     "push_after_batch_commit": true,
     "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
-    "stop_after_section": null,
+    "stop_after_section": 311,
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
@@ -34,7 +34,7 @@
     "bugfix_only_counts_as_functional_section": false,
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
-    "current_user_batch_target_section": null,
+    "current_user_batch_target_section": 311,
     "current_user_batch_completed": false,
     "requirements_synced_each_section": true,
     "atomic_section_source_receipt_status_commit": true,
@@ -60,16 +60,17 @@
     "usage_threshold_changed_on_Beijing": "2026-10-18",
     "finish_entire_active_section_before_usage_wrap_up": true,
     "usage_wrap_up_triggered": false,
-    "pause_after_active_section_requested": false,
+    "pause_after_active_section_requested": true,
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
-    "current_usage_remaining_percent": 88,
-    "current_usage_receipt": "verification/sections/310-preparation/usage-threshold.json",
+    "current_usage_remaining_percent": 85,
+    "current_usage_receipt": "verification/sections/311-preparation/usage-threshold.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
-    "latest_user_instruction_receipt": "verification/sections/306-preparation/resume-and-numbering.json"
+    "latest_user_instruction_receipt": "verification/sections/306-preparation/resume-and-numbering.json",
+    "latest_pause_instruction_receipt": "verification/sections/311-preparation/finish-current-and-pause.json"
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 310,
+  "completed_sections": 311,
   "sections": [
     {
       "number": 1,
@@ -1918,10 +1919,16 @@
       "completion_ref": "p3-section-310",
       "topic": "洛伦茨与源阶方的交替激活及模块条件",
       "verification": "verification/sections/310.json"
+    },
+    {
+      "number": 311,
+      "completion_ref": "p3-section-311",
+      "topic": "卡德霍、痛楚化身与猎犬的招式和退场条件",
+      "verification": "verification/sections/311.json"
     }
   ],
-  "next_section": 311,
-  "next_action": "第310节 + 洛伦茨与源阶方的交替激活及模块条件，已验收并普通推送核对。继续P3剩余节点/敌人/固定地图事项；下一定期全量320，311未启动。",
+  "next_section": 312,
+  "next_action": "311本地验收完成；按用户最新要求完成本节普通推送与远端核对后暂停，312不启动，等待用户恢复。",
   "full_validation_due": false,
   "windows_native_validation": "当前289：Windows隔离MainWindow两页56检查及原测试窗口可见响应通过；不计实际游戏/聊天验收。最新完整可用全量仍verification/full-285/summary.json，真实符号链接1314、历史原件/私样本等缺口保留。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -2038,14 +2045,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 310,
-    "verification": "verification/sections/310.json",
+    "section": 311,
+    "verification": "verification/sections/311.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 310,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "f40b74c625ab2ef67a521041b7a09e1d248baaf4",
     "proof": "verification/sections/310-publication.json",
@@ -2304,7 +2311,7 @@
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": null,
-  "batch_status": "P3_SECTION310_PUBLISHED",
+  "batch_status": "P3_SECTION311_LOCAL_ACCEPTED_PUBLICATION_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2348,19 +2355,20 @@
     307,
     308,
     309,
-    310
+    310,
+    311
   ],
   "current_batch": {
-    "start": 310,
-    "end": null,
-    "status": "P3_SECTION310_PUBLISHED",
-    "completed_sections": 310,
-    "next_section": 311,
+    "start": 311,
+    "end": 311,
+    "status": "P3_SECTION311_LOCAL_ACCEPTED_PUBLICATION_PENDING",
+    "completed_sections": 311,
+    "next_section": 312,
     "next_section_started": false,
     "next_full_validation_after": 320,
-    "batch_closed": true,
+    "batch_closed": false,
     "target_origin": "User authorized P3 continuation; no numeric stopping target",
-    "receipt": "verification/sections/310.json"
+    "receipt": "verification/sections/311.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -2493,8 +2501,8 @@
     "full_validation_interval": 5,
     "next_full_validation_after": 120
   },
-  "batch_start_section": 310,
-  "batch_target_section": null,
+  "batch_start_section": 311,
+  "batch_target_section": 311,
   "suspended_target_section": 400,
   "latest_user_resume": {
     "at_Beijing": "2026-10-16T00:17:47.624882+08:00",
@@ -2640,7 +2648,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 310,
+  "latest_functional_section": 311,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -5039,7 +5047,15 @@
       "不修改任何数值模型/地图/本局；必要检查、实际Windows阅读、项目要求与云端发布核对后才计完成"
     ]
   },
-  "current_section_validation": {
+  "historical_before310_publication": {
+    "section": 309,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "ce4d920de4e4b9594b75966aa88b0de5cedd8171",
+    "proof": "verification/sections/309-publication.json",
+    "proof_sha256": "3b32d1f2222440061ed674d9b7046fc9bea43571e34c13a4e4f2d9281ad9b25f"
+  },
+  "historical_before311_current_section_validation": {
     "section": 310,
     "receipt": "verification/sections/310.json",
     "necessary_methods_passed": 75,
@@ -5051,7 +5067,7 @@
     "last_full_receipt": "verification/full-305/summary.json",
     "full_source_is_historical305": true
   },
-  "latest_section_environment": {
+  "historical_before311_latest_section_environment": {
     "section": 310,
     "receipt": "verification/sections/310.json",
     "native_windows": "75 necessary; exact two entries / eight actual topic readings / four actual refresh states / real temporary public source failure and manual recovery; original app startup separately verified",
@@ -5059,20 +5075,45 @@
     "current_section_full_rerun": false,
     "last_full_receipt": "verification/full-305/summary.json"
   },
-  "historical_before310_publication": {
-    "section": 309,
-    "scope": "previous_functional_section",
-    "binding": "verified_remote_commit",
-    "commit": "ce4d920de4e4b9594b75966aa88b0de5cedd8171",
-    "proof": "verification/sections/309-publication.json",
-    "proof_sha256": "3b32d1f2222440061ed674d9b7046fc9bea43571e34c13a4e4f2d9281ad9b25f"
-  },
-  "cloud_publication_closeout": {
+  "historical_before311_cloud_publication_closeout": {
     "section": 310,
     "functional_commit": "f40b74c625ab2ef67a521041b7a09e1d248baaf4",
     "proof": "verification/sections/310-publication.json",
     "current_commit_kind": "publication metadata only",
     "next_section_started": false,
     "development_paused": false
+  },
+  "historical_before311_active_section": {
+    "number": 311,
+    "completed": false,
+    "remaining_todo": "P3敌人面板与机制：未覆盖首领及其关联敌人的完整文献条件",
+    "proposed_capability": "普通版永无安宁中的卡德霍、痛楚化身及猎犬proto完整招式、条件退场及版本差异阅读",
+    "acceptance": [
+      "仅三个严格普通版身份显示入口；痛苦将息与自定义2/3不借用普通版技能",
+      "四主题覆盖击倒休整、分担与位移、痛楚退场及猎犬锁定；完整8技能与3能力及术语原文保留",
+      "明确20/10秒、关卡生成/摘要召唤、全场敌方/旧图鉴、存疑波次差异；不恢复实际时序或数值",
+      "同来源刷新保留主题页签选区滚动；换身份或来源失效清空、恢复后手动重开",
+      "不修改本局、地图或数值模型；适当必要检查与实际Windows阅读、要求索引及远端核对后才计完成"
+    ]
+  },
+  "current_section_validation": {
+    "section": 311,
+    "receipt": "verification/sections/311.json",
+    "necessary_methods_passed": 94,
+    "native_isolated_window_checks": 31,
+    "exact_entries": 3,
+    "actual_topic_readings": 12,
+    "actual_nonzero_refresh_states": 6,
+    "full_suite_rerun": false,
+    "last_full_receipt": "verification/full-305/summary.json",
+    "full_source_is_historical305": true
+  },
+  "latest_section_environment": {
+    "section": 311,
+    "receipt": "verification/sections/311.json",
+    "native_windows": "94 necessary;31 unique native checks;3 entries/12 manual topics/6 real nonzero refresh states; source damage and manual recovery; original app startup separately verified",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": false,
+    "last_full_receipt": "verification/full-305/summary.json"
   }
 }

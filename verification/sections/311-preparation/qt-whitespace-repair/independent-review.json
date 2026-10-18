@@ -1,0 +1,91 @@
+{
+  "kind": "SECTION311_READONLY_REVIEW_AFTER_QT_TECHNICAL_JSON_REPAIR",
+  "at_utc": "2026-10-18T09:05:47.898681+00:00",
+  "verdict": "no_static_blocker",
+  "findings": [],
+  "checks": {
+    "before_files_match_original_handoff": true,
+    "all_existing_view_methods_except_technical_render_AST_same": true,
+    "all_original_test_and_helper_method_AST_same": true,
+    "exactly_one_new_actual_Qt_roundtrip_test": true,
+    "exact_three_official_substitution_characters_escaped": true,
+    "json_serializer_same_readable_Chinese_indent": true,
+    "only_new_module_level_helper_added": true,
+    "render_only_changes_technical_json_serialization_call": true,
+    "new_test_contains_real_unicode_and_literal_escape_sequences": true,
+    "new_test_uses_real_QPlainTextEdit_and_strict_decoded_equal": true,
+    "entire_native_driver_bytes_unchanged": true,
+    "parent_entire_file_unchanged_since_final_static": true,
+    "old_six_reader_method_AST_same": true,
+    "model_data_builder_source_bytes_unchanged": true,
+    "original_failure_receipt_reference_sha_still_exact": true,
+    "reported_54_NBSP_and_zero_separators_match_actual_data": true
+  },
+  "current_repaired_files": {
+    "rouge\\boss_hunt_view.py": {
+      "sha256": "33a522ca865c0e7a0a0b1164aa310814f430c98fc23d7a1a5f0955df2b65db79",
+      "bytes": 9165
+    },
+    "tests\\test_boss_hunt_view_311.py": {
+      "sha256": "c6674760bb23c76f68d40b2b1221df1e3b7b7a0b84df620cf80737cb534432c1",
+      "bytes": 11019
+    }
+  },
+  "preserved_native_driver": {
+    "sha256": "937e16f28d825646c9a89fc0097cb046b3ae1bd361f128ba836c6c2b05415d45",
+    "bytes": 26647
+  },
+  "preserved_parent": {
+    "sha256": "803acb2015c10fb8c8d066ce49a87466d39abcf756cf1542c1c67f2a3961d6ae",
+    "bytes": 54968
+  },
+  "prior_final_review": {
+    "file": ".cache/p3-311-native-independent-review/REVIEW_FINAL.json",
+    "sha256": "a340c5efb205a4b21d723441f1e219972c653e9bcece0ee7fe4d51485ddb6ff1",
+    "bytes": 3817
+  },
+  "original_failure_preservation": {
+    "before_metadata": {
+      "sha256": "8fcab5d6744af299fe43ecd3ec02d36164c245d4b2484daa2be17bd26995eed6",
+      "bytes": 1072
+    },
+    "before_view": {
+      "sha256": "f6b5422167c0cd16e37fd6e2db27450a9c5a4d7975bff7da95ad313e737630c3",
+      "bytes": 8771
+    },
+    "before_test": {
+      "sha256": "1d21327d9f1c9f39b21eb0b6259aa54c520776eea2c111a7a1183061a8aa98d2",
+      "bytes": 10396
+    },
+    "original_UI_handoff_is_historical_after_this_repair": true
+  },
+  "official_source": {
+    "url": "https://doc.qt.io/qt-6.11/qtextdocument.html#toPlainText",
+    "accessed_online_readonly": true,
+    "Qt_version_in_document": "6.11.2",
+    "paraphrase": "toPlainText substitutes NBSP with regular space; paragraph and line separators become LF.",
+    "codepoints": [
+      {
+        "from": "U+00A0",
+        "JSON_escape": "\\u00a0"
+      },
+      {
+        "from": "U+2028",
+        "JSON_escape": "\\u2028"
+      },
+      {
+        "from": "U+2029",
+        "JSON_escape": "\\u2029"
+      }
+    ]
+  },
+  "scope_and_reasoning": [
+    "json.dumps first escapes literal backslashes; replacing only actual three Unicode characters afterward cannot confuse a literal six-character backslash-u string with the original Unicode character. Keys and nested strings receive the same lossless JSON escape treatment.",
+    "Chinese stays literal/readable; no source string, numeric data, model or player formatter changes. The technical page displays JSON escapes while json.loads must reproduce the full original packet.",
+    "All original eleven test methods and helper methods retain exact AST, including strict source==json.loads technical assertions. One actual-QPlainTextEdit roundtrip test added; its passing is not claimed by this static review.",
+    "Entire canonical native driver bytes, hence all 31 require conditions, remain exact. Parent entire file and old six reader methods remain exact.",
+    "No Qt or tests or product helper executed by this reviewer. Root actual revalidation remains necessary; prior UI handoff old hash is not current repaired source."
+  ],
+  "actual_product_or_Qt_or_tests_executed": false,
+  "live_or_Git_or_private_modified": false
+}

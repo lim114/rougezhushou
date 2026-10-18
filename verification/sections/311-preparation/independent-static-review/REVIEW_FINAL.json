@@ -1,0 +1,82 @@
+{
+  "kind": "SECTION311_INDEPENDENT_FINAL_NATIVE_UI_STATIC_REVIEW",
+  "at_utc": "2026-10-18T08:57:41.380360+00:00",
+  "verdict": "no_static_blocker",
+  "findings": [],
+  "author_handoff": {
+    "file": ".cache/p3-311-view/HANDOFF_FINAL.json",
+    "sha256": "33cde547364ca343eecf598e6ac665aa8f3fc8f71becbbb2640e170b57f53dab",
+    "bytes": 11739
+  },
+  "reviewed_final_five_files": {
+    "rouge/boss_hunt_view.py": {
+      "sha256": "f6b5422167c0cd16e37fd6e2db27450a9c5a4d7975bff7da95ad313e737630c3",
+      "bytes": 8771
+    },
+    "rouge/battle_view.py": {
+      "sha256": "803acb2015c10fb8c8d066ce49a87466d39abcf756cf1542c1c67f2a3961d6ae",
+      "bytes": 54968
+    },
+    "tests/test_boss_hunt_view_311.py": {
+      "sha256": "1d21327d9f1c9f39b21eb0b6259aa54c520776eea2c111a7a1183061a8aa98d2",
+      "bytes": 10396
+    },
+    "tests/test_boss_hunt_integration_311.py": {
+      "sha256": "5b9fcee71ec69645c2778f78fbbd7d0f9d8ced71abc6760fe3fc8f15d4471874",
+      "bytes": 6769
+    },
+    "scripts/verify_boss_hunt_window_311.py": {
+      "sha256": "937e16f28d825646c9a89fc0097cb046b3ae1bd361f128ba836c6c2b05415d45",
+      "bytes": 26647
+    }
+  },
+  "backend_actual_API_snapshot": {
+    "core": {
+      "sha256": "cc422c139621e7af35ed1c822dd0d61570875c23dc51f337ffca291da8fba0e1",
+      "bytes": 8529
+    },
+    "manifest": {
+      "sha256": "dc1024855751338d2b4b536c53c83e8cd56e75f548b12296dfa34d3b12335321",
+      "bytes": 5912
+    },
+    "data": {
+      "sha256": "7d285e9dfd854f0cdd2d7a2085f19226cbb54eb02118cf12d32c0692e83a80d5",
+      "bytes": 2476877
+    }
+  },
+  "conclusions": [
+    "整份native及全部嵌套闭包已检查：无未定义global/free名字，PACK/DATA/MANIFEST/TARGETS与实际后端一致，无keyS/旧PACK残留。",
+    "普通版三精确入口；每入口遍历当前4主题，规划12次阅读及6组双reader状态保留，尚非实际执行数。",
+    "负源完整复制manifest+12 runtime成员，先验证有效，损坏真实runtime-selected-authority.json，finally恢复原字节，清3图/2reader/topic，恢复后需手动重开。",
+    "痛苦将息关卡同名身份仍严格非入口；不推其节点类别。畸症旧入口负控所读309 manifest/runtime和b6PNG均已追加sourceguard。",
+    "父旧六个306/309/310方法AST全部相同；只4旧hook methods变更，加2新方法。三张原图ID与文件hash和catalog一致。",
+    "4临时状态路径及8外部操作禁用在BattlePreviewPanel构造前；Windows QPA/可见自有HWND校验、回调失败exit1、timeout、Qt0+done+widgets关闭成功门完整。",
+    "原生scope明确隔离BattlePreview，不声称完整MainWindow或进程后代job闭合；后者需root自己的外层真实凭证。"
+  ],
+  "final_player_string_alignment": {
+    "three_files_AST_equal_except_strings": {
+      "rouge/boss_hunt_view.py": true,
+      "rouge/battle_view.py": true,
+      "scripts/verify_boss_hunt_window_311.py": true
+    },
+    "all_native_require_condition_AST_preserved": true,
+    "native_require_sites_planned_not_actual": 31,
+    "new_view_and_integration_test_bytes_unchanged": true
+  },
+  "full_static_detail": {
+    "file": ".cache/p3-311-native-independent-review/review-current.json",
+    "sha256": "65157dadfb0fdff60b7a2923b486ae264e0105020c10c5515306807d963070d3",
+    "bytes": 25379
+  },
+  "auditor_only_preparation_note": "首symtable读取把super()的Python编译器隐式__class__ cell误报；首reader和结果保留，修正class祖先绑定后重核通过。这是审查工具修正，不是产品失败。",
+  "scope": {
+    "product_imported": false,
+    "Qt_or_GUI_run": false,
+    "tests_run": false,
+    "native_run": false,
+    "source_or_Git_modified": false,
+    "private_read": false,
+    "final_five_hash_recheck_passed": true,
+    "runtime_success_claimed": false
+  }
+}
