@@ -10,6 +10,7 @@ from PySide6.QtWidgets import QApplication
 from rouge import expedition_results as results,event_planning,node_catalog as catalog
 from rouge.node_catalog_view import NodeCatalogPanel
 from rouge.player_node_information import node_information_text
+from tests.player_presentation_legacy_307 import legacy_node_information_text
 
 ROOT=Path(__file__).resolve().parents[1]
 BASELINE=ROOT/'verification/sections/297-preparation/before-output-hashes.json'
@@ -28,10 +29,11 @@ class ExpeditionPublicIntegration297Tests(unittest.TestCase):
         self.assertEqual(len(seen),190);self.assertEqual(seen,baseline['choice_resources_scenes'])
 
     def test_all_37_other_event_player_outputs_are_exactly_unchanged(self):
+        # Explicit before307 presentation scope; current307 default reading is checked separately.
         baseline=json.loads(BASELINE.read_bytes());count=0
         for e in catalog.all_events(include_indirect=True)['rows']:
             if e['id']==results.EVENT:continue
-            self.assertEqual(sha256(node_information_text({'kind':'event','record':e}).encode()).hexdigest(),
+            self.assertEqual(sha256(legacy_node_information_text({'kind':'event','record':e}).encode()).hexdigest(),
                              baseline['player_events'][e['id']],e['id']);count+=1
         self.assertEqual(count,37)
 

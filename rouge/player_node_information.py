@@ -10,6 +10,7 @@ import re
 import json
 
 from . import event_planning
+from . import choice_annotations
 from . import expedition_results
 from .documented_choice_items import event_item_references
 from .stage_entry_reference import stage_entry_reference
@@ -188,11 +189,13 @@ def _event_lines(entry, context):
     if reward_options.get('supplemental_reward_reference', {}).get('status') == 'unknown':
         lines.append('补充奖励资料暂时无法核对；可继续查看选项原文，奖励数量与实际领取仍未确认。')
     battle_rows = event_planning.event_battle_links(event_id, context=context)['rows']
+    annotation_reading=deepcopy(catalog._event(event_id));annotation_reading['scenes']=deepcopy(scenes)
     for number, scene in enumerate(scenes, 1):
         lines.extend(['', f'【场景 {number}】', _plain(scene['description'])])
         lines.extend(_plain(note) for note in scene.get('edesc_texts', []))
         lines.extend(_scene_outcome_lines(event_planning.scene_outcomes(event_id, scene['key'], context)))
-        resources = {row['choice_key']: row for row in event_planning.choice_resources(event_id, scene['key'], context)['rows']}
+        resources = {row['choice_key']: row for row in choice_annotations.classified_choice_resources(
+            event_id,scene['key'],context,event=annotation_reading,scene=scene)['rows']}
         for index, choice in enumerate(scene['choices'], 1):
             row = resources[choice['key']]
             expedition_row=expedition_rows.get((scene['key'],choice['key']))
@@ -215,7 +218,11 @@ def _event_lines(entry, context):
                                       else _plain(choice.get('description')) or '未知'),
                           '选项条件：' + _status(row['choice_eligibility']['status']) + '；实际可选仍未知。'])
             if choice.get('conditional') and not known_recruitment and not known_movement:
-                lines.append('条件原文：' + _plain(choice['conditional']))
+                if condition.get('annotation_role')=='preselection_requirement':
+                    lines.append('条件原文：'+_plain(choice['conditional']))
+                else:
+                    lines.extend(_plain(t)for t in choice_annotations.reading_lines(
+                        condition.get('annotation_reference'),choice['conditional']))
             if known_recruitment:
                 lines.append('选择后可能的招募结果：')
                 for variant_index, variant in enumerate(recruitment['variants'], 1):
@@ -243,7 +250,7 @@ def _event_lines(entry, context):
                 if check.get('holding_is_consumption') is False:
                     lines.append('这里要求持有；不据此认定会消耗该物品。')
             if condition.get('unparsed_condition_text'):
-                lines.append('这段附加条件尚未完整解析；保留原文，不当作已满足。')
+                lines.append('这段附注的类型或完整内容尚未核对；保留原文，不据此认定额外条件已满足。')
             if any(check.get('key') == 'hidden_option_unlock' for check in condition['checks']):
                 lines.append('这可能是隐藏选项；解锁条件尚未确认。')
             if expedition_row:

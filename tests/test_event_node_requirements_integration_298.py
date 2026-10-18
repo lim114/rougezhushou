@@ -9,6 +9,7 @@ from unittest.mock import patch
 from rouge import node_catalog as catalog, event_planning as planning
 from rouge import event_node_requirements as model
 from rouge.player_node_information import node_information_text
+from tests.player_presentation_legacy_307 import legacy_node_information_text
 
 ROOT=Path(__file__).resolve().parents[1]
 BASELINE=ROOT/'verification/sections/298-preparation/before-output.json'
@@ -98,21 +99,23 @@ class EventNodeRequirementsIntegrationTests(unittest.TestCase):
   self.assertEqual([e['id']for e in r['history_observed_event_rows']],['community_group_024']);self.assertEqual(g,old)
 
  def test_all_default_190_resource_and_38_player_outputs_remain_exact_parent_bytes(self):
+     # Explicit before307 presentation scope; current307 default reading is checked separately.
   before=json.loads(BASELINE.read_bytes());self.assertEqual(sha256(BASELINE.read_bytes()).hexdigest(),'68f0d3cd7d116ced58046fb4d40570620b066e6c6303c771db687f53d123ca7b')
   resources={};players={}
   for event in catalog.all_events(include_indirect=True)['rows']:
-   players[event['id']]=sha256(node_information_text({'kind':'event','record':event}).encode()).hexdigest()
+   players[event['id']]=sha256(legacy_node_information_text({'kind':'event','record':event}).encode()).hexdigest()
    for scene in catalog.event_details(event['id'])['rows']:
     resources[scene['key']]=sha256(canon(planning.choice_resources(event['id'],scene['key']))).hexdigest()
   self.assertEqual(len(players),38);self.assertEqual(len(resources),190)
   self.assertEqual(players,before['default_player_events']);self.assertEqual(resources,before['default_choice_resources_scenes'])
 
  def test_other_32_natural_context_player_outputs_are_unchanged(self):
+     # Explicit before307 presentation scope; current307 default reading is checked separately.
   before=json.loads(BASELINE.read_bytes());actual={}
   for e in catalog.all_events(include_indirect=True)['rows']:
    if e['id']in FORBIDDEN:continue
    context={'node_type':e['node_types'][0]if e['node_types']else None,'floor':3,'entry_mode':'natural'}
-   actual[e['id']]=sha256(node_information_text({'kind':'event','record':e},context=context).encode()).hexdigest()
+   actual[e['id']]=sha256(legacy_node_information_text({'kind':'event','record':e},context=context).encode()).hexdigest()
   self.assertEqual(len(actual),32);self.assertEqual(actual,before['non_target_natural_floor3_player_events'])
 
  def test_explicit_target_resources_only_add_one_documented_check_and_derived_status(self):

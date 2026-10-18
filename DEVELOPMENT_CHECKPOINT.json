@@ -14,7 +14,7 @@
     "max_failed_attempts_per_problem": 3,
     "wrap_up_below_usage_percent": 15,
     "usage_percent_available": true,
-    "usage_monitoring": "Use verified available account windows only. Strictly below 15 percent triggers wrap-up; exactly 15 does not. Do not start another section after triggering. Complete the entire active section: implementation, necessary validation, records/requirements/index, commit, ordinary push and actual remote verification. Do not rush, reduce scope or claim incomplete work complete. Unavailable windows remain unavailable. The user explicitly requests pausing after completing section305; section306 must wait for renewed user authorization.",
+    "usage_monitoring": "Use verified available account windows only. Strictly below15 percent triggers wrap-up, exactly15 does not. Finish the entire active section, necessary checks, records, requirements/index, ordinary push and actual remote verification before stopping. Never reduce scope or infer unavailable windows. The prior305 pause was completed and explicitly revoked by subsequent user continuation.",
     "automatic_next_batch": false,
     "commit_interval": 1,
     "commit_after_full_validation_pass": false,
@@ -63,13 +63,13 @@
     "pause_after_active_section_requested": false,
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
-    "current_usage_remaining_percent": 98,
-    "current_usage_receipt": "verification/sections/306-preparation/resume-and-numbering.json",
+    "current_usage_remaining_percent": 95,
+    "current_usage_receipt": "verification/sections/307-preparation/usage-threshold.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
     "latest_user_instruction_receipt": "verification/sections/306-preparation/resume-and-numbering.json"
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 306,
+  "completed_sections": 307,
   "sections": [
     {
       "number": 1,
@@ -1894,10 +1894,16 @@
       "completion_ref": "p3-section-306",
       "topic": "本性难移伪装与现身资料、进度标题显示实际改动",
       "verification": "verification/sections/306.json"
+    },
+    {
+      "number": 307,
+      "completion_ref": "p3-section-307",
+      "topic": "事件附注区分出现前条件与选择后结果",
+      "verification": "verification/sections/307.json"
     }
   ],
-  "next_section": 307,
-  "next_action": "第306节 + 本性难移伪装与现身资料、进度标题显示实际改动，已验收并普通推送核对。继续P3剩余节点/敌人/固定地图事项；下一定期全量320，307未启动。",
+  "next_section": 308,
+  "next_action": "第307节 + 事件附注区分出现前条件与选择后结果已本地验收；普通推送及真实远端核对后继续P3。下一定期全量320。",
   "full_validation_due": false,
   "windows_native_validation": "当前289：Windows隔离MainWindow两页56检查及原测试窗口可见响应通过；不计实际游戏/聊天验收。最新完整可用全量仍verification/full-285/summary.json，真实符号链接1314、历史原件/私样本等缺口保留。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -2014,14 +2020,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 306,
-    "verification": "verification/sections/306.json",
+    "section": 307,
+    "verification": "verification/sections/307.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 306,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "ac3359f943366da85017f51b4ba5e15227881aac",
     "proof": "verification/sections/306-publication.json",
@@ -2280,7 +2286,7 @@
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": null,
-  "batch_status": "P3_SECTION306_PUBLISHED",
+  "batch_status": "P3_SECTION307_LOCAL_ACCEPTED_PUBLICATION_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2320,19 +2326,20 @@
     303,
     304,
     305,
-    306
+    306,
+    307
   ],
   "current_batch": {
-    "start": 306,
+    "start": 307,
     "end": null,
-    "status": "P3_SECTION306_PUBLISHED",
-    "next_section": 307,
+    "status": "P3_SECTION307_LOCAL_ACCEPTED_PUBLICATION_PENDING",
+    "next_section": 308,
     "next_section_started": false,
     "next_full_validation_after": 320,
-    "batch_closed": true,
+    "batch_closed": false,
     "target_origin": "User authorized P3 continuation without a numeric stopping target.",
-    "receipt": "verification/sections/306.json",
-    "completed_sections": 306
+    "receipt": "verification/sections/307.json",
+    "completed_sections": 307
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -2465,7 +2472,7 @@
     "full_validation_interval": 5,
     "next_full_validation_after": 120
   },
-  "batch_start_section": 306,
+  "batch_start_section": 307,
   "batch_target_section": null,
   "suspended_target_section": 400,
   "latest_user_resume": {
@@ -2612,7 +2619,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 303,
+  "latest_functional_section": 307,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -4808,23 +4815,6 @@
     "planned_change": "本性难移四类空值体的伪装与现身资料；进度标题显示当前节加实际改动",
     "acceptance": "普通/紧急8个精确引用；无关敌人不显示专属入口；来源失效清旧内容；同身份刷新保留阅读；不改分类/数值/本局；必要检查与实际Qt窗口验证"
   },
-  "current_section_validation": {
-    "section": 306,
-    "receipt": "verification/sections/306.json",
-    "necessary_methods_passed": 75,
-    "native_isolated_window_checks": 23,
-    "full_suite_rerun": false,
-    "last_full_receipt": "verification/full-305/summary.json",
-    "full_source_is_historical305": true
-  },
-  "latest_section_environment": {
-    "section": 306,
-    "receipt": "verification/sections/306.json",
-    "native_windows": "75 necessary; panel-only actual Windows reader; original app startup verified separately",
-    "native_game_or_chat_verified": false,
-    "current_section_full_rerun": false,
-    "last_full_receipt": "verification/full-305/summary.json"
-  },
   "historical_before306_publication": {
     "section": 305,
     "scope": "previous_functional_section",
@@ -4833,12 +4823,65 @@
     "proof": "verification/sections/305-publication.json",
     "proof_sha256": "636851854e27fd1c2b67ba52cc798c66840ead532cc2d0bd7c73b49a8de44e1e"
   },
-  "cloud_publication_closeout": {
+  "historical_before307_batch": {
+    "start": 306,
+    "end": null,
+    "status": "P3_SECTION306_PUBLISHED",
+    "next_section": 307,
+    "next_section_started": false,
+    "next_full_validation_after": 320,
+    "batch_closed": true,
+    "target_origin": "User authorized P3 continuation without a numeric stopping target.",
+    "receipt": "verification/sections/306.json",
+    "completed_sections": 306
+  },
+  "historical_before307_current_section_validation": {
+    "section": 306,
+    "receipt": "verification/sections/306.json",
+    "necessary_methods_passed": 75,
+    "native_isolated_window_checks": 23,
+    "full_suite_rerun": false,
+    "last_full_receipt": "verification/full-305/summary.json",
+    "full_source_is_historical305": true
+  },
+  "historical_before307_latest_section_environment": {
+    "section": 306,
+    "receipt": "verification/sections/306.json",
+    "native_windows": "75 necessary; panel-only actual Windows reader; original app startup verified separately",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": false,
+    "last_full_receipt": "verification/full-305/summary.json"
+  },
+  "historical_before307_cloud_publication_closeout": {
     "section": 306,
     "functional_commit": "ac3359f943366da85017f51b4ba5e15227881aac",
     "proof": "verification/sections/306-publication.json",
     "current_commit_kind": "publication metadata only",
     "next_section_started": false,
     "development_paused": false
-  }
+  },
+  "historical_before307_active_section": {
+    "number": 307,
+    "status": "implementation_not_completed",
+    "planned_change": "事件附注区分出现前条件和选择后结果，保留全部资格与旧结果入口",
+    "acceptance": "16附注完整核验、十条结果不误标条件、38事件当前/历史成对、资格资源原接口不变、3阅读出口及真实源失效/恢复"
+  },
+  "current_section_validation": {
+    "section": 307,
+    "receipt": "verification/sections/307.json",
+    "necessary_methods_passed": 87,
+    "native_isolated_window_checks": 23,
+    "full_suite_rerun": false,
+    "last_full_receipt": "verification/full-305/summary.json",
+    "full_source_is_historical305": true
+  },
+  "latest_section_environment": {
+    "section": 307,
+    "receipt": "verification/sections/307.json",
+    "native_windows": "87 necessary; nine-event isolated actual Windows reader; original app startup separately verified",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": false,
+    "last_full_receipt": "verification/full-305/summary.json"
+  },
+  "historical_before307_latest_functional_section": 303
 }

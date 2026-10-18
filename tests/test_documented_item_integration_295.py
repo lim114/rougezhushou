@@ -12,6 +12,7 @@ from PySide6.QtWidgets import QApplication
 from rouge import node_catalog as catalog, documented_choice_items as model
 from rouge.node_catalog_view import NodeCatalogPanel
 from rouge.player_node_information import node_information_text
+from tests.player_presentation_legacy_307 import legacy_node_information_text
 
 ROOT=Path(__file__).resolve().parents[1]
 BASELINE=ROOT/'verification/sections/295-preparation/pre295-query-baseline.json'
@@ -38,13 +39,14 @@ class DocumentedItemIntegration295Tests(unittest.TestCase):
         self.assertEqual(ast.dump(current_query,include_attributes=False),ast.dump(original_query,include_attributes=False))
 
     def test_non_target_player_output_is_exactly_unchanged(self):
+        # Explicit before307 presentation scope; current307 default reading is checked separately.
         old=json.loads(BASELINE.read_bytes())
         # Replay the295 presentation scope;297 separately verifies all37 current
         # non-target outputs and the new delayed expedition-result rendering.
         with patch('rouge.player_node_information.expedition_results.event_reference',return_value=None):
             for event_id,row in old['events'].items():
                 if event_id==model.EVENT:continue
-                text=node_information_text(entry(event_id))
+                text=legacy_node_information_text(entry(event_id))
                 self.assertEqual(sha256(text.encode()).hexdigest(),row['player_sha256'],event_id)
 
     def test_player_reference_is_under_exact_option_and_not_claimed_as_reward(self):

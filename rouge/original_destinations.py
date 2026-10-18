@@ -6,6 +6,7 @@ import json
 import re
 from pathlib import Path
 from . import node_catalog as catalog, event_planning as planning
+from . import choice_annotations
 
 DATA = Path(__file__).with_name('data')
 
@@ -134,9 +135,13 @@ def destination_text(result, technical=False):
             for check in q['checks']:
                 state='相符' if check['matches'] is True else '不符' if check['matches'] is False else '未知'
                 lines.append('  条件 '+state+'：'+check['source_text'])
-            for ch in reference['choice_qualifications']['rows']:
+            classified=choice_annotations.classified_choice_eligibility(reference['event_id'],reference['scene_key'],result['context'],scene=reference['scene'])
+            for ch in classified['rows']:
                 lines.append('  '+ch['choice_title']+'：'+STATUS[ch['status']]+'；实际可选未知。')
-                if ch['conditional_text']:lines.append('    条件原文：'+ch['conditional_text'])
+                if ch['conditional_text']:
+                    if ch.get('annotation_role')=='preselection_requirement':lines.append('    条件原文：'+ch['conditional_text'])
+                    else:lines.extend('    '+t for t in choice_annotations.reading_lines(
+                        ch.get('annotation_reference'),ch['conditional_text']))
                 if ch['unparsed_condition_text']:lines.append('    附加规则保留原文；完整脚本及实际触发未知。')
                 for check in ch['checks']:
                     if check not in q['checks']:

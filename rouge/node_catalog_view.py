@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QComboBox,QLineEd
     QLabel,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QSplitter,QPushButton,QCheckBox,QTabWidget)
 from . import node_catalog as catalog
 from . import event_planning
+from . import choice_annotations
 from . import original_destinations
 from .original_destinations_view import OriginalDestinationPanel
 from .battle_reward_planning import stage_reward_sources,reward_source_text
@@ -172,7 +173,6 @@ def map_conditions(graph,run_config):
             'difficulty':difficulty_value((run_config or {}).get('difficulty'))}
 
 
-@lru_cache(maxsize=64)
 def event_text(event_id):
     return _event_flow_text(event_id)
 
@@ -196,10 +196,14 @@ def _event_flow_text(event_id,context=None,planning=False):
     if supplemental and supplemental['status']=='unknown':
         lines.append('补充奖励来源未通过核对；数量、领取和原入口仍未知。')
     scenes=result['rows']; numbers={s['key']:n for n,s in enumerate(scenes,1)}
+    annotation_reading=deepcopy(catalog._event(event_id));annotation_reading['scenes']=deepcopy(scenes)
     for number,scene in enumerate(scenes,1):
         lines += ['',f'场景 {number}',scene['description']]
         lines.extend(scene.get('edesc_texts',[]))
-        resources={r['choice_key']:r for r in event_planning.choice_resources(event_id,scene['key'],context)['rows']} if planning else {}
+        resources={r['choice_key']:r for r in choice_annotations.classified_choice_resources(
+            event_id,scene['key'],context,event=annotation_reading,scene=scene)['rows']} if planning else {}
+        annotations=({key:r['choice_eligibility'].get('annotation_reference')for key,r in resources.items()}
+                     if planning else choice_annotations.scene_references(event_id,scene['key'],event=annotation_reading,scene=scene))
         if planning:lines.extend(scene_outcome_lines(event_planning.scene_outcomes(event_id,scene['key'],context)))
         for choice in scene['choices']:
             role=ROLES.get(choice['presentation_role'],'展示参考（不是已证按钮）')
@@ -211,9 +215,12 @@ def _event_flow_text(event_id,context=None,planning=False):
                                 and movement['annotation_role']=='selection_result')
             lines += [f"  {role}：{choice['title']}",f"    {choice.get('description') or '结果说明未知'}"]
             if choice.get('conditional'):
-                prefix=('    选择后职业组合说明（原文）：' if known_recruitment else
-                        '    选择后移动例外说明（原文）：' if known_movement else '    条件：')
-                lines.append(prefix+choice['conditional'])
+                annotation=annotations.get(choice['key'])
+                if known_recruitment:lines.append('    选择后职业组合说明（原文）：'+choice['conditional'])
+                elif known_movement:lines.append('    选择后移动例外说明（原文）：'+choice['conditional'])
+                elif annotation and annotation.get('role')=='preselection_requirement':lines.append('    条件：'+choice['conditional'])
+                else:lines.extend('    '+t for t in choice_annotations.reading_lines(annotation,choice['conditional']))
+                if annotation:lines.append('    附注角色完整依据：'+json.dumps(annotation,ensure_ascii=False))
             if known_recruitment:
                 lines.append('    四种招募结果的内容依据：不证明原入口、实际招募、费用或培养；各组为不同结果参考。')
                 lines.append('    招募结果来源：'+json.dumps(recruitment,ensure_ascii=False))
@@ -256,7 +263,7 @@ def _event_flow_text(event_id,context=None,planning=False):
                 if qualification.get('edition_warnings'):
                     lines.append('    旧版导航参考：本场景有版本差异，请对照上方较新条件；当前按钮与后续尚未核验。')
                 if qualification.get('unparsed_condition_text'):
-                    lines.append('    未解析条件：'+qualification['unparsed_condition_text'])
+                    lines.append('    未解析附注：'+qualification['unparsed_condition_text'])
                 lines += ['    未解析边界：完整效果未证；上方结果原文保留，括号内藏品效果不自动计即时增减。',
                           '    预算不足只表示已列费用覆盖不足，不改变事件资格，不认定服务器隐藏或禁用选项。']
     unlinked=result.get('unlinked_original_scenes',[])
@@ -697,7 +704,7 @@ class NodeCatalogPanel(QWidget):
             text+='\n'+'\n'.join(('相符' if c['matches'] is True else '不符' if c['matches'] is False else '未知')+'：'+c['source_text'] for c in q['checks'])
             context=self._event_context(entry['record'])
             for scene in catalog.event_details(entry['record']['id'])['rows']:
-                for choice in event_planning.choice_eligibility(entry['record']['id'],scene['key'],context)['rows']:
+                for choice in choice_annotations.classified_choice_eligibility(entry['record']['id'],scene['key'],context)['rows']:
                     if choice['conditional_text']:
                         recruitment=choice.get('recruitment_result_reference')
                         if recruitment and recruitment['status']=='documented_reference' and recruitment['annotation_role']=='selection_result':
@@ -706,7 +713,11 @@ class NodeCatalogPanel(QWidget):
                                 and choice['movement_result_reference'].get('annotation_role')=='selection_result'):
                             text+='\n选择后移动例外资料 '+choice['choice_title']+'：'+choice['conditional_text']+'；实际结果未知。'
                         else:
-                            text+='\n选项 '+choice['choice_title']+'：'+QUALIFICATIONS[choice['status']]+'；'+choice['conditional_text']
+                            if choice.get('annotation_role')=='preselection_requirement':
+                                text+='\n选项 '+choice['choice_title']+'：'+QUALIFICATIONS[choice['status']]+'；'+choice['conditional_text']
+                            else:
+                                text+='\n选项 '+choice['choice_title']+'：'+QUALIFICATIONS[choice['status']]+'；实际可选仍未知。'
+                                text+='\n'+'\n'.join(choice_annotations.reading_lines(choice.get('annotation_reference'),choice['conditional_text']))
             # This reader shows the complete event flow. Preview-only filters
             # must not silently change its document on the next full refresh.
             complete_links=event_planning.event_battle_links(entry['record']['id'],context=context)
