@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/306.json)。
 
-已完成至306，后续307；本批状态 `P3_SECTION306_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量320。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至306，后续307；本批状态 `P3_SECTION306_PUBLISHED`。推进终点：未指定数字终点。下次定期全量320。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -102,5 +102,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 固定原记录“空植体”与文献“空值体”、“受攻击”与“受到伤害”的差异明确保留。本体与对应敌人分开，不推定实际召唤等级、能力继承、档次、生成成功、现身时刻、位置或当前服务器行为；本体图片缺失时不借用伪装对象图片。未补齐首领阶段、四派生分类或缺失头像，不改数值、地图或本局。P3/P2/P1剩余项保留。
 
-<!-- section306-publication-pending -->当前为本地验收完成，普通推送与真实远端核对尚待完成。
+第306节功能提交ac3359f943366da85017f51b4ba5e15227881aac已普通推送并核对真实远端及公开文件字节，证明verification/sections/306-publication.json。本次仅保存发布元数据，不增加功能节数；继续P3，307未启动，下一定期全量320。
 <!-- section306-handoff:end -->
