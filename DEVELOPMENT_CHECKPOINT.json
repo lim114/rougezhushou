@@ -20,7 +20,7 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section: commit and ordinary push origin codex/p2-development; full available validation after125 then every15 sections",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": false,
+    "development_paused_by_latest_user_request": true,
     "summary_interval": 5,
     "stop_after_section": null,
     "each_section_requires_functional_progress": true,
@@ -42,7 +42,7 @@
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
     "repair_full_validation_after_functional_260": true,
-    "new_functional_sections_paused": false,
+    "new_functional_sections_paused": true,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
@@ -67,7 +67,8 @@
     "pause_after_active_section": 305,
     "pause_request_date": "2026-10-18",
     "latest_usage_and_pause_instruction_receipt": "verification/sections/305-preparation/usage-policy-restored15-and-pause.json",
-    "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17"
+    "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
+    "usage_wrap_up_completed": true
   },
   "baseline_commit": "0015c20",
   "completed_sections": 305,
@@ -1892,7 +1893,7 @@
     }
   ],
   "next_section": 306,
-  "next_action": "用户已恢复15%阈值并明确要求305完整完成后暂停；普通推送与实际远端核对完成后结束，不启动306，等待用户恢复，下次定期全量320。",
+  "next_action": "第305节完整验收、索引与要求、普通发布及实际远端核对已完成。收尾阈值已恢复严格低于15%；按用户明确要求在305后暂停，306未启动，等待用户恢复。后续优先P3，下一定期全量320；P2/P1与识别剩余项保留。",
   "full_validation_due": false,
   "windows_native_validation": "当前289：Windows隔离MainWindow两页56检查及原测试窗口可见响应通过；不计实际游戏/聊天验收。最新完整可用全量仍verification/full-285/summary.json，真实符号链接1314、历史原件/私样本等缺口保留。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -2013,15 +2014,15 @@
     "verification": "verification/sections/305.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit",
-    "commit_reference": "enclosing functional305 snapshot; actual ordinary publication proof remains separately bound"
+    "commit_reference": "enclosing publication metadata snapshot; separately bound actual305 functional source/acceptance/requirements/index commit verified remotely"
   },
   "last_verified_cloud_save": {
-    "section": 304,
-    "scope": "previous_functional_section",
+    "section": 305,
+    "scope": "current_functional_section",
     "binding": "verified_remote_commit",
-    "commit": "73e51a8a43a027eb18bb2fae4ac10cd7d0056d5c",
-    "proof": "verification/sections/304-publication.json",
-    "proof_sha256": "52cb2d827de387c7b075d7a99e523a2672b03f50dbad161f098afb40cfd30afc"
+    "commit": "86d8c8e6ea647e179d37d8ca7987043070825a15",
+    "proof": "verification/sections/305-publication.json",
+    "proof_sha256": "636851854e27fd1c2b67ba52cc798c66840ead532cc2d0bd7c73b49a8de44e1e"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -2276,7 +2277,7 @@
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": null,
-  "batch_status": "P3_SECTION305_LOCAL_ACCEPTED_PUBLICATION_PENDING_USAGE_WRAPUP",
+  "batch_status": "P3_SECTION305_PUBLISHED_USAGE_WRAPUP_COMPLETE",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2320,11 +2321,11 @@
   "current_batch": {
     "start": 286,
     "end": null,
-    "status": "P3_SECTION305_LOCAL_ACCEPTED_PUBLICATION_PENDING_USAGE_WRAPUP",
+    "status": "P3_SECTION305_PUBLISHED_USAGE_WRAPUP_COMPLETE",
     "next_section": 306,
     "next_section_started": false,
     "next_full_validation_after": 320,
-    "batch_closed": false,
+    "batch_closed": true,
     "target_origin": "User authorized P3 continuation without a numeric stopping target.",
     "receipt": "verification/sections/305.json",
     "completed_sections": 305
@@ -4745,5 +4746,25 @@
     "native_game_or_chat_verified": false,
     "current_section_full_rerun": true,
     "last_full_receipt": "verification/full-305/summary.json"
+  },
+  "historical_before305_publication": {
+    "section": 304,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "73e51a8a43a027eb18bb2fae4ac10cd7d0056d5c",
+    "proof": "verification/sections/304-publication.json",
+    "proof_sha256": "52cb2d827de387c7b075d7a99e523a2672b03f50dbad161f098afb40cfd30afc"
+  },
+  "cloud_publication_closeout": {
+    "section": 305,
+    "functional_commit": "86d8c8e6ea647e179d37d8ca7987043070825a15",
+    "functional_source_bytes_unchanged": true,
+    "proof": "verification/sections/305-publication.json",
+    "current_commit_kind": "publication metadata only; no new functional section",
+    "next_section": 306,
+    "batch_closed": true,
+    "next_section_started": false,
+    "usage_wrap_up_completed": true,
+    "numeric_continuation_target": null
   }
 }
