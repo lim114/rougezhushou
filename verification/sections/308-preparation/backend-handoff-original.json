@@ -1,0 +1,183 @@
+{
+  "section": 308,
+  "status": "CACHE_CANDIDATE_READY_FOR_ROOT_FIRST_BUILD_AND_FORMAL_VALIDATION_NOT_PASS",
+  "candidate_root": ".cache/p3-308-backend/candidate",
+  "functional_candidate_files": {
+    "scripts/extend_direct_landmark_308.py": {
+      "sha256": "525a83a372fbad9440b65a99e0367df73d6f2826ce8bafaea7f19d72167ef919",
+      "bytes": 26363
+    },
+    "tests/test_direct_landmark_308.py": {
+      "sha256": "ed427e9d170bdb355a7a900ffca4a52f648ad28f0135cfd0a52ec70a986733e4",
+      "bytes": 21711
+    }
+  },
+  "existing_test_maintenance": {
+    "tests/test_direct_landmark_303.py": {
+      "sha256": "aebac3ec436971b7cd82d6c678c357869902af75b999dac1985bf9287d146834",
+      "bytes": 20489
+    }
+  },
+  "source_pack": "research/p3-map-direct-ground-308",
+  "source_manifest": {
+    "sha256": "a47baddc0d8201afd63b415602f7ebf572d70efcc09fd6d9e4c0875fbba2ddff",
+    "bytes": 3437
+  },
+  "independent_root_first_comparison": {
+    "file": "verification/sections/308-preparation/first-frozen-comparison.json",
+    "sha256": "a0141c9bb9fb6c405e23157c62a09eb31861855022e803004bec9d50c85df0f4",
+    "bytes": 20051,
+    "role": "Independent readback expectation only, never a runtime data input"
+  },
+  "all_source_requests": 67,
+  "literal_first_comparison_counts": {
+    "ro6_n_5_1": {
+      "requested": 30,
+      "accepted": 5,
+      "rejected_or_unknown": 25
+    },
+    "ro6_n_5_5": {
+      "requested": 37,
+      "accepted": 11,
+      "rejected_or_unknown": 26
+    },
+    "accepted_total": 16,
+    "rejected_or_unknown_total": 51
+  },
+  "expected_direct_scope_after_root_build": [
+    14,
+    25,
+    123
+  ],
+  "prior_direct_scope": [
+    12,
+    21,
+    107
+  ],
+  "regular_scope_unchanged": [
+    12,
+    24
+  ],
+  "whole_map_gaps_unchanged": [
+    81,
+    59
+  ],
+  "raw_A_B_schema_differences_preserved": true,
+  "A_pixel_field": "observed_pixel",
+  "B_pixel_field": "pixel",
+  "comparison_row_fields": [
+    "reference",
+    "row",
+    "col",
+    "tile_key",
+    "request_id",
+    "observed_pixel",
+    "independent_pixel",
+    "reader_reason",
+    "original_reader_rows",
+    "reader_cue",
+    "agreement_px",
+    "accepted_for_runtime",
+    "rejection"
+  ],
+  "original_reader_pointer_fields": [
+    "file",
+    "image_index",
+    "reading_index",
+    "pixel_field"
+  ],
+  "new_test_methods_AST_only": 16,
+  "existing303_original_test_methods": 16,
+  "source_build_or_API_tests_or_Qt_executed_by_author": false,
+  "production_reader_originals_DATA_Git_or_private_mutated": false,
+  "static_prebuild_PNG_candidate_error": "Original and correction preserved; caught by peer before any actual build. Corrected bitmap AST exactly equals303.",
+  "file_pins": {
+    "candidate/scripts/extend_direct_landmark_308.py": {
+      "sha256": "525a83a372fbad9440b65a99e0367df73d6f2826ce8bafaea7f19d72167ef919",
+      "bytes": 26363
+    },
+    "candidate/tests/test_direct_landmark_308.py": {
+      "sha256": "ed427e9d170bdb355a7a900ffca4a52f648ad28f0135cfd0a52ec70a986733e4",
+      "bytes": 21711
+    },
+    "candidate/tests/test_direct_landmark_303.py": {
+      "sha256": "aebac3ec436971b7cd82d6c678c357869902af75b999dac1985bf9287d146834",
+      "bytes": 20489
+    },
+    "before/tests/test_direct_landmark_303.py": {
+      "sha256": "607608121d1a5f824dd931a9a65b30d905015acfb8d81e7bba7c20ac9551915e",
+      "bytes": 18863
+    },
+    "historical303-explicit107.diff": {
+      "sha256": "b47daa7f7db058431de3da3514b5fe65e91c244ba9c89cafa1a692f2e3660930",
+      "bytes": 3665
+    },
+    "historical303-maintenance-proof.json": {
+      "sha256": "a44d01746ad32b02b4bb16939b2350a70d269dc93988a542896bdcf45a27e2c6",
+      "bytes": 3249
+    },
+    "builder-semantic-review.json": {
+      "sha256": "66fa63db946a2c22824bb42a9745244ee9f90e4b2e05e60734972fbbc41f7eb2",
+      "bytes": 1606
+    },
+    "builder303-to308-semantic.diff": {
+      "sha256": "e0bc1a7958400205906dccd920e0bd1715afc62300fdcc8d9e6ed0bd91eab25f",
+      "bytes": 24143
+    },
+    "static-correction/original-incorrect-png-magic.py": {
+      "sha256": "1d2d401540dcbd7e680ed78a5bc70389e40ccd3ffc35268a17200ce7b1a3074c",
+      "bytes": 26363
+    },
+    "static-correction/correction.json": {
+      "sha256": "fbf546ac761bb0b1996085ff648c7702ec0117a8f446864d38c4d984926aa36a",
+      "bytes": 611
+    },
+    "prepare_builder_skeleton.py": {
+      "sha256": "4a42a5b5086a5bcfc7cde62f442c54acea24cc3ce2a23b939ff0d90602cc516f",
+      "bytes": 8532
+    },
+    "adapt_original_readers.py": {
+      "sha256": "bfe47e8198a884f8970684a92cb5510612d673f8801bdd9955138340f4837fb2",
+      "bytes": 8742
+    },
+    "review_builder_semantics.py": {
+      "sha256": "bc0ecde4039482d55aa2d3ba74e1d5497a3bb0ded536ae3176de7cac4094773a",
+      "bytes": 4378
+    },
+    "prepare_historical303_candidate.py": {
+      "sha256": "38e4221e0508956dc84269b5b2a185c4cb0dadb02e7d01e4789c3bd961b195a3",
+      "bytes": 6556
+    },
+    "preparation-tool-error-summary.json": {
+      "sha256": "00861109534beb5c9cab203e494d7105faec78b4d3a7a5bc36c6ff0b28388386",
+      "bytes": 532
+    }
+  },
+  "root_first_build_argv": [
+    ".venv/Scripts/python.exe",
+    "-B",
+    "-X",
+    "utf8",
+    ".cache/p3-308-backend/candidate/scripts/extend_direct_landmark_308.py",
+    "--output-dir",
+    ".cache/p3-308-root-build-attempt1"
+  ],
+  "root_additional_source_guard": [
+    "verification/sections/308-preparation/first-frozen-comparison.json"
+  ],
+  "necessary_selector_suggestions": [
+    "tests.test_direct_landmark_308",
+    "tests.test_direct_landmark_303",
+    "tests.test_direct_landmark_294",
+    "tests.test_direct_landmark_288",
+    "tests.test_direct_landmark_mapping",
+    "tests.test_map_projection_048",
+    "tests.test_map_projection_049"
+  ],
+  "next_action": "Root review and a single actual pure source build; preserve original exit/stdout/stderr. Only then promote returned exact DATA and three candidate code/test files, run change-specific necessary and native verification. No passing status is implied.",
+  "pre_review_metadata_correction": {
+    "original_handoff": "HANDOFF_FINAL.json",
+    "original_sha256": "6cc350909503bc93e96347a3a128fe96b50dc816cf351bf3a7157bd63c7a1b97",
+    "only_change": "Selector suggestion corrected to existing tests.test_direct_landmark_mapping; no source/test contents or numbers changed. No test was run."
+  }
+}

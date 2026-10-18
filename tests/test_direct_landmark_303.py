@@ -39,7 +39,28 @@ class DirectGround303Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.builder = load_builder()
-        cls.output, cls.receipt = cls.builder.build()
+        # Replay this303 contract against its exact public107 input. The308
+        # tests separately verify the original builder rejects the live append.
+        cls.historical_temporary = tempfile.TemporaryDirectory(prefix='rouge303-exact107-')
+        cls.addClassCleanup(cls.historical_temporary.cleanup)
+        cls.historical_data = Path(cls.historical_temporary.name) / 'data'
+        cls.historical_data.mkdir()
+        prior = Path(__file__).resolve().parents[1] / 'research/p3-map-direct-ground-308/prior-direct-references.json'
+        prior_raw = prior.read_bytes()
+        if len(prior_raw) != 58293 or hashlib.sha256(prior_raw).hexdigest() != 'dc43bbbe70eab6f11cc8661c3bfeab994000ea614ea0f8c999a596f5cb2c445a':
+            raise AssertionError('Exact original303 public107 bytes are required.')
+        for name in ('battle-previews.json', 'battle-map-projections.json'):
+            shutil.copyfile(PUBLIC_DATA / name, cls.historical_data / name)
+        historical_source = cls.builder.read(cls.builder.BASE / 'source-records.json')
+        for image in {row['image']['file'] for row in historical_source['stages'].values()}:
+            target = cls.historical_data / image
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(PUBLIC_DATA / image, target)
+        (cls.historical_data / 'fixed-landmark-references.json').write_bytes(prior_raw)
+        original_data = cls.builder.DATA
+        cls.addClassCleanup(setattr, cls.builder, 'DATA', original_data)
+        cls.builder.DATA = cls.historical_data
+        cls.output, cls.receipt = cls.builder.build(public_data=cls.historical_data)
         cls.source = cls.builder.read(cls.builder.BASE / 'source-records.json')
         cls.stages = cls.builder.read(cls.builder.DATA / 'battle-previews.json')['stages']
         cls.comparisons = cls.receipt['new_agreement_comparisons']
@@ -259,7 +280,7 @@ class DirectGround303Tests(unittest.TestCase):
 
     def test_14_default_cli_is_readonly_and_candidate_output_is_exclusive(self):
         before = pin(self.builder.DATA / 'fixed-landmark-references.json')
-        command = [sys.executable, str(Path(self.builder.__file__))]
+        command = [sys.executable, '-B', '-X', 'utf8', str(Path(self.builder.__file__)), '--public-data-dir', str(self.historical_data)]
         result = subprocess.run(command, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertTrue(json.loads(result.stdout)['read_only'])
@@ -271,9 +292,9 @@ class DirectGround303Tests(unittest.TestCase):
             self.assertEqual(self.builder.read(target / 'fixed-landmark-references.json'), self.output)
             again = subprocess.run(command + ['--output-dir', str(target)], capture_output=True, text=True)
             self.assertNotEqual(again.returncode, 0)
-        forbidden = subprocess.run(command + ['--output-dir', str(self.builder.DATA / '_forbidden303')], capture_output=True, text=True)
+        forbidden = subprocess.run(command + ['--output-dir', str(PUBLIC_DATA / '_forbidden303')], capture_output=True, text=True)
         self.assertNotEqual(forbidden.returncode, 0)
-        self.assertFalse((self.builder.DATA / '_forbidden303').exists())
+        self.assertFalse((PUBLIC_DATA / '_forbidden303').exists())
         self.assertEqual(pin(self.builder.DATA / 'fixed-landmark-references.json'), before)
 
     def test_15_current_accepts_only_exact_prior_or_exact_complete_new_dictionary(self):
