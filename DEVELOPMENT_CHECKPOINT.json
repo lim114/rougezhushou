@@ -63,13 +63,13 @@
     "pause_after_active_section_requested": false,
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
-    "current_usage_remaining_percent": 90,
-    "current_usage_receipt": "verification/sections/309-preparation/usage-threshold.json",
+    "current_usage_remaining_percent": 88,
+    "current_usage_receipt": "verification/sections/310-preparation/usage-threshold.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
     "latest_user_instruction_receipt": "verification/sections/306-preparation/resume-and-numbering.json"
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 309,
+  "completed_sections": 310,
   "sections": [
     {
       "number": 1,
@@ -1912,10 +1912,16 @@
       "completion_ref": "p3-section-309",
       "topic": "畸症首领按形态查看招式与转换条件",
       "verification": "verification/sections/309.json"
+    },
+    {
+      "number": 310,
+      "completion_ref": "p3-section-310",
+      "topic": "洛伦茨与源阶方的交替激活及模块条件",
+      "verification": "verification/sections/310.json"
     }
   ],
-  "next_section": 310,
-  "next_action": "第309节 + 畸症首领按形态查看招式与转换条件，已验收并普通推送核对。继续P3剩余节点/敌人/固定地图事项；下一定期全量320，310未启动。",
+  "next_section": 311,
+  "next_action": "第310节 + 洛伦茨与源阶方的交替激活及模块条件已本地验收，普通推送并真实远端核对后继续P3；条件说明不等于本局实际，剩余缺口保留，下次定期全量320。",
   "full_validation_due": false,
   "windows_native_validation": "当前289：Windows隔离MainWindow两页56检查及原测试窗口可见响应通过；不计实际游戏/聊天验收。最新完整可用全量仍verification/full-285/summary.json，真实符号链接1314、历史原件/私样本等缺口保留。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -2032,14 +2038,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 309,
-    "verification": "verification/sections/309.json",
+    "section": 310,
+    "verification": "verification/sections/310.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 309,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "ce4d920de4e4b9594b75966aa88b0de5cedd8171",
     "proof": "verification/sections/309-publication.json",
@@ -2298,7 +2304,7 @@
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": null,
-  "batch_status": "P3_SECTION309_PUBLISHED",
+  "batch_status": "P3_SECTION310_LOCAL_ACCEPTED_PUBLICATION_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2341,19 +2347,20 @@
     306,
     307,
     308,
-    309
+    309,
+    310
   ],
   "current_batch": {
-    "start": 309,
+    "start": 310,
     "end": null,
-    "status": "P3_SECTION309_PUBLISHED",
-    "completed_sections": 309,
-    "next_section": 310,
+    "status": "P3_SECTION310_LOCAL_ACCEPTED_PUBLICATION_PENDING",
+    "completed_sections": 310,
+    "next_section": 311,
     "next_section_started": false,
     "next_full_validation_after": 320,
-    "batch_closed": true,
+    "batch_closed": false,
     "target_origin": "User authorized P3 continuation; no numeric stopping target",
-    "receipt": "verification/sections/309.json"
+    "receipt": "verification/sections/310.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -2486,7 +2493,7 @@
     "full_validation_interval": 5,
     "next_full_validation_after": 120
   },
-  "batch_start_section": 309,
+  "batch_start_section": 310,
   "batch_target_section": null,
   "suspended_target_section": 400,
   "latest_user_resume": {
@@ -2633,7 +2640,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 309,
+  "latest_functional_section": 310,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -4985,7 +4992,15 @@
     ],
     "completed": false
   },
-  "current_section_validation": {
+  "historical_before309_publication": {
+    "section": 308,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "f3aa1686de588bdd87934098f1bcc99c2922eb00",
+    "proof": "verification/sections/308-publication.json",
+    "proof_sha256": "af5a53b8e1ffa92060857c4939565ce1ac0a306f322627a27048e806beff8d21"
+  },
+  "historical_before310_current_section_validation": {
     "section": 309,
     "receipt": "verification/sections/309.json",
     "necessary_methods_passed": 83,
@@ -4995,7 +5010,7 @@
     "last_full_receipt": "verification/full-305/summary.json",
     "full_source_is_historical305": true
   },
-  "latest_section_environment": {
+  "historical_before310_latest_section_environment": {
     "section": 309,
     "receipt": "verification/sections/309.json",
     "native_windows": "83 necessary; exact target six documentary readings / two actual reading refresh states / real temporary public clone failure and manual recovery; original app startup separately verified",
@@ -5003,20 +5018,45 @@
     "current_section_full_rerun": false,
     "last_full_receipt": "verification/full-305/summary.json"
   },
-  "historical_before309_publication": {
-    "section": 308,
-    "scope": "previous_functional_section",
-    "binding": "verified_remote_commit",
-    "commit": "f3aa1686de588bdd87934098f1bcc99c2922eb00",
-    "proof": "verification/sections/308-publication.json",
-    "proof_sha256": "af5a53b8e1ffa92060857c4939565ce1ac0a306f322627a27048e806beff8d21"
-  },
-  "cloud_publication_closeout": {
+  "historical_before310_cloud_publication_closeout": {
     "section": 309,
     "functional_commit": "ce4d920de4e4b9594b75966aa88b0de5cedd8171",
     "proof": "verification/sections/309-publication.json",
     "current_commit_kind": "publication metadata only",
     "next_section_started": false,
     "development_paused": false
+  },
+  "historical_before310_active_section": {
+    "number": 310,
+    "completed": false,
+    "remaining_todo": "P3敌人面板与机制：其余首领的完整文献流程",
+    "proposed_capability": "混沌源阶理论中洛伦茨/源阶方的交替激活与模块条件阅读；按主体与条件分组，含原先漏抽的装置技能表",
+    "acceptance": [
+      "仅两个精确首领引用显示入口，模块与源阶粒素不借用敌人身份",
+      "完整文献7条流程按主循环/首次半血/终点退场/模块两类结果分组，不成为必然时间轴",
+      "保留7技能、2能力与独立装置技能/机制完整原件，模块白值仅技术，零字段不当本局预测",
+      "同来源刷新保留阅读，两身份切换或来源失效清空，恢复手动重开",
+      "不修改任何数值模型/地图/本局；必要检查、实际Windows阅读、项目要求与云端发布核对后才计完成"
+    ]
+  },
+  "current_section_validation": {
+    "section": 310,
+    "receipt": "verification/sections/310.json",
+    "necessary_methods_passed": 75,
+    "native_isolated_window_checks": 28,
+    "exact_entries": 2,
+    "actual_topic_readings": 8,
+    "actual_nonzero_refresh_states": 4,
+    "full_suite_rerun": false,
+    "last_full_receipt": "verification/full-305/summary.json",
+    "full_source_is_historical305": true
+  },
+  "latest_section_environment": {
+    "section": 310,
+    "receipt": "verification/sections/310.json",
+    "native_windows": "75 necessary; exact two entries / eight actual topic readings / four actual refresh states / real temporary public source failure and manual recovery; original app startup separately verified",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": false,
+    "last_full_receipt": "verification/full-305/summary.json"
   }
 }

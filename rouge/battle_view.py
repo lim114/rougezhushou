@@ -306,6 +306,9 @@ class BattlePreviewPanel(QWidget):
         self.boss_phase_button=QPushButton('查看首领形态与转换');enemy_layout.addWidget(self.boss_phase_button)
         self.boss_phase_button.hide();self.boss_phase_window=None
         self.boss_phase_button.clicked.connect(self.open_boss_phase_reference)
+        self.boss_cycle_button=QPushButton('查看交替激活与模块条件');enemy_layout.addWidget(self.boss_cycle_button)
+        self.boss_cycle_button.hide();self.boss_cycle_window=None
+        self.boss_cycle_button.clicked.connect(self.open_boss_cycle_reference)
         self.enemy_detail=QPlainTextEdit();self.enemy_detail.setReadOnly(True);enemy_layout.addWidget(self.enemy_detail,1)
         details.addWidget(enemy_box)
         details.setSizes([260,340,380]);layout.addWidget(details,3)
@@ -498,6 +501,7 @@ class BattlePreviewPanel(QWidget):
         self._rows_stage=None;self._shown_enemy=None;self._tile_cell=None;self._detail_key=None
         self._refresh_enemy_form()
         self._refresh_boss_phase()
+        self._refresh_boss_cycle()
         self._branch_marker=None;self.branch_panel.set_stage(sid)
         self.current_stage=sid;stage=battle_data()['stages'].get(sid)
         self.duel_reward_button.setVisible(is_duel_stage(sid))
@@ -611,6 +615,7 @@ class BattlePreviewPanel(QWidget):
 
         self._refresh_enemy_form()
         self._refresh_boss_phase()
+        self._refresh_boss_cycle()
 
     def _refresh_branch_positions(self,*_):
         from .branch_position_overview import branch_position_overview
@@ -666,13 +671,13 @@ class BattlePreviewPanel(QWidget):
     def _render_enemy(self,enemy_id,level=None,*,preserve=False):
         stage=battle_data()['stages'].get(self.current_stage)
         if not stage:
-            self._shown_enemy=None;self._refresh_enemy_form();self._refresh_boss_phase();return
+            self._shown_enemy=None;self._refresh_enemy_form();self._refresh_boss_phase();self._refresh_boss_cycle();return
         choices=[e for e in stage['enemies'] if e['id']==enemy_id and (level is None or e['level']==level)]
         if len(choices)!=1:
             self._shown_enemy=None
             self.enemy_picture.set_subject(None,None,'')
             replace_text(self.enemy_detail,'敌人引用等级不能唯一确认，请通过敌人筛选选择。',preserve=False)
-            self._refresh_enemy_form();self._refresh_boss_phase();return
+            self._refresh_enemy_form();self._refresh_boss_phase();self._refresh_boss_cycle();return
         key=(self.current_stage,enemy_id,choices[0]['level'])
         keep=preserve and self._shown_enemy==key;self._shown_enemy=key
         entry=choices[0]
@@ -681,6 +686,7 @@ class BattlePreviewPanel(QWidget):
         replace_text(self.enemy_detail,text,preserve=keep)
         self._refresh_enemy_form()
         self._refresh_boss_phase()
+        self._refresh_boss_cycle()
 
     def _refresh_enemy_form(self):
         from .enemy_form_view import target_identity
@@ -734,6 +740,34 @@ class BattlePreviewPanel(QWidget):
         if self.boss_phase_window is None:self.boss_phase_window=BossPhaseReferencePanel(self)
         if not self.boss_phase_window.set_reference(self._shown_enemy,result):return False
         self.boss_phase_window.show();self.boss_phase_window.raise_()
+        return True
+
+    def _refresh_boss_cycle(self):
+        from .boss_cycle_view import target_identity
+        from .boss_cycle_reference import cycle_reference
+        key=self._shown_enemy;target=target_identity(key)
+        try:result=cycle_reference(*key)if target else None
+        except (OSError,ValueError,TypeError,KeyError):result=None
+        valid=bool(result and result.get('source_valid')is True and result.get('status')=='documented_reference')
+        self.boss_cycle_button.setVisible(target);self.boss_cycle_button.setEnabled(valid)
+        if self.boss_cycle_window is not None:
+            window=self.boss_cycle_window
+            if not valid:
+                window.clear_reference('当前首领或资料无法核对，旧交替激活与模块条件内容已清除。')
+            elif(window.identity==key and window.result is not None
+                    and window.result.get('source_identity')==result.get('source_identity')):
+                window.set_reference(key,result)
+            else:
+                window.clear_reference('当前阅读身份或资料已变化；请手动打开首领交替激活与模块条件资料。')
+        return result
+
+    def open_boss_cycle_reference(self):
+        result=self._refresh_boss_cycle()
+        if not result or result.get('source_valid')is not True:return False
+        from .boss_cycle_view import BossCycleReferencePanel
+        if self.boss_cycle_window is None:self.boss_cycle_window=BossCycleReferencePanel(self)
+        if not self.boss_cycle_window.set_reference(self._shown_enemy,result):return False
+        self.boss_cycle_window.show();self.boss_cycle_window.raise_()
         return True
 
     def _spawn_selected(self,item,*_,preserve=False):

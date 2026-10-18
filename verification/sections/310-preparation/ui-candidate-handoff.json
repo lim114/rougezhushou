@@ -1,0 +1,163 @@
+{
+  "section": 310,
+  "kind": "CACHE_ONLY_UI_PARENT_TEST_NATIVE_PREPARATION_NOT_EXECUTED",
+  "candidate_root": ".cache\\p3-310-view\\candidate",
+  "promotion_files": {
+    "rouge/battle_view.py": {
+      "sha256": "ea4e0cf1bb2bf8df91ceca0036d050db2c5fc07241fd6d9bc8485e3bc577a716",
+      "bytes": 52931
+    },
+    "rouge/boss_cycle_view.py": {
+      "sha256": "144de1bd66e11568440107c0d2c48ecbbf64ac422e1afb699fdf11c2e3826e78",
+      "bytes": 8198
+    },
+    "scripts/verify_boss_cycle_window_310.py": {
+      "sha256": "181f1094f2f5cbeccd177681fd43e79960647ebd25f6c507dc418d96bfc4a305",
+      "bytes": 22592
+    },
+    "tests/test_boss_cycle_integration_310.py": {
+      "sha256": "3c5f33663f88bbd401cc54cd28441ade92bd4698e17ea8968ccf36d46dcf42eb",
+      "bytes": 6353
+    },
+    "tests/test_boss_cycle_view_310.py": {
+      "sha256": "a95bd858e88bed7c3964c37abb44910bc820809e32edc65d43abd3e7823bc5af",
+      "bytes": 7687
+    }
+  },
+  "new_files": [
+    "rouge/boss_cycle_view.py",
+    "scripts/verify_boss_cycle_window_310.py",
+    "tests/test_boss_cycle_integration_310.py",
+    "tests/test_boss_cycle_view_310.py"
+  ],
+  "existing_production_change": {
+    "rouge/battle_view.py": {
+      "before": {
+        "sha256": "08f79353318c323f0dd9f9c8659493381c4e3c34a554f932a4ad80df4bf4965e",
+        "bytes": 50834
+      },
+      "after": {
+        "sha256": "ea4e0cf1bb2bf8df91ceca0036d050db2c5fc07241fd6d9bc8485e3bc577a716",
+        "bytes": 52931
+      }
+    }
+  },
+  "api": {
+    "class": "BossCycleReferencePanel",
+    "module": "rouge.boss_cycle_view",
+    "methods": [
+      "set_reference(identity,result=None)",
+      "refresh_reference()",
+      "clear_reference()"
+    ],
+    "attributes": [
+      "identity",
+      "scope_key",
+      "result",
+      "topic",
+      "tabs",
+      "player",
+      "technical",
+      "lorentz_picture",
+      "cube_picture"
+    ],
+    "parent_attributes": [
+      "boss_cycle_button",
+      "boss_cycle_window"
+    ],
+    "parent_methods": [
+      "_refresh_boss_cycle",
+      "open_boss_cycle_reference"
+    ],
+    "exact_typed_targets": [
+      [
+        "ro6_b_5",
+        "enemy_2147_shophm",
+        0
+      ],
+      [
+        "ro6_b_5",
+        "enemy_2148_shorbb",
+        0
+      ]
+    ],
+    "topic_selection": "None overview plus every exact source-defined topic.id/name; both identities retain all topics and their selected entry identity"
+  },
+  "preserved_old_reader_methods_AST": [
+    "_refresh_enemy_form",
+    "open_enemy_form",
+    "_refresh_boss_phase",
+    "open_boss_phase_reference"
+  ],
+  "only_old_hook_methods_with_appended_statements": [
+    "__init__",
+    "_load_stage",
+    "_render_enemy",
+    "render_rows"
+  ],
+  "new_parent_methods": [
+    "_refresh_boss_cycle",
+    "open_boss_cycle_reference"
+  ],
+  "old_readers_files_unchanged": {
+    "rouge/enemy_form_view.py": {
+      "sha256": "fb197eec893fea5d50b4e2929b094d666dffaa84ee58dff77e97d341b01f7c65",
+      "bytes": 4249
+    },
+    "rouge/enemy_form_reference.py": {
+      "sha256": "05aa96d0e6e032082d10b2f950923ded8a65d73a21e31fc148017a7f53c3dac3",
+      "bytes": 8303
+    },
+    "rouge/boss_phase_view.py": {
+      "sha256": "6de4a3295dd2c46e21f9d447a5a162d877c7d6aadbe28cadff151686c955dec6",
+      "bytes": 7727
+    },
+    "rouge/boss_phase_reference.py": {
+      "sha256": "1ceab41b49e18a88b184b24d113fa74d471bed0a02667ea96b2bb49990e4fa2a",
+      "bytes": 11141
+    }
+  },
+  "prepared_test_methods_not_actual_checks": {
+    "test_boss_cycle_integration_310.py": 7,
+    "test_boss_cycle_view_310.py": 9
+  },
+  "native": {
+    "canonical": "scripts/verify_boss_cycle_window_310.py",
+    "kind": "isolated_native_windows_boss_cycle_reader",
+    "command": [
+      ".venv/Scripts/python.exe",
+      "-B",
+      "-X",
+      "utf8",
+      "scripts/verify_boss_cycle_window_310.py",
+      "--receipt",
+      "<new-absolute-actual/window.json>",
+      "--visible-ms",
+      "60000"
+    ],
+    "literal_labels_prepared_not_execution_count": 28,
+    "actual_report_fields": [
+      "actual_entry_overviews",
+      "actual_topic_readings",
+      "same_identity_refresh_observations",
+      "source_negative_fixture",
+      "screenshots",
+      "native_observations",
+      "source_sha256_before",
+      "source_sha256_after"
+    ],
+    "source_negative": "manifest plus all runtime_files exact temporary clone; patch only model.ROOT; warm valid then append a byte to selected-original-records; restore original bytes; manual reopen required",
+    "screenshots": "two exact-entry overview player views +one selected topic for each +source failure; actual saved count recorded only after run",
+    "isolation": "BattlePreviewPanel only; four app paths patched first; eight external operations blocked; no MainWindow or huge dependency clone",
+    "process_boundary": "Qt and owned QWidget closure recorded; root retains real Popen/job/supervisor termination separately, not inferred from widget closure"
+  },
+  "integration_diff": {
+    "sha256": "a9aec61c84393e4ae92e8b6eb21304b44b7aa533b19b56ecfc4b6fe42854aaf6",
+    "bytes": 4953
+  },
+  "AST_parse_compile_and_whitespace_checks_completed": true,
+  "Qt_tests_native_or_GUI_executed": false,
+  "production_Git_private_or_original_windows_modified": false,
+  "backend_final_HANDOFF_or_product_PASS_claimed": false,
+  "source_contract": "Backend author confirmed TARGETS/cycle_reference/reference_text, constants, source fault member, ACTUAL_FIELDS and six false flags; actual final backend/data pins remain owned by its HANDOFF."
+}
