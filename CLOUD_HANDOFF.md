@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/309.json)。
 
-已完成至309，后续310；本批状态 `P3_SECTION309_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量320。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至309，后续310；本批状态 `P3_SECTION309_PUBLISHED`。推进终点：未指定数字终点。下次定期全量320。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -138,5 +138,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 六项是文献阅读条目，不等于六条血或六次击倒；飞行是第三形态子过程，主目标退场打断灾厄之口不等于进入下一形态。不经重生的循环保留说明明确注明来自文献说明注。重生加成、延长时长、索敌措辞及同名原招式的对应口径分别保留，不能认定数值互斥、擅自10+1或按数组顺序恢复引擎绑定。当前服务器、实际形态/转换/时刻、阶段完整面板/伤害与第三或飞行形态的完整终止流程仍未知；不修改预计数值、地图或本局记忆。其余首领、节点/事件/掉落与完整地图校准及P2/P1缺口均保留。
 
-<!-- section309-publication-pending -->当前为本地验收完成，普通推送与真实远端核对尚待完成。
+第309节功能提交ce4d920de4e4b9594b75966aa88b0de5cedd8171已普通推送并核对真实远端及公开文件字节，证明verification/sections/309-publication.json。本次仅保存发布元数据，不增加功能节数；继续P3，310未启动，下一定期全量320。
 <!-- section309-handoff:end -->
