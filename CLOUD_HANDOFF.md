@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/307.json)。
 
-已完成至307，后续308；本批状态 `P3_SECTION307_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量320。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至307，后续308；本批状态 `P3_SECTION307_PUBLISHED`。推进终点：未指定数字终点。下次定期全量320。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -114,5 +114,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 本节是资料分类与阅读能力，不是新增十种机制或奖励池。原资格判断、资源数量、实际可选未知与299兼容原接口不改。安眠一隅两处原注均写2种、分别只列1种和列3种的矛盾继续明确提示；完整候选池、概率、实际触发/领取、25个原场景与57个原选项入口及当前服务器适用性均未补齐，不据文献推断本局已发生。P3/P2/P1均未全部完成，识别优化最后。
 
-<!-- section307-publication-pending -->当前为本地验收完成，普通推送与真实远端核对尚待完成。
+第307节功能提交777b5c3f04322fc06b93a914ce3e9b88a1f1c1c1已普通推送并核对真实远端及公开文件字节，证明verification/sections/307-publication.json。本次仅保存发布元数据，不增加功能节数；继续P3，308未启动，下一定期全量320。
 <!-- section307-handoff:end -->
