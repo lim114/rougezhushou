@@ -70,13 +70,32 @@ class OriginalDestinationTests(unittest.TestCase):
         with self.assertRaises(ValueError):nav.destination_reference('choice_ro6_bat1_1',{'floor':True})
 
     def test_independent_scene_choices_keep_unknown_special_conditions(self):
-        # A literal target preserves its additional movement condition as unparsed.
+        # Section291 classifies this exact annotation as a documented selection
+        # result. A literal destination still proves neither completion nor movement.
         result=nav.destination_reference('choice_ro6_task1_1')
         choices=[ch for ref in result['catalog_references'] for ch in ref['choice_qualifications']['rows']]
-        selected=next(ch for ch in choices if ch['unparsed_condition_text'])
-        self.assertEqual(selected['unparsed_condition_text'],'若已完成当前层的【“居民”据点】作战则不会移动')
+        selected=next(ch for ch in choices if ch['choice_key']=='community_group_019:scene:1:choice:0')
+        self.assertEqual(selected['conditional_text'],'若已完成当前层的【“居民”据点】作战则不会移动')
+        self.assertIsNone(selected['unparsed_condition_text'])
+        movement=selected['movement_result_reference']
+        self.assertEqual(movement['status'],'documented_reference')
+        self.assertTrue(movement['source_valid'])
+        self.assertEqual(movement['annotation_role'],'selection_result')
+        self.assertEqual(movement['choice_key'],selected['choice_key'])
+        exception=movement['completion_exception_reference']
+        self.assertEqual(exception['condition_text'],selected['conditional_text'])
+        self.assertTrue(exception['one_way_implication'])
+        self.assertFalse(exception['documented_movement_if_condition_matches'])
+        self.assertIsNone(exception['condition_matches'])
+        self.assertFalse(exception['converse_verified'])
+        self.assertFalse(exception['negation_implies_successful_movement_verified'])
+        for field in ('actual_current_floor_completion','actual_target_node_id','actual_moved',
+                      'actual_battle_triggered','actual_position_after'):
+            self.assertIsNone(movement[field])
+        self.assertFalse(movement['source_scene_link_verified'])
+        self.assertFalse(movement['complete_movement_result_known'])
         self.assertEqual(selected['status'],'unknown');self.assertIsNone(selected['actual_selectable'])
-        self.assertIn(selected['unparsed_condition_text'],nav.destination_text(result))
+        self.assertIn(selected['conditional_text'],nav.destination_text(result))
         self.assertFalse(result['source_scene_origin_verified'])
 
     def test_file_and_record_identity_guards_fail_without_guessing_or_mutation(self):

@@ -37,7 +37,8 @@ class Batch185WindowTests(unittest.TestCase):
         graph={'zone_id':'zone_1','template_id':'public-t','grid':{'rows':3,'cols':4},'edges':[],
                'nodes':[{'id':'a','row':1,'col':2,'distance':2,'observed_type':'不期而遇'}]}
         self.window.map_view.graph=graph;self.window.map_view.historical=False
-        self.window.map_node_selected('a');panel=self.window.node_catalog
+        self.window.map_view.select_node('a');panel=self.window.node_catalog
+        self.assertEqual(self.window.map_view.selected,'a')
         self.assertTrue(panel.bind_button.isEnabled());panel.bind_button.click()
         self.assertIn('第2行、第3列',panel.context_label.text());self.assertTrue(panel.dossier['rows'])
         self.window.show_catalog_battle('ro6_n_1_2');self.qt.processEvents()

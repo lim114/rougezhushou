@@ -88,6 +88,17 @@ def isolated_public_source():
 class PeaceGuardianPlanning291Tests(unittest.TestCase):
     def test_all_fixed_events_and_contexts_keep_status_checks_ids_and_non_target_fields(self):
         previous = previous_planning()
+        # Verify the exact section298 addition before comparing all pre291 fields.
+        # Keep the actual source active; no source/helper mocking or status copying.
+        rule_raw = (ROOT / 'rouge/data/event-node-requirements.json').read_bytes()
+        self.assertEqual(hashlib.sha256(rule_raw).hexdigest(),
+                         'f11c6d83a048ffdea14cbccdd1506ff02c3ef35a1cf94f107e30845b2d1deab3')
+        rules = json.loads(rule_raw)
+        expected_forbidden = {'community_group_024':[1,5,6], 'community_group_025':[1,6],
+                              'community_group_027':[1,2,6], 'community_group_028':[1,2,6],
+                              'community_group_029':[1,2,6], 'community_group_037':[1]}
+        self.assertEqual({identity:rule['documented_excluded_main_floors']
+                          for identity,rule in rules['events'].items()}, expected_forbidden)
         for context in ({}, {'floor': 2, 'node_type': '不期而遇', 'entry_mode': 'content', 'resources': {'hope': 20}},
                         {'floor': 1, 'difficulty': 3, 'node_type': '作战', 'entry_mode': 'natural'}):
             for event in catalog._data()['events']:
@@ -95,6 +106,28 @@ class PeaceGuardianPlanning291Tests(unittest.TestCase):
                     before = previous.choice_eligibility(event['id'], scene['key'], context)
                     after = event_planning.choice_eligibility(event['id'], scene['key'], context)
                     for row in after['rows']:
+                        added = [check for check in row['checks']
+                                 if check['key']=='documented_node_natural_main_floor']
+                        applies = (event['id'] in expected_forbidden
+                                   and context.get('entry_mode')=='natural'
+                                   and context.get('floor') is not None
+                                   and not context.get('special_region',False))
+                        self.assertEqual(len(added), 1 if applies else 0)
+                        if applies:
+                            rule = rules['events'][event['id']]
+                            self.assertEqual(added[0], {
+                                'key':'documented_node_natural_main_floor',
+                                'kind':'source_node_floor_requirement',
+                                'matches':context['floor'] not in expected_forbidden[event['id']],
+                                'source_text':rule['source_text'], 'context_applicable':True,
+                                'documented_excluded_main_floors':expected_forbidden[event['id']],
+                                'source_revision':rules['source']['main']['revision'],
+                                'actual_server_eligible':None})
+                            row['checks'] = [check for check in row['checks']
+                                if check['key']!='documented_node_natural_main_floor']
+                            matches = [check['matches'] for check in row['checks']]
+                            row['status'] = ('excluded' if False in matches else
+                                'unknown' if None in matches or not matches else 'matched')
                         restore_prior_row(row)
                     self.assertEqual(after, before, (event['id'], scene['key'], context))
 

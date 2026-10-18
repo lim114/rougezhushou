@@ -29,6 +29,8 @@ from . import ritual_weakening
 from .ritual_weakening_view import RitualWeakeningPanel
 from . import curiosity_node_rules
 from .curiosity_node_rules_view import CuriosityNodeRulesPanel
+from . import relic_exchange_flow
+from .relic_exchange_flow_view import RelicExchangeFlowPanel
 from .player_node_information import node_information_text
 from .resident_location_references import resident_location_references,resident_binding_matches
 from .peace_guardian_results import EVENT as _RESIDENT_EVENT,SCENE as _RESIDENT_SCENE,CHOICE as _RESIDENT_CHOICE
@@ -331,6 +333,7 @@ class NodeCatalogPanel(QWidget):
         self.named_reward_window=None
         self.ritual_weakening_window=None
         self.curiosity_node_rules_window=None
+        self.relic_exchange_flow_window=None
         layout=QVBoxLayout(self)
         self.context_label=QLabel(DIRECTORY_NOTICE)
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
@@ -402,6 +405,9 @@ class NodeCatalogPanel(QWidget):
         self.curiosity_node_rules_button=QPushButton("查看标记、节点变化与再访说明");rl.addWidget(self.curiosity_node_rules_button)
         self.curiosity_node_rules_button.setToolTip("按具体选项阅读固定资料；不识别或标记本局目标，不执行游戏操作。")
         self.curiosity_node_rules_button.hide();self.curiosity_node_rules_button.clicked.connect(self.open_curiosity_node_rules)
+        self.relic_exchange_flow_button=QPushButton("查看收藏品交换与完整流程");rl.addWidget(self.relic_exchange_flow_button)
+        self.relic_exchange_flow_button.setToolTip("查阅固定本体272件收藏品的提供物资格、两次交换条件和退出结果；不扣除物品。")
+        self.relic_exchange_flow_button.hide();self.relic_exchange_flow_button.clicked.connect(self.open_relic_exchange_flow)
         self.resident_reference_label=QLabel();self.resident_reference_label.setWordWrap(True)
         self.resident_location=QComboBox();self.resident_location.setAccessibleName('本图已读据点位置参考')
         self.resident_map_button=QPushButton('在地图查看这个位置')
@@ -672,6 +678,12 @@ class NodeCatalogPanel(QWidget):
         self.curiosity_node_rules_button.setEnabled(bool(curiosity and curiosity_packet.get("source_valid") is True))
         if self.curiosity_node_rules_window:
             self.curiosity_node_rules_window.set_reference(entry["record"]["id"] if curiosity else None,scope_key=key if curiosity else None)
+        exchange_flow_packet=relic_exchange_flow.event_reference(entry["record"].get("id")) if entry and entry["kind"]=="event" else None
+        exchange_flow=bool(exchange_flow_packet and exchange_flow_packet.get("target") is True)
+        self.relic_exchange_flow_button.setVisible(exchange_flow)
+        self.relic_exchange_flow_button.setEnabled(bool(exchange_flow and exchange_flow_packet.get("source_valid") is True))
+        if self.relic_exchange_flow_window:
+            self.relic_exchange_flow_window.set_reference(entry["record"]["id"] if exchange_flow else None,scope_key=key if exchange_flow else None)
         if not entry:text='没有符合筛选的资料。不能把资料缺失视为不可能出现。'
         elif entry['kind']=='event':
             q=entry['qualification'];text=event_details_text(entry['record']['id'],self._event_context(entry['record']))
@@ -925,6 +937,18 @@ class NodeCatalogPanel(QWidget):
         if self.documented_item_window is None:self.documented_item_window=DocumentedChoiceItemPanel(self)
         self.documented_item_window.set_reference(documented_choice_items.EVENT,scope_key=key)
         self.documented_item_window.show();self.documented_item_window.raise_();self.documented_item_window.activateWindow()
+
+    def open_relic_exchange_flow(self):
+        key=self.list.selected_key();entry=next((r for r in self.entries if r["key"]==key),None)
+        if not entry or entry["kind"]!="event":return
+        identity=entry["record"].get("id");packet=relic_exchange_flow.event_reference(identity)
+        if not packet or packet.get("source_valid") is not True:
+            self.relic_exchange_flow_button.setEnabled(False)
+            if self.relic_exchange_flow_window:self.relic_exchange_flow_window.set_reference(None)
+            return
+        if self.relic_exchange_flow_window is None:self.relic_exchange_flow_window=RelicExchangeFlowPanel(self)
+        self.relic_exchange_flow_window.set_reference(identity,scope_key=key)
+        self.relic_exchange_flow_window.show();self.relic_exchange_flow_window.raise_();self.relic_exchange_flow_window.activateWindow()
 
     def open_curiosity_node_rules(self):
         key=self.list.selected_key();entry=next((r for r in self.entries if r["key"]==key),None)

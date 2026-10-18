@@ -10,15 +10,19 @@
 
 执行时明确区分已核实事实、基于证据的推断和主观建议；资料不足或存在冲突时标明来源、适用版本与未决条件，不以假设冒充结论，也不以完成节数或公式自洽代替实际准确性验收。
 
-## 当前用量收尾规则（2026-10-17）
+## 当前用量收尾规则及本节后暂停（2026-10-18）
 
-可核验的账户剩余额度严格低于5%时开始收尾，替代原15%阈值。触发后不再开启新小节；完整完成当前小节的实现、必要验证、记录与索引更新、提交、普通推送及实际远端核对后再结束。不得因为低额度赶进度、遗漏步骤、缩减验收或把未完成项标为完成。正好5%不触发此规则；不可用的用量窗口仍记为不可用，不推定为零或充足。下文旧阈值及第303节收尾为历史记录，不能覆盖本规则。
+用户2026-10-18将收尾阈值恢复为15%：可核验的账户剩余额度严格低于15%时开始收尾，正好15%不触发。触发后不再开启新小节；必须完整完成当前小节的实现、必要验证、记录与索引更新、提交、普通推送及实际远端核对后再结束，不因低额度赶进度、遗漏步骤、缩减验收或虚报完成。未提供的用量窗口仍记不可用，不推定为零或充足。用户同时明确要求完成当前第305节后暂停，306不得启动；完整收尾后等待用户恢复。原5%规则及旧节数收尾为历史，不能覆盖本段。
 
-## 当前续接 · 第304节已完成功能与必要/原生验收
+## 当前续接 · 第305节完成完整可用验收，额度收尾中
 
-好奇心与死、窥视箱中共五项完整资料选择分别解释50源石锭标记、未具名收藏品、同节点转为混沌源阶理论、变化后无法离开及仅对作战节点生效的效果例外、暂离后再访和决战。取得至少一个沙盘后的第五层3个命运所指与双沙盘自动标记分开；默认未选，手选只读，两个相关选择可手动打开既有固定作战。来源或范围失效清旧资料，同范围刷新保留阅读。
+2026-10-18T11:51:06.120689+08:00。回滚文明完整11场景、19条选择/说明/导航资料可手动阅读；固定本体272件收藏品逐项核对能否交换出去，251项原提供物旗标为真、21项为假，21项均与完整编目角标对应。区分持有声明、第一次/第二次交换、手掌和首次同类条件，不把条件相符当实际可选。两条见好就收分别补充文献后续，保留既有导航及四个同文原场景候选。默认未选，同范围刷新保留搜索、声明与阅读；换范围或来源失效清旧内容。原零件工具完整结果保持不变。
 
-实际68必要检查、原生70个唯一检查通过；5张实际PNG由根代理查看。原项目窗口更新可见响应、私人5路径未变。固定社区版本及原参数不等于当前服务器；两条同文保护证据原选项仍保留歧义，实际选择、50锭支付、领取、节点身份/标记/转换/再访及完整入口脚本未知；不改本局或计算，不提供路线推荐；25场景/57选项、10附注和17条typed奖励统计不因本节减少。 同时修正完整事件正文误用预览筛选的作战提示；两次原生失败及逐域差异保留，修后维持原严格断言。来源及实际回执verification/sections/304.json；290完整范围沿用原来源，本节未跑全量；后续305且到期全量305，无数字终点。304功能提交73e51a8a43a027eb18bb2fae4ac10cd7d0056d5c已普通推送并核对实际远端，公开证明verification/sections/304-publication.json；本次只追加发布元数据，不增加功能节数。
+实际65项必要检查、72个功能原生唯一检查通过；最终完整可用全量305通过，完整469选择器、旧52状态与原typed核对、原30及独立29、全部20项补充窗口范围保留。原30符号链接1314缺权限仍未通过；73项历史跳过、私有/原Windows及Linux/Wine、游戏和聊天不冒充通过。第一轮失败及修复来源另存，未覆盖原件。根代理查看本轮全部实际PNG，原项目测试窗口已更新可见响应，启动前后私人5路径不变。
+
+272件为固定本体快照，不是当前完整收藏品目录；提供物资格不是奖励池，不能反推奖励档次、数量或概率。旧PRTS两条退出导航指向场景5，另一份完整调查记录却记载不同退出原文，双源冲突分别保留，不恢复唯一服务器入口。实际选择、持有、消耗、奖励、剩余次数及当前服务器资格仍未知；25个原场景/57原选项入口、10条附注、17条typed奖励口径不减少。P3/P2/P1均未全部完成，识别优化仍最后，不推荐或自动选路。
+
+用户2026-10-18已恢复严格低于15%的收尾阈值，并明确要求完整完成305后暂停；此前4%触发为历史记录。完成305普通发布核对后结束本批，306未启动，等待用户恢复；下次定期全量320。<!-- section305-publication-pending -->当前为本地完整验收完成，普通推送与实际远端核对尚待完成。
 
 ## 当前优先顺序与输出可读性（2026-10-15最新更正）
 
@@ -79,7 +83,7 @@ Continue development on `codex/p2-development`. The user requested that all subs
 
 The user authorized continuous work without confirmation between sections. Each coherent functional section records its implemented scope, necessary validation (or why none is needed), limitations and next action in DEVELOPMENT_CHECKPOINT.json and WORK_IN_PROGRESS.md, then commits and ordinarily pushes. Reuse unchanged passing evidence; do not require exhaustive native graph comparisons, repeated independent audits, screenshots or broad regression on every section. Run an actual window only when needed to verify the changed UI behavior; full Linux/Wine/window validation keeps its complete available scope. Wine is compatibility validation, not genuine Windows/game/desktop integration.
 
-User instruction on 2026-10-07: after P2 is complete, continue P3. If the same problem remains unresolved after three attempts, defer it with evidence, attempt count and restart conditions; continue independent work. The former 15% usage rule is superseded by the 2026-10-17 rule above: strictly below 5%, finish the entire active section including validation and verified ordinary publication before wrapping up. Use the account usage tool when available; never invent an unavailable percentage.
+User instruction on 2026-10-07: after P2 is complete, continue P3. If the same problem remains unresolved after three attempts, defer it with evidence, attempt count and restart conditions; continue independent work. The 2026-10-18 rule restores strictly below 15%; finish the entire active section including validation and verified ordinary publication before wrapping up. The user explicitly requests pausing after completing section305; do not start306. Use the account usage tool when available; never invent an unavailable percentage.
 
 User instructions on 2026-10-08: increase the amount of useful work in each section. Group related, source-supported functional improvements with their complete verification into one section; source collection, an isolated assertion, or routine archival preparation is not a separate progress milestone. Keep per-issue original evidence, applicability, boundary input/output checks, failure records and restart conditions. Use only necessary change-specific validation before archiving the group; full validation follows the latest cadence above. Broader scope does not reduce detail control.
 

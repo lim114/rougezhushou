@@ -1,0 +1,48 @@
+--- immutable-first/archive_full305.py
++++ independent-attempt2/archive_full305.py
+@@ -17,12 +17,13 @@
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--archive', action='store_true'); parser.add_argument('--container', required=True, type=Path)
+     parser.add_argument('--attempt-name', required=True)
++    parser.add_argument('--controller-process-receipt', type=Path, default=BASE / 'root-launch-attempt2/controller-process.json')
+     for name in ('expected-parent-commit', 'freeze-sha256', 'activation-sha256'):
+         parser.add_argument('--' + name, required=True)
+     args = parser.parse_args()
+     if not args.archive: raise ValueError('Root explicit --archive required.')
+     data, activation = bound(args.expected_parent_commit, args.freeze_sha256, args.activation_sha256)
+-    if args.attempt_name != 'execution-attempt1':
++    if args.attempt_name != 'execution-attempt2':
+         raise ValueError('This reviewed one-shot controller has exactly one reviewed archive identity; no automatic retries.')
+     container = args.container.resolve()
+     if not args.container.is_absolute() or container.is_relative_to(ROOT) or container.is_symlink():
+@@ -33,6 +34,11 @@
+             or authority['activation_sha256'] != args.activation_sha256 or authority['parent_commit'] != args.expected_parent_commit):
+         raise ValueError('Wrong actual original305 namespace/freeze.')
+     orchestration = json.loads((container / 'orchestration.json').read_bytes())
++    from archive_gate_attempt2 import root_controller_gate, complete_components_gate
++    actual_root_process = root_controller_gate(args.controller_process_receipt,args.expected_parent_commit,args.freeze_sha256,args.activation_sha256,container)
++    complete_scope = complete_components_gate(container,orchestration,data,args.expected_parent_commit,args.freeze_sha256,args.activation_sha256)
++    from attempt2_lineage import first_closed_archive
++    first_closed_archive(data['first_attempt_lineage']['archive']['sha256'])
+     # Failed terminal attempts are sealed intact. Uncertain live executions are
+     # never sealed as finished; this function does not terminate any process.
+     for row in orchestration['steps']:
+@@ -59,6 +65,8 @@
+     copy(FREEZE, 'source-freeze.json', 'root actual fresh305 source declaration')
+     copy(BASE / 'activation305.json', 'activation305.json', 'root actual binding')
+     copy(BASE / 'full305-once.json', 'full305-once.json', 'root one-shot namespace authority')
++    for name in ('controller-process.json','process.exit','stdout.txt','stderr.txt'):
++        copy(BASE / 'root-launch-attempt2' / name,'root-launch-attempt2/' + name,'actual retained root-controller Popen and original streams')
+     copy(READY_PATH, 'execution-tools/' + READY_PATH.name, 'reviewed preparation identity')
+     for name in tool_pins()['files']:
+         copy(BASE / name, 'execution-tools/' + name, 'exact preparation/executed dependency; old raw labels preserved')
+@@ -90,7 +98,8 @@
+         if (container / 'legacy' / entry).is_file():
+             copy(container / 'legacy' / entry, 'legacy/' + entry, 'actual unchanged original typed auditor output')
+     bound(args.expected_parent_commit, args.freeze_sha256, args.activation_sha256)
+-    manifest = {'section': 305, 'kind': 'EXACT_FULL305_ORIGINAL_EXECUTION_ARCHIVE', 'sealed_at': now(),
++    manifest = {'section': 305, 'actual_validation_attempt': 2, 'kind': 'EXACT_FULL305_ORIGINAL_EXECUTION_ARCHIVE', 'sealed_at': now(),
++        'actual_root_process_closure': actual_root_process, 'complete_scope_gate': complete_scope,
+         'source_freeze_sha256': args.freeze_sha256, 'activation_sha256': args.activation_sha256,
+         'raw_namespace_preserved_in_original_bytes': str(container), 'files': files,
+         'automated_available_scope_passed': orchestration.get('automated_available_scope_passed'),

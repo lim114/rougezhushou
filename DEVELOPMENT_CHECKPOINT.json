@@ -12,9 +12,9 @@
       "P1"
     ],
     "max_failed_attempts_per_problem": 3,
-    "wrap_up_below_usage_percent": 5,
+    "wrap_up_below_usage_percent": 15,
     "usage_percent_available": true,
-    "usage_monitoring": "Use verified available account windows only. Strictly below 5 percent triggers wrap-up; exactly 5 does not. Do not start another section after triggering. Complete the entire active section: implementation, necessary validation, records/requirements/index, commit, ordinary push and actual remote verification. Do not rush, reduce scope or claim incomplete work complete. Unavailable windows remain unavailable.",
+    "usage_monitoring": "Use verified available account windows only. Strictly below 15 percent triggers wrap-up; exactly 15 does not. Do not start another section after triggering. Complete the entire active section: implementation, necessary validation, records/requirements/index, commit, ordinary push and actual remote verification. Do not rush, reduce scope or claim incomplete work complete. Unavailable windows remain unavailable. The user explicitly requests pausing after completing section305; section306 must wait for renewed user authorization.",
     "automatic_next_batch": false,
     "commit_interval": 1,
     "commit_after_full_validation_pass": false,
@@ -27,7 +27,7 @@
     "validation_is_additional_to_functional_progress": true,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
     "full_validation_anchor_section": 125,
-    "next_full_validation_after": 305,
+    "next_full_validation_after": 320,
     "validation_per_section": "Necessary checks tied to changed behavior only; omit when unnecessary. Full available suite unchanged.",
     "each_section_window_required": false,
     "each_section_requires_meaningful_project_advancement": true,
@@ -57,11 +57,20 @@
     "priority_changed_on_Beijing": "2026-10-15",
     "player_readability": "Default player output requires no computing terminology: useful result/information first, game Chinese names, conditions/units/unknowns explained; raw IDs, numeric implementation and debug details expandable.",
     "historical_long_term_target_section_before_p3_continuation": 400,
-    "usage_threshold_changed_on_Beijing": "2026-10-17",
-    "finish_entire_active_section_before_usage_wrap_up": true
+    "usage_threshold_changed_on_Beijing": "2026-10-18",
+    "finish_entire_active_section_before_usage_wrap_up": true,
+    "usage_wrap_up_triggered": true,
+    "usage_wrap_up_after_active_section": 305,
+    "usage_remaining_percent_at_trigger": 4,
+    "usage_threshold_receipt": "verification/sections/305-preparation/usage-threshold.json",
+    "pause_after_active_section_requested": true,
+    "pause_after_active_section": 305,
+    "pause_request_date": "2026-10-18",
+    "latest_usage_and_pause_instruction_receipt": "verification/sections/305-preparation/usage-policy-restored15-and-pause.json",
+    "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17"
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 304,
+  "completed_sections": 305,
   "sections": [
     {
       "number": 1,
@@ -1874,41 +1883,17 @@
       "completion_ref": "p3-section-304",
       "topic": "命运所指五项选择的标记、节点变化、暂离再访与固定决战资料",
       "verification": "verification/sections/304.json"
+    },
+    {
+      "number": 305,
+      "completion_ref": "p3-section-305",
+      "topic": "回滚文明收藏品提供物核对与两类完整文献流程",
+      "verification": "verification/sections/305.json"
     }
   ],
-  "next_section": 305,
-  "next_action": "从305继续有证P3剩余事项并完成到期完整可用全量，保持原范围；P2/P1保留、识别最后，无数字终点。",
+  "next_section": 306,
+  "next_action": "用户已恢复15%阈值并明确要求305完整完成后暂停；普通推送与实际远端核对完成后结束，不启动306，等待用户恢复，下次定期全量320。",
   "full_validation_due": false,
-  "last_full_validation": {
-    "after_section": 290,
-    "receipt": "verification/full-290/summary.json",
-    "available_checks_passed": true,
-    "complete_repository_validation": false,
-    "scope_not_reduced": true,
-    "native_current_windows_gui_verified": true,
-    "native_windows_game_chat_verified": false,
-    "unresolved_available_failures": false,
-    "original_failed_attempts_preserved": true,
-    "component_freezes": {
-      "offline3": {
-        "path": "verification/full-290/source-freeze-final-A3.json",
-        "sha256": "ad3842c95c4a4eadb6779611a337fbeb26c2682a25d6ed83945dcf7a0a8d65f7"
-      },
-      "legacy4_and_original_typed": {
-        "path": "verification/full-290/source-freeze-final-A3.json",
-        "sha256": "ad3842c95c4a4eadb6779611a337fbeb26c2682a25d6ed83945dcf7a0a8d65f7"
-      },
-      "A2_current_and_P3": {
-        "path": "verification/full-290/source-freeze-repair.json",
-        "sha256": "75cec266144a389b93aced04d150c4cf6e72a23403f250a9caab9915543e6ec0"
-      }
-    },
-    "all_historical_source_maps_same_freeze": false,
-    "composite_proof": "verification/full-290/composite-admissibility.json",
-    "actual_offline_attempt": 3,
-    "actual_legacy_ordinal": 4,
-    "reused_current_P3_attempt": 2
-  },
   "windows_native_validation": "当前289：Windows隔离MainWindow两页56检查及原测试窗口可见响应通过；不计实际游戏/聊天验收。最新完整可用全量仍verification/full-285/summary.json，真实符号链接1314、历史原件/私样本等缺口保留。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
   "deferred_problems": [
@@ -2000,7 +1985,7 @@
     "commit_interval": 1,
     "push_after_each_section": true,
     "full_validation_interval": 15,
-    "next_full_validation_after": 305,
+    "next_full_validation_after": 320,
     "requirements_synced_each_section": true
   },
   "pending_batch_sections": [],
@@ -2024,15 +2009,15 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 304,
-    "verification": "verification/sections/304.json",
+    "section": 305,
+    "verification": "verification/sections/305.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit",
-    "commit_reference": "enclosing snapshot contains304 verified functional source, acceptance, requirements and index; functional publication proof separately bound"
+    "commit_reference": "enclosing functional305 snapshot; actual ordinary publication proof remains separately bound"
   },
   "last_verified_cloud_save": {
     "section": 304,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "73e51a8a43a027eb18bb2fae4ac10cd7d0056d5c",
     "proof": "verification/sections/304-publication.json",
@@ -2227,7 +2212,7 @@
     "full095_deferred_preserved": true,
     "scope": "Current239 maintained available selector union plus inherited bounded healthy functional MainWindow suite. Specialist101–104 receipts separately archived. Missing evidence, original skips and3 actual Wine capability bodies are not PASS."
   },
-  "next_full_validation_after": 305,
+  "next_full_validation_after": 320,
   "user_requested_wrap": false,
   "current_full110_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -2282,17 +2267,16 @@
     "deferred095_and109_preserved": true
   },
   "current_available_full_validation": {
-    "section": 290,
-    "receipt": "verification/full-290/summary.json",
+    "section": 305,
+    "receipt": "verification/full-305/summary.json",
     "available_scope_passed": true,
-    "native_windows_game_chat_verified": false,
-    "composite_proof": "verification/full-290/composite-admissibility.json",
-    "actual_offline_attempt": 3,
-    "actual_legacy_ordinal": 4,
-    "reused_current_P3_attempt": 2
+    "actual_validation_attempt": 2,
+    "source_freeze": "verification/full-305/source-freeze-attempt2.json",
+    "source_freeze_sha256": "4e2528deb25cbb166b74d74db8e0c3a6212ec6095a6d7b441bf62a911ade8086",
+    "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": null,
-  "batch_status": "P3_SECTION304_PUBLISHED_CONTINUATION_READY",
+  "batch_status": "P3_SECTION305_LOCAL_ACCEPTED_PUBLICATION_PENDING_USAGE_WRAPUP",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2330,18 +2314,20 @@
     301,
     302,
     303,
-    304
+    304,
+    305
   ],
   "current_batch": {
     "start": 286,
     "end": null,
-    "status": "P3_SECTION304_PUBLISHED_CONTINUATION_READY",
-    "next_section": 305,
+    "status": "P3_SECTION305_LOCAL_ACCEPTED_PUBLICATION_PENDING_USAGE_WRAPUP",
+    "next_section": 306,
     "next_section_started": false,
-    "next_full_validation_after": 305,
+    "next_full_validation_after": 320,
     "batch_closed": false,
     "target_origin": "User authorized P3 continuation without a numeric stopping target.",
-    "receipt": "verification/sections/304.json"
+    "receipt": "verification/sections/305.json",
+    "completed_sections": 305
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -4631,23 +4617,6 @@
     "status": "implementation_in_progress",
     "functional_progress_claimed": false
   },
-  "current_section_validation": {
-    "section": 304,
-    "receipt": "verification/sections/304.json",
-    "necessary_methods_passed": 68,
-    "native_isolated_window_checks": 70,
-    "full_suite_rerun": false,
-    "last_full_receipt": "verification/full-290/summary.json",
-    "full_source_is_historical290": true
-  },
-  "latest_section_environment": {
-    "section": 304,
-    "receipt": "verification/sections/304.json",
-    "native_windows": "68 necessary; 70 unique native; root PNG review and original window/private5 unchanged",
-    "native_game_or_chat_verified": false,
-    "current_section_full_rerun": false,
-    "last_full_receipt": "verification/full-290/summary.json"
-  },
   "historical_before304_publication": {
     "section": 303,
     "scope": "previous_functional_section",
@@ -4656,7 +4625,63 @@
     "proof": "verification/sections/303-publication.json",
     "proof_sha256": "7e68597d2d3f03e8ddb36643c2f5d49eb671a2a533d74889d1a2c41539c73bb5"
   },
-  "cloud_publication_closeout": {
+  "policy_change_history": [
+    {
+      "at_utc": "2026-10-18T03:31:06.806795+00:00",
+      "previous_wrap_up_below_usage_percent": 5,
+      "new_wrap_up_below_usage_percent": 15,
+      "user_explicit_pause_after_section": 305,
+      "original_trigger_receipt_retained": "verification/sections/305-preparation/usage-threshold.json"
+    }
+  ],
+  "historical_before305_last_full_validation": {
+    "after_section": 290,
+    "receipt": "verification/full-290/summary.json",
+    "available_checks_passed": true,
+    "complete_repository_validation": false,
+    "scope_not_reduced": true,
+    "native_current_windows_gui_verified": true,
+    "native_windows_game_chat_verified": false,
+    "unresolved_available_failures": false,
+    "original_failed_attempts_preserved": true,
+    "component_freezes": {
+      "offline3": {
+        "path": "verification/full-290/source-freeze-final-A3.json",
+        "sha256": "ad3842c95c4a4eadb6779611a337fbeb26c2682a25d6ed83945dcf7a0a8d65f7"
+      },
+      "legacy4_and_original_typed": {
+        "path": "verification/full-290/source-freeze-final-A3.json",
+        "sha256": "ad3842c95c4a4eadb6779611a337fbeb26c2682a25d6ed83945dcf7a0a8d65f7"
+      },
+      "A2_current_and_P3": {
+        "path": "verification/full-290/source-freeze-repair.json",
+        "sha256": "75cec266144a389b93aced04d150c4cf6e72a23403f250a9caab9915543e6ec0"
+      }
+    },
+    "all_historical_source_maps_same_freeze": false,
+    "composite_proof": "verification/full-290/composite-admissibility.json",
+    "actual_offline_attempt": 3,
+    "actual_legacy_ordinal": 4,
+    "reused_current_P3_attempt": 2
+  },
+  "historical_before305_current_section_validation": {
+    "section": 304,
+    "receipt": "verification/sections/304.json",
+    "necessary_methods_passed": 68,
+    "native_isolated_window_checks": 70,
+    "full_suite_rerun": false,
+    "last_full_receipt": "verification/full-290/summary.json",
+    "full_source_is_historical290": true
+  },
+  "historical_before305_latest_section_environment": {
+    "section": 304,
+    "receipt": "verification/sections/304.json",
+    "native_windows": "68 necessary; 70 unique native; root PNG review and original window/private5 unchanged",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": false,
+    "last_full_receipt": "verification/full-290/summary.json"
+  },
+  "historical_before305_cloud_publication_closeout": {
     "section": 304,
     "functional_commit": "73e51a8a43a027eb18bb2fae4ac10cd7d0056d5c",
     "functional_source_bytes_unchanged": true,
@@ -4666,5 +4691,59 @@
     "batch_closed": false,
     "next_section_started": false,
     "numeric_continuation_target": null
+  },
+  "historical_before305_active_section": {
+    "section": 305,
+    "scope": "verification/sections/305-preparation/scope.json",
+    "status": "functional_and_repaired_maintenance_checks_passed_complete_second_full_running_not_completed",
+    "functional_progress_claimed": false,
+    "functional_checks_passed": true,
+    "periodic_full_running": true,
+    "runtime_checkpoint": "verification/sections/305-preparation/runtime-checkpoint.json",
+    "full_source_freeze": "verification/full-305/source-freeze.json",
+    "full_namespace": "C:/Users/李娜/AppData/Local/Temp/rouge-full305-e6aada2377db4d4f9f58019bfa25502d",
+    "usage_wrap_up_after_completion": true,
+    "first_live_findings": "verification/full-305/preparation/first-offline-live-findings.json",
+    "first_full_failure_candidates_not_applied": true,
+    "first_offline_terminal_findings": "verification/full-305/preparation/first-offline-terminal-failures.json",
+    "first_offline_actual_failures": 5,
+    "first_full_complete_or_passed": false,
+    "second_full_validation": {
+      "source_freeze": "verification/full-305/source-freeze-attempt2.json",
+      "source_freeze_sha256": "4e2528deb25cbb166b74d74db8e0c3a6212ec6095a6d7b441bf62a911ade8086",
+      "controller_ready": ".cache/p3-full305-attempt2-prep-revision2/CONTROLLER_READY_ATTEMPT2_REV2.json",
+      "root_process": ".cache/p3-full305-attempt2-prep-revision2/root-launch-attempt2/controller-process.json",
+      "actual_container": "C:\\Users\\李娜\\AppData\\Local\\Temp\\rouge-full305-attempt2-08fc1d008e904924b0d6f19436e61f2f",
+      "first_attempt_archive": "verification/full-305/execution-attempt1/archive-manifest.json",
+      "maintenance_actual_checks": "verification/full-305/repairs-after-first/necessary/process.json",
+      "native296_regression": "verification/full-305/native296-maintenance-attempt1/process.json",
+      "completed_or_published": false
+    }
+  },
+  "last_full_validation": {
+    "after_section": 305,
+    "receipt": "verification/full-305/summary.json",
+    "available_checks_passed": true,
+    "complete_repository_validation": false,
+    "scope_not_reduced": true,
+    "source_freeze": "verification/full-305/source-freeze-attempt2.json",
+    "source_freeze_sha256": "4e2528deb25cbb166b74d74db8e0c3a6212ec6095a6d7b441bf62a911ade8086"
+  },
+  "current_section_validation": {
+    "section": 305,
+    "receipt": "verification/sections/305.json",
+    "necessary_methods_passed": 65,
+    "native_isolated_window_checks": 72,
+    "full_suite_rerun": true,
+    "last_full_receipt": "verification/full-305/summary.json",
+    "full_source_is_historical290": false
+  },
+  "latest_section_environment": {
+    "section": 305,
+    "receipt": "verification/sections/305.json",
+    "native_windows": "65 necessary;72 unique functional-native; final complete available full305 bound separately",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": true,
+    "last_full_receipt": "verification/full-305/summary.json"
   }
 }

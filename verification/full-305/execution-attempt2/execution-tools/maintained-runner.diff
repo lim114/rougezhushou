@@ -1,0 +1,37 @@
+--- original
++++ candidate
+@@ -136,6 +136,9 @@
+ )
+ 
+ 
++# Complete post290 modules append after the preserved original selector union.
++ADDITIONAL_MODULES = ('tests.test_battle_entry_compatibility_299', 'tests.test_battle_entry_integration_296', 'tests.test_battle_entry_reference_view_296', 'tests.test_battle_event_references_296', 'tests.test_curiosity_node_rules_304', 'tests.test_curiosity_node_rules_view_304', 'tests.test_direct_landmark_294', 'tests.test_direct_landmark_303', 'tests.test_documented_choice_item_view_295', 'tests.test_documented_choice_items_295', 'tests.test_documented_item_integration_295', 'tests.test_event_node_requirements_298', 'tests.test_event_node_requirements_integration_298', 'tests.test_event_node_requirements_view_298', 'tests.test_event_preview_filters_292', 'tests.test_expedition_integration_297', 'tests.test_expedition_results_297', 'tests.test_expedition_results_view_297', 'tests.test_future_region_effects_300', 'tests.test_future_region_effects_view_300', 'tests.test_future_region_integration_300', 'tests.test_named_reward_integration_301', 'tests.test_named_reward_items_301', 'tests.test_named_reward_items_view_301', 'tests.test_peace_guardian_integration_291', 'tests.test_peace_guardian_results_291', 'tests.test_resident_location_references_291', 'tests.test_resident_reference_signals_291', 'tests.test_resting_corner_results_293', 'tests.test_resting_corner_view_293', 'tests.test_ritual_weakening_302', 'tests.test_ritual_weakening_integration_302', 'tests.test_ritual_weakening_view_302', 'tests.test_spawn_candidates_299', 'tests.test_spawn_candidates_integration_299', 'tests.test_spawn_candidates_view_299', 'tests.test_stage_entry_configuration_296')
++
+ def source_hashes():
+     files = [*ROOT.glob('rouge/**/*.py'), *ROOT.glob('rouge/data/**/*.json'),
+              *ROOT.glob('tests/test_*.py'), *ROOT.glob('scripts/**/*.py'),
+@@ -281,6 +284,14 @@
+         super().addSubTest(test, subtest, err)
+ 
+ 
++def maintained_selectors():
++    """Original maintained ordered union, then all explicit post290 additions."""
++    historical = json.loads((ROOT / 'CORE_0.70_VERIFICATION.json').read_bytes())
++    from verify_cloud import MODULES
++    original = list(dict.fromkeys(historical['test_modules'] + list(NEW_MODULES) + list(MODULES)))
++    return list(dict.fromkeys(original + list(ADDITIONAL_MODULES)))
++
++
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--output', type=Path, required=True)
+@@ -292,8 +303,7 @@
+     before = source_hashes()
+     historical = json.loads((ROOT / 'CORE_0.70_VERIFICATION.json').read_text(encoding='utf-8'))
+     # Pick up future cloud selectors automatically as the project advances.
+-    from verify_cloud import MODULES
+-    selectors = list(dict.fromkeys(historical['test_modules'] + list(NEW_MODULES) + list(MODULES)))
++    selectors = maintained_selectors()
+     args.output.parent.mkdir(parents=True, exist_ok=True)
+     with args.output.with_suffix('.log').open('x', encoding='utf-8') as log:
+         result = unittest.TextTestRunner(stream=log, verbosity=args.verbosity,

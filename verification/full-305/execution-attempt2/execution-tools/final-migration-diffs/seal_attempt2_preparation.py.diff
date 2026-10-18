@@ -1,0 +1,89 @@
+--- immutable-first/seal_attempt2_preparation.py
++++ independent-attempt2/seal_attempt2_preparation.py
+@@ -0,0 +1,86 @@
++"""Static second-cache READY only; never declare, activate or run a suite."""
++import ast,difflib,json,sys
++from pathlib import Path
++from hashlib import sha256
++from full305_common import BASE,ROOT,READY_PATH,sha,write_new
++from activate_full305 import preservation,replace_assignment
++
++
++def pin(path):return {'sha256':sha(path),'bytes':path.stat().st_size}
++
++
++def main():
++    if READY_PATH.exists():raise FileExistsError('Preserve second preparation READY; new changes need a reviewed revision.')
++    if any((BASE/name).exists()for name in('activation305.json','full305-once.json','bound-legacy','bound-current','root-launch-attempt2')):
++        raise ValueError('Preparation cannot seal an activated/executed cache.')
++    checks=[]
++    def require(value,label):
++        if not value:raise ValueError(label)
++        checks.append(label)
++    first=ROOT/'.cache/p3-full305-prep'
++    original=json.loads((BASE/'FIRST_ATTEMPT_CONTROLLER_READY.json').read_bytes())
++    require(sha(first/'CONTROLLER_READY_REV2.json')==sha(BASE/'FIRST_ATTEMPT_CONTROLLER_READY.json')=='89c698e1dfd6adcf87350147ed26dd755f6a1c99668ceadeb554abecd0cad6e4','Exact immutable first READY')
++    require(all(sha(first/name)==value['sha256']and(first/name).stat().st_size==value['bytes']for name,value in original['files'].items()),'Every original first frozen tool remains unchanged')
++    prepared=json.loads((BASE/'prepared-inputs-final.json').read_bytes())
++    for mode,entries in prepared['template_bundle_sha256'].items():
++        require(len(entries)==(84 if mode=='legacy' else 18),'Complete original'+mode+' template count')
++        require(all(sha(BASE/('template-'+mode)/name)==value for name,value in entries.items()),'Exact original'+mode+' bytes')
++    raw=(BASE/'template-legacy/window.py').read_bytes()
++    proof=preservation(raw,replace_assignment(replace_assignment(raw,'_SOURCE125_GUARD_SHA256','0'*64),'_SOURCE125_MAINTAINED_COUNT',99999),{'_SOURCE125_GUARD_SHA256','_SOURCE125_MAINTAINED_COUNT'})
++    require(proof['assert_AST_count']==862 and proof['all_nonbinding_AST_identical'],'Original862/generators/observers nonbinding AST preserved')
++    source=raw.decode('utf8');tree=ast.parse(source)
++    body=[n for n in tree.body if isinstance(n,ast.Try)and sum(isinstance(x,ast.Assert)for x in ast.walk(n))==552]
++    require(len(body)==1 and sha256(ast.get_source_segment(source,body[0]).encode()).hexdigest()=='11da3f02423dc96598480c85c31f3c8ba4672f6f4cd232741579ff45a7f87922','Original552 physical mainbody')
++    for name in('window.py','window29.py'):
++        before=(BASE/'template-current'/name).read_bytes()
++        require(preservation(before,replace_assignment(before,'FREEZE_SHA256','0'*64),{'FREEZE_SHA256'})['all_nonbinding_AST_identical'],'Current'+name+' original assertions preserved')
++    adapter='candidate/scripts/verify_curiosity_node_rules_window_304_full305.py'
++    before=(first/adapter).read_text(encoding='utf8');after=(BASE/adapter).read_text(encoding='utf8')
++    require(after==before.replace("freeze=read(ROOT/'verification/full-305/source-freeze.json')","freeze=read(ROOT/'verification/full-305/source-freeze-attempt2.json')",1),'304 only exact secondfreeze path difference')
++    def require_calls(text):
++        return[ast.dump(n,include_attributes=False)for n in sorted((n for n in ast.walk(ast.parse(text))if isinstance(n,ast.Call)and isinstance(n.func,ast.Name)and n.func.id=='require'),key=lambda n:(n.lineno,n.col_offset))]
++    require(require_calls(before)==require_calls(after),'304 every original require unchanged')
++    require(sha(BASE/'supervisor305.py')=='b073d86b1ddb6d697278380e34b29fd3887a8ea14448f29ffd8a8852dc4b2309','Actual mature supervisor unchanged')
++    api={'__file__':str(ROOT/'scripts/verify_full_available.py'),'__name__':'_attempt2_current_maintained_api_only'}
++    sys.path[:0]=[str(ROOT/'scripts'),str(ROOT)]
++    exec(compile((BASE/'candidate/scripts/verify_full_available.py').read_bytes(),'maintained-source-only','exec'),api)
++    selectors=api['maintained_selectors']();old=json.loads((ROOT/'verification/full-290/source-freeze-final-A3.json').read_bytes())['selectors']
++    require(selectors[:len(old)]==old and len(old)==430,'Complete430 original ordered prefix')
++    require(len(selectors)==469 and len(selectors)==len(set(selectors)),'Actual469 unchanged complete selector API')
++    parse_files={}
++    for path in sorted([*BASE.glob('*.py'),*(BASE/'candidate/scripts').glob('*.py')]):
++        ast.parse(path.read_bytes(),filename=str(path));parse_files[path.relative_to(BASE).as_posix()]=pin(path)
++    archive=(BASE/'archive_full305.py').read_text(encoding='utf8')
++    require(archive.index('root_controller_gate(args.controller_process_receipt')<archive.index('target.mkdir(parents=True)'), 'Archive actual root-Popen gate before any archive write')
++    require(archive.index('complete_components_gate(container')<archive.index('target.mkdir(parents=True)'), 'Archive exact25 full gate before any archive write')
++    gate=(BASE/'archive_gate_attempt2.py').read_text(encoding='utf8')
++    require("record.get('required_components')==expected"in gate and "[row.get('name')for row in record['steps']]==expected"in gate and 'len(expected)==25'in gate,'Archive rejects partial/reordered/duplicate component positions')
++    require("'exit_observed_directly_from_retained_popen')is True"in gate and "'derived_from_supervisor_json')is False"in gate,'Archive original actual exit provenance retained')
++    require("'execution-attempt2'"in archive and 'first_closed_archive(data['in archive,'Exclusive second archive and immutable first lineage')
++    migration={}
++    names=[p.relative_to(BASE).as_posix()for p in BASE.glob('*.py')]+['prepared-inputs-final.json',adapter,'RUN_PLAN_ATTEMPT2.md','SOURCE_AND_RECEIPT_SCHEMA_ATTEMPT2.md']
++    for name in sorted(set(names)):
++        current=BASE/name;old_path=first/name
++        before=old_path.read_text(encoding='utf8')if old_path.is_file()else''
++        after=current.read_text(encoding='utf8')
++        if before==after:continue
++        diff=''.join(difflib.unified_diff(before.splitlines(True),after.splitlines(True),fromfile='immutable-first/'+name,tofile='independent-attempt2/'+name))
++        dest=BASE/'final-migration-diffs'/(name.replace('/','__')+'.diff');dest.parent.mkdir(parents=True,exist_ok=True)
++        with dest.open('x',encoding='utf8')as f:f.write(diff)
++        migration[name]={'first_sha256':sha(old_path)if old_path.is_file()else None,'second_sha256':sha(current),'diff':dest.relative_to(BASE).as_posix()}
++    report={'section':305,'actual_validation_attempt':2,'kind':'STATIC_CACHE_PREPARATION_NOT_TEST_OR_ACTUAL_VALIDATION','checks':checks,'static_checks':len(checks),
++        'actual_selector_API_count':len(selectors),'parsed_sources':parse_files,'migration':migration,
++        'first_full_still_unmodified':True,'first_archive_maintenance_and_second_root_declaration_remain_required':True}
++    write_new(BASE/'ATTEMPT2_STATIC_PREPARATION.json',report)
++    files={p.relative_to(BASE).as_posix():pin(p)for p in sorted(BASE.rglob('*'))if p.is_file()and'__pycache__'not in p.parts and not p.is_symlink()}
++    ready={'section':305,'actual_validation_attempt':2,'kind':'FULL305_CONTROLLER_CACHE_READY_NOT_EXECUTED','files':files,
++        'first_ready_sha256':sha(BASE/'FIRST_ATTEMPT_CONTROLLER_READY.json'),'actual_current_selector_API_count':len(selectors),
++        'native_component_count_after_root_binding':20,'scope_not_reduced':True,'public_promote_after_first_seal_only':{adapter.removeprefix('candidate/'):pin(BASE/adapter)},
++        'entrypoints':{'declare':'declare_freeze305.py','activate':'activate_full305.py','execute_explicit_root_owned_wrapper':'run_owned_full305_root.py','archive':'archive_full305.py'},
++        'run_plan':'RUN_PLAN_ATTEMPT2.md','source_receipt_contract':'SOURCE_AND_RECEIPT_SCHEMA_ATTEMPT2.md',
++        'first_archive_or_final_maintenance_PASS_invented':False,'second_input_freeze_activation_execution_started':False,'actual_full305_second_PASS':None}
++    write_new(READY_PATH,ready)
++    print(json.dumps({'ready':str(READY_PATH),'sha256':sha(READY_PATH),'files':len(files),'static_checks':len(checks),'actual_selectors':len(selectors),'runtime_started':False},ensure_ascii=False))
++
++
++if __name__=='__main__':main()
