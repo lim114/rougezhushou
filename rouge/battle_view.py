@@ -303,6 +303,9 @@ class BattlePreviewPanel(QWidget):
         self.enemy_form_button=QPushButton('查看伪装与现身资料');enemy_layout.addWidget(self.enemy_form_button)
         self.enemy_form_button.hide();self.enemy_form_window=None
         self.enemy_form_button.clicked.connect(self.open_enemy_form)
+        self.boss_phase_button=QPushButton('查看首领形态与转换');enemy_layout.addWidget(self.boss_phase_button)
+        self.boss_phase_button.hide();self.boss_phase_window=None
+        self.boss_phase_button.clicked.connect(self.open_boss_phase_reference)
         self.enemy_detail=QPlainTextEdit();self.enemy_detail.setReadOnly(True);enemy_layout.addWidget(self.enemy_detail,1)
         details.addWidget(enemy_box)
         details.setSizes([260,340,380]);layout.addWidget(details,3)
@@ -494,6 +497,7 @@ class BattlePreviewPanel(QWidget):
         if self.spawn_candidates_window is not None:self.spawn_candidates_window.set_reference(None)
         self._rows_stage=None;self._shown_enemy=None;self._tile_cell=None;self._detail_key=None
         self._refresh_enemy_form()
+        self._refresh_boss_phase()
         self._branch_marker=None;self.branch_panel.set_stage(sid)
         self.current_stage=sid;stage=battle_data()['stages'].get(sid)
         self.duel_reward_button.setVisible(is_duel_stage(sid))
@@ -606,6 +610,7 @@ class BattlePreviewPanel(QWidget):
         self._refresh_spawn_candidates()
 
         self._refresh_enemy_form()
+        self._refresh_boss_phase()
 
     def _refresh_branch_positions(self,*_):
         from .branch_position_overview import branch_position_overview
@@ -661,13 +666,13 @@ class BattlePreviewPanel(QWidget):
     def _render_enemy(self,enemy_id,level=None,*,preserve=False):
         stage=battle_data()['stages'].get(self.current_stage)
         if not stage:
-            self._shown_enemy=None;self._refresh_enemy_form();return
+            self._shown_enemy=None;self._refresh_enemy_form();self._refresh_boss_phase();return
         choices=[e for e in stage['enemies'] if e['id']==enemy_id and (level is None or e['level']==level)]
         if len(choices)!=1:
             self._shown_enemy=None
             self.enemy_picture.set_subject(None,None,'')
             replace_text(self.enemy_detail,'敌人引用等级不能唯一确认，请通过敌人筛选选择。',preserve=False)
-            self._refresh_enemy_form();return
+            self._refresh_enemy_form();self._refresh_boss_phase();return
         key=(self.current_stage,enemy_id,choices[0]['level'])
         keep=preserve and self._shown_enemy==key;self._shown_enemy=key
         entry=choices[0]
@@ -675,6 +680,7 @@ class BattlePreviewPanel(QWidget):
         text=enemy_text(enemy_preview(self.current_stage,enemy_id,choices[0]['level'],self.context),technical=self.technical.isChecked())
         replace_text(self.enemy_detail,text,preserve=keep)
         self._refresh_enemy_form()
+        self._refresh_boss_phase()
 
     def _refresh_enemy_form(self):
         from .enemy_form_view import target_identity
@@ -700,6 +706,34 @@ class BattlePreviewPanel(QWidget):
         if self.enemy_form_window is None:self.enemy_form_window=EnemyFormReferencePanel(self)
         if not self.enemy_form_window.set_reference(self._shown_enemy,result):return False
         self.enemy_form_window.show();self.enemy_form_window.raise_()
+        return True
+
+    def _refresh_boss_phase(self):
+        from .boss_phase_view import target_identity
+        from .boss_phase_reference import phase_reference
+        key=self._shown_enemy;target=target_identity(key)
+        try:result=phase_reference(*key)if target else None
+        except (OSError,ValueError,TypeError,KeyError):result=None
+        valid=bool(result and result.get('source_valid')is True and result.get('status')=='documented_reference')
+        self.boss_phase_button.setVisible(target);self.boss_phase_button.setEnabled(valid)
+        if self.boss_phase_window is not None:
+            window=self.boss_phase_window
+            if not valid:
+                window.clear_reference('当前首领或资料无法核对，旧形态与转换内容已清除。')
+            elif(window.identity==key and window.result is not None
+                    and window.result.get('source_identity')==result.get('source_identity')):
+                window.set_reference(key,result)
+            else:
+                window.clear_reference('当前阅读身份或资料已变化；请手动打开首领形态与转换资料。')
+        return result
+
+    def open_boss_phase_reference(self):
+        result=self._refresh_boss_phase()
+        if not result or result.get('source_valid')is not True:return False
+        from .boss_phase_view import BossPhaseReferencePanel
+        if self.boss_phase_window is None:self.boss_phase_window=BossPhaseReferencePanel(self)
+        if not self.boss_phase_window.set_reference(self._shown_enemy,result):return False
+        self.boss_phase_window.show();self.boss_phase_window.raise_()
         return True
 
     def _spawn_selected(self,item,*_,preserve=False):

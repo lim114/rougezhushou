@@ -1,0 +1,387 @@
+{
+  "kind": "SECTION309_FINAL_INDEPENDENT_SOURCE_REVIEW_NOT_RUNTIME_ACCEPTANCE",
+  "mode_extraction_error_confirmed": true,
+  "error": "Cutting header at first newline retained skill name but dropped every following bracketed mode label.",
+  "correction": "Extract all [] labels from complete ak-card__title subtree, not split first line; crosscheck complete source HTML card and frozen complete_DOM. Do not edit original frozen source record.",
+  "phase_skill_reviews": [
+    {
+      "phase_id": "first",
+      "document_name": "第一形态",
+      "candidate_skill_ids": [],
+      "independently_extracted_explicit_skill_ids": [],
+      "mapping_matches_complete_header_labels": true,
+      "scope": "Only explicitly labelled documentary skills; empty list never proves no abilities or hidden scripts.",
+      "candidate_summary_review": "Supported as documentary reading, not an actual mode/current instance claim."
+    },
+    {
+      "phase_id": "calamity_1",
+      "document_name": "灾厄形态(一)",
+      "candidate_skill_ids": [
+        "calamity_mouth"
+      ],
+      "independently_extracted_explicit_skill_ids": [
+        "calamity_mouth"
+      ],
+      "mapping_matches_complete_header_labels": true,
+      "scope": "Only explicitly labelled documentary skills; empty list never proves no abilities or hidden scripts.",
+      "candidate_summary_review": "Supported as documentary reading, not an actual mode/current instance claim."
+    },
+    {
+      "phase_id": "second",
+      "document_name": "第二形态",
+      "candidate_skill_ids": [
+        "unextinguished_ground"
+      ],
+      "independently_extracted_explicit_skill_ids": [
+        "unextinguished_ground"
+      ],
+      "mapping_matches_complete_header_labels": true,
+      "scope": "Only explicitly labelled documentary skills; empty list never proves no abilities or hidden scripts.",
+      "candidate_summary_review": "Supported as documentary reading, not an actual mode/current instance claim."
+    },
+    {
+      "phase_id": "calamity_2",
+      "document_name": "灾厄形态(二)",
+      "candidate_skill_ids": [
+        "calamity_mouth"
+      ],
+      "independently_extracted_explicit_skill_ids": [
+        "calamity_mouth"
+      ],
+      "mapping_matches_complete_header_labels": true,
+      "scope": "Only explicitly labelled documentary skills; empty list never proves no abilities or hidden scripts.",
+      "candidate_summary_review": "Supported as documentary reading, not an actual mode/current instance claim."
+    },
+    {
+      "phase_id": "third",
+      "document_name": "第三形态",
+      "candidate_skill_ids": [
+        "unextinguished_ground",
+        "repeat_calamity",
+        "takeoff"
+      ],
+      "independently_extracted_explicit_skill_ids": [
+        "unextinguished_ground",
+        "repeat_calamity",
+        "takeoff"
+      ],
+      "mapping_matches_complete_header_labels": true,
+      "scope": "Only explicitly labelled documentary skills; empty list never proves no abilities or hidden scripts.",
+      "candidate_summary_review": "Supported as documentary reading, not an actual mode/current instance claim."
+    },
+    {
+      "phase_id": "flying",
+      "document_name": "飞行形态",
+      "candidate_skill_ids": [
+        "flying_ground",
+        "landing"
+      ],
+      "independently_extracted_explicit_skill_ids": [
+        "flying_ground",
+        "landing"
+      ],
+      "mapping_matches_complete_header_labels": true,
+      "scope": "Only explicitly labelled documentary skills; empty list never proves no abilities or hidden scripts.",
+      "candidate_summary_review": "Supported as documentary reading, not an actual mode/current instance claim."
+    }
+  ],
+  "transition_reviews": [
+    {
+      "transition_id": "first_to_calamity1",
+      "candidate": {
+        "transition_id": "first_to_calamity1",
+        "from_phase_id": "first",
+        "to_phase_id": "calamity_1",
+        "condition": "第一形态被击倒",
+        "text": "文献：先进行3.6秒重生并回复100%生命，重生结束后进入灾厄形态(一)。属性强化的口径另见来源差异，不在此换算。",
+        "source_refs": [
+          {
+            "file": "boss-complete.html",
+            "revision": "435612",
+            "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+            "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+          }
+        ],
+        "actual_transition": null
+      },
+      "evidence": {
+        "card_index": 6,
+        "quote": "被击倒后进行持续3.6秒的重生，回复100%生命值，重生结束时由第一形态进入灾厄形态(一)（或由第二形态进入灾厄形态(二)）并获得最大生命值+50%，攻击力+20%的增益（不会被重生清除）"
+      },
+      "condition_and_destination_documented": true,
+      "not_rebirth_annotation_source": null,
+      "actual_execution_or_exact_timeline_proven": false
+    },
+    {
+      "transition_id": "calamity1_to_second",
+      "candidate": {
+        "transition_id": "calamity1_to_second",
+        "from_phase_id": "calamity_1",
+        "to_phase_id": "second",
+        "condition": "灾厄之口未被打断并完成后续过程",
+        "text": "文献：技能结束后获得1.63秒强制缴械；该效果结束后进入第二形态。主目标退场导致的技能中断与重新施放另见招式说明，不能把每次中断当成进入下一形态。",
+        "source_refs": [
+          {
+            "file": "boss-complete.html",
+            "revision": "435612",
+            "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+            "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+          }
+        ],
+        "actual_transition": null
+      },
+      "evidence": {
+        "card_index": 0,
+        "quote": "※若技能未被打断，结束时获得1.63秒强制缴械，该强制缴械结束后自身由灾厄形态(一)进入第二形态（或由灾厄形态(二)进入第三形态）"
+      },
+      "condition_and_destination_documented": true,
+      "not_rebirth_annotation_source": null,
+      "actual_execution_or_exact_timeline_proven": false
+    },
+    {
+      "transition_id": "second_to_calamity2",
+      "candidate": {
+        "transition_id": "second_to_calamity2",
+        "from_phase_id": "second",
+        "to_phase_id": "calamity_2",
+        "condition": "第二形态被击倒",
+        "text": "文献：先进行3.6秒重生并回复100%生命，重生结束后进入灾厄形态(二)。第二次强化字段与文献尚不能直接对算。",
+        "source_refs": [
+          {
+            "file": "boss-complete.html",
+            "revision": "435612",
+            "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+            "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+          }
+        ],
+        "actual_transition": null
+      },
+      "evidence": {
+        "card_index": 6,
+        "quote": "被击倒后进行持续3.6秒的重生，回复100%生命值，重生结束时由第一形态进入灾厄形态(一)（或由第二形态进入灾厄形态(二)）并获得最大生命值+50%，攻击力+20%的增益（不会被重生清除）"
+      },
+      "condition_and_destination_documented": true,
+      "not_rebirth_annotation_source": null,
+      "actual_execution_or_exact_timeline_proven": false
+    },
+    {
+      "transition_id": "calamity2_to_third",
+      "candidate": {
+        "transition_id": "calamity2_to_third",
+        "from_phase_id": "calamity_2",
+        "to_phase_id": "third",
+        "condition": "灾厄之口未被打断并完成后续过程",
+        "text": "文献：技能结束后获得1.63秒强制缴械；该效果结束后进入第三形态。这次转换不经过重生。",
+        "source_refs": [
+          {
+            "file": "boss-complete.html",
+            "revision": "435612",
+            "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+            "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+          }
+        ],
+        "actual_transition": null
+      },
+      "evidence": {
+        "card_index": 0,
+        "quote": "※若技能未被打断，结束时获得1.63秒强制缴械，该强制缴械结束后自身由灾厄形态(一)进入第二形态（或由灾厄形态(二)进入第三形态）"
+      },
+      "condition_and_destination_documented": true,
+      "not_rebirth_annotation_source": {
+        "kind": "document_explanatory_tooltip_not_default_visible_body",
+        "text": "可以轻松注意到，“从灾厄形态(二)进入第三形态”以及“从第三形态回到灾厄形态(二)”均不会经过重生。意味着从首次进入灾厄形态(二)开始，灾厄形态(二)下【灾厄之口】未消耗的【延长灾厄】可供后续再次进入灾厄形态(二)使用。",
+        "source_node_ordinal": 902,
+        "attributes": {
+          "style": "display:none;",
+          "data-size": "350",
+          "data-trigger": "click mouseenter focus",
+          "data-interactive": "true",
+          "data-append-to": "body"
+        }
+      },
+      "actual_execution_or_exact_timeline_proven": false
+    },
+    {
+      "transition_id": "third_to_calamity2",
+      "candidate": {
+        "transition_id": "third_to_calamity2",
+        "from_phase_id": "third",
+        "to_phase_id": "calamity_2",
+        "condition": "第三形态的“再次释放”技能结束",
+        "text": "文献：返回灾厄形态(二)，这次返回不经过重生；不是再次被击倒。实际就绪和发动时点仍未知。",
+        "source_refs": [
+          {
+            "file": "boss-complete.html",
+            "revision": "435612",
+            "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+            "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+          }
+        ],
+        "actual_transition": null
+      },
+      "evidence": {
+        "card_index": 2,
+        "quote": "技能结束时回到灾厄形态(二)"
+      },
+      "condition_and_destination_documented": true,
+      "not_rebirth_annotation_source": {
+        "kind": "document_explanatory_tooltip_not_default_visible_body",
+        "text": "可以轻松注意到，“从灾厄形态(二)进入第三形态”以及“从第三形态回到灾厄形态(二)”均不会经过重生。意味着从首次进入灾厄形态(二)开始，灾厄形态(二)下【灾厄之口】未消耗的【延长灾厄】可供后续再次进入灾厄形态(二)使用。",
+        "source_node_ordinal": 902,
+        "attributes": {
+          "style": "display:none;",
+          "data-size": "350",
+          "data-trigger": "click mouseenter focus",
+          "data-interactive": "true",
+          "data-append-to": "body"
+        }
+      },
+      "actual_execution_or_exact_timeline_proven": false
+    },
+    {
+      "transition_id": "third_to_flying",
+      "candidate": {
+        "transition_id": "third_to_flying",
+        "from_phase_id": "third",
+        "to_phase_id": "flying",
+        "condition": "第三形态的“起飞”技能结束",
+        "text": "文献：获得近地悬浮并进入飞行形态，15秒内不能触发降落。这里不据冷却参数制作实际倒计时。",
+        "source_refs": [
+          {
+            "file": "boss-complete.html",
+            "revision": "435612",
+            "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+            "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+          }
+        ],
+        "actual_transition": null
+      },
+      "evidence": {
+        "card_index": 3,
+        "quote": "技能结束时获得近地悬浮并进入飞行形态，15秒内自身无法触发技能【降落】"
+      },
+      "condition_and_destination_documented": true,
+      "not_rebirth_annotation_source": null,
+      "actual_execution_or_exact_timeline_proven": false
+    },
+    {
+      "transition_id": "flying_to_third",
+      "candidate": {
+        "transition_id": "flying_to_third",
+        "from_phase_id": "flying",
+        "to_phase_id": "third",
+        "condition": "飞行形态的“降落”技能结束",
+        "text": "文献：解除近地悬浮并回到第三形态。",
+        "source_refs": [
+          {
+            "file": "boss-complete.html",
+            "revision": "435612",
+            "sha256": "96d948e69154606b5bba118fbc78197bc0abbfa2db65604ae5445c70a16557f7",
+            "url": "https://m.prts.wiki/w/玻利瓦尔，症结之核?oldid=435612"
+          }
+        ],
+        "actual_transition": null
+      },
+      "evidence": {
+        "card_index": 5,
+        "quote": "技能结束时解除近地悬浮，回到第三形态"
+      },
+      "condition_and_destination_documented": true,
+      "not_rebirth_annotation_source": null,
+      "actual_execution_or_exact_timeline_proven": false
+    }
+  ],
+  "additional_document_tooltip_notes": [
+    {
+      "kind": "document_explanatory_tooltip_not_default_visible_body",
+      "text": "可以轻松注意到，“从灾厄形态(二)进入第三形态”以及“从第三形态回到灾厄形态(二)”均不会经过重生。意味着从首次进入灾厄形态(二)开始，灾厄形态(二)下【灾厄之口】未消耗的【延长灾厄】可供后续再次进入灾厄形态(二)使用。",
+      "source_node_ordinal": 902,
+      "attributes": {
+        "style": "display:none;",
+        "data-size": "350",
+        "data-trigger": "click mouseenter focus",
+        "data-interactive": "true",
+        "data-append-to": "body"
+      }
+    }
+  ],
+  "difference_field_review": [
+    {
+      "difference_id": "second_rebirth_value_basis",
+      "all_fields_present_in_complete_raw_record": true,
+      "raw_values": {
+        "reborn_1.max_hp": 0.5,
+        "reborn_1.atk": 0.2,
+        "reborn_2.max_hp": 1.0,
+        "reborn_2.atk": 0.3
+      },
+      "document_quote": "被击倒后进行持续3.6秒的重生，回复100%生命值，重生结束时由第一形态进入灾厄形态(一)（或由第二形态进入灾厄形态(二)）并获得最大生命值+50%，攻击力+20%的增益（不会被重生清除）",
+      "mutual_incompatibility_proven": false,
+      "base_stacking_execution_semantics_verified": false
+    },
+    {
+      "difference_id": "extension_clock_basis",
+      "all_fields_present_in_complete_raw_record": true,
+      "raw_Fire_records": [
+        {
+          "raw_skill_index": 0,
+          "prefabKey": "Fire",
+          "cooldown": 1.0,
+          "duration_extend": 10.0
+        },
+        {
+          "raw_skill_index": 2,
+          "prefabKey": "Fire",
+          "cooldown": 1.0,
+          "duration_extend": 10.0
+        }
+      ],
+      "document_quote": "消耗1层【延长灾厄】以额外增加11秒持续时间",
+      "mutual_incompatibility_proven": false,
+      "ten_plus_one_explanation_verified": false,
+      "clock_execution_verified": false
+    },
+    {
+      "difference_id": "highest_hp_selection_wording",
+      "overview_quote": "选中全场生命值最高的干员",
+      "detail_quote": "选择全场范围内最大生命值最高的我方干员 > 自身为主目标",
+      "uncertain_clause_quote": "以主目标为中心（存疑）",
+      "source_wording_difference_present": true,
+      "actual_target_or_center_verified": false
+    },
+    {
+      "difference_id": "raw_mode_index_binding",
+      "raw_skill_keys": [
+        "prefabKey",
+        "priority",
+        "cooldown",
+        "initCooldown",
+        "spCost",
+        "blackboard"
+      ],
+      "raw_prefab_keys_in_order": [
+        "Fire",
+        "Fireball",
+        "Fire",
+        "Fireball",
+        "RebornLike",
+        "Fly",
+        "Fireball_Fly",
+        "Return"
+      ],
+      "duplicate_records_present": true,
+      "engine_mode_attachment_or_inheritance_verified": false
+    }
+  ],
+  "important_nonblocking_corrections": [
+    "first.skill_ids=[]仅表示文献技能卡没有第一形态标签，不可显示为没有技能。",
+    "第三形态无额外天赋或能力不等于没有共同能力；飞行子形态不应转译为第四条血。",
+    "中间形态kind等是阅读分类，不是新增的引擎状态枚举或当前状态识别。",
+    "灾厄二与第三不经重生的依据是文献tooltip注释；应标明是说明注而不是默认可见正文。",
+    "主目标离场造成中断与时长重设有明确文献；不能据此编造实际重新施放时钟或确定下次目标。"
+  ],
+  "numeric_use": "All numbers are literal documentary or fixed-field references; no stage stats, damage, countdown, extra HP bars or runtime timing derived.",
+  "new_blocking_source_issue_other_than_missing_modes": false,
+  "frozen_source_files_unchanged": true,
+  "Qt_tests_Git_or_production_executed": false
+}
