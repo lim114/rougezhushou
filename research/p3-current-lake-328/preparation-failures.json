@@ -1,0 +1,18 @@
+{
+  "attempt1": {
+    "exit": 1,
+    "error": "Ambiguous continuation rejected",
+    "cause": "Generic leave caption matched unrelated original choices; did not first use exact following narrative to distinguish them."
+  },
+  "attempt2": {
+    "exit": 1,
+    "error": "TypeError str / str",
+    "cause": "Entry scene variable reused filesystem root name after successful extraction."
+  },
+  "fixes": [
+    "Prefer explicit nextSceneId equal to following exact narrative before testing random continuation candidates.",
+    "Keep filesystem root as Path and use entry for scene identity."
+  ],
+  "original_HTML_or_game_records_modified": false,
+  "mechanism_or_probability_invented": false
+}

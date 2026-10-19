@@ -45,8 +45,7 @@ class CurrentEventBattlesPanel(QWidget):
         if not keep:self._close_battle();self._close_flow()
         self.choice_id=cid;c=model.choice(self.result,cid)if self.result else None
         if self.result is None:return
-        from .current_encounters import locate
-        target=locate('choices',cid)if cid is not None else None
+        _,target=self._flow_target(cid)
         self.flow_button.setVisible(target is not None);self.flow_button.setEnabled(target is not None)
         if target is None:self._close_flow()
         replace_text(self.player,model.player_text(self.result,cid),preserve=keep);replace_text(self.technical,_technical_json({'choice':c,'source':self.result['data']['source'],'identity':self.result['source_identity']})if c else'',preserve=keep)
@@ -68,14 +67,28 @@ class CurrentEventBattlesPanel(QWidget):
     def _close_flow(self):
         if self.flow_dialog is not None:self.flow_dialog.close()
 
+    @staticmethod
+    def _flow_target(cid):
+        if cid is None:return None,None
+        from .current_encounters import locate
+        target=locate('choices',cid)
+        if target is not None:return 'encounter',target
+        from .current_lake import locate as lake_locate
+        return 'lake',lake_locate('choices',cid)
+
     def open_full_flow(self):
         if self.result is None:return False
         if model.reference(self.event_id,self.stage_id)!=self.result:self.clear_reference();return False
-        from .current_encounters import locate
-        target=locate('choices',self.choice_id)
+        kind,target=self._flow_target(self.choice_id)
         if target is None:self._close_flow();self.flow_button.hide();return False
-        from .current_encounters_view import CurrentEncountersDialog
-        self._close_flow();self.flow_dialog=CurrentEncountersDialog(target['event_id'],target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
+        self._close_flow()
+        if kind=='lake':
+            from .current_lake_view import CurrentLakeDialog
+            self.flow_dialog=CurrentLakeDialog(target,self)
+        else:
+            from .current_encounters_view import CurrentEncountersDialog
+            self.flow_dialog=CurrentEncountersDialog(target['event_id'],target['scene_id'],target['choice_id'],self)
+        self.flow_dialog.show();return True
 
     def closeEvent(self,event):self._close_battle();self._close_flow();super().closeEvent(event)
 
