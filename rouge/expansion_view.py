@@ -30,6 +30,7 @@ class ExpansionUpdatePanel(QWidget):
         right=QWidget();body=QVBoxLayout(right);self.map_image=QLabel('选择关卡可查看固定原图');self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter);self.map_image.setMinimumSize(260,150);body.addWidget(self.map_image)
         self.next_button=QPushButton('查看原资料指定的后续场景');self.next_button.hide();body.addWidget(self.next_button)
         self.flow_button=QPushButton('查看这个情景的选项、奖励和后续');self.flow_button.hide();body.addWidget(self.flow_button);self.flow_button.clicked.connect(self.open_documented_flow)
+        self.exchange_button=QPushButton('查看当前回滚文明：能否交出与奖励条文');self.exchange_button.hide();body.addWidget(self.exchange_button);self.exchange_button.clicked.connect(self.open_current_exchange)
         self.battle_button=QPushButton('查看本版本关卡：原图、敌人和出怪条件');self.battle_button.hide();body.addWidget(self.battle_button)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.player.setReadOnly(True);self.technical=QPlainTextEdit();self.technical.setReadOnly(True)
         self.tabs.addTab(self.player,'条件与用途');self.tabs.addTab(self.technical,'完整原值与来源');self.stage_source=QPlainTextEdit();self.stage_source.setReadOnly(True);self.tabs.addTab(self.stage_source,'层数分类依据');body.addWidget(self.tabs,1);split.addWidget(right);split.setSizes([300,750])
@@ -41,6 +42,7 @@ class ExpansionUpdatePanel(QWidget):
 
     def _clear_detail(self,notice='请先选择一项资料。'):
         self._close_flow();self.flow_button.hide()
+        self._close_exchange();self.exchange_button.hide()
         dialog=getattr(self,'current_battle_dialog',None)
         if dialog is not None:dialog.close()
         self.result=None;self.image_raw=None;self.map_image.clear();self.map_image.setText(notice);self.next_button.hide();self.next_button.setEnabled(False)
@@ -95,7 +97,7 @@ class ExpansionUpdatePanel(QWidget):
         key=item.data(Qt.ItemDataRole.UserRole);result=model.detail(self.category.currentData(),key)
         if result is None or result['source_identity']!=self.source_identity:self._unavailable();return
         keep=preserve and self.result is not None and self.result['row']['id']==key and self.result['row']['category']==result['row']['category']
-        if not keep:self._close_flow()
+        if not keep:self._close_flow();self._close_exchange()
         self.result=deepcopy(result)
         from .documented_event_flows import event_for_scene
         from .box_event_reference import locate
@@ -103,6 +105,13 @@ class ExpansionUpdatePanel(QWidget):
         self.flow_button.setVisible(available);self.flow_button.setEnabled(available)
         self.flow_button.setText('查看本事件的条件、选项和相关作战')
         child=getattr(self,'flow_dialog',None)
+        if keep and child is not None and child.isVisible():child.panel.refresh_reference()
+        from .current_exchange_reference import target_entry
+        category=result['row']['category'];name=result['row']['name']
+        candidate=category=='relics'or(category=='scenes'and name=='回滚文明')or(category=='choices'and name in('复原藏品','接过藏品','复原零件','接过零件','复原“文明”','等待结果','离开','继续赞助它','有点可疑'))
+        exchange_target=target_entry(category,key)if candidate else None
+        self.exchange_button.setVisible(exchange_target is not None);self.exchange_button.setEnabled(exchange_target is not None)
+        child=getattr(self,'exchange_dialog',None)
         if keep and child is not None and child.isVisible():child.panel.refresh_reference()
         is_stage=result['row']['category']=='stages';self.battle_button.setVisible(is_stage);self.battle_button.setEnabled(is_stage)
         self.stage_info=stage_directory.detail(key)if is_stage else None
@@ -177,8 +186,22 @@ class ExpansionUpdatePanel(QWidget):
         self._close_flow();self.flow_dialog=DocumentedEventFlowDialog(event_id,fresh['row']['id'],self);self.flow_dialog.show();return True
 
     def closeEvent(self,event):
-        self._close_flow()
+        self._close_flow();self._close_exchange()
         for name in ('ending_dialog','current_battle_dialog'):
             dialog=getattr(self,name,None)
             if dialog is not None:dialog.close()
         super().closeEvent(event)
+
+    def _close_exchange(self):
+        dialog=getattr(self,'exchange_dialog',None)
+        if dialog is not None:dialog.close()
+
+    def open_current_exchange(self):
+        if self.result is None:return False
+        row=self.result['row'];fresh=model.detail(row['category'],row['id'])
+        if fresh!=self.result:self._unavailable();return False
+        from .current_exchange_reference import target_entry
+        target=target_entry(row['category'],row['id'])
+        if target is None:self._close_exchange();self.exchange_button.hide();return False
+        from .current_exchange_view import CurrentExchangeDialog
+        self._close_exchange();self.exchange_dialog=CurrentExchangeDialog(target,self);self.exchange_dialog.show();return True

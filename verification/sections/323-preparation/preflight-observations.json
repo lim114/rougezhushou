@@ -1,0 +1,29 @@
+{
+  "section": 323,
+  "kind": "contemporaneous_root_observations_not_replayed_process_logs",
+  "observed_preparation_errors": [
+    {
+      "context": "Initial research-caption diagnostic over all current choices",
+      "observed_exception": "TypeError: can only concatenate str (not \"NoneType\") to str",
+      "resolution": "Handle missing descriptions explicitly; not a product test failure."
+    },
+    {
+      "context": "First builder .cache/323-built-attempt1, no output directory was created",
+      "observed_exit": 1,
+      "observed_exception": "ValueError: Do not merge differing current captions.",
+      "rejected_candidates": {
+        "choice_leave": {
+          "title": "离开",
+          "description": null
+        },
+        "choice_ro6_sacrifice1_5": {
+          "title": "离开",
+          "description": "多一事不如少一事"
+        }
+      },
+      "resolution": "Exclude empty-description generic candidates, do not use weak title-only matching. Final builder preserved43 exact-caption candidates and all13 cells."
+    }
+  ],
+  "formal_product_tests_failed": false,
+  "actual_original_tool_outputs_remain_in_thread": true
+}
