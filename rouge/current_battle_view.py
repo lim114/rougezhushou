@@ -17,6 +17,7 @@ class CurrentBattlePanel(QWidget):
         self.tabs=QTabWidget();layout.addWidget(self.tabs,1)
         overview=QWidget();body=QVBoxLayout(overview);self.map_image=QLabel();self.map_image.setMinimumSize(300,160);self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter);body.addWidget(self.map_image)
         self.position_button=QPushButton('查看地图格子与已核对的原图位置');body.addWidget(self.position_button);self.position_button.clicked.connect(self.open_map_positions)
+        self.event_origins_button=QPushButton('查看与本关对应的事件选项');body.addWidget(self.event_origins_button);self.event_origins_button.clicked.connect(self.open_event_origins)
         self.summary=QPlainTextEdit();self.summary.setReadOnly(True);body.addWidget(self.summary,1);self.tabs.addTab(overview,'地图与关卡')
         enemies=QWidget();body=QVBoxLayout(enemies);self.enemy_combo=QComboBox();self.enemy_choices=BranchChoice(self.enemy_combo,[],overview_label='总览（本关候选）',placeholder='请选择敌人或关联实体');body.addWidget(self.enemy_choices)
         self.enemy_portrait=QLabel();self.enemy_portrait.setMinimumSize(85,85);self.enemy_portrait.setAlignment(Qt.AlignmentFlag.AlignCenter);body.addWidget(self.enemy_portrait)
@@ -33,6 +34,7 @@ class CurrentBattlePanel(QWidget):
         self.refresh_reference()
 
     def _clear(self):
+        self._close_event_origins();self.event_origins_button.setEnabled(False);self.event_origins_button.hide()
         self._close_map_positions();self.position_button.setEnabled(False)
         self.action_position_button.setEnabled(False)
         self.result=None;self.source_identity=None;self.enemy_key=None;self.action_key=None
@@ -46,8 +48,13 @@ class CurrentBattlePanel(QWidget):
         fresh=model.stage_reference(self.stage_id)
         if fresh is None:self._clear();return False
         keep=self.result is not None and self.source_identity==fresh['source_identity']and self.result['id']==fresh['id']
+        if not keep:self._close_event_origins()
         old_enemy=self.enemy_combo.currentData()if keep else None
         self.result=fresh;self.source_identity=fresh['source_identity']
+        from .current_event_battles import stage_has_reference
+        has_origins=stage_has_reference(self.stage_id);self.event_origins_button.setVisible(has_origins);self.event_origins_button.setEnabled(has_origins)
+        origin=getattr(self,'event_origins_dialog',None)
+        if keep and origin is not None and origin.isVisible():origin.panel.refresh_reference()
         self.position_button.setEnabled(True)
         self.settlement.refresh_reference()
         replace_text(self.summary,model.summary_text(fresh),preserve=keep);replace_text(self.technical,_technical_json(fresh),preserve=keep)
@@ -131,7 +138,19 @@ class CurrentBattlePanel(QWidget):
         from .current_map_position_view import CurrentMapPositionDialog
         self._close_map_positions();self.position_dialog=CurrentMapPositionDialog(self.stage_id,self);self.position_dialog.show();return True
 
-    def closeEvent(self,event):self._close_map_positions();super().closeEvent(event)
+    def _close_event_origins(self):
+        dialog=getattr(self,'event_origins_dialog',None)
+        if dialog is not None:dialog.close()
+
+    def open_event_origins(self):
+        if self.result is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .current_event_battles import stage_has_reference
+        if not stage_has_reference(self.stage_id):self._close_event_origins();self.event_origins_button.hide();return False
+        from .current_event_battles_view import CurrentEventBattlesDialog
+        self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
+
+    def closeEvent(self,event):self._close_map_positions();self._close_event_origins();super().closeEvent(event)
 
 
 class CurrentBattleDialog(QDialog):
@@ -139,4 +158,4 @@ class CurrentBattleDialog(QDialog):
         super().__init__(parent);self.setWindowTitle('本次更新 · 固定关卡预览');self.resize(1120,820)
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
-    def closeEvent(self,event):self.panel._close_map_positions();super().closeEvent(event)
+    def closeEvent(self,event):self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)

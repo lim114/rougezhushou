@@ -30,6 +30,7 @@ class ExpansionUpdatePanel(QWidget):
         right=QWidget();body=QVBoxLayout(right);self.map_image=QLabel('选择关卡可查看固定原图');self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter);self.map_image.setMinimumSize(260,150);body.addWidget(self.map_image)
         self.next_button=QPushButton('查看原资料指定的后续场景');self.next_button.hide();body.addWidget(self.next_button)
         self.flow_button=QPushButton('查看这个情景的选项、奖励和后续');self.flow_button.hide();body.addWidget(self.flow_button);self.flow_button.clicked.connect(self.open_documented_flow)
+        self.event_battles_button=QPushButton('查看本事件的具名作战选项与固定地图');self.event_battles_button.hide();body.addWidget(self.event_battles_button);self.event_battles_button.clicked.connect(self.open_event_battles)
         self.exchange_button=QPushButton('查看当前回滚文明：能否交出与奖励条文');self.exchange_button.hide();body.addWidget(self.exchange_button);self.exchange_button.clicked.connect(self.open_current_exchange)
         self.battle_button=QPushButton('查看本版本关卡：原图、敌人和出怪条件');self.battle_button.hide();body.addWidget(self.battle_button)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.player.setReadOnly(True);self.technical=QPlainTextEdit();self.technical.setReadOnly(True)
@@ -41,6 +42,7 @@ class ExpansionUpdatePanel(QWidget):
         self.refresh_reference()
 
     def _clear_detail(self,notice='请先选择一项资料。'):
+        self._close_event_battles();self.event_battles_button.hide()
         self._close_flow();self.flow_button.hide()
         self._close_exchange();self.exchange_button.hide()
         dialog=getattr(self,'current_battle_dialog',None)
@@ -97,8 +99,13 @@ class ExpansionUpdatePanel(QWidget):
         key=item.data(Qt.ItemDataRole.UserRole);result=model.detail(self.category.currentData(),key)
         if result is None or result['source_identity']!=self.source_identity:self._unavailable();return
         keep=preserve and self.result is not None and self.result['row']['id']==key and self.result['row']['category']==result['row']['category']
-        if not keep:self._close_flow();self._close_exchange()
+        if not keep:self._close_flow();self._close_exchange();self._close_event_battles()
         self.result=deepcopy(result)
+        from .current_event_battles import locate as event_battle_locate
+        target=event_battle_locate(result['row']['category'],key)
+        self.event_battles_button.setVisible(target is not None);self.event_battles_button.setEnabled(target is not None)
+        child=getattr(self,'event_battles_dialog',None)
+        if keep and child is not None and child.isVisible():child.panel.refresh_reference()
         from .documented_event_flows import event_for_scene
         from .box_event_reference import locate
         from .current_ritual_reference import locate as ritual_locate
@@ -198,7 +205,7 @@ class ExpansionUpdatePanel(QWidget):
         self._close_flow();self.flow_dialog=DocumentedEventFlowDialog(event_id,fresh['row']['id'],self);self.flow_dialog.show();return True
 
     def closeEvent(self,event):
-        self._close_flow();self._close_exchange()
+        self._close_flow();self._close_exchange();self._close_event_battles()
         for name in ('ending_dialog','current_battle_dialog'):
             dialog=getattr(self,name,None)
             if dialog is not None:dialog.close()
@@ -207,6 +214,20 @@ class ExpansionUpdatePanel(QWidget):
     def _close_exchange(self):
         dialog=getattr(self,'exchange_dialog',None)
         if dialog is not None:dialog.close()
+
+    def _close_event_battles(self):
+        dialog=getattr(self,'event_battles_dialog',None)
+        if dialog is not None:dialog.close()
+
+    def open_event_battles(self):
+        if self.result is None:return False
+        row=self.result['row'];fresh=model.detail(row['category'],row['id'])
+        if fresh!=self.result:self._unavailable();return False
+        from .current_event_battles import locate
+        target=locate(row['category'],row['id'])
+        if target is None:self._close_event_battles();self.event_battles_button.hide();return False
+        from .current_event_battles_view import CurrentEventBattlesDialog
+        self._close_event_battles();self.event_battles_dialog=CurrentEventBattlesDialog(target['event_id'],target['choice_id'],parent=self);self.event_battles_dialog.show();return True
 
     def open_current_exchange(self):
         if self.result is None:return False
