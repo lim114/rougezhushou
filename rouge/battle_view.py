@@ -242,7 +242,9 @@ class BattlePreviewPanel(QWidget):
     def __init__(self,parent=None):
         super().__init__(parent);self.context={};self.current_stage=None;self.rows=[]
         self._rows_stage=None;self._shown_enemy=None;self._tile_cell=None;self._detail_key=None;self.reward_result=None;self._branch_marker=None
-        layout=QVBoxLayout(self);controls=QHBoxLayout()
+        layout=QVBoxLayout(self)
+        from .expansion_reference import LEGACY_NOTICE
+        self.version_notice=QLabel(LEGACY_NOTICE);self.version_notice.setWordWrap(True);layout.addWidget(self.version_notice);controls=QHBoxLayout()
         self.stage_combo=QComboBox()
         self.stage_choices=BranchChoice(self.stage_combo,stage_groups(battle_data()['stages']),
             overview_label='总览（全部关卡）',placeholder='尚未选择战斗节点')

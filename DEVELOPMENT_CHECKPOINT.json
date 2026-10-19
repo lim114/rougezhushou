@@ -63,14 +63,15 @@
     "pause_after_active_section_requested": false,
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
-    "current_usage_remaining_percent": 80,
-    "current_usage_receipt": "verification/sections/312-preparation/usage-threshold.json",
+    "current_usage_remaining_percent": 79,
+    "current_usage_receipt": "verification/sections/313-preparation/usage-final.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
     "latest_user_instruction_receipt": "verification/sections/312-preparation/resume-and-scope.json",
-    "latest_pause_instruction_receipt": "verification/sections/311-preparation/finish-current-and-pause.json"
+    "latest_pause_instruction_receipt": "verification/sections/311-preparation/finish-current-and-pause.json",
+    "latest_data_update_instruction_receipt": "verification/sections/313-preparation/scope.json"
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 312,
+  "completed_sections": 313,
   "sections": [
     {
       "number": 1,
@@ -1931,10 +1932,16 @@
       "completion_ref": "p3-section-312",
       "topic": "德莱昂两个版本与赤金条的起飞、劫掠和退场条件",
       "verification": "verification/sections/312.json"
+    },
+    {
+      "number": 313,
+      "completion_ref": "p3-section-313",
+      "topic": "国服10月拓展目录、固定原图与选项后续场景",
+      "verification": "verification/sections/313.json"
     }
   ],
-  "next_section": 313,
-  "next_action": "第312节 + 德莱昂两个版本与赤金条的起飞、劫掠和退场条件，已验收并普通推送核对。后续313从剩余P3资料缺口接续，未启动；不继承311后的旧暂停，识别优化最后，下一定期全量320。",
+  "next_section": 314,
+  "next_action": "第313节 + 国服10月拓展目录、固定原图与选项后续场景已本地验收。普通推送核对后继续迁移bee3当前国服P3关卡几何/敌人/事件前置与作战绑定；314未启动，下一定期全量320。",
   "full_validation_due": false,
   "windows_native_validation": "当前289：Windows隔离MainWindow两页56检查及原测试窗口可见响应通过；不计实际游戏/聊天验收。最新完整可用全量仍verification/full-285/summary.json，真实符号链接1314、历史原件/私样本等缺口保留。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -2051,14 +2058,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 312,
-    "verification": "verification/sections/312.json",
+    "section": 313,
+    "verification": "verification/sections/313.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 312,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "734bb3f112ec9248321724531c0efaa3745b7dec",
     "proof": "verification/sections/312-publication.json",
@@ -2317,7 +2324,7 @@
     "native_windows_game_chat_verified": false
   },
   "batch_stop_after_section": null,
-  "batch_status": "P3_SECTION312_PUBLISHED",
+  "batch_status": "P3_SECTION313_LOCAL_ACCEPTED_PUBLICATION_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2363,19 +2370,20 @@
     309,
     310,
     311,
-    312
+    312,
+    313
   ],
   "current_batch": {
-    "start": 312,
+    "start": 313,
     "end": null,
-    "status": "P3_SECTION312_PUBLISHED",
-    "completed_sections": 312,
-    "next_section": 313,
+    "status": "P3_SECTION313_LOCAL_ACCEPTED_PUBLICATION_PENDING",
+    "completed_sections": 313,
+    "next_section": 314,
     "next_section_started": false,
     "next_full_validation_after": 320,
     "batch_closed": false,
     "target_origin": "User authorized P3 continuation; no numeric stopping target",
-    "receipt": "verification/sections/312.json"
+    "receipt": "verification/sections/313.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -2508,7 +2516,7 @@
     "full_validation_interval": 5,
     "next_full_validation_after": 120
   },
-  "batch_start_section": 312,
+  "batch_start_section": 313,
   "batch_target_section": null,
   "suspended_target_section": 400,
   "latest_user_resume": {
@@ -2655,7 +2663,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 312,
+  "latest_functional_section": 313,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -5251,7 +5259,15 @@
     "game_or_chat_used": false,
     "completed": false
   },
-  "current_section_validation": {
+  "historical_before312_publication": {
+    "section": 311,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "baaa89dd84f2cb2888f21b33662394870237f809",
+    "proof": "verification/sections/311-publication.json",
+    "proof_sha256": "f38b4d272d610f09779925b97586834324098b3bbc7ffa7f36d5f57170105cc4"
+  },
+  "historical_before313_current_section_validation": {
     "section": 312,
     "receipt": "verification/sections/312.json",
     "necessary_methods_passed": 84,
@@ -5263,7 +5279,7 @@
     "last_full_receipt": "verification/full-305/summary.json",
     "full_source_is_historical305": true
   },
-  "latest_section_environment": {
+  "historical_before313_latest_section_environment": {
     "section": 312,
     "receipt": "verification/sections/312.json",
     "native_windows": "84 necessary;31 unique native;3 entries/12 topics/6 nonzero refresh states; source damage/recovery; original app startup verified",
@@ -5271,20 +5287,57 @@
     "current_section_full_rerun": false,
     "last_full_receipt": "verification/full-305/summary.json"
   },
-  "historical_before312_publication": {
-    "section": 311,
-    "scope": "previous_functional_section",
-    "binding": "verified_remote_commit",
-    "commit": "baaa89dd84f2cb2888f21b33662394870237f809",
-    "proof": "verification/sections/311-publication.json",
-    "proof_sha256": "f38b4d272d610f09779925b97586834324098b3bbc7ffa7f36d5f57170105cc4"
-  },
-  "cloud_publication_closeout": {
+  "historical_before313_cloud_publication_closeout": {
     "section": 312,
     "functional_commit": "734bb3f112ec9248321724531c0efaa3745b7dec",
     "proof": "verification/sections/312-publication.json",
     "current_commit_kind": "publication metadata only",
     "next_section_started": false,
     "development_paused": false
+  },
+  "historical_before313_active_section": {
+    "section": 313,
+    "human_steering": "黒流树海dlc2已经更新，注意同步最新情况",
+    "official_name_difference": "Verified official wording is 内容拓展·一; DLC2 official name not established. Supporting sources distinguished, TapTap AI repost not an official original.",
+    "remaining_todo": "P3当前国服资料同步、事件后续与具名物品提示、更新关卡固定原图",
+    "new_capability": "独立版本目录提供当前完整资料与全部新增/改动筛选，选项明确后续场景可跳转，80变更关卡的精确固定原图可读，旧计算显示版本边界",
+    "acceptance": [
+      "旧计算与历史来源保留；更新未全量迁移必须明确提示",
+      "全量新旧主题选片与原文件匹配；所有类别的增删改和同名条目不混并",
+      "只依据明确nextSceneId跳转，不拼接前置场景，不把item提示当领取",
+      "固定原图80引用、41不同blob严格校验，不添加未核对的位置标记",
+      "同资料刷新保留搜索、筛选和阅读，坏源清旧、恢复手动重选",
+      "必要验证与真实Windows窗口、要求索引同提交普通推送核对"
+    ],
+    "at_utc": "2026-10-19T09:05:35.626716+00:00",
+    "game_chat_private_used": false,
+    "completed": false
+  },
+  "current_section_validation": {
+    "section": 313,
+    "receipt": "verification/sections/313.json",
+    "necessary_methods_passed": 31,
+    "native_isolated_window_checks": 22,
+    "actual_source_readings": 13,
+    "compact_real_reader_nonzero_refresh_states": 2,
+    "full_suite_rerun": false,
+    "last_full_receipt": "verification/full-305/summary.json",
+    "full_source_is_historical305": true
+  },
+  "latest_section_environment": {
+    "section": 313,
+    "receipt": "verification/sections/313.json",
+    "native_windows": "31 necessary;22 native checks in actual MainWindow plus separate compact reader; source damage and recovery; exact original app startup/private5 preservation verified",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": false,
+    "last_full_receipt": "verification/full-305/summary.json"
+  },
+  "current_data_versions": {
+    "reference_catalog_commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+    "reference_resource_commit": "de6cfb30ed1d41d9102d93e8ea400fc0cefc8ff7",
+    "calculation_and_original_battle_commit": "a550f5e048bb94e7cdefc6eb97a4091f0c4c7add",
+    "legacy_calculation_boundary_visible": true,
+    "whole_functional_migration_completed": false,
+    "current_server_verified": false
   }
 }

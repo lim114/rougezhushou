@@ -159,6 +159,9 @@ class MainWindow(QMainWindow):
         self.node_catalog.stageSelected.connect(self.show_catalog_battle)
         self.node_catalog.mapNodeSelected.connect(self.show_catalog_map_node)
         tabs.addTab(self.node_catalog,'节点事件')
+        from .expansion_view import ExpansionUpdatePanel
+        self.expansion_update=ExpansionUpdatePanel()
+        tabs.addTab(self.expansion_update,'版本与更新')
         from .offline_tools_view import OfflineToolsPanel
         self.offline_tools=OfflineToolsPanel(include_historical_route_diagnostics=include_historical_route_diagnostics)
         self.offline_tools.mapNodeSelected.connect(self.show_catalog_map_node)
@@ -635,6 +638,8 @@ class MainWindow(QMainWindow):
     def make_damage_tab(self):
         tab = QWidget()
         layout = QVBoxLayout(tab)
+        from .expansion_reference import LEGACY_NOTICE
+        self.damage_version_notice=QLabel(LEGACY_NOTICE);self.damage_version_notice.setWordWrap(True);layout.addWidget(self.damage_version_notice)
         columns = QHBoxLayout()
         form = QFormLayout()
         self.damage_form=form

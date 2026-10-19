@@ -144,6 +144,7 @@ ADDITIONAL_MODULES += ('tests.test_boss_phase_reference_309', 'tests.test_boss_p
 ADDITIONAL_MODULES += ('tests.test_boss_cycle_reference_310', 'tests.test_boss_cycle_view_310', 'tests.test_boss_cycle_integration_310')
 ADDITIONAL_MODULES += ('tests.test_boss_hunt_reference_311', 'tests.test_boss_hunt_view_311', 'tests.test_boss_hunt_integration_311')
 ADDITIONAL_MODULES += ('tests.test_gold_boss_reference_312', 'tests.test_gold_boss_view_312', 'tests.test_gold_boss_integration_312')
+ADDITIONAL_MODULES += ('tests.test_expansion_reference_313', 'tests.test_expansion_view_313', 'tests.test_expansion_integration_313')
 
 def source_hashes():
     files = [*ROOT.glob('rouge/**/*.py'), *ROOT.glob('rouge/data/**/*.json'),
