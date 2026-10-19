@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/321.json)。
 
-已完成至321，后续322；本批状态 `P3_SECTION321_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至321，后续322；本批状态 `P3_SECTION321_PUBLISHED`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -286,5 +286,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 依据BWIKI调查记录固定修订352356的三张原表，逐格对照bee3当前游戏文本和明确nextSceneId，并核对2件收藏品及唯一灰坑关卡；这是文献父子关系，不是恢复服务器父选项脚本。11个原选项已在316平铺资料中存在，本节新增的是情景归属和逐步阅读，不重复计原选项为新增数据。战斗入口按原表具名灰坑及游戏battle图标核对，原type为TRADE，不能按BATTLE类型误排。完整出现前置、隐藏分支、实际是否可选、制图桌完整随机池和手术祭坛半生命上限的整数处理仍未知。未恢复本局选择、领取或战斗执行，不计算资源扣除，不改本局记忆或旧数值。P3/P2/P1未完成，识别优化最后。
 
-<!-- section321-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第321节功能提交40cbe75ce1c930269c957869090fe589b9052019已普通推送并核对真实远端及844份相关公开文件字节，证明verification/sections/321-publication.json。本次仅保存发布元数据，不增加功能节数；后续322尚未启动，下一定期全量335。P3/P2/P1未完成，文献流程不冒充服务器生成条件、完整奖励池或数值全面迁移，私人状态及游戏聊天未纳入云端。
 <!-- section321-handoff:end -->
