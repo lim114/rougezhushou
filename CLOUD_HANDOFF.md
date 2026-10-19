@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/325.json)。
 
-已完成至325，后续326；本批状态 `P3_SECTION325_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至325，后续326；本批状态 `P3_SECTION325_PUBLISHED`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -334,5 +334,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 复用321实际下载的BWIKI352356中两张完整原表与PRTS433770第二结局完整DOM，以原字节/字符位置摘录并核对SHA；修正首轮Windows文本写入换行导致的摘要不符，原失败保留。当前PRTS网页文字独立复核层数、沙盘、标记和50源石锭，未冒称重新下载当前HTML。旧433770第二结局没有后来的祭日之契结局条件，不将该旧段当当前完整结局规则；窥视箱中沿用322独立新依据。完整选择文案及明确nextSceneId对照bee3当前与a550完整记录，不按ID猜父情景。文献条件符合只表示已列条件，不是服务器全部资格；完整前置、随机池、实际发放、具名件数、本局真实标记及沙盘实际获取仍未知，商店1源石锭不保证有货，三节点分布不推广至所有第五层。不操作游戏、聊天，不改本局/私人配置和旧计算，不推荐路线或概率；P3/P2/P1未完成，识别最后。
 
-<!-- section325-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第325节功能提交8a1285436f18d03c61553cbf702ba3d3e939e809已普通推送并核对真实远端及907份相关公开文件字节，证明verification/sections/325-publication.json。本次仅保存发布元数据，不增加功能节数；后续326尚未启动，下一定期全量335。P3/P2/P1未完成，文献流程不冒充实际资格或领取、完整事件条件或数值全面迁移，私人状态及游戏聊天未纳入云端。
 <!-- section325-handoff:end -->
