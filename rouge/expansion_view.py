@@ -19,6 +19,7 @@ class ExpansionUpdatePanel(QWidget):
         self.scope=QComboBox();self.scope.addItem('只看新增与改动',True);self.scope.addItem('查看本版本全部资料',False)
         self.search=QLineEdit();self.search.setPlaceholderText('按中文名称搜索；同名资料分别保留')
         self.refresh_button=QPushButton('重新核对资料');bar.addWidget(self.category);bar.addWidget(self.scope);bar.addWidget(self.search,1);bar.addWidget(self.refresh_button);layout.addLayout(bar)
+        self.ending_button=QPushButton('旧日重燃：事件前置与相关作战');layout.addWidget(self.ending_button);self.ending_button.clicked.connect(self.open_ending_events)
         self.count=QLabel();layout.addWidget(self.count)
         split=QSplitter();layout.addWidget(split,1);self.entries=QListWidget();self.entries.setAccessibleName('本版本资料条目');split.addWidget(self.entries)
         right=QWidget();body=QVBoxLayout(right);self.map_image=QLabel('选择关卡可查看固定原图');self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter);self.map_image.setMinimumSize(260,150);body.addWidget(self.map_image)
@@ -39,6 +40,8 @@ class ExpansionUpdatePanel(QWidget):
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
     def _unavailable(self):
+        dialog=getattr(self,'ending_dialog',None)
+        if dialog is not None:dialog.close()
         self.source_identity=None
         # clear() destroys the C++ items. Suppress currentItemChanged while they
         # are being destroyed; its old-item argument must not reenter Python.
@@ -118,3 +121,10 @@ class ExpansionUpdatePanel(QWidget):
         self.current_battle_dialog=CurrentBattleDialog(fresh['row']['id'],self)
         self.current_battle_dialog.show()
         return True
+
+    def open_ending_events(self):
+        if model.packet()is None:self._unavailable();return False
+        from .ending_event_view import EndingEventDialog
+        previous=getattr(self,'ending_dialog',None)
+        if previous is not None:previous.close()
+        self.ending_dialog=EndingEventDialog(self);self.ending_dialog.show();return True

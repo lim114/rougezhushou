@@ -342,3 +342,8 @@ verification/sections/311-preparation/registry-eol-repair/original-verify_full_a
 verification/sections/313-diagnostic-attempt1/stderr.txt -text whitespace=cr-at-eol,-blank-at-eof
 verification/sections/313-necessary-attempt1/stderr.txt -text whitespace=cr-at-eol,-blank-at-eol
 verification/sections/313-index-validation/git-diff-check-first-attempt.txt -text whitespace=cr-at-eol,-blank-at-eol
+
+# Exact316 community excerpt preserves Markdown and terminal whitespace.
+research/p3-ending-events-316/topic-441984-excerpt.md -text whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+# Exact316 initial diagnostic preserves quoted source bytes.
+verification/sections/316-index-validation/git-diff-check-first-attempt.txt -text whitespace=cr-at-eol,-blank-at-eol
