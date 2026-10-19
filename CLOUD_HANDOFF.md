@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/322.json)。
 
-已完成至322，后续323；本批状态 `P3_SECTION322_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至322，后续323；本批状态 `P3_SECTION322_PUBLISHED`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -298,5 +298,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 依据BWIKI调查记录固定修订352356原表（保留调查中标记）与当前bee3游戏记录。复用321实际下载的同SHA原HTTP，单独摘出本事件两张表，不重复下载整个页面。原表失恒常量链接位于NEXT选项，不移动到相邻ZONE_END“打印”记录；文献中的主选项分组不冒充游戏父脚本。保留4情景、5组选项及全部7原记录，3份相同文案记录的实际来源选择、内部机制物品效果与真实父子关系仍未知。祭日持有仅是原文列出的条件对照，不是自动本局读取、完整资格或实际结局判断。未证明隐藏分支、实际战斗进入、服务器生成条件及完整奖励；不提供路线建议或概率，不操作游戏、聊天，不改本局持有、私人状态和旧计算。P3/P2/P1未完成，识别优化最后。
 
-<!-- section322-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第322节功能提交57d1b2b0f30ccf969577c165f15e3b01cd25e1a4已普通推送并核对真实远端及854份相关公开文件字节，证明verification/sections/322-publication.json。本次仅保存发布元数据，不增加功能节数；后续323尚未启动，下一定期全量335。P3/P2/P1未完成，文献流程不冒充服务器生成条件、完整奖励池或数值全面迁移，私人状态及游戏聊天未纳入云端。
 <!-- section322-handoff:end -->
