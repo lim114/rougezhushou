@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/320.json)。
 
-已完成至320，后续321；本批状态 `P3_SECTION320_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至320，后续321；本批状态 `P3_SECTION320_PUBLISHED`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -274,5 +274,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 这里只查看固定配置的名义格和已有独立中心参考，不证明实际出场、出生偏移/随机范围、装置激活、条件分支路线数组、全局时钟、实际脚点或连续寻路；不连接离散格子为敌人实际路线。1709条中心引用复用319的33配置/13原图部分中心，不是新增测量或扩大完整校准范围，四像素仍仅是旧记录相互差值上限。其余地图完整投影、高台表面与其它格、动态分支和结算、当前敌人完整预计面板、全部事件前置与掉落池等P3缺口保留。P3/P2/P1均未完成，识别优化最后。只读本地固定资料，不操作游戏、不发送聊天，不改本局记忆、私人设置或旧计算版本。
 
-<!-- section320-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第320节功能提交b3e69c1cbc719e3c309347d37ba852b9d7aa06ce已普通推送并核对真实远端及4374份相关公开文件字节，证明verification/sections/320-publication.json。本次仅保存发布元数据，不增加功能节数；后续321尚未启动，下一定期全量335。P3/P2/P1未完成，新资料阅读不冒充计算与战斗全面迁移，私人状态及游戏聊天未纳入云端。
 <!-- section320-handoff:end -->
