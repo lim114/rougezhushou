@@ -8,8 +8,9 @@ from .ui_state import replace_text
 
 
 class DocumentedEventFlowPanel(QWidget):
-    def __init__(self, event_id, scene_id=None, parent=None):
+    def __init__(self, event_id, scene_id=None, parent=None, *, reference_model=None):
         super().__init__(parent)
+        self.reference_model = reference_model or model
         self.event_id = event_id; self.result = None; self.scene_id = None; self.choice_id = None
         self.battle_dialog = None
         layout = QVBoxLayout(self)
@@ -39,10 +40,13 @@ class DocumentedEventFlowPanel(QWidget):
             blocked = widget.blockSignals(True); widget.clear(); widget.blockSignals(blocked)
         self.scene.setEnabled(False)
         for button in (self.start_button, self.next_button, self.battle_button): button.hide(); button.setEnabled(False)
-        replace_text(self.player, model.UNAVAILABLE, preserve=False); replace_text(self.technical, '', preserve=False); self.tabs.setCurrentIndex(0)
+        replace_text(self.player, self.reference_model.UNAVAILABLE, preserve=False); replace_text(self.technical, '', preserve=False); self.tabs.setCurrentIndex(0)
+
+    def _fresh_reference(self):
+        return self.reference_model.reference(self.event_id)
 
     def refresh_reference(self, *_, initial_scene=None, initial=False):
-        fresh = model.reference(self.event_id)
+        fresh = self._fresh_reference()
         if fresh is None: self.clear_reference(); return False
         keep = self.result is not None and self.result['source_identity'] == fresh['source_identity']
         selected = self.scene_id if keep else None
@@ -50,7 +54,7 @@ class DocumentedEventFlowPanel(QWidget):
             selected = initial_scene if initial_scene in fresh['scenes'] else fresh['event']['entry_scene_id']
         if not keep: self._close_battle()
         self.result = fresh; blocked = self.scene.blockSignals(True); self.scene.clear(); self.scene.addItem('请选择情景', None)
-        for sid in fresh['event']['scene_ids']: self.scene.addItem(model.scene_label(fresh, sid), sid)
+        for sid in fresh['event']['scene_ids']: self.scene.addItem(self.reference_model.scene_label(fresh, sid), sid)
         self.scene.setCurrentIndex(max(0, self.scene.findData(selected))); self.scene.setEnabled(True); self.scene.blockSignals(blocked)
         self._scene_changed(preserve=keep); return True
 
@@ -61,8 +65,9 @@ class DocumentedEventFlowPanel(QWidget):
         self.scene_id = sid; blocked = self.choices.blockSignals(True); self.choices.clear()
         scene = self.result['scenes'].get(sid) if self.result else None
         for cid in scene['choice_ids'] if scene else []:
-            original = self.result['data']['originals']['choices'][cid]
-            item = QListWidgetItem(model.version._plain(original['title'])); item.setData(Qt.ItemDataRole.UserRole, cid); self.choices.addItem(item)
+            title = self.result['choices'][cid].get('title')
+            if title is None: title = self.result['data']['originals']['choices'][cid]['title']
+            item = QListWidgetItem(model.version._plain(title)); item.setData(Qt.ItemDataRole.UserRole, cid); self.choices.addItem(item)
             if cid == selected: self.choices.setCurrentItem(item)
         self.choices.blockSignals(blocked)
         if selected is None: self.choices.setCurrentRow(-1)
@@ -74,16 +79,20 @@ class DocumentedEventFlowPanel(QWidget):
         if not keep: self._close_battle()
         self.choice_id = cid
         if self.result is None: return
-        choice = model.choice_reference(self.result, self.scene_id, cid)
-        replace_text(self.player, model.player_text(self.result, self.scene_id, cid), preserve=keep)
+        choice = self.reference_model.choice_reference(self.result, self.scene_id, cid)
+        replace_text(self.player, self.reference_model.player_text(self.result, self.scene_id, cid), preserve=keep)
         replace_text(self.technical, _technical_json({'reference': self.result, 'scene': self.scene_id, 'choice': choice}), preserve=keep)
         self.start_button.setVisible(self.scene_id != self.result['event']['entry_scene_id']); self.start_button.setEnabled(True)
-        self.next_button.setVisible(bool(choice and choice['next_scene_id'])); self.next_button.setEnabled(bool(choice and choice['next_scene_id']))
-        self.battle_button.setVisible(bool(choice and choice['stage_ids'])); self.battle_button.setEnabled(bool(choice and choice['stage_ids']))
+        allowed = bool(choice and choice.get('listed_condition_match') is not False)
+        if not allowed: self._close_battle()
+        self.next_button.setVisible(bool(choice and choice['next_scene_id'])); self.next_button.setEnabled(bool(allowed and choice['next_scene_id']))
+        self.battle_button.setVisible(bool(choice and choice['stage_ids'])); self.battle_button.setEnabled(bool(allowed and choice['stage_ids']))
+        if choice and len(choice['stage_ids']) == 1:
+            self.battle_button.setText('查看' + self.result['data']['originals']['stages'][choice['stage_ids'][0]]['name'] + '固定作战资料')
         if not keep: self.tabs.setCurrentIndex(0)
 
     def _recheck(self):
-        if self.result is None or model.reference(self.event_id) != self.result:
+        if self.result is None or self._fresh_reference() != self.result:
             self.clear_reference(); return False
         return True
 
@@ -93,16 +102,18 @@ class DocumentedEventFlowPanel(QWidget):
 
     def follow_scene(self):
         if not self._recheck(): return False
-        choice = model.choice_reference(self.result, self.scene_id, self.choice_id)
-        if choice is None or choice['next_scene_id'] is None: return False
+        choice = self.reference_model.choice_reference(self.result, self.scene_id, self.choice_id)
+        if choice is None or choice['next_scene_id'] is None or choice.get('listed_condition_match') is False: return False
         self.scene.setCurrentIndex(self.scene.findData(choice['next_scene_id'])); return True
 
     def open_battle(self):
         if not self._recheck(): return False
-        choice = model.choice_reference(self.result, self.scene_id, self.choice_id)
-        if choice is None or choice['stage_ids'] != ['ro6_s_1']: return False
+        choice = self.reference_model.choice_reference(self.result, self.scene_id, self.choice_id)
+        if choice is None or len(choice['stage_ids']) != 1 or choice.get('listed_condition_match') is False: return False
+        sid = choice['stage_ids'][0]
+        if sid not in self.result['data']['originals']['stages']: return False
         from .current_battle_view import CurrentBattleDialog
-        self._close_battle(); self.battle_dialog = CurrentBattleDialog('ro6_s_1', self); self.battle_dialog.show(); return True
+        self._close_battle(); self.battle_dialog = CurrentBattleDialog(sid, self); self.battle_dialog.show(); return True
 
     def closeEvent(self, event):
         self._close_battle(); super().closeEvent(event)

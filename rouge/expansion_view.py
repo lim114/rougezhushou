@@ -98,8 +98,10 @@ class ExpansionUpdatePanel(QWidget):
         if not keep:self._close_flow()
         self.result=deepcopy(result)
         from .documented_event_flows import event_for_scene
-        available=result['row']['category']=='scenes'and event_for_scene(key)is not None
+        from .box_event_reference import locate
+        available=(result['row']['category']=='scenes'and event_for_scene(key)is not None)or locate(result['row']['category'],key)is not None
         self.flow_button.setVisible(available);self.flow_button.setEnabled(available)
+        self.flow_button.setText('查看本事件的条件、选项和相关作战')
         child=getattr(self,'flow_dialog',None)
         if keep and child is not None and child.isVisible():child.panel.refresh_reference()
         is_stage=result['row']['category']=='stages';self.battle_button.setVisible(is_stage);self.battle_button.setEnabled(is_stage)
@@ -160,12 +162,17 @@ class ExpansionUpdatePanel(QWidget):
         if dialog is not None:dialog.close()
 
     def open_documented_flow(self):
-        if self.result is None or self.result['row']['category']!='scenes':return False
-        fresh=model.detail('scenes',self.result['row']['id'])
+        if self.result is None or self.result['row']['category']not in('scenes','choices'):return False
+        category=self.result['row']['category'];fresh=model.detail(category,self.result['row']['id'])
         if fresh!=self.result:self._unavailable();return False
         from .documented_event_flows import event_for_scene
-        event_id=event_for_scene(fresh['row']['id'])
-        if event_id is None:self._close_flow();self.flow_button.hide();return False
+        event_id=event_for_scene(fresh['row']['id'])if category=='scenes'else None
+        if event_id is None:
+            from .box_event_reference import locate
+            target=locate(category,fresh['row']['id'])
+            if target is None:self._close_flow();self.flow_button.hide();return False
+            from .box_event_view import BoxEventDialog
+            self._close_flow();self.flow_dialog=BoxEventDialog(target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
         from .documented_event_flow_view import DocumentedEventFlowDialog
         self._close_flow();self.flow_dialog=DocumentedEventFlowDialog(event_id,fresh['row']['id'],self);self.flow_dialog.show();return True
 

@@ -1,0 +1,562 @@
+{
+  "schema": "box_event_322_v1",
+  "game_commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+  "event": {
+    "id": "box",
+    "title": "窥视箱中",
+    "entry_scene_id": "scene_ro6_end2_enter",
+    "scene_ids": [
+      "scene_ro6_end2_enter",
+      "scene_ro6_end2_2",
+      "scene_ro6_end2_1",
+      "scene_ro6_end2_3"
+    ],
+    "choice_ids": [
+      "protect",
+      "normal_battle",
+      "leave",
+      "covenant",
+      "print"
+    ]
+  },
+  "scenes": {
+    "scene_ro6_end2_enter": {
+      "id": "scene_ro6_end2_enter",
+      "choice_ids": [
+        "protect",
+        "leave",
+        "covenant",
+        "print"
+      ],
+      "source": {
+        "file": "research/p3-box-event-322/documented-table.html",
+        "table": 1,
+        "row": 1,
+        "cell": 0,
+        "text_sha256": "7661e2314af42c514f698495b42f738ece25091cf3e004ccf922a83f5ecdb53d",
+        "attributes": {
+          "colspan": "3"
+        }
+      }
+    },
+    "scene_ro6_end2_2": {
+      "id": "scene_ro6_end2_2",
+      "choice_ids": [
+        "normal_battle"
+      ],
+      "source": {
+        "file": "research/p3-box-event-322/documented-table.html",
+        "table": 1,
+        "row": 3,
+        "cell": 0,
+        "text_sha256": "dfcabae6de27bbdc634e873969b3746a410fcbb9efd25790453bf26f128c9a33",
+        "attributes": {
+          "colspan": "2"
+        }
+      }
+    },
+    "scene_ro6_end2_1": {
+      "id": "scene_ro6_end2_1",
+      "choice_ids": [],
+      "source": {
+        "file": "research/p3-box-event-322/documented-table.html",
+        "table": 1,
+        "row": 6,
+        "cell": 0,
+        "text_sha256": "c2ab402379bbd87bd245924f833c8cec1997942cc2ba462508c920feb98f8e53",
+        "attributes": {
+          "colspan": "2"
+        }
+      }
+    },
+    "scene_ro6_end2_3": {
+      "id": "scene_ro6_end2_3",
+      "choice_ids": [],
+      "source": {
+        "file": "research/p3-box-event-322/documented-table.html",
+        "table": 1,
+        "row": 8,
+        "cell": 0,
+        "text_sha256": "3fa181c2de3456ab8c6d72ba817c54330519aa822e7ec37bcb12de5ef3cc6d01",
+        "attributes": {
+          "colspan": "2"
+        }
+      }
+    }
+  },
+  "choices": {
+    "protect": {
+      "id": "protect",
+      "scene_id": "scene_ro6_end2_enter",
+      "title": "保护证据，查缴那些机器！",
+      "description": "找到传出声音的位置\r\n<@ro6.lose>将遭遇险路恶敌</>",
+      "variant_ids": [
+        "choice_ro6_end2_1",
+        "choice_ro6_end2_4",
+        "choice_ro6_end2_7"
+      ],
+      "next_scene_id": "scene_ro6_end2_2",
+      "stage_ids": [],
+      "item_id": null,
+      "source": {
+        "file": "research/p3-box-event-322/documented-table.html",
+        "table": 1,
+        "row": 2,
+        "cell": 2,
+        "text_sha256": "449d0931bc0e2a630199d86d1d77e6f9f0027bdc4965f4e1ffb8640145cdd818",
+        "attributes": {}
+      },
+      "document_option_label": "选项一",
+      "requires_covenant": false,
+      "actual_variant_id": null,
+      "game_parent_scene_verified": false,
+      "battle_destination_unbound": false
+    },
+    "normal_battle": {
+      "id": "normal_battle",
+      "scene_id": "scene_ro6_end2_2",
+      "title": "你将见证一场毁灭，抑或新生",
+      "description": "遭遇与当前区域首领的决战",
+      "variant_ids": [
+        "choice_ro6_end2_3"
+      ],
+      "next_scene_id": null,
+      "stage_ids": [
+        "ro6_b_5"
+      ],
+      "item_id": null,
+      "source": {
+        "file": "research/p3-box-event-322/documented-table.html",
+        "table": 1,
+        "row": 4,
+        "cell": 0,
+        "text_sha256": "da33308968061ad257bb6e54473e25ff71266db2b3b9ee4ab66ac3ef4627e48d",
+        "attributes": {}
+      },
+      "document_option_label": "选项一",
+      "requires_covenant": false,
+      "actual_variant_id": null,
+      "game_parent_scene_verified": false,
+      "battle_destination_unbound": false
+    },
+    "leave": {
+      "id": "leave",
+      "scene_id": "scene_ro6_end2_enter",
+      "title": "她在说什么疯话？",
+      "description": "多一事不如少一事",
+      "variant_ids": [
+        "choice_ro6_end2_2"
+      ],
+      "next_scene_id": "scene_ro6_end2_1",
+      "stage_ids": [],
+      "item_id": null,
+      "source": {
+        "file": "research/p3-box-event-322/documented-table.html",
+        "table": 1,
+        "row": 5,
+        "cell": 1,
+        "text_sha256": "f07bd73cf397226c34d2a25d9e6aff0d0682e2298b72285b06991f305f466818",
+        "attributes": {}
+      },
+      "document_option_label": "选项二",
+      "requires_covenant": false,
+      "actual_variant_id": null,
+      "game_parent_scene_verified": false,
+      "battle_destination_unbound": false
+    },
+    "covenant": {
+      "id": "covenant",
+      "scene_id": "scene_ro6_end2_enter",
+      "title": "等等，这东西不太对劲",
+      "description": "持有<@ro6.get>祭日之契</>，可开启更艰难的战斗",
+      "variant_ids": [
+        "choice_ro6_end2_5"
+      ],
+      "next_scene_id": "scene_ro6_end2_3",
+      "stage_ids": [
+        "ro6_b_5_b"
+      ],
+      "item_id": null,
+      "source": {
+        "file": "research/p3-box-event-322/documented-table.html",
+        "table": 1,
+        "row": 7,
+        "cell": 1,
+        "text_sha256": "ee9d329cd0124ec51927f83779f1c4e68ea1dcc8ab80a8e4aacc35a417aaf989",
+        "attributes": {}
+      },
+      "document_option_label": "选项三",
+      "requires_covenant": true,
+      "actual_variant_id": null,
+      "game_parent_scene_verified": false,
+      "battle_destination_unbound": false
+    },
+    "print": {
+      "id": "print",
+      "scene_id": "scene_ro6_end2_enter",
+      "title": "这块石板在“打印”怪物？",
+      "description": "遭遇与当前区域首领的决战",
+      "variant_ids": [
+        "choice_ro6_end2_6"
+      ],
+      "next_scene_id": null,
+      "stage_ids": [],
+      "item_id": null,
+      "source": {
+        "file": "research/p3-box-event-322/documented-table.html",
+        "table": 1,
+        "row": 9,
+        "cell": 1,
+        "text_sha256": "575ef71d2e78be533e589451de503aefda2c44f64d6312211ea46def116fd63d",
+        "attributes": {}
+      },
+      "document_option_label": "选项四",
+      "requires_covenant": false,
+      "actual_variant_id": null,
+      "game_parent_scene_verified": false,
+      "battle_destination_unbound": true
+    }
+  },
+  "originals": {
+    "scenes": {
+      "scene_ro6_end2_enter": {
+        "id": "scene_ro6_end2_enter",
+        "title": "窥视箱中",
+        "description": "“我一直在等你。”一只......猫？你并不确定她究竟是什么。“不明白也没有关系。我向正在观察我们之人言说，尽管我不知道你是否拥有生命和意识。我邀请你见证必将发生之事。”",
+        "background": "pic_rogue_6_37",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_end2_2": {
+        "id": "scene_ro6_end2_2",
+        "title": "窥视箱中",
+        "description": "“你对它们的用途有一些猜测，对吗？”她对你露出了笑容，“不必紧张，它们并不会以你想象的方式运作。但即便我这么说，你仍会尝试阻止我，你也必须这么做。”",
+        "background": "pic_rogue_6_37",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_end2_1": {
+        "id": "scene_ro6_end2_1",
+        "title": "窥视箱中",
+        "description": "“你不是来找我的？好吧。”她转过身去，没有回头再对你说什么，环境中只剩下机器持续运作的轻微噪音。为了避免再生事端，你决定离开这个可疑的地方。",
+        "background": "pic_rogue_6_37",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_end2_3": {
+        "id": "scene_ro6_end2_3",
+        "title": "窥视箱中",
+        "description": "之前探险家发掘出的那枚黑色石板变得冰冷无比，它似乎正在迅速地抽走周边的热量。你忙不迭地将它丢在一边，避免被它冻伤。石板却转而开始从四周的设备中夺取能量，又向周围投射出若干扭曲的幻影，并且越来越多。她似乎吃了一惊，向你质问：“你究竟是什么人？是来夺回权限的吗？这是你第几次来到这里？”",
+        "background": "pic_rogue_6_37",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      }
+    },
+    "choices": {
+      "choice_ro6_end2_1": {
+        "id": "choice_ro6_end2_1",
+        "title": "保护证据，查缴那些机器！",
+        "description": "找到传出声音的位置\r\n<@ro6.lose>将遭遇险路恶敌</>",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_end2_2",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": "rogue_6_end_2_change",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_end2_4": {
+        "id": "choice_ro6_end2_4",
+        "title": "保护证据，查缴那些机器！",
+        "description": "找到传出声音的位置\r\n<@ro6.lose>将遭遇险路恶敌</>",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_end2_2",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_end2_7": {
+        "id": "choice_ro6_end2_7",
+        "title": "保护证据，查缴那些机器！",
+        "description": "找到传出声音的位置\r\n<@ro6.lose>将遭遇险路恶敌</>",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_end2_2",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_end2_3": {
+        "id": "choice_ro6_end2_3",
+        "title": "你将见证一场毁灭，抑或新生",
+        "description": "遭遇与当前区域首领的决战",
+        "lockedCoverDesc": null,
+        "type": "ZONE_END",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "battle",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "battle",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_end2_2": {
+        "id": "choice_ro6_end2_2",
+        "title": "她在说什么疯话？",
+        "description": "多一事不如少一事",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_end2_1",
+        "icon": "leave",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "leave",
+          "itemId": "rogue_6_end_2_trigger_2",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_end2_5": {
+        "id": "choice_ro6_end2_5",
+        "title": "等等，这东西不太对劲",
+        "description": "持有<@ro6.get>祭日之契</>，可开启更艰难的战斗",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_end2_3",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_end2_6": {
+        "id": "choice_ro6_end2_6",
+        "title": "这块石板在“打印”怪物？",
+        "description": "遭遇与当前区域首领的决战",
+        "lockedCoverDesc": null,
+        "type": "ZONE_END",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "battle",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "battle",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      }
+    },
+    "stages": {
+      "ro6_b_5": {
+        "id": "ro6_b_5",
+        "linkedStageId": "",
+        "levelId": "Obt/Roguelike/RO6/level_rogue6_b-5",
+        "levelReplaceIds": [],
+        "code": "ISW-DF",
+        "name": "混沌源阶理论",
+        "loadingPicId": "loading_HLSH_RL",
+        "description": "这里是可能性的牢笼。没有人知道这些装置被启动后会发生什么，但她将尽力确保结果不偏离她的预期。\\n<@rolv.rem>场地中会出现可被我方治疗的<源阶方模块></>",
+        "eliteDesc": null,
+        "isBoss": 1,
+        "isElite": 0,
+        "difficulty": "NORMAL",
+        "capsulePool": null,
+        "capsuleProb": 0.0,
+        "vutresProb": [],
+        "boxProb": [
+          0.2,
+          0.2
+        ],
+        "specialNodeId": "boss_shorbb",
+        "redCapsulePool": null,
+        "redCapsuleProb": 0.0
+      },
+      "ro6_b_5_b": {
+        "id": "ro6_b_5_b",
+        "linkedStageId": "",
+        "levelId": "Obt/Roguelike/RO6/level_rogue6_b-5-b",
+        "levelReplaceIds": [],
+        "code": "ISW-DF",
+        "name": "失恒常量",
+        "loadingPicId": "loading_HLSH_RL",
+        "description": "异常的信息流干涉了源阶方的运作。她料想到黑流树海中存在某些她尚不了解的事物，但不曾想过那竟足以在局部区域篡改常量。她必须尽快完成修正。\\n<@rolv.rem>场地中会出现可被我方治疗的<源阶方模块></>",
+        "eliteDesc": null,
+        "isBoss": 1,
+        "isElite": 0,
+        "difficulty": "NORMAL",
+        "capsulePool": null,
+        "capsuleProb": 0.0,
+        "vutresProb": [],
+        "boxProb": [
+          0.2,
+          0.2
+        ],
+        "specialNodeId": "boss_shorbb",
+        "redCapsulePool": null,
+        "redCapsuleProb": 0.0
+      }
+    },
+    "items": {
+      "rogue_6_end_2_change": {
+        "id": "rogue_6_end_2_change",
+        "name": "二结局转变弹窗",
+        "description": "机制物品",
+        "usage": "触发二结局弹窗",
+        "obtainApproach": "在集成战略模式中获得",
+        "iconId": "rogue_6_end_2_change",
+        "itemIconGroupId": null,
+        "type": "FEATURE",
+        "subType": "NONE",
+        "rarity": "NONE",
+        "sortId": 999,
+        "canSacrifice": false,
+        "tinyIconColor": null,
+        "unlockCondDesc": null,
+        "shortUsage": null
+      },
+      "rogue_6_end_2_trigger_2": {
+        "id": "rogue_6_end_2_trigger_2",
+        "name": "二结局激活2",
+        "description": "机制物品",
+        "usage": "选项结束后触发二结局激活3",
+        "obtainApproach": "在集成战略模式中获得",
+        "iconId": "rogue_6_end_2_trigger_2",
+        "itemIconGroupId": null,
+        "type": "FEATURE",
+        "subType": "NONE",
+        "rarity": "NONE",
+        "sortId": 999,
+        "canSacrifice": false,
+        "tinyIconColor": null,
+        "unlockCondDesc": null,
+        "shortUsage": null
+      },
+      "rogue_6_relic_final_8": {
+        "id": "rogue_6_relic_final_8",
+        "name": "祭日之契",
+        "description": "终结亦是起始。太阳已然熄灭，它蛰伏于生灵体内。新火在等待浇灌，乌托邦的渴求本身即为我们。",
+        "usage": "不再出现熄日余径，所有干员再部署时间+50%，使用加工品移动后使其损毁；让探索开启不同的方向",
+        "obtainApproach": "在集成战略模式中获得",
+        "iconId": "rogue_6_relic_final_8",
+        "itemIconGroupId": null,
+        "type": "RELIC",
+        "subType": "NONE",
+        "rarity": "SUPER_RARE",
+        "sortId": 999,
+        "canSacrifice": false,
+        "tinyIconColor": null,
+        "unlockCondDesc": "【内容拓展 · 一】后，完成一次游戏结局",
+        "shortUsage": null
+      }
+    }
+  },
+  "source": {
+    "section": 322,
+    "revision": 352356,
+    "document_title": "沉沦者的黑流树海/调查记录",
+    "fixed_revision_url": "https://wiki.biligame.com/arknights/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7%2F%E8%B0%83%E6%9F%A5%E8%AE%B0%E5%BD%95&oldid=352356",
+    "source_reused_from": "research/p3-document-flows-321/source-receipt.json",
+    "actual_original_HTTP_response_sha256": "e64fc0aac0c092de0ca885f6c77555e0ef035d4c556a3e134a4291845659956e",
+    "actual_original_HTTP_response_bytes": 261190,
+    "original_download_at_UTC": "2026-10-19T16:28:41.353882+00:00",
+    "excerpt_created_at_UTC": "2026-10-19T17:06:24.195581+00:00",
+    "selected_file": "research/p3-box-event-322/documented-table.html",
+    "selected_sha256": "78c2101b6547b3a922164f099f54ceccdf98c67756cc4c6d60bcb2ba1874da30",
+    "selected_bytes": 3264,
+    "selected_table_character_spans": [
+      [
+        113808,
+        114039
+      ],
+      [
+        114050,
+        115987
+      ]
+    ],
+    "investigation_banner_preserved": true,
+    "new_HTTP_download_claimed": false,
+    "whole_HTTP_body_publicly_copied": false,
+    "document_is_community_not_server_script": true
+  },
+  "covenant_item_id": "rogue_6_relic_final_8",
+  "document_under_investigation": true,
+  "all_game_options_verified": false,
+  "game_parent_script_restored": false,
+  "actual_server_eligible": null,
+  "actual_variant_selected": null,
+  "actual_battle_entered": null,
+  "run_updated": false
+}
