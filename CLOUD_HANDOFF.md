@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/327.json)。
 
-已完成至327，后续328；本批状态 `P3_SECTION327_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至327，后续328；本批状态 `P3_SECTION327_PUBLISHED`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -358,5 +358,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 复用321真实下载的BWIKI352356原HTTP及326已核SHA摘录，保留七张完整表的原字符位置、全文文案与nextSceneId核对。只把原表根标签与明确后续用于文献流程；不按ID、序号或同标题猜游戏父脚本。25为文献组选项、28为原记录，不是已恢复的本局选择池；黑诞三份TRADE/一份NEXT全部保留，不指定实际变体。笼控器是SCRAP持有前提，不从持有文字推已消耗或发放1件猎印；既有藏品计算未改变。当前7事件23情景28选项及2物品逐项比较固定bee3与a550完整记录；固定文献不冒充当前服务器的完整出现资格、真实发放脚本/奖励池或实际入口。已针对半数取整与猎印额外来源搜索，未得到完整整数/发放执行依据，不推算奇数扣费、战胜后实际领取件数或套用加成。P3/P2/P1未完成、识别最后，不操作游戏/聊天、不清本局或覆盖私人设置，不给路线建议与概率。
 
-<!-- section327-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第327节功能提交76007c23860a29cbe234596b06fa54ddb305d215已普通推送并核对真实远端及901份相关公开文件字节，证明verification/sections/327-publication.json。本次仅保存发布元数据，不增加功能节数；后续328尚未启动，下一定期全量335。P3/P2/P1未完成，文献流程不冒充实际资格或领取、完整事件条件或数值全面迁移，私人状态及游戏聊天未纳入云端。
 <!-- section327-handoff:end -->
