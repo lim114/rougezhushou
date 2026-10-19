@@ -25,6 +25,8 @@ class CurrentBattlePanel(QWidget):
         self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.technical,'完整原值与来源')
         from .current_reward_view import CurrentRewardPanel
         self.rewards=CurrentRewardPanel(stage_id);self.tabs.addTab(self.rewards,'奖励与条件');self.rewards.actionSelected.connect(self._reward_action_selected)
+        from .current_settlement_view import CurrentSettlementPanel
+        self.settlement=CurrentSettlementPanel(stage_id);self.tabs.addTab(self.settlement,'通关基础奖励')
         self.refresh_button.clicked.connect(self.refresh_reference);self.enemy_combo.currentIndexChanged.connect(self._enemy_changed);self.queue_kind.currentIndexChanged.connect(self._actions_changed);self.actions.currentItemChanged.connect(self._action_changed)
         self.refresh_reference()
 
@@ -34,6 +36,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_choices.set_groups([],emit=False);blocked=self.actions.blockSignals(True);self.actions.clear();self.actions.blockSignals(blocked)
         for widget in(self.summary,self.enemy_player,self.action_player,self.technical):replace_text(widget,'',preserve=False)
         self.rewards.clear_reference()
+        self.settlement.clear_reference()
 
     def refresh_reference(self):
         fresh=model.stage_reference(self.stage_id)
@@ -41,6 +44,7 @@ class CurrentBattlePanel(QWidget):
         keep=self.result is not None and self.source_identity==fresh['source_identity']and self.result['id']==fresh['id']
         old_enemy=self.enemy_combo.currentData()if keep else None
         self.result=fresh;self.source_identity=fresh['source_identity']
+        self.settlement.refresh_reference()
         replace_text(self.summary,model.summary_text(fresh),preserve=keep);replace_text(self.technical,_technical_json(fresh),preserve=keep)
         raw=version.image_bytes(fresh['image']);pix=QPixmap()
         if raw and pix.loadFromData(raw,'PNG'):self.map_image.setPixmap(pix.scaled(760,235,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
