@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/324.json)。
 
-已完成至324，后续325；本批状态 `P3_SECTION324_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至324，后续325；本批状态 `P3_SECTION324_PUBLISHED`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -322,5 +322,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 逐格复用实际下载且核对SHA的BWIKI352356两张完整原表与PRTS433770完整第三结局DOM；当前网页文字重新查证材料来源和三种作用，新441984原HTML的TLS失败保留，不冒称新下载成功。选项按完整文案及明确后续对话对应，不按编号猜父情景；泪之聚落采用当前游戏的倾囊资助，旧文献倾囊相助差异保留。完整对照bee3当前记录与a550旧基准，文献流程不当游戏脚本或服务器实际资格。交付件数、源私钥连续替代/库存消耗、实际削弱和完整发放条件仍未知，不假定1件或一把完成三项，也不改敌人或旧计算。无效验尸只在已注明的光明之末条件下为材料来源，不当所有普通作战必掉。P3/P2/P1均未完成，识别最后；不操作游戏、聊天或私人状态，不推荐路线。
 
-<!-- section324-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第324节功能提交eb283e880db7dfcc845391aacca08898c12f62fd已普通推送并核对真实远端及878份相关公开文件字节，证明verification/sections/324-publication.json。本次仅保存发布元数据，不增加功能节数；后续325尚未启动，下一定期全量335。P3/P2/P1未完成，文献流程不冒充实际交付或削弱、完整事件条件或数值全面迁移，私人状态及游戏聊天未纳入云端。
 <!-- section324-handoff:end -->
