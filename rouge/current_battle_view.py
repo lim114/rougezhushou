@@ -22,7 +22,8 @@ class CurrentBattlePanel(QWidget):
         self.enemy_portrait=QLabel();self.enemy_portrait.setMinimumSize(85,85);self.enemy_portrait.setAlignment(Qt.AlignmentFlag.AlignCenter);body.addWidget(self.enemy_portrait)
         self.enemy_player=QPlainTextEdit();self.enemy_player.setReadOnly(True);body.addWidget(self.enemy_player,1);self.tabs.addTab(enemies,'敌人和机制')
         wave=QWidget();body=QVBoxLayout(wave);self.queue_kind=QComboBox();self.queue_kind.addItem('总览（全部条目）',None);self.queue_kind.addItem('主波次','main');self.queue_kind.addItem('条件分支','branch');body.addWidget(self.queue_kind)
-        split=QSplitter();self.actions=QListWidget();split.addWidget(self.actions);self.action_player=QPlainTextEdit();self.action_player.setReadOnly(True);split.addWidget(self.action_player);split.setSizes([350,650]);body.addWidget(split,1);self.tabs.addTab(wave,'出怪与条件')
+        split=QSplitter();self.actions=QListWidget();split.addWidget(self.actions);self.action_player=QPlainTextEdit();self.action_player.setReadOnly(True);split.addWidget(self.action_player);split.setSizes([350,650]);body.addWidget(split,1)
+        self.action_position_button=QPushButton('在地图上查看本条位置参考');body.addWidget(self.action_position_button);self.action_position_button.clicked.connect(self.open_action_positions);self.tabs.addTab(wave,'出怪与条件')
         self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.technical,'完整原值与来源')
         from .current_reward_view import CurrentRewardPanel
         self.rewards=CurrentRewardPanel(stage_id);self.tabs.addTab(self.rewards,'奖励与条件');self.rewards.actionSelected.connect(self._reward_action_selected)
@@ -33,6 +34,7 @@ class CurrentBattlePanel(QWidget):
 
     def _clear(self):
         self._close_map_positions();self.position_button.setEnabled(False)
+        self.action_position_button.setEnabled(False)
         self.result=None;self.source_identity=None;self.enemy_key=None;self.action_key=None
         self.map_image.clear();self.map_image.setText(model.UNAVAILABLE);self.enemy_portrait.clear()
         self.enemy_choices.set_groups([],emit=False);blocked=self.actions.blockSignals(True);self.actions.clear();self.actions.blockSignals(blocked)
@@ -66,6 +68,9 @@ class CurrentBattlePanel(QWidget):
         self.enemy_combo.blockSignals(blocked);self._enemy_changed(preserve=keep);self._actions_changed(preserve=keep)
         if not keep:self.tabs.setCurrentIndex(0)
         self.rewards.refresh_reference()
+        for name in ('position_dialog','action_position_dialog'):
+            dialog=getattr(self,name,None)
+            if dialog is not None and dialog.isVisible():dialog.panel.refresh_reference()
         return True
 
     def _reward_action_selected(self,key):
@@ -99,12 +104,26 @@ class CurrentBattlePanel(QWidget):
     def _action_changed(self,item,*_,preserve=False):
         key=item.data(Qt.ItemDataRole.UserRole)if item else None
         action=next((a for a in self.result['actions']if a['key']==key),None)if self.result else None
+        if key!=self.action_key:
+            dialog=getattr(self,'action_position_dialog',None)
+            if dialog is not None:dialog.close()
         keep=preserve and key==self.action_key;self.action_key=key
         replace_text(self.action_player,model.action_text(action)if action else'请选择一条出怪、装置或条件分支资料。',preserve=keep)
+        self.action_position_button.setEnabled(action is not None and action['raw'].get('actionType')in('SPAWN','ACTIVATE_PREDEFINED'))
 
     def _close_map_positions(self):
-        dialog=getattr(self,'position_dialog',None)
+        for name in ('position_dialog','action_position_dialog'):
+            dialog=getattr(self,name,None)
+            if dialog is not None:dialog.close()
+
+    def open_action_positions(self):
+        if self.result is None or self.action_key is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .current_action_positions_view import CurrentActionPositionsDialog
+        dialog=getattr(self,'action_position_dialog',None)
         if dialog is not None:dialog.close()
+        self.action_position_dialog=CurrentActionPositionsDialog(self.stage_id,self.action_key,self)
+        self.action_position_dialog.show();return True
 
     def open_map_positions(self):
         if self.result is None:return False

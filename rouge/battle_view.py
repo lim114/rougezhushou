@@ -258,8 +258,12 @@ class BattlePreviewPanel(QWidget):
         layout.addLayout(controls)
         layout.addWidget(self.enemy_choices)
         self.include_branches=QCheckBox('包含特定条件下才可能出现的敌人（不保证本局出现）');self.include_branches.setChecked(True)
-        layout.addWidget(self.include_branches)
-        self.technical=QCheckBox('显示技术资料（原始参数、标识与来源）');layout.addWidget(self.technical)
+        reading_options=QHBoxLayout();reading_options.addWidget(self.include_branches)
+        self.technical=QCheckBox('显示技术资料（原始参数、标识与来源）')
+        # Keep both reading options on one row so content changes do not force
+        # the 1050x720 test/player window taller; maps retain their own minimum.
+        reading_options.addWidget(self.technical)
+        reading_options.addStretch(1);layout.addLayout(reading_options)
         self.occurrence_bar=QWidget();occurrence_layout=QHBoxLayout(self.occurrence_bar)
         occurrence_layout.setContentsMargins(0,0,0,0)
         occurrence_layout.addWidget(QLabel('这一组的第几名敌人'))

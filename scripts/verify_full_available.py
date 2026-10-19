@@ -156,9 +156,12 @@ ADDITIONAL_MODULES += ('tests.test_current_settlement_reference_318', 'tests.tes
 
 ADDITIONAL_MODULES += ('tests.test_current_map_position_319', 'tests.test_current_map_position_view_319', 'tests.test_current_map_position_integration_319')
 
+ADDITIONAL_MODULES += ('tests.test_current_action_positions_320', 'tests.test_current_action_positions_view_320')
+
 def source_hashes():
     files = [*ROOT.glob('rouge/**/*.py'), *ROOT.glob('rouge/data/**/*.json'),
              *ROOT.glob('tests/test_*.py'), *ROOT.glob('scripts/**/*.py'),
+             ROOT / 'tests/player_presentation_legacy_307.py',
              ROOT / 'CORE_0.70_VERIFICATION.json']
     return {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
             for p in sorted(set(files))}

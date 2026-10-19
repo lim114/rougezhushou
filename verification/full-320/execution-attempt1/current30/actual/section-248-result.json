@@ -1,0 +1,340 @@
+{
+  "scope": "declared_preprocessing_order_binary32_parameter_diagnostic",
+  "declaration": {
+    "relic_ids": [
+      "rogue_6_relic_legacy_8",
+      "rogue_6_relic_legacy_9",
+      "rogue_6_relic_legacy_10"
+    ],
+    "declared_processing_order": [
+      "rogue_6_relic_legacy_9",
+      "rogue_6_relic_legacy_10",
+      "rogue_6_relic_legacy_8"
+    ],
+    "before_constraints": []
+  },
+  "relic_ids": [
+    "rogue_6_relic_legacy_8",
+    "rogue_6_relic_legacy_9",
+    "rogue_6_relic_legacy_10"
+  ],
+  "before_constraints": [],
+  "declared_processing_order": [
+    "rogue_6_relic_legacy_9",
+    "rogue_6_relic_legacy_10",
+    "rogue_6_relic_legacy_8"
+  ],
+  "accepted_order_count": 6,
+  "unconstrained_distinct_order_count": 6,
+  "source_available": true,
+  "source": "research/p2-direct-continuation/relic-order-source-audit.json",
+  "arithmetic_policy": "IEEE754 binary32 nearest-even; round each add and subtract separately; first group record copied",
+  "groups_start_empty_as_reference_condition": true,
+  "runtime_acquisition_to_processing_order_verified": false,
+  "actual_processing_order": null,
+  "runtime_binding_verified": false,
+  "current_hotfix_equivalence_proven": false,
+  "actual_fp_control_mode": null,
+  "actual_final_packet_factor": null,
+  "actual_damage": null,
+  "enumeration_counts_are_probabilities": false,
+  "actual_probability_by_order": null,
+  "notes": [
+    "选择清单不提供实际顺序。留空声明顺序时，枚举所有满足调用方先后约束的不同排列。",
+    "每组从空的声明来源组开始；第一个来源复制参数，后续同一prefabKey才逐次合并。没有填入其它隐藏背景来源。",
+    "物理与法术分别合并，不跨组相加或把两组倍率乘成一个总倍率。",
+    "参考按IEEE754单精度最近偶数算术；加和减分别取单精度，不能仅把最终十进制结果转换一次。",
+    "最小/最大值只是边界；仅列出的离散bit结果属于可接受顺序结果，中间bit不自动列为候选。",
+    "顺序数量是完整枚举计数，不是实际出现频率或概率；未推定OnStack、实时获取或获取到列表顺序的绑定。",
+    "当前十进制模型只作对照，原默认引擎数值不改。合并黑板参数不等于最终FP伤害包、实际承伤倍率或实机认证。"
+  ],
+  "selected_sources": [
+    {
+      "relic_id": "rogue_6_relic_legacy_8",
+      "name": "制式防暴用具",
+      "source_buff_key": "global_buff_stack_base_one",
+      "prefab_group": "enemy_damage_scale[mag]",
+      "damage_family": "magic",
+      "damage_mask": "MAGICAL",
+      "parameter": 1.2,
+      "template_key": "damage_scale[mag]",
+      "raw_selector": "selected.rogue_6_relic_legacy_8.buffs[0].blackboard.damage_scale"
+    },
+    {
+      "relic_id": "rogue_6_relic_legacy_9",
+      "name": "皇帝的收藏",
+      "source_buff_key": "global_buff_stack_base_one",
+      "prefab_group": "enemy_damage_scale[mag]",
+      "damage_family": "magic",
+      "damage_mask": "MAGICAL",
+      "parameter": 1.3,
+      "template_key": "damage_scale[mag]",
+      "raw_selector": "selected.rogue_6_relic_legacy_9.buffs[0].blackboard.damage_scale"
+    },
+    {
+      "relic_id": "rogue_6_relic_legacy_10",
+      "name": "“璀璨悲泣”",
+      "source_buff_key": "global_buff_stack_base_one",
+      "prefab_group": "enemy_damage_scale[mag]",
+      "damage_family": "magic",
+      "damage_mask": "MAGICAL",
+      "parameter": 1.4,
+      "template_key": "damage_scale[mag]",
+      "raw_selector": "selected.rogue_6_relic_legacy_10.buffs[0].blackboard.damage_scale"
+    }
+  ],
+  "families": [
+    {
+      "damage_family": "magic",
+      "name": "法术承伤参数组",
+      "prefab_group": "enemy_damage_scale[mag]",
+      "relic_ids": [
+        "rogue_6_relic_legacy_8",
+        "rogue_6_relic_legacy_9",
+        "rogue_6_relic_legacy_10"
+      ],
+      "exact_decimal_reference_text": "1.9",
+      "existing_decimal_model_reference": 1.9,
+      "existing_decimal_model_binary64_hex": "0x3ffe666666666666",
+      "single_final_cast_of_exact_decimal_f32": 1.899999976158142,
+      "single_final_cast_of_exact_decimal_bits": "0x3ff33333",
+      "discrete_outcomes": [
+        {
+          "value_f32": 1.8999998569488525,
+          "bits": "0x3ff33332",
+          "accepted_order_count": 4,
+          "example_order": [
+            "rogue_6_relic_legacy_10",
+            "rogue_6_relic_legacy_8",
+            "rogue_6_relic_legacy_9"
+          ],
+          "f32_minus_existing_decimal_model": -1.4305114737211966e-07,
+          "f32_minus_exact_decimal_text": "-1.430511474609375E-7"
+        },
+        {
+          "value_f32": 1.9000000953674316,
+          "bits": "0x3ff33334",
+          "accepted_order_count": 2,
+          "example_order": [
+            "rogue_6_relic_legacy_8",
+            "rogue_6_relic_legacy_9",
+            "rogue_6_relic_legacy_10"
+          ],
+          "f32_minus_existing_decimal_model": 9.536743172944284e-08,
+          "f32_minus_exact_decimal_text": "9.5367431640625E-8"
+        }
+      ],
+      "distinct_outcome_count": 2,
+      "minimum_f32": 1.8999998569488525,
+      "minimum_bits": "0x3ff33332",
+      "maximum_f32": 1.9000000953674316,
+      "maximum_bits": "0x3ff33334",
+      "range_width": 2.384185791015625e-07,
+      "bit_word_span": 2,
+      "actual_final_packet_factor": null
+    }
+  ],
+  "order_outcomes": [
+    {
+      "order": [
+        "rogue_6_relic_legacy_10",
+        "rogue_6_relic_legacy_8",
+        "rogue_6_relic_legacy_9"
+      ],
+      "family_outcomes": {
+        "magic": {
+          "value_f32": 1.8999998569488525,
+          "bits": "0x3ff33332"
+        }
+      }
+    },
+    {
+      "order": [
+        "rogue_6_relic_legacy_10",
+        "rogue_6_relic_legacy_9",
+        "rogue_6_relic_legacy_8"
+      ],
+      "family_outcomes": {
+        "magic": {
+          "value_f32": 1.8999998569488525,
+          "bits": "0x3ff33332"
+        }
+      }
+    },
+    {
+      "order": [
+        "rogue_6_relic_legacy_8",
+        "rogue_6_relic_legacy_10",
+        "rogue_6_relic_legacy_9"
+      ],
+      "family_outcomes": {
+        "magic": {
+          "value_f32": 1.8999998569488525,
+          "bits": "0x3ff33332"
+        }
+      }
+    },
+    {
+      "order": [
+        "rogue_6_relic_legacy_8",
+        "rogue_6_relic_legacy_9",
+        "rogue_6_relic_legacy_10"
+      ],
+      "family_outcomes": {
+        "magic": {
+          "value_f32": 1.9000000953674316,
+          "bits": "0x3ff33334"
+        }
+      }
+    },
+    {
+      "order": [
+        "rogue_6_relic_legacy_9",
+        "rogue_6_relic_legacy_10",
+        "rogue_6_relic_legacy_8"
+      ],
+      "family_outcomes": {
+        "magic": {
+          "value_f32": 1.8999998569488525,
+          "bits": "0x3ff33332"
+        }
+      }
+    },
+    {
+      "order": [
+        "rogue_6_relic_legacy_9",
+        "rogue_6_relic_legacy_8",
+        "rogue_6_relic_legacy_10"
+      ],
+      "family_outcomes": {
+        "magic": {
+          "value_f32": 1.9000000953674316,
+          "bits": "0x3ff33334"
+        }
+      }
+    }
+  ],
+  "joint_outcomes": [
+    {
+      "family_outcomes": {
+        "magic": {
+          "value_f32": 1.8999998569488525,
+          "bits": "0x3ff33332"
+        }
+      },
+      "accepted_order_count": 4,
+      "example_order": [
+        "rogue_6_relic_legacy_10",
+        "rogue_6_relic_legacy_8",
+        "rogue_6_relic_legacy_9"
+      ]
+    },
+    {
+      "family_outcomes": {
+        "magic": {
+          "value_f32": 1.9000000953674316,
+          "bits": "0x3ff33334"
+        }
+      },
+      "accepted_order_count": 2,
+      "example_order": [
+        "rogue_6_relic_legacy_8",
+        "rogue_6_relic_legacy_9",
+        "rogue_6_relic_legacy_10"
+      ]
+    }
+  ],
+  "declared_order_trace": {
+    "order": [
+      "rogue_6_relic_legacy_9",
+      "rogue_6_relic_legacy_10",
+      "rogue_6_relic_legacy_8"
+    ],
+    "family_outcomes": {
+      "magic": {
+        "value_f32": 1.8999998569488525,
+        "bits": "0x3ff33332"
+      }
+    },
+    "steps": [
+      {
+        "ordinal": 1,
+        "relic_id": "rogue_6_relic_legacy_9",
+        "name": "皇帝的收藏",
+        "damage_family": "magic",
+        "prefab_group": "enemy_damage_scale[mag]",
+        "source_parameter_decimal_text": "1.3",
+        "incoming_f32": 1.2999999523162842,
+        "incoming_bits": "0x3fa66666",
+        "previous_group_f32": null,
+        "previous_group_bits": null,
+        "first_group_record_is_copy": true,
+        "rounded_addition_f32": null,
+        "rounded_addition_bits": null,
+        "group_result_f32": 1.2999999523162842,
+        "group_result_bits": "0x3fa66666",
+        "exact_decimal_reference_text": "1.3",
+        "f32_minus_exact_decimal_text": "-4.76837158203125E-8",
+        "groups_after_step": {
+          "magic": {
+            "value_f32": 1.2999999523162842,
+            "bits": "0x3fa66666"
+          }
+        },
+        "actual_final_packet_factor": null
+      },
+      {
+        "ordinal": 2,
+        "relic_id": "rogue_6_relic_legacy_10",
+        "name": "“璀璨悲泣”",
+        "damage_family": "magic",
+        "prefab_group": "enemy_damage_scale[mag]",
+        "source_parameter_decimal_text": "1.4",
+        "incoming_f32": 1.399999976158142,
+        "incoming_bits": "0x3fb33333",
+        "previous_group_f32": 1.2999999523162842,
+        "previous_group_bits": "0x3fa66666",
+        "first_group_record_is_copy": false,
+        "rounded_addition_f32": 2.6999998092651367,
+        "rounded_addition_bits": "0x402ccccc",
+        "group_result_f32": 1.6999998092651367,
+        "group_result_bits": "0x3fd99998",
+        "exact_decimal_reference_text": "1.7",
+        "f32_minus_exact_decimal_text": "-1.9073486328125E-7",
+        "groups_after_step": {
+          "magic": {
+            "value_f32": 1.6999998092651367,
+            "bits": "0x3fd99998"
+          }
+        },
+        "actual_final_packet_factor": null
+      },
+      {
+        "ordinal": 3,
+        "relic_id": "rogue_6_relic_legacy_8",
+        "name": "制式防暴用具",
+        "damage_family": "magic",
+        "prefab_group": "enemy_damage_scale[mag]",
+        "source_parameter_decimal_text": "1.2",
+        "incoming_f32": 1.2000000476837158,
+        "incoming_bits": "0x3f99999a",
+        "previous_group_f32": 1.6999998092651367,
+        "previous_group_bits": "0x3fd99998",
+        "first_group_record_is_copy": false,
+        "rounded_addition_f32": 2.8999998569488525,
+        "rounded_addition_bits": "0x40399999",
+        "group_result_f32": 1.8999998569488525,
+        "group_result_bits": "0x3ff33332",
+        "exact_decimal_reference_text": "1.9",
+        "f32_minus_exact_decimal_text": "-1.430511474609375E-7",
+        "groups_after_step": {
+          "magic": {
+            "value_f32": 1.8999998569488525,
+            "bits": "0x3ff33332"
+          }
+        },
+        "actual_final_packet_factor": null
+      }
+    ]
+  }
+}

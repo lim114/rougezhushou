@@ -1,14 +1,14 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 319,
-  "next_section": 320,
-  "current_section_label": "第319节 + 当前固定地图方格、原图近似中心与跨版本地形核对",
-  "current_completed_change": "当前关卡地图页新增独立方格/原图对照入口，全部184份当前配置可查看完整静态方格与地形中文标注。对13份旧公开完整原件重新核对SHA与字节数，固定完整mapData、mapId、cameraPlugin及tilesDisallowToLocate，与当前对应导出和原图字节分别比较；不靠名称、同ID或只有相同图片继承坐标。在33份当前配置、13张不同原图上显示265条跨配置的已独立复读中心引用（不是265个独立物理格），其中含10份旧地标没有同ID的DLC配置。左侧点格或从已核对中心列表选择，右侧仅画对应近似中心并随窗口缩放；未读格与未准入地图保留方格和准确原图，不造标记，不从图片反推格子，也不连成路径。刷新保留格子、列表、页签和非零阅读，坏源清图清旧并要求重新选格，重复打开/父窗关闭均关闭旧位置窗口。实际截图发现的格子列表回到占位项问题在本节修正，以稳定的格子标识保持同步。",
-  "batch_status": "P3_SECTION319_PUBLISHED",
-  "next_full_validation_after": 320,
+  "completed_sections": 320,
+  "next_section": 321,
+  "current_section_label": "第320节 + 当前出怪与预置装置条目直达地图格子和有证原图参考",
+  "current_completed_change": "当前关卡“出怪与条件”页新增条目位置入口，可直接查看基础出怪路线的出生格、移动目标格、再出现格和终点格，以及唯一具名预置装置/单位的声明格；全部184份当前配置逐项核对9440条记录，8198条有明确的名义位置引用。44422条位置与1709条有证原图中心均是跨条目重复引用，不是独立地块或实际出怪数量。玩家从位置列表选择后，左侧标出对应格子，右侧只在319已有核对依据时标出近似中心。654条条件分支出怪不借基础/额外路线数组；等待和消失的占位格不标图，重复或空别名不选对象，越界位置不裁剪到地图。刷新保留条目、位置、页签与阅读，源失效清图清旧、恢复手动选择，重复开窗/切换条目/关闭父窗均关闭旧位置窗。修正首轮新增布局破坏旧分栏阅读检查的问题，保留原分栏关系。",
+  "batch_status": "P3_SECTION320_LOCAL_ACCEPTED_PUBLICATION_PENDING",
+  "next_full_validation_after": 335,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
-  "latest_full_receipt": "verification/full-305/summary.json",
+  "latest_full_receipt": "verification/full-320/summary.json",
   "latest_full_available_checks_passed": true,
   "priority_order": "P3 → P2 → P1；识别优化最后；未完成事项保留",
   "node_scope": "list all source-covered possible events and conditions; no generation probabilities",
@@ -16,7 +16,7 @@
   "current_batch_target_section": null,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "e65a15ce5cdc63d461dcf4206251782669befcfa4eeb98e0a3f7a1677e3b868b",
+    "sha256": "8b1e04b7f63279755bcfcbedff32c92211d05fc009784956c47d3c5e66689260",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -1921,16 +1921,22 @@
       "completion_ref": "p3-section-319",
       "topic": "当前固定地图方格、原图近似中心与跨版本地形核对",
       "verification": "verification/sections/319.json"
+    },
+    {
+      "number": 320,
+      "completion_ref": "p3-section-320",
+      "topic": "当前出怪与预置装置条目直达地图格子和有证原图参考",
+      "verification": "verification/sections/320.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "3eaf43d7946dc803d73b98049284039ad5c85242d8053eb8a09754c591519664",
-    "PROJECT_PROGRESS.md": "9c2c847c3055cdb770939381da10a57f8e8ce3d8de2a6247513e95eefbbf247a",
-    "WORK_IN_PROGRESS.md": "de1a6a036a797147b3b717b3481861b0ccef0a3507fb2919e3c9fbf3411b1bc2",
-    "PROJECT_COMPLETED.md": "17277414feaa3c54818d5d6ab92eb584b581e799ef8b0636ae00ebb9eb5d4449",
-    "AGENTS.md": "cc46169498bf683ff757736f4e50a2beb820aeb87bd929686712e723a9754b4b",
-    "PROJECT_REQUIREMENTS.md": "e65a15ce5cdc63d461dcf4206251782669befcfa4eeb98e0a3f7a1677e3b868b",
-    "verification/sections/319.json": "df59ac8254b9bef1dd8eafaa233a775fc233a152afb19042afb0469cd4940f8f"
+    "DEVELOPMENT_CHECKPOINT.json": "93afa1c1c158eb50e50938af2f1ed11cb9f31a3d9e6e715755c53a0948ffd897",
+    "PROJECT_PROGRESS.md": "9800a24e286f179c4b19f5e788b78cc5278b932c9584fb7649ead13ddb6cd545",
+    "WORK_IN_PROGRESS.md": "31c37d1d5049ad6406d6ac56e4eed608faa608fb1924e251f55cb042fa169890",
+    "PROJECT_COMPLETED.md": "b65e94bfcc22bf2c7cbbbe6a0597dd6a36507d1c512c4a617da1d84d989e271f",
+    "AGENTS.md": "c58ea05d8133f0963428f770549019143efa16a75027e4d6623b19dc5b3953fd",
+    "PROJECT_REQUIREMENTS.md": "8b1e04b7f63279755bcfcbedff32c92211d05fc009784956c47d3c5e66689260",
+    "verification/sections/320.json": "59e2ec2573c03cdb18123f1f027bc04fbf01c95c12be03588e6913be21848aad"
   },
   "private_state_included": false
 }
