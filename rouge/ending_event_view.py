@@ -23,6 +23,7 @@ class EndingEventPanel(QWidget):
             self.controls[key]=control;row,col=divmod(i,2);grid.addWidget(QLabel(label),row,col*2);grid.addWidget(control,row,col*2+1);control.currentIndexChanged.connect(self._context_changed)
         bar=QHBoxLayout();self.gold=QLineEdit();self.gold.setPlaceholderText('源石锭：留空表示未知');self.gold.setAccessibleName('用于对照的源石锭');bar.addWidget(self.gold);self.refresh_button=QPushButton('重新核对资料');bar.addWidget(self.refresh_button);layout.addLayout(bar)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.player.setReadOnly(True);self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.player,'条件与后续');self.tabs.addTab(self.technical,'完整来源');layout.addWidget(self.tabs,1)
+        self.flow_button=QPushButton('逐步查看本事件的选项、奖励和后续');self.flow_button.hide();layout.addWidget(self.flow_button);self.flow_button.clicked.connect(self.open_documented_flow)
         bar=QHBoxLayout();self.battle_combo=QComboBox();self.battle_combo.setAccessibleName('相关作战的精确配置');self.battle_button=QPushButton('查看这场作战');bar.addWidget(self.battle_combo,1);bar.addWidget(self.battle_button);layout.addLayout(bar)
         self.combo.currentIndexChanged.connect(self._selected);self.gold.textChanged.connect(self._context_changed);self.refresh_button.clicked.connect(self.refresh_reference);self.battle_combo.currentIndexChanged.connect(self._battle_changed);self.battle_button.clicked.connect(self.open_battle);self.refresh_reference()
 
@@ -30,8 +31,12 @@ class EndingEventPanel(QWidget):
         dialog=getattr(self,'battle_dialog',None)
         if dialog is not None:dialog.close()
 
+    def _close_flow(self):
+        dialog=getattr(self,'flow_dialog',None)
+        if dialog is not None:dialog.close()
+
     def clear_reference(self):
-        self._close_battle();self.result=None;self.identity=None;self.source_identity=None;self.choices.set_groups([],emit=False)
+        self._close_battle();self._close_flow();self.flow_button.hide();self.result=None;self.identity=None;self.source_identity=None;self.choices.set_groups([],emit=False)
         blocked=self.battle_combo.blockSignals(True);self.battle_combo.clear();self.battle_combo.blockSignals(blocked);self.battle_button.setEnabled(False)
         replace_text(self.player,'来源暂时无法核对，旧条件和作战入口已清除。恢复后请手动重新选择。',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
@@ -53,13 +58,17 @@ class EndingEventPanel(QWidget):
 
     def _selected(self,*_,preserve=False):
         identity=self.combo.currentData();keep=preserve and identity==self.identity;old_battle=self.battle_combo.currentData()if keep else None
-        if not keep:self._close_battle()
+        if not keep:self._close_battle();self._close_flow()
         try:values=self.declared_context()
         except ValueError as exc:
-            self._close_battle();self.result=None;self.battle_combo.clear();self.battle_button.setEnabled(False);replace_text(self.player,str(exc),preserve=False);replace_text(self.technical,'',preserve=False);return
+            self._close_battle();self._close_flow();self.flow_button.hide();self.result=None;self.battle_combo.clear();self.battle_button.setEnabled(False);replace_text(self.player,str(exc),preserve=False);replace_text(self.technical,'',preserve=False);return
         result=model.evaluate(identity,values)if identity is not None else None
         if identity is not None and result is None:self.clear_reference();return
         self.identity=identity;self.result=result
+        self.flow_button.setVisible(result is not None and identity in ('button','blueprint','revive'))
+        self.flow_button.setEnabled(result is not None and identity in ('button','blueprint','revive'))
+        child=getattr(self,'flow_dialog',None)
+        if keep and child is not None and child.isVisible():child.panel.refresh_reference()
         replace_text(self.player,model.player_text(result)if result else'请选择一项。条件不全时会保留未知，不据此排除所有事件。',preserve=keep)
         replace_text(self.technical,_technical_json(result)if result else'',preserve=keep)
         blocked=self.battle_combo.blockSignals(True);self.battle_combo.clear();self.battle_combo.addItem('手动选择相关作战；同名配置分别保留',None)
@@ -82,11 +91,20 @@ class EndingEventPanel(QWidget):
         from .current_battle_view import CurrentBattleDialog
         self._close_battle();self.battle_dialog=CurrentBattleDialog(sid,self);self.battle_dialog.show();return True
 
-    def closeEvent(self,event):self._close_battle();super().closeEvent(event)
+    def open_documented_flow(self):
+        if self.result is None or self.identity not in ('button','blueprint','revive'):return False
+        if model.evaluate(self.identity,self.declared_context())!=self.result:self.clear_reference();return False
+        from .documented_event_flow_view import DocumentedEventFlowDialog
+        from .documented_event_flows import reference
+        if reference(self.identity)is None:
+            self._close_flow();self.flow_button.setEnabled(False);return False
+        self.flow_button.setEnabled(True);self._close_flow();self.flow_dialog=DocumentedEventFlowDialog(self.identity,parent=self);self.flow_dialog.show();return True
+
+    def closeEvent(self,event):self._close_battle();self._close_flow();super().closeEvent(event)
 
 
 class EndingEventDialog(QDialog):
     def __init__(self,parent=None):
         super().__init__(parent);self.setWindowTitle('旧日重燃 · 事件条件与相关作战');self.resize(1060,820);layout=QVBoxLayout(self);self.panel=EndingEventPanel(self);layout.addWidget(self.panel)
 
-    def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)
+    def closeEvent(self,event):self.panel._close_battle();self.panel._close_flow();super().closeEvent(event)

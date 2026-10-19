@@ -29,6 +29,7 @@ class ExpansionUpdatePanel(QWidget):
         split=QSplitter();layout.addWidget(split,1);self.entries=QListWidget();self.entries.setAccessibleName('本版本资料条目');split.addWidget(self.entries)
         right=QWidget();body=QVBoxLayout(right);self.map_image=QLabel('选择关卡可查看固定原图');self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter);self.map_image.setMinimumSize(260,150);body.addWidget(self.map_image)
         self.next_button=QPushButton('查看原资料指定的后续场景');self.next_button.hide();body.addWidget(self.next_button)
+        self.flow_button=QPushButton('查看这个情景的选项、奖励和后续');self.flow_button.hide();body.addWidget(self.flow_button);self.flow_button.clicked.connect(self.open_documented_flow)
         self.battle_button=QPushButton('查看本版本关卡：原图、敌人和出怪条件');self.battle_button.hide();body.addWidget(self.battle_button)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.player.setReadOnly(True);self.technical=QPlainTextEdit();self.technical.setReadOnly(True)
         self.tabs.addTab(self.player,'条件与用途');self.tabs.addTab(self.technical,'完整原值与来源');self.stage_source=QPlainTextEdit();self.stage_source.setReadOnly(True);self.tabs.addTab(self.stage_source,'层数分类依据');body.addWidget(self.tabs,1);split.addWidget(right);split.setSizes([300,750])
@@ -39,6 +40,7 @@ class ExpansionUpdatePanel(QWidget):
         self.refresh_reference()
 
     def _clear_detail(self,notice='请先选择一项资料。'):
+        self._close_flow();self.flow_button.hide()
         dialog=getattr(self,'current_battle_dialog',None)
         if dialog is not None:dialog.close()
         self.result=None;self.image_raw=None;self.map_image.clear();self.map_image.setText(notice);self.next_button.hide();self.next_button.setEnabled(False)
@@ -93,7 +95,13 @@ class ExpansionUpdatePanel(QWidget):
         key=item.data(Qt.ItemDataRole.UserRole);result=model.detail(self.category.currentData(),key)
         if result is None or result['source_identity']!=self.source_identity:self._unavailable();return
         keep=preserve and self.result is not None and self.result['row']['id']==key and self.result['row']['category']==result['row']['category']
+        if not keep:self._close_flow()
         self.result=deepcopy(result)
+        from .documented_event_flows import event_for_scene
+        available=result['row']['category']=='scenes'and event_for_scene(key)is not None
+        self.flow_button.setVisible(available);self.flow_button.setEnabled(available)
+        child=getattr(self,'flow_dialog',None)
+        if keep and child is not None and child.isVisible():child.panel.refresh_reference()
         is_stage=result['row']['category']=='stages';self.battle_button.setVisible(is_stage);self.battle_button.setEnabled(is_stage)
         self.stage_info=stage_directory.detail(key)if is_stage else None
         if is_stage and self.stage_info is None:self._unavailable();return
@@ -146,3 +154,24 @@ class ExpansionUpdatePanel(QWidget):
         previous=getattr(self,'ending_dialog',None)
         if previous is not None:previous.close()
         self.ending_dialog=EndingEventDialog(self);self.ending_dialog.show();return True
+
+    def _close_flow(self):
+        dialog=getattr(self,'flow_dialog',None)
+        if dialog is not None:dialog.close()
+
+    def open_documented_flow(self):
+        if self.result is None or self.result['row']['category']!='scenes':return False
+        fresh=model.detail('scenes',self.result['row']['id'])
+        if fresh!=self.result:self._unavailable();return False
+        from .documented_event_flows import event_for_scene
+        event_id=event_for_scene(fresh['row']['id'])
+        if event_id is None:self._close_flow();self.flow_button.hide();return False
+        from .documented_event_flow_view import DocumentedEventFlowDialog
+        self._close_flow();self.flow_dialog=DocumentedEventFlowDialog(event_id,fresh['row']['id'],self);self.flow_dialog.show();return True
+
+    def closeEvent(self,event):
+        self._close_flow()
+        for name in ('ending_dialog','current_battle_dialog'):
+            dialog=getattr(self,name,None)
+            if dialog is not None:dialog.close()
+        super().closeEvent(event)
