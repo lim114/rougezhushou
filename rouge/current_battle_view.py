@@ -23,6 +23,8 @@ class CurrentBattlePanel(QWidget):
         wave=QWidget();body=QVBoxLayout(wave);self.queue_kind=QComboBox();self.queue_kind.addItem('总览（全部条目）',None);self.queue_kind.addItem('主波次','main');self.queue_kind.addItem('条件分支','branch');body.addWidget(self.queue_kind)
         split=QSplitter();self.actions=QListWidget();split.addWidget(self.actions);self.action_player=QPlainTextEdit();self.action_player.setReadOnly(True);split.addWidget(self.action_player);split.setSizes([350,650]);body.addWidget(split,1);self.tabs.addTab(wave,'出怪与条件')
         self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.technical,'完整原值与来源')
+        from .current_reward_view import CurrentRewardPanel
+        self.rewards=CurrentRewardPanel(stage_id);self.tabs.addTab(self.rewards,'奖励与条件');self.rewards.actionSelected.connect(self._reward_action_selected)
         self.refresh_button.clicked.connect(self.refresh_reference);self.enemy_combo.currentIndexChanged.connect(self._enemy_changed);self.queue_kind.currentIndexChanged.connect(self._actions_changed);self.actions.currentItemChanged.connect(self._action_changed)
         self.refresh_reference()
 
@@ -31,6 +33,7 @@ class CurrentBattlePanel(QWidget):
         self.map_image.clear();self.map_image.setText(model.UNAVAILABLE);self.enemy_portrait.clear()
         self.enemy_choices.set_groups([],emit=False);blocked=self.actions.blockSignals(True);self.actions.clear();self.actions.blockSignals(blocked)
         for widget in(self.summary,self.enemy_player,self.action_player,self.technical):replace_text(widget,'',preserve=False)
+        self.rewards.clear_reference()
 
     def refresh_reference(self):
         fresh=model.stage_reference(self.stage_id)
@@ -55,7 +58,17 @@ class CurrentBattlePanel(QWidget):
         if old_enemy is not None:self.enemy_choices.select_value(old_enemy,emit=False)
         self.enemy_combo.blockSignals(blocked);self._enemy_changed(preserve=keep);self._actions_changed(preserve=keep)
         if not keep:self.tabs.setCurrentIndex(0)
+        self.rewards.refresh_reference()
         return True
+
+    def _reward_action_selected(self,key):
+        if self.result is None or self.rewards.result is None or self.result['source_identity']!=self.rewards.result['battle_source_identity']:return False
+        action=next((a for a in self.result['actions']if a['key']==key),None)
+        if action is None:return False
+        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']))
+        for i in range(self.actions.count()):
+            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
+        return False
 
     def _enemy_changed(self,*_,preserve=False):
         key=self.enemy_combo.currentData();enemy=next((e for e in self.result['enemies']if e['key']==key),None)if self.result else None
