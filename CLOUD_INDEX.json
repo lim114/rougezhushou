@@ -1,11 +1,11 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 318,
-  "next_section": 319,
-  "current_section_label": "第318节 + 当前通关基础奖励、特殊入口与历史经验参考分开核对",
-  "current_completed_change": "当前关卡预览新增“通关基础奖励”页，原前五页签不变。按固定441984原文解析六行区域与18条特殊入口奖励，分别显示可核对的当前基础源石锭、通常追猎零经验/一张招募券条款及明确标注的旧版经验参考；基础经验与满科技经验未分离的拼接文本不当当前经验计算，也不默认账号满科技。入口与区域独立对照，同名事件与通常追猎分项不相加，陌生旅伴2至3源石锭保留范围，不取中点。秘境仅沿用文献明确的普通/紧急原关卡分项，盲目者所见不借用同层源流表，余径基础结算保留未知并单列普通作战额外1件藏品条件。支持全部184配置的资料/未知状态；不支持的具名入口、空值不当零。刷新保留声明、页签和阅读状态，坏源清除当前/历史数值，单个来源失效不冒称其它关卡资料失败。玩家页使用普通中文，技术来源独立保存。",
-  "batch_status": "P3_SECTION318_PUBLISHED",
+  "completed_sections": 319,
+  "next_section": 320,
+  "current_section_label": "第319节 + 当前固定地图方格、原图近似中心与跨版本地形核对",
+  "current_completed_change": "当前关卡地图页新增独立方格/原图对照入口，全部184份当前配置可查看完整静态方格与地形中文标注。对13份旧公开完整原件重新核对SHA与字节数，固定完整mapData、mapId、cameraPlugin及tilesDisallowToLocate，与当前对应导出和原图字节分别比较；不靠名称、同ID或只有相同图片继承坐标。在33份当前配置、13张不同原图上显示265条跨配置的已独立复读中心引用（不是265个独立物理格），其中含10份旧地标没有同ID的DLC配置。左侧点格或从已核对中心列表选择，右侧仅画对应近似中心并随窗口缩放；未读格与未准入地图保留方格和准确原图，不造标记，不从图片反推格子，也不连成路径。刷新保留格子、列表、页签和非零阅读，坏源清图清旧并要求重新选格，重复打开/父窗关闭均关闭旧位置窗口。实际截图发现的格子列表回到占位项问题在本节修正，以稳定的格子标识保持同步。",
+  "batch_status": "P3_SECTION319_LOCAL_ACCEPTED_PUBLICATION_PENDING",
   "next_full_validation_after": 320,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
   "latest_full_receipt": "verification/full-305/summary.json",
@@ -16,7 +16,7 @@
   "current_batch_target_section": null,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "c72da3bd06c087d3617aa78afcda8df2140cd11fdaf6b0c957588a2c9c155f10",
+    "sha256": "0e9080b30c7dd36e0bafbab0f5e2e2589dcb4d9ba0c20d92fc63c049724a8fc7",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -1915,16 +1915,22 @@
       "completion_ref": "p3-section-318",
       "topic": "当前通关基础奖励、特殊入口与历史经验参考分开核对",
       "verification": "verification/sections/318.json"
+    },
+    {
+      "number": 319,
+      "completion_ref": "p3-section-319",
+      "topic": "当前固定地图方格、原图近似中心与跨版本地形核对",
+      "verification": "verification/sections/319.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "6113de4f89d65d5406790ad3e2f24f3185e1f3ef92cfe983e679751dfb9d59fb",
-    "PROJECT_PROGRESS.md": "71081b61f28b115be75058ab398a32a9f933113bd0380c1df21dc52496a288e1",
-    "WORK_IN_PROGRESS.md": "25212fdfa0247c500447683e9e2df51aa26ea1b199e4c99a6c1d625f01571fc8",
-    "PROJECT_COMPLETED.md": "42ca8b500296bd166c05a1bd6bbda829d8ac09dbead6109f8e83bfcbb685152e",
-    "AGENTS.md": "dbdc41e7d17d2f165bc735b34a9bfbb2c6515990b504656948963534d6789633",
-    "PROJECT_REQUIREMENTS.md": "c72da3bd06c087d3617aa78afcda8df2140cd11fdaf6b0c957588a2c9c155f10",
-    "verification/sections/318.json": "b88ec5d8007436a798c0129a06fd82401ae6740d2fe1bd44cac51a16e670393a"
+    "DEVELOPMENT_CHECKPOINT.json": "d35c752964567bf829f2a2ab18de948638ac4aaf7d1ab1529f0be5fcd10b1612",
+    "PROJECT_PROGRESS.md": "9c2c847c3055cdb770939381da10a57f8e8ce3d8de2a6247513e95eefbbf247a",
+    "WORK_IN_PROGRESS.md": "2c99b24ea699a0e15b32a69c398f8ecbfe14d02d3ef3a3a93fe6a1c0b042c447",
+    "PROJECT_COMPLETED.md": "02bfa7803bceb660e4bbe06ee7d1ef245ef2f69f8093e027c369cf518e420a22",
+    "AGENTS.md": "4a7700e5e7573e34bd41f4904312c457bdeb851af78f423175fe94315585d658",
+    "PROJECT_REQUIREMENTS.md": "0e9080b30c7dd36e0bafbab0f5e2e2589dcb4d9ba0c20d92fc63c049724a8fc7",
+    "verification/sections/319.json": "df59ac8254b9bef1dd8eafaa233a775fc233a152afb19042afb0469cd4940f8f"
   },
   "private_state_included": false
 }

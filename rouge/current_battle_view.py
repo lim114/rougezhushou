@@ -16,6 +16,7 @@ class CurrentBattlePanel(QWidget):
         self.refresh_button=QPushButton('重新核对本关资料');layout.addWidget(self.refresh_button)
         self.tabs=QTabWidget();layout.addWidget(self.tabs,1)
         overview=QWidget();body=QVBoxLayout(overview);self.map_image=QLabel();self.map_image.setMinimumSize(300,160);self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter);body.addWidget(self.map_image)
+        self.position_button=QPushButton('查看地图格子与已核对的原图位置');body.addWidget(self.position_button);self.position_button.clicked.connect(self.open_map_positions)
         self.summary=QPlainTextEdit();self.summary.setReadOnly(True);body.addWidget(self.summary,1);self.tabs.addTab(overview,'地图与关卡')
         enemies=QWidget();body=QVBoxLayout(enemies);self.enemy_combo=QComboBox();self.enemy_choices=BranchChoice(self.enemy_combo,[],overview_label='总览（本关候选）',placeholder='请选择敌人或关联实体');body.addWidget(self.enemy_choices)
         self.enemy_portrait=QLabel();self.enemy_portrait.setMinimumSize(85,85);self.enemy_portrait.setAlignment(Qt.AlignmentFlag.AlignCenter);body.addWidget(self.enemy_portrait)
@@ -31,6 +32,7 @@ class CurrentBattlePanel(QWidget):
         self.refresh_reference()
 
     def _clear(self):
+        self._close_map_positions();self.position_button.setEnabled(False)
         self.result=None;self.source_identity=None;self.enemy_key=None;self.action_key=None
         self.map_image.clear();self.map_image.setText(model.UNAVAILABLE);self.enemy_portrait.clear()
         self.enemy_choices.set_groups([],emit=False);blocked=self.actions.blockSignals(True);self.actions.clear();self.actions.blockSignals(blocked)
@@ -44,6 +46,7 @@ class CurrentBattlePanel(QWidget):
         keep=self.result is not None and self.source_identity==fresh['source_identity']and self.result['id']==fresh['id']
         old_enemy=self.enemy_combo.currentData()if keep else None
         self.result=fresh;self.source_identity=fresh['source_identity']
+        self.position_button.setEnabled(True)
         self.settlement.refresh_reference()
         replace_text(self.summary,model.summary_text(fresh),preserve=keep);replace_text(self.technical,_technical_json(fresh),preserve=keep)
         raw=version.image_bytes(fresh['image']);pix=QPixmap()
@@ -99,8 +102,22 @@ class CurrentBattlePanel(QWidget):
         keep=preserve and key==self.action_key;self.action_key=key
         replace_text(self.action_player,model.action_text(action)if action else'请选择一条出怪、装置或条件分支资料。',preserve=keep)
 
+    def _close_map_positions(self):
+        dialog=getattr(self,'position_dialog',None)
+        if dialog is not None:dialog.close()
+
+    def open_map_positions(self):
+        if self.result is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .current_map_position_view import CurrentMapPositionDialog
+        self._close_map_positions();self.position_dialog=CurrentMapPositionDialog(self.stage_id,self);self.position_dialog.show();return True
+
+    def closeEvent(self,event):self._close_map_positions();super().closeEvent(event)
+
 
 class CurrentBattleDialog(QDialog):
     def __init__(self,stage_id,parent=None):
         super().__init__(parent);self.setWindowTitle('本次更新 · 固定关卡预览');self.resize(1120,820)
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
+
+    def closeEvent(self,event):self.panel._close_map_positions();super().closeEvent(event)
