@@ -112,7 +112,7 @@ def detail(category,key):
         lines+=['关卡说明：'+_plain(value.get('description'))]
         if value.get('eliteDesc'):lines+=['紧急说明：'+_plain(value['eliteDesc'])]
         lines+=['同名条目可能是不同关卡变体，不能借用另一条目的敌人、路线或掉落。',
-                '原图仅供查看；本次尚未校准坐标，也未恢复新关卡出怪、敌人面板或完整奖励池。']
+                '原图仅供查看；当前尚未校准坐标。可打开本版本关卡预览，查看已接入的敌人、出怪和条件奖励；完整修正面板、全局时间轴与奖励池仍待核验。']
         image=ref['images']['images'].get(key)
     elif category=='scenes':
         lines+=['场景内容：'+_plain(value.get('description')),

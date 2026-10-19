@@ -150,6 +150,8 @@ ADDITIONAL_MODULES += ('tests.test_current_reward_reference_315', 'tests.test_cu
 
 ADDITIONAL_MODULES += ('tests.test_ending_event_reference_316', 'tests.test_ending_event_view_316')
 
+ADDITIONAL_MODULES += ('tests.test_current_stage_directory_317', 'tests.test_current_stage_directory_view_317', 'tests.test_current_stage_directory_integration_317')
+
 def source_hashes():
     files = [*ROOT.glob('rouge/**/*.py'), *ROOT.glob('rouge/data/**/*.json'),
              *ROOT.glob('tests/test_*.py'), *ROOT.glob('scripts/**/*.py'),

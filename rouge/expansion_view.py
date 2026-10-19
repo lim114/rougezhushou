@@ -5,6 +5,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QLineEdit,QListWidget,QListWidgetItem,QPlainTextEdit,QTabWidget,QPushButton,QSplitter
 from . import expansion_reference as model
+from . import current_stage_directory as stage_directory
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
 
@@ -19,6 +20,10 @@ class ExpansionUpdatePanel(QWidget):
         self.scope=QComboBox();self.scope.addItem('只看新增与改动',True);self.scope.addItem('查看本版本全部资料',False)
         self.search=QLineEdit();self.search.setPlaceholderText('按中文名称搜索；同名资料分别保留')
         self.refresh_button=QPushButton('重新核对资料');bar.addWidget(self.category);bar.addWidget(self.scope);bar.addWidget(self.search,1);bar.addWidget(self.refresh_button);layout.addLayout(bar)
+        filters=QWidget();stage_bar=QHBoxLayout(filters);stage_bar.setContentsMargins(0,0,0,0);self.stage_filters=filters;self.stage_floor=QComboBox();self.stage_kind=QComboBox();self.stage_floor.setAccessibleName('当前关卡资料层数');self.stage_kind.setAccessibleName('当前关卡作战来源')
+        for value,label in stage_directory.FLOORS:self.stage_floor.addItem(label,value)
+        for value,label in stage_directory.KINDS:self.stage_kind.addItem(label,value)
+        stage_bar.addWidget(self.stage_floor);stage_bar.addWidget(self.stage_kind);stage_bar.addWidget(QLabel('层数按文献分组；同名配置分别保留。'),1);layout.addWidget(filters)
         self.ending_button=QPushButton('旧日重燃：事件前置与相关作战');layout.addWidget(self.ending_button);self.ending_button.clicked.connect(self.open_ending_events)
         self.count=QLabel();layout.addWidget(self.count)
         split=QSplitter();layout.addWidget(split,1);self.entries=QListWidget();self.entries.setAccessibleName('本版本资料条目');split.addWidget(self.entries)
@@ -26,8 +31,9 @@ class ExpansionUpdatePanel(QWidget):
         self.next_button=QPushButton('查看原资料指定的后续场景');self.next_button.hide();body.addWidget(self.next_button)
         self.battle_button=QPushButton('查看本版本关卡：原图、敌人和出怪条件');self.battle_button.hide();body.addWidget(self.battle_button)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.player.setReadOnly(True);self.technical=QPlainTextEdit();self.technical.setReadOnly(True)
-        self.tabs.addTab(self.player,'条件与用途');self.tabs.addTab(self.technical,'完整原值与来源');body.addWidget(self.tabs,1);split.addWidget(right);split.setSizes([300,750])
+        self.tabs.addTab(self.player,'条件与用途');self.tabs.addTab(self.technical,'完整原值与来源');self.stage_source=QPlainTextEdit();self.stage_source.setReadOnly(True);self.tabs.addTab(self.stage_source,'层数分类依据');body.addWidget(self.tabs,1);split.addWidget(right);split.setSizes([300,750])
         self.category.currentIndexChanged.connect(self._filter_changed);self.scope.currentIndexChanged.connect(self._filter_changed);self.search.textChanged.connect(self._filter_changed)
+        self.stage_floor.currentIndexChanged.connect(self._filter_changed);self.stage_kind.currentIndexChanged.connect(self._filter_changed)
         self.entries.currentItemChanged.connect(self._selected);self.next_button.clicked.connect(self.follow_scene);self.refresh_button.clicked.connect(self.refresh_reference)
         self.battle_button.clicked.connect(self.open_current_battle)
         self.refresh_reference()
@@ -36,6 +42,7 @@ class ExpansionUpdatePanel(QWidget):
         dialog=getattr(self,'current_battle_dialog',None)
         if dialog is not None:dialog.close()
         self.result=None;self.image_raw=None;self.map_image.clear();self.map_image.setText(notice);self.next_button.hide();self.next_button.setEnabled(False)
+        self.stage_info=None;replace_text(self.stage_source,'',preserve=False);self.tabs.setTabVisible(2,False)
         self.battle_button.hide();self.battle_button.setEnabled(False)
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
@@ -60,13 +67,19 @@ class ExpansionUpdatePanel(QWidget):
         current=self.entries.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if preserve and same and current else None
         self.source_identity=reference['source_identity']
         items=model.rows(self.category.currentData(),changes_only=self.scope.currentData(),reference=reference)
+        is_stage=self.category.currentData()=='stages';self.stage_filters.setVisible(is_stage);stage_ref=stage_directory.packet()if is_stage else None
+        if is_stage and stage_ref is None:self._unavailable();return False
+        if is_stage:
+            allowed={r['id']for r in stage_directory.rows(self.stage_floor.currentData(),self.stage_kind.currentData(),reference=stage_ref)};items=[r for r in items if r['id']in allowed]
         query=self.search.text().strip();visible=[r for r in items if not query or query in r['name']]
         blocked=self.entries.blockSignals(True);self.entries.clear()
         for row in visible:
-            item=QListWidgetItem(row['label']);item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
+            title=stage_directory.label(stage_directory.detail(row['id'],reference=stage_ref))if is_stage else row['label']
+            item=QListWidgetItem(title);item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
             if row['id']==selected:self.entries.setCurrentItem(item)
         self.entries.blockSignals(blocked)
         self.count.setText('当前分类列出'+str(len(visible))+'项资料。条目包含同名变体与强化档位，不等于新增地图或新增分队的数量。')
+        if is_stage:self.count.setText('当前列出'+str(len(visible))+'份关卡配置，保留同名变体。可按层数与来源分别筛选；资料目录不是本局必出关卡池。')
         if selected is None or self.entries.currentItem()is None:self.entries.setCurrentRow(-1);self._clear_detail()
         else:self._selected(self.entries.currentItem(),preserve=True)
         return True
@@ -82,7 +95,11 @@ class ExpansionUpdatePanel(QWidget):
         keep=preserve and self.result is not None and self.result['row']['id']==key and self.result['row']['category']==result['row']['category']
         self.result=deepcopy(result)
         is_stage=result['row']['category']=='stages';self.battle_button.setVisible(is_stage);self.battle_button.setEnabled(is_stage)
-        replace_text(self.player,result['player_text'],preserve=keep);replace_text(self.technical,_technical_json(result),preserve=keep)
+        self.stage_info=stage_directory.detail(key)if is_stage else None
+        if is_stage and self.stage_info is None:self._unavailable();return
+        player=(stage_directory.player_text(self.stage_info)+'\n'if self.stage_info else'')+result['player_text']
+        self.tabs.setTabVisible(2,is_stage);replace_text(self.stage_source,_technical_json(self.stage_info)if self.stage_info else'',preserve=keep)
+        replace_text(self.player,player,preserve=keep);replace_text(self.technical,_technical_json(result),preserve=keep)
         if not keep:self.tabs.setCurrentIndex(0)
         target=result['next_scene'];self.next_button.setVisible(target is not None);self.next_button.setEnabled(target is not None)
         if target:self.next_button.setText('查看后续场景：'+target['title'])
@@ -115,6 +132,7 @@ class ExpansionUpdatePanel(QWidget):
         if self.result is None or self.result['row']['category']!='stages':return False
         fresh=model.detail('stages',self.result['row']['id'])
         if fresh!=self.result:self._unavailable();return False
+        if stage_directory.detail(self.result['row']['id'])!=self.stage_info:self._unavailable();return False
         from .current_battle_view import CurrentBattleDialog
         previous=getattr(self,'current_battle_dialog',None)
         if previous is not None:previous.close()
