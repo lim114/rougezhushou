@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/316.json)。
 
-已完成至316，后续317；本批状态 `P3_SECTION316_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量320。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至316，后续317；本批状态 `P3_SECTION316_PUBLISHED`。推进终点：未指定数字终点。下次定期全量320。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -226,5 +226,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 当前结局社区资料固定441984修订，实际来自Windows-mcp轻量Scrape返回的连续原文节选，不冒称原始HTTP字节或服务器脚本。已与bee3固定原表核对选项、明确nextSceneId、藏品与精确关卡引用；没有恢复场景到选项的完整脚本。制图桌完整出现前置与节点类型、隐藏层实际进入过程、两份同名熄日的实际选择、当前服务器资格及完整奖励池仍未知。文献节点数量标待补充，不作为模板上限；半目标生命上限的实际整数处理、实际触发/可选/领取/库存均不推算。声明条件不等于自动读取到的实际状态，也不计算生成概率或提供路线建议。新旧数值模型不混用。P3/P2/P1均未完成，识别优化最后；地图完整投影、其余节点和掉落与旧计算缺口继续保留。
 
-<!-- section316-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第316节功能提交107efdc06826b1c0c6a3110ed2d6d6e9346115b1已普通推送并核对真实远端及853份相关公开文件字节，证明verification/sections/316-publication.json。本次仅保存发布元数据，不增加功能节数；后续317尚未启动，下一定期全量320。P3/P2/P1未完成，新资料阅读不冒充计算与战斗全面迁移，私人状态及游戏聊天未纳入云端。
 <!-- section316-handoff:end -->
