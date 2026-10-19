@@ -1,0 +1,89 @@
+"""Manual current-version battle reader, with real category branches."""
+import json
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QPixmap,QIcon
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog
+from . import current_battle_reference as model,expansion_reference as version
+from .branch_choice import BranchChoice
+from .boss_hunt_view import _technical_json
+from .ui_state import replace_text
+
+
+class CurrentBattlePanel(QWidget):
+    def __init__(self,stage_id,parent=None):
+        super().__init__(parent);self.stage_id=stage_id;self.result=None;self.source_identity=None;self.enemy_key=None;self.action_key=None
+        layout=QVBoxLayout(self);self.notice=QLabel(model.NOTICE);self.notice.setWordWrap(True);layout.addWidget(self.notice)
+        self.refresh_button=QPushButton('重新核对本关资料');layout.addWidget(self.refresh_button)
+        self.tabs=QTabWidget();layout.addWidget(self.tabs,1)
+        overview=QWidget();body=QVBoxLayout(overview);self.map_image=QLabel();self.map_image.setMinimumSize(300,160);self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter);body.addWidget(self.map_image)
+        self.summary=QPlainTextEdit();self.summary.setReadOnly(True);body.addWidget(self.summary,1);self.tabs.addTab(overview,'地图与关卡')
+        enemies=QWidget();body=QVBoxLayout(enemies);self.enemy_combo=QComboBox();self.enemy_choices=BranchChoice(self.enemy_combo,[],overview_label='总览（本关候选）',placeholder='请选择敌人或关联实体');body.addWidget(self.enemy_choices)
+        self.enemy_portrait=QLabel();self.enemy_portrait.setMinimumSize(85,85);self.enemy_portrait.setAlignment(Qt.AlignmentFlag.AlignCenter);body.addWidget(self.enemy_portrait)
+        self.enemy_player=QPlainTextEdit();self.enemy_player.setReadOnly(True);body.addWidget(self.enemy_player,1);self.tabs.addTab(enemies,'敌人和机制')
+        wave=QWidget();body=QVBoxLayout(wave);self.queue_kind=QComboBox();self.queue_kind.addItem('总览（全部条目）',None);self.queue_kind.addItem('主波次','main');self.queue_kind.addItem('条件分支','branch');body.addWidget(self.queue_kind)
+        split=QSplitter();self.actions=QListWidget();split.addWidget(self.actions);self.action_player=QPlainTextEdit();self.action_player.setReadOnly(True);split.addWidget(self.action_player);split.setSizes([350,650]);body.addWidget(split,1);self.tabs.addTab(wave,'出怪与条件')
+        self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.technical,'完整原值与来源')
+        self.refresh_button.clicked.connect(self.refresh_reference);self.enemy_combo.currentIndexChanged.connect(self._enemy_changed);self.queue_kind.currentIndexChanged.connect(self._actions_changed);self.actions.currentItemChanged.connect(self._action_changed)
+        self.refresh_reference()
+
+    def _clear(self):
+        self.result=None;self.source_identity=None;self.enemy_key=None;self.action_key=None
+        self.map_image.clear();self.map_image.setText(model.UNAVAILABLE);self.enemy_portrait.clear()
+        self.enemy_choices.set_groups([],emit=False);blocked=self.actions.blockSignals(True);self.actions.clear();self.actions.blockSignals(blocked)
+        for widget in(self.summary,self.enemy_player,self.action_player,self.technical):replace_text(widget,'',preserve=False)
+
+    def refresh_reference(self):
+        fresh=model.stage_reference(self.stage_id)
+        if fresh is None:self._clear();return False
+        keep=self.result is not None and self.source_identity==fresh['source_identity']and self.result['id']==fresh['id']
+        old_enemy=self.enemy_combo.currentData()if keep else None
+        self.result=fresh;self.source_identity=fresh['source_identity']
+        replace_text(self.summary,model.summary_text(fresh),preserve=keep);replace_text(self.technical,_technical_json(fresh),preserve=keep)
+        raw=version.image_bytes(fresh['image']);pix=QPixmap()
+        if raw and pix.loadFromData(raw,'PNG'):self.map_image.setPixmap(pix.scaled(760,235,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
+        else:self.map_image.clear();self.map_image.setText('本关固定原图无法核对，不借用同名关卡图片。')
+        groups=[]
+        for tier,label in [*model.TIERS.items(),(None,'类别未确认')]:
+            items=[]
+            for e in fresh['enemies']:
+                if e['tier']!=tier:continue
+                icon=QIcon();raw=model.picture_bytes(e['portrait']);picture=QPixmap()
+                if raw and picture.loadFromData(raw,'PNG'):icon=QIcon(picture)
+                items.append((e['name']+' · 引用资料'+str(e['reference_index']+1),e['key'],icon))
+            groups.append((label,items))
+        blocked=self.enemy_combo.blockSignals(True);self.enemy_choices.set_groups(groups,emit=False)
+        if old_enemy is not None:self.enemy_choices.select_value(old_enemy,emit=False)
+        self.enemy_combo.blockSignals(blocked);self._enemy_changed(preserve=keep);self._actions_changed(preserve=keep)
+        if not keep:self.tabs.setCurrentIndex(0)
+        return True
+
+    def _enemy_changed(self,*_,preserve=False):
+        key=self.enemy_combo.currentData();enemy=next((e for e in self.result['enemies']if e['key']==key),None)if self.result else None
+        keep=preserve and key==self.enemy_key;self.enemy_key=key
+        replace_text(self.enemy_player,model.enemy_text(enemy)if enemy else'请选择敌人或关联实体。',preserve=keep)
+        self.enemy_portrait.clear();pix=QPixmap();raw=model.picture_bytes(enemy['portrait'])if enemy else None
+        if raw and pix.loadFromData(raw,'PNG'):self.enemy_portrait.setPixmap(pix.scaled(90,90,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
+        else:self.enemy_portrait.setText('此精确引用未取得图片。'if enemy else'')
+
+    def _actions_changed(self,*_,preserve=False):
+        old=self.actions.currentItem();key=old.data(Qt.ItemDataRole.UserRole)if old and preserve else None
+        blocked=self.actions.blockSignals(True);self.actions.clear();kind=self.queue_kind.currentData()
+        for action in self.result['actions']if self.result else[]:
+            if kind is not None and action['queue']['kind']!=kind:continue
+            item=QListWidgetItem(model.action_label(action));item.setData(Qt.ItemDataRole.UserRole,action['key']);self.actions.addItem(item)
+            if key==action['key']:self.actions.setCurrentItem(item)
+        self.actions.blockSignals(blocked)
+        if key is None:self.actions.setCurrentRow(-1)
+        self._action_changed(self.actions.currentItem(),preserve=preserve)
+
+    def _action_changed(self,item,*_,preserve=False):
+        key=item.data(Qt.ItemDataRole.UserRole)if item else None
+        action=next((a for a in self.result['actions']if a['key']==key),None)if self.result else None
+        keep=preserve and key==self.action_key;self.action_key=key
+        replace_text(self.action_player,model.action_text(action)if action else'请选择一条出怪、装置或条件分支资料。',preserve=keep)
+
+
+class CurrentBattleDialog(QDialog):
+    def __init__(self,stage_id,parent=None):
+        super().__init__(parent);self.setWindowTitle('本次更新 · 固定关卡预览');self.resize(1120,820)
+        layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)

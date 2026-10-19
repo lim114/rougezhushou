@@ -23,14 +23,19 @@ class ExpansionUpdatePanel(QWidget):
         split=QSplitter();layout.addWidget(split,1);self.entries=QListWidget();self.entries.setAccessibleName('本版本资料条目');split.addWidget(self.entries)
         right=QWidget();body=QVBoxLayout(right);self.map_image=QLabel('选择关卡可查看固定原图');self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter);self.map_image.setMinimumSize(260,150);body.addWidget(self.map_image)
         self.next_button=QPushButton('查看原资料指定的后续场景');self.next_button.hide();body.addWidget(self.next_button)
+        self.battle_button=QPushButton('查看本版本关卡：原图、敌人和出怪条件');self.battle_button.hide();body.addWidget(self.battle_button)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.player.setReadOnly(True);self.technical=QPlainTextEdit();self.technical.setReadOnly(True)
         self.tabs.addTab(self.player,'条件与用途');self.tabs.addTab(self.technical,'完整原值与来源');body.addWidget(self.tabs,1);split.addWidget(right);split.setSizes([300,750])
         self.category.currentIndexChanged.connect(self._filter_changed);self.scope.currentIndexChanged.connect(self._filter_changed);self.search.textChanged.connect(self._filter_changed)
         self.entries.currentItemChanged.connect(self._selected);self.next_button.clicked.connect(self.follow_scene);self.refresh_button.clicked.connect(self.refresh_reference)
+        self.battle_button.clicked.connect(self.open_current_battle)
         self.refresh_reference()
 
     def _clear_detail(self,notice='请先选择一项资料。'):
+        dialog=getattr(self,'current_battle_dialog',None)
+        if dialog is not None:dialog.close()
         self.result=None;self.image_raw=None;self.map_image.clear();self.map_image.setText(notice);self.next_button.hide();self.next_button.setEnabled(False)
+        self.battle_button.hide();self.battle_button.setEnabled(False)
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
     def _unavailable(self):
@@ -73,6 +78,7 @@ class ExpansionUpdatePanel(QWidget):
         if result is None or result['source_identity']!=self.source_identity:self._unavailable();return
         keep=preserve and self.result is not None and self.result['row']['id']==key and self.result['row']['category']==result['row']['category']
         self.result=deepcopy(result)
+        is_stage=result['row']['category']=='stages';self.battle_button.setVisible(is_stage);self.battle_button.setEnabled(is_stage)
         replace_text(self.player,result['player_text'],preserve=keep);replace_text(self.technical,_technical_json(result),preserve=keep)
         if not keep:self.tabs.setCurrentIndex(0)
         target=result['next_scene'];self.next_button.setVisible(target is not None);self.next_button.setEnabled(target is not None)
@@ -101,3 +107,14 @@ class ExpansionUpdatePanel(QWidget):
         for i in range(self.entries.count()):
             if self.entries.item(i).data(Qt.ItemDataRole.UserRole)==target:self.entries.setCurrentRow(i);return True
         self._clear_detail('指定场景在本版本资料中无法核对。');return False
+
+    def open_current_battle(self):
+        if self.result is None or self.result['row']['category']!='stages':return False
+        fresh=model.detail('stages',self.result['row']['id'])
+        if fresh!=self.result:self._unavailable();return False
+        from .current_battle_view import CurrentBattleDialog
+        previous=getattr(self,'current_battle_dialog',None)
+        if previous is not None:previous.close()
+        self.current_battle_dialog=CurrentBattleDialog(fresh['row']['id'],self)
+        self.current_battle_dialog.show()
+        return True
