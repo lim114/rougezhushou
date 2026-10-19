@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/328.json)。
 
-已完成至328，后续329；本批状态 `P3_SECTION328_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至328，后续329；本批状态 `P3_SECTION328_PUBLISHED`。推进终点：未指定数字终点。下次定期全量335。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -370,5 +370,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 复用321真实下载的BWIKI352356原HTTP与326核过摘要的完整湖中表摘录，保留精确字节与字符位置；公开网页文字独立复读不冒充新HTML下载。10段当前对话和10份完整原选项逐项比较bee3与a550基准。磁石后继续投入以原表明确重复注及唯一明文后续定位破表，不按编号猜父脚本；随机继续项仍为NEXT_PROB且nextSceneId为空，两种结果是文献分支而非恢复的本局脚本。1为单次文案代价而非累计投入；1件珍贵收藏品不等于已恢复具体奖励池或实际发放。完整服务器资格、实际重复脚本/父关系、实际随机结果与奖励池仍未知，不补概率、不自动支付或领取、不改本局。P3/P2/P1未完成，识别最后，不操作游戏或聊天，不覆盖私人配置，不提供路线建议。
 
-<!-- section328-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第328节功能提交e7690092a31f59b2d816638b79ad3dd7b56bc321已普通推送并核对真实远端及887份相关公开文件字节，证明verification/sections/328-publication.json。本次仅保存发布元数据，不增加功能节数；后续329尚未启动，下一定期全量335。P3/P2/P1未完成，文献流程不冒充实际资格或领取、完整事件条件或数值全面迁移，私人状态及游戏聊天未纳入云端。
 <!-- section328-handoff:end -->
