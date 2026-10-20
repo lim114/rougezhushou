@@ -6,7 +6,10 @@ def make_dialog(binding,parent=None,*,historical=False):
     b=model.recheck(binding)
     if b is None:return None
     kind=b['reader'];event=b['current_event_id']
-    if kind=='vine333':
+    if kind=='cave334':
+        from .current_cave_view import CurrentCaveDialog
+        dialog=CurrentCaveDialog(parent=parent)
+    elif kind=='vine333':
         from .current_vine_events_view import CurrentVineEventsDialog
         dialog=CurrentVineEventsDialog(event,parent=parent)
     elif kind=='rest':

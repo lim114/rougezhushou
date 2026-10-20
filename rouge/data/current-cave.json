@@ -1,0 +1,3240 @@
+{
+  "schema": "current_cave_334_v1",
+  "game_commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+  "event": {
+    "id": "cave",
+    "title": "洞中宝",
+    "entry_scene_id": "cave-scene:start",
+    "scene_ids": [
+      "cave-scene:start",
+      "cave-scene:crow",
+      "cave-scene:low_gold",
+      "cave-scene:squirrel",
+      "cave-scene:end",
+      "cave-scene:empty",
+      "cave-scene:low_empty",
+      "cave-scene:danger",
+      "cave-scene:initial_exit",
+      "cave-scene:repeat_exit"
+    ],
+    "choice_ids": [
+      "cave-choice:dig",
+      "cave-choice:leave",
+      "cave-choice:gold",
+      "cave-choice:relic",
+      "cave-choice:empty",
+      "cave-choice:battle",
+      "cave-choice:again",
+      "cave-choice:stop"
+    ]
+  },
+  "scenes": {
+    "cave-scene:start": {
+      "id": "cave-scene:start",
+      "event_id": "cave",
+      "label": "最初对话 · 洞中宝",
+      "description": "树洞在黑流树海中随处可见，但你还是被一片在漆黑中闪烁的金光吸引住了。那些金灿灿的东西仿佛一张张大大的笑脸，正在欢迎你去一探究竟。",
+      "original_scene_ids": [
+        "scene_ro6_bat6_enter",
+        "scene_ro6_bat6b_enter"
+      ],
+      "choice_ids": [
+        "cave-choice:dig",
+        "cave-choice:leave"
+      ],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 1,
+          "cell": 0,
+          "attributes": {
+            "colspan": "4"
+          },
+          "text": "树洞在黑流树海中随处可见，但你还是被一片在漆黑中闪烁的金光吸引住了。那些金灿灿的东西仿佛一张张大大的笑脸，正在欢迎你去一探究竟。\n",
+          "text_sha256": "7fab1c3c03e9107be855837b51fff575e58c161866c3848de9a789605e6f8750"
+        }
+      ]
+    },
+    "cave-scene:crow": {
+      "id": "cave-scene:crow",
+      "event_id": "cave",
+      "label": "文献结果：摸到乌鸦的宝贝",
+      "description": "“哗啦啦——”\r\n你摸到了乌鸦藏在此处的宝贝，它们接二连三地从洞中掉落出来。",
+      "original_scene_ids": [
+        "scene_ro6_bat6_2",
+        "scene_ro6_bat6_8",
+        "scene_ro6_bat6_13",
+        "scene_ro6_bat6_18",
+        "scene_ro6_bat6b_2",
+        "scene_ro6_bat6b_8",
+        "scene_ro6_bat6b_13",
+        "scene_ro6_bat6b_18"
+      ],
+      "choice_ids": [
+        "cave-choice:gold"
+      ],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 3,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "“哗啦啦——”\n你摸到了乌鸦藏在此处的宝贝，它们接二连三地从洞中掉落出来。\n\n",
+          "text_sha256": "3598dbb0a9c37d4eeeb51c9b9eaf1b63620871e5975cdffd49fabf68f7e89d48"
+        }
+      ]
+    },
+    "cave-scene:low_gold": {
+      "id": "cave-scene:low_gold",
+      "event_id": "cave",
+      "label": "文献后续：拿到源石锭后听到低鸣",
+      "description": "“呼噜噜——”\r\n洞里传出活物低鸣的声音，你不禁向洞内探了探头，里面漆黑一片，似乎什么都没有。",
+      "original_scene_ids": [
+        "scene_ro6_bat6_6",
+        "scene_ro6_bat6_12",
+        "scene_ro6_bat6_17",
+        "scene_ro6_bat6b_6",
+        "scene_ro6_bat6b_12",
+        "scene_ro6_bat6b_17"
+      ],
+      "choice_ids": [
+        "cave-choice:again",
+        "cave-choice:stop"
+      ],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 5,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "“呼噜噜——”\n洞里传出活物低鸣的声音，你不禁向洞内探了探头，里面漆黑一片，似乎什么都没有。\n\n",
+          "text_sha256": "5ca3a3817481bb5e2368e809c27082c1d27585c47134f4e338a240da4146f638"
+        }
+      ]
+    },
+    "cave-scene:squirrel": {
+      "id": "cave-scene:squirrel",
+      "event_id": "cave",
+      "label": "文献结果：摸到松鼠的宝贝",
+      "description": "“咕咚咚——”\r\n你摸到了松鼠藏在此处的宝贝，它急不可耐地从洞中掉落出来。",
+      "original_scene_ids": [
+        "scene_ro6_bat6_3",
+        "scene_ro6_bat6_9",
+        "scene_ro6_bat6_14",
+        "scene_ro6_bat6_19",
+        "scene_ro6_bat6b_3",
+        "scene_ro6_bat6b_9",
+        "scene_ro6_bat6b_14",
+        "scene_ro6_bat6b_19"
+      ],
+      "choice_ids": [
+        "cave-choice:relic"
+      ],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 7,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "“咕咚咚——”\n你摸到了松鼠藏在此处的宝贝，它急不可耐地从洞中掉落出来。\n\n",
+          "text_sha256": "f4cf7e910ecce7038626736eb70d708a4af7921aa27cdf134edb9d165a62d40f"
+        }
+      ]
+    },
+    "cave-scene:end": {
+      "id": "cave-scene:end",
+      "event_id": "cave",
+      "label": "洞中似乎不剩什么，离开",
+      "description": "树洞中似乎不剩什么了，你拉紧背包离开了。",
+      "original_scene_ids": [
+        "scene_ro6_bat6_22",
+        "scene_ro6_bat6b_22"
+      ],
+      "choice_ids": [],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 9,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "树洞中似乎不剩什么了，你拉紧背包离开了。\n",
+          "text_sha256": "e6427f9bd8f4857e9f401d24cd3cec01d904b9062b749f448ef453cae1aa98df"
+        }
+      ]
+    },
+    "cave-scene:empty": {
+      "id": "cave-scene:empty",
+      "event_id": "cave",
+      "label": "文献结果：一无所获",
+      "description": "树洞的触感十分柔软，你感觉手陷进了一团棉花里，可惜一无所获。",
+      "original_scene_ids": [
+        "scene_ro6_bat6_4",
+        "scene_ro6_bat6_10",
+        "scene_ro6_bat6_15",
+        "scene_ro6_bat6_20",
+        "scene_ro6_bat6b_4",
+        "scene_ro6_bat6b_10",
+        "scene_ro6_bat6b_15",
+        "scene_ro6_bat6b_20"
+      ],
+      "choice_ids": [
+        "cave-choice:empty"
+      ],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 11,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "树洞的触感十分柔软，你感觉手陷进了一团棉花里，可惜一无所获。\n",
+          "text_sha256": "1280fa6d45dd13b652bc5446594c0a44bacb8fec4e23301d42749608520c1372"
+        }
+      ]
+    },
+    "cave-scene:low_empty": {
+      "id": "cave-scene:low_empty",
+      "event_id": "cave",
+      "label": "文献后续：空手后听到低鸣",
+      "description": "“呼噜噜——”\r\n洞里传出活物低鸣的声音，你不禁向洞内探了探头，里面漆黑一片，似乎什么都没有。",
+      "original_scene_ids": [
+        "scene_ro6_bat6_6",
+        "scene_ro6_bat6_12",
+        "scene_ro6_bat6_17",
+        "scene_ro6_bat6b_6",
+        "scene_ro6_bat6b_12",
+        "scene_ro6_bat6b_17"
+      ],
+      "choice_ids": [
+        "cave-choice:again",
+        "cave-choice:stop"
+      ],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 13,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "“呼噜噜——”\n洞里传出活物低鸣的声音，你不禁向洞内探了探头，里面漆黑一片，似乎什么都没有。\n\n",
+          "text_sha256": "5ca3a3817481bb5e2368e809c27082c1d27585c47134f4e338a240da4146f638"
+        }
+      ]
+    },
+    "cave-scene:danger": {
+      "id": "cave-scene:danger",
+      "event_id": "cave",
+      "label": "文献结果：树洞咬人",
+      "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+      "original_scene_ids": [
+        "scene_ro6_bat6_5",
+        "scene_ro6_bat6_11",
+        "scene_ro6_bat6_16",
+        "scene_ro6_bat6_21",
+        "scene_ro6_bat6b_5",
+        "scene_ro6_bat6b_11",
+        "scene_ro6_bat6b_16",
+        "scene_ro6_bat6b_21"
+      ],
+      "choice_ids": [
+        "cave-choice:battle"
+      ],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 15,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。\n",
+          "text_sha256": "08375b02b2b4e07dea58856fc212205f7f3422dbdbc01f8f9a0fdc00dcd2f00d"
+        }
+      ]
+    },
+    "cave-scene:initial_exit": {
+      "id": "cave-scene:initial_exit",
+      "event_id": "cave",
+      "label": "最初就离开",
+      "description": "这片大地岂有白吃的午餐，还是远离危险吧。",
+      "original_scene_ids": [
+        "scene_ro6_bat6_1",
+        "scene_ro6_bat6b_1"
+      ],
+      "choice_ids": [],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 18,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "这片大地岂有白吃的午餐，还是远离危险吧。\n",
+          "text_sha256": "126489b05874a44402cefc2ccae8d82f15dc67ea7e1a21651931fab2e2eebd25"
+        }
+      ]
+    },
+    "cave-scene:repeat_exit": {
+      "id": "cave-scene:repeat_exit",
+      "event_id": "cave",
+      "label": "听到低鸣后离开",
+      "description": "树洞里面说不定有什么可怕的东西，到此为止吧。",
+      "original_scene_ids": [
+        "scene_ro6_bat6_7",
+        "scene_ro6_bat6b_7"
+      ],
+      "choice_ids": [],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 21,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "树洞里面说不定有什么可怕的东西，到此为止吧。\n",
+          "text_sha256": "1d9e802379710f35115f8bb788772744508de9a9adb0ec48ed90be1fcd0cc62d"
+        },
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 24,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "树洞里面说不定有什么可怕的东西，到此为止吧。\n",
+          "text_sha256": "1d9e802379710f35115f8bb788772744508de9a9adb0ec48ed90be1fcd0cc62d"
+        }
+      ]
+    }
+  },
+  "choices": {
+    "cave-choice:dig": {
+      "id": "cave-choice:dig",
+      "event_id": "cave",
+      "role": "dig",
+      "title": "树洞里肯定有好东西",
+      "description": "掏一下",
+      "scene_ids": [
+        "cave-scene:start"
+      ],
+      "variant_ids": [
+        "choice_ro6_bat6_1",
+        "choice_ro6_bat6b_1"
+      ],
+      "variant_next_scene_ids": {
+        "choice_ro6_bat6_1": null,
+        "choice_ro6_bat6b_1": null
+      },
+      "next_scene_id": null,
+      "documented_next_scene_id": null,
+      "record_next_scene_ids": [],
+      "documented_outcomes": [
+        {
+          "scene_id": "cave-scene:crow",
+          "basis": "documented_random_case",
+          "probability": null,
+          "actual_outcome": null
+        },
+        {
+          "scene_id": "cave-scene:squirrel",
+          "basis": "documented_random_case",
+          "probability": null,
+          "actual_outcome": null
+        },
+        {
+          "scene_id": "cave-scene:empty",
+          "basis": "documented_random_case",
+          "probability": null,
+          "actual_outcome": null
+        },
+        {
+          "scene_id": "cave-scene:danger",
+          "basis": "documented_random_case",
+          "probability": null,
+          "actual_outcome": null
+        }
+      ],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 2,
+          "cell": 3,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "树洞里肯定有好东西掏一下\n",
+          "text_sha256": "449229f8f4b72a1ab66764098d1658c690ad693c448a6097b23c4cd23dd37b67"
+        },
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 6,
+          "cell": 1,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "树洞里肯定有好东西掏一下\n",
+          "text_sha256": "449229f8f4b72a1ab66764098d1658c690ad693c448a6097b23c4cd23dd37b67"
+        },
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 10,
+          "cell": 1,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "树洞里肯定有好东西掏一下\n",
+          "text_sha256": "449229f8f4b72a1ab66764098d1658c690ad693c448a6097b23c4cd23dd37b67"
+        },
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 14,
+          "cell": 1,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "树洞里肯定有好东西掏一下\n",
+          "text_sha256": "449229f8f4b72a1ab66764098d1658c690ad693c448a6097b23c4cd23dd37b67"
+        }
+      ],
+      "stage_ids": [],
+      "battle_hint_without_exact_stage": false,
+      "reward_reference": null,
+      "actual_eligible": null,
+      "actual_received": null,
+      "actual_variant": null,
+      "actual_parent_scene_id": null
+    },
+    "cave-choice:leave": {
+      "id": "cave-choice:leave",
+      "event_id": "cave",
+      "role": "leave",
+      "title": "离开",
+      "description": "多一事不如少一事",
+      "scene_ids": [
+        "cave-scene:start"
+      ],
+      "variant_ids": [
+        "choice_ro6_bat6_2",
+        "choice_ro6_bat6b_2"
+      ],
+      "variant_next_scene_ids": {
+        "choice_ro6_bat6_2": "cave-scene:initial_exit",
+        "choice_ro6_bat6b_2": "cave-scene:initial_exit"
+      },
+      "next_scene_id": "cave-scene:initial_exit",
+      "documented_next_scene_id": "cave-scene:initial_exit",
+      "record_next_scene_ids": [
+        "cave-scene:initial_exit"
+      ],
+      "documented_outcomes": [],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 17,
+          "cell": 1,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "离开多一事不如少一事\n",
+          "text_sha256": "5783fa5c3ebc242bf3120b6540c13b1a9c24ce2f500f27275fcf772bebdd07fb"
+        }
+      ],
+      "stage_ids": [],
+      "battle_hint_without_exact_stage": false,
+      "reward_reference": null,
+      "actual_eligible": null,
+      "actual_received": null,
+      "actual_variant": null,
+      "actual_parent_scene_id": null
+    },
+    "cave-choice:gold": {
+      "id": "cave-choice:gold",
+      "event_id": "cave",
+      "role": "gold",
+      "title": "我的了！",
+      "description": "获得<@ro6.get>5</>源石锭",
+      "scene_ids": [
+        "cave-scene:crow"
+      ],
+      "variant_ids": [
+        "choice_ro6_bat6_3",
+        "choice_ro6_bat6_9",
+        "choice_ro6_bat6_14",
+        "choice_ro6_bat6_19",
+        "choice_ro6_bat6b_3",
+        "choice_ro6_bat6b_9",
+        "choice_ro6_bat6b_14",
+        "choice_ro6_bat6b_19"
+      ],
+      "variant_next_scene_ids": {
+        "choice_ro6_bat6_3": "cave-scene:low_gold",
+        "choice_ro6_bat6_9": "cave-scene:low_gold",
+        "choice_ro6_bat6_14": "cave-scene:low_gold",
+        "choice_ro6_bat6_19": "cave-scene:end",
+        "choice_ro6_bat6b_3": "cave-scene:low_gold",
+        "choice_ro6_bat6b_9": "cave-scene:low_gold",
+        "choice_ro6_bat6b_14": "cave-scene:low_gold",
+        "choice_ro6_bat6b_19": "cave-scene:end"
+      },
+      "next_scene_id": null,
+      "documented_next_scene_id": "cave-scene:low_gold",
+      "record_next_scene_ids": [
+        "cave-scene:low_gold",
+        "cave-scene:end"
+      ],
+      "documented_outcomes": [],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 4,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "我的了！获得5源石锭◈前往【情况1后续】\n",
+          "text_sha256": "9a8ee0bb12c2671bc2fe68349cfd17b1bcb8491c989b73ed5958a61a4c1aae18"
+        }
+      ],
+      "stage_ids": [],
+      "battle_hint_without_exact_stage": false,
+      "reward_reference": {
+        "quantity": 5,
+        "kind": "源石锭",
+        "pool": null
+      },
+      "actual_eligible": null,
+      "actual_received": null,
+      "actual_variant": null,
+      "actual_parent_scene_id": null
+    },
+    "cave-choice:relic": {
+      "id": "cave-choice:relic",
+      "event_id": "cave",
+      "role": "relic",
+      "title": "我的了！",
+      "description": "获得<@ro6.get>1件</>收藏品",
+      "scene_ids": [
+        "cave-scene:squirrel"
+      ],
+      "variant_ids": [
+        "choice_ro6_bat6_4",
+        "choice_ro6_bat6_10",
+        "choice_ro6_bat6_15",
+        "choice_ro6_bat6_20",
+        "choice_ro6_bat6b_4",
+        "choice_ro6_bat6b_10",
+        "choice_ro6_bat6b_15",
+        "choice_ro6_bat6b_20"
+      ],
+      "variant_next_scene_ids": {
+        "choice_ro6_bat6_4": "cave-scene:end",
+        "choice_ro6_bat6_10": "cave-scene:end",
+        "choice_ro6_bat6_15": "cave-scene:end",
+        "choice_ro6_bat6_20": "cave-scene:end",
+        "choice_ro6_bat6b_4": "cave-scene:end",
+        "choice_ro6_bat6b_10": "cave-scene:end",
+        "choice_ro6_bat6b_15": "cave-scene:end",
+        "choice_ro6_bat6b_20": "cave-scene:end"
+      },
+      "next_scene_id": "cave-scene:end",
+      "documented_next_scene_id": "cave-scene:end",
+      "record_next_scene_ids": [
+        "cave-scene:end"
+      ],
+      "documented_outcomes": [],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 8,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "我的了！获得1件收藏品\n",
+          "text_sha256": "3bdb1f9470ebe6783e23359ac925e930ed5882b4236f2c8f393ee14439f528eb"
+        }
+      ],
+      "stage_ids": [],
+      "battle_hint_without_exact_stage": false,
+      "reward_reference": {
+        "quantity": 1,
+        "kind": "收藏品",
+        "pool": null
+      },
+      "actual_eligible": null,
+      "actual_received": null,
+      "actual_variant": null,
+      "actual_parent_scene_id": null
+    },
+    "cave-choice:empty": {
+      "id": "cave-choice:empty",
+      "event_id": "cave",
+      "role": "empty",
+      "title": "怎么是空的！",
+      "description": "继续掏",
+      "scene_ids": [
+        "cave-scene:empty"
+      ],
+      "variant_ids": [
+        "choice_ro6_bat6_5",
+        "choice_ro6_bat6_11",
+        "choice_ro6_bat6_16",
+        "choice_ro6_bat6_21",
+        "choice_ro6_bat6b_5",
+        "choice_ro6_bat6b_11",
+        "choice_ro6_bat6b_16",
+        "choice_ro6_bat6b_21"
+      ],
+      "variant_next_scene_ids": {
+        "choice_ro6_bat6_5": "cave-scene:low_empty",
+        "choice_ro6_bat6_11": "cave-scene:low_empty",
+        "choice_ro6_bat6_16": "cave-scene:low_empty",
+        "choice_ro6_bat6_21": "cave-scene:end",
+        "choice_ro6_bat6b_5": "cave-scene:low_empty",
+        "choice_ro6_bat6b_11": "cave-scene:low_empty",
+        "choice_ro6_bat6b_16": "cave-scene:low_empty",
+        "choice_ro6_bat6b_21": "cave-scene:end"
+      },
+      "next_scene_id": null,
+      "documented_next_scene_id": "cave-scene:low_empty",
+      "record_next_scene_ids": [
+        "cave-scene:low_empty",
+        "cave-scene:end"
+      ],
+      "documented_outcomes": [],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 12,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "怎么是空的！继续掏◈前往【情况3后续】\n",
+          "text_sha256": "bda4c6aa519ecf8f688ceb6362c5c0a7cdd09bd24ac97b233107f181015ab75a"
+        }
+      ],
+      "stage_ids": [],
+      "battle_hint_without_exact_stage": false,
+      "reward_reference": null,
+      "actual_eligible": null,
+      "actual_received": null,
+      "actual_variant": null,
+      "actual_parent_scene_id": null
+    },
+    "cave-choice:battle": {
+      "id": "cave-choice:battle",
+      "event_id": "cave",
+      "role": "battle",
+      "title": "放开我！",
+      "description": "遭遇一场艰难的战斗",
+      "scene_ids": [
+        "cave-scene:danger"
+      ],
+      "variant_ids": [
+        "choice_ro6_bat6_6",
+        "choice_ro6_bat6_12",
+        "choice_ro6_bat6_17",
+        "choice_ro6_bat6_22",
+        "choice_ro6_bat6b_6",
+        "choice_ro6_bat6b_12",
+        "choice_ro6_bat6b_17",
+        "choice_ro6_bat6b_22"
+      ],
+      "variant_next_scene_ids": {
+        "choice_ro6_bat6_6": null,
+        "choice_ro6_bat6_12": null,
+        "choice_ro6_bat6_17": null,
+        "choice_ro6_bat6_22": null,
+        "choice_ro6_bat6b_6": null,
+        "choice_ro6_bat6b_12": null,
+        "choice_ro6_bat6b_17": null,
+        "choice_ro6_bat6b_22": null
+      },
+      "next_scene_id": null,
+      "documented_next_scene_id": null,
+      "record_next_scene_ids": [],
+      "documented_outcomes": [],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 16,
+          "cell": 0,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "放开我！遭遇一场艰难的战斗\n",
+          "text_sha256": "1730a0c893a2de27989b8b38086d02b9bd7b0cefe32df44b07a34fe341e1dd66"
+        }
+      ],
+      "stage_ids": [],
+      "battle_hint_without_exact_stage": true,
+      "reward_reference": null,
+      "actual_eligible": null,
+      "actual_received": null,
+      "actual_variant": null,
+      "actual_parent_scene_id": null
+    },
+    "cave-choice:again": {
+      "id": "cave-choice:again",
+      "event_id": "cave",
+      "role": "again",
+      "title": "一定是错觉",
+      "description": "继续掏",
+      "scene_ids": [
+        "cave-scene:low_gold",
+        "cave-scene:low_empty"
+      ],
+      "variant_ids": [
+        "choice_ro6_bat6_7",
+        "choice_ro6_bat6_13",
+        "choice_ro6_bat6_18",
+        "choice_ro6_bat6b_7",
+        "choice_ro6_bat6b_13",
+        "choice_ro6_bat6b_18"
+      ],
+      "variant_next_scene_ids": {
+        "choice_ro6_bat6_7": null,
+        "choice_ro6_bat6_13": null,
+        "choice_ro6_bat6_18": null,
+        "choice_ro6_bat6b_7": null,
+        "choice_ro6_bat6b_13": null,
+        "choice_ro6_bat6b_18": null
+      },
+      "next_scene_id": null,
+      "documented_next_scene_id": null,
+      "record_next_scene_ids": [],
+      "documented_outcomes": [
+        {
+          "scene_id": "cave-scene:crow",
+          "basis": "documented_random_case",
+          "probability": null,
+          "actual_outcome": null
+        },
+        {
+          "scene_id": "cave-scene:squirrel",
+          "basis": "documented_random_case",
+          "probability": null,
+          "actual_outcome": null
+        },
+        {
+          "scene_id": "cave-scene:empty",
+          "basis": "documented_random_case",
+          "probability": null,
+          "actual_outcome": null
+        },
+        {
+          "scene_id": "cave-scene:danger",
+          "basis": "documented_random_case",
+          "probability": null,
+          "actual_outcome": null
+        }
+      ],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 19,
+          "cell": 2,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "一定是错觉继续掏◈将再次进入随机组【随机组1】\n",
+          "text_sha256": "5e63e27dc004e4757c4bc70d953c229b76193b679de7145685af00651b004021"
+        },
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 22,
+          "cell": 2,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "一定是错觉继续掏◈将再次进入随机组【随机组1】\n",
+          "text_sha256": "5e63e27dc004e4757c4bc70d953c229b76193b679de7145685af00651b004021"
+        }
+      ],
+      "stage_ids": [],
+      "battle_hint_without_exact_stage": false,
+      "reward_reference": null,
+      "actual_eligible": null,
+      "actual_received": null,
+      "actual_variant": null,
+      "actual_parent_scene_id": null
+    },
+    "cave-choice:stop": {
+      "id": "cave-choice:stop",
+      "event_id": "cave",
+      "role": "stop",
+      "title": "太诡异了",
+      "description": "多一事不如少一事",
+      "scene_ids": [
+        "cave-scene:low_gold",
+        "cave-scene:low_empty"
+      ],
+      "variant_ids": [
+        "choice_ro6_bat6_8",
+        "choice_ro6_bat6b_8"
+      ],
+      "variant_next_scene_ids": {
+        "choice_ro6_bat6_8": "cave-scene:repeat_exit",
+        "choice_ro6_bat6b_8": "cave-scene:repeat_exit"
+      },
+      "next_scene_id": "cave-scene:repeat_exit",
+      "documented_next_scene_id": "cave-scene:repeat_exit",
+      "record_next_scene_ids": [
+        "cave-scene:repeat_exit"
+      ],
+      "documented_outcomes": [],
+      "source_cells": [
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 20,
+          "cell": 1,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "太诡异了多一事不如少一事\n",
+          "text_sha256": "3f73d3fbf8997072a144f9ace17684e55d34bd23540dda484fcf076c65ce9499"
+        },
+        {
+          "file": "research/p3-current-cave-334/documented-table.html",
+          "row": 23,
+          "cell": 1,
+          "attributes": {
+            "colspan": "2"
+          },
+          "text": "太诡异了多一事不如少一事\n",
+          "text_sha256": "3f73d3fbf8997072a144f9ace17684e55d34bd23540dda484fcf076c65ce9499"
+        }
+      ],
+      "stage_ids": [],
+      "battle_hint_without_exact_stage": false,
+      "reward_reference": null,
+      "actual_eligible": null,
+      "actual_received": null,
+      "actual_variant": null,
+      "actual_parent_scene_id": null
+    }
+  },
+  "originals": {
+    "scenes": {
+      "scene_ro6_bat6_enter": {
+        "id": "scene_ro6_bat6_enter",
+        "title": "洞中宝",
+        "description": "树洞在黑流树海中随处可见，但你还是被一片在漆黑中闪烁的金光吸引住了。那些金灿灿的东西仿佛一张张大大的笑脸，正在欢迎你去一探究竟。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_enter": {
+        "id": "scene_ro6_bat6b_enter",
+        "title": "洞中宝",
+        "description": "树洞在黑流树海中随处可见，但你还是被一片在漆黑中闪烁的金光吸引住了。那些金灿灿的东西仿佛一张张大大的笑脸，正在欢迎你去一探究竟。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_2": {
+        "id": "scene_ro6_bat6_2",
+        "title": "洞中宝",
+        "description": "“哗啦啦——”\r\n你摸到了乌鸦藏在此处的宝贝，它们接二连三地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_8": {
+        "id": "scene_ro6_bat6_8",
+        "title": "洞中宝",
+        "description": "“哗啦啦——”\r\n你摸到了乌鸦藏在此处的宝贝，它们接二连三地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_13": {
+        "id": "scene_ro6_bat6_13",
+        "title": "洞中宝",
+        "description": "“哗啦啦——”\r\n你摸到了乌鸦藏在此处的宝贝，它们接二连三地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_18": {
+        "id": "scene_ro6_bat6_18",
+        "title": "洞中宝",
+        "description": "“哗啦啦——”\r\n你摸到了乌鸦藏在此处的宝贝，它们接二连三地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_2": {
+        "id": "scene_ro6_bat6b_2",
+        "title": "洞中宝",
+        "description": "“哗啦啦——”\r\n你摸到了乌鸦藏在此处的宝贝，它们接二连三地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_8": {
+        "id": "scene_ro6_bat6b_8",
+        "title": "洞中宝",
+        "description": "“哗啦啦——”\r\n你摸到了乌鸦藏在此处的宝贝，它们接二连三地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_13": {
+        "id": "scene_ro6_bat6b_13",
+        "title": "洞中宝",
+        "description": "“哗啦啦——”\r\n你摸到了乌鸦藏在此处的宝贝，它们接二连三地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_18": {
+        "id": "scene_ro6_bat6b_18",
+        "title": "洞中宝",
+        "description": "“哗啦啦——”\r\n你摸到了乌鸦藏在此处的宝贝，它们接二连三地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_6": {
+        "id": "scene_ro6_bat6_6",
+        "title": "洞中宝",
+        "description": "“呼噜噜——”\r\n洞里传出活物低鸣的声音，你不禁向洞内探了探头，里面漆黑一片，似乎什么都没有。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_12": {
+        "id": "scene_ro6_bat6_12",
+        "title": "洞中宝",
+        "description": "“呼噜噜——”\r\n洞里传出活物低鸣的声音，你不禁向洞内探了探头，里面漆黑一片，似乎什么都没有。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_17": {
+        "id": "scene_ro6_bat6_17",
+        "title": "洞中宝",
+        "description": "“呼噜噜——”\r\n洞里传出活物低鸣的声音，你不禁向洞内探了探头，里面漆黑一片，似乎什么都没有。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_6": {
+        "id": "scene_ro6_bat6b_6",
+        "title": "洞中宝",
+        "description": "“呼噜噜——”\r\n洞里传出活物低鸣的声音，你不禁向洞内探了探头，里面漆黑一片，似乎什么都没有。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_12": {
+        "id": "scene_ro6_bat6b_12",
+        "title": "洞中宝",
+        "description": "“呼噜噜——”\r\n洞里传出活物低鸣的声音，你不禁向洞内探了探头，里面漆黑一片，似乎什么都没有。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_17": {
+        "id": "scene_ro6_bat6b_17",
+        "title": "洞中宝",
+        "description": "“呼噜噜——”\r\n洞里传出活物低鸣的声音，你不禁向洞内探了探头，里面漆黑一片，似乎什么都没有。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_3": {
+        "id": "scene_ro6_bat6_3",
+        "title": "洞中宝",
+        "description": "“咕咚咚——”\r\n你摸到了松鼠藏在此处的宝贝，它急不可耐地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_9": {
+        "id": "scene_ro6_bat6_9",
+        "title": "洞中宝",
+        "description": "“咕咚咚——”\r\n你摸到了松鼠藏在此处的宝贝，它急不可耐地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_14": {
+        "id": "scene_ro6_bat6_14",
+        "title": "洞中宝",
+        "description": "“咕咚咚——”\r\n你摸到了松鼠藏在此处的宝贝，它急不可耐地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_19": {
+        "id": "scene_ro6_bat6_19",
+        "title": "洞中宝",
+        "description": "“咕咚咚——”\r\n你摸到了松鼠藏在此处的宝贝，它急不可耐地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_3": {
+        "id": "scene_ro6_bat6b_3",
+        "title": "洞中宝",
+        "description": "“咕咚咚——”\r\n你摸到了松鼠藏在此处的宝贝，它急不可耐地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_9": {
+        "id": "scene_ro6_bat6b_9",
+        "title": "洞中宝",
+        "description": "“咕咚咚——”\r\n你摸到了松鼠藏在此处的宝贝，它急不可耐地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_14": {
+        "id": "scene_ro6_bat6b_14",
+        "title": "洞中宝",
+        "description": "“咕咚咚——”\r\n你摸到了松鼠藏在此处的宝贝，它急不可耐地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_19": {
+        "id": "scene_ro6_bat6b_19",
+        "title": "洞中宝",
+        "description": "“咕咚咚——”\r\n你摸到了松鼠藏在此处的宝贝，它急不可耐地从洞中掉落出来。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_22": {
+        "id": "scene_ro6_bat6_22",
+        "title": "洞中宝",
+        "description": "树洞中似乎不剩什么了，你拉紧背包离开了。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_22": {
+        "id": "scene_ro6_bat6b_22",
+        "title": "洞中宝",
+        "description": "树洞中似乎不剩什么了，你拉紧背包离开了。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_4": {
+        "id": "scene_ro6_bat6_4",
+        "title": "洞中宝",
+        "description": "树洞的触感十分柔软，你感觉手陷进了一团棉花里，可惜一无所获。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_10": {
+        "id": "scene_ro6_bat6_10",
+        "title": "洞中宝",
+        "description": "树洞的触感十分柔软，你感觉手陷进了一团棉花里，可惜一无所获。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_15": {
+        "id": "scene_ro6_bat6_15",
+        "title": "洞中宝",
+        "description": "树洞的触感十分柔软，你感觉手陷进了一团棉花里，可惜一无所获。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_20": {
+        "id": "scene_ro6_bat6_20",
+        "title": "洞中宝",
+        "description": "树洞的触感十分柔软，你感觉手陷进了一团棉花里，可惜一无所获。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_4": {
+        "id": "scene_ro6_bat6b_4",
+        "title": "洞中宝",
+        "description": "树洞的触感十分柔软，你感觉手陷进了一团棉花里，可惜一无所获。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_10": {
+        "id": "scene_ro6_bat6b_10",
+        "title": "洞中宝",
+        "description": "树洞的触感十分柔软，你感觉手陷进了一团棉花里，可惜一无所获。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_15": {
+        "id": "scene_ro6_bat6b_15",
+        "title": "洞中宝",
+        "description": "树洞的触感十分柔软，你感觉手陷进了一团棉花里，可惜一无所获。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_20": {
+        "id": "scene_ro6_bat6b_20",
+        "title": "洞中宝",
+        "description": "树洞的触感十分柔软，你感觉手陷进了一团棉花里，可惜一无所获。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_5": {
+        "id": "scene_ro6_bat6_5",
+        "title": "洞中宝",
+        "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_11": {
+        "id": "scene_ro6_bat6_11",
+        "title": "洞中宝",
+        "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_16": {
+        "id": "scene_ro6_bat6_16",
+        "title": "洞中宝",
+        "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_21": {
+        "id": "scene_ro6_bat6_21",
+        "title": "洞中宝",
+        "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_5": {
+        "id": "scene_ro6_bat6b_5",
+        "title": "洞中宝",
+        "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_11": {
+        "id": "scene_ro6_bat6b_11",
+        "title": "洞中宝",
+        "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_16": {
+        "id": "scene_ro6_bat6b_16",
+        "title": "洞中宝",
+        "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_21": {
+        "id": "scene_ro6_bat6b_21",
+        "title": "洞中宝",
+        "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_1": {
+        "id": "scene_ro6_bat6_1",
+        "title": "洞中宝",
+        "description": "这片大地岂有白吃的午餐，还是远离危险吧。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_1": {
+        "id": "scene_ro6_bat6b_1",
+        "title": "洞中宝",
+        "description": "这片大地岂有白吃的午餐，还是远离危险吧。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6_7": {
+        "id": "scene_ro6_bat6_7",
+        "title": "洞中宝",
+        "description": "树洞里面说不定有什么可怕的东西，到此为止吧。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_bat6b_7": {
+        "id": "scene_ro6_bat6b_7",
+        "title": "洞中宝",
+        "description": "树洞里面说不定有什么可怕的东西，到此为止吧。",
+        "background": "pic_rogue_6_6",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      }
+    },
+    "choices": {
+      "choice_ro6_bat6_1": {
+        "id": "choice_ro6_bat6_1",
+        "title": "树洞里肯定有好东西",
+        "description": "掏一下",
+        "lockedCoverDesc": null,
+        "type": "NEXT_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_1": {
+        "id": "choice_ro6_bat6b_1",
+        "title": "树洞里肯定有好东西",
+        "description": "掏一下",
+        "lockedCoverDesc": null,
+        "type": "NEXT_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_2": {
+        "id": "choice_ro6_bat6_2",
+        "title": "离开",
+        "description": "多一事不如少一事",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_1",
+        "icon": "leave",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "leave",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_2": {
+        "id": "choice_ro6_bat6b_2",
+        "title": "离开",
+        "description": "多一事不如少一事",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_1",
+        "icon": "leave",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "leave",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_3": {
+        "id": "choice_ro6_bat6_3",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>5</>源石锭",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_6",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "gold",
+          "itemId": "rogue_6_gold",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_9": {
+        "id": "choice_ro6_bat6_9",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>5</>源石锭",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_12",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "gold",
+          "itemId": "rogue_6_gold",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_14": {
+        "id": "choice_ro6_bat6_14",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>5</>源石锭",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_17",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "gold",
+          "itemId": "rogue_6_gold",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_19": {
+        "id": "choice_ro6_bat6_19",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>5</>源石锭",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_22",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "gold",
+          "itemId": "rogue_6_gold",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_3": {
+        "id": "choice_ro6_bat6b_3",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>5</>源石锭",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_6",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "gold",
+          "itemId": "rogue_6_gold",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_9": {
+        "id": "choice_ro6_bat6b_9",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>5</>源石锭",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_12",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "gold",
+          "itemId": "rogue_6_gold",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_14": {
+        "id": "choice_ro6_bat6b_14",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>5</>源石锭",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_17",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "gold",
+          "itemId": "rogue_6_gold",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_19": {
+        "id": "choice_ro6_bat6b_19",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>5</>源石锭",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_22",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "gold",
+          "itemId": "rogue_6_gold",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_4": {
+        "id": "choice_ro6_bat6_4",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>1件</>收藏品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_22",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_10": {
+        "id": "choice_ro6_bat6_10",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>1件</>收藏品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_22",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_15": {
+        "id": "choice_ro6_bat6_15",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>1件</>收藏品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_22",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_20": {
+        "id": "choice_ro6_bat6_20",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>1件</>收藏品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_22",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_4": {
+        "id": "choice_ro6_bat6b_4",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>1件</>收藏品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_22",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_10": {
+        "id": "choice_ro6_bat6b_10",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>1件</>收藏品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_22",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_15": {
+        "id": "choice_ro6_bat6b_15",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>1件</>收藏品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_22",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_20": {
+        "id": "choice_ro6_bat6b_20",
+        "title": "我的了！",
+        "description": "获得<@ro6.get>1件</>收藏品",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_22",
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_5": {
+        "id": "choice_ro6_bat6_5",
+        "title": "怎么是空的！",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_6",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": true,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_11": {
+        "id": "choice_ro6_bat6_11",
+        "title": "怎么是空的！",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_12",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": true,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_16": {
+        "id": "choice_ro6_bat6_16",
+        "title": "怎么是空的！",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_17",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": true,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_21": {
+        "id": "choice_ro6_bat6_21",
+        "title": "怎么是空的！",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_22",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": true,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_5": {
+        "id": "choice_ro6_bat6b_5",
+        "title": "怎么是空的！",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_6",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": true,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_11": {
+        "id": "choice_ro6_bat6b_11",
+        "title": "怎么是空的！",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_12",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": true,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_16": {
+        "id": "choice_ro6_bat6b_16",
+        "title": "怎么是空的！",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_17",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": true,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_21": {
+        "id": "choice_ro6_bat6b_21",
+        "title": "怎么是空的！",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_22",
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": true,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_6": {
+        "id": "choice_ro6_bat6_6",
+        "title": "放开我！",
+        "description": "遭遇一场艰难的战斗",
+        "lockedCoverDesc": null,
+        "type": "TRADE_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "battle",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "battle",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_12": {
+        "id": "choice_ro6_bat6_12",
+        "title": "放开我！",
+        "description": "遭遇一场艰难的战斗",
+        "lockedCoverDesc": null,
+        "type": "TRADE_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "battle",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "battle",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_17": {
+        "id": "choice_ro6_bat6_17",
+        "title": "放开我！",
+        "description": "遭遇一场艰难的战斗",
+        "lockedCoverDesc": null,
+        "type": "TRADE_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "battle",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "battle",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_22": {
+        "id": "choice_ro6_bat6_22",
+        "title": "放开我！",
+        "description": "遭遇一场艰难的战斗",
+        "lockedCoverDesc": null,
+        "type": "TRADE_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "battle",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "battle",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_6": {
+        "id": "choice_ro6_bat6b_6",
+        "title": "放开我！",
+        "description": "遭遇一场艰难的战斗",
+        "lockedCoverDesc": null,
+        "type": "TRADE_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "battle",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "battle",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_12": {
+        "id": "choice_ro6_bat6b_12",
+        "title": "放开我！",
+        "description": "遭遇一场艰难的战斗",
+        "lockedCoverDesc": null,
+        "type": "TRADE_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "battle",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "battle",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_17": {
+        "id": "choice_ro6_bat6b_17",
+        "title": "放开我！",
+        "description": "遭遇一场艰难的战斗",
+        "lockedCoverDesc": null,
+        "type": "TRADE_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "battle",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "battle",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_22": {
+        "id": "choice_ro6_bat6b_22",
+        "title": "放开我！",
+        "description": "遭遇一场艰难的战斗",
+        "lockedCoverDesc": null,
+        "type": "TRADE_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "battle",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "battle",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_7": {
+        "id": "choice_ro6_bat6_7",
+        "title": "一定是错觉",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_13": {
+        "id": "choice_ro6_bat6_13",
+        "title": "一定是错觉",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_18": {
+        "id": "choice_ro6_bat6_18",
+        "title": "一定是错觉",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_7": {
+        "id": "choice_ro6_bat6b_7",
+        "title": "一定是错觉",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_13": {
+        "id": "choice_ro6_bat6b_13",
+        "title": "一定是错觉",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_18": {
+        "id": "choice_ro6_bat6b_18",
+        "title": "一定是错觉",
+        "description": "继续掏",
+        "lockedCoverDesc": null,
+        "type": "NEXT_PROB",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": "unknown",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6_8": {
+        "id": "choice_ro6_bat6_8",
+        "title": "太诡异了",
+        "description": "多一事不如少一事",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6_7",
+        "icon": "leave",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "leave",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_bat6b_8": {
+        "id": "choice_ro6_bat6b_8",
+        "title": "太诡异了",
+        "description": "多一事不如少一事",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_bat6b_7",
+        "icon": "leave",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "leave",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      }
+    },
+    "items": {
+      "rogue_6_gold": {
+        "id": "rogue_6_gold",
+        "name": "源石锭",
+        "description": null,
+        "usage": "源石锭",
+        "obtainApproach": "在集成战略模式中获得",
+        "iconId": "rogue_6_gold",
+        "itemIconGroupId": null,
+        "type": "GOLD",
+        "subType": "NONE",
+        "rarity": "NONE",
+        "sortId": 999,
+        "canSacrifice": false,
+        "tinyIconColor": "02d3ae",
+        "unlockCondDesc": null,
+        "shortUsage": null
+      }
+    },
+    "stages": {}
+  },
+  "counts": {
+    "document_scenes": 10,
+    "document_choice_groups": 8,
+    "original_scenes": 46,
+    "original_choices": 44,
+    "caption_cells": 13,
+    "documented_random_outcomes": 4,
+    "original_next_divergent_groups": 2,
+    "catalogue_exact_scene_links": 46
+  },
+  "source": {
+    "section": 334,
+    "revision": 352356,
+    "url": "https://wiki.biligame.com/arknights/沉沦者的黑流树海/调查记录",
+    "reused_actual_download": "research/p3-document-flows-321/source-receipt.json",
+    "original_download_sha256": "e64fc0aac0c092de0ca885f6c77555e0ef035d4c556a3e134a4291845659956e",
+    "original_download_bytes": 261190,
+    "selected_file": "research/p3-current-cave-334/documented-table.html",
+    "selected_sha256": "5b75b63714ad1e0b1b2f4ecedf1ede92abf51e7b60c25f9f4c00adf7048d7297",
+    "selected_bytes": 3953,
+    "table_character_span_in_downloaded_parse_text": [
+      31811,
+      34503
+    ],
+    "table_sha256": "6b95e284ea8b4a7183eabd2a46fb3861636921ea7ee9f10edf7af4d71fd578a7",
+    "fresh_targeted_web_text_rechecked": true,
+    "fresh_HTML_download_claimed": false,
+    "actual_parent_script_restored": false,
+    "full_reward_pools_verified": false,
+    "battle_lookup": {
+      "queries": [
+        "洞中宝 战斗 明日方舟",
+        "洞中宝 随机组",
+        "site:prts.wiki 洞中宝",
+        "site:wiki.biligame.com/arknights 洞中宝 放开我"
+      ],
+      "exact_stage_name_found": false,
+      "reason": "Selected complete table and current choice record provide only generic battle caption/hint; no exact stage identity. No battle map inferred."
+    },
+    "current_same_caption_next_destinations_checked": true
+  },
+  "complete_selected_record_comparison_to_baseline": {
+    "scenes": {
+      "scene_ro6_bat6_enter": true,
+      "scene_ro6_bat6b_enter": true,
+      "scene_ro6_bat6_2": true,
+      "scene_ro6_bat6_8": true,
+      "scene_ro6_bat6_13": true,
+      "scene_ro6_bat6_18": true,
+      "scene_ro6_bat6b_2": true,
+      "scene_ro6_bat6b_8": true,
+      "scene_ro6_bat6b_13": true,
+      "scene_ro6_bat6b_18": true,
+      "scene_ro6_bat6_6": true,
+      "scene_ro6_bat6_12": true,
+      "scene_ro6_bat6_17": true,
+      "scene_ro6_bat6b_6": true,
+      "scene_ro6_bat6b_12": true,
+      "scene_ro6_bat6b_17": true,
+      "scene_ro6_bat6_3": true,
+      "scene_ro6_bat6_9": true,
+      "scene_ro6_bat6_14": true,
+      "scene_ro6_bat6_19": true,
+      "scene_ro6_bat6b_3": true,
+      "scene_ro6_bat6b_9": true,
+      "scene_ro6_bat6b_14": true,
+      "scene_ro6_bat6b_19": true,
+      "scene_ro6_bat6_22": true,
+      "scene_ro6_bat6b_22": true,
+      "scene_ro6_bat6_4": true,
+      "scene_ro6_bat6_10": true,
+      "scene_ro6_bat6_15": true,
+      "scene_ro6_bat6_20": true,
+      "scene_ro6_bat6b_4": true,
+      "scene_ro6_bat6b_10": true,
+      "scene_ro6_bat6b_15": true,
+      "scene_ro6_bat6b_20": true,
+      "scene_ro6_bat6_5": true,
+      "scene_ro6_bat6_11": true,
+      "scene_ro6_bat6_16": true,
+      "scene_ro6_bat6_21": true,
+      "scene_ro6_bat6b_5": true,
+      "scene_ro6_bat6b_11": true,
+      "scene_ro6_bat6b_16": true,
+      "scene_ro6_bat6b_21": true,
+      "scene_ro6_bat6_1": true,
+      "scene_ro6_bat6b_1": true,
+      "scene_ro6_bat6_7": true,
+      "scene_ro6_bat6b_7": true
+    },
+    "choices": {
+      "choice_ro6_bat6_1": true,
+      "choice_ro6_bat6b_1": true,
+      "choice_ro6_bat6_2": true,
+      "choice_ro6_bat6b_2": true,
+      "choice_ro6_bat6_3": true,
+      "choice_ro6_bat6_9": true,
+      "choice_ro6_bat6_14": true,
+      "choice_ro6_bat6_19": true,
+      "choice_ro6_bat6b_3": true,
+      "choice_ro6_bat6b_9": true,
+      "choice_ro6_bat6b_14": true,
+      "choice_ro6_bat6b_19": true,
+      "choice_ro6_bat6_4": true,
+      "choice_ro6_bat6_10": true,
+      "choice_ro6_bat6_15": true,
+      "choice_ro6_bat6_20": true,
+      "choice_ro6_bat6b_4": true,
+      "choice_ro6_bat6b_10": true,
+      "choice_ro6_bat6b_15": true,
+      "choice_ro6_bat6b_20": true,
+      "choice_ro6_bat6_5": true,
+      "choice_ro6_bat6_11": true,
+      "choice_ro6_bat6_16": true,
+      "choice_ro6_bat6_21": true,
+      "choice_ro6_bat6b_5": true,
+      "choice_ro6_bat6b_11": true,
+      "choice_ro6_bat6b_16": true,
+      "choice_ro6_bat6b_21": true,
+      "choice_ro6_bat6_6": true,
+      "choice_ro6_bat6_12": true,
+      "choice_ro6_bat6_17": true,
+      "choice_ro6_bat6_22": true,
+      "choice_ro6_bat6b_6": true,
+      "choice_ro6_bat6b_12": true,
+      "choice_ro6_bat6b_17": true,
+      "choice_ro6_bat6b_22": true,
+      "choice_ro6_bat6_7": true,
+      "choice_ro6_bat6_13": true,
+      "choice_ro6_bat6_18": true,
+      "choice_ro6_bat6b_7": true,
+      "choice_ro6_bat6b_13": true,
+      "choice_ro6_bat6b_18": true,
+      "choice_ro6_bat6_8": true,
+      "choice_ro6_bat6b_8": true
+    },
+    "items": {
+      "rogue_6_gold": true
+    },
+    "stages": {}
+  },
+  "complete_game_option_pool": false,
+  "game_parent_script_restored": false,
+  "actual_probability": null,
+  "actual_outcome": null,
+  "actual_eligible": null,
+  "actual_variant": null,
+  "actual_received": null,
+  "actual_max_attempts": null,
+  "actual_stage": null,
+  "run_updated": false,
+  "catalogue_binding": {
+    "expected_legacy_event": {
+      "id": "community_group_017",
+      "title": "洞中宝",
+      "node_types": [
+        "不期而遇"
+      ],
+      "floors": [
+        3,
+        4
+      ],
+      "natural": null,
+      "natural_reason": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+      "entry": [
+        "community_group_017:scene:0"
+      ],
+      "source_group_id": "community_group_017",
+      "scenes": [
+        {
+          "key": "community_group_017:scene:0",
+          "game_scene_ids": [
+            "scene_ro6_bat6_enter",
+            "scene_ro6_bat6b_enter"
+          ],
+          "description": "树洞在黑流树海中随处可见，但你还是被一片在漆黑中闪烁的金光吸引住了。那些金灿灿的东西仿佛一张张大大的笑脸，正在欢迎你去一探究竟。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "开始",
+            "data-image": "Avg_pic_rogue_6_6",
+            "data-name": "洞中宝",
+            "data-ename": "",
+            "data-efloor": "III,IV",
+            "data-index": "91",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [
+            "本事件有概率在同一局探索中于【误入奇境】内、外各出现一次。"
+          ],
+          "choices": [
+            {
+              "key": "community_group_017:scene:0:choice:0",
+              "title": "树洞里肯定有好东西",
+              "description": "掏一下",
+              "destination_keys": [
+                "community_group_017:scene:2"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_bat6_1",
+                "choice_ro6_bat6b_1"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "树洞里肯定有好东西",
+                "data-icon": "unknown",
+                "data-dest": "2",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "exact_normalized_title_description",
+              "server_option_availability_verified": false
+            },
+            {
+              "key": "community_group_017:scene:0:choice:1",
+              "title": "离开",
+              "description": "多一事不如少一事",
+              "destination_keys": [
+                "community_group_017:scene:1"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_bat6_2",
+                "choice_ro6_bat6b_2"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "离开",
+                "data-icon": "leave",
+                "data-dest": "1",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+              "server_option_availability_verified": false
+            }
+          ]
+        },
+        {
+          "key": "community_group_017:scene:1",
+          "game_scene_ids": [
+            "scene_ro6_bat6_1",
+            "scene_ro6_bat6b_1"
+          ],
+          "description": "这片大地岂有白吃的午餐，还是远离危险吧。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "离开",
+            "data-image": "Avg_pic_rogue_6_6",
+            "data-name": "洞中宝",
+            "data-ename": "",
+            "data-index": "92",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": []
+        },
+        {
+          "key": "community_group_017:scene:2",
+          "game_scene_ids": [],
+          "description": "随机出现下列结果之一",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "掏一下",
+            "data-image": "Avg_pic_rogue_6_6",
+            "data-name": "洞中宝",
+            "data-ename": "",
+            "data-index": "93",
+            "data-prtsinfo": "true"
+          },
+          "edesc_texts": [],
+          "choices": [
+            {
+              "key": "community_group_017:scene:2:choice:0",
+              "title": "乌鸦的宝贝：源石锭",
+              "description": "乌鸦的宝贝",
+              "destination_keys": [
+                "community_group_017:scene:3"
+              ],
+              "game_choice_ids": [],
+              "source_type": "guide",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "guide",
+                "data-title": "乌鸦的宝贝：源石锭",
+                "data-icon": "",
+                "data-dest": "3",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "community_navigation_guide",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": null,
+              "server_option_availability_verified": false
+            },
+            {
+              "key": "community_group_017:scene:2:choice:1",
+              "title": "松鼠的宝贝：收藏品",
+              "description": "松鼠的宝贝",
+              "destination_keys": [
+                "community_group_017:scene:4"
+              ],
+              "game_choice_ids": [],
+              "source_type": "guide",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "guide",
+                "data-title": "松鼠的宝贝：收藏品",
+                "data-icon": "",
+                "data-dest": "4",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "community_navigation_guide",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": null,
+              "server_option_availability_verified": false
+            },
+            {
+              "key": "community_group_017:scene:2:choice:2",
+              "title": "怎么是空的！",
+              "description": "怎么是空的！",
+              "destination_keys": [
+                "community_group_017:scene:5"
+              ],
+              "game_choice_ids": [],
+              "source_type": "guide",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "guide",
+                "data-title": "怎么是空的！",
+                "data-icon": "",
+                "data-dest": "5",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "community_navigation_guide",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": null,
+              "server_option_availability_verified": false
+            },
+            {
+              "key": "community_group_017:scene:2:choice:3",
+              "title": "树洞咬人！",
+              "description": "树洞咬人！",
+              "destination_keys": [
+                "community_group_017:scene:6"
+              ],
+              "game_choice_ids": [],
+              "source_type": "guide",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "guide",
+                "data-title": "树洞咬人！",
+                "data-icon": "",
+                "data-dest": "6",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "community_navigation_guide",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": null,
+              "server_option_availability_verified": false
+            }
+          ]
+        },
+        {
+          "key": "community_group_017:scene:3",
+          "game_scene_ids": [
+            "scene_ro6_bat6_2",
+            "scene_ro6_bat6_8",
+            "scene_ro6_bat6_13",
+            "scene_ro6_bat6_18",
+            "scene_ro6_bat6b_2",
+            "scene_ro6_bat6b_8",
+            "scene_ro6_bat6b_13",
+            "scene_ro6_bat6b_18"
+          ],
+          "description": "“哗啦啦——”你摸到了乌鸦藏在此处的宝贝，它们接二连三地从洞中掉落出来。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "乌鸦的宝贝",
+            "data-image": "Avg_pic_rogue_6_6",
+            "data-name": "洞中宝",
+            "data-ename": "",
+            "data-index": "94",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": [
+            {
+              "key": "community_group_017:scene:3:choice:0",
+              "title": "我的了！",
+              "description": "获得5源石锭",
+              "destination_keys": [
+                "community_group_017:scene:7"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_bat6_3",
+                "choice_ro6_bat6_9",
+                "choice_ro6_bat6_14",
+                "choice_ro6_bat6b_3",
+                "choice_ro6_bat6b_9",
+                "choice_ro6_bat6b_14"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "我的了！",
+                "data-icon": "gold",
+                "data-dest": "7",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+              "server_option_availability_verified": false
+            }
+          ]
+        },
+        {
+          "key": "community_group_017:scene:4",
+          "game_scene_ids": [
+            "scene_ro6_bat6_3",
+            "scene_ro6_bat6_9",
+            "scene_ro6_bat6_14",
+            "scene_ro6_bat6_19",
+            "scene_ro6_bat6b_3",
+            "scene_ro6_bat6b_9",
+            "scene_ro6_bat6b_14",
+            "scene_ro6_bat6b_19"
+          ],
+          "description": "“咕咚咚——”你摸到了松鼠藏在此处的宝贝，它急不可耐地从洞中掉落出来。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "松鼠的宝贝",
+            "data-image": "Avg_pic_rogue_6_6",
+            "data-name": "洞中宝",
+            "data-ename": "",
+            "data-index": "95",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": [
+            {
+              "key": "community_group_017:scene:4:choice:0",
+              "title": "我的了！",
+              "description": "获得1件收藏品",
+              "destination_keys": [
+                "community_group_017:scene:9"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_bat6_4",
+                "choice_ro6_bat6_10",
+                "choice_ro6_bat6_15",
+                "choice_ro6_bat6_20",
+                "choice_ro6_bat6b_4",
+                "choice_ro6_bat6b_10",
+                "choice_ro6_bat6b_15",
+                "choice_ro6_bat6b_20"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "我的了！",
+                "data-icon": "unknown",
+                "data-dest": "9",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+              "server_option_availability_verified": false
+            }
+          ]
+        },
+        {
+          "key": "community_group_017:scene:5",
+          "game_scene_ids": [
+            "scene_ro6_bat6_4",
+            "scene_ro6_bat6_10",
+            "scene_ro6_bat6_15",
+            "scene_ro6_bat6_20",
+            "scene_ro6_bat6b_4",
+            "scene_ro6_bat6b_10",
+            "scene_ro6_bat6b_15",
+            "scene_ro6_bat6b_20"
+          ],
+          "description": "树洞的触感十分柔软，你感觉手陷进了一团棉花里，可惜一无所获。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "怎么是空的！",
+            "data-image": "Avg_pic_rogue_6_6",
+            "data-name": "洞中宝",
+            "data-ename": "",
+            "data-index": "96",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": [
+            {
+              "key": "community_group_017:scene:5:choice:0",
+              "title": "怎么是空的！",
+              "description": "继续掏",
+              "destination_keys": [
+                "community_group_017:scene:7"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_bat6_5",
+                "choice_ro6_bat6_11",
+                "choice_ro6_bat6_16",
+                "choice_ro6_bat6b_5",
+                "choice_ro6_bat6b_11",
+                "choice_ro6_bat6b_16"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "怎么是空的！",
+                "data-icon": "unknown",
+                "data-dest": "7",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+              "server_option_availability_verified": false
+            }
+          ]
+        },
+        {
+          "key": "community_group_017:scene:6",
+          "game_scene_ids": [
+            "scene_ro6_bat6_5",
+            "scene_ro6_bat6_11",
+            "scene_ro6_bat6_16",
+            "scene_ro6_bat6_21",
+            "scene_ro6_bat6b_5",
+            "scene_ro6_bat6b_11",
+            "scene_ro6_bat6b_16",
+            "scene_ro6_bat6b_21"
+          ],
+          "description": "你的手感到一阵猛烈的刺痛——树洞里长出了两排牙齿，疯狂啃食你的手，树汁从齿间淌下来，你拼尽全力试图甩脱。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "树洞咬人！",
+            "data-image": "Avg_pic_rogue_6_6",
+            "data-name": "洞中宝",
+            "data-ename": "",
+            "data-index": "97",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": [
+            {
+              "key": "community_group_017:scene:6:choice:0",
+              "title": "放开我！",
+              "description": "遭遇一场艰难的战斗",
+              "destination_keys": [],
+              "game_choice_ids": [
+                "choice_ro6_bat6_6",
+                "choice_ro6_bat6_12",
+                "choice_ro6_bat6_17",
+                "choice_ro6_bat6_22",
+                "choice_ro6_bat6b_6",
+                "choice_ro6_bat6b_12",
+                "choice_ro6_bat6b_17",
+                "choice_ro6_bat6b_22"
+              ],
+              "source_type": "simple",
+              "conditional": "随机出现下一层的普通作战中的一个",
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "放开我！",
+                "data-icon": "battle",
+                "data-dest": "",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "no_navigation",
+              "game_match_basis": "exact_normalized_title_description",
+              "server_option_availability_verified": false
+            }
+          ]
+        },
+        {
+          "key": "community_group_017:scene:7",
+          "game_scene_ids": [
+            "scene_ro6_bat6_6",
+            "scene_ro6_bat6_12",
+            "scene_ro6_bat6_17",
+            "scene_ro6_bat6b_6",
+            "scene_ro6_bat6b_12",
+            "scene_ro6_bat6b_17"
+          ],
+          "description": "“呼噜噜——”洞里传出活物低鸣的声音，你不禁向洞内探了探头，里面漆黑一片，似乎什么都没有。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "开始",
+            "data-image": "Avg_pic_rogue_6_6",
+            "data-name": "洞中宝",
+            "data-ename": "",
+            "data-index": "98",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": [
+            {
+              "key": "community_group_017:scene:7:choice:0",
+              "title": "一定是错觉",
+              "description": "继续掏",
+              "destination_keys": [
+                "community_group_017:scene:2"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_bat6_7",
+                "choice_ro6_bat6_13",
+                "choice_ro6_bat6_18",
+                "choice_ro6_bat6b_7",
+                "choice_ro6_bat6b_13",
+                "choice_ro6_bat6b_18"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "一定是错觉",
+                "data-icon": "unknown",
+                "data-dest": "2",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "exact_normalized_title_description",
+              "server_option_availability_verified": false
+            },
+            {
+              "key": "community_group_017:scene:7:choice:1",
+              "title": "太诡异了",
+              "description": "多一事不如少一事",
+              "destination_keys": [
+                "community_group_017:scene:8"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_bat6_8",
+                "choice_ro6_bat6b_8"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "太诡异了",
+                "data-icon": "leave",
+                "data-dest": "8",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+              "server_option_availability_verified": false
+            }
+          ]
+        },
+        {
+          "key": "community_group_017:scene:8",
+          "game_scene_ids": [
+            "scene_ro6_bat6_7",
+            "scene_ro6_bat6b_7"
+          ],
+          "description": "树洞里面说不定有什么可怕的东西，到此为止吧。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "离去",
+            "data-image": "Avg_pic_rogue_6_6",
+            "data-name": "洞中宝",
+            "data-ename": "",
+            "data-index": "99",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": []
+        },
+        {
+          "key": "community_group_017:scene:9",
+          "game_scene_ids": [
+            "scene_ro6_bat6_22",
+            "scene_ro6_bat6b_22"
+          ],
+          "description": "树洞中似乎不剩什么了，你拉紧背包离开了。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "结束",
+            "data-image": "Avg_pic_rogue_6_6",
+            "data-name": "洞中宝",
+            "data-ename": "",
+            "data-index": "100",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": []
+        }
+      ]
+    },
+    "expected_summary": {
+      "id": "community_group_017",
+      "title": "洞中宝",
+      "node_types": [
+        "不期而遇"
+      ],
+      "floors": [
+        3,
+        4
+      ],
+      "natural": null,
+      "natural_reason": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+      "entry": [
+        "community_group_017:scene:0"
+      ]
+    },
+    "exact_scene_links": [
+      {
+        "legacy_scene_key": "community_group_017:scene:0",
+        "current_original_scene_id": "scene_ro6_bat6_enter"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:0",
+        "current_original_scene_id": "scene_ro6_bat6b_enter"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:1",
+        "current_original_scene_id": "scene_ro6_bat6_1"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:1",
+        "current_original_scene_id": "scene_ro6_bat6b_1"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:3",
+        "current_original_scene_id": "scene_ro6_bat6_2"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:3",
+        "current_original_scene_id": "scene_ro6_bat6_8"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:3",
+        "current_original_scene_id": "scene_ro6_bat6_13"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:3",
+        "current_original_scene_id": "scene_ro6_bat6_18"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:3",
+        "current_original_scene_id": "scene_ro6_bat6b_2"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:3",
+        "current_original_scene_id": "scene_ro6_bat6b_8"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:3",
+        "current_original_scene_id": "scene_ro6_bat6b_13"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:3",
+        "current_original_scene_id": "scene_ro6_bat6b_18"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:4",
+        "current_original_scene_id": "scene_ro6_bat6_3"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:4",
+        "current_original_scene_id": "scene_ro6_bat6_9"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:4",
+        "current_original_scene_id": "scene_ro6_bat6_14"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:4",
+        "current_original_scene_id": "scene_ro6_bat6_19"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:4",
+        "current_original_scene_id": "scene_ro6_bat6b_3"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:4",
+        "current_original_scene_id": "scene_ro6_bat6b_9"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:4",
+        "current_original_scene_id": "scene_ro6_bat6b_14"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:4",
+        "current_original_scene_id": "scene_ro6_bat6b_19"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:5",
+        "current_original_scene_id": "scene_ro6_bat6_4"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:5",
+        "current_original_scene_id": "scene_ro6_bat6_10"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:5",
+        "current_original_scene_id": "scene_ro6_bat6_15"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:5",
+        "current_original_scene_id": "scene_ro6_bat6_20"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:5",
+        "current_original_scene_id": "scene_ro6_bat6b_4"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:5",
+        "current_original_scene_id": "scene_ro6_bat6b_10"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:5",
+        "current_original_scene_id": "scene_ro6_bat6b_15"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:5",
+        "current_original_scene_id": "scene_ro6_bat6b_20"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:6",
+        "current_original_scene_id": "scene_ro6_bat6_5"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:6",
+        "current_original_scene_id": "scene_ro6_bat6_11"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:6",
+        "current_original_scene_id": "scene_ro6_bat6_16"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:6",
+        "current_original_scene_id": "scene_ro6_bat6_21"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:6",
+        "current_original_scene_id": "scene_ro6_bat6b_5"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:6",
+        "current_original_scene_id": "scene_ro6_bat6b_11"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:6",
+        "current_original_scene_id": "scene_ro6_bat6b_16"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:6",
+        "current_original_scene_id": "scene_ro6_bat6b_21"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:7",
+        "current_original_scene_id": "scene_ro6_bat6_6"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:7",
+        "current_original_scene_id": "scene_ro6_bat6_12"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:7",
+        "current_original_scene_id": "scene_ro6_bat6_17"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:7",
+        "current_original_scene_id": "scene_ro6_bat6b_6"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:7",
+        "current_original_scene_id": "scene_ro6_bat6b_12"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:7",
+        "current_original_scene_id": "scene_ro6_bat6b_17"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:8",
+        "current_original_scene_id": "scene_ro6_bat6_7"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:8",
+        "current_original_scene_id": "scene_ro6_bat6b_7"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:9",
+        "current_original_scene_id": "scene_ro6_bat6_22"
+      },
+      {
+        "legacy_scene_key": "community_group_017:scene:9",
+        "current_original_scene_id": "scene_ro6_bat6b_22"
+      }
+    ],
+    "current_event_id": "cave"
+  }
+}
