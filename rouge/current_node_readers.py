@@ -50,6 +50,9 @@ def matches_current(row,reference):
 
 def binding_for(record):
     if type(record)is not dict or type(record.get('id'))is not str or not record['id'].startswith('community_group_'):return None
+    if record['id']in('community_group_007','community_group_009'):
+        from .current_vine_events import catalogue_binding
+        return catalogue_binding(record)
     try:
         p=packet()
         if p is None:return None
