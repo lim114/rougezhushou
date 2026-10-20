@@ -113,7 +113,8 @@ class ExpansionUpdatePanel(QWidget):
         from .current_encounters import locate as encounter_locate
         from .current_lake import locate as lake_locate
         from .current_resource_events import locate as resource_locate
-        available=(result['row']['category']=='scenes'and event_for_scene(key)is not None)or locate(result['row']['category'],key)is not None or ritual_locate(result['row']['category'],key)is not None or sand_locate(result['row']['category'],key)is not None or encounter_locate(result['row']['category'],key)is not None or lake_locate(result['row']['category'],key)is not None or resource_locate(result['row']['category'],key)is not None
+        from .current_unattended_shop import locate as shop_locate
+        available=(result['row']['category']=='scenes'and event_for_scene(key)is not None)or locate(result['row']['category'],key)is not None or ritual_locate(result['row']['category'],key)is not None or sand_locate(result['row']['category'],key)is not None or encounter_locate(result['row']['category'],key)is not None or lake_locate(result['row']['category'],key)is not None or resource_locate(result['row']['category'],key)is not None or shop_locate(result['row']['category'],key)is not None
         self.flow_button.setVisible(available);self.flow_button.setEnabled(available)
         self.flow_button.setText('查看本事件的条件、选项和相关作战')
         child=getattr(self,'flow_dialog',None)
@@ -186,6 +187,11 @@ class ExpansionUpdatePanel(QWidget):
         if self.result is None or self.result['row']['category']not in('scenes','choices','relics'):return False
         category=self.result['row']['category'];fresh=model.detail(category,self.result['row']['id'])
         if fresh!=self.result:self._unavailable();return False
+        from .current_unattended_shop import locate as shop_locate
+        target=shop_locate(category,fresh['row']['id'])
+        if target is not None:
+            from .current_unattended_shop_view import CurrentUnattendedShopDialog
+            self._close_flow();self.flow_dialog=CurrentUnattendedShopDialog(target,self);self.flow_dialog.show();return True
         from .current_resource_events import locate as resource_locate
         target=resource_locate(category,fresh['row']['id'])
         if target is not None:

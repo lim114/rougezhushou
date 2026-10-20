@@ -63,8 +63,8 @@
     "pause_after_active_section_requested": false,
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
-    "current_usage_remaining_percent": 67,
-    "current_usage_receipt": "verification/sections/329-preparation/usage-final.json",
+    "current_usage_remaining_percent": 100,
+    "current_usage_receipt": "verification/sections/330-preparation/usage-final.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
     "latest_user_instruction_receipt": "verification/sections/312-preparation/resume-and-scope.json",
     "latest_pause_instruction_receipt": "verification/sections/311-preparation/finish-current-and-pause.json",
@@ -73,7 +73,7 @@
     "avoid_duplicate_cloud_tests": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 329,
+  "completed_sections": 330,
   "sections": [
     {
       "number": 1,
@@ -2036,12 +2036,18 @@
       "completion_ref": "p3-section-329",
       "topic": "八类资源事件的选项、代价与奖励",
       "verification": "verification/sections/329.json"
+    },
+    {
+      "number": 330,
+      "completion_ref": "p3-section-330",
+      "topic": "无人商店的持有条件、换档与同文案记录",
+      "verification": "verification/sections/330.json"
     }
   ],
-  "next_section": 330,
-  "next_action": "第329节 + 八类资源事件的选项、代价与奖励，已本机必要验收并普通推送核对。后续330接续P3当前事件条件、完整奖励池与固定地图实际剩余缺口，未启动；P3/P2/P1均未完成，识别优化最后，下次定期全量335。",
+  "next_section": 331,
+  "next_action": "第330节 + 无人商店的持有条件、换档与同文案记录已本机必要验收；普通推送核对后331接续P3实际剩余缺口，未启动。下次335。",
   "full_validation_due": false,
-  "windows_native_validation": "本机首轮39项必要检查通过。实际界面复读仅调整player_text中的无关源石锭与生命/护盾提示，保留初版模型完整字节并确认该函数以外AST不变；扩充原模型测试方法中的相关断言，最终8项模型复验通过，其余31项未变检查复用，不声称最终重跑39项。最终31项Windows原生唯一检查通过，遍历全部32情景24文献选项、仅两事件有固定费用对照、未知/9/10与3/4边界、离开分支独立、三类随机零件不混池、六具名奖励资料与未知件数、半生命不套保1点、全源石锭零余额资格未知、两组真实非零阅读经父页刷新保留、实际坏源清旧/手选恢复、重复开窗及父源失效清子窗。最终9张PNG全部直接查看，首轮和复验原日志并存；七类外部调用零、临时本局及旧计算上下文不变。原项目测试窗已正常更新、可见响应，正常关闭到启动私人五路径不变。525旧选择器原序保持，现527。测试只本机，未重复全量或未变索引25单测；320全量/原失败/不可用范围仍属历史，下次335。",
+  "windows_native_validation": "本机31项相关必要检查通过，可重复构建字节核对通过；Windows原生临时MainWindow34项唯一检查通过，核对15精确原始入口、4情景/4组选择/11变体、化石三态只影响持有分支、普通两小桶仍1件且不需化石/源石锭、指定原记录不冒充实际变体、3/4源石锭边界、两份同文后续无默认/分别查看/无伪循环、开桶不是领取或重复扣费、两组真实非零阅读经父页刷新保持、实际公开副本损坏清旧/手选恢复、重复开窗/父源失效清子窗。7张实际PNG全部直接查看，七类外部调用零，临时本局与旧计算上下文不变。原项目测试窗正常更新并可见响应，正常关闭到启动私人五路径不变。527旧选择器原序保留，现529。全部测试本机，未重复全量或未变索引25单测；320完整范围/失败/不可用原件仍属历史，下一全量335。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
   "deferred_problems": [
     {
@@ -2156,14 +2162,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 329,
-    "verification": "verification/sections/329.json",
+    "section": 330,
+    "verification": "verification/sections/330.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 329,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "314202ea94581145e5ded19e2bac0da96fb55f0f",
     "proof": "verification/sections/329-publication.json",
@@ -2413,7 +2419,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "P3_SECTION329_PUBLISHED",
+  "batch_status": "P3_SECTION330_LOCAL_ACCEPTED_PUBLICATION_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2476,19 +2482,20 @@
     326,
     327,
     328,
-    329
+    329,
+    330
   ],
   "current_batch": {
     "start": 313,
     "end": null,
-    "status": "P3_SECTION329_PUBLISHED",
-    "completed_sections": 329,
-    "next_section": 330,
+    "status": "P3_SECTION330_LOCAL_ACCEPTED_PUBLICATION_PENDING",
+    "completed_sections": 330,
+    "next_section": 331,
     "next_section_started": false,
     "next_full_validation_after": 335,
     "batch_closed": false,
     "target_origin": "User authorized P3 continuation; no numeric stopping target",
-    "receipt": "verification/sections/329.json"
+    "receipt": "verification/sections/330.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -2768,7 +2775,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 329,
+  "latest_functional_section": 330,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -5515,7 +5522,14 @@
     "current_resource_events_scenes": 32,
     "current_resource_events_choices": 24,
     "current_resource_events_fixed_gold_is_local_only": true,
-    "current_resource_events_actual_eligibility_verified": false
+    "current_resource_events_actual_eligibility_verified": false,
+    "current_unattended_shop_game_commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+    "current_unattended_shop_document_revision": 352356,
+    "current_unattended_shop_scenes": 4,
+    "current_unattended_shop_choice_groups": 4,
+    "current_unattended_shop_original_choices": 11,
+    "current_unattended_shop_same_text_followups_separate": true,
+    "current_unattended_shop_actual_upgrade_verified": false
   },
   "historical_before313_publication": {
     "section": 312,
@@ -6143,7 +6157,15 @@
     "next_section_started": false,
     "development_paused": false
   },
-  "current_section_validation": {
+  "historical_before329_publication": {
+    "section": 328,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "e7690092a31f59b2d816638b79ad3dd7b56bc321",
+    "proof": "verification/sections/328-publication.json",
+    "proof_sha256": "670195d533e513e4b301a807dfd65741ea8fbba686ffe9132e45cfe45d1732d9"
+  },
+  "historical_before330_current_section_validation": {
     "section": 329,
     "receipt": "verification/sections/329.json",
     "initial39_all_passed": true,
@@ -6162,7 +6184,7 @@
     "last_full_receipt": "verification/full-320/summary.json",
     "last_full_receipt_is_historical_for_current_changes": true
   },
-  "latest_section_environment": {
+  "historical_before330_latest_section_environment": {
     "section": 329,
     "receipt": "verification/sections/329.json",
     "native_windows": "本机首轮39项必要检查通过。实际界面复读仅调整player_text中的无关源石锭与生命/护盾提示，保留初版模型完整字节并确认该函数以外AST不变；扩充原模型测试方法中的相关断言，最终8项模型复验通过，其余31项未变检查复用，不声称最终重跑39项。最终31项Windows原生唯一检查通过，遍历全部32情景24文献选项、仅两事件有固定费用对照、未知/9/10与3/4边界、离开分支独立、三类随机零件不混池、六具名奖励资料与未知件数、半生命不套保1点、全源石锭零余额资格未知、两组真实非零阅读经父页刷新保留、实际坏源清旧/手选恢复、重复开窗及父源失效清子窗。最终9张PNG全部直接查看，首轮和复验原日志并存；七类外部调用零、临时本局及旧计算上下文不变。原项目测试窗已正常更新、可见响应，正常关闭到启动私人五路径不变。525旧选择器原序保持，现527。测试只本机，未重复全量或未变索引25单测；320全量/原失败/不可用范围仍属历史，下次335。",
@@ -6170,20 +6192,37 @@
     "current_section_full_rerun": false,
     "last_full_receipt": "verification/full-320/summary.json"
   },
-  "historical_before329_publication": {
-    "section": 328,
-    "scope": "previous_functional_section",
-    "binding": "verified_remote_commit",
-    "commit": "e7690092a31f59b2d816638b79ad3dd7b56bc321",
-    "proof": "verification/sections/328-publication.json",
-    "proof_sha256": "670195d533e513e4b301a807dfd65741ea8fbba686ffe9132e45cfe45d1732d9"
-  },
-  "cloud_publication_closeout": {
+  "historical_before330_cloud_publication_closeout": {
     "section": 329,
     "functional_commit": "314202ea94581145e5ded19e2bac0da96fb55f0f",
     "proof": "verification/sections/329-publication.json",
     "current_commit_kind": "publication metadata only",
     "next_section_started": false,
     "development_paused": false
+  },
+  "current_section_validation": {
+    "section": 330,
+    "receipt": "verification/sections/330.json",
+    "necessary_methods_passed": 31,
+    "native_isolated_window_checks": 34,
+    "documented_events": 1,
+    "documented_scenes": 4,
+    "document_choice_groups": 4,
+    "original_choices": 11,
+    "same_text_followup_records": 2,
+    "held_relic_choices": 1,
+    "fixed_gold_choices": 1,
+    "real_nonzero_refresh_states": 2,
+    "full_suite_rerun": false,
+    "last_full_receipt": "verification/full-320/summary.json",
+    "last_full_receipt_is_historical_for_current_changes": true
+  },
+  "latest_section_environment": {
+    "section": 330,
+    "receipt": "verification/sections/330.json",
+    "native_windows": "本机31项相关必要检查通过，可重复构建字节核对通过；Windows原生临时MainWindow34项唯一检查通过，核对15精确原始入口、4情景/4组选择/11变体、化石三态只影响持有分支、普通两小桶仍1件且不需化石/源石锭、指定原记录不冒充实际变体、3/4源石锭边界、两份同文后续无默认/分别查看/无伪循环、开桶不是领取或重复扣费、两组真实非零阅读经父页刷新保持、实际公开副本损坏清旧/手选恢复、重复开窗/父源失效清子窗。7张实际PNG全部直接查看，七类外部调用零，临时本局与旧计算上下文不变。原项目测试窗正常更新并可见响应，正常关闭到启动私人五路径不变。527旧选择器原序保留，现529。全部测试本机，未重复全量或未变索引25单测；320完整范围/失败/不可用原件仍属历史，下一全量335。",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": false,
+    "last_full_receipt": "verification/full-320/summary.json"
   }
 }
