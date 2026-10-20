@@ -341,6 +341,7 @@ class NodeCatalogPanel(QWidget):
         self.ritual_weakening_window=None
         self.curiosity_node_rules_window=None
         self.relic_exchange_flow_window=None
+        self.current_reference_window=None;self._current_reference_origin=None;self._current_reference_source=None
         layout=QVBoxLayout(self)
         self.context_label=QLabel(DIRECTORY_NOTICE)
         self.context_label.setWordWrap(True);layout.addWidget(self.context_label)
@@ -385,6 +386,9 @@ class NodeCatalogPanel(QWidget):
         self.event_stage.currentIndexChanged.connect(lambda *_:self.battle_button.setEnabled(bool(self.event_stage.currentData())))
         self.event_scene_filter.currentIndexChanged.connect(self._event_preview_filter_changed)
         self.event_choice_filter.currentIndexChanged.connect(self._event_preview_filter_changed)
+        self.current_reference_button=QPushButton('查看当前版本的完整事件资料');self.current_reference_button.setAccessibleName('节点目录打开当前事件资料')
+        self.current_reference_button.setToolTip('按已核对来源打开当前固定资料；不确认本局版本、阶段或选项，不自动代入资源。')
+        self.current_reference_button.hide();self.current_reference_button.setEnabled(False);rl.addWidget(self.current_reference_button);self.current_reference_button.clicked.connect(self.open_current_event_reference)
         self.destination_choice=QComboBox();self.destination_choice.setAccessibleName('原选项目的地资料候选');rl.addWidget(self.destination_choice)
         self.destination_button=QPushButton('查看选项目的地原文与作战资料');rl.addWidget(self.destination_button)
         self.duel_reward_button=QPushButton('查看狭路相逢档次奖励');rl.addWidget(self.duel_reward_button)
@@ -599,6 +603,7 @@ class NodeCatalogPanel(QWidget):
     def show_selected(self):
         key=self.list.selected_key()
         entry=next((e for e in self.entries if e['key']==key),None)
+        self._refresh_current_event_reference(entry,key)
         previous_location=self.map_location.currentData()
         previous_destination=self.destination_choice.currentData(Qt.ItemDataRole.UserRole+1);self.destination_choice.clear()
         self.map_location.clear();self.map_jump.setEnabled(False)
@@ -1181,3 +1186,38 @@ class NodeCatalogPanel(QWidget):
         if not entry or entry['kind']!='map' or not self.map_context:return
         graph,conditions,_,_=self.map_context
         self.set_node(graph,entry['record']['id'],**conditions);self.bind_current_node()
+
+    def _close_current_event_reference(self):
+        if self.current_reference_window is not None:self.current_reference_window.close()
+        self.current_reference_window=None
+
+    def _current_event_reference_scope(self,entry,key):
+        historical=bool(entry and(entry.get('history_read')or entry['record'].get('historical_read_reference')or self._bound_historical_map()))
+        if self.dossier is not None and self.node_context:
+            graph,node_id,_=self.node_context;epoch=self.map_context[2]if self.map_context else None
+            return ('node',key,epoch,graph.get('zone_id'),graph.get('template_id'),node_id,historical)
+        return ('directory',key)
+
+    def _refresh_current_event_reference(self,entry,key):
+        from . import current_node_readers as current
+        binding=current.binding_for(entry['record'])if entry and entry['kind']=='event'else None
+        valid=binding is not None;self.current_reference_button.setVisible(valid);self.current_reference_button.setEnabled(valid)
+        origin=self._current_event_reference_scope(entry,key)if valid else None
+        source=(binding['reader'],binding['current_event_id'],binding['source_identity'])if valid else None
+        if origin!=self._current_reference_origin or not current.same(source,self._current_reference_source):self._close_current_event_reference()
+        self._current_reference_origin=deepcopy(origin);self._current_reference_source=deepcopy(source)
+        if self.current_reference_window is not None and self.current_reference_window.isVisible():
+            if not self.current_reference_window.panel.refresh_reference():self._close_current_event_reference()
+        return binding
+
+    def open_current_event_reference(self):
+        key=self.list.selected_key();entry=next((e for e in self.entries if e['key']==key),None);binding=self._refresh_current_event_reference(entry,key)
+        if binding is None:return False
+        from .current_node_readers_view import make_dialog
+        self._close_current_event_reference();historical=bool(entry.get('history_read')or entry['record'].get('historical_read_reference')or self._bound_historical_map())
+        dialog=make_dialog(binding,self,historical=historical)
+        if dialog is None:self.current_reference_button.setEnabled(False);return False
+        self.current_reference_window=dialog;dialog.show();return True
+
+    def closeEvent(self,event):
+        self._close_current_event_reference();super().closeEvent(event)
