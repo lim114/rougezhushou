@@ -97,19 +97,26 @@ def differences(expected, actual, path=''):
     return [] if expected == actual else [{'path': path, 'expected': expected, 'actual': actual}]
 
 
+def _declared_parent_pin(freeze_path):
+    path = (ROOT / freeze_path).resolve()
+    if not path.is_relative_to((ROOT / 'verification').resolve()) or path.is_symlink():
+        raise ValueError('Explicit regular public verification source freeze required.')
+    freeze = read(path)
+    if type(freeze.get('section')) is not int or freeze['section'] < 320 or freeze.get('root_declared') is not True:
+        raise ValueError('Root-declared complete source freeze required.')
+    for name in (CANONICAL, 'rouge/node_catalog_view.py'):
+        if sha(ROOT / name) != freeze['source_sha256'][name]:
+            raise ValueError('Declared current verifier or parent differs from actual bytes: ' + name)
+    return freeze['source_sha256']['rouge/node_catalog_view.py']
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--receipt', required=True)
     parser.add_argument('--visible-ms', type=int, default=90000)
+    parser.add_argument('--source-freeze', default='verification/full-320/source-freeze-attempt2.json')
     args = parser.parse_args()
-    freeze=read(ROOT/'verification/full-320/source-freeze-attempt2.json')
-    if freeze.get('section')!=320 or freeze.get('root_declared')is not True:
-        raise ValueError('Current320 frozen parent source required.')
-    parent_pin=freeze['source_sha256']['rouge/node_catalog_view.py']
-    if sha(ROOT/'rouge/node_catalog_view.py')!=parent_pin:
-        raise ValueError('Current320 declared parent differs from actual bytes.')
-    # Only the evolved parent UI pin changes; all original data, scope and assertions remain.
-    EXPECTED_SOURCE_PINS['rouge/node_catalog_view.py']=parent_pin
+    EXPECTED_SOURCE_PINS['rouge/node_catalog_view.py'] = _declared_parent_pin(args.source_freeze)
     destination = Path(args.receipt).resolve()
     if destination.exists():
         raise FileExistsError('Preserve first actual receipt.')

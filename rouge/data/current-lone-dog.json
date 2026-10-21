@@ -1,0 +1,589 @@
+{
+  "schema": "current_lone_dog_335_v1",
+  "game_commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+  "event": {
+    "id": "dog",
+    "title": "独活",
+    "entry_scene_id": "scene_ro6_task2_enter",
+    "scene_ids": [
+      "scene_ro6_task2_enter",
+      "scene_ro6_task2_1",
+      "scene_ro6_task2_2"
+    ],
+    "choice_ids": [
+      "choice_ro6_task2_1",
+      "choice_ro6_task2_2",
+      "choice_ro6_task2_3",
+      "choice_ro6_task2_4"
+    ]
+  },
+  "scenes": {
+    "scene_ro6_task2_enter": {
+      "id": "scene_ro6_task2_enter",
+      "event_id": "dog",
+      "choice_ids": [
+        "choice_ro6_task2_1",
+        "choice_ro6_task2_2"
+      ],
+      "source": {
+        "file": "research/p3-current-lone-dog-335/documented-table.html",
+        "row": 1,
+        "cell": 0,
+        "attributes": {
+          "colspan": "3"
+        },
+        "text": "夜晚已经降临。不远处出现了一只裹着披风的安静小狗，它动了动耳朵，抬头望向挂满佣兵识别牌的巨大树木。\n",
+        "sha256": "b919e9d4858baf8ab75e86a96dc4b2d309bf1a0c1f229837fd5c39e8d27e676f"
+      }
+    },
+    "scene_ro6_task2_1": {
+      "id": "scene_ro6_task2_1",
+      "event_id": "dog",
+      "choice_ids": [
+        "choice_ro6_task2_3",
+        "choice_ro6_task2_4"
+      ],
+      "source": {
+        "file": "research/p3-current-lone-dog-335/documented-table.html",
+        "row": 3,
+        "cell": 0,
+        "attributes": {
+          "colspan": "2"
+        },
+        "text": "你找到了它，礼貌地询问它附近是否有可以歇脚的营地。它没有说话也没有看你，你们眼前的丛林一片漆黑，树梢上失去主人的识别牌摇摇晃晃。看起来它已经独自行动很久了。\n",
+        "sha256": "ed2d158a4cd25c5fa8281d1aff3aa64e5c81d68282b317c006528b414d694632"
+      }
+    },
+    "scene_ro6_task2_2": {
+      "id": "scene_ro6_task2_2",
+      "event_id": "dog",
+      "choice_ids": [],
+      "source": {
+        "file": "research/p3-current-lone-dog-335/documented-table.html",
+        "row": 5,
+        "cell": 0,
+        "attributes": {
+          "colspan": "2"
+        },
+        "text": "你没有跟上去，小狗停下来看了看你，似乎在它眼中你与树梢上的识别牌没有什么不同。它抖抖耳朵便离开了。\n",
+        "sha256": "5f9df705c5ed39d19d9055787365a691104e63c39612aa8968b5f96d9af9e113"
+      }
+    }
+  },
+  "choices": {
+    "choice_ro6_task2_1": {
+      "id": "choice_ro6_task2_1",
+      "event_id": "dog",
+      "scene_id": "scene_ro6_task2_enter",
+      "title": "去看看小狗",
+      "description": "获得收藏品<@ro6.get>同行者</>",
+      "role": "approach",
+      "next_scene_id": "scene_ro6_task2_1",
+      "stage_ids": [],
+      "item_id": "rogue_6_relic_cargo_10",
+      "quantity_reference": null,
+      "target_node_type": null,
+      "actual_target_node_id": null,
+      "actual_marked": null,
+      "actual_moved": null,
+      "actual_recruited": null,
+      "actual_received": null,
+      "actual_eligible": null,
+      "source": {
+        "file": "research/p3-current-lone-dog-335/documented-table.html",
+        "row": 2,
+        "cell": 2,
+        "attributes": {},
+        "text": "去看看小狗获得收藏品同行者\n",
+        "sha256": "f68986f5cfc41c2177e13e97417778abadd8e913c53472f156f2e7b1c65a7372"
+      }
+    },
+    "choice_ro6_task2_2": {
+      "id": "choice_ro6_task2_2",
+      "event_id": "dog",
+      "scene_id": "scene_ro6_task2_enter",
+      "title": "小心为上",
+      "description": "多一事不如少一事",
+      "role": "leave",
+      "next_scene_id": "scene_ro6_task2_2",
+      "stage_ids": [],
+      "item_id": null,
+      "quantity_reference": null,
+      "target_node_type": null,
+      "actual_target_node_id": null,
+      "actual_marked": null,
+      "actual_moved": null,
+      "actual_recruited": null,
+      "actual_received": null,
+      "actual_eligible": null,
+      "source": {
+        "file": "research/p3-current-lone-dog-335/documented-table.html",
+        "row": 4,
+        "cell": 1,
+        "attributes": {},
+        "text": "小心为上多一事不如少一事\n",
+        "sha256": "2730cd793bfe48bb726668a4b4804a4bb3c453159f1040f2440b397863ef40c0"
+      }
+    },
+    "choice_ro6_task2_3": {
+      "id": "choice_ro6_task2_3",
+      "event_id": "dog",
+      "scene_id": "scene_ro6_task2_1",
+      "title": "跟随小狗",
+      "description": "前往应急助力",
+      "role": "move",
+      "next_scene_id": null,
+      "stage_ids": [],
+      "item_id": null,
+      "quantity_reference": null,
+      "target_node_type": "应急助力",
+      "actual_target_node_id": null,
+      "actual_marked": null,
+      "actual_moved": null,
+      "actual_recruited": null,
+      "actual_received": null,
+      "actual_eligible": null,
+      "source": {
+        "file": "research/p3-current-lone-dog-335/documented-table.html",
+        "row": 6,
+        "cell": 2,
+        "attributes": {},
+        "text": "跟随小狗前往应急助力\n",
+        "sha256": "ea001e86e1556655477e974962b92a5dcfbb007dfdf6a15f01ecae5b968575d1"
+      }
+    },
+    "choice_ro6_task2_4": {
+      "id": "choice_ro6_task2_4",
+      "event_id": "dog",
+      "scene_id": "scene_ro6_task2_1",
+      "title": "请小狗告知营地位置",
+      "description": "标记应急助力位置",
+      "role": "mark",
+      "next_scene_id": null,
+      "stage_ids": [],
+      "item_id": null,
+      "quantity_reference": null,
+      "target_node_type": "应急助力",
+      "actual_target_node_id": null,
+      "actual_marked": null,
+      "actual_moved": null,
+      "actual_recruited": null,
+      "actual_received": null,
+      "actual_eligible": null,
+      "source": {
+        "file": "research/p3-current-lone-dog-335/documented-table.html",
+        "row": 7,
+        "cell": 1,
+        "attributes": {},
+        "text": "请小狗告知营地位置标记应急助力位置\n",
+        "sha256": "ae0a5fcd59a37eb07c1bbd5caa621d470a5eaaa62d2ac7bfe8fba940052b95d8"
+      }
+    }
+  },
+  "originals": {
+    "scenes": {
+      "scene_ro6_task2_enter": {
+        "id": "scene_ro6_task2_enter",
+        "title": "独活",
+        "description": "夜晚已经降临。不远处出现了一只裹着披风的安静小狗，它动了动耳朵，抬头望向挂满佣兵识别牌的巨大树木。",
+        "background": "pic_rogue_6_21",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_task2_1": {
+        "id": "scene_ro6_task2_1",
+        "title": "独活",
+        "description": "你找到了它，礼貌地询问它附近是否有可以歇脚的营地。它没有说话也没有看你，你们眼前的丛林一片漆黑，树梢上失去主人的识别牌摇摇晃晃。看起来它已经独自行动很久了。",
+        "background": "pic_rogue_6_21",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      },
+      "scene_ro6_task2_2": {
+        "id": "scene_ro6_task2_2",
+        "title": "独活",
+        "description": "你没有跟上去，小狗停下来看了看你，似乎在它眼中你与树梢上的识别牌没有什么不同。它抖抖耳朵便离开了。",
+        "background": "pic_rogue_6_21",
+        "titleIcon": null,
+        "subTypeId": 0,
+        "useHiddenMusic": false
+      }
+    },
+    "choices": {
+      "choice_ro6_task2_1": {
+        "id": "choice_ro6_task2_1",
+        "title": "去看看小狗",
+        "description": "获得收藏品<@ro6.get>同行者</>",
+        "lockedCoverDesc": null,
+        "type": "TRADE",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_task2_1",
+        "icon": "",
+        "displayData": {
+          "type": "ITEM",
+          "costHintType": "NONE",
+          "effectHintType": "ITEM",
+          "funcIconId": null,
+          "itemId": "rogue_6_relic_cargo_10",
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_task2_2": {
+        "id": "choice_ro6_task2_2",
+        "title": "小心为上",
+        "description": "多一事不如少一事",
+        "lockedCoverDesc": null,
+        "type": "NEXT",
+        "leftDecoType": "NONE",
+        "nextSceneId": "scene_ro6_task2_2",
+        "icon": "leave",
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "leave",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_task2_3": {
+        "id": "choice_ro6_task2_3",
+        "title": "跟随小狗",
+        "description": "前往应急助力",
+        "lockedCoverDesc": null,
+        "type": "MOVE",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      },
+      "choice_ro6_task2_4": {
+        "id": "choice_ro6_task2_4",
+        "title": "请小狗告知营地位置",
+        "description": "标记应急助力位置",
+        "lockedCoverDesc": null,
+        "type": "VISION",
+        "leftDecoType": "NONE",
+        "nextSceneId": null,
+        "icon": null,
+        "displayData": {
+          "type": "NORMAL",
+          "costHintType": "NONE",
+          "effectHintType": "NONE",
+          "funcIconId": "unknown",
+          "itemId": null,
+          "difficultyUpgradeRelicGroupId": null,
+          "taskId": null,
+          "instId": null
+        },
+        "forceShowWhenOnlyLeave": false,
+        "isHiddenChoice": false,
+        "sortId": 0
+      }
+    },
+    "items": {
+      "rogue_6_relic_cargo_10": {
+        "id": "rogue_6_relic_cargo_10",
+        "name": "同行者",
+        "description": "“现在你是我们的一员了，让我们熟悉彼此的气味。”",
+        "usage": "应急助力节点中招募所需源石锭-50%，应急干员的生命值、攻击力和防御力+40%",
+        "obtainApproach": "在集成战略模式中获得",
+        "iconId": "rogue_6_relic_cargo_10",
+        "itemIconGroupId": null,
+        "type": "RELIC",
+        "subType": "NONE",
+        "rarity": "RARE",
+        "sortId": 999,
+        "canSacrifice": true,
+        "tinyIconColor": null,
+        "unlockCondDesc": null,
+        "shortUsage": null
+      }
+    },
+    "stages": {}
+  },
+  "source": {
+    "section": 335,
+    "revision": 352356,
+    "url": "https://wiki.biligame.com/arknights/沉沦者的黑流树海/调查记录",
+    "reused_actual_download": "research/p3-document-flows-321/source-receipt.json",
+    "original_download_sha256": "e64fc0aac0c092de0ca885f6c77555e0ef035d4c556a3e134a4291845659956e",
+    "original_download_bytes": 261190,
+    "selected_file": "research/p3-current-lone-dog-335/documented-table.html",
+    "selected_sha256": "0d5b521fecb4f2490d126c39dbfc121cf77926bf09bd5d198498a0588e8fee95",
+    "selected_bytes": 1832,
+    "table_character_span_in_downloaded_parse_text": [
+      94489,
+      95800
+    ],
+    "table_sha256": "e8da5c133692d214b023045577fc6bc85be14ead90bb0bf5dfff886031ada05a",
+    "fresh_targeted_web_text_rechecked": true,
+    "fresh_HTML_download_claimed": false,
+    "supplemental_usage_source": "https://prts.wiki/w/同行者",
+    "actual_parent_script_restored": false,
+    "actual_movement_or_mark_or_recruitment_verified": false
+  },
+  "complete_selected_record_comparison_to_baseline": {
+    "scenes": {
+      "scene_ro6_task2_enter": true,
+      "scene_ro6_task2_1": true,
+      "scene_ro6_task2_2": true
+    },
+    "choices": {
+      "choice_ro6_task2_1": true,
+      "choice_ro6_task2_2": true,
+      "choice_ro6_task2_3": true,
+      "choice_ro6_task2_4": true
+    },
+    "items": {
+      "rogue_6_relic_cargo_10": true
+    },
+    "stages": {}
+  },
+  "catalogue_binding": {
+    "expected_legacy_event": {
+      "id": "community_group_020",
+      "title": "独活",
+      "node_types": [
+        "不期而遇"
+      ],
+      "floors": [
+        2,
+        3,
+        4
+      ],
+      "natural": null,
+      "natural_reason": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+      "entry": [
+        "community_group_020:scene:0"
+      ],
+      "source_group_id": "community_group_020",
+      "scenes": [
+        {
+          "key": "community_group_020:scene:0",
+          "game_scene_ids": [
+            "scene_ro6_task2_enter"
+          ],
+          "description": "夜晚已经降临。不远处出现了一只裹着披风的安静小狗，它动了动耳朵，抬头望向挂满佣兵识别牌的巨大树木。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "开始",
+            "data-image": "Avg_pic_rogue_6_21",
+            "data-name": "独活",
+            "data-ename": "",
+            "data-efloor": "II,III,IV",
+            "data-index": "108",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": [
+            {
+              "key": "community_group_020:scene:0:choice:0",
+              "title": "去看看小狗",
+              "description": "获得收藏品同行者（应急助力节点中招募所需源石锭-50%，应急干员的生命值、攻击力和防御力+40%）",
+              "destination_keys": [
+                "community_group_020:scene:1"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_task2_1"
+              ],
+              "source_type": "collection2",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "collection2",
+                "data-title": "去看看小狗",
+                "data-icon": "207",
+                "data-dest": "1",
+                "data-iconid": "rogue_6_relic_cargo_10",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "normalized_title_and_explicit_item_id_and_destination_scene",
+              "server_option_availability_verified": false
+            },
+            {
+              "key": "community_group_020:scene:0:choice:1",
+              "title": "小心为上",
+              "description": "多一事不如少一事",
+              "destination_keys": [
+                "community_group_020:scene:2"
+              ],
+              "game_choice_ids": [
+                "choice_ro6_task2_2"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "小心为上",
+                "data-icon": "leave",
+                "data-dest": "2",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "community_group_local_navigation",
+              "game_match_basis": "exact_normalized_title_description_and_destination_scene",
+              "server_option_availability_verified": false
+            }
+          ]
+        },
+        {
+          "key": "community_group_020:scene:1",
+          "game_scene_ids": [
+            "scene_ro6_task2_1"
+          ],
+          "description": "你找到了它，礼貌地询问它附近是否有可以歇脚的营地。它没有说话也没有看你，你们眼前的丛林一片漆黑，树梢上失去主人的识别牌摇摇晃晃。看起来它已经独自行动很久了。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "看看小狗",
+            "data-image": "Avg_pic_rogue_6_21",
+            "data-name": "独活",
+            "data-ename": "",
+            "data-index": "109",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": [
+            {
+              "key": "community_group_020:scene:1:choice:0",
+              "title": "跟随小狗",
+              "description": "前往应急助力",
+              "destination_keys": [],
+              "game_choice_ids": [
+                "choice_ro6_task2_3"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "跟随小狗",
+                "data-icon": "unknown",
+                "data-dest": "",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "no_navigation",
+              "game_match_basis": "exact_normalized_title_description",
+              "server_option_availability_verified": false
+            },
+            {
+              "key": "community_group_020:scene:1:choice:1",
+              "title": "请小狗告知营地位置",
+              "description": "标记应急助力位置",
+              "destination_keys": [],
+              "game_choice_ids": [
+                "choice_ro6_task2_4"
+              ],
+              "source_type": "simple",
+              "conditional": null,
+              "nested": false,
+              "subchoices": [],
+              "attributes": {
+                "class": "choose",
+                "data-type": "simple",
+                "data-title": "请小狗告知营地位置",
+                "data-icon": "unknown",
+                "data-dest": "",
+                "data-iconid": "",
+                "data-subchoose": ""
+              },
+              "presentation_role": "display_option_reference",
+              "destination_status": "no_navigation",
+              "game_match_basis": "exact_normalized_title_description",
+              "server_option_availability_verified": false
+            }
+          ]
+        },
+        {
+          "key": "community_group_020:scene:2",
+          "game_scene_ids": [
+            "scene_ro6_task2_2"
+          ],
+          "description": "你没有跟上去，小狗停下来看了看你，似乎在它眼中你与树梢上的识别牌没有什么不同。它抖抖耳朵便离开了。",
+          "attributes": {
+            "class": "scene",
+            "data-nav": "离开",
+            "data-image": "Avg_pic_rogue_6_21",
+            "data-name": "独活",
+            "data-ename": "",
+            "data-index": "110",
+            "data-prtsinfo": ""
+          },
+          "edesc_texts": [],
+          "choices": []
+        }
+      ]
+    },
+    "expected_summary": {
+      "id": "community_group_020",
+      "title": "独活",
+      "node_types": [
+        "不期而遇"
+      ],
+      "floors": [
+        2,
+        3,
+        4
+      ],
+      "natural": null,
+      "natural_reason": "已列入具名节点事件目录；未恢复服务器自然生成及资格条件",
+      "entry": [
+        "community_group_020:scene:0"
+      ]
+    },
+    "exact_scene_links": [
+      {
+        "legacy_scene_key": "community_group_020:scene:0",
+        "current_original_scene_id": "scene_ro6_task2_enter"
+      },
+      {
+        "legacy_scene_key": "community_group_020:scene:1",
+        "current_original_scene_id": "scene_ro6_task2_1"
+      },
+      {
+        "legacy_scene_key": "community_group_020:scene:2",
+        "current_original_scene_id": "scene_ro6_task2_2"
+      }
+    ],
+    "current_event_id": "dog"
+  },
+  "complete_game_option_pool": false,
+  "game_parent_script_restored": false,
+  "actual_eligible": null,
+  "run_updated": false
+}

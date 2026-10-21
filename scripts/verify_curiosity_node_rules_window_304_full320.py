@@ -96,22 +96,26 @@ def bound_files():
     return result
 
 
-def _fresh320_parent_pin():
-    freeze=read(ROOT/'verification/full-320/source-freeze-attempt2.json')
-    if freeze.get('section')!=320 or freeze.get('root_declared')is not True:
-        raise ValueError('Actual320 declared source input required for this parent compatibility pin.')
-    expected=freeze['source_sha256']['rouge/node_catalog_view.py']
-    if sha(ROOT/'rouge/node_catalog_view.py')!=expected:
-        raise ValueError('Fresh320 parent source differs from its declared pin.')
-    return expected
+def _declared_parent_pin(freeze_path):
+    path = (ROOT / freeze_path).resolve()
+    if not path.is_relative_to((ROOT / 'verification').resolve()) or path.is_symlink():
+        raise ValueError('Explicit regular public verification source freeze required.')
+    freeze = read(path)
+    if type(freeze.get('section')) is not int or freeze['section'] < 320 or freeze.get('root_declared') is not True:
+        raise ValueError('Root-declared complete source freeze required.')
+    for name in (CANONICAL, 'rouge/node_catalog_view.py'):
+        if sha(ROOT / name) != freeze['source_sha256'][name]:
+            raise ValueError('Declared current verifier or parent differs from actual bytes: ' + name)
+    return freeze['source_sha256']['rouge/node_catalog_view.py']
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--receipt', required=True)
     parser.add_argument('--visible-ms', type=int, default=90000)
+    parser.add_argument('--source-freeze', default='verification/full-320/source-freeze-attempt2.json')
     args = parser.parse_args()
-    EXPECTED_SOURCE_PINS['rouge/node_catalog_view.py'] = _fresh320_parent_pin()
+    EXPECTED_SOURCE_PINS['rouge/node_catalog_view.py'] = _declared_parent_pin(args.source_freeze)
     destination = Path(args.receipt).resolve()
     if destination.exists():
         raise FileExistsError('Preserve first actual receipt.')
