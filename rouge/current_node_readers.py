@@ -50,6 +50,9 @@ def matches_current(row,reference):
 
 def binding_for(record):
     if type(record)is not dict or type(record.get('id'))is not str or not record['id'].startswith('community_group_'):return None
+    if record['id']=='community_group_010':
+        from .current_shadow import catalogue_binding
+        return catalogue_binding(record)
     if record['id']=='community_group_023':
         from .current_resting import catalogue_binding
         return catalogue_binding(record)

@@ -1,0 +1,723 @@
+<h3><span id=".E8.A2.AB.E6.AD.8C.E9.A2.82.E7.9A.84.E5.BD.B1.E5.AD.90"></span><span class="mw-headline" id="被歌颂的影子">被歌颂的影子</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/arknights/index.php?title=%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7/%E8%B0%83%E6%9F%A5%E8%AE%B0%E5%BD%95&amp;action=edit&amp;section=21" title="编辑章节：被歌颂的影子">编辑</a><span class="mw-editsection-bracket">]</span></span></h3>
+<center><div style="padding: 10px;background:#f9f9f9;border: 0px solid rgb(77 120 216 / 78%);border-left-width: 5px;margin:10px auto;width:800px;max-width:100%;text-align:left">由于该事件过于复杂，进行尝试性的可视化展示</div></center>
+<p><style>
+.rogue-fragment {
+--bg: #000000;
+--panel: #080808;
+--panel-edge: #2a2a2a;
+--body-block: #111111;
+--choice: #1a1a1a;
+--choice-hover: #222222;
+--subchoice: #242424;
+--subchoice-hover: #2d2d2d;
+--line: #454545;
+--line-strong: #666666;
+--text: #f2f2f2;
+--muted: #9c9c9c;
+--accent: #ffffff;
+--gain: #8ee2bf;
+--lose: #ff9b9b;
+box-sizing: border-box;
+max-width: 900px;
+margin: 0 auto;
+padding: 0;
+background: var(--bg);
+color: var(--text);
+font-family: "Microsoft YaHei UI", "PingFang SC", sans-serif;
+}
+.rogue-fragment * {
+box-sizing: border-box;
+}
+.rogue-fragment .shell {
+max-width: 900px;
+margin: 0 auto;
+padding: 10px 0 0;
+}
+.rogue-fragment .hero {
+margin: 0 0 18px;
+overflow: hidden;
+background: #101010;
+border: 1px solid var(--line-strong);
+}
+.rogue-fragment .hero img {
+display: block;
+width: 100%;
+height: auto;
+min-height: 220px;
+max-height: 360px;
+object-fit: cover;
+background: #0f0f0f;
+}
+.rogue-fragment .node {
+display: none;
+background: var(--panel);
+border: 1px solid var(--panel-edge);
+padding: 18px;
+box-shadow: inset 0 0 0 1px #060606;
+}
+.rogue-fragment:not(:has(.node:target)) .node.start,
+.rogue-fragment .node:target {
+display: block;
+}
+.rogue-fragment .crumbs {
+display: flex;
+gap: 8px;
+align-items: center;
+margin: 0 0 16px;
+}
+.rogue-fragment .crumb {
+width: 8px;
+height: 8px;
+display: block;
+border: 1px solid var(--line-strong);
+background: transparent;
+}
+.rogue-fragment .crumb.active {
+background: var(--accent);
+border-color: var(--accent);
+}
+.rogue-fragment .body {
+font-size: 16px;
+line-height: 1.95;
+margin-bottom: 18px;
+white-space: normal;
+background: var(--body-block);
+padding: 14px 15px;
+}
+.rogue-fragment .choices {
+display: grid;
+gap: 10px;
+}
+.rogue-fragment .choice {
+display: block;
+text-decoration: none;
+color: inherit;
+border: 1px solid var(--line);
+background: var(--choice);
+padding: 14px 14px 12px;
+box-shadow: inset 0 0 0 1px #101010;
+}
+.rogue-fragment .choice.choice-link:hover {
+border-color: var(--line-strong);
+background: var(--choice-hover);
+}
+.rogue-fragment .choice-title {
+font-size: 16px;
+font-weight: 700;
+margin-bottom: 4px;
+}
+.rogue-fragment .choice-badge {
+margin-left: 8px;
+font-size: 11px;
+color: var(--muted);
+font-weight: 400;
+}
+.rogue-fragment .choice-desc {
+color: var(--muted);
+line-height: 1.7;
+font-size: 13px;
+white-space: pre-line;
+}
+.rogue-fragment .choice-preview {
+margin-top: 7px;
+color: #d8d8d8;
+font-size: 13px;
+line-height: 1.7;
+}
+.rogue-fragment .subchoices {
+display: grid;
+gap: 8px;
+margin-top: 10px;
+padding-top: 10px;
+border-top: 1px solid var(--line);
+}
+.rogue-fragment .subchoice {
+display: block;
+text-decoration: none;
+color: inherit;
+border: 1px solid var(--line);
+background: var(--subchoice);
+padding: 10px 11px;
+box-shadow: inset 0 0 0 1px #171717;
+}
+.rogue-fragment .subchoice:hover {
+border-color: var(--line-strong);
+background: var(--subchoice-hover);
+}
+.rogue-fragment .subchoice-title {
+font-size: 13px;
+color: var(--accent);
+margin-bottom: 4px;
+}
+.rogue-fragment .empty {
+padding: 12px;
+border: 1px dashed var(--line);
+color: var(--muted);
+}
+.rogue-fragment .token-get { color: var(--gain); font-weight: 700; }
+.rogue-fragment .token-lose { color: var(--lose); font-weight: 700; }
+@media (max-width: 720px) {
+.rogue-fragment,
+.rogue-fragment .shell { max-width: 100%; }
+.rogue-fragment .hero { margin-bottom: 14px; }
+.rogue-fragment .hero img { min-height: 160px; max-height: 240px; }
+.rogue-fragment .node { padding: 12px; border-left: 0; border-right: 0; }
+.rogue-fragment .crumbs { margin-bottom: 12px; gap: 7px; }
+.rogue-fragment .crumb { width: 7px; height: 7px; }
+.rogue-fragment .body { font-size: 15px; line-height: 1.85; margin-bottom: 14px; padding: 12px; }
+.rogue-fragment .choices { gap: 10px; }
+.rogue-fragment .choice { padding: 12px 11px 10px; }
+.rogue-fragment .choice-title { font-size: 15px; }
+.rogue-fragment .choice-desc { font-size: 13px; }
+.rogue-fragment .choice-preview { font-size: 12px; }
+.rogue-fragment .subchoice { padding: 9px 10px; }
+}
+</style>
+<div class="rogue-fragment">
+<div class="shell">
+
+<section class="node start" id="node-1">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">树海中没有白天黑夜之分，燃起篝火即是夜晚降临。七条狗正围着一团温暖的火焰跳舞，丝毫不在意身体上的残缺。“来和我们跳舞吧。”缺眼睛的狗跳出来，摇晃着尾巴说。</div>
+<div class="choices">
+<div class="choice">
+<div class="choice-title">加入它们</div>
+<div class="choice-desc">消耗<span class="token-lose">1</span>目标生命值</div>
+
+<div class="subchoices">
+<a class="subchoice" href="#node-2">
+<div class="subchoice-title">4源石锭</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺眼睛后面，绕着篝火跳完了第一圈。“谢谢你。”缺眼睛说，…</div>
+</a>
+
+
+<a class="subchoice" href="#node-27">
+<div class="subchoice-title">1生命</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺眼睛后面，绕着篝火跳完了第一圈。“谢谢你。”缺眼睛说，…</div>
+</a>
+</div>
+</div>
+
+
+<a class="choice choice-link" href="#node-28">
+<div class="choice-title">我不会跳舞</div>
+<div class="choice-desc">多一事不如少一事</div>
+<div class="choice-preview">篝火边的狗群如鬼影，你感到害怕，快速逃离了这里。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-2">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺眼睛后面，绕着篝火跳完了第一圈。“谢谢你。”缺眼睛说，从它空缺的眼睛处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-3">
+<div class="choice-title">收下</div>
+<div class="choice-desc">获得<span class="token-get">4</span>源石锭</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺嘴巴跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-7">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">“我们继续跳舞吧。”缺右前腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+<div class="choices">
+<div class="choice">
+<div class="choice-title">加入它们</div>
+<div class="choice-desc">消耗<span class="token-lose">2</span>目标生命值</div>
+
+<div class="subchoices">
+<a class="subchoice" href="#node-8">
+<div class="subchoice-title">1加工品</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺右前腿后面，绕着篝火跳完了第四圈。“谢谢你。”缺右前腿…</div>
+</a>
+
+
+<a class="subchoice" href="#node-23">
+<div class="subchoice-title">12源石锭</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺右前腿后面，绕着篝火跳完了第四圈。“谢谢你。”缺右前腿…</div>
+</a>
+
+
+<a class="subchoice" href="#node-24">
+<div class="subchoice-title">2生命</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺右前腿后面，绕着篝火跳完了第四圈。“谢谢你。”缺右前腿…</div>
+</a>
+</div>
+</div>
+
+
+<a class="choice choice-link" href="#node-19">
+<div class="choice-title">不想再跳了</div>
+<div class="choice-desc">该离开了</div>
+<div class="choice-preview">大狗跃入火中，七条狗围成圈，重新奔跑起来。你深感疲惫，离开了此地。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-8">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺右前腿后面，绕着篝火跳完了第四圈。“谢谢你。”缺右前腿说，从它空缺的右前腿处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-9">
+<div class="choice-title">收下</div>
+<div class="choice-desc">获得<span class="token-get">1件</span>随机加工品</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺左后腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-27">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺眼睛后面，绕着篝火跳完了第一圈。“谢谢你。”缺眼睛说，从它空缺的眼睛处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-3">
+<div class="choice-title">休息好了</div>
+<div class="choice-desc">回复<span class="token-get">1</span>目标生命值</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺嘴巴跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-9">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><a class="crumb" href="#node-8" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">“我们继续跳舞吧。”缺左后腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+<div class="choices">
+<div class="choice">
+<div class="choice-title">加入它们</div>
+<div class="choice-desc">消耗<span class="token-lose">2</span>目标生命值</div>
+
+<div class="subchoices">
+<a class="subchoice" href="#node-10">
+<div class="subchoice-title">1收藏品</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺左后腿后面，绕着篝火跳完了第五圈。“谢谢你。”缺左后腿…</div>
+</a>
+
+
+<a class="subchoice" href="#node-22">
+<div class="subchoice-title">5生命</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺左后腿后面，绕着篝火跳完了第五圈。“谢谢你。”缺左后腿…</div>
+</a>
+</div>
+</div>
+
+
+<a class="choice choice-link" href="#node-19">
+<div class="choice-title">不想再跳了</div>
+<div class="choice-desc">该离开了</div>
+<div class="choice-preview">大狗跃入火中，七条狗围成圈，重新奔跑起来。你深感疲惫，离开了此地。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-10">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><a class="crumb" href="#node-8" aria-label="step"></a><a class="crumb" href="#node-9" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺左后腿后面，绕着篝火跳完了第五圈。“谢谢你。”缺左后腿说，从它空缺的左后腿处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-11">
+<div class="choice-title">收下</div>
+<div class="choice-desc">获得<span class="token-get">1件</span>随机收藏品</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺右后腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-11">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><a class="crumb" href="#node-8" aria-label="step"></a><a class="crumb" href="#node-9" aria-label="step"></a><a class="crumb" href="#node-10" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">“我们继续跳舞吧。”缺右后腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+<div class="choices">
+<div class="choice">
+<div class="choice-title">加入它们</div>
+<div class="choice-desc">消耗<span class="token-lose">3</span>目标生命值</div>
+
+<div class="subchoices">
+<a class="subchoice" href="#node-12">
+<div class="subchoice-title">8希望</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺右后腿后面，绕着篝火跳完了第六圈。“谢谢你。”缺右后腿…</div>
+</a>
+
+
+<a class="subchoice" href="#node-20">
+<div class="subchoice-title">可带+1</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺右后腿后面，绕着篝火跳完了第六圈。“谢谢你。”缺右后腿…</div>
+</a>
+
+
+<a class="subchoice" href="#node-21">
+<div class="subchoice-title">3生命</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺右后腿后面，绕着篝火跳完了第六圈。“谢谢你。”缺右后腿…</div>
+</a>
+</div>
+</div>
+
+
+<a class="choice choice-link" href="#node-19">
+<div class="choice-title">不想再跳了</div>
+<div class="choice-desc">该离开了</div>
+<div class="choice-preview">大狗跃入火中，七条狗围成圈，重新奔跑起来。你深感疲惫，离开了此地。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-12">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><a class="crumb" href="#node-8" aria-label="step"></a><a class="crumb" href="#node-9" aria-label="step"></a><a class="crumb" href="#node-10" aria-label="step"></a><a class="crumb" href="#node-11" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺右后腿后面，绕着篝火跳完了第六圈。“谢谢你。”缺右后腿说，从它空缺的右后腿处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-13">
+<div class="choice-title">收下</div>
+<div class="choice-desc">获得<span class="token-get">8</span>希望</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺肚子跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-28">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">篝火边的狗群如鬼影，你感到害怕，快速逃离了这里。</div>
+<div class="choices"><div class="empty">此处没有后续。</div></div>
+</section>
+
+
+<section class="node" id="node-26">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺嘴巴后面，绕着篝火跳完了第二圈。“谢谢你。”缺嘴巴说，从它空缺的嘴巴处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-5">
+<div class="choice-title">休息好了</div>
+<div class="choice-desc">回复<span class="token-get">1</span>目标生命值</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺左前腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-13">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><a class="crumb" href="#node-8" aria-label="step"></a><a class="crumb" href="#node-9" aria-label="step"></a><a class="crumb" href="#node-10" aria-label="step"></a><a class="crumb" href="#node-11" aria-label="step"></a><a class="crumb" href="#node-12" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">“我们继续跳舞吧。”缺肚子跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-14">
+<div class="choice-title">加入它们</div>
+<div class="choice-desc">消耗<span class="token-lose">3</span>目标生命值</div>
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺肚子后面，绕着篝火跳完了第七圈。“谢谢你。”缺肚子说，…</div>
+</a>
+
+
+<a class="choice choice-link" href="#node-19">
+<div class="choice-title">不想再跳了</div>
+<div class="choice-desc">该离开了</div>
+<div class="choice-preview">大狗跃入火中，七条狗围成圈，重新奔跑起来。你深感疲惫，离开了此地。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-14">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><a class="crumb" href="#node-8" aria-label="step"></a><a class="crumb" href="#node-9" aria-label="step"></a><a class="crumb" href="#node-10" aria-label="step"></a><a class="crumb" href="#node-11" aria-label="step"></a><a class="crumb" href="#node-12" aria-label="step"></a><a class="crumb" href="#node-13" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺肚子后面，绕着篝火跳完了第七圈。“谢谢你。”缺肚子说，从它空缺的肚子处掉出了三样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-15">
+<div class="choice-title">收下</div>
+<div class="choice-desc">获得<span class="token-get">3件</span>随机收藏品</div>
+<div class="choice-preview">“我们继续跳舞吧！”七条狗全部跳起来说，它们晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-15">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-16" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">“我们继续跳舞吧！”七条狗全部跳起来说，它们晃荡着尾巴，显得十分兴奋。</div>
+<div class="choices">
+<div class="choice">
+<div class="choice-title">加入它们</div>
+<div class="choice-desc">消耗<span class="token-lose">3</span>目标生命值</div>
+
+<div class="subchoices">
+<a class="subchoice" href="#node-16">
+<div class="subchoice-title">1行动力</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在所有狗后面，绕着篝火又跳了一圈。你已精疲力竭。狗群再次安…</div>
+</a>
+
+
+<a class="subchoice" href="#node-17">
+<div class="subchoice-title">犬植浆</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在所有狗后面，绕着篝火又跳了一圈。你已精疲力竭。狗群停了下…</div>
+</a>
+</div>
+</div>
+
+
+<a class="choice choice-link" href="#node-19">
+<div class="choice-title">不想再跳了</div>
+<div class="choice-desc">该离开了</div>
+<div class="choice-preview">大狗跃入火中，七条狗围成圈，重新奔跑起来。你深感疲惫，离开了此地。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-17">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-16" aria-label="step"></a><a class="crumb" href="#node-15" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在所有狗后面，绕着篝火又跳了一圈。你已精疲力竭。狗群停了下来，围在一起，你看到从它们缺失的部位长出的阴影融为了一体，火光通过残缺的狗群重新塑造了一具完整的躯体。“谢谢你。”那如火的身影说，“你应得到报偿。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-18">
+<div class="choice-title">收下</div>
+<div class="choice-desc">获得收藏品<span class="token-lose">犬植浆</span></div>
+<div class="choice-preview">带着火光的大狗跃入篝火中，七条残缺的狗又围了起来。火舌渐小，黑暗被驱逐，你深感疲惫…</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-16">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-15" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在所有狗后面，绕着篝火又跳了一圈。你已精疲力竭。狗群再次安静下来，你听到了自己粗重的呼吸声。这次狗群交给了你一样东西。</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-15">
+<div class="choice-title">收下</div>
+<div class="choice-desc">获得<span class="token-get">1</span>行动力</div>
+<div class="choice-preview">“我们继续跳舞吧！”七条狗全部跳起来说，它们晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-18">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-16" aria-label="step"></a><a class="crumb" href="#node-15" aria-label="step"></a><a class="crumb" href="#node-17" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">带着火光的大狗跃入篝火中，七条残缺的狗又围了起来。火舌渐小，黑暗被驱逐，你深感疲惫，但夜晚已然结束。</div>
+<div class="choices"><div class="empty">此处没有后续。</div></div>
+</section>
+
+
+<section class="node" id="node-25">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺左前腿后面，绕着篝火跳完了第三圈。“谢谢你。”缺左前腿说，从它空缺的左前腿处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-7">
+<div class="choice-title">休息好了</div>
+<div class="choice-desc">回复<span class="token-get">2</span>目标生命值</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺右前腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-23">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺右前腿后面，绕着篝火跳完了第四圈。“谢谢你。”缺右前腿说，从它空缺的右前腿处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-9">
+<div class="choice-title">收下</div>
+<div class="choice-desc">获得<span class="token-get">12</span>源石锭</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺左后腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-24">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺右前腿后面，绕着篝火跳完了第四圈。“谢谢你。”缺右前腿说，从它空缺的右前腿处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-9">
+<div class="choice-title">休息好了</div>
+<div class="choice-desc">回复<span class="token-get">2</span>目标生命值</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺左后腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-22">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><a class="crumb" href="#node-8" aria-label="step"></a><a class="crumb" href="#node-9" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺左后腿后面，绕着篝火跳完了第五圈。“谢谢你。”缺左后腿说，从它空缺的左后腿处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-11">
+<div class="choice-title">收下</div>
+<div class="choice-desc">获得<span class="token-get">5</span>目标生命值</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺右后腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-20">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><a class="crumb" href="#node-8" aria-label="step"></a><a class="crumb" href="#node-9" aria-label="step"></a><a class="crumb" href="#node-10" aria-label="step"></a><a class="crumb" href="#node-11" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺右后腿后面，绕着篝火跳完了第六圈。“谢谢你。”缺右后腿说，从它空缺的右后腿处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-13">
+<div class="choice-title">收下</div>
+<div class="choice-desc">可携带干员<span class="token-get">+1</span></div>
+<div class="choice-preview">“我们继续跳舞吧。”缺肚子跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-21">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><a class="crumb" href="#node-6" aria-label="step"></a><a class="crumb" href="#node-7" aria-label="step"></a><a class="crumb" href="#node-8" aria-label="step"></a><a class="crumb" href="#node-9" aria-label="step"></a><a class="crumb" href="#node-10" aria-label="step"></a><a class="crumb" href="#node-11" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺右后腿后面，绕着篝火跳完了第六圈。“谢谢你。”缺右后腿说，从它空缺的右后腿处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-13">
+<div class="choice-title">休息好了</div>
+<div class="choice-desc">回复<span class="token-get">3</span>目标生命值</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺肚子跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-3">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">“我们继续跳舞吧。”缺嘴巴跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+<div class="choices">
+<div class="choice">
+<div class="choice-title">加入它们</div>
+<div class="choice-desc">消耗<span class="token-lose">1</span>目标生命值</div>
+
+<div class="subchoices">
+<a class="subchoice" href="#node-4">
+<div class="subchoice-title">2希望</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺嘴巴后面，绕着篝火跳完了第二圈。“谢谢你。”缺嘴巴说，…</div>
+</a>
+
+
+<a class="subchoice" href="#node-26">
+<div class="subchoice-title">1生命</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺嘴巴后面，绕着篝火跳完了第二圈。“谢谢你。”缺嘴巴说，…</div>
+</a>
+</div>
+</div>
+
+
+<a class="choice choice-link" href="#node-19">
+<div class="choice-title">不想再跳了</div>
+<div class="choice-desc">该离开了</div>
+<div class="choice-preview">大狗跃入火中，七条狗围成圈，重新奔跑起来。你深感疲惫，离开了此地。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-4">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺嘴巴后面，绕着篝火跳完了第二圈。“谢谢你。”缺嘴巴说，从它空缺的嘴巴处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-5">
+<div class="choice-title">收下</div>
+<div class="choice-desc">获得<span class="token-get">2</span>希望</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺左前腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-19">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-16" aria-label="step"></a><a class="crumb" href="#node-15" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">大狗跃入火中，七条狗围成圈，重新奔跑起来。你深感疲惫，离开了此地。</div>
+<div class="choices"><div class="empty">此处没有后续。</div></div>
+</section>
+
+
+<section class="node" id="node-5">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">“我们继续跳舞吧。”缺左前腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+<div class="choices">
+<div class="choice">
+<div class="choice-title">加入它们</div>
+<div class="choice-desc">消耗<span class="token-lose">2</span>目标生命值</div>
+
+<div class="subchoices">
+<a class="subchoice" href="#node-6">
+<div class="subchoice-title">1自然物</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺左前腿后面，绕着篝火跳完了第三圈。“谢谢你。”缺左前腿…</div>
+</a>
+
+
+<a class="subchoice" href="#node-25">
+<div class="subchoice-title">2生命</div>
+
+<div class="choice-preview">你加入了狗群的舞蹈，跟随在缺左前腿后面，绕着篝火跳完了第三圈。“谢谢你。”缺左前腿…</div>
+</a>
+</div>
+</div>
+
+
+<a class="choice choice-link" href="#node-19">
+<div class="choice-title">不想再跳了</div>
+<div class="choice-desc">该离开了</div>
+<div class="choice-preview">大狗跃入火中，七条狗围成圈，重新奔跑起来。你深感疲惫，离开了此地。</div>
+</a>
+</div>
+</section>
+
+
+<section class="node" id="node-6">
+<div class="hero"><img src="https://patchwiki.biligame.com/images/arknights/4/46/nc05zy3wa0qde3iwo3u5uv1m8llf8yp.png" alt="被歌颂的影子"></div>
+<div class="crumbs"><a class="crumb" href="#node-1" aria-label="step"></a><a class="crumb" href="#node-2" aria-label="step"></a><a class="crumb" href="#node-3" aria-label="step"></a><a class="crumb" href="#node-4" aria-label="step"></a><a class="crumb" href="#node-5" aria-label="step"></a><span class="crumb active" aria-hidden="true"></span></div>
+<div class="body">你加入了狗群的舞蹈，跟随在缺左前腿后面，绕着篝火跳完了第三圈。“谢谢你。”缺左前腿说，从它空缺的左前腿处掉出了一样东西，“这是送给你的。”</div>
+<div class="choices">
+<a class="choice choice-link" href="#node-7">
+<div class="choice-title">收下</div>
+<div class="choice-desc">获得<span class="token-get">1件</span>随机自然物</div>
+<div class="choice-preview">“我们继续跳舞吧。”缺右前腿跳出来说，它晃荡着尾巴，显得十分兴奋。</div>
+</a>
+</div>
+</section>
+
+</div>
+</div>
+</p><p><br />
+</p>
