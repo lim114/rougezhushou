@@ -131,7 +131,8 @@ class ExpansionUpdatePanel(QWidget):
         from .current_agency import locate as agency_locate
         from .current_portal import locate as portal_locate
         from .current_scout import locate as scout_locate
-        available=scout_locate(result['row']['category'],key)is not None or portal_locate(result['row']['category'],key)is not None or agency_locate(result['row']['category'],key)is not None or exit_locate(result['row']['category'],key)is not None or memory_locate(result['row']['category'],key)is not None or dog_locate(result['row']['category'],key)is not None or cave_locate(result['row']['category'],key)is not None or vine_locate(result['row']['category'],key)is not None or(result['row']['category']=='scenes'and event_for_scene(key)is not None)or locate(result['row']['category'],key)is not None or ritual_locate(result['row']['category'],key)is not None or sand_locate(result['row']['category'],key)is not None or encounter_locate(result['row']['category'],key)is not None or lake_locate(result['row']['category'],key)is not None or resource_locate(result['row']['category'],key)is not None or shop_locate(result['row']['category'],key)is not None or rest_travel_locate(result['row']['category'],key)is not None
+        from .current_peace import locate as peace_locate
+        available=peace_locate(result['row']['category'],key)is not None or scout_locate(result['row']['category'],key)is not None or portal_locate(result['row']['category'],key)is not None or agency_locate(result['row']['category'],key)is not None or exit_locate(result['row']['category'],key)is not None or memory_locate(result['row']['category'],key)is not None or dog_locate(result['row']['category'],key)is not None or cave_locate(result['row']['category'],key)is not None or vine_locate(result['row']['category'],key)is not None or(result['row']['category']=='scenes'and event_for_scene(key)is not None)or locate(result['row']['category'],key)is not None or ritual_locate(result['row']['category'],key)is not None or sand_locate(result['row']['category'],key)is not None or encounter_locate(result['row']['category'],key)is not None or lake_locate(result['row']['category'],key)is not None or resource_locate(result['row']['category'],key)is not None or shop_locate(result['row']['category'],key)is not None or rest_travel_locate(result['row']['category'],key)is not None
         self.flow_button.setVisible(available);self.flow_button.setEnabled(available)
         self.flow_button.setText('查看本事件的条件、选项和相关作战')
         child=getattr(self,'flow_dialog',None)
@@ -204,6 +205,11 @@ class ExpansionUpdatePanel(QWidget):
         if self.result is None or self.result['row']['category']not in('scenes','choices','relics'):return False
         category=self.result['row']['category'];fresh=model.detail(category,self.result['row']['id'])
         if fresh!=self.result:self._unavailable();return False
+        from .current_peace import locate as peace_locate
+        target=peace_locate(category,fresh['row']['id'])
+        if target is not None:
+            from .current_peace_view import CurrentPeaceDialog
+            self._close_flow();self.flow_dialog=CurrentPeaceDialog(target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
         from .current_scout import locate as scout_locate
         target=scout_locate(category,fresh['row']['id'])
         if target is not None:
