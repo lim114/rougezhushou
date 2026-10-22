@@ -50,6 +50,9 @@ def matches_current(row,reference):
 
 def binding_for(record):
     if type(record)is not dict or type(record.get('id'))is not str or not record['id'].startswith('community_group_'):return None
+    if record['id']=='community_group_025':
+        from .current_reconstruction import catalogue_binding
+        return catalogue_binding(record)
     if record['id']=='community_group_019':
         from .current_peace import catalogue_binding
         return catalogue_binding(record)

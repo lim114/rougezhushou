@@ -1,0 +1,26 @@
+{
+  "section": 344,
+  "archive": "verification/sections/344-format-repair/original-git-diff-failures.zip",
+  "raw_logs_preserved": [
+    {
+      "file": "verification/sections/344-index-validation/git-diff-check.txt",
+      "sha256": "4d76f21730b06a2f4939af678f7e879c4f38c46e8790d35631e50e3994b7a415",
+      "bytes": 33406,
+      "actual_diff_check_exit": null,
+      "exact_nested_exit_unrecorded": true,
+      "finalizer_actual_exit": 1,
+      "diff_check_failed": true
+    },
+    {
+      "file": "verification/sections/344-index-validation-attempt2/git-diff-check.txt",
+      "sha256": "0347b5cdc7ffdfd6469ef3bd19c87b66717d83977de71a8b3536ced3f03e7088",
+      "bytes": 35034,
+      "actual_diff_check_exit": null,
+      "exact_nested_exit_unrecorded": true,
+      "finalizer_actual_exit": 1,
+      "diff_check_failed": true
+    }
+  ],
+  "reason": "Raw whitespace diagnostics reproduce invalid CR endings; preserve exact original bytes in ZIP and stage clean explicit pointers. Product and final native3 source unchanged.",
+  "second_gate_failure": "Original failure text itself retained CR diagnostics; archived rather than hiding or normalizing original evidence."
+}

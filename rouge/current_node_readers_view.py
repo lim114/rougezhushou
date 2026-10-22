@@ -6,7 +6,10 @@ def make_dialog(binding,parent=None,*,historical=False):
     b=model.recheck(binding)
     if b is None:return None
     kind=b['reader'];event=b['current_event_id']
-    if kind=='peace343':
+    if kind=='reconstruction344':
+        from .current_reconstruction_view import CurrentReconstructionDialog
+        dialog=CurrentReconstructionDialog(parent=parent)
+    elif kind=='peace343':
         from .current_peace_view import CurrentPeaceDialog
         dialog=CurrentPeaceDialog(parent=parent)
     elif kind=='scout342':
