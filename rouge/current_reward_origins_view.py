@@ -70,6 +70,10 @@ class CurrentRewardOriginsPanel(QWidget):
         elif row['reader'] == 'vine':
             from .current_vine_events_view import CurrentVineEventsDialog
             self.event_dialog = CurrentVineEventsDialog(row['event_id'], row['scene_id'], row['choice_id'], self)
+        elif row['reader'] == 'critical349':
+            from .current_critical_reward_origins_view import make_event_dialog
+            self.event_dialog = make_event_dialog(row, self)
+            if self.event_dialog is None: self._clear(); return False
         elif row['reader'] == 'named347':
             from .current_named_reward_origins_view import make_event_dialog
             self.event_dialog = make_event_dialog(row, self)

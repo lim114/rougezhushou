@@ -69,6 +69,8 @@ def packet():
 
 def reference(category, item_id):
     if type(category) is not str or type(item_id) is not str or category not in ('relics', 'scrap'): return None
+    from . import current_critical_reward_origins as critical
+    if item_id in critical.ITEM_IDS: return critical.reference(category, item_id)
     from . import current_named_reward_origins as named
     if item_id in named.ITEM_IDS: return named.reference(category, item_id)
     p = packet()
@@ -84,6 +86,9 @@ def reference(category, item_id):
 
 
 def player_text(result, key=None):
+    if result.get('kind') == 'critical_acquisition_349':
+        from .current_critical_reward_origins import player_text as critical_text
+        return critical_text(result, key)
     if result.get('kind') == 'named_acquisition_347':
         from .current_named_reward_origins import player_text as named_text
         return named_text(result, key)

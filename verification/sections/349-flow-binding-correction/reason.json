@@ -1,0 +1,18 @@
+{
+  "section": 349,
+  "original_necessary_exit": 1,
+  "methods_ran": 49,
+  "passed_methods": 47,
+  "failures": 2,
+  "actual_cause": "New entry flow gate compared original choice_ro6_final1_8 with existing339 document-choice key. Existing reader correctly selects one documented option with variant_ids exactly [choice_ro6_final1_8]. New panel incorrectly rejected that exact option.",
+  "fix": "Store and revalidate both accurate document target and original variant ID/full record; check each according to actual representation. Preserve original339 source and gate against forged/ambiguous targets, not compare unlike IDs.",
+  "source_record": "rouge/data/current-exit.json",
+  "source_target": [
+    "scene_ro6_final1_enter",
+    "document-choice:4c2ee355995158ab5a845f7c09661a589e6c234607a76b337bd5455ec3ca5a1b"
+  ],
+  "source_choice_variants": [
+    "choice_ro6_final1_8"
+  ],
+  "scope": "One source representation bug surfaced in two new UI tests. No change to event mechanics, pointer or declared conditions; old39 tests passed."
+}
