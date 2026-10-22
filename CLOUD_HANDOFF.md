@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/349.json)。
 
-已完成至349，后续350；本批状态 `P3_SECTION349_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量350。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至349，后续350；本批状态 `P3_SECTION349_PUBLISHED`。推进终点：未指定数字终点。下次定期全量350。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -623,5 +623,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 复用固定bee3国服原件及316条件、321完整文献、339险路尽头的冻结来源，另查当前PRTS结局文献印证三项取得选项；资料不是当前服务器执行证明。原描述只写获得收藏品，明确itemId作为对应依据；独立件数仍未知，不补1件。完整出现前置、服务器资格、真实费用扣除/领取/生效、半生命上限取整、其余取得来源及全部掉落池仍待核对。手动条件仅本页对照，不写本局，也不把原文窗口自己的对照值自动视为同一状态。不新增机制、计算、地图绑定、路线建议或概率；P3/P2/P1未完成，识别最后。
 
-<!-- section349-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第349节功能提交9726f3787dd459cb9c2676215dd6808343d471f4已普通推送并核对真实远端及516份相关公开文件字节，证明verification/sections/349-publication.json。本次仅保存发布元数据，不增加功能节数；后续350尚未启动，下一定期全量350。P3/P2/P1未完成，三项取得入口不冒充完整获取池、服务器资格或实际领取；私人状态及实机游戏/聊天未纳入云端。
 <!-- section349-handoff:end -->
