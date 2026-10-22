@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/339.json)。
 
-已完成至339，后续340；本批状态 `P3_SECTION339_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量350。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至339，后续340；本批状态 `P3_SECTION339_PUBLISHED`。推进终点：未指定数字终点。下次定期全量350。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -503,5 +503,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 复用321实际下载的BWIKI352356完整HTTP中的险路尽头标题段，保留调查中及完整表；本轮独立复读BWIKI和PRTS主题页，常规等级16例外另核对bee3完整difficulty原记录，不冒称新下载HTML或核对当前服务器。表中缺失的选项三不补造。八原选项完整保留，提示生命上限的字段不当额外数值奖励；同文案原件不凭ID/难度消歧，两份无加工品原件只按明确nextSceneId关联后续、前置仍未知。实际原菜单/变体、服务器资格、招募费用/库存/随机结果与培养、完整加工品池、希望结算执行阶段/上限修正、谒日之祈发放件数及余径/探险家/首领脚本仍待依据。等量希望是固定规则对照而非实际资源结算；文献流程不执行换层、招募或选择。仅局外查阅，不操作游戏、不发送聊天、不改本局/地图/数值或私人配置，不提供路线建议/排序/概率。P3/P2/P1未完成，识别最后。
 
-<!-- section339-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第339节功能提交020dd83789e5536a6a83c490f06837333c8eac08已普通推送并核对真实远端及434份相关公开文件字节，证明verification/sections/339-publication.json。本次仅保存发布元数据，不增加功能节数；后续340尚未启动，下一定期全量350。P3/P2/P1未完成，完整事件表不冒充完整服务器资格或实际结算；私人状态及实机游戏/聊天未纳入云端。
 <!-- section339-handoff:end -->
