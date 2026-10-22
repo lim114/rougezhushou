@@ -42,6 +42,11 @@ def stage_reference(stage_id):
         observed=symbols.mapping_for(stage_id,ref['current'])
         if observed is None or mapping is not None:return None
         mapping=observed['mapping'];points=mapping['points'];identity=(identity,observed['source_identity'])
+    from . import boss_map_markers as boss_symbols
+    if stage_id in boss_symbols.STAGES:
+        observed=boss_symbols.mapping_for(stage_id,ref['current'])
+        if observed is None or mapping is not None:return None
+        mapping=observed['mapping'];points=mapping['points'];identity=(identity,observed['source_identity'])
     if mapping:
         envelope={k:level[k]for k in ref['data']['geometry_keys']};digest=sha256(json.dumps(envelope,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
         if mapping['current_level_key']!=key or mapping['image']!=image or mapping['full_selected_geometry_sha256']!=digest:return None
@@ -53,7 +58,7 @@ def cell_reference(result,row,col):
 def summary_text(result):
     if (result.get('mapping_evidence')or{}).get('annotation_kind')=='visible_map_symbol':
         entries=sum(p['tile_key']=='tile_start'for p in result['points']);targets=sum(p['tile_key']=='tile_end'for p in result['points'])
-        return chr(10).join([result['stage_name'],'','【怎样查看】','从列表选入口或保护目标，或在左侧格子图点选；右侧会在固定原图上标出相应的可见标志。',f'本图{result["rows"]}行、{result["cols"]}列，已对照{entries}个入口标志与{targets}个保护目标标志。','','【标注范围】','这些位置直接取自本图可见的红色入口和蓝色保护目标标志；不是从旧图、同名关卡或附近格子外推。','标记是可见标志的近似中心，精确误差尚未测量；它不表示敌人实际落脚点、出生偏移或随机范围。','其余地块没有新增位置，不插值、不反向点击推算，也不连成实际路线。','两份同名配置各自核对完整地形、相机字段和固定原图；不能只凭同名或同图套用。','本页只看固定地图资料，不读取战斗、不操作游戏，也不代表本局一定进入这份配置。'])
+        return chr(10).join([result['stage_name'],'','【怎样查看】','从列表选入口或保护目标，或在左侧格子图点选；右侧会在固定原图上标出相应的可见标志。',f'本图{result["rows"]}行、{result["cols"]}列，已对照{entries}个入口标志与{targets}个保护目标标志。','','【标注范围】','这些位置直接取自本图可见的红色入口和蓝色保护目标标志；不是从旧图、同名关卡或附近格子外推。','标记是可见标志的近似中心，精确误差尚未测量；它不表示敌人实际落脚点、出生偏移或随机范围。','其余地块没有新增位置，不插值、不反向点击推算，也不连成实际路线。','每份配置各自核对完整地形、相机字段和固定原图；不能只凭同名或同图套用。','本页只看固定地图资料，不读取战斗、不操作游戏，也不代表本局一定进入这份配置。'])
     return '\n'.join([result['stage_name'],'','【怎样查看】','在左侧方格图点选格子，或从已核对格子列表中选择。右侧显示这场作战的固定原图。',f"本图有{result['rows']}行、{result['cols']}列；目前有{len(result['points'])}个格子中心能与原图对应。",'只有核对过的近似中心会画出标记；其它格子不会按相邻位置猜测。',('这些中心只在新旧完整地形导出、相机字段和原图字节均一致时复用；没有新增测量，也没有证明完整地图或战斗中的位置。'if result['points']else'本图当前地形和原图可读，但没有满足条件的已核对中心；右侧不画位置。'),'地形只是固定资料，不表示本局一定出现、能部署、敌人从这里出场或经过。','高台表面、未读格、实际出生偏移与地图上的整段路径仍待核验；右侧图片不能点击反推其它格子。'])
 def cell_text(result,cell):
     if cell is None:return summary_text(result)
