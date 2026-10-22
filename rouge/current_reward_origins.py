@@ -69,6 +69,8 @@ def packet():
 
 def reference(category, item_id):
     if type(category) is not str or type(item_id) is not str or category not in ('relics', 'scrap'): return None
+    from . import current_named_reward_origins as named
+    if item_id in named.ITEM_IDS: return named.reference(category, item_id)
     p = packet()
     if p is None: return None
     rows = [deepcopy(r) for r in p['data']['rows'] if r['item_id'] == item_id]
@@ -82,6 +84,9 @@ def reference(category, item_id):
 
 
 def player_text(result, key=None):
+    if result.get('kind') == 'named_acquisition_347':
+        from .current_named_reward_origins import player_text as named_text
+        return named_text(result, key)
     lines = ['【取得方式资料】' + result['item']['name'], NOTICE, '',
              '已核对 ' + str(len(result['rows'])) + ' 条选项；请逐条查看，互斥分支不会合并领取。']
     row = next((r for r in result['rows'] if r['key'] == key), None)

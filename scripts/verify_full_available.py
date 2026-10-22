@@ -183,6 +183,7 @@ ADDITIONAL_MODULES += ('tests.test_current_peace_343', 'tests.test_current_peace
 ADDITIONAL_MODULES += ('tests.test_current_reconstruction_344', 'tests.test_current_reconstruction_view_344')
 ADDITIONAL_MODULES += ('tests.test_current_resting_345', 'tests.test_current_resting_view_345')
 ADDITIONAL_MODULES += ('tests.test_current_shadow_346', 'tests.test_current_shadow_view_346')
+ADDITIONAL_MODULES += ('tests.test_current_named_reward_origins_347', 'tests.test_current_named_reward_origins_view_347')
 
 def source_hashes():
     files = [*ROOT.glob('rouge/**/*.py'), *ROOT.glob('rouge/data/**/*.json'),

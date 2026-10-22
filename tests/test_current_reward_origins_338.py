@@ -32,7 +32,9 @@ class CurrentRewardOrigins338Tests(unittest.TestCase):
         rows = model.packet()['data']['rows']; choices = {r['choice_id'] for r in rows}
         self.assertNotIn('choice_ro6_normal5_4', choices)
         self.assertNotIn('choice_ro6_task2_3', choices); self.assertNotIn('choice_ro6_task2_4', choices)
-        self.assertIsNone(model.reference('relics', 'rogue_6_relic_cargo_13'))
+        key_rows = model.reference('relics', 'rogue_6_relic_cargo_13')['rows']
+        self.assertEqual([r['choice_id'] for r in key_rows], ['choice_ro6_surprise_1'])
+        self.assertTrue(all(not r['choice_id'].startswith('choice_ro6_end3_') for r in key_rows))
         self.assertEqual({r['event_title'] for r in rows}, {'愈创之心', '独活', '沉寂之屋'})
 
     def test_three_memory_costs_are_separate_and_not_added(self):

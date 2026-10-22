@@ -9,7 +9,7 @@ class CurrentRewardOriginsPanel(QWidget):
     def __init__(self, category, item_id, parent=None):
         super().__init__(parent); self.category = category; self.item_id = item_id; self.result = None; self.event_dialog = None
         layout = QVBoxLayout(self); self.notice = QLabel(model.NOTICE); self.notice.setWordWrap(True); layout.addWidget(self.notice)
-        self.entries = QListWidget(); self.entries.setAccessibleName('物品已核对的取得选项'); layout.addWidget(self.entries)
+        self.entries = QListWidget(); self.entries.setAccessibleName('物品已核对的取得选项'); self.entries.setMaximumHeight(120); layout.addWidget(self.entries)
         self.open_button = QPushButton('查看这条选项的条件与后续'); layout.addWidget(self.open_button)
         self.tabs = QTabWidget(); self.player = QPlainTextEdit(); self.technical = QPlainTextEdit()
         for reader, label in ((self.player, '取得方式'), (self.technical, '来源原件')):
@@ -70,6 +70,10 @@ class CurrentRewardOriginsPanel(QWidget):
         elif row['reader'] == 'vine':
             from .current_vine_events_view import CurrentVineEventsDialog
             self.event_dialog = CurrentVineEventsDialog(row['event_id'], row['scene_id'], row['choice_id'], self)
+        elif row['reader'] == 'named347':
+            from .current_named_reward_origins_view import make_event_dialog
+            self.event_dialog = make_event_dialog(row, self)
+            if self.event_dialog is None: self._clear(); return False
         else: return False
         if self.event_dialog.panel.result is None: self._close_event(); self._clear(); return False
         self.event_dialog.show(); return True

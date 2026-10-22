@@ -57,6 +57,6 @@ class CurrentRewardOriginsView338Tests(unittest.TestCase):
     def test_parent_loss_and_actual_dialog_close_clear_nested_children(self):
         p = self.version_panel(2); p.open_reward_origins(); d = p.origins_dialog; d.panel.entries.setCurrentRow(0); d.panel.open_event(); child = d.panel.event_dialog; p._unavailable(); self.assertFalse(d.isVisible()); self.assertFalse(child.isVisible())
         d = self.dialog(1); d.panel.entries.setCurrentRow(0); d.panel.open_event(); child = d.panel.event_dialog; d.close(); self.assertFalse(child.isVisible())
-    def test_consumer_item_has_no_acquisition_button(self):
-        p = self.version_panel(); key = 'rogue_6_relic_cargo_13'; p.entries.setCurrentRow(next(i for i in range(p.entries.count()) if p.entries.item(i).data(Qt.ItemDataRole.UserRole) == key)); self.assertTrue(p.origins_button.isHidden()); self.assertFalse(p.open_reward_origins())
+    def test_named_key_has_one_actual_get_not_its_three_delivery_options(self):
+        p = self.version_panel(); key = 'rogue_6_relic_cargo_13'; p.entries.setCurrentRow(next(i for i in range(p.entries.count()) if p.entries.item(i).data(Qt.ItemDataRole.UserRole) == key)); self.assertFalse(p.origins_button.isHidden()); self.assertTrue(p.open_reward_origins()); rows = p.origins_dialog.panel.result['rows']; self.assertEqual(len(rows), 1); self.assertEqual(rows[0]['choice_id'], 'choice_ro6_surprise_1'); self.assertNotIn('交出', rows[0]['choice']['description'])
 if __name__ == '__main__': unittest.main()
