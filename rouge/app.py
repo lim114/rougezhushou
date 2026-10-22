@@ -2255,6 +2255,7 @@ class MainWindow(QMainWindow):
         self.closing=True
         self.node_catalog._close_current_event_reference()
         self.expansion_update._close_origins()
+        self.expansion_update._close_flow()
         self.timer.stop()
         self.cancel_event.set()
         self.capture.close()

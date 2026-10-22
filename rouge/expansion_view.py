@@ -127,7 +127,8 @@ class ExpansionUpdatePanel(QWidget):
         from .current_cave import locate as cave_locate
         from .current_vine_events import locate as vine_locate
         from .current_rest_travel import locate as rest_travel_locate
-        available=memory_locate(result['row']['category'],key)is not None or dog_locate(result['row']['category'],key)is not None or cave_locate(result['row']['category'],key)is not None or vine_locate(result['row']['category'],key)is not None or(result['row']['category']=='scenes'and event_for_scene(key)is not None)or locate(result['row']['category'],key)is not None or ritual_locate(result['row']['category'],key)is not None or sand_locate(result['row']['category'],key)is not None or encounter_locate(result['row']['category'],key)is not None or lake_locate(result['row']['category'],key)is not None or resource_locate(result['row']['category'],key)is not None or shop_locate(result['row']['category'],key)is not None or rest_travel_locate(result['row']['category'],key)is not None
+        from .current_exit import locate as exit_locate
+        available=exit_locate(result['row']['category'],key)is not None or memory_locate(result['row']['category'],key)is not None or dog_locate(result['row']['category'],key)is not None or cave_locate(result['row']['category'],key)is not None or vine_locate(result['row']['category'],key)is not None or(result['row']['category']=='scenes'and event_for_scene(key)is not None)or locate(result['row']['category'],key)is not None or ritual_locate(result['row']['category'],key)is not None or sand_locate(result['row']['category'],key)is not None or encounter_locate(result['row']['category'],key)is not None or lake_locate(result['row']['category'],key)is not None or resource_locate(result['row']['category'],key)is not None or shop_locate(result['row']['category'],key)is not None or rest_travel_locate(result['row']['category'],key)is not None
         self.flow_button.setVisible(available);self.flow_button.setEnabled(available)
         self.flow_button.setText('查看本事件的条件、选项和相关作战')
         child=getattr(self,'flow_dialog',None)
@@ -200,6 +201,11 @@ class ExpansionUpdatePanel(QWidget):
         if self.result is None or self.result['row']['category']not in('scenes','choices','relics'):return False
         category=self.result['row']['category'];fresh=model.detail(category,self.result['row']['id'])
         if fresh!=self.result:self._unavailable();return False
+        from .current_exit import locate as exit_locate
+        target=exit_locate(category,fresh['row']['id'])
+        if target is not None:
+            from .current_exit_view import CurrentExitDialog
+            self._close_flow();self.flow_dialog=CurrentExitDialog(target,self);self.flow_dialog.show();return True
         from .current_memory_tree import locate as memory_locate
         target=memory_locate(category,fresh['row']['id'])
         if target is not None:

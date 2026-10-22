@@ -6,7 +6,10 @@ def make_dialog(binding,parent=None,*,historical=False):
     b=model.recheck(binding)
     if b is None:return None
     kind=b['reader'];event=b['current_event_id']
-    if kind=='memory336':
+    if kind=='exit339':
+        from .current_exit_view import CurrentExitDialog
+        dialog=CurrentExitDialog(parent=parent)
+    elif kind=='memory336':
         from .current_memory_tree_view import CurrentMemoryTreeDialog
         dialog=CurrentMemoryTreeDialog(parent=parent)
     elif kind=='dog335':
