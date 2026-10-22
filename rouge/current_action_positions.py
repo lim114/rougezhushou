@@ -85,13 +85,16 @@ def entry_label(entry):
 
 
 def player_text(result, entry=None):
+    symbol=bool(entry and entry.get('center')and entry['center'].get('kind')=='visible_map_symbol')
     lines = [result['label'], '', '【位置参考】',
              '从列表选择一处，左侧标出对应格子；右侧只有已经核对过的近似中心才画标记。',
              '出生和移动位置是关卡资料中的名义格，不是实际脚点；偏移、随机范围和敌人寻路没有推算。']
+    if(result['grid'].get('mapping_evidence')or{}).get('annotation_kind')=='visible_map_symbol':
+        lines[3]='从列表选择一处，左侧标出资料中的格子；右侧仅在该格有已对照的入口或保护目标标志时显示近似标记。'
     if entry:
-        lines += [entry_label(entry), '原图近似中心：' + ('有已核对参考。' if entry['center'] else '尚未核对，不猜位置。')]
+        lines += [entry_label(entry), ('原图可见标志位置：'+entry['center']['label']+'，近似中心的精确误差尚未测量。'if symbol else'原图近似中心：' + ('有已核对参考。' if entry['center'] else '尚未核对，不猜位置。'))]
         if any(type(v) in (int, float) and v != 0 for d in (entry['offset'], entry['random_range']) if isinstance(d, dict) for v in d.values()):
-            lines += ['本条包含位置偏移参数；这里仍只标名义格中心，不表示偏移后的出生或到达点。']
+            lines += ['本条包含位置偏移参数；图中只标固定标志，不表示偏移后的出生或到达点。'if symbol else'本条包含位置偏移参数；这里仍只标名义格中心，不表示偏移后的出生或到达点。']
     if not result['entries']:
         lines += ['本条尚无能够绑定的位置。']
     lines += ['', '【条件和等待】', *result['notes'],

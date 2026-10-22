@@ -70,7 +70,7 @@ class CurrentMapPositionPanel(QWidget):
         if raw is None:self.clear_reference();return False
         keep=self.result is not None and self.result['source_identity']==fresh['source_identity']and self.result['stage_id']==fresh['stage_id'];selected=self.selected if keep else None;self.result=fresh;self.image_raw=raw
         blocked=self.combo.blockSignals(True);self.combo.clear();self.combo.addItem('选择已核对格子，或在左侧点选其它格子',None)
-        for p in fresh['points']:self.combo.addItem(f"第{p['row']+1}行 · 第{p['col']+1}列",str(p['row'])+':'+str(p['col']))
+        for p in fresh['points']:self.combo.addItem((p['label']+' · 'if p.get('kind')=='visible_map_symbol'else'')+f"第{p['row']+1}行 · 第{p['col']+1}列",str(p['row'])+':'+str(p['col']))
         self.combo.setEnabled(bool(fresh['points']));self.combo.blockSignals(blocked)
         if selected is None:self.selected=None;self._render(preserve=keep)
         else:self.select_cell(*selected,preserve=keep)
