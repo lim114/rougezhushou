@@ -25,6 +25,11 @@ class ExpansionUpdatePanel(QWidget):
         if full_catalog:self.scope.setCurrentIndex(self.scope.findData(False));self.scope.hide()
         self.search=QLineEdit();self.search.setPlaceholderText('按中文名称搜索；同名资料分别保留')
         self.refresh_button=QPushButton('重新核对资料');bar.addWidget(self.category);bar.addWidget(self.scope);bar.addWidget(self.search,1);bar.addWidget(self.refresh_button);layout.addLayout(bar)
+        self.tickets_button=QPushButton('招募券：适用职业、留存与取出')
+        self.tickets_button.setAccessibleName('招募券用途与留存规则')
+        layout.addWidget(self.tickets_button)
+        self.tickets_button.setVisible(full_catalog and categories is not None and 'relics' in categories)
+        self.tickets_button.clicked.connect(self.open_recruit_tickets)
         self.item_kind=QComboBox();self.item_kind.setAccessibleName('物品与效果类型')
         for label,value in [('收藏品','RELIC'),('战术道具','ACTIVE_TOOL'),('培育与继承','LEGACY'),('地图标志','NODE_BUOY'),('其它特殊效果','FEATURE'),('分队效果说明','BAND'),('总览（含以上各类）',None)]:self.item_kind.addItem(label,value)
         if not full_catalog:self.item_kind.setCurrentIndex(self.item_kind.findData(None))
@@ -66,6 +71,7 @@ class ExpansionUpdatePanel(QWidget):
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
     def _unavailable(self):
+        self._close_tickets();self.tickets_button.setEnabled(False)
         dialog=getattr(self,'ending_dialog',None)
         if dialog is not None:dialog.close()
         self.source_identity=None
@@ -108,7 +114,23 @@ class ExpansionUpdatePanel(QWidget):
 
     def refresh_reference(self):
         # After source loss, no old identity survives; recovery restores a list, not a prior selection.
-        return self._populate(preserve=True)
+        ready=self._populate(preserve=True)
+        self.tickets_button.setEnabled(ready)
+        child=getattr(self,'tickets_dialog',None)
+        if ready and child is not None and child.isVisible():child.panel.refresh_reference()
+        return ready
+
+    def _close_tickets(self):
+        child=getattr(self,'tickets_dialog',None)
+        if child is not None:child.close()
+
+    def open_recruit_tickets(self):
+        if not self.full_catalog or 'relics' not in self.allowed_categories:return False
+        if model.packet() is None:self._unavailable();return False
+        from .current_recruit_tickets_view import CurrentRecruitTicketsDialog
+        self._close_tickets();self.tickets_dialog=CurrentRecruitTicketsDialog(self)
+        if self.tickets_dialog.panel.result is None:self._close_tickets();return False
+        self.tickets_dialog.show();return True
 
     def _selected(self,item,*_,preserve=False):
         if item is None:self._clear_detail();return
@@ -352,6 +374,7 @@ class ExpansionUpdatePanel(QWidget):
         self.origins_dialog.show();return True
 
     def close_children(self):
+        self._close_tickets()
         self._close_origins()
         self._close_flow();self._close_exchange();self._close_event_battles()
         for name in ('ending_dialog','current_battle_dialog'):
