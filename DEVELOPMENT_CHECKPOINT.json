@@ -74,7 +74,7 @@
     "latest_product_instruction_receipt": "verification/sections/352-preparation/scope.json"
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 362,
+  "completed_sections": 363,
   "sections": [
     {
       "number": 1,
@@ -2235,12 +2235,18 @@
       "completion_ref": "p3-section-362",
       "topic": "战斗奖励中的基础与满科技经验分别展示",
       "verification": "verification/sections/362.json"
+    },
+    {
+      "number": 363,
+      "completion_ref": "p3-section-363",
+      "topic": "分队初始物品与印记招募券的准确取得来源",
+      "verification": "verification/sections/363.json"
     }
   ],
-  "next_section": 363,
-  "next_action": "第362节 + 战斗奖励中的基础与满科技经验分别展示，已本机必要验收并普通推送核对。后续363接续P3当前事件条件、完整奖励池与固定地图实际剩余缺口，未启动；P3/P2/P1均未完成，识别优化最后，下次定期全量365。",
+  "next_section": 364,
+  "next_action": "第363节 + 分队初始物品与印记招募券的准确取得来源已本机必要验收；普通推送核对后364接续P3实际剩余缺口，未启动。下次365。",
   "full_validation_due": false,
-  "windows_native_validation": "本机30项必要测试及49项新原生窗口唯一检查通过；额外执行适配后的318原生29项通过，原参数/源损坏等原场景未删。旧318独立模型/reader测试原语义保留，仅当前生产入口补充362实例与10/13两个分项；旧native当前追猎断言改为两个分项0且实际科技未知，新增资料源全部绑定，技术JSON按标准序列化结构比较不忽略字段。新native准确普通/紧急/源流、两晶矿/入口边界、范围/隐藏层/余径、旧318/新362/当前battle三种真实来源损坏、父刷新两非零阅读及关闭清旧通过。七类真实外部操作零、临时本局与旧计算保持。独立子代理实际查看新native最终七图；318适配原生截图未在本节另逐张视觉复查，不据此声称完整视觉覆盖。原项目测试窗口可见响应，重启全程私人五路径保持。590旧选择器原序保留，新增2个共592；350全量仅改前历史，下次365。当前索引/要求实际校验，未变25索引单测复用；不可用私样本/1314/实机游戏聊天未计通过。继续至370后暂停。",
+  "windows_native_validation": "最终本机28项必要测试、55项原生窗口唯一检查通过，十条来源与两侧原文、18个真实普通反向入口、数量/时点/同名档位边界、两非零阅读/搜索/精确请求经实际父刷新保持、真实来源损坏与手选恢复、完整深层树关闭。首轮28测试通过，原生约两分钟在反向按钮可见性失败；同一目标独立locate有效，旧时限关闭可能影响可见性，原因未冒称已确定。保留原失败和改前源码；减少同次重复读取、补两张券原物品不匹配拒绝，并保留首个超时错误。新验收预算300秒，最终约95秒完成全部55项，不当作生产耗时承诺或性能基准。七真实外部操作零，临时本局/旧计算保持。独立子代理实际逐张查看最终七图；本机测试窗正常更新可见响应，正常重启全程私人五路径保持。592旧选择器原序保留，新2个共594；350全量仅历史，下次365。当前索引/要求实际验证、未变25索引单测复用；缺私样本/1314/游戏聊天不计通过，继续至370后暂停。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
   "deferred_problems": [
     {
@@ -2355,14 +2361,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 362,
-    "verification": "verification/sections/362.json",
+    "section": 363,
+    "verification": "verification/sections/363.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 362,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "0bce2c684bd364cd53934f360275744878a594b0",
     "proof": "verification/sections/362-publication.json",
@@ -2612,7 +2618,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "P3_SECTION362_PUBLISHED",
+  "batch_status": "P3_SECTION363_LOCAL_ACCEPTED_PUBLICATION_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2708,19 +2714,20 @@
     359,
     360,
     361,
-    362
+    362,
+    363
   ],
   "current_batch": {
     "start": 313,
     "end": 370,
-    "status": "P3_SECTION362_PUBLISHED",
-    "completed_sections": 362,
-    "next_section": 363,
+    "status": "P3_SECTION363_LOCAL_ACCEPTED_PUBLICATION_PENDING",
+    "completed_sections": 363,
+    "next_section": 364,
     "next_section_started": false,
     "next_full_validation_after": 365,
     "batch_closed": false,
     "target_origin": "Direct user continuation to370 then pause",
-    "receipt": "verification/sections/362.json"
+    "receipt": "verification/sections/363.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -3000,7 +3007,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 362,
+  "latest_functional_section": 363,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -5953,7 +5960,11 @@
     "current_settlement_named_special_rows": 18,
     "current_settlement_docs_revision": 442954,
     "current_actual_player_technology_verified": false,
-    "current_actual_reward_total_verified": false
+    "current_actual_reward_total_verified": false,
+    "current_non_event_named_sources": 10,
+    "current_named_squad_initial_sources": 8,
+    "current_mark_ticket_sources_with_unknown_timing": 2,
+    "current_non_event_actual_receipt_verified": false
   },
   "historical_before313_publication": {
     "section": 312,
@@ -7948,7 +7959,15 @@
     "next_section_started": false,
     "development_paused": false
   },
-  "current_section_validation": {
+  "historical_before362_publication": {
+    "section": 361,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "07be02308814d4370fdea132524b8c81a4625f5b",
+    "proof": "verification/sections/361-publication.json",
+    "proof_sha256": "cc69acf26667f16c56ecfb2f2d159e37d2cb3431913b9061efdffcf679540d7d"
+  },
+  "historical_before363_current_section_validation": {
     "section": 362,
     "receipt": "verification/sections/362.json",
     "methods_run": 30,
@@ -7958,7 +7977,7 @@
     "last_full_receipt": "verification/full-350/summary.json",
     "last_full_receipt_is_historical_for_current_changes": true
   },
-  "latest_section_environment": {
+  "historical_before363_latest_section_environment": {
     "section": 362,
     "receipt": "verification/sections/362.json",
     "native_windows": "本机30项必要测试及49项新原生窗口唯一检查通过；额外执行适配后的318原生29项通过，原参数/源损坏等原场景未删。旧318独立模型/reader测试原语义保留，仅当前生产入口补充362实例与10/13两个分项；旧native当前追猎断言改为两个分项0且实际科技未知，新增资料源全部绑定，技术JSON按标准序列化结构比较不忽略字段。新native准确普通/紧急/源流、两晶矿/入口边界、范围/隐藏层/余径、旧318/新362/当前battle三种真实来源损坏、父刷新两非零阅读及关闭清旧通过。七类真实外部操作零、临时本局与旧计算保持。独立子代理实际查看新native最终七图；318适配原生截图未在本节另逐张视觉复查，不据此声称完整视觉覆盖。原项目测试窗口可见响应，重启全程私人五路径保持。590旧选择器原序保留，新增2个共592；350全量仅改前历史，下次365。当前索引/要求实际校验，未变25索引单测复用；不可用私样本/1314/实机游戏聊天未计通过。继续至370后暂停。",
@@ -7966,20 +7985,30 @@
     "current_section_full_rerun": false,
     "last_full_receipt": "verification/full-350/summary.json"
   },
-  "historical_before362_publication": {
-    "section": 361,
-    "scope": "previous_functional_section",
-    "binding": "verified_remote_commit",
-    "commit": "07be02308814d4370fdea132524b8c81a4625f5b",
-    "proof": "verification/sections/361-publication.json",
-    "proof_sha256": "cc69acf26667f16c56ecfb2f2d159e37d2cb3431913b9061efdffcf679540d7d"
-  },
-  "cloud_publication_closeout": {
+  "historical_before363_cloud_publication_closeout": {
     "section": 362,
     "functional_commit": "0bce2c684bd364cd53934f360275744878a594b0",
     "proof": "verification/sections/362-publication.json",
     "current_commit_kind": "publication metadata only",
     "next_section_started": false,
     "development_paused": false
+  },
+  "current_section_validation": {
+    "section": 363,
+    "receipt": "verification/sections/363.json",
+    "methods_run": 28,
+    "native_isolated_window_checks": 55,
+    "real_nonzero_refresh_states": 2,
+    "full_suite_rerun": false,
+    "last_full_receipt": "verification/full-350/summary.json",
+    "last_full_receipt_is_historical_for_current_changes": true
+  },
+  "latest_section_environment": {
+    "section": 363,
+    "receipt": "verification/sections/363.json",
+    "native_windows": "最终本机28项必要测试、55项原生窗口唯一检查通过，十条来源与两侧原文、18个真实普通反向入口、数量/时点/同名档位边界、两非零阅读/搜索/精确请求经实际父刷新保持、真实来源损坏与手选恢复、完整深层树关闭。首轮28测试通过，原生约两分钟在反向按钮可见性失败；同一目标独立locate有效，旧时限关闭可能影响可见性，原因未冒称已确定。保留原失败和改前源码；减少同次重复读取、补两张券原物品不匹配拒绝，并保留首个超时错误。新验收预算300秒，最终约95秒完成全部55项，不当作生产耗时承诺或性能基准。七真实外部操作零，临时本局/旧计算保持。独立子代理实际逐张查看最终七图；本机测试窗正常更新可见响应，正常重启全程私人五路径保持。592旧选择器原序保留，新2个共594；350全量仅历史，下次365。当前索引/要求实际验证、未变25索引单测复用；缺私样本/1314/游戏聊天不计通过，继续至370后暂停。",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": false,
+    "last_full_receipt": "verification/full-350/summary.json"
   }
 }

@@ -54,6 +54,10 @@ class ExpansionUpdatePanel(QWidget):
         layout.addWidget(self.legacy_reference_button)
         self.legacy_reference_button.setVisible(full_catalog and categories is not None and any(key in categories for key in ['relics', 'initial']))
         self.legacy_reference_button.clicked.connect(lambda:self.open_legacy_reference())
+        self.named_sources_button=QPushButton('具名物品：分队与收藏品的取得来源')
+        layout.addWidget(self.named_sources_button)
+        self.named_sources_button.setVisible(full_catalog and categories is not None and any(key in categories for key in ['relics', 'squads']))
+        self.named_sources_button.clicked.connect(lambda:self.open_named_sources())
         self.item_kind=QComboBox();self.item_kind.setAccessibleName('物品与效果类型')
         for label,value in [('收藏品','RELIC'),('战术道具','ACTIVE_TOOL'),('培育与继承','LEGACY'),('地图标志','NODE_BUOY'),('其它特殊效果','FEATURE'),('分队效果说明','BAND'),('总览（含以上各类）',None)]:self.item_kind.addItem(label,value)
         if not full_catalog:self.item_kind.setCurrentIndex(self.item_kind.findData(None))
@@ -88,6 +92,9 @@ class ExpansionUpdatePanel(QWidget):
         self.legacy_reference_item_button=QPushButton('查看对应襁褓来源与下次助力条件')
         self.legacy_reference_item_button.hide();body.addWidget(self.legacy_reference_item_button)
         self.legacy_reference_item_button.clicked.connect(lambda:self.open_legacy_reference(from_item=True))
+        self.named_sources_item_button=QPushButton('查看这项资料对应的具名物品来源')
+        self.named_sources_item_button.hide();body.addWidget(self.named_sources_item_button)
+        self.named_sources_item_button.clicked.connect(lambda:self.open_named_sources(from_item=True))
         self.event_battles_button=QPushButton('查看本事件的具名作战选项与固定地图');self.event_battles_button.hide();body.addWidget(self.event_battles_button);self.event_battles_button.clicked.connect(self.open_event_battles)
         self.exchange_button=QPushButton('查看当前回滚文明：能否交出与奖励条文');self.exchange_button.hide();body.addWidget(self.exchange_button);self.exchange_button.clicked.connect(self.open_current_exchange)
         self.battle_button=QPushButton('查看本版本关卡：原图、敌人和出怪条件');self.battle_button.hide();body.addWidget(self.battle_button)
@@ -101,6 +108,8 @@ class ExpansionUpdatePanel(QWidget):
         self.refresh_reference()
 
     def _clear_detail(self,notice='请先选择一项资料。'):
+        if getattr(self,'named_sources_origin',None)=='item':self._close_named_sources()
+        self.named_sources_item_button.hide()
         if getattr(self,'legacy_reference_origin',None)=='item':self._close_legacy_reference()
         self.legacy_reference_item_button.hide()
         if getattr(self,'upgrade_tickets_origin',None)=='item':self._close_upgrade_tickets()
@@ -125,6 +134,7 @@ class ExpansionUpdatePanel(QWidget):
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
     def _unavailable(self):
+        self._close_named_sources();self.named_sources_button.setEnabled(False)
         self._close_legacy_reference();self.legacy_reference_button.setEnabled(False)
         self._close_upgrade_tickets();self.upgrade_tickets_button.setEnabled(False)
         self._close_region_resources();self.region_resources_button.setEnabled(False)
@@ -176,6 +186,9 @@ class ExpansionUpdatePanel(QWidget):
         # After source loss, no old identity survives; recovery restores a list, not a prior selection.
         ready=self._populate(preserve=True)
         self.tickets_button.setEnabled(ready)
+        self.named_sources_button.setEnabled(ready)
+        child=getattr(self,'named_sources_dialog',None)
+        if ready and child is not None and child.isVisible():child.panel.refresh_reference()
         self.legacy_reference_button.setEnabled(ready)
         child=getattr(self,'legacy_reference_dialog',None)
         if ready and child is not None and child.isVisible():child.panel.refresh_reference()
@@ -263,6 +276,28 @@ class ExpansionUpdatePanel(QWidget):
         if self.legacy_reference_dialog.panel.result is None:self._close_legacy_reference();return False
         self.legacy_reference_origin='item' if from_item else 'directory'
         self.legacy_reference_dialog.show();return True
+
+    def _close_named_sources(self):
+        child=getattr(self,'named_sources_dialog',None)
+        if child is not None:child.close()
+        self.named_sources_origin=None
+
+    def open_named_sources(self,*,from_item=False):
+        if model.packet() is None:self._unavailable();return False
+        from . import current_non_event_origins as reader
+        target=None
+        if from_item:
+            if self.result is None:return False
+            row=self.result['row'];key=row['id'];category=row['category']
+            if model.detail(category,key)!=self.result:self._unavailable();return False
+            target=reader.locate(category,key) if category in ('relics','scrap','squads') else None
+            if target is None:return False
+        elif not self.full_catalog or not any(key in self.allowed_categories for key in ['relics', 'squads']):return False
+        from .current_non_event_origins_view import CurrentNonEventOriginsDialog
+        self._close_named_sources();self.named_sources_dialog=CurrentNonEventOriginsDialog(target,self)
+        if self.named_sources_dialog.panel.result is None:self._close_named_sources();return False
+        self.named_sources_origin='item' if from_item else 'directory'
+        self.named_sources_dialog.show();return True
 
     def _close_portal_rules(self):
         child=getattr(self,'portal_rules_dialog',None)
@@ -354,6 +389,11 @@ class ExpansionUpdatePanel(QWidget):
             elif battle_dialog.isVisible():battle_dialog.panel.refresh_reference()
         if not keep:self._close_flow();self._close_exchange();self._close_event_battles();self._close_origins()
         self.result=deepcopy(result)
+        from . import current_non_event_origins as reader
+        row=result['row'];category=row['category']
+        target=reader.locate(category,key) if category in ('relics','scrap','squads') else None
+        self.named_sources_item_button.setVisible(target is not None);self.named_sources_item_button.setEnabled(target is not None)
+        if not keep and getattr(self,'named_sources_origin',None)=='item':self._close_named_sources()
         from . import current_legacy as reader
         row=result['row'];category=row['category']
         target=reader.locate('items' if category=='scrap' else category,key) if category in ('relics','scrap','choices','difficulty','scenes') else None
@@ -618,6 +658,7 @@ class ExpansionUpdatePanel(QWidget):
         self.origins_dialog.show();return True
 
     def close_children(self):
+        self._close_named_sources()
         self._close_legacy_reference()
         self._close_upgrade_tickets()
         self._close_region_resources()
