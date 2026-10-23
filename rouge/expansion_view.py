@@ -30,6 +30,10 @@ class ExpansionUpdatePanel(QWidget):
         layout.addWidget(self.tickets_button)
         self.tickets_button.setVisible(full_catalog and categories is not None and 'relics' in categories)
         self.tickets_button.clicked.connect(self.open_recruit_tickets)
+        self.bank_button=QPushButton('前瞻性投资：解锁门槛与条件说明')
+        layout.addWidget(self.bank_button)
+        self.bank_button.setVisible(full_catalog and categories is not None and 'initial' in categories)
+        self.bank_button.clicked.connect(lambda:self.open_bank_reference())
         self.item_kind=QComboBox();self.item_kind.setAccessibleName('物品与效果类型')
         for label,value in [('收藏品','RELIC'),('战术道具','ACTIVE_TOOL'),('培育与继承','LEGACY'),('地图标志','NODE_BUOY'),('其它特殊效果','FEATURE'),('分队效果说明','BAND'),('总览（含以上各类）',None)]:self.item_kind.addItem(label,value)
         if not full_catalog:self.item_kind.setCurrentIndex(self.item_kind.findData(None))
@@ -46,6 +50,9 @@ class ExpansionUpdatePanel(QWidget):
         self.next_button=QPushButton('查看原资料指定的后续场景');self.next_button.hide();body.addWidget(self.next_button)
         self.flow_button=QPushButton('查看这个情景的选项、奖励和后续');self.flow_button.hide();body.addWidget(self.flow_button);self.flow_button.clicked.connect(self.open_documented_flow)
         self.origins_button=QPushButton('查看已核对的取得方式');self.origins_button.hide();body.addWidget(self.origins_button);self.origins_button.clicked.connect(self.open_reward_origins)
+        self.bank_item_button=QPushButton('查看投资解锁的两种说明')
+        self.bank_item_button.hide();body.addWidget(self.bank_item_button)
+        self.bank_item_button.clicked.connect(lambda:self.open_bank_reference(from_item=True))
         self.event_battles_button=QPushButton('查看本事件的具名作战选项与固定地图');self.event_battles_button.hide();body.addWidget(self.event_battles_button);self.event_battles_button.clicked.connect(self.open_event_battles)
         self.exchange_button=QPushButton('查看当前回滚文明：能否交出与奖励条文');self.exchange_button.hide();body.addWidget(self.exchange_button);self.exchange_button.clicked.connect(self.open_current_exchange)
         self.battle_button=QPushButton('查看本版本关卡：原图、敌人和出怪条件');self.battle_button.hide();body.addWidget(self.battle_button)
@@ -59,6 +66,8 @@ class ExpansionUpdatePanel(QWidget):
         self.refresh_reference()
 
     def _clear_detail(self,notice='请先选择一项资料。'):
+        if getattr(self,'bank_origin',None)=='item':self._close_bank()
+        self.bank_item_button.hide()
         self._close_origins();self.origins_button.hide()
         self._close_event_battles();self.event_battles_button.hide()
         self._close_flow();self.flow_button.hide()
@@ -71,6 +80,7 @@ class ExpansionUpdatePanel(QWidget):
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
     def _unavailable(self):
+        self._close_bank();self.bank_button.setEnabled(False)
         self._close_tickets();self.tickets_button.setEnabled(False)
         dialog=getattr(self,'ending_dialog',None)
         if dialog is not None:dialog.close()
@@ -116,9 +126,34 @@ class ExpansionUpdatePanel(QWidget):
         # After source loss, no old identity survives; recovery restores a list, not a prior selection.
         ready=self._populate(preserve=True)
         self.tickets_button.setEnabled(ready)
+        self.bank_button.setEnabled(ready)
         child=getattr(self,'tickets_dialog',None)
         if ready and child is not None and child.isVisible():child.panel.refresh_reference()
+        child=getattr(self,'bank_dialog',None)
+        if ready and child is not None and child.isVisible():child.panel.refresh_reference()
         return ready
+
+    def _close_bank(self):
+        child=getattr(self,'bank_dialog',None)
+        if child is not None:child.close()
+        self.bank_origin=None
+
+    def open_bank_reference(self,*,from_item=False):
+        if model.packet() is None:self._unavailable();return False
+        from . import current_bank_reference as bank
+        target=None
+        if from_item:
+            if self.result is None:return False
+            row=self.result['row']
+            if model.detail(row['category'],row['id'])!=self.result:self._unavailable();return False
+            target=bank.locate(row['category'],row['id'])
+            if target is None:return False
+        elif not self.full_catalog or 'initial' not in self.allowed_categories:return False
+        from .current_bank_view import CurrentBankDialog
+        self._close_bank();self.bank_dialog=CurrentBankDialog(target,self)
+        if self.bank_dialog.panel.result is None:self._close_bank();return False
+        self.bank_origin='item' if from_item else 'directory'
+        self.bank_dialog.show();return True
 
     def _close_tickets(self):
         child=getattr(self,'tickets_dialog',None)
@@ -143,6 +178,10 @@ class ExpansionUpdatePanel(QWidget):
             elif battle_dialog.isVisible():battle_dialog.panel.refresh_reference()
         if not keep:self._close_flow();self._close_exchange();self._close_event_battles();self._close_origins()
         self.result=deepcopy(result)
+        from . import current_bank_reference as bank
+        target=bank.locate('relics',key) if result['row']['category']=='relics' and key==bank.ITEM_ID else None
+        self.bank_item_button.setVisible(target is not None);self.bank_item_button.setEnabled(target is not None)
+        if not keep and getattr(self,'bank_origin',None)=='item':self._close_bank()
         from .current_reward_origins import reference as origins_reference
         origin=origins_reference(result['row']['category'],key)
         self.origins_button.setVisible(origin is not None);self.origins_button.setEnabled(origin is not None)
@@ -378,6 +417,7 @@ class ExpansionUpdatePanel(QWidget):
         self.origins_dialog.show();return True
 
     def close_children(self):
+        self._close_bank()
         self._close_tickets()
         self._close_origins()
         self._close_flow();self._close_exchange();self._close_event_battles()
