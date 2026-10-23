@@ -49,7 +49,7 @@ def main():
             for name,key in(('start','desktop_start'),('request','desktop_request')):stack.enter_context(patch.object(backend,name,side_effect=forbidden(key)))
             stack.enter_context(patch.object(app_module,'stream_chat',side_effect=forbidden('provider_chat')));stack.enter_context(patch.object(app_module,'read_key',side_effect=forbidden('credential_read')))
             window=app_module.MainWindow();window.resize(1220,850);window.setWindowTitle('第315节 · 当前奖励条件（公开隔离验收）');window.show();gui.processEvents()
-            tabs=window.centralWidget();panel=window.expansion_update;state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
+            tabs=window.centralWidget();panel=window.reference_panel('stages');state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
             def native(widget=None):
                 widget=window if widget is None else widget
                 hwnd=int(widget.winId());pid=win32process.GetWindowThreadProcessId(hwnd)[1]
@@ -64,8 +64,8 @@ def main():
                 nonlocal done,failure,panel
                 dialog=None
                 try:
-                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_update_tab_opened')
-                    main_panel=panel;combo=main_panel.scope;QTest.keyClick(combo,Qt.Key.Key_End);QTest.keyClick(combo,Qt.Key.Key_Return);gui.processEvents();require(combo.currentData()is False,'actual_scope_choice_shows_complete_current_stage_catalog')
+                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_common_reference_tab_opened')
+                    main_panel=panel;require(main_panel.scope.isHidden(),'common_page_has_no_update_scope_control');require(main_panel.scope.currentData()is False,'actual_scope_choice_shows_complete_current_stage_catalog')
                     for sid in('ro6_n_2_6','ro6_t_7','ro6_n_4_1_dlc1'):
                         item=next(main_panel.entries.item(i)for i in range(main_panel.entries.count())if main_panel.entries.item(i).data(Qt.ItemDataRole.UserRole)==sid)
                         main_panel.entries.scrollToItem(item);gui.processEvents();QTest.mouseClick(main_panel.entries.viewport(),Qt.MouseButton.LeftButton,pos=main_panel.entries.visualItemRect(item).center());QTest.mouseClick(main_panel.battle_button,Qt.MouseButton.LeftButton);gui.processEvents();dialog=main_panel.current_battle_dialog;current=dialog.panel;panel=current.rewards

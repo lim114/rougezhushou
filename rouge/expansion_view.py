@@ -11,20 +11,30 @@ from .ui_state import replace_text
 
 
 class ExpansionUpdatePanel(QWidget):
-    def __init__(self,parent=None):
+    def __init__(self,parent=None,*,categories=None,full_catalog=False):
         super().__init__(parent)
         self.source_identity=None;self.result=None;self.image_raw=None
+        self.full_catalog=full_catalog
         layout=QVBoxLayout(self);self.notice=QLabel(model.NOTICE);self.notice.setWordWrap(True);layout.addWidget(self.notice)
-        bar=QHBoxLayout();self.category=QComboBox();self.category.setAccessibleName('更新资料分类')
-        for key,label in model.CATEGORIES:self.category.addItem(label,key)
+        bar=QHBoxLayout();self.category=QComboBox();self.category.setAccessibleName('资料分类')
+        allowed=dict(model.CATEGORIES) if categories is None else {key:dict(model.CATEGORIES)[key] for key in categories}
+        self.allowed_categories=tuple(allowed)
+        common_labels={'stages':'关卡','scenes':'事件情景','choices':'事件选项','relics':'收藏品','scrap':'零件','squads':'分队','difficulty':'保密等级','regions':'区域','endings':'结局','initial':'开局设置'}
+        for key,label in allowed.items():self.category.addItem(common_labels[key] if full_catalog else label,key)
         self.scope=QComboBox();self.scope.addItem('只看新增与改动',True);self.scope.addItem('查看本版本全部资料',False)
+        if full_catalog:self.scope.setCurrentIndex(self.scope.findData(False));self.scope.hide()
         self.search=QLineEdit();self.search.setPlaceholderText('按中文名称搜索；同名资料分别保留')
         self.refresh_button=QPushButton('重新核对资料');bar.addWidget(self.category);bar.addWidget(self.scope);bar.addWidget(self.search,1);bar.addWidget(self.refresh_button);layout.addLayout(bar)
+        self.item_kind=QComboBox();self.item_kind.setAccessibleName('物品与效果类型')
+        for label,value in [('收藏品','RELIC'),('战术道具','ACTIVE_TOOL'),('培育与继承','LEGACY'),('地图标志','NODE_BUOY'),('其它特殊效果','FEATURE'),('分队效果说明','BAND'),('总览（含以上各类）',None)]:self.item_kind.addItem(label,value)
+        if not full_catalog:self.item_kind.setCurrentIndex(self.item_kind.findData(None))
+        layout.addWidget(self.item_kind);self.item_kind.hide()
         filters=QWidget();stage_bar=QHBoxLayout(filters);stage_bar.setContentsMargins(0,0,0,0);self.stage_filters=filters;self.stage_floor=QComboBox();self.stage_kind=QComboBox();self.stage_floor.setAccessibleName('当前关卡资料层数');self.stage_kind.setAccessibleName('当前关卡作战来源')
         for value,label in stage_directory.FLOORS:self.stage_floor.addItem(label,value)
         for value,label in stage_directory.KINDS:self.stage_kind.addItem(label,value)
         stage_bar.addWidget(self.stage_floor);stage_bar.addWidget(self.stage_kind);stage_bar.addWidget(QLabel('层数按文献分组；同名配置分别保留。'),1);layout.addWidget(filters)
         self.ending_button=QPushButton('旧日重燃：事件前置与相关作战');layout.addWidget(self.ending_button);self.ending_button.clicked.connect(self.open_ending_events)
+        if categories is not None and 'endings' not in categories:self.ending_button.hide()
         self.count=QLabel();layout.addWidget(self.count)
         split=QSplitter();layout.addWidget(split,1);self.entries=QListWidget();self.entries.setAccessibleName('本版本资料条目');split.addWidget(self.entries)
         right=QWidget();body=QVBoxLayout(right);self.map_image=QLabel('选择关卡可查看固定原图');self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter);self.map_image.setMinimumSize(260,150);body.addWidget(self.map_image)
@@ -38,6 +48,7 @@ class ExpansionUpdatePanel(QWidget):
         self.tabs.addTab(self.player,'条件与用途');self.tabs.addTab(self.technical,'完整原值与来源');self.stage_source=QPlainTextEdit();self.stage_source.setReadOnly(True);self.tabs.addTab(self.stage_source,'层数分类依据');body.addWidget(self.tabs,1);split.addWidget(right);split.setSizes([300,750])
         self.category.currentIndexChanged.connect(self._filter_changed);self.scope.currentIndexChanged.connect(self._filter_changed);self.search.textChanged.connect(self._filter_changed)
         self.stage_floor.currentIndexChanged.connect(self._filter_changed);self.stage_kind.currentIndexChanged.connect(self._filter_changed)
+        self.item_kind.currentIndexChanged.connect(self._filter_changed)
         self.entries.currentItemChanged.connect(self._selected);self.next_button.clicked.connect(self.follow_scene);self.refresh_button.clicked.connect(self.refresh_reference)
         self.battle_button.clicked.connect(self.open_current_battle)
         self.refresh_reference()
@@ -75,6 +86,9 @@ class ExpansionUpdatePanel(QWidget):
         current=self.entries.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if preserve and same and current else None
         self.source_identity=reference['source_identity']
         items=model.rows(self.category.currentData(),changes_only=self.scope.currentData(),reference=reference)
+        item_types=self.full_catalog and self.category.currentData()=='relics';self.item_kind.setVisible(item_types)
+        if item_types and self.item_kind.currentData()is not None:
+            items=[row for row in items if (row['value'].get('item')or{}).get('type')==self.item_kind.currentData()]
         is_stage=self.category.currentData()=='stages';self.stage_filters.setVisible(is_stage);stage_ref=stage_directory.packet()if is_stage else None
         if is_stage and stage_ref is None:self._unavailable();return False
         if is_stage:
@@ -337,13 +351,14 @@ class ExpansionUpdatePanel(QWidget):
         if self.origins_dialog.panel.result is None:self._close_origins();return False
         self.origins_dialog.show();return True
 
-    def closeEvent(self,event):
+    def close_children(self):
         self._close_origins()
         self._close_flow();self._close_exchange();self._close_event_battles()
         for name in ('ending_dialog','current_battle_dialog'):
             dialog=getattr(self,name,None)
             if dialog is not None:dialog.close()
-        super().closeEvent(event)
+    def closeEvent(self,event):
+        self.close_children();super().closeEvent(event)
 
     def _close_exchange(self):
         dialog=getattr(self,'exchange_dialog',None)

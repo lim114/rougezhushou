@@ -151,17 +151,28 @@ class MainWindow(QMainWindow):
         self.battle_preview=BattlePreviewPanel()
         self.battle_preview.stageSelected.connect(self.select_battle_stage)
         self.battle_preview.entryEventSelected.connect(self.show_battle_event_reference)
-        tabs.addTab(self.battle_preview,'战斗预览')
+        tabs.addTab(self.battle_preview,'战斗计算参考')
         from .node_catalog_view import NodeCatalogPanel
         self.node_catalog=NodeCatalogPanel()
         self.node_catalog.bind_button.clicked.disconnect(self.node_catalog.bind_current_node)
         self.node_catalog.bind_button.clicked.connect(self.show_selected_map_node_contents)
         self.node_catalog.stageSelected.connect(self.show_catalog_battle)
         self.node_catalog.mapNodeSelected.connect(self.show_catalog_map_node)
-        tabs.addTab(self.node_catalog,'节点事件')
+        tabs.addTab(self.node_catalog,'本图节点')
         from .expansion_view import ExpansionUpdatePanel
-        self.expansion_update=ExpansionUpdatePanel()
-        tabs.addTab(self.expansion_update,'版本与更新')
+        self.common_reference_panels={}
+        self.common_reference_categories={}
+        for name,label,categories in (
+            ('battle','战斗预览',('stages',)),
+            ('events','节点事件',('scenes','choices','regions','endings')),
+            ('items','藏品与零件',('relics','scrap')),
+            ('setup','探索设置',('squads','difficulty','initial')),
+        ):
+            panel=ExpansionUpdatePanel(categories=categories,full_catalog=True)
+            self.common_reference_panels[name]=panel
+            for category in categories:self.common_reference_categories[category]=name
+            tabs.addTab(panel,label)
+        tabs.currentChanged.connect(self._common_page_changed)
         from .offline_tools_view import OfflineToolsPanel
         self.offline_tools=OfflineToolsPanel(include_historical_route_diagnostics=include_historical_route_diagnostics)
         self.offline_tools.mapNodeSelected.connect(self.show_catalog_map_node)
@@ -2251,11 +2262,28 @@ class MainWindow(QMainWindow):
         else:
             self.chat_status.setText(message)
 
+    def _common_page_changed(self,*_):
+        current=self.centralWidget().currentWidget()
+        for panel in self.common_reference_panels.values():
+            if panel is not current:panel.close_children()
+
+    def reference_panel(self,category,*,activate=True):
+        """Open the ordinary content page for an exact reference category."""
+        if type(category)is not str or category not in self.common_reference_categories:return None
+        panel=self.common_reference_panels[self.common_reference_categories[category]]
+        if activate:
+            for other in self.common_reference_panels.values():
+                if other is not panel:other.close_children()
+            self.centralWidget().setCurrentWidget(panel)
+        index=panel.category.findData(category)
+        if index<0:return None
+        if panel.category.currentIndex()!=index:panel.category.setCurrentIndex(index)
+        return panel
+
     def closeEvent(self, event):
         self.closing=True
         self.node_catalog._close_current_event_reference()
-        self.expansion_update._close_origins()
-        self.expansion_update._close_flow()
+        for panel in self.common_reference_panels.values():panel.close_children()
         self.timer.stop()
         self.cancel_event.set()
         self.capture.close()

@@ -51,7 +51,7 @@ def main():
             for name,key in(('start','desktop_start'),('request','desktop_request')):stack.enter_context(patch.object(backend,name,side_effect=forbidden(key)))
             stack.enter_context(patch.object(app_module,'stream_chat',side_effect=forbidden('provider_chat')));stack.enter_context(patch.object(app_module,'read_key',side_effect=forbidden('credential_read')))
             window=app_module.MainWindow();window.resize(1220,850);window.setWindowTitle('第320节 · 当前出怪与装置位置（公开隔离验收）');window.show();gui.processEvents()
-            tabs=window.centralWidget();panel=window.expansion_update;state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
+            tabs=window.centralWidget();panel=window.reference_panel('stages');state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
             def native(widget=None):
                 widget=window if widget is None else widget
                 hwnd=int(widget.winId());pid=win32process.GetWindowThreadProcessId(hwnd)[1]
@@ -66,8 +66,8 @@ def main():
                 nonlocal done,failure,panel
                 dialog=None
                 try:
-                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_update_tab_opened')
-                    main_panel=panel;QTest.keyClick(panel.scope,Qt.Key.Key_End);QTest.keyClick(panel.scope,Qt.Key.Key_Return);gui.processEvents();require(panel.scope.currentData()is False,'current_complete_stage_catalog_available')
+                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_common_reference_tab_opened')
+                    main_panel=panel;require(panel.scope.isHidden(),'common_page_has_no_update_scope_control');require(panel.scope.currentData()is False,'current_complete_stage_catalog_available')
                     battle_dialog=None;owned=None
                     def open_action(sid,key):
                         nonlocal panel,dialog,battle_dialog

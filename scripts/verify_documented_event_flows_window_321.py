@@ -46,7 +46,7 @@ def main():
             for name,key in(('start','desktop_start'),('request','desktop_request')):stack.enter_context(patch.object(backend,name,side_effect=forbidden(key)))
             stack.enter_context(patch.object(app_module,'stream_chat',side_effect=forbidden('provider_chat')));stack.enter_context(patch.object(app_module,'read_key',side_effect=forbidden('credential_read')))
             window=app_module.MainWindow();window.resize(1220,850);window.setWindowTitle('第321节 · 更新事件条件（公开隔离验收）');window.show();gui.processEvents()
-            tabs=window.centralWidget();panel=window.expansion_update;state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
+            tabs=window.centralWidget();panel=window.reference_panel('endings');state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
             def native(widget=None):
                 widget=window if widget is None else widget
                 hwnd=int(widget.winId());pid=win32process.GetWindowThreadProcessId(hwnd)[1]
@@ -61,7 +61,7 @@ def main():
                 nonlocal done,failure,panel
                 dialog=None
                 try:
-                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_update_tab_opened')
+                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_common_reference_tab_opened')
                     main_panel=panel;QTest.mouseClick(main_panel.ending_button,Qt.MouseButton.LeftButton);gui.processEvents();dialog=main_panel.ending_dialog;panel=dialog.panel
                     require(dialog.isVisible()and panel.combo.currentData()is None,'actual_MainWindow_ending_entry_manual_no_auto_selection')
                     ending=panel
@@ -123,7 +123,7 @@ def main():
                         flow.close();panel=ending
                     choose(ending.choices.branch,'线索与区域');choose(ending.combo,'entry');require(not ending.flow_button.isVisible(),'unrelated_event_has_no_special_flow_entry')
                     dialog.close();panel=main_panel
-                    choose(panel.scope,False);choose(panel.category,'scenes')
+                    panel=window.reference_panel('scenes');main_panel=panel;gui.processEvents();require(tabs.currentWidget()is panel and panel.isVisible()and panel.scope.currentData()is False and panel.scope.isHidden(),'actual_common_event_page_for_exact_scene');choose(panel.category,'scenes')
                     sid='scene_ro6_end4_1';row=next(i for i in range(panel.entries.count())if panel.entries.item(i).data(Qt.ItemDataRole.UserRole)==sid);panel.entries.setCurrentRow(row);gui.processEvents()
                     require(panel.flow_button.isVisible(),'exact_current_scene_exposes_flow_entry');QTest.mouseClick(panel.flow_button,Qt.MouseButton.LeftButton);gui.processEvents();child=panel.flow_dialog;require(child.isVisible()and child.panel.scene_id==sid,'current_scene_entry_retains_exact_scene_not_other_same_title')
                     select_panel=panel;panel=child.panel;select_choice('choice_ro6_end4_3');shot('direct-scene-entry');panel=select_panel

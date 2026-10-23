@@ -46,7 +46,7 @@ def main():
             for name,key in(('start','desktop_start'),('request','desktop_request')):stack.enter_context(patch.object(backend,name,side_effect=forbidden(key)))
             stack.enter_context(patch.object(app_module,'stream_chat',side_effect=forbidden('provider_chat')));stack.enter_context(patch.object(app_module,'read_key',side_effect=forbidden('credential_read')))
             window=app_module.MainWindow();window.resize(1220,850);window.setWindowTitle('第322节 · 更新事件条件（公开隔离验收）');window.show();gui.processEvents()
-            tabs=window.centralWidget();panel=window.expansion_update;state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
+            tabs=window.centralWidget();panel=window.reference_panel('stages');state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
             def native(widget=None):
                 widget=window if widget is None else widget
                 hwnd=int(widget.winId());pid=win32process.GetWindowThreadProcessId(hwnd)[1]
@@ -61,14 +61,17 @@ def main():
                 nonlocal done,failure,panel
                 dialog=None
                 try:
-                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_update_tab_opened')
+                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_common_reference_tab_opened')
                     main_panel=panel
                     def choose(combo,value):
                         index=combo.findData(value);require(index>=0,'exact_native_combo_value_present');combo.setFocus();combo.setCurrentIndex(index);QTest.keyClick(combo,Qt.Key.Key_Return);gui.processEvents();require(combo.currentData()==value,'direct_exact_choice_without_prefix_keyboard_traversal')
                     def select_choice(cid):
                         row=next(i for i in range(panel.choices.count())if panel.choices.item(i).data(Qt.ItemDataRole.UserRole)==cid);item=panel.choices.item(row);panel.choices.scrollToItem(item);gui.processEvents();QTest.mouseClick(panel.choices.viewport(),Qt.MouseButton.LeftButton,pos=panel.choices.visualItemRect(item).center());gui.processEvents();require(panel.choice_id==cid,'actual_mouse_selects_document_option')
                     def entry(category,key):
-                        choose(main_panel.scope,False);choose(main_panel.category,category)
+                        nonlocal main_panel
+                        main_panel=window.reference_panel(category);gui.processEvents()
+                        require(tabs.currentWidget()is main_panel and main_panel.isVisible()and main_panel.scope.currentData()is False and main_panel.scope.isHidden(),'actual_common_page_for_requested_category')
+                        choose(main_panel.category,category)
                         row=next(i for i in range(main_panel.entries.count())if main_panel.entries.item(i).data(Qt.ItemDataRole.UserRole)==key);main_panel.entries.setCurrentRow(row);gui.processEvents();require(main_panel.flow_button.isVisible(),'actual_update_catalog_exact_entry_visible');QTest.mouseClick(main_panel.flow_button,Qt.MouseButton.LeftButton);gui.processEvents();return main_panel.flow_dialog
                     dialog=entry('scenes','scene_ro6_end2_enter');panel=dialog.panel;require(dialog.isVisible()and panel.scene_id=='scene_ro6_end2_enter'and panel.choice_id is None,'actual_MainWindow_opens_exact_box_scene')
                     expected={'scene_ro6_end2_enter':['protect','leave','covenant','print'],'scene_ro6_end2_2':['normal_battle'],'scene_ro6_end2_1':[],'scene_ro6_end2_3':[]}

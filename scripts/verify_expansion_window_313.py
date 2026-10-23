@@ -44,7 +44,7 @@ def main():
             for name,key in(('start','desktop_start'),('request','desktop_request')):stack.enter_context(patch.object(backend,name,side_effect=forbidden(key)))
             stack.enter_context(patch.object(app_module,'stream_chat',side_effect=forbidden('provider_chat')));stack.enter_context(patch.object(app_module,'read_key',side_effect=forbidden('credential_read')))
             window=app_module.MainWindow();window.resize(1220,850);window.setWindowTitle('第313节 · 国服更新资料（公开隔离验收）');window.show();gui.processEvents()
-            tabs=window.centralWidget();panel=window.expansion_update;state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
+            tabs=window.centralWidget();panel=window.reference_panel('stages');state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
             def native(widget=None):
                 widget=window if widget is None else widget
                 hwnd=int(widget.winId());pid=win32process.GetWindowThreadProcessId(hwnd)[1]
@@ -54,6 +54,10 @@ def main():
                 gui.processEvents();file=dest.with_name('window-'+label+'.png');assert not file.exists();require(panel.grab().save(str(file),'PNG'),'actual_widget_screenshot_saved')
                 images.append({'name':label,'path':str(file),'sha256':sha256(file.read_bytes()).hexdigest(),'native':native()})
             def category(key):
+                nonlocal panel
+                if tabs.indexOf(panel)>=0:
+                    panel=window.reference_panel(key);gui.processEvents()
+                    require(tabs.currentWidget()is panel and panel.isVisible()and panel.scope.currentData()is False and panel.scope.isHidden(),'actual_common_page_for_requested_category')
                 combo=panel.category;index=combo.findData(key);require(index>=0,'category_value_exists')
                 QTest.keyClick(combo,Qt.Key.Key_Home)
                 for _ in range(index):QTest.keyClick(combo,Qt.Key.Key_Down)
@@ -71,8 +75,8 @@ def main():
                 nonlocal done,failure,panel
                 try:
                     bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents()
-                    require(tabs.currentWidget()is panel and panel.isVisible(),'actual_main_tab_button_opens_update_reader')
-                    require(panel.result is None and panel.entries.count()==80,'changes_default_is_manual_and_has80_stage_entries')
+                    require(tabs.currentWidget()is panel and panel.isVisible(),'actual_main_tab_button_opens_common_battle_preview')
+                    require(panel.result is None and panel.entries.count()==184 and panel.scope.currentData()is False and panel.scope.isHidden(),'full_current_default_is_manual_and_has184_stage_entries')
                     for key in('ro6_b_7','ro6_n_7_1','ro6_n_4_1_dlc1'):
                         choose(key);require(panel.image_raw is not None and panel.map_image.pixmap()is not None and not panel.map_image.pixmap().isNull(),'exact_current_map_bytes_load_without_coordinate_markers')
                         if key=='ro6_b_7':shot('new-boss-map')
@@ -92,7 +96,7 @@ def main():
                     panel.close();panel=main_panel;gui.processEvents();QTest.mouseClick(panel.next_button,Qt.MouseButton.LeftButton);gui.processEvents()
                     require(panel.result['row']['id']=='scene_ro6_final1_4'and panel.category.currentData()=='scenes'and panel.scope.currentData()is False,'actual_next_scene_button_follows_only_explicit_destination')
                     require('不是本场景内的选项'in panel.player.toPlainText(),'incoming_choices_not_misrepresented_as_current_scene_options');shot('explicit-next-scene')
-                    panel.scope.setCurrentIndex(panel.scope.findData(True));category('difficulty');choose('NORMAL|16');shot('new-difficulty16')
+                    category('difficulty');choose('NORMAL|16');shot('new-difficulty16')
                     # Read representative new parts, bands, ending and text-only new scenes.
                     for cat,key in(('scrap','rogue_6_scrap_P_07'),('squads','rogue_6_band_23'),('relics','rogue_6_relic_final_7'),('regions','zone_7'),('endings','ro6_ending_4'),('scenes','scene_ro6_end4_enter')):
                         category(cat);choose(key)
@@ -104,7 +108,7 @@ def main():
                         require(model.packet()is not None,'actual_complete_public_source_clone_valid_before_damage');target.write_bytes(original+b' ')
                         try:QTest.mouseClick(panel.refresh_button,Qt.MouseButton.LeftButton);gui.processEvents();require(panel.result is None and not panel.player.toPlainText()and not panel.technical.toPlainText()and panel.entries.count()==0 and panel.image_raw is None and not panel.next_button.isEnabled(),'real_byte_damage_clears_old_selection_readers_image_and_link');shot('source-loss-cleared')
                         finally:target.write_bytes(original)
-                        QTest.mouseClick(panel.refresh_button,Qt.MouseButton.LeftButton);gui.processEvents();require(panel.result is None and panel.entries.currentRow()==-1 and panel.entries.count()==17,'source_recovery_restores_list_without_auto_selection');choose('scene_ro6_end4_enter')
+                        QTest.mouseClick(panel.refresh_button,Qt.MouseButton.LeftButton);gui.processEvents();require(panel.result is None and panel.entries.currentRow()==-1 and panel.entries.count()==355,'source_recovery_restores_full_scene_list_without_auto_selection');choose('scene_ro6_end4_enter')
                     require(window.run.state==state and window.battle_preview.context==context,'temporary_run_and_legacy_calculation_context_unchanged')
                     require(all(value==0 for value in calls.values())and not window.auto.isChecked(),'all_real_capture_chat_credential_operations_zero')
                     require('更新前'in window.battle_preview.version_notice.text()and'尚未完整适配'in window.damage_version_notice.text(),'both_legacy_pages_display_version_boundary')

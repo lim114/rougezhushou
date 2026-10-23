@@ -49,7 +49,7 @@ def main():
             for name,key in(('start','desktop_start'),('request','desktop_request')):stack.enter_context(patch.object(backend,name,side_effect=forbidden(key)))
             stack.enter_context(patch.object(app_module,'stream_chat',side_effect=forbidden('provider_chat')));stack.enter_context(patch.object(app_module,'read_key',side_effect=forbidden('credential_read')))
             window=app_module.MainWindow();window.resize(1220,850);window.setWindowTitle('第317节 · 当前关卡层数与来源（公开隔离验收）');window.show();gui.processEvents()
-            tabs=window.centralWidget();panel=window.expansion_update;state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
+            tabs=window.centralWidget();panel=window.reference_panel('stages');state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
             def native(widget=None):
                 widget=window if widget is None else widget
                 hwnd=int(widget.winId());pid=win32process.GetWindowThreadProcessId(hwnd)[1]
@@ -64,14 +64,14 @@ def main():
                 nonlocal done,failure,panel
                 dialog=None
                 try:
-                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_update_tab_opened')
+                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_common_reference_tab_opened')
                     def choose(combo,value):
                         index=combo.findData(value);require(index>=0,'requested_filter_available');QTest.keyClick(combo,Qt.Key.Key_Home)
                         for _ in range(index):QTest.keyClick(combo,Qt.Key.Key_Down)
                         QTest.keyClick(combo,Qt.Key.Key_Return);gui.processEvents();require(combo.currentData()==value,'actual_QTest_filter_selected')
                     def select(sid):
                         item=next(panel.entries.item(i)for i in range(panel.entries.count())if panel.entries.item(i).data(Qt.ItemDataRole.UserRole)==sid);panel.entries.scrollToItem(item);gui.processEvents();QTest.mouseClick(panel.entries.viewport(),Qt.MouseButton.LeftButton,pos=panel.entries.visualItemRect(item).center());gui.processEvents();require(panel.result['row']['id']==sid,'actual_exact_stage_selected')
-                    choose(panel.scope,False);require(panel.entries.count()==184 and panel.result is None,'all184_before_filters_no_auto_selection')
+                    require(panel.scope.currentData()is False and panel.scope.isHidden(),'complete_current_catalog_default_without_hidden_control_input');require(panel.entries.count()==184 and panel.result is None,'all184_before_filters_no_auto_selection')
                     choose(panel.stage_floor,'floor6');require(panel.entries.count()==11,'sixth_layer_has_two_documented_regions')
                     for kind,sid in [('normal','ro6_n_7_1'),('emergency','ro6_e_7_1'),('boss','ro6_b_7'),('boss','ro6_b_7_b')]:
                         choose(panel.stage_kind,kind);select(sid);require(panel.stage_info['row']['floor']=='floor6'and panel.stage_info['row']['region']=='盲目者所见','hidden_sixth_layer_not_seventh_or_source_region');require(json.loads(panel.technical.toPlainText())==panel.result and json.loads(panel.stage_source.toPlainText())==panel.stage_info,'separate_original_and_classification_source_roundtrips');QTest.mouseClick(panel.battle_button,Qt.MouseButton.LeftButton);gui.processEvents();dialog=panel.current_battle_dialog;require(dialog.isVisible()and dialog.panel.stage_id==sid and not dialog.panel.map_image.pixmap().isNull(),'actual_exact_current_stage_original_map_opened');observations.append({'stage':sid,'kind':kind,'floor':panel.stage_info['row']['floor'],'region':panel.stage_info['row']['region'],'variant':panel.stage_info['variant_index']});dialog.close()
