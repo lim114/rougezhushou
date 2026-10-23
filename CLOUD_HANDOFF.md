@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/351.json)。
 
-已完成至351，后续352；本批状态 `P3_SECTION351_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至351，后续352；本批状态 `P3_SECTION351_PUBLISHED`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -649,5 +649,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 采用bee3国服10月16日原关卡和敌人资料及固定PRTS异常效果文献。固定声明不能证明当前服务器、阶段、技能、实际控制结果、最终漏敌扣点或总敌人数。当前保密等级/分队/阶段的完整数值修正仍待迁移，生命攻击防御法抗继续标未知，不显示白值替代。独立构造不借数据库图鉴或同名原型；未取得精确数据库等级时仅采用本关明确覆盖。没有加入游戏操作、聊天、实时战斗分析、路线推荐或生成概率；P3/P2/P1均未完成，识别最后。
 
-<!-- section351-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第351节功能提交c90d169874a94a25bf571a2119cc0c24857d026c已普通推送并核对真实远端及401份相关公开文件字节，证明verification/sections/351-publication.json。本次仅保存发布元数据，不增加功能节数；后续352尚未启动；按本次授权继续至370并完整收尾后暂停，下一定期全量365。P3/P2/P1未完成，固定敌人声明不冒充本局最终面板或实际阶段行为；私人状态及实机游戏/聊天未纳入云端。
 <!-- section351-handoff:end -->
