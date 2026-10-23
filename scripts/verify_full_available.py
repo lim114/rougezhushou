@@ -352,6 +352,8 @@ ADDITIONAL_MODULES += ('tests.test_current_settlement_modes_362', 'tests.test_cu
 
 ADDITIONAL_MODULES += ('tests.test_current_non_event_origins_363', 'tests.test_current_non_event_origins_view_363')
 
+ADDITIONAL_MODULES += ('tests.test_current_initial_recruit_364', 'tests.test_current_initial_recruit_view_364')
+
 def maintained_selectors():
     """Original maintained ordered union, then all explicit post290 additions."""
     historical = json.loads((ROOT / 'CORE_0.70_VERIFICATION.json').read_bytes())
