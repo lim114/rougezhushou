@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/363.json)。
 
-已完成至363，后续364；本批状态 `P3_SECTION363_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至363，后续364；本批状态 `P3_SECTION363_PUBLISHED`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -793,5 +793,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 十条明确id/count与固定国服原件及PRTS442954分队整行核对；不是完整取得池或当前已生效/已领取。博士银印水月主题备注不能套到黑流；变量名不证明发放时钟，同名基础分队不能借强化档位。只有两张准确券原文能进入已有招募券目录，未在该目录新增反向UI，不把354留存、360新典训或361助力重复记新机制。完整随机候选、人选/培养、当前解锁/实际发放及服务器执行未知，无计算/本局写入、游戏聊天操作、概率或路线建议。P3/P2/P1未完成。
 
-<!-- section363-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第363节功能提交2aecf8f6226936409ed4c9a857747af83ced0295已普通推送并核对真实远端及458份相关公开文件字节，证明verification/sections/363-publication.json。本次仅保存发布元数据，不增加功能节数；后续364尚未启动；按本次授权继续至370并完整收尾后暂停，下一定期全量365。P3/P2/P1未完成，资料对照不冒充本局实际状态/生成/生效/结算；私人状态及实机游戏/聊天未纳入云端。
 <!-- section363-handoff:end -->
