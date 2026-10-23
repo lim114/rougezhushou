@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/360.json)。
 
-已完成至360，后续361；本批状态 `P3_SECTION360_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至360，后续361；本批状态 `P3_SECTION360_PUBLISHED`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -757,5 +757,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 固定国服原表及实际保存PRTS440806/355079完整正文；前期HTTP200验证页原失败保留且不作机制证据。18份记录不是18个不同券种或当前持有18张。八新典训明确附1张券，但安全角落原文未单列张数；普通同名券不借新典训来源。券适用星级不证明低星或具体成员可进阶，无希望用途不推其它成本全免。完整取得池、当前持有/资格/具体培养和结果仍未知。旧招募/留存配对不重计，战斗藏品效果只作说明，无数值或本局写入、游戏聊天操作、概率或路线建议。P3/P2/P1未完成。
 
-<!-- section360-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第360节功能提交87e0351b5d4a059bf68947fa0327cb9be647baa1已普通推送并核对真实远端及456份相关公开文件字节，证明verification/sections/360-publication.json。本次仅保存发布元数据，不增加功能节数；后续361尚未启动；按本次授权继续至370并完整收尾后暂停，下一定期全量365。P3/P2/P1未完成，资料对照不冒充本局实际状态/生成/生效/结算；私人状态及实机游戏/聊天未纳入云端。
 <!-- section360-handoff:end -->
