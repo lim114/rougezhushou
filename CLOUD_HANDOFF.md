@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/358.json)。
 
-已完成至358，后续359；本批状态 `P3_SECTION358_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至358，后续359；本批状态 `P3_SECTION358_PUBLISHED`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -733,5 +733,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 依据固定国服原表及已保存的PRTS442947/433770原文核对。十九份区域不推定为当前同时存在的秘境；同名或编号不证明主层、雾色、规则与刷新表的对应。原表只列节点类型，不是具体事件全集，不能把同类型的所有事件都列为本区可发生。条件对照不证明当前进入、刷新、消耗、奖励或资格，地图标志不冒充藏品。P3/P2/P1仍未完成，无生成概率、路线建议或数值/本局状态写入；游戏和聊天未操作。
 
-<!-- section358-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第358节功能提交7d25c264222e49e7b4c344f0f4dd27784f87c431已普通推送并核对真实远端及441份相关公开文件字节，证明verification/sections/358-publication.json。本次仅保存发布元数据，不增加功能节数；后续359尚未启动；按本次授权继续至370并完整收尾后暂停，下一定期全量365。P3/P2/P1未完成，资料对照不冒充本局实际状态/生成/生效/结算；私人状态及实机游戏/聊天未纳入云端。
 <!-- section358-handoff:end -->
