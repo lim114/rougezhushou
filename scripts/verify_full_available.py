@@ -342,6 +342,8 @@ class AvailableResult(unittest.TextTestResult):
         super().addSubTest(test, subtest, err)
 
 
+ADDITIONAL_MODULES += ('tests.test_current_regions_359', 'tests.test_current_region_view_359')
+
 def maintained_selectors():
     """Original maintained ordered union, then all explicit post290 additions."""
     historical = json.loads((ROOT / 'CORE_0.70_VERIFICATION.json').read_bytes())
