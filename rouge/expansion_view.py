@@ -134,8 +134,9 @@ class ExpansionUpdatePanel(QWidget):
         from .current_peace import locate as peace_locate
         from .current_reconstruction import locate as reconstruction_locate
         from .current_resting import locate as resting_locate
+        from .current_startup import locate as startup_locate
         from .current_shadow import locate as shadow_locate
-        available=shadow_locate(result['row']['category'],key)is not None or resting_locate(result['row']['category'],key)is not None or reconstruction_locate(result['row']['category'],key)is not None or peace_locate(result['row']['category'],key)is not None or scout_locate(result['row']['category'],key)is not None or portal_locate(result['row']['category'],key)is not None or agency_locate(result['row']['category'],key)is not None or exit_locate(result['row']['category'],key)is not None or memory_locate(result['row']['category'],key)is not None or dog_locate(result['row']['category'],key)is not None or cave_locate(result['row']['category'],key)is not None or vine_locate(result['row']['category'],key)is not None or(result['row']['category']=='scenes'and event_for_scene(key)is not None)or locate(result['row']['category'],key)is not None or ritual_locate(result['row']['category'],key)is not None or sand_locate(result['row']['category'],key)is not None or encounter_locate(result['row']['category'],key)is not None or lake_locate(result['row']['category'],key)is not None or resource_locate(result['row']['category'],key)is not None or shop_locate(result['row']['category'],key)is not None or rest_travel_locate(result['row']['category'],key)is not None
+        available=startup_locate(result['row']['category'],key)is not None or shadow_locate(result['row']['category'],key)is not None or resting_locate(result['row']['category'],key)is not None or reconstruction_locate(result['row']['category'],key)is not None or peace_locate(result['row']['category'],key)is not None or scout_locate(result['row']['category'],key)is not None or portal_locate(result['row']['category'],key)is not None or agency_locate(result['row']['category'],key)is not None or exit_locate(result['row']['category'],key)is not None or memory_locate(result['row']['category'],key)is not None or dog_locate(result['row']['category'],key)is not None or cave_locate(result['row']['category'],key)is not None or vine_locate(result['row']['category'],key)is not None or(result['row']['category']=='scenes'and event_for_scene(key)is not None)or locate(result['row']['category'],key)is not None or ritual_locate(result['row']['category'],key)is not None or sand_locate(result['row']['category'],key)is not None or encounter_locate(result['row']['category'],key)is not None or lake_locate(result['row']['category'],key)is not None or resource_locate(result['row']['category'],key)is not None or shop_locate(result['row']['category'],key)is not None or rest_travel_locate(result['row']['category'],key)is not None
         self.flow_button.setVisible(available);self.flow_button.setEnabled(available)
         self.flow_button.setText('查看本事件的条件、选项和相关作战')
         child=getattr(self,'flow_dialog',None)
@@ -208,6 +209,11 @@ class ExpansionUpdatePanel(QWidget):
         if self.result is None or self.result['row']['category']not in('scenes','choices','relics'):return False
         category=self.result['row']['category'];fresh=model.detail(category,self.result['row']['id'])
         if fresh!=self.result:self._unavailable();return False
+        from .current_startup import locate as startup_locate
+        target=startup_locate(category,fresh['row']['id'])
+        if target is not None:
+            from .current_startup_view import CurrentStartupDialog
+            self._close_flow();self.flow_dialog=CurrentStartupDialog(target,self);self.flow_dialog.show();return True
         from .current_shadow import locate as shadow_locate
         target=shadow_locate(category,fresh['row']['id'])
         if target is not None:

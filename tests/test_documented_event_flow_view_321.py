@@ -79,7 +79,9 @@ class DocumentedEventFlowView321Tests(unittest.TestCase):
             self.fail('missing actual scene')
         for sid in EXPECTED:
             choose(sid);self.assertTrue(p.flow_button.isVisible());self.assertTrue(p.open_documented_flow());child=p.flow_dialog;self.assertEqual(child.panel.scene_id,sid);self.assertTrue(p.refresh_reference());self.assertTrue(child.isVisible())
-        choose('scene_ro6_final1_enter');self.assertFalse(p.flow_button.isVisible());self.assertFalse(child.isVisible());self.assertFalse(p.open_documented_flow())
+        choose('scene_ro6_final1_enter');self.assertFalse(child.isVisible());self.assertTrue(p.flow_button.isVisible());self.assertTrue(p.open_documented_flow());child=p.flow_dialog;self.assertEqual(child.panel.event_id,'exit')
+        p.category.setCurrentIndex(p.category.findData('regions'));p.entries.setCurrentRow(0);self.assertFalse(p.flow_button.isVisible());self.assertFalse(child.isVisible());self.assertFalse(p.open_documented_flow())
+        p.category.setCurrentIndex(p.category.findData('scenes'))
         choose('scene_ro6_end4_1');p.open_documented_flow();child=p.flow_dialog;p._unavailable();self.assertFalse(child.isVisible());self.assertFalse(p.flow_button.isVisible())
 
 

@@ -361,11 +361,15 @@ def main():
                 nonlocal size_index
                 native_info = native()
                 require(tabs.currentWidget() is panel, 'actual_node_panel_is_visible_for_layout')
+                measurement = {'requested_size': list(SIZES[size_index]), 'actual_size': [window.width(), window.height()],
+                    'player_size': [panel.player_detail.width(), panel.player_detail.height()], 'controls': {},
+                    'native_window': native_info, 'threshold_is_operational_not_general_usability_claim': True}
+                geometry.append(measurement)
                 require(panel.player_detail.width() >= 260 and panel.player_detail.height() >= 120,
                         'player_reading_area_at_least_260_by_120_operational_threshold')
                 controls = {}
                 for name in ('resident_reference_label', 'resident_location', 'resident_map_button',
-                             'resident_stage', 'resident_stage_button'):
+                             'resident_stage', 'resident_stage_button', 'current_reference_button'):
                     widget = getattr(panel, name)
                     rect = QRect(widget.mapTo(window, QPoint(0, 0)), widget.size())
                     parent_rect = QRect(widget.mapTo(widget.parentWidget(), QPoint(0, 0)), widget.size())
@@ -373,9 +377,7 @@ def main():
                     require(window.rect().contains(rect) and widget.parentWidget().rect().contains(parent_rect),
                             'layout_' + name + '_fully_inside_window_and_parent')
                     controls[name] = [rect.x(), rect.y(), rect.width(), rect.height()]
-                geometry.append({'requested_size': list(SIZES[size_index]), 'actual_size': [window.width(), window.height()],
-                    'player_size': [panel.player_detail.width(), panel.player_detail.height()], 'controls': controls,
-                    'native_window': native_info, 'threshold_is_operational_not_general_usability_claim': True})
+                measurement['controls'] = controls
                 require([window.width(),window.height()]==list(SIZES[size_index]),
                         'actual_window_client_size_matches_requested_layout_size')
                 if size_index==0:
