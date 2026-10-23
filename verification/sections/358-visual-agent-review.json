@@ -1,0 +1,113 @@
+{
+  "schema": "section358_final_actual_subagent_visual_review_v1",
+  "section": 358,
+  "attempt": 2,
+  "actor": "/root/p3_351_scope_research",
+  "actor_role": "真实子代理逐张实际视觉复查，不冒称根代理直接查看",
+  "reviewed_at": "2026-10-23T18:42:34.447486+00:00",
+  "process_passed_gate": {
+    "path": "verification/sections/358-native-attempt2/process.json",
+    "sha256": "8aad06ccd516a11012bd4efbd2ae382a28387812206e52b6dff7d751fad9556e",
+    "passed_observed_before_review": true
+  },
+  "method": "七个指定实际PNG分别调用tools.view_image并阅读可见像素；之后读取原图完整字节核对最终native回执中的SHA。不是只核对哈希或验收断言。",
+  "images": [
+    {
+      "path": "verification/sections/358-native-attempt2/actual/window-blue-completed-shop.png",
+      "bytes": 125627,
+      "sha256": "54d5cf0ff996298195200f5d8a3ffbb2db91d0b18384690dc61acc6289dc972a",
+      "width": 1348,
+      "height": 1023,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "所选为全知者盲区蓝雾。只出现节点类型、移动、经过和商店完成专属控件；“已完成”商店例外与一般刷新文字分开，明确实际刷新/事件未知。原游戏说明与补充文献分组清楚，没有用区域编号认定蓝雾。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/358-native-attempt2/actual/window-consumption-original.png",
+      "bytes": 128832,
+      "sha256": "469f5a34d566a186a32a9accda6a6aafd7cee511f02ac606c34d77172c3a0858",
+      "width": 1348,
+      "height": 1023,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "消耗螺旋显示进入前常规第IV层控件，不显示蓝雾商店控件。游戏原文单独保留，社区“获胜的”“正式”补充独立解释，并明确不能由已编队、未部署、未获胜推定资格消耗。条件相符与实际资格未知可读。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/358-native-attempt2/actual/window-region-table.png",
+      "bytes": 106297,
+      "sha256": "8fed9056bdff40e68f5752c1bcd91088a020f8ac8be9079654f0ac11002cf295",
+      "width": 1348,
+      "height": 1023,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "原区域刷新表分支显示有原表的同名资料项，列出不期而遇、作战、紧急作战、诡意行商、得偿所愿五类。明确这不是全部乌托邦的通用池，类型不等于所有同类事件可能发生，也不猜雾色、主层、概率或实际刷新。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/358-native-attempt2/actual/window-region-no-table.png",
+      "bytes": 86132,
+      "sha256": "fb7e6f188d37cc31e1e61d544e77d0279e490ae7a5dee6c44dcdf8531c1e68cc",
+      "width": 1348,
+      "height": 1023,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "选中原区域资料1，明确未列独立刷新表；未知不等于不会刷新，也不借其它三份表。没有蓝雾或主层条件控件，没有填入别处节点池。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/358-native-attempt2/actual/window-resident-marker-source.png",
+      "bytes": 20935,
+      "sha256": "e87ec9a15ad22890be44afe7b3d45b5f1a564a77826df38ede38e6c84a7bc576",
+      "width": 1063,
+      "height": 775,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "独立原说明页明确“流窜居民·地图标志”，完整中文原用途与“不是收藏品、不代表本局已有或已触发战斗”分开，未混入领取或战斗结果。两页签标签清楚。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/358-native-attempt2/actual/window-source-loss.png",
+      "bytes": 39328,
+      "sha256": "15dae60d4fa2dc1984080715b304745e0b5acea0752f466dd50b12cd6c49a770",
+      "width": 1348,
+      "height": 1023,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "旧规则/区域列表已空，专属条件消失，原阅读区只剩来源无法核对的提示；原资料选择框为空且按钮禁用，没有残留旧数值、旧规则或商店判断。截图只证明当前可见阅读页，另一页和子窗实际关闭仍以原生回执为准。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/358-native-attempt2/actual/window-reverse-red-candidates.png",
+      "bytes": 91869,
+      "sha256": "b3f5245d4f7fea0552349c8b5a6f9f29e39723a452f7c9c582d8d6af8ed86645",
+      "width": 1348,
+      "height": 1023,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "反向进入后仅筛红雾，四条候选全部可见且无选中规则。正文明确尚未确认哪种、不按对话或区域编号选定，仍提示手动选择；没有自动补阶段、主层、当局规则或奖励。",
+      "visual_blocking_issue": false
+    }
+  ],
+  "actual_view_image_calls": 7,
+  "all_seven_actual_images_reviewed": true,
+  "root_direct_view_claimed": false,
+  "blocking_visual_issues": [],
+  "visual_result": "七张最终图未发现阻断阅读、错误专属控件、旧数据残留或红雾自动选定的可见问题。",
+  "limits": [
+    "这仅核对七个实际截图的可见外观，不替代机制来源、完整27/19等交互遍历、两阅读位置或实际窗口关闭的原生证据。",
+    "子代理查看不能改称根代理直接查看；如当前验收要求根代理亲自看图，仍需根代理完成。"
+  ],
+  "formal_tree_modified": false,
+  "tests_or_windows_started": false,
+  "game_or_chat_run": false,
+  "private_state_touched": false
+}

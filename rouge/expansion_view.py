@@ -38,6 +38,10 @@ class ExpansionUpdatePanel(QWidget):
         layout.addWidget(self.real_domain_button)
         self.real_domain_button.setVisible(full_catalog and categories is not None and 'regions' in categories)
         self.real_domain_button.clicked.connect(lambda:self.open_real_domain())
+        self.portal_rules_button=QPushButton('秘境乌托邦：雾色、规则与节点刷新')
+        layout.addWidget(self.portal_rules_button)
+        self.portal_rules_button.setVisible(full_catalog and categories is not None and 'regions' in categories)
+        self.portal_rules_button.clicked.connect(lambda:self.open_portal_rules())
         self.item_kind=QComboBox();self.item_kind.setAccessibleName('物品与效果类型')
         for label,value in [('收藏品','RELIC'),('战术道具','ACTIVE_TOOL'),('培育与继承','LEGACY'),('地图标志','NODE_BUOY'),('其它特殊效果','FEATURE'),('分队效果说明','BAND'),('总览（含以上各类）',None)]:self.item_kind.addItem(label,value)
         if not full_catalog:self.item_kind.setCurrentIndex(self.item_kind.findData(None))
@@ -60,6 +64,9 @@ class ExpansionUpdatePanel(QWidget):
         self.real_domain_item_button=QPushButton('查看相关实托邦理念与条件')
         self.real_domain_item_button.hide();body.addWidget(self.real_domain_item_button)
         self.real_domain_item_button.clicked.connect(lambda:self.open_real_domain(from_item=True))
+        self.portal_rules_item_button=QPushButton('查看对应秘境规则与原区域说明')
+        self.portal_rules_item_button.hide();body.addWidget(self.portal_rules_item_button)
+        self.portal_rules_item_button.clicked.connect(lambda:self.open_portal_rules(from_item=True))
         self.event_battles_button=QPushButton('查看本事件的具名作战选项与固定地图');self.event_battles_button.hide();body.addWidget(self.event_battles_button);self.event_battles_button.clicked.connect(self.open_event_battles)
         self.exchange_button=QPushButton('查看当前回滚文明：能否交出与奖励条文');self.exchange_button.hide();body.addWidget(self.exchange_button);self.exchange_button.clicked.connect(self.open_current_exchange)
         self.battle_button=QPushButton('查看本版本关卡：原图、敌人和出怪条件');self.battle_button.hide();body.addWidget(self.battle_button)
@@ -73,6 +80,8 @@ class ExpansionUpdatePanel(QWidget):
         self.refresh_reference()
 
     def _clear_detail(self,notice='请先选择一项资料。'):
+        if getattr(self,'portal_rules_origin',None)=='item':self._close_portal_rules()
+        self.portal_rules_item_button.hide()
         if getattr(self,'real_domain_origin',None)=='item':self._close_real_domain()
         self.real_domain_item_button.hide()
         if getattr(self,'bank_origin',None)=='item':self._close_bank()
@@ -89,6 +98,7 @@ class ExpansionUpdatePanel(QWidget):
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
     def _unavailable(self):
+        self._close_portal_rules();self.portal_rules_button.setEnabled(False)
         self._close_real_domain();self.real_domain_button.setEnabled(False)
         self._close_bank();self.bank_button.setEnabled(False)
         self._close_tickets();self.tickets_button.setEnabled(False)
@@ -138,13 +148,39 @@ class ExpansionUpdatePanel(QWidget):
         self.tickets_button.setEnabled(ready)
         self.bank_button.setEnabled(ready)
         self.real_domain_button.setEnabled(ready)
+        self.portal_rules_button.setEnabled(ready)
         child=getattr(self,'tickets_dialog',None)
         if ready and child is not None and child.isVisible():child.panel.refresh_reference()
         child=getattr(self,'bank_dialog',None)
         if ready and child is not None and child.isVisible():child.panel.refresh_reference()
         child=getattr(self,'real_domain_dialog',None)
         if ready and child is not None and child.isVisible():child.panel.refresh_reference()
+        child=getattr(self,'portal_rules_dialog',None)
+        if ready and child is not None and child.isVisible():child.panel.refresh_reference()
         return ready
+
+    def _close_portal_rules(self):
+        child=getattr(self,'portal_rules_dialog',None)
+        if child is not None:child.close()
+        self.portal_rules_origin=None
+
+    def open_portal_rules(self,*,from_item=False):
+        if model.packet() is None:self._unavailable();return False
+        from . import current_portal_rules as rules
+        target=None
+        if from_item:
+            if self.result is None:return False
+            row=self.result['row']
+            if model.detail(row['category'],row['id'])!=self.result:self._unavailable();return False
+            category='items' if row['category']=='relics' else row['category']
+            target=rules.locate(category,row['id'])
+            if target is None:return False
+        elif not self.full_catalog or 'regions' not in self.allowed_categories:return False
+        from .current_portal_rules_view import CurrentPortalRulesDialog
+        self._close_portal_rules();self.portal_rules_dialog=CurrentPortalRulesDialog(target,self)
+        if self.portal_rules_dialog.panel.result is None:self._close_portal_rules();return False
+        self.portal_rules_origin='item' if from_item else 'directory'
+        self.portal_rules_dialog.show();return True
 
     def _close_real_domain(self):
         child=getattr(self,'real_domain_dialog',None)
@@ -213,6 +249,11 @@ class ExpansionUpdatePanel(QWidget):
             elif battle_dialog.isVisible():battle_dialog.panel.refresh_reference()
         if not keep:self._close_flow();self._close_exchange();self._close_event_battles();self._close_origins()
         self.result=deepcopy(result)
+        from . import current_portal_rules as rules
+        category='items' if result['row']['category']=='relics' else result['row']['category']
+        target=rules.locate(category,key) if category in ('scenes','regions','items') else None
+        self.portal_rules_item_button.setVisible(target is not None);self.portal_rules_item_button.setEnabled(target is not None)
+        if not keep and getattr(self,'portal_rules_origin',None)=='item':self._close_portal_rules()
         from . import current_real_domain as domain
         known={('scenes','scene_ro6_normal3_enter'),*((cat,identity)for _,cat,identity,_ in domain.LINKS.values())}
         target=domain.locate(result['row']['category'],key) if (result['row']['category'],key)in known else None
@@ -457,6 +498,7 @@ class ExpansionUpdatePanel(QWidget):
         self.origins_dialog.show();return True
 
     def close_children(self):
+        self._close_portal_rules()
         self._close_real_domain()
         self._close_bank()
         self._close_tickets()

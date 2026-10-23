@@ -1,0 +1,104 @@
+{
+  "schema": "current_portal_rules_358_source_notes_v1",
+  "section": 358,
+  "status": "prepared_candidate_not_published",
+  "scope": "A player-readable documentary reader for nine Utopia rules, six fog correspondences, distinct movement/passed/completed-shop wording, and exactly three independently scoped raw region node-type tables. Existing section341 processed-item dialogue reader is reused, not replaced.",
+  "game": {
+    "commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+    "fixed_cn_date": "2026-10-16",
+    "source": {
+      "path": "research/p3-expansion-313/current-topic.json",
+      "bytes": 1988739,
+      "sha256": "06a9c49b096d877003e8c129fb48eca3fc5d99c6de5fa35fbf3406adba49b490"
+    },
+    "paths": [
+      "details.variationData",
+      "details.rollNodeData",
+      "details.zones",
+      "details.nodeTypeData",
+      "details.items.rogue_6_bubble_01",
+      "details.choiceScenes"
+    ]
+  },
+  "public_documentation": [
+    {
+      "url": "https://m.prts.wiki/w/沉沦者的黑流树海/黑流数据库",
+      "revision": 442947,
+      "local_complete_utopia_section": "database-utopia-section.html",
+      "source_reuse_receipt": "source-reuse.json",
+      "facts": "Nine rule tables; numerical commentary; completed BATTLE_SHOP exception; variation8 explicit community wording addition and footnote; documented layouts and limited main-floor statements. Community supplementation is displayed separately from immutable game descriptions.",
+      "copied_complete_section_only": true,
+      "new_download_by_this_candidate": false,
+      "original_download": {
+        "name": "database",
+        "requested_url": "https://m.prts.wiki/w/%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7/%E9%BB%91%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93",
+        "resolved_url": "https://m.prts.wiki/w/%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7/%E9%BB%91%E6%B5%81%E6%95%B0%E6%8D%AE%E5%BA%93",
+        "http_status": 200,
+        "revision": 442947,
+        "bytes": 332320,
+        "sha256": "9748c582db8e9e404ff8cf5902f9ed2bc4a08f82ca4881ce0ad098dd404bb63c",
+        "downloaded_at_utc": "2026-10-23T16:25:35.844487+00:00",
+        "public_page_no_login": true,
+        "file": "research/p3-current-real-domain-357/database-page.html"
+      }
+    },
+    {
+      "url": "https://prts.wiki/w/沉沦者的黑流树海",
+      "revision": 433770,
+      "local_complete_portal_section": "main-portal-section.html",
+      "full_original": {
+        "path": "research/p3-future-region-effects-300/prts-main-433770.html",
+        "bytes": 954799,
+        "sha256": "366e0bf14b526816b20750f1d83b6c7b132d556dfc0b09a0ab3c302fd00610e9"
+      },
+      "facts": "All six fog colors and Chinese principle/layout correspondence; three processed-item choices at entry and local action-point exhaustion return. Existing341 owns full dialogue choices.",
+      "fresh_web_correspondence_checked": true,
+      "fresh_HTML_download_by_this_candidate": false
+    }
+  ],
+  "established_facts": [
+    "Nine rules are nine exact variationData originals, not nine relics. Red fog lists four candidate rules and never auto-selects one.",
+    "Fog assignment for nineteen raw enter scenes uses explicit Chinese fog color plus principle in original scene description; no raw scene/zone suffix is interpreted.",
+    "Only the source-table entries zone_portal_normal_5_1/5_2/5_3 declare independent rollNodeData. Each lists INCIDENT/BATTLE_NORMAL/BATTLE_ELITE/BATTLE_SHOP/WISH, without probabilities or concrete event members.",
+    "All nineteen same-name portal zones are separate originals. No mapping from their IDs to fog, rule, main-floor or layout is claimed.",
+    "Full original game description of variation8 lacks the community-added words 获胜的 and 正式; both texts and footnote are retained, not silently normalized.",
+    "variation5 has a movement trigger and wording 其余未经过节点; completed BATTLE_SHOP exclusion comes from public mechanism documentation. Passing a node and completed shop status remain distinct declarations.",
+    "rogue_6_bubble_01 is the actual NODE_BUOY 流窜“居民” marker, not a relic. No unrelated ending relic is linked merely because its lore contains 乌托邦.",
+    "Source-specific player descriptions include physical/magic versus true damage, stated ranges/durations/caps, and stage/layout restrictions without adding numerical effects to the calculator."
+  ],
+  "unknowns_and_boundaries": [
+    "Current server execution, actual entered rule/variant, actual refreshed nodes/results, held items, affected roster and reward settlement are not verified.",
+    "Three raw roll-node tables do not prove a universal Utopia pool or variation5 table mapping; absent table means unknown, not no refresh.",
+    "Matching manually declared documented floor or movement/pass/shop conditions is a wording comparison only, never full server eligibility or actual trigger.",
+    "No probability, actual event membership, hidden refresh scripts, scene-suffix inference, route ranking or live battle placement is added.",
+    "No relic correspondence is manufactured for named variations. Node and marker windows are factual original-record readers.",
+    "This candidate has not executed formal tests or GUI; parent must install and validate before completing section358."
+  ],
+  "integration_reference": {
+    "existing_dialogue_model": {
+      "path": "rouge/current_portal.py",
+      "bytes": 11372,
+      "sha256": "9cefa3c0c76a2bf148af157dd7d9c203828ccb2e115b25fc8c0954cd4fd9a4a0"
+    },
+    "existing_dialogue_view": {
+      "path": "rouge/current_portal_view.py",
+      "bytes": 2414,
+      "sha256": "02b4462367ef0d5e8227426694a340da7d407926e34065b04741c724e301ad2a"
+    },
+    "read_only_targets": [
+      "CurrentPortalDialog.panel.scene data fog:<Chinese fog>",
+      "current_portal_rules.locate(scenes, exact raw enter scene key)",
+      "current_portal_rules.locate(regions, exact portal zone key)",
+      "current_portal_rules.locate(items, rogue_6_bubble_01)"
+    ],
+    "parent_must_preserve": "Provider/source failure clears stale target, child links and content. All owned child windows close with the source panel. No private/run/chat writes."
+  },
+  "validation": {
+    "formal_test_execution": false,
+    "native_or_offscreen_GUI_execution": false,
+    "syntax_validation": "Separate actual AST-parse receipt only; no test imports/execution.",
+    "game_operated": false,
+    "chat_sent": false,
+    "private_state_accessed": false
+  }
+}
