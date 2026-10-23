@@ -137,6 +137,10 @@ class ExpansionUpdatePanel(QWidget):
         key=item.data(Qt.ItemDataRole.UserRole);result=model.detail(self.category.currentData(),key)
         if result is None or result['source_identity']!=self.source_identity:self._unavailable();return
         keep=preserve and self.result is not None and self.result['row']['id']==key and self.result['row']['category']==result['row']['category']
+        battle_dialog=getattr(self,'current_battle_dialog',None)
+        if battle_dialog is not None:
+            if not keep:battle_dialog.close()
+            elif battle_dialog.isVisible():battle_dialog.panel.refresh_reference()
         if not keep:self._close_flow();self._close_exchange();self._close_event_battles();self._close_origins()
         self.result=deepcopy(result)
         from .current_reward_origins import reference as origins_reference

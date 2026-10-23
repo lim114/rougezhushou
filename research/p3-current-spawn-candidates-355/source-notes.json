@@ -1,0 +1,96 @@
+{
+  "schema": "current_spawn_candidates_355_source_notes_v1",
+  "recorded_at": "2026-10-23T15:57:09.908294+00:00",
+  "game_commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+  "prepared_candidate_only": true,
+  "current_scope": {
+    "main_groups": 604,
+    "main_group_members": 2635,
+    "configurations": 184,
+    "stages_with_relations": 140,
+    "main_packages": 393,
+    "main_package_members": 1205,
+    "unique_original_levels": 113
+  },
+  "raw_relation_key_types": {
+    "randomSpawnGroupKey:str": 2635,
+    "randomSpawnGroupKey:NoneType": 6805,
+    "randomSpawnGroupPackKey:NoneType": 8235,
+    "randomSpawnGroupPackKey:str": 1205
+  },
+  "public_file_pins": {
+    "research/p3-current-battle-314/source-inputs.json": {
+      "bytes": 11110457,
+      "sha256": "5def486651d970226f0f7536d4cbc42b6012007950da9db613a20b27fecb8e33"
+    },
+    "research/p3-current-battle-314/source-selection.json": {
+      "bytes": 55653,
+      "sha256": "c1501184f0723d0b6af44c0d1147ac5afed9cbb71b68a84b874b4119d63b5791"
+    },
+    "research/p3-current-battle-314/runtime-manifest.json": {
+      "bytes": 846,
+      "sha256": "5afaa89bda5cee08b90d0db4f536d70a742755d93f073cfd55257f5fd2fbfc13"
+    },
+    "research/p3-expansion-313/current-topic.json": {
+      "bytes": 1988739,
+      "sha256": "06a9c49b096d877003e8c129fb48eca3fc5d99c6de5fa35fbf3406adba49b490"
+    },
+    "research/p3-current-rewards-315/selected-originals.json": {
+      "bytes": 23784,
+      "sha256": "7c47eafd98a20fd33bd6af7f9ff53f2669d127e06e722ba9627c595544e45544"
+    },
+    "research/p3-current-rewards-315/source-selection.json": {
+      "bytes": 1465,
+      "sha256": "c4f0532a80e77522bd65536993362d49c356a1d4bf327e6f3eb1a84fd5d2be36"
+    }
+  },
+  "observed_existing_api_and_structural_reference_pins": {
+    "rouge/current_battle_reference.py": {
+      "bytes": 12558,
+      "sha256": "08a9df5cf32d707d5518feebf37fa7d50d2250b061713e62d1e1ec704c9b8a88"
+    },
+    "rouge/current_action_positions.py": {
+      "bytes": 7087,
+      "sha256": "c517089beea176a244bd4041d4ecd470d0ccacb4c1ec3725799410abed47ddf3"
+    },
+    "rouge/current_action_positions_view.py": {
+      "bytes": 4404,
+      "sha256": "8686aae431a6114485d302cac8d9bd591787219e621e1f9552eebbe87d645fb1"
+    },
+    "rouge/spawn_candidates.py": {
+      "bytes": 13716,
+      "sha256": "e2f4422a56112e692722ae8aab6d8e2c48a437221256c43a7e171e1b3d6696de"
+    },
+    "scripts/build_spawn_candidates_299.py": {
+      "bytes": 15134,
+      "sha256": "d87eb81db6545d84f372f4d6b95e652cb1f9ec417191550c00c4ff55329cad80"
+    }
+  },
+  "evidence_scope": [
+    "The current topic contains 184 configurations pointing to 113 unique original level JSONs. Previous 166-config wording was incomplete and is not used here.",
+    "Every main wave fragment and every branch phase has a separate exact JSON source selector. Group and package fields are separate relations, including actions carrying both.",
+    "All 604 candidate groups / 393 associated packages in this fixed source are main-queue scopes. All branch phases were inspected and currently contain zero nonempty relation keys; synthetic branch scope tests are not actual current branch examples.",
+    "Membership count is 2635 group-memberships and 1205 package-memberships, with overlap; neither is actual enemy count.",
+    "Current 315 selected complete character records provide exact names for five known devices. Other predefined entities retain unnamed placeholders; no older character table or enemy portrait is substituted.",
+    "Old 299 code is a structural reference only, not current evidence. Current original data and 314 current action projections are source-bound independently."
+  ],
+  "original_source_urls": "Per configuration and unique level, see scope-inventory.json.original_level_source and research/p3-current-battle-314/source-selection.json; these retain original URL, bytes, SHA256 and Git blob identity.",
+  "mechanics_not_proven": [
+    "No RNG algorithm, mutually exclusive selection count, independent trials, simultaneous adoption, event occurrence, probabilities, actual enemies or actual reward total.",
+    "Hidden-group and branch activation remains separate; equal raw keys across scopes are never merged.",
+    "No global clock, actual script callback, exact feet, movement path, portal connection or map calibration is added.",
+    "SPAWN and ACTIVATE_PREDEFINED position requests go through the existing current_action_positions reader and its exact source identities; branch or ambiguous positions may remain unknown.",
+    "No game operation, chat send, run reset or private-state read/write."
+  ],
+  "integration_contract": {
+    "panel": "CurrentSpawnCandidatesPanel(stage_id, origin_action_key=None, parent=None)",
+    "signals": [
+      "actionSelected(str action_key)",
+      "actionPositionRequested(str action_key)",
+      "sourceInvalidated()"
+    ],
+    "root_owns_parent_wiring_and_position_dialog": true,
+    "refresh": "Same source/stage/origin/relation/member retains both readers, selection and current tab; source loss clears all stale content, image and links; recovery requires manual choice."
+  },
+  "evidence_status": "Preparation and source census only; not an installed feature, not a test or GUI acceptance."
+}

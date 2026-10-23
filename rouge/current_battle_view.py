@@ -25,6 +25,8 @@ class CurrentBattlePanel(QWidget):
         wave=QWidget();body=QVBoxLayout(wave);self.queue_kind=QComboBox();self.queue_kind.addItem('总览（全部条目）',None);self.queue_kind.addItem('主波次','main');self.queue_kind.addItem('条件分支','branch');body.addWidget(self.queue_kind)
         split=QSplitter();self.actions=QListWidget();split.addWidget(self.actions);self.action_player=QPlainTextEdit();self.action_player.setReadOnly(True);split.addWidget(self.action_player);split.setSizes([350,650]);body.addWidget(split,1)
         self.action_position_button=QPushButton('在地图上查看本条位置参考');body.addWidget(self.action_position_button);self.action_position_button.clicked.connect(self.open_action_positions);self.tabs.addTab(wave,'出怪与条件')
+        self.spawn_candidates_button=QPushButton('查看出怪候选与关联记录')
+        body.addWidget(self.spawn_candidates_button);self.spawn_candidates_button.clicked.connect(self.open_spawn_candidates)
         self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.technical,'完整原值与来源')
         from .current_reward_view import CurrentRewardPanel
         self.rewards=CurrentRewardPanel(stage_id);self.tabs.addTab(self.rewards,'奖励与条件');self.rewards.actionSelected.connect(self._reward_action_selected)
@@ -34,6 +36,7 @@ class CurrentBattlePanel(QWidget):
         self.refresh_reference()
 
     def _clear(self):
+        self._close_spawn_candidates();self.spawn_candidates_button.setEnabled(False)
         self._close_event_origins();self.event_origins_button.setEnabled(False);self.event_origins_button.hide()
         self._close_map_positions();self.position_button.setEnabled(False)
         self.action_position_button.setEnabled(False)
@@ -48,7 +51,7 @@ class CurrentBattlePanel(QWidget):
         fresh=model.stage_reference(self.stage_id)
         if fresh is None:self._clear();return False
         keep=self.result is not None and self.source_identity==fresh['source_identity']and self.result['id']==fresh['id']
-        if not keep:self._close_event_origins()
+        if not keep:self._close_event_origins();self._close_spawn_candidates()
         old_enemy=self.enemy_combo.currentData()if keep else None
         self.result=fresh;self.source_identity=fresh['source_identity']
         from .current_event_battles import stage_has_reference
@@ -56,6 +59,7 @@ class CurrentBattlePanel(QWidget):
         origin=getattr(self,'event_origins_dialog',None)
         if keep and origin is not None and origin.isVisible():origin.panel.refresh_reference()
         self.position_button.setEnabled(True)
+        self.spawn_candidates_button.setEnabled(True)
         self.settlement.refresh_reference()
         replace_text(self.summary,model.summary_text(fresh),preserve=keep);replace_text(self.technical,_technical_json(fresh),preserve=keep)
         raw=version.image_bytes(fresh['image']);pix=QPixmap()
@@ -75,10 +79,45 @@ class CurrentBattlePanel(QWidget):
         self.enemy_combo.blockSignals(blocked);self._enemy_changed(preserve=keep);self._actions_changed(preserve=keep)
         if not keep:self.tabs.setCurrentIndex(0)
         self.rewards.refresh_reference()
-        for name in ('position_dialog','action_position_dialog'):
+        for name in ('position_dialog','action_position_dialog','spawn_candidates_dialog'):
             dialog=getattr(self,name,None)
             if dialog is not None and dialog.isVisible():dialog.panel.refresh_reference()
         return True
+
+    def _close_spawn_candidates(self):
+        dialog=getattr(self,'spawn_candidates_dialog',None)
+        if dialog is not None:dialog.close()
+
+    def _spawn_source_invalidated(self):
+        dialog=getattr(self,'action_position_dialog',None)
+        if dialog is not None:dialog.close()
+
+    def _spawn_action_selected(self,key):
+        dialog=getattr(self,'spawn_candidates_dialog',None)
+        if self.result is None or dialog is None or dialog.panel.result is None:return False
+        if dialog.panel.result['battle_source_identity']!=self.result['source_identity']:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        action=next((a for a in self.result['actions']if a['key']==key),None)
+        if action is None:return False
+        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']))
+        for i in range(self.actions.count()):
+            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
+        return False
+
+    def _spawn_position_requested(self,key):
+        return self._spawn_action_selected(key) and self.open_action_positions()
+
+    def open_spawn_candidates(self):
+        if self.result is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .current_spawn_candidates_view import CurrentSpawnCandidatesDialog
+        self._close_spawn_candidates();self.spawn_candidates_dialog=CurrentSpawnCandidatesDialog(self.stage_id,parent=self)
+        panel=self.spawn_candidates_dialog.panel
+        if panel.result is None:self._close_spawn_candidates();return False
+        panel.actionSelected.connect(self._spawn_action_selected)
+        panel.actionPositionRequested.connect(self._spawn_position_requested)
+        panel.sourceInvalidated.connect(self._spawn_source_invalidated)
+        self.spawn_candidates_dialog.show();return True
 
     def _reward_action_selected(self,key):
         if self.result is None or self.rewards.result is None or self.result['source_identity']!=self.rewards.result['battle_source_identity']:return False
@@ -150,12 +189,12 @@ class CurrentBattlePanel(QWidget):
         from .current_event_battles_view import CurrentEventBattlesDialog
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
-    def closeEvent(self,event):self._close_map_positions();self._close_event_origins();super().closeEvent(event)
+    def closeEvent(self,event):self._close_spawn_candidates();self._close_map_positions();self._close_event_origins();super().closeEvent(event)
 
 
 class CurrentBattleDialog(QDialog):
     def __init__(self,stage_id,parent=None):
-        super().__init__(parent);self.setWindowTitle('本次更新 · 固定关卡预览');self.resize(1120,820)
+        super().__init__(parent);self.setWindowTitle('固定关卡预览');self.resize(1120,820)
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
-    def closeEvent(self,event):self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)
+    def closeEvent(self,event):self.panel._close_spawn_candidates();self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)
