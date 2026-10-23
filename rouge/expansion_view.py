@@ -46,6 +46,10 @@ class ExpansionUpdatePanel(QWidget):
         layout.addWidget(self.region_resources_button)
         self.region_resources_button.setVisible(full_catalog and categories is not None and any(key in categories for key in ['regions']))
         self.region_resources_button.clicked.connect(lambda:self.open_region_resources())
+        self.upgrade_tickets_button=QPushButton('进阶券：适用职业、星级与取得方式')
+        layout.addWidget(self.upgrade_tickets_button)
+        self.upgrade_tickets_button.setVisible(full_catalog and categories is not None and any(key in categories for key in ['relics']))
+        self.upgrade_tickets_button.clicked.connect(lambda:self.open_upgrade_tickets())
         self.item_kind=QComboBox();self.item_kind.setAccessibleName('物品与效果类型')
         for label,value in [('收藏品','RELIC'),('战术道具','ACTIVE_TOOL'),('培育与继承','LEGACY'),('地图标志','NODE_BUOY'),('其它特殊效果','FEATURE'),('分队效果说明','BAND'),('总览（含以上各类）',None)]:self.item_kind.addItem(label,value)
         if not full_catalog:self.item_kind.setCurrentIndex(self.item_kind.findData(None))
@@ -74,6 +78,9 @@ class ExpansionUpdatePanel(QWidget):
         self.region_resources_item_button=QPushButton('查看本区域行动力分项与耗尽条件')
         self.region_resources_item_button.hide();body.addWidget(self.region_resources_item_button)
         self.region_resources_item_button.clicked.connect(lambda:self.open_region_resources(from_item=True))
+        self.upgrade_tickets_item_button=QPushButton('查看所附进阶券与准确取得方式')
+        self.upgrade_tickets_item_button.hide();body.addWidget(self.upgrade_tickets_item_button)
+        self.upgrade_tickets_item_button.clicked.connect(lambda:self.open_upgrade_tickets(from_item=True))
         self.event_battles_button=QPushButton('查看本事件的具名作战选项与固定地图');self.event_battles_button.hide();body.addWidget(self.event_battles_button);self.event_battles_button.clicked.connect(self.open_event_battles)
         self.exchange_button=QPushButton('查看当前回滚文明：能否交出与奖励条文');self.exchange_button.hide();body.addWidget(self.exchange_button);self.exchange_button.clicked.connect(self.open_current_exchange)
         self.battle_button=QPushButton('查看本版本关卡：原图、敌人和出怪条件');self.battle_button.hide();body.addWidget(self.battle_button)
@@ -87,6 +94,8 @@ class ExpansionUpdatePanel(QWidget):
         self.refresh_reference()
 
     def _clear_detail(self,notice='请先选择一项资料。'):
+        if getattr(self,'upgrade_tickets_origin',None)=='item':self._close_upgrade_tickets()
+        self.upgrade_tickets_item_button.hide()
         if getattr(self,'region_resources_origin',None)=='item':self._close_region_resources()
         self.region_resources_item_button.hide()
         if getattr(self,'portal_rules_origin',None)=='item':self._close_portal_rules()
@@ -107,6 +116,7 @@ class ExpansionUpdatePanel(QWidget):
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
     def _unavailable(self):
+        self._close_upgrade_tickets();self.upgrade_tickets_button.setEnabled(False)
         self._close_region_resources();self.region_resources_button.setEnabled(False)
         self._close_portal_rules();self.portal_rules_button.setEnabled(False)
         self._close_real_domain();self.real_domain_button.setEnabled(False)
@@ -156,6 +166,9 @@ class ExpansionUpdatePanel(QWidget):
         # After source loss, no old identity survives; recovery restores a list, not a prior selection.
         ready=self._populate(preserve=True)
         self.tickets_button.setEnabled(ready)
+        self.upgrade_tickets_button.setEnabled(ready)
+        child=getattr(self,'upgrade_tickets_dialog',None)
+        if ready and child is not None and child.isVisible():child.panel.refresh_reference()
         self.region_resources_button.setEnabled(ready)
         child=getattr(self,'region_resources_dialog',None)
         if ready and child is not None and child.isVisible():child.panel.refresh_reference()
@@ -193,6 +206,28 @@ class ExpansionUpdatePanel(QWidget):
         if self.region_resources_dialog.panel.result is None:self._close_region_resources();return False
         self.region_resources_origin='item' if from_item else 'directory'
         self.region_resources_dialog.show();return True
+
+    def _close_upgrade_tickets(self):
+        child=getattr(self,'upgrade_tickets_dialog',None)
+        if child is not None:child.close()
+        self.upgrade_tickets_origin=None
+
+    def open_upgrade_tickets(self,*,from_item=False):
+        if model.packet() is None:self._unavailable();return False
+        from . import current_upgrade_tickets as reader
+        target=None
+        if from_item:
+            if self.result is None:return False
+            row=self.result['row'];key=row['id'];category=row['category']
+            if model.detail(category,key)!=self.result:self._unavailable();return False
+            target=reader.locate(category,key) if category in ('relics','choices') else None
+            if target is None:return False
+        elif not self.full_catalog or not any(key in self.allowed_categories for key in ['relics']):return False
+        from .current_upgrade_tickets_view import CurrentUpgradeTicketsDialog
+        self._close_upgrade_tickets();self.upgrade_tickets_dialog=CurrentUpgradeTicketsDialog(self,target=target)
+        if self.upgrade_tickets_dialog.panel.result is None:self._close_upgrade_tickets();return False
+        self.upgrade_tickets_origin='item' if from_item else 'directory'
+        self.upgrade_tickets_dialog.show();return True
 
     def _close_portal_rules(self):
         child=getattr(self,'portal_rules_dialog',None)
@@ -284,6 +319,11 @@ class ExpansionUpdatePanel(QWidget):
             elif battle_dialog.isVisible():battle_dialog.panel.refresh_reference()
         if not keep:self._close_flow();self._close_exchange();self._close_event_battles();self._close_origins()
         self.result=deepcopy(result)
+        from . import current_upgrade_tickets as reader
+        row=result['row'];category=row['category']
+        target=reader.locate(category,key) if category in ('relics','choices') else None
+        self.upgrade_tickets_item_button.setVisible(target is not None);self.upgrade_tickets_item_button.setEnabled(target is not None)
+        if not keep and getattr(self,'upgrade_tickets_origin',None)=='item':self._close_upgrade_tickets()
         from . import current_region_reference as reader
         row=result['row'];category=row['category']
         target=reader.locate(category,key) if category=='regions' else None
@@ -538,6 +578,7 @@ class ExpansionUpdatePanel(QWidget):
         self.origins_dialog.show();return True
 
     def close_children(self):
+        self._close_upgrade_tickets()
         self._close_region_resources()
         self._close_portal_rules()
         self._close_real_domain()
