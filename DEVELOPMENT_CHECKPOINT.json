@@ -20,9 +20,9 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section: commit and ordinary push origin codex/p2-development; full available validation after125 then every15 sections",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": true,
+    "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
-    "stop_after_section": 350,
+    "stop_after_section": 370,
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
@@ -34,20 +34,20 @@
     "bugfix_only_counts_as_functional_section": false,
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
-    "current_user_batch_target_section": null,
-    "current_user_batch_completed": true,
+    "current_user_batch_target_section": 370,
+    "current_user_batch_completed": false,
     "requirements_synced_each_section": true,
     "atomic_section_source_receipt_status_commit": true,
     "verify_remote_head_after_each_push": true,
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
     "repair_full_validation_after_functional_260": true,
-    "new_functional_sections_paused": true,
+    "new_functional_sections_paused": false,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
     "historical_accuracy_validation_after_section_before261": 115,
-    "batch_target_section": null,
+    "batch_target_section": 370,
     "highest_priority_project_requirements": {
       "path": "PROJECT_REQUIREMENTS.md",
       "section": "项目级最高优先要求（2026-10-15）",
@@ -60,20 +60,20 @@
     "usage_threshold_changed_on_Beijing": "2026-10-18",
     "finish_entire_active_section_before_usage_wrap_up": true,
     "usage_wrap_up_triggered": false,
-    "pause_after_active_section_requested": true,
+    "pause_after_active_section_requested": false,
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
     "current_usage_remaining_percent": 92,
     "current_usage_receipt": "verification/sections/340-closeout/usage-final.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
-    "latest_user_instruction_receipt": "verification/sections/350-pause-request.json",
+    "latest_user_instruction_receipt": "verification/sections/351-preparation/resume-and-scope.json",
     "latest_pause_instruction_receipt": "verification/sections/350-pause-request.json",
     "latest_data_update_instruction_receipt": "verification/sections/313-preparation/scope.json",
     "verification_execution_preference": "local_project_environment",
     "avoid_duplicate_cloud_tests": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 350,
+  "completed_sections": 351,
   "sections": [
     {
       "number": 1,
@@ -2162,12 +2162,18 @@
       "completion_ref": "p3-section-350",
       "topic": "行动奖励的当前版本候选、继承来源与专门条件",
       "verification": "verification/sections/350.json"
+    },
+    {
+      "number": 351,
+      "completion_ref": "p3-section-351",
+      "topic": "敌人行动方式、漏敌影响与控制抗性的中文预览",
+      "verification": "verification/sections/351.json"
     }
   ],
-  "next_section": 351,
-  "next_action": "第350节 + 行动奖励的当前版本候选、继承来源与专门条件，已本机必要验收并普通推送核对。按用户要求完成本节后暂停，351未启动；等待明确继续后才恢复P3实际剩余缺口；P3/P2/P1均未完成，识别优化最后，下次定期全量365。",
+  "next_section": 352,
+  "next_action": "第351节 + 敌人行动方式、漏敌影响与控制抗性的中文预览已本机必要验收；普通推送核对后352接续P3实际剩余缺口，未启动。下次365。",
   "full_validation_due": false,
-  "windows_native_validation": "最终本机22项相关测试、33项原生窗口检查通过，五张功能截图已逐张复查；修复另有38项相关测试、142项节点窗口检查及44项取得入口检查。到期350完整可用范围已在本机通过：保留569个维护选择器、52份旧状态与独立完整审核、原30项及其可用29项、65组P3补充窗口。首轮原始失败、改前源码和修复回执全部保留；修正一个实际布局问题、两处过时断言及304/305审核器的参数比较，未削减原验收范围。第二轮根进程实际退出1，312在完整检查强制60秒时超时；相同源码按该脚本原有120秒默认上限完整复验31项通过，合并证据支持可用范围通过，不宣称单次全绿、原60秒通过或性能已改善。原生截图使用主代理直接查看或逐字节相同的已审阅原图；具体数量和不可用项以本节完整摘要为准。符号链接1314、历史Windows/私有样本、Linux/Wine与实际游戏聊天范围不计通过。原项目测试窗首次启动响应断言失败且未保留私人前后哈希；随后确认该窗健康并完成第二次正常重启，可见响应，第二次完整关闭/启动区间私人五路径保持，首次区间不补称通过；云端不重复跑测试。索引实现未改，复用历史25项单测，仍实际校验本节文档和索引绑定。下一定期全量365。",
+  "windows_native_validation": "本机24项必要测试及23项原生窗口唯一检查通过，验证四份真实关卡的独立构造、未定义占位、无普通攻击但有特殊行为、零扣点与不计总数、地面但不可阻挡等边界。通过真实MainWindow版本页打开关卡，核对两组非零阅读状态经父刷新保持、原源字节损坏清除、恢复手选和主窗关闭整树；七类真实外部操作零，临时本局及旧计算上下文不变。五张实际截图主代理逐张复查；原项目测试窗已正常更新并可见响应，完整正常关闭/启动区间私人五路径保持。569个旧选择器顺序保留，新加2个，当前571。350完整可用验收保留为本节改动前的历史证据，本节未重复跑全量，下一定期365；符号链接1314、历史Windows/私有样本与实机游戏聊天未冒称通过。索引实现未改，复用25项历史单测，实际校验本节要求/索引绑定。用户本次继续至370，完整收尾后暂停。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
   "deferred_problems": [
     {
@@ -2282,14 +2288,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 350,
-    "verification": "verification/sections/350.json",
+    "section": 351,
+    "verification": "verification/sections/351.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 350,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "5ea458fc0065f2cc7da1fcbad4d961fb73714d4a",
     "proof": "verification/sections/350-publication.json",
@@ -2539,7 +2545,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "P3_SECTION350_PUBLISHED_PAUSED",
+  "batch_status": "P3_SECTION351_LOCAL_ACCEPTED_PUBLICATION_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2623,19 +2629,20 @@
     347,
     348,
     349,
-    350
+    350,
+    351
   ],
   "current_batch": {
     "start": 313,
-    "end": null,
-    "status": "P3_SECTION350_PUBLISHED_PAUSED",
-    "completed_sections": 350,
-    "next_section": 351,
+    "end": 370,
+    "status": "P3_SECTION351_LOCAL_ACCEPTED_PUBLICATION_PENDING",
+    "completed_sections": 351,
+    "next_section": 352,
     "next_section_started": false,
     "next_full_validation_after": 365,
-    "batch_closed": true,
-    "target_origin": "User authorized P3 continuation; no numeric stopping target",
-    "receipt": "verification/sections/350.json"
+    "batch_closed": false,
+    "target_origin": "Direct user continuation to370 then pause",
+    "receipt": "verification/sections/351.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -2769,7 +2776,7 @@
     "next_full_validation_after": 120
   },
   "batch_start_section": 313,
-  "batch_target_section": null,
+  "batch_target_section": 370,
   "suspended_target_section": 400,
   "latest_user_resume": {
     "at_Beijing": "2026-10-16T00:17:47.624882+08:00",
@@ -2915,7 +2922,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 350,
+  "latest_functional_section": 351,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -5814,7 +5821,10 @@
     "current_startup_regular_candidates": 6,
     "current_startup_inherited_sources": 6,
     "current_startup_original_entries": 19,
-    "current_startup_actual_menu_verified": false
+    "current_startup_actual_menu_verified": false,
+    "current_enemy_traits_game_commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+    "current_enemy_trait_immunities": 11,
+    "current_enemy_dynamic_control_verified": false
   },
   "historical_before313_publication": {
     "section": 312,
@@ -6090,7 +6100,9 @@
     "validation_composition": "Complete attempt2 plus complete same-source312 canonical120s recheck.",
     "source_freeze": "verification/full-350/source-freeze-attempt2.json",
     "source_freeze_sha256": "57d5b8b33a978ebbbc5af3f7331c9dc4f5045a4b1f306fd5cb62190c8101742e",
-    "native_windows_game_chat_verified": false
+    "native_windows_game_chat_verified": false,
+    "historical_for_current_changed_source": true,
+    "current_worktree_validation_authority": false
   },
   "last_full_validation": {
     "after_section": 350,
@@ -6099,7 +6111,8 @@
     "complete_repository_validation": false,
     "scope_not_reduced": true,
     "source_freeze": "verification/full-350/source-freeze-attempt2.json",
-    "source_freeze_sha256": "57d5b8b33a978ebbbc5af3f7331c9dc4f5045a4b1f306fd5cb62190c8101742e"
+    "source_freeze_sha256": "57d5b8b33a978ebbbc5af3f7331c9dc4f5045a4b1f306fd5cb62190c8101742e",
+    "historical_for_current_changed_source": true
   },
   "historical_before320_publication": {
     "section": 319,
@@ -7339,29 +7352,6 @@
     "next_section_started": false,
     "development_paused": false
   },
-  "current_section_validation": {
-    "section": 350,
-    "receipt": "verification/sections/350.json",
-    "methods_run": 22,
-    "native_isolated_window_checks": 33,
-    "current_startup_choices": 12,
-    "regular_candidates": 6,
-    "independent_inherited_sources": 6,
-    "current_original_entries": 19,
-    "actual_menu_verified": false,
-    "real_nonzero_refresh_states": 2,
-    "full_suite_rerun": true,
-    "last_full_receipt": "verification/full-350/summary.json",
-    "last_full_receipt_is_historical_for_current_changes": false
-  },
-  "latest_section_environment": {
-    "section": 350,
-    "receipt": "verification/sections/350.json",
-    "native_windows": "最终本机22项相关测试、33项原生窗口检查通过，五张功能截图已逐张复查；修复另有38项相关测试、142项节点窗口检查及44项取得入口检查。到期350完整可用范围已在本机通过：保留569个维护选择器、52份旧状态与独立完整审核、原30项及其可用29项、65组P3补充窗口。首轮原始失败、改前源码和修复回执全部保留；修正一个实际布局问题、两处过时断言及304/305审核器的参数比较，未削减原验收范围。第二轮根进程实际退出1，312在完整检查强制60秒时超时；相同源码按该脚本原有120秒默认上限完整复验31项通过，合并证据支持可用范围通过，不宣称单次全绿、原60秒通过或性能已改善。原生截图使用主代理直接查看或逐字节相同的已审阅原图；具体数量和不可用项以本节完整摘要为准。符号链接1314、历史Windows/私有样本、Linux/Wine与实际游戏聊天范围不计通过。原项目测试窗首次启动响应断言失败且未保留私人前后哈希；随后确认该窗健康并完成第二次正常重启，可见响应，第二次完整关闭/启动区间私人五路径保持，首次区间不补称通过；云端不重复跑测试。索引实现未改，复用历史25项单测，仍实际校验本节文档和索引绑定。下一定期全量365。",
-    "native_game_or_chat_verified": false,
-    "current_section_full_rerun": true,
-    "last_full_receipt": "verification/full-350/summary.json"
-  },
   "historical_before350_current_available_full_validation": {
     "section": 335,
     "receipt": "verification/full-335/summary.json",
@@ -7390,12 +7380,61 @@
     "proof": "verification/sections/349-publication.json",
     "proof_sha256": "88eee80a53c39c88ffd067f70e6db5be75d20c742c9cb95c90da861dad4dba81"
   },
-  "cloud_publication_closeout": {
+  "historical_before351_policy_pause": {
+    "new_functional_sections_paused": true,
+    "development_paused_by_latest_user_request": true,
+    "stop_after_section": 350,
+    "pause_after_active_section_requested": true
+  },
+  "historical_before351_current_section_validation": {
+    "section": 350,
+    "receipt": "verification/sections/350.json",
+    "methods_run": 22,
+    "native_isolated_window_checks": 33,
+    "current_startup_choices": 12,
+    "regular_candidates": 6,
+    "independent_inherited_sources": 6,
+    "current_original_entries": 19,
+    "actual_menu_verified": false,
+    "real_nonzero_refresh_states": 2,
+    "full_suite_rerun": true,
+    "last_full_receipt": "verification/full-350/summary.json",
+    "last_full_receipt_is_historical_for_current_changes": false
+  },
+  "historical_before351_latest_section_environment": {
+    "section": 350,
+    "receipt": "verification/sections/350.json",
+    "native_windows": "最终本机22项相关测试、33项原生窗口检查通过，五张功能截图已逐张复查；修复另有38项相关测试、142项节点窗口检查及44项取得入口检查。到期350完整可用范围已在本机通过：保留569个维护选择器、52份旧状态与独立完整审核、原30项及其可用29项、65组P3补充窗口。首轮原始失败、改前源码和修复回执全部保留；修正一个实际布局问题、两处过时断言及304/305审核器的参数比较，未削减原验收范围。第二轮根进程实际退出1，312在完整检查强制60秒时超时；相同源码按该脚本原有120秒默认上限完整复验31项通过，合并证据支持可用范围通过，不宣称单次全绿、原60秒通过或性能已改善。原生截图使用主代理直接查看或逐字节相同的已审阅原图；具体数量和不可用项以本节完整摘要为准。符号链接1314、历史Windows/私有样本、Linux/Wine与实际游戏聊天范围不计通过。原项目测试窗首次启动响应断言失败且未保留私人前后哈希；随后确认该窗健康并完成第二次正常重启，可见响应，第二次完整关闭/启动区间私人五路径保持，首次区间不补称通过；云端不重复跑测试。索引实现未改，复用历史25项单测，仍实际校验本节文档和索引绑定。下一定期全量365。",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": true,
+    "last_full_receipt": "verification/full-350/summary.json"
+  },
+  "historical_before351_cloud_publication_closeout": {
     "section": 350,
     "functional_commit": "5ea458fc0065f2cc7da1fcbad4d961fb73714d4a",
     "proof": "verification/sections/350-publication.json",
     "current_commit_kind": "publication metadata only",
     "next_section_started": false,
     "development_paused": true
+  },
+  "current_section_validation": {
+    "section": 351,
+    "receipt": "verification/sections/351.json",
+    "methods_run": 24,
+    "native_isolated_window_checks": 23,
+    "enemy_boundary_subjects": 4,
+    "explicit_immunity_fields": 11,
+    "real_nonzero_refresh_states": 2,
+    "full_suite_rerun": false,
+    "last_full_receipt": "verification/full-350/summary.json",
+    "last_full_receipt_is_historical_for_current_changes": true
+  },
+  "latest_section_environment": {
+    "section": 351,
+    "receipt": "verification/sections/351.json",
+    "native_windows": "本机24项必要测试及23项原生窗口唯一检查通过，验证四份真实关卡的独立构造、未定义占位、无普通攻击但有特殊行为、零扣点与不计总数、地面但不可阻挡等边界。通过真实MainWindow版本页打开关卡，核对两组非零阅读状态经父刷新保持、原源字节损坏清除、恢复手选和主窗关闭整树；七类真实外部操作零，临时本局及旧计算上下文不变。五张实际截图主代理逐张复查；原项目测试窗已正常更新并可见响应，完整正常关闭/启动区间私人五路径保持。569个旧选择器顺序保留，新加2个，当前571。350完整可用验收保留为本节改动前的历史证据，本节未重复跑全量，下一定期365；符号链接1314、历史Windows/私有样本与实机游戏聊天未冒称通过。索引实现未改，复用25项历史单测，实际校验本节要求/索引绑定。用户本次继续至370，完整收尾后暂停。",
+    "native_game_or_chat_verified": false,
+    "current_section_full_rerun": false,
+    "last_full_receipt": "verification/full-350/summary.json"
   }
 }

@@ -65,12 +65,14 @@ def enemy_records(level,ref):
         # An image named exactly as the reference is independently identifiable,
         # but a same-name handbook enemy or stripped suffix is never substituted.
         if portrait is None:portrait=ref['portraits']['images'].get(binding['id'])
+        from .current_enemy_traits import declarations
         results.append({'key':str(index),'reference_index':index,'id':binding['id'],'level':binding['level'],
             'name':plain(name),'tier':tier if tier in TIERS else None,'prefab_key':prefab,
             'portrait':deepcopy(portrait),'description':plain(identity.get('description')or handbook.get('description')),
             'abilities':[plain(a['text'])for a in handbook.get('abilityList')or[]if a.get('text')],
             'handbook_applied':bool(handbook),'exact_database_level_present':exact,'use_db':binding['useDb'],
-            'raw_binding':deepcopy(binding),'expected_stats':None,'actual_count':None})
+            'raw_binding':deepcopy(binding),'expected_stats':None,'actual_count':None,
+            'declared_traits':declarations(binding,ref)})
     return results
 
 
@@ -136,8 +138,10 @@ def summary_text(result):
 
 
 def enemy_text(enemy):
+    from .current_enemy_traits import player_lines
     lines=[enemy['name']+' · '+TIERS.get(enemy['tier'],'类别未确认'),'','【预计面板】',
         '生命值、攻击力、防御、法抗：未知。当前版本的关卡、保密等级和技能修正尚未完整迁移，不以白值替代。',
+        *player_lines(enemy.get('declared_traits')),
         '','【介绍与机制】',enemy['description']or'此精确引用未取得独立介绍。']
     lines+=enemy['abilities']or['此精确引用未取得独立图鉴能力；不能借用同名或派生单位的机制。']
     if not enemy['use_db']:lines+=['本关采用独立配置，未借用数据库图鉴机制。']
