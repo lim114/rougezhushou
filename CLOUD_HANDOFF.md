@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/350.json)。
 
-已完成至350，后续351；本批状态 `P3_SECTION350_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至350，后续351；本批状态 `P3_SECTION350_PUBLISHED_PAUSED`。推进终点：未指定数字终点。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -637,5 +637,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 用户最新要求：第350节完整收尾后暂停，不启动351；完成本节普通发布、远端核对及暂停断点后等待明确继续。
 
-<!-- section350-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第350节功能提交5ea458fc0065f2cc7da1fcbad4d961fb73714d4a已普通推送并核对真实远端及3438份相关公开文件字节，证明verification/sections/350-publication.json。本次仅保存发布元数据，不增加功能节数；本批完成后已暂停，351尚未启动，等待用户明确继续；恢复后下一定期全量365。P3/P2/P1未完成，资料目录不冒充实际菜单、服务器资格或实际领取；私人状态及实机游戏/聊天未纳入云端。
 <!-- section350-handoff:end -->

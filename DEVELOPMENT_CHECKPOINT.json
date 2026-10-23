@@ -35,14 +35,14 @@
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
     "current_user_batch_target_section": null,
-    "current_user_batch_completed": false,
+    "current_user_batch_completed": true,
     "requirements_synced_each_section": true,
     "atomic_section_source_receipt_status_commit": true,
     "verify_remote_head_after_each_push": true,
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
     "repair_full_validation_after_functional_260": true,
-    "new_functional_sections_paused": false,
+    "new_functional_sections_paused": true,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
@@ -2165,7 +2165,7 @@
     }
   ],
   "next_section": 351,
-  "next_action": "第350节 + 行动奖励的当前版本候选、继承来源与专门条件已本机必要验收；完成本节普通推送、真实远端核对与暂停元数据后停止；351未启动，等待明确继续。恢复后下次全量365。",
+  "next_action": "第350节 + 行动奖励的当前版本候选、继承来源与专门条件，已本机必要验收并普通推送核对。按用户要求完成本节后暂停，351未启动；等待明确继续后才恢复P3实际剩余缺口；P3/P2/P1均未完成，识别优化最后，下次定期全量365。",
   "full_validation_due": false,
   "windows_native_validation": "最终本机22项相关测试、33项原生窗口检查通过，五张功能截图已逐张复查；修复另有38项相关测试、142项节点窗口检查及44项取得入口检查。到期350完整可用范围已在本机通过：保留569个维护选择器、52份旧状态与独立完整审核、原30项及其可用29项、65组P3补充窗口。首轮原始失败、改前源码和修复回执全部保留；修正一个实际布局问题、两处过时断言及304/305审核器的参数比较，未削减原验收范围。第二轮根进程实际退出1，312在完整检查强制60秒时超时；相同源码按该脚本原有120秒默认上限完整复验31项通过，合并证据支持可用范围通过，不宣称单次全绿、原60秒通过或性能已改善。原生截图使用主代理直接查看或逐字节相同的已审阅原图；具体数量和不可用项以本节完整摘要为准。符号链接1314、历史Windows/私有样本、Linux/Wine与实际游戏聊天范围不计通过。原项目测试窗首次启动响应断言失败且未保留私人前后哈希；随后确认该窗健康并完成第二次正常重启，可见响应，第二次完整关闭/启动区间私人五路径保持，首次区间不补称通过；云端不重复跑测试。索引实现未改，复用历史25项单测，仍实际校验本节文档和索引绑定。下一定期全量365。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -2288,12 +2288,12 @@
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
-    "section": 349,
-    "scope": "previous_functional_section",
+    "section": 350,
+    "scope": "current_functional_section",
     "binding": "verified_remote_commit",
-    "commit": "9726f3787dd459cb9c2676215dd6808343d471f4",
-    "proof": "verification/sections/349-publication.json",
-    "proof_sha256": "88eee80a53c39c88ffd067f70e6db5be75d20c742c9cb95c90da861dad4dba81"
+    "commit": "5ea458fc0065f2cc7da1fcbad4d961fb73714d4a",
+    "proof": "verification/sections/350-publication.json",
+    "proof_sha256": "882bb78ddacd4e2bde1c8860918e68f25c4d1cff7997ba63146a1809952da077"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -2539,7 +2539,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "P3_SECTION350_LOCAL_ACCEPTED_PUBLICATION_PENDING",
+  "batch_status": "P3_SECTION350_PUBLISHED_PAUSED",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2628,12 +2628,12 @@
   "current_batch": {
     "start": 313,
     "end": null,
-    "status": "P3_SECTION350_LOCAL_ACCEPTED_PUBLICATION_PENDING",
+    "status": "P3_SECTION350_PUBLISHED_PAUSED",
     "completed_sections": 350,
     "next_section": 351,
     "next_section_started": false,
     "next_full_validation_after": 365,
-    "batch_closed": false,
+    "batch_closed": true,
     "target_origin": "User authorized P3 continuation; no numeric stopping target",
     "receipt": "verification/sections/350.json"
   },
@@ -7381,5 +7381,21 @@
     "scope_not_reduced": true,
     "source_freeze": "verification/full-335/source-freeze-binding-recheck2.json",
     "source_freeze_sha256": "a428e10af9cadc6acafcae044524308ada1f7816e7512a4346c59efc74b71815"
+  },
+  "historical_before350_publication": {
+    "section": 349,
+    "scope": "previous_functional_section",
+    "binding": "verified_remote_commit",
+    "commit": "9726f3787dd459cb9c2676215dd6808343d471f4",
+    "proof": "verification/sections/349-publication.json",
+    "proof_sha256": "88eee80a53c39c88ffd067f70e6db5be75d20c742c9cb95c90da861dad4dba81"
+  },
+  "cloud_publication_closeout": {
+    "section": 350,
+    "functional_commit": "5ea458fc0065f2cc7da1fcbad4d961fb73714d4a",
+    "proof": "verification/sections/350-publication.json",
+    "current_commit_kind": "publication metadata only",
+    "next_section_started": false,
+    "development_paused": true
   }
 }
