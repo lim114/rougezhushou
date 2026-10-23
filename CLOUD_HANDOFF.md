@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/353.json)。
 
-已完成至353，后续354；本批状态 `P3_SECTION353_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至353，后续354；本批状态 `P3_SECTION353_PUBLISHED`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -673,5 +673,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 名称依据固定BWIKI与PRTS完整地形文献；参数字段含义另有明确标为缓存摘要、未取得完整修订原件的文献证据，不能冒称当前全文或服务器核验。tile_pollution_roadf仍缺准确名称和效果，不凭变量片段猜成污染区。首次生效、重触发、结束时刻、实际通道配对和本局最终面板未证；本页不把地形效果写入计算。除已有校准位置外的格子、实际脚点与绝对精度仍待核验。未操作游戏、未发聊天、未加入路线建议或概率；P3/P2/P1未完成，识别最后。
 
-<!-- section353-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第353节功能提交d2f59fd4f53ebda01f6f1ff31540bb07a0e14292已普通推送并核对真实远端及432份相关公开文件字节，证明verification/sections/353-publication.json。本次仅保存发布元数据，不增加功能节数；后续354尚未启动；按本次授权继续至370并完整收尾后暂停，下一定期全量365。P3/P2/P1未完成，地形说明不冒充本局生效或未核验原图校准；私人状态及实机游戏/聊天未纳入云端。
 <!-- section353-handoff:end -->
