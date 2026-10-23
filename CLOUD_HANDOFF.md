@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/352.json)。
 
-已完成至352，后续353；本批状态 `P3_SECTION352_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至352，后续353；本批状态 `P3_SECTION352_PUBLISHED`。推进终点：370。下次定期全量365。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -661,5 +661,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 这是资料入口及分类的真实整合，不代表新版本计算、完整服务器资格、事件脚本、掉落池、实际领取或当前游戏状态已完成迁移。38份既有原生脚本和4份集成测试已按真实常用页迁移并做语法/检查保留核对；本节实际重跑6份代表原生流程，不宣称38份全部重跑或本节全量通过。固定来源仍为bee3国服10月16日；未知与新旧数值边界继续在对应页面说明，不增加游戏操作、聊天、路线建议或生成概率。P3/P2/P1仍未完成，识别最后；353地形等缓存预备不计完成或发布。
 
-<!-- section352-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第352节功能提交f1a0eb33ef59a785ef87f7787b7ef36fcd410dac已普通推送并核对真实远端及586份相关公开文件字节，证明verification/sections/352-publication.json。本次仅保存发布元数据，不增加功能节数；后续353尚未启动；按本次授权继续至370并完整收尾后暂停，下一定期全量365。P3/P2/P1未完成，资料整合不冒充新版本计算和完整游戏脚本已迁移；私人状态及实机游戏/聊天未纳入云端。
 <!-- section352-handoff:end -->
