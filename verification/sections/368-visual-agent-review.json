@@ -1,0 +1,99 @@
+{
+  "schema": "section368_final_actual_subagent_visual_review_v1",
+  "section": 368,
+  "attempt": 1,
+  "actor": "/root/p3_battle_gap_research",
+  "actor_role": "真实子代理逐张实际视觉复查，不冒称根代理直接查看",
+  "reviewed_at": "2026-10-24T01:08:44.6622910+00:00",
+  "process_passed_gate": {
+    "path": "verification/sections/368-native-attempt1/process.json",
+    "sha256": "98cfd765ccedbd8adb30ca3d9bde0833e7f6bf2c71e851dc25c22bdfb421f637",
+    "passed_reported_by_root_before_review": true,
+    "passed_observed_after_review": true,
+    "actual_observed_exit": 0
+  },
+  "native_receipt": {
+    "path": "verification/sections/368-native-attempt1/actual/window.json",
+    "sha256": "66c5b82c2a51d14a9fd0a1f38d70e9a93984da7ac69712c8f2bccba9fe1b7bff"
+  },
+  "method": "六个最终实际PNG分别调用tools.view_image(detail=original)，两批各返回三张原图后逐张阅读可见像素；随后核对完整PNG字节SHA与原生截图回执。不是凭文件名、元数据或测试断言判定已看。",
+  "images": [
+    {
+      "path": "verification/sections/368-native-attempt1/actual/window-faith-actual-damage-only.png",
+      "sha256": "fa2fb5f7396b35db6be9136d614f7430086afb45674b63598d5064922824706c",
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "沉沦之人总览将三种形态与两个阶段明确区分，头像和本次形态选择清楚；信仰主题可见实际生命降低、日照/日蚀两种进度、满值切换与重生阶段条件。长文有独立滚动条，当前画面文字未重叠；该截图只展示滚动区可见部分。",
+      "bytes": 224630
+    },
+    {
+      "path": "verification/sections/368-native-attempt1/actual/window-sun-complete-skill.png",
+      "sha256": "33454b72613d27dc283ed66161e9d898e00a49ea0f589f339ad0ecf8907f74c3",
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "日照形态艾穆拉伊的耀日恩宠被单独选择，完整招式说明区分触发形态、蓄力、弹道与跳跃，强化形态追加效果独立写出。底部明确来源修订号、固定资料与实际信仰/形态/召唤时钟未知，头像与选择控件完整可见。",
+      "bytes": 153377
+    },
+    {
+      "path": "verification/sections/368-native-attempt1/actual/window-eclipse-title-difference.png",
+      "sha256": "94e665ae60fdfd29141931f7d73cb82836023989061ad58dccb1e3183b4dfa97",
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "日蚀形态托斯卡特尔的熄日祭坛说明独立展示，明确本形态、同行/同列、蓄力与强化蓄力差异。原文名称与当前游戏图鉴名称的差别单独成段，保留两种名称而不擅改为脚本对应；文字在阅读区内完整可读。",
+      "bytes": 160904
+    },
+    {
+      "path": "verification/sections/368-native-attempt1/actual/window-fixed-terrain-no-phase-projection.png",
+      "sha256": "591eb44319128b6d6b0b5d391cf1957db79336d81f1e5dee0fc420344108d838",
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "固定熄日地图与九行十三列地形表并排可见，入口、保护目标和传送类格子用文字和颜色区分；下方说明已对照的入口及目标标志、近似中心和未知实际落点。右图未额外画出祭坛或二阶段变化投影，长说明可滚动。",
+      "bytes": 654328
+    },
+    {
+      "path": "verification/sections/368-native-attempt1/actual/window-altar-mechanism-boundary.png",
+      "sha256": "e38613edd85b565d441dd193d91196385a729f5d4c8b2805629de03543af3ce2",
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "陨石与祭台页将首领文献原项和祭台独立文献分段，写明资料分别保存、固定关卡无祭台预置及实际生成位置未核验；底部固定地形按钮明确标注不预测二阶段，未把原文描述当成地图已定位实体。",
+      "bytes": 157895
+    },
+    {
+      "path": "verification/sections/368-native-attempt1/actual/window-source-loss.png",
+      "sha256": "cbb5424b4bdb6b3d7a7bd5fb810825871b0f85e8eec05ad7bd89a72b5e1852f1",
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "来源失效页显示资料无法核对、旧形态招式图片与地形入口已清除的中文提示；旧头像、机制正文和地图按钮均不残留，形态和招式控件灰显，重新核对按钮仍可见且排版完整。",
+      "bytes": 43436
+    }
+  ],
+  "actual_view_image_calls": 6,
+  "all_six_actual_images_reviewed": true,
+  "root_direct_view_claimed": false,
+  "blocking_visual_issues": [],
+  "visual_result": "六张实际原分辨率截图未发现阻碍阅读的文字遮挡、形态控件错配、首领与祭台来源混写或坏源旧内容残留。三种形态与两个阶段的区别、原文名称差异及实际状态未知均在可见正文中标明；固定地图未补画祭台或二阶段变化。",
+  "limits": [
+    "此次仅审阅六张截图实际可见像素，不替代36项必要检查与72项原生交互、准确全引用核验。",
+    "信仰总览及固定地图说明为可滚动内容，未因截图存在便宣称全部滚动原文、完整来源页签与所有招式已经逐张视觉检查。",
+    "三种形态的控件和代表内容分开可见，不单凭静态图证明全部切换链、非零阅读保持、关闭清理或手动恢复；这些由实际原生检查另证。",
+    "祭台的动态生成、地形替换、二阶段实际格与实际信仰、战斗时钟均不由截图证明；固定地图可读与有限可见标志对照不代表二阶段位置预测完成。",
+    "截图里的文献数值与机制原文只按画面阅读，不重复推导机制，也不将其视为当前本局预测面板或完整服务器行为。",
+    "真实查看者为子代理，不声称根代理直接查看。"
+  ],
+  "formal_tree_modified": false,
+  "tests_or_windows_started": false,
+  "game_or_chat_run": false,
+  "private_state_touched": false
+}

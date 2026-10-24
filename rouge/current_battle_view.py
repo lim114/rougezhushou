@@ -26,6 +26,7 @@ class CurrentBattlePanel(QWidget):
         self.shop_vault_dialog=None
         self.shop_vault_button=QPushButton('查看坎诺特与保险柜的条件和后果');self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False)
         body.addWidget(self.shop_vault_button);self.shop_vault_button.clicked.connect(self.open_shop_vault)
+        self.sun_boss_button=QPushButton('查看本关多形态首领与祭台的完整机制');self.sun_boss_button.hide();body.addWidget(self.sun_boss_button);self.sun_boss_button.clicked.connect(self.open_sun_boss)
         self.enemy_player=QPlainTextEdit();self.enemy_player.setReadOnly(True);body.addWidget(self.enemy_player,1);self.tabs.addTab(enemies,'敌人和机制')
         wave=QWidget();body=QVBoxLayout(wave);self.queue_kind=QComboBox();self.queue_kind.addItem('总览（全部条目）',None);self.queue_kind.addItem('主波次','main');self.queue_kind.addItem('条件分支','branch');body.addWidget(self.queue_kind)
         split=QSplitter();self.actions=QListWidget();split.addWidget(self.actions);self.action_player=QPlainTextEdit();self.action_player.setReadOnly(True);split.addWidget(self.action_player);split.setSizes([350,650]);body.addWidget(split,1)
@@ -41,6 +42,7 @@ class CurrentBattlePanel(QWidget):
         self.refresh_reference()
 
     def _clear(self):
+        self._close_sun_boss();self.sun_boss_button.hide();self.sun_boss_button.setEnabled(False)
         self._close_shop_vault();self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False)
         self._close_elbert();self.elbert_button.hide();self.elbert_button.setEnabled(False)
         self._close_hanko();self.hanko_button.hide();self.hanko_button.setEnabled(False)
@@ -143,6 +145,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_portrait.clear();pix=QPixmap();raw=model.picture_bytes(enemy['portrait'])if enemy else None
         if raw and pix.loadFromData(raw,'PNG'):self.enemy_portrait.setPixmap(pix.scaled(90,90,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
         else:self.enemy_portrait.setText('此精确引用未取得图片。'if enemy else'')
+        self._sync_sun_boss(keep)
         self._sync_elbert(keep)
         self._sync_hanko(keep)
         self._sync_shop_vault(keep)
@@ -246,6 +249,38 @@ class CurrentBattlePanel(QWidget):
             self._close_elbert();return False
         self.elbert_dialog.show();return True
 
+    def _close_sun_boss(self):
+        child=getattr(self,'sun_boss_dialog',None)
+        if child is not None:
+            child.panel.clear_reference();child.close()
+
+    def _sync_sun_boss(self,keep):
+        from . import current_sun_boss as reader
+        available=self.result is not None and self.enemy_key is not None and bool(reader.target_available(self.stage_id,self.enemy_key))
+        self.sun_boss_button.setVisible(available);self.sun_boss_button.setEnabled(available)
+        child=getattr(self,'sun_boss_dialog',None)
+        if child is not None and child.isVisible():
+            if not keep:self._close_sun_boss()
+            elif not available:child.panel.clear_reference()
+            else:
+                child.panel.refresh_reference()
+                child_result=child.panel.result
+                if child_result is not None and child_result.get('battle_source_identity')!=self.result['source_identity']:
+                    self._close_sun_boss()
+
+    def open_sun_boss(self):
+        if self.result is None or self.enemy_key is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from . import current_sun_boss as reader
+        if not reader.target_available(self.stage_id,self.enemy_key):
+            self._close_sun_boss();self.sun_boss_button.hide();return False
+        from .current_sun_boss_view import CurrentSunBossDialog
+        self._close_sun_boss();self.sun_boss_dialog=CurrentSunBossDialog(self.stage_id,self.enemy_key,self)
+        child_result=self.sun_boss_dialog.panel.result
+        if child_result is None or child_result.get('battle_source_identity')!=self.result['source_identity']:
+            self._close_sun_boss();return False
+        self.sun_boss_dialog.show();return True
+
     def _close_event_origins(self):
         dialog=getattr(self,'event_origins_dialog',None)
         if dialog is not None:dialog.close()
@@ -258,7 +293,7 @@ class CurrentBattlePanel(QWidget):
         from .current_event_battles_view import CurrentEventBattlesDialog
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
-    def closeEvent(self,event):self._close_shop_vault();self.rewards._close_shop_vault();self._close_elbert();self._close_hanko();self.settlement.clear_reference();self._close_spawn_candidates();self._close_map_positions();self._close_event_origins();super().closeEvent(event)
+    def closeEvent(self,event):self._close_sun_boss();self._close_shop_vault();self.rewards._close_shop_vault();self._close_elbert();self._close_hanko();self.settlement.clear_reference();self._close_spawn_candidates();self._close_map_positions();self._close_event_origins();super().closeEvent(event)
 
     def _close_shop_vault(self):
         child=getattr(self,'shop_vault_dialog',None)
@@ -299,4 +334,4 @@ class CurrentBattleDialog(QDialog):
         super().__init__(parent);self.setWindowTitle('固定关卡预览');self.resize(1120,820)
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
-    def closeEvent(self,event):self.panel._close_shop_vault();self.panel.rewards._close_shop_vault();self.panel._close_elbert();self.panel._close_hanko();self.panel.settlement.clear_reference();self.panel._close_spawn_candidates();self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)
+    def closeEvent(self,event):self.panel._close_sun_boss();self.panel._close_shop_vault();self.panel.rewards._close_shop_vault();self.panel._close_elbert();self.panel._close_hanko();self.panel.settlement.clear_reference();self.panel._close_spawn_candidates();self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)
