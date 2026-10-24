@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/369.json)。
 
-已完成至369，后续370；本批状态 `P3_SECTION369_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：370。下次定期全量380。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至369，后续370；本批状态 `P3_SECTION369_PUBLISHED`。推进终点：370。下次定期全量380。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -865,5 +865,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 四组旧文献不是四套新机制。当前赤金厄运未配置旧两项关卡修正，旧倍率与面板不能套用；只提供守卫后的文献说明，完整当前敌人预测数值仍未知。未支持的变体、DLC配置或同名狗不借用已支持条目。两份独立痛楚实体只在追猎变体ro6_b_4_b的准确普通敌人条目保留，该变体尚无本节完整机制入口；不把它们放入普通关ro6_b_4的关联列表，不伪造完整图鉴、实际出现或位置。 只作局外查阅，不操作游戏、发送聊天或改变本局；P3/P2/P1均未完成，识别最后。
 
-<!-- section369-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第369节功能提交57698254501297c54031713f878dbbb0a1789245已普通推送并核对真实远端及1069份相关公开文件字节，证明verification/sections/369-publication.json。本次仅保存发布元数据，不增加功能节数；后续370尚未启动；按本次授权继续至370并完整收尾后暂停，下一定期全量380。P3/P2/P1未完成，资料对照不冒充本局实际状态/生成/生效/结算；私人状态及实机游戏/聊天未纳入云端。
 <!-- section369-handoff:end -->
