@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/365.json)。
 
-已完成至365，后续366；本批状态 `P3_SECTION365_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：370。下次定期全量380。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至365，后续366；本批状态 `P3_SECTION365_PUBLISHED`。推进终点：370。下次定期全量380。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -817,5 +817,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 原始图鉴与社区修正分别保存，不把照明弹视为清除全场所有隐匿/迷彩。当前实际触发时刻、持续时间、解除状态、烟雾位置及数量和最终敌人面板仍未知；关卡原参数仅按已证范围说明，不把未解析参数翻译成实际时钟。关卡中的未定义覆写不替换真实敌人身份，相关实体也不冒充同时登场。只提供固定资料与局外查阅，不加入伤害公式、不操作游戏或发聊天、不更改本局。P3/P2/P1仍未完成，识别最后。
 
-<!-- section365-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第365节功能提交7d4a9df8d72bce2df635e81507ad6a5127f37f75已普通推送并核对真实远端及3925份相关公开文件字节，证明verification/sections/365-publication.json。本次仅保存发布元数据，不增加功能节数；后续366尚未启动；按本次授权继续至370并完整收尾后暂停，下一定期全量380。P3/P2/P1未完成，资料对照不冒充本局实际状态/生成/生效/结算；私人状态及实机游戏/聊天未纳入云端。
 <!-- section365-handoff:end -->
