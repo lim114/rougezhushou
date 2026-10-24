@@ -22,6 +22,7 @@ class CurrentBattlePanel(QWidget):
         enemies=QWidget();body=QVBoxLayout(enemies);self.enemy_combo=QComboBox();self.enemy_choices=BranchChoice(self.enemy_combo,[],overview_label='总览（本关候选）',placeholder='请选择敌人或关联实体');body.addWidget(self.enemy_choices)
         self.enemy_portrait=QLabel();self.enemy_portrait.setMinimumSize(85,85);self.enemy_portrait.setAlignment(Qt.AlignmentFlag.AlignCenter);body.addWidget(self.enemy_portrait)
         self.hanko_button=QPushButton('查看汉科、相关敌人和烟雾弹的完整机制');self.hanko_button.hide();body.addWidget(self.hanko_button);self.hanko_button.clicked.connect(self.open_hanko)
+        self.elbert_button=QPushButton('查看本关首领、关联敌人与火种的完整机制');self.elbert_button.hide();body.addWidget(self.elbert_button);self.elbert_button.clicked.connect(self.open_elbert)
         self.enemy_player=QPlainTextEdit();self.enemy_player.setReadOnly(True);body.addWidget(self.enemy_player,1);self.tabs.addTab(enemies,'敌人和机制')
         wave=QWidget();body=QVBoxLayout(wave);self.queue_kind=QComboBox();self.queue_kind.addItem('总览（全部条目）',None);self.queue_kind.addItem('主波次','main');self.queue_kind.addItem('条件分支','branch');body.addWidget(self.queue_kind)
         split=QSplitter();self.actions=QListWidget();split.addWidget(self.actions);self.action_player=QPlainTextEdit();self.action_player.setReadOnly(True);split.addWidget(self.action_player);split.setSizes([350,650]);body.addWidget(split,1)
@@ -37,6 +38,7 @@ class CurrentBattlePanel(QWidget):
         self.refresh_reference()
 
     def _clear(self):
+        self._close_elbert();self.elbert_button.hide();self.elbert_button.setEnabled(False)
         self._close_hanko();self.hanko_button.hide();self.hanko_button.setEnabled(False)
         self._close_spawn_candidates();self.spawn_candidates_button.setEnabled(False)
         self._close_event_origins();self.event_origins_button.setEnabled(False);self.event_origins_button.hide()
@@ -137,6 +139,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_portrait.clear();pix=QPixmap();raw=model.picture_bytes(enemy['portrait'])if enemy else None
         if raw and pix.loadFromData(raw,'PNG'):self.enemy_portrait.setPixmap(pix.scaled(90,90,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
         else:self.enemy_portrait.setText('此精确引用未取得图片。'if enemy else'')
+        self._sync_elbert(keep)
         self._sync_hanko(keep)
 
     def _actions_changed(self,*_,preserve=False):
@@ -206,6 +209,38 @@ class CurrentBattlePanel(QWidget):
         if self.hanko_dialog.panel.result is None:self._close_hanko();return False
         self.hanko_dialog.show();return True
 
+    def _close_elbert(self):
+        child=getattr(self,'elbert_dialog',None)
+        if child is not None:
+            child.panel.clear_reference();child.close()
+
+    def _sync_elbert(self,keep):
+        from . import current_elbert_reference as reader
+        available=self.result is not None and self.enemy_key is not None and bool(reader.locate(self.stage_id,self.enemy_key) is not None)
+        self.elbert_button.setVisible(available);self.elbert_button.setEnabled(available)
+        child=getattr(self,'elbert_dialog',None)
+        if child is not None and child.isVisible():
+            if not keep:self._close_elbert()
+            elif not available:child.panel.clear_reference()
+            else:
+                child.panel.refresh_reference()
+                child_result=child.panel.base
+                if child_result is not None and child_result.get('battle_source_identity')!=self.result['source_identity']:
+                    self._close_elbert()
+
+    def open_elbert(self):
+        if self.result is None or self.enemy_key is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from . import current_elbert_reference as reader
+        if not reader.locate(self.stage_id,self.enemy_key) is not None:
+            self._close_elbert();self.elbert_button.hide();return False
+        from .current_elbert_view import CurrentElbertDialog
+        self._close_elbert();self.elbert_dialog=CurrentElbertDialog(self.stage_id,self.enemy_key,self)
+        child_result=self.elbert_dialog.panel.result
+        if child_result is None or child_result.get('battle_source_identity')!=self.result['source_identity']:
+            self._close_elbert();return False
+        self.elbert_dialog.show();return True
+
     def _close_event_origins(self):
         dialog=getattr(self,'event_origins_dialog',None)
         if dialog is not None:dialog.close()
@@ -218,7 +253,7 @@ class CurrentBattlePanel(QWidget):
         from .current_event_battles_view import CurrentEventBattlesDialog
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
-    def closeEvent(self,event):self._close_hanko();self.settlement.clear_reference();self._close_spawn_candidates();self._close_map_positions();self._close_event_origins();super().closeEvent(event)
+    def closeEvent(self,event):self._close_elbert();self._close_hanko();self.settlement.clear_reference();self._close_spawn_candidates();self._close_map_positions();self._close_event_origins();super().closeEvent(event)
 
 
 class CurrentBattleDialog(QDialog):
@@ -226,4 +261,4 @@ class CurrentBattleDialog(QDialog):
         super().__init__(parent);self.setWindowTitle('固定关卡预览');self.resize(1120,820)
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
-    def closeEvent(self,event):self.panel._close_hanko();self.panel.settlement.clear_reference();self.panel._close_spawn_candidates();self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)
+    def closeEvent(self,event):self.panel._close_elbert();self.panel._close_hanko();self.panel.settlement.clear_reference();self.panel._close_spawn_candidates();self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)

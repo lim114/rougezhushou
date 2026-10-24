@@ -1,0 +1,106 @@
+{
+  "schema": "section366_final_actual_subagent_visual_review_v1",
+  "section": 366,
+  "attempt": 1,
+  "actor": "/root/p3_351_scope_research",
+  "actor_role": "真实子代理逐张实际视觉复查，不冒称根代理直接查看",
+  "reviewed_at": "2026-10-24T00:53:09.737332+00:00",
+  "process_passed_gate": {
+    "path": "verification/sections/366-native-attempt1/process.json",
+    "sha256": "73120c06aad7d6ab4f620d5a16a51f3a4306e3d61e3f2e34d4bef6dc517d8be5",
+    "passed_reported_by_root_before_review": true,
+    "passed_observed_before_review": false,
+    "passed_observed_after_review": true,
+    "actual_observed_exit": 0
+  },
+  "method": "六个最终实际PNG分别调用tools.view_image(detail=original)，以原分辨率输出并阅读每张可见像素；随后核对完整原图SHA与native截图回执。不是仅凭元数据或断言判定已看。",
+  "images": [
+    {
+      "path": "verification/sections/366-native-attempt1/actual/window-ordinary-enemy-entry.png",
+      "bytes": 158697,
+      "sha256": "29ce713bf04bceee5da282170782a8bab3496c1d2be8d65bfa503ad33e0c720b",
+      "width": 1373,
+      "height": 998,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "当前敌人页选中埃尔伯特，显示对应敌人图片及首领、关联敌人与火种完整机制入口；预计面板明确未知，说明与免疫分组可读，未以白值代替预测。按钮和正文无重叠或横向截断。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/366-native-attempt1/actual/window-normal-blink-conditions.png",
+      "bytes": 124747,
+      "sha256": "ce22d755b4586790e0cee16265036b6e8b4b33dcc0ae54372ba621b82ec1d63c",
+      "width": 1323,
+      "height": 1004,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "埃尔伯特闪现专属主题和查看本关火种按钮清楚，未被阻挡、开始动作、正常结束后传送和后摇保护分别说明；0秒初始冷却、30秒冷却没有被写成整场实际触发时刻，图片与所选敌人相符。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/366-native-attempt1/actual/window-database-firebrand.png",
+      "bytes": 118869,
+      "sha256": "a669b494376c1a07ff44df2e68fefe0e036c87d4285ef954e5c407a736752dc8",
+      "width": 1323,
+      "height": 1004,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "资料库火种明确独立图片尚未取得，没有借用首领图；默认文献10秒退场、逐秒变化及半径2/法术1000/凋亡200均带默认适用说明，本关引用资料与未证变化方向另列，未直接显示伤害曲线。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/366-native-attempt1/actual/window-heretic-post-exit-staff.png",
+      "bytes": 123217,
+      "sha256": "4d6778acf4f7a8b8b5219e8551ebecc513cb05d1e768be4bb80eb3edaf17b76a",
+      "width": 1323,
+      "height": 1004,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "异端埃尔伯特的退场法杖主题与首领图片对应；退场而非仅被击倒、半径20、攻击速度+50、最终移动速度150%即增加50%、同名不叠加均在可见正文分句说明，明确未证明当前留杖或敌人实际获益。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/366-native-attempt1/actual/window-independent-firebrand.png",
+      "bytes": 125340,
+      "sha256": "d608dcc6a585841e3350a0f33d92b3615c886be4d7bf5d42a2759a3d3e9c934b",
+      "width": 1323,
+      "height": 1004,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "冰冷流亡独立火种页保留默认文献与本关必须另看的区别；本关6秒、范围1.5、法术500另列且不按首领名字自动判断增长曲线、不按路程反算强度。缺图提示清楚，主体阅读区宽敞无控件遮挡。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/366-native-attempt1/actual/window-source-loss.png",
+      "bytes": 38724,
+      "sha256": "9804f84b51c9ecca0c982d640f59065694996b0370b0db481467e714d1251f0a",
+      "width": 1323,
+      "height": 1004,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "来源失效图中选择框回到请选择本关首领或火种，旧敌人图片、专属主题和关联入口均已消失；正文仅保留暂时无法核对、旧内容已清除和恢复后重新选择的说明，没有遗留上一张火种参数。",
+      "visual_blocking_issue": false
+    }
+  ],
+  "actual_view_image_calls": 6,
+  "all_six_actual_images_reviewed": true,
+  "root_direct_view_claimed": false,
+  "blocking_visual_issues": [],
+  "visual_result": "六张实际原分辨率截图未发现入口错配、默认文献与独立本关火种配置混同、法杖百分比误读、旧内容残留、文字遮挡或阅读阻断。",
+  "limits": [
+    "此次仅审阅六张截图中实际可见内容，不替代31项必要检查、57项原生交互与准确引用语义核验。",
+    "六图没有专门的恢复后手选截图；可见的是来源失效后的清空及恢复提示，不将恢复交互或两组阅读保持冒充为本次像素直接验证。",
+    "独立火种缺图是明确标示的资料边界，本次不证明真实图片已获取；未核验当前游戏实战、本局数值或不可见完整原文。",
+    "真实查看者为子代理，不声称根代理直接查看。"
+  ],
+  "formal_tree_modified": false,
+  "tests_or_windows_started": false,
+  "game_or_chat_run": false,
+  "private_state_touched": false
+}
