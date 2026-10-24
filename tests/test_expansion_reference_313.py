@@ -102,7 +102,11 @@ class ExpansionReference313Tests(unittest.TestCase):
 
     def test_official_label_and_legacy_limits_are_explicit_not_DLC2_or_current_calibration(self):
         ref=model.packet();self.assertFalse(ref['source']['DLC2_as_official_name_verified']);self.assertFalse(ref['baseline_calculation_migrated']);self.assertFalse(ref['position_mapping_verified'])
-        self.assertIn('内容拓展·一',model.NOTICE);self.assertIn('尚未整体迁移',model.NOTICE)
+        self.assertIn('内容拓展·一',model.NOTICE)
+        self.assertIn('固定资料',model.NOTICE);self.assertIn('须按对应条件确认',model.NOTICE)
+        self.assertIn('以该项结果旁注明的适用范围为准',model.NOTICE)
+        self.assertIn('更新前的固定基准',model.LEGACY_NOTICE)
+        self.assertIn('数值计算和位置映射尚未完整适配',model.LEGACY_NOTICE)
         copy=model.packet();copy['current']['details']['stages'].clear();self.assertEqual(len(model.packet()['current']['details']['stages']),184)
 
 if __name__=='__main__':unittest.main()

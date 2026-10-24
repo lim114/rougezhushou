@@ -1,0 +1,102 @@
+{
+  "schema": "section365_final_actual_subagent_visual_review_v1",
+  "section": 365,
+  "attempt": 2,
+  "actor": "/root/p3_351_scope_research",
+  "actor_role": "真实子代理逐张实际视觉复查，不冒称根代理直接查看",
+  "reviewed_at": "2026-10-23T19:56:58.560389+00:00",
+  "process_passed_gate": {
+    "path": "verification/sections/365-native-attempt2/process.json",
+    "sha256": "acbfe4e36b8bf18a9a2b7c5796edc727e6bb3ce5afb6ee116cd121dc5e11782d",
+    "passed_observed_before_review": true
+  },
+  "method": "六个最终实际PNG分别调用tools.view_image并阅读可见像素；之后读取完整原图字节核对最终native回执SHA。不是仅核对哈希、文件名或验收断言。",
+  "images": [
+    {
+      "path": "verification/sections/365-native-attempt2/actual/window-ordinary-enemy-entry.png",
+      "bytes": 154791,
+      "sha256": "161aa9ba1a11416dea90ff1471422cf3ec946e4c2c05b4fc56016fd934c08fac",
+      "width": 1373,
+      "height": 998,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "真实当前敌人页选中汉科并有完整机制入口和对应图像；预计面板明确未知、不以白值替代，图鉴与原免疫/行动等固定配置分组。入口处没有冒充已核对完整当前数值或本局状态。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/365-native-attempt2/actual/window-game-original-community-correction.png",
+      "bytes": 201641,
+      "sha256": "dd43751bec7d1a9bb864a130401fa8b3275d5764dd5b49a41be3a23a9d0e02eb",
+      "width": 1298,
+      "height": 1023,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "汉科照明弹/隐匿分支把游戏图鉴原文与社区修正分开，明确原文反隐描述与文献表现冲突、当前服务器未实测。0秒/15秒为文献初始/后续冷却，并提醒范围触发、不是开场绝对时刻或连续技能周期；未静默覆盖原文。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/365-native-attempt2/actual/window-independent-smoke.png",
+      "bytes": 154505,
+      "sha256": "f5477f969cb6c3a42562f8869b65d1a504250f9ae064195489580765d6eb49f6",
+      "width": 1298,
+      "height": 1023,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "独立烟雾弹准确条目没有图片时明示无可核对图，不借其他图。烟雾对敌我生效条件、300秒退场、0.75秒后天赋分别说明，强调普通敌人需未阻挡、辅助实体缺少普通出场不等于不会生成；未冒充实际覆盖范围或烟雾数量。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/365-native-attempt2/actual/window-president-stage-override.png",
+      "bytes": 206931,
+      "sha256": "63980b6f27d5a32c3c1239a51f1ea6dd2c9c948d7e3bd01cebc2a2cf8e9caa7f",
+      "width": 1298,
+      "height": 1023,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "大总统汉科独立准确引用与图像可见，明确本关有专门覆盖和配套出场参数，通用冷却/持续/比例不能直接视为本关实际值。与烟雾弹未覆盖情况分开，原图鉴、社区修正和通用文献保持限定，不用未赋值字段当身份。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/365-native-attempt2/actual/window-meeting-identity-placeholder.png",
+      "bytes": 207344,
+      "sha256": "852781c3b617cc4372d37329efe35b8ce079118708c52a86e0f49b12becfb0e6",
+      "width": 1298,
+      "height": 1023,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "合伙人会议里的大总统汉科以引用10单独保留，不能凭相同名字套铁腕迷思的关卡参数。普通攻击分支分别说明阻挡时近战200%、未阻挡远程二连击各100%、出场/退场烟雾，均标文献参考而非预测面板，身份与参数适用范围分开。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/365-native-attempt2/actual/window-source-loss.png",
+      "bytes": 42899,
+      "sha256": "f4cec924b80980a9ac90e9db954ee2849c22e4357950e123059868855b97951b",
+      "width": 1298,
+      "height": 1023,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "high",
+      "observation": "源失效提示窗真实可见，原实体、招式、图片和关联入口已清空/禁用；正文只有来源无法核对与重新选择提示，没有旧汉科身份、冷却或伤害残留。截图支持保留不可用提示的可见状态，不替代其他窗口整树关闭或恢复手选证据。",
+      "visual_blocking_issue": false
+    }
+  ],
+  "actual_view_image_calls": 6,
+  "all_six_actual_images_reviewed": true,
+  "root_direct_view_claimed": false,
+  "blocking_visual_issues": [],
+  "visual_result": "六张最终图未发现游戏原文/社区修正混同、独立烟雾误用图像、同名跨关参数套用、白值充当预测或坏源旧内容残留的可见阻断。",
+  "limits": [
+    "可见截图不代替46项交互、完整准确引用遍历、覆盖字段核对、双阅读保持、恢复手选或换敌/关/页/窗关闭整树证据。",
+    "部分长说明在折外，不声称本次阅读不可见全部原文；根代理要求的到期全量另行判断。",
+    "子代理真实查看不能改称根代理直接查看；如要求根代理亲自查看仍需根代理完成。"
+  ],
+  "formal_tree_modified": false,
+  "tests_or_windows_started": false,
+  "game_or_chat_run": false,
+  "private_state_touched": false
+}
