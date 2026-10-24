@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/368.json)。
 
-已完成至368，后续369；本批状态 `P3_SECTION368_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：370。下次定期全量380。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至368，后续369；本批状态 `P3_SECTION368_PUBLISHED`。推进终点：370。下次定期全量380。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -853,5 +853,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 三个形态引用不表示三只敌人同时登场。第一阶段40秒消逝不扩成第二阶段规则，信仰获得须符合实际生命伤害等原条件；混合冷却仍未知。图鉴祭仪与社区祭坛分别列出处；缺少的2160/2161完整记录不伪造。没有固定祭坛实例或格子依据，不推第二阶段地形、实际阶段/时钟/位置、最终面板或服务器行为。 只作局外查阅，不操作游戏、发送聊天或改变本局；P3/P2/P1均未完成，识别最后。
 
-<!-- section368-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第368节功能提交628420287e238486216d8402862da65fa496aa69已普通推送并核对真实远端及940份相关公开文件字节，证明verification/sections/368-publication.json。本次仅保存发布元数据，不增加功能节数；后续369尚未启动；按本次授权继续至370并完整收尾后暂停，下一定期全量380。P3/P2/P1未完成，资料对照不冒充本局实际状态/生成/生效/结算；私人状态及实机游戏/聊天未纳入云端。
 <!-- section368-handoff:end -->
