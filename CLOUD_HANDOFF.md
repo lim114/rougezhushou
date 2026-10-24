@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/370.json)。
 
-已完成至370，后续371；本批状态 `P3_SECTION370_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：370。下次定期全量380。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至370，后续371；本批状态 `P3_SECTION370_PUBLISHED_PAUSED`。推进终点：370。下次定期全量380。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -877,5 +877,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 2060条引用是固定资料目录，不表示实际登场数量或全部开启了2060个窗口；原生只打开代表性准确目标，完整资料映射另逐条核对。95条独立配置不全是辅助单位，十条不计数标记是独立条件，不覆盖原档次。四种尚缺档次依据的派生敌人和13处缺图保留未知；不借同名图片或推断实际敌人面板、阶段、出现概率或服务器版本。 只作局外查阅，不操作游戏、发送聊天或改变本局；P3/P2/P1均未完成，识别最后。
 
-<!-- section370-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第370节功能提交66ee8cb8028ca3db4fe638efa49c7da463066716已普通推送并核对真实远端及820份相关公开文件字节，证明verification/sections/370-publication.json。本次仅保存发布元数据，不增加功能节数；本批按要求在370结束并暂停，不启动371；下一定期全量380仅恢复后适用。P3/P2/P1未完成，资料对照不冒充本局实际状态/生成/生效/结算；私人状态及实机游戏/聊天未纳入云端。
 <!-- section370-handoff:end -->
