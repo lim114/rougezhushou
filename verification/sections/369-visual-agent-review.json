@@ -1,0 +1,114 @@
+{
+  "schema": "section369_final_actual_subagent_visual_review_v1",
+  "section": 369,
+  "attempt": 3,
+  "actor": "/root/p3_battle_gap_research",
+  "actor_role": "真实子代理逐张实际视觉复查，不冒称根代理直接查看",
+  "reviewed_at": "2026-10-24T01:39:47.0919622+00:00",
+  "process_passed_gate": {
+    "path": "verification/sections/369-native-attempt3/process.json",
+    "root_reported_running_before_review": true,
+    "final_process_receipt_read_during_this_review": false,
+    "passed_reported_by_root_before_review": null,
+    "passed_observed_after_review": null,
+    "actual_observed_exit": null,
+    "final_process_and_window_semantics_confirmation_owned_by_root": true
+  },
+  "native_receipt": {
+    "path": "verification/sections/369-native-attempt3/actual/window.json",
+    "final_receipt_read_during_this_review": false,
+    "sha256": null,
+    "reason": "按根代理要求仅在原生后半流程运行时审阅已固定的七张PNG，不读取或宣称最终过程/窗口回执通过。"
+  },
+  "method": "七个已固定实际PNG分别调用tools.view_image(detail=original)，按三张、三张、一张返回原图后逐张阅读可见像素；随后只核对这七张完整PNG字节SHA未变。不是凭文件名、元数据或测试断言判定已看。",
+  "appearance_only": true,
+  "images": [
+    {
+      "path": "verification/sections/369-native-attempt3/actual/window-cycle-complete-document.png",
+      "sha256": "62eed7f1ff78af45b2fac4dc5fd1685294cdb27e0ad6ba4734fd06d7fa2fb007",
+      "bytes": 311730,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "洛伦茨头像、准确敌人选择及完整总览控件清晰，正文按交替激活、首次半血变化、终点退场和模块存活分组；明确资料值不等于实际阶段或倒计时。长文有滚动条，当前可见正文没有重叠；左侧分支下拉显示宽度略窄，但主标题和阅读内容完整可辨。"
+    },
+    {
+      "path": "verification/sections/369-native-attempt3/actual/window-exact-current-fixed-map.png",
+      "sha256": "39deff964b865a106813473b06a4f1a04cd4e11ea81024e06468f06e50c58e12",
+      "bytes": 888073,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "混沌源阶理论的九行十三列地形表与固定原图并排显示，入口、目标和传送类格有文字和颜色区分；说明已对照三个入口及一个保护目标，同时明确近似中心、未知实际落点和不推算路径，图上没有首领实际位置标记。"
+    },
+    {
+      "path": "verification/sections/369-native-attempt3/actual/window-gold-complete-document.png",
+      "sha256": "9b0da8325b737d306460f6b34e4eb9f0a7909cc923bd4749710568e347f8448c",
+      "bytes": 257111,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "光荣远征的德莱昂头像与关卡标题一致，完整总览先讲受伤、起飞、降落和退场条件，再列招式；文献值与本局实际结果明确区分，普通版增益与两版本分开查阅的说明清楚，长正文可滚动。"
+    },
+    {
+      "path": "verification/sections/369-native-attempt3/actual/window-gold-current-rune-difference.png",
+      "sha256": "ef4c2f06bf0cea840abc0fd8e48a6c4a5d1ea3babf2a0afcc0150bdd2b838463",
+      "bytes": 270312,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "赤金厄运的征服者德莱昂单独显示头像与准确名称；版本差异段放在机制正文前，明确旧关卡两项修正、当前对应栏未填写，不沿用旧面板，也不把空栏当服务器无修正。起飞降落条件和本版本文献增益仍分段可读，未见旧符文倍率被呈现为当前预计结果。"
+    },
+    {
+      "path": "verification/sections/369-native-attempt3/actual/window-hunt-complete-document.png",
+      "sha256": "d11ebbacb5119dc82162de5a0dc103cc7f05039c7d085f162013ae6d932f4c64",
+      "bytes": 287139,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "永无安宁卡德霍的普通版关卡名称与头像清楚，正文将击倒休整、后续来敌、分担伤害和位移分组；再释放2次存疑、十五秒和两来源十/二十秒差异均作为文献条件说明保留，没有直接生成当前倒计时。当前可见文字无重叠，后续招式可滚动。"
+    },
+    {
+      "path": "verification/sections/369-native-attempt3/actual/window-phase-complete-document.png",
+      "sha256": "646c4061733cc76b27c18d952f176cfd0cbff0f85bc6d3ec63c485e324d507fa",
+      "bytes": 286489,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "畸症的玻利瓦尔头像与形态机制总览匹配，正文分别列第一、第二、第三、两次灾厄和飞行形态，并说明不是六条血或六个敌人；转换与返回条件、招式适用形态分段清楚，长文滚动区保留顶部来源和未知提示。"
+    },
+    {
+      "path": "verification/sections/369-native-attempt3/actual/window-source-loss.png",
+      "sha256": "a75ab5179972ce566cfae310a2631150571d0d61334a9e00ba1fca4cff1eb7c2",
+      "bytes": 59926,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "visual_blocking_issue": false,
+      "observation": "来源失效后原头像、选中敌人、机制正文与关联选项均不残留；中文提示明确旧选择说明图片与入口已清除并要求恢复后手动选择。固定地图和关联跳转按钮灰显，重新核对按钮仍可见，提示完整无重叠。"
+    }
+  ],
+  "actual_view_image_calls": 7,
+  "all_seven_actual_images_reviewed": true,
+  "root_direct_view_claimed": false,
+  "blocking_visual_issues": [],
+  "visual_result": "七张原分辨率截图未发现阻碍阅读的文字遮挡、可见关卡与敌人错配、旧头像或机制残留、固定地图推测首领标记。四类代表机制阅读、赤金厄运的版本差异前置说明和坏源清旧在画面中清楚可辨；窄的总览分支控件仅显示部分标签，不影响准确敌人名称和正文阅读。",
+  "limits": [
+    "仅代表七张PNG中实际可见内容和外观；此时根代理报告原生后半清理流程仍在运行，不据图片数量或外观宣称原生attempt3通过。",
+    "最终原生过程退出码、窗口回执、全引用与交互语义由根代理稍后核对真实回执，本审阅不继承或覆盖旧尝试失败记录。",
+    "四类代表总览及固定地图说明为可滚动内容，本次不声称已逐像素查看全部滚动原文、全部38主题、9引用或完整来源页签。",
+    "关联实体跳转、非零阅读保持、来源失效恢复、X/Esc与整棵窗口树清理不能由静态图片单独证明。",
+    "图中文字的时长比例是文献说明，外观清晰不证明本局阶段、预测面板、实际战斗时钟或服务器行为。",
+    "真实查看者为子代理，不声称根代理直接查看。"
+  ],
+  "formal_tree_modified": false,
+  "tests_or_windows_started": false,
+  "game_or_chat_run": false,
+  "private_state_touched": false
+}

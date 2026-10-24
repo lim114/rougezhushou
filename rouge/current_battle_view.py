@@ -27,6 +27,7 @@ class CurrentBattlePanel(QWidget):
         self.shop_vault_button=QPushButton('查看坎诺特与保险柜的条件和后果');self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False)
         body.addWidget(self.shop_vault_button);self.shop_vault_button.clicked.connect(self.open_shop_vault)
         self.sun_boss_button=QPushButton('查看本关多形态首领与祭台的完整机制');self.sun_boss_button.hide();body.addWidget(self.sun_boss_button);self.sun_boss_button.clicked.connect(self.open_sun_boss)
+        self.boss_documents_button=QPushButton('查看本关首领与关联实体的完整机制');self.boss_documents_button.hide();body.addWidget(self.boss_documents_button);self.boss_documents_button.clicked.connect(self.open_boss_documents)
         self.enemy_player=QPlainTextEdit();self.enemy_player.setReadOnly(True);body.addWidget(self.enemy_player,1);self.tabs.addTab(enemies,'敌人和机制')
         wave=QWidget();body=QVBoxLayout(wave);self.queue_kind=QComboBox();self.queue_kind.addItem('总览（全部条目）',None);self.queue_kind.addItem('主波次','main');self.queue_kind.addItem('条件分支','branch');body.addWidget(self.queue_kind)
         split=QSplitter();self.actions=QListWidget();split.addWidget(self.actions);self.action_player=QPlainTextEdit();self.action_player.setReadOnly(True);split.addWidget(self.action_player);split.setSizes([350,650]);body.addWidget(split,1)
@@ -42,6 +43,7 @@ class CurrentBattlePanel(QWidget):
         self.refresh_reference()
 
     def _clear(self):
+        self._close_boss_documents();self.boss_documents_button.hide();self.boss_documents_button.setEnabled(False)
         self._close_sun_boss();self.sun_boss_button.hide();self.sun_boss_button.setEnabled(False)
         self._close_shop_vault();self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False)
         self._close_elbert();self.elbert_button.hide();self.elbert_button.setEnabled(False)
@@ -145,6 +147,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_portrait.clear();pix=QPixmap();raw=model.picture_bytes(enemy['portrait'])if enemy else None
         if raw and pix.loadFromData(raw,'PNG'):self.enemy_portrait.setPixmap(pix.scaled(90,90,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
         else:self.enemy_portrait.setText('此精确引用未取得图片。'if enemy else'')
+        self._sync_boss_documents(keep)
         self._sync_sun_boss(keep)
         self._sync_elbert(keep)
         self._sync_hanko(keep)
@@ -281,6 +284,58 @@ class CurrentBattlePanel(QWidget):
             self._close_sun_boss();return False
         self.sun_boss_dialog.show();return True
 
+    def _boss_documents_enemy_requested(self,key):
+        dialog=getattr(self,'boss_documents_dialog',None)
+        if type(key)is not str or self.result is None or dialog is None or not dialog.isVisible():return False
+        child=dialog.panel
+        if child.result is None or child.stage_id!=self.stage_id or child.result.get('stage_id')!=self.stage_id:
+            self._close_boss_documents();return False
+        if child.result.get('battle_source_identity')!=self.result['source_identity']:
+            self._close_boss_documents();return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from . import current_boss_documents as reader
+        request=reader.resolve_entity(child.result,child.selected_key,child.related.currentData())
+        if request is None or request['stage_id']!=self.stage_id or request['enemy_key']!=key:
+            self._close_boss_documents();return False
+        if not any(row['key']==key for row in self.result['enemies']):self._close_boss_documents();return False
+        selected=self.enemy_choices.select_value(key)
+        if selected:
+            self._close_boss_documents();self.tabs.setCurrentIndex(1)
+        return selected
+
+    def _close_boss_documents(self):
+        child=getattr(self,'boss_documents_dialog',None)
+        if child is not None:
+            child.panel.clear_reference();child.close()
+
+    def _sync_boss_documents(self,keep):
+        from . import current_boss_documents as reader
+        available=self.result is not None and self.enemy_key is not None and bool(reader.target_available(self.stage_id,self.enemy_key))
+        self.boss_documents_button.setVisible(available);self.boss_documents_button.setEnabled(available)
+        child=getattr(self,'boss_documents_dialog',None)
+        if child is not None and child.isVisible():
+            if not keep:self._close_boss_documents()
+            elif not available:child.panel.clear_reference()
+            else:
+                child.panel.refresh_reference()
+                child_result=child.panel.result
+                if child_result is not None and child_result.get('battle_source_identity')!=self.result['source_identity']:
+                    self._close_boss_documents()
+
+    def open_boss_documents(self):
+        if self.result is None or self.enemy_key is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from . import current_boss_documents as reader
+        if not reader.target_available(self.stage_id,self.enemy_key):
+            self._close_boss_documents();self.boss_documents_button.hide();return False
+        from .current_boss_documents_view import CurrentBossDocumentsDialog
+        self._close_boss_documents();self.boss_documents_dialog=CurrentBossDocumentsDialog(self.stage_id,self.enemy_key,self)
+        child_result=self.boss_documents_dialog.panel.result
+        if child_result is None or child_result.get('battle_source_identity')!=self.result['source_identity']:
+            self._close_boss_documents();return False
+        self.boss_documents_dialog.panel.enemy_requested.connect(self._boss_documents_enemy_requested)
+        self.boss_documents_dialog.show();return True
+
     def _close_event_origins(self):
         dialog=getattr(self,'event_origins_dialog',None)
         if dialog is not None:dialog.close()
@@ -293,7 +348,7 @@ class CurrentBattlePanel(QWidget):
         from .current_event_battles_view import CurrentEventBattlesDialog
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
-    def closeEvent(self,event):self._close_sun_boss();self._close_shop_vault();self.rewards._close_shop_vault();self._close_elbert();self._close_hanko();self.settlement.clear_reference();self._close_spawn_candidates();self._close_map_positions();self._close_event_origins();super().closeEvent(event)
+    def closeEvent(self,event):self._close_boss_documents();self._close_sun_boss();self._close_shop_vault();self.rewards._close_shop_vault();self._close_elbert();self._close_hanko();self.settlement.clear_reference();self._close_spawn_candidates();self._close_map_positions();self._close_event_origins();super().closeEvent(event)
 
     def _close_shop_vault(self):
         child=getattr(self,'shop_vault_dialog',None)
@@ -334,4 +389,4 @@ class CurrentBattleDialog(QDialog):
         super().__init__(parent);self.setWindowTitle('固定关卡预览');self.resize(1120,820)
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
-    def closeEvent(self,event):self.panel._close_sun_boss();self.panel._close_shop_vault();self.panel.rewards._close_shop_vault();self.panel._close_elbert();self.panel._close_hanko();self.panel.settlement.clear_reference();self.panel._close_spawn_candidates();self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)
+    def closeEvent(self,event):self.panel._close_boss_documents();self.panel._close_sun_boss();self.panel._close_shop_vault();self.panel.rewards._close_shop_vault();self.panel._close_elbert();self.panel._close_hanko();self.panel.settlement.clear_reference();self.panel._close_spawn_candidates();self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)
