@@ -1,0 +1,123 @@
+{
+  "schema": "section367_final_actual_subagent_visual_review_v1",
+  "section": 367,
+  "attempt": 1,
+  "actor": "/root/full350_312_timeout_review",
+  "actor_role": "真实子代理逐张实际视觉复查，不冒称根代理直接查看",
+  "reviewed_at": "2026-10-24T01:01:31.029932+00:00",
+  "process_passed_gate": {
+    "path": "verification/sections/367-native-attempt1/process.json",
+    "sha256": "cf92f6972450510cb5e4ff5bc6ccf04e3a88502a54126b64f236a2f5a66926ff",
+    "passed_reported_by_root_before_review": true,
+    "passed_observed_after_review": true,
+    "actual_observed_exit": 0
+  },
+  "native_receipt": {
+    "path": "verification/sections/367-native-attempt1/actual/window.json",
+    "sha256": "a2b35447464a151627efd491add473a1d8605b7558f1e0d8318b8779789ff646"
+  },
+  "method": "七个最终实际PNG分别调用tools.view_image(detail=original)，两批返回3张与4张原图后逐张阅读可见像素；随后核对完整PNG字节SHA和原生截图回执。不是凭文件名、元数据或测试断言判定已看。",
+  "images": [
+    {
+      "path": "verification/sections/367-native-attempt1/actual/window-deadbox-exact-enemy.png",
+      "bytes": 240036,
+      "sha256": "f38b3e3979747b66677b105c98aeee56d6173d55ab0725ddc1665073c12980b1",
+      "width": 1323,
+      "height": 1060,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "坎诺特精确敌人引用与死箱关卡名称清晰，正文明确本关7份保险柜记录不等于实际出现或领取数量；商店入口、回收、拾取分组可读，关联资料区有准确作战、敌人与保险柜奖励入口，没有文字重叠。截图仅显示总览可见部分，后续正文由滚动阅读。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/367-native-attempt1/actual/window-free-paths-and-source-boundary.png",
+      "bytes": 149514,
+      "sha256": "35c6c31936fd733e549d351546d6ef13841f5d62b3d682ff682c09bdbac6126e",
+      "width": 1323,
+      "height": 1060,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "两种免费栏位来源独立成段，明确玩家拾取与坎诺特回收不能把同一保险柜重复计数；最多5个与大保险柜2栏的说明没有拼成统一公式。价格为0不等于已经领取、具体商品未知等边界清楚，当前专属主题正文完整可见。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/367-native-attempt1/actual/window-deadbox-large-vault.png",
+      "bytes": 242393,
+      "sha256": "422bbb90292c830e487efb5d236734ce2de34fddb124248689ff9e7670964c0d",
+      "width": 1323,
+      "height": 1060,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "死箱大保险柜资料1被准确选中，成功拾取路径对应2个零价格栏位与实际已领取数量未知分开显示；本关7份记录、相关作战和奖励链接可读，未按图标推测等级或将2栏套入坎诺特回收总量。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/367-native-attempt1/actual/window-livingwood-small-vault.png",
+      "bytes": 237100,
+      "sha256": "63f66612138473aed2a2390a3b30670469a47c642da13bd4a7ef867c46e56331",
+      "width": 1323,
+      "height": 1060,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "活木小保险柜资料1与死箱分开，显示本关10份记录及成功拾取路径对应1个零价格栏位，不冒充实际领取；下方明确活木作战与本关坎诺特、保险柜奖励参考入口，文字分组和选择框均清晰。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/367-native-attempt1/actual/window-source-loss-cleared-ordinary-entry.png",
+      "bytes": 90470,
+      "sha256": "463d2854d8fac390b43e9c31dcce40f0468e2d64c89db6aa24d3b200d87e856f",
+      "width": 1373,
+      "height": 998,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "来源失效后的普通奖励与条件页仍显示其独立的坎诺特保险柜候选说明，坎诺特专属完整机制入口不再可见；现有奖励描述保留1至2个商店物品的原说明及实际商品、数量未知，没有把所属机制源失效误写成所有普通资料都清空。照片只证当前可见状态，不单凭这一图证明关闭整棵子窗口树。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/367-native-attempt1/actual/window-shop-main-floor-four-boundary.png",
+      "bytes": 248213,
+      "sha256": "868a7dafb425f77d6746fd341f5df79b99869da1b87eb43f9ec4368704f73888",
+      "width": 1323,
+      "height": 1060,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "商店入口按文献主层对照，第4层仅列可查活木，明确当前账户挑战条件仍未知；正文保留最高投资与历史累计投资两种口径及未知层数不自动选作战的限制，关联区准确显示活木机制与固定作战预览。",
+      "visual_blocking_issue": false
+    },
+    {
+      "path": "verification/sections/367-native-attempt1/actual/window-owned-current-fixed-map.png",
+      "bytes": 710551,
+      "sha256": "f4b000d066a88ab6d2cb18558b2cbb5b6172c95a17c3b2bacd885bf75df4fe3c",
+      "width": 1410,
+      "height": 973,
+      "actual_view_image_called": true,
+      "actual_pixels_visually_reviewed": true,
+      "view_image_detail": "original",
+      "observation": "活木固定地图原图与9行13列地形表同时可见，列行编号、地形文字与下方使用说明清晰；说明当前0个已核对格子中心，右图没有添加推测标记，并明确不读取或操作战斗、不反推实际敌人路径。没有把地形表当已完成精确地图落点。",
+      "visual_blocking_issue": false
+    }
+  ],
+  "actual_view_image_calls": 7,
+  "all_seven_actual_images_reviewed": true,
+  "root_direct_view_claimed": false,
+  "blocking_visual_issues": [],
+  "visual_result": "七张实际原分辨率截图未发现文字遮挡、可见入口错配、免费栏位两条路径混算、已领取数量冒称或固定地图推测标记。普通奖励页在独立机制源失效时保留自己的可用说明，专属入口不可见。",
+  "limits": [
+    "此次仅审阅七张截图中实际可见内容，不替代23项必要检查与59项原生交互/准确引用核验。",
+    "图片可见死箱7份、活木10份记录总述及大小保险柜代表项；没有逐张展示17项所有内容，17原引用逐项正确性由实际原生检查另证。",
+    "三类普通入口的完整点击链、两处非零阅读保持、损坏后子树关闭、恢复后手动重开及退出清理不能仅由七张静态图证明。",
+    "图片没有展示全部滚动原文、完整来源页签及逃脱99源石锭主题；不将其隐含为本次像素已全部核对。",
+    "固定地图当前明确无已核对位置中心，原图与地形可读不代表精确地图落点已完成；真实生成、战斗、击破、回收、拾取、商品与结算均不由截图证明。",
+    "真实查看者为子代理，不声称根代理直接查看。"
+  ],
+  "formal_tree_modified": false,
+  "tests_or_windows_started": false,
+  "game_or_chat_run": false,
+  "private_state_touched": false
+}

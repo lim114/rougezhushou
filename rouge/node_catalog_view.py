@@ -372,6 +372,9 @@ class NodeCatalogPanel(QWidget):
         self.reading_tabs.addTab(self.player_detail,'玩家说明')
         self.reading_tabs.addTab(self.detail,'资料与依据')
         rl.addWidget(self.reading_tabs,1)
+        self.shop_vault_dialog=None;self._shop_vault_origin=None
+        self.shop_vault_button=QPushButton('查看坎诺特挑战与保险柜');self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False)
+        rl.addWidget(self.shop_vault_button);self.shop_vault_button.clicked.connect(self.open_shop_vault)
         self.battle_button=QPushButton('查看对应固定战斗地图');self.battle_button.setEnabled(False)
         self.event_preview_filters=QWidget();event_filters=QHBoxLayout(self.event_preview_filters)
         event_filters.setContentsMargins(0,0,0,0)
@@ -604,6 +607,7 @@ class NodeCatalogPanel(QWidget):
     def show_selected(self):
         key=self.list.selected_key()
         entry=next((e for e in self.entries if e['key']==key),None)
+        self._sync_shop_vault(entry,key)
         self._refresh_current_event_reference(entry,key)
         previous_location=self.map_location.currentData()
         previous_destination=self.destination_choice.currentData(Qt.ItemDataRole.UserRole+1);self.destination_choice.clear()
@@ -1221,4 +1225,35 @@ class NodeCatalogPanel(QWidget):
         self.current_reference_window=dialog;dialog.show();return True
 
     def closeEvent(self,event):
+        self._close_shop_vault()
         self._close_current_event_reference();super().closeEvent(event)
+
+    def _close_shop_vault(self):
+        child=getattr(self,'shop_vault_dialog',None)
+        if child is not None:
+            child.panel.clear_reference();child.close()
+        self.shop_vault_dialog=None
+
+    def _sync_shop_vault(self,entry,key):
+        from . import current_cannot_reference as reader
+        target=reader.shop_target(entry['record']) if entry and entry['kind']=='function' else None
+        available=target is not None
+        self.shop_vault_button.setVisible(available);self.shop_vault_button.setEnabled(available)
+        origin=self._current_event_reference_scope(entry,key) if available else None
+        if origin!=self._shop_vault_origin:self._close_shop_vault()
+        self._shop_vault_origin=deepcopy(origin)
+        child=getattr(self,'shop_vault_dialog',None)
+        if child is not None and child.isVisible():
+            if not available:child.panel.clear_reference()
+            elif not child.panel.refresh_reference():self._close_shop_vault()
+        return target
+
+    def open_shop_vault(self):
+        key=self.list.selected_key();entry=next((e for e in self.entries if e['key']==key),None)
+        target=self._sync_shop_vault(entry,key)
+        if target is None:return False
+        from .current_cannot_view import CurrentCannotDialog
+        self._close_shop_vault();self.shop_vault_dialog=CurrentCannotDialog(target,self)
+        if self.shop_vault_dialog.panel.result is None:
+            self._close_shop_vault();self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False);return False
+        self.shop_vault_dialog.show();return True

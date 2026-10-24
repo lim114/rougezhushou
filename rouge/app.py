@@ -2283,6 +2283,7 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         self.closing=True
         self.node_catalog._close_current_event_reference()
+        self.node_catalog._close_shop_vault()
         for panel in self.common_reference_panels.values():panel.close_children()
         self.timer.stop()
         self.cancel_event.set()

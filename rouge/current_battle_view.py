@@ -23,6 +23,9 @@ class CurrentBattlePanel(QWidget):
         self.enemy_portrait=QLabel();self.enemy_portrait.setMinimumSize(85,85);self.enemy_portrait.setAlignment(Qt.AlignmentFlag.AlignCenter);body.addWidget(self.enemy_portrait)
         self.hanko_button=QPushButton('查看汉科、相关敌人和烟雾弹的完整机制');self.hanko_button.hide();body.addWidget(self.hanko_button);self.hanko_button.clicked.connect(self.open_hanko)
         self.elbert_button=QPushButton('查看本关首领、关联敌人与火种的完整机制');self.elbert_button.hide();body.addWidget(self.elbert_button);self.elbert_button.clicked.connect(self.open_elbert)
+        self.shop_vault_dialog=None
+        self.shop_vault_button=QPushButton('查看坎诺特与保险柜的条件和后果');self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False)
+        body.addWidget(self.shop_vault_button);self.shop_vault_button.clicked.connect(self.open_shop_vault)
         self.enemy_player=QPlainTextEdit();self.enemy_player.setReadOnly(True);body.addWidget(self.enemy_player,1);self.tabs.addTab(enemies,'敌人和机制')
         wave=QWidget();body=QVBoxLayout(wave);self.queue_kind=QComboBox();self.queue_kind.addItem('总览（全部条目）',None);self.queue_kind.addItem('主波次','main');self.queue_kind.addItem('条件分支','branch');body.addWidget(self.queue_kind)
         split=QSplitter();self.actions=QListWidget();split.addWidget(self.actions);self.action_player=QPlainTextEdit();self.action_player.setReadOnly(True);split.addWidget(self.action_player);split.setSizes([350,650]);body.addWidget(split,1)
@@ -38,6 +41,7 @@ class CurrentBattlePanel(QWidget):
         self.refresh_reference()
 
     def _clear(self):
+        self._close_shop_vault();self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False)
         self._close_elbert();self.elbert_button.hide();self.elbert_button.setEnabled(False)
         self._close_hanko();self.hanko_button.hide();self.hanko_button.setEnabled(False)
         self._close_spawn_candidates();self.spawn_candidates_button.setEnabled(False)
@@ -141,6 +145,7 @@ class CurrentBattlePanel(QWidget):
         else:self.enemy_portrait.setText('此精确引用未取得图片。'if enemy else'')
         self._sync_elbert(keep)
         self._sync_hanko(keep)
+        self._sync_shop_vault(keep)
 
     def _actions_changed(self,*_,preserve=False):
         old=self.actions.currentItem();key=old.data(Qt.ItemDataRole.UserRole)if old and preserve else None
@@ -253,7 +258,40 @@ class CurrentBattlePanel(QWidget):
         from .current_event_battles_view import CurrentEventBattlesDialog
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
-    def closeEvent(self,event):self._close_elbert();self._close_hanko();self.settlement.clear_reference();self._close_spawn_candidates();self._close_map_positions();self._close_event_origins();super().closeEvent(event)
+    def closeEvent(self,event):self._close_shop_vault();self.rewards._close_shop_vault();self._close_elbert();self._close_hanko();self.settlement.clear_reference();self._close_spawn_candidates();self._close_map_positions();self._close_event_origins();super().closeEvent(event)
+
+    def _close_shop_vault(self):
+        child=getattr(self,'shop_vault_dialog',None)
+        if child is not None:
+            child.panel.clear_reference();child.close()
+        self.shop_vault_dialog=None
+
+    def _sync_shop_vault(self,keep):
+        from . import current_cannot_reference as reader
+        target=reader.target_for_enemy(self.stage_id,self.enemy_key) if self.result is not None and self.enemy_key is not None else None
+        available=target is not None
+        self.shop_vault_button.setVisible(available);self.shop_vault_button.setEnabled(available)
+        child=getattr(self,'shop_vault_dialog',None)
+        if child is not None and child.isVisible():
+            if not keep:self._close_shop_vault()
+            elif not available:child.panel.clear_reference()
+            else:child.panel.refresh_reference()
+        return target
+
+    def open_shop_vault(self):
+        if self.result is None or self.enemy_key is None:return False
+        if self.enemy_combo.currentData()!=self.enemy_key:
+            self._close_shop_vault();return False
+        if model.stage_reference(self.stage_id)!=self.result:
+            self._clear();return False
+        target=self._sync_shop_vault(True)
+        if target is None:
+            self._close_shop_vault();return False
+        from .current_cannot_view import CurrentCannotDialog
+        self._close_shop_vault();self.shop_vault_dialog=CurrentCannotDialog(target,self)
+        if self.shop_vault_dialog.panel.result is None:
+            self._close_shop_vault();self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False);return False
+        self.shop_vault_dialog.show();return True
 
 
 class CurrentBattleDialog(QDialog):
@@ -261,4 +299,4 @@ class CurrentBattleDialog(QDialog):
         super().__init__(parent);self.setWindowTitle('固定关卡预览');self.resize(1120,820)
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
-    def closeEvent(self,event):self.panel._close_elbert();self.panel._close_hanko();self.panel.settlement.clear_reference();self.panel._close_spawn_candidates();self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)
+    def closeEvent(self,event):self.panel._close_shop_vault();self.panel.rewards._close_shop_vault();self.panel._close_elbert();self.panel._close_hanko();self.panel.settlement.clear_reference();self.panel._close_spawn_candidates();self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)
