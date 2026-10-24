@@ -100,7 +100,7 @@ class MainWindow(QMainWindow):
         from .information_scope import require_query_scope
         require_query_scope('exploration',None,include_historical_route_diagnostics)
         self.include_historical_route_diagnostics=include_historical_route_diagnostics
-        self.setWindowTitle('黑流树海助手 0.91 · 局外计算与节点测试（234）')
+        self.setWindowTitle('黑流树海助手 · 局外计算与节点测试')
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader()

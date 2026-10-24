@@ -25,6 +25,11 @@ class ExpansionUpdatePanel(QWidget):
         if full_catalog:self.scope.setCurrentIndex(self.scope.findData(False));self.scope.hide()
         self.search=QLineEdit();self.search.setPlaceholderText('按中文名称搜索；同名资料分别保留')
         self.refresh_button=QPushButton('重新核对资料');bar.addWidget(self.category);bar.addWidget(self.scope);bar.addWidget(self.search,1);bar.addWidget(self.refresh_button);layout.addLayout(bar)
+        self.enemy_directory_dialog=None
+        self.enemy_directory_button=QPushButton('按敌人查找关卡');self.enemy_directory_button.setAccessibleName('按敌人中文名查找准确关卡')
+        layout.addWidget(self.enemy_directory_button)
+        self.enemy_directory_button.setVisible(self.full_catalog and 'stages' in self.allowed_categories)
+        self.enemy_directory_button.clicked.connect(self.open_enemy_directory)
         self.tickets_button=QPushButton('招募券：适用职业、留存与取出')
         self.tickets_button.setAccessibleName('招募券用途与留存规则')
         layout.addWidget(self.tickets_button)
@@ -143,6 +148,7 @@ class ExpansionUpdatePanel(QWidget):
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
     def _unavailable(self):
+        self._close_enemy_directory();self.enemy_directory_button.setEnabled(False)
         self._close_initial_recruits();self.initial_recruits_button.setEnabled(False)
         self._close_named_sources();self.named_sources_button.setEnabled(False)
         self._close_legacy_reference();self.legacy_reference_button.setEnabled(False)
@@ -222,6 +228,7 @@ class ExpansionUpdatePanel(QWidget):
         if ready and child is not None and child.isVisible():child.panel.refresh_reference()
         child=getattr(self,'portal_rules_dialog',None)
         if ready and child is not None and child.isVisible():child.panel.refresh_reference()
+        self._sync_enemy_directory(ready)
         return ready
 
     def _close_region_resources(self):
@@ -698,6 +705,7 @@ class ExpansionUpdatePanel(QWidget):
         self.origins_dialog.show();return True
 
     def close_children(self):
+        self._close_enemy_directory()
         self._close_initial_recruits()
         self._close_named_sources()
         self._close_legacy_reference()
@@ -742,3 +750,37 @@ class ExpansionUpdatePanel(QWidget):
         if target is None:self._close_exchange();self.exchange_button.hide();return False
         from .current_exchange_view import CurrentExchangeDialog
         self._close_exchange();self.exchange_dialog=CurrentExchangeDialog(target,self);self.exchange_dialog.show();return True
+
+    def _close_enemy_directory(self):
+        child=getattr(self,'enemy_directory_dialog',None)
+        if child is not None:
+            child.panel.clear_reference();child.close()
+        self.enemy_directory_dialog=None
+
+    def _sync_enemy_directory(self,ready):
+        allowed=self.full_catalog and 'stages' in self.allowed_categories
+        self.enemy_directory_button.setVisible(allowed);self.enemy_directory_button.setEnabled(ready and allowed)
+        child=getattr(self,'enemy_directory_dialog',None)
+        if not ready or not allowed:
+            self._close_enemy_directory();return False
+        if child is not None and child.isVisible():
+            if not child.panel.refresh_reference():
+                self._close_enemy_directory();self.enemy_directory_button.setEnabled(False);return False
+            identity=child.panel.reference.get('source_identity')if child.panel.reference is not None else None
+            if type(identity)not in(tuple,list)or len(identity)!=4 or identity[3]!=self.source_identity:
+                self._close_enemy_directory();self.enemy_directory_button.setEnabled(False);return False
+        return True
+
+    def open_enemy_directory(self):
+        if not self.full_catalog or 'stages'not in self.allowed_categories:
+            self._close_enemy_directory();return False
+        fresh=model.packet()
+        if fresh is None or fresh['source_identity']!=self.source_identity:
+            self._unavailable();return False
+        from .current_enemy_stage_index_view import CurrentEnemyStageIndexDialog
+        self._close_enemy_directory();self.enemy_directory_dialog=CurrentEnemyStageIndexDialog(self)
+        child=self.enemy_directory_dialog
+        identity=child.panel.reference.get('source_identity')if child.panel.reference is not None else None
+        if type(identity)not in(tuple,list)or len(identity)!=4 or identity[3]!=self.source_identity:
+            self._close_enemy_directory();self.enemy_directory_button.setEnabled(False);return False
+        child.show();return True

@@ -31,7 +31,7 @@ def main():
             font=QFontDatabase.addApplicationFont(str(font_file));families=QFontDatabase.applicationFontFamilies(font)
             if families:app.setFont(QFont(families[0],9))
         window=OfflineWindow(include_historical_route_diagnostics=True);assert not window.auto.isChecked() and window.capture.target is None
-        assert window.windowTitle()=='黑流树海助手 0.91 · 局外计算与节点测试（234）'
+        assert window.windowTitle()=='黑流树海助手 · 局外计算与节点测试'
         tab=window.centralWidget();tab.setCurrentIndex(next(i for i in range(tab.count()) if tab.tabText(i)=='地图预览'))
         window.resize(1120,900);window.show();app.processEvents()
         image=cv2.imdecode(np.fromfile(ROOT/'samples/native-client/exploration-map.png',dtype=np.uint8),1)
