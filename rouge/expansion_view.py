@@ -42,6 +42,12 @@ class ExpansionUpdatePanel(QWidget):
         layout.addWidget(self.event_resources_button)
         self.event_resources_button.setVisible(self.full_catalog and 'scenes' in self.allowed_categories)
         self.event_resources_button.clicked.connect(self.open_event_resources)
+        self.event_item_uses_dialog=None
+        self.event_item_uses_button=QPushButton('物品用途：持有、交付与消耗的事件来源')
+        self.event_item_uses_button.setAccessibleName('具名物品用途与准确条件入口')
+        layout.addWidget(self.event_item_uses_button)
+        self.event_item_uses_button.setVisible(self.full_catalog and any(key in self.allowed_categories for key in ('scenes','relics','scrap')))
+        self.event_item_uses_button.clicked.connect(self.open_event_item_uses)
         self.tickets_button=QPushButton('招募券：适用职业、留存与取出')
         self.tickets_button.setAccessibleName('招募券用途与留存规则')
         layout.addWidget(self.tickets_button)
@@ -160,6 +166,7 @@ class ExpansionUpdatePanel(QWidget):
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
     def _unavailable(self):
+        self._close_event_item_uses();self.event_item_uses_button.setEnabled(False)
         self._close_event_resources();self.event_resources_button.setEnabled(False)
         self._close_event_directory();self.event_directory_button.setEnabled(False)
         self._close_enemy_directory();self.enemy_directory_button.setEnabled(False)
@@ -245,6 +252,7 @@ class ExpansionUpdatePanel(QWidget):
         self._sync_enemy_directory(ready)
         self._sync_event_directory(ready)
         self._sync_event_resources(ready)
+        self._sync_event_item_uses(ready)
         return ready
 
     def _close_region_resources(self):
@@ -721,6 +729,7 @@ class ExpansionUpdatePanel(QWidget):
         self.origins_dialog.show();return True
 
     def close_children(self):
+        self._close_event_item_uses()
         self._close_event_resources()
         self._close_event_directory()
         self._close_enemy_directory()
@@ -865,4 +874,40 @@ class ExpansionUpdatePanel(QWidget):
         child=self.event_resources_dialog
         if child.panel.result is None or child.panel.result.get('version_source_identity')!=self.source_identity:
             self._close_event_resources();self.event_resources_button.setEnabled(False);return False
+        child.show();return True
+
+    def _close_event_item_uses(self):
+        child=getattr(self,'event_item_uses_dialog',None)
+        if child is not None:
+            child.panel.clear_reference();child.close()
+        self.event_item_uses_dialog=None
+
+    def _sync_event_item_uses(self,ready):
+        allowed=self.full_catalog and any(key in self.allowed_categories for key in ('scenes','relics','scrap'))
+        self.event_item_uses_button.setVisible(allowed);self.event_item_uses_button.setEnabled(ready and allowed)
+        child=getattr(self,'event_item_uses_dialog',None)
+        if not ready or not allowed:
+            self._close_event_item_uses();return False
+        if child is not None and child.isVisible():
+            if not child.panel.refresh_reference():
+                self._close_event_item_uses();self.event_item_uses_button.setEnabled(False);return False
+            if child.panel.result is None or child.panel.result.get('version_source_identity')!=self.source_identity:
+                self._close_event_item_uses();self.event_item_uses_button.setEnabled(False);return False
+        return True
+
+    def open_event_item_uses(self):
+        if not self.full_catalog or not any(key in self.allowed_categories for key in ('scenes','relics','scrap')):
+            self._close_event_item_uses();return False
+        fresh=model.packet()
+        if fresh is None or fresh['source_identity']!=self.source_identity:
+            self._unavailable();return False
+        from .current_event_item_uses_view import CurrentEventItemUsesDialog
+        self._close_event_item_uses();self.event_item_uses_dialog=CurrentEventItemUsesDialog(self)
+        child=self.event_item_uses_dialog
+        if child.panel.result is None or child.panel.result.get('version_source_identity')!=self.source_identity:
+            self._close_event_item_uses();self.event_item_uses_button.setEnabled(False);return False
+        row=self.result.get('row')if self.result is not None else None
+        if row is not None and row.get('category')in('relics','scrap'):
+            index=child.panel.item.findData(row['id'])
+            if index>0:child.panel.item.setCurrentIndex(index)
         child.show();return True
