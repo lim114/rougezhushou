@@ -366,6 +366,10 @@ ADDITIONAL_MODULES += ('tests.test_current_boss_documents_369', 'tests.test_curr
 
 ADDITIONAL_MODULES += ('tests.test_current_enemy_stage_index_370', 'tests.test_current_enemy_stage_index_view_370')
 
+ADDITIONAL_MODULES += ('tests.test_current_enemy_spawns_371', 'tests.test_current_enemy_spawns_view_371')
+
+ADDITIONAL_MODULES += ('tests.test_current_event_directory_372', 'tests.test_current_event_directory_view_372')
+
 def maintained_selectors():
     """Original maintained ordered union, then all explicit post290 additions."""
     historical = json.loads((ROOT / 'CORE_0.70_VERIFICATION.json').read_bytes())
@@ -435,4 +439,3 @@ def main():
 if __name__ == '__main__':
     sys.exit(main())
 
-ADDITIONAL_MODULES += ('tests.test_current_enemy_spawns_371', 'tests.test_current_enemy_spawns_view_371')
