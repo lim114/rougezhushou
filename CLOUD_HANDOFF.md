@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/374.json)。
 
-已完成至374，后续375；本批状态 `P3_SECTION374_LOCAL_ACCEPTED_PUBLICATION_PENDING`。推进终点：380。下次定期全量380。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至374，后续375；本批状态 `P3_SECTION374_PUBLISHED`。推进终点：380。下次定期全量380。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
@@ -925,5 +925,5 @@ Wine检查使用 `bash scripts/wine_python.sh ...`：同一个Wine前缀中的Qt
 
 只覆盖39份已核对事件文献277个位置中描述明确的数值；不补叙述独有或隐藏数量、不补具名奖励件数或池，不判断服务器资格。随机/珍贵只确认数量类别，半量取整、底限、额外修正和实际结算未知。P3/P2/P1未全部完成。
 
-<!-- section374-publication-pending -->本地验收完成，普通推送及真实远端核对待完成。
+第374节功能提交91ad3f6acb7a0affb0029488d881584c45773384已普通推送并核对真实远端及609份相关公开文件字节，证明verification/sections/374-publication.json。本次仅保存发布元数据，不增加功能节数；后续375尚未启动；按本次授权继续至380并完整收尾后暂停，下一定期全量380。P3/P2/P1未完成，资料对照不冒充本局实际状态/生成/生效/结算；私人状态及实机游戏/聊天未纳入云端。
 <!-- section374-handoff:end -->
