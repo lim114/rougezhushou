@@ -36,6 +36,12 @@ class ExpansionUpdatePanel(QWidget):
         layout.addWidget(self.event_directory_button)
         self.event_directory_button.setVisible(self.full_catalog and 'scenes' in self.allowed_categories)
         self.event_directory_button.clicked.connect(self.open_event_directory)
+        self.event_resources_dialog=None
+        self.event_resources_button=QPushButton('事件资源：按收益与代价查找准确来源')
+        self.event_resources_button.setAccessibleName('事件资源收益代价与完整条件入口')
+        layout.addWidget(self.event_resources_button)
+        self.event_resources_button.setVisible(self.full_catalog and 'scenes' in self.allowed_categories)
+        self.event_resources_button.clicked.connect(self.open_event_resources)
         self.tickets_button=QPushButton('招募券：适用职业、留存与取出')
         self.tickets_button.setAccessibleName('招募券用途与留存规则')
         layout.addWidget(self.tickets_button)
@@ -154,6 +160,7 @@ class ExpansionUpdatePanel(QWidget):
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
     def _unavailable(self):
+        self._close_event_resources();self.event_resources_button.setEnabled(False)
         self._close_event_directory();self.event_directory_button.setEnabled(False)
         self._close_enemy_directory();self.enemy_directory_button.setEnabled(False)
         self._close_initial_recruits();self.initial_recruits_button.setEnabled(False)
@@ -237,6 +244,7 @@ class ExpansionUpdatePanel(QWidget):
         if ready and child is not None and child.isVisible():child.panel.refresh_reference()
         self._sync_enemy_directory(ready)
         self._sync_event_directory(ready)
+        self._sync_event_resources(ready)
         return ready
 
     def _close_region_resources(self):
@@ -713,6 +721,7 @@ class ExpansionUpdatePanel(QWidget):
         self.origins_dialog.show();return True
 
     def close_children(self):
+        self._close_event_resources()
         self._close_event_directory()
         self._close_enemy_directory()
         self._close_initial_recruits()
@@ -824,4 +833,36 @@ class ExpansionUpdatePanel(QWidget):
         child=self.event_directory_dialog
         if child.panel.result is None or child.panel.result.get('version_source_identity')!=self.source_identity:
             self._close_event_directory();self.event_directory_button.setEnabled(False);return False
+        child.show();return True
+
+    def _close_event_resources(self):
+        child=getattr(self,'event_resources_dialog',None)
+        if child is not None:
+            child.panel.clear_reference();child.close()
+        self.event_resources_dialog=None
+
+    def _sync_event_resources(self,ready):
+        allowed=self.full_catalog and 'scenes' in self.allowed_categories
+        self.event_resources_button.setVisible(allowed);self.event_resources_button.setEnabled(ready and allowed)
+        child=getattr(self,'event_resources_dialog',None)
+        if not ready or not allowed:
+            self._close_event_resources();return False
+        if child is not None and child.isVisible():
+            if not child.panel.refresh_reference():
+                self._close_event_resources();self.event_resources_button.setEnabled(False);return False
+            if child.panel.result is None or child.panel.result.get('version_source_identity')!=self.source_identity:
+                self._close_event_resources();self.event_resources_button.setEnabled(False);return False
+        return True
+
+    def open_event_resources(self):
+        if not self.full_catalog or 'scenes'not in self.allowed_categories:
+            self._close_event_resources();return False
+        fresh=model.packet()
+        if fresh is None or fresh['source_identity']!=self.source_identity:
+            self._unavailable();return False
+        from .current_event_resources_view import CurrentEventResourcesDialog
+        self._close_event_resources();self.event_resources_dialog=CurrentEventResourcesDialog(self)
+        child=self.event_resources_dialog
+        if child.panel.result is None or child.panel.result.get('version_source_identity')!=self.source_identity:
+            self._close_event_resources();self.event_resources_button.setEnabled(False);return False
         child.show();return True

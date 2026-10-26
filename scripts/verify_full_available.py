@@ -438,6 +438,8 @@ def main():
 
 ADDITIONAL_MODULES += ('tests.test_current_stage_objects_373','tests.test_current_stage_objects_view_373')
 
+ADDITIONAL_MODULES += ('tests.test_current_event_resources_374', 'tests.test_current_event_resources_view_374')
+
 if __name__ == '__main__':
     sys.exit(main())
 
