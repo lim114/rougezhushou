@@ -1,0 +1,58 @@
+{
+  "kind": "TARGETED_PUBLIC_SOURCE_SEARCH_SCOPE_NOT_RUNTIME_VALIDATION",
+  "actor": "/root/p3_371_battle_candidates",
+  "date": "2026-10-26",
+  "queries_actually_run": [
+    "腐败骑士 蓄力锤 4秒 site:prts.wiki",
+    "腐败骑士 蓄力锤 蓄力 四秒 site:wiki.biligame.com",
+    "Arknights ChargeAttack duration enemy_1513_dekght",
+    "\"Corrupted Knight\" \"4 seconds\"",
+    "\"腐败骑士\" \"蓄力\" \"4秒\"",
+    "\"腐败骑士\" \"ChargeAttack\" \"duration\""
+  ],
+  "existing_exact_sources_reused": [
+    {
+      "path": "research/p3-current-guest-knights-377/corrupt-knight-complete.html",
+      "revision": 435832,
+      "url": "https://m.prts.wiki/w/%E8%85%90%E8%B4%A5%E9%AA%91%E5%A3%AB",
+      "facts": "完整技能卡说明22秒初始冷却、22秒再次就绪、300%物理伤害及主目标/周围四格；未检出蓄力4秒或该相位完整起止的文字。"
+    },
+    {
+      "path": "research/p3-current-guest-knights-377/reference-data.json:originals.enemy_definitions.enemy_1513_dekght",
+      "game_commit": "bee3f83c5d60590b5e1cd42b8d09d00ce32ab10d",
+      "facts": "数据库级别0的ChargeAttack含duration=4、cooldown=22、initCooldown=22；级别1的skills为空。该原参数独立保留，不能单凭其名称证明当前精确引用的完整蓄力相位或总时长。"
+    }
+  ],
+  "public_search_leads_found": [
+    {
+      "url": "https://prts.wiki/w/%E8%85%90%E8%B4%A5%E9%AA%91%E5%A3%AB",
+      "title": "腐败骑士 - PRTS",
+      "observation": "搜索返回与既有完整原页相同的22/22冷却和300%伤害；没有直接4秒相位证据。新open实际超时400，未把搜索命中说成新完整下载。",
+      "accepted_as_current_phase_proof": false
+    },
+    {
+      "url": "https://arknights.fandom.com/wiki/Corrupted_Knight/Enemy",
+      "title": "Corrupted Knight (enemy)",
+      "observation": "搜索返回泛用介绍：特殊攻击从起跳到砸落用4秒。页面列早期MN/VI等关卡，未建立黑流树海四份当前精确配置、动作/脚本版本或相位起止的直接绑定。仅作线索，不作为当前相位验收。",
+      "accepted_as_current_phase_proof": false
+    },
+    {
+      "url": "https://wiki.biligame.com/arknights/%E5%8D%B1%E6%9C%BA%E5%90%88%E7%BA%A6/%E6%95%B0%E5%80%BC%E6%94%B9%E5%8A%A8",
+      "title": "危机合约/数值改动 - BWIKI",
+      "observation": "搜索返回腐败重锤蓄力4秒，但同条伤害为主目标280%、周围250%，与本关已选完整文献卡300%不同；模式/数值改动范围未对应，不能移植完整相位。",
+      "accepted_as_current_phase_proof": false
+    },
+    {
+      "url": "https://www.9game.cn/mrfz/5160758.html",
+      "title": "明日方舟腐败骑士打法一览",
+      "observation": "搜索结果声称每4秒砸地一次，混淆普通攻击间隔和技能冷却；非本次可靠机制依据，未采用。",
+      "accepted_as_current_phase_proof": false
+    }
+  ],
+  "conclusion": "查到相关4秒说法，但未得到适用于当前黑流树海准确配置的完整蓄力相位证据。撤去默认4秒蓄力结论，保留已证原卡22/22、300%等条件；技术原duration=4保留并明确不解释为完整相位或总时长。不添加任意时序，不计算实际周期。",
+  "original_compiled_line_to_correct_in_default_output": "固定数据另记蓄力4秒。冷却准备、蓄力、命中与全局开场时刻分别看待，不相加成未经核验的实际周期。",
+  "no_formal_or_pinned_source_changed_by_reviewer": true,
+  "tests_or_Qt_or_game_or_chat_executed": false,
+  "mechanism_numeric_execution_performed": false,
+  "complete_current_phase_proven": false
+}

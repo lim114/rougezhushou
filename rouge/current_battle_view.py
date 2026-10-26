@@ -81,6 +81,10 @@ class CurrentBattlePanel(QWidget):
         self.enemy_spawns_button.hide()
         body.addWidget(self.enemy_spawns_button)
         self.enemy_spawns_button.clicked.connect(self.open_enemy_spawns)
+        self.guest_knights_button = QPushButton('恶意讨薪 · 双骑士联动与完整招式')
+        self.guest_knights_button.hide()
+        body.addWidget(self.guest_knights_button)
+        self.guest_knights_button.clicked.connect(self.open_guest_knights)
         self.enemy_player = QPlainTextEdit()
         self.enemy_player.setReadOnly(True)
         body.addWidget(self.enemy_player, 1)
@@ -107,9 +111,10 @@ class CurrentBattlePanel(QWidget):
         self.spawn_candidates_button = QPushButton('查看出怪候选与关联记录')
         body.addWidget(self.spawn_candidates_button)
         self.spawn_candidates_button.clicked.connect(self.open_spawn_candidates)
-        self.route_itinerary_dialog=None
-        self.route_itinerary_button=QPushButton('查看完整行程与停留条件')
-        body.addWidget(self.route_itinerary_button);self.route_itinerary_button.clicked.connect(self.open_route_itinerary)
+        self.route_itinerary_dialog = None
+        self.route_itinerary_button = QPushButton('查看完整行程与停留条件')
+        body.addWidget(self.route_itinerary_button)
+        self.route_itinerary_button.clicked.connect(self.open_route_itinerary)
         self.technical = QPlainTextEdit()
         self.technical.setReadOnly(True)
         self.tabs.addTab(self.technical, '完整原值与来源')
@@ -127,6 +132,9 @@ class CurrentBattlePanel(QWidget):
         self.refresh_reference()
 
     def _clear(self):
+        self._close_guest_knights()
+        self.guest_knights_button.hide()
+        self.guest_knights_button.setEnabled(False)
         self._close_route_itinerary()
         self.route_itinerary_button.setEnabled(False)
         self._close_stage_objects()
@@ -298,6 +306,7 @@ class CurrentBattlePanel(QWidget):
         self._sync_hanko(keep)
         self._sync_shop_vault(keep)
         self._sync_enemy_spawns(keep)
+        self._sync_guest_knights(keep)
 
     def _actions_changed(self,*_,preserve=False):
         old=self.actions.currentItem();key=old.data(Qt.ItemDataRole.UserRole)if old and preserve else None
@@ -482,6 +491,34 @@ class CurrentBattlePanel(QWidget):
         self.boss_documents_dialog.panel.enemy_requested.connect(self._boss_documents_enemy_requested)
         self.boss_documents_dialog.show();return True
 
+    def _close_guest_knights(self):
+        child=getattr(self,'guest_knights_dialog',None)
+        if child is not None:child.panel.clear_reference();child.close()
+
+    def _sync_guest_knights(self,keep):
+        from . import current_guest_knights as reader
+        available=self.result is not None and self.enemy_key is not None and reader.target_available(self.stage_id,self.enemy_key)
+        self.guest_knights_button.setVisible(available);self.guest_knights_button.setEnabled(available)
+        child=getattr(self,'guest_knights_dialog',None)
+        if child is not None and child.isVisible():
+            if not keep:self._close_guest_knights()
+            elif not available:child.panel.clear_reference()
+            else:
+                child.panel.refresh_reference()
+                result=child.panel.result
+                if result is not None and result.get('battle_source_identity')!=self.result['source_identity']:self._close_guest_knights()
+
+    def open_guest_knights(self):
+        if self.result is None or self.enemy_key is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from . import current_guest_knights as reader
+        if not reader.target_available(self.stage_id,self.enemy_key):self._close_guest_knights();self.guest_knights_button.hide();return False
+        from .current_guest_knights_view import CurrentGuestKnightsDialog
+        self._close_guest_knights();self.guest_knights_dialog=CurrentGuestKnightsDialog(self.stage_id,self.enemy_key,self)
+        result=self.guest_knights_dialog.panel.result
+        if result is None or result.get('battle_source_identity')!=self.result['source_identity']:self._close_guest_knights();return False
+        self.guest_knights_dialog.show();return True
+
     def _close_event_origins(self):
         dialog=getattr(self,'event_origins_dialog',None)
         if dialog is not None:dialog.close()
@@ -495,6 +532,7 @@ class CurrentBattlePanel(QWidget):
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
     def closeEvent(self, event):
+        self._close_guest_knights()
         self._close_route_itinerary()
         self._close_stage_objects()
         self._close_enemy_spawns()
@@ -655,6 +693,7 @@ class CurrentBattleDialog(QDialog):
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
     def closeEvent(self, event):
+        self.panel._close_guest_knights()
         self.panel._close_route_itinerary()
         self.panel._close_stage_objects()
         self.panel._close_enemy_spawns()
