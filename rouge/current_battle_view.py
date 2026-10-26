@@ -10,52 +10,153 @@ from .ui_state import replace_text
 
 
 class CurrentBattlePanel(QWidget):
-    def __init__(self,stage_id,parent=None):
-        super().__init__(parent);self.stage_id=stage_id;self.result=None;self.source_identity=None;self.enemy_key=None;self.action_key=None
-        layout=QVBoxLayout(self);self.notice=QLabel(model.NOTICE);self.notice.setWordWrap(True);layout.addWidget(self.notice)
-        self.refresh_button=QPushButton('重新核对本关资料');layout.addWidget(self.refresh_button)
-        self.tabs=QTabWidget();layout.addWidget(self.tabs,1)
-        overview=QWidget();body=QVBoxLayout(overview);self.map_image=QLabel();self.map_image.setMinimumSize(300,160);self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter);body.addWidget(self.map_image)
-        self.position_button=QPushButton('查看地图格子与已核对的原图位置');body.addWidget(self.position_button);self.position_button.clicked.connect(self.open_map_positions)
-        self.event_origins_button=QPushButton('查看与本关对应的事件选项');body.addWidget(self.event_origins_button);self.event_origins_button.clicked.connect(self.open_event_origins)
-        self.summary=QPlainTextEdit();self.summary.setReadOnly(True);body.addWidget(self.summary,1);self.tabs.addTab(overview,'地图与关卡')
-        enemies=QWidget();body=QVBoxLayout(enemies);self.enemy_combo=QComboBox();self.enemy_choices=BranchChoice(self.enemy_combo,[],overview_label='总览（本关候选）',placeholder='请选择敌人或关联实体');body.addWidget(self.enemy_choices)
-        self.enemy_portrait=QLabel();self.enemy_portrait.setMinimumSize(85,85);self.enemy_portrait.setAlignment(Qt.AlignmentFlag.AlignCenter);body.addWidget(self.enemy_portrait)
-        self.hanko_button=QPushButton('查看汉科、相关敌人和烟雾弹的完整机制');self.hanko_button.hide();body.addWidget(self.hanko_button);self.hanko_button.clicked.connect(self.open_hanko)
-        self.elbert_button=QPushButton('查看本关首领、关联敌人与火种的完整机制');self.elbert_button.hide();body.addWidget(self.elbert_button);self.elbert_button.clicked.connect(self.open_elbert)
-        self.shop_vault_dialog=None
-        self.shop_vault_button=QPushButton('查看坎诺特与保险柜的条件和后果');self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False)
-        body.addWidget(self.shop_vault_button);self.shop_vault_button.clicked.connect(self.open_shop_vault)
-        self.sun_boss_button=QPushButton('查看本关多形态首领与祭台的完整机制');self.sun_boss_button.hide();body.addWidget(self.sun_boss_button);self.sun_boss_button.clicked.connect(self.open_sun_boss)
-        self.boss_documents_button=QPushButton('查看本关首领与关联实体的完整机制');self.boss_documents_button.hide();body.addWidget(self.boss_documents_button);self.boss_documents_button.clicked.connect(self.open_boss_documents)
-        self.enemy_player=QPlainTextEdit();self.enemy_player.setReadOnly(True);body.addWidget(self.enemy_player,1);self.tabs.addTab(enemies,'敌人和机制')
-        wave=QWidget();body=QVBoxLayout(wave);self.queue_kind=QComboBox();self.queue_kind.addItem('总览（全部条目）',None);self.queue_kind.addItem('主波次','main');self.queue_kind.addItem('条件分支','branch');body.addWidget(self.queue_kind)
-        split=QSplitter();self.actions=QListWidget();split.addWidget(self.actions);self.action_player=QPlainTextEdit();self.action_player.setReadOnly(True);split.addWidget(self.action_player);split.setSizes([350,650]);body.addWidget(split,1)
-        self.action_position_button=QPushButton('在地图上查看本条位置参考');body.addWidget(self.action_position_button);self.action_position_button.clicked.connect(self.open_action_positions);self.tabs.addTab(wave,'出怪与条件')
-        self.spawn_candidates_button=QPushButton('查看出怪候选与关联记录')
-        body.addWidget(self.spawn_candidates_button);self.spawn_candidates_button.clicked.connect(self.open_spawn_candidates)
-        self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.technical,'完整原值与来源')
+    def __init__(self, stage_id, parent=None):
+        super().__init__(parent)
+        self.stage_id = stage_id
+        self.result = None
+        self.source_identity = None
+        self.enemy_key = None
+        self.action_key = None
+        layout = QVBoxLayout(self)
+        self.notice = QLabel(model.NOTICE)
+        self.notice.setWordWrap(True)
+        layout.addWidget(self.notice)
+        self.refresh_button = QPushButton('重新核对本关资料')
+        layout.addWidget(self.refresh_button)
+        self.tabs = QTabWidget()
+        layout.addWidget(self.tabs, 1)
+        overview = QWidget()
+        body = QVBoxLayout(overview)
+        self.map_image = QLabel()
+        self.map_image.setMinimumSize(300, 160)
+        self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        body.addWidget(self.map_image)
+        self.position_button = QPushButton('查看地图格子与已核对的原图位置')
+        body.addWidget(self.position_button)
+        self.position_button.clicked.connect(self.open_map_positions)
+        self.event_origins_button = QPushButton('查看与本关对应的事件选项')
+        body.addWidget(self.event_origins_button)
+        self.event_origins_button.clicked.connect(self.open_event_origins)
+        self.summary = QPlainTextEdit()
+        self.summary.setReadOnly(True)
+        body.addWidget(self.summary, 1)
+        self.tabs.addTab(overview, '地图与关卡')
+        enemies = QWidget()
+        body = QVBoxLayout(enemies)
+        self.enemy_combo = QComboBox()
+        self.enemy_choices = BranchChoice(self.enemy_combo, [], overview_label='总览（本关候选）', placeholder='请选择敌人或关联实体')
+        body.addWidget(self.enemy_choices)
+        self.enemy_portrait = QLabel()
+        self.enemy_portrait.setMinimumSize(85, 85)
+        self.enemy_portrait.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        body.addWidget(self.enemy_portrait)
+        self.hanko_button = QPushButton('查看汉科、相关敌人和烟雾弹的完整机制')
+        self.hanko_button.hide()
+        body.addWidget(self.hanko_button)
+        self.hanko_button.clicked.connect(self.open_hanko)
+        self.elbert_button = QPushButton('查看本关首领、关联敌人与火种的完整机制')
+        self.elbert_button.hide()
+        body.addWidget(self.elbert_button)
+        self.elbert_button.clicked.connect(self.open_elbert)
+        self.shop_vault_dialog = None
+        self.shop_vault_button = QPushButton('查看坎诺特与保险柜的条件和后果')
+        self.shop_vault_button.hide()
+        self.shop_vault_button.setEnabled(False)
+        body.addWidget(self.shop_vault_button)
+        self.shop_vault_button.clicked.connect(self.open_shop_vault)
+        self.sun_boss_button = QPushButton('查看本关多形态首领与祭台的完整机制')
+        self.sun_boss_button.hide()
+        body.addWidget(self.sun_boss_button)
+        self.sun_boss_button.clicked.connect(self.open_sun_boss)
+        self.boss_documents_button = QPushButton('查看本关首领与关联实体的完整机制')
+        self.boss_documents_button.hide()
+        body.addWidget(self.boss_documents_button)
+        self.boss_documents_button.clicked.connect(self.open_boss_documents)
+        self.enemy_spawns_dialog=None
+        self.enemy_spawns_button=QPushButton('查看这个敌人的出怪条目与条件')
+        self.enemy_spawns_button.hide();body.addWidget(self.enemy_spawns_button);self.enemy_spawns_button.clicked.connect(self.open_enemy_spawns)
+        self.enemy_player = QPlainTextEdit()
+        self.enemy_player.setReadOnly(True)
+        body.addWidget(self.enemy_player, 1)
+        self.tabs.addTab(enemies, '敌人和机制')
+        wave = QWidget()
+        body = QVBoxLayout(wave)
+        self.queue_kind = QComboBox()
+        self.queue_kind.addItem('总览（全部条目）', None)
+        self.queue_kind.addItem('主波次', 'main')
+        self.queue_kind.addItem('条件分支', 'branch')
+        body.addWidget(self.queue_kind)
+        split = QSplitter()
+        self.actions = QListWidget()
+        split.addWidget(self.actions)
+        self.action_player = QPlainTextEdit()
+        self.action_player.setReadOnly(True)
+        split.addWidget(self.action_player)
+        split.setSizes([350, 650])
+        body.addWidget(split, 1)
+        self.action_position_button = QPushButton('在地图上查看本条位置参考')
+        body.addWidget(self.action_position_button)
+        self.action_position_button.clicked.connect(self.open_action_positions)
+        self.tabs.addTab(wave, '出怪与条件')
+        self.spawn_candidates_button = QPushButton('查看出怪候选与关联记录')
+        body.addWidget(self.spawn_candidates_button)
+        self.spawn_candidates_button.clicked.connect(self.open_spawn_candidates)
+        self.technical = QPlainTextEdit()
+        self.technical.setReadOnly(True)
+        self.tabs.addTab(self.technical, '完整原值与来源')
         from .current_reward_view import CurrentRewardPanel
-        self.rewards=CurrentRewardPanel(stage_id);self.tabs.addTab(self.rewards,'奖励与条件');self.rewards.actionSelected.connect(self._reward_action_selected)
+        self.rewards = CurrentRewardPanel(stage_id)
+        self.tabs.addTab(self.rewards, '奖励与条件')
+        self.rewards.actionSelected.connect(self._reward_action_selected)
         from .current_settlement_modes_view import CurrentSettlementModesPanel
-        self.settlement=CurrentSettlementModesPanel(stage_id);self.tabs.addTab(self.settlement,'通关基础奖励')
-        self.refresh_button.clicked.connect(self.refresh_reference);self.enemy_combo.currentIndexChanged.connect(self._enemy_changed);self.queue_kind.currentIndexChanged.connect(self._actions_changed);self.actions.currentItemChanged.connect(self._action_changed)
+        self.settlement = CurrentSettlementModesPanel(stage_id)
+        self.tabs.addTab(self.settlement, '通关基础奖励')
+        self.refresh_button.clicked.connect(self.refresh_reference)
+        self.enemy_combo.currentIndexChanged.connect(self._enemy_changed)
+        self.queue_kind.currentIndexChanged.connect(self._actions_changed)
+        self.actions.currentItemChanged.connect(self._action_changed)
         self.refresh_reference()
 
     def _clear(self):
-        self._close_boss_documents();self.boss_documents_button.hide();self.boss_documents_button.setEnabled(False)
-        self._close_sun_boss();self.sun_boss_button.hide();self.sun_boss_button.setEnabled(False)
-        self._close_shop_vault();self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False)
-        self._close_elbert();self.elbert_button.hide();self.elbert_button.setEnabled(False)
-        self._close_hanko();self.hanko_button.hide();self.hanko_button.setEnabled(False)
-        self._close_spawn_candidates();self.spawn_candidates_button.setEnabled(False)
-        self._close_event_origins();self.event_origins_button.setEnabled(False);self.event_origins_button.hide()
-        self._close_map_positions();self.position_button.setEnabled(False)
+        self._close_enemy_spawns()
+        self.enemy_spawns_button.hide()
+        self.enemy_spawns_button.setEnabled(False)
+        self._close_boss_documents()
+        self.boss_documents_button.hide()
+        self.boss_documents_button.setEnabled(False)
+        self._close_sun_boss()
+        self.sun_boss_button.hide()
+        self.sun_boss_button.setEnabled(False)
+        self._close_shop_vault()
+        self.shop_vault_button.hide()
+        self.shop_vault_button.setEnabled(False)
+        self._close_elbert()
+        self.elbert_button.hide()
+        self.elbert_button.setEnabled(False)
+        self._close_hanko()
+        self.hanko_button.hide()
+        self.hanko_button.setEnabled(False)
+        self._close_spawn_candidates()
+        self.spawn_candidates_button.setEnabled(False)
+        self._close_event_origins()
+        self.event_origins_button.setEnabled(False)
+        self.event_origins_button.hide()
+        self._close_map_positions()
+        self.position_button.setEnabled(False)
         self.action_position_button.setEnabled(False)
-        self.result=None;self.source_identity=None;self.enemy_key=None;self.action_key=None
-        self.map_image.clear();self.map_image.setText(model.UNAVAILABLE);self.enemy_portrait.clear()
-        self.enemy_choices.set_groups([],emit=False);blocked=self.actions.blockSignals(True);self.actions.clear();self.actions.blockSignals(blocked)
-        for widget in(self.summary,self.enemy_player,self.action_player,self.technical):replace_text(widget,'',preserve=False)
+        self.result = None
+        self.source_identity = None
+        self.enemy_key = None
+        self.action_key = None
+        self.map_image.clear()
+        self.map_image.setText(model.UNAVAILABLE)
+        self.enemy_portrait.clear()
+        self.enemy_choices.set_groups([], emit=False)
+        blocked = self.actions.blockSignals(True)
+        self.actions.clear()
+        self.actions.blockSignals(blocked)
+        for widget in (self.summary, self.enemy_player, self.action_player, self.technical):
+            replace_text(widget, '', preserve=False)
         self.rewards.clear_reference()
         self.settlement.clear_reference()
 
@@ -140,18 +241,25 @@ class CurrentBattlePanel(QWidget):
             if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
         return False
 
-    def _enemy_changed(self,*_,preserve=False):
-        key=self.enemy_combo.currentData();enemy=next((e for e in self.result['enemies']if e['key']==key),None)if self.result else None
-        keep=preserve and key==self.enemy_key;self.enemy_key=key
-        replace_text(self.enemy_player,model.enemy_text(enemy)if enemy else'请选择敌人或关联实体。',preserve=keep)
-        self.enemy_portrait.clear();pix=QPixmap();raw=model.picture_bytes(enemy['portrait'])if enemy else None
-        if raw and pix.loadFromData(raw,'PNG'):self.enemy_portrait.setPixmap(pix.scaled(90,90,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
-        else:self.enemy_portrait.setText('此精确引用未取得图片。'if enemy else'')
+    def _enemy_changed(self, *_, preserve=False):
+        key = self.enemy_combo.currentData()
+        enemy = next((e for e in self.result['enemies'] if e['key'] == key), None) if self.result else None
+        keep = preserve and key == self.enemy_key
+        self.enemy_key = key
+        replace_text(self.enemy_player, model.enemy_text(enemy) if enemy else '请选择敌人或关联实体。', preserve=keep)
+        self.enemy_portrait.clear()
+        pix = QPixmap()
+        raw = model.picture_bytes(enemy['portrait']) if enemy else None
+        if raw and pix.loadFromData(raw, 'PNG'):
+            self.enemy_portrait.setPixmap(pix.scaled(90, 90, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
+        else:
+            self.enemy_portrait.setText('此精确引用未取得图片。' if enemy else '')
         self._sync_boss_documents(keep)
         self._sync_sun_boss(keep)
         self._sync_elbert(keep)
         self._sync_hanko(keep)
         self._sync_shop_vault(keep)
+        self._sync_enemy_spawns(keep)
 
     def _actions_changed(self,*_,preserve=False):
         old=self.actions.currentItem();key=old.data(Qt.ItemDataRole.UserRole)if old and preserve else None
@@ -348,7 +456,19 @@ class CurrentBattlePanel(QWidget):
         from .current_event_battles_view import CurrentEventBattlesDialog
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
-    def closeEvent(self,event):self._close_boss_documents();self._close_sun_boss();self._close_shop_vault();self.rewards._close_shop_vault();self._close_elbert();self._close_hanko();self.settlement.clear_reference();self._close_spawn_candidates();self._close_map_positions();self._close_event_origins();super().closeEvent(event)
+    def closeEvent(self, event):
+        self._close_enemy_spawns()
+        self._close_boss_documents()
+        self._close_sun_boss()
+        self._close_shop_vault()
+        self.rewards._close_shop_vault()
+        self._close_elbert()
+        self._close_hanko()
+        self.settlement.clear_reference()
+        self._close_spawn_candidates()
+        self._close_map_positions()
+        self._close_event_origins()
+        super().closeEvent(event)
 
     def _close_shop_vault(self):
         child=getattr(self,'shop_vault_dialog',None)
@@ -383,10 +503,66 @@ class CurrentBattlePanel(QWidget):
             self._close_shop_vault();self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False);return False
         self.shop_vault_dialog.show();return True
 
+    def _close_enemy_spawns(self):
+        child=getattr(self,'enemy_spawns_dialog',None)
+        if child is not None:child.panel.clear_reference(notify=False);child.close()
+        self._enemy_spawns_source_invalidated()
+        self.enemy_spawns_dialog=None
+    def _enemy_spawns_source_invalidated(self):
+        child=getattr(self,'enemy_spawns_position_dialog',None)
+        if child is not None:child.panel.clear_reference();child.close()
+        self.enemy_spawns_position_dialog=None
+    def _sync_enemy_spawns(self,keep):
+        available=self.result is not None and self.enemy_key is not None
+        self.enemy_spawns_button.setVisible(available);self.enemy_spawns_button.setEnabled(available)
+        child=getattr(self,'enemy_spawns_dialog',None)
+        if child is not None and child.isVisible():
+            if not keep or not available or child.panel.enemy_key!=self.enemy_key:self._close_enemy_spawns()
+            else:child.panel.refresh_reference()
+    def _enemy_spawns_action_selected(self,key):
+        child=getattr(self,'enemy_spawns_dialog',None)
+        if self.result is None or child is None or child.panel.result is None:return False
+        if child.panel.result['battle_source_identity']!=self.result['source_identity']or child.panel.enemy_key!=self.enemy_key:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .current_enemy_spawns import resolve_action
+        if resolve_action(child.panel.result,key)is None:child.panel.clear_reference();return False
+        action=next((a for a in self.result['actions']if a['key']==key),None)
+        if action is None:return False
+        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']))
+        for i in range(self.actions.count()):
+            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
+        return False
+    def _enemy_spawns_position_requested(self,key):
+        okay=self._enemy_spawns_action_selected(key)and self.open_action_positions()
+        if okay:self.enemy_spawns_position_dialog=self.action_position_dialog
+        return okay
+    def open_enemy_spawns(self):
+        if self.result is None or self.enemy_key is None:return False
+        if self.enemy_combo.currentData()!=self.enemy_key:self._close_enemy_spawns();return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .current_enemy_spawns_view import CurrentEnemySpawnsDialog
+        self._close_enemy_spawns();self.enemy_spawns_dialog=CurrentEnemySpawnsDialog(self.stage_id,self.enemy_key,self)
+        panel=self.enemy_spawns_dialog.panel
+        if panel.result is None:self._close_enemy_spawns();return False
+        panel.actionSelected.connect(self._enemy_spawns_action_selected);panel.actionPositionRequested.connect(self._enemy_spawns_position_requested);panel.sourceInvalidated.connect(self._enemy_spawns_source_invalidated)
+        self.enemy_spawns_dialog.show();return True
+
 
 class CurrentBattleDialog(QDialog):
     def __init__(self,stage_id,parent=None):
         super().__init__(parent);self.setWindowTitle('固定关卡预览');self.resize(1120,820)
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
-    def closeEvent(self,event):self.panel._close_boss_documents();self.panel._close_sun_boss();self.panel._close_shop_vault();self.panel.rewards._close_shop_vault();self.panel._close_elbert();self.panel._close_hanko();self.panel.settlement.clear_reference();self.panel._close_spawn_candidates();self.panel._close_map_positions();self.panel._close_event_origins();super().closeEvent(event)
+    def closeEvent(self, event):
+        self.panel._close_enemy_spawns()
+        self.panel._close_boss_documents()
+        self.panel._close_sun_boss()
+        self.panel._close_shop_vault()
+        self.panel.rewards._close_shop_vault()
+        self.panel._close_elbert()
+        self.panel._close_hanko()
+        self.panel.settlement.clear_reference()
+        self.panel._close_spawn_candidates()
+        self.panel._close_map_positions()
+        self.panel._close_event_origins()
+        super().closeEvent(event)

@@ -1,11 +1,11 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 370,
-  "next_section": 371,
-  "current_section_label": "第370节 + 通用敌人目录与准确关卡反查",
-  "current_completed_change": "通用关卡页面新增按敌人查关卡的完整目录，可按中文名、普通/精英/领袖/未确认、层数、作战来源及独立的不计数标记筛选，再进入对应关卡的准确敌人条目与固定地图。184份配置、2060条准确引用逐条保留，同名、不同配置和独立记录不合并；缺图明确留空。总览不要求先选中某关。父刷新保留搜索、筛选、选择与两阅读，坏源清旧并手选恢复，所属战斗及地图窗口关闭后清实际资料。主测试窗同时移除过时的0.91与234标签，使用普通名称。",
-  "batch_status": "P3_SECTION370_PUBLISHED_PAUSED",
+  "completed_sections": 371,
+  "next_section": 372,
+  "current_section_label": "第371节 + 从敌人反查准确出怪记录与条件分支",
+  "current_completed_change": "通用关卡的准确敌人页面新增出怪反查，可按主波次和条件分支查看该引用对应的直接出怪条目，准确返回原条目及已有地图位置参考。184份配置、2060条敌人引用逐项核对；无直接记录的110条保留技能、装置等动态来源的可能，不据此判断不会出现。同名多引用保留候选，不强选等级。真实父刷新保留所选条目、分类、页签和两处阅读，坏源清旧并手选恢复，切换敌人或关闭所属窗口清理地图。",
+  "batch_status": "P3_SECTION371_LOCAL_ACCEPTED_PUBLICATION_PENDING",
   "next_full_validation_after": 380,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
   "latest_full_receipt": "verification/full-365/summary.json",
@@ -13,10 +13,10 @@
   "priority_order": "P3 → P2 → P1；识别优化最后；未完成事项保留",
   "node_scope": "list all source-covered possible events and conditions; no generation probabilities",
   "project_complete": false,
-  "current_batch_target_section": 370,
+  "current_batch_target_section": 380,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "009b9e2a5fd77ff741a3a4bcdb1df69041959c55633cc85934e297d62de0bb9e",
+    "sha256": "44d7d9f0b2d41aa56918b31f512c127e8d52ed182c66f18d3d720ed3a0a9f8f6",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2227,16 +2227,22 @@
       "completion_ref": "p3-section-370",
       "topic": "通用敌人目录与准确关卡反查",
       "verification": "verification/sections/370.json"
+    },
+    {
+      "number": 371,
+      "completion_ref": "p3-section-371",
+      "topic": "从敌人反查准确出怪记录与条件分支",
+      "verification": "verification/sections/371.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "7f63533ea9236540095deac0caad810b78b1d8279ad8bb5e5c36d91a4e4ce214",
+    "DEVELOPMENT_CHECKPOINT.json": "92a98a4cd9f7f583a7c5451327f8067e4caa52ca1dcd49cdb94c8dfb7278c959",
     "PROJECT_PROGRESS.md": "551d9e5af061364c41596385080cfe5c6d4938a3caa0c0d85ebd800c9aef1378",
-    "WORK_IN_PROGRESS.md": "958ae4e46aa91275a5b476ca8142bf0a692f90aec1ab79f55e265cd3e3d3f5f7",
-    "PROJECT_COMPLETED.md": "a9f42542289ef057830aa4437cff1f0460a49517dc7870856065c253081066cc",
-    "AGENTS.md": "2e0bc68471981b3c4dbc5c27296eacfcd7923fab5f5d94470847acc5dca99055",
-    "PROJECT_REQUIREMENTS.md": "009b9e2a5fd77ff741a3a4bcdb1df69041959c55633cc85934e297d62de0bb9e",
-    "verification/sections/370.json": "be30df33505ea7f01edca924cf65db56ab2279923527c661f31af6ac7100aa12"
+    "WORK_IN_PROGRESS.md": "1445adfc833e3086e15cfd7677fcac6367668977949152b9964cedb7ff8263fb",
+    "PROJECT_COMPLETED.md": "44656f4dafb4bd63cb609346c8dab1f466f8895d44e866651010e2f78265f262",
+    "AGENTS.md": "001259d28e7fa439fadabc33be189a604f50d6431f6e4f664e4ec8586694360b",
+    "PROJECT_REQUIREMENTS.md": "44d7d9f0b2d41aa56918b31f512c127e8d52ed182c66f18d3d720ed3a0a9f8f6",
+    "verification/sections/371.json": "84c635de400409568434fb61077c67ff8fa4a29b591019c11a165c00eccf4982"
   },
   "private_state_included": false
 }

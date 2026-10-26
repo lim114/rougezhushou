@@ -434,3 +434,5 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
+
+ADDITIONAL_MODULES += ('tests.test_current_enemy_spawns_371', 'tests.test_current_enemy_spawns_view_371')
