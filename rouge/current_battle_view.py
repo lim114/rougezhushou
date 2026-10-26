@@ -37,6 +37,9 @@ class CurrentBattlePanel(QWidget):
         self.event_origins_button = QPushButton('查看与本关对应的事件选项')
         body.addWidget(self.event_origins_button)
         self.event_origins_button.clicked.connect(self.open_event_origins)
+        self.stage_objects_dialog=None
+        self.stage_objects_button=QPushButton('查看本关物件与机关')
+        body.addWidget(self.stage_objects_button);self.stage_objects_button.clicked.connect(self.open_stage_objects)
         self.summary = QPlainTextEdit()
         self.summary.setReadOnly(True)
         body.addWidget(self.summary, 1)
@@ -72,9 +75,11 @@ class CurrentBattlePanel(QWidget):
         self.boss_documents_button.hide()
         body.addWidget(self.boss_documents_button)
         self.boss_documents_button.clicked.connect(self.open_boss_documents)
-        self.enemy_spawns_dialog=None
-        self.enemy_spawns_button=QPushButton('查看这个敌人的出怪条目与条件')
-        self.enemy_spawns_button.hide();body.addWidget(self.enemy_spawns_button);self.enemy_spawns_button.clicked.connect(self.open_enemy_spawns)
+        self.enemy_spawns_dialog = None
+        self.enemy_spawns_button = QPushButton('查看这个敌人的出怪条目与条件')
+        self.enemy_spawns_button.hide()
+        body.addWidget(self.enemy_spawns_button)
+        self.enemy_spawns_button.clicked.connect(self.open_enemy_spawns)
         self.enemy_player = QPlainTextEdit()
         self.enemy_player.setReadOnly(True)
         body.addWidget(self.enemy_player, 1)
@@ -118,6 +123,8 @@ class CurrentBattlePanel(QWidget):
         self.refresh_reference()
 
     def _clear(self):
+        self._close_stage_objects()
+        self.stage_objects_button.setEnabled(False)
         self._close_enemy_spawns()
         self.enemy_spawns_button.hide()
         self.enemy_spawns_button.setEnabled(False)
@@ -161,40 +168,64 @@ class CurrentBattlePanel(QWidget):
         self.settlement.clear_reference()
 
     def refresh_reference(self):
-        fresh=model.stage_reference(self.stage_id)
-        if fresh is None:self._clear();return False
-        keep=self.result is not None and self.source_identity==fresh['source_identity']and self.result['id']==fresh['id']
-        if not keep:self._close_event_origins();self._close_spawn_candidates()
-        old_enemy=self.enemy_combo.currentData()if keep else None
-        self.result=fresh;self.source_identity=fresh['source_identity']
+        fresh = model.stage_reference(self.stage_id)
+        if fresh is None:
+            self._clear()
+            return False
+        keep = self.result is not None and self.source_identity == fresh['source_identity'] and (self.result['id'] == fresh['id'])
+        if not keep:
+            self._close_event_origins()
+            self._close_spawn_candidates()
+        old_enemy = self.enemy_combo.currentData() if keep else None
+        self.result = fresh
+        self.source_identity = fresh['source_identity']
         from .current_event_battles import stage_has_reference
-        has_origins=stage_has_reference(self.stage_id);self.event_origins_button.setVisible(has_origins);self.event_origins_button.setEnabled(has_origins)
-        origin=getattr(self,'event_origins_dialog',None)
-        if keep and origin is not None and origin.isVisible():origin.panel.refresh_reference()
+        has_origins = stage_has_reference(self.stage_id)
+        self.event_origins_button.setVisible(has_origins)
+        self.event_origins_button.setEnabled(has_origins)
+        origin = getattr(self, 'event_origins_dialog', None)
+        if keep and origin is not None and origin.isVisible():
+            origin.panel.refresh_reference()
         self.position_button.setEnabled(True)
         self.spawn_candidates_button.setEnabled(True)
         self.settlement.refresh_reference()
-        replace_text(self.summary,model.summary_text(fresh),preserve=keep);replace_text(self.technical,_technical_json(fresh),preserve=keep)
-        raw=version.image_bytes(fresh['image']);pix=QPixmap()
-        if raw and pix.loadFromData(raw,'PNG'):self.map_image.setPixmap(pix.scaled(760,235,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
-        else:self.map_image.clear();self.map_image.setText('本关固定原图无法核对，不借用同名关卡图片。')
-        groups=[]
-        for tier,label in [*model.TIERS.items(),(None,'类别未确认')]:
-            items=[]
+        replace_text(self.summary, model.summary_text(fresh), preserve=keep)
+        replace_text(self.technical, _technical_json(fresh), preserve=keep)
+        raw = version.image_bytes(fresh['image'])
+        pix = QPixmap()
+        if raw and pix.loadFromData(raw, 'PNG'):
+            self.map_image.setPixmap(pix.scaled(760, 235, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
+        else:
+            self.map_image.clear()
+            self.map_image.setText('本关固定原图无法核对，不借用同名关卡图片。')
+        groups = []
+        for tier, label in [*model.TIERS.items(), (None, '类别未确认')]:
+            items = []
             for e in fresh['enemies']:
-                if e['tier']!=tier:continue
-                icon=QIcon();raw=model.picture_bytes(e['portrait']);picture=QPixmap()
-                if raw and picture.loadFromData(raw,'PNG'):icon=QIcon(picture)
-                items.append((e['name']+' · 引用资料'+str(e['reference_index']+1),e['key'],icon))
-            groups.append((label,items))
-        blocked=self.enemy_combo.blockSignals(True);self.enemy_choices.set_groups(groups,emit=False)
-        if old_enemy is not None:self.enemy_choices.select_value(old_enemy,emit=False)
-        self.enemy_combo.blockSignals(blocked);self._enemy_changed(preserve=keep);self._actions_changed(preserve=keep)
-        if not keep:self.tabs.setCurrentIndex(0)
+                if e['tier'] != tier:
+                    continue
+                icon = QIcon()
+                raw = model.picture_bytes(e['portrait'])
+                picture = QPixmap()
+                if raw and picture.loadFromData(raw, 'PNG'):
+                    icon = QIcon(picture)
+                items.append((e['name'] + ' · 引用资料' + str(e['reference_index'] + 1), e['key'], icon))
+            groups.append((label, items))
+        blocked = self.enemy_combo.blockSignals(True)
+        self.enemy_choices.set_groups(groups, emit=False)
+        if old_enemy is not None:
+            self.enemy_choices.select_value(old_enemy, emit=False)
+        self.enemy_combo.blockSignals(blocked)
+        self._enemy_changed(preserve=keep)
+        self._actions_changed(preserve=keep)
+        if not keep:
+            self.tabs.setCurrentIndex(0)
         self.rewards.refresh_reference()
-        for name in ('position_dialog','action_position_dialog','spawn_candidates_dialog'):
-            dialog=getattr(self,name,None)
-            if dialog is not None and dialog.isVisible():dialog.panel.refresh_reference()
+        for name in ('position_dialog', 'action_position_dialog', 'spawn_candidates_dialog'):
+            dialog = getattr(self, name, None)
+            if dialog is not None and dialog.isVisible():
+                dialog.panel.refresh_reference()
+        self._sync_stage_objects(keep)
         return True
 
     def _close_spawn_candidates(self):
@@ -457,6 +488,7 @@ class CurrentBattlePanel(QWidget):
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
     def closeEvent(self, event):
+        self._close_stage_objects()
         self._close_enemy_spawns()
         self._close_boss_documents()
         self._close_sun_boss()
@@ -547,6 +579,37 @@ class CurrentBattlePanel(QWidget):
         panel.actionSelected.connect(self._enemy_spawns_action_selected);panel.actionPositionRequested.connect(self._enemy_spawns_position_requested);panel.sourceInvalidated.connect(self._enemy_spawns_source_invalidated)
         self.enemy_spawns_dialog.show();return True
 
+    def _close_stage_objects(self):
+        child=getattr(self,'stage_objects_dialog',None)
+        if child is not None:child.panel.clear_reference(notify=False);child.close()
+        self.stage_objects_dialog=None
+    def _sync_stage_objects(self,keep):
+        self.stage_objects_button.setEnabled(self.result is not None)
+        child=getattr(self,'stage_objects_dialog',None)
+        if child is not None and child.isVisible():
+            if not keep:self._close_stage_objects()
+            else:child.panel.refresh_reference()
+    def _stage_objects_action_selected(self,key):
+        child=getattr(self,'stage_objects_dialog',None)
+        if self.result is None or child is None or child.panel.result is None:return False
+        if child.panel.result['battle_source_identity']!=self.result['source_identity']:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .current_stage_objects import resolve
+        row=child.panel.selected();action=child.panel.selected_action()
+        if row is None or action is None or action['key']!=key or resolve(child.panel.result,row['key'],key)is None:child.panel.clear_reference();return False
+        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']))
+        for i in range(self.actions.count()):
+            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
+        return False
+    def open_stage_objects(self):
+        if self.result is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .current_stage_objects_view import CurrentStageObjectsDialog
+        self._close_stage_objects();self.stage_objects_dialog=CurrentStageObjectsDialog(self.stage_id,self)
+        child=self.stage_objects_dialog
+        if child.panel.result is None or child.panel.result['battle_source_identity']!=self.result['source_identity']:self._close_stage_objects();return False
+        child.panel.actionSelected.connect(self._stage_objects_action_selected);child.show();return True
+
 
 class CurrentBattleDialog(QDialog):
     def __init__(self,stage_id,parent=None):
@@ -554,6 +617,7 @@ class CurrentBattleDialog(QDialog):
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
     def closeEvent(self, event):
+        self.panel._close_stage_objects()
         self.panel._close_enemy_spawns()
         self.panel._close_boss_documents()
         self.panel._close_sun_boss()

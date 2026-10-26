@@ -436,6 +436,8 @@ def main():
     return 1 if not receipt['available_checks_passed'] else (2 if args.require_complete and result.unavailable else 0)
 
 
+ADDITIONAL_MODULES += ('tests.test_current_stage_objects_373','tests.test_current_stage_objects_view_373')
+
 if __name__ == '__main__':
     sys.exit(main())
 
