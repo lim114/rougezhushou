@@ -446,6 +446,8 @@ ADDITIONAL_MODULES += ('tests.test_current_event_item_uses_376', 'tests.test_cur
 
 ADDITIONAL_MODULES += ('tests.test_current_guest_knights_377', 'tests.test_current_guest_knights_view_377')
 
+ADDITIONAL_MODULES += ('tests.test_current_terrain_directory_378',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

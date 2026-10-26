@@ -1,0 +1,93 @@
+--- original-native
++++ instrumented-native
+@@ -6,7 +6,7 @@
+ from contextlib import ExitStack
+ from unittest.mock import patch
+ from copy import deepcopy
+-import argparse,json,os,sys,traceback
++import argparse,json,os,sys,traceback,time
+ ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
+ 
+ def bound_files():
+@@ -27,7 +27,13 @@
+     dest.parent.mkdir(parents=True,exist_ok=True);before={};after={};checks=[];images=[];refreshes=[];jumps=[];full_scope={}
+     calls={k:0 for k in('game_connect','capture','next_frame','desktop_start','desktop_request','provider_chat','credential_read')}
+     failure=None;window=None;gui=None;exitcode=None;done=False
++    timeout_fired=False;gui_started=None;callback_stage='initializing';timing_events=[];subsequent_failures=[];timeout_observations=[]
++    def elapsed_ms():return None if gui_started is None else round((time.monotonic()-gui_started)*1000,3)
++    def mark(stage,**details):
++        nonlocal callback_stage
++        callback_stage=stage;timing_events.append({'stage':stage,'monotonic_elapsed_ms':elapsed_ms(),**details})
+     def require(value,name):
++        mark('check:'+name,passed=bool(value))
+         if not value:raise AssertionError(name)
+         if name not in checks:checks.append(name)
+     def forbidden(name):
+@@ -54,7 +60,10 @@
+             window=a.MainWindow();window.resize(1280,900);window.setWindowTitle('第378节 · 地形与效果反查（公开隔离验收）');window.show();gui.processEvents()
+             state=deepcopy(window.run.state);context=deepcopy(window.battle_preview.context)
+             def click(button):
+-                require(button.isVisible() and button.isEnabled(),'actual_visible_usable_button');QTest.mouseClick(button,Qt.MouseButton.LeftButton);gui.processEvents()
++                mark('click:before-check',button_text=button.text())
++                require(button.isVisible() and button.isEnabled(),'actual_visible_usable_button');mark('click:before-mouse',button_text=button.text())
++                QTest.mouseClick(button,Qt.MouseButton.LeftButton);mark('click:before-process-events',button_text=button.text())
++                gui.processEvents();mark('click:after-process-events',button_text=button.text(),window_closing=window.closing,window_visible=window.isVisible())
+             def native(widget):
+                 owner=widget.window();h=int(owner.winId());pid=win32process.GetWindowThreadProcessId(h)[1]
+                 require(win32gui.IsWindowVisible(h) and not win32gui.IsIconic(h) and pid==os.getpid(),'visible_owned_native_HWND_PID')
+@@ -65,12 +74,17 @@
+             def reading(widget):
+                 c=widget.textCursor();return {'anchor':c.anchor(),'position':c.position(),'selection':c.selectedText(),'scroll':widget.verticalScrollBar().value()}
+             def ordinary():
+-                common=window.reference_panel('stages');gui.processEvents();click(common.terrain_directory_button);dialog=common.terrain_directory_dialog
++                mark('ordinary:before-reference-panel',window_closing=window.closing,window_visible=window.isVisible())
++                common=window.reference_panel('stages');mark('ordinary:before-parent-process-events',window_closing=window.closing,window_visible=window.isVisible(),parent_source_available=common.source_identity is not None)
++                gui.processEvents();mark('ordinary:after-parent-process-events',window_closing=window.closing,window_visible=window.isVisible(),parent_source_available=common.source_identity is not None)
++                click(common.terrain_directory_button);dialog=common.terrain_directory_dialog
++                mark('ordinary:after-entry-click',window_closing=window.closing,window_visible=window.isVisible(),dialog_exists=dialog is not None,dialog_visible=dialog.isVisible() if dialog is not None else None,panel_source_available=dialog.panel.reference is not None if dialog is not None else None)
+                 require(dialog is not None and dialog.isVisible() and dialog.panel.reference is not None,'actual_common_page_terrain_directory_entry')
+                 return common,dialog,dialog.panel
+             def exercise():
+                 nonlocal done,failure,full_scope
+                 dialog=None
++                mark('exercise:entered')
+                 try:
+                     common,dialog,p=ordinary();ref=p.reference;require(p.result is None and not p.open_button.isEnabled(),'no_implicit_terrain_or_cell_selection')
+                     shot('ordinary-entry',common)
+@@ -157,21 +171,30 @@
+                     require(window.run.state==state and window.battle_preview.context==context,'temporary_run_and_old_calculation_unchanged');require(all(v==0 for v in calls.values()) and not window.auto.isChecked(),'all_seven_real_external_operations_zero')
+                     window.close();gui.processEvents();require(not dialog.isVisible() and not child.isVisible() and p.reference is None and child.panel.result is None,'actual_MainWindow_close_clears_owned_tree');done=True;gui.exit(0)
+                 except BaseException as error:
+-                    failure={'type':type(error).__name__,'message':str(error),'traceback':traceback.format_exc()}
++                    caught={'type':type(error).__name__,'message':str(error),'traceback':traceback.format_exc(),'monotonic_elapsed_ms':elapsed_ms(),'callback_stage':callback_stage}
++                    if failure is None:failure=caught
++                    else:subsequent_failures.append(caught)
++                    mark('exercise:exception',exception_type=type(error).__name__,timeout_fired=timeout_fired)
+                     if dialog is not None:dialog.close()
+-                    window.close();gui.exit(1)
++                    window.close();gui.exit(2 if timeout_fired else 1)
+             def timeout():
+-                nonlocal failure
+-                if not done:failure=failure or {'type':'TimeoutError','message':f'Native exercise exceeded {args.visible_ms} ms'};window.close();gui.exit(2)
++                nonlocal failure,timeout_fired
++                if not done:
++                    timeout_fired=True;observed={'monotonic_elapsed_ms':elapsed_ms(),'callback_stage':callback_stage,'window_closing_before_timeout':window.closing,'window_visible_before_timeout':window.isVisible()}
++                    timeout_observations.append(observed);failure=failure or {'type':'TimeoutError','message':f'Native exercise exceeded {args.visible_ms} ms',**observed}
++                    mark('timeout:fired',**observed);window.close();gui.exit(2)
++            gui_started=time.monotonic();mark('native-watchdog:scheduled',configured_visible_ms=args.visible_ms)
+             QTimer.singleShot(250,exercise);QTimer.singleShot(args.visible_ms,timeout);exitcode=gui.exec();require(exitcode==0 and done and not window.isVisible(),'actual_Qt_success_and_MainWindow_closed')
+     except BaseException as error:
+-        if failure is None:failure={'type':type(error).__name__,'message':str(error),'traceback':traceback.format_exc()}
++        caught={'type':type(error).__name__,'message':str(error),'traceback':traceback.format_exc(),'monotonic_elapsed_ms':elapsed_ms(),'callback_stage':callback_stage}
++        if failure is None:failure=caught
++        else:subsequent_failures.append(caught)
+     finally:
+         if window is not None:window.close()
+     try:after=bound_files()
+     except BaseException as error:
+         if failure is None:failure={'type':type(error).__name__,'message':str(error),'traceback':traceback.format_exc()}
+-    result={'section':378,'passed':done and failure is None and exitcode==0 and bool(before) and before==after,'failure':failure,'process_id':os.getpid(),'qpa':gui.platformName() if gui else None,'qt_exit_code':exitcode,'configured_visible_ms':args.visible_ms,'verification_window_closed':window is not None and not window.isVisible(),'unique_checks':len(checks),'checks':checks,'full_original_terrain_scope':full_scope,'actual_readings':jumps,'same_identity_refresh_observations':refreshes,'screenshots':images,'source_sha256_before':before,'source_sha256_after':after,'external_operation_attempts':calls,'temporary_state':True,'private_contents_read_copied_or_restored':False,'game_operated':False,'chat_sent':False,'current_server_or_original_runtime_validated':False,'at_utc':datetime.now(timezone.utc).isoformat()}
++    result={'section':378,'passed':done and failure is None and exitcode==0 and bool(before) and before==after,'failure':failure,'process_id':os.getpid(),'qpa':gui.platformName() if gui else None,'qt_exit_code':exitcode,'configured_visible_ms':args.visible_ms,'timeout_fired':timeout_fired,'monotonic_elapsed_ms':elapsed_ms(),'callback_stage':callback_stage,'timeout_observations':timeout_observations,'timing_events':timing_events,'subsequent_failures':subsequent_failures,'verification_window_closed':window is not None and not window.isVisible(),'unique_checks':len(checks),'checks':checks,'full_original_terrain_scope':full_scope,'actual_readings':jumps,'same_identity_refresh_observations':refreshes,'screenshots':images,'source_sha256_before':before,'source_sha256_after':after,'external_operation_attempts':calls,'temporary_state':True,'private_contents_read_copied_or_restored':False,'game_operated':False,'chat_sent':False,'current_server_or_original_runtime_validated':False,'at_utc':datetime.now(timezone.utc).isoformat()}
+     dest.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8');print(json.dumps({'passed':result['passed'],'checks':len(checks),'failure':failure},ensure_ascii=False));return 0 if result['passed'] else 1
+ 
+ if __name__=='__main__':raise SystemExit(main())

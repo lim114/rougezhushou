@@ -30,6 +30,12 @@ class ExpansionUpdatePanel(QWidget):
         layout.addWidget(self.enemy_directory_button)
         self.enemy_directory_button.setVisible(self.full_catalog and 'stages' in self.allowed_categories)
         self.enemy_directory_button.clicked.connect(self.open_enemy_directory)
+        self.terrain_directory_dialog=None
+        self.terrain_directory_button=QPushButton('按地形与效果查找关卡')
+        self.terrain_directory_button.setAccessibleName('按地形效果查找准确关卡和地图格')
+        layout.addWidget(self.terrain_directory_button)
+        self.terrain_directory_button.setVisible(self.full_catalog and 'stages' in self.allowed_categories)
+        self.terrain_directory_button.clicked.connect(self.open_terrain_directory)
         self.event_directory_dialog=None
         self.event_directory_button=QPushButton('节点事件：按条件原文查找与进入完整流程')
         self.event_directory_button.setAccessibleName('当前节点事件目录与准确对话入口')
@@ -166,28 +172,45 @@ class ExpansionUpdatePanel(QWidget):
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
 
     def _unavailable(self):
-        self._close_event_item_uses();self.event_item_uses_button.setEnabled(False)
-        self._close_event_resources();self.event_resources_button.setEnabled(False)
-        self._close_event_directory();self.event_directory_button.setEnabled(False)
-        self._close_enemy_directory();self.enemy_directory_button.setEnabled(False)
-        self._close_initial_recruits();self.initial_recruits_button.setEnabled(False)
-        self._close_named_sources();self.named_sources_button.setEnabled(False)
-        self._close_legacy_reference();self.legacy_reference_button.setEnabled(False)
-        self._close_upgrade_tickets();self.upgrade_tickets_button.setEnabled(False)
-        self._close_region_resources();self.region_resources_button.setEnabled(False)
-        self._close_portal_rules();self.portal_rules_button.setEnabled(False)
-        self._close_real_domain();self.real_domain_button.setEnabled(False)
-        self._close_bank();self.bank_button.setEnabled(False)
-        self._close_tickets();self.tickets_button.setEnabled(False)
-        dialog=getattr(self,'ending_dialog',None)
-        if dialog is not None:dialog.close()
-        self.source_identity=None
-        # clear() destroys the C++ items. Suppress currentItemChanged while they
-        # are being destroyed; its old-item argument must not reenter Python.
-        blocked=self.entries.blockSignals(True)
-        try:self.entries.clear()
-        finally:self.entries.blockSignals(blocked)
-        self._clear_detail(model.UNAVAILABLE);self.count.setText(model.UNAVAILABLE)
+        self._close_terrain_directory()
+        self.terrain_directory_button.setEnabled(False)
+        self._close_event_item_uses()
+        self.event_item_uses_button.setEnabled(False)
+        self._close_event_resources()
+        self.event_resources_button.setEnabled(False)
+        self._close_event_directory()
+        self.event_directory_button.setEnabled(False)
+        self._close_enemy_directory()
+        self.enemy_directory_button.setEnabled(False)
+        self._close_initial_recruits()
+        self.initial_recruits_button.setEnabled(False)
+        self._close_named_sources()
+        self.named_sources_button.setEnabled(False)
+        self._close_legacy_reference()
+        self.legacy_reference_button.setEnabled(False)
+        self._close_upgrade_tickets()
+        self.upgrade_tickets_button.setEnabled(False)
+        self._close_region_resources()
+        self.region_resources_button.setEnabled(False)
+        self._close_portal_rules()
+        self.portal_rules_button.setEnabled(False)
+        self._close_real_domain()
+        self.real_domain_button.setEnabled(False)
+        self._close_bank()
+        self.bank_button.setEnabled(False)
+        self._close_tickets()
+        self.tickets_button.setEnabled(False)
+        dialog = getattr(self, 'ending_dialog', None)
+        if dialog is not None:
+            dialog.close()
+        self.source_identity = None
+        blocked = self.entries.blockSignals(True)
+        try:
+            self.entries.clear()
+        finally:
+            self.entries.blockSignals(blocked)
+        self._clear_detail(model.UNAVAILABLE)
+        self.count.setText(model.UNAVAILABLE)
 
     def _filter_changed(self,*_):
         self._populate(preserve=False)
@@ -729,6 +752,7 @@ class ExpansionUpdatePanel(QWidget):
         self.origins_dialog.show();return True
 
     def close_children(self):
+        self._close_terrain_directory()
         self._close_event_item_uses()
         self._close_event_resources()
         self._close_event_directory()
@@ -743,10 +767,13 @@ class ExpansionUpdatePanel(QWidget):
         self._close_bank()
         self._close_tickets()
         self._close_origins()
-        self._close_flow();self._close_exchange();self._close_event_battles()
-        for name in ('ending_dialog','current_battle_dialog'):
-            dialog=getattr(self,name,None)
-            if dialog is not None:dialog.close()
+        self._close_flow()
+        self._close_exchange()
+        self._close_event_battles()
+        for name in ('ending_dialog', 'current_battle_dialog'):
+            dialog = getattr(self, name, None)
+            if dialog is not None:
+                dialog.close()
     def closeEvent(self,event):
         self.close_children();super().closeEvent(event)
 
@@ -784,18 +811,25 @@ class ExpansionUpdatePanel(QWidget):
             child.panel.clear_reference();child.close()
         self.enemy_directory_dialog=None
 
-    def _sync_enemy_directory(self,ready):
-        allowed=self.full_catalog and 'stages' in self.allowed_categories
-        self.enemy_directory_button.setVisible(allowed);self.enemy_directory_button.setEnabled(ready and allowed)
-        child=getattr(self,'enemy_directory_dialog',None)
+    def _sync_enemy_directory(self, ready):
+        self._sync_terrain_directory(ready)
+        allowed = self.full_catalog and 'stages' in self.allowed_categories
+        self.enemy_directory_button.setVisible(allowed)
+        self.enemy_directory_button.setEnabled(ready and allowed)
+        child = getattr(self, 'enemy_directory_dialog', None)
         if not ready or not allowed:
-            self._close_enemy_directory();return False
+            self._close_enemy_directory()
+            return False
         if child is not None and child.isVisible():
             if not child.panel.refresh_reference():
-                self._close_enemy_directory();self.enemy_directory_button.setEnabled(False);return False
-            identity=child.panel.reference.get('source_identity')if child.panel.reference is not None else None
-            if type(identity)not in(tuple,list)or len(identity)!=4 or identity[3]!=self.source_identity:
-                self._close_enemy_directory();self.enemy_directory_button.setEnabled(False);return False
+                self._close_enemy_directory()
+                self.enemy_directory_button.setEnabled(False)
+                return False
+            identity = child.panel.reference.get('source_identity') if child.panel.reference is not None else None
+            if type(identity) not in (tuple, list) or len(identity) != 4 or identity[3] != self.source_identity:
+                self._close_enemy_directory()
+                self.enemy_directory_button.setEnabled(False)
+                return False
         return True
 
     def open_enemy_directory(self):
@@ -910,4 +944,26 @@ class ExpansionUpdatePanel(QWidget):
         if row is not None and row.get('category')in('relics','scrap'):
             index=child.panel.item.findData(row['id'])
             if index>0:child.panel.item.setCurrentIndex(index)
+        child.show();return True
+
+    def _close_terrain_directory(self):
+        child=getattr(self,'terrain_directory_dialog',None)
+        if child is not None:child.panel.clear_reference();child.close()
+        self.terrain_directory_dialog=None
+
+    def _sync_terrain_directory(self,ready):
+        allowed=self.full_catalog and 'stages' in self.allowed_categories
+        self.terrain_directory_button.setVisible(allowed);self.terrain_directory_button.setEnabled(ready and allowed)
+        child=getattr(self,'terrain_directory_dialog',None)
+        if not ready or not allowed:self._close_terrain_directory();return False
+        if child is not None and child.isVisible():child.panel.refresh_reference()
+        return True
+
+    def open_terrain_directory(self):
+        if not self.full_catalog or 'stages' not in self.allowed_categories:self._close_terrain_directory();return False
+        fresh=model.packet()
+        if fresh is None or fresh['source_identity']!=self.source_identity:self._unavailable();return False
+        from .current_terrain_directory_view import CurrentTerrainDirectoryDialog
+        self._close_terrain_directory();child=CurrentTerrainDirectoryDialog(self);self.terrain_directory_dialog=child
+        if child.panel.reference is None:self._close_terrain_directory();return False
         child.show();return True

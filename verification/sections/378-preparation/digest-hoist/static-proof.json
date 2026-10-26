@@ -1,0 +1,30 @@
+{
+  "kind": "SECTION378_CACHE_ONLY_STAGE_DIGEST_HOIST_STATIC_PROOF",
+  "actor": "/root/p3_371_event_candidates",
+  "at_utc": "2026-10-26T16:15:47.534634+00:00",
+  "original_file": "rouge/current_terrain_directory.py",
+  "original_sha256": "f81b2d40c2a9888621d01aeef0087733b9f0983bef0698cdc0a32230dc21261e",
+  "candidate_file": ".cache/terrain378-model-digest-hoisted.py",
+  "candidate_sha256": "ad99e6056566b343593808e4b42ffdf93fd91088f783802a628c2c2b198638fd",
+  "backup_directory": ".cache/terrain378-digest-hoist-20261026T161547470712Z",
+  "proof": {
+    "entire_original_module_AST_restored_by_reinlining_only_two_exact_digest_expressions_and_removing_two_new_bindings": true,
+    "hoisted_names_were_not_preexisting_local_bindings": true,
+    "both_assignments_after_all_grid_index_validation_and_before_original_tile_loop": true,
+    "original_grid_iteration_and_cells_insertion_order_unchanged": true,
+    "original_row_values_symbolically_identical": true,
+    "original_tile_decoder_call_AST_unchanged": true,
+    "exact_map_and_all_other_functions_AST_unchanged": true
+  },
+  "reasoning": [
+    "Every accepted grid has at least one row, at least one column and a validated original tile index in every cell; therefore the old tile loop necessarily evaluated both digests at least once per stage.",
+    "digest is the unchanged deterministic canonical-JSON SHA function. stage and whole mapData are the same source objects for every tile of one stage; the existing decoder only reads a tile and builds a fresh result, and deepcopy does not mutate input.",
+    "Two digest calls move only after complete grid-index validation. Their values are reused as immutable strings; tile selection, row construction, effect decoder, deepcopies, exact_map revalidation and source identities remain unchanged.",
+    "Bad digest input still returns unavailable through the same packet exception boundary; no partial rows were externally exposed by the old function.",
+    "The optimization is local common-expression reuse, with no warm cross-call cache or relaxed source check. No speed or runtime success is claimed."
+  ],
+  "formal_files_modified": false,
+  "product_or_Qt_imported": false,
+  "tests_or_native_or_benchmarks_run": false,
+  "validation": "Static AST and exact textual diff only."
+}

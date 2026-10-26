@@ -1,0 +1,12 @@
+{
+  "section": 378,
+  "kind": "PREINSTALL_EXPECTED_HEAD_PLACEHOLDER_REJECTED",
+  "actor": "/root",
+  "actual_command": ".cache/integrate378.py --expected-head PLACEHOLDER",
+  "actual_observed_exit": 1,
+  "failure": "AssertionError at actual HEAD == args.expected_head, before proposed source or installation writes",
+  "actual_HEAD_observed_before_correction": "17a808bd6b1a67049e6c5475d6567ce5e88497be",
+  "formal_mutation_from_rejected_invocation": false,
+  "correction": "The root supplied a placeholder by mistake. Repeated the read-only plan with the actual previously published metadata HEAD, then explicitly applied with the same exact HEAD. Both actual exits were zero. This rejected setup call is not a product or mechanism test.",
+  "original_success_scope_file": ".cache/terrain378-install-plan.json"
+}

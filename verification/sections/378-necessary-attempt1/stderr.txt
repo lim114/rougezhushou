@@ -1,0 +1,44 @@
+test_actual_directory_Escape_clears_directory_and_map_actual_data (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_actual_directory_Escape_clears_directory_and_map_actual_data) ... ok
+test_actual_owned_map_X_and_Escape_clear_data_and_can_manually_reopen (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_actual_owned_map_X_and_Escape_clear_data_and_can_manually_reopen) ... ok
+test_bad_source_clears_old_map_and_recovery_requires_reselection (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_bad_source_clears_old_map_and_recovery_requires_reselection) ... ok
+test_every_current_grid_cell_has_exact_one_original_tile_declaration (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_every_current_grid_cell_has_exact_one_original_tile_declaration) ... ok
+test_exact_map_rechecks_source_pair_and_original_parameters (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_exact_map_rechecks_source_pair_and_original_parameters) ... ok
+test_filter_and_dialog_rejection_clear_owned_tree (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_filter_and_dialog_rejection_clear_owned_tree) ... ok
+test_filters_use_player_text_and_preserve_all_parameter_variants (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_filters_use_player_text_and_preserve_all_parameter_variants) ... ok
+test_forged_or_malformed_key_never_reuses_old_target (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_forged_or_malformed_key_never_reuses_old_target) ... ok
+test_no_implicit_selection_and_exact_manual_cell_navigation (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_no_implicit_selection_and_exact_manual_cell_navigation) ... ok
+test_nonempty_combined_effect_kind_floor_and_source_matches_exact_order (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_nonempty_combined_effect_kind_floor_and_source_matches_exact_order) ... ok
+test_player_labels_distinguish_every_original_record_without_raw_identifiers (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_player_labels_distinguish_every_original_record_without_raw_identifiers) ... ok
+test_same_source_refresh_preserves_exact_cell_reading_and_owned_map (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_same_source_refresh_preserves_exact_cell_reading_and_owned_map) ... FAIL
+test_unknown_effect_and_live_qualification_remain_unknown (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_unknown_effect_and_live_qualification_remain_unknown) ... ok
+test_all_ten_categories_list_full_current_records_through_real_normal_pages (tests.test_common_content_352.CommonContent352Tests.test_all_ten_categories_list_full_current_records_through_real_normal_pages) ... ok
+test_close_all_common_child_trees_and_keep_legacy_calculation_scope_explicit (tests.test_common_content_352.CommonContent352Tests.test_close_all_common_child_trees_and_keep_legacy_calculation_scope_explicit) ... ok
+test_collectible_default_and_real_type_branches_do_not_mislabel_squad_effects (tests.test_common_content_352.CommonContent352Tests.test_collectible_default_and_real_type_branches_do_not_mislabel_squad_effects) ... ok
+test_current_battle_and_item_flow_open_from_their_ordinary_pages (tests.test_common_content_352.CommonContent352Tests.test_current_battle_and_item_flow_open_from_their_ordinary_pages) ... ok
+test_no_update_tab_and_every_category_has_one_ordinary_home (tests.test_common_content_352.CommonContent352Tests.test_no_update_tab_and_every_category_has_one_ordinary_home) ... ok
+test_pages_keep_independent_search_selection_and_nonzero_reading_after_refresh (tests.test_common_content_352.CommonContent352Tests.test_pages_keep_independent_search_selection_and_nonzero_reading_after_refresh) ... ok
+test_source_failure_clears_each_page_and_restoration_does_not_auto_select (tests.test_common_content_352.CommonContent352Tests.test_source_failure_clears_each_page_and_restoration_does_not_auto_select) ... ok
+
+======================================================================
+FAIL: test_same_source_refresh_preserves_exact_cell_reading_and_owned_map (tests.test_current_terrain_directory_378.TerrainDirectory378Tests.test_same_source_refresh_preserves_exact_cell_reading_and_owned_map)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_current_terrain_directory_378.py", line 98, in test_same_source_refresh_preserves_exact_cell_reading_and_owned_map
+    self.assertEqual(expected,(p.selected_key,p.cells.currentData(),p.technical.textCursor().selectedText(),p.technical.verticalScrollBar().value(),p.tabs.currentIndex()))
+AssertionError: Tuples differ: (('ro6_n_5_8', 37), (4, 1), '"row": {\u2029    "ke', 2, 1) != (('ro6_n_5_8', 37), None, '"row": {\u2029    "ke', 2, 1)
+
+First differing element 1:
+(4, 1)
+None
+
+- (('ro6_n_5_8', 37), (4, 1), '"row": {\u2029    "ke', 2, 1)
+?                     ^^ ----
+
++ (('ro6_n_5_8', 37), None, '"row": {\u2029    "ke', 2, 1)
+?                     ^^^^
+
+
+----------------------------------------------------------------------
+Ran 20 tests in 204.537s
+
+FAILED (failures=1)
