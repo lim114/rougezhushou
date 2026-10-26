@@ -37,9 +37,10 @@ class CurrentBattlePanel(QWidget):
         self.event_origins_button = QPushButton('查看与本关对应的事件选项')
         body.addWidget(self.event_origins_button)
         self.event_origins_button.clicked.connect(self.open_event_origins)
-        self.stage_objects_dialog=None
-        self.stage_objects_button=QPushButton('查看本关物件与机关')
-        body.addWidget(self.stage_objects_button);self.stage_objects_button.clicked.connect(self.open_stage_objects)
+        self.stage_objects_dialog = None
+        self.stage_objects_button = QPushButton('查看本关物件与机关')
+        body.addWidget(self.stage_objects_button)
+        self.stage_objects_button.clicked.connect(self.open_stage_objects)
         self.summary = QPlainTextEdit()
         self.summary.setReadOnly(True)
         body.addWidget(self.summary, 1)
@@ -106,6 +107,9 @@ class CurrentBattlePanel(QWidget):
         self.spawn_candidates_button = QPushButton('查看出怪候选与关联记录')
         body.addWidget(self.spawn_candidates_button)
         self.spawn_candidates_button.clicked.connect(self.open_spawn_candidates)
+        self.route_itinerary_dialog=None
+        self.route_itinerary_button=QPushButton('查看完整行程与停留条件')
+        body.addWidget(self.route_itinerary_button);self.route_itinerary_button.clicked.connect(self.open_route_itinerary)
         self.technical = QPlainTextEdit()
         self.technical.setReadOnly(True)
         self.tabs.addTab(self.technical, '完整原值与来源')
@@ -123,6 +127,8 @@ class CurrentBattlePanel(QWidget):
         self.refresh_reference()
 
     def _clear(self):
+        self._close_route_itinerary()
+        self.route_itinerary_button.setEnabled(False)
         self._close_stage_objects()
         self.stage_objects_button.setEnabled(False)
         self._close_enemy_spawns()
@@ -226,6 +232,7 @@ class CurrentBattlePanel(QWidget):
             if dialog is not None and dialog.isVisible():
                 dialog.panel.refresh_reference()
         self._sync_stage_objects(keep)
+        self._sync_route_itinerary(keep)
         return True
 
     def _close_spawn_candidates(self):
@@ -488,6 +495,7 @@ class CurrentBattlePanel(QWidget):
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
     def closeEvent(self, event):
+        self._close_route_itinerary()
         self._close_stage_objects()
         self._close_enemy_spawns()
         self._close_boss_documents()
@@ -610,6 +618,36 @@ class CurrentBattlePanel(QWidget):
         if child.panel.result is None or child.panel.result['battle_source_identity']!=self.result['source_identity']:self._close_stage_objects();return False
         child.panel.actionSelected.connect(self._stage_objects_action_selected);child.show();return True
 
+    def _close_route_itinerary(self):
+        child=getattr(self,'route_itinerary_dialog',None)
+        if child is not None:child.panel.clear_reference(notify=False);child.close()
+        self.route_itinerary_dialog=None
+    def _sync_route_itinerary(self,keep):
+        self.route_itinerary_button.setEnabled(self.result is not None)
+        child=getattr(self,'route_itinerary_dialog',None)
+        if child is not None and child.isVisible():
+            if not keep:self._close_route_itinerary()
+            else:child.panel.refresh_reference()
+    def _route_itinerary_action_selected(self,key):
+        child=getattr(self,'route_itinerary_dialog',None)
+        if self.result is None or child is None or child.panel.result is None:return False
+        if child.panel.result['battle_source_identity']!=self.result['source_identity']:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .current_route_itinerary import resolve
+        route=child.panel.selected_route();action=child.panel.selected_action()
+        if action is None or action['key']!=key or resolve(child.panel.result,route['key']if route else None,action_key=key)is None:child.panel.clear_reference();return False
+        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']))
+        for i in range(self.actions.count()):
+            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
+        return False
+    def open_route_itinerary(self):
+        if self.result is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .current_route_itinerary_view import CurrentRouteItineraryDialog
+        self._close_route_itinerary();self.route_itinerary_dialog=CurrentRouteItineraryDialog(self.stage_id,self);child=self.route_itinerary_dialog
+        if child.panel.result is None or child.panel.result['battle_source_identity']!=self.result['source_identity']:self._close_route_itinerary();return False
+        child.panel.actionSelected.connect(self._route_itinerary_action_selected);child.show();return True
+
 
 class CurrentBattleDialog(QDialog):
     def __init__(self,stage_id,parent=None):
@@ -617,6 +655,7 @@ class CurrentBattleDialog(QDialog):
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
     def closeEvent(self, event):
+        self.panel._close_route_itinerary()
         self.panel._close_stage_objects()
         self.panel._close_enemy_spawns()
         self.panel._close_boss_documents()
