@@ -450,6 +450,8 @@ ADDITIONAL_MODULES += ('tests.test_current_terrain_directory_378',)
 
 ADDITIONAL_MODULES += ('tests.test_current_guest_crystals_379', 'tests.test_current_guest_crystals_view_379')
 
+ADDITIONAL_MODULES += ('tests.test_current_guest_material_380', 'tests.test_current_guest_material_view_380')
+
 if __name__ == '__main__':
     sys.exit(main())
 

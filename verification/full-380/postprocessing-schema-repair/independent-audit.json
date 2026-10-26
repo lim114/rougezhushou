@@ -1,0 +1,144 @@
+{
+  "kind": "INDEPENDENT_STATIC_CANDIDATE_REVIEW_NOT_SEAL_TEST_OR_NEW_IMAGE_REVIEW",
+  "review_actor": "/root/full380_prepare",
+  "recorded_at_utc": "2026-10-26T23:17:24.378626+00:00",
+  "blocking_findings": [],
+  "candidate_static_review_accepted_for_root_actual_execution_decision": true,
+  "pins": [
+    {
+      "file": "verification/full-380/execution-summary380.py",
+      "sha256": "0643bc133b4681712c38435dd1f7259c57cbb90a9250e1e5ffb7806cd6ba0d67",
+      "bytes": 56514
+    },
+    {
+      "file": ".cache/full380-sealer-historical-schema-repair/execution-summary380-revision2.py",
+      "sha256": "52d347e24a62d61f2d056ff23c7900e4462e10024d23f8d7fb3d7338665b47c6",
+      "bytes": 118528
+    },
+    {
+      "file": ".cache/full380-sealer-historical-schema-repair/historical_schema_compat.py",
+      "sha256": "8c541beb81db550441630aa3c7587218552a5c8e552d56f905560a81223c19e1",
+      "bytes": 61085
+    },
+    {
+      "file": ".cache/full380-sealer-historical-schema-repair/generate_revision2.py",
+      "sha256": "8c7e5d9f298317843fb2776e10bfcc7fbf3bd658e4ed220385c260d89cad8a28",
+      "bytes": 70449
+    },
+    {
+      "file": ".cache/full380-sealer-historical-schema-repair/plan.json",
+      "sha256": "d7a3029a31985d8b3100a1ed449a1f1f8cafa883cb8d4f85616c461a534e5f75",
+      "bytes": 2947
+    },
+    {
+      "file": ".cache/full380-sealer-historical-schema-repair/PREPARED_FILES.json",
+      "sha256": "70b56565e5dabc86c85bc53638602436d7d90aedb97d4e28c2263672f11c8008",
+      "bytes": 1478
+    },
+    {
+      "file": ".cache/full380-sealer-historical-schema-repair/original-row-diagnosis.json",
+      "sha256": "01cb942a5a868d3e8d641016dd1b2fc2ae808aa43d1a8126602131e769712951",
+      "bytes": 1969942
+    },
+    {
+      "file": "verification/full-380/root-visual-review.json",
+      "sha256": "b93e1d24f9c0fa5b467635cec44eb56003b974734dabb29b381349b67aef4ec3",
+      "bytes": 1393315
+    }
+  ],
+  "AST_and_scope": {
+    "changed_existing_functions": [
+      "verify_registry_chain"
+    ],
+    "exact_inverse_restores_all_original_bytes_and_AST": true,
+    "embedded_compat_module_exact_bytes": true,
+    "all_other_existing_function_AST_identical": true,
+    "original_require_AST_calls_preserved_with_multiplicity": true,
+    "original_require_count": 108,
+    "candidate_require_count": 109,
+    "all_original_assert_AST_unchanged": true,
+    "original_100_component_typed_current30_independent29_freeze_source_scope_guards_unchanged": true
+  },
+  "actual_whitelist_evidence_read": {
+    "legacy_leaf_rows": 24,
+    "public_original_proofs": 6,
+    "exact_row_sets": {
+      "323": [
+        5
+      ],
+      "325": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "327": [
+        3
+      ],
+      "331": [
+        6,
+        7
+      ],
+      "341": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8
+      ],
+      "344": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "proof_SHA_row_pointer_whole_row_and_item_fingerprints_original_field_semantics_checked": true,
+    "all_original_and_current_PNG_whole_bytes_equal": true,
+    "actual_selected_registry_origin_actor_and_24_rows_match": true,
+    "section323_extra_native_receipt_and_screenshot_row_checked": true,
+    "same_proof327_unique_edge": {
+      "from_row": 6,
+      "to_row": 5,
+      "proof_sha256": "2b177969e321b8969ec15c402858a7b1737d7beaa52830cc2d02ea9548a261ab",
+      "exact_original_reuse_and_direct_review_wording_checked": true,
+      "item_next_item_and_row_fingerprints_checked": true,
+      "actual_current_rows": [
+        "verification/full-380/execution-attempt2/p3_327/actual/window-emergency-confirm.png",
+        "verification/full-380/execution-attempt2/p3_327/actual/window-reverse-full-dialogue.png"
+      ],
+      "whole_PNG_bytes_equal": true
+    }
+  },
+  "negative_cases_static_not_executed": {
+    "unknown_proof_SHA_or_row": "No unique exact whitelist match returns False; unchanged original strict branch remains.",
+    "mutated_item_or_row_or_origin_or_actor": "Exact fingerprints and origin equality fail closed before compatibility success.",
+    "wrong_PNG_bytes_or_length": "Entry SHA/bytes and current bytes hash/length plus original whole-byte comparison remain.",
+    "other_same_proof_edge": "Only exact327 proofSHA,row6,row5,known item/next-item/row fingerprints and exact prior-direct wording accepted; original cross-proof require retained for all others.",
+    "unknown_schema": "Only six section-specific original old-schema claims accepted; no generic reviewed flag or substring/path heuristic.",
+    "new_direct_claim": "Compatibility leaves remain old appearance reuse, not new image calls or current semantic validation."
+  },
+  "reviewer_own_initial_readonly_probe_failure_retained": {
+    "tool_chunk_id": "ce0532",
+    "actual_exit": 1,
+    "error_type": "KeyError",
+    "field": "directly_viewed_final3",
+    "cause": "Reviewer initially assumed341 used344 field name. Actual341 uses directly_viewed_by_root=False; actual344 uses directly_viewed_final3=False. Corrected only reviewer read logic after reading originals; candidate and evidence unchanged.",
+    "no_audit_file_written_by_failed_probe": true
+  },
+  "not_claimed": [
+    "No candidate/module/generator was imported or executed.",
+    "No seal, tests, Qt, image viewing, new summary or PASS occurred in this audit.",
+    "No239-image repeat review; only whitelist public files read for hashes/whole-byte equality.",
+    "Root must run the new independent postprocessing sealer and retain its actual outcome."
+  ],
+  "original_public_sealer_registry_visual_raw_proofs_images_freezes_capsules_and_archives_modified": false,
+  "only_this_new_cache_audit_written": true
+}

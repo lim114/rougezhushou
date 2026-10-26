@@ -89,6 +89,10 @@ class CurrentBattlePanel(QWidget):
         self.guest_crystals_button.hide()
         body.addWidget(self.guest_crystals_button)
         self.guest_crystals_button.clicked.connect(self.open_guest_crystals)
+        self.guest_material_button = QPushButton('“物欲拮抗者” · 指令、屏障与斯第奇')
+        self.guest_material_button.hide()
+        body.addWidget(self.guest_material_button)
+        self.guest_material_button.clicked.connect(self.open_guest_material)
         self.enemy_player = QPlainTextEdit()
         self.enemy_player.setReadOnly(True)
         body.addWidget(self.enemy_player, 1)
@@ -136,6 +140,9 @@ class CurrentBattlePanel(QWidget):
         self.refresh_reference()
 
     def _clear(self):
+        self._close_guest_material()
+        self.guest_material_button.hide()
+        self.guest_material_button.setEnabled(False)
         self._close_guest_crystals()
         self.guest_crystals_button.hide()
         self.guest_crystals_button.setEnabled(False)
@@ -315,6 +322,7 @@ class CurrentBattlePanel(QWidget):
         self._sync_enemy_spawns(keep)
         self._sync_guest_knights(keep)
         self._sync_guest_crystals(keep)
+        self._sync_guest_material(keep)
 
     def _actions_changed(self,*_,preserve=False):
         old=self.actions.currentItem();key=old.data(Qt.ItemDataRole.UserRole)if old and preserve else None
@@ -555,6 +563,34 @@ class CurrentBattlePanel(QWidget):
         if result is None or result.get('battle_source_identity')!=self.result['source_identity']:self._close_guest_crystals();return False
         self.guest_crystals_dialog.show();return True
 
+    def _close_guest_material(self):
+        child=getattr(self,'guest_material_dialog',None)
+        if child is not None:child.panel.clear_reference();child.close()
+
+    def _sync_guest_material(self,keep):
+        from . import current_guest_material as reader
+        available=self.result is not None and self.enemy_key is not None and reader.target_available(self.stage_id,self.enemy_key)
+        self.guest_material_button.setVisible(available);self.guest_material_button.setEnabled(available)
+        child=getattr(self,'guest_material_dialog',None)
+        if child is not None and child.isVisible():
+            if not keep:self._close_guest_material()
+            elif not available:child.panel.clear_reference()
+            else:
+                child.panel.refresh_reference()
+                result=child.panel.result
+                if result is not None and result.get('battle_source_identity')!=self.result['source_identity']:self._close_guest_material()
+
+    def open_guest_material(self):
+        if self.result is None or self.enemy_key is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from . import current_guest_material as reader
+        if not reader.target_available(self.stage_id,self.enemy_key):self._close_guest_material();self.guest_material_button.hide();return False
+        from .current_guest_material_view import CurrentGuestMaterialDialog
+        self._close_guest_material();self.guest_material_dialog=CurrentGuestMaterialDialog(self.stage_id,self.enemy_key,self)
+        result=self.guest_material_dialog.panel.result
+        if result is None or result.get('battle_source_identity')!=self.result['source_identity']:self._close_guest_material();return False
+        self.guest_material_dialog.show();return True
+
     def _close_event_origins(self):
         dialog=getattr(self,'event_origins_dialog',None)
         if dialog is not None:dialog.close()
@@ -568,6 +604,7 @@ class CurrentBattlePanel(QWidget):
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
     def closeEvent(self, event):
+        self._close_guest_material()
         self._close_guest_crystals()
         self._close_guest_knights()
         self._close_route_itinerary()
@@ -730,6 +767,7 @@ class CurrentBattleDialog(QDialog):
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
     def closeEvent(self, event):
+        self.panel._close_guest_material()
         self.panel._close_guest_crystals()
         self.panel._close_guest_knights()
         self.panel._close_route_itinerary()
