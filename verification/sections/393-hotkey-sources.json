@@ -1,0 +1,27 @@
+{
+  "section": 393,
+  "sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-registerhotkey",
+      "established": "RegisterHotKey associates an owned window with a combination, posts WM_HOTKEY, supports MOD_NOREPEAT, and reports registration failure. F12 and Windows combinations are not offered."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-unregisterhotkey",
+      "established": "Explicit release of the matching registered hotkey on its owner thread."
+    },
+    {
+      "url": "https://doc.qt.io/qtforpython-6/PySide6/QtCore/QAbstractNativeEventFilter.html",
+      "established": "Distinguishes Windows native messages; an application-wide filter was investigated but not retained. Final implementation receives only its own hidden QWidget messages."
+    }
+  ],
+  "final_strategy": "Stable hidden receiver HWND, RegisterHotKey MOD_NOREPEAT, QWidget nativeEvent only; no input hooks, game messages or keyboard injection. No default plain-Tab takeover.",
+  "validation_boundary": "Real Windows OS register/conflict/release; synthetic WM_HOTKEY to owned receiver. No physical keyboard cross-application claim.",
+  "failure_records": {
+    "wrong_unittest_selector": "393-first-selector-error",
+    "initial_hover_regression": "393-hover-regression-first-failure",
+    "filter_bool_hover": "393-filter-bool-hover-failure",
+    "receiver_reopen_test": "393-receiver-reopen-test-failure",
+    "stale_pre_layout_coordinate": "393-prelayout-hover-failure"
+  },
+  "correction": "Initial attribution of hover failure to native filtering was not established. Changing the filter alone did not fix it. Final receiver avoids app-wide filtering; test now resolves coordinates after native layout settles. Retained failed outputs do not count as passes."
+}

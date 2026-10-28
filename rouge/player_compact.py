@@ -1,7 +1,7 @@
 """Video-style floating toolbar, with persistent read-only panels opened on demand."""
 from PySide6.QtCore import Qt,QPoint,QSize,QEvent
 from PySide6.QtGui import QIcon,QPixmap
-from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout,QLabel,QPushButton,QCheckBox,QToolButton,QApplication,QPlainTextEdit
+from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout,QLabel,QPushButton,QCheckBox,QToolButton,QApplication,QPlainTextEdit,QComboBox
 from .player_overview import overview_facts
 from .player_context import recent_content
 
@@ -32,7 +32,7 @@ class ToolPopover(QDialog):
 from .player_map import MapPanel
 
 class CompactAssistant(QDialog):
-    def __init__(self,owner):
+    def __init__(self,owner,hotkey_path=None):
         super().__init__(owner,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint)
         self.owner=owner;self.active_popup=None;self.inventory_popup=None;self.map_popup=None;self.drag_origin=None;self.setWindowTitle('黑流树海助手')
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground,True);self.setFixedSize(410,82)
@@ -47,16 +47,61 @@ class CompactAssistant(QDialog):
         layout.addLayout(grid);self.overview_popup=ToolPopover('本局概况',overview,self);self.overview_popup.resize(460,320)
         settings=QWidget();layout=QVBoxLayout(settings);self.pin=QCheckBox('保持置顶');self.pin.setChecked(True);self.pin.toggled.connect(self.set_pinned);layout.addWidget(self.pin)
         self.expand=QPushButton('展开完整助手');self.expand.clicked.connect(self.open_full);layout.addWidget(self.expand)
+        from .player_hotkey import GlobalHotkey,load_preferences,DEFAULT
+        self.hotkey_path=hotkey_path;self.hidden_windows=None;self.hotkey=GlobalHotkey(self)
+        self.hotkey.triggered.connect(self.toggle_visibility)
+        self.hotkey_preferences,load_warning=load_preferences(hotkey_path)if hotkey_path is not None else({'enabled':False,'shortcut':DEFAULT,'allow_single':False},'')
+        self.hotkey_enabled=QCheckBox('启用全局呼出 / 收起');self.hotkey_enabled.setChecked(self.hotkey_preferences['enabled']);layout.addWidget(self.hotkey_enabled)
+        self.hotkey_keys=QComboBox();self.hotkey_keys.setEditable(True);self.hotkey_keys.addItems([DEFAULT,'Ctrl+Shift+F10','Alt+Space','Tab']);self.hotkey_keys.setCurrentText(self.hotkey_preferences['shortcut']);layout.addWidget(self.hotkey_keys)
+        self.hotkey_single=QCheckBox('允许占用单独按键（例如 Tab）');self.hotkey_single.setChecked(self.hotkey_preferences['allow_single']);layout.addWidget(self.hotkey_single)
+        warning=QLabel('单独 Tab 会影响其他程序的切换或游戏按键。\n建议使用 Ctrl+Alt+Space；收起不会关闭笔记或清空本局。');warning.setWordWrap(True);layout.addWidget(warning)
+        self.hotkey_apply=QPushButton('应用快捷键');self.hotkey_apply.clicked.connect(self.apply_hotkey);layout.addWidget(self.hotkey_apply)
+        self.hotkey_status=QLabel();self.hotkey_status.setWordWrap(True);layout.addWidget(self.hotkey_status)
+        self.hide_button=QPushButton('收起助手（用快捷键恢复）');self.hide_button.clicked.connect(self.toggle_visibility);layout.addWidget(self.hide_button)
+        ok,message=self.hotkey.configure(**self.hotkey_preferences);self.hotkey_status.setText((load_warning+'\n'if load_warning else'')+message);self.hide_button.setEnabled(ok and self.hotkey.binding is not None)
         public=QPushButton('路标资料：藏品池与节点事件');public.clicked.connect(self.open_archive);layout.addWidget(public)
         stat=QPushButton('节点历史统计');stat.clicked.connect(lambda:self.open_owner_dialog(owner.open_public_statistics,'public_statistics'));layout.addWidget(stat)
         close=QPushButton('退出助手');close.clicked.connect(self.exit_application);layout.addWidget(close)
-        self.settings_popup=ToolPopover('工具设置',settings,self);self.settings_popup.resize(330,260)
+        self.settings_popup=ToolPopover('工具设置',settings,self);self.settings_popup.resize(420,570)
         actions=[('本局概况','overview',lambda:self.present(self.overview_popup)),('地图与节点','map',self.open_map),('本局藏品','bag',self.open_inventory),('场景笔记','note',lambda:self.open_owner_dialog(owner.open_scene_notes,'player_notes')),('干员与技能','calc',self.open_operators),('聊天分析','chat',self.open_chat),('工具设置','settings',lambda:self.present(self.settings_popup))]
         for name,glyph,callback in actions:
             button=QToolButton();button.setIcon(icon(glyph));button.setIconSize(QSize(23,23));button.setFixedSize(40,40);button.setToolTip(name);button.setAccessibleName(name);button.clicked.connect(callback);bar.addWidget(button);self.buttons[name]=button;button.installEventFilter(self)
         # Retain programmatic shortcut compatibility; statistics lives in the settings menu.
         self.buttons['节点统计']=stat
         self.set_pinned(True);self.refresh()
+    def apply_hotkey(self):
+        from .player_hotkey import parse_shortcut,save_preferences
+        try:
+            canonical,_,_=parse_shortcut(self.hotkey_keys.currentText(),self.hotkey_single.isChecked())
+        except ValueError as error:self.hotkey_status.setText(str(error));return
+        desired={'enabled':self.hotkey_enabled.isChecked(),'shortcut':canonical,'allow_single':self.hotkey_single.isChecked()}
+        ok,message=self.hotkey.configure(**desired)
+        if ok:
+            self.hotkey_preferences=desired;self.hotkey_keys.setCurrentText(canonical)
+            try:
+                if self.hotkey_path is not None:save_preferences(self.hotkey_path,desired)
+            except OSError as error:message+='\n'+str(error)+' 本次仍可用，重启后不会保留。'
+        self.hotkey_status.setText(message);self.hide_button.setEnabled(self.hotkey.binding is not None)
+    def toggle_visibility(self):
+        if self.owner.closing:return
+        app=QApplication.instance()
+        if app.activeModalWidget()is not None:return
+        if self.hidden_windows is None:
+            if self.map_popup is not None:
+                self.map_popup.panel.hover_timer.stop();self.map_popup.panel.leave_timer.stop()
+            self.hidden_windows=[]
+            for widget in app.topLevelWidgets():
+                parent=widget
+                while parent is not None and parent is not self.owner:parent=parent.parentWidget()
+                if parent is self.owner and widget.isVisible():self.hidden_windows.append(widget)
+            if not self.hidden_windows:self.hidden_windows=None;self.show();self.raise_();return
+            for widget in self.hidden_windows:widget.hide()
+        else:
+            from shiboken6 import isValid
+            restore=self.hidden_windows;self.hidden_windows=None
+            for widget in restore:
+                if isValid(widget):widget.show();widget.raise_()
+            self.show();self.raise_()
     def set_pinned(self,value):
         visible=self.isVisible();self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,value)
         if visible:self.show()
@@ -109,6 +154,7 @@ class CompactAssistant(QDialog):
         if self.drag_origin is not None and event.buttons()&Qt.MouseButton.LeftButton:self.move(event.globalPosition().toPoint()-self.drag_origin);event.accept()
     def mouseReleaseEvent(self,event):self.drag_origin=None;super().mouseReleaseEvent(event)
     def closeEvent(self,event):
+        if self.owner.closing:self.hotkey.close()
         if not self.owner.closing:self.open_full()
         for popup in (self.active_popup,self.inventory_popup,self.map_popup,self.overview_popup,self.settings_popup):
             if popup is not None:popup.close()

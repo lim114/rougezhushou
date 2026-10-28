@@ -267,7 +267,8 @@ class MainWindow(QMainWindow):
 
     def show_compact(self):
         from .player_compact import CompactAssistant
-        if self.compact_window is None:self.compact_window=CompactAssistant(self)
+        if self.compact_window is None:self.compact_window=CompactAssistant(self,ROOT/'.local/player-shortcut.json')
+        if self.compact_window.hidden_windows is not None:self.compact_window.toggle_visibility()
         self.compact_window.refresh();self.compact_window.show();self.hide()
 
     def open_public_archive(self):

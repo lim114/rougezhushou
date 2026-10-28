@@ -28,7 +28,11 @@ def check(window,gui,require):
     require(mp.view.overlay[known]['match']=='observed'and mp.view.overlay[known]['frequency']is None,'revealed_location_not_prediction')
     mp.refresh();require(mp.type_buttons['诡意行商'].isChecked(),'refresh_preserves_type_filter')
     mp.type_buttons['诡意行商'].click();require(mp.view.filter_kind is None,'click_selected_shortcut_clears_filter')
-    old_selection=mp.view.selected;point=mp.view._positions()[1][candidate].toPoint();QTest.mouseMove(mp.view,QPoint(3,3));QTest.qWait(60);QTest.mouseMove(mp.view,point);QTest.qWait(450);gui.processEvents()
+    old_selection=mp.view.selected
+    # Native show/layout can settle during the first wait. Derive the node point
+    # afterwards, so a stale pre-layout coordinate cannot hover a different node.
+    QTest.mouseMove(mp.view,QPoint(3,3));QTest.qWait(180);gui.processEvents()
+    point=mp.view._positions()[1][candidate].toPoint();QTest.mouseMove(mp.view,point);QTest.qWait(450);gui.processEvents()
     card=mp.hover_card;require(card.isVisible(),'real_mouse_hover_opens_node_card')
     require(mp.view.selected==old_selection and not mp.drawer.isVisible(),'hover_does_not_change_selection_or_force_drawer')
     require(set(card.type_values)=={'诡意行商','不期而遇'},'hover_uses_exact_node_candidate_types')

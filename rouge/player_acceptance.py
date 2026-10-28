@@ -1,5 +1,8 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==393:
+        from .player_hotkey_acceptance import check as check_hotkey
+        check_hotkey(window,gui,require)
     if section==392:
         from .player_map_acceptance import check as check_map_interaction
         check_map_interaction(window,gui,require)

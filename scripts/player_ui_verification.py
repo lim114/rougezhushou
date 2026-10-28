@@ -66,7 +66,7 @@ def run(section,receipt):
             require(window.run.state==state,'feature_does_not_reset_run')
             from PySide6.QtTest import QTest
             QTest.qWait(120);gui.processEvents()
-            shot=receipt.with_suffix('.png');shot_target=window.compact_window.map_popup if section==392 else window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390,391) else window
+            shot=receipt.with_suffix('.png');shot_target=window.compact_window.settings_popup if section==393 else window.compact_window.map_popup if section==392 else window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390,391) else window
             assert shot_target.grab().save(str(shot))
             images.append({'file':shot.relative_to(ROOT).as_posix(),'sha256':sha256(shot.read_bytes()).hexdigest()})
             if section==392:
@@ -81,7 +81,9 @@ def run(section,receipt):
                 window.compact_window.map_popup.panel.details_toggle.setChecked(True);gui.processEvents()
                 drawer=receipt.with_name('map-node-details.png');assert window.compact_window.map_popup.grab().save(str(drawer))
                 images.append({'file':drawer.relative_to(ROOT).as_posix(),'sha256':sha256(drawer.read_bytes()).hexdigest()})
-            window.close();gui.processEvents();require(not window.isVisible(),'normal_owned_window_close');window=None
+            window.close();gui.processEvents();require(not window.isVisible(),'normal_owned_window_close')
+            if section==393:require(window.compact_window.hotkey.binding is None,'owner_exit_unregisters_global_hotkey')
+            window=None
     except Exception:
         failure=traceback.format_exc()
     finally:

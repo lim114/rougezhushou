@@ -474,6 +474,7 @@ ADDITIONAL_MODULES += ('tests.test_player_navigation_390',)
 
 ADDITIONAL_MODULES += ('tests.test_player_reference_391',)
 ADDITIONAL_MODULES += ('tests.test_player_map_interaction_392',)
+ADDITIONAL_MODULES += ('tests.test_player_hotkey_393',)
 
 if __name__ == '__main__':
     sys.exit(main())
