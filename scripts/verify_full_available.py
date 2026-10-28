@@ -470,6 +470,8 @@ ADDITIONAL_MODULES += ('tests.test_player_statistics_388',)
 
 ADDITIONAL_MODULES += ('tests.test_player_compact_389',)
 
+ADDITIONAL_MODULES += ('tests.test_player_navigation_390',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

@@ -18,10 +18,11 @@ DEVELOPER_PAGES=frozenset(('局外工具','前后校准','路线约束','居民�
 
 class PlayerWorkspace(QTabWidget):
     activePageChanged=Signal(object)
+    backAvailable=Signal(bool)
     def __init__(self,parent=None,*,developer_tools=False):
         super().__init__(parent)
         self.setAccessibleName('助手主要栏目')
-        self.groups={};self.pages={};self.aliases={};self.container_leaf={};self.developer_tools=developer_tools;self._last_page=None
+        self.groups={};self.pages={};self.aliases={};self.container_leaf={};self.developer_tools=developer_tools;self._last_page=None;self._history=[];self._going_back=False
         self.developer_dialog=QDialog(self);self.developer_dialog.setWindowTitle('开发核对工具')
         self.developer_dialog.resize(1000,760);self.developer_tabs=QTabWidget()
         QVBoxLayout(self.developer_dialog).addWidget(self.developer_tabs)
@@ -76,7 +77,20 @@ class PlayerWorkspace(QTabWidget):
     def _announce(self,*_):
         page=self.currentWidget()
         if page is not self._last_page:
-            self._last_page=page;self.activePageChanged.emit(page)
+            old=self._last_page
+            if not self._going_back and old in self.pages and self.pages[old][0]!='developer':
+                self._history.append(old);self._history=self._history[-30:]
+            self._last_page=page;self.activePageChanged.emit(page);self.backAvailable.emit(bool(self._history))
+
+    def go_back(self):
+        while self._history:
+            page=self._history.pop()
+            if page is self.currentWidget()or page not in self.pages:continue
+            self._going_back=True
+            try:result=self.setCurrentWidget(page)
+            finally:self._going_back=False
+            self.backAvailable.emit(bool(self._history));return result
+        self.backAvailable.emit(False);return False
 
     def close_developer_tools(self):
         self.developer_dialog.close()

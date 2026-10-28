@@ -1,5 +1,19 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==390:
+        ws=window.centralWidget();panel=window.inventory_panel;ws.setCurrentWidget(panel);panel.search.setText('攻击');query=panel.search.text()
+        ws.setCurrentWidget(window.exploration_map_tab);window.back_button.click();gui.processEvents()
+        require(ws.currentWidget()is panel and panel.search.text()==query,'back_preserves_inventory_query')
+        window.sync_run_config();gui.processEvents();require(ws.currentWidget()is panel and panel.search.text()==query,'run_refresh_keeps_current_reading')
+        for owner in (385,386,387,388):check(owner,window,gui,require)
+        window.player_notes.close();window.public_statistics.close()
+        require(window.charge_timeline_button.isHidden()and window.shield_timeline_button.isHidden(),'mechanist_tools_absent_without_mechanist')
+        require(not window.damage_tools_fold.content.isVisible(),'additional_calculation_tools_collapsed')
+        check(389,window,gui,require);window.compact_window.pin.setChecked(True);gui.processEvents()
+        import win32gui,win32con
+        handle=int(window.compact_window.winId())
+        require(win32gui.IsWindowVisible(handle)and bool(win32gui.GetWindowLong(handle,win32con.GWL_EXSTYLE)&win32con.WS_EX_TOPMOST),'actual_native_companion_topmost')
+        require(ws.map_node_workspace.splitter.orientation()==__import__('PySide6.QtCore',fromlist=['Qt']).Qt.Orientation.Vertical,'map_node_column_readable_at_standard_window_width')
     if section==389:
         window.show_compact();gui.processEvents();panel=window.compact_window
         require(panel.isVisible()and not window.isVisible(),'compact_mode_has_visible_companion')
@@ -35,10 +49,12 @@ def check(section,window,gui,require):
         require(window.reference_panel('relics',activate=False).result['row']['id']==identity,'inventory_exact_reference_navigation')
         window.centralWidget().setCurrentWidget(panel);require(panel.search.text()=='希望','inventory_query_kept_after_navigation')
     if section==385:
-        ws=window.centralWidget();ws.setCurrentIndex(0);gui.processEvents()
+        ws=window.centralWidget();ws.groups['本局'].setCurrentIndex(0);ws.setCurrentIndex(0);gui.processEvents()
         require(window.context_bar.isVisible(),'context_shortcuts_visible_across_pages')
         require(not window.context_bar.open_button.isEnabled(),'no_fabricated_recent_content_link')
         require(not window.capture_details.content.isVisible(),'technical_capture_details_collapsed')
+        from PySide6.QtTest import QTest
+        QTest.qWait(120);gui.processEvents()
         require(window.capture_details.toggle.visibleRegion().boundingRect().height()>0,'capture_settings_toggle_in_viewport')
         window.capture_details.toggle.click();gui.processEvents()
         require(window.windows.isVisible(),'connection_settings_expand')
@@ -60,7 +76,7 @@ def check(section,window,gui,require):
         ws.setCurrentWidget(window.exploration_map_tab);gui.processEvents()
         require(ws.currentWidget()is window.exploration_map_tab,'existing_map_link_routes_preserved')
     if section==382:
-        ws=window.centralWidget();ws.setCurrentIndex(0);gui.processEvents()
+        ws=window.centralWidget();ws.groups['本局'].setCurrentIndex(0);ws.setCurrentIndex(0);gui.processEvents()
         require(window.run_cards.cards['保密等级'].text()=='尚未确认','unknown_grade_card_not_zero')
         window.run_cards.map_button.click();gui.processEvents()
         require(ws.currentWidget()is window.exploration_map_tab,'home_map_shortcut')

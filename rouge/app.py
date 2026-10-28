@@ -258,6 +258,11 @@ class MainWindow(QMainWindow):
         self.compact_window=None
         self.compact_button=QPushButton('助手小窗');self.compact_button.clicked.connect(self.show_compact)
         self.context_bar.addWidget(self.compact_button)
+        self.back_button=QPushButton('返回上页');self.back_button.setEnabled(bool(tabs._history))
+        self.back_button.clicked.connect(tabs.go_back);tabs.backAvailable.connect(self.back_button.setEnabled)
+        self.context_bar.addWidget(self.back_button)
+        from PySide6.QtGui import QShortcut,QKeySequence
+        self.back_shortcut=QShortcut(QKeySequence('Alt+Left'),self);self.back_shortcut.activated.connect(tabs.go_back)
 
     def show_compact(self):
         from .player_compact import CompactAssistant
@@ -291,6 +296,8 @@ class MainWindow(QMainWindow):
         title=recent_content(self.run.state)
         if not title:return
         panel=self.node_catalog
+        panel.show_directory()
+        for control in (panel.kind,panel.node_type,panel.floor):control.setCurrentIndex(0)
         panel.search.setText(title)
         self.centralWidget().setCurrentWidget(panel)
 
@@ -1025,13 +1032,15 @@ class MainWindow(QMainWindow):
                 self.supplemental_skill_button,self.damage_budget_button,self.cultivation_comparison_button,
                 self.wang_resource_button,self.supplemental_token_module_button)):
             layout.removeWidget(button);tools_layout.addWidget(button,index//2,index%2)
-        layout.addLayout(tools_layout)
+        from .player_context import Fold
+        tool_content=QWidget();tool_content.setLayout(tools_layout)
+        self.damage_tools_fold=Fold('更多计算与比较',tool_content);layout.addWidget(self.damage_tools_fold)
         self.damage_text = QPlainTextEdit()
         self.damage_text.setReadOnly(True)
         layout.addWidget(self.damage_text,1)
         self.raw_damage=QCheckBox('显示结构化计算数据（调试）')
         self.raw_damage.toggled.connect(self.render_damage)
-        layout.addWidget(self.raw_damage)
+        tools_layout.addWidget(self.raw_damage,7,0,1,2)
         self.damage_technical=QCheckBox('显示技术资料（来源与原始字段说明）')
         self.damage_technical.toggled.connect(self.render_damage);layout.addWidget(self.damage_technical)
         label = QLabel('基础属性只读，只能调整等级进行模拟；精英、信赖、潜能、技能等级和模组来自读取。未确认时明确使用档案预览条件。回转和周期输出均为估计，模组条件机制/特训和部分藏品仍有缺失。')
@@ -1800,6 +1809,15 @@ class MainWindow(QMainWindow):
         self.timing_scenario.setEnabled(key is not None)
         self.relic_context.setEnabled(key is not None)
 
+    def sync_player_tools(self,op,skill):
+        if not hasattr(self,'damage_tools_fold'):return
+        self.charge_timeline_button.setVisible(op=='mechanist'and skill==3)
+        self.shield_timeline_button.setVisible(op=='mechanist'and skill==2)
+        for name in ('barrier_ledger_button','shield_grant_button','shield_inventory_button','explosion_values_button'):
+            self.damage_form.setRowVisible(getattr(self,name),op=='mechanist'and skill==2)
+        tokens=bool(catalog()['operators'].get(op,{}).get('tokens'))
+        self.token_comparison_button.setVisible(tokens);self.token_budget_button.setVisible(tokens)
+
     def calculate(self):
         if hasattr(self,'charge_timeline_button'):self.charge_timeline_button.setEnabled(False)
         if hasattr(self,'shield_timeline_button'):self.shield_timeline_button.setEnabled(False)
@@ -1811,6 +1829,7 @@ class MainWindow(QMainWindow):
         self.damage_result=None
         if hasattr(self,'relic_context'):self.damage_form.setRowVisible(self.relic_context,False)
         op=self.operator.currentData()
+        self.sync_player_tools(op,self.skill.currentData())
         self.sync_animation_references(op,self.skill.currentData())
         if hasattr(self,'target_buff_list'):
             self.sync_target_buffs(op)
