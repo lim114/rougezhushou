@@ -1,5 +1,14 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==386:
+        panel=window.inventory_panel;window.centralWidget().setCurrentWidget(panel);gui.processEvents()
+        require(panel.entries.count()==0,'empty_run_not_filled_from_reference')
+        panel.held.setChecked(False);gui.processEvents();require(panel.entries.count()>0,'reference_inventory_available')
+        panel.search.setText('希望');gui.processEvents();require(panel.entries.count()>0,'effect_search_returns_results')
+        panel.entries.setCurrentRow(0);gui.processEvents();identity=panel.entries.currentItem().data(256)
+        panel.reference_button.click();gui.processEvents()
+        require(window.reference_panel('relics',activate=False).result['row']['id']==identity,'inventory_exact_reference_navigation')
+        window.centralWidget().setCurrentWidget(panel);require(panel.search.text()=='希望','inventory_query_kept_after_navigation')
     if section==385:
         ws=window.centralWidget();ws.setCurrentIndex(0);gui.processEvents()
         require(window.context_bar.isVisible(),'context_shortcuts_visible_across_pages')

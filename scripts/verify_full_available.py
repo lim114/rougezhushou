@@ -462,6 +462,8 @@ ADDITIONAL_MODULES += ('tests.test_player_action_menu_384',)
 
 ADDITIONAL_MODULES += ('tests.test_player_context_385',)
 
+ADDITIONAL_MODULES += ('tests.test_player_inventory_386',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

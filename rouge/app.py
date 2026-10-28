@@ -175,6 +175,10 @@ class MainWindow(QMainWindow):
             for category in categories:self.common_reference_categories[category]=name
             tabs.addTab(panel,label)
         tabs.activePageChanged.connect(self._common_page_changed)
+        from .player_inventory import InventoryPanel
+        self.inventory_panel=InventoryPanel(self.run)
+        self.inventory_panel.openReference.connect(self.open_item_reference)
+        tabs.addTab(self.inventory_panel,'本局藏品')
         from .offline_tools_view import OfflineToolsPanel
         self.offline_tools=OfflineToolsPanel(include_historical_route_diagnostics=include_historical_route_diagnostics)
         self.offline_tools.mapNodeSelected.connect(self.show_catalog_map_node)
@@ -247,6 +251,15 @@ class MainWindow(QMainWindow):
         self.context_bar=ContextBar(self.run,self.open_recent_content,self)
         self.addToolBar(self.context_bar)
 
+    def open_item_reference(self,identity):
+        panel=self.reference_panel('relics')
+        panel.item_kind.setCurrentIndex(0);panel.scope.setCurrentIndex(panel.scope.findData(False))
+        panel.search.clear()
+        for i in range(panel.entries.count()):
+            if panel.entries.item(i).data(Qt.ItemDataRole.UserRole)==identity:
+                panel.entries.setCurrentRow(i);return True
+        panel.entries.setCurrentRow(-1);return False
+
     def open_recent_content(self):
         from .player_context import recent_content
         title=recent_content(self.run.state)
@@ -262,7 +275,7 @@ class MainWindow(QMainWindow):
         self.run_cards=RunOverviewPanel(self.run,
             show_map=lambda:self.centralWidget().setCurrentWidget(self.exploration_map_tab),
             show_operators=lambda:self.centralWidget().groups['干员计算'].setCurrentIndex(0) or self.centralWidget().setCurrentWidget(self.centralWidget().groups['干员计算']),
-            show_items=lambda:self.reference_panel('relics'))
+            show_items=lambda:self.centralWidget().setCurrentWidget(self.inventory_panel))
         layout.addWidget(self.run_cards)
         from .player_context import Fold
         details=QWidget();details_layout=QVBoxLayout(details)
@@ -1573,6 +1586,7 @@ class MainWindow(QMainWindow):
     def sync_run_config(self):
         if hasattr(self,'run_cards'):self.run_cards.refresh()
         if hasattr(self,'context_bar'):self.context_bar.refresh()
+        if hasattr(self,'inventory_panel'):self.inventory_panel.refresh()
         if hasattr(self,'battle_preview'):self.battle_preview.set_context(self.run.state.get('config',{}))
         difficulty=self.run.state.get('config',{}).get('difficulty')
         from .run_config import difficulty_value
