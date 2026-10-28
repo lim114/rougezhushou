@@ -64,7 +64,7 @@
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
     "current_usage_remaining_percent": 73,
-    "current_usage_receipt": "verification/sections/404-usage.json",
+    "current_usage_receipt": "verification/sections/405-usage.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
     "latest_user_instruction_receipt": "verification/sections/371-preparation/resume-and-scope.json",
     "latest_pause_instruction_receipt": "verification/sections/350-pause-request.json",
@@ -77,7 +77,7 @@
     "video_parity_document": "VIDEO_PARITY.md"
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 404,
+  "completed_sections": 405,
   "sections": [
     {
       "number": 1,
@@ -2490,12 +2490,18 @@
       "completion_ref": "player-section-404",
       "topic": "资源变化分项回顾与缺失断点",
       "verification": "verification/sections/404.json"
+    },
+    {
+      "number": 405,
+      "completion_ref": "player-section-405",
+      "topic": "藏品、道具及队伍变化的已读证据回顾",
+      "verification": "verification/sections/405.json"
     }
   ],
-  "next_section": 405,
-  "next_action": "继续第405节：藏品、道具及队伍变化的已读证据回顾。第410节完成全部可用范围、普通发布核对后暂停，不启动411。",
+  "next_section": 406,
+  "next_action": "继续第406节：个人本机统计：区分有效样本与缺失。第410节完成全部可用范围、普通发布核对后暂停，不启动411。",
   "full_validation_due": false,
-  "windows_native_validation": "当前404：4项必要检查、19项原生窗口检查通过；隔离状态与九类外部操作零。395全量仅历史，不证明改后源码；下次410。",
+  "windows_native_validation": "当前405：4项必要检查、18项原生窗口检查通过；隔离状态与九类外部操作零。395全量仅历史，不证明改后源码；下次410。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
   "deferred_problems": [
     {
@@ -2610,14 +2616,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 404,
-    "verification": "verification/sections/404.json",
+    "section": 405,
+    "verification": "verification/sections/405.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 404,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "b1c347b77ef37284f4826da9580be512e9e414ce",
     "proof": "verification/sections/404-publication.json",
@@ -2867,7 +2873,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "PLAYER_SECTION404_PUBLISHED",
+  "batch_status": "PLAYER_SECTION405_PUBLICATION_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3005,18 +3011,19 @@
     401,
     402,
     403,
-    404
+    404,
+    405
   ],
   "current_batch": {
     "start": 395,
     "end": 410,
     "next_full_validation_after": 410,
-    "status": "PLAYER_SECTION404_PUBLISHED",
-    "completed_sections": 404,
-    "next_section": 405,
+    "status": "PLAYER_SECTION405_PUBLICATION_PENDING",
+    "completed_sections": 405,
+    "next_section": 406,
     "next_section_started": false,
     "batch_closed": false,
-    "receipt": "verification/sections/404.json"
+    "receipt": "verification/sections/405.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -3296,7 +3303,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 404,
+  "latest_functional_section": 405,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -9003,14 +9010,14 @@
     "development_paused": false
   },
   "current_section_validation": {
-    "section": 404,
-    "receipt": "verification/sections/404.json",
+    "section": 405,
+    "receipt": "verification/sections/405.json",
     "full_suite_rerun": false,
     "last_full_receipt": "verification/full-395/summary.json",
     "last_full_receipt_is_historical_for_current_changes": true
   },
   "latest_section_environment": {
-    "section": 404,
+    "section": 405,
     "native_windows_verified": true,
     "native_game_or_chat_verified": false,
     "current_section_full_rerun": false,
@@ -9026,10 +9033,8 @@
     "proof_sha256": "3dde2df8e2ee658fafa8c831b90b259d6e90eed797c9bd1bbe45324e3d6926a8"
   },
   "cloud_publication_closeout": {
-    "section": 404,
-    "functional_commit": "b1c347b77ef37284f4826da9580be512e9e414ce",
-    "proof": "verification/sections/404-publication.json",
-    "current_commit_kind": "publication metadata only",
+    "section": 405,
+    "current_commit_kind": "functional section pending actual publication",
     "next_section_started": false,
     "development_paused": false
   },

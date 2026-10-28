@@ -108,6 +108,8 @@ class ReplayPanel(QWidget):
         self.nodes=NodeReplayPage();self.tabs.addTab(self.nodes,'逐层节点')
         from .player_resource_history import ResourceHistoryPage
         self.resources=ResourceHistoryPage();self.tabs.addTab(self.resources,'资源变化')
+        from .player_evidence_history import EvidenceHistoryPage
+        self.evidence=EvidenceHistoryPage();self.tabs.addTab(self.evidence,'藏品与队伍变化')
         self.entries.currentItemChanged.connect(self.selected)
         from .player_replay_archive import attach_history
         attach_history(self,body)
@@ -123,6 +125,7 @@ class ReplayPanel(QWidget):
         self.key = key
         self.nodes.refresh(state)
         self.resources.refresh(state)
+        self.evidence.refresh(state)
         changed_run = self.snapshot is not None and self.snapshot.get('id') != state.get('id')
         self.snapshot = state
         old = self.entries.currentItem()

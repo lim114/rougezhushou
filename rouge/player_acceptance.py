@@ -1,5 +1,8 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==405:
+        from .player_evidence_acceptance import check as check_feature
+        check_feature(window,gui,require)
     if section==404:
         from .player_resource_acceptance import check as check_feature
         check_feature(window,gui,require)

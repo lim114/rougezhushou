@@ -1,11 +1,11 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第404节 + 资源变化分项回顾与缺失断点
+# 当前云端续接索引 · 第405节 + 藏品、道具及队伍变化的已读证据回顾
 
-实际完成的改动：独立资源页分别列出已读数量及相邻有效读取之间的变化；可按资源筛选，真实0值保留，首次读取和中间缺失时变化标未知。
+实际完成的改动：收藏品、战术道具与队伍变化分成独立分支，展示对应图片、已读培养和同时间记录的具名场景；保留具体发放来源未知。
 
-[本节验收回执](verification/sections/404.json)。
+[本节验收回执](verification/sections/405.json)。
 
-已完成至404，后续405；本批状态 `PLAYER_SECTION404_PUBLISHED`。推进终点：410。下次定期全量410。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至405，后续406；本批状态 `PLAYER_SECTION405_PUBLICATION_PENDING`。推进终点：410。下次定期全量410。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 
