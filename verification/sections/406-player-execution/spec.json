@@ -1,0 +1,20 @@
+{
+  "title": "个人本机统计：区分有效样本与缺失",
+  "change": "从本机历史计算归档前最近已读资源均值，并可查看所选收藏品的归档时持有率；有效、缺失及不完整清单样本分别显示。",
+  "limits": "不是胜率、结算收益或掉落概率；当前未归档对局不混入，同局多版归档只取一份。 P3/P2/P1仍未全部完成，识别优化最后。",
+  "criteria": [
+    "真实0参与均值，缺失不按0",
+    "持有率只用完整清单分母",
+    "同局多归档不重复计样本",
+    "历史不可用清旧结果，完整总量保持未知"
+  ],
+  "test": "tests.test_player_statistics_406",
+  "native": "scripts/verify_player_personal_statistics_window_406.py",
+  "next": "继续第407节：统计按保密等级和分队类型筛选。",
+  "additional_tests": [
+    "tests.test_player_history_store_402"
+  ],
+  "unit_receipt": "verification/sections/406-player-checks-attempt2/process.json",
+  "native_receipt": "verification/sections/406-player-window-attempt2/window.json",
+  "native_process_receipt": "verification/sections/406-player-window-process-attempt2/process.json"
+}

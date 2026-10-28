@@ -11,6 +11,8 @@ def attach_history(panel,body):
     panel.reload_history_button=QPushButton('重新读取本机历史');body.insertWidget(3,panel.reload_history_button)
     panel.reload_history_button.clicked.connect(lambda:reload_history(panel));panel.sessions.currentIndexChanged.connect(panel.refresh)
     reload_history(panel,initial=True)
+    from .player_personal_statistics import PersonalStatisticsPage
+    panel.statistics=PersonalStatisticsPage(panel.history_store);panel.tabs.addTab(panel.statistics,'个人统计')
 
 def reload_history(panel,initial=False):
     old=panel.sessions.currentData();panel.archives={};error=None
@@ -28,7 +30,9 @@ def reload_history(panel,initial=False):
         panel.sessions.addItem('此前历史暂不可用 · 请重新选择','unavailable');selected=panel.sessions.count()-1
     panel.sessions.setCurrentIndex(max(0,selected));panel.sessions.blockSignals(False)
     panel.history_status.setText(('本机历史暂时不可用：'+error+'；原件没有改动。')if error else f'读到{len(panel.archives)}局本机历史，另有{len(panel.history_issues)}份记录无法核对。归档不表示通关或完整结算，不上传。')
-    if not initial:panel.key=None;panel.refresh()
+    if not initial:
+        panel.key=None;panel.refresh()
+        if hasattr(panel,'statistics'):panel.statistics.refresh()
 
 def selected_state(panel):
     identity=panel.sessions.currentData()
