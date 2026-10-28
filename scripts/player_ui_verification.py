@@ -70,7 +70,10 @@ def run(section,receipt):
             require(window.run.state==state,'feature_does_not_reset_run')
             from PySide6.QtTest import QTest
             QTest.qWait(120);gui.processEvents()
-            shot=receipt.with_suffix('.png');shot_target=window.compact_window.scene_popup if section==395 else window.compact_window.inventory_popup if section==394 else window.compact_window.settings_popup if section==393 else window.compact_window.map_popup if section==392 else window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390,391) else window
+            shot=receipt.with_suffix('.png');shot_target=window.compact_window.team_popup if section==396 else window.compact_window.scene_popup if section==395 else window.compact_window.inventory_popup if section==394 else window.compact_window.settings_popup if section==393 else window.compact_window.map_popup if section==392 else window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390,391) else window
+            if section>=396:
+                feature_handle=int(shot_target.winId())
+                require(win32gui.IsWindowVisible(feature_handle)and win32process.GetWindowThreadProcessId(feature_handle)[1]==os.getpid(),'visible_owned_actual_feature_native_window')
             assert shot_target.grab().save(str(shot))
             images.append({'file':image_name(shot),'sha256':sha256(shot.read_bytes()).hexdigest()})
             if section==394:
