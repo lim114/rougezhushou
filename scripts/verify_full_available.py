@@ -494,6 +494,8 @@ ADDITIONAL_MODULES += ('tests.test_player_history_store_402',)
 
 ADDITIONAL_MODULES += ('tests.test_player_replay_nodes_403',)
 
+ADDITIONAL_MODULES += ('tests.test_player_resource_history_404',)
+
 if __name__ == '__main__':
     sys.exit(main())
 
