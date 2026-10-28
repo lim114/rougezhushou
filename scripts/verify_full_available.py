@@ -480,6 +480,8 @@ ADDITIONAL_MODULES += ('tests.test_player_scene_battle_395',)
 
 ADDITIONAL_MODULES += ('tests.test_player_team_396',)
 
+ADDITIONAL_MODULES += ('tests.test_player_parts_397',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

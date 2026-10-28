@@ -17,6 +17,7 @@ def source_hashes():
     paths=list((ROOT/'rouge').glob('*.py'))+[Path(__file__).resolve(),ROOT/'scripts/verify_full_available.py']
     paths+=list((ROOT/'tests').glob('test_player*py'))
     paths+=list((ROOT/'scripts').glob('verify_player*py'))
+    paths+=list((ROOT/'rouge/data/part-icons').glob('*.png'))
     paths+=list((ROOT/'rouge/data/map-art').glob('*'))+list((ROOT/'rouge/data/map-event-art').glob('*'))
     paths+=[ROOT/'research/public-statistics-388/nodes.json']
     paths+=[ROOT/'scripts/update_cloud_index.py',ROOT/'research/public-reference-391/snapshot.json']
@@ -70,7 +71,7 @@ def run(section,receipt):
             require(window.run.state==state,'feature_does_not_reset_run')
             from PySide6.QtTest import QTest
             QTest.qWait(120);gui.processEvents()
-            shot=receipt.with_suffix('.png');shot_target=window.compact_window.team_popup if section==396 else window.compact_window.scene_popup if section==395 else window.compact_window.inventory_popup if section==394 else window.compact_window.settings_popup if section==393 else window.compact_window.map_popup if section==392 else window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390,391) else window
+            shot=receipt.with_suffix('.png');shot_target=getattr(window,'player_validation_target',None) or (window.compact_window.team_popup if section==396 else window.compact_window.scene_popup if section==395 else window.compact_window.inventory_popup if section==394 else window.compact_window.settings_popup if section==393 else window.compact_window.map_popup if section==392 else window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390,391) else window)
             if section>=396:
                 feature_handle=int(shot_target.winId())
                 require(win32gui.IsWindowVisible(feature_handle)and win32process.GetWindowThreadProcessId(feature_handle)[1]==os.getpid(),'visible_owned_actual_feature_native_window')

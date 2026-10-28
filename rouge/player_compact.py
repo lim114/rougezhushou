@@ -1,7 +1,7 @@
 """Video-style floating toolbar, with persistent read-only panels opened on demand."""
 from PySide6.QtCore import Qt,QPoint,QSize,QEvent
 from PySide6.QtGui import QIcon,QPixmap
-from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout,QLabel,QPushButton,QCheckBox,QToolButton,QApplication,QPlainTextEdit,QComboBox
+from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout,QLabel,QPushButton,QCheckBox,QToolButton,QApplication,QPlainTextEdit,QComboBox,QTabWidget
 from .player_overview import overview_facts
 from .player_context import recent_content
 
@@ -116,7 +116,8 @@ class CompactAssistant(QDialog):
         title=recent_content(self.owner.run.state);self.context.setText('最近读取：'+title if title else'本局信息 · 等待读取节点详情')
         for key,value in overview_facts(self.owner.run.state).items():self.cards[key].setText(value)
         self.buttons['场景笔记'].setEnabled(bool(title));self.setToolTip(self.context.text())
-        if self.inventory_popup:self.inventory_popup.panel.refresh()
+        if self.inventory_popup:
+            self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh()
         if self.map_popup:self.map_popup.panel.refresh()
         if self.scene_popup:self.scene_popup.panel.refresh()
         if self.team_popup:self.team_popup.panel.refresh()
@@ -137,8 +138,13 @@ class CompactAssistant(QDialog):
             from .player_inventory import InventoryPanel
             panel=InventoryPanel(self.owner.run,self.owner.inventory_panel.public_cache);panel.openReference.connect(lambda i:(self.owner.open_item_reference(i),self.open_full()))
             panel.openPoolReference.connect(lambda version,identity:self.open_owner_dialog(lambda:self.owner.open_public_pool_reference(version,identity),'public_archive'))
-            self.inventory_popup=ToolPopover('本局藏品',panel,self);self.inventory_popup.panel=panel;self.inventory_popup.resize(810,570)
-        self.inventory_popup.panel.refresh();return self.present(self.inventory_popup)
+            from .player_parts import PartsPanel
+            from .player_tools import ToolsPanel
+            pages=QTabWidget();parts=PartsPanel(self.owner.run);tools=ToolsPanel(self.owner.run)
+            pages.addTab(panel,'收藏品');pages.addTab(tools,'战术道具');pages.addTab(parts,'零件箱资料')
+            self.inventory_popup=ToolPopover('收藏品、战术道具与零件',pages,self)
+            self.inventory_popup.panel=panel;self.inventory_popup.pages=pages;self.inventory_popup.parts=parts;self.inventory_popup.tools=tools;self.inventory_popup.resize(840,650)
+        self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();return self.present(self.inventory_popup)
     def open_map(self):
         if self.map_popup is None:
             panel=MapPanel(self.owner);self.map_popup=ToolPopover('探索地图与节点',panel,self);self.map_popup.panel=panel;self.map_popup.resize(1100,650);self.map_popup.setObjectName('videoMapWindow');self.map_popup.setStyleSheet('#videoMapWindow{background:#f5f5f7;border:1px solid #bbc1c5;border-radius:12px;} #videoMapWindow QLabel{color:#25332f;} #videoMapWindow QPushButton,#videoMapWindow QComboBox{color:#263630;background:#e8ebea;border:1px solid #bbc6c1;border-radius:7px;padding:5px;} #videoMapWindow QTabBar{background:#f5f5f7;border:0;} #videoMapWindow QTabBar::tab{color:#35403c;background:#e4e7e6;border:0;border-radius:10px;padding:6px 12px;} #videoMapWindow QTabBar::tab:selected{background:#2c3533;color:white;} #videoMapWindow QPlainTextEdit,#videoMapWindow QTreeWidget{color:#28332e;background:#fff;border:1px solid #d2d9d5;}')
