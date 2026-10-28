@@ -1,11 +1,11 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第383节 + 探索地图与所选节点同页联动
+# 当前云端续接索引 · 第384节 + 资料查询工具收拢为相关查询菜单
 
-实际完成的改动：将探索地图和节点详情合并为同一工作区，点选地图节点即可在旁边查阅，不再来回切换两个栏目。旧地图与节点的准确跳转继续定位原阅读器；窄窗口上下排列，宽窗口左右排列。
+实际完成的改动：资料页面将敌人反查、地形反查、物品用途、取得来源和特殊规则等散落按钮合并为一个相关查询菜单。菜单沿用原按钮的适用性与可用状态，保留准确跳转，默认版面留给搜索、条目与玩家说明。
 
-[本节验收回执](verification/sections/383.json)。
+[本节验收回执](verification/sections/384.json)。
 
-已完成至383，后续384；本批状态 `PLAYER_SECTION383_PUBLISHED`。推进终点：390。下次定期全量395。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至384，后续385；本批状态 `PLAYER_SECTION384_PUBLICATION_PENDING`。推进终点：390。下次定期全量395。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 

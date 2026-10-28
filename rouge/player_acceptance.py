@@ -1,5 +1,13 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==384:
+        panel=window.reference_panel('stages');gui.processEvents();menu=panel.query_menu
+        actions=menu.visible_actions();require(any('敌人' in a.text()for a in actions),'enemy_lookup_available_in_query_menu')
+        require(any('地形' in a.text()for a in actions),'terrain_lookup_available_in_query_menu')
+        require(not panel.enemy_directory_button.isVisible(),'scattered_query_buttons_removed_from_default_layout')
+        menu.menu.popup(menu.button.mapToGlobal(menu.button.rect().bottomLeft()));gui.processEvents()
+        require(menu.menu.isVisible(),'actual_query_menu_opens');menu.menu.hide();gui.processEvents()
+        require(panel.search.isVisible()and panel.entries.isVisible(),'main_search_and_results_remain_visible')
     if section==383:
         ws=window.centralWidget();ws.setCurrentWidget(window.node_catalog);gui.processEvents()
         require(window.exploration_map_tab.isVisible()and window.node_catalog.isVisible(),'map_and_node_readers_visible_together')

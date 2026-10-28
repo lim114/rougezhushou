@@ -142,6 +142,13 @@ class ExpansionUpdatePanel(QWidget):
         self.entries.currentItemChanged.connect(self._selected);self.next_button.clicked.connect(self.follow_scene);self.refresh_button.clicked.connect(self.refresh_reference)
         self.battle_button.clicked.connect(self.open_current_battle)
         self.refresh_reference()
+        if full_catalog:
+            from .player_action_menu import ButtonMenu
+            self.query_menu=ButtonMenu(self,[self.enemy_directory_button,self.terrain_directory_button,
+                self.event_directory_button,self.event_resources_button,self.event_item_uses_button,
+                self.tickets_button,self.bank_button,self.real_domain_button,self.portal_rules_button,
+                self.region_resources_button,self.upgrade_tickets_button,self.legacy_reference_button,
+                self.named_sources_button,self.initial_recruits_button,self.ending_button],title='相关查询')
 
     def _clear_detail(self,notice='请先选择一项资料。'):
         if getattr(self,'initial_recruits_origin',None)=='item':self._close_initial_recruits()
