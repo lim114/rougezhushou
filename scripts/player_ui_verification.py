@@ -57,7 +57,8 @@ def run(section,receipt):
             require(window.run.state==state,'feature_does_not_reset_run')
             from PySide6.QtTest import QTest
             QTest.qWait(120);gui.processEvents()
-            shot=receipt.with_suffix('.png');assert window.grab().save(str(shot))
+            shot=receipt.with_suffix('.png');shot_target=window.player_notes if section==387 else window
+            assert shot_target.grab().save(str(shot))
             images.append({'file':shot.relative_to(ROOT).as_posix(),'sha256':sha256(shot.read_bytes()).hexdigest()})
             window.close();gui.processEvents();require(not window.isVisible(),'normal_owned_window_close');window=None
     except Exception:

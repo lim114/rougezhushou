@@ -250,6 +250,17 @@ class MainWindow(QMainWindow):
         from .player_context import ContextBar
         self.context_bar=ContextBar(self.run,self.open_recent_content,self)
         self.addToolBar(self.context_bar)
+        from .player_notes import NotesDialog
+        self.player_notes=NotesDialog(ROOT/'.local/player-notes',self)
+        self.notes_button=QPushButton('场景笔记');self.notes_button.clicked.connect(self.open_scene_notes)
+        self.context_bar.addWidget(self.notes_button)
+
+    def open_scene_notes(self):
+        content=self.run.state.get('last_node_content')
+        if not content:
+            self.context_bar.label.setText('尚未读取具名节点或关卡，暂不能绑定场景笔记。');return False
+        ready=self.player_notes.set_context(content)
+        self.player_notes.show();return ready
 
     def open_item_reference(self,identity):
         panel=self.reference_panel('relics')
@@ -2322,6 +2333,9 @@ class MainWindow(QMainWindow):
         return panel
 
     def closeEvent(self, event):
+        if hasattr(self,'player_notes')and self.player_notes.dirty:
+            self.player_notes.show();self.player_notes.status.setText('笔记尚未保存，请保存或放弃后退出助手。');event.ignore();return
+        if hasattr(self,'player_notes'):self.player_notes.close()
         self.closing=True
         self.node_catalog._close_current_event_reference()
         self.node_catalog._close_shop_vault()

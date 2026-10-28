@@ -1,5 +1,14 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==387:
+        notes=window.player_notes;require(notes.set_context({'kind':'battle','title':'测试关卡','variant_id':'fixture-a'}),'notes_bind_explicit_context')
+        notes.show();notes.editor.setPlainText('# 测试笔记\n注意第二阶段的机制。');gui.processEvents()
+        require(not notes.set_context({'kind':'event','title':'另一事件'}),'dirty_note_not_rebound')
+        notes.save_button.click();require(not notes.dirty,'note_explicitly_saved')
+        require(notes.set_context({'kind':'event','title':'另一事件'}),'saved_note_can_change_context')
+        require(notes.editor.toPlainText()=='','new_context_does_not_borrow_note')
+        notes.set_context({'kind':'battle','title':'测试关卡','variant_id':'fixture-a'});gui.processEvents()
+        require('第二阶段'in notes.editor.toPlainText(),'local_note_restored_by_exact_context')
     if section==386:
         panel=window.inventory_panel;window.centralWidget().setCurrentWidget(panel);gui.processEvents()
         require(panel.entries.count()==0,'empty_run_not_filled_from_reference')
