@@ -1,0 +1,20 @@
+{
+  "title": "本机笔记目录、正文搜索与准确场景回访",
+  "change": "可从工具设置查询本机场景笔记，按场景名或正文搜索并回到准确变体编辑页；缺少旧场景标签的笔记继续只读展示，不猜关联。",
+  "limits": "目录标签更新失败不把已经保存的正文误报为未保存；损坏原件保留，未保存笔记阻止隐式关闭。 P3/P2/P1仍未全部完成，识别优化最后。",
+  "criteria": [
+    "无当前游戏页面也可查询已保存笔记",
+    "同名变体分开，正文可搜索",
+    "旧无标签笔记不伪造身份",
+    "搜索、选择与未保存保护保持"
+  ],
+  "test": "tests.test_player_note_library_399",
+  "native": "scripts/verify_player_note_library_window_399.py",
+  "next": "继续第400节：场景笔记主动导出与覆盖确认。",
+  "additional_tests": [
+    "tests.test_player_note_preview_398"
+  ],
+  "unit_receipt": "verification/sections/399-player-checks/process.json",
+  "native_receipt": "verification/sections/399-player-window/window.json",
+  "native_process_receipt": "verification/sections/399-player-window-process/process.json"
+}

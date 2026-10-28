@@ -1,11 +1,11 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第398节 + 场景笔记排版预览与多窗口保存保护
+# 当前云端续接索引 · 第399节 + 本机笔记目录、正文搜索与准确场景回访
 
-实际完成的改动：场景笔记增加Markdown排版预览，保留原文、绑定与未保存保护；预览不加载外部图片、不自动打开链接，保存冲突保留双方文字。
+实际完成的改动：可从工具设置查询本机场景笔记，按场景名或正文搜索并回到准确变体编辑页；缺少旧场景标签的笔记继续只读展示，不猜关联。
 
-[本节验收回执](verification/sections/398.json)。
+[本节验收回执](verification/sections/399.json)。
 
-已完成至398，后续399；本批状态 `PLAYER_SECTION398_PUBLISHED`。推进终点：410。下次定期全量410。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至399，后续400；本批状态 `PLAYER_SECTION399_PUBLICATION_PENDING`。推进终点：410。下次定期全量410。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 

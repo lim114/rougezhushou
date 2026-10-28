@@ -80,7 +80,12 @@ class NotesDialog(QDialog):
         if self.key is None:return False
         try:self.digest=self.store.save(self.key,self.editor.toPlainText(),self.digest)
         except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return False
-        self.dirty=False;self.status.setText('已保存到本机；不会上传。'+(self.store.save_warning or''));return True
+        self.dirty=False;warning=self.store.save_warning or''
+        try:
+            from .player_note_library import NoteLibrary
+            NoteLibrary(self.store.folder).record(self.content)
+        except(OSError,ValueError,UnicodeError,TypeError):warning+='正文已保存，但场景标签未能更新；可继续从当前编辑页读取。'
+        self.status.setText('已保存到本机；不会上传。'+warning);return True
     def discard(self):
         if self.key is None:return
         try:text,digest=self.store.read(self.key)

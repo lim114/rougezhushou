@@ -61,6 +61,7 @@ class CompactAssistant(QDialog):
         ok,message=self.hotkey.configure(**self.hotkey_preferences);self.hotkey_status.setText((load_warning+'\n'if load_warning else'')+message);self.hide_button.setEnabled(ok and self.hotkey.binding is not None)
         public=QPushButton('路标资料：藏品池与节点事件');public.clicked.connect(self.open_archive);layout.addWidget(public)
         stat=QPushButton('节点历史统计');stat.clicked.connect(lambda:self.open_owner_dialog(owner.open_public_statistics,'public_statistics'));layout.addWidget(stat)
+        self.note_library=None;self.note_library_button=QPushButton('查找本机场景笔记');self.note_library_button.clicked.connect(self.open_note_library);layout.addWidget(self.note_library_button)
         close=QPushButton('退出助手');close.clicked.connect(self.exit_application);layout.addWidget(close)
         self.settings_popup=ToolPopover('工具设置',settings,self);self.settings_popup.resize(420,570)
         actions=[('本局概况','overview',lambda:self.present(self.overview_popup)),('地图与节点','map',self.open_map),('本局藏品','bag',self.open_inventory),('场景笔记','note',lambda:self.open_owner_dialog(owner.open_scene_notes,'player_notes')),('干员与技能','calc',self.open_operators),('聊天分析','chat',self.open_chat),('工具设置','settings',lambda:self.present(self.settings_popup))]
@@ -128,6 +129,16 @@ class CompactAssistant(QDialog):
             panel.openOperator.connect(lambda identity:(self.owner.select_operator(identity),self.open_operators()))
             self.team_popup=ToolPopover('本局队伍 · 已招募干员',panel,self);self.team_popup.panel=panel;self.team_popup.resize(830,690)
         self.team_popup.panel.refresh();return self.present(self.team_popup)
+    def open_note_library(self):
+        if self.note_library is None:
+            from .player_note_library import NoteLibraryDialog
+            self.note_library=NoteLibraryDialog(self.owner.player_notes.store.folder,self)
+            self.note_library.openContext.connect(self.open_saved_note)
+        self.note_library.refresh();return self.present(self.note_library)
+    def open_saved_note(self,content):
+        notes=self.owner.player_notes
+        if not notes.set_context(content):notes.show();notes.raise_();return False
+        return self.present(notes)
     def open_scene_battle(self):
         if self.scene_popup is None:
             from .player_scene_battle import SceneBattlePanel
