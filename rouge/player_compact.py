@@ -44,7 +44,7 @@ class CompactAssistant(QDialog):
         overview=QWidget();layout=QVBoxLayout(overview);self.context=QLabel();self.context.setWordWrap(True);layout.addWidget(self.context);grid=QGridLayout();self.cards={}
         for i,name in enumerate(overview_facts(owner.run.state)):
             value=QLabel();value.setWordWrap(True);self.cards[name]=value;grid.addWidget(QLabel(name),i//2*2,i%2);grid.addWidget(value,i//2*2+1,i%2)
-        layout.addLayout(grid);self.scene_button=QPushButton('最近关卡与敌人资料');self.scene_button.clicked.connect(self.open_scene_battle);layout.addWidget(self.scene_button);self.scene_popup=None;self.team_popup=None;self.team_button=QPushButton('本局队伍 · 职业与培养');self.team_button.clicked.connect(self.open_team);layout.addWidget(self.team_button);self.overview_popup=ToolPopover('本局概况',overview,self);self.overview_popup.resize(460,350)
+        layout.addLayout(grid);self.scene_button=QPushButton('最近关卡与敌人资料');self.scene_button.clicked.connect(self.open_scene_battle);layout.addWidget(self.scene_button);self.scene_popup=None;self.replay_popup=None;self.replay_button=QPushButton('查看本局读取记录');self.replay_button.clicked.connect(self.open_replay);layout.addWidget(self.replay_button);self.team_popup=None;self.team_button=QPushButton('本局队伍 · 职业与培养');self.team_button.clicked.connect(self.open_team);layout.addWidget(self.team_button);self.overview_popup=ToolPopover('本局概况',overview,self);self.overview_popup.resize(460,350)
         settings=QWidget();layout=QVBoxLayout(settings);self.pin=QCheckBox('保持置顶');self.pin.setChecked(True);self.pin.toggled.connect(self.set_pinned);layout.addWidget(self.pin)
         self.expand=QPushButton('展开完整助手');self.expand.clicked.connect(self.open_full);layout.addWidget(self.expand)
         from .player_hotkey import GlobalHotkey,load_preferences,DEFAULT
@@ -122,6 +122,12 @@ class CompactAssistant(QDialog):
         if self.map_popup:self.map_popup.panel.refresh()
         if self.scene_popup:self.scene_popup.panel.refresh()
         if self.team_popup:self.team_popup.panel.refresh()
+        if self.replay_popup:self.replay_popup.panel.refresh()
+    def open_replay(self):
+        if self.replay_popup is None:
+            from .player_replay import ReplayPanel
+            panel=ReplayPanel(self.owner.run);self.replay_popup=ToolPopover('本局已读记录',panel,self);self.replay_popup.panel=panel;self.replay_popup.resize(900,650)
+        self.replay_popup.panel.refresh();return self.present(self.replay_popup)
     def open_team(self):
         if self.team_popup is None:
             from .player_team import TeamPanel
