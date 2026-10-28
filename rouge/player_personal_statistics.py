@@ -112,6 +112,8 @@ class PersonalStatisticsPage(QWidget):
         attach_filters(self,body)
         self.reload = QPushButton('重新读取本机历史')
         body.addWidget(self.reload)
+        from .player_statistics_card import CardControls
+        self.card_controls=CardControls(self,body)
         self.reload.clicked.connect(self.refresh)
         self.relic.currentIndexChanged.connect(self.render)
         self.refresh()
@@ -141,10 +143,12 @@ class PersonalStatisticsPage(QWidget):
     def render(self, *_):
         if not self.source_available:
             self.result = None
+            self.card_controls.sync()
             self.detail.setPlainText('本机历史暂未读到，统计未知；没有用0局或旧结果替代。')
             return
         from .player_cohort_ui import selected_records,filter_notes
         self.result = statistics(selected_records(self), self.relic.currentData())
+        self.card_controls.sync()
         text = filter_notes(self)+'\n\n'+statistics_text(self.result)
         if self.detail.toPlainText() != text:
             self.detail.setPlainText(text)

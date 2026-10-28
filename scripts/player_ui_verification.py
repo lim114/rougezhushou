@@ -77,6 +77,9 @@ def run(section,receipt):
                 require(win32gui.IsWindowVisible(feature_handle)and win32process.GetWindowThreadProcessId(feature_handle)[1]==os.getpid(),'visible_owned_actual_feature_native_window')
             assert shot_target.grab().save(str(shot))
             images.append({'file':image_name(shot),'sha256':sha256(shot.read_bytes()).hexdigest()})
+            if section==408:
+                card=receipt.with_name('statistics-card.png');assert window.compact_window.replay_popup.panel.statistics.card_controls.card.grab().save(str(card))
+                images.append({'file':image_name(card),'sha256':sha256(card.read_bytes()).hexdigest()})
             if section==394:
                 hover=receipt.with_name('item-hover.png');assert window.compact_window.inventory_popup.panel.hover_card.grab().save(str(hover))
                 images.append({'file':image_name(hover),'sha256':sha256(hover.read_bytes()).hexdigest()})

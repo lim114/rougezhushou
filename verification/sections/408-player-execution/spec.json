@@ -1,0 +1,21 @@
+{
+  "title": "个人统计展示卡与主动本机图片导出",
+  "change": "可选择展示字段，将当前筛选后的个人统计生成本机展示卡，并主动保存为PNG；图片保留有效样本、缺失和适用范围说明。",
+  "limits": "展示卡不含账户、聊天、截图、对局身份或私人路径；统计或字段改变后旧卡失效，没有默认导出或上传。 P3/P2/P1仍未全部完成，识别优化最后。",
+  "criteria": [
+    "只有明确点击才生成或保存",
+    "分母、缺失和未知保留在图片中",
+    "图片覆盖需再次明确确认",
+    "来源失效清旧卡，恢复后重新生成"
+  ],
+  "test": "tests.test_player_statistics_card_408",
+  "native": "scripts/verify_player_statistics_card_window_408.py",
+  "next": "继续第409节：失与得提供物到换入候选的准确资料联动。",
+  "additional_tests": [
+    "tests.test_player_note_export_400",
+    "tests.test_player_statistics_cohorts_407"
+  ],
+  "unit_receipt": "verification/sections/408-player-checks/process.json",
+  "native_receipt": "verification/sections/408-player-window/window.json",
+  "native_process_receipt": "verification/sections/408-player-window-process/process.json"
+}
