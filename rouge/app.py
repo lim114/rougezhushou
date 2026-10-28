@@ -246,6 +246,12 @@ class MainWindow(QMainWindow):
     def make_capture_tab(self):
         tab = QWidget()
         layout = QVBoxLayout(tab)
+        from .player_overview import RunOverviewPanel
+        self.run_cards=RunOverviewPanel(self.run,
+            show_map=lambda:self.centralWidget().setCurrentWidget(self.exploration_map_tab),
+            show_operators=lambda:self.centralWidget().groups['干员计算'].setCurrentIndex(0) or self.centralWidget().setCurrentWidget(self.centralWidget().groups['干员计算']),
+            show_items=lambda:self.reference_panel('relics'))
+        layout.addWidget(self.run_cards)
         controls = QHBoxLayout()
         self.windows = QComboBox()
         controls.addWidget(self.windows,1)
@@ -1547,6 +1553,7 @@ class MainWindow(QMainWindow):
         return True
 
     def sync_run_config(self):
+        if hasattr(self,'run_cards'):self.run_cards.refresh()
         if hasattr(self,'battle_preview'):self.battle_preview.set_context(self.run.state.get('config',{}))
         difficulty=self.run.state.get('config',{}).get('difficulty')
         from .run_config import difficulty_value

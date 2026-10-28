@@ -1,11 +1,11 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第381节 + 五大玩家栏目与开发入口移出默认界面
+# 当前云端续接索引 · 第382节 + 本局概况卡与常用信息直达
 
-实际完成的改动：主界面收拢为本局、地图与节点、干员计算、资料查询、聊天五大栏目。原有准确资料跳转保持，搜索和阅读器实例保留；校准、原值资格与精度等开发页面不再占据默认导航。
+实际完成的改动：本局首页直接显示保密等级、分队、区域、已确认干员、已读收藏品及库存完整性；地图、干员和藏品提供直达入口。沿用本局记忆同步更新，未读信息明确显示尚未确认，不以0或完整库存冒充。
 
-[本节验收回执](verification/sections/381.json)。
+[本节验收回执](verification/sections/382.json)。
 
-已完成至381，后续382；本批状态 `PLAYER_SECTION381_PUBLISHED`。推进终点：390。下次定期全量395。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至382，后续383；本批状态 `PLAYER_SECTION382_PUBLICATION_PENDING`。推进终点：390。下次定期全量395。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 
