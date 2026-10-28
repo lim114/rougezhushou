@@ -104,6 +104,8 @@ class ReplayPanel(QWidget):
         self.detail.setReadOnly(True)
         layout.addWidget(self.detail, 1)
         self.tabs.addTab(page, '读取记录')
+        from .player_replay_nodes import NodeReplayPage
+        self.nodes=NodeReplayPage();self.tabs.addTab(self.nodes,'逐层节点')
         self.entries.currentItemChanged.connect(self.selected)
         from .player_replay_archive import attach_history
         attach_history(self,body)
@@ -117,6 +119,7 @@ class ReplayPanel(QWidget):
             self.snapshot=state
             return
         self.key = key
+        self.nodes.refresh(state)
         changed_run = self.snapshot is not None and self.snapshot.get('id') != state.get('id')
         self.snapshot = state
         old = self.entries.currentItem()

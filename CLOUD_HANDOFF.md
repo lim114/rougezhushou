@@ -1,11 +1,11 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第402节 + 手动新局前归档、历史与当前记录分开查看
+# 当前云端续接索引 · 第403节 + 按层回顾节点及明确记录的旧类型
 
-实际完成的改动：只有玩家手动开始新局时，先在本机保留上一局完整已读记录；可手动载入历史独立查看，读取历史不会恢复或覆盖当前对局。
+实际完成的改动：历史记录可按已读区域筛选，并将所选节点映射到当时明确绑定的固定模板；经过后变为空地的节点保留该条明确记载的原类型。
 
-[本节验收回执](verification/sections/402.json)。
+[本节验收回执](verification/sections/403.json)。
 
-已完成至402，后续403；本批状态 `PLAYER_SECTION402_PUBLISHED`。推进终点：410。下次定期全量410。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至403，后续404；本批状态 `PLAYER_SECTION403_PUBLICATION_PENDING`。推进终点：410。下次定期全量410。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 
