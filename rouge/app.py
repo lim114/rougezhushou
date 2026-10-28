@@ -243,6 +243,17 @@ class MainWindow(QMainWindow):
         self.sync_run_config()
         self.sync_run_relics()
         self.render_map()
+        from .player_context import ContextBar
+        self.context_bar=ContextBar(self.run,self.open_recent_content,self)
+        self.addToolBar(self.context_bar)
+
+    def open_recent_content(self):
+        from .player_context import recent_content
+        title=recent_content(self.run.state)
+        if not title:return
+        panel=self.node_catalog
+        panel.search.setText(title)
+        self.centralWidget().setCurrentWidget(panel)
 
     def make_capture_tab(self):
         tab = QWidget()
@@ -253,6 +264,12 @@ class MainWindow(QMainWindow):
             show_operators=lambda:self.centralWidget().groups['干员计算'].setCurrentIndex(0) or self.centralWidget().setCurrentWidget(self.centralWidget().groups['干员计算']),
             show_items=lambda:self.reference_panel('relics'))
         layout.addWidget(self.run_cards)
+        from .player_context import Fold
+        details=QWidget();details_layout=QVBoxLayout(details)
+        self.capture_details=Fold('连接与采样设置、读取详情',details)
+        layout.addWidget(self.capture_details)
+        layout.addStretch(1)
+        layout=details_layout
         controls = QHBoxLayout()
         self.windows = QComboBox()
         controls.addWidget(self.windows,1)
@@ -1555,6 +1572,7 @@ class MainWindow(QMainWindow):
 
     def sync_run_config(self):
         if hasattr(self,'run_cards'):self.run_cards.refresh()
+        if hasattr(self,'context_bar'):self.context_bar.refresh()
         if hasattr(self,'battle_preview'):self.battle_preview.set_context(self.run.state.get('config',{}))
         difficulty=self.run.state.get('config',{}).get('difficulty')
         from .run_config import difficulty_value

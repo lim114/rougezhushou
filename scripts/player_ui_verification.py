@@ -12,6 +12,7 @@ sys.path.insert(0,str(ROOT))
 def source_hashes():
     paths=list((ROOT/'rouge').glob('*.py'))+[Path(__file__).resolve(),ROOT/'scripts/verify_full_available.py']
     paths+=list((ROOT/'tests').glob('test_player*py'))
+    paths+=list((ROOT/'scripts').glob('verify_player*py'))
     return {p.relative_to(ROOT).as_posix():sha256(p.read_bytes()).hexdigest()for p in sorted(set(paths))}
 
 def run(section,receipt):
@@ -54,6 +55,8 @@ def run(section,receipt):
             player_acceptance.check(section,window,gui,require)
             require(all(x==0 for x in calls.values()),'all_seven_external_operations_zero')
             require(window.run.state==state,'feature_does_not_reset_run')
+            from PySide6.QtTest import QTest
+            QTest.qWait(120);gui.processEvents()
             shot=receipt.with_suffix('.png');assert window.grab().save(str(shot))
             images.append({'file':shot.relative_to(ROOT).as_posix(),'sha256':sha256(shot.read_bytes()).hexdigest()})
             window.close();gui.processEvents();require(not window.isVisible(),'normal_owned_window_close');window=None

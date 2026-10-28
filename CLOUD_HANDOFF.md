@@ -1,11 +1,11 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第384节 + 资料查询工具收拢为相关查询菜单
+# 当前云端续接索引 · 第385节 + 场景快捷查询与可收起的采样设置
 
-实际完成的改动：资料页面将敌人反查、地形反查、物品用途、取得来源和特殊规则等散落按钮合并为一个相关查询菜单。菜单沿用原按钮的适用性与可用状态，保留准确跳转，默认版面留给搜索、条目与玩家说明。
+实际完成的改动：各页常驻最近读取的节点内容与直达入口，明确这是本局最近记录而非当前位置；本局首页保留概况卡，连接采样及详细读取收起按需展开。参照录像采用场景关联与减少重复操作，完整录像回顾及后续计划单独留证。
 
-[本节验收回执](verification/sections/384.json)。
+[本节验收回执](verification/sections/385.json)。
 
-已完成至384，后续385；本批状态 `PLAYER_SECTION384_PUBLISHED`。推进终点：390。下次定期全量395。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至385，后续386；本批状态 `PLAYER_SECTION385_PUBLICATION_PENDING`。推进终点：390。下次定期全量395。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点只列来源覆盖的候选与条件，不要求生成概率。
 

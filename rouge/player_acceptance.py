@@ -1,5 +1,15 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==385:
+        ws=window.centralWidget();ws.setCurrentIndex(0);gui.processEvents()
+        require(window.context_bar.isVisible(),'context_shortcuts_visible_across_pages')
+        require(not window.context_bar.open_button.isEnabled(),'no_fabricated_recent_content_link')
+        require(not window.capture_details.content.isVisible(),'technical_capture_details_collapsed')
+        require(window.capture_details.toggle.visibleRegion().boundingRect().height()>0,'capture_settings_toggle_in_viewport')
+        window.capture_details.toggle.click();gui.processEvents()
+        require(window.windows.isVisible(),'connection_settings_expand')
+        window.capture_details.toggle.click();gui.processEvents()
+        require(window.run_cards.isVisible(),'run_facts_remain_visible')
     if section==384:
         panel=window.reference_panel('stages');gui.processEvents();menu=panel.query_menu
         actions=menu.visible_actions();require(any('敌人' in a.text()for a in actions),'enemy_lookup_available_in_query_menu')
