@@ -504,6 +504,8 @@ ADDITIONAL_MODULES += ('tests.test_player_statistics_cohorts_407',)
 
 ADDITIONAL_MODULES += ('tests.test_player_statistics_card_408',)
 
+ADDITIONAL_MODULES += ('tests.test_player_exchange_sources_409',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

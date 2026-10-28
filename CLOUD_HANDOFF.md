@@ -1,11 +1,11 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第408节 + 个人统计展示卡与主动本机图片导出
+# 当前云端续接索引 · 第409节 + 失与得提供物到换入候选的准确资料联动
 
-实际完成的改动：可选择展示字段，将当前筛选后的个人统计生成本机展示卡，并主动保存为PNG；图片保留有效样本、缺失和适用范围说明。
+实际完成的改动：从藏品及零件入口查看路标明确记载的提供物与换入集合对应关系，候选配图并可打开准确输出集合的完整来源与统计。
 
-[本节验收回执](verification/sections/408.json)。
+[本节验收回执](verification/sections/409.json)。
 
-已完成至408，后续409；本批状态 `PLAYER_SECTION408_PUBLISHED`。推进终点：410。下次定期全量410。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至409，后续410；本批状态 `PLAYER_SECTION409_PUBLICATION_PENDING`。推进终点：410。下次定期全量410。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 

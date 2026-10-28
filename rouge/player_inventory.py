@@ -29,6 +29,7 @@ def inventory_rows(state,query='',held_only=True,*,rarity=None,exchange=None,kin
 class InventoryPanel(QWidget):
     openReference=Signal(str)
     openPoolReference=Signal(str,str)
+    openExchangeReference=Signal(str,str)
     def __init__(self,run,public_cache=None):
         super().__init__();self.run=run;self.rows={};self.public_cache=Path(public_cache)if public_cache is not None else None;self.source_stamp=None;self.source_signature=None;self.source_index=None;self.render_key=None;body=QVBoxLayout(self)
         bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('搜索藏品名称或效果，如攻击、生命')
@@ -44,6 +45,9 @@ class InventoryPanel(QWidget):
         self.entries=QListWidget();self.entries.setIconSize(QSize(42,42));body.addWidget(self.entries,2)
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1)
         self.reference_button=QPushButton('查看取得来源与相关查询');body.addWidget(self.reference_button)
+        self.exchange_button=QPushButton('查看此提供物对应的换入候选');body.addWidget(self.exchange_button);self.exchange_button.setVisible(False)
+        from .player_exchange_view import request_inventory
+        self.exchange_button.clicked.connect(lambda:request_inventory(self))
         self.reference_button.clicked.connect(self.open_selected);self.entries.currentItemChanged.connect(self.selected)
         from .player_item_hover import ItemHoverCard
         self.hover_card=ItemHoverCard(self);self.hover_card.poolRequested.connect(self.openPoolReference)
@@ -86,6 +90,8 @@ class InventoryPanel(QWidget):
         if render_key!=self.render_key:self.render_rows(rows,selected);self.render_key=render_key
         if self.hover_card.identity not in self.rows:self.hover_card.dismiss()
         elif self.hover_card.isVisible():self.hover_card.install(self.rows[self.hover_card.identity],self.version.currentData(),self.source_index,self.source_signature)
+        from .player_exchange_view import update_inventory_button
+        update_inventory_button(self)
         complete=self.run.state.get('inventory_verified')is True
         self.status.setText('资料暂不可用，已清除旧列表。'if rows is None else f'找到{len(rows)}件。'+('本局收藏品已核对完整。'if complete else'本局尚未核对读全；未列出不代表没有。')+' 悬停查看所属池，点击阅读效果。说明基准：国服2026年10月16日；不是当前DLC完整目录或已生效证明。')
     def render_rows(self,rows,selected):
@@ -101,6 +107,8 @@ class InventoryPanel(QWidget):
     def selected(self,*_):
         item=self.entries.currentItem();row=self.rows.get(item.data(Qt.ItemDataRole.UserRole))if item else None
         self.reference_button.setEnabled(row is not None)
+        from .player_exchange_view import update_inventory_button
+        update_inventory_button(self)
         if not row:self.detail.clear();return
         exchange='资料允许交换'if row['exchange']is True else'资料不允许交换'if row['exchange']is False else'交换资格未确认'
         text=row['name']+' · '+RARITIES.get(row['rarity'],'未分档')+'\n\n效果说明\n'+(row['usage']or'暂无说明')+'\n\n'+exchange+'；实际能否交换仍需对应事件条件。'

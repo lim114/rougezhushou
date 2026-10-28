@@ -44,7 +44,7 @@ class CompactAssistant(QDialog):
         overview=QWidget();layout=QVBoxLayout(overview);self.context=QLabel();self.context.setWordWrap(True);layout.addWidget(self.context);grid=QGridLayout();self.cards={}
         for i,name in enumerate(overview_facts(owner.run.state)):
             value=QLabel();value.setWordWrap(True);self.cards[name]=value;grid.addWidget(QLabel(name),i//2*2,i%2);grid.addWidget(value,i//2*2+1,i%2)
-        layout.addLayout(grid);self.scene_button=QPushButton('最近关卡与敌人资料');self.scene_button.clicked.connect(self.open_scene_battle);layout.addWidget(self.scene_button);self.scene_popup=None;self.replay_popup=None;self.replay_button=QPushButton('查看本局读取记录');self.replay_button.clicked.connect(self.open_replay);layout.addWidget(self.replay_button);self.team_popup=None;self.team_button=QPushButton('本局队伍 · 职业与培养');self.team_button.clicked.connect(self.open_team);layout.addWidget(self.team_button);self.overview_popup=ToolPopover('本局概况',overview,self);self.overview_popup.resize(460,350)
+        layout.addLayout(grid);self.scene_button=QPushButton('最近关卡与敌人资料');self.scene_button.clicked.connect(self.open_scene_battle);layout.addWidget(self.scene_button);self.scene_popup=None;self.exchange_popup=None;self.replay_popup=None;self.replay_button=QPushButton('查看本局读取记录');self.replay_button.clicked.connect(self.open_replay);layout.addWidget(self.replay_button);self.team_popup=None;self.team_button=QPushButton('本局队伍 · 职业与培养');self.team_button.clicked.connect(self.open_team);layout.addWidget(self.team_button);self.overview_popup=ToolPopover('本局概况',overview,self);self.overview_popup.resize(460,350)
         settings=QWidget();layout=QVBoxLayout(settings);self.pin=QCheckBox('保持置顶');self.pin.setChecked(True);self.pin.toggled.connect(self.set_pinned);layout.addWidget(self.pin)
         self.expand=QPushButton('展开完整助手');self.expand.clicked.connect(self.open_full);layout.addWidget(self.expand)
         from .player_hotkey import GlobalHotkey,load_preferences,DEFAULT
@@ -118,11 +118,23 @@ class CompactAssistant(QDialog):
         for key,value in overview_facts(self.owner.run.state).items():self.cards[key].setText(value)
         self.buttons['场景笔记'].setEnabled(bool(title));self.setToolTip(self.context.text())
         if self.inventory_popup:
-            self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh()
+            self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();self.inventory_popup.parts.refresh_exchange()
         if self.map_popup:self.map_popup.panel.refresh()
         if self.scene_popup:self.scene_popup.panel.refresh()
         if self.team_popup:self.team_popup.panel.refresh()
         if self.replay_popup:self.replay_popup.panel.refresh()
+        if self.exchange_popup and self.inventory_popup:
+            source=self.inventory_popup.panel
+            self.exchange_popup.panel.refresh_source(source.source_index.data if source.source_index else None,source.source_signature)
+    def open_exchange(self,version,identity):
+        if self.inventory_popup is None:self.open_inventory()
+        source=self.inventory_popup.panel;source.reload_sources()
+        if self.exchange_popup is None:
+            from .player_exchange_view import ExchangePanel
+            panel=ExchangePanel();panel.openPool.connect(lambda version,identity:self.open_owner_dialog(lambda:self.owner.open_public_pool_reference(version,identity),'public_archive'))
+            self.exchange_popup=ToolPopover('失与得 · 提供物与换入候选',panel,self);self.exchange_popup.panel=panel;self.exchange_popup.resize(830,670)
+        self.exchange_popup.panel.bind(source.source_index.data if source.source_index else None,version,identity,source.source_signature)
+        return self.present(self.exchange_popup)
     def open_replay(self):
         if self.replay_popup is None:
             from .player_replay import ReplayPanel
@@ -158,10 +170,14 @@ class CompactAssistant(QDialog):
             from .player_parts import PartsPanel
             from .player_tools import ToolsPanel
             pages=QTabWidget();parts=PartsPanel(self.owner.run);tools=ToolsPanel(self.owner.run)
+            from .player_exchange_view import related_exchanges
+            panel.openExchangeReference.connect(self.open_exchange)
+            parts.exchange_lookup=lambda identity:bool(panel.source_index and related_exchanges(panel.source_index.data,panel.version.currentData(),identity))
+            parts.exchangeRequested.connect(lambda identity:self.open_exchange(panel.version.currentData(),identity))
             pages.addTab(panel,'收藏品');pages.addTab(tools,'战术道具');pages.addTab(parts,'零件箱资料')
             self.inventory_popup=ToolPopover('收藏品、战术道具与零件',pages,self)
             self.inventory_popup.panel=panel;self.inventory_popup.pages=pages;self.inventory_popup.parts=parts;self.inventory_popup.tools=tools;self.inventory_popup.resize(840,650)
-        self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();return self.present(self.inventory_popup)
+        self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();self.inventory_popup.parts.refresh_exchange();return self.present(self.inventory_popup)
     def open_map(self):
         if self.map_popup is None:
             panel=MapPanel(self.owner);self.map_popup=ToolPopover('探索地图与节点',panel,self);self.map_popup.panel=panel;self.map_popup.resize(1100,650);self.map_popup.setObjectName('videoMapWindow');self.map_popup.setStyleSheet('#videoMapWindow{background:#f5f5f7;border:1px solid #bbc1c5;border-radius:12px;} #videoMapWindow QLabel{color:#25332f;} #videoMapWindow QPushButton,#videoMapWindow QComboBox{color:#263630;background:#e8ebea;border:1px solid #bbc6c1;border-radius:7px;padding:5px;} #videoMapWindow QTabBar{background:#f5f5f7;border:0;} #videoMapWindow QTabBar::tab{color:#35403c;background:#e4e7e6;border:0;border-radius:10px;padding:6px 12px;} #videoMapWindow QTabBar::tab:selected{background:#2c3533;color:white;} #videoMapWindow QPlainTextEdit,#videoMapWindow QTreeWidget{color:#28332e;background:#fff;border:1px solid #d2d9d5;}')

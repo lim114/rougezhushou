@@ -186,6 +186,7 @@ class MainWindow(QMainWindow):
         from .player_inventory import InventoryPanel
         self.inventory_panel=InventoryPanel(self.run,ROOT/'.local/public-reference/archive.json')
         self.inventory_panel.openPoolReference.connect(self.open_public_pool_reference)
+        self.inventory_panel.openExchangeReference.connect(lambda version,identity:(self.show_compact(),self.compact_window.open_exchange(version,identity)))
         self.inventory_panel.openReference.connect(self.open_item_reference)
         tabs.addTab(self.inventory_panel,'本局藏品')
         from .offline_tools_view import OfflineToolsPanel
