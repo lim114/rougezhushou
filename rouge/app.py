@@ -141,7 +141,8 @@ class MainWindow(QMainWindow):
         self.events.chunk.connect(self.chat_chunk)
         self.events.chat_done.connect(self.chat_finished)
         self.events.desktop_state.connect(self.desktop_state_received)
-        tabs = QTabWidget()
+        from .player_workspace import PlayerWorkspace
+        tabs = PlayerWorkspace(developer_tools=include_historical_route_diagnostics)
         self.setCentralWidget(tabs)
         tabs.addTab(self.make_capture_tab(), '采样测试')
         tabs.addTab(self.make_damage_tab(), '伤害测试')
@@ -172,7 +173,7 @@ class MainWindow(QMainWindow):
             self.common_reference_panels[name]=panel
             for category in categories:self.common_reference_categories[category]=name
             tabs.addTab(panel,label)
-        tabs.currentChanged.connect(self._common_page_changed)
+        tabs.activePageChanged.connect(self._common_page_changed)
         from .offline_tools_view import OfflineToolsPanel
         self.offline_tools=OfflineToolsPanel(include_historical_route_diagnostics=include_historical_route_diagnostics)
         self.offline_tools.mapNodeSelected.connect(self.show_catalog_map_node)

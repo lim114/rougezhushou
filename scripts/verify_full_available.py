@@ -452,6 +452,8 @@ ADDITIONAL_MODULES += ('tests.test_current_guest_crystals_379', 'tests.test_curr
 
 ADDITIONAL_MODULES += ('tests.test_current_guest_material_380', 'tests.test_current_guest_material_view_380')
 
+ADDITIONAL_MODULES += ('tests.test_player_workspace_381',)
+
 if __name__ == '__main__':
     sys.exit(main())
 
