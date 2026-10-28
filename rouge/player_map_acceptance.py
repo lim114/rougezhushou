@@ -2,7 +2,8 @@
 from copy import deepcopy
 from pathlib import Path
 import json
-from PySide6.QtCore import Qt,QPoint
+from PySide6.QtCore import Qt,QPoint,QPointF,QEvent
+from PySide6.QtGui import QMouseEvent
 from PySide6.QtTest import QTest
 
 def fixtures():
@@ -18,6 +19,9 @@ def fixtures():
     return graphs,nodes[0]['id'],nodes[1]['id'],nodes[2]['id']
 
 def check(window,gui,require):
+    def owned_move(view,point):
+        event=QMouseEvent(QEvent.Type.MouseMove,QPointF(point),QPointF(view.mapToGlobal(point)),Qt.MouseButton.NoButton,Qt.MouseButton.NoButton,Qt.KeyboardModifier.NoModifier)
+        gui.sendEvent(view,event)
     before=deepcopy(window.run.state);graphs,candidate,passed,known=fixtures()
     window.run.state['maps']={g['zone_id']:g for g in graphs};window.show_compact();bar=window.compact_window;bar.open_map();gui.processEvents();mp=bar.map_popup.panel
     require(len(mp.type_buttons)==5,'video_has_five_map_type_shortcuts')
@@ -31,9 +35,9 @@ def check(window,gui,require):
     old_selection=mp.view.selected
     # Native show/layout can settle during the first wait. Derive the node point
     # afterwards, so a stale pre-layout coordinate cannot hover a different node.
-    QTest.mouseMove(mp.view,QPoint(3,3));QTest.qWait(180);gui.processEvents()
-    point=mp.view._positions()[1][candidate].toPoint();QTest.mouseMove(mp.view,point);QTest.qWait(450);gui.processEvents()
-    card=mp.hover_card;require(card.isVisible(),'real_mouse_hover_opens_node_card')
+    QTest.qWait(180);gui.processEvents();owned_move(mp.view,QPoint(3,3))
+    point=mp.view._positions()[1][candidate].toPoint();owned_move(mp.view,point);mp.hover_timer.stop();mp.hover_timer.timeout.emit();gui.processEvents()
+    card=mp.hover_card;require(card.isVisible(),'owned_mouse_hover_opens_node_card')
     require(mp.view.selected==old_selection and not mp.drawer.isVisible(),'hover_does_not_change_selection_or_force_drawer')
     require(set(card.type_values)=={'诡意行商','不期而遇'},'hover_uses_exact_node_candidate_types')
     require('不是本局概率'in card.notice.text()and'当前DLC'in card.notice.text(),'historical_rate_scope_visible_in_hover')
@@ -47,7 +51,7 @@ def check(window,gui,require):
     require('https://'not in mp.detail.toPlainText()and 'community_group_'not in mp.detail.toPlainText(),'map_event_reading_uses_player_chinese_not_raw_sources')
     mp.hover_timer.stop();mp.leave_timer.stop();point=mp.view._positions()[1][candidate].toPoint();mp.hover_pending=(candidate,mp.view.mapToGlobal(point));mp.show_hover();gui.processEvents()
     require(card.isVisible(),'card_reopens_after_drawer_layout_change');card.pin.click();binding=card.binding
-    other=next(n['id']for n in graphs[0]['nodes']if n['id']!=candidate);QTest.mouseMove(mp.view,mp.view._positions()[1][other].toPoint());QTest.qWait(300);gui.processEvents()
+    other=next(n['id']for n in graphs[0]['nodes']if n['id']!=candidate);owned_move(mp.view,mp.view._positions()[1][other].toPoint());mp.hover_timer.stop();mp.hover_timer.timeout.emit();gui.processEvents()
     require(card.isVisible()and card.pinned and card.binding==binding,'pinned_hover_not_rebound_by_neighbor')
     mp.refresh();require(card.pinned and card.binding==binding,'same_map_refresh_keeps_pinned_reading')
     mp.floors.setCurrentIndex(1);gui.processEvents();require(not card.isVisible()and not card.pinned,'floor_change_expires_pinned_card')

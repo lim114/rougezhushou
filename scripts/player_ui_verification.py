@@ -7,6 +7,10 @@ from unittest.mock import patch
 from copy import deepcopy
 import json,os,sys,traceback
 ROOT=Path(__file__).resolve().parents[1]
+
+def image_name(path):
+    return path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else str(path)
+
 sys.path.insert(0,str(ROOT))
 
 def source_hashes():
@@ -66,24 +70,24 @@ def run(section,receipt):
             require(window.run.state==state,'feature_does_not_reset_run')
             from PySide6.QtTest import QTest
             QTest.qWait(120);gui.processEvents()
-            shot=receipt.with_suffix('.png');shot_target=window.compact_window.inventory_popup if section==394 else window.compact_window.settings_popup if section==393 else window.compact_window.map_popup if section==392 else window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390,391) else window
+            shot=receipt.with_suffix('.png');shot_target=window.compact_window.scene_popup if section==395 else window.compact_window.inventory_popup if section==394 else window.compact_window.settings_popup if section==393 else window.compact_window.map_popup if section==392 else window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390,391) else window
             assert shot_target.grab().save(str(shot))
-            images.append({'file':shot.relative_to(ROOT).as_posix(),'sha256':sha256(shot.read_bytes()).hexdigest()})
+            images.append({'file':image_name(shot),'sha256':sha256(shot.read_bytes()).hexdigest()})
             if section==394:
                 hover=receipt.with_name('item-hover.png');assert window.compact_window.inventory_popup.panel.hover_card.grab().save(str(hover))
-                images.append({'file':hover.relative_to(ROOT).as_posix(),'sha256':sha256(hover.read_bytes()).hexdigest()})
+                images.append({'file':image_name(hover),'sha256':sha256(hover.read_bytes()).hexdigest()})
             if section==392:
                 hover=receipt.with_name('node-hover.png');assert window.compact_window.map_popup.panel.hover_card.grab().save(str(hover))
-                images.append({'file':hover.relative_to(ROOT).as_posix(),'sha256':sha256(hover.read_bytes()).hexdigest()})
+                images.append({'file':image_name(hover),'sha256':sha256(hover.read_bytes()).hexdigest()})
             if section==391:
                 detail=receipt.with_name('public-reference.png');assert window.public_archive.grab().save(str(detail))
-                images.append({'file':detail.relative_to(ROOT).as_posix(),'sha256':sha256(detail.read_bytes()).hexdigest()})
+                images.append({'file':image_name(detail),'sha256':sha256(detail.read_bytes()).hexdigest()})
             if section==391:
                 preview=receipt.with_name('map-preview.png');assert window.compact_window.map_popup.grab().save(str(preview))
-                images.append({'file':preview.relative_to(ROOT).as_posix(),'sha256':sha256(preview.read_bytes()).hexdigest()})
+                images.append({'file':image_name(preview),'sha256':sha256(preview.read_bytes()).hexdigest()})
                 window.compact_window.map_popup.panel.details_toggle.setChecked(True);gui.processEvents()
                 drawer=receipt.with_name('map-node-details.png');assert window.compact_window.map_popup.grab().save(str(drawer))
-                images.append({'file':drawer.relative_to(ROOT).as_posix(),'sha256':sha256(drawer.read_bytes()).hexdigest()})
+                images.append({'file':image_name(drawer),'sha256':sha256(drawer.read_bytes()).hexdigest()})
             window.close();gui.processEvents();require(not window.isVisible(),'normal_owned_window_close')
             if section==393:require(window.compact_window.hotkey.binding is None,'owner_exit_unregisters_global_hotkey')
             window=None
@@ -92,7 +96,7 @@ def run(section,receipt):
     finally:
         if window is not None:window.close();gui.processEvents()
     after=source_hashes();passed=failure is None and before==after
-    result={'section':section,'passed':passed,'checks':checks,'unique_checks':len(checks),'qpa':gui.platformName(),
+    result={'section':section,'passed':passed,'checks':checks,'unique_checks':len(checks),'qpa':gui.platformName(),'process_id':os.getpid(),'verification_window_closed':window is None,'qt_validation_mode':'native processEvents; real Python component exit observed by outer retained Popen',
         'source_sha256_before':before,'source_sha256_after':after,'source_drift':before!=after,
         'external_operation_attempts':calls,'screenshots':images,'failure':failure,
         'temporary_state_only':True,'private_contents_read_copied_or_restored':False,

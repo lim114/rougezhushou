@@ -1,5 +1,8 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==395:
+        from .player_scene_acceptance import check as check_scene
+        check_scene(window,gui,require)
     if section==394:
         from .player_item_acceptance import check as check_item_sources
         check_item_sources(window,gui,require)
@@ -155,8 +158,8 @@ def check(section,window,gui,require):
         window.run_cards.map_button.click();gui.processEvents()
         require(ws.currentWidget()is window.exploration_map_tab,'home_map_shortcut')
         window.run_cards.items_button.click();gui.processEvents()
-        require(ws.currentWidget()is window.reference_panel('relics',activate=False),'home_items_shortcut')
-        ws.setCurrentIndex(0);gui.processEvents()
+        require(ws.currentWidget()is window.inventory_panel,'home_items_shortcut')
+        ws.groups['本局'].setCurrentIndex(0);ws.setCurrentIndex(0);gui.processEvents()
         require(window.run_cards.isVisible(),'overview_cards_visible_on_home')
     if section==381:
         from .player_workspace import DEVELOPER_PAGES

@@ -1,5 +1,6 @@
 """Plain native test UI. Visual polish intentionally deferred."""
 import json
+import os
 import sys
 import threading
 import time
@@ -95,12 +96,16 @@ class MainWindow(QMainWindow):
         self.offline_tools.select_query('calibration','explosion-values')
         self.centralWidget().setCurrentWidget(self.offline_tools)
 
-    def __init__(self, *, include_historical_route_diagnostics=False):
+    def __init__(self, *, include_historical_route_diagnostics=False, diagnostic_layout=None):
+        if diagnostic_layout is not None and type(diagnostic_layout) is not bool:
+            raise ValueError('诊断布局需要明确的开关。')
         super().__init__()
+        self.diagnostic_layout=(os.environ.get('ROUGE_DIAGNOSTIC_LAYOUT')=='1' if diagnostic_layout is None else diagnostic_layout)
         from .information_scope import require_query_scope
         require_query_scope('exploration',None,include_historical_route_diagnostics)
         self.include_historical_route_diagnostics=include_historical_route_diagnostics
         self.setWindowTitle('黑流树海助手 · 局外计算与节点测试')
+        if self.diagnostic_layout:self.setWindowTitle(self.windowTitle()+' · 历史布局诊断')
         self.resize(1050, 830)
         self.capture = GameCapture()
         self.reader = ScreenReader()
@@ -142,7 +147,10 @@ class MainWindow(QMainWindow):
         self.events.chat_done.connect(self.chat_finished)
         self.events.desktop_state.connect(self.desktop_state_received)
         from .player_workspace import PlayerWorkspace
-        tabs = PlayerWorkspace(developer_tools=include_historical_route_diagnostics)
+        if self.diagnostic_layout:
+            from .diagnostic_workspace import DiagnosticWorkspace
+            tabs=DiagnosticWorkspace()
+        else:tabs = PlayerWorkspace(developer_tools=include_historical_route_diagnostics)
         self.setCentralWidget(tabs)
         tabs.addTab(self.make_capture_tab(), '采样测试')
         tabs.addTab(self.make_damage_tab(), '伤害测试')
@@ -265,6 +273,19 @@ class MainWindow(QMainWindow):
         self.context_bar.addWidget(self.back_button)
         from PySide6.QtGui import QShortcut,QKeySequence
         self.back_shortcut=QShortcut(QKeySequence('Alt+Left'),self);self.back_shortcut.activated.connect(tabs.go_back)
+        if self.diagnostic_layout:
+            from .player_action_menu import ButtonMenu
+            self.context_bar.hide();self.run_cards.hide();self.capture_details.toggle.setChecked(True);self.damage_tools_fold.toggle.setChecked(True)
+            for menu in self.findChildren(ButtonMenu):menu.expose_original_controls()
+            from .diagnostic_workspace import record_layout
+            record_layout(self,'constructed')
+
+    def show(self):
+        returned=super().show()
+        if self.diagnostic_layout:
+            from .diagnostic_workspace import record_layout
+            record_layout(self,'show')
+        return returned
 
     def show_compact(self):
         from .player_compact import CompactAssistant
@@ -330,7 +351,7 @@ class MainWindow(QMainWindow):
         from .player_overview import RunOverviewPanel
         self.run_cards=RunOverviewPanel(self.run,
             show_map=lambda:self.centralWidget().setCurrentWidget(self.exploration_map_tab),
-            show_operators=lambda:self.centralWidget().groups['干员计算'].setCurrentIndex(0) or self.centralWidget().setCurrentWidget(self.centralWidget().groups['干员计算']),
+            show_operators=lambda:self.centralWidget().show_group('干员计算'),
             show_items=lambda:self.centralWidget().setCurrentWidget(self.inventory_panel))
         layout.addWidget(self.run_cards)
         from .player_context import Fold

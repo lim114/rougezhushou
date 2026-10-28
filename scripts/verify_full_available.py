@@ -476,6 +476,7 @@ ADDITIONAL_MODULES += ('tests.test_player_reference_391',)
 ADDITIONAL_MODULES += ('tests.test_player_map_interaction_392',)
 ADDITIONAL_MODULES += ('tests.test_player_hotkey_393',)
 ADDITIONAL_MODULES += ('tests.test_player_item_sources_394',)
+ADDITIONAL_MODULES += ('tests.test_player_scene_battle_395',)
 
 if __name__ == '__main__':
     sys.exit(main())

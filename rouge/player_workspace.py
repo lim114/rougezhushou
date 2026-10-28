@@ -26,6 +26,8 @@ class PlayerWorkspace(QTabWidget):
         self.developer_dialog=QDialog(self);self.developer_dialog.setWindowTitle('开发核对工具')
         self.developer_dialog.resize(1000,760);self.developer_tabs=QTabWidget()
         QVBoxLayout(self.developer_dialog).addWidget(self.developer_tabs)
+        self.developer_tabs.currentChanged.connect(self._announce)
+        self.developer_dialog.finished.connect(self._announce)
         for name in GROUPS:
             tabs=QTabWidget();tabs.setAccessibleName(name+'内容')
             self.groups[name]=tabs;super().addTab(tabs,name)
@@ -43,6 +45,7 @@ class PlayerWorkspace(QTabWidget):
 
     def currentWidget(self):
         """Return the selected reader for callers that route exact content."""
+        if self.developer_tools and self.developer_dialog.isVisible():return self.developer_tabs.currentWidget()
         group=super().currentWidget()
         page=group.currentWidget() if isinstance(group,QTabWidget) else group
         return self.container_leaf.get(page,page)
@@ -55,12 +58,19 @@ class PlayerWorkspace(QTabWidget):
             group,_=self.pages[page]
             if group=='developer':
                 if not self.developer_tools:return False
-                self.developer_tabs.setCurrentWidget(page);self.developer_dialog.show();return True
+                self.developer_tabs.setCurrentWidget(page);self.developer_dialog.show();self._announce();return True
+            self.developer_dialog.hide()
             self.groups[group].setCurrentWidget(page)
             super().setCurrentWidget(self.groups[group]);self._announce();return True
         if page in self.groups.values():
+            self.developer_dialog.hide()
             super().setCurrentWidget(page);return True
         return False
+
+    def show_group(self,name):
+        group=self.groups.get(name)
+        if group is None:return False
+        group.setCurrentIndex(0);return self.setCurrentWidget(group)
 
     def combine_map_and_node(self,map_page,node_page):
         """One physical workspace, retaining exact old reader routing aliases."""

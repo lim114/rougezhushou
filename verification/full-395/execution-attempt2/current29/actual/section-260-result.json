@@ -1,0 +1,193 @@
+{
+  "snapshot": {
+    "snapshot_id": "占用算术演示",
+    "source": "合成声明，非本局",
+    "capacity": 5,
+    "inventory_complete": true,
+    "items": [
+      {
+        "instance_id": "a",
+        "item_id": "rogue_6_scrap_M_01",
+        "slot_units": 3,
+        "source": "字面量算术演示的独立占用声明，非游戏测量"
+      },
+      {
+        "instance_id": "b",
+        "item_id": "rogue_6_scrap_M_01",
+        "slot_units": 2,
+        "source": "字面量算术演示的独立占用声明，非游戏测量"
+      },
+      {
+        "instance_id": "c",
+        "item_id": "rogue_6_scrap_M_01",
+        "slot_units": 2,
+        "source": "字面量算术演示的独立占用声明，非游戏测量"
+      }
+    ]
+  },
+  "protected_ids": [
+    "a"
+  ],
+  "initial": {
+    "known_occupied_lower_bound": 7,
+    "declared_occupied": 7,
+    "capacity": 5,
+    "complete_occupancy_known": true,
+    "declared_overloaded": true,
+    "free_units": -2,
+    "minimum_release_units": 2,
+    "documented_action_gate": "blocked_by_declared_overload",
+    "actual_game_action_allowed": null,
+    "pursuit_exempt_from_overload": false
+  },
+  "minimum_release": {
+    "minimum_discarded_instances": 1,
+    "candidate_discard_sets": [
+      {
+        "instance_ids": [
+          "b"
+        ],
+        "released_units": 2
+      },
+      {
+        "instance_ids": [
+          "c"
+        ],
+        "released_units": 2
+      }
+    ],
+    "complete_candidate_enumeration": true,
+    "search_visits": 2,
+    "item_value_or_utility_ranked": false,
+    "source": "finite mathematics on explicit slot declarations only",
+    "status": "minimal_instance_count_proved"
+  },
+  "proposals": [
+    {
+      "id": "保留a丢弃b",
+      "source": "局外假设方案",
+      "discard_ids": [
+        "b"
+      ],
+      "received_items": [],
+      "after_discard": {
+        "known_occupied_lower_bound": 5,
+        "declared_occupied": 5,
+        "capacity": 5,
+        "complete_occupancy_known": true,
+        "declared_overloaded": false,
+        "free_units": 0,
+        "minimum_release_units": 0,
+        "documented_action_gate": "overload_condition_not_blocking",
+        "actual_game_action_allowed": null,
+        "pursuit_exempt_from_overload": false
+      },
+      "after_receive": {
+        "known_occupied_lower_bound": 5,
+        "declared_occupied": 5,
+        "capacity": 5,
+        "complete_occupancy_known": true,
+        "declared_overloaded": false,
+        "free_units": 0,
+        "minimum_release_units": 0,
+        "documented_action_gate": "overload_condition_not_blocking",
+        "actual_game_action_allowed": null,
+        "pursuit_exempt_from_overload": false
+      },
+      "actual_discard_performed": null,
+      "actual_rewards_received": null,
+      "actual_reward_interface_allows_discard": null,
+      "minimum_release": {
+        "minimum_discarded_instances": 0,
+        "candidate_discard_sets": [
+          {
+            "instance_ids": [],
+            "released_units": 0
+          }
+        ],
+        "complete_candidate_enumeration": true,
+        "search_visits": 0,
+        "item_value_or_utility_ranked": false,
+        "source": "finite mathematics on explicit slot declarations only",
+        "status": "no_release_required"
+      }
+    },
+    {
+      "id": "丢弃bc并声明领取d",
+      "source": "局外假设方案",
+      "discard_ids": [
+        "b",
+        "c"
+      ],
+      "received_items": [
+        {
+          "instance_id": "d",
+          "item_id": "rogue_6_scrap_M_01",
+          "slot_units": 1,
+          "source": "字面量算术演示的独立占用声明，非游戏测量"
+        }
+      ],
+      "after_discard": {
+        "known_occupied_lower_bound": 3,
+        "declared_occupied": 3,
+        "capacity": 5,
+        "complete_occupancy_known": true,
+        "declared_overloaded": false,
+        "free_units": 2,
+        "minimum_release_units": 0,
+        "documented_action_gate": "overload_condition_not_blocking",
+        "actual_game_action_allowed": null,
+        "pursuit_exempt_from_overload": false
+      },
+      "after_receive": {
+        "known_occupied_lower_bound": 4,
+        "declared_occupied": 4,
+        "capacity": 5,
+        "complete_occupancy_known": true,
+        "declared_overloaded": false,
+        "free_units": 1,
+        "minimum_release_units": 0,
+        "documented_action_gate": "overload_condition_not_blocking",
+        "actual_game_action_allowed": null,
+        "pursuit_exempt_from_overload": false
+      },
+      "actual_discard_performed": null,
+      "actual_rewards_received": null,
+      "actual_reward_interface_allows_discard": null,
+      "minimum_release": {
+        "minimum_discarded_instances": 0,
+        "candidate_discard_sets": [
+          {
+            "instance_ids": [],
+            "released_units": 0
+          }
+        ],
+        "complete_candidate_enumeration": true,
+        "search_visits": 0,
+        "item_value_or_utility_ranked": false,
+        "source": "finite mathematics on explicit slot declarations only",
+        "status": "no_release_required"
+      }
+    }
+  ],
+  "native_inventory_or_capacity_verified": false,
+  "inventory_updated": false,
+  "source_rule": "PRTS固定433770：零件箱具有储存上限。当零件箱超载时，你将无法行动（包括进入追猎）。此时你需要整理零件箱（例如丢弃零件等）避免超载。",
+  "source_reference": {
+    "source_url": "https://m.prts.wiki/w/%E6%B2%89%E6%B2%A6%E8%80%85%E7%9A%84%E9%BB%91%E6%B5%81%E6%A0%91%E6%B5%B7?oldid=433770",
+    "source_revision": 433770,
+    "source_html_sha256": "7a432f74ea32640d25e357f43c9e5f6e7980ff81b490c715d97ce5ea71cf131d",
+    "source_bytes": 804406,
+    "fragment_sha256": "290d4e58c246c7e1dd986606e7bbcda2d758fc8d8e5be9732d174abb6d3fd518",
+    "rule_text": "零件箱具有储存上限。当零件箱超载时，你将无法行动（包括进入追猎）。此时你需要整理零件箱（例如丢弃零件等）避免超载。",
+    "individual_item_occupancy_known": false,
+    "current_total_capacity_known": false,
+    "all_reward_interfaces_allow_discard": false,
+    "scope": "Overload rule only; capacity/each-instance slot weights, actual inventory and all proposed changes are independent caller declarations."
+  },
+  "notes": [
+    "每实例占用单位由用户独立声明；没有默认为每件1格。",
+    "容量条件不阻断不证明其它行动资格成立；实际游戏行动仍未知。",
+    "方案为独立假设，不触发领取/丢弃/出售或改写本局。"
+  ]
+}

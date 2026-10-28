@@ -5,3 +5,7 @@ from player_ui_verification import run
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--receipt',type=Path,required=True);args=parser.parse_args()
     raise SystemExit(run(394,args.receipt))
+
+def bound_files():
+    from player_ui_verification import source_hashes
+    return source_hashes()

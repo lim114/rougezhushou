@@ -21,3 +21,13 @@ class ButtonMenu(QWidget):
             action.setText(button.text());action.setVisible(not button.isHidden());action.setEnabled(button.isEnabled())
     def visible_actions(self):
         self.sync();return[action for _,action in self.actions if action.isVisible()]
+
+    def expose_original_controls(self):
+        """Real original controls, only for the explicit diagnostic layout."""
+        if getattr(self,'diagnostic_controls_exposed',False):return
+        owner=self.parentWidget();layout=owner.layout();index=layout.indexOf(self)
+        if index<0:raise ValueError('原按钮布局无法核对。')
+        layout.removeWidget(self);self.hide()
+        for offset,(button,_)in enumerate(self.actions):
+            eligible=not button.isHidden();button.setParent(owner);layout.insertWidget(index+offset,button);button.setVisible(eligible)
+        self.diagnostic_controls_exposed=True

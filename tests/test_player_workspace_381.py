@@ -19,4 +19,12 @@ class WorkspaceTests(unittest.TestCase):
   events=[];self.w.activePageChanged.connect(events.append);a,b=QWidget(),QWidget()
   self.w.addTab(a,'地图预览');self.w.addTab(b,'本图节点');self.w.setCurrentWidget(a);self.w.setCurrentWidget(b)
   self.assertIs(events[-1],b);self.assertFalse(self.w.setCurrentWidget(QWidget()))
+ def test_explicit_developer_dialog_is_current_and_product_navigation_returns(self):
+  page,normal=QWidget(),QWidget();self.w.addTab(page,'局外工具');self.w.addTab(normal,'地图预览');self.w.developer_tools=True
+  self.w.show();self.assertTrue(self.w.setCurrentWidget(page));self.gui.processEvents()
+  self.assertTrue(page.isVisible());self.assertIs(self.w.currentWidget(),page)
+  self.w.setCurrentWidget(normal);self.gui.processEvents();self.assertFalse(self.w.developer_dialog.isVisible());self.assertIs(self.w.currentWidget(),normal)
+ def test_group_navigation_uses_exact_first_page_without_new_instances(self):
+  normal=QWidget();self.w.addTab(normal,'伤害测试');self.assertTrue(self.w.show_group('干员计算'));self.assertIs(self.w.currentWidget(),normal)
+  self.assertFalse(self.w.show_group('unknown'))
 if __name__=='__main__':unittest.main()

@@ -9,7 +9,12 @@ from tests import test_batch185_mainwindow as setup_module
 
 class ExplorationMainWindowTests(unittest.TestCase):
     setUpClass=classmethod(setup_module.Batch185WindowTests.setUpClass.__func__)
-    setUp=setup_module.Batch185WindowTests.setUp
+    def setUp(self):
+        setup_module.Batch185WindowTests.setUp(self)
+        # Explicitly opt this diagnostic workflow into its real tools dialog.
+        # Keep information-only exploration and the ordinary product default.
+        self.window.centralWidget().developer_tools=True
+        self.assertFalse(self.window.include_historical_route_diagnostics)
 
     def test_imported_source_map_navigates_and_same_clock_new_id_rejects_old_result(self):
         from rouge.offline_tools_view import public_payload

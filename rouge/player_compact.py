@@ -44,7 +44,7 @@ class CompactAssistant(QDialog):
         overview=QWidget();layout=QVBoxLayout(overview);self.context=QLabel();self.context.setWordWrap(True);layout.addWidget(self.context);grid=QGridLayout();self.cards={}
         for i,name in enumerate(overview_facts(owner.run.state)):
             value=QLabel();value.setWordWrap(True);self.cards[name]=value;grid.addWidget(QLabel(name),i//2*2,i%2);grid.addWidget(value,i//2*2+1,i%2)
-        layout.addLayout(grid);self.overview_popup=ToolPopover('本局概况',overview,self);self.overview_popup.resize(460,320)
+        layout.addLayout(grid);self.scene_button=QPushButton('最近关卡与敌人资料');self.scene_button.clicked.connect(self.open_scene_battle);layout.addWidget(self.scene_button);self.scene_popup=None;self.overview_popup=ToolPopover('本局概况',overview,self);self.overview_popup.resize(460,350)
         settings=QWidget();layout=QVBoxLayout(settings);self.pin=QCheckBox('保持置顶');self.pin.setChecked(True);self.pin.toggled.connect(self.set_pinned);layout.addWidget(self.pin)
         self.expand=QPushButton('展开完整助手');self.expand.clicked.connect(self.open_full);layout.addWidget(self.expand)
         from .player_hotkey import GlobalHotkey,load_preferences,DEFAULT
@@ -118,6 +118,12 @@ class CompactAssistant(QDialog):
         self.buttons['场景笔记'].setEnabled(bool(title));self.setToolTip(self.context.text())
         if self.inventory_popup:self.inventory_popup.panel.refresh()
         if self.map_popup:self.map_popup.panel.refresh()
+        if self.scene_popup:self.scene_popup.panel.refresh()
+    def open_scene_battle(self):
+        if self.scene_popup is None:
+            from .player_scene_battle import SceneBattlePanel
+            panel=SceneBattlePanel(self.owner.run);self.scene_popup=ToolPopover('最近关卡与敌人',panel,self);self.scene_popup.panel=panel;self.scene_popup.resize(760,600)
+        self.scene_popup.panel.refresh();return self.present(self.scene_popup)
     def open_inventory(self):
         if self.inventory_popup is None:
             from .player_inventory import InventoryPanel
@@ -140,8 +146,9 @@ class CompactAssistant(QDialog):
         if page is not None and not isinstance(page,bool):self.owner.centralWidget().setCurrentWidget(page)
         self.owner.show();self.owner.raise_();self.owner.activateWindow()
     def open_operators(self):
-        ws=self.owner.centralWidget();ws.groups['干员计算'].setCurrentIndex(0);self.open_full(ws.groups['干员计算'])
-    def open_chat(self):self.open_full(self.owner.centralWidget().groups['聊天'])
+        ws=self.owner.centralWidget();ws.show_group('干员计算');self.open_full(ws.currentWidget())
+    def open_chat(self):
+        ws=self.owner.centralWidget();ws.show_group('聊天');self.open_full(ws.currentWidget())
     def exit_application(self):
         self.owner.close()
         if self.owner.closing:QApplication.instance().quit()

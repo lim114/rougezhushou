@@ -20,11 +20,17 @@ class CommonContent352Tests(unittest.TestCase):
     def test_no_update_tab_and_every_category_has_one_ordinary_home(self):
         tabs=self.window.centralWidget();labels=[tabs.tabText(i)for i in range(tabs.count())]
         self.assertNotIn('版本与更新',labels)
-        homes={'战斗预览':{'stages'},'节点事件':{'scenes','choices','regions','endings'},
-               '藏品与零件':{'relics','scrap'},'探索设置':{'squads','difficulty','initial'}}
+        homes={'battle':('地图与节点','关卡与敌人',{'stages'}),
+               'events':('地图与节点','事件查询',{'scenes','choices','regions','endings'}),
+               'items':('资料查询','藏品与零件',{'relics','scrap'}),
+               'setup':('本局','分队与难度',{'squads','difficulty','initial'})}
         seen=[]
-        for label,categories in homes.items():
-            panel=tabs.widget(labels.index(label));self.assertIsInstance(panel,ExpansionUpdatePanel)
+        for identity,(group,label,categories) in homes.items():
+            panel=self.window.common_reference_panels[identity];self.assertIsInstance(panel,ExpansionUpdatePanel)
+            owner=tabs.groups[group];index=owner.indexOf(panel)
+            self.assertGreaterEqual(index,0);self.assertEqual(owner.tabText(index),label)
+            self.assertIs(owner.widget(index),panel);self.assertEqual(tabs.pages[panel],(group,label))
+            tabs.setCurrentWidget(panel);self.qt.processEvents();self.assertIs(tabs.currentWidget(),panel);self.assertTrue(panel.isVisible())
             actual={panel.category.itemData(i)for i in range(panel.category.count())}
             self.assertEqual(actual,categories);seen.extend(actual)
             self.assertFalse(panel.scope.currentData());self.assertTrue(panel.scope.isHidden())

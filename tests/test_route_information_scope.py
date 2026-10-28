@@ -118,7 +118,12 @@ class RouteInformationScopeTests(unittest.TestCase):
     def test_current_main_window_has_no_route_planning_pages_or_instances(self):
         tabs = self.window.centralWidget()
         labels = {tabs.tabText(i) for i in range(tabs.count())}
-        self.assertTrue({'地图预览', '节点事件', '战斗预览', '局外工具'} <= labels)
+        self.assertEqual(labels,{'本局','地图与节点','干员计算','资料查询','聊天'})
+        self.assertEqual(tabs.pages[self.window.common_reference_panels['battle']],('地图与节点','关卡与敌人'))
+        self.assertEqual(tabs.pages[self.window.common_reference_panels['events']],('地图与节点','事件查询'))
+        self.assertIs(tabs.aliases[self.window.exploration_map_tab],tabs.aliases[self.window.node_catalog])
+        self.assertFalse(tabs.developer_tools);self.assertFalse(tabs.setCurrentWidget(self.window.offline_tools))
+        self.assertFalse(tabs.developer_dialog.isVisible())
         self.assertFalse(labels.intersection(REMOVED_TABS))
         for name in REMOVED_ATTRIBUTES:
             self.assertFalse(hasattr(self.window, name), name)

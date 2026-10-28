@@ -2,7 +2,7 @@ from tempfile import TemporaryDirectory
 from unittest import TestCase
 from unittest.mock import patch
 from PySide6.QtWidgets import QApplication
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt,QPoint
 from PySide6.QtTest import QTest
 from rouge import current_event_item_uses as model
 from rouge.current_event_item_uses_view import CurrentEventItemUsesPanel, CurrentEventItemUsesDialog
@@ -14,6 +14,15 @@ def select(widget, key):
     matches = [i for i in range(widget.count()) if widget.item(i).data(Qt.ItemDataRole.UserRole) == key]
     if len(matches) != 1: raise AssertionError('Unique exact record required')
     widget.setCurrentRow(matches[0]); _APP.processEvents()
+
+def click_item_use_entry(panel):
+    menu=panel.query_menu;menu.sync()
+    action=next(action for button,action in menu.actions if button is panel.event_item_uses_button)
+    if not(menu.button.isVisible()and action.isVisible()and action.isEnabled()):
+        raise AssertionError('Current ordinary item-use menu entry must be visible and enabled')
+    menu.menu.popup(menu.button.mapToGlobal(QPoint(0,menu.button.height())));_APP.processEvents()
+    if not menu.menu.isVisible():raise AssertionError('Actual ordinary query menu must open')
+    QTest.mouseClick(menu.menu,Qt.MouseButton.LeftButton,pos=menu.menu.actionGeometry(action).center());_APP.processEvents()
 
 
 class CurrentEventItemUsesViewTests(TestCase):
@@ -73,8 +82,8 @@ class CurrentEventItemUsesViewTests(TestCase):
     def test_actual_ordinary_event_page_button_opens_exported_dialog_class(self):
         from rouge.expansion_view import ExpansionUpdatePanel
         p = ExpansionUpdatePanel(categories=('scenes', 'choices', 'regions', 'endings'), full_catalog=True)
-        p.show(); _APP.processEvents(); self.assertTrue(p.event_item_uses_button.isVisible()); self.assertTrue(p.event_item_uses_button.isEnabled())
-        QTest.mouseClick(p.event_item_uses_button, Qt.MouseButton.LeftButton); _APP.processEvents()
+        p.show(); _APP.processEvents();self.assertTrue(p.query_menu.button.isVisible());self.assertFalse(p.event_item_uses_button.isVisible());self.assertTrue(p.event_item_uses_button.isEnabled())
+        click_item_use_entry(p)
         child = p.event_item_uses_dialog; self.assertIsInstance(child, CurrentEventItemUsesDialog)
         self.assertTrue(child.isVisible()); self.assertEqual(child.panel.entries.count(), 12)
         p.close_children(); self.assertIsNone(child.panel.result)
@@ -83,7 +92,7 @@ class CurrentEventItemUsesViewTests(TestCase):
         from rouge.expansion_view import ExpansionUpdatePanel
         p = ExpansionUpdatePanel(categories=('relics', 'scrap'), full_catalog=True); p.show(); _APP.processEvents()
         select(p.entries, 'rogue_6_relic_cargo_13'); self.assertEqual(p.result['row']['id'], 'rogue_6_relic_cargo_13')
-        QTest.mouseClick(p.event_item_uses_button, Qt.MouseButton.LeftButton); _APP.processEvents(); child = p.event_item_uses_dialog
+        click_item_use_entry(p); child = p.event_item_uses_dialog
         self.assertIsInstance(child, CurrentEventItemUsesDialog); self.assertEqual(child.panel.item.currentData(), 'rogue_6_relic_cargo_13')
         self.assertEqual(child.panel.entries.count(), 4); self.assertIsNone(child.panel.selected_key)
         p.close_children(); self.assertIsNone(child.panel.result)
@@ -91,14 +100,14 @@ class CurrentEventItemUsesViewTests(TestCase):
     def test_actual_ordinary_parent_recheck_restores_failed_entry(self):
         from rouge.expansion_view import ExpansionUpdatePanel
         p = ExpansionUpdatePanel(categories=('scenes', 'choices', 'regions', 'endings'), full_catalog=True); p.show(); _APP.processEvents()
-        QTest.mouseClick(p.event_item_uses_button, Qt.MouseButton.LeftButton); _APP.processEvents(); child = p.event_item_uses_dialog
+        click_item_use_entry(p); child = p.event_item_uses_dialog
         with TemporaryDirectory() as folder:
             root = clone(folder); path = root / model.DATA; raw = path.read_bytes()
             with patch.object(model, 'ROOT', root):
                 path.write_bytes(raw + b'x'); self.assertTrue(p.refresh_reference()); self.assertFalse(p.event_item_uses_button.isEnabled())
                 self.assertIsNone(child.panel.result); self.assertFalse(child.isVisible()); path.write_bytes(raw)
                 QTest.mouseClick(p.refresh_button, Qt.MouseButton.LeftButton); _APP.processEvents()
-                self.assertTrue(p.event_item_uses_button.isEnabled()); QTest.mouseClick(p.event_item_uses_button, Qt.MouseButton.LeftButton); _APP.processEvents()
+                self.assertTrue(p.event_item_uses_button.isEnabled());click_item_use_entry(p)
                 recovered = p.event_item_uses_dialog; self.assertIsInstance(recovered, CurrentEventItemUsesDialog)
                 self.assertIsNone(recovered.panel.selected_key); self.assertFalse(recovered.panel.open_button.isEnabled())
         p.close_children()

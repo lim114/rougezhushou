@@ -10,7 +10,9 @@ class ExpansionIntegration313Tests(unittest.TestCase):
     setUp=setup_module.Batch185WindowTests.setUp
     def test_actual_mainwindow_tab_and_both_legacy_version_notices(self):
         tabs=self.window.centralWidget();p=self.window.reference_panel('stages')
-        self.assertIsInstance(p,ExpansionUpdatePanel);self.assertEqual(tabs.tabText(tabs.indexOf(p)),'战斗预览')
+        self.assertIsInstance(p,ExpansionUpdatePanel);group=tabs.groups['地图与节点']
+        self.assertGreaterEqual(group.indexOf(p),0);self.assertEqual(group.tabText(group.indexOf(p)),'关卡与敌人')
+        self.assertIs(group.widget(group.indexOf(p)),p);self.assertIs(tabs.currentWidget(),p)
         self.assertFalse(hasattr(self.window,'expansion_update'));self.assertNotIn('版本与更新',[tabs.tabText(i)for i in range(tabs.count())])
         self.assertFalse(p.scope.currentData());self.assertTrue(p.scope.isHidden());self.assertEqual(p.entries.count(),184)
         self.assertIn('更新前',self.window.battle_preview.version_notice.text());self.assertIn('尚未完整适配',self.window.damage_version_notice.text())
