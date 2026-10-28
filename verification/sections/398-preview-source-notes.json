@@ -1,0 +1,18 @@
+{
+  "section": 398,
+  "kind": "mechanism_reference_not_validation",
+  "primary_source": "https://doc.qt.io/qt-6.12/qtextdocument.html",
+  "source_read_during_preparation": true,
+  "facts": [
+    "Qt resolves image resources through document/browser loading and may use fallback providers.",
+    "Valid image resources may use QImage values."
+  ],
+  "local_findings": [
+    "An empty byte-array-only override did not stop this local file-image experiment.",
+    "The prepared browser and document overrides return a transparent in-memory image; separate local-file and owned-loopback tests check the behavior."
+  ],
+  "limits": [
+    "Documentation alone is not runtime proof. Installed source is independently checked in this section.",
+    "No file content, personal note or user screenshot is included."
+  ]
+}

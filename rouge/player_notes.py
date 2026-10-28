@@ -2,7 +2,10 @@
 from hashlib import sha256
 from pathlib import Path
 import json,os,tempfile
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QLabel,QPlainTextEdit,QPushButton,QHBoxLayout
+from PySide6.QtWidgets import QDialog,QVBoxLayout,QLabel,QPlainTextEdit,QPushButton,QHBoxLayout,QTabWidget
+from PySide6.QtCore import QTimer
+from .player_note_preview import NotePreview
+from copy import deepcopy
 
 def content_key(content):
     if not content or not isinstance(content.get('title'),str)or not content['title'].strip():return None
@@ -11,7 +14,7 @@ def content_key(content):
     return json.dumps([kind,identity],ensure_ascii=False,separators=(',',':'))
 
 class NoteStore:
-    def __init__(self,folder):self.folder=Path(folder)
+    def __init__(self,folder):self.folder=Path(folder);self.save_warning=None
     def path(self,key):return self.folder/(sha256(key.encode()).hexdigest()+'.md')
     def read(self,key):
         p=self.path(key)
@@ -19,47 +22,73 @@ class NoteStore:
         raw=p.read_bytes()if p.exists()else b''
         return raw.decode('utf8'),sha256(raw).hexdigest()
     def save(self,key,text,expected):
-        _,current=self.read(key)
-        if current!=expected:raise ValueError('笔记已被其他窗口或软件修改；为保留双方内容，本次未覆盖。')
-        self.folder.mkdir(parents=True,exist_ok=True);raw=text.encode('utf8')
-        fd,name=tempfile.mkstemp(prefix='.note-',dir=self.folder)
+        from .persistence_install import record_save_lock
+        raw=text.encode('utf8');self.save_warning=None;published=False
+        self.folder.mkdir(parents=True,exist_ok=True)
         try:
-            with os.fdopen(fd,'wb')as f:f.write(raw)
-            os.replace(name,self.path(key))
-        finally:
-            if Path(name).exists():Path(name).unlink()
+            with record_save_lock(self.path(key)):
+                _,current=self.read(key)
+                if current!=expected:raise ValueError('笔记已被其他窗口或软件修改；为保留双方内容，本次未覆盖。')
+                fd,name=tempfile.mkstemp(prefix='.note-',dir=self.folder)
+                try:
+                    with os.fdopen(fd,'wb')as f:f.write(raw);f.flush();os.fsync(f.fileno())
+                    # Other software may not participate in our save lock.
+                    # Check again after preparing bytes; do not claim an OS-wide CAS.
+                    if self.read(key)[1]!=expected:raise ValueError('笔记在保存期间被修改；本次未覆盖，编辑内容仍保留。')
+                    os.replace(name,self.path(key));published=True
+                finally:
+                    try:Path(name).unlink(missing_ok=True)
+                    except OSError:
+                        if published:self.save_warning='内容已保存，但一份临时副本未能清理。'
+        except OSError:
+            if not published:raise
+            self.save_warning='内容已保存，但保存占用标记未能清理；后续保存可能需要先处理占用。'
         return sha256(raw).hexdigest()
 
 class NotesDialog(QDialog):
     def __init__(self,folder,parent=None):
-        super().__init__(parent);self.store=NoteStore(folder);self.key=None;self.digest=None;self.dirty=False
+        super().__init__(parent);self.store=NoteStore(folder);self.key=None;self.digest=None;self.dirty=False;self.content=None
         self.setWindowTitle('本地场景笔记');self.resize(620,500);body=QVBoxLayout(self)
         self.context=QLabel();self.context.setWordWrap(True);body.addWidget(self.context)
-        self.editor=QPlainTextEdit();self.editor.setPlaceholderText('记下这关的机制、注意事项或上次失误。支持保存为本地 Markdown 文本。');body.addWidget(self.editor)
+        self.pages=QTabWidget();body.addWidget(self.pages,1)
+        self.editor=QPlainTextEdit();self.editor.setPlaceholderText('记下这关的机制、注意事项或上次失误。可用#写标题，用-列要点。');self.pages.addTab(self.editor,'编辑文字')
+        self.preview=NotePreview();self.pages.addTab(self.preview,'排版预览')
+        self.preview_timer=QTimer(self);self.preview_timer.setSingleShot(True);self.preview_timer.setInterval(180);self.preview_timer.timeout.connect(self.refresh_preview)
+        self.pages.currentChanged.connect(self.refresh_preview)
+        self.preview.linkBlocked.connect(self.blocked_link)
         self.status=QLabel('笔记只保存在本机，点击保存后写入；不会上传或加入聊天。');self.status.setWordWrap(True);body.addWidget(self.status)
         bar=QHBoxLayout();self.save_button=QPushButton('保存笔记');self.discard_button=QPushButton('放弃未保存修改');bar.addWidget(self.save_button);bar.addWidget(self.discard_button);body.addLayout(bar)
         self.editor.textChanged.connect(self.changed);self.save_button.clicked.connect(self.save);self.discard_button.clicked.connect(self.discard)
-    def changed(self):self.dirty=True;self.status.setText('有未保存修改；仍绑定上方场景，不会随识别结果转移。')
+    def changed(self):
+        self.dirty=True;self.status.setText('有未保存修改；仍绑定上方场景，不会随识别结果转移。')
+        if self.pages.currentIndex()==1:self.preview_timer.start()
+    def refresh_preview(self,*_):
+        if self.pages.currentIndex()==1:self.preview.read_markdown(self.editor.toPlainText())
+    def blocked_link(self):
+        self.status.setText(('有未保存修改。'if self.dirty else'')+'预览中的链接不会自动打开；可回到编辑页复制使用。')
     def set_context(self,content):
         key=content_key(content)
         if key is None:return False
         if self.dirty and key!=self.key:self.status.setText('请先保存或放弃上方场景的修改，再打开另一个场景。');return False
         if key==self.key:return True
         try:text,digest=self.store.read(key)
-        except(OSError,ValueError,UnicodeError)as e:self.status.setText(str(e));return False
-        self.key=key;self.digest=digest;self.editor.blockSignals(True);self.editor.setPlainText(text);self.editor.blockSignals(False);self.dirty=False
+        except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return False
+        self.key=key;self.digest=digest;self.content=deepcopy({field:content[field]for field in('kind','title','variant_id','event_id')if field in content});self.editor.blockSignals(True);self.editor.setPlainText(text);self.editor.blockSignals(False);self.dirty=False
         self.context.setText('笔记对应：'+content['title']+'\n同名且未确认变体时共用笔记；这不是当前位置声明。')
-        self.status.setText('本地笔记已读取；新笔记尚未保存。'if not text else'本地已保存；不会上传。');return True
+        self.status.setText('本地笔记已读取；新笔记尚未保存。'if not text else'本地已保存；不会上传。');self.refresh_preview();return True
     def save(self):
         if self.key is None:return False
         try:self.digest=self.store.save(self.key,self.editor.toPlainText(),self.digest)
-        except(OSError,ValueError,UnicodeError)as e:self.status.setText(str(e));return False
-        self.dirty=False;self.status.setText('已保存到本机；不会上传。');return True
+        except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return False
+        self.dirty=False;self.status.setText('已保存到本机；不会上传。'+(self.store.save_warning or''));return True
     def discard(self):
         if self.key is None:return
         try:text,digest=self.store.read(self.key)
-        except(OSError,ValueError,UnicodeError)as e:self.status.setText(str(e));return
-        self.editor.blockSignals(True);self.editor.setPlainText(text);self.editor.blockSignals(False);self.digest=digest;self.dirty=False;self.status.setText('已恢复为本机保存的内容。')
+        except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return
+        self.editor.blockSignals(True);self.editor.setPlainText(text);self.editor.blockSignals(False);self.digest=digest;self.dirty=False;self.status.setText('已恢复为本机保存的内容。');self.refresh_preview()
+    def report_issue(self,error):
+        from .player_file_messages import file_issue
+        self.status.setText(file_issue(error));self.status.setToolTip(str(error))
     def closeEvent(self,event):
         if self.dirty:self.status.setText('修改尚未保存，请保存或放弃后关闭。');event.ignore()
         else:event.accept()
