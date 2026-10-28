@@ -500,6 +500,8 @@ ADDITIONAL_MODULES += ('tests.test_player_evidence_history_405',)
 
 ADDITIONAL_MODULES += ('tests.test_player_statistics_406',)
 
+ADDITIONAL_MODULES += ('tests.test_player_statistics_cohorts_407',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

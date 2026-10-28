@@ -108,6 +108,8 @@ class PersonalStatisticsPage(QWidget):
         self.detail = QPlainTextEdit()
         self.detail.setReadOnly(True)
         body.addWidget(self.detail, 1)
+        from .player_cohort_ui import attach_filters
+        attach_filters(self,body)
         self.reload = QPushButton('重新读取本机历史')
         body.addWidget(self.reload)
         self.reload.clicked.connect(self.refresh)
@@ -124,9 +126,13 @@ class PersonalStatisticsPage(QWidget):
             self.notice.setText('本机历史暂时不可用：' + file_issue(error) + ' 旧统计已清除，原件未改动。')
             self.notice.setToolTip(str(error))
             self.key = None
+            from .player_cohort_ui import refresh_filters
+            refresh_filters(self)
             self.render()
             return
         self.records = records
+        from .player_cohort_ui import refresh_filters
+        refresh_filters(self)
         self.source_available = True
         self.notice.setToolTip('')
         self.notice.setText(f'读取到{len(records)}局本机历史；另有{len(issues)}份记录无法核对，未计入。当前未归档对局不混入。')
@@ -137,7 +143,8 @@ class PersonalStatisticsPage(QWidget):
             self.result = None
             self.detail.setPlainText('本机历史暂未读到，统计未知；没有用0局或旧结果替代。')
             return
-        self.result = statistics(self.records, self.relic.currentData())
-        text = statistics_text(self.result)
+        from .player_cohort_ui import selected_records,filter_notes
+        self.result = statistics(selected_records(self), self.relic.currentData())
+        text = filter_notes(self)+'\n\n'+statistics_text(self.result)
         if self.detail.toPlainText() != text:
             self.detail.setPlainText(text)

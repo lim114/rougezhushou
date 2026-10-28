@@ -1,11 +1,11 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第406节 + 个人本机统计：区分有效样本与缺失
+# 当前云端续接索引 · 第407节 + 统计按保密等级和分队类型筛选
 
-实际完成的改动：从本机历史计算归档前最近已读资源均值，并可查看所选收藏品的归档时持有率；有效、缺失及不完整清单样本分别显示。
+实际完成的改动：个人统计可按已核对保密等级和分队类型组合筛选；未读信息独立成组，基础与强化阶段仅依固定资料的分队归属合并。
 
-[本节验收回执](verification/sections/406.json)。
+[本节验收回执](verification/sections/407.json)。
 
-已完成至406，后续407；本批状态 `PLAYER_SECTION406_PUBLISHED`。推进终点：410。下次定期全量410。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至407，后续408；本批状态 `PLAYER_SECTION407_PUBLICATION_PENDING`。推进终点：410。下次定期全量410。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 
