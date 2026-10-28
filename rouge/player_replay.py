@@ -105,10 +105,13 @@ class ReplayPanel(QWidget):
         layout.addWidget(self.detail, 1)
         self.tabs.addTab(page, '读取记录')
         self.entries.currentItemChanged.connect(self.selected)
+        from .player_replay_archive import attach_history
+        attach_history(self,body)
         self.refresh()
 
     def refresh(self):
-        state = deepcopy(self.run.state)
+        from .player_replay_archive import selected_state
+        state = selected_state(self)
         key = repr((state.get('id'),state.get('started_at'),state.get('history')))
         if key == self.key:
             self.snapshot=state
@@ -131,8 +134,8 @@ class ReplayPanel(QWidget):
         self.entries.verticalScrollBar().setValue(offset)
         self.entries.blockSignals(False)
         self.selected()
-        self.notice.setText(f'本机保存了{len(self.rows)}条读取记录。开始时间：' + observation_time(state.get('started_at')) +
-                            '。这不是完整流程或胜负记录；缺失步骤不按零计算。')
+        from .player_replay_archive import snapshot_notice
+        self.notice.setText(snapshot_notice(self,len(self.rows),state))
 
     def selected(self, *_):
         item = self.entries.currentItem()

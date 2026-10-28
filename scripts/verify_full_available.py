@@ -490,6 +490,8 @@ ADDITIONAL_MODULES += ('tests.test_player_note_export_400',)
 
 ADDITIONAL_MODULES += ('tests.test_player_replay_401',)
 
+ADDITIONAL_MODULES += ('tests.test_player_history_store_402',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

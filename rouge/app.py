@@ -1695,6 +1695,11 @@ class MainWindow(QMainWindow):
         if hasattr(self,'raw_damage'):self.calculate()
 
     def reset_run(self):
+        from .player_history_store import archive_before_manual_reset
+        try:archive_before_manual_reset(self.run,Path(self.run.file).parent/'run-history')
+        except(OSError,ValueError,UnicodeError,TypeError,RecursionError)as error:
+            from .player_file_messages import file_issue
+            self.capture_status.setText('未开始新局：上一局本机归档未完成。'+file_issue(error)+' 当前记录保持，请处理后重试。');self.capture_status.setToolTip(str(error));return False
         self.sample_epoch += 1
         self.capture.discard_pending()
         self.run.reset()
