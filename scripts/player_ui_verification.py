@@ -66,9 +66,12 @@ def run(section,receipt):
             require(window.run.state==state,'feature_does_not_reset_run')
             from PySide6.QtTest import QTest
             QTest.qWait(120);gui.processEvents()
-            shot=receipt.with_suffix('.png');shot_target=window.compact_window.settings_popup if section==393 else window.compact_window.map_popup if section==392 else window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390,391) else window
+            shot=receipt.with_suffix('.png');shot_target=window.compact_window.inventory_popup if section==394 else window.compact_window.settings_popup if section==393 else window.compact_window.map_popup if section==392 else window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390,391) else window
             assert shot_target.grab().save(str(shot))
             images.append({'file':shot.relative_to(ROOT).as_posix(),'sha256':sha256(shot.read_bytes()).hexdigest()})
+            if section==394:
+                hover=receipt.with_name('item-hover.png');assert window.compact_window.inventory_popup.panel.hover_card.grab().save(str(hover))
+                images.append({'file':hover.relative_to(ROOT).as_posix(),'sha256':sha256(hover.read_bytes()).hexdigest()})
             if section==392:
                 hover=receipt.with_name('node-hover.png');assert window.compact_window.map_popup.panel.hover_card.grab().save(str(hover))
                 images.append({'file':hover.relative_to(ROOT).as_posix(),'sha256':sha256(hover.read_bytes()).hexdigest()})

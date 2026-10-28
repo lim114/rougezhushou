@@ -29,8 +29,14 @@ class ArchiveDialog(QDialog):
         self.update_button.clicked.connect(self.update_online);self.source_button.clicked.connect(lambda:QDesktopServices.openUrl(QUrl(model.SITE+'/pools/rogue_6')))
         self.pool_search.textChanged.connect(self.render_pools);self.version.currentIndexChanged.connect(self.render_pools);self.pools.currentItemChanged.connect(self.select_pool);self.sources.currentIndexChanged.connect(self.render_members)
         self.floor.currentIndexChanged.connect(self.render_events);self.treehole.toggled.connect(self.render_events);self.event_search.textChanged.connect(self.render_events);self.events.currentItemChanged.connect(self.select_event);self.received.connect(self.accept_data)
-        try:self.data=model.load(self.cache if self.cache.is_file()else model.DEFAULT)
+        self.loaded_path=self.cache if self.cache.is_file()else model.DEFAULT
+        try:self.data=model.load(self.loaded_path)
         except(OSError,ValueError,KeyError,TypeError):pass
+        self.install()
+    def reload_local(self):
+        path=self.cache if self.cache.is_file()else self.loaded_path
+        try:self.data=model.load(path);self.loaded_path=path
+        except(OSError,ValueError,KeyError,TypeError,AttributeError):self.data=None
         self.install()
     def install(self):
         version=self.version.currentData();self.version.blockSignals(True);self.version.clear()
@@ -55,6 +61,16 @@ class ArchiveDialog(QDialog):
         old=self.sources.currentData();self.sources.blockSignals(True);self.sources.clear()
         for key,label,_ in model.distributions(row)if row else[]:self.sources.addItem(label,key)
         self.sources.setCurrentIndex(max(0,self.sources.findData(old)));self.sources.blockSignals(False);self.render_members()
+    def select_exact_pool(self,version,identity):
+        self.tabs.setCurrentIndex(0)
+        index=self.version.findData(version)
+        if index<0:
+            self.pools.setCurrentRow(-1);self.select_pool();self.pool_note.setPlainText('所请求的资料范围已不可用，没有打开其他范围的同名池。');return False
+        self.version.setCurrentIndex(index);self.pool_search.clear();self.render_pools()
+        for row in range(self.pools.count()):
+            item=self.pools.item(row)
+            if item.data(Qt.ItemDataRole.UserRole)==identity:self.pools.setCurrentItem(item);return True
+        self.pools.setCurrentRow(-1);self.select_pool();self.pool_note.setPlainText('所请求的藏品池已不可用，没有打开同名的其他池。');return False
     def render_members(self,*_):
         self.members.setRowCount(0);self.pool_note.clear();item=self.pools.currentItem();pool=self.pool_by_id.get(item.data(Qt.ItemDataRole.UserRole))if item else None
         if pool is None:return

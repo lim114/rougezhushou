@@ -176,7 +176,8 @@ class MainWindow(QMainWindow):
             tabs.addTab(panel,label)
         tabs.activePageChanged.connect(self._common_page_changed)
         from .player_inventory import InventoryPanel
-        self.inventory_panel=InventoryPanel(self.run)
+        self.inventory_panel=InventoryPanel(self.run,ROOT/'.local/public-reference/archive.json')
+        self.inventory_panel.openPoolReference.connect(self.open_public_pool_reference)
         self.inventory_panel.openReference.connect(self.open_item_reference)
         tabs.addTab(self.inventory_panel,'本局藏品')
         from .offline_tools_view import OfflineToolsPanel
@@ -277,6 +278,10 @@ class MainWindow(QMainWindow):
             self.public_archive=ArchiveDialog(ROOT/'.local/public-reference/archive.json',self)
             self.public_archive.openReference.connect(self.open_public_event_reference)
         self.public_archive.show()
+    def open_public_pool_reference(self,version,identity):
+        self.open_public_archive()
+        self.public_archive.reload_local()
+        return self.public_archive.select_exact_pool(version,identity)
 
     def open_public_event_reference(self,category,identity):
         panel=self.reference_panel(category);panel.scope.setCurrentIndex(panel.scope.findData(False));panel.search.clear()

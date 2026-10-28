@@ -121,8 +121,9 @@ class CompactAssistant(QDialog):
     def open_inventory(self):
         if self.inventory_popup is None:
             from .player_inventory import InventoryPanel
-            panel=InventoryPanel(self.owner.run);panel.openReference.connect(lambda i:(self.owner.open_item_reference(i),self.open_full()))
-            self.inventory_popup=ToolPopover('本局藏品',panel,self);self.inventory_popup.panel=panel;self.inventory_popup.resize(680,530)
+            panel=InventoryPanel(self.owner.run,self.owner.inventory_panel.public_cache);panel.openReference.connect(lambda i:(self.owner.open_item_reference(i),self.open_full()))
+            panel.openPoolReference.connect(lambda version,identity:self.open_owner_dialog(lambda:self.owner.open_public_pool_reference(version,identity),'public_archive'))
+            self.inventory_popup=ToolPopover('本局藏品',panel,self);self.inventory_popup.panel=panel;self.inventory_popup.resize(810,570)
         self.inventory_popup.panel.refresh();return self.present(self.inventory_popup)
     def open_map(self):
         if self.map_popup is None:
