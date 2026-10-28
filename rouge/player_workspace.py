@@ -89,6 +89,6 @@ class MapNodeWorkspace(QWidget):
             scroll=QScrollArea();scroll.setWidgetResizable(True);scroll.setWidget(child);self.splitter.addWidget(scroll)
         self.splitter.setSizes([600,460]);self.splitter.setChildrenCollapsible(False)
     def resizeEvent(self,event):
-        orientation=Qt.Orientation.Vertical if self.width()<850 else Qt.Orientation.Horizontal
+        orientation=Qt.Orientation.Vertical if self.width()<1350 else Qt.Orientation.Horizontal
         if self.splitter.orientation()!=orientation:self.splitter.setOrientation(orientation)
         super().resizeEvent(event)

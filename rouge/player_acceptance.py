@@ -1,5 +1,14 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==389:
+        window.show_compact();gui.processEvents();panel=window.compact_window
+        require(panel.isVisible()and not window.isVisible(),'compact_mode_has_visible_companion')
+        require(panel.width()<=480 and panel.height()<=600,'compact_logical_size')
+        from PySide6.QtCore import Qt
+        require(bool(panel.windowFlags()&Qt.WindowType.WindowStaysOnTopHint),'companion_topmost_enabled')
+        panel.pin.click();gui.processEvents();require(not bool(panel.windowFlags()&Qt.WindowType.WindowStaysOnTopHint),'topmost_can_be_disabled')
+        panel.buttons['本局藏品'].click();gui.processEvents();require(window.centralWidget().currentWidget()is window.inventory_panel,'compact_inventory_shortcut')
+        window.show_compact();gui.processEvents();require(panel.isVisible(),'return_to_same_companion_instance')
     if section==388:
         window.open_public_statistics();gui.processEvents();panel=window.public_statistics
         require(panel.isVisible(),'actual_public_statistics_reader_visible')

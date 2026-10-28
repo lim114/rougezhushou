@@ -255,6 +255,14 @@ class MainWindow(QMainWindow):
         self.notes_button=QPushButton('场景笔记');self.notes_button.clicked.connect(self.open_scene_notes)
         self.context_bar.addWidget(self.notes_button)
         self.public_statistics=None
+        self.compact_window=None
+        self.compact_button=QPushButton('助手小窗');self.compact_button.clicked.connect(self.show_compact)
+        self.context_bar.addWidget(self.compact_button)
+
+    def show_compact(self):
+        from .player_compact import CompactAssistant
+        if self.compact_window is None:self.compact_window=CompactAssistant(self)
+        self.compact_window.refresh();self.compact_window.show();self.hide()
 
     def open_public_statistics(self):
         from .public_node_statistics_view import StatisticsDialog
@@ -1607,6 +1615,7 @@ class MainWindow(QMainWindow):
         if hasattr(self,'run_cards'):self.run_cards.refresh()
         if hasattr(self,'context_bar'):self.context_bar.refresh()
         if hasattr(self,'inventory_panel'):self.inventory_panel.refresh()
+        if getattr(self,'compact_window',None)is not None:self.compact_window.refresh()
         if hasattr(self,'battle_preview'):self.battle_preview.set_context(self.run.state.get('config',{}))
         difficulty=self.run.state.get('config',{}).get('difficulty')
         from .run_config import difficulty_value
@@ -2347,6 +2356,7 @@ class MainWindow(QMainWindow):
         if hasattr(self,'player_notes'):self.player_notes.close()
         if getattr(self,'public_statistics',None)is not None:self.public_statistics.close()
         self.closing=True
+        if getattr(self,'compact_window',None)is not None:self.compact_window.close()
         self.node_catalog._close_current_event_reference()
         self.node_catalog._close_shop_vault()
         for panel in self.common_reference_panels.values():panel.close_children()
@@ -2359,7 +2369,7 @@ class MainWindow(QMainWindow):
 def main():
     app=QApplication(sys.argv)
     window=MainWindow()
-    window.show()
+    window.show_compact()
     window.auto.setChecked(True)
     sys.exit(app.exec())
 
