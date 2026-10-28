@@ -3,10 +3,10 @@ from pathlib import Path
 from functools import lru_cache
 from copy import deepcopy
 import json
-from PySide6.QtCore import Qt,QRectF,QPointF
-from PySide6.QtGui import QColor,QPainter,QPen,QImage,QPainterPath
+from PySide6.QtCore import Qt,QRectF,QPointF,QPoint,Signal,QTimer,QSize
+from PySide6.QtGui import QColor,QPainter,QPen,QImage,QPainterPath,QIcon,QPixmap
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QTabBar,
-    QPushButton,QScrollArea,QSplitter,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QComboBox)
+    QPushButton,QScrollArea,QSplitter,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QComboBox,QToolButton)
 from .map_view import MapView
 from .run_config import config_data
 
@@ -47,13 +47,26 @@ def dossier_graph(graph):
 def art_manifest():return json.loads((ART/'sources.json').read_text('utf8'))
 
 class PreviewMapView(MapView):
+    nodeHovered=Signal(str,QPoint)
     def __init__(self):
-        super().__init__();self.atlas=QImage(str(ART/'nodes.png'));self.background=QImage();self.icons={};self.setMinimumSize(480,300)
+        super().__init__();self.atlas=QImage(str(ART/'nodes.png'));self.background=QImage();self.icons={};self.filter_kind=None;self.overlay={};self.hover_id=None;self.setMinimumSize(480,300)
+    def sprite_for(self,kind):
+        key=ICONS.get(kind);sprite=art_manifest()['sprites'].get(key)
+        if not sprite:return QImage()
+        if key not in self.icons:
+            import numpy as np
+            icon=self.atlas.copy(sprite['x'],sprite['y'],sprite['width'],sprite['height']).convertToFormat(QImage.Format.Format_RGBA8888)
+            alpha=np.frombuffer(icon.bits(),np.uint8).reshape(icon.height(),icon.width(),4)[:,:,3];ys,xs=np.where(alpha>16)
+            self.icons[key]=icon.copy(int(xs.min()),int(ys.min()),int(xs.max()-xs.min()+1),int(ys.max()-ys.min()+1))if len(xs)else icon
+        return self.icons[key]
+    def set_type_filter(self,kind):
+        from .player_map_reference import overlay_rows
+        self.filter_kind=kind;self.overlay=overlay_rows(self.graph,kind)if kind else{};self.update()
     def set_map(self,graph,image=None,*,historical=False):
         _,floor=zone_info(graph)
         # Decoration only. Exact zone/topology remains in the graph, not inferred from artwork.
         name=f'area-{floor+1}.png'if floor and floor<6 else'area-1.png'if floor==6 else'blindness.png'
-        self.background=QImage(str(ART/name));super().set_map(graph,None,historical=historical)
+        self.background=QImage(str(ART/name));super().set_map(graph,None,historical=historical);self.set_type_filter(self.filter_kind)
     def _positions(self):
         canvas=QRectF(self.contentsRect()).adjusted(38,36,-38,-45);points={}
         if self.graph:
@@ -80,21 +93,19 @@ class PreviewMapView(MapView):
             p.setPen(QPen(QColor(183,189,179,135),1.5));p.drawPath(path)
         font=self.font();font.setPointSize(9);p.setFont(font)
         for node in self.graph['nodes']:
-            point=points[node['id']];kind,note,evidence=node_style(node);key=ICONS.get(kind);sprite=art_manifest()['sprites'].get(key)
-            p.setOpacity(.64 if evidence=='template' else 1)
-            if sprite:
-                if key not in self.icons:
-                    import numpy as np
-                    icon=self.atlas.copy(sprite['x'],sprite['y'],sprite['width'],sprite['height']).convertToFormat(QImage.Format.Format_RGBA8888)
-                    alpha=np.frombuffer(icon.bits(),np.uint8).reshape(icon.height(),icon.width(),4)[:,:,3];ys,xs=np.where(alpha>16)
-                    self.icons[key]=icon.copy(int(xs.min()),int(ys.min()),int(xs.max()-xs.min()+1),int(ys.max()-ys.min()+1))if len(xs)else icon
+            point=points[node['id']];kind,note,evidence=node_style(node);overlay=self.overlay.get(node['id'],{});match=overlay.get('match')
+            image_kind=self.filter_kind if match=='candidate'else kind;icon=self.sprite_for(image_kind)
+            p.setOpacity(.22 if match=='excluded'else .7 if match=='candidate'else .64 if evidence=='template'else 1)
+            if not icon.isNull():
                 rect=QRectF(point.x()-size/2,point.y()-size/2,size,size)
-                icon=self.icons[key];factor=min(rect.width()/icon.width(),rect.height()/icon.height());w,h=icon.width()*factor,icon.height()*factor
+                factor=min(rect.width()/icon.width(),rect.height()/icon.height());w,h=icon.width()*factor,icon.height()*factor
                 p.drawImage(QRectF(point.x()-w/2,point.y()-h/2,w,h),icon)
             else:
                 p.setPen(QPen(QColor('#acb9b3'),1.7));p.setBrush(QColor('#0c1415'));p.drawEllipse(point,6,6)
                 if kind!='林间空地':p.setPen(QColor('#ffffff'));p.drawText(QRectF(point.x()-14,point.y()-12,28,24),Qt.AlignmentFlag.AlignCenter,'?')
             p.setOpacity(1)
+            if match in('observed','template','candidate','history'):
+                p.setPen(QPen(QColor('#ffd087')if match=='history'else QColor('#8cebd2'),1.7,Qt.PenStyle.DashLine if match=='candidate'else Qt.PenStyle.SolidLine));p.setBrush(Qt.BrushStyle.NoBrush);p.drawEllipse(point,size/2+7,size/2+7)
             if node['id']==self.selected:
                 p.setPen(QPen(QColor('#ffffff'),2));p.setBrush(Qt.BrushStyle.NoBrush);p.drawEllipse(point,size/2+4,size/2+4)
             current=self.graph.get('current_node')
@@ -107,13 +118,22 @@ class PreviewMapView(MapView):
             if kind=='林间空地'and node.get('remembered_type'):label='原·'+node['remembered_type']
             if evidence=='template':label+='·模板'
             elif evidence=='history'and kind!='林间空地':label+='·记录'
+            if match=='candidate':label='候选·'+self.filter_kind
             badge=QRectF(point.x()-width/2,point.y()+size/2+2,width,20)
             p.fillRect(badge,QColor(0,0,0,145));p.setPen(QColor('#ffdb9f')if evidence=='history'else QColor('#f4f5f0'))
             p.drawText(badge,Qt.AlignmentFlag.AlignCenter,p.fontMetrics().elidedText(label,Qt.TextElideMode.ElideRight,int(width)-4))
+            if match=='candidate':
+                row=overlay.get('frequency');label=f"历史 {row['frequency']:.1%}"if row else'历史比例未知'
+                badge.translate(0,20);p.fillRect(badge,QColor(13,42,35,220));p.setPen(QColor('#bef6e3'));p.drawText(badge,Qt.AlignmentFlag.AlignCenter,label)
     def _hit(self,point):
         _,points=self._positions();size=self.icon_size()
         hits=[((p-point).manhattanLength(),key)for key,p in points.items()if QRectF(p.x()-size/2-5,p.y()-size/2-7,size+10,size+35).contains(point)]
         return min(hits)[1]if hits else None
+    def mouseMoveEvent(self,event):
+        node_id=self._hit(event.position());self.setCursor(Qt.CursorShape.PointingHandCursor if node_id else Qt.CursorShape.ArrowCursor)
+        if node_id!=self.hover_id:self.hover_id=node_id;self.nodeHovered.emit(node_id or'',event.globalPosition().toPoint())
+    def leaveEvent(self,event):
+        self.hover_id=None;self.nodeHovered.emit('',QPoint());super().leaveEvent(event)
 
 class MapPanel(QWidget):
     def __init__(self,owner):
@@ -123,20 +143,60 @@ class MapPanel(QWidget):
         self.zoom=QComboBox();self.zoom.addItems(['适应窗口','放大125%','放大150%','放大200%']);head.addWidget(self.zoom)
         self.details_toggle=QPushButton('节点资料');self.details_toggle.setCheckable(True);head.addWidget(self.details_toggle);body.addLayout(head)
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
+        self.resources=QLabel();self.resources.setWordWrap(True);body.addWidget(self.resources)
         self.split=QSplitter();self.scroll=QScrollArea();self.scroll.setWidgetResizable(True);self.view=PreviewMapView();self.scroll.setWidget(self.view);self.split.addWidget(self.scroll)
+        self.palette=QWidget();self.palette.setObjectName('mapNodePalette');self.palette.setFixedWidth(58);self.palette.setStyleSheet('#mapNodePalette{background:#253b39;border:1px solid #82958c;border-radius:23px;} QToolButton{border:0;background:transparent;border-radius:18px;} QToolButton:checked{background:#658979;}')
+        palette_layout=QVBoxLayout(self.palette);palette_layout.setContentsMargins(6,12,6,12);self.type_buttons={}
+        for kind in ('秘境行商','诡意行商','误入奇境','狭路相逢','不期而遇'):
+            button=QToolButton();button.setFixedSize(44,44);button.setIcon(QIcon(QPixmap.fromImage(self.view.sprite_for(kind))))
+            button.setIconSize(QSize(36,36));button.setCheckable(True);button.setToolTip(kind+'：在助手地图查看对应位置和历史节点比例');button.setAccessibleName('地图类型筛选：'+kind);button.clicked.connect(lambda checked=False,k=kind:self.set_type_filter(k if checked else None));palette_layout.addWidget(button);self.type_buttons[kind]=button
+        palette_layout.addStretch();stage=QWidget();stage_layout=QHBoxLayout(stage);stage_layout.setContentsMargins(0,0,0,0);stage_layout.addWidget(self.palette);stage_layout.addWidget(self.scroll,1);self.split.insertWidget(0,stage)
         self.drawer=QWidget();right=QVBoxLayout(self.drawer);right.setContentsMargins(6,0,0,0);self.title=QLabel('请选择地图节点');self.title.setWordWrap(True);right.addWidget(self.title)
         self.entries=QTreeWidget();self.entries.setHeaderHidden(True);right.addWidget(self.entries,2)
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);right.addWidget(self.detail,2)
         self.open_button=QPushButton('打开完整资料');self.open_button.setEnabled(False);right.addWidget(self.open_button)
         self.split.addWidget(self.drawer);self.split.setSizes([700,300]);self.drawer.hide();body.addWidget(self.split,1)
-        legend=QLabel('实色：已读　半透明：模板固定　金字：本局记录　?：未确认　连线不代表现在可通行');legend.setWordWrap(True);body.addWidget(legend)
+        legend=QLabel('实色：已读　半透明：模板固定　金字：本局记录　?：未确认　历史比例不是本局概率；连线不代表现在可通行');legend.setWordWrap(True);body.addWidget(legend)
         self.floors.currentChanged.connect(self.show_floor);self.zoom.currentIndexChanged.connect(self.change_zoom);self.view.nodeSelected.connect(self.select_interactive)
         self.details_toggle.toggled.connect(self.drawer.setVisible);self.entries.currentItemChanged.connect(self.read_entry);self.open_button.clicked.connect(self.open_entry);self.refresh()
+        from .player_map_hover import NodeHoverCard
+        self.hover_card=NodeHoverCard(self);self.hover_card.entryRequested.connect(self.open_hover_entry);self.hover_pending=None
+        self.hover_timer=QTimer(self);self.hover_timer.setSingleShot(True);self.hover_timer.setInterval(180);self.hover_timer.timeout.connect(self.show_hover)
+        self.leave_timer=QTimer(self);self.leave_timer.setSingleShot(True);self.leave_timer.setInterval(220);self.leave_timer.timeout.connect(self.leave_hover)
+        self.view.nodeHovered.connect(self.queue_hover);self.hover_card.entered.connect(self.leave_timer.stop);self.hover_card.left.connect(self.leave_timer.start)
+    def set_type_filter(self,kind):
+        for name,button in self.type_buttons.items():button.setChecked(name==kind)
+        self.view.set_type_filter(kind)
+    def queue_hover(self,node_id,point):
+        self.hover_timer.stop();self.leave_timer.stop()
+        if not node_id:self.hover_pending=None;self.leave_timer.start();return
+        self.hover_pending=(node_id,point);self.hover_timer.start()
+    def leave_hover(self):
+        if not self.hover_card.pinned and not self.hover_card.underMouse():self.hover_card.hide()
+    def show_hover(self):
+        if not self.hover_pending or not self.view.graph:return
+        node_id,point=self.hover_pending;graph=self.view.graph;binding=(self.epoch,graph.get('zone_id'),graph.get('template_id'),node_id)
+        if not self.hover_card.install(binding,graph,node_id,self.owner.run.state.get('config',{}),self.view):return
+        self.hover_card.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,bool(self.window().windowFlags()&Qt.WindowType.WindowStaysOnTopHint));self.hover_card.show()
+        area=self.screen().availableGeometry();self.hover_card.move(max(area.left(),min(point.x()+22,area.right()-self.hover_card.width())),max(area.top(),min(point.y()+12,area.bottom()-self.hover_card.height())))
+    def open_hover_entry(self,node_id,kind,identity):
+        self.hover_card.dismiss();self.view.select_node(node_id)
+        for i in range(self.entries.topLevelItemCount()):
+            group=self.entries.topLevelItem(i)
+            for j in range(group.childCount()):
+                item=group.child(j);key=item.data(0,Qt.ItemDataRole.UserRole)
+                if key and key[1:]==(kind,identity):self.entries.setCurrentItem(item);return
+    def hideEvent(self,event):
+        if hasattr(self,'hover_card'):self.hover_timer.stop();self.hover_card.dismiss()
+        super().hideEvent(event)
     def refresh(self):
         epoch=self.owner.run.state['id'];old_key=self.selected_zone
         if epoch!=self.epoch:
             self.readings.clear();old_key=None;self.epoch=epoch;self.selected_zone=None;self.view.set_map(None)
         self.graphs=deepcopy(self.owner.run.state.get('maps',{}));original=self.owner.map_view
+        from .player_overview import overview_facts
+        facts=overview_facts(self.owner.run.state);self.resources.setText('本局最近记录：　保密等级 '+facts['保密等级']+'　已确认干员 '+facts['已确认干员']+'　已读藏品 '+facts['已读收藏品']+'　零件 '+str((self.owner.run.state.get('resources',{}).get('parts_count')or{}).get('value','未读到'))+'　源石锭 '+str((self.owner.run.state.get('resources',{}).get('gold')or{}).get('value','未读到')))
+        if self.owner.run.state.get('inventory_verified')is not True:self.resources.setText(self.resources.text()+'　（藏品数量待核对）')
         if original.graph and original.graph.get('template_id')==(self.graphs.get(original.graph.get('zone_id'))or{}).get('template_id'):self.graphs[original.graph['zone_id']]=deepcopy(original.graph)
         self.floors.blockSignals(True)
         while self.floors.count():self.floors.removeTab(0)
@@ -149,6 +209,8 @@ class MapPanel(QWidget):
             old=(self.view.graph.get('zone_id'),self.view.graph.get('template_id'));self.readings[old]=(self.view.selected,self.selected_reference,self.detail.verticalScrollBar().value())
         index=self.floors.currentIndex();key=self.floors.tabData(index)if index>=0 else None
         graph=self.graphs.get(key);original=self.owner.map_view;self.selected_zone=key
+        if hasattr(self,'hover_card')and ((self.view.graph or{}).get('zone_id'),(self.view.graph or{}).get('template_id'))!=(key,(graph or{}).get('template_id')):
+            self.hover_timer.stop();self.leave_timer.stop();self.hover_pending=None;self.hover_card.dismiss()
         historical=not(graph and original.graph and key==original.graph.get('zone_id')and graph.get('template_id')==original.graph.get('template_id')and not original.historical)
         saved=self.readings.get((key,(graph or{}).get('template_id')),(None,None,0))
         self.view.blockSignals(True);self.view.set_map(graph,historical=historical)
@@ -162,6 +224,10 @@ class MapPanel(QWidget):
         self.detail.verticalScrollBar().setValue(saved[2])
         name,_=zone_info(graph);self.status.setText(name+(' · 本局历史记录'if historical else' · 最近确认的地图')+'；未揭示内容仍是候选。'if graph else'尚无本局地图记录；读到地图后自动显示，不填入示例。')
         self.change_zoom()
+        if hasattr(self,'hover_card')and self.hover_card.isVisible():
+            binding=self.hover_card.binding
+            if not graph or not binding or binding[:3]!=(self.epoch,graph.get('zone_id'),graph.get('template_id')):self.hover_card.dismiss()
+            else:self.hover_card.install(binding,graph,binding[-1],self.owner.run.state.get('config',{}),self.view,force=True)
     def change_zoom(self,*_):
         scale=(1,1.25,1.5,2)[self.zoom.currentIndex()];self.scroll.setWidgetResizable(scale==1)
         if scale!=1:self.view.resize(max(600,int(self.scroll.viewport().width()*scale)),max(330,int(self.scroll.viewport().height()*scale)))
@@ -200,10 +266,14 @@ class MapPanel(QWidget):
         item=self.entries.currentItem();key=item.data(0,Qt.ItemDataRole.UserRole)if item else None;row=self.rows.get(key)
         self.selected_reference=key if row else None;self.open_button.setEnabled(bool(row and key[1]in('event','battle')))
         if not row:return
-        from .node_catalog_view import event_text
-        if key[1]=='event':text=event_text(row['id'])
-        elif key[1]=='battle':text=row.get('title','')+'\n普通/紧急、敌人和地图请打开作战预览。\n这是资料候选，不表示本节点一定出现。'
-        else:text='\n'.join(str(v)for k,v in row.items()if k in('node_type','description','description_text','notes'))or'功能条件详见节点完整资料。'
+        from .player_node_information import node_information_text
+        from .node_catalog_view import map_conditions
+        graph=self.view.graph or {};context=map_conditions(graph,self.owner.run.state.get('config',{}))
+        entry={'kind':key[1],'record':row,'history_context_reference':self.view.historical or key[0].startswith('已读历史')}
+        context['entry_mode']='content'if entry['history_context_reference']else'natural'
+        node=next((n for n in graph.get('nodes',[])if n['id']==self.view.selected),{})
+        observed=node.get('observed_type');context['node_type']=observed if observed and not observed.startswith('未知')else node.get('template_type')
+        text=node_information_text(entry,context=context)
         self.detail.setPlainText(text)
     def open_entry(self):
         key=self.selected_reference;row=self.rows.get(key)

@@ -81,7 +81,7 @@ class CompactAssistant(QDialog):
         self.inventory_popup.panel.refresh();return self.present(self.inventory_popup)
     def open_map(self):
         if self.map_popup is None:
-            panel=MapPanel(self.owner);self.map_popup=ToolPopover('探索地图与节点',panel,self);self.map_popup.panel=panel;self.map_popup.resize(1100,650)
+            panel=MapPanel(self.owner);self.map_popup=ToolPopover('探索地图与节点',panel,self);self.map_popup.panel=panel;self.map_popup.resize(1100,650);self.map_popup.setObjectName('videoMapWindow');self.map_popup.setStyleSheet('#videoMapWindow{background:#f5f5f7;border:1px solid #bbc1c5;border-radius:12px;} #videoMapWindow QLabel{color:#25332f;} #videoMapWindow QPushButton,#videoMapWindow QComboBox{color:#263630;background:#e8ebea;border:1px solid #bbc6c1;border-radius:7px;padding:5px;} #videoMapWindow QTabBar{background:#f5f5f7;border:0;} #videoMapWindow QTabBar::tab{color:#35403c;background:#e4e7e6;border:0;border-radius:10px;padding:6px 12px;} #videoMapWindow QTabBar::tab:selected{background:#2c3533;color:white;} #videoMapWindow QPlainTextEdit,#videoMapWindow QTreeWidget{color:#28332e;background:#fff;border:1px solid #d2d9d5;}')
         self.map_popup.panel.refresh();return self.present(self.map_popup)
     def open_archive(self):return self.open_owner_dialog(self.owner.open_public_archive,'public_archive')
     def open_owner_dialog(self,callback,name):

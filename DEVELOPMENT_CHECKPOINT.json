@@ -63,8 +63,8 @@
     "pause_after_active_section_requested": false,
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
-    "current_usage_remaining_percent": 93,
-    "current_usage_receipt": "verification/sections/391-usage.json",
+    "current_usage_remaining_percent": 92,
+    "current_usage_receipt": "verification/sections/392-usage.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
     "latest_user_instruction_receipt": "verification/sections/371-preparation/resume-and-scope.json",
     "latest_pause_instruction_receipt": "verification/sections/350-pause-request.json",
@@ -72,10 +72,12 @@
     "verification_execution_preference": "local_project_environment",
     "avoid_duplicate_cloud_tests": true,
     "latest_product_instruction_receipt": "verification/sections/352-preparation/scope.json",
-    "public_statistics_enabled": true
+    "public_statistics_enabled": true,
+    "video_final_parity_required": true,
+    "video_parity_document": "VIDEO_PARITY.md"
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 391,
+  "completed_sections": 392,
   "sections": [
     {
       "number": 1,
@@ -2410,12 +2412,18 @@
       "completion_ref": "player-section-391",
       "topic": "视频式浮动工具条、整层图标地图与路标离线资料",
       "verification": "verification/sections/391.json"
+    },
+    {
+      "number": 392,
+      "completion_ref": "player-section-392",
+      "topic": "节点类型位置高亮、图文悬浮卡与视频逐项验收",
+      "verification": "verification/sections/392.json"
     }
   ],
-  "next_section": 392,
-  "next_action": "继续P3：核验路标资料对DLC2的覆盖和本图条件统计，完善地图资料交互；不上传本局、不推荐路线。下一定期全量395，P3/P2/P1未全部完成，识别最后。",
+  "next_section": 393,
+  "next_action": "继续按VIDEO_PARITY.md逐项对齐：全局呼出/收起、藏品池与库存场景联动、完整本地复盘和个人统计；P3概率/版本证据缺口保留。识别最后，下一定期全量395。",
   "full_validation_due": false,
-  "windows_native_validation": "当前391：45项必要检查、39项原生Qt唯一检查通过；四张隔离原图主代理实际查看。原项目测试工具条在完整Windows-MCP桌面图中可见，Win32核对响应及五份私人路径保持；不证明游戏或聊天。380全量为历史，下一到期395。",
+  "windows_native_validation": "当前392：62项必要检查、新功能34项原生窗口唯一检查及上一批39项窗口契约回归通过，六张最终隔离原图逐张审阅。原项目地图与工具条已实际可见响应，正常重启区间五份私人路径保持。历史输入时序失败与标签裁剪原件保留，不冒充通过；380全量为历史，下一到期395。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
   "deferred_problems": [
     {
@@ -2530,14 +2538,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 391,
-    "verification": "verification/sections/391.json",
+    "section": 392,
+    "verification": "verification/sections/392.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 391,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "30975e20faf2b78bf84038b8d31c780410818b11",
     "proof": "verification/sections/391-publication.json",
@@ -2787,7 +2795,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "PLAYER_SECTION391_PUBLISHED",
+  "batch_status": "PLAYER_SECTION392_PUBLICATION_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -2912,18 +2920,19 @@
     388,
     389,
     390,
-    391
+    391,
+    392
   ],
   "current_batch": {
     "start": 391,
     "end": null,
     "next_full_validation_after": 395,
-    "status": "PLAYER_SECTION391_PUBLISHED",
-    "completed_sections": 391,
-    "next_section": 392,
+    "status": "PLAYER_SECTION392_PUBLICATION_PENDING",
+    "completed_sections": 392,
+    "next_section": 393,
     "next_section_started": false,
     "batch_closed": false,
-    "receipt": "verification/sections/391.json"
+    "receipt": "verification/sections/392.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -3203,7 +3212,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 391,
+  "latest_functional_section": 392,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -8914,14 +8923,14 @@
     "development_paused": false
   },
   "current_section_validation": {
-    "section": 391,
-    "receipt": "verification/sections/391.json",
+    "section": 392,
+    "receipt": "verification/sections/392.json",
     "full_suite_rerun": false,
     "last_full_receipt": "verification/full-380/summary.json",
     "last_full_receipt_is_historical_for_current_changes": true
   },
   "latest_section_environment": {
-    "section": 391,
+    "section": 392,
     "native_windows_verified": true,
     "native_game_or_chat_verified": false,
     "current_section_full_rerun": false,
@@ -8937,10 +8946,8 @@
     "proof_sha256": "3dde2df8e2ee658fafa8c831b90b259d6e90eed797c9bd1bbe45324e3d6926a8"
   },
   "cloud_publication_closeout": {
-    "section": 391,
-    "functional_commit": "30975e20faf2b78bf84038b8d31c780410818b11",
-    "proof": "verification/sections/391-publication.json",
-    "current_commit_kind": "publication metadata only",
+    "section": 392,
+    "current_commit_kind": "functional section pending actual publication",
     "next_section_started": false,
     "development_paused": false
   },
