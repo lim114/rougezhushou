@@ -255,6 +255,7 @@ class MainWindow(QMainWindow):
         self.notes_button=QPushButton('场景笔记');self.notes_button.clicked.connect(self.open_scene_notes)
         self.context_bar.addWidget(self.notes_button)
         self.public_statistics=None
+        self.public_archive=None
         self.compact_window=None
         self.compact_button=QPushButton('助手小窗');self.compact_button.clicked.connect(self.show_compact)
         self.context_bar.addWidget(self.compact_button)
@@ -268,6 +269,22 @@ class MainWindow(QMainWindow):
         from .player_compact import CompactAssistant
         if self.compact_window is None:self.compact_window=CompactAssistant(self)
         self.compact_window.refresh();self.compact_window.show();self.hide()
+
+    def open_public_archive(self):
+        from .public_archive_view import ArchiveDialog
+        if self.public_archive is None:
+            self.public_archive=ArchiveDialog(ROOT/'.local/public-reference/archive.json',self)
+            self.public_archive.openReference.connect(self.open_public_event_reference)
+        self.public_archive.show()
+
+    def open_public_event_reference(self,category,identity):
+        panel=self.reference_panel(category);panel.scope.setCurrentIndex(panel.scope.findData(False));panel.search.clear()
+        for i in range(panel.entries.count()):
+            if panel.entries.item(i).data(Qt.ItemDataRole.UserRole)==identity:
+                panel.entries.setCurrentRow(i);self.show();self.raise_();return True
+        panel.entries.setCurrentRow(-1)
+        if self.public_archive:self.public_archive.event_note.appendPlainText('本机原文资料尚未收录该精确场景，不能跳到同名替代。')
+        return False
 
     def open_public_statistics(self):
         from .public_node_statistics_view import StatisticsDialog
@@ -2374,6 +2391,7 @@ class MainWindow(QMainWindow):
             self.player_notes.show();self.player_notes.status.setText('笔记尚未保存，请保存或放弃后退出助手。');event.ignore();return
         if hasattr(self,'player_notes'):self.player_notes.close()
         if getattr(self,'public_statistics',None)is not None:self.public_statistics.close()
+        if getattr(self,'public_archive',None)is not None:self.public_archive.close()
         self.closing=True
         if getattr(self,'compact_window',None)is not None:self.compact_window.close()
         self.node_catalog._close_current_event_reference()

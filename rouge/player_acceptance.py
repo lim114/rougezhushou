@@ -1,5 +1,70 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==391:
+        from PySide6.QtCore import Qt
+        from PySide6.QtTest import QTest
+        window.show_compact();gui.processEvents();bar=window.compact_window
+        require(bar.height()<=100 and bool(bar.windowFlags()&Qt.WindowType.FramelessWindowHint),'video_form_frameless_horizontal_toolbar')
+        require(len([b for b in bar.buttons if b!='节点统计'])==7,'seven_icon_tools_not_dashboard_cards')
+        bar.buttons['地图与节点'].click();gui.processEvents();require(bar.map_popup.isVisible()and not window.isVisible(),'map_opens_local_popover_without_main_window')
+        bar.buttons['本局藏品'].click();gui.processEvents();require(bar.inventory_popup.isVisible()and not bar.map_popup.isVisible(),'only_selected_tool_panel_expanded')
+        inventory=bar.inventory_popup.panel;inventory.held.setChecked(False);inventory.search.setText('攻击');query=inventory.search.text()
+        bar.refresh();require(inventory.search.text()==query,'toolbar_refresh_keeps_inventory_query')
+        bar.open_archive();gui.processEvents();panel=window.public_archive
+        require(panel.isVisible()and not bar.inventory_popup.isVisible(),'public_reference_opens_from_toolbar')
+        require(panel.version.currentData()=='dlc1','source_default_version_is_explicit')
+        panel.pool_search.setText('报废轮子');gui.processEvents()
+        target=next(i for i in range(panel.pools.count())if panel.pools.item(i).data(256)=='rogue_6:node_battle_boss_scrap')
+        panel.pools.setCurrentRow(target);gui.processEvents()
+        require(panel.members.rowCount()>0 and any(panel.members.item(i,1).text()!='未知'for i in range(panel.members.rowCount())),'real_source_drop_counts_render')
+        require('不表示最终领取概率'in panel.pool_note.toPlainText(),'candidate_frequency_distinguished_from_claimed_reward')
+        selection=panel.pools.currentItem().data(256);panel.install();require(panel.pools.currentItem().data(256)==selection,'public_refresh_preserves_exact_pool_selection')
+        panel.tabs.setCurrentIndex(1);panel.floor.setCurrentIndex(0);panel.treehole.setChecked(True);gui.processEvents();require(panel.events.count()==0,'treehole_not_available_from_first_floor')
+        panel.floor.setCurrentIndex(2);require(panel.events.count()>0,'treehole_third_floor_has_source_events')
+        panel.events.setCurrentRow(0);require('未确认'in panel.event_note.toPlainText(),'event_source_candidate_not_actual_eligibility')
+        panel.treehole.setChecked(False);panel.floor.setCurrentIndex(0);panel.events.setCurrentRow(0);identity=panel.events.currentItem().data(256).split(':',1)[-1]
+        panel.event_button.click();gui.processEvents();reference=window.reference_panel('scenes',activate=False)
+        require(reference.result is not None and reference.result['row']['id']==identity,'exact_event_reference_link')
+        notes=window.player_notes;notes.set_context({'title':'临时测试关卡','kind':'battle'});bar.open_owner_dialog(notes.show,'player_notes');notes.editor.setPlainText('尚未保存的测试笔记')
+        require(not bar.open_inventory()and notes.isVisible(),'dirty_note_not_hidden_by_toolbar_switch');notes.discard()
+        window.show_compact();bar.open_archive();panel.tabs.setCurrentIndex(0);QTest.qWait(120);gui.processEvents()
+        require(not window.isVisible(),'reference_lookup_keeps_large_window_hidden')
+        from copy import deepcopy
+        from pathlib import Path
+        import json
+        templates=json.loads((Path(__file__).with_name('data')/'map-templates.json').read_text('utf8'))
+        graphs=[]
+        for zone in ('zone_1','zone_2'):
+            t=next(t for t in templates['templates']if t['zone_id']==zone)
+            nodes=[{**n,'template_type':n.get('fixed_type'),'visible':False,'center':[.5,.5]}for n in t['nodes']]
+            graphs.append({'zone_id':zone,'template_id':t['id'],'nodes':nodes,'grid':{'rows':t['rows'],'cols':t['cols']},'edges':t['edges'],'source':templates['source']})
+        old_state=deepcopy(window.run.state);window.run.state['maps']={g['zone_id']:g for g in graphs}
+        bar.open_map();mp=bar.map_popup.panel;gui.processEvents()
+        require(mp.floors.count()==2,'recorded_floors_have_separate_tabs')
+        require(not mp.view.atlas.isNull()and not mp.view.background.isNull(),'real_game_art_loaded_without_network')
+        mp.details_toggle.click();mp.view.select_node(graphs[0]['nodes'][0]['id']);gui.processEvents();selected=mp.view.selected
+        require(mp.drawer.isVisible()and mp.entries.topLevelItemCount()>0,'node_click_has_grouped_events_or_battles')
+        require(all(mp.entries.topLevelItem(i).text(0).startswith('作战预览')for i in range(mp.entries.topLevelItemCount())),'template_battle_not_all_event_types')
+        root=mp.entries.topLevelItem(0);mp.entries.setCurrentItem(root.child(0));identity=mp.selected_reference
+        mp.refresh();gui.processEvents();require(mp.view.selected==selected and mp.selected_reference==identity,'map_refresh_preserves_node_and_reading')
+        mp.floors.setCurrentIndex(1);gui.processEvents();require(mp.view.graph['zone_id']=='zone_2','floor_switch_changes_whole_map')
+        mp.floors.setCurrentIndex(0);gui.processEvents();require(mp.view.selected==selected and mp.selected_reference==identity,'return_to_floor_restores_reading')
+        mp.zoom.setCurrentIndex(3);gui.processEvents();require(not mp.scroll.widgetResizable(),'zoom_uses_scrollable_full_map')
+        mp.zoom.setCurrentIndex(0);require(mp.scroll.widgetResizable(),'fit_restores_whole_floor')
+        before=dict(mp.view.graph);mp.graphs['zone_1']={**before,'template_id':'different-layout'};mp.show_floor();require(mp.view.selected is None,'changed_layout_does_not_reuse_same_coordinate')
+        mp.graphs['zone_1']=graphs[0];mp.show_floor();mp.view.select_node(selected);mp.details_toggle.setChecked(False)
+        mp.status.setText('隔离验收示例：公开一层模板；不是本局游戏读取。点击节点展开事件、奖励与作战资料。')
+        from PySide6.QtCore import QPoint
+        QTest.mouseClick(mp.view,Qt.MouseButton.LeftButton,pos=mp.view._positions()[1][selected].toPoint());gui.processEvents()
+        require(mp.drawer.isVisible(),'actual_node_click_expands_dossier')
+        battle=next((mp.entries.topLevelItem(i).child(j)for i in range(mp.entries.topLevelItemCount())for j in range(mp.entries.topLevelItem(i).childCount())if mp.entries.topLevelItem(i).child(j).data(0,Qt.ItemDataRole.UserRole)[1]=='battle'),None)
+        require(battle is not None,'fixed_battle_node_has_stage_previews');mp.entries.setCurrentItem(battle);stage=mp.rows[mp.selected_reference]['id'];mp.open_button.click();gui.processEvents()
+        require(window.battle_preview.current_stage==stage,'map_battle_link_opens_exact_stage')
+        window.show_compact();mp.details_toggle.setChecked(False)
+        mp.status.setText('隔离验收示例：公开模板；不是本局游戏读取。点击节点展开事件、奖励与作战资料。')
+
+        window.run.state=old_state;window.public_archive.show();QTest.qWait(150);gui.processEvents()
+
     if section==390:
         ws=window.centralWidget();panel=window.inventory_panel;ws.setCurrentWidget(panel);panel.search.setText('攻击');query=panel.search.text()
         ws.setCurrentWidget(window.exploration_map_tab);window.back_button.click();gui.processEvents()
@@ -21,7 +86,7 @@ def check(section,window,gui,require):
         from PySide6.QtCore import Qt
         require(bool(panel.windowFlags()&Qt.WindowType.WindowStaysOnTopHint),'companion_topmost_enabled')
         panel.pin.click();gui.processEvents();require(not bool(panel.windowFlags()&Qt.WindowType.WindowStaysOnTopHint),'topmost_can_be_disabled')
-        panel.buttons['本局藏品'].click();gui.processEvents();require(window.centralWidget().currentWidget()is window.inventory_panel,'compact_inventory_shortcut')
+        panel.buttons['本局藏品'].click();gui.processEvents();require(window.centralWidget().currentWidget()is window.inventory_panel or bool(getattr(panel,'inventory_popup',None)and panel.inventory_popup.isVisible()),'compact_inventory_shortcut')
         window.show_compact();gui.processEvents();require(panel.isVisible(),'return_to_same_companion_instance')
     if section==388:
         window.open_public_statistics();gui.processEvents();panel=window.public_statistics

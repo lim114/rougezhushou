@@ -13,6 +13,8 @@ def source_hashes():
     paths=list((ROOT/'rouge').glob('*.py'))+[Path(__file__).resolve(),ROOT/'scripts/verify_full_available.py']
     paths+=list((ROOT/'tests').glob('test_player*py'))
     paths+=list((ROOT/'scripts').glob('verify_player*py'))
+    paths+=list((ROOT/'rouge/data/map-art').glob('*'))
+    paths+=[ROOT/'scripts/update_cloud_index.py',ROOT/'research/public-reference-391/snapshot.json']
     return {p.relative_to(ROOT).as_posix():sha256(p.read_bytes()).hexdigest()for p in sorted(set(paths))}
 
 def run(section,receipt):
@@ -43,6 +45,9 @@ def run(section,receipt):
             from rouge import public_node_statistics
             calls['public_statistics_read']=0
             stack.enter_context(patch.object(public_node_statistics,'fetch',side_effect=forbidden('public_statistics_read')))
+            from rouge import public_archive
+            calls['public_reference_read']=0
+            stack.enter_context(patch.object(public_archive,'fetch',side_effect=forbidden('public_reference_read')))
             window=a.MainWindow();window.setWindowTitle(f'第{section}节 · 玩家界面隔离验证');window.resize(1100,790);window.show();gui.processEvents()
             h=int(window.winId());require(win32gui.IsWindowVisible(h)and win32process.GetWindowThreadProcessId(h)[1]==os.getpid(),'visible_owned_native_window')
             state=deepcopy(window.run.state);ws=window.centralWidget()
@@ -60,9 +65,18 @@ def run(section,receipt):
             require(window.run.state==state,'feature_does_not_reset_run')
             from PySide6.QtTest import QTest
             QTest.qWait(120);gui.processEvents()
-            shot=receipt.with_suffix('.png');shot_target=window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390) else window
+            shot=receipt.with_suffix('.png');shot_target=window.player_notes if section==387 else window.public_statistics if section==388 else window.compact_window if section in (389,390,391) else window
             assert shot_target.grab().save(str(shot))
             images.append({'file':shot.relative_to(ROOT).as_posix(),'sha256':sha256(shot.read_bytes()).hexdigest()})
+            if section==391:
+                detail=receipt.with_name('public-reference.png');assert window.public_archive.grab().save(str(detail))
+                images.append({'file':detail.relative_to(ROOT).as_posix(),'sha256':sha256(detail.read_bytes()).hexdigest()})
+            if section==391:
+                preview=receipt.with_name('map-preview.png');assert window.compact_window.map_popup.grab().save(str(preview))
+                images.append({'file':preview.relative_to(ROOT).as_posix(),'sha256':sha256(preview.read_bytes()).hexdigest()})
+                window.compact_window.map_popup.panel.details_toggle.setChecked(True);gui.processEvents()
+                drawer=receipt.with_name('map-node-details.png');assert window.compact_window.map_popup.grab().save(str(drawer))
+                images.append({'file':drawer.relative_to(ROOT).as_posix(),'sha256':sha256(drawer.read_bytes()).hexdigest()})
             window.close();gui.processEvents();require(not window.isVisible(),'normal_owned_window_close');window=None
     except Exception:
         failure=traceback.format_exc()
