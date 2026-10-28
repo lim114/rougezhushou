@@ -1,0 +1,21 @@
+{
+  "title": "场景笔记主动导出与覆盖确认",
+  "change": "玩家可主动将当前笔记文字导出为Markdown或纯文本；导出保留未保存状态，已有同名文件须明确确认，取消不改动原文件。",
+  "limits": "只导出用户主动选择的位置；不会自动保存场景笔记或发送到网站、聊天及其他应用。 P3/P2/P1仍未全部完成，识别优化最后。",
+  "criteria": [
+    "导出原样保留当前编辑文字",
+    "默认不覆盖已有文件",
+    "取消与失败保留原件和编辑",
+    "选择位置或确认覆盖期间文字变化时停止导出，保留双方内容",
+    "成功后的临时清理问题不误报正文未导出"
+  ],
+  "test": "tests.test_player_note_export_400",
+  "native": "scripts/verify_player_note_export_window_400.py",
+  "next": "继续第401节：本局读取记录：保留原顺序的独立回顾。",
+  "additional_tests": [
+    "tests.test_player_notes_387"
+  ],
+  "unit_receipt": "verification/sections/400-player-checks/process.json",
+  "native_receipt": "verification/sections/400-player-window/window.json",
+  "native_process_receipt": "verification/sections/400-player-window-process/process.json"
+}

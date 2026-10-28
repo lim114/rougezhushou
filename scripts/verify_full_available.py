@@ -486,6 +486,8 @@ ADDITIONAL_MODULES += ('tests.test_player_note_preview_398',)
 
 ADDITIONAL_MODULES += ('tests.test_player_note_library_399',)
 
+ADDITIONAL_MODULES += ('tests.test_player_note_export_400',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

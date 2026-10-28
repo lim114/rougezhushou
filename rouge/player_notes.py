@@ -58,7 +58,11 @@ class NotesDialog(QDialog):
         self.preview.linkBlocked.connect(self.blocked_link)
         self.status=QLabel('笔记只保存在本机，点击保存后写入；不会上传或加入聊天。');self.status.setWordWrap(True);body.addWidget(self.status)
         bar=QHBoxLayout();self.save_button=QPushButton('保存笔记');self.discard_button=QPushButton('放弃未保存修改');bar.addWidget(self.save_button);bar.addWidget(self.discard_button);body.addLayout(bar)
+        self.export_button=QPushButton('导出当前文字');bar.addWidget(self.export_button);self.export_button.clicked.connect(self.export_current)
         self.editor.textChanged.connect(self.changed);self.save_button.clicked.connect(self.save);self.discard_button.clicked.connect(self.discard)
+    def export_current(self):
+        from .player_note_export_ui import export_editor
+        return export_editor(self)
     def changed(self):
         self.dirty=True;self.status.setText('有未保存修改；仍绑定上方场景，不会随识别结果转移。')
         if self.pages.currentIndex()==1:self.preview_timer.start()
