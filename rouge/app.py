@@ -254,6 +254,13 @@ class MainWindow(QMainWindow):
         self.player_notes=NotesDialog(ROOT/'.local/player-notes',self)
         self.notes_button=QPushButton('场景笔记');self.notes_button.clicked.connect(self.open_scene_notes)
         self.context_bar.addWidget(self.notes_button)
+        self.public_statistics=None
+
+    def open_public_statistics(self):
+        from .public_node_statistics_view import StatisticsDialog
+        if self.public_statistics is None:self.public_statistics=StatisticsDialog(ROOT/'.local/public-statistics/nodes.json',self)
+        self.public_statistics.set_map_node(self.map_view.graph,self.map_view.selected)
+        self.public_statistics.show()
 
     def open_scene_notes(self):
         content=self.run.state.get('last_node_content')
@@ -377,6 +384,8 @@ class MainWindow(QMainWindow):
         self.movement_source_button=QPushButton('加工品获取清单与来源机会')
         self.movement_source_button.clicked.connect(self.show_movement_sources)
         layout.addWidget(self.movement_source_button);self.movement_source_dialog=None
+        self.public_statistics_button=QPushButton('所选位置的公开节点统计（历史参考）')
+        self.public_statistics_button.clicked.connect(self.open_public_statistics);layout.addWidget(self.public_statistics_button)
         self.fruit_marker_button=QPushButton('藏果地标记：核对声明探索与密道保留')
         self.fruit_marker_button.clicked.connect(self.show_fruit_marker_flow)
         layout.addWidget(self.fruit_marker_button);self.fruit_marker_dialog=None
@@ -2336,6 +2345,7 @@ class MainWindow(QMainWindow):
         if hasattr(self,'player_notes')and self.player_notes.dirty:
             self.player_notes.show();self.player_notes.status.setText('笔记尚未保存，请保存或放弃后退出助手。');event.ignore();return
         if hasattr(self,'player_notes'):self.player_notes.close()
+        if getattr(self,'public_statistics',None)is not None:self.public_statistics.close()
         self.closing=True
         self.node_catalog._close_current_event_reference()
         self.node_catalog._close_shop_vault()

@@ -1,5 +1,12 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==388:
+        window.open_public_statistics();gui.processEvents();panel=window.public_statistics
+        require(panel.isVisible(),'actual_public_statistics_reader_visible')
+        require(panel.table.rowCount()>0,'offline_public_aggregate_available')
+        require('历史'in panel.status.text()and'未核验'in panel.status.text(),'old_distribution_not_current_DLC_prediction')
+        panel.distance.setValue(100);require(panel.table.rowCount()==0 and'未知'in panel.status.text(),'no_sample_not_zero_probability')
+        panel.distance.setValue(3);gui.processEvents();require(panel.table.rowCount()>0,'local_query_computes_without_network')
     if section==387:
         notes=window.player_notes;require(notes.set_context({'kind':'battle','title':'测试关卡','variant_id':'fixture-a'}),'notes_bind_explicit_context')
         notes.show();notes.editor.setPlainText('# 测试笔记\n注意第二阶段的机制。');gui.processEvents()

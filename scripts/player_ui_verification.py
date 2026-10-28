@@ -40,6 +40,9 @@ def run(section,receipt):
             for name,key in [('connect','game_connect'),('capture','capture'),('next_frame','next_frame')]:stack.enter_context(patch.object(a.GameCapture,name,side_effect=forbidden(key)))
             for name,key in [('start','desktop_start'),('request','desktop_request')]:stack.enter_context(patch.object(backend,name,side_effect=forbidden(key)))
             stack.enter_context(patch.object(a,'stream_chat',side_effect=forbidden('provider_chat')));stack.enter_context(patch.object(a,'read_key',side_effect=forbidden('credential_read')))
+            from rouge import public_node_statistics
+            calls['public_statistics_read']=0
+            stack.enter_context(patch.object(public_node_statistics,'fetch',side_effect=forbidden('public_statistics_read')))
             window=a.MainWindow();window.setWindowTitle(f'第{section}节 · 玩家界面隔离验证');window.resize(1100,790);window.show();gui.processEvents()
             h=int(window.winId());require(win32gui.IsWindowVisible(h)and win32process.GetWindowThreadProcessId(h)[1]==os.getpid(),'visible_owned_native_window')
             state=deepcopy(window.run.state);ws=window.centralWidget()
@@ -57,7 +60,7 @@ def run(section,receipt):
             require(window.run.state==state,'feature_does_not_reset_run')
             from PySide6.QtTest import QTest
             QTest.qWait(120);gui.processEvents()
-            shot=receipt.with_suffix('.png');shot_target=window.player_notes if section==387 else window
+            shot=receipt.with_suffix('.png');shot_target=window.player_notes if section==387 else window.public_statistics if section==388 else window
             assert shot_target.grab().save(str(shot))
             images.append({'file':shot.relative_to(ROOT).as_posix(),'sha256':sha256(shot.read_bytes()).hexdigest()})
             window.close();gui.processEvents();require(not window.isVisible(),'normal_owned_window_close');window=None
