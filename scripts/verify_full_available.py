@@ -456,6 +456,8 @@ ADDITIONAL_MODULES += ('tests.test_player_workspace_381',)
 
 ADDITIONAL_MODULES += ('tests.test_player_overview_382',)
 
+ADDITIONAL_MODULES += ('tests.test_player_map_workspace_383',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

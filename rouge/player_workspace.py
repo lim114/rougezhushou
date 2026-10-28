@@ -1,6 +1,7 @@
 """A small player navigation surface; existing readers keep their own state."""
 from PySide6.QtCore import Signal
-from PySide6.QtWidgets import QTabWidget,QDialog,QVBoxLayout
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QTabWidget,QDialog,QVBoxLayout,QWidget,QSplitter,QScrollArea
 
 GROUPS=('本局','地图与节点','干员计算','资料查询','聊天')
 PAGE_GROUP={
@@ -19,7 +20,7 @@ class PlayerWorkspace(QTabWidget):
     def __init__(self,parent=None,*,developer_tools=False):
         super().__init__(parent)
         self.setAccessibleName('助手主要栏目')
-        self.groups={};self.pages={};self.developer_tools=developer_tools;self._last_page=None
+        self.groups={};self.pages={};self.aliases={};self.container_leaf={};self.developer_tools=developer_tools;self._last_page=None
         self.developer_dialog=QDialog(self);self.developer_dialog.setWindowTitle('开发核对工具')
         self.developer_dialog.resize(1000,760);self.developer_tabs=QTabWidget()
         QVBoxLayout(self.developer_dialog).addWidget(self.developer_tabs)
@@ -41,9 +42,13 @@ class PlayerWorkspace(QTabWidget):
     def currentWidget(self):
         """Return the selected reader for callers that route exact content."""
         group=super().currentWidget()
-        return group.currentWidget() if isinstance(group,QTabWidget) else group
+        page=group.currentWidget() if isinstance(group,QTabWidget) else group
+        return self.container_leaf.get(page,page)
 
     def setCurrentWidget(self,page):
+        original=page
+        if page in self.aliases:
+            page=self.aliases[page];self.container_leaf[page]=original
         if page in self.pages:
             group,_=self.pages[page]
             if group=='developer':
@@ -55,6 +60,18 @@ class PlayerWorkspace(QTabWidget):
             super().setCurrentWidget(page);return True
         return False
 
+    def combine_map_and_node(self,map_page,node_page):
+        """One physical workspace, retaining exact old reader routing aliases."""
+        group=self.groups['地图与节点'];index=group.indexOf(map_page)
+        assert index>=0 and group.indexOf(node_page)>=0
+        group.removeTab(group.indexOf(node_page));group.removeTab(group.indexOf(map_page))
+        container=MapNodeWorkspace(map_page,node_page)
+        self.pages[container]=('地图与节点','探索地图与节点')
+        self.aliases[map_page]=container;self.aliases[node_page]=container;self.container_leaf[container]=map_page
+        group.insertTab(index,container,'探索地图与节点');group.setCurrentWidget(container)
+        self.map_node_workspace=container
+        return container
+
     def _announce(self,*_):
         page=self.currentWidget()
         if page is not self._last_page:
@@ -62,3 +79,15 @@ class PlayerWorkspace(QTabWidget):
 
     def close_developer_tools(self):
         self.developer_dialog.close()
+
+class MapNodeWorkspace(QWidget):
+    def __init__(self,map_page,node_page):
+        super().__init__();self.splitter=QSplitter();QVBoxLayout(self).addWidget(self.splitter)
+        self.setAccessibleName('地图与所选节点同页查看')
+        for child in (map_page,node_page):
+            scroll=QScrollArea();scroll.setWidgetResizable(True);scroll.setWidget(child);self.splitter.addWidget(scroll)
+        self.splitter.setSizes([600,460]);self.splitter.setChildrenCollapsible(False)
+    def resizeEvent(self,event):
+        orientation=Qt.Orientation.Vertical if self.width()<850 else Qt.Orientation.Horizontal
+        if self.splitter.orientation()!=orientation:self.splitter.setOrientation(orientation)
+        super().resizeEvent(event)

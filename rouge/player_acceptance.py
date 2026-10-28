@@ -1,5 +1,12 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==383:
+        ws=window.centralWidget();ws.setCurrentWidget(window.node_catalog);gui.processEvents()
+        require(window.exploration_map_tab.isVisible()and window.node_catalog.isVisible(),'map_and_node_readers_visible_together')
+        require(ws.currentWidget()is window.node_catalog,'exact_node_alias_routes_to_shared_workspace')
+        require(ws.groups['地图与节点'].count()==3,'duplicate_node_top_subpage_removed')
+        ws.setCurrentWidget(window.exploration_map_tab);gui.processEvents()
+        require(ws.currentWidget()is window.exploration_map_tab,'existing_map_link_routes_preserved')
     if section==382:
         ws=window.centralWidget();ws.setCurrentIndex(0);gui.processEvents()
         require(window.run_cards.cards['保密等级'].text()=='尚未确认','unknown_grade_card_not_zero')

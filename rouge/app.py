@@ -160,6 +160,7 @@ class MainWindow(QMainWindow):
         self.node_catalog.stageSelected.connect(self.show_catalog_battle)
         self.node_catalog.mapNodeSelected.connect(self.show_catalog_map_node)
         tabs.addTab(self.node_catalog,'本图节点')
+        tabs.combine_map_and_node(self.exploration_map_tab,self.node_catalog)
         from .expansion_view import ExpansionUpdatePanel
         self.common_reference_panels={}
         self.common_reference_categories={}
