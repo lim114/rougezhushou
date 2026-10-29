@@ -2,7 +2,7 @@
 from pathlib import Path
 from PySide6.QtCore import Qt,QSize,Signal,QTimer,QEvent
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLineEdit,QCheckBox,QLabel,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QComboBox
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLineEdit,QCheckBox,QLabel,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QComboBox,QGridLayout,QSlider,QSplitter,QButtonGroup
 from . import expansion_reference as reference
 from .record_flags import active_record
 
@@ -36,23 +36,33 @@ class InventoryPanel(QWidget):
     def __init__(self,run,public_cache=None):
         super().__init__();self.run=run;self.rows={};self.public_cache=Path(public_cache)if public_cache is not None else None;self.source_stamp=None;self.source_signature=None;self.source_index=None;self.render_key=None;body=QVBoxLayout(self)
         bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('搜索藏品名称或效果，如攻击、生命')
-        self.held=QCheckBox('只看本局已确认持有');self.held.setChecked(True);bar.addWidget(self.search,1);bar.addWidget(self.held);body.addLayout(bar)
-        filters=QHBoxLayout();self.rarity=QComboBox();self.rarity.addItem('全部稀有度',None)
+        self.held=QCheckBox('只看本局已确认持有');self.held.setChecked(True);bar.addWidget(self.search,1);bar.addWidget(self.held);self.more=QPushButton('更多筛选');self.more.setCheckable(True);bar.addWidget(self.more);body.addLayout(bar)
+        self.filter_box=QWidget();filters=QGridLayout(self.filter_box);self.rarity=QComboBox();self.rarity.addItem('全部稀有度',None)
         for key,label in RARITIES.items():self.rarity.addItem(label,key)
         self.exchange=QComboBox();self.exchange.addItem('全部交换资格',None);self.exchange.addItem('资料允许交出',True);self.exchange.addItem('资料不允许交出',False)
         self.kind=QComboBox();self.kind.addItem('全部类别',None);self.kind.addItem('收藏品','RELIC');self.kind.addItem('开局助力','LEGACY')
         self.version=QComboBox();self.version.setToolTip('切换所属池与已核对的版本图鉴说明；未收录的条目保留固定国服说明，并逐项标明。不是本局生效证明。')
-        for widget in(self.rarity,self.exchange,self.kind,self.version):filters.addWidget(widget)
-        body.addLayout(filters)
-        self.category=QComboBox();self.category.addItem('全部游戏内类别',None);body.addWidget(self.category)
+        for i,widget in enumerate((self.exchange,self.kind,self.version)):filters.addWidget(widget,i//2,i%2)
+        self.category=QComboBox();self.category.addItem('全部游戏内类别',None);filters.addWidget(self.category,1,1)
+        body.addWidget(self.filter_box);self.filter_box.hide();self.more.toggled.connect(self.filter_box.setVisible)
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
-        self.entries=QListWidget();self.entries.setIconSize(QSize(42,42));body.addWidget(self.entries,1)
-        self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,2)
+        from .player_catalog_grid import CatalogGrid
+        self.entries=CatalogGrid();self.splitter=QSplitter(Qt.Orientation.Horizontal);self.splitter.addWidget(self.entries);body.addWidget(self.splitter,1)
+        self.reader=QWidget();reader=QVBoxLayout(self.reader);reader.setContentsMargins(8,0,0,0)
+        self.hide_reader=QPushButton('收起说明');reader.addWidget(self.hide_reader)
+        self.detail=QPlainTextEdit();self.detail.setReadOnly(True);reader.addWidget(self.detail,1)
+        self.splitter.addWidget(self.reader);self.splitter.setSizes([650,310]);self.reader.hide();self.hide_reader.clicked.connect(self.reader.hide)
+        bottom=QHBoxLayout();bottom.addWidget(QLabel('稀有度'));self.rarity_buttons=QButtonGroup(self);self.rarity_buttons.setExclusive(True)
+        for i,label in enumerate(('全部','N','R','SR','未分档')):
+            button=QPushButton(label);button.setCheckable(True);button.setChecked(i==0);self.rarity_buttons.addButton(button,i);bottom.addWidget(button)
+        self.rarity_buttons.idClicked.connect(self.rarity.setCurrentIndex);self.rarity.hide()
+        self.rarity.currentIndexChanged.connect(lambda i:self.rarity_buttons.button(i).setChecked(True))
+        bottom.addStretch();bottom.addWidget(QLabel('图标大小'));self.icon_scale=QSlider(Qt.Orientation.Horizontal);self.icon_scale.setRange(48,104);self.icon_scale.setValue(72);self.icon_scale.setMaximumWidth(160);bottom.addWidget(self.icon_scale);self.icon_scale.valueChanged.connect(self.entries.set_tile_size);body.addLayout(bottom)
         self.reference_button=QPushButton('查看取得来源与相关查询');body.addWidget(self.reference_button)
         self.exchange_button=QPushButton('查看此提供物对应的换入候选');body.addWidget(self.exchange_button);self.exchange_button.setVisible(False)
         from .player_exchange_view import request_inventory
         self.exchange_button.clicked.connect(lambda:request_inventory(self))
-        self.reference_button.clicked.connect(self.open_selected);self.entries.currentItemChanged.connect(self.selected)
+        self.reference_button.clicked.connect(self.open_selected);self.entries.currentItemChanged.connect(self.selected);self.entries.itemClicked.connect(lambda _:(self.reader.show(),self.splitter.setSizes([500,310])))
         from .player_item_hover import ItemHoverCard
         self.hover_card=ItemHoverCard(self);self.hover_card.poolRequested.connect(self.openPoolReference)
         self.hover_pending=None;self.hover_timer=QTimer(self);self.hover_timer.setSingleShot(True);self.hover_timer.setInterval(180);self.hover_timer.timeout.connect(self.show_hover)
@@ -116,17 +126,18 @@ class InventoryPanel(QWidget):
         self.entries.blockSignals(True);self.entries.clear()
         for row in rows or[]:
             icon=Path(__file__).parent/'data/relic-icons'/((row['icon']or'')+'.png')
-            item=QListWidgetItem(QIcon(str(icon))if icon.is_file()else QIcon(),row['name']+(' · 本局已确认'if row['held']else'')+' · '+RARITIES.get(row['rarity'],'未分档'))
-            item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
+            item=QListWidgetItem(QIcon(str(icon))if icon.is_file()else QIcon(),row['name'])
+            item.setToolTip(row['name']+' · '+RARITIES.get(row['rarity'],'未分档')+(' · 本局已确认'if row['held']else' · 资料条目'));item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
             if row['id']==selected:self.entries.setCurrentItem(item)
         if selected not in self.rows:self.entries.setCurrentRow(-1)
-        self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.selected()
+        self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
     def selected(self,*_):
         item=self.entries.currentItem();row=self.rows.get(item.data(Qt.ItemDataRole.UserRole))if item else None
         self.reference_button.setEnabled(row is not None)
         from .player_exchange_view import update_inventory_button
         update_inventory_button(self)
-        if not row:self.detail.clear();return
+        if not row:self.detail.clear();self.reader.hide();return
+        if self.sender()is self.entries:self.reader.show();self.splitter.setSizes([500,310])
         exchange='资料允许交换'if row['exchange']is True else'资料不允许交换'if row['exchange']is False else'交换资格未确认'
         text=row['name']+' · '+RARITIES.get(row['rarity'],'未分档')+'\n\n效果说明\n'+(row['usage']or'暂无说明')+'\n\n'+exchange+'；实际能否交换仍需对应事件条件。'
         doc=row.get('compendium')

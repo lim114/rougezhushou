@@ -215,6 +215,8 @@ class CompactAssistant(QDialog):
             parts.exchangeRequested.connect(lambda identity:self.open_exchange(panel.version.currentData(),identity))
             pages.addTab(panel,'收藏品');pages.addTab(tools,'战术道具');pages.addTab(parts,'零件箱资料')
             self.inventory_popup=ToolPopover('收藏品、战术道具与零件',pages,self)
+            from .player_catalog_grid import INVENTORY_STYLE
+            self.inventory_popup.setObjectName('inventoryWindow');self.inventory_popup.setStyleSheet(INVENTORY_STYLE)
             self.inventory_popup.panel=panel;self.inventory_popup.pages=pages;self.inventory_popup.parts=parts;self.inventory_popup.tools=tools;self.inventory_popup.resize(840,650)
         self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();self.inventory_popup.parts.refresh_exchange();return self.present(self.inventory_popup)
     def open_map(self):
