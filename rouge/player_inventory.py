@@ -8,22 +8,25 @@ from .record_flags import active_record
 
 RARITIES={'NORMAL':'低稀有度 · N','RARE':'中稀有度 · R','SUPER_RARE':'高稀有度 · SR','NONE':'未分档'}
 
-def inventory_rows(state,query='',held_only=True,*,rarity=None,exchange=None,kind=None):
-    packet=reference.packet()
+def inventory_rows(state,query='',held_only=True,*,rarity=None,exchange=None,kind=None,public_data=None,version=None,category=None,packet=...):
+    packet=reference.packet() if packet is ... else packet
     if packet is None:return None
+    from .public_compendium import resolve,effect_text
+    docs=resolve(public_data,version,packet) if public_data is not None else {}
     held={key for key,row in state.get('relics',{}).items()if active_record(row,'held')}
     result=[];q=query.strip().casefold()
     for row in reference.rows('relics',changes_only=False,reference=packet):
         item=row['value'].get('item')or{}
         if item.get('type')not in ('RELIC','LEGACY'):continue
-        usage=reference._plain(item.get('usage'))
+        doc=docs.get(row['id']);usage=effect_text(doc.get('effect') if doc else item.get('usage'))
+        if category is not None and (doc or{}).get('category')!=category:continue
         if held_only and row['id']not in held:continue
         if q and q not in (row['name']+' '+usage).casefold():continue
         if rarity is not None and item.get('rarity')!=rarity:continue
         if exchange is not None and item.get('canSacrifice')is not exchange:continue
         if kind is not None and item.get('type')!=kind:continue
         result.append({'id':row['id'],'name':row['name'],'usage':usage,'held':row['id']in held,
-            'icon':item.get('iconId'),'exchange':item.get('canSacrifice'),'rarity':item.get('rarity'),'kind':item.get('type')})
+            'icon':item.get('iconId'),'exchange':item.get('canSacrifice'),'rarity':item.get('rarity'),'kind':item.get('type'),'compendium':doc,'category':(doc or{}).get('category')})
     return result
 
 class InventoryPanel(QWidget):
@@ -38,12 +41,13 @@ class InventoryPanel(QWidget):
         for key,label in RARITIES.items():self.rarity.addItem(label,key)
         self.exchange=QComboBox();self.exchange.addItem('全部交换资格',None);self.exchange.addItem('资料允许交出',True);self.exchange.addItem('资料不允许交出',False)
         self.kind=QComboBox();self.kind.addItem('全部类别',None);self.kind.addItem('收藏品','RELIC');self.kind.addItem('开局助力','LEGACY')
-        self.version=QComboBox();self.version.setToolTip('只切换所属池的资料范围；效果说明仍使用旁边标明的固定国服基准。')
+        self.version=QComboBox();self.version.setToolTip('切换所属池与已核对的版本图鉴说明；未收录的条目保留固定国服说明，并逐项标明。不是本局生效证明。')
         for widget in(self.rarity,self.exchange,self.kind,self.version):filters.addWidget(widget)
         body.addLayout(filters)
+        self.category=QComboBox();self.category.addItem('全部游戏内类别',None);body.addWidget(self.category)
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
-        self.entries=QListWidget();self.entries.setIconSize(QSize(42,42));body.addWidget(self.entries,2)
-        self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1)
+        self.entries=QListWidget();self.entries.setIconSize(QSize(42,42));body.addWidget(self.entries,1)
+        self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,2)
         self.reference_button=QPushButton('查看取得来源与相关查询');body.addWidget(self.reference_button)
         self.exchange_button=QPushButton('查看此提供物对应的换入候选');body.addWidget(self.exchange_button);self.exchange_button.setVisible(False)
         from .player_exchange_view import request_inventory
@@ -56,7 +60,7 @@ class InventoryPanel(QWidget):
         self.entries.setMouseTracking(True);self.entries.viewport().installEventFilter(self);self.entries.itemEntered.connect(self.queue_hover)
         self.hover_card.entered.connect(self.leave_timer.stop);self.hover_card.left.connect(self.leave_timer.start)
         self.search.textChanged.connect(self.refresh);self.held.toggled.connect(self.refresh)
-        for widget in(self.rarity,self.exchange,self.kind,self.version):widget.currentIndexChanged.connect(self.refresh)
+        for widget in(self.rarity,self.exchange,self.kind,self.version,self.category):widget.currentIndexChanged.connect(self.refresh)
         self.refresh()
     def reload_sources(self):
         from . import public_archive
@@ -84,8 +88,20 @@ class InventoryPanel(QWidget):
         self.version.blockSignals(False)
     def refresh(self,*_):
         self.reload_sources()
+        from .public_compendium import complete
+        data=complete(self.source_index.data) if self.source_index else None
+        packet=reference.packet()
+        available=inventory_rows({},held_only=False,public_data=data,version=self.version.currentData(),packet=packet)
+        categories=list(dict.fromkeys(r['category'] for r in available or[] if r.get('category')))
+        options=[self.category.itemData(i) for i in range(1,self.category.count())]
+        if options!=categories:
+            prior=self.category.currentData();self.category.blockSignals(True);self.category.clear();self.category.addItem('全部游戏内类别',None)
+            for label in categories:self.category.addItem(label,label)
+            index=self.category.findData(prior)
+            if prior is not None and index<0:self.category.addItem('原类别在此范围无资料',prior);index=self.category.count()-1
+            self.category.setCurrentIndex(max(0,index));self.category.blockSignals(False)
         current=self.entries.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if current else None
-        rows=inventory_rows(self.run.state,self.search.text(),self.held.isChecked(),rarity=self.rarity.currentData(),exchange=self.exchange.currentData(),kind=self.kind.currentData());self.rows={r['id']:r for r in rows or[]}
+        rows=inventory_rows(self.run.state,self.search.text(),self.held.isChecked(),rarity=self.rarity.currentData(),exchange=self.exchange.currentData(),kind=self.kind.currentData(),public_data=data,version=self.version.currentData(),category=self.category.currentData(),packet=packet);self.rows={r['id']:r for r in rows or[]}
         render_key=repr(rows)
         if render_key!=self.render_key:self.render_rows(rows,selected);self.render_key=render_key
         if self.hover_card.identity not in self.rows:self.hover_card.dismiss()
@@ -93,7 +109,8 @@ class InventoryPanel(QWidget):
         from .player_exchange_view import update_inventory_button
         update_inventory_button(self)
         complete=self.run.state.get('inventory_verified')is True
-        self.status.setText('资料暂不可用，已清除旧列表。'if rows is None else f'找到{len(rows)}件。'+('本局收藏品已核对完整。'if complete else'本局尚未核对读全；未列出不代表没有。')+' 悬停查看所属池，点击阅读效果。说明基准：国服2026年10月16日；不是当前DLC完整目录或已生效证明。')
+        self.status.setText('资料暂不可用，已清除旧列表。'if rows is None else f'找到{len(rows)}件。'+('本局收藏品已核对完整。'if complete else'本局尚未核对读全；未列出不代表没有。')+' 悬停查看所属池，点击阅读效果与取得条件。拓展一图鉴按所选范围显示；其它条目另注明固定基准。不是当前DLC完整目录或已生效证明。')
+        if rows is not None and data is None:self.status.setText('公开图鉴暂不可用；下方只显示固定国服说明，未沿用旧的图鉴或掉落资料。'+self.status.text())
     def render_rows(self,rows,selected):
         offset=self.entries.verticalScrollBar().value()
         self.entries.blockSignals(True);self.entries.clear()
@@ -112,6 +129,15 @@ class InventoryPanel(QWidget):
         if not row:self.detail.clear();return
         exchange='资料允许交换'if row['exchange']is True else'资料不允许交换'if row['exchange']is False else'交换资格未确认'
         text=row['name']+' · '+RARITIES.get(row['rarity'],'未分档')+'\n\n效果说明\n'+(row['usage']or'暂无说明')+'\n\n'+exchange+'；实际能否交换仍需对应事件条件。'
+        doc=row.get('compendium')
+        if doc:
+            text=row['name']+' · '+(row.get('category')or'未分类')+'\n\n效果说明\n'+(row['usage']or'来源未说明')
+            text+='\n\n取得与解锁\n'+(reference._plain(doc.get('unlockConditionText'))or'来源未列解锁条件；不等于本局已解锁。')
+            if doc.get('obtainMethod'):text+='\n'+reference._plain(doc['obtainMethod'])
+            text+='\n\n'+exchange+'；实际能否交换仍需对应事件条件。'
+            if doc.get('description'):text+='\n\n藏品简介\n'+reference._plain(doc['description'])
+            text+='\n\n说明来源：路标档案馆 · 拓展一图鉴。列出的分档效果不代表本局当前档位；持有、解锁与生效均需另行确认。'
+        else:text+='\n\n说明来源：固定国服2026年10月16日；所选图鉴未确认收录此条，不能视为该范围完整说明。'
         if self.detail.toPlainText()!=text:self.detail.setPlainText(text)
     def open_selected(self):
         item=self.entries.currentItem()

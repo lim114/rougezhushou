@@ -82,7 +82,7 @@ class ArchiveDialog(QDialog):
         if distribution:notes += ['统计记录：'+str(distribution.get('sampleCount','未说明'))+'；更新时间：'+updated,'适用口径：'+str(distribution.get('scopeLabel')or distribution.get('observationSource')or'来源未说明'),str(distribution.get('notes')or'')]
         else:notes+=['该池暂无可核对的出现频率，概率未知。']
         self.pool_note.setPlainText('\n'.join(notes).replace('archive累计','归档累计').replace('观测边际分布','按候选出现次数统计的比例').replace('同局相关性','同一局内结果的关联'))
-        for row in model.members(self.data,pool,distribution):
+        for row in model.members(self.data,pool,distribution,version=self.version.currentData()):
             i=self.members.rowCount();self.members.insertRow(i)
             values=[row['name'],f"{row['rate']:.2%}"if row['rate']is not None else'未知',f"{row['count']}／{row['total']}"if row['rate']is not None else'未核对',row['effect']]
             for j,value in enumerate(values):cell=QTableWidgetItem(value);cell.setToolTip(value);self.members.setItem(i,j,cell)

@@ -24,6 +24,7 @@ def normalize(archive,events,provenance):
                 items.setdefault(item['itemId'],{'id':item['itemId'],'name':item['name'],'effect':item.get('usage')or'','icon':None})
             pools[version].append({key:deepcopy(row[key])for key in ('id','name','collectibles','description','poolKind','nodeBindings','usageChannels','sourceReferences','observedDistribution','frequencyColumns')if key in row})
     result={'schema':'rouge-public-archive-v1','provider':'路标档案馆','provenance':provenance,'retrieved_at':datetime.now(timezone.utc).isoformat(),'default_version':archive['pools'].get('defaultVersionId'),'versions':pools,'items':items,'events':deepcopy(events),'version_applicability':'来源未声明DLC2覆盖；不能视为当前版本完整资料。'}
+    result['versioned_collectibles']=deepcopy(archive['classifier'].get('versionedCollectibles',{}))
     validate(result);return result
 
 def validate(data):
@@ -37,6 +38,8 @@ def validate(data):
             if not isinstance(row.get('id'),str)or row['id']in seen or not isinstance(row.get('name'),str):raise ValueError('藏品池标识无效或重复。')
             seen.add(row['id'])
             if not isinstance(row.get('collectibles'),list)or any(not isinstance(i,str)for i in row['collectibles']):raise ValueError('藏品池成员异常。')
+    from .public_compendium import validate as validate_compendium
+    validate_compendium(data.get('versioned_collectibles',{}))
     events=data.get('events',{})
     if events.get('topicId')!='rogue_6'or not isinstance(events.get('floors'),list)or not isinstance(events.get('specialLayers'),list):raise ValueError('事件层数资料缺失。')
     return data
@@ -52,11 +55,14 @@ def fetch():
         values[kind]=json.loads(raw);proof[kind]={'url':url,'sha256':sha256(raw).hexdigest(),'bytes':len(raw)}
     return normalize(values['archive'],values['events'],proof)
 
-def load(path=DEFAULT):return validate(json.loads(Path(path).read_text('utf8')))
+def load(path=DEFAULT):
+    from .public_compendium import complete
+    return complete(validate(json.loads(Path(path).read_text('utf8'))))
 
 def pool_rows(data,version,query=''):
-    q=query.strip().casefold()
-    return [r for r in data['versions'].get(version,[])if not q or q in(r['name']+' '+(r.get('description')or'')+' '+' '.join(data['items'].get(k,{}).get('name',k)+' '+data['items'].get(k,{}).get('effect','')for k in r['collectibles'])).casefold()]
+    from .public_compendium import resolve,item
+    q=query.strip().casefold();docs=resolve(data,version) if q else {}
+    return [r for r in data['versions'].get(version,[])if not q or q in(r['name']+' '+(r.get('description')or'')+' '+' '.join(item(data,k,docs).get('name',k)+' '+item(data,k,docs).get('effect','')for k in r['collectibles'])).casefold()]
 
 def distributions(pool):
     # Separate overlapping observations; do not add counts or mix denominators.
@@ -66,16 +72,18 @@ def distributions(pool):
         if row.get('status')=='observed'and row.get('observedDistribution'):rows.append((key,{'autobattle':'自动战斗样本','blackflow-archive-cumulative':'归档累计样本'}.get(key,key if any('\u4e00'<=c<='\u9fff'for c in key)else'其他来源样本 '+str(len(rows)+1)),row['observedDistribution']))
     return rows
 
-def members(data,pool,distribution=None):
+def members(data,pool,distribution=None,*,version=None):
+    from .public_compendium import resolve,item as described_item,effect_text
+    docs=resolve(data,version) if version is not None else {}
     observed={r.get('itemId'):r for r in(distribution or{}).get('members',[])}
     result=[]
     for identity in pool['collectibles']:
-        item=data['items'].get(identity,{'name':'未命名物品','effect':''});row=observed.get(identity,{})
+        item=described_item(data,identity,docs);row=observed.get(identity,{})
         n=row.get('occurrenceCount');total=row.get('totalOccurrenceCount',(distribution or{}).get('totalOccurrenceCount'));rate=None
         if (distribution or{}).get('interpretation')=='observedFrequencyOnly'and type(n)is int and type(total)is int and 0<=n<=total and total>0:
             reported=row.get('occurrenceRate',n/total)
             if isinstance(reported,(int,float))and math.isfinite(reported)and math.isclose(reported,n/total,rel_tol=1e-6,abs_tol=1e-6):rate=n/total
-        result.append({'id':identity,'name':item['name'],'effect':_plain(item['effect']),'icon':item.get('icon'),'count':n,'total':total,'rate':rate})
+        result.append({'id':identity,'name':item['name'],'effect':effect_text(item['effect']),'icon':item.get('icon'),'count':n,'total':total,'rate':rate})
     return result
 
 def event_rows(data,floor,treehole=False,query='',node_type=None):

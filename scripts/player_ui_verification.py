@@ -21,6 +21,7 @@ def source_hashes():
     paths+=list((ROOT/'rouge/data/map-art').glob('*'))+list((ROOT/'rouge/data/map-event-art').glob('*'))
     paths+=[ROOT/'research/public-statistics-388/nodes.json']
     paths+=[ROOT/'scripts/update_cloud_index.py',ROOT/'research/public-reference-391/snapshot.json']
+    paths+=list((ROOT/'research/public-compendium-413').glob('*'))
     return {p.relative_to(ROOT).as_posix():sha256(p.read_bytes()).hexdigest()for p in sorted(set(paths))}
 
 def run(section,receipt):
@@ -77,6 +78,10 @@ def run(section,receipt):
                 require(win32gui.IsWindowVisible(feature_handle)and win32process.GetWindowThreadProcessId(feature_handle)[1]==os.getpid(),'visible_owned_actual_feature_native_window')
             assert shot_target.grab().save(str(shot))
             images.append({'file':image_name(shot),'sha256':sha256(shot.read_bytes()).hexdigest()})
+            if section==413:
+                detail=shot_target.panel.detail;detail.verticalScrollBar().setValue(detail.verticalScrollBar().maximum());gui.processEvents()
+                lower=receipt.with_name('acquisition-and-limits.png');assert shot_target.grab().save(str(lower))
+                images.append({'file':image_name(lower),'sha256':sha256(lower.read_bytes()).hexdigest()})
             if section==412:
                 idle=receipt.with_name('toolbar-idle.png');assert window.player_idle_toolbar_image.save(str(idle))
                 images.append({'file':image_name(idle),'sha256':sha256(idle.read_bytes()).hexdigest()})
