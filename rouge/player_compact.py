@@ -1,6 +1,6 @@
 """Video-style floating toolbar, with persistent read-only panels opened on demand."""
 from PySide6.QtCore import Qt,QPoint,QSize,QEvent
-from PySide6.QtGui import QIcon,QPixmap
+from PySide6.QtGui import QIcon,QPixmap,QRegion
 from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout,QLabel,QPushButton,QCheckBox,QToolButton,QApplication,QPlainTextEdit,QComboBox,QTabWidget
 from .player_overview import overview_facts
 from .player_context import recent_content
@@ -35,12 +35,8 @@ class CompactAssistant(QDialog):
     def __init__(self,owner,hotkey_path=None):
         super().__init__(owner,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint)
         self.owner=owner;self.active_popup=None;self.inventory_popup=None;self.map_popup=None;self.drag_origin=None;self.setWindowTitle('黑流树海助手')
-        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground,True);self.setFixedSize(410,82)
-        outer=QVBoxLayout(self);outer.setContentsMargins(3,3,3,3);shell=QWidget();shell.setObjectName('toolbarShell');outer.addWidget(shell)
-        shell.setStyleSheet('#toolbarShell{background:#28333d;border:1px solid #68747f;border-radius:18px;} QToolButton{background:#f5f7f9;color:#26323b;border:0;border-radius:20px;} QToolButton:hover{background:#bce8ef;} QToolButton:disabled{background:#8a959c;}')
-        body=QVBoxLayout(shell);body.setContentsMargins(12,7,12,5);bar=QHBoxLayout();bar.setSpacing(10);body.addLayout(bar)
-        self.grip=QLabel('⠿');self.grip.setFixedWidth(12);self.grip.setToolTip('按住工具条空白处拖动');self.grip.setStyleSheet('color:#dce6ee');bar.addWidget(self.grip)
-        self.buttons={};self.hover_label=QLabel('黑流树海助手 · 点图标展开');self.hover_label.setAlignment(Qt.AlignmentFlag.AlignCenter);self.hover_label.setStyleSheet('color:#e4edf3;font-size:11px;');body.addWidget(self.hover_label)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground,True)
+        self.buttons={};self.tool_buttons=[];self._dock_positioned=False
         overview=QWidget();layout=QVBoxLayout(overview);self.context=QLabel();self.context.setWordWrap(True);layout.addWidget(self.context);grid=QGridLayout();self.cards={}
         for i,name in enumerate(overview_facts(owner.run.state)):
             value=QLabel();value.setWordWrap(True);self.cards[name]=value;grid.addWidget(QLabel(name),i//2*2,i%2);grid.addWidget(value,i//2*2+1,i%2)
@@ -66,11 +62,40 @@ class CompactAssistant(QDialog):
         self.settings_popup=ToolPopover('工具设置',settings,self);self.settings_popup.resize(420,570)
         self.recent_notes_popup=None
         actions=[('本局概况','overview',lambda:self.present(self.overview_popup)),('地图与节点','map',self.open_map),('本局藏品','bag',self.open_inventory),('场景笔记','note',self.open_recent_notes),('干员与技能','calc',self.open_operators),('聊天分析','chat',self.open_chat),('工具设置','settings',lambda:self.present(self.settings_popup))]
-        for name,glyph,callback in actions:
-            button=QToolButton();button.setIcon(icon(glyph));button.setIconSize(QSize(23,23));button.setFixedSize(40,40);button.setToolTip(name);button.setAccessibleName(name);button.clicked.connect(callback);bar.addWidget(button);self.buttons[name]=button;button.installEventFilter(self)
+        from .player_toolbar import DockButton,ORDER,NAMES
+        by_name={name:(glyph,callback)for name,glyph,callback in actions}
+        for name,label in zip(ORDER,NAMES):
+            glyph,callback=by_name[name];button=DockButton(label,glyph,self)
+            button.setAccessibleName(name);button.clicked.connect(callback)
+            button.geometryChanged.connect(self._layout_dock);button.hoverChanged.connect(self._hover_tool);button.dragged.connect(self._drag_dock)
+            self.buttons[name]=button;self.tool_buttons.append(button)
         # Retain programmatic shortcut compatibility; statistics lives in the settings menu.
         self.buttons['节点统计']=stat
-        self.set_pinned(True);self.refresh()
+        self._layout_dock();self.set_pinned(True);self.refresh()
+    def _layout_dock(self):
+        from .player_toolbar import DIAMETER,GAP
+        right=self.x()+self.width();x=2;region=QRegion()
+        for button in self.tool_buttons:
+            button.move(x,2)
+            # Leave antialiased edge pixels intact; only the spaces between tools
+            # are removed from the native input region.
+            region=region.united(QRegion(button.geometry()));x+=button.width()+GAP
+        self.setFixedSize(x-GAP+2,DIAMETER+4);self.setMask(region)
+        if self._dock_positioned:self._move_dock(QPoint(right-self.width(),self.y()))
+    def _move_dock(self,position):
+        screen=QApplication.screenAt(position+self.rect().center())or self.screen();area=screen.availableGeometry()
+        self.move(max(area.left(),min(position.x(),area.right()-self.width()+1)),max(area.top(),min(position.y(),area.bottom()-self.height()+1)))
+    def _drag_dock(self,delta):self._move_dock(self.pos()+delta)
+    def _hover_tool(self,button):
+        for item in self.tool_buttons:item.set_expanded(item is button)
+    def showEvent(self,event):
+        super().showEvent(event)
+        if not self._dock_positioned:
+            area=self.screen().availableGeometry();self._dock_positioned=True
+            self._move_dock(QPoint(area.right()-self.width()-15,area.bottom()-self.height()-11))
+    def hideEvent(self,event):
+        for button in self.tool_buttons:button.set_expanded(False,animate=False)
+        super().hideEvent(event)
     def apply_hotkey(self):
         from .player_hotkey import parse_shortcut,save_preferences
         try:
@@ -214,8 +239,6 @@ class CompactAssistant(QDialog):
         self.owner.close()
         if self.owner.closing:QApplication.instance().quit()
     def eventFilter(self,obj,event):
-        if event.type()==QEvent.Type.Enter and isinstance(obj,QToolButton):self.hover_label.setText(obj.accessibleName())
-        elif event.type()==QEvent.Type.Leave and isinstance(obj,QToolButton):self.hover_label.setText('黑流树海助手 · 点图标展开')
         return super().eventFilter(obj,event)
     def mousePressEvent(self,event):
         if event.button()==Qt.MouseButton.LeftButton:self.drag_origin=event.globalPosition().toPoint()-self.pos();event.accept()
