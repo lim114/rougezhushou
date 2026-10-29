@@ -8,6 +8,9 @@ from .player_note_library import _regular
 from .player_note_preview import NotePreview
 
 NOTE_STYLE='''
+QWidget#sceneNotesSurface QComboBox{background:#e6e6eb;color:#303139;border:1px solid #cdcdd5;border-radius:9px;padding:5px;}
+QWidget#sceneNotesSurface QComboBox QAbstractItemView{background:white;color:#303139;selection-background-color:#cde5eb;selection-color:#25262b;}
+
 QWidget#sceneNotesSurface,QDialog#sceneNotesEditor,QDialog#sceneNotesWindow{background:#f5f5f7;color:#25262b;}
 QDialog#sceneNotesWindow{border:1px solid #dedee5;border-radius:12px;}
 QDialog#sceneNotesWindow QPushButton#popoverCloseButton{padding:0;border:0;background:transparent;color:#303139;}
@@ -41,6 +44,8 @@ class RecentNotesPanel(QWidget):
         self.setObjectName('sceneNotesSurface');self.setStyleSheet(NOTE_STYLE)
         body=QVBoxLayout(self);body.setContentsMargins(16,12,16,16);body.setSpacing(10)
         self.scene=QLabel();self.scene.setWordWrap(True);body.addWidget(self.scene)
+        from .player_note_selector import SceneNoteSelector
+        self.selector=SceneNoteSelector(self);self.selector.chosen.connect(self.select_context);body.addWidget(self.selector)
         bar=QHBoxLayout();self.follow=QCheckBox('跟随最近读取的场景');self.follow.setChecked(True);bar.addWidget(self.follow);bar.addStretch()
         self.reload=QPushButton('刷新笔记');bar.addWidget(self.reload);body.addLayout(bar)
         self.preview=NotePreview();self.preview.setMinimumHeight(180);body.addWidget(self.preview,1)
@@ -54,6 +59,9 @@ class RecentNotesPanel(QWidget):
 
     def _tick(self):
         if self.isVisible():self.refresh()
+
+    def select_context(self,content):
+        self.follow.setChecked(False);self.context=deepcopy(content);self.refresh(force=True)
 
     def refresh(self,*,force=False):
         current=scene_context(self.run.state.get('last_node_content'))
@@ -70,7 +78,8 @@ class RecentNotesPanel(QWidget):
             self.preview.read_markdown('')
             self.status.setText('读取到作战或事件名称后，这里会展示对应的本机笔记。');return
         self.context=target
-        self.scene.setText(('最近读取：'if self.follow.isChecked()else'已暂停跟随，正在阅读：')+target['title'])
+        manual=target.get('kind')in('reference-stage','reference-scene')
+        self.scene.setText(('手选固定资料：'if manual else'最近读取：'if self.follow.isChecked()else'已暂停跟随，正在阅读：')+target['title'])
         if not force and not changed and time.monotonic()<self._next_check:return
         self._next_check=time.monotonic()+1
         try:
@@ -82,7 +91,7 @@ class RecentNotesPanel(QWidget):
             from .player_file_messages import file_issue
             self.preview.read_markdown('');self._stamp=object();self.status.setText(file_issue(error));self.status.setToolTip(str(error));return
         self._stamp=stamp;self.preview.read_markdown(text);self.status.setToolTip('')
-        scope='未确认变体时，同名场景共用笔记。'if not(target.get('variant_id')or target.get('event_id'))else'按已读场景身份分别关联。'
+        scope='按准确固定资料分别保存；目录分类不证明本局出现。'if manual else'未确认变体时，同名场景共用笔记。'if not(target.get('variant_id')or target.get('event_id'))else'按已读场景身份分别关联。'
         self.status.setText(('本机已保存笔记。'if text else'还没有保存笔记，可点击下方按钮编写。')+scope+' 最近读取不表示当前所在位置；此处不自动保存。')
 
     def request_edit(self):

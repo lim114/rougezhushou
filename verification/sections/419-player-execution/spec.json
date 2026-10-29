@@ -1,0 +1,21 @@
+{
+  "title": "备忘录按层数、节点与准确场景查找",
+  "change": "在浅色备忘录中加入黑流树海主题、层数、节点类别和具体场景的连续筛选；可手动查阅或编辑准确资料笔记，同名变体分别保存，手选后暂停跟随，未确认层数单列。",
+  "limits": "采用既有固定关卡和事件目录分类，只用于查资料，不证明本局能遇到或当前所在位置；未分类场景不填入已知楼层。",
+  "criteria": [
+    "层数与节点过滤取交集，未知单列",
+    "同名条目依准确身份关联，手动阅读不改本局",
+    "刷新保留选择，来源失效清旧入口",
+    "未保存编辑不被手选覆盖"
+  ],
+  "additional_tests": [
+    "tests.test_player_recent_notes_411",
+    "tests.test_player_reference_notes_410"
+  ],
+  "next": "继续至425；每节实际功能与必要验证、要求和索引普通推送，425到期完整范围验收后暂停。",
+  "test": "tests.test_player_feature_419",
+  "native": "scripts/verify_player_feature_window_419.py",
+  "unit_receipt": "verification/sections/419-player-checks-attempt2/process.json",
+  "native_receipt": "verification/sections/419-player-window-attempt2/window.json",
+  "native_process_receipt": "verification/sections/419-player-window-process-attempt2/process.json"
+}
