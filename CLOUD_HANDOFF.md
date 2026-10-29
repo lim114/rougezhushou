@@ -5,7 +5,7 @@
 
 [本节验收回执](verification/sections/413.json)。
 
-已完成至413，后续414；本批状态 `PLAYER_SECTION413_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量425。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至413，后续414；本批状态 `PLAYER_SECTION413_PUBLISHED`。推进终点：未指定数字终点。下次定期全量425。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 
