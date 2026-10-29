@@ -1,8 +1,8 @@
-"""Explicit local Markdown notes; no game state, network, or automatic overwrite."""
+"""Local Markdown notes with context-bound automatic saving and conflict refusal."""
 from hashlib import sha256
 from pathlib import Path
 import json,os,tempfile
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QLabel,QPlainTextEdit,QPushButton,QHBoxLayout,QTabWidget
+from PySide6.QtWidgets import QDialog,QVBoxLayout,QLabel,QPlainTextEdit,QPushButton,QHBoxLayout,QTabWidget,QCheckBox
 from PySide6.QtCore import QTimer,Signal
 from .player_note_preview import NotePreview
 from copy import deepcopy
@@ -59,7 +59,10 @@ class NotesDialog(QDialog):
         self.preview_timer=QTimer(self);self.preview_timer.setSingleShot(True);self.preview_timer.setInterval(180);self.preview_timer.timeout.connect(self.refresh_preview)
         self.pages.currentChanged.connect(self.refresh_preview)
         self.preview.linkBlocked.connect(self.blocked_link)
-        self.status=QLabel('笔记只保存在本机，点击保存后写入；不会上传或加入聊天。');self.status.setWordWrap(True);body.addWidget(self.status)
+        self.autosave=QCheckBox('自动保存在本机');self.autosave.setChecked(True);body.addWidget(self.autosave)
+        self.autosave_timer=QTimer(self);self.autosave_timer.setSingleShot(True);self.autosave_timer.setInterval(900);self.autosave_timer.timeout.connect(self.save_pending);self.pending_key=None
+        self.autosave.toggled.connect(self.set_autosave)
+        self.status=QLabel('编辑停顿后自动保存在本机；不会上传或加入聊天。');self.status.setWordWrap(True);body.addWidget(self.status)
         bar=QHBoxLayout();self.save_button=QPushButton('保存笔记');self.discard_button=QPushButton('放弃未保存修改');bar.addWidget(self.save_button);bar.addWidget(self.discard_button);body.addLayout(bar)
         self.reference_button=QPushButton('查看笔记对应的固定资料（打开时核对）');bar.addWidget(self.reference_button);self.reference_button.hide()
         from .player_reference_notes import request_note_source
@@ -71,7 +74,15 @@ class NotesDialog(QDialog):
         return export_editor(self)
     def changed(self):
         self.dirty=True;self.status.setText('有未保存修改；仍绑定上方场景，不会随识别结果转移。')
+        if self.autosave.isChecked()and self.key is not None:self.pending_key=self.key;self.autosave_timer.start()
         if self.pages.currentIndex()==1:self.preview_timer.start()
+    def set_autosave(self,value):
+        self.autosave_timer.stop();self.pending_key=None
+        if value and self.dirty and self.key is not None:self.pending_key=self.key;self.autosave_timer.start()
+    def save_pending(self):
+        if self.autosave.isChecked()and self.dirty and self.key is not None and self.pending_key==self.key:
+            if not self.save():
+                self.autosave.setChecked(False);self.status.setText(self.status.text()+' 自动保存已暂停；编辑内容仍保留，请核对后手动处理。')
     def refresh_preview(self,*_):
         if self.pages.currentIndex()==1:self.preview.read_markdown(self.editor.toPlainText())
     def blocked_link(self):
@@ -89,6 +100,7 @@ class NotesDialog(QDialog):
         sync_note_source(self)
         self.status.setText('本地笔记已读取；新笔记尚未保存。'if not text else'本地已保存；不会上传。');self.refresh_preview();return True
     def save(self):
+        self.autosave_timer.stop();self.pending_key=None
         if self.key is None:return False
         try:self.digest=self.store.save(self.key,self.editor.toPlainText(),self.digest)
         except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return False
@@ -99,6 +111,7 @@ class NotesDialog(QDialog):
         except(OSError,ValueError,UnicodeError,TypeError):warning+='正文已保存，但场景标签未能更新；可继续从当前编辑页读取。'
         self.status.setText('已保存到本机；不会上传。'+warning);return True
     def discard(self):
+        self.autosave_timer.stop();self.pending_key=None
         if self.key is None:return
         try:text,digest=self.store.read(self.key)
         except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return
@@ -107,5 +120,6 @@ class NotesDialog(QDialog):
         from .player_file_messages import file_issue
         self.status.setText(file_issue(error));self.status.setToolTip(str(error))
     def closeEvent(self,event):
+        if self.dirty and self.autosave.isChecked():self.save_pending()
         if self.dirty:self.status.setText('修改尚未保存，请保存或放弃后关闭。');event.ignore()
-        else:event.accept()
+        else:self.autosave_timer.stop();event.accept()

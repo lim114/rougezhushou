@@ -55,7 +55,11 @@ def run(section,receipt):
             from rouge import public_archive
             calls['public_reference_read']=0
             stack.enter_context(patch.object(public_archive,'fetch',side_effect=forbidden('public_reference_read')))
-            window=a.MainWindow();window.setWindowTitle(f'第{section}节 · 玩家界面隔离验证');window.resize(1100,790);window.show();gui.processEvents()
+            window=a.MainWindow()
+            # Historical scenarios explicitly exercise the retained manual-save
+            # mode. Section 420 verifies automatic saving separately.
+            if section<420:window.player_notes.autosave.setChecked(False)
+            window.setWindowTitle(f'第{section}节 · 玩家界面隔离验证');window.resize(1100,790);window.show();gui.processEvents()
             h=int(window.winId());require(win32gui.IsWindowVisible(h)and win32process.GetWindowThreadProcessId(h)[1]==os.getpid(),'visible_owned_native_window')
             state=deepcopy(window.run.state);ws=window.centralWidget()
             require(tuple(ws.tabText(i)for i in range(ws.count()))==GROUPS,'five_player_groups_only')

@@ -16,7 +16,7 @@ QDialog#sceneNotesWindow{border:1px solid #dedee5;border-radius:12px;}
 QDialog#sceneNotesWindow QPushButton#popoverCloseButton{padding:0;border:0;background:transparent;color:#303139;}
 QDialog#sceneNotesWindow QPushButton#popoverCloseButton:hover{background:#e6e6eb;}
 QWidget#sceneNotesSurface QLabel,QDialog#sceneNotesEditor QLabel,QDialog#sceneNotesWindow QLabel{color:#303139;background:transparent;}
-QWidget#sceneNotesSurface QCheckBox,QDialog#sceneNotesEditor QTabWidget{color:#40414a;}
+QWidget#sceneNotesSurface QCheckBox,QDialog#sceneNotesEditor QCheckBox,QDialog#sceneNotesEditor QTabWidget{color:#40414a;}
 QWidget#sceneNotesSurface QTextBrowser,QDialog#sceneNotesEditor QPlainTextEdit,QDialog#sceneNotesEditor QTextBrowser{
  background:white;color:#25262b;border:1px solid #dedee5;border-radius:12px;padding:12px;selection-background-color:#cde5eb;selection-color:#25262b;}
 QWidget#sceneNotesSurface QPushButton,QDialog#sceneNotesEditor QPushButton{

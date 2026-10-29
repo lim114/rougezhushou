@@ -2422,6 +2422,7 @@ class MainWindow(QMainWindow):
         return panel
 
     def closeEvent(self, event):
+        if hasattr(self,'player_notes')and self.player_notes.dirty and self.player_notes.autosave.isChecked():self.player_notes.save_pending()
         if hasattr(self,'player_notes')and self.player_notes.dirty:
             self.player_notes.show();self.player_notes.status.setText('笔记尚未保存，请保存或放弃后退出助手。');event.ignore();return
         if hasattr(self,'player_notes'):self.player_notes.close()
