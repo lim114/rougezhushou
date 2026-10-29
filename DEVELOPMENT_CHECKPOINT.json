@@ -20,7 +20,7 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section: commit and ordinary push origin codex/p2-development; full available validation after125 then every15 sections",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": false,
+    "development_paused_by_latest_user_request": true,
     "summary_interval": 5,
     "stop_after_section": 410,
     "each_section_requires_functional_progress": true,
@@ -35,14 +35,14 @@
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
     "current_user_batch_target_section": 410,
-    "current_user_batch_completed": false,
+    "current_user_batch_completed": true,
     "requirements_synced_each_section": true,
     "atomic_section_source_receipt_status_commit": true,
     "verify_remote_head_after_each_push": true,
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
     "repair_full_validation_after_functional_260": true,
-    "new_functional_sections_paused": false,
+    "new_functional_sections_paused": true,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
@@ -2652,12 +2652,12 @@
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
-    "section": 409,
-    "scope": "previous_functional_section",
+    "section": 410,
+    "scope": "current_functional_section",
     "binding": "verified_remote_commit",
-    "commit": "67baefcab287e2ea0b8379f4bcf68b9f1d8daabb",
-    "proof": "verification/sections/409-publication.json",
-    "proof_sha256": "6a99d55b57c234069255514fe01761c1bff4ef20dbd3827241b7583eb8369ec5"
+    "commit": "b600b1d00a53af72e0b885084682e52aac4250e4",
+    "proof": "verification/sections/410-publication.json",
+    "proof_sha256": "d792c5fdb2cf254fb81fe13f6f8b36eade59dfbc05bdbe66607fbeabc83c9d28"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -2903,7 +2903,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "PLAYER_SECTION410_PUBLICATION_PENDING",
+  "batch_status": "PLAYER_SECTION410_PUBLISHED_PAUSED",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3053,11 +3053,11 @@
     "start": 395,
     "end": 410,
     "next_full_validation_after": 425,
-    "status": "PLAYER_SECTION410_PUBLICATION_PENDING",
+    "status": "PLAYER_SECTION410_PUBLISHED_PAUSED",
     "completed_sections": 410,
     "next_section": 411,
     "next_section_started": false,
-    "batch_closed": false,
+    "batch_closed": true,
     "receipt": "verification/sections/410.json"
   },
   "current_full140_checkpoint": {
@@ -9065,9 +9065,11 @@
   },
   "cloud_publication_closeout": {
     "section": 410,
-    "current_commit_kind": "functional section pending actual publication",
+    "functional_commit": "b600b1d00a53af72e0b885084682e52aac4250e4",
+    "proof": "verification/sections/410-publication.json",
+    "current_commit_kind": "publication metadata only",
     "next_section_started": false,
-    "development_paused": false
+    "development_paused": true
   },
   "historical_before381_batch": {
     "current_batch": {
