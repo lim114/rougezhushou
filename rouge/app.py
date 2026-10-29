@@ -2437,6 +2437,9 @@ class MainWindow(QMainWindow):
         self.capture.close()
         self.desktop.close()
         event.accept()
+        # The compact Tool window is not a Qt primary window. With the main
+        # window hidden, accepting WM_CLOSE alone may leave its event loop alive.
+        if getattr(self,'compact_window',None)is not None:QApplication.instance().quit()
 
 def main():
     app=QApplication(sys.argv)

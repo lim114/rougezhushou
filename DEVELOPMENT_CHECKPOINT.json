@@ -84,7 +84,7 @@
     "dlc1_missing_content_audit_pending": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 416,
+  "completed_sections": 417,
   "sections": [
     {
       "number": 1,
@@ -2569,12 +2569,18 @@
       "completion_ref": "player-section-416",
       "topic": "助手小窗绑定游戏窗口并跟随移动与隐藏",
       "verification": "verification/sections/416.json"
+    },
+    {
+      "number": 417,
+      "completion_ref": "player-section-417",
+      "topic": "游戏画面五秒悬停触发藏品来源提示",
+      "verification": "verification/sections/417.json"
     }
   ],
-  "next_section": 417,
+  "next_section": 418,
   "next_action": "继续至425；每节实际功能与必要验证、要求和索引普通推送，425到期完整范围验收后暂停。",
   "full_validation_due": false,
-  "windows_native_validation": "当前416：15项必要检查、19项原生窗口检查通过；隔离状态与九类外部操作零。410全量仅历史，不证明改后源码；下次425。",
+  "windows_native_validation": "当前417：39项必要检查、19项原生窗口检查通过；隔离状态与九类外部操作零。410全量仅历史，不证明改后源码；下次425。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
   "deferred_problems": [
     {
@@ -2689,14 +2695,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 416,
-    "verification": "verification/sections/416.json",
+    "section": 417,
+    "verification": "verification/sections/417.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 416,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "2bb9c4a4c8984d93d4c6e69e175b444a77bc278f",
     "proof": "verification/sections/416-publication.json",
@@ -2946,7 +2952,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "PLAYER_SECTION416_PUBLISHED",
+  "batch_status": "PLAYER_SECTION417_PUBLICATION_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3096,18 +3102,19 @@
     413,
     414,
     415,
-    416
+    416,
+    417
   ],
   "current_batch": {
     "start": 414,
     "end": 425,
     "next_full_validation_after": 425,
-    "status": "PLAYER_SECTION416_PUBLISHED",
-    "completed_sections": 416,
-    "next_section": 417,
+    "status": "PLAYER_SECTION417_PUBLICATION_PENDING",
+    "completed_sections": 417,
+    "next_section": 418,
     "next_section_started": false,
     "batch_closed": false,
-    "receipt": "verification/sections/416.json"
+    "receipt": "verification/sections/417.json"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -3387,7 +3394,7 @@
     "long_term_target_not_completed": 400
   },
   "historical_before_section261_latest_section_environment": "Linux offline/real Qt widgets; Wine where specifically recorded; original Windows and private state unavailable here.",
-  "latest_functional_section": 416,
+  "latest_functional_section": 417,
   "current_completed_section_kind": "functional_section",
   "historical_previous260_verified_save_before261_publication": {
     "section": 260,
@@ -9090,14 +9097,14 @@
     "development_paused": false
   },
   "current_section_validation": {
-    "section": 416,
-    "receipt": "verification/sections/416.json",
+    "section": 417,
+    "receipt": "verification/sections/417.json",
     "full_suite_rerun": false,
     "last_full_receipt": "verification/full-410/summary.json",
     "last_full_receipt_is_historical_for_current_changes": true
   },
   "latest_section_environment": {
-    "section": 416,
+    "section": 417,
     "native_windows_verified": true,
     "native_game_or_chat_verified": false,
     "current_section_full_rerun": false,
@@ -9113,10 +9120,8 @@
     "proof_sha256": "3dde2df8e2ee658fafa8c831b90b259d6e90eed797c9bd1bbe45324e3d6926a8"
   },
   "cloud_publication_closeout": {
-    "section": 416,
-    "functional_commit": "2bb9c4a4c8984d93d4c6e69e175b444a77bc278f",
-    "proof": "verification/sections/416-publication.json",
-    "current_commit_kind": "publication metadata only",
+    "section": 417,
+    "current_commit_kind": "functional section pending actual publication",
     "next_section_started": false,
     "development_paused": false
   },
@@ -9350,7 +9355,7 @@
     "path": "IMPLEMENTATION_STRATEGY.md",
     "sha256": "6a963c1f61c561e5520c21c030c97f36deec41c51f1c75255ad4b3834afdbe97",
     "status": "ongoing_functional_delivery_not_full_video_completion",
-    "last_functional_section": 416,
+    "last_functional_section": 417,
     "next_functional_section_started": false
   }
 }

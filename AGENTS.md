@@ -1,13 +1,13 @@
 <!-- player-batch-current:start -->
-## 当前第416节 + 助手小窗绑定游戏窗口并跟随移动与隐藏
+## 当前第417节 + 游戏画面五秒悬停触发藏品来源提示
 
-工具条与已打开的玩家浮窗绑定经PID核对的游戏客户端范围，跟随窗口移动/缩放并限制在可用屏幕内；最小化、关闭或失去绑定时隐藏，恢复后无激活显示。支持暂停跟随，未找到游戏时保留独立设置入口。
+在绑定游戏客户区只读观察鼠标约5秒，商店优先读取商品名称并按当前文字位置推导商品格，与固定目录精确对应；名称不完整或有歧义时不强行识图。无名称的纯图标场景以多尺度图像作补充。异步重新取景核对后，无激活显示来源卡，且限制在游戏可见范围内。
 
-本节交付窗口绑定与生命周期，不把内部目录悬停当作游戏内悬停。自有原生窗口验证几何、DPI换算与隐藏恢复，不冒充真实游戏采样或5秒藏品识别通过。
+约5秒为触发等待，首次文字读取仍需额外时间；当前实际商店文字样例、无图标场景及隔离窗口分别验证，不称全部页面或分辨率全覆盖。文字有歧义时拒绝补猜；同图未明变体保留未知。
 
-实际15项必要检查、19项原生窗口唯一检查通过，原图逐张查看；只用临时状态，九类外部操作零。410全量仅为历史来源，下一425完整范围不缩减。 P3/P2/P1未全部完成，识别最后。
+实际39项必要检查、19项原生窗口唯一检查通过，原图逐张查看；只用临时状态，九类外部操作零。410全量仅为历史来源，下一425完整范围不缩减。 P3/P2/P1未全部完成，识别最后。
 
-本节功能提交2bb9c4a4c8984d93d4c6e69e175b444a77bc278f已普通推送并核对真实远端及669份公开文件。后续417尚未启动，本批终点425。
+<!-- player-publication-pending -->普通推送与远端核对待完成。
 <!-- player-batch-current:end -->
 
 ## 当前续接 · 第380节 + “物欲拮抗者” · 指令、屏障与斯第奇
@@ -153,3 +153,8 @@ User requirement reaffirmed globally on 2026-10-07 (originally recorded on 2026-
 - Keep the simple test interface available. Validate the actual project window when the change needs UI verification; full window validation remains part of the full-check cadence.
 - Automation 1-3 was deleted at the user's request. Do not recreate it.
 - Do not start overlapping edits or spawn agents unless explicitly authorized by the user or another applicable instruction.
+
+
+## 商店藏品识别口径（2026-10-30用户更正）
+
+商店有商品名称，优先读取文字并对应目录；由当前文字排列确定商品格，不使用固定屏幕坐标或就近标题替代。名称读不全或同名有歧义时保留未确认，不强行改用图标猜测。无名称的图标场景才以有来源图像补充。新画面可复用已核验且整字节未变的名称区域；改变后必须重新核对，不降低置信门槛。

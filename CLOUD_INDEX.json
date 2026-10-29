@@ -1,11 +1,11 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 416,
-  "next_section": 417,
-  "current_section_label": "第416节 + 助手小窗绑定游戏窗口并跟随移动与隐藏",
-  "current_completed_change": "工具条与已打开的玩家浮窗绑定经PID核对的游戏客户端范围，跟随窗口移动/缩放并限制在可用屏幕内；最小化、关闭或失去绑定时隐藏，恢复后无激活显示。支持暂停跟随，未找到游戏时保留独立设置入口。",
-  "batch_status": "PLAYER_SECTION416_PUBLISHED",
+  "completed_sections": 417,
+  "next_section": 418,
+  "current_section_label": "第417节 + 游戏画面五秒悬停触发藏品来源提示",
+  "current_completed_change": "在绑定游戏客户区只读观察鼠标约5秒，商店优先读取商品名称并按当前文字位置推导商品格，与固定目录精确对应；名称不完整或有歧义时不强行识图。无名称的纯图标场景以多尺度图像作补充。异步重新取景核对后，无激活显示来源卡，且限制在游戏可见范围内。",
+  "batch_status": "PLAYER_SECTION417_PUBLICATION_PENDING",
   "next_full_validation_after": 425,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
   "latest_full_receipt": "verification/full-410/summary.json",
@@ -16,7 +16,7 @@
   "current_batch_target_section": 425,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "ad5f7e5ba5291b0a46a02d312272e3171e0ae820dcb8824ddc5b28153ed5dfa6",
+    "sha256": "3b252aa25788dc859cfa78884310d519b7d3d09433d7669ca92beb71e6bd47c8",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2503,16 +2503,22 @@
       "completion_ref": "player-section-416",
       "topic": "助手小窗绑定游戏窗口并跟随移动与隐藏",
       "verification": "verification/sections/416.json"
+    },
+    {
+      "number": 417,
+      "completion_ref": "player-section-417",
+      "topic": "游戏画面五秒悬停触发藏品来源提示",
+      "verification": "verification/sections/417.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "554dcc3142710ec35cbba8277e124eedb24c0483b1e56ddba4ebfec07c337ef4",
-    "PROJECT_PROGRESS.md": "610d57ced7e05591efa8e1e09662066e5969c853cff56e9b640dd1c2a7c249a7",
-    "WORK_IN_PROGRESS.md": "a0c2e6c263113be43b737f3682edca285368c3f51185b5d4f2b528fa95008536",
-    "PROJECT_COMPLETED.md": "c602af50cb746748ff0257f5fd8276fdb5a5984d5b96be2af9c205b878731225",
-    "AGENTS.md": "81832f9f0c69a03103246e1ed21540efe70f63850c5172985ff8be3288db6631",
-    "PROJECT_REQUIREMENTS.md": "ad5f7e5ba5291b0a46a02d312272e3171e0ae820dcb8824ddc5b28153ed5dfa6",
-    "verification/sections/416.json": "b11ea8cbcf61aa218d55357672cf9b11cad3973ca2391020a94764cad8d23116"
+    "DEVELOPMENT_CHECKPOINT.json": "36282aded7a1053b36642d66a70485a5906f2eb3f0e76406cc73acf21827948b",
+    "PROJECT_PROGRESS.md": "f8e2a15d8bef71ee6b2b8d9c5ccb8e929d07f264c82071628dd7e8e54db74273",
+    "WORK_IN_PROGRESS.md": "27597ac8d559c7ccee82eab33d583a48a221378ea2cccc4c105a4bf44cb52e85",
+    "PROJECT_COMPLETED.md": "a78e6917cb840a53f7905afee4986ed510dcada3a4f1a0b505b673b7e02f85b6",
+    "AGENTS.md": "9aed1c2e5122561041e95fea6212d7ccd4fa6bba29c0b6eaea0cc0e06cfce91a",
+    "PROJECT_REQUIREMENTS.md": "3b252aa25788dc859cfa78884310d519b7d3d09433d7669ca92beb71e6bd47c8",
+    "verification/sections/417.json": "e30db0360b9318083cfdaeb0a205a7222b1cf9b31554238185ceed662408bed0"
   },
   "private_state_included": false
 }

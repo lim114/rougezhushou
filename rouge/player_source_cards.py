@@ -2,6 +2,7 @@
 from . import public_archive
 
 def source_cards(index,version,identity):
+    from .player_item_sources import pool_label
     pools=[];nodes=[]
     for pool in index.pools(version,identity)if index else[]:
         observations=public_archive.distributions(pool)
@@ -11,7 +12,9 @@ def source_cards(index,version,identity):
             row=next((r for r in public_archive.members(index.data,pool,summary,version=version)if r['id']==identity),None)
             if row and row['rate']is not None:frequency=f"历史候选频率 {row['rate']:.2%}";counts=f"来源汇总：{row['count']}／{row['total']}次候选出现"
         elif observations:frequency='有分组统计，展开查看'
-        record={'id':pool['id'],'title':pool['name'],'frequency':frequency,'counts':counts,'version':version}
+        if pool['name'].startswith('失与得：')and pool['name'].endswith('输入'):
+            frequency='可作为交换提供物，并非奖励池';counts='仅表示此集合允许交出，不表示能够从中获得。'
+        record={'id':pool['id'],'title':pool_label(pool),'frequency':frequency,'counts':counts,'version':version}
         pools.append(record)
         for name in dict.fromkeys(b.get('nodeName')for b in pool.get('nodeBindings',[])if b.get('nodeName')):
             nodes.append({**record,'title':name,'pool_name':pool['name']})

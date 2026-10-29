@@ -91,7 +91,7 @@ class GameWindowBinding(QObject):
         self.restore();self.previous=snapshot
         self.status='已绑定游戏窗口；玩家小窗随客户端移动。'
     def tick(self):
-        if self.owner.closing or not self.enabled:return
+        if self.owner.closing:return
         self.apply(self.api.read(self.target()))
         label=getattr(self.companion,'binding_status',None)
         if label is not None:label.setText(self.status)
