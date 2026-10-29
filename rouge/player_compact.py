@@ -121,6 +121,8 @@ class CompactAssistant(QDialog):
         app=QApplication.instance()
         if app.activeModalWidget()is not None:return
         if self.hidden_windows is None:
+            self.game_hover.invalidate()
+            self.game_binding.suspended=[]
             if self.map_popup is not None:
                 self.map_popup.panel.hover_timer.stop();self.map_popup.panel.leave_timer.stop()
             self.hidden_windows=[]

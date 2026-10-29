@@ -1,5 +1,6 @@
 """Shop names first: infer the current card grid from text, not fixed coordinates."""
 import unicodedata
+import time
 from hashlib import sha256
 import numpy as np
 from . import expansion_reference
@@ -59,7 +60,7 @@ def shop_target(raw,names,point,shape):
             'source':'shop_exact_name_and_current_grid'},True
 
 class ShopNameReader:
-    def __init__(self,engine=None):self.engine=engine;self.is_shop=False
+    def __init__(self,engine=None):self.engine=engine;self.is_shop=False;self.cached=None
     def ocr(self,image):
         if self.engine is None:
             from rapidocr_onnxruntime import RapidOCR
@@ -68,7 +69,21 @@ class ShopNameReader:
     def identify(self,image,point):
         packet=expansion_reference.packet()
         if packet is None:self.is_shop=False;return None
-        item,self.is_shop=shop_target(self.ocr(image),name_catalog(packet),point,image.shape)
+        names=name_catalog(packet);now=time.monotonic();cached=self.cached
+        if cached and now-cached['at']<30 and cached['shape']==image.shape and all(sha256(image[y:v,x:u].tobytes()).digest()==digest for x,y,u,v,digest in cached['patches']):
+            raw=cached['raw']
+        else:
+            raw=self.ocr(image);self.cached=None
+            _,shop=shop_target(raw,names,point,image.shape)
+            if shop:
+                patches=[];h,w=image.shape[:2]
+                for box,label,score in raw:
+                    label=canonical(label)
+                    if score<.85 or not(label in names or any(k in label for k in ('购买','当前余额','前瞻性投资','刷新','编队'))):continue
+                    x=max(0,int(min(p[0]for p in box))-2);y=max(0,int(min(p[1]for p in box))-2);u=min(w,int(max(p[0]for p in box))+2);v=min(h,int(max(p[1]for p in box))+2)
+                    if x<u and y<v:patches.append((x,y,u,v,sha256(image[y:v,x:u].tobytes()).digest()))
+                if patches:self.cached={'at':now,'shape':image.shape,'raw':raw,'patches':patches}
+        item,self.is_shop=shop_target(raw,names,point,image.shape)
         if item is not None:
             x0,y0,x1,y1=item['name_bounds'];item['name_pixels_sha256']=sha256(image[y0:y1,x0:x1].tobytes()).hexdigest()
         return item

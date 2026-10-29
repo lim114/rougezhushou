@@ -36,7 +36,7 @@ class GameHover(QObject):
         try:session.connect(request['target']);return session.capture(timeout=2.)
         finally:session.close()
     def tick(self):
-        if self.owner.closing or not self.enabled:self.invalidate();return
+        if self.owner.closing or not self.enabled or getattr(self.companion,'hidden_windows',None)is not None:self.invalidate();return
         binding=self.companion.game_binding;snapshot=binding.snapshot
         if not snapshot or not snapshot['active']:
             if self.gate.key is not None or self.last_request is not None:self.invalidate()
@@ -86,7 +86,7 @@ class GameHover(QObject):
         Thread(target=work,daemon=True,name='rouge-game-hover').start()
     def accept(self,result):
         self.busy=False;request=result['request'];item=result['item'];self.last_report={'reason':result.get('reason'),'elapsed_seconds':result.get('elapsed_seconds'),'item_found':item is not None,'accepted':False}
-        if self.owner.closing or not self.enabled or item is None or item.get('confirmed')is not True or request['serial']!=self.serial:return
+        if self.owner.closing or not self.enabled or getattr(self.companion,'hidden_windows',None)is not None or item is None or item.get('confirmed')is not True or request['serial']!=self.serial:return
         if self.owner.run.recognition_context().get('run_id')!=request['run_id']:self.last_report['reason']='本局已改变';return
         if not isinstance(request.get('captured_at'),(int,float))or not 0<=time.time()-request['captured_at']<=2:self.last_report['reason']='复核画面已过期';return
         target=self.companion.game_binding.target()

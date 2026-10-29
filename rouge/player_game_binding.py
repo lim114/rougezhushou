@@ -69,6 +69,7 @@ class GameWindowBinding(QObject):
     def apply(self,snapshot):
         self.snapshot=snapshot
         if not self.enabled:return
+        if getattr(self.companion,'hidden_windows',None)is not None:return
         if snapshot is None or not snapshot['active']:
             if self.ever_bound:
                 for w in self.surfaces():

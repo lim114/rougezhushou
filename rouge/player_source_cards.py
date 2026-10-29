@@ -21,7 +21,7 @@ def source_cards(index,version,identity):
     return {'pools':pools,'nodes':nodes}
 
 from PySide6.QtCore import Signal,Qt
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QGridLayout,QLabel,QPushButton,QScrollArea
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QGridLayout,QLabel,QPushButton,QScrollArea,QSizePolicy
 
 class SourceCards(QScrollArea):
     poolChosen=Signal(str)
@@ -36,10 +36,13 @@ class SourceCards(QScrollArea):
             if item.widget():item.widget().deleteLater()
         for key,title in (('pools','藏品池'),('nodes','可获取节点')):
             label=QLabel(title);label.setTextFormat(Qt.TextFormat.PlainText);self.body.addWidget(label)
-            host=QWidget();grid=QGridLayout(host);grid.setContentsMargins(0,0,0,0);grid.setSpacing(7);self.body.addWidget(host)
+            host=QWidget();grid=QGridLayout(host);grid.setContentsMargins(0,0,0,0);grid.setSpacing(7);grid.setColumnStretch(0,1);grid.setColumnStretch(1,1);self.body.addWidget(host)
             for i,row in enumerate(groups[key]):
                 caption=row['title']+'\n'+(row.get('pool_name','')+'\n'if key=='nodes'else'')+row['frequency']
-                button=QPushButton(caption);button.setCheckable(True);button.setMinimumHeight(62);button.setToolTip(row['counts']or'未核对完整次数与分母；不是本局概率。')
+                button=QPushButton();button.setAccessibleName(caption);button.setCheckable(True);button.setMinimumHeight(62);button.setMinimumWidth(0);button.setSizePolicy(QSizePolicy.Policy.Ignored,QSizePolicy.Policy.Minimum)
+                label=QLabel(caption,button);label.setTextFormat(Qt.TextFormat.PlainText);label.setWordWrap(True);label.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents);label.setSizePolicy(QSizePolicy.Policy.Ignored,QSizePolicy.Policy.Preferred)
+                box=QVBoxLayout(button);box.setContentsMargins(10,8,10,8);box.addWidget(label);button.caption=label
+                button.setToolTip(row['counts']or'未核对完整次数与分母；不是本局概率。')
                 button.setProperty('poolIdentity',row['id']);button.clicked.connect(lambda _,identity=row['id']:self.poolChosen.emit(identity));grid.addWidget(button,i//2,i%2);self.buttons.append(button)
             if not groups[key]:grid.addWidget(QLabel('该范围未列出；不表示没有取得途径。'),0,0,1,2)
         self.body.addStretch()
