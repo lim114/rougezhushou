@@ -21,14 +21,16 @@ from PySide6.QtCore import Qt,QSize
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QCheckBox,QListWidget,QListWidgetItem,QPlainTextEdit
 
+from .player_catalog_grid import CatalogGrid,add_catalog_controls
+
 class ToolsPanel(QWidget):
     def __init__(self,run,parent=None):
         super().__init__(parent);self.run=run;self.rows={};self.key=None;body=QVBoxLayout(self)
         bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('查找战术道具或效果');bar.addWidget(self.search)
         self.held=QCheckBox('只看本局已确认持有');self.held.setChecked(True);bar.addWidget(self.held);body.addLayout(bar)
         self.notice=QLabel();self.notice.setWordWrap(True);body.addWidget(self.notice)
-        self.entries=QListWidget();self.entries.setIconSize(QSize(42,42));body.addWidget(self.entries,1)
-        self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1)
+        self.entries=CatalogGrid();body.addWidget(self.entries,1)
+        self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.details_toggle,self.icon_scale=add_catalog_controls(body,self.entries,self.detail)
         self.search.textChanged.connect(self.refresh);self.held.toggled.connect(self.refresh);self.entries.currentItemChanged.connect(self.selected);self.refresh()
     def refresh(self,*_):
         rows=tool_rows(self.run.state,self.search.text(),self.held.isChecked());key=repr(rows)
@@ -38,11 +40,12 @@ class ToolsPanel(QWidget):
         self.entries.blockSignals(True);self.entries.clear()
         for row in rows or[]:
             path=Path(__file__).with_name('data')/'relic-icons'/((row['icon']or'')+'.png')
-            item=QListWidgetItem(QIcon(str(path))if path.is_file()else QIcon(),row['name']+(' · 本局已确认'if row['held']else' · 资料')+(''if path.is_file()else' · 图片待补'))
+            item=QListWidgetItem(QIcon(str(path))if path.is_file()else QIcon(),row['name'])
             item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
             if row['id']==old:self.entries.setCurrentItem(item)
-        self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.selected()
+        self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
     def selected(self,*_):
         item=self.entries.currentItem();row=self.rows.get(item.data(Qt.ItemDataRole.UserRole))if item else None
         text=(row['name']+'\n\n资料效果\n'+row['usage']+'\n\n仅提供持有记录与资料查阅，不自动使用、不计算实际战斗触发，也不改变本局。')if row else'选择一件战术道具阅读固定说明。'
+        if row is None:self.details_toggle.setChecked(False)
         if self.detail.toPlainText()!=text:self.detail.setPlainText(text)

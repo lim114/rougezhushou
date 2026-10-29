@@ -1,11 +1,11 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第420节 + 场景笔记自动保存与冲突保护
+# 当前云端续接索引 · 第421节 + 零件与战术道具的分类图标目录
 
-实际完成的改动：编辑停顿后自动将文字保存到当前准确场景的本机笔记；可关闭自动保存，手动保存仍保留。保存冲突或失败时暂停自动写入，保留原件和未保存正文，切换场景不得带走旧稿。
+实际完成的改动：复用藏品图标网格显示零件与战术道具；零件按加工品、自然物、概念体分支切换，图标大小可调，点击展开效果、再次收起，刷新保持阅读与选中身份。
 
-[本节验收回执](verification/sections/420.json)。
+[本节验收回执](verification/sections/421.json)。
 
-已完成至420，后续421；本批状态 `PLAYER_SECTION420_PUBLISHED`。推进终点：425。下次定期全量425。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至421，后续422；本批状态 `PLAYER_SECTION421_PUBLICATION_PENDING`。推进终点：425。下次定期全量425。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 

@@ -49,3 +49,10 @@ class CatalogGrid(QListWidget):
     def set_tile_size(self,size):
         size=max(48,min(104,int(size)));self.tile_icon=size
         self.setIconSize(QSize(size,size));self.setGridSize(QSize(max(104,size+46),size+66));self.doItemsLayout();self.viewport().update()
+
+def add_catalog_controls(body,grid,detail):
+    from PySide6.QtWidgets import QHBoxLayout,QLabel,QSlider,QPushButton
+    bar=QHBoxLayout();button=QPushButton('效果说明');button.setCheckable(True);button.toggled.connect(detail.setVisible);bar.addWidget(button);bar.addStretch();bar.addWidget(QLabel('图标大小'))
+    scale=QSlider(Qt.Orientation.Horizontal);scale.setRange(48,104);scale.setValue(72);scale.setMaximumWidth(180);scale.valueChanged.connect(grid.set_tile_size);bar.addWidget(scale);body.addLayout(bar);detail.hide()
+    grid.currentItemChanged.connect(lambda item:button.setChecked(item is not None))
+    return button,scale
