@@ -70,9 +70,11 @@ from PySide6.QtCore import Signal,Qt
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QLabel,QLineEdit,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton
 class NoteLibraryDialog(QDialog):
     openContext=Signal(object)
+    openReference=Signal(object)
     def __init__(self,folder,parent=None):
         super().__init__(parent);self.library=NoteLibrary(folder);self.rows=[];self.setWindowTitle('本机场景笔记');self.resize(680,560);body=QVBoxLayout(self)
         self.notice=QLabel('只查本机笔记；搜索不会上传，旧笔记缺少场景标签时不猜测关联。');self.notice.setWordWrap(True);body.addWidget(self.notice);self.search=QLineEdit();self.search.setPlaceholderText('搜索场景名称或笔记内容');body.addWidget(self.search);self.entries=QListWidget();body.addWidget(self.entries,1);self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.open_button=QPushButton('打开这条笔记对应的编辑页');body.addWidget(self.open_button)
+        self.reference_button=QPushButton('查看所选笔记对应的固定资料');body.addWidget(self.reference_button);self.reference_button.clicked.connect(self.open_reference)
         self.search.textChanged.connect(self.refresh);self.entries.currentItemChanged.connect(self.selected);self.open_button.clicked.connect(self.open_selected);self.refresh()
     def refresh(self,*_):
         old=self.entries.currentItem();identity=old.data(Qt.ItemDataRole.UserRole)if old else None;offset=self.entries.verticalScrollBar().value()
@@ -89,6 +91,13 @@ class NoteLibraryDialog(QDialog):
         text=row['text']if row else'选择一条本机笔记。'
         if self.detail.toPlainText()!=text:self.detail.setPlainText(text)
         self.open_button.setEnabled(bool(row and row['content']))
+        from .player_reference_notes import reference_target
+        self.reference_button.setEnabled(bool(row and reference_target(row['content'])is not None))
+    def open_reference(self):
+        from .player_reference_notes import reference_target
+        item=self.entries.currentItem();row=self.rows[item.data(Qt.ItemDataRole.UserRole+1)]if item else None
+        if row and reference_target(row['content'])is not None:self.openReference.emit(row['content'])
+        else:self.reference_button.setEnabled(False)
     def open_selected(self):
         item=self.entries.currentItem();row=self.rows[item.data(Qt.ItemDataRole.UserRole+1)]if item else None
         if row and row['content']:self.openContext.emit(row['content'])

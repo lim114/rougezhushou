@@ -152,6 +152,8 @@ class CompactAssistant(QDialog):
             from .player_note_library import NoteLibraryDialog
             self.note_library=NoteLibraryDialog(self.owner.player_notes.store.folder,self)
             self.note_library.openContext.connect(self.open_saved_note)
+            from .player_reference_notes import open_reference
+            self.note_library.openReference.connect(lambda content:open_reference(self.owner,content))
         self.note_library.refresh();return self.present(self.note_library)
     def open_saved_note(self,content):
         notes=self.owner.player_notes
@@ -160,7 +162,8 @@ class CompactAssistant(QDialog):
     def open_scene_battle(self):
         if self.scene_popup is None:
             from .player_scene_battle import SceneBattlePanel
-            panel=SceneBattlePanel(self.owner.run);self.scene_popup=ToolPopover('最近关卡与敌人',panel,self);self.scene_popup.panel=panel;self.scene_popup.resize(760,600)
+            from .player_reference_notes import open_note
+            panel=SceneBattlePanel(self.owner.run);panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.scene_popup=ToolPopover('最近关卡与敌人',panel,self);self.scene_popup.panel=panel;self.scene_popup.resize(760,600)
         self.scene_popup.panel.refresh();return self.present(self.scene_popup)
     def open_inventory(self):
         if self.inventory_popup is None:

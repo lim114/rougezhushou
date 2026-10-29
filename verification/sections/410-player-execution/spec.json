@@ -1,0 +1,23 @@
+{
+  "title": "固定关卡与事件的专属笔记和精确资料回访",
+  "change": "准确关卡或事件资料可手动建立专属笔记，按条目和固定资料基准分开保存；从笔记编辑页或本机目录返回准确资料，并保留未保存修改。",
+  "limits": "手动资料笔记与当前游戏节点笔记分开；原资料失效时笔记仍可读，不借同名条目，不改变当前对局或实际场景。 P3/P2/P1仍未全部完成，识别优化最后。",
+  "criteria": [
+    "同名变体和不同资料基准分开记笔记",
+    "真实菜单点击进入准确资料笔记",
+    "返回资料不丢失未保存修改",
+    "原资料失效保留笔记且拒绝借用同名条目",
+    "完成当前完整可用范围与实际普通发布后暂停"
+  ],
+  "test": "tests.test_player_reference_notes_410",
+  "native": "scripts/verify_player_reference_notes_window_410.py",
+  "next": "本批至410完整收尾后暂停，不启动411。",
+  "additional_tests": [
+    "tests.test_player_notes_387",
+    "tests.test_player_note_library_399",
+    "tests.test_player_scene_battle_395"
+  ],
+  "unit_receipt": "verification/sections/410-player-checks/process.json",
+  "native_receipt": "verification/sections/410-player-window/window.json",
+  "native_process_receipt": "verification/sections/410-player-window-process/process.json"
+}

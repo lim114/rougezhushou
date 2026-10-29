@@ -1,15 +1,15 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第409节 + 失与得提供物到换入候选的准确资料联动
+# 当前云端续接索引 · 第410节 + 固定关卡与事件的专属笔记和精确资料回访
 
-实际完成的改动：从藏品及零件入口查看路标明确记载的提供物与换入集合对应关系，候选配图并可打开准确输出集合的完整来源与统计。
+实际完成的改动：准确关卡或事件资料可手动建立专属笔记，按条目和固定资料基准分开保存；从笔记编辑页或本机目录返回准确资料，并保留未保存修改。
 
-[本节验收回执](verification/sections/409.json)。
+[本节验收回执](verification/sections/410.json)。
 
-已完成至409，后续410；本批状态 `PLAYER_SECTION409_PUBLISHED`。推进终点：410。下次定期全量410。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至410，后续411；本批状态 `PLAYER_SECTION410_PUBLICATION_PENDING`。推进终点：410。下次定期全量425。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 
-最新记录全量：`verification/full-395/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。下面是历史交接，不代表当前节数。
+最新记录全量：`verification/full-410/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。下面是历史交接，不代表当前节数。
 <!-- live-cloud-index:end -->
 
 下一到期完整检查须给304/305两份full320验证脚本显式传入--source-freeze及当轮根声明冻结文件；默认320仅供历史绑定，不能把旧摘要改成当前通过。当前335原失败、验证脚本两处绑定维护与完整复验见verification/full-335/summary.json。

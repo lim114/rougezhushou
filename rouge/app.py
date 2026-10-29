@@ -262,6 +262,8 @@ class MainWindow(QMainWindow):
         self.addToolBar(self.context_bar)
         from .player_notes import NotesDialog
         self.player_notes=NotesDialog(ROOT/'.local/player-notes',self)
+        from .player_reference_notes import install as install_reference_notes
+        install_reference_notes(self)
         self.notes_button=QPushButton('场景笔记');self.notes_button.clicked.connect(self.open_scene_notes)
         self.context_bar.addWidget(self.notes_button)
         self.public_statistics=None

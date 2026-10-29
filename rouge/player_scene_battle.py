@@ -18,11 +18,12 @@ def stage_candidates(content):
         title=content.get('title');ids=[k for k,v in rows.items()if v.get('name')==title]if isinstance(title,str)and title.strip()else[]
     return [{'id':k,'name':rows[k]['name'],'label':rows[k]['name']+' · '+('紧急'if rows[k]['isElite']else'领袖'if rows[k]['isBoss']else'普通')+' · 候选'+str(i+1)}for i,k in enumerate(ids)]
 
-from PySide6.QtCore import Qt,QSize
+from PySide6.QtCore import Qt,QSize,Signal
 from PySide6.QtGui import QIcon,QPixmap
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QTabWidget,QDialog
 
 class SceneBattlePanel(QWidget):
+    noteRequested=Signal(object)
     def __init__(self,run,parent=None):
         super().__init__(parent);self.run=run;self.identity=None;self.result=None;self.enemies={};self.context_key=None;self.dialog=None
         body=QVBoxLayout(self);self.notice=QLabel('最近读取的关卡资料，不证明当前位置、实际出现或本局面板。未完整核验的数值保持未知。');self.notice.setWordWrap(True);body.addWidget(self.notice)
@@ -33,7 +34,14 @@ class SceneBattlePanel(QWidget):
         self.tabs.currentChanged.connect(self.select_enemy);body.addWidget(self.tabs,1)
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1)
         self.open_button=QPushButton('打开所选关卡的固定地图与完整资料');self.open_button.clicked.connect(self.open_stage);body.addWidget(self.open_button)
+        self.note_button=QPushButton('为这个准确关卡写笔记');body.addWidget(self.note_button);self.note_button.clicked.connect(self.write_note)
         self.refresh()
+    def write_note(self):
+        self.refresh()
+        if self.result is None:return
+        from .player_reference_notes import note_for
+        content=note_for('stages',self.identity)
+        if content is not None:self.noteRequested.emit(content)
     def refresh(self):
         content=self.run.state.get('last_node_content')
         if not isinstance(content,dict):content=None
@@ -48,6 +56,7 @@ class SceneBattlePanel(QWidget):
         else:self.notice.setText('最近读取：'+str(content.get('title')or'已记录关卡')+'。请核对所选版本；候选不是本局必出，图鉴不替代完整条件和预计面板。')
     def select_stage(self,*_):
         identity=self.stages.currentData();self.identity=identity;self.result=model.stage_reference(identity)if identity else None;self.enemies={};self.detail.clear();self.open_button.setEnabled(self.result is not None)
+        self.note_button.setVisible(self.result is not None)
         for widget in self.lists.values():widget.clear()
         if self.dialog is not None:self.dialog.close();self.dialog=None
         if self.result is None:

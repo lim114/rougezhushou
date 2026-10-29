@@ -3,7 +3,7 @@ from hashlib import sha256
 from pathlib import Path
 import json,os,tempfile
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QLabel,QPlainTextEdit,QPushButton,QHBoxLayout,QTabWidget
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import QTimer,Signal
 from .player_note_preview import NotePreview
 from copy import deepcopy
 
@@ -46,6 +46,7 @@ class NoteStore:
         return sha256(raw).hexdigest()
 
 class NotesDialog(QDialog):
+    openReference=Signal(object)
     def __init__(self,folder,parent=None):
         super().__init__(parent);self.store=NoteStore(folder);self.key=None;self.digest=None;self.dirty=False;self.content=None
         self.setWindowTitle('本地场景笔记');self.resize(620,500);body=QVBoxLayout(self)
@@ -58,6 +59,9 @@ class NotesDialog(QDialog):
         self.preview.linkBlocked.connect(self.blocked_link)
         self.status=QLabel('笔记只保存在本机，点击保存后写入；不会上传或加入聊天。');self.status.setWordWrap(True);body.addWidget(self.status)
         bar=QHBoxLayout();self.save_button=QPushButton('保存笔记');self.discard_button=QPushButton('放弃未保存修改');bar.addWidget(self.save_button);bar.addWidget(self.discard_button);body.addLayout(bar)
+        self.reference_button=QPushButton('查看笔记对应的固定资料（打开时核对）');bar.addWidget(self.reference_button);self.reference_button.hide()
+        from .player_reference_notes import request_note_source
+        self.reference_button.clicked.connect(lambda:request_note_source(self))
         self.export_button=QPushButton('导出当前文字');bar.addWidget(self.export_button);self.export_button.clicked.connect(self.export_current)
         self.editor.textChanged.connect(self.changed);self.save_button.clicked.connect(self.save);self.discard_button.clicked.connect(self.discard)
     def export_current(self):
@@ -78,7 +82,9 @@ class NotesDialog(QDialog):
         try:text,digest=self.store.read(key)
         except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return False
         self.key=key;self.digest=digest;self.content=deepcopy({field:content[field]for field in('kind','title','variant_id','event_id')if field in content});self.editor.blockSignals(True);self.editor.setPlainText(text);self.editor.blockSignals(False);self.dirty=False
-        self.context.setText('笔记对应：'+content['title']+'\n同名且未确认变体时共用笔记；这不是当前位置声明。')
+        self.context.setText('笔记对应：'+content['title']+('\n手动选择的固定资料笔记，按准确条目和资料基准分别保存；不表示当前关卡。'if content.get('kind')in('reference-stage','reference-scene')else'\n同名且未确认变体时共用笔记；这不是当前位置声明。'))
+        from .player_reference_notes import sync_note_source
+        sync_note_source(self)
         self.status.setText('本地笔记已读取；新笔记尚未保存。'if not text else'本地已保存；不会上传。');self.refresh_preview();return True
     def save(self):
         if self.key is None:return False
