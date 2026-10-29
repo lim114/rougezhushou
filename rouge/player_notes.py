@@ -49,7 +49,9 @@ class NotesDialog(QDialog):
     openReference=Signal(object)
     def __init__(self,folder,parent=None):
         super().__init__(parent);self.store=NoteStore(folder);self.key=None;self.digest=None;self.dirty=False;self.content=None
-        self.setWindowTitle('本地场景笔记');self.resize(620,500);body=QVBoxLayout(self)
+        from .player_recent_notes import NOTE_STYLE
+        self.setObjectName('sceneNotesEditor');self.setStyleSheet(NOTE_STYLE)
+        self.setWindowTitle('本地场景笔记');self.resize(900,500);body=QVBoxLayout(self)
         self.context=QLabel();self.context.setWordWrap(True);body.addWidget(self.context)
         self.pages=QTabWidget();body.addWidget(self.pages,1)
         self.editor=QPlainTextEdit();self.editor.setPlaceholderText('记下这关的机制、注意事项或上次失误。可用#写标题，用-列要点。');self.pages.addTab(self.editor,'编辑文字')

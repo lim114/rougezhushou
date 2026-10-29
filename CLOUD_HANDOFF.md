@@ -1,11 +1,11 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第410节 + 固定关卡与事件的专属笔记和精确资料回访
+# 当前云端续接索引 · 第411节 + 随场景切换的备忘录与浅色笔记浮窗
 
-实际完成的改动：准确关卡或事件资料可手动建立专属笔记，按条目和固定资料基准分开保存；从笔记编辑页或本机目录返回准确资料，并保留未保存修改。
+实际完成的改动：小窗备忘录自动展示最近已读场景的本机笔记，支持暂停跟随、刷新及进入原编辑器；场景变化不覆盖未保存编辑。笔记阅读和编辑采用参照录像的浅色浮窗与白色正文卡片。
 
-[本节验收回执](verification/sections/410.json)。
+[本节验收回执](verification/sections/411.json)。
 
-已完成至410，后续411；本批状态 `RESUMED_VIDEO_STRATEGY_RECORDED`。推进终点：未指定数字终点。下次定期全量425。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至411，后续412；本批状态 `PLAYER_SECTION411_PUBLICATION_PENDING`。推进终点：未指定数字终点。下次定期全量425。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；识别优化最后；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 

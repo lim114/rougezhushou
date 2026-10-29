@@ -508,6 +508,8 @@ ADDITIONAL_MODULES += ('tests.test_player_exchange_sources_409',)
 
 ADDITIONAL_MODULES += ('tests.test_player_reference_notes_410',)
 
+ADDITIONAL_MODULES += ('tests.test_player_recent_notes_411',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

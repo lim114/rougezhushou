@@ -77,6 +77,11 @@ def run(section,receipt):
                 require(win32gui.IsWindowVisible(feature_handle)and win32process.GetWindowThreadProcessId(feature_handle)[1]==os.getpid(),'visible_owned_actual_feature_native_window')
             assert shot_target.grab().save(str(shot))
             images.append({'file':image_name(shot),'sha256':sha256(shot.read_bytes()).hexdigest()})
+            if section==411:
+                notes=window.player_notes;notes.discard();notes.show();gui.processEvents();QTest.qWait(60)
+                require(win32gui.IsWindowVisible(int(notes.winId()))and win32process.GetWindowThreadProcessId(int(notes.winId()))[1]==os.getpid(),'visible_owned_actual_note_editor_native_window')
+                editor=receipt.with_name('note-editor.png');assert notes.grab().save(str(editor))
+                images.append({'file':image_name(editor),'sha256':sha256(editor.read_bytes()).hexdigest()});notes.close();gui.processEvents()
             if section==408:
                 card=receipt.with_name('statistics-card.png');assert window.compact_window.replay_popup.panel.statistics.card_controls.card.grab().save(str(card))
                 images.append({'file':image_name(card),'sha256':sha256(card.read_bytes()).hexdigest()})

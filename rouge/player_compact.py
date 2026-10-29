@@ -21,7 +21,7 @@ def icon(name):
 class ToolPopover(QDialog):
     def __init__(self,title,content,parent):
         super().__init__(parent,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint);self.setWindowTitle(title);self.setSizeGripEnabled(True);self.drag_origin=None
-        body=QVBoxLayout(self);bar=QHBoxLayout();bar.addWidget(QLabel(title),1);close=QPushButton('×');close.setFixedWidth(30);close.clicked.connect(self.close);bar.addWidget(close);body.addLayout(bar);body.addWidget(content,1)
+        body=QVBoxLayout(self);bar=QHBoxLayout();bar.addWidget(QLabel(title),1);close=QPushButton('×');close.setObjectName('popoverCloseButton');close.setFixedWidth(30);close.clicked.connect(self.close);bar.addWidget(close);body.addLayout(bar);body.addWidget(content,1)
 
     def mousePressEvent(self,event):
         if event.button()==Qt.MouseButton.LeftButton and event.position().y()<42:self.drag_origin=event.globalPosition().toPoint()-self.pos();event.accept()
@@ -64,7 +64,8 @@ class CompactAssistant(QDialog):
         self.note_library=None;self.note_library_button=QPushButton('查找本机场景笔记');self.note_library_button.clicked.connect(self.open_note_library);layout.addWidget(self.note_library_button)
         close=QPushButton('退出助手');close.clicked.connect(self.exit_application);layout.addWidget(close)
         self.settings_popup=ToolPopover('工具设置',settings,self);self.settings_popup.resize(420,570)
-        actions=[('本局概况','overview',lambda:self.present(self.overview_popup)),('地图与节点','map',self.open_map),('本局藏品','bag',self.open_inventory),('场景笔记','note',lambda:self.open_owner_dialog(owner.open_scene_notes,'player_notes')),('干员与技能','calc',self.open_operators),('聊天分析','chat',self.open_chat),('工具设置','settings',lambda:self.present(self.settings_popup))]
+        self.recent_notes_popup=None
+        actions=[('本局概况','overview',lambda:self.present(self.overview_popup)),('地图与节点','map',self.open_map),('本局藏品','bag',self.open_inventory),('场景笔记','note',self.open_recent_notes),('干员与技能','calc',self.open_operators),('聊天分析','chat',self.open_chat),('工具设置','settings',lambda:self.present(self.settings_popup))]
         for name,glyph,callback in actions:
             button=QToolButton();button.setIcon(icon(glyph));button.setIconSize(QSize(23,23));button.setFixedSize(40,40);button.setToolTip(name);button.setAccessibleName(name);button.clicked.connect(callback);bar.addWidget(button);self.buttons[name]=button;button.installEventFilter(self)
         # Retain programmatic shortcut compatibility; statistics lives in the settings menu.
@@ -117,6 +118,7 @@ class CompactAssistant(QDialog):
         title=recent_content(self.owner.run.state);self.context.setText('最近读取：'+title if title else'本局信息 · 等待读取节点详情')
         for key,value in overview_facts(self.owner.run.state).items():self.cards[key].setText(value)
         self.buttons['场景笔记'].setEnabled(bool(title));self.setToolTip(self.context.text())
+        if self.recent_notes_popup and self.recent_notes_popup.isVisible():self.recent_notes_popup.panel.refresh()
         if self.inventory_popup:
             self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();self.inventory_popup.parts.refresh_exchange()
         if self.map_popup:self.map_popup.panel.refresh()
@@ -159,6 +161,15 @@ class CompactAssistant(QDialog):
         notes=self.owner.player_notes
         if not notes.set_context(content):notes.show();notes.raise_();return False
         return self.present(notes)
+    def open_recent_notes(self):
+        if self.recent_notes_popup is None:
+            from .player_recent_notes import RecentNotesPanel,NOTE_STYLE
+            panel=RecentNotesPanel(self.owner.run,self.owner.player_notes.store)
+            panel.editRequested.connect(self.open_saved_note)
+            self.recent_notes_popup=ToolPopover('备忘录',panel,self);self.recent_notes_popup.panel=panel
+            self.recent_notes_popup.setObjectName('sceneNotesWindow');self.recent_notes_popup.setStyleSheet(NOTE_STYLE)
+            self.recent_notes_popup.resize(900,480)
+        self.recent_notes_popup.panel.refresh(force=True);return self.present(self.recent_notes_popup)
     def open_scene_battle(self):
         if self.scene_popup is None:
             from .player_scene_battle import SceneBattlePanel
