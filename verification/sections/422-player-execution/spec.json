@@ -1,0 +1,21 @@
+{
+  "title": "按实际读取保存楼层资源快照并回看",
+  "change": "仅在同一帧确认区域/地图和资源时保存楼层资源快照；地图切层与本机复盘显示该层当时的已读数量和时间，未读字段保持未读，不用当前资源补历史。",
+  "limits": "快照是读取时刻，不等于入层/出层、节点奖励或完整结算；旧记录缺少同帧证据时不追填。",
+  "criteria": [
+    "只接受同帧区域与有效资源，不沿用旧区域",
+    "重复相同读取不堆日志，不同层和不同数值保留",
+    "地图按选中层显示，不借当前数值填旧层",
+    "复盘只读，旧记录与未知数量保留"
+  ],
+  "additional_tests": [
+    "tests.test_player_resource_history_404",
+    "tests.test_player_map_interaction_392"
+  ],
+  "next": "继续至425；每节实际功能与必要验证、要求和索引普通推送，425到期完整范围验收后暂停。",
+  "test": "tests.test_player_feature_422",
+  "native": "scripts/verify_player_feature_window_422.py",
+  "unit_receipt": "verification/sections/422-player-checks-attempt2/process.json",
+  "native_receipt": "verification/sections/422-player-window-attempt2/window.json",
+  "native_process_receipt": "verification/sections/422-player-window-process-attempt2/process.json"
+}

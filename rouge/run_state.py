@@ -750,6 +750,8 @@ class RunState:
                         state['history'].append({'at':captured_at,'kind':'operator_no_longer_present','id':key})
         from .recipient_state import invalidate_recipient_absence
         invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held-prior_unknown_held,promoted_ids,captured_at)
+        from .player_floor_resources import record_snapshot
+        record_snapshot(state,observed,captured_at)
         state['last_read']=captured_at
         if state['notice'].startswith('等待'):state['notice']='同一局信息持续累积并保存；开始另一局时请手动清空本局读取。'
         self.save()

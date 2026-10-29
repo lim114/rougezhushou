@@ -23,6 +23,7 @@ EVENT_LABELS = {
     'map_node_passed': '确认经过节点',
     'map_node_revealed': '读到节点类型',
     'map_node_content_confirmed': '确认节点详情关联',
+    'floor_resources_read': '读到区域资源快照',
     'relic_variant_corrected': '收藏品变体核对',
     'state_flag_reconfirmed': '持有或在队标记核对',
 }
@@ -108,6 +109,8 @@ class ReplayPanel(QWidget):
         self.nodes=NodeReplayPage();self.tabs.addTab(self.nodes,'逐层节点')
         from .player_resource_history import ResourceHistoryPage
         self.resources=ResourceHistoryPage();self.tabs.addTab(self.resources,'资源变化')
+        from .player_floor_resources import FloorResourcesPage
+        self.floor_resources=FloorResourcesPage();self.tabs.addTab(self.floor_resources,'各层资源记录')
         from .player_evidence_history import EvidenceHistoryPage
         self.evidence=EvidenceHistoryPage();self.tabs.addTab(self.evidence,'藏品与队伍变化')
         self.entries.currentItemChanged.connect(self.selected)
@@ -125,6 +128,7 @@ class ReplayPanel(QWidget):
         self.key = key
         self.nodes.refresh(state)
         self.resources.refresh(state)
+        self.floor_resources.refresh(state)
         self.evidence.refresh(state)
         changed_run = self.snapshot is not None and self.snapshot.get('id') != state.get('id')
         self.snapshot = state

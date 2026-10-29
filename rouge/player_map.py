@@ -144,6 +144,7 @@ class MapPanel(QWidget):
         self.details_toggle=QPushButton('节点资料');self.details_toggle.setCheckable(True);head.addWidget(self.details_toggle);body.addLayout(head)
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
         self.resources=QLabel();self.resources.setWordWrap(True);body.addWidget(self.resources)
+        self.floor_resources=QLabel();self.floor_resources.setWordWrap(True);body.addWidget(self.floor_resources)
         self.split=QSplitter();self.scroll=QScrollArea();self.scroll.setWidgetResizable(True);self.view=PreviewMapView();self.scroll.setWidget(self.view);self.split.addWidget(self.scroll)
         self.palette=QWidget();self.palette.setObjectName('mapNodePalette');self.palette.setFixedWidth(58);self.palette.setStyleSheet('#mapNodePalette{background:#253b39;border:1px solid #82958c;border-radius:23px;} QToolButton{border:0;background:transparent;border-radius:18px;} QToolButton:checked{background:#658979;}')
         palette_layout=QVBoxLayout(self.palette);palette_layout.setContentsMargins(6,12,6,12);self.type_buttons={}
@@ -209,6 +210,8 @@ class MapPanel(QWidget):
             old=(self.view.graph.get('zone_id'),self.view.graph.get('template_id'));self.readings[old]=(self.view.selected,self.selected_reference,self.detail.verticalScrollBar().value())
         index=self.floors.currentIndex();key=self.floors.tabData(index)if index>=0 else None
         graph=self.graphs.get(key);original=self.owner.map_view;self.selected_zone=key
+        from .player_floor_resources import snapshots,snapshot_text
+        row=next((r for r in reversed(snapshots(self.owner.run.state))if r['zone_id']==key),None);self.floor_resources.setText(snapshot_text(row))
         if hasattr(self,'hover_card')and ((self.view.graph or{}).get('zone_id'),(self.view.graph or{}).get('template_id'))!=(key,(graph or{}).get('template_id')):
             self.hover_timer.stop();self.leave_timer.stop();self.hover_pending=None;self.hover_card.dismiss()
         historical=not(graph and original.graph and key==original.graph.get('zone_id')and graph.get('template_id')==original.graph.get('template_id')and not original.historical)
