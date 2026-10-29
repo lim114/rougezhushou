@@ -55,6 +55,8 @@ class CompactAssistant(QDialog):
         self.hotkey_status=QLabel();self.hotkey_status.setWordWrap(True);layout.addWidget(self.hotkey_status)
         self.hide_button=QPushButton('收起助手（用快捷键恢复）');self.hide_button.clicked.connect(self.toggle_visibility);layout.addWidget(self.hide_button)
         ok,message=self.hotkey.configure(**self.hotkey_preferences);self.hotkey_status.setText((load_warning+'\n'if load_warning else'')+message);self.hide_button.setEnabled(ok and self.hotkey.binding is not None)
+        self.binding_enabled=QCheckBox('玩家小窗跟随明日方舟窗口');self.binding_enabled.setChecked(True);layout.addWidget(self.binding_enabled)
+        self.binding_status=QLabel('尚未找到游戏；可先独立查阅。');self.binding_status.setWordWrap(True);layout.addWidget(self.binding_status)
         public=QPushButton('路标资料：藏品池与节点事件');public.clicked.connect(self.open_archive);layout.addWidget(public)
         stat=QPushButton('节点历史统计');stat.clicked.connect(lambda:self.open_owner_dialog(owner.open_public_statistics,'public_statistics'));layout.addWidget(stat)
         self.note_library=None;self.note_library_button=QPushButton('查找本机场景笔记');self.note_library_button.clicked.connect(self.open_note_library);layout.addWidget(self.note_library_button)
@@ -72,6 +74,8 @@ class CompactAssistant(QDialog):
         # Retain programmatic shortcut compatibility; statistics lives in the settings menu.
         self.buttons['节点统计']=stat
         self._layout_dock();self.set_pinned(True);self.refresh()
+        from .player_game_binding import GameWindowBinding
+        self.game_binding=GameWindowBinding(self,owner);self.binding_enabled.toggled.connect(self.game_binding.set_enabled)
     def _layout_dock(self):
         from .player_toolbar import DIAMETER,GAP
         right=self.x()+self.width();x=2;region=QRegion()
@@ -248,7 +252,7 @@ class CompactAssistant(QDialog):
         if self.drag_origin is not None and event.buttons()&Qt.MouseButton.LeftButton:self.move(event.globalPosition().toPoint()-self.drag_origin);event.accept()
     def mouseReleaseEvent(self,event):self.drag_origin=None;super().mouseReleaseEvent(event)
     def closeEvent(self,event):
-        if self.owner.closing:self.hotkey.close()
+        if self.owner.closing:self.hotkey.close();self.game_binding.close()
         if not self.owner.closing:self.open_full()
         for popup in (self.active_popup,self.inventory_popup,self.map_popup,self.overview_popup,self.settings_popup):
             if popup is not None:popup.close()

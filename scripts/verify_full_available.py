@@ -514,6 +514,7 @@ ADDITIONAL_MODULES += ('tests.test_player_toolbar_412',)
 ADDITIONAL_MODULES += ('tests.test_player_compendium_413',)
 ADDITIONAL_MODULES += ('tests.test_player_feature_414',)
 ADDITIONAL_MODULES += ('tests.test_player_feature_415',)
+ADDITIONAL_MODULES += ('tests.test_player_feature_416',)
 
 if __name__ == '__main__':
     sys.exit(main())
