@@ -677,6 +677,7 @@ class MainWindow(QMainWindow):
                 observation['captured_at'] = selected['captured_at']
                 observation['_sampling']={'epoch':epoch,'generation':generation,'seq':selected.get('seq')}
                 observation['_sampling']['recognition_attempts']=attempt+1
+                observation['_overlay_frame']={'image':selected['image'],'client_rect':selected.get('client_rect'),'target':selected.get('target'),'captured_at':selected['captured_at'],'run_id':run_context['run_id']}
                 self.events.sample.emit((selected['image'],observation))
             except Exception as error:
                 self.events.sample_error.emit((epoch,generation,str(error)))
@@ -709,6 +710,8 @@ class MainWindow(QMainWindow):
         self.finish_sample()
         if not valid or observation.get('captured_at',0)<max(self.last_sample_at,self.run.state['started_at']):return
         self.last_sample_at=observation['captured_at']
+        overlay_frame=observation.pop('_overlay_frame',None)
+        self.map_overlay_reference={**overlay_frame,'observation':observation}if overlay_frame else None
         self.observation = observation
         stage=observation.get('stage')
         if observation.get('page')=='node_detail' and stage:

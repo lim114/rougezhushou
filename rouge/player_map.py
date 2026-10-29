@@ -168,6 +168,8 @@ class MapPanel(QWidget):
     def set_type_filter(self,kind):
         for name,button in self.type_buttons.items():button.setChecked(name==kind)
         self.view.set_type_filter(kind)
+        companion=getattr(self.owner,'compact_window',None)
+        if companion is not None and hasattr(companion,'game_overlay'):companion.game_overlay.set_kind(kind)
     def queue_hover(self,node_id,point):
         self.hover_timer.stop();self.leave_timer.stop()
         if not node_id:self.hover_pending=None;self.leave_timer.start();return

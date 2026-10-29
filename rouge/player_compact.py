@@ -79,6 +79,8 @@ class CompactAssistant(QDialog):
         self.game_binding=GameWindowBinding(self,owner);self.binding_enabled.toggled.connect(self.game_binding.set_enabled)
         from .player_game_hover import GameHover
         self.game_hover=GameHover(self,owner);self.game_hover_enabled.toggled.connect(self.game_hover.set_enabled)
+        from .player_game_map import GameMapOverlay
+        self.game_overlay=GameMapOverlay(self,owner);self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
     def _layout_dock(self):
         from .player_toolbar import DIAMETER,GAP
         right=self.x()+self.width();x=2;region=QRegion()
@@ -259,7 +261,7 @@ class CompactAssistant(QDialog):
         if self.drag_origin is not None and event.buttons()&Qt.MouseButton.LeftButton:self.move(event.globalPosition().toPoint()-self.drag_origin);event.accept()
     def mouseReleaseEvent(self,event):self.drag_origin=None;super().mouseReleaseEvent(event)
     def closeEvent(self,event):
-        if self.owner.closing:self.hotkey.close();self.game_binding.close();self.game_hover.close()
+        if self.owner.closing:self.hotkey.close();self.game_binding.close();self.game_hover.close();self.game_overlay.close()
         if not self.owner.closing:self.open_full()
         for popup in (self.active_popup,self.inventory_popup,self.map_popup,self.overview_popup,self.settings_popup):
             if popup is not None:popup.close()

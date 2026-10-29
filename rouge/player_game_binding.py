@@ -33,7 +33,7 @@ class BindingApi:
             screens=[s for s in QApplication.screens()if s.name()==monitor['Device']]
             if len(screens)!=1:return None
             screen=screens[0];origin=screen.geometry().topLeft();rect=logical_rect((x,y,w,h),monitor['Monitor'],(origin.x(),origin.y()),screen.devicePixelRatio())
-            return {'target':dict(target),'key':(hwnd,pid),'physical_client':(x,y,w,h),'logical_client':rect,'cursor':cursor,'cursor_on_game':bool(active and hit==hwnd and x<=cursor[0]<x+w and y<=cursor[1]<y+h),'active':bool(active),'screen':screen}
+            return {'target':dict(target),'key':(hwnd,pid),'physical_client':(x,y,w,h),'logical_client':rect,'cursor':cursor,'cursor_on_game':bool(active and hit==hwnd and x<=cursor[0]<x+w and y<=cursor[1]<y+h),'foreground_on_game':win32gui.GetForegroundWindow()==hwnd,'active':bool(active),'screen':screen}
         except (OSError,RuntimeError,ValueError,KeyError,TypeError,win32gui.error):return None
 
 def clamp_window(widget,area):
