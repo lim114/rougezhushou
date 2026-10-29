@@ -1,11 +1,11 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 422,
-  "next_section": 423,
-  "current_section_label": "第422节 + 按实际读取保存楼层资源快照并回看",
-  "current_completed_change": "仅在同一帧确认区域/地图和资源时保存楼层资源快照；地图切层与本机复盘显示该层当时的已读数量和时间，未读字段保持未读，不用当前资源补历史。",
-  "batch_status": "PLAYER_SECTION422_PUBLISHED",
+  "completed_sections": 423,
+  "next_section": 424,
+  "current_section_label": "第423节 + 离开商店后回看已读商品",
+  "current_completed_change": "商店文字核对成功时，只在新画面中全部名称标记仍一致的情况下记下已确认商品名称；收藏品大栏目内可切到商店记录，离开页面后继续查效果。记录属于本局，不当作持有，未读价格/刷新次数不补写。",
+  "batch_status": "PLAYER_SECTION423_PUBLICATION_PENDING",
   "next_full_validation_after": 425,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
   "latest_full_receipt": "verification/full-410/summary.json",
@@ -16,7 +16,7 @@
   "current_batch_target_section": 425,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "ea210a6b2ba0e1c93ccc9978f8a21b0cd793cd275d184a2f0f8570fa71420125",
+    "sha256": "c4ffb5d384ae07e1d5c6a0f886b99367d3f8f95c5f96b422f46f678774e3f683",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2539,16 +2539,22 @@
       "completion_ref": "player-section-422",
       "topic": "按实际读取保存楼层资源快照并回看",
       "verification": "verification/sections/422.json"
+    },
+    {
+      "number": 423,
+      "completion_ref": "player-section-423",
+      "topic": "离开商店后回看已读商品",
+      "verification": "verification/sections/423.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "7650ad7f36bf1fafa2c0c289e4b89045581ec4dc2aacea76b6c76d09a0bbf2c3",
-    "PROJECT_PROGRESS.md": "2ffd4fd01519b27efe6b9608a26d702f41a6bcd31ba4a8c361b9ca00fd8dc8dd",
-    "WORK_IN_PROGRESS.md": "2bf9e0a37f39b18a0c7cc476441b2843786fd530744ce299ff5b4b379f436147",
-    "PROJECT_COMPLETED.md": "b22776ff4605a720247cc857487d1ae78a47c21dd0b69e414ee983c0f61c4bd2",
-    "AGENTS.md": "88c064665ae1004bce6fb290a679cd5d12845a338719184d158d687889d812e0",
-    "PROJECT_REQUIREMENTS.md": "ea210a6b2ba0e1c93ccc9978f8a21b0cd793cd275d184a2f0f8570fa71420125",
-    "verification/sections/422.json": "598316b3a5e9b47e614ac3157c105a100de9340e26fe187203c331488f748a63"
+    "DEVELOPMENT_CHECKPOINT.json": "928f867fea64d4eb4a238f75008422aac820cf72dd761c7fbaefab66a1554ac4",
+    "PROJECT_PROGRESS.md": "f3b081a71aefe29f64983c2a0e26cf1058e4884fe4182e6a6014466d3c5c888c",
+    "WORK_IN_PROGRESS.md": "5e0218631d9a2d769aaffcb816079cb9f927f0732bafa5612dc7b82a3ae71ca1",
+    "PROJECT_COMPLETED.md": "0266f6239c6c0c3e19dc4d1a75a5251e214ef0a89c38ae3d372624507421c482",
+    "AGENTS.md": "91ff0ccadc2bc2c44607199049c2f12f3739a003867cb8ed79e8a4a32b45f83f",
+    "PROJECT_REQUIREMENTS.md": "c4ffb5d384ae07e1d5c6a0f886b99367d3f8f95c5f96b422f46f678774e3f683",
+    "verification/sections/423.json": "b90d3391bead1347dbaee9ed53b8dc9007be7b5608b2d2953a77ea9a76a09181"
   },
   "private_state_included": false
 }

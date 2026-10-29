@@ -10,7 +10,7 @@ def check(window,gui,require):
     tools=tool_rows({},held_only=False);identity=tools[0]['id']
     window.run.state['tactical_tools']={identity:{'held':True}}
     window.show_compact();bar=window.compact_window;bar.open_inventory();gui.processEvents();popup=bar.inventory_popup
-    require(popup.isVisible()and popup.pages.count()==3,'collection_tool_and_parts_have_real_distinct_pages')
+    require(popup.isVisible()and popup.pages.count()==4,'collection_tool_and_parts_have_real_distinct_pages')
     require(popup.panel is popup.pages.widget(0),'original_collection_panel_and_navigation_retained')
     popup.pages.setCurrentIndex(2);parts=popup.parts;gui.processEvents()
     require(parts.entries.count()==44 and '6件'in parts.notice.text(),'parts_directory_not_inferred_inventory')

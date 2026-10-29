@@ -100,3 +100,15 @@ class ShopNameReader:
         lines,_=self.engine(crop,use_det=False,use_cls=False)
         exact=[r for r in lines or[]if len(r)==2 and float(r[1])>=.9 and canonical(r[0])==item['name']]
         return dict(item)if exact else None
+    def snapshot(self,image):
+        cached=self.cached
+        if not cached or time.monotonic()-cached['at']>=30 or cached['shape']!=image.shape:return None
+        if not all(sha256(image[y:v,x:u].tobytes()).digest()==digest for x,y,u,v,digest in cached['patches']):return None
+        packet=expansion_reference.packet()
+        if packet is None:return None
+        names=name_catalog(packet);items={}
+        for box,name,score in cached['raw']:
+            identities=names.get(canonical(name),[])
+            if score>=.9 and len(identities)==1:
+                identity=identities[0];items[identity]={'id':identity,'name':packet['current']['details']['items'][identity]['name']}
+        return {'items':list(items.values()),'complete':False,'source':'fresh_shop_exact_names'}if items else None

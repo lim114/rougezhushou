@@ -24,6 +24,7 @@ EVENT_LABELS = {
     'map_node_revealed': '读到节点类型',
     'map_node_content_confirmed': '确认节点详情关联',
     'floor_resources_read': '读到区域资源快照',
+    'shop_items_read': '读到商店商品名称',
     'relic_variant_corrected': '收藏品变体核对',
     'state_flag_reconfirmed': '持有或在队标记核对',
 }

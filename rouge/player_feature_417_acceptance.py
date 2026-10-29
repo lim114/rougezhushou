@@ -16,6 +16,8 @@ def check(window,gui,require):
  from tests.test_player_feature_417 import shop_fixture
  probe=GameHover(c,window,frame_provider=frame)
  probe.text_reader=ShopNameReader(lambda *args,**kw:([['第一法则',.99]]if kw.get('use_det')is False else shop_fixture(),None))
+ from unittest.mock import patch
+ stock_guard=patch('rouge.player_shop_memory.remember',return_value=True);stock_guard.start()
  try:
   probe.tick();QTest.qWait(4800);gui.processEvents();require(not calls,'no_capture_before_five_seconds')
   deadline=time.monotonic()+4
@@ -31,4 +33,4 @@ def check(window,gui,require):
   require(probe.last_request is None,'old_request_invalidated_after_leave')
   c.binding_status.setText('隔离验收：5秒后触发、二次新鲜画面核对与离开清理通过；文字识别由隔离数据注入，不冒充游戏识别。')
   c.game_hover_enabled.setChecked(False);c.present(c.settings_popup);gui.processEvents();window.player_validation_target=c.settings_popup
- finally:probe.close();fixture.close();window.capture.target=old_target;c.game_binding.api=original_api;c.game_binding.snapshot=None;c.game_binding.previous=None;c.game_binding.ever_bound=False;c.game_binding.suspended=[]
+ finally:stock_guard.stop();probe.close();fixture.close();window.capture.target=old_target;c.game_binding.api=original_api;c.game_binding.snapshot=None;c.game_binding.previous=None;c.game_binding.ever_bound=False;c.game_binding.suspended=[]

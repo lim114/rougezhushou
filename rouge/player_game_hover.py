@@ -79,6 +79,7 @@ class GameHover(QObject):
                                 from .player_hover_match import verify_again
                                 result=verify_again(current,point,result,difficulty=request['difficulty'],cancelled=lambda:self.serial!=request['serial']or self.owner.closing)
                             if result is None:reason='复核画面中的名称或图标无法一致确认'
+                            elif result.get('source')=='shop_exact_name_and_current_grid':result['shop_snapshot']=self.text_reader.snapshot(current)
                         request['captured_at']=fresh.get('captured_at')if current is not None else None
 
             except Exception as error:result=None;reason='读取或匹配未完成：'+type(error).__name__
@@ -95,6 +96,9 @@ class GameHover(QObject):
         if not snapshot or not snapshot['active']or not snapshot['cursor_on_game']:return
         if tuple(snapshot['key'])!=tuple(request['key'])or tuple(snapshot['physical_client'])!=tuple(request['physical_client']):return
         if max(abs(a-b)for a,b in zip(snapshot['cursor'],request['cursor']))>self.gate.tolerance:return
+        if item.get('shop_snapshot'):
+            from .player_shop_memory import remember
+            remember(self.owner.run,item['shop_snapshot'],request['run_id'],request['captured_at'])
         from .expansion_reference import packet
         public=packet();record=public['current']['details']['items'].get(item['id'])if public else None
         if not record:return
