@@ -19,13 +19,13 @@ class SelectorTests(unittest.TestCase):
   self.assertEqual(matching(rows,'floor1','作战'),rows[:1]);self.assertEqual(matching(rows,'unknown'),rows[1:2])
  def test_manual_selection_pauses_follow_without_run_write(self):
   with tempfile.TemporaryDirectory()as d:
-   state={'run_id':'one','last_node_content':{'kind':'event','title':'原场景'}};run=SimpleNamespace(state=state.copy());panel=RecentNotesPanel(run,NoteStore(d));target=self.rows[0]['context']
+   state={'id':'one','last_node_content':{'kind':'event','title':'原场景'}};run=SimpleNamespace(state=state.copy());panel=RecentNotesPanel(run,NoteStore(d));target=self.rows[0]['context']
    try:
     panel.select_context(target);self.assertFalse(panel.follow.isChecked());self.assertEqual(panel.context,target);self.assertIn('手选固定资料',panel.scene.text());self.assertEqual(run.state,state);self.assertFalse(list(Path(d).iterdir()))
     panel.refresh();self.assertEqual(panel.context,target)
    finally:panel.close()
  def test_selection_preserved_and_source_loss_clears_picker(self):
-  with patch('rouge.player_note_selector.catalogue',return_value=self.rows[:3]):
+  with patch('rouge.player_note_selector.catalogue_snapshot',return_value={'rows':self.rows[:3],'unavailable':[]}):
    widget=SceneNoteSelector();widget.scene.setCurrentIndex(1);old=widget.scene.currentData();widget.reload();self.assertEqual(widget.scene.currentData(),old)
-  with patch('rouge.player_note_selector.catalogue',return_value=[]):widget.reload();self.assertEqual(widget.scene.count(),0);self.assertIsNone(widget.scene.currentData())
+  with patch('rouge.player_note_selector.catalogue_snapshot',return_value={'rows':[],'unavailable':['固定资料']}):widget.reload();self.assertEqual(widget.scene.count(),0);self.assertIsNone(widget.scene.currentData())
   widget.close()

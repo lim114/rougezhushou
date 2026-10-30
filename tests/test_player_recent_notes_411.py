@@ -12,7 +12,7 @@ class RecentNotesTests(unittest.TestCase):
     def setUpClass(cls):cls.app=QApplication.instance()or QApplication([])
     def setUp(self):
         self.tmp=TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
-        self.store=NoteStore(self.tmp.name);self.run=SimpleNamespace(state={'run_id':'one','last_node_content':None})
+        self.store=NoteStore(self.tmp.name);self.run=SimpleNamespace(state={'id':'one','last_node_content':None})
         self.panel=RecentNotesPanel(self.run,self.store);self.addCleanup(self.panel.deleteLater)
         self.a={'kind':'battle','title':'同名关卡','variant_id':'normal'}
         self.b={**self.a,'variant_id':'emergency'}
@@ -54,7 +54,7 @@ class RecentNotesTests(unittest.TestCase):
         self.assertIn('同名场景共用',self.panel.status.text());self.assertIn('不表示当前',self.panel.status.text())
     def test_new_run_clears_paused_reading_but_never_deletes_notes(self):
         self.save(self.a,'本机笔记');self.bind(self.a);self.panel.follow.setChecked(False)
-        self.run.state={'run_id':'two','last_node_content':None};self.panel.refresh(force=True)
+        self.run.state={'id':'two','last_node_content':None};self.panel.refresh(force=True)
         self.assertIsNone(self.panel.context);self.assertEqual(self.store.read(content_key(self.a))[0],'本机笔记')
     def test_follow_preview_does_not_rebind_or_change_unsaved_editor(self):
         editor=NotesDialog(self.tmp.name);self.addCleanup(editor.deleteLater)

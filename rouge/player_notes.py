@@ -3,7 +3,8 @@ from hashlib import sha256
 from pathlib import Path
 import json,os,tempfile
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QLabel,QPlainTextEdit,QPushButton,QHBoxLayout,QTabWidget,QCheckBox
-from PySide6.QtCore import QTimer,Signal
+from PySide6.QtCore import QTimer,Signal,QSignalBlocker
+from .ui_state import replace_text
 from .player_note_preview import NotePreview
 from copy import deepcopy
 
@@ -49,7 +50,7 @@ class NotesDialog(QDialog):
     openReference=Signal(object)
     def __init__(self,folder,parent=None):
         super().__init__(parent);self.store=NoteStore(folder);self.key=None;self.digest=None;self.dirty=False;self.content=None
-        from .player_recent_notes import NOTE_STYLE
+        from .player_note_style import NOTE_STYLE
         self.setObjectName('sceneNotesEditor');self.setStyleSheet(NOTE_STYLE)
         self.setWindowTitle('本地场景笔记');self.resize(900,500);body=QVBoxLayout(self)
         self.context=QLabel();self.context.setWordWrap(True);body.addWidget(self.context)
@@ -91,10 +92,14 @@ class NotesDialog(QDialog):
         key=content_key(content)
         if key is None:return False
         if self.dirty and key!=self.key:self.status.setText('请先保存或放弃上方场景的修改，再打开另一个场景。');return False
-        if key==self.key:return True
+        same=key==self.key
+        if self.dirty:return True
         try:text,digest=self.store.read(key)
         except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return False
-        self.key=key;self.digest=digest;self.content=deepcopy({field:content[field]for field in('kind','title','variant_id','event_id')if field in content});self.editor.blockSignals(True);self.editor.setPlainText(text);self.editor.blockSignals(False);self.dirty=False
+        if same and digest==self.digest:return True
+        self.key=key;self.digest=digest;self.content=deepcopy({field:content[field]for field in('kind','title','variant_id','event_id')if field in content})
+        with QSignalBlocker(self.editor):replace_text(self.editor,text,preserve=same)
+        self.dirty=False
         self.context.setText('笔记对应：'+content['title']+('\n手动选择的固定资料笔记，按准确条目和资料基准分别保存；不表示当前关卡。'if content.get('kind')in('reference-stage','reference-scene')else'\n同名且未确认变体时共用笔记；这不是当前位置声明。'))
         from .player_reference_notes import sync_note_source
         sync_note_source(self)
@@ -115,7 +120,8 @@ class NotesDialog(QDialog):
         if self.key is None:return
         try:text,digest=self.store.read(self.key)
         except(OSError,ValueError,UnicodeError)as e:self.report_issue(e);return
-        self.editor.blockSignals(True);self.editor.setPlainText(text);self.editor.blockSignals(False);self.digest=digest;self.dirty=False;self.status.setText('已恢复为本机保存的内容。');self.refresh_preview()
+        with QSignalBlocker(self.editor):replace_text(self.editor,text)
+        self.digest=digest;self.dirty=False;self.status.setText('已恢复为本机保存的内容。');self.refresh_preview()
     def report_issue(self,error):
         from .player_file_messages import file_issue
         self.status.setText(file_issue(error));self.status.setToolTip(str(error))

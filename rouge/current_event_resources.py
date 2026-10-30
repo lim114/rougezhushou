@@ -5,8 +5,8 @@ from pathlib import Path
 import json, re
 from . import current_event_directory as directory
 ROOT = Path(__file__).resolve().parents[1]
-PACK = 'research/p3-current-event-resources-374'; DATA = 'rouge/data/current-event-resources.json'
-NOTES = PACK + '/source-notes.json'; MANIFEST = PACK + '/runtime-manifest.json'; MANIFEST_SHA256 = 'fba199d073730919c677e6a359ebe2ad2ef07d801db2d6b1b10885d764be7a2c'
+PACK = 'research/runtime-event-resources-20261031'; DATA = PACK + '/data.json'
+NOTES = PACK + '/source-notes.json'; MANIFEST = PACK + '/runtime-manifest.json'; MANIFEST_SHA256 = '6d86944e356acf53ca9d3ed9d265b5d80e30b86c9322f9bfff5356a7c7b4ed60'
 RESOURCES = (('gold', '源石锭'), ('hope', '希望'), ('life', '目标生命值'), ('max_life', '目标生命值上限'),
              ('shield', '护盾'), ('ap', '行动力'), ('carry', '可携带干员数'), ('weight', '零件箱容量'),
              ('relic', '收藏品'), ('processed', '加工品'), ('concept', '概念体'), ('natural', '自然物'), ('part', '零件'))
@@ -63,8 +63,8 @@ def packet():
         raw = (ROOT / MANIFEST).read_bytes()
         if sha256(raw).hexdigest() != MANIFEST_SHA256: return None
         manifest = json.loads(raw)
-        expected = {DATA, NOTES, directory.DATA, directory.MANIFEST, 'rouge/current_event_directory.py'}
-        if manifest['schema'] != 'current_event_resources_374_manifest_v1' or set(manifest['files']) != expected: return None
+        expected = {DATA, NOTES, directory.DATA, directory.MANIFEST}
+        if manifest['schema'] != 'current_event_resources_runtime_manifest_v2' or set(manifest['files']) != expected: return None
         blobs = {}
         for name, pin in manifest['files'].items():
             rel = Path(name); path = ROOT / name

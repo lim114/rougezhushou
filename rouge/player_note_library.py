@@ -66,17 +66,21 @@ class NoteLibrary:
                 result.append({'title':'旧笔记（场景标签未记录）','key':None,'content':None,'text':text,'path':path,'legacy':True})
         return result
 
-from PySide6.QtCore import Signal,Qt
+from PySide6.QtCore import Signal,Qt,QTimer
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QLabel,QLineEdit,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton
 class NoteLibraryDialog(QDialog):
     openContext=Signal(object)
     openReference=Signal(object)
     def __init__(self,folder,parent=None):
         super().__init__(parent);self.library=NoteLibrary(folder);self.rows=[];self.setWindowTitle('本机场景笔记');self.resize(680,560);body=QVBoxLayout(self)
+        from .player_note_style import NOTE_STYLE
+        self.setObjectName('sceneNotesLibrary');self.setStyleSheet(NOTE_STYLE)
         self.notice=QLabel('只查本机笔记；搜索不会上传，旧笔记缺少场景标签时不猜测关联。');self.notice.setWordWrap(True);body.addWidget(self.notice);self.search=QLineEdit();self.search.setPlaceholderText('搜索场景名称或笔记内容');body.addWidget(self.search);self.entries=QListWidget();body.addWidget(self.entries,1);self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.open_button=QPushButton('打开这条笔记对应的编辑页');body.addWidget(self.open_button)
         self.reference_button=QPushButton('查看所选笔记对应的固定资料');body.addWidget(self.reference_button);self.reference_button.clicked.connect(self.open_reference)
-        self.search.textChanged.connect(self.refresh);self.entries.currentItemChanged.connect(self.selected);self.open_button.clicked.connect(self.open_selected);self.refresh()
+        self.search_timer=QTimer(self);self.search_timer.setSingleShot(True);self.search_timer.setInterval(150);self.search_timer.timeout.connect(self.refresh)
+        self.search.textChanged.connect(lambda _:self.search_timer.start());self.search.returnPressed.connect(self.refresh);self.entries.currentItemChanged.connect(self.selected);self.open_button.clicked.connect(self.open_selected);self.refresh()
     def refresh(self,*_):
+        self.search_timer.stop()
         old=self.entries.currentItem();identity=old.data(Qt.ItemDataRole.UserRole)if old else None;offset=self.entries.verticalScrollBar().value()
         try:
             self.rows=self.library.rows(self.search.text());self.notice.setText('只查本机笔记，不会上传；旧笔记缺少场景标签时不猜关联。'+(f'另有{len(self.library.issues)}份文字或标签无法核对。'if self.library.issues else''))
@@ -101,3 +105,4 @@ class NoteLibraryDialog(QDialog):
     def open_selected(self):
         item=self.entries.currentItem();row=self.rows[item.data(Qt.ItemDataRole.UserRole+1)]if item else None
         if row and row['content']:self.openContext.emit(row['content'])
+    def hideEvent(self,event):self.search_timer.stop();super().hideEvent(event)

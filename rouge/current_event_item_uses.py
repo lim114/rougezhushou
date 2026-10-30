@@ -5,8 +5,8 @@ from pathlib import Path
 import json
 from . import current_event_directory as directory, expansion_reference as version
 ROOT = Path(__file__).resolve().parents[1]
-PACK = 'research/p3-current-event-item-uses-376'; DATA = 'rouge/data/current-event-item-uses.json'
-NOTES = PACK + '/source-notes.json'; MANIFEST = PACK + '/runtime-manifest.json'; MANIFEST_SHA256 = '5f3d1281e3de8a77d0c26f717bca767d8e618c8ef9c29f3129bf60902927a5e9'
+PACK = 'research/runtime-event-item-uses-20261031'; DATA = PACK + '/data.json'
+NOTES = PACK + '/source-notes.json'; MANIFEST = PACK + '/runtime-manifest.json'; MANIFEST_SHA256 = '46198dfa9d8a31323f9546e0ccae8920d84ac1c5bcd2a1d1d0c0ec8868b9994b'
 ROLES = (('held', '持有条件'), ('offered', '原文要求交出'), ('consumed', '原文明确消耗'))
 NOTICE = '按准确物品查事件用途：持有、交出与消耗分别保留；查阅不表示已经持有、可以选择、已经消耗或已生效。'
 UNAVAILABLE = '物品用途来源暂时无法核对，旧条目和所属资料窗口已清除；恢复后请重新选择。'
@@ -40,8 +40,8 @@ def packet():
         raw = (ROOT / MANIFEST).read_bytes()
         if sha256(raw).hexdigest() != MANIFEST_SHA256: return None
         manifest = json.loads(raw)
-        expected = {DATA, NOTES, directory.DATA, directory.MANIFEST, 'rouge/current_event_directory.py', version.PACK + '/current-topic.json'}
-        if manifest['schema'] != 'current_event_item_uses_376_manifest_v1' or set(manifest['files']) != expected: return None
+        expected = {DATA, NOTES, directory.DATA, directory.MANIFEST, version.PACK + '/current-topic.json'}
+        if manifest['schema'] != 'current_event_item_uses_runtime_manifest_v2' or set(manifest['files']) != expected: return None
         blobs = {}
         for name, pin in manifest['files'].items():
             rel = Path(name); path = ROOT / name

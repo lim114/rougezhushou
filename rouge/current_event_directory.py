@@ -5,11 +5,11 @@ from pathlib import Path, PurePosixPath
 import importlib, json, re
 
 ROOT = Path(__file__).resolve().parents[1]
-PACK = 'research/p3-current-event-directory-372'
+PACK = 'research/runtime-event-directory-20261031'
 DATA = 'rouge/data/current-event-directory.json'
 NOTES = PACK + '/source-notes.json'
 MANIFEST = PACK + '/runtime-manifest.json'
-MANIFEST_SHA256 = '1700a08414f07e55ea560a3e8a404dbb308cb44a07be2fd49893c26207834de1'
+MANIFEST_SHA256 = '1eb3a5be0ae1cc5c1e287f0b6f9e45431dfa9bd121195cbf2c5a2bd27464b1dc'
 UNAVAILABLE = '事件目录的来源暂时无法核对，旧目录、阅读内容和所属窗口已清除；恢复后请重新选择。'
 NOTICE = ('按已经核对的当前固定资料查找事件。这里的分类只帮助查资料，'
           '不是本局可能出现的完整清单，也不判断现在能否选择。')
@@ -147,7 +147,8 @@ def packet():
         if len(notes_raw) != notes_pin['bytes'] or sha256(notes_raw).hexdigest() != notes_pin['sha256']: return None
         notes = json.loads(notes_raw)
         expected = {DATA, NOTES, 'rouge/data/node-catalog.json', *notes['original_sources']}
-        if (manifest['schema'] != 'current_event_directory_372_manifest_v1'
+        if (manifest['schema'] != 'current_event_directory_runtime_manifest_v2'
+                or notes['schema'] != 'current_event_directory_runtime_notes_v2'
                 or manifest['game_commit'] != version.NEW_COMMIT or set(manifest['files']) != expected): return None
         blobs = {}
         for name, pin in manifest['files'].items():
