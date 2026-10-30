@@ -107,6 +107,11 @@ class CurrentBattlePanel(QWidget):
         self.queue_kind.addItem('主波次', 'main')
         self.queue_kind.addItem('条件分支', 'branch')
         body.addWidget(self.queue_kind)
+        filters=QHBoxLayout();self.action_group=QComboBox();self.action_group.addItem('全部波次/分支分组',None);filters.addWidget(self.action_group)
+        self.action_focus=QComboBox();self.action_focus.addItem('全部资料条目',None)
+        for key,label in(('enemy','含所选敌人的候选条目'),('hidden','带隐藏组标记'),('random','带随机组标记'),('predefined','预置单位或装置条目')):self.action_focus.addItem(label,key)
+        filters.addWidget(self.action_focus);body.addLayout(filters)
+        self.action_filter_notice=QLabel();self.action_filter_notice.setWordWrap(True);body.addWidget(self.action_filter_notice)
         split = QSplitter()
         self.actions = QListWidget()
         split.addWidget(self.actions)
@@ -139,6 +144,7 @@ class CurrentBattlePanel(QWidget):
         self.refresh_button.clicked.connect(self.refresh_reference)
         self.enemy_combo.currentIndexChanged.connect(self._enemy_changed)
         self.queue_kind.currentIndexChanged.connect(self._actions_changed)
+        self.action_group.currentIndexChanged.connect(self._actions_changed);self.action_focus.currentIndexChanged.connect(self._actions_changed)
         self.actions.currentItemChanged.connect(self._action_changed)
         self.refresh_reference()
 
@@ -193,6 +199,8 @@ class CurrentBattlePanel(QWidget):
         self.enemy_choices.set_groups([], emit=False)
         blocked = self.actions.blockSignals(True)
         self.actions.clear()
+        self.action_filter_notice.setText('当前关卡资料暂不可用，旧分组和出怪条目已清除。')
+        group_blocked=self.action_group.blockSignals(True);self.action_group.clear();self.action_group.addItem('全部波次/分支分组',None);self.action_group.blockSignals(group_blocked)
         self.actions.blockSignals(blocked)
         for widget in (self.summary, self.enemy_player, self.action_player, self.technical):
             replace_text(widget, '', preserve=False)
@@ -232,6 +240,8 @@ class CurrentBattlePanel(QWidget):
             self.map_image.setText('本关固定原图无法核对，不借用同名关卡图片。')
         self.install_enemy_choices(old_enemy)
         self._enemy_changed(preserve=keep)
+        if not keep:
+            blocked=self.action_group.blockSignals(True);self.action_group.setCurrentIndex(0);self.action_group.blockSignals(blocked)
         self._actions_changed(preserve=keep)
         if not keep:
             self.tabs.setCurrentIndex(0)
@@ -259,10 +269,7 @@ class CurrentBattlePanel(QWidget):
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
         action=next((a for a in self.result['actions']if a['key']==key),None)
         if action is None:return False
-        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']))
-        for i in range(self.actions.count()):
-            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
-        return False
+        return self.focus_action(action)
 
     def _spawn_position_requested(self,key):
         return self._spawn_action_selected(key) and self.open_action_positions()
@@ -283,10 +290,7 @@ class CurrentBattlePanel(QWidget):
         if self.result is None or self.rewards.result is None or self.result['source_identity']!=self.rewards.result['battle_source_identity']:return False
         action=next((a for a in self.result['actions']if a['key']==key),None)
         if action is None:return False
-        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']))
-        for i in range(self.actions.count()):
-            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
-        return False
+        return self.focus_action(action)
 
     def install_enemy_choices(self,preferred=None):
         from .player_enemy_search import matches
@@ -322,6 +326,7 @@ class CurrentBattlePanel(QWidget):
         else:
             self.enemy_portrait.setText('此精确引用未取得图片。' if enemy else '')
         self._sync_boss_documents(keep)
+        if self.action_focus.currentData()=='enemy':self._actions_changed(preserve=True)
         self._sync_sun_boss(keep)
         self._sync_elbert(keep)
         self._sync_hanko(keep)
@@ -332,15 +337,34 @@ class CurrentBattlePanel(QWidget):
         self._sync_guest_material(keep)
 
     def _actions_changed(self,*_,preserve=False):
+        from .player_spawn_filters import action_rows,group_key,group_label
         old=self.actions.currentItem();key=old.data(Qt.ItemDataRole.UserRole)if old and preserve else None
-        blocked=self.actions.blockSignals(True);self.actions.clear();kind=self.queue_kind.currentData()
-        for action in self.result['actions']if self.result else[]:
-            if kind is not None and action['queue']['kind']!=kind:continue
+        kind=self.queue_kind.currentData();actions=self.result['actions']if self.result else[]
+        selected_group=None if self.sender()is self.queue_kind else self.action_group.currentData()
+        groups=list(dict.fromkeys(group_key(a)for a in action_rows(actions,kind)if group_key(a)is not None))
+        blocked=self.action_group.blockSignals(True);self.action_group.clear();self.action_group.addItem('全部波次/分支分组',None)
+        for group in groups:self.action_group.addItem(group_label(group),group)
+        index=self.action_group.findData(selected_group)
+        if selected_group is not None and index<0:self.action_group.addItem('原分组在当前范围无资料',selected_group);index=self.action_group.count()-1
+        self.action_group.setCurrentIndex(max(0,index));self.action_group.blockSignals(blocked)
+        rows=action_rows(actions,kind,self.action_group.currentData(),self.action_focus.currentData(),self.enemy_key)
+        blocked=self.actions.blockSignals(True);self.actions.clear()
+        for action in rows:
             item=QListWidgetItem(model.action_label(action));item.setData(Qt.ItemDataRole.UserRole,action['key']);self.actions.addItem(item)
             if key==action['key']:self.actions.setCurrentItem(item)
         self.actions.blockSignals(blocked)
-        if key is None:self.actions.setCurrentRow(-1)
+        if not any(a['key']==key for a in rows):self.actions.setCurrentRow(-1)
         self._action_changed(self.actions.currentItem(),preserve=preserve)
+        self.action_filter_notice.setText(('请先在敌人页选择准确引用。'if self.action_focus.currentData()=='enemy'and self.enemy_key is None else f'显示{len(rows)}条资料，关卡完整资料共{len(actions)}条。')+'分组、隐藏与随机标记不证明实际触发、数量或出怪时刻；多等级候选仍需分别核对。')
+
+    def focus_action(self,action):
+        if self.result is None or action not in self.result['actions']:return False
+        for widget in(self.action_group,self.action_focus):
+            blocked=widget.blockSignals(True);widget.setCurrentIndex(0);widget.blockSignals(blocked)
+        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']));self._actions_changed()
+        for i in range(self.actions.count()):
+            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==action['key']:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
+        return False
 
     def _action_changed(self,item,*_,preserve=False):
         key=item.data(Qt.ItemDataRole.UserRole)if item else None
@@ -688,10 +712,7 @@ class CurrentBattlePanel(QWidget):
         if resolve_action(child.panel.result,key)is None:child.panel.clear_reference();return False
         action=next((a for a in self.result['actions']if a['key']==key),None)
         if action is None:return False
-        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']))
-        for i in range(self.actions.count()):
-            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
-        return False
+        return self.focus_action(action)
     def _enemy_spawns_position_requested(self,key):
         okay=self._enemy_spawns_action_selected(key)and self.open_action_positions()
         if okay:self.enemy_spawns_position_dialog=self.action_position_dialog
@@ -725,10 +746,7 @@ class CurrentBattlePanel(QWidget):
         from .current_stage_objects import resolve
         row=child.panel.selected();action=child.panel.selected_action()
         if row is None or action is None or action['key']!=key or resolve(child.panel.result,row['key'],key)is None:child.panel.clear_reference();return False
-        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']))
-        for i in range(self.actions.count()):
-            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
-        return False
+        return self.focus_action(action)
     def open_stage_objects(self):
         if self.result is None:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
@@ -756,10 +774,7 @@ class CurrentBattlePanel(QWidget):
         from .current_route_itinerary import resolve
         route=child.panel.selected_route();action=child.panel.selected_action()
         if action is None or action['key']!=key or resolve(child.panel.result,route['key']if route else None,action_key=key)is None:child.panel.clear_reference();return False
-        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']))
-        for i in range(self.actions.count()):
-            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
-        return False
+        return self.focus_action(action)
     def open_route_itinerary(self):
         if self.result is None:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False

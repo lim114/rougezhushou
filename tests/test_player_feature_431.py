@@ -32,5 +32,11 @@ class CompactMapReaders(unittest.TestCase):
   try:
    with patch('rouge.current_battle_reference.stage_reference',return_value=None):self.assertIsNone(make_reader('battle',{'id':'ro6_n_1_2','title':'遗忘时间'},parent))
   finally:parent.close()
+ def test_stage_caption_comes_from_exact_source_not_caller_supplied_name(self):
+  parent=QWidget();dialog=make_reader('battle',{'id':'ro6_b_7','title':'stale-title-fixture'},parent)
+  try:self.assertTrue(dialog.windowTitle().startswith('熄日'))
+  finally:
+   if dialog:dialog.close()
+   parent.close()
 
 if __name__=='__main__':unittest.main()

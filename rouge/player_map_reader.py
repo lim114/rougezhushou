@@ -25,7 +25,7 @@ def make_reader(kind,record,parent,*,historical=False):
         from .current_battle_view import CurrentBattlePanel
         panel=CurrentBattlePanel(identity)
         if panel.result is None:return None
-        dialog=ToolPopover(record['title']+' · 固定作战预览',panel,parent);dialog.panel=panel;dialog.resize(920,720)
+        dialog=ToolPopover(panel.result['name']+' · 固定作战预览',panel,parent);dialog.panel=panel;dialog.resize(920,720)
         return readable(dialog)
     if kind=='event':
         from .current_node_readers import binding_for
