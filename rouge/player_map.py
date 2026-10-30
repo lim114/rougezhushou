@@ -307,7 +307,7 @@ class MapPanel(QWidget):
         try:dossier=model.node_dossier(dossier_graph(graph),node_id,**map_conditions(graph,self.owner.run.state.get('config',{})))
         except(ValueError,KeyError,TypeError)as error:
             self.detail.setPlainText('节点资料尚不能读取：'+str(error));self.entries.blockSignals(False);return
-        groups=[('事件候选','event',dossier['rows']),('作战预览','battle',dossier['battle_rows']),('功能说明','function',dossier['function_rows']),('已读历史事件','event',dossier['history_observed_event_rows']),('已读历史作战','battle',dossier['history_observed_battle_rows'])]
+        groups=[('事件候选','event',dossier['rows']),('作战预览','battle',dossier['battle_rows']),('功能说明','function',dossier['function_rows']),('已读历史事件','event',dossier['history_observed_event_rows']),('已读历史作战','battle',dossier['history_observed_battle_rows']),('已列条件排除的事件（不是候选）','event',dossier.get('excluded_event_candidates',[]))]
         chosen=None
         total=sum(len(rows)for _,_,rows in groups);shown=0
         for label,kind,rows in groups:
@@ -317,12 +317,12 @@ class MapPanel(QWidget):
             for row in rows:
                 key=(label,kind,row.get('id')or row.get('node_type'));item=QTreeWidgetItem([row.get('title')or row.get('node_type')or'功能节点']);item.setToolTip(0,item.text(0));item.setData(0,Qt.ItemDataRole.UserRole,key);root.addChild(item);self.rows[key]=row
                 if key==keep:chosen=item
-            root.setExpanded(True)
+            root.setExpanded(not label.startswith('已列条件排除'))
         self.entries.blockSignals(False);self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical))
         if chosen:self.entries.setCurrentItem(chosen)
         self.restore_entry_expansion()
         self.detail.verticalScrollBar().setValue(reading.get('scroll',0)if chosen else 0)
-        self.entry_count.setText(f'显示{shown}/{total}项所选节点资料。名称筛选只改变查阅列表，不改变候选与历史比例；无匹配不表示没有其它内容。')
+        self.entry_count.setText(f'显示{shown}/{total}项所选节点资料，含单列的排除说明。名称筛选只改变查阅列表，不改变候选与历史比例；无匹配不表示没有其它内容。')
         # Only synchronize the owning current map; historical-floor reading never rebinds it.
         if self.owner.map_view.graph and graph.get('zone_id')==self.owner.map_view.graph.get('zone_id')and graph.get('template_id')==self.owner.map_view.graph.get('template_id'):self.owner.map_view.select_node(node_id)
 
@@ -339,7 +339,7 @@ class MapPanel(QWidget):
     def restore_entry_expansion(self):
         expanded=self.entry_readings.get(self.reading_key,{}).get('expanded',{})
         for i in range(self.entries.topLevelItemCount()):
-            root=self.entries.topLevelItem(i);root.setExpanded(expanded.get(root.data(0,257),True))
+            root=self.entries.topLevelItem(i);label=root.data(0,257);root.setExpanded(expanded.get(label,not str(label).startswith('已列条件排除')))
     def read_entry(self,*_):
         item=self.entries.currentItem();key=item.data(0,Qt.ItemDataRole.UserRole)if item else None;row=self.rows.get(key)
         self.selected_reference=key if row else None;self.open_button.setEnabled(bool(row and key[1]in('event','battle')))
@@ -353,6 +353,7 @@ class MapPanel(QWidget):
         node=next((n for n in graph.get('nodes',[])if n['id']==self.view.selected),{})
         observed=node.get('observed_type');context['node_type']=observed if observed and not observed.startswith('未知')else node.get('template_type')
         text=node_information_text(entry,context=context)
+        if key[0].startswith('已列条件排除'):text='【不属于本节点当前资料候选】\n排除依据：'+str(row.get('reason')or'请查看已列条件')+'\n这是固定目录的条件对照，不能替代当前服务器规则或证明其它层必定出现。\n\n'+text
         self.detail.setPlainText(text)
     def open_entry(self):
         binding=self.reader_binding();key=self.selected_reference
