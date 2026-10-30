@@ -226,7 +226,7 @@ class CompactAssistant(QDialog):
             parts.exchangeRequested.connect(lambda identity:self.open_exchange(panel.version.currentData(),identity))
             pages.addTab(panel,'收藏品');pages.addTab(tools,'战术道具');pages.addTab(parts,'零件箱资料')
             from .player_shop_memory import ShopMemoryPanel
-            shop=ShopMemoryPanel(self.owner.run);pages.addTab(shop,'商店记录')
+            shop=ShopMemoryPanel(self.owner.run,panel);pages.addTab(shop,'商店记录')
             self.inventory_popup=ToolPopover('收藏品、战术道具与零件',pages,self)
             from .player_catalog_grid import INVENTORY_STYLE
             self.inventory_popup.setObjectName('inventoryWindow');self.inventory_popup.setStyleSheet(INVENTORY_STYLE)

@@ -1,0 +1,29 @@
+{
+  "section": 426,
+  "user_objective": "结束后自行完成至440",
+  "resumes_after_section425_pause": true,
+  "stop_after_completed_section": 440,
+  "next_full_validation_after": 440,
+  "new_agents_authorized": false,
+  "game_operations_authorized": false,
+  "private_uploads_authorized": false,
+  "recognition_optimization_last": true,
+  "section_plan": {
+    "title": "商店清单对照、商品搜索与取得来源联动",
+    "change": "本局商店记录可按名称搜索，逐次查看本次新读到、前次读到但本次未读到以及两次都读到的商品；从已读商品直接打开共享公开资料的取得来源、完整池入口和历史统计。来源与列表更新、换局、离开页面时撤销失效卡片，普通刷新保留搜索与选中项。",
+    "limits": "两次记录都可能不完整，也可能来自不同商店；清单差异不是购买、下架、刷新或持有证明。未读取价格与剩余刷新次数。共享公开资料仍受其版本和统计分母约束；不是当前DLC完整性或本局掉落概率证明。仅隔离原生窗口验收，不冒称真实游戏读取与完整视频对齐。",
+    "criteria": [
+      "同局有效读取按记录顺序对照，缺失不推断交易",
+      "已读商品可搜索并直接打开准确物品的资料来源",
+      "刷新保留阅读，隐藏和换局撤销旧入口",
+      "不修改本局库存，不联网发送私人数据"
+    ],
+    "test": "tests.test_player_feature_426",
+    "native": "scripts/verify_player_feature_window_426.py",
+    "next": "继续第427节，按视频效果剩余缺口自主推进至440；440执行到期完整范围并普通发布后暂停。",
+    "unit_receipt": "verification/sections/426-player-checks-attempt1/process.json",
+    "native_receipt": "verification/sections/426-player-window-attempt1/window.json",
+    "native_process_receipt": "verification/sections/426-player-window-process-attempt1/process.json",
+    "source_receipt": "verification/sections/426-reference.json"
+  }
+}
