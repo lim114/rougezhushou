@@ -30,11 +30,6 @@ def select_cohort(records, *, difficulty=None, squad=None):
         return []
     if squad is not None and not isinstance(squad, str):
         return []
-    options = cohort_options(records)
-    if difficulty is not None and difficulty not in dict(options['difficulty']):
-        return []
-    if squad is not None and squad not in dict(options['squad']):
-        return []
     result = []
     for record in unique_archives(records):
         group = cohort(record)

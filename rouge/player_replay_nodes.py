@@ -5,10 +5,30 @@ from .player_replay import observation_time
 KINDS = {'map_position_updated': '位置读到', 'map_node_passed': '确认经过',
          'map_node_revealed': '类型读到', 'map_node_content_confirmed': '详情关联'}
 
+def _apply_reading(node,event):
+    kind=event.get('kind')
+    if kind=='map_node_passed':
+        original=event.get('original_type')
+        if not isinstance(original,str)or original=='林间空地'or original.startswith(('未知','类型未确认')):
+            original=node.get('remembered_type')or node.get('observed_type')
+        node.update(observed_type='林间空地',visited=True)
+        if isinstance(original,str)and original!='林间空地'and not original.startswith(('未知','类型未确认')):node['remembered_type']=original
+    elif kind=='map_node_revealed'and isinstance(event.get('type'),str):
+        node['observed_type']=event['type']
+    elif kind=='map_node_content_confirmed':
+        content=event.get('content')
+        if isinstance(content,dict)and content.get('source')=='same_frame_selected_node':
+            previous=node.get('remembered_content')
+            if previous and previous!=content:node.setdefault('content_history',[]).append(previous)
+            node['remembered_content']=deepcopy(content)
+
+
 def node_steps(state):
     from .map_recognition import map_data
+    from .player_floor_resources import snapshots
     templates = {row['id']: row for row in map_data()['templates']}
-    layouts = {}
+    layouts = {};observed={};positions={};resources={}
+    resource_reads={row['index']:row for row in snapshots(state)}
     result = []
     for index, event in enumerate(state.get('history', [])):
         if not isinstance(event, dict):
@@ -16,8 +36,12 @@ def node_steps(state):
         kind, zone = event.get('kind'), event.get('zone_id')
         if not isinstance(kind,str):continue
         if not isinstance(zone,str)or not zone:zone=None
+        if index in resource_reads:resources[zone]=resource_reads[index]
         if zone is not None and kind in('map_confirmed','map_layout_changed'):
             identity=event.get('template_id')if kind=='map_confirmed'else event.get('current_template')
+            if kind=='map_layout_changed'or layouts.get(zone)!=identity:
+                observed[zone]={};positions[zone]=None
+                if kind=='map_layout_changed':resources.pop(zone,None)
             layouts[zone]=identity if isinstance(identity,str)else None
         if kind not in KINDS:
             continue
@@ -26,32 +50,36 @@ def node_steps(state):
         if template and template['zone_id'] != zone:
             template = None
         node = next((row for row in template['nodes'] if row['id'] == identity), None) if template else None
+        if node:
+            if kind=='map_position_updated':positions[zone]=identity
+            else:_apply_reading(observed.setdefault(zone,{}).setdefault(identity,{}),event)
         distance = node.get('distance') if node else None
         distance = distance if type(distance) is int and distance >= 0 else None
         result.append({'index': index, 'zone_id': zone, 'template': deepcopy(template) if node else None,
                        'node_id': identity, 'distance': distance, 'event': deepcopy(event),
+                       'observed_nodes':deepcopy(observed.get(zone,{})),
+                       'last_confirmed_current_node':positions.get(zone),
+                       'resource_snapshot':deepcopy(resources.get(zone)),
                        'label': KINDS[kind], 'time': observation_time(event.get('at'))})
     return result
 
 def template_graph(row):
-    """Show a template reference, never copy later revealed nodes into the past."""
+    """Project only saved reads at or before this step onto its exact template."""
     template = row.get('template')
     if not template:
         return None
     from .map_recognition import map_data
     nodes=[{**deepcopy(node),'template_type':node.get('fixed_type')}for node in template['nodes']]
-    chosen=next((node for node in nodes if node['id']==row.get('node_id')),None)
-    event=row.get('event',{})
-    if chosen is not None:
-        if event.get('kind')=='map_node_passed':
-            chosen['observed_type']='林间空地'
-            original=event.get('original_type')
-            if isinstance(original,str)and original!='林间空地'and not original.startswith(('未知','类型未确认')):chosen['remembered_type']=original
-        elif event.get('kind')=='map_node_revealed'and isinstance(event.get('type'),str):chosen['observed_type']=event['type']
+    if 'observed_nodes'in row:
+        for node in nodes:node.update(deepcopy(row['observed_nodes'].get(node['id'],{})))
+    else:
+        chosen=next((node for node in nodes if node['id']==row.get('node_id')),None)
+        if chosen is not None:_apply_reading(chosen,row.get('event',{}))
     return {'zone_id': template['zone_id'], 'template_id': template['id'],
             'nodes': nodes,
             'grid': {'rows': template['rows'], 'cols': template['cols']},
-            'edges': deepcopy(template['edges']), 'source': deepcopy(map_data()['source'])}
+            'edges': deepcopy(template['edges']), 'source': deepcopy(map_data()['source']),
+            'last_confirmed_current_node':row.get('last_confirmed_current_node')}
 
 def zone_label(identity):
     from .run_config import config_data
@@ -81,20 +109,23 @@ class NodeReplayPage(QWidget):
         body.addWidget(self.notice)
         self.floors = QComboBox()
         body.addWidget(self.floors)
+        self.resources=QLabel();self.resources.setWordWrap(True);self.resources.setAccessibleName('所选历史记录之前最近一次同区域资源快照');body.addWidget(self.resources)
         split = QSplitter()
         body.addWidget(split, 1)
         self.entries = QListWidget()
         self.view = RecordedMapView()
+        self.view.setContentsMargins(0,30,0,0)
         split.addWidget(self.entries)
         split.addWidget(self.view)
         self.floors.currentIndexChanged.connect(self.show_rows)
         self.entries.currentItemChanged.connect(self.selected)
 
     def refresh(self, state):
-        rows = node_steps(state)
-        key = repr((state.get('id'), rows))
+        kinds=(*KINDS,'map_confirmed','map_layout_changed','floor_resources_read')
+        key=repr((state.get('id'),[(i,e)for i,e in enumerate(state.get('history',[]))if isinstance(e,dict)and e.get('kind')in kinds]))
         if key == self.key:
             return
+        rows = node_steps(state)
         changed_run = getattr(self, 'run_id', None) != state.get('id')
         self.run_id = state.get('id')
         self.key, self.rows = key, rows
@@ -112,6 +143,7 @@ class NodeReplayPage(QWidget):
         self.show_rows()
 
     def show_rows(self, *_):
+        from .map_reporting import location
         item = self.entries.currentItem()
         old = item.data(Qt.ItemDataRole.UserRole) if item else None
         offset = self.entries.verticalScrollBar().value()
@@ -121,7 +153,10 @@ class NodeReplayPage(QWidget):
             if self.floors.currentIndex() > 0 and row['zone_id'] != self.floors.currentData():
                 continue
             distance = f'距起点{row["distance"]}步' if row['distance'] is not None else '模板位置未确认'
-            item = QListWidgetItem(row['time'] + ' · ' + row['label'] + ' · ' + distance)
+            template=row.get('template');node=next((n for n in template['nodes']if n['id']==row['node_id']),None)if template else None
+            place=location(node,template['rows'])if node else'模板位置未确认'
+            item = QListWidgetItem(row['label']+' · '+place)
+            item.setToolTip(row['time']+'\n'+distance+'；距起点步数不是实际消耗行动次数。')
             item.setData(Qt.ItemDataRole.UserRole, row['index'])
             self.entries.addItem(item)
             if row['index'] == old:
@@ -131,11 +166,13 @@ class NodeReplayPage(QWidget):
         self.selected()
 
     def selected(self, *_):
+        from .player_floor_resources import snapshot_text
         item = self.entries.currentItem()
         row = next((row for row in self.rows if row['index'] == item.data(Qt.ItemDataRole.UserRole)), None) if item else None
         graph = template_graph(row) if row else None
         self.view.set_map(graph, historical=True)
+        self.resources.setText(snapshot_text(row.get('resource_snapshot')if row else None))
         if graph:
             self.view.select_node(row['node_id'])
         self.notice.setText((zone_label(row['zone_id']) + '；' + row['label'] + '。' if row else '') +
-                            '图中只显示对应模板和所选记录的位置；不还原未读步骤，不把后来的节点状态填回过去。')
+                            '图中累积显示截至所选记录已读到的节点；白圈为所选节点，金圈为当时最近已读位置。不还原未读步骤，不把后来的节点状态填回过去。')

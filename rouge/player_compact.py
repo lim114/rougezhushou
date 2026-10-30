@@ -169,10 +169,11 @@ class CompactAssistant(QDialog):
         return self.present(self.exchange_popup)
     def open_replay(self):
         if self.replay_popup is None:
-            from .player_replay import ReplayPanel
+            from .player_replay import ReplayPanel,HISTORY_STYLE
             panel=ReplayPanel(self.owner.run,source_panel=self.owner.inventory_panel)
             from .player_reference_notes import open_note
-            panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.replay_popup=ToolPopover('本局已读记录',panel,self,on_show=self.refresh);self.replay_popup.panel=panel;self.replay_popup.resize(900,720)
+            panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.replay_popup=ToolPopover('对局记录与个人统计',panel,self,on_show=self.refresh);self.replay_popup.panel=panel;self.replay_popup.resize(900,720)
+            self.replay_popup.setObjectName('historyWindow');self.replay_popup.setStyleSheet(HISTORY_STYLE)
         return self.present(self.replay_popup)
     def open_team(self):
         if self.team_popup is None:

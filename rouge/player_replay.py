@@ -3,6 +3,22 @@ from copy import deepcopy
 from datetime import datetime
 import math
 
+HISTORY_STYLE='''
+#historyWindow{background:#f5f5f7;border:1px solid #c9cdd0;border-radius:12px;}
+#historyWindow QLabel,#historyWindow QCheckBox{color:#303139;background:transparent;}
+#historyWindow QPushButton,#historyWindow QComboBox{color:#303139;background:#e6e6eb;border:0;border-radius:10px;padding:6px 10px;}
+#historyWindow QPushButton:hover{background:#d6e5e9;}
+#historyWindow QPushButton:disabled{color:#92929b;}
+#historyWindow QComboBox QAbstractItemView{background:white;color:#303139;selection-background-color:#cde5eb;selection-color:#25262b;}
+#historyWindow QTabWidget::pane{background:white;border:0;border-radius:12px;}
+#historyWindow QTabBar::tab{color:#484952;background:#e6e6eb;border:0;border-radius:12px;padding:6px 10px;margin:2px;}
+#historyWindow QTabBar::tab:selected{background:#303438;color:white;}
+#historyWindow QPlainTextEdit,#historyWindow QListWidget,#historyWindow QTableWidget{color:#28332e;background:white;border:1px solid #d2d9d5;border-radius:10px;selection-background-color:#cde5eb;selection-color:#25262b;}
+#historyWindow QListWidget::item{padding:5px;}
+#historyWindow QListWidget::item:selected{background:#cde5eb;color:#25262b;border-radius:5px;}
+#historyWindow QHeaderView::section{color:#303139;background:#e6e6eb;border:0;padding:6px;}
+'''
+
 EVENT_LABELS = {
     'config_updated': '对局信息更新',
     'node_content_seen': '读到节点详情',

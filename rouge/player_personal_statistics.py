@@ -90,7 +90,6 @@ class PersonalStatisticsPage(QWidget):
         self.store = store
         self.records = []
         self.result = None
-        self.key = None
         self.source_available = False
         body = QVBoxLayout(self)
         self.notice = QLabel('个人统计只使用本机历史归档；尚未归档的当前对局不混入样本。')
@@ -126,7 +125,6 @@ class PersonalStatisticsPage(QWidget):
             self.source_available = False
             self.notice.setText('本机历史暂时不可用：' + file_issue(error) + ' 旧统计已清除，原件未改动。')
             self.notice.setToolTip(str(error))
-            self.key = None
             from .player_cohort_ui import refresh_filters
             refresh_filters(self)
             self.render()
@@ -147,8 +145,9 @@ class PersonalStatisticsPage(QWidget):
             self.samples.install([],self.relic.currentData())
             return
         from .player_cohort_ui import selected_records,filter_notes
-        self.result = statistics(selected_records(self), self.relic.currentData())
-        self.samples.install(selected_records(self),self.relic.currentData())
+        selected=selected_records(self)
+        self.result = statistics(selected, self.relic.currentData())
+        self.samples.install(selected,self.relic.currentData())
         self.card_controls.sync()
         text = filter_notes(self)+'\n\n'+statistics_text(self.result)
         if self.detail.toPlainText() != text:
