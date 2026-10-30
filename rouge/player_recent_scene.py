@@ -33,7 +33,8 @@ def event_excerpt(result,key):
     return '\n'.join(lines)
 
 class RecentScenePanel(SceneBattlePanel):
-    def __init__(self,run,parent=None):
+    def __init__(self,run,parent=None,*,historical=False):
+        self.historical_reading=historical
         self.scene_run=run.state.get('id');self.event_key=None;self.event_result=None;self.event_dialog=None
         super().__init__(run,parent)
         self.event_body=QWidget();body=QVBoxLayout(self.event_body);body.setContentsMargins(0,0,0,0)
@@ -66,7 +67,10 @@ class RecentScenePanel(SceneBattlePanel):
         if not is_event:
             if self.event_key is not None:
                 self.event_key=None;self.event_result=None;self.event_text.clear();self.event_choices.clear();self.event_entries.clear();self._close_event()
-            return super().refresh()
+            result=super().refresh()
+            if self.historical_reading and not self.notice.text().startswith('历史记录：'):
+                self.notice.setText('历史记录：'+self.notice.text().replace('最近读取：','当时读取：'))
+            return result
         if self.dialog is not None:self.dialog.close();self.dialog=None
         self.result=None;self.enemies={};self.context_key=None
         reference=events.reference();rows=event_candidates(content,reference)if reference else[]
@@ -76,7 +80,8 @@ class RecentScenePanel(SceneBattlePanel):
         self.event_choices.blockSignals(True);self.event_choices.clear();self.event_choices.addItem('请选择要查阅的准确事件资料',None)
         for i,row in enumerate(rows,1):self.event_choices.addItem(row['title']+' · '+('、'.join(row['node_types'])or'类别未确认')+' · 资料'+str(i),row['id'])
         self.event_choices.setCurrentIndex(0);self.event_choices.blockSignals(False);self.select_event()
-        self.notice.setText(('最近读取：'+str(content.get('title')or'事件')+'。请选择对应资料；没有判断本局阶段、可选选项或奖励。')if rows else'最近读取的事件暂无可核对的准确资料；没有借用相似名称，旧入口已清除。')
+        prefix='历史记录：'if self.historical_reading else'最近读取：'
+        self.notice.setText((prefix+str(content.get('title')or'事件')+'。请选择对应资料；没有判断本局阶段、可选选项或奖励。')if rows else prefix+'事件暂无可核对的准确资料；没有借用相似名称，旧入口已清除。')
 
     def select_event(self,*_):
         self._close_event();identity=self.event_choices.currentData()

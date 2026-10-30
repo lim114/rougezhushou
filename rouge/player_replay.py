@@ -84,16 +84,18 @@ def event_text(row):
               '没有记录的步骤、奖励、胜负和结算不会补写；相邻记录不代表因果关系。']
     return '\n'.join(lines)
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt,Signal
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QComboBox, QListWidget, QListWidgetItem, QPlainTextEdit, QTabWidget
 
 class ReplayPanel(QWidget):
+    noteRequested=Signal(object)
     def __init__(self, run, parent=None,source_panel=None):
         super().__init__(parent)
         self.run = run
         self.snapshot = None
         self.rows = {}
         self.key = None
+        self.scene_popup=None;self.scene_binding=None
         body = QVBoxLayout(self)
         self.notice = QLabel('仅查看本机已读记录，不改变本局，不上传。')
         self.notice.setWordWrap(True)
@@ -112,6 +114,7 @@ class ReplayPanel(QWidget):
         layout.addWidget(self.detail, 1)
         from PySide6.QtWidgets import QPushButton
         self.shop_button=QPushButton('查看这次读到的商店清单');layout.addWidget(self.shop_button);self.shop_button.hide();self.shop_button.clicked.connect(self.open_selected_shop)
+        self.scene_button=QPushButton('查看这条记录的事件或关卡资料');layout.addWidget(self.scene_button);self.scene_button.hide();self.scene_button.clicked.connect(self.open_selected_scene)
         self.tabs.addTab(page, '读取记录')
         from .player_replay_nodes import NodeReplayPage
         self.nodes=NodeReplayPage();self.tabs.addTab(self.nodes,'逐层节点')
@@ -135,6 +138,7 @@ class ReplayPanel(QWidget):
         if key == self.key:
             self.snapshot=state
             self.shop.refresh(state)
+            if self.scene_popup is not None and self.scene_popup.isVisible():self.scene_popup.panel.refresh()
             return
         self.key = key
         self.nodes.refresh(state)
@@ -159,6 +163,7 @@ class ReplayPanel(QWidget):
         self.entries.verticalScrollBar().setValue(offset)
         self.entries.blockSignals(False)
         self.selected()
+        if self.scene_popup is not None and self.scene_popup.isVisible():self.scene_popup.panel.refresh()
         from .player_replay_archive import snapshot_notice
         self.notice.setText(snapshot_notice(self,len(self.rows),state))
 
@@ -167,6 +172,11 @@ class ReplayPanel(QWidget):
         row = self.rows.get(item.data(Qt.ItemDataRole.UserRole)) if item else None
         from .player_shop_memory import recorded_shops
         self.shop_button.setVisible(bool(row and any(index==row['index']for index,_ in recorded_shops(self.snapshot or{}))))
+        from .player_recorded_scene import recorded_context
+        context=recorded_context(self.snapshot or{},row['index'])if row else None
+        self.scene_button.setVisible(context is not None)
+        binding=(self.sessions.currentData(),row['index'],repr(context))if context and row else None
+        if binding!=self.scene_binding:self.close_scene()
         text = event_text(row) if row else '选择一条记录查看；读取时间不等于游戏动作发生时间。'
         if self.detail.toPlainText() != text:
             self.detail.setPlainText(text)
@@ -175,3 +185,27 @@ class ReplayPanel(QWidget):
         self.refresh();item=self.entries.currentItem();index=item.data(Qt.ItemDataRole.UserRole)if item else None
         if self.shop.select_observation(index):self.tabs.setCurrentWidget(self.shop);return True
         return False
+
+    def close_scene(self):
+        if self.scene_popup is not None:self.scene_popup.close();self.scene_popup=None
+        self.scene_binding=None
+
+    def open_selected_scene(self):
+        self.refresh();item=self.entries.currentItem();index=item.data(Qt.ItemDataRole.UserRole)if item else None
+        from .player_recorded_scene import recorded_context
+        context=recorded_context(self.snapshot or{},index)
+        if context is None:self.close_scene();return False
+        self.close_scene()
+        from types import SimpleNamespace
+        from .player_recent_scene import RecentScenePanel
+        from .player_compact import ToolPopover
+        reading=SimpleNamespace(state={'id':self.snapshot.get('id'),'last_node_content':deepcopy(context)})
+        panel=RecentScenePanel(reading,historical=True);panel.noteRequested.connect(self.noteRequested)
+        self.scene_popup=ToolPopover('这条历史记录的节点资料',panel,self);self.scene_popup.panel=panel;self.scene_popup.resize(760,600)
+        self.scene_binding=(self.sessions.currentData(),index,repr(context));self.scene_popup.show();return True
+
+    def hideEvent(self,event):
+        self.close_scene();super().hideEvent(event)
+
+    def closeEvent(self,event):
+        self.close_scene();super().closeEvent(event)

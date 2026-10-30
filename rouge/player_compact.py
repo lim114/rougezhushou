@@ -176,7 +176,9 @@ class CompactAssistant(QDialog):
     def open_replay(self):
         if self.replay_popup is None:
             from .player_replay import ReplayPanel
-            panel=ReplayPanel(self.owner.run,source_panel=self.owner.inventory_panel);self.replay_popup=ToolPopover('本局已读记录',panel,self);self.replay_popup.panel=panel;self.replay_popup.resize(900,720)
+            panel=ReplayPanel(self.owner.run,source_panel=self.owner.inventory_panel)
+            from .player_reference_notes import open_note
+            panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.replay_popup=ToolPopover('本局已读记录',panel,self);self.replay_popup.panel=panel;self.replay_popup.resize(900,720)
         self.replay_popup.panel.refresh();return self.present(self.replay_popup)
     def open_team(self):
         if self.team_popup is None:
