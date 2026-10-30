@@ -75,6 +75,11 @@ def event_text(row):
             lines.append(field + '：' + (str(value) if value is not None else '尚未核验'))
             if field_key=='difficulty' and value is None and type(current.get('value'))is int:
                 lines.append(f'这条记录写有{current["value"]}；超出固定资料或模式尚未核对，不按已核验等级使用。')
+    if kind=='shop_items_read':
+        from .player_shop_memory import qualified
+        items=qualified(event)
+        lines+=['','当时确认读到的商品：'+('、'.join(r['name']for r in items)if items else'原记录暂时无法核对'),
+            '这是部分商品名称，不代表已经买下、仍在出售或完整商店库存。']
     lines += ['', '这是助手当时读到的记录，不是完整游戏日志。',
               '没有记录的步骤、奖励、胜负和结算不会补写；相邻记录不代表因果关系。']
     return '\n'.join(lines)
@@ -83,7 +88,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QComboBox, QListWidget, QListWidgetItem, QPlainTextEdit, QTabWidget
 
 class ReplayPanel(QWidget):
-    def __init__(self, run, parent=None):
+    def __init__(self, run, parent=None,source_panel=None):
         super().__init__(parent)
         self.run = run
         self.snapshot = None
@@ -105,6 +110,8 @@ class ReplayPanel(QWidget):
         self.detail = QPlainTextEdit()
         self.detail.setReadOnly(True)
         layout.addWidget(self.detail, 1)
+        from PySide6.QtWidgets import QPushButton
+        self.shop_button=QPushButton('查看这次读到的商店清单');layout.addWidget(self.shop_button);self.shop_button.hide();self.shop_button.clicked.connect(self.open_selected_shop)
         self.tabs.addTab(page, '读取记录')
         from .player_replay_nodes import NodeReplayPage
         self.nodes=NodeReplayPage();self.tabs.addTab(self.nodes,'逐层节点')
@@ -114,6 +121,8 @@ class ReplayPanel(QWidget):
         self.floor_resources=FloorResourcesPage();self.tabs.addTab(self.floor_resources,'各层资源记录')
         from .player_evidence_history import EvidenceHistoryPage
         self.evidence=EvidenceHistoryPage();self.tabs.addTab(self.evidence,'藏品与队伍变化')
+        from .player_shop_replay import ShopReplayPage
+        self.shop=ShopReplayPage(source_panel);self.tabs.addTab(self.shop,'商店货物')
         self.entries.currentItemChanged.connect(self.selected)
         from .player_replay_archive import attach_history
         attach_history(self,body)
@@ -125,12 +134,14 @@ class ReplayPanel(QWidget):
         key = repr((state.get('id'),state.get('started_at'),state.get('history')))
         if key == self.key:
             self.snapshot=state
+            self.shop.refresh(state)
             return
         self.key = key
         self.nodes.refresh(state)
         self.resources.refresh(state)
         self.floor_resources.refresh(state)
         self.evidence.refresh(state)
+        self.shop.refresh(state)
         changed_run = self.snapshot is not None and self.snapshot.get('id') != state.get('id')
         self.snapshot = state
         old = self.entries.currentItem()
@@ -154,6 +165,13 @@ class ReplayPanel(QWidget):
     def selected(self, *_):
         item = self.entries.currentItem()
         row = self.rows.get(item.data(Qt.ItemDataRole.UserRole)) if item else None
+        from .player_shop_memory import recorded_shops
+        self.shop_button.setVisible(bool(row and any(index==row['index']for index,_ in recorded_shops(self.snapshot or{}))))
         text = event_text(row) if row else '选择一条记录查看；读取时间不等于游戏动作发生时间。'
         if self.detail.toPlainText() != text:
             self.detail.setPlainText(text)
+
+    def open_selected_shop(self):
+        self.refresh();item=self.entries.currentItem();index=item.data(Qt.ItemDataRole.UserRole)if item else None
+        if self.shop.select_observation(index):self.tabs.setCurrentWidget(self.shop);return True
+        return False

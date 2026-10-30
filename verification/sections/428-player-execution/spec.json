@@ -1,0 +1,18 @@
+{
+  "title": "历史商店货物复盘与读取记录准确跳转",
+  "change": "本机复盘可查看所选旧局的商店货物，复用商品图片、名称搜索、前后清单对照和取得来源查询；普通读取记录直接列出已读商品，并可一键定位那次准确清单。历史采用独立只读视图，切回当前局或历史失效时清除旧货物。长对照默认收起，保留整行图标与效果阅读空间。",
+  "limits": "仅有记录的商店清单可复盘，不追填旧局缺失字段，不判断是否同一家店、实际购买、价格、剩余刷新次数或结算。历史固定资料仍受版本范围限制。没有恢复或覆盖当前局；隔离历史样例不等于已采完整个人历史或视频全部效果。",
+  "criteria": [
+    "从归档或当前对局分别读取商店清单，不回写当前局",
+    "读取记录跳到准确历史位置，不按同名或同时间合并",
+    "历史失效清空，刷新保留选择",
+    "商品图标完整可见，长清单对照可展开收起"
+  ],
+  "test": "tests.test_player_feature_428",
+  "native": "scripts/verify_player_feature_window_428.py",
+  "next": "继续第429节，围绕视频剩余功能、资料与外观缺口自主推进至440；440完整验收并发布后暂停。",
+  "unit_receipt": "verification/sections/428-player-checks-attempt2/process.json",
+  "native_receipt": "verification/sections/428-player-window-attempt2/window.json",
+  "native_process_receipt": "verification/sections/428-player-window-process-attempt2/process.json",
+  "source_receipt": "verification/sections/428-reference.json"
+}
