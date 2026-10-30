@@ -20,9 +20,9 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section: commit and ordinary push origin codex/p2-development; full available validation after125 then every15 sections",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": true,
+    "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
-    "stop_after_section": 440,
+    "stop_after_section": null,
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
@@ -34,15 +34,15 @@
     "bugfix_only_counts_as_functional_section": false,
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
-    "current_user_batch_target_section": 440,
-    "current_user_batch_completed": true,
+    "current_user_batch_target_section": null,
+    "current_user_batch_completed": false,
     "requirements_synced_each_section": true,
     "atomic_section_source_receipt_status_commit": true,
     "verify_remote_head_after_each_push": true,
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
     "repair_full_validation_after_functional_260": true,
-    "new_functional_sections_paused": true,
+    "new_functional_sections_paused": false,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
@@ -2717,7 +2717,7 @@
     }
   ],
   "next_section": 441,
-  "next_action": "继续PROGRAM_REVIEW.md中未完成的核心链路审查；发现有证问题及时修正。全程序回顾、P3/P2/P1与视频对齐仍未完成；本轮为维护，功能节数仍440。",
+  "next_action": "继续完整程序回顾：本局合并/保存/恢复到计算显示，再核对其余资料入口、缺图与视频差异；识别优化最后。当前目标持续有效，未完成整程序回顾或P3/P2/P1，不用代码清点代替验收。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -3091,7 +3091,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "PLAYER_SECTION440_PUBLISHED_PAUSED",
+  "batch_status": "IMPLEMENTATION_REVIEW_ACTIVE",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3268,15 +3268,17 @@
     440
   ],
   "current_batch": {
-    "start": 426,
-    "end": 440,
-    "next_full_validation_after": 455,
-    "status": "PLAYER_SECTION440_PUBLISHED_PAUSED",
+    "kind": "whole_program_review_and_implementation_improvement",
+    "start": 441,
+    "end": null,
+    "status": "IMPLEMENTATION_REVIEW_ACTIVE",
     "completed_sections": 440,
     "next_section": 441,
     "next_section_started": false,
-    "batch_closed": true,
-    "receipt": "verification/sections/440.json"
+    "batch_closed": false,
+    "next_full_validation_after": 455,
+    "receipt": "verification/maintenance/catalog-review-20261031/summary.json",
+    "scope": "Maintenance after functional440. The next numeric pointer is not a claim that functional441 started. Complete whole-program review and video requirements, not a smaller file-inventory goal."
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -3409,8 +3411,8 @@
     "full_validation_interval": 5,
     "next_full_validation_after": 120
   },
-  "batch_start_section": 426,
-  "batch_target_section": 440,
+  "batch_start_section": 441,
+  "batch_target_section": null,
   "suspended_target_section": 400,
   "latest_user_resume": {
     "at_Beijing": "2026-10-16T00:17:47.624882+08:00",
@@ -9728,13 +9730,29 @@
   },
   "current_maintenance_save": {
     "kind": "implementation_maintenance",
-    "title": "全程序审查范围清单与聊天回执修复（整体验证未完成）",
-    "receipt": "verification/maintenance/overall-review-20261031/summary.json",
+    "title": "启动与目录读取精简、按需头像及39个藏品共图变体修复",
+    "receipt": "verification/maintenance/catalog-review-20261031/summary.json",
     "binding": "enclosing_commit",
     "functional_section_added": false,
-    "status": "partial_overall_review_concrete_receipt_issues_fixed",
+    "status": "partial_whole_program_review_catalog_optimization_and_shared_artwork_fixed",
     "review_checklist": "PROGRAM_REVIEW.md",
-    "review_checklist_sha256": "da9e7ce61cedfc4a15d67bce1cf34726af865ee2f4270d595059b56ddcc33d62",
+    "review_checklist_sha256": "f7eeda2f3622100558ab25ba8ed7ae5a8f485d144e3a9908f4fdf220b9288d18",
     "application_review_complete": false
+  },
+  "historical_before_whole_program_review_batch_20261031": {
+    "current_batch": {
+      "start": 426,
+      "end": 440,
+      "next_full_validation_after": 455,
+      "status": "PLAYER_SECTION440_PUBLISHED_PAUSED",
+      "completed_sections": 440,
+      "next_section": 441,
+      "next_section_started": false,
+      "batch_closed": true,
+      "receipt": "verification/sections/440.json"
+    },
+    "batch_status": "PLAYER_SECTION440_PUBLISHED_PAUSED",
+    "batch_start_section": 426,
+    "batch_target_section": 440
   }
 }

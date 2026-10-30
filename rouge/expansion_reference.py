@@ -1,5 +1,6 @@
 """Version-separated current CN reference. Never mutates the baseline calculator."""
 from copy import deepcopy
+from collections import Counter
 from hashlib import sha256,sha1
 from pathlib import Path,PurePosixPath
 import json,re
@@ -91,7 +92,7 @@ def rows(category,*,changes_only=True,reference=None):
         result.append({'id':key,'name':name,'label':label,'change':'added'if key not in old else'changed'if changed else'unchanged',
                        'value':deepcopy(value),'before':deepcopy(old.get(key)),'category':category})
     # Original order is retained; duplicate names are separate real source entries.
-    totals={label:sum(r['label']==label for r in result)for label in {r['label']for r in result}}
+    totals=Counter(r['label']for r in result)
     positions={}
     for row in result:
         label=row['label'];positions[label]=positions.get(label,0)+1

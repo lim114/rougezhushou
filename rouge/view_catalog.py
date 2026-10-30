@@ -1,5 +1,6 @@
 """Local pictures and evidence-backed groups; never changes calculation inputs."""
 import json
+from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 from .stage_context import context_data
@@ -39,7 +40,20 @@ def _picture(filename,edge):
 
 def portrait_icon(kind,identity):
     record=portrait_record(kind,identity)
-    return QIcon(_picture(record['file'],32)) if record else QIcon()
+    path=DATA/record['file'] if record else None
+    # Let Qt decode at the displayed size, rather than eagerly scaling every
+    # portrait to 32px while building a hidden catalog.
+    return QIcon(str(path)) if path is not None and path.is_file() else QIcon()
+
+
+def relic_icon(identity):
+    """Reuse only explicitly documented shared artwork, never infer item identity."""
+    path=DATA/'relic-icons'/(identity+'.png')
+    if not path.is_file():
+        from .relic_recognition import artwork_families
+        family=artwork_families().get(identity)
+        if family:path=DATA/'relic-icons'/(family[0]+'.png')
+    return QIcon(str(path)) if path.is_file() else QIcon()
 
 
 @lru_cache(maxsize=1)
@@ -83,7 +97,7 @@ def add_groups(combo,groups,placeholder=None):
 
 
 def operator_groups(profiles,implemented):
-    counts={p['name']:sum(v['name']==p['name'] for v in profiles.values()) for p in profiles.values()}
+    counts=Counter(p['name']for p in profiles.values())
     groups=[]
     for profession,label in PROFESSIONS.items():
         entries=sorted(((key,p) for key,p in profiles.items() if p['profession']==profession),

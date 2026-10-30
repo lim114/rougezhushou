@@ -1,9 +1,8 @@
 """Pinnable local item reference; all navigation carries exact version and pool IDs."""
 from PySide6.QtCore import Qt,Signal
-from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QComboBox,QPlainTextEdit
-from pathlib import Path
 from .player_item_sources import pool_label,VERSION_LABELS
+from .view_catalog import relic_icon
 
 class ItemHoverCard(QDialog):
     entered=Signal()
@@ -35,8 +34,8 @@ class ItemHoverCard(QDialog):
         if key==self.signature:return True
         old=self.pools.currentData()if self.identity==row['id']and self.version==version else None
         self.signature=key;self.identity=row['id'];self.version=version;self.index=index
-        self.title.setText(row['name']);self.picture.clear();path=Path(__file__).parent/'data/relic-icons'/((row.get('icon')or'')+'.png')
-        if path.is_file():self.picture.setPixmap(QPixmap(str(path)).scaled(46,46,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
+        self.title.setText(row['name']);self.picture.clear()
+        self.picture.setPixmap(relic_icon(row.get('icon')or'').pixmap(46,46))
         self.notice.setText(VERSION_LABELS.get(version,'未确认资料范围')+' · 当前DLC适用性待核验。\n比例为历史候选出现频率，不是抽取权重或本局获得概率；不同来源可能重叠，不相加。仅本机查询，不上传本局。')
         self.pools.blockSignals(True);self.pools.clear()
         for pool in index.pools(version,row['id'])if index else[]:self.pools.addItem(pool_label(pool),pool['id'])

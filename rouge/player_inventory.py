@@ -1,7 +1,6 @@
 """Read-only picture inventory, with held facts distinct from source descriptions."""
 from pathlib import Path
 from PySide6.QtCore import Qt,QSize,Signal,QTimer,QEvent
-from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLineEdit,QCheckBox,QLabel,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QComboBox,QGridLayout,QSlider,QSplitter,QButtonGroup
 from . import expansion_reference as reference
 from .record_flags import active_record
@@ -23,27 +22,39 @@ def inventory_rows(state,query='',held_only=True,*,rarity=None,exchange=None,kin
     if packet is None:return None
     from .public_compendium import resolve,effect_text
     docs=resolve(public_data,version,packet) if public_data is not None else {}
-    held={key for key,row in state.get('relics',{}).items()if active_record(row,'held')}
-    result=[];q=query.strip().casefold();nodes=source_nodes(public_data,version)
-    for row in reference.rows('relics',changes_only=False,reference=packet):
-        item=row['value'].get('item')or{}
+    result=[];nodes=source_nodes(public_data,version)
+    details=packet['current']['details']
+    # This reader needs the current item fields, not copied baseline effects,
+    # change labels or the other reference categories.
+    for identity in details['relics']:
+        item=details['items'].get(identity)or{}
         if item.get('type')not in ('RELIC','LEGACY'):continue
-        doc=docs.get(row['id']);usage=effect_text(doc.get('effect') if doc else item.get('usage'))
-        if category is not None and (doc or{}).get('category')!=category:continue
+        doc=docs.get(identity);usage=effect_text(doc.get('effect') if doc else item.get('usage'))
+        result.append({'id':identity,'name':reference._plain(item.get('name'))or'未命名效果条目','usage':usage,
+            'icon':item.get('iconId'),'exchange':item.get('canSacrifice'),'rarity':item.get('rarity'),'kind':item.get('type'),'compendium':doc,'category':(doc or{}).get('category'),'source_nodes':nodes.get(identity,[])})
+    return _filter_rows(result,state,query,held_only,rarity=rarity,exchange=exchange,kind=kind,category=category,access=access,source_node=source_node)
+
+
+def _filter_rows(rows,state,query='',held_only=True,*,rarity=None,exchange=None,kind=None,category=None,access=None,source_node=None):
+    if rows is None:return None
+    held={key for key,row in state.get('relics',{}).items()if active_record(row,'held')}
+    result=[];q=query.strip().casefold()
+    for row in rows:
+        doc=row['compendium']
+        if category is not None and row['category']!=category:continue
         if held_only and row['id']not in held:continue
-        search_text=row['name']+' '+usage
+        search_text=row['name']+' '+row['usage']
         if doc:search_text+=' '+reference._plain(doc.get('unlockConditionText'))+' '+reference._plain(doc.get('obtainMethod'))
         if q and q not in search_text.casefold():continue
         if access=='unlock'and not(doc and(doc.get('unlockConditional')is True or reference._plain(doc.get('unlockConditionText')).strip())):continue
         if access=='special'and not(doc and(doc.get('specialAccess')is True or reference._plain(doc.get('obtainMethod')).strip())):continue
         if access=='uncovered'and doc is not None:continue
         if access not in(None,'unlock','special','uncovered'):continue
-        if source_node is not None and source_node not in nodes.get(row['id'],[]):continue
-        if rarity is not None and item.get('rarity')!=rarity:continue
-        if exchange is not None and item.get('canSacrifice')is not exchange:continue
-        if kind is not None and item.get('type')!=kind:continue
-        result.append({'id':row['id'],'name':row['name'],'usage':usage,'held':row['id']in held,
-            'icon':item.get('iconId'),'exchange':item.get('canSacrifice'),'rarity':item.get('rarity'),'kind':item.get('type'),'compendium':doc,'category':(doc or{}).get('category'),'source_nodes':nodes.get(row['id'],[])})
+        if source_node is not None and source_node not in row['source_nodes']:continue
+        if rarity is not None and row['rarity']!=rarity:continue
+        if exchange is not None and row['exchange']is not exchange:continue
+        if kind is not None and row['kind']!=kind:continue
+        result.append({**row,'held':row['id']in held})
     return result
 
 class InventoryPanel(QWidget):
@@ -138,7 +149,7 @@ class InventoryPanel(QWidget):
             if prior is not None and index<0:self.category.addItem('原类别在此范围无资料',prior);index=self.category.count()-1
             self.category.setCurrentIndex(max(0,index));self.category.blockSignals(False)
         current=self.entries.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if current else None
-        rows=inventory_rows(self.run.state,self.search.text(),self.held.isChecked(),rarity=self.rarity.currentData(),exchange=self.exchange.currentData(),kind=self.kind.currentData(),public_data=data,version=self.version.currentData(),category=self.category.currentData(),access=self.access.currentData(),source_node=self.source_node.currentData(),packet=packet);self.rows={r['id']:r for r in rows or[]}
+        rows=_filter_rows(available,self.run.state,self.search.text(),self.held.isChecked(),rarity=self.rarity.currentData(),exchange=self.exchange.currentData(),kind=self.kind.currentData(),category=self.category.currentData(),access=self.access.currentData(),source_node=self.source_node.currentData());self.rows={r['id']:r for r in rows or[]}
         render_key=repr(rows)
         if render_key!=self.render_key:self.render_rows(rows,selected);self.render_key=render_key
         if self.hover_card.identity not in self.rows:self.hover_card.dismiss()
@@ -150,11 +161,11 @@ class InventoryPanel(QWidget):
         if rows is not None and data is None:self.status.setText('公开图鉴暂不可用；下方只显示固定国服说明，未沿用旧的图鉴或掉落资料。'+self.status.text())
         if self.access.currentData()or self.source_node.currentData():self.status.setText(self.status.text()+' 当前按来源说明筛选，不判断本局解锁、可选或必掉；未收录不表示没有取得途径。')
     def render_rows(self,rows,selected):
+        from .view_catalog import relic_icon
         offset=self.entries.verticalScrollBar().value()
         self.entries.blockSignals(True);self.entries.clear()
         for row in rows or[]:
-            icon=Path(__file__).parent/'data/relic-icons'/((row['icon']or'')+'.png')
-            item=QListWidgetItem(QIcon(str(icon))if icon.is_file()else QIcon(),row['name'])
+            item=QListWidgetItem(relic_icon(row['icon']or''),row['name'])
             item.setToolTip(row['name']+' · '+RARITIES.get(row['rarity'],'未分档')+(' · 本局已确认'if row['held']else' · 资料条目'));item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
             if row['id']==selected:self.entries.setCurrentItem(item)
         if selected not in self.rows:self.entries.setCurrentRow(-1)
