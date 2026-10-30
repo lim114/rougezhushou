@@ -1,3 +1,9 @@
+<!-- agents-cleanup-20261031:start -->
+## 文档维护 · 精简执行规则与历史归档
+
+`AGENTS.md` 已归并有效要求及常见误区，精简前原文完整保存在 `docs/history/2026-10-31-AGENTS-before-cleanup.md`，档案不作为当前指令。保留五条最高要求、P3优先、只读与私人状态边界、证据/复用规则和真实验收/发布要求；不再向执行入口追加逐节历史。本次仅文档维护，功能仍440，441未启动，功能开发保持暂停；原full-440仅证明其冻结来源范围。核对记录：`verification/maintenance/20261031-agents-cleanup.json`。
+<!-- agents-cleanup-20261031:end -->
+
 <!-- player-batch-current:start -->
 ## 当前第440节 + 本局地图读取覆盖与按信息来源查找
 
