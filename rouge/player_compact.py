@@ -40,7 +40,7 @@ class CompactAssistant(QDialog):
         overview=QWidget();layout=QVBoxLayout(overview);self.context=QLabel();self.context.setWordWrap(True);layout.addWidget(self.context);grid=QGridLayout();self.cards={}
         for i,name in enumerate(overview_facts(owner.run.state)):
             value=QLabel();value.setWordWrap(True);self.cards[name]=value;grid.addWidget(QLabel(name),i//2*2,i%2);grid.addWidget(value,i//2*2+1,i%2)
-        layout.addLayout(grid);self.scene_button=QPushButton('最近关卡与敌人资料');self.scene_button.clicked.connect(self.open_scene_battle);layout.addWidget(self.scene_button);self.scene_popup=None;self.exchange_popup=None;self.replay_popup=None;self.replay_button=QPushButton('查看本局读取记录');self.replay_button.clicked.connect(self.open_replay);layout.addWidget(self.replay_button);self.team_popup=None;self.team_button=QPushButton('本局队伍 · 职业与培养');self.team_button.clicked.connect(self.open_team);layout.addWidget(self.team_button);self.overview_popup=ToolPopover('本局概况',overview,self);self.overview_popup.resize(460,350)
+        layout.addLayout(grid);self.scene_button=QPushButton('最近节点 · 事件、关卡与敌人资料');self.scene_button.clicked.connect(self.open_scene_battle);layout.addWidget(self.scene_button);self.scene_popup=None;self.exchange_popup=None;self.replay_popup=None;self.replay_button=QPushButton('查看本局读取记录');self.replay_button.clicked.connect(self.open_replay);layout.addWidget(self.replay_button);self.team_popup=None;self.team_button=QPushButton('本局队伍 · 职业与培养');self.team_button.clicked.connect(self.open_team);layout.addWidget(self.team_button);self.overview_popup=ToolPopover('本局概况',overview,self);self.overview_popup.resize(460,350)
         settings=QWidget();layout=QVBoxLayout(settings);self.pin=QCheckBox('保持置顶');self.pin.setChecked(True);self.pin.toggled.connect(self.set_pinned);layout.addWidget(self.pin)
         self.expand=QPushButton('展开完整助手');self.expand.clicked.connect(self.open_full);layout.addWidget(self.expand)
         from .player_hotkey import GlobalHotkey,load_preferences,DEFAULT
@@ -208,9 +208,9 @@ class CompactAssistant(QDialog):
         self.recent_notes_popup.panel.refresh(force=True);return self.present(self.recent_notes_popup)
     def open_scene_battle(self):
         if self.scene_popup is None:
-            from .player_scene_battle import SceneBattlePanel
+            from .player_recent_scene import RecentScenePanel
             from .player_reference_notes import open_note
-            panel=SceneBattlePanel(self.owner.run);panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.scene_popup=ToolPopover('最近关卡与敌人',panel,self);self.scene_popup.panel=panel;self.scene_popup.resize(760,600)
+            panel=RecentScenePanel(self.owner.run);panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.scene_popup=ToolPopover('最近节点资料',panel,self);self.scene_popup.panel=panel;self.scene_popup.resize(760,600)
         self.scene_popup.panel.refresh();return self.present(self.scene_popup)
     def open_inventory(self):
         if self.inventory_popup is None:
