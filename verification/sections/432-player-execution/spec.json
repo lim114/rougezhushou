@@ -1,0 +1,18 @@
+{
+  "title": "个人统计逐局明细与准确归档回看",
+  "change": "个人统计增加逐局记录，可分别核对源石锭、零件、藏品栏总数及所选藏品持有情况的有效记录、未计入原因和实际读到值。平均数与逐局明细共用数值核对规则，真实0与未知分开；可打开生成该项记录的准确本机归档，归档已变更时要求重读而不替代。沿用保密等级/分队筛选、重复局去重和只使用完整藏品清单的持有率口径。",
+  "limits": "逐局明细只解释已归档的读取样本，不提供通关率、结算收益、掉落概率或分队强度结论。版本与读取缺失偏差仍保留；未归档的当前局不计入。准确归档入口需已有内容校验，缺失或变更则不跳转。只有隔离原生样例证明，没有读取、上传或覆盖真实个人记录。",
+  "criteria": [
+    "逐局计入/排除与总统计口径一致",
+    "实际0、未读和完整清单未持有分别显示",
+    "同局重复版本不重复计数，筛选和阅读可保持",
+    "只按准确归档身份和内容校验导航，失效不替代当前局"
+  ],
+  "test": "tests.test_player_feature_432",
+  "native": "scripts/verify_player_feature_window_432.py",
+  "next": "继续第433节，按视频剩余功能和资料缺口推进至440；440执行到期完整检查和真实普通发布后暂停。",
+  "unit_receipt": "verification/sections/432-player-checks-attempt1/process.json",
+  "native_receipt": "verification/sections/432-player-window-attempt1/window.json",
+  "native_process_receipt": "verification/sections/432-player-window-process-attempt1/process.json",
+  "source_receipt": "verification/sections/432-reference.json"
+}

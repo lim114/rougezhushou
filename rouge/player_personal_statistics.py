@@ -38,20 +38,15 @@ def unique_archives(records):
     return list(result.values())
 
 def statistics(records, relic_id=None):
+    from .player_statistics_samples import MEASURES,numeric_value
     records = unique_archives(records)
     result = {'archive_count': len(records), 'measures': {},
               'outcomes_observed': False, 'relic': None}
-    for key, name, getter in [
-            ('gold', '归档前最近读到的源石锭', lambda state: state.get('resources', {}).get('gold', {}).get('value')),
-            ('parts_count', '归档前最近读到的零件数', lambda state: state.get('resources', {}).get('parts_count', {}).get('value')),
-            ('relic_count', '归档前最近读到的藏品栏总数（含道具）', lambda state: state.get('relic_count'))]:
+    for key,name in MEASURES.items():
         values = []
         for record in records:
-            try:
-                value = getter(record['state'])
-            except (AttributeError, TypeError):
-                value = None
-            if nonnegative_integer(value):
+            value=numeric_value(record['state'],key)
+            if value is not None:
                 values.append(value)
         result['measures'][key] = {'name': name, 'sample_count': len(values),
                                    'missing_count': len(records) - len(values),
@@ -85,9 +80,11 @@ def statistics_text(result):
               '只在本机计算与显示，不上传这些记录。']
     return '\n'.join(lines)
 
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QComboBox, QPlainTextEdit, QPushButton
 
 class PersonalStatisticsPage(QWidget):
+    archiveRequested=Signal(object)
     def __init__(self, store, parent=None):
         super().__init__(parent)
         self.store = store
@@ -114,6 +111,8 @@ class PersonalStatisticsPage(QWidget):
         body.addWidget(self.reload)
         from .player_statistics_card import CardControls
         self.card_controls=CardControls(self,body)
+        from .player_statistics_samples import StatisticsSamplesPage
+        self.samples=StatisticsSamplesPage();self.samples.archiveRequested.connect(self.archiveRequested);self.card_controls.pages.addTab(self.samples,'逐局记录')
         self.reload.clicked.connect(self.refresh)
         self.relic.currentIndexChanged.connect(self.render)
         self.refresh()
@@ -145,9 +144,11 @@ class PersonalStatisticsPage(QWidget):
             self.result = None
             self.card_controls.sync()
             self.detail.setPlainText('本机历史暂未读到，统计未知；没有用0局或旧结果替代。')
+            self.samples.install([],self.relic.currentData())
             return
         from .player_cohort_ui import selected_records,filter_notes
         self.result = statistics(selected_records(self), self.relic.currentData())
+        self.samples.install(selected_records(self),self.relic.currentData())
         self.card_controls.sync()
         text = filter_notes(self)+'\n\n'+statistics_text(self.result)
         if self.detail.toPlainText() != text:

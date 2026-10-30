@@ -13,6 +13,19 @@ def attach_history(panel,body):
     reload_history(panel,initial=True)
     from .player_personal_statistics import PersonalStatisticsPage
     panel.statistics=PersonalStatisticsPage(panel.history_store);panel.tabs.addTab(panel.statistics,'个人统计')
+    panel.statistics.archiveRequested.connect(lambda binding:open_statistics_archive(panel,binding))
+
+def open_statistics_archive(panel,binding):
+    from .player_statistics_samples import sample_binding
+    canonical=sample_binding(binding)
+    if canonical is None or canonical!=binding:return False
+    reload_history(panel)
+    identity='archive:'+binding['id'];record=panel.archives.get(identity)
+    if record is None or record.get('state_sha256')!=binding['state_sha256']:
+        panel.statistics.notice.setText('所选归档已更新或暂不可用，请重新读取统计后再选；没有用当前局或其它记录替代。');return False
+    index=panel.sessions.findData(identity)
+    if index<0:return False
+    panel.sessions.setCurrentIndex(index);panel.tabs.setCurrentIndex(0);return True
 
 def reload_history(panel,initial=False):
     old=panel.sessions.currentData();panel.archives={};error=None
