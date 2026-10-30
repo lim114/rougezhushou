@@ -7,6 +7,7 @@ QDialog#mapReferenceWindow QTabBar::tab {color:#35403c;background:#e4e7e6;border
 QDialog#mapReferenceWindow QTabBar::tab:selected {background:#2c3533;color:white;}
 QDialog#mapReferenceWindow QPushButton,QDialog#mapReferenceWindow QComboBox {color:#263630;background:#e8ebea;border:1px solid #bbc6c1;border-radius:7px;padding:5px;}
 QDialog#mapReferenceWindow QPushButton:disabled {color:#92999a;}
+QDialog#mapReferenceWindow QLineEdit {color:#28332e;background:white;border:1px solid #d2d9d5;border-radius:7px;padding:6px;selection-background-color:#cde5eb;selection-color:#25332f;}
 QDialog#mapReferenceWindow QPlainTextEdit,QDialog#mapReferenceWindow QTextBrowser,QDialog#mapReferenceWindow QListWidget,QDialog#mapReferenceWindow QTreeWidget {color:#28332e;background:white;border:1px solid #d2d9d5;}
 '''
 

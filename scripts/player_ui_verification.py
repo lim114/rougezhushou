@@ -22,6 +22,7 @@ def source_hashes():
     paths+=[ROOT/'research/public-statistics-388/nodes.json']
     paths+=[ROOT/'scripts/update_cloud_index.py',ROOT/'research/public-reference-391/snapshot.json']
     paths+=list((ROOT/'research/public-compendium-413').glob('*'))
+    paths+=[ROOT/'rouge/data/enemy-portrait-supplement-433.json',ROOT/'rouge/data/current-enemies/enemy_1250_lyengs_2.png']
     return {p.relative_to(ROOT).as_posix():sha256(p.read_bytes()).hexdigest()for p in sorted(set(paths))}
 
 def run(section,receipt):

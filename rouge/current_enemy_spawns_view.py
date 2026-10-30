@@ -41,7 +41,7 @@ class CurrentEnemySpawnsPanel(QWidget):
         keep=self.result is not None and fresh['source_identity']==self.result['source_identity']and fresh['enemy_key']==self.result['enemy_key']and fresh['stage_id']==self.result['stage_id']
         key=self.entries.currentData()if keep else None;self.result=fresh;rows=model.rows(fresh,self.kind.currentData());self._fill(self.entries,rows,key);self.entries.setEnabled(bool(rows));row=self.selected();view=(deepcopy(fresh['source_identity']),self.kind.currentData(),row['key']if row else None);preserve=keep and view==self._view_key
         replace_text(self.player,model.player_text(fresh,row),preserve=preserve);replace_text(self.technical,_technical_json({'stage_id':fresh['stage_id'],'enemy_key':fresh['enemy_key'],'selected':row,'source_identity':fresh['source_identity'],'original_level_source':fresh['original_level_source'],'exact_enemy':fresh['enemy'],'all_corresponding_actions':fresh['entries'],'actual_occurrence':None,'actual_count':None,'absolute_time':None}),preserve=preserve)
-        pix=QPixmap();raw=model.battle.picture_bytes(fresh['enemy']['portrait']);self.portrait.show()
+        pix=QPixmap();raw=model.battle.picture_for_enemy(fresh['enemy']);self.portrait.show()
         if raw and pix.loadFromData(raw,'PNG'):self.portrait.setPixmap(pix.scaled(74,74,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
         else:self.portrait.clear();self.portrait.setText('此精确引用未取得图片；不借用同名单位。')
         self.action_button.setEnabled(row is not None);self.position_button.setEnabled(row is not None)

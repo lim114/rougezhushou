@@ -63,7 +63,7 @@ class SceneBattlePanel(QWidget):
             self.detail.setPlainText('所选关卡资料无法核对，旧内容已清除。'if identity else'请选择准确关卡版本。');return
         counts=Counter(enemy['name']for enemy in self.result['enemies']);occurrences=Counter()
         for enemy in self.result['enemies']:
-            self.enemies[enemy['key']]=enemy;pix=QPixmap();raw=model.picture_bytes(enemy['portrait'])
+            self.enemies[enemy['key']]=enemy;pix=QPixmap();raw=model.picture_for_enemy(enemy)
             if raw:pix.loadFromData(raw)
             occurrences[enemy['name']]+=1
             label=enemy['name']+(f"\n同名记录{occurrences[enemy['name']]}"if counts[enemy['name']]>1 else'')

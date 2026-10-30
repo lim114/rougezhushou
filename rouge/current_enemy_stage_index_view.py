@@ -155,7 +155,7 @@ class CurrentEnemyStageIndexPanel(QWidget):
         self.selected_key = key; self.result = info; self.open_button.setEnabled(True)
         replace_text(self.player, model.player_text(info), preserve=keep)
         replace_text(self.technical, _technical_json(info), preserve=keep)
-        self.portrait.clear(); pix = QPixmap(); raw = battle.picture_bytes(info['row']['portrait'])
+        self.portrait.clear(); pix = QPixmap(); raw = battle.picture_for_enemy(info['row'])
         if raw and pix.loadFromData(raw, 'PNG'):
             self.portrait.setPixmap(pix.scaled(92, 92, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
         else: self.portrait.setText('此精确引用未取得可核对的图片。')

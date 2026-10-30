@@ -25,7 +25,7 @@ class CurrentBattleView314Tests(unittest.TestCase):
         for e in p.result['enemies']:
             self.assertTrue(p.enemy_choices.select_value(e['key']));self.app.processEvents();self.assertIn(e['name'],p.enemy_player.toPlainText());self.assertIn('不以白值替代',p.enemy_player.toPlainText())
             pix=p.enemy_portrait.pixmap()
-            if model.picture_bytes(e['portrait'])is None:self.assertTrue(pix is None or pix.isNull());self.assertIn('未取得图片',p.enemy_portrait.text())
+            if model.picture_for_enemy(e)is None:self.assertTrue(pix is None or pix.isNull());self.assertIn('未取得图片',p.enemy_portrait.text())
             else:self.assertFalse(pix.isNull())
     def test_main_vs_branch_filter_is_real_separate_choice_without_autoselection(self):
         p=self.panel()

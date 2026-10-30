@@ -184,3 +184,13 @@ def picture_bytes(info):
         if len(raw)!=info['bytes']or sha256(raw).hexdigest()!=info['sha256']or sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()!=info['git_blob_sha1']:return None
         return raw
     except(OSError,ValueError,TypeError,KeyError):return None
+
+def picture_for_enemy(enemy):
+    if not isinstance(enemy,dict):return None
+    # A corrupt declared original is not silently replaced. Only a genuinely
+    # absent portrait may use the independently pinned exact-ID supplement.
+    info=enemy.get('portrait')
+    if info is None:
+        from .enemy_portrait_supplement import portrait
+        info=portrait(enemy)
+    return picture_bytes(info)

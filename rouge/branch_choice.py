@@ -6,12 +6,13 @@ OVERVIEW='__overview__'
 
 
 class BranchChoice(QWidget):
-    def __init__(self,combo,groups,*,overview_label,placeholder=None,overview=None,empty_label='此分支暂无条目',notify_unchanged=False,branch_icons=None):
+    def __init__(self,combo,groups,*,overview_label,placeholder=None,overview=None,empty_label='此分支暂无条目',notify_unchanged=False,branch_icons=None,keep_empty_groups=False):
         super().__init__()
         self.combo=combo;self.groups=[];self.overview=overview
         self.overview_label=overview_label;self.placeholder=placeholder;self.empty_label=empty_label
         self.notify_unchanged=notify_unchanged
         self.branch_icons=branch_icons or {}
+        self.keep_empty_groups=keep_empty_groups
         self.branch=QComboBox();self.branch.setAccessibleName(overview_label+'；选择分类分支')
         self.branch.setIconSize(QSize(26,26))
         self.branch.setMinimumContentsLength(7)
@@ -44,7 +45,7 @@ class BranchChoice(QWidget):
 
     def set_groups(self,groups,*,emit=True):
         previous=self.combo.currentData();key=self.branch.currentData()
-        self.groups=[(name,list(items)) for name,items in groups if items]
+        self.groups=[(name,list(items)) for name,items in groups if items or self.keep_empty_groups]
         blocked=self.branch.blockSignals(True);self.branch.clear()
         self.branch.addItem(self.overview_label,OVERVIEW)
         for name,_ in self.groups:

@@ -2,7 +2,7 @@
 import json
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap,QIcon
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog,QLineEdit
 from . import current_battle_reference as model,expansion_reference as version
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
@@ -47,8 +47,11 @@ class CurrentBattlePanel(QWidget):
         self.tabs.addTab(overview, '地图与关卡')
         enemies = QWidget()
         body = QVBoxLayout(enemies)
+        self.enemy_search=QLineEdit();self.enemy_search.setMaxLength(120);self.enemy_search.setPlaceholderText('搜索本关敌人名称或图鉴原文，如隐匿、攻击');body.addWidget(self.enemy_search)
+        self.enemy_search_notice=QLabel('');self.enemy_search_notice.setWordWrap(True);body.addWidget(self.enemy_search_notice)
         self.enemy_combo = QComboBox()
         self.enemy_choices = BranchChoice(self.enemy_combo, [], overview_label='总览（本关候选）', placeholder='请选择敌人或关联实体')
+        self.enemy_search.textChanged.connect(self.filter_enemies)
         body.addWidget(self.enemy_choices)
         self.enemy_portrait = QLabel()
         self.enemy_portrait.setMinimumSize(85, 85)
@@ -186,6 +189,7 @@ class CurrentBattlePanel(QWidget):
         self.map_image.clear()
         self.map_image.setText(model.UNAVAILABLE)
         self.enemy_portrait.clear()
+        self.enemy_search_notice.setText('当前关卡资料暂不可用，旧搜索结果已清除。')
         self.enemy_choices.set_groups([], emit=False)
         blocked = self.actions.blockSignals(True)
         self.actions.clear()
@@ -226,24 +230,7 @@ class CurrentBattlePanel(QWidget):
         else:
             self.map_image.clear()
             self.map_image.setText('本关固定原图无法核对，不借用同名关卡图片。')
-        groups = []
-        for tier, label in [*model.TIERS.items(), (None, '类别未确认')]:
-            items = []
-            for e in fresh['enemies']:
-                if e['tier'] != tier:
-                    continue
-                icon = QIcon()
-                raw = model.picture_bytes(e['portrait'])
-                picture = QPixmap()
-                if raw and picture.loadFromData(raw, 'PNG'):
-                    icon = QIcon(picture)
-                items.append((e['name'] + ' · 引用资料' + str(e['reference_index'] + 1), e['key'], icon))
-            groups.append((label, items))
-        blocked = self.enemy_combo.blockSignals(True)
-        self.enemy_choices.set_groups(groups, emit=False)
-        if old_enemy is not None:
-            self.enemy_choices.select_value(old_enemy, emit=False)
-        self.enemy_combo.blockSignals(blocked)
+        self.install_enemy_choices(old_enemy)
         self._enemy_changed(preserve=keep)
         self._actions_changed(preserve=keep)
         if not keep:
@@ -301,6 +288,26 @@ class CurrentBattlePanel(QWidget):
             if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==key:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
         return False
 
+    def install_enemy_choices(self,preferred=None):
+        from .player_enemy_search import matches
+        query=self.enemy_search.text();rows=[e for e in(self.result or{}).get('enemies',[])if matches(e,query)];groups=[]
+        for tier,label in [*model.TIERS.items(),(None,'类别未确认')]:
+            items=[]
+            for enemy in rows:
+                if enemy['tier']!=tier:continue
+                picture=QPixmap();icon=QIcon();raw=model.picture_for_enemy(enemy)
+                if raw and picture.loadFromData(raw,'PNG'):icon=QIcon(picture)
+                items.append((enemy['name']+' · 引用资料'+str(enemy['reference_index']+1),enemy['key'],icon))
+            groups.append((label,items))
+        self.enemy_choices.keep_empty_groups=bool(query.strip())
+        blocked=self.enemy_combo.blockSignals(True);self.enemy_choices.set_groups(groups,emit=False)
+        if preferred is not None:self.enemy_choices.select_value(preferred,emit=False)
+        self.enemy_combo.blockSignals(blocked)
+        self.enemy_search_notice.setText(f'原文搜索匹配{len(rows)}条引用资料，可继续按分类查看；不是实际出怪数量。未匹配不表示没有这种机制，隐藏脚本和阶段变化不在此搜索范围。'if query.strip()else'可搜索名称与已列图鉴原文；同名不同引用分别保留，不相加为实际敌人数。')
+
+    def filter_enemies(self,*_):
+        preferred=self.enemy_combo.currentData();self.install_enemy_choices(preferred);self._enemy_changed(preserve=True)
+
     def _enemy_changed(self, *_, preserve=False):
         key = self.enemy_combo.currentData()
         enemy = next((e for e in self.result['enemies'] if e['key'] == key), None) if self.result else None
@@ -309,7 +316,7 @@ class CurrentBattlePanel(QWidget):
         replace_text(self.enemy_player, model.enemy_text(enemy) if enemy else '请选择敌人或关联实体。', preserve=keep)
         self.enemy_portrait.clear()
         pix = QPixmap()
-        raw = model.picture_bytes(enemy['portrait']) if enemy else None
+        raw = model.picture_for_enemy(enemy)
         if raw and pix.loadFromData(raw, 'PNG'):
             self.enemy_portrait.setPixmap(pix.scaled(90, 90, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
         else:
@@ -469,6 +476,7 @@ class CurrentBattlePanel(QWidget):
         if request is None or request['stage_id']!=self.stage_id or request['enemy_key']!=key:
             self._close_boss_documents();return False
         if not any(row['key']==key for row in self.result['enemies']):self._close_boss_documents();return False
+        if self.enemy_combo.findData(key)<0:self.enemy_search.clear()
         selected=self.enemy_choices.select_value(key)
         if selected:
             self._close_boss_documents();self.tabs.setCurrentIndex(1)
