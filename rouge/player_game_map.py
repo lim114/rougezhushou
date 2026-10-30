@@ -1,7 +1,7 @@
 """Transparent, input-free annotations on a freshly corroborated game map."""
 import time,math
 import numpy as np
-from PySide6.QtCore import QObject,QTimer,Qt,QPointF
+from PySide6.QtCore import QObject,QTimer,Qt,QPointF,QPoint
 from PySide6.QtGui import QPainter,QColor,QPen
 from PySide6.QtWidgets import QWidget
 
@@ -57,14 +57,66 @@ class OverlaySurface(QWidget):
 class GameMapOverlay(QObject):
     def __init__(self,companion,owner):
         super().__init__(companion);self.companion=companion;self.owner=owner;self.enabled=False;self.kind=None;self.surface=OverlaySurface(companion);self.current=None
+        from .player_game_hover import HoverGate
+        self.gate=HoverGate(delay=.35);self.hover_key=None;self.card=None;self.view=None
         self.timer=QTimer(self);self.timer.setInterval(500);self.timer.timeout.connect(self.tick);self.timer.start()
     def set_enabled(self,value):self.enabled=bool(value);self.tick()
     def set_kind(self,value):self.kind=value;self.tick()
     def tick(self):
         self.current=None;c=self.companion;reference=getattr(self.owner,'map_overlay_reference',None)
-        if self.enabled and self.kind and reference and not self.owner.closing and c.hidden_windows is None:
+        snapshot=None
+        if self.enabled and reference and not self.owner.closing and c.hidden_windows is None:
             snapshot=c.game_binding.api.read(c.game_binding.target())
             self.current=payload(reference,self.owner.capture.buffer.latest(),snapshot,self.owner.run.state['id'])
-        if not self.current:self.surface.hide();self.surface.data=None;return
-        self.surface.data=self.current;self.surface.kind=self.kind;self.surface.setGeometry(self.current['rect']);self.surface.show();self.surface.update()
-    def close(self):self.timer.stop();self.surface.close();self.current=None
+        if not self.current:
+            self.surface.hide();self.surface.data=None;self.clear_hover();return
+        graph=self.current['graph'];saved=self.owner.run.state.get('maps',{}).get(graph['zone_id'])or{}
+        if saved.get('template_id')==graph['template_id']and saved.get('captured_at')==reference['captured_at']:self.current['graph']=saved
+        if self.kind:self.surface.data=self.current;self.surface.kind=self.kind;self.surface.setGeometry(self.current['rect']);self.surface.show();self.surface.update()
+        else:self.surface.hide()
+        self.hover(self.current,snapshot)
+    def clear_hover(self):
+        self.gate.reset();self.hover_key=None
+        if self.card:self.card.dismiss()
+    def hover(self,data,snapshot):
+        graph=data['graph'];prefix=(self.owner.run.state['id'],graph['zone_id'],graph['template_id'])
+        if self.card and self.card.isVisible()and(self.card.underMouse()or self.card.pinned):
+            if self.card.binding[:3]==prefix:return
+            self.clear_hover()
+        identity=hit_node(data,snapshot)
+        if identity is None:self.clear_hover();return
+        key=prefix+(identity,)
+        if key!=self.hover_key:self.clear_hover();self.hover_key=key
+        if not self.gate.update(snapshot,time.monotonic()):return
+        if self.card is None:
+            from .player_map_hover import NodeHoverCard
+            from .player_map import PreviewMapView
+            self.view=PreviewMapView();self.view.historical=False;self.card=NodeHoverCard(self.companion);self.card.setWindowFlag(Qt.WindowType.WindowDoesNotAcceptFocus,True);self.card.entryRequested.connect(self.open_entry)
+        if not self.card.install(key,graph,identity,self.owner.run.state.get('config',{}),self.view):return
+        area=data['rect'].intersected(snapshot['screen'].availableGeometry())
+        if area.width()<self.card.minimumSizeHint().width()or area.height()<self.card.minimumSizeHint().height():self.clear_hover();return
+        self.card.resize(min(400,area.width()),min(520,area.height()));client=snapshot['physical_client'];rect=data['rect'];x=(snapshot['cursor'][0]-client[0])*rect.width()/client[2];y=(snapshot['cursor'][1]-client[1])*rect.height()/client[3]
+        from .player_game_binding import clamp_window
+        self.card.move(rect.topLeft()+QPoint(round(x)+16,round(y)+16));clamp_window(self.card,area);self.card.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,True);self.card.show()
+    def open_entry(self,node_id,kind,identity):
+        if not self.current or not self.card:return False
+        graph=self.current['graph'];binding=(self.owner.run.state['id'],graph['zone_id'],graph['template_id'],node_id)
+        if self.card.binding!=binding:return False
+        self.companion.open_map();panel=self.companion.map_popup.panel
+        for i in range(panel.floors.count()):
+            zone=panel.floors.tabData(i)
+            if zone==graph['zone_id']and panel.graphs[zone].get('template_id')==graph['template_id']:
+                panel.floors.setCurrentIndex(i);self.card.dismiss()
+                if panel.open_hover_entry(node_id,kind,identity):return True
+                panel.detail.setPlainText('所选候选已无法在当前资料中核对，未打开其他同名条目。');return False
+        self.clear_hover();return False
+    def close(self):
+        self.timer.stop();self.surface.close();self.current=None;self.clear_hover()
+        if self.view:self.view.close()
+
+def hit_node(data,snapshot):
+    if not snapshot.get('cursor_on_game'):return None
+    x,y,w,h=snapshot['physical_client'];px=(snapshot['cursor'][0]-x)*data['rect'].width()/w;py=(snapshot['cursor'][1]-y)*data['rect'].height()/h
+    hits=sorted((math.hypot(nx-px,ny-py),identity)for identity,nx,ny in data['points'])
+    if not hits or hits[0][0]>30 or(len(hits)>1 and hits[1][0]-hits[0][0]<6):return None
+    return hits[0][1]

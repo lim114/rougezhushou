@@ -15,6 +15,8 @@ class BindingTests(unittest.TestCase):
    with self.assertRaises(ValueError):logical_rect(*args)
  @unittest.skipUnless(sys.platform=='win32','native Windows identity check')
  def test_owned_native_identity_and_geometry(self):
+  # This same case is explicitly executed by the real-Windows416 acceptance.
+  if self.gui.platformName()!='windows':self.skipTest('Requires actual Windows QPA; same case runs in native416, not offscreen.')
   w=QWidget();w.resize(500,300);w.show();self.gui.processEvents()
   try:
    api=BindingApi();snap=api.read({'hwnd':int(w.winId()),'pid':os.getpid()});self.assertIsNotNone(snap);self.assertTrue(snap['active']);self.assertGreater(snap['physical_client'][2],0)

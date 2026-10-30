@@ -27,7 +27,7 @@ def snapshots(state):
     result=[]
     for index,event in enumerate(state.get('history',[])):
         if not isinstance(event,dict)or event.get('kind')!='floor_resources_read'or event.get('source')!='same_frame_zone_and_resources':continue
-        if event.get('zone_id')not in config_data()['zones']or not isinstance(event.get('values'),dict):continue
+        if not isinstance(event.get('zone_id'),str)or event.get('zone_id')not in config_data()['zones']or not isinstance(event.get('values'),dict):continue
         values={k:v for k,v in event['values'].items()if isinstance(k,str)and numeric_read(v)}
         if values:result.append({**deepcopy(event),'values':values,'index':index})
     return result

@@ -1,7 +1,7 @@
 """Video-style floating toolbar, with persistent read-only panels opened on demand."""
 from PySide6.QtCore import Qt,QPoint,QSize,QEvent
 from PySide6.QtGui import QIcon,QPixmap,QRegion
-from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout,QLabel,QPushButton,QCheckBox,QToolButton,QApplication,QPlainTextEdit,QComboBox,QTabWidget
+from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout,QLabel,QPushButton,QCheckBox,QToolButton,QApplication,QPlainTextEdit,QComboBox,QTabWidget,QScrollArea
 from .player_overview import overview_facts
 from .player_context import recent_content
 
@@ -56,13 +56,13 @@ class CompactAssistant(QDialog):
         self.hide_button=QPushButton('收起助手（用快捷键恢复）');self.hide_button.clicked.connect(self.toggle_visibility);layout.addWidget(self.hide_button)
         ok,message=self.hotkey.configure(**self.hotkey_preferences);self.hotkey_status.setText((load_warning+'\n'if load_warning else'')+message);self.hide_button.setEnabled(ok and self.hotkey.binding is not None)
         self.binding_enabled=QCheckBox('玩家小窗跟随明日方舟窗口');self.binding_enabled.setChecked(True);layout.addWidget(self.binding_enabled)
-        self.game_hover_enabled=QCheckBox('游戏画面中悬停藏品约5秒显示资料');self.game_hover_enabled.setChecked(True);layout.addWidget(self.game_hover_enabled)
+        self.game_hover_enabled=QCheckBox('在游戏藏品上停留5秒后读取资料');self.game_hover_enabled.setChecked(True);layout.addWidget(self.game_hover_enabled)
         self.binding_status=QLabel('尚未找到游戏；可先独立查阅。');self.binding_status.setWordWrap(True);layout.addWidget(self.binding_status)
         public=QPushButton('路标资料：藏品池与节点事件');public.clicked.connect(self.open_archive);layout.addWidget(public)
         stat=QPushButton('节点历史统计');stat.clicked.connect(lambda:self.open_owner_dialog(owner.open_public_statistics,'public_statistics'));layout.addWidget(stat)
         self.note_library=None;self.note_library_button=QPushButton('查找本机场景笔记');self.note_library_button.clicked.connect(self.open_note_library);layout.addWidget(self.note_library_button)
         close=QPushButton('退出助手');close.clicked.connect(self.exit_application);layout.addWidget(close)
-        self.settings_popup=ToolPopover('工具设置',settings,self);self.settings_popup.resize(420,570)
+        self.settings_scroll=QScrollArea();self.settings_scroll.setWidgetResizable(True);self.settings_scroll.setWidget(settings);self.settings_popup=ToolPopover('工具设置',self.settings_scroll,self);self.settings_popup.resize(420,570)
         self.recent_notes_popup=None
         actions=[('本局概况','overview',lambda:self.present(self.overview_popup)),('地图与节点','map',self.open_map),('本局藏品','bag',self.open_inventory),('场景笔记','note',self.open_recent_notes),('干员与技能','calc',self.open_operators),('聊天分析','chat',self.open_chat),('工具设置','settings',lambda:self.present(self.settings_popup))]
         from .player_toolbar import DockButton,ORDER,NAMES
@@ -153,7 +153,7 @@ class CompactAssistant(QDialog):
     def refresh(self):
         title=recent_content(self.owner.run.state);self.context.setText('最近读取：'+title if title else'本局信息 · 等待读取节点详情')
         for key,value in overview_facts(self.owner.run.state).items():self.cards[key].setText(value)
-        self.buttons['场景笔记'].setEnabled(bool(title));self.setToolTip(self.context.text())
+        self.buttons['场景笔记'].setEnabled(True);self.setToolTip(self.context.text())
         if self.recent_notes_popup and self.recent_notes_popup.isVisible():self.recent_notes_popup.panel.refresh()
         if self.inventory_popup:
             self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();self.inventory_popup.parts.refresh_exchange();self.inventory_popup.shop.refresh()

@@ -1,7 +1,8 @@
 from copy import deepcopy
 import ctypes
 from ctypes import wintypes
-from PySide6.QtCore import Qt,QPoint
+from PySide6.QtCore import Qt,QPoint,QPointF,QEvent
+from PySide6.QtGui import QEnterEvent,QMouseEvent
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QWidget
 
@@ -9,11 +10,20 @@ def check(window,gui,require):
     from .player_toolbar import ORDER,DIAMETER,LABEL_SPACE
     import win32gui
     before=deepcopy(window.run.state);window.show_compact();bar=window.compact_window
-    area=bar.screen().availableGeometry();bar._move_dock(QPoint(area.right()-bar.width()-30,area.bottom()-bar.height()-30))
+    area=bar.screen().availableGeometry();bar._move_dock(QPoint(area.center().x()-bar.width()//2,area.center().y()-bar.height()//2))
     probe=QWidget();probe.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,True)
     probe.setWindowTitle('隔离验收背景');probe.setGeometry(bar.x()-20,bar.y()-20,bar.width()+40,bar.height()+40)
+    def owned_hover(widget,point):
+        # The QWidget QTest route can depend on moving the real OS cursor.
+        # Deliver normal Qt events to our own widgets instead; never force the
+        # animation state or claim this validates native cursor movement.
+        for button in bar.tool_buttons:
+            if button is not widget:gui.sendEvent(button,QEvent(QEvent.Type.Leave))
+        local=QPointF(point);global_pos=QPointF(widget.mapToGlobal(point))
+        if widget in bar.tool_buttons:gui.sendEvent(widget,QEnterEvent(local,QPointF(widget.mapTo(widget.window(),point)),global_pos))
+        gui.sendEvent(widget,QMouseEvent(QEvent.Type.MouseMove,local,global_pos,Qt.MouseButton.NoButton,Qt.MouseButton.NoButton,Qt.KeyboardModifier.NoModifier))
     try:
-        probe.show();bar.raise_();QTest.mouseMove(probe,QPoint(5,5));QTest.qWait(240);gui.processEvents()
+        probe.show();bar.raise_();owned_hover(probe,QPoint(5,5));QTest.qWait(240);gui.processEvents()
         require(bar.height()==DIAMETER+4 and not hasattr(bar,'hover_label')and not hasattr(bar,'grip'),'single_row_without_subtitle_or_drag_handle')
         require(tuple(b.accessibleName()for b in bar.tool_buttons)==ORDER,'actual_buttons_follow_reference_function_order')
         require(bar.findChild(QWidget,'toolbarShell')is None,'continuous_panel_background_removed')
@@ -29,13 +39,13 @@ def check(window,gui,require):
         require(pixels.pixelColor(round(gap.x()*scale),round(gap.y()*scale)).alpha()==0,'actual_idle_gap_pixels_are_transparent')
         window.player_idle_toolbar_image=image
         old_right=bar.x()+bar.width();button=bar.buttons['工具设置']
-        QTest.mouseMove(button,QPoint(16,16));QTest.qWait(240);gui.processEvents()
-        require(button.width()==DIAMETER+LABEL_SPACE and button._target,'real_mouse_hover_expands_settings_name_in_button')
+        owned_hover(button,QPoint(16,16));QTest.qWait(240);gui.processEvents()
+        require(button.width()==DIAMETER+LABEL_SPACE and button._target,'owned_Qt_mouse_enter_expands_settings_name_in_button')
         require(bar.x()+bar.width()==old_right,'hover_expansion_keeps_right_edge_stationary')
         require(area.contains(bar.geometry()),'expanded_toolbar_stays_in_available_screen')
         QTest.mouseClick(button,Qt.MouseButton.LeftButton,pos=QPoint(16,16));gui.processEvents()
         require(bar.settings_popup.isVisible()and not window.isVisible(),'actual_settings_button_keeps_native_compact_navigation')
-        bar.settings_popup.close();QTest.mouseMove(probe,QPoint(5,5));QTest.qWait(240);gui.processEvents()
+        bar.settings_popup.close();owned_hover(probe,QPoint(5,5));QTest.qWait(240);gui.processEvents()
         require(all(b.width()==DIAMETER for b in bar.tool_buttons),'leaving_buttons_returns_to_round_faces')
         bar.activateWindow();gui.processEvents();previous=bar.buttons['干员与技能'];previous.setFocus(Qt.FocusReason.OtherFocusReason)
         QTest.keyClick(previous,Qt.Key.Key_Tab);QTest.qWait(220);gui.processEvents()
@@ -58,7 +68,7 @@ def check(window,gui,require):
         QTest.mouseClick(bar.buttons['场景笔记'],Qt.MouseButton.LeftButton,pos=QPoint(16,16));gui.processEvents()
         require(bar.recent_notes_popup.isVisible(),'actual_notebook_icon_retains_scene_notebook_entry')
         bar.recent_notes_popup.close();bar.refresh()
-        QTest.mouseMove(bar.buttons['工具设置'],QPoint(16,16));QTest.qWait(240);gui.processEvents()
+        owned_hover(bar.buttons['工具设置'],QPoint(16,16));QTest.qWait(240);gui.processEvents()
         require(bar.buttons['工具设置']._amount==1.,'final_native_window_contains_fully_expanded_name_capsule')
         window.player_validation_target=bar
         require(window.run.state==before,'toolbar_appearance_does_not_modify_run_state')

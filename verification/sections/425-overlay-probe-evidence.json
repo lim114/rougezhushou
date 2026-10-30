@@ -1,0 +1,22 @@
+{
+  "section": 425,
+  "kind": "primary-source-supported owned-window probe design, not execution proof",
+  "sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindow",
+      "facts": "GW_HWNDNEXT follows the window below in native Z order. Traversal can race destroyed windows, so the probe bounds the walk and rejects cycles instead of inferring a pass."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/winmsg/window-features#layered-windows",
+      "facts": "Layered-window hit testing accounts for transparent areas; WS_EX_TRANSPARENT additionally permits pointer events to reach windows underneath."
+    }
+  ],
+  "probe_requirements": [
+    "Actual Windows Qt backend and separate owned underlay process; no game or input manipulation.",
+    "Actual painted pixels at both query points, native layered/transparent/noactivate styles and unchanged foreground.",
+    "Actual underlay below the overlay in Z order before checking WindowFromPoint; an overlay behind the target cannot pass.",
+    "Retained launcher and real Qt runtime ancestry checked separately; cooperative close and actual exit retained."
+  ],
+  "actual_execution_pass_claimed_by_this_document": false,
+  "real_game_integration_claimed": false
+}

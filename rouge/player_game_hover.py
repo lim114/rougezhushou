@@ -68,7 +68,7 @@ class GameHover(QObject):
                         if self.text_reader is None:self.text_reader=ShopNameReader()
                         result=self.text_reader.identify(image,point)
                         if result is None and not self.text_reader.is_shop:result=hover_item(image,point,cancelled=lambda:self.serial!=request['serial']or self.owner.closing,difficulty=request['difficulty'])
-                        elif result is None:reason='商店商品名称未能唯一确认，未强行用图标猜测'
+                        elif result is None:reason='商店商品名称或对应位置未能核对，未使用图标猜测'
                     if result is not None:
                         # Refresh after retrieval: expensive matching must not publish old pixels.
                         fresh=self.frame_provider(request);current=client_image(fresh,request)

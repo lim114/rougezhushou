@@ -1,0 +1,11 @@
+{
+  "section": 425,
+  "original_public_path": "rouge/player_toolbar_acceptance.py",
+  "sha256": "7bfd7fe971e49fe35754d90664d120ce2ed9fe739413c081a80bbe58cd5c53c9",
+  "reason": "Preserve central-fixture source before replacing unreliable QWidget QTest mouseMove cursor dependence with explicit owned Qt event dispatch. Product event handlers and all behavioral assertions remain required. Native gap hit-test is separate and remains unchanged.",
+  "primary_source": "https://raw.githubusercontent.com/qt/qtbase/v6.11.2/src/testlib/qtestmouse.h",
+  "evidence": [
+    "verification/sections/425-toolbar-hover-diagnostic-attempt2/events.json"
+  ],
+  "limits": "Actual observer saw no button enter event or cursor displacement. The first empty event trace used an incorrect diagnostic label filter and is not valid event evidence. Closing old417 runtime did not solve hover; that hypothesis was not confirmed. Input desktop was Default and readable; no locked-desktop conclusion is drawn. No real OS cursor hover pass is claimed."
+}

@@ -12,7 +12,7 @@ def qualified(snapshot):
     if not isinstance(rows,list)or not rows:return None
     result=[];seen=set()
     for row in rows:
-        if not isinstance(row,dict):return None
+        if not isinstance(row,dict)or not isinstance(row.get('id'),str)or not isinstance(row.get('name'),str):return None
         item=public['current']['details']['items'].get(row.get('id'))
         if not item or canonical(item['name'])!=canonical(row.get('name'))or row['id']in seen:return None
         seen.add(row['id']);result.append({'id':row['id'],'name':item['name']})

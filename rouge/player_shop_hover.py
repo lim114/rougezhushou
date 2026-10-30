@@ -19,45 +19,80 @@ def name_catalog(packet):
     return result
 
 def shop_target(raw,names,point,shape):
-    """A unique name on the inferred card is evidence; a nearby name alone is not."""
+    """Bind the exact name to its own price text; unread cards remain unknown.
+
+    Positions come from this frame. Font-relative limits admit the observed
+    card layout conservatively; they do not infer missing rows or columns.
+    """
     height,width=shape[:2];records=[]
     for box,text,score in raw or[]:
         if float(score)<.85:continue
         xs=[float(p[0])for p in box];ys=[float(p[1])for p in box]
-        records.append({'text':canonical(text),'score':float(score),'bounds':(min(xs),min(ys),max(xs),max(ys))})
+        if not np.isfinite(xs+ys).all():continue
+        bounds=(min(xs),min(ys),max(xs),max(ys))
+        if bounds[2]<=bounds[0] or bounds[3]<=bounds[1]:continue
+        records.append({'text':canonical(text),'score':float(score),'bounds':bounds})
     words=[r['text']for r in records]
     is_shop=any('购买'in s for s in words)and any(any(w in s for w in('当前余额','前瞻性投资','刷新'))for s in words)
     if not is_shop:return None,False
     headers=[{**r,'ids':names[r['text']]}for r in records if r['score']>=.9 and r['text']in names]
-    if len(headers)<2:return None,True
-    font=max(4.,float(np.median([r['bounds'][3]-r['bounds'][1]for r in headers])))
-    columns=[]
-    for row in sorted(headers,key=lambda r:r['bounds'][0]):
-        left=row['bounds'][0]
-        if not columns or left-columns[-1][-1]>font*1.5:columns.append([left])
-        else:columns[-1].append(left)
-    xs=[float(np.median(c))for c in columns]
-    if len(xs)<2:return None,True
-    gaps=np.diff(xs);pitch=float(np.median(gaps))
-    if pitch<font*3 or max(gaps)>pitch*1.6 or min(gaps)<pitch*.6:return None,True
-    rows=[]
-    for header in sorted(headers,key=lambda r:r['bounds'][1]):
-        top=header['bounds'][1]
-        if not rows or top-rows[-1][-1]>font*.9:rows.append([top])
-        else:rows[-1].append(top)
-    ys=[float(np.median(r))for r in rows];x,y=point;pad=font*.65
-    footer=min((r['bounds'][1]for r in records if r['text']in('收藏品','干员','编队','零件箱')and r['bounds'][1]>ys[-1]+font*2),default=float(height))
-    col=next((i for i,left in enumerate(xs)if left-pad<=x<(xs[i+1]-pad if i+1<len(xs)else left+pitch-pad)),None)
-    row=next((i for i,top in enumerate(ys)if top-pad<=y<(ys[i+1]-pad if i+1<len(ys)else footer)),None)
-    if col is None or row is None:return None,True
-    matches=[r for r in headers if abs(r['bounds'][0]-xs[col])<=font*1.5 and abs(r['bounds'][1]-ys[row])<=font*.9]
-    identities={identity for r in matches for identity in r['ids']}
-    if len(identities)!=1 or not matches:return None,True
-    selected=max(matches,key=lambda r:r['score']);identity=next(iter(identities));x0,y0,x1,y1=selected['bounds']
+    # Pointer over an exact name needs no inferred card extent at all.
+    x,y=point
+    covered=[r for r in headers if r['bounds'][0]<=x<r['bounds'][2]and r['bounds'][1]<=y<r['bounds'][3]]
+    if len(covered)==1 and len(set(covered[0]['ids']))==1:
+        selected=covered[0];identity=next(iter(set(selected['ids'])));left,top,right,bottom=selected['bounds']
+        return {'id':identity,'name':selected['text'],'confirmed':True,'candidates':[identity],
+            'name_bounds':tuple(round(v)for v in selected['bounds']),'price_label_bounds':None,
+            'bounds':(round(left),round(top),round(right-left),round(bottom-top)),
+            'source':'shop_exact_name_and_current_grid','card_evidence':'cursor_on_exact_name_text'},True
+    prices=[r for r in records if r['text']=='价格']
+    matches=[];x,y=point;pairs_by_header=[];measured=[]
+    for header in headers:
+        left,top,right,bottom=header['bounds'];font=max(4.,bottom-top);pairs=[]
+        for price in prices:
+            px,py,pu,pv=price['bounds'];dx,dy=px-left,py-top
+            if font*2<=dx<=font*9 and font*2<=dy<=font*9 and .5<=dx/dy<=2:pairs.append(price)
+        pairs_by_header.append(pairs)
+        if len(pairs)==1:
+            px,py,pu,pv=pairs[0]['bounds'];measured.append(((px-left)/font,(py-top)/font,(pu-px)/font,(pv-py)/font))
+    layout=None
+    if len(measured)>=2:
+        values=np.asarray(measured);center=np.median(values,axis=0)
+        if np.max(np.ptp(values[:,:2],axis=0))<=1.5:layout=center
+    for header,pairs in zip(headers,pairs_by_header):
+        left,top,right,bottom=header['bounds'];font=max(4.,bottom-top);pad=font*.65
+        if len(pairs)==1:
+            price=pairs[0];px,py,pu,pv=price['bounds'];evidence='exact_name_and_own_price_text'
+        elif not pairs and layout is not None:
+            dx,dy,pw,ph=layout;px=left+dx*font;py=top+dy*font;pu=px+pw*font;pv=py+ph*font
+            # A cursor can cover one price label. Reuse a size measured on
+            # multiple current cards only with BOTH current row/column anchors.
+            columns=[r for r in prices if abs(r['bounds'][0]-px)<=font*.75]
+            rows=[r for r in prices if abs(r['bounds'][1]-py)<=font*.75]
+            if not columns or not rows:continue
+            pu=min(r['bounds'][2]for r in columns);pv=min(r['bounds'][3]for r in rows)
+            price=None;evidence='exact_name_and_current_text_layout'
+        else:continue
+        # Stay inside the actual name-to-price text span. Never extrapolate
+        # padding to a missing neighbour or invent the rest of a card.
+        bounds=(max(0.,left),max(0.,top),min(float(width),max(right,pu)),min(float(height),pv))
+        # A neighbouring header is a hard edge, never a substitute identity.
+        for other in headers:
+            if other is header:continue
+            ox,oy,ou,ov=other['bounds']
+            if abs(oy-top)<=font and ox>left:bounds=(bounds[0],bounds[1],min(bounds[2],ox),bounds[3])
+            if abs(ox-left)<=font and oy>top:bounds=(bounds[0],bounds[1],bounds[2],min(bounds[3],oy))
+        if bounds[0]<=x<bounds[2] and bounds[1]<=y<bounds[3]:matches.append((header,price,bounds,evidence))
+    if len(matches)!=1:return None,True
+    selected,price,bounds,evidence=matches[0];identities=set(selected['ids'])
+    if len(identities)!=1:return None,True
+    identity=next(iter(identities));x0,y0,x1,y1=selected['bounds'];left,top,right,bottom=bounds
     return {'id':identity,'name':selected['text'],'confirmed':True,'candidates':[identity],
             'name_bounds':tuple(round(v)for v in(x0,y0,x1,y1)),
-            'bounds':(round(xs[col]-pad),round(ys[row]-pad),round(pitch),round((ys[row+1]-pad if row+1<len(ys)else footer)-(ys[row]-pad))),
-            'source':'shop_exact_name_and_current_grid'},True
+            'price_label_bounds':tuple(round(v)for v in price['bounds'])if price is not None else None,
+            'bounds':(round(left),round(top),round(right-left),round(bottom-top)),
+            # Keep the existing reader/verification route identifier compatible.
+            'source':'shop_exact_name_and_current_grid','card_evidence':evidence},True
 
 class ShopNameReader:
     def __init__(self,engine=None):self.engine=engine;self.is_shop=False;self.cached=None
@@ -79,7 +114,7 @@ class ShopNameReader:
                 patches=[];h,w=image.shape[:2]
                 for box,label,score in raw:
                     label=canonical(label)
-                    if score<.85 or not(label in names or any(k in label for k in ('购买','当前余额','前瞻性投资','刷新','编队'))):continue
+                    if score<.85 or not(label in names or any(k in label for k in ('购买','当前余额','前瞻性投资','刷新','编队','价格'))):continue
                     x=max(0,int(min(p[0]for p in box))-2);y=max(0,int(min(p[1]for p in box))-2);u=min(w,int(max(p[0]for p in box))+2);v=min(h,int(max(p[1]for p in box))+2)
                     if x<u and y<v:patches.append((x,y,u,v,sha256(image[y:v,x:u].tobytes()).digest()))
                 if patches:self.cached={'at':now,'shape':image.shape,'raw':raw,'patches':patches}

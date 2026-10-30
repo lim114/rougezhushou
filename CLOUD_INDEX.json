@@ -1,14 +1,14 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 424,
-  "next_section": 425,
-  "current_section_label": "第424节 + 绑定游戏画面的只读地图类型标注",
-  "current_completed_change": "地图类型筛选可选择在游戏客户区显示透明标注层；按当前识别帧的完整坐标与客户区换算，只有目标、尺寸及新画面的节点/标题像素一致才显示，切页或绑定失效清除。标注层不接收鼠标，不向游戏发送输入。",
-  "batch_status": "PLAYER_SECTION424_PUBLISHED",
-  "next_full_validation_after": 425,
+  "completed_sections": 425,
+  "next_section": 426,
+  "current_section_label": "第425节 + 游戏节点悬停速览、准确跳转与商店文字定位",
+  "current_completed_change": "在经当前画面核对的地图位置悬停可读节点类型、事件和作战候选；点击卡片进入助手对应节点与准确条目，不操作游戏。离开、换图、新局、画面失效撤销旧提示。商店优先用商品名称和价格文字定位各自商品卡，缺行缺列不延伸相邻名称；鼠标遮住单个价格标签时，只有当前文字行列与同页尺寸均能核对才复用布局。游戏节点速览卡显式不抢焦点，固定和取消固定仍可用鼠标操作。手动笔记入口保持可用，设置可滚动以适应小屏。",
+  "batch_status": "PLAYER_SECTION425_PUBLICATION_PENDING",
+  "next_full_validation_after": 440,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
-  "latest_full_receipt": "verification/full-410/summary.json",
+  "latest_full_receipt": "verification/full-425/summary.json",
   "latest_full_available_checks_passed": true,
   "priority_order": "P3 → P2 → P1；识别优化最后；未完成事项保留",
   "node_scope": "source-covered events and conditions plus public node probabilities and statistics; no personal uploads or route recommendations",
@@ -16,7 +16,7 @@
   "current_batch_target_section": 425,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "a610689b6b9f690fafda469b1a34ea7c868117700a843419e888c5cdc0afaf99",
+    "sha256": "fe61e5a773344d0b36f9f99bfb0809bdb1ac5b2c7f096e3bc4ef5ed71ff6800c",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2551,16 +2551,22 @@
       "completion_ref": "player-section-424",
       "topic": "绑定游戏画面的只读地图类型标注",
       "verification": "verification/sections/424.json"
+    },
+    {
+      "number": 425,
+      "completion_ref": "player-section-425",
+      "topic": "游戏节点悬停速览、准确跳转与商店文字定位",
+      "verification": "verification/sections/425.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "c3dc559d824e18ddab8b06f4c56e5bdc0efb7154775ed29e9161b1bdd3917b70",
-    "PROJECT_PROGRESS.md": "f288a7e4b2421220d967c7c71bfea781ebccf5efd1699c5836dc73deee79ccf7",
-    "WORK_IN_PROGRESS.md": "1ba977a25a981663bf9531b367df23304689f85f90b2e2b1218487e8a533add6",
-    "PROJECT_COMPLETED.md": "16b5af73976bcdd8ea998af6c37c8537f6b95f7d7dbef665f320aeb07c06dcc2",
-    "AGENTS.md": "48c6294fbb303948fb7a12da496ce3650e505513659cfd68e9270d61bc1031ec",
-    "PROJECT_REQUIREMENTS.md": "a610689b6b9f690fafda469b1a34ea7c868117700a843419e888c5cdc0afaf99",
-    "verification/sections/424.json": "4ef65d341c6ea0117199e87d887b8fb17cc0b6c3f77e8a37795ba50e172c47da"
+    "DEVELOPMENT_CHECKPOINT.json": "3d515c72046112367245ab3631ec9dfc463ad689c315acc86e229a232a42563d",
+    "PROJECT_PROGRESS.md": "ba0742c39c9b328cd1d44dc17537bc1c447f07af9f7241c5093e8381ffeda99c",
+    "WORK_IN_PROGRESS.md": "bcf93362efa6b526385c2a02d4ba344b9b4f61c92aca436e73a2cb326cc29a28",
+    "PROJECT_COMPLETED.md": "62468477cdc982eca4d4f5d858f18872fa4d46ae4b602abdd7c03471ae7676a5",
+    "AGENTS.md": "a94a92826acdacf6750fa73fe62f48df4869f83467558a5da19cd97bc95a4e4c",
+    "PROJECT_REQUIREMENTS.md": "fe61e5a773344d0b36f9f99bfb0809bdb1ac5b2c7f096e3bc4ef5ed71ff6800c",
+    "verification/sections/425.json": "98e84a9aef98514f0227eb9f35d65115100116bf2ea15b5224ec1b740f16590f"
   },
   "private_state_included": false
 }

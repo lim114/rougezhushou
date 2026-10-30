@@ -188,7 +188,8 @@ class MapPanel(QWidget):
             group=self.entries.topLevelItem(i)
             for j in range(group.childCount()):
                 item=group.child(j);key=item.data(0,Qt.ItemDataRole.UserRole)
-                if key and key[1:]==(kind,identity):self.entries.setCurrentItem(item);return
+                if key and key[1:]==(kind,identity):self.entries.setCurrentItem(item);return True
+        return False
     def hideEvent(self,event):
         if hasattr(self,'hover_card'):self.hover_timer.stop();self.hover_card.dismiss()
         super().hideEvent(event)

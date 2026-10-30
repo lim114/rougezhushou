@@ -69,4 +69,4 @@ class HoverTests(unittest.TestCase):
 
 def shop_fixture():
  def text(name,x,y,w=100):return [[[x,y],[x+w,y],[x+w,y+20],[x,y+20]],name,.99]
- return [text('购买',600,10),text('当前余额',30,40),text('第一法则',100,120),text('活玫瑰',300,120),text('白模鱼',100,350),text('支援补给站',300,350),text('编队',600,550)]
+ return [text('购买',600,10),text('当前余额',30,40),text('第一法则',100,120),text('活玫瑰',300,120),text('白模鱼',100,350),text('支援补给站',300,350),text('编队',600,550),text('价格',240,250,40),text('价格',440,250,40),text('价格',240,480,40),text('价格',440,480,40)]

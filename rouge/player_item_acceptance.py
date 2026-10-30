@@ -50,6 +50,6 @@ def check(window,gui,require):
     require(not card.isVisible()and card.identity is None,'filter_excluding_pinned_item_clears_stale_card')
     panel.rarity.setCurrentIndex(0);panel.entries.setCurrentRow(0);panel.hover_pending=target;panel.show_hover();gui.processEvents();card.pin.setChecked(True)
     card.pools.setCurrentIndex(card.pools.findData(counted['id']))
-    require('2026年10月16日'in panel.status.text()and '当前DLC'in card.notice.text(),'catalog_and_pool_version_limits_visible')
+    require('其它条目另注明固定基准'in panel.status.text()and '不是当前DLC完整目录或已生效证明'in panel.status.text()and '当前DLC适用性待核验'in card.notice.text(),'catalog_and_pool_version_limits_visible')
     window.run.state=original
     panel.status.setText('隔离验收示例：三件公开藏品；不是本局读取。按稀有度、交换资格和类别筛选，悬停查池。')
