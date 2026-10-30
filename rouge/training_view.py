@@ -1,8 +1,7 @@
-"""Source-only proposal for qualification before the existing UI consumes state.
+"""Qualify effective training inputs before the UI consumes retained state.
 
-This file has not been imported or executed by its author. It is not a RunState
-schema, a time policy, a numerical model, or a repair of a persisted record.
-Root must bind the actual 98/99 sources and run the accompanying acceptance plan.
+Run facts take precedence over account references. Incompatible mixtures get an
+explicit preview notice; neither stored records nor numerical rules are changed.
 """
 import time
 

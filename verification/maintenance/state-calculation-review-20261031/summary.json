@@ -1,0 +1,93 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "本局信息到计算显示的同步合并与重复工作精简",
+  "baseline_commit": "92bd5b780f50da41e5bdb2e5f6d93098a94c64f2",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "next_functional_section_started": false,
+  "implemented_fixes_passed": true,
+  "application_review_complete": false,
+  "source_review": {
+    "path": "verification/maintenance/state-calculation-review-20261031/review-source.json",
+    "sha256": "22eb5642c7f4dd0940f39954088818ae8eda36b9a36d61b7e7b2d2b87f92d8ce",
+    "bytes": 2250
+  },
+  "replay_processes": {
+    "path": "verification/maintenance/state-calculation-review-20261031/replay-processes.json",
+    "sha256": "71287a828fe21ec4a0055e44e3c568cc2831d263a219355f028db94dbe891d57",
+    "bytes": 3013
+  },
+  "controlled_replay_process_count": 6,
+  "actions_per_process": 95,
+  "UI_skill_combinations_per_process": 87,
+  "independent_skill_mechanics_validation_claimed": false,
+  "all_final_results_reports_and_saved_states_equal": true,
+  "calculation_calls": {
+    "run_update_before": 3,
+    "run_update_after": 1,
+    "combined_frame_before": 5,
+    "combined_frame_after": 1,
+    "manual_operator_switch_before": 2,
+    "manual_operator_switch_after": 1
+  },
+  "relic_UI_sync_including_calculation_held_reads": {
+    "before": 273,
+    "after": 2
+  },
+  "median_action_ms": {
+    "run_observation": {
+      "before": 76.53069985099137,
+      "after": 65.25889993645251
+    },
+    "repeated_frame": {
+      "before": 83.10009981505573,
+      "after": 55.12989987619221
+    },
+    "manual_operator_switch": {
+      "before": 37.118300097063184,
+      "after": 23.458999814465642
+    },
+    "combined_run_and_account_frame": {
+      "before": 202.99250003881752,
+      "after": 143.73270003125072
+    }
+  },
+  "performance_scope": "Same public fixtures, temporary state, three before/after independent Windows Qt processes. Combined sample uses a 64x96 synthetic image; not recognition, whole-game latency or numerical accuracy.",
+  "related_tests": {
+    "declared": 200,
+    "passed_available": 197,
+    "unavailable_not_passed": 3,
+    "corrected_harness_errors": 6,
+    "reconciliation": {
+      "path": "verification/maintenance/state-calculation-review-20261031/tests/reconciled.json",
+      "sha256": "f98b97f10af533812aeadc2ec705ddaded0a58c349c55eb6db033a5c263cbb12",
+      "bytes": 28060
+    }
+  },
+  "native_checks": 21,
+  "native_receipt": {
+    "path": "verification/maintenance/state-calculation-review-20261031/native-396/window.json",
+    "sha256": "0290d702295d5b3e663d2298547c349b05f6b3a77cc6761e89b6a6fa2bcc375c",
+    "bytes": 163596
+  },
+  "native_images_actually_viewed_by_root": [
+    "native-396/window.png"
+  ],
+  "runtime": {
+    "path": "verification/maintenance/state-calculation-review-20261031/live-window/desktop-review.json",
+    "sha256": "d9897d5eb957e9e067f1ddc7c454cb52ce7a8322f922111d85870459734f2583",
+    "bytes": 589
+  },
+  "maintained_selectors_count": 691,
+  "full_scope_original_order_preserved": true,
+  "full_validation_rerun": false,
+  "prior_full_only_original_frozen_source": true,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "video_parity_complete": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "private_data_included": false,
+  "publication_binding": "enclosing maintenance commit; verify actual remote after ordinary push"
+}

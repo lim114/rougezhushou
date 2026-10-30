@@ -32,7 +32,7 @@ from .battle_view import BattlePreviewPanel
 from .chat import ProviderConfig, stream_chat
 from .credentials import save_key, read_key
 from .desktop_backend import DesktopBackend
-from .ui_state import replace_text,append_text
+from .ui_state import replace_text,append_text,calculation_batch
 from .view_catalog import (operator_groups,stage_groups,enemy_groups,skill_icon,
                            SubjectPicture,PROFESSIONS,ENEMY_TIERS,profession_branch_icons)
 from .branch_choice import BranchChoice
@@ -112,6 +112,8 @@ class MainWindow(QMainWindow):
         self.visual_reader = None
         self.events = Events()
         self.busy = False
+        self._calculation_batch_depth = 0
+        self._calculation_requested = False
         self.closing = False
         self.sample_epoch = 0
         self.last_sample_at = 0
@@ -713,37 +715,38 @@ class MainWindow(QMainWindow):
         overlay_frame=observation.pop('_overlay_frame',None)
         self.map_overlay_reference={**overlay_frame,'observation':observation}if overlay_frame else None
         self.observation = observation
-        stage=observation.get('stage')
-        if observation.get('page')=='node_detail' and stage:
-            sid=stage.get('visible_variant_id') or stage.get('id')
-            key=(sid,stage['name'])
-            if key!=self.last_observed_stage:
-                self.last_observed_stage=key
-                if sid or (self.target_stage.currentData() and catalog()['stages'][self.target_stage.currentData()]['name']!=stage['name']):
-                    self.target_stage_choices.select_value(sid)
-            self.target_stage.setToolTip('最近节点详情：'+stage['name']+'；'+stage.get('variant_source','普通/紧急变体尚未确认，请选择明确的测试关卡。'))
-        run_applied=False
-        if observation.get('run'):
-            run_applied=self.apply_run_observation(observation['run'],observation.get('captured_at',time.time()))
-        if observation.get('operator'):
-            self.apply_operator_observation(observation['operator'],observation.get('captured_at',time.time()))
-            saved=self.account_cache.view(observation['operator']['id'])
-            profile=operator_profiles()[observation['operator']['id']]
-            self.capture_operator_picture.set_subject('operator',observation['operator']['id'],
-                profile['name']+' · '+PROFESSIONS[profile['profession']])
-            note='本帧纯视觉只确认身份与已匹配潜能；其余项来自以前已确认记录。\n' if observation.get('performance',{}).get('backend')=='visual' else ''
-            account_notice=self.account_cache.notice(observation['operator']['id'])
-            summary=format_operator_observation(saved) if saved else '本帧干员档案尚未确认；未使用不可用的账号记录。'
-            replace_text(self.operator_summary,note+summary+('\n'+account_notice if account_notice else ''))
-        elif run_applied and (observation.get('run') or {}).get('selected_operator'):
-            selected=observation['run']['selected_operator']
-            profile=operator_profiles()[selected]
-            self.capture_operator_picture.set_subject('operator',selected,profile['name']+' · '+PROFESSIONS[profile['profession']])
-            from .training_view import format_run_training_observation
-            replace_text(self.operator_summary,format_run_training_observation(selected,self.run.state['operators'][selected]))
-        else:
-            self.capture_operator_picture.set_subject(None,None,'')
-            replace_text(self.operator_summary,'本帧未确认新的干员培养信息；本局已确认记录继续保留，见本局状态与计算页。')
+        with calculation_batch(self):
+            stage=observation.get('stage')
+            if observation.get('page')=='node_detail' and stage:
+                sid=stage.get('visible_variant_id') or stage.get('id')
+                key=(sid,stage['name'])
+                if key!=self.last_observed_stage:
+                    self.last_observed_stage=key
+                    if sid or (self.target_stage.currentData() and catalog()['stages'][self.target_stage.currentData()]['name']!=stage['name']):
+                        self.target_stage_choices.select_value(sid)
+                self.target_stage.setToolTip('最近节点详情：'+stage['name']+'；'+stage.get('variant_source','普通/紧急变体尚未确认，请选择明确的测试关卡。'))
+            run_applied=False
+            if observation.get('run'):
+                run_applied=self.apply_run_observation(observation['run'],observation.get('captured_at',time.time()))
+            if observation.get('operator'):
+                self.apply_operator_observation(observation['operator'],observation.get('captured_at',time.time()))
+                saved=self.account_cache.view(observation['operator']['id'])
+                profile=operator_profiles()[observation['operator']['id']]
+                self.capture_operator_picture.set_subject('operator',observation['operator']['id'],
+                    profile['name']+' · '+PROFESSIONS[profile['profession']])
+                note='本帧纯视觉只确认身份与已匹配潜能；其余项来自以前已确认记录。\n' if observation.get('performance',{}).get('backend')=='visual' else ''
+                account_notice=self.account_cache.notice(observation['operator']['id'])
+                summary=format_operator_observation(saved) if saved else '本帧干员档案尚未确认；未使用不可用的账号记录。'
+                replace_text(self.operator_summary,note+summary+('\n'+account_notice if account_notice else ''))
+            elif run_applied and (observation.get('run') or {}).get('selected_operator'):
+                selected=observation['run']['selected_operator']
+                profile=operator_profiles()[selected]
+                self.capture_operator_picture.set_subject('operator',selected,profile['name']+' · '+PROFESSIONS[profile['profession']])
+                from .training_view import format_run_training_observation
+                replace_text(self.operator_summary,format_run_training_observation(selected,self.run.state['operators'][selected]))
+            else:
+                self.capture_operator_picture.set_subject(None,None,'')
+                replace_text(self.operator_summary,'本帧未确认新的干员培养信息；本局已确认记录继续保留，见本局状态与计算页。')
         rgb = image[:,:,::-1].copy()
         height,width,_ = rgb.shape
         qimage = QImage(rgb.data,width,height,rgb.strides[0],QImage.Format.Format_RGB888).copy()
@@ -1634,7 +1637,6 @@ class MainWindow(QMainWindow):
         self.account_training_status(status)
         self.update_base_attack()
         self.update_skill_options()
-        if hasattr(self,'raw_damage'):self.calculate()
 
     def level_changed(self):
         self.level_override=True
@@ -1660,15 +1662,16 @@ class MainWindow(QMainWindow):
         return True
 
     def apply_run_observation(self,observed,captured_at):
-        if not self.run.apply(observed,captured_at):return False
-        self.refresh_operator_overview()
-        self.run_summary.setText(self.run.summary())
-        self.sync_run_config()
-        self.sync_run_relics()
-        selected=observed.get('selected_operator')
-        if not selected or not self.show_observed_operator(selected):
-            self.update_operator(preserve_level=self.level_override)
-        return True
+        with calculation_batch(self):
+            if not self.run.apply(observed,captured_at):return False
+            self.refresh_operator_overview()
+            self.run_summary.setText(self.run.summary())
+            self.sync_run_config()
+            self.sync_run_relics()
+            selected=observed.get('selected_operator')
+            if not selected or not self.show_observed_operator(selected):
+                self.update_operator(preserve_level=self.level_override)
+            return True
 
     def sync_run_config(self):
         if hasattr(self,'run_cards'):self.run_cards.refresh()
@@ -1690,50 +1693,52 @@ class MainWindow(QMainWindow):
     def sync_run_relics(self):
         if not hasattr(self,'relic_list'):return
         automatic=self.auto_relics.isChecked()
+        held=set(self.run.held_relic_ids()) if automatic else set()
         self.relic_list.blockSignals(True)
         for i in range(self.relic_list.count()):
             item=self.relic_list.item(i)
             flags=item.flags()
             item.setFlags(flags&~Qt.ItemFlag.ItemIsUserCheckable if automatic else flags|Qt.ItemFlag.ItemIsUserCheckable)
             if automatic:
-                item.setCheckState(Qt.CheckState.Checked if item.data(Qt.ItemDataRole.UserRole) in self.run.held_relic_ids() else Qt.CheckState.Unchecked)
+                item.setCheckState(Qt.CheckState.Checked if item.data(Qt.ItemDataRole.UserRole) in held else Qt.CheckState.Unchecked)
         self.relic_list.blockSignals(False)
         if hasattr(self,'raw_damage'):self.calculate()
 
     def reset_run(self):
-        from .player_history_store import archive_before_manual_reset
-        try:archive_before_manual_reset(self.run,Path(self.run.file).parent/'run-history')
-        except(OSError,ValueError,UnicodeError,TypeError,RecursionError)as error:
-            from .player_file_messages import file_issue
-            self.capture_status.setText('未开始新局：上一局本机归档未完成。'+file_issue(error)+' 当前记录保持，请处理后重试。');self.capture_status.setToolTip(str(error));return False
-        self.sample_epoch += 1
-        self.capture.discard_pending()
-        self.run.reset()
-        self.clear_skill_rank_reference()
-        self.refresh_operator_overview()
-        self.observation=None
-        self.capture_operator_picture.set_subject(None,None,'')
-        replace_text(self.operator_summary,'本局已重置，等待新的干员页面读取；账号档案仍保留。',preserve=False)
-        self.preview.clear();self.preview.setText('本局尚未采样')
-        replace_text(self.observed_text,'',preserve=False)
-        self.capture_status.setText('已开始新局，等待新的页面采样；账号档案已保留。')
-        self.update_sampling_status()
-        self.target_stage.setToolTip('本局节点详情尚未确认；可手动选择关卡进行局外预览。')
-        self.map_frame=None
-        self.map_frames.clear()
-        self.last_observed_operator=None;self.last_observed_stage=None
-        self.target_stage.setCurrentIndex(0)
-        self.target_enemy.setCurrentIndex(0)
-        self.sync_run_config()
-        self.relic_context_previews.clear()
-        self.relic_context.blockSignals(True);self.relic_context.clear();self.relic_context.blockSignals(False)
-        self.target_buff_previews.clear();self.target_preview_operator=None
-        self.target_buff_test.blockSignals(True);self.target_buff_test.setChecked(False);self.target_buff_test.blockSignals(False)
-        self.target_buff_list.blockSignals(True);self.target_buff_list.clear();self.target_buff_list.blockSignals(False)
-        self.run_summary.setText(self.run.summary())
-        self.sync_run_relics()
-        self.update_operator()
-        self.render_map()
+        with calculation_batch(self):
+            from .player_history_store import archive_before_manual_reset
+            try:archive_before_manual_reset(self.run,Path(self.run.file).parent/'run-history')
+            except(OSError,ValueError,UnicodeError,TypeError,RecursionError)as error:
+                from .player_file_messages import file_issue
+                self.capture_status.setText('未开始新局：上一局本机归档未完成。'+file_issue(error)+' 当前记录保持，请处理后重试。');self.capture_status.setToolTip(str(error));return False
+            self.sample_epoch += 1
+            self.capture.discard_pending()
+            self.run.reset()
+            self.clear_skill_rank_reference()
+            self.refresh_operator_overview()
+            self.observation=None
+            self.capture_operator_picture.set_subject(None,None,'')
+            replace_text(self.operator_summary,'本局已重置，等待新的干员页面读取；账号档案仍保留。',preserve=False)
+            self.preview.clear();self.preview.setText('本局尚未采样')
+            replace_text(self.observed_text,'',preserve=False)
+            self.capture_status.setText('已开始新局，等待新的页面采样；账号档案已保留。')
+            self.update_sampling_status()
+            self.target_stage.setToolTip('本局节点详情尚未确认；可手动选择关卡进行局外预览。')
+            self.map_frame=None
+            self.map_frames.clear()
+            self.last_observed_operator=None;self.last_observed_stage=None
+            self.target_stage.setCurrentIndex(0)
+            self.target_enemy.setCurrentIndex(0)
+            self.sync_run_config()
+            self.relic_context_previews.clear()
+            self.relic_context.blockSignals(True);self.relic_context.clear();self.relic_context.blockSignals(False)
+            self.target_buff_previews.clear();self.target_preview_operator=None
+            self.target_buff_test.blockSignals(True);self.target_buff_test.setChecked(False);self.target_buff_test.blockSignals(False)
+            self.target_buff_list.blockSignals(True);self.target_buff_list.clear();self.target_buff_list.blockSignals(False)
+            self.run_summary.setText(self.run.summary())
+            self.sync_run_relics()
+            self.update_operator()
+            self.render_map()
 
     def update_base_attack(self):
         if not hasattr(self,'attack'):return
@@ -1874,6 +1879,9 @@ class MainWindow(QMainWindow):
         self.token_comparison_button.setVisible(tokens);self.token_budget_button.setVisible(tokens)
 
     def calculate(self):
+        if self._calculation_batch_depth:
+            self._calculation_requested = True
+            return
         if hasattr(self,'charge_timeline_button'):self.charge_timeline_button.setEnabled(False)
         if hasattr(self,'shield_timeline_button'):self.shield_timeline_button.setEnabled(False)
         if hasattr(self,'healing_budget_button'):self.healing_budget_button.setEnabled(False)

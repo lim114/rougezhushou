@@ -1,5 +1,27 @@
-"""Refresh read-only text without moving the reader's cursor or viewport."""
+"""Synchronous GUI updates and read-only text that preserve the reader's state."""
 from PySide6.QtGui import QTextCursor
+from contextlib import contextmanager
+
+
+@contextmanager
+def calculation_batch(window):
+    """Calculate once, synchronously, after a related set of GUI inputs is ready.
+
+    Nested updates share the outer batch. A failed update releases the batch
+    without publishing a calculation from partially updated controls.
+    """
+    window._calculation_batch_depth += 1
+    complete = False
+    try:
+        yield
+        complete = True
+    finally:
+        window._calculation_batch_depth -= 1
+        if window._calculation_batch_depth == 0:
+            requested = window._calculation_requested
+            window._calculation_requested = False
+            if complete and requested:
+                window.calculate()
 
 
 def _reading_state(widget):
