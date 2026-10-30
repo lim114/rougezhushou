@@ -105,7 +105,7 @@ class GameMapOverlay(QObject):
         if not self.card.install(key,graph,identity,self.owner.run.state.get('config',{}),self.view):return
         area=data['rect'].intersected(snapshot['screen'].availableGeometry())
         if area.width()<self.card.minimumSizeHint().width()or area.height()<self.card.minimumSizeHint().height():self.clear_hover();return
-        self.card.resize(min(400,area.width()),min(520,area.height()));client=snapshot['physical_client'];rect=data['rect'];x=(snapshot['cursor'][0]-client[0])*rect.width()/client[2];y=(snapshot['cursor'][1]-client[1])*rect.height()/client[3]
+        self.card.resize(self.card.sizeHint().boundedTo(area.size()));client=snapshot['physical_client'];rect=data['rect'];x=(snapshot['cursor'][0]-client[0])*rect.width()/client[2];y=(snapshot['cursor'][1]-client[1])*rect.height()/client[3]
         from .player_game_binding import clamp_window
         self.card.move(rect.topLeft()+QPoint(round(x)+16,round(y)+16));clamp_window(self.card,area);self.card.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,True);self.card.show()
     def open_entry(self,node_id,kind,identity):

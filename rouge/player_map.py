@@ -197,8 +197,9 @@ class MapPanel(QWidget):
         if not self.hover_pending or not self.view.graph:return
         node_id,point=self.hover_pending;graph=self.view.graph;binding=(self.epoch,graph.get('zone_id'),graph.get('template_id'),node_id)
         if not self.hover_card.install(binding,graph,node_id,self.owner.run.state.get('config',{}),self.view):return
+        area=self.screen().availableGeometry();self.hover_card.resize(self.hover_card.sizeHint().boundedTo(area.size()))
         self.hover_card.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,bool(self.window().windowFlags()&Qt.WindowType.WindowStaysOnTopHint));self.hover_card.show()
-        area=self.screen().availableGeometry();self.hover_card.move(max(area.left(),min(point.x()+22,area.right()-self.hover_card.width())),max(area.top(),min(point.y()+12,area.bottom()-self.hover_card.height())))
+        self.hover_card.move(max(area.left(),min(point.x()+22,area.right()-self.hover_card.width())),max(area.top(),min(point.y()+12,area.bottom()-self.hover_card.height())))
     def open_hover_entry(self,node_id,kind,identity):
         from .player_map_reference import node_dossier
         try:dossier=node_dossier(self.view.graph,node_id,self.owner.run.state.get('config',{}))or{}

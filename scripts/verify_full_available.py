@@ -541,6 +541,7 @@ ADDITIONAL_MODULES += ('tests.test_state_calculation_updates',)
 ADDITIONAL_MODULES += ('tests.test_player_resource_strip',)
 ADDITIONAL_MODULES += ('tests.test_battle_reader_review',)
 ADDITIONAL_MODULES += ('tests.test_node_card_source_review',)
+ADDITIONAL_MODULES += ('tests.test_node_card_visual_review',)
 
 if __name__ == '__main__':
     sys.exit(main())
