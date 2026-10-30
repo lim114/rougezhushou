@@ -2,16 +2,18 @@
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QGridLayout,QLabel,QPushButton,QHBoxLayout
 from .record_flags import active_record
 from .run_config import difficulty_value
+from .player_resource_facts import inventory_summary
 
 def overview_facts(state):
     config=state.get('config',{});grade=difficulty_value(config.get('difficulty'))
     squad=config.get('squad',{});zone=config.get('zone',{})
     crew=sum(active_record(row,'present') for row in state.get('operators',{}).values())
-    relics=sum(active_record(row,'held') for row in state.get('relics',{}).values())
-    total=state.get('relic_count');complete=state.get('inventory_verified')is True
+    inventory=inventory_summary(state);relics=inventory['relics']
+    total=inventory['expected_relics'];complete=inventory['complete']
     return {'保密等级':str(grade)if grade is not None else'尚未确认',
         '分队':squad.get('name')or'尚未确认','当前区域':zone.get('name')or'尚未确认',
-        '已确认干员':f'{crew}名','已读收藏品':f'{relics}件'+(f' / 共{total}件'if type(total)is int else''),
+        '已确认干员':f'{crew}名','已读收藏品':f'{relics}件'+(f' / 共{total}件'if total is not None else'')
+            +(f"（另已读{inventory['tools']}件道具）"if inventory['tools']else''),
         '收藏品完整性':'已核对完整'if complete else'尚未读全或未核对'}
 
 class RunOverviewPanel(QWidget):

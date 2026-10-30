@@ -9,5 +9,7 @@ class OverviewTests(unittest.TestCase):
  def test_count_not_completeness(self):
   r=overview_facts({'relic_count':4,'inventory_verified':False});self.assertEqual(r['已读收藏品'],'0件 / 共4件');self.assertNotEqual(r['收藏品完整性'],'已核对完整')
  def test_complete_only_explicit_true(self):
-  self.assertEqual(overview_facts({'inventory_verified':True})['收藏品完整性'],'已核对完整')
+  self.assertEqual(overview_facts({'inventory_verified':True,'relic_count':0})['收藏品完整性'],'已核对完整')
+  self.assertNotEqual(overview_facts({'inventory_verified':True})['收藏品完整性'],'已核对完整')
+  self.assertNotEqual(overview_facts({'inventory_verified':1,'relic_count':0})['收藏品完整性'],'已核对完整')
 if __name__=='__main__':unittest.main()

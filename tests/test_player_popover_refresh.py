@@ -84,19 +84,22 @@ class PopoverRefreshTests(unittest.TestCase):
 
     def test_inventory_bundle_sleeps_and_restores_together(self):
         popup, reader = self.reader('inventory_popup')
+        popup.resources = SimpleNamespace(refresh=Mock())
         popup.parts = SimpleNamespace(refresh=Mock(), refresh_exchange=Mock())
         popup.tools = SimpleNamespace(refresh=Mock())
         popup.shop = SimpleNamespace(refresh=Mock())
         self.bar.refresh()
         self.assertEqual(reader.calls, 0)
+        popup.resources.refresh.assert_not_called()
         self.bar.present(popup)
         self.assertEqual(reader.calls, 1)
-        for method in (popup.parts.refresh, popup.parts.refresh_exchange,
+        for method in (popup.resources.refresh, popup.parts.refresh, popup.parts.refresh_exchange,
                        popup.tools.refresh, popup.shop.refresh):
             self.assertEqual(method.call_count, 1)
         popup.hide()
         self.bar.refresh()
         self.assertEqual(popup.parts.refresh.call_count, 1)
+        self.assertEqual(popup.resources.refresh.call_count, 1)
 
     def test_exchange_rechecks_its_source_while_inventory_is_hidden(self):
         inventory, reader = self.reader('inventory_popup')

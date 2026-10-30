@@ -150,7 +150,8 @@ class MapPanel(QWidget):
         read_row=QHBoxLayout();self.read_scope=QComboBox()
         for label,key in(('查找全部记录',None),('只查已读或历史类型','read'),('只查模板固定类型','fixed'),('只查尚待确认类型','unknown')):self.read_scope.addItem(label,key)
         read_row.addWidget(self.read_scope);self.coverage_notice=QLabel();self.coverage_notice.setWordWrap(True);read_row.addWidget(self.coverage_notice,1);finder.addLayout(read_row);self.read_scope.currentIndexChanged.connect(self.update_node_finder)
-        self.resources=QLabel();self.resources.setWordWrap(True);body.addWidget(self.resources)
+        from .player_resource_strip import ResourceStrip
+        self.resources=ResourceStrip(owner.run.state);body.addWidget(self.resources)
         self.floor_resources=QLabel();self.floor_resources.setWordWrap(True);body.addWidget(self.floor_resources)
         row=QHBoxLayout();self.filter_notice=QLabel();self.filter_notice.setWordWrap(True);row.addWidget(self.filter_notice,1);self.clear_filter=QPushButton('显示所有类型');self.clear_filter.clicked.connect(lambda:self.set_type_filter(None));row.addWidget(self.clear_filter);body.addLayout(row);self.clear_filter.hide()
         self.split=QSplitter();self.scroll=QScrollArea();self.scroll.setWidgetResizable(True);self.view=PreviewMapView();self.scroll.setWidget(self.view);self.split.addWidget(self.scroll)
@@ -219,9 +220,7 @@ class MapPanel(QWidget):
             self.close_reference()
             self.readings.clear();self.entry_readings.clear();self.reading_key=None;blocked=self.entry_search.blockSignals(True);self.entry_search.clear();self.entry_search.blockSignals(blocked);old_key=None;self.epoch=epoch;self.selected_zone=None;self.view.set_map(None)
         self.graphs=deepcopy(self.owner.run.state.get('maps',{}));original=self.owner.map_view
-        from .player_overview import overview_facts
-        facts=overview_facts(self.owner.run.state);self.resources.setText('本局最近记录：　保密等级 '+facts['保密等级']+'　已确认干员 '+facts['已确认干员']+'　已读藏品 '+facts['已读收藏品']+'　零件 '+str((self.owner.run.state.get('resources',{}).get('parts_count')or{}).get('value','未读到'))+'　源石锭 '+str((self.owner.run.state.get('resources',{}).get('gold')or{}).get('value','未读到')))
-        if self.owner.run.state.get('inventory_verified')is not True:self.resources.setText(self.resources.text()+'　（藏品数量待核对）')
+        self.resources.refresh(self.owner.run.state)
         if original.graph and original.graph.get('template_id')==(self.graphs.get(original.graph.get('zone_id'))or{}).get('template_id'):self.graphs[original.graph['zone_id']]=deepcopy(original.graph)
         self.latest_position.setEnabled(self.latest_position_key()is not None)
         self.update_node_finder();self.floors.blockSignals(True)
@@ -282,6 +281,10 @@ class MapPanel(QWidget):
         self.detail.verticalScrollBar().setValue(saved[2])
         self.restore_entry_expansion()
         name,_=zone_info(graph);self.status.setText(name+(' · 本局历史记录'if historical else' · 最近确认的地图')+'；未揭示内容仍是候选。'if graph else'尚无本局地图记录；读到地图后自动显示，不填入示例。')
+        from .run_config import difficulty_value
+        config=self.owner.run.state.get('config',{});grade=difficulty_value(config.get('difficulty'))
+        squad=config.get('squad',{}).get('name');squad=squad if isinstance(squad,str) and squad else'未读'
+        self.status.setText(self.status.text()+f'　保密等级 {grade if grade is not None else "未读"} · 分队 {squad}')
         self.change_zoom()
         if hasattr(self,'hover_card')and self.hover_card.isVisible():
             binding=self.hover_card.binding

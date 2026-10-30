@@ -151,6 +151,7 @@ class CompactAssistant(QDialog):
         self.buttons['场景笔记'].setEnabled(True);self.setToolTip(self.context.text())
         if self.recent_notes_popup and self.recent_notes_popup.isVisible():self.recent_notes_popup.panel.refresh()
         if self.inventory_popup and self.inventory_popup.isVisible():
+            self.inventory_popup.resources.refresh(self.owner.run.state)
             self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();self.inventory_popup.parts.refresh_exchange();self.inventory_popup.shop.refresh()
         for popup in (self.map_popup,self.scene_popup,self.team_popup,self.replay_popup):
             if popup and popup.isVisible():popup.panel.refresh()
@@ -222,7 +223,12 @@ class CompactAssistant(QDialog):
             pages.addTab(panel,'收藏品');pages.addTab(tools,'战术道具');pages.addTab(parts,'零件箱资料')
             from .player_shop_memory import ShopMemoryPanel
             shop=ShopMemoryPanel(self.owner.run,panel);pages.addTab(shop,'商店记录')
-            self.inventory_popup=ToolPopover('收藏品、战术道具与零件',pages,self,on_show=self.refresh)
+            from .player_resource_strip import ResourceStrip
+            bundle=QWidget();body=QVBoxLayout(bundle);body.setContentsMargins(0,0,0,0)
+            resources=ResourceStrip(self.owner.run.state,dark=True);resources.requested.connect(self.open_resource)
+            body.addWidget(resources);body.addWidget(pages,1)
+            self.inventory_popup=ToolPopover('收藏品、战术道具与零件',bundle,self,on_show=self.refresh)
+            self.inventory_popup.resources=resources
             from .player_catalog_grid import INVENTORY_STYLE
             self.inventory_popup.setObjectName('inventoryWindow');self.inventory_popup.setStyleSheet(INVENTORY_STYLE)
             self.inventory_popup.panel=panel;self.inventory_popup.pages=pages;self.inventory_popup.parts=parts;self.inventory_popup.tools=tools;self.inventory_popup.shop=shop;self.inventory_popup.resize(840,650)
@@ -230,7 +236,15 @@ class CompactAssistant(QDialog):
     def open_map(self):
         if self.map_popup is None:
             panel=MapPanel(self.owner);self.map_popup=ToolPopover('探索地图与节点',panel,self,on_show=self.refresh);self.map_popup.panel=panel;self.map_popup.resize(1100,650);self.map_popup.setObjectName('videoMapWindow');self.map_popup.setStyleSheet('#videoMapWindow{background:#f5f5f7;border:1px solid #bbc1c5;border-radius:12px;} #videoMapWindow QLabel{color:#25332f;} #videoMapWindow QPushButton,#videoMapWindow QComboBox{color:#263630;background:#e8ebea;border:1px solid #bbc6c1;border-radius:7px;padding:5px;} #videoMapWindow QTabBar{background:#f5f5f7;border:0;} #videoMapWindow QTabBar::tab{color:#35403c;background:#e4e7e6;border:0;border-radius:10px;padding:6px 12px;} #videoMapWindow QTabBar::tab:selected{background:#2c3533;color:white;} #videoMapWindow QPlainTextEdit,#videoMapWindow QTreeWidget{color:#28332e;background:#fff;border:1px solid #d2d9d5;}')
+            panel.resources.requested.connect(self.open_resource)
         return self.present(self.map_popup)
+
+    def open_resource(self,kind):
+        if kind=='crew':return self.open_team()
+        if kind in ('items','parts'):
+            if self.open_inventory() is False:return False
+            self.inventory_popup.pages.setCurrentWidget(self.inventory_popup.parts if kind=='parts' else self.inventory_popup.panel)
+            return True
     def open_archive(self):return self.open_owner_dialog(self.owner.open_public_archive,'public_archive')
     def open_owner_dialog(self,callback,name):
         if self.active_popup is not None and self.active_popup.isVisible()and not self.active_popup.close():

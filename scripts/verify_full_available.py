@@ -538,6 +538,7 @@ ADDITIONAL_MODULES += ('tests.test_player_popover_refresh',)
 ADDITIONAL_MODULES += ('tests.test_desktop_receipts',)
 ADDITIONAL_MODULES += ('tests.test_catalog_refresh_review',)
 ADDITIONAL_MODULES += ('tests.test_state_calculation_updates',)
+ADDITIONAL_MODULES += ('tests.test_player_resource_strip',)
 
 if __name__ == '__main__':
     sys.exit(main())
