@@ -142,6 +142,7 @@ class MapPanel(QWidget):
         head=QHBoxLayout();self.floors=QTabBar();self.floors.setExpanding(False);self.floors.setAccessibleName('本局已记录楼层');head.addWidget(self.floors,1)
         self.zoom=QComboBox();self.zoom.addItems(['适应窗口','放大125%','放大150%','放大200%']);head.addWidget(self.zoom)
         self.details_toggle=QPushButton('节点资料');self.details_toggle.setCheckable(True);head.addWidget(self.details_toggle);body.addLayout(head)
+        find=QHBoxLayout();self.node_query=QLineEdit();self.node_query.setMaxLength(100);self.node_query.setPlaceholderText('查找本局已记录楼层中的类型、位置或已读名称');find.addWidget(self.node_query,1);self.node_results=QComboBox();self.node_results.setMinimumWidth(200);find.addWidget(self.node_results,2);self.find_node=QPushButton('定位节点');find.addWidget(self.find_node);body.addLayout(find);self.node_query.textChanged.connect(self.update_node_finder);self.find_node.clicked.connect(self.locate_found_node)
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
         self.resources=QLabel();self.resources.setWordWrap(True);body.addWidget(self.resources)
         self.floor_resources=QLabel();self.floor_resources.setWordWrap(True);body.addWidget(self.floor_resources)
@@ -216,12 +217,28 @@ class MapPanel(QWidget):
         facts=overview_facts(self.owner.run.state);self.resources.setText('本局最近记录：　保密等级 '+facts['保密等级']+'　已确认干员 '+facts['已确认干员']+'　已读藏品 '+facts['已读收藏品']+'　零件 '+str((self.owner.run.state.get('resources',{}).get('parts_count')or{}).get('value','未读到'))+'　源石锭 '+str((self.owner.run.state.get('resources',{}).get('gold')or{}).get('value','未读到')))
         if self.owner.run.state.get('inventory_verified')is not True:self.resources.setText(self.resources.text()+'　（藏品数量待核对）')
         if original.graph and original.graph.get('template_id')==(self.graphs.get(original.graph.get('zone_id'))or{}).get('template_id'):self.graphs[original.graph['zone_id']]=deepcopy(original.graph)
-        self.floors.blockSignals(True)
+        self.update_node_finder();self.floors.blockSignals(True)
         while self.floors.count():self.floors.removeTab(0)
         for key,graph in sorted(self.graphs.items(),key=lambda pair:(zone_info(pair[1])[1]or 99,pair[0])):
             name,floor=zone_info(graph);i=self.floors.addTab(('第'+str(floor)+'层 · 'if floor else'')+name);self.floors.setTabData(i,key)
         keys=[self.floors.tabData(i)for i in range(self.floors.count())];wanted=old_key if old_key in keys else(original.graph or{}).get('zone_id')
         self.floors.setCurrentIndex(keys.index(wanted)if wanted in keys else 0 if keys else-1);self.floors.blockSignals(False);self.show_floor()
+    def update_node_finder(self,*_):
+        from .player_map_find import rows
+        previous=self.node_results.currentData();self.node_results.blockSignals(True);self.node_results.clear()
+        for row in rows(self.graphs,self.node_query.text()):self.node_results.addItem(row['label'],row['key'])
+        i=self.node_results.findData(previous)
+        if i>=0:self.node_results.setCurrentIndex(i)
+        self.node_results.blockSignals(False);self.find_node.setEnabled(self.node_results.count()>0)
+        self.node_results.setToolTip('只查找本局保存的地图位置；已读名称须直接关联到该节点。搜索不到不表示未生成。')
+    def locate_found_node(self):
+        key=self.node_results.currentData()
+        if not key:return False
+        zone,template,node=key;g=self.graphs.get(zone)
+        if not g or g.get('template_id')!=template or not any(n['id']==node for n in g['nodes']):return False
+        index=next((i for i in range(self.floors.count())if self.floors.tabData(i)==zone),None)
+        if index is None:return False
+        self.floors.setCurrentIndex(index);self.view.select_node(node);self.select_interactive(node);return True
     def show_floor(self,*_):
         if self.view.graph:
             old=(self.view.graph.get('zone_id'),self.view.graph.get('template_id'));self.readings[old]=(self.view.selected,self.selected_reference,self.detail.verticalScrollBar().value())
