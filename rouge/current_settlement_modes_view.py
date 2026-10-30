@@ -6,7 +6,7 @@ from .ui_state import replace_text
 
 
 class CurrentSettlementModesPanel(QWidget):
-    def __init__(self, stage_id, parent=None):
+    def __init__(self, stage_id, parent=None, *, load=True):
         super().__init__(parent)
         self.stage_id = stage_id
         self.result = None
@@ -38,7 +38,8 @@ class CurrentSettlementModesPanel(QWidget):
         self.entry.currentIndexChanged.connect(self.refresh_reference)
         self.region.currentIndexChanged.connect(self.refresh_reference)
         self.refresh_button.clicked.connect(self.refresh_reference)
-        self.refresh_reference()
+        if load:
+            self.refresh_reference()
 
     def clear_reference(self):
         self.result = None

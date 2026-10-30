@@ -1,0 +1,89 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "固定作战资料重复读取、地图图片与窗口清理复用",
+  "baseline_commit": "b5ce07b802f51d42095f10fb12ce261b08dbd2f1",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "next_section_started": false,
+  "implemented_scope_passed": true,
+  "application_review_complete": false,
+  "video_parity_complete": false,
+  "source_review": {
+    "path": "verification/maintenance/battle-reader-review-20261031/review-source.json",
+    "sha256": "0967e58c4521b8dcc8f6756d731b1d739afbcbb43afd5440d515f338c9338a96",
+    "bytes": 3114
+  },
+  "replay_current_processes": {
+    "path": "verification/maintenance/battle-reader-review-20261031/replay/current-processes.json",
+    "sha256": "8123d50d0cec8f61b74d9c9f4d9358b29d50c53654207da860e58e7d681c62e8",
+    "bytes": 1459
+  },
+  "before_after_current_processes": 6,
+  "fixed_stages_per_process": 2,
+  "actions_per_process": 18,
+  "complete_results_and_reports_equal": true,
+  "construction_reward_and_settlement_reads": {
+    "before_each": 2,
+    "after_each": 1
+  },
+  "filtered_refresh_and_navigation_rebuilds": {
+    "before_each": 2,
+    "after_each": 1
+  },
+  "median_local_ms": {
+    "ro6_n_5_2": {
+      "before": {
+        "construct": 781.088599935174,
+        "filtered_refresh": 820.4249001573771
+      },
+      "after": {
+        "construct": 570.490000071004,
+        "filtered_refresh": 904.5906001701951
+      }
+    },
+    "ro6_b_7": {
+      "before": {
+        "construct": 794.0331001300365,
+        "filtered_refresh": 931.6332000307739
+      },
+      "after": {
+        "construct": 505.10599999688566,
+        "filtered_refresh": 865.1469999458641
+      }
+    }
+  },
+  "timing_scope": "Three before and three current-after independent Windows Qt processes, two fixed public stages. Not recognition speed, whole-app speed, current gameplay accuracy, or proof of a universal refresh improvement.",
+  "related_unique_passed": 61,
+  "related_receipt": {
+    "path": "verification/maintenance/battle-reader-review-20261031/tests-reconciled.json",
+    "sha256": "a23e5ad91261d48c6fbe9acc410cdb7765b7c1a3293475fc7b3dc730d7529b75",
+    "bytes": 9541
+  },
+  "native_checks": 50,
+  "native_receipt": {
+    "path": "verification/maintenance/battle-reader-review-20261031/native-current/window.json",
+    "sha256": "44010825b0b1e2751161cc8f31806f3bd75a670a7b1bbbe7c79dcf2c14341d2a",
+    "bytes": 166266
+  },
+  "image_review": {
+    "path": "verification/maintenance/battle-reader-review-20261031/image-review.json",
+    "sha256": "5d23206eaac4fcf0d7edfb1284878b27af84978d15b80c11f28d93088934b95c",
+    "bytes": 5027
+  },
+  "runtime": {
+    "path": "verification/maintenance/battle-reader-review-20261031/live-window-final/desktop-review.json",
+    "sha256": "78c376443c06aba1fa11a142df269b5ad2ec0b967f820fece88f74cb029e18cd",
+    "bytes": 411
+  },
+  "maintained_selectors_count": 693,
+  "original_full_order_and_scope_preserved": true,
+  "full_validation_rerun": false,
+  "full440_only_original_frozen_source": true,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "private_data_included": false,
+  "publication_binding": "enclosing maintenance commit, actual remote checked after ordinary push"
+}

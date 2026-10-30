@@ -11,7 +11,7 @@ from .ui_state import replace_text
 
 class CurrentRewardPanel(QWidget):
     actionSelected=Signal(str)
-    def __init__(self,stage_id,parent=None):
+    def __init__(self,stage_id,parent=None,*,load=True):
         super().__init__(parent);self.stage_id=stage_id;self.result=None;self.row_id=None
         layout=QVBoxLayout(self);self.notice=QLabel(model.NOTICE);self.notice.setWordWrap(True);layout.addWidget(self.notice)
         self.refresh_button=QPushButton('重新核对奖励资料');layout.addWidget(self.refresh_button)
@@ -22,7 +22,8 @@ class CurrentRewardPanel(QWidget):
         self.shop_vault_button=QPushButton('查看这份保险柜的领取条件与商店后果');self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False)
         layout.addWidget(self.shop_vault_button);self.shop_vault_button.clicked.connect(self.open_shop_vault)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.player.setReadOnly(True);self.technical=QPlainTextEdit();self.technical.setReadOnly(True);self.tabs.addTab(self.player,'奖励和条件');self.tabs.addTab(self.technical,'完整来源与候选');layout.addWidget(self.tabs,1)
-        self.combo.currentIndexChanged.connect(self._selected);self.source_combo.currentIndexChanged.connect(self._source_changed);self.source_button.clicked.connect(self.follow_action);self.refresh_button.clicked.connect(self.refresh_reference);self.refresh_reference()
+        self.combo.currentIndexChanged.connect(self._selected);self.source_combo.currentIndexChanged.connect(self._source_changed);self.source_button.clicked.connect(self.follow_action);self.refresh_button.clicked.connect(self.refresh_reference)
+        if load:self.refresh_reference()
 
     def clear_reference(self):
         self._close_shop_vault();self.shop_vault_button.hide();self.shop_vault_button.setEnabled(False)

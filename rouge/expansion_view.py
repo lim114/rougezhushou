@@ -2,11 +2,11 @@
 from copy import deepcopy
 import json
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QLineEdit,QListWidget,QListWidgetItem,QPlainTextEdit,QTabWidget,QPushButton,QSplitter
 from . import expansion_reference as model
 from . import current_stage_directory as stage_directory
 from .boss_hunt_view import _technical_json
+from .reference_image import ReferenceImage
 from .ui_state import replace_text
 
 
@@ -103,7 +103,7 @@ class ExpansionUpdatePanel(QWidget):
         if categories is not None and 'endings' not in categories:self.ending_button.hide()
         self.count=QLabel();layout.addWidget(self.count)
         split=QSplitter();layout.addWidget(split,1);self.entries=QListWidget();self.entries.setAccessibleName('本版本资料条目');split.addWidget(self.entries)
-        right=QWidget();body=QVBoxLayout(right);self.map_image=QLabel('选择关卡可查看固定原图');self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter);self.map_image.setMinimumSize(260,150);body.addWidget(self.map_image)
+        right=QWidget();body=QVBoxLayout(right);self.map_image=ReferenceImage('选择关卡可查看固定原图');self.map_image.setMinimumSize(260,150);body.addWidget(self.map_image)
         self.next_button=QPushButton('查看原资料指定的后续场景');self.next_button.hide();body.addWidget(self.next_button)
         self.flow_button=QPushButton('查看这个情景的选项、奖励和后续');self.flow_button.hide();body.addWidget(self.flow_button);self.flow_button.clicked.connect(self.open_documented_flow)
         self.origins_button=QPushButton('查看已核对的取得方式');self.origins_button.hide();body.addWidget(self.origins_button);self.origins_button.clicked.connect(self.open_reward_origins)
@@ -579,19 +579,9 @@ class ExpansionUpdatePanel(QWidget):
         target=result['next_scene'];self.next_button.setVisible(target is not None);self.next_button.setEnabled(target is not None)
         if target:self.next_button.setText('查看后续场景：'+target['title'])
         self.image_raw=model.image_bytes(result['image'])
-        self._draw_image()
-
-    def _draw_image(self):
-        if self.image_raw is None:
-            self.map_image.clear();self.map_image.setText('本项无地图资料'if self.result and self.result['image']is None else'固定地图原图暂时无法核对。');return
-        pixmap=QPixmap()
-        if not pixmap.loadFromData(self.image_raw,'PNG')or pixmap.isNull():self.image_raw=None;self.map_image.clear();self.map_image.setText('原图无法读取。');return
-        self.map_image.setPixmap(pixmap.scaled(max(1,self.map_image.width()-8),220,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
+        notice='本项无地图资料'if result['image']is None else'固定地图原图暂时无法核对。'
+        if not self.map_image.set_data(self.image_raw,notice):self.image_raw=None
         self.map_image.setToolTip('固定原图，可随窗口缩放查看；尚未校准位置，不显示未经核对的出怪标记。')
-
-    def resizeEvent(self,event):
-        super().resizeEvent(event)
-        if hasattr(self,'map_image'):self._draw_image()
 
     def follow_scene(self):
         if self.result is None or self.result['next_scene']is None:return False

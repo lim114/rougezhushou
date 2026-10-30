@@ -7,6 +7,7 @@ from . import current_battle_reference as model,expansion_reference as version
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .reference_image import ReferenceImage
 
 
 class CurrentBattlePanel(QWidget):
@@ -27,7 +28,7 @@ class CurrentBattlePanel(QWidget):
         layout.addWidget(self.tabs, 1)
         overview = QWidget()
         body = QVBoxLayout(overview)
-        self.map_image = QLabel()
+        self.map_image = ReferenceImage()
         self.map_image.setMinimumSize(300, 160)
         self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         body.addWidget(self.map_image)
@@ -135,11 +136,11 @@ class CurrentBattlePanel(QWidget):
         self.technical.setReadOnly(True)
         self.tabs.addTab(self.technical, '完整原值与来源')
         from .current_reward_view import CurrentRewardPanel
-        self.rewards = CurrentRewardPanel(stage_id)
+        self.rewards = CurrentRewardPanel(stage_id, load=False)
         self.tabs.addTab(self.rewards, '奖励与条件')
         self.rewards.actionSelected.connect(self._reward_action_selected)
         from .current_settlement_modes_view import CurrentSettlementModesPanel
-        self.settlement = CurrentSettlementModesPanel(stage_id)
+        self.settlement = CurrentSettlementModesPanel(stage_id, load=False)
         self.tabs.addTab(self.settlement, '通关基础奖励')
         self.refresh_button.clicked.connect(self.refresh_reference)
         self.enemy_combo.currentIndexChanged.connect(self._enemy_changed)
@@ -232,14 +233,9 @@ class CurrentBattlePanel(QWidget):
         replace_text(self.summary, model.summary_text(fresh), preserve=keep)
         replace_text(self.technical, _technical_json(fresh), preserve=keep)
         raw = version.image_bytes(fresh['image'])
-        pix = QPixmap()
-        if raw and pix.loadFromData(raw, 'PNG'):
-            self.map_image.setPixmap(pix.scaled(760, 235, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
-        else:
-            self.map_image.clear()
-            self.map_image.setText('本关固定原图无法核对，不借用同名关卡图片。')
+        self.map_image.set_data(raw, '本关固定原图无法核对，不借用同名关卡图片。')
         self.install_enemy_choices(old_enemy)
-        self._enemy_changed(preserve=keep)
+        self._enemy_changed(preserve=keep, update_actions=False)
         if not keep:
             blocked=self.action_group.blockSignals(True);self.action_group.setCurrentIndex(0);self.action_group.blockSignals(blocked)
         self._actions_changed(preserve=keep)
@@ -312,7 +308,7 @@ class CurrentBattlePanel(QWidget):
     def filter_enemies(self,*_):
         preferred=self.enemy_combo.currentData();self.install_enemy_choices(preferred);self._enemy_changed(preserve=True)
 
-    def _enemy_changed(self, *_, preserve=False):
+    def _enemy_changed(self, *_, preserve=False, update_actions=True):
         key = self.enemy_combo.currentData()
         enemy = next((e for e in self.result['enemies'] if e['key'] == key), None) if self.result else None
         keep = preserve and key == self.enemy_key
@@ -326,7 +322,7 @@ class CurrentBattlePanel(QWidget):
         else:
             self.enemy_portrait.setText('此精确引用未取得图片。' if enemy else '')
         self._sync_boss_documents(keep)
-        if self.action_focus.currentData()=='enemy':self._actions_changed(preserve=True)
+        if update_actions and self.action_focus.currentData()=='enemy':self._actions_changed(preserve=True)
         self._sync_sun_boss(keep)
         self._sync_elbert(keep)
         self._sync_hanko(keep)
@@ -361,7 +357,7 @@ class CurrentBattlePanel(QWidget):
         if self.result is None or action not in self.result['actions']:return False
         for widget in(self.action_group,self.action_focus):
             blocked=widget.blockSignals(True);widget.setCurrentIndex(0);widget.blockSignals(blocked)
-        self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']));self._actions_changed()
+        blocked=self.queue_kind.blockSignals(True);self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']));self.queue_kind.blockSignals(blocked);self._actions_changed()
         for i in range(self.actions.count()):
             if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==action['key']:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
         return False
@@ -635,7 +631,7 @@ class CurrentBattlePanel(QWidget):
         from .current_event_battles_view import CurrentEventBattlesDialog
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
-    def closeEvent(self, event):
+    def _close_readers(self):
         self._close_guest_material()
         self._close_guest_crystals()
         self._close_guest_knights()
@@ -652,6 +648,9 @@ class CurrentBattlePanel(QWidget):
         self._close_spawn_candidates()
         self._close_map_positions()
         self._close_event_origins()
+
+    def closeEvent(self, event):
+        self._close_readers()
         super().closeEvent(event)
 
     def _close_shop_vault(self):
@@ -790,20 +789,5 @@ class CurrentBattleDialog(QDialog):
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
 
     def closeEvent(self, event):
-        self.panel._close_guest_material()
-        self.panel._close_guest_crystals()
-        self.panel._close_guest_knights()
-        self.panel._close_route_itinerary()
-        self.panel._close_stage_objects()
-        self.panel._close_enemy_spawns()
-        self.panel._close_boss_documents()
-        self.panel._close_sun_boss()
-        self.panel._close_shop_vault()
-        self.panel.rewards._close_shop_vault()
-        self.panel._close_elbert()
-        self.panel._close_hanko()
-        self.panel.settlement.clear_reference()
-        self.panel._close_spawn_candidates()
-        self.panel._close_map_positions()
-        self.panel._close_event_origins()
+        self.panel._close_readers()
         super().closeEvent(event)
