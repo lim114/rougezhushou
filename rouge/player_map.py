@@ -137,7 +137,7 @@ class PreviewMapView(MapView):
 
 class MapPanel(QWidget):
     def __init__(self,owner):
-        super().__init__();self.owner=owner;self.epoch=None;self.graphs={};self.readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None
+        super().__init__();self.owner=owner;self.epoch=None;self.graphs={};self.readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None;self.reference_popup=None;self.reference_binding=None
         body=QVBoxLayout(self);body.setContentsMargins(5,0,5,5)
         head=QHBoxLayout();self.floors=QTabBar();self.floors.setExpanding(False);self.floors.setAccessibleName('本局已记录楼层');head.addWidget(self.floors,1)
         self.zoom=QComboBox();self.zoom.addItems(['适应窗口','放大125%','放大150%','放大200%']);head.addWidget(self.zoom)
@@ -192,10 +192,12 @@ class MapPanel(QWidget):
         return False
     def hideEvent(self,event):
         if hasattr(self,'hover_card'):self.hover_timer.stop();self.hover_card.dismiss()
+        self.close_reference()
         super().hideEvent(event)
     def refresh(self):
         epoch=self.owner.run.state['id'];old_key=self.selected_zone
         if epoch!=self.epoch:
+            self.close_reference()
             self.readings.clear();old_key=None;self.epoch=epoch;self.selected_zone=None;self.view.set_map(None)
         self.graphs=deepcopy(self.owner.run.state.get('maps',{}));original=self.owner.map_view
         from .player_overview import overview_facts
@@ -234,6 +236,7 @@ class MapPanel(QWidget):
             binding=self.hover_card.binding
             if not graph or not binding or binding[:3]!=(self.epoch,graph.get('zone_id'),graph.get('template_id')):self.hover_card.dismiss()
             else:self.hover_card.install(binding,graph,binding[-1],self.owner.run.state.get('config',{}),self.view,force=True)
+        self.check_reference()
     def change_zoom(self,*_):
         scale=(1,1.25,1.5,2)[self.zoom.currentIndex()];self.scroll.setWidgetResizable(scale==1)
         if scale!=1:self.view.resize(max(600,int(self.scroll.viewport().width()*scale)),max(330,int(self.scroll.viewport().height()*scale)))
@@ -244,7 +247,9 @@ class MapPanel(QWidget):
         from . import node_catalog as model
         from .node_catalog_view import map_conditions
         from .map_reporting import format_node,location
-        graph=self.view.graph;old=self.entries.currentItem();keep=old.data(0,Qt.ItemDataRole.UserRole)if old and self.reading_key==((graph or{}).get('zone_id'),(graph or{}).get('template_id'),node_id)else None
+        graph=self.view.graph
+        if self.reference_popup is not None and self.reference_binding[:4]!=(self.epoch,(graph or{}).get('zone_id'),(graph or{}).get('template_id'),node_id):self.close_reference()
+        old=self.entries.currentItem();keep=old.data(0,Qt.ItemDataRole.UserRole)if old and self.reading_key==((graph or{}).get('zone_id'),(graph or{}).get('template_id'),node_id)else None
         self.reading_key=((graph or{}).get('zone_id'),(graph or{}).get('template_id'),node_id)
         self.entries.blockSignals(True);self.entries.clear();self.rows={};self.selected_reference=None;self.open_button.setEnabled(False)
         if not graph or not node_id:
@@ -271,6 +276,7 @@ class MapPanel(QWidget):
     def read_entry(self,*_):
         item=self.entries.currentItem();key=item.data(0,Qt.ItemDataRole.UserRole)if item else None;row=self.rows.get(key)
         self.selected_reference=key if row else None;self.open_button.setEnabled(bool(row and key[1]in('event','battle')))
+        if self.reference_popup is not None and self.reference_binding!=self.reader_binding():self.close_reference()
         if not row:return
         from .player_node_information import node_information_text
         from .node_catalog_view import map_conditions
@@ -282,9 +288,39 @@ class MapPanel(QWidget):
         text=node_information_text(entry,context=context)
         self.detail.setPlainText(text)
     def open_entry(self):
-        key=self.selected_reference;row=self.rows.get(key)
-        if not row:return
+        binding=self.reader_binding();key=self.selected_reference
+        self.refresh()
+        if binding!=self.reader_binding():return False
+        row=self.rows.get(key)
+        if not row:return False
+        self.close_reference()
+        from .player_map_reader import make_reader
+        popup=make_reader(key[1],row,self,historical=self.view.historical or key[0].startswith('已读历史'))
+        if popup is not None:
+            self.reference_popup=popup;self.reference_binding=binding
+            popup.setWindowFlag(Qt.WindowType.Tool,True);popup.show()
+            area=self.screen().availableGeometry();popup.move(max(area.left(),min(self.mapToGlobal(QPoint(20,20)).x(),area.right()-popup.width()+1)),max(area.top(),min(self.mapToGlobal(QPoint(20,20)).y(),area.bottom()-popup.height()+1)))
+            return True
+        # Retain the existing full-directory route when no exact floating
+        # reader is available; never substitute another same-name instance.
+        self.detail.appendPlainText('\n这份资料暂时没有可核对的完整浮窗入口，将在助手原目录继续查阅。')
         if key[1]=='battle':self.owner.show_catalog_battle(row['id'])
         elif key[1]=='event':self.owner.show_source_catalog_event(row['id'])
-        else:return
+        else:return False
         self.owner.show();self.owner.raise_();self.owner.activateWindow()
+        return True
+
+    def reader_binding(self):
+        graph=self.view.graph or{}
+        return (self.epoch,graph.get('zone_id'),graph.get('template_id'),self.view.selected,self.selected_reference)
+
+    def close_reference(self):
+        if self.reference_popup is not None:self.reference_popup.close();self.reference_popup=None
+        self.reference_binding=None
+
+    def check_reference(self):
+        if self.reference_popup is None:return
+        if not self.reference_popup.isVisible():self.close_reference();return
+        if self.reference_binding!=self.reader_binding():self.close_reference();return
+        panel=getattr(self.reference_popup,'panel',None)
+        if panel is not None and hasattr(panel,'refresh_reference')and panel.refresh_reference()is False:self.close_reference()
