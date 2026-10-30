@@ -1,0 +1,18 @@
+{
+  "title": "节点目录名称筛选、独立阅读与折叠保持",
+  "change": "地图节点资料可按事件或作战名称筛选，每个准确节点独立保留搜索、选中条目、展开与收起、阅读位置。普通刷新保持这些状态；从悬浮卡准确跳转时清除冲突筛选并展开目标。切换本局只清阅读缓存，不清游戏记录。",
+  "limits": "名称筛选只作用于该节点已合格的资料候选，不改变生成条件、历史比例或本局状态。找不到名称不表示该事件不存在；不同楼层、模板或节点不共用阅读缓存。",
+  "criteria": [
+    "筛选仅限准确节点候选",
+    "同节点刷新保持搜索与折叠、选择、阅读",
+    "不同节点独立阅读，坏链接不破坏筛选",
+    "准确跳转可显示被筛掉的目标，新局清理空缓存"
+  ],
+  "test": "tests.test_player_feature_435",
+  "native": "scripts/verify_player_feature_window_435.py",
+  "next": "继续第436节，推进现有来源与地图资料联动至440，440完整验收后发布并暂停。",
+  "unit_receipt": "verification/sections/435-player-checks-attempt2/process.json",
+  "native_receipt": "verification/sections/435-player-window-attempt2/window.json",
+  "native_process_receipt": "verification/sections/435-player-window-process-attempt2/process.json",
+  "source_receipt": "verification/sections/435-reference.json"
+}

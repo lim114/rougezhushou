@@ -533,6 +533,7 @@ ADDITIONAL_MODULES += ('tests.test_player_feature_431',)
 ADDITIONAL_MODULES += ('tests.test_player_feature_432',)
 ADDITIONAL_MODULES += ('tests.test_player_feature_433',)
 ADDITIONAL_MODULES += ('tests.test_player_feature_434',)
+ADDITIONAL_MODULES += ('tests.test_player_feature_435',)
 
 if __name__ == '__main__':
     sys.exit(main())

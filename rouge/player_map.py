@@ -6,7 +6,7 @@ import json
 from PySide6.QtCore import Qt,QRectF,QPointF,QPoint,Signal,QTimer,QSize
 from PySide6.QtGui import QColor,QPainter,QPen,QImage,QPainterPath,QIcon,QPixmap
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QTabBar,
-    QPushButton,QScrollArea,QSplitter,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QComboBox,QToolButton)
+    QPushButton,QScrollArea,QSplitter,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QComboBox,QToolButton,QLineEdit)
 from .map_view import MapView
 from .run_config import config_data
 
@@ -137,7 +137,7 @@ class PreviewMapView(MapView):
 
 class MapPanel(QWidget):
     def __init__(self,owner):
-        super().__init__();self.owner=owner;self.epoch=None;self.graphs={};self.readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None;self.reference_popup=None;self.reference_binding=None
+        super().__init__();self.owner=owner;self.epoch=None;self.graphs={};self.readings={};self.entry_readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None;self.reference_popup=None;self.reference_binding=None
         body=QVBoxLayout(self);body.setContentsMargins(5,0,5,5)
         head=QHBoxLayout();self.floors=QTabBar();self.floors.setExpanding(False);self.floors.setAccessibleName('本局已记录楼层');head.addWidget(self.floors,1)
         self.zoom=QComboBox();self.zoom.addItems(['适应窗口','放大125%','放大150%','放大200%']);head.addWidget(self.zoom)
@@ -153,6 +153,8 @@ class MapPanel(QWidget):
             button.setIconSize(QSize(36,36));button.setCheckable(True);button.setToolTip(kind+'：在助手地图查看对应位置和历史节点比例');button.setAccessibleName('地图类型筛选：'+kind);button.clicked.connect(lambda checked=False,k=kind:self.set_type_filter(k if checked else None));palette_layout.addWidget(button);self.type_buttons[kind]=button
         palette_layout.addStretch();stage=QWidget();stage_layout=QHBoxLayout(stage);stage_layout.setContentsMargins(0,0,0,0);stage_layout.addWidget(self.palette);stage_layout.addWidget(self.scroll,1);self.split.insertWidget(0,stage)
         self.drawer=QWidget();right=QVBoxLayout(self.drawer);right.setContentsMargins(6,0,0,0);self.title=QLabel('请选择地图节点');self.title.setWordWrap(True);right.addWidget(self.title)
+        self.entry_search=QLineEdit();self.entry_search.setMaxLength(100);self.entry_search.setPlaceholderText('筛选所选节点的事件或作战名称');self.entry_search.setStyleSheet('QLineEdit{color:#28332e;background:white;border:1px solid #d2d9d5;border-radius:7px;padding:5px;}');right.addWidget(self.entry_search)
+        self.entry_count=QLabel();self.entry_count.setWordWrap(True);right.addWidget(self.entry_count)
         self.entries=QTreeWidget();self.entries.setHeaderHidden(True);right.addWidget(self.entries,2)
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);right.addWidget(self.detail,2)
         self.open_button=QPushButton('打开完整资料');self.open_button.setEnabled(False);right.addWidget(self.open_button)
@@ -160,6 +162,7 @@ class MapPanel(QWidget):
         legend=QLabel('实色：已读　半透明：模板固定　金字：本局记录　?：未确认　历史比例不是本局概率；连线不代表现在可通行');legend.setWordWrap(True);body.addWidget(legend)
         self.floors.currentChanged.connect(self.show_floor);self.zoom.currentIndexChanged.connect(self.change_zoom);self.view.nodeSelected.connect(self.select_interactive)
         self.details_toggle.toggled.connect(self.drawer.setVisible);self.entries.currentItemChanged.connect(self.read_entry);self.open_button.clicked.connect(self.open_entry);self.refresh()
+        self.entry_search.textChanged.connect(lambda _text:self.selected(self.view.selected))
         from .player_map_hover import NodeHoverCard
         self.hover_card=NodeHoverCard(self);self.hover_card.entryRequested.connect(self.open_hover_entry);self.hover_pending=None
         self.hover_timer=QTimer(self);self.hover_timer.setSingleShot(True);self.hover_timer.setInterval(180);self.hover_timer.timeout.connect(self.show_hover)
@@ -183,12 +186,18 @@ class MapPanel(QWidget):
         self.hover_card.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,bool(self.window().windowFlags()&Qt.WindowType.WindowStaysOnTopHint));self.hover_card.show()
         area=self.screen().availableGeometry();self.hover_card.move(max(area.left(),min(point.x()+22,area.right()-self.hover_card.width())),max(area.top(),min(point.y()+12,area.bottom()-self.hover_card.height())))
     def open_hover_entry(self,node_id,kind,identity):
+        from .player_map_reference import node_dossier
+        try:dossier=node_dossier(self.view.graph,node_id,self.owner.run.state.get('config',{}))or{}
+        except(ValueError,KeyError,TypeError):return False
+        names=('rows','history_observed_event_rows')if kind=='event'else('battle_rows','history_observed_battle_rows')if kind=='battle'else()
+        if not any(row.get('id')==identity for name in names for row in dossier.get(name,[])):return False
         self.hover_card.dismiss();self.view.select_node(node_id)
+        self.entry_search.clear()
         for i in range(self.entries.topLevelItemCount()):
             group=self.entries.topLevelItem(i)
             for j in range(group.childCount()):
                 item=group.child(j);key=item.data(0,Qt.ItemDataRole.UserRole)
-                if key and key[1:]==(kind,identity):self.entries.setCurrentItem(item);return True
+                if key and key[1:]==(kind,identity):group.setExpanded(True);self.entries.setCurrentItem(item);return True
         return False
     def hideEvent(self,event):
         if hasattr(self,'hover_card'):self.hover_timer.stop();self.hover_card.dismiss()
@@ -198,7 +207,7 @@ class MapPanel(QWidget):
         epoch=self.owner.run.state['id'];old_key=self.selected_zone
         if epoch!=self.epoch:
             self.close_reference()
-            self.readings.clear();old_key=None;self.epoch=epoch;self.selected_zone=None;self.view.set_map(None)
+            self.readings.clear();self.entry_readings.clear();self.reading_key=None;blocked=self.entry_search.blockSignals(True);self.entry_search.clear();self.entry_search.blockSignals(blocked);old_key=None;self.epoch=epoch;self.selected_zone=None;self.view.set_map(None)
         self.graphs=deepcopy(self.owner.run.state.get('maps',{}));original=self.owner.map_view
         from .player_overview import overview_facts
         facts=overview_facts(self.owner.run.state);self.resources.setText('本局最近记录：　保密等级 '+facts['保密等级']+'　已确认干员 '+facts['已确认干员']+'　已读藏品 '+facts['已读收藏品']+'　零件 '+str((self.owner.run.state.get('resources',{}).get('parts_count')or{}).get('value','未读到'))+'　源石锭 '+str((self.owner.run.state.get('resources',{}).get('gold')or{}).get('value','未读到')))
@@ -230,6 +239,7 @@ class MapPanel(QWidget):
                 item=parent.child(j)
                 if item.data(0,Qt.ItemDataRole.UserRole)==saved[1]:self.entries.setCurrentItem(item)
         self.detail.verticalScrollBar().setValue(saved[2])
+        self.restore_entry_expansion()
         name,_=zone_info(graph);self.status.setText(name+(' · 本局历史记录'if historical else' · 最近确认的地图')+'；未揭示内容仍是候选。'if graph else'尚无本局地图记录；读到地图后自动显示，不填入示例。')
         self.change_zoom()
         if hasattr(self,'hover_card')and self.hover_card.isVisible():
@@ -247,11 +257,14 @@ class MapPanel(QWidget):
         from . import node_catalog as model
         from .node_catalog_view import map_conditions
         from .map_reporting import format_node,location
-        graph=self.view.graph
+        self.remember_entry_reading();graph=self.view.graph
         if self.reference_popup is not None and self.reference_binding[:4]!=(self.epoch,(graph or{}).get('zone_id'),(graph or{}).get('template_id'),node_id):self.close_reference()
-        old=self.entries.currentItem();keep=old.data(0,Qt.ItemDataRole.UserRole)if old and self.reading_key==((graph or{}).get('zone_id'),(graph or{}).get('template_id'),node_id)else None
         self.reading_key=((graph or{}).get('zone_id'),(graph or{}).get('template_id'),node_id)
+        reading=self.entry_readings.get(self.reading_key,{})
+        blocked=self.entry_search.blockSignals(True);self.entry_search.setText(reading.get('query',''));self.entry_search.blockSignals(blocked)
+        keep=reading.get('selected');query=self.entry_search.text().strip().casefold()
         self.entries.blockSignals(True);self.entries.clear();self.rows={};self.selected_reference=None;self.open_button.setEnabled(False)
+        self.entry_count.setText('所选节点的资料尚未读取；未用全目录填充。')
         if not graph or not node_id:
             self.title.setText('请选择地图节点');self.detail.setPlainText('点击图标查看事件、奖励与作战；可切换已记录楼层。');self.entries.blockSignals(False);return
         node=next(n for n in graph['nodes']if n['id']==node_id);self.title.setText(location(node,graph['grid']['rows'])+' · '+(node_style(node)[0]or'类型未确认'))
@@ -262,17 +275,37 @@ class MapPanel(QWidget):
             self.detail.setPlainText('节点资料尚不能读取：'+str(error));self.entries.blockSignals(False);return
         groups=[('事件候选','event',dossier['rows']),('作战预览','battle',dossier['battle_rows']),('功能说明','function',dossier['function_rows']),('已读历史事件','event',dossier['history_observed_event_rows']),('已读历史作战','battle',dossier['history_observed_battle_rows'])]
         chosen=None
+        total=sum(len(rows)for _,_,rows in groups);shown=0
         for label,kind,rows in groups:
+            full_count=len(rows);rows=[row for row in rows if not query or query in(row.get('title')or row.get('node_type')or'').casefold()]
             if not rows:continue
-            root=QTreeWidgetItem([label+f'（{len(rows)}）']);self.entries.addTopLevelItem(root)
+            shown+=len(rows);root=QTreeWidgetItem([label+(f'（{len(rows)}/{full_count}）'if query else f'（{len(rows)}）')]);root.setData(0,257,label);self.entries.addTopLevelItem(root)
             for row in rows:
-                key=(label,kind,row.get('id')or row.get('node_type'));item=QTreeWidgetItem([row.get('title')or row.get('node_type')or'功能节点']);item.setData(0,Qt.ItemDataRole.UserRole,key);root.addChild(item);self.rows[key]=row
+                key=(label,kind,row.get('id')or row.get('node_type'));item=QTreeWidgetItem([row.get('title')or row.get('node_type')or'功能节点']);item.setToolTip(0,item.text(0));item.setData(0,Qt.ItemDataRole.UserRole,key);root.addChild(item);self.rows[key]=row
                 if key==keep:chosen=item
             root.setExpanded(True)
         self.entries.blockSignals(False);self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical))
         if chosen:self.entries.setCurrentItem(chosen)
+        self.restore_entry_expansion()
+        self.detail.verticalScrollBar().setValue(reading.get('scroll',0)if chosen else 0)
+        self.entry_count.setText(f'显示{shown}/{total}项所选节点资料。名称筛选只改变查阅列表，不改变候选与历史比例；无匹配不表示没有其它内容。')
         # Only synchronize the owning current map; historical-floor reading never rebinds it.
         if self.owner.map_view.graph and graph.get('zone_id')==self.owner.map_view.graph.get('zone_id')and graph.get('template_id')==self.owner.map_view.graph.get('template_id'):self.owner.map_view.select_node(node_id)
+
+    def remember_entry_reading(self):
+        if not self.reading_key or not all(isinstance(value,str)and value for value in self.reading_key):return
+        expanded={}
+        for i in range(self.entries.topLevelItemCount()):
+            root=self.entries.topLevelItem(i);label=root.data(0,257)
+            if isinstance(label,str):expanded[label]=root.isExpanded()
+        previous=self.entry_readings.get(self.reading_key,{})
+        self.entry_readings[self.reading_key]={'query':self.entry_search.text(),'selected':self.selected_reference,
+            'expanded':{**previous.get('expanded',{}),**expanded},'scroll':self.detail.verticalScrollBar().value()}
+
+    def restore_entry_expansion(self):
+        expanded=self.entry_readings.get(self.reading_key,{}).get('expanded',{})
+        for i in range(self.entries.topLevelItemCount()):
+            root=self.entries.topLevelItem(i);root.setExpanded(expanded.get(root.data(0,257),True))
     def read_entry(self,*_):
         item=self.entries.currentItem();key=item.data(0,Qt.ItemDataRole.UserRole)if item else None;row=self.rows.get(key)
         self.selected_reference=key if row else None;self.open_button.setEnabled(bool(row and key[1]in('event','battle')))
