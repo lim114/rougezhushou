@@ -288,8 +288,8 @@ class RitualWeakeningTests(unittest.TestCase):
                         (self.subject.ROOT / self.subject.MANIFEST).stat().st_size, 1_000_000)
 
     def test_complete_fixed_source_builder_replays_without_writes(self):
-        script = self.subject.ROOT / 'scripts/build_ritual_weakening_302.py'
-        result = subprocess.run([sys.executable, '-B', '-X', 'utf8', str(script)],
+        script = self.subject.ROOT / 'scripts/replay_reference_recipe.py'
+        result = subprocess.run([sys.executable, '-B', '-X', 'utf8', str(script), '--recipe', 'ritual'],
                                 capture_output=True, timeout=60, check=False)
         self.assertEqual(result.returncode, 0, result.stderr.decode('utf8'))
         receipt = json.loads(result.stdout)

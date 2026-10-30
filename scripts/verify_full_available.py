@@ -546,6 +546,10 @@ ADDITIONAL_MODULES += ('tests.test_history_reader_review',)
 ADDITIONAL_MODULES += ('tests.test_notes_reader_review',
         'tests.test_inline_notebook_review',)
 
+ADDITIONAL_MODULES += ('tests.test_runtime_reference_review',)
+
 if __name__ == '__main__':
     sys.exit(main())
+
+
 

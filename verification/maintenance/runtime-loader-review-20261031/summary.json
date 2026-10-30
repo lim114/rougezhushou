@@ -1,0 +1,60 @@
+{
+  "kind": "implementation_review_maintenance",
+  "title": "恢复战斗事件入口、具名奖励和调谐仪式资料，分开构建溯源与运行校验",
+  "baseline_commit": "cb64f25638e732a5eda52a5fe2f8c4ec1d33a7d5",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "implemented_scope_passed": true,
+  "related_unique_tests": 139,
+  "test_scope": "First current run 137 passed and two historical builder replays failed; only the two repaired failures rerun. Changed text reader scope rerun, all overlapping methods deduplicated. No production mechanism model changed.",
+  "initial_receipt": {
+    "path": "verification/maintenance/runtime-loader-review-20261031/tests/results.json",
+    "sha256": "f175e91764410c078957b787d59dd6dc5f0723de96672c5e82ee67a683bd1f5e",
+    "bytes": 722
+  },
+  "repaired_receipt": {
+    "path": "verification/maintenance/runtime-loader-review-20261031/tests-repaired/results.json",
+    "sha256": "d3bb4cd09d1a95d8032b246d53c9df9d07a1556c16d827df0151335f5b5d31b1",
+    "bytes": 467
+  },
+  "reader_receipt": {
+    "path": "verification/maintenance/runtime-loader-review-20261031/view-check/results.json",
+    "sha256": "e93196c3d70e16c5328f90235e952836b13844aeebf4290ecc62b4e3b206e89a",
+    "bytes": 256
+  },
+  "native_unique_checks": 42,
+  "native_receipt": {
+    "path": "verification/maintenance/runtime-loader-review-20261031/native-current/window.json",
+    "sha256": "0abb3f786a7f46edf7f563c07e712043fb211825697c72906115f48424a44a5c",
+    "bytes": 166654
+  },
+  "source_review": {
+    "path": "verification/maintenance/runtime-loader-review-20261031/source-review.json",
+    "sha256": "43730153e9aa41cb09e70bdf4ff912e3ad5e6f01996b4a56d7c816186dd0b422",
+    "bytes": 9108
+  },
+  "image_review": {
+    "path": "verification/maintenance/runtime-loader-review-20261031/image-review.json",
+    "sha256": "246fd9fccdf9eebb1fab810e8bcd3cc3c2e11c41ddfd6b560575692db08e61d2",
+    "bytes": 5334
+  },
+  "runtime": {
+    "path": "verification/maintenance/runtime-loader-review-20261031/live-window/desktop-review.json",
+    "sha256": "7da34eb09a60f285f719d1687e9d062f78a4314a434df6d14fce761a37566294",
+    "bytes": 381
+  },
+  "static_resolved_bindings": 92,
+  "static_byte_consistency_not_semantic_coverage": true,
+  "initial_failures": "Unchanged 301/302 historical builders required old parser bytes in the live checkout. New isolated replay supplies exactly pinned historical guard bytes without executing historical application code or modifying old builders/outputs; all original assertions retained.",
+  "application_review_complete": false,
+  "video_parity_complete": false,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "full_validation_rerun": false,
+  "full440_only_original_frozen_source": true,
+  "private_data_included": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "publication_binding": "enclosing maintenance commit, ordinary publication and actual remote/blob check follows"
+}

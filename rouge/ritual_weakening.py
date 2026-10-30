@@ -6,10 +6,10 @@ from pathlib import Path, PurePosixPath
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = 'rouge/data/ritual-weakening.json'
-MANIFEST = 'research/p3-ritual-weakening-302/source-manifest.json'
+MANIFEST = 'research/runtime-reference-loaders-20261031/ritual/source-manifest.json'
 SELECTED_AUTHORITY = 'research/p3-ritual-weakening-302/selected-authority-records.json'
 DATA_SHA256 = '3e0533e212927bd9b50dd8f4f183ca97c5c02187f396a20718b049d7b7951138'
-MANIFEST_SHA256 = 'bb1ab31f0e41e7015d303368292d28a752f539e78f7b80be90329adb24f97182'
+MANIFEST_SHA256 = '0bfbdde98a2fae0c46e1ae9cd3957dfd73adcde7ffeb4ecc016b90c74bbd0850'
 EVENT_ID = 'community_group_032'
 CHOICE_KEYS = tuple(EVENT_ID + ':scene:' + str(s) + ':choice:' + str(c) for s in (2, 3, 4) for c in (0, 1))
 ACTUAL_FIELDS = ('actual_choice', 'actual_weakening', 'actual_attached', 'actual_inventory',

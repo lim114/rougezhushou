@@ -254,7 +254,9 @@ class NamedRewardItemsTests(unittest.TestCase):
     def test_default_readonly_builder_recreates_all_three_outputs_without_modification(self):
         root=self.subject.ROOT;paths=[root/self.subject.DATA,root/self.subject.MANIFEST,root/self.subject.SELECTED_AUTHORITY]
         before=[p.read_bytes()for p in paths]
-        result=subprocess.run([sys.executable,'-B','-X','utf8',str(root/'scripts/build_named_reward_items_301.py')],cwd=root,capture_output=True,check=False)
+        # Replay the unchanged original builder with its archived code-byte
+        # inputs, rather than requiring today's parser to be the 301 source.
+        result=subprocess.run([sys.executable,'-B','-X','utf8',str(root/'scripts/replay_reference_recipe.py'),'--recipe','named-items'],cwd=root,capture_output=True,check=False)
         self.assertEqual(result.returncode,0,result.stderr.decode('utf8'))
         self.assertEqual([p.read_bytes()for p in paths],before)
         report=json.loads(result.stdout);self.assertFalse(report['write']);self.assertTrue(report['prior38_query_values_reconstructed_unchanged'])

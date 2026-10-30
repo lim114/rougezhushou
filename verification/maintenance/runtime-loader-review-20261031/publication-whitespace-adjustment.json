@@ -1,0 +1,12 @@
+{
+  "kind": "preserve_raw_failure_evidence",
+  "failed_publication_tool_chunk": "e1048b",
+  "publisher_actual_exit": 1,
+  "underlying_git_diff_check_exit": 2,
+  "stage": "staged whitespace check; commit and push not started",
+  "raw_log": "verification/maintenance/runtime-loader-review-20261031/tests/stderr.txt",
+  "raw_log_sha256": "2f7fcb0cc2a3185412dfa788f888f9706ddf80580e156fe33048f27d77f6b30d",
+  "cause": "Windows nested subprocess traceback retained literal CR CR LF; cr-at-eol consumes only one CR.",
+  "remedy": "Exclude exactly this immutable raw stderr file from whitespace lint, retain archive SHA and final Git-blob byte check; every other staged file still checked. No log normalization, reset or force push.",
+  "resume_inventory_correction": "First resume safety assertion stopped before commit because index-only paths were absent from unstaged inventory. Include existing reviewed staged paths in the same strict allowlist and hash check; do not reset the index."
+}

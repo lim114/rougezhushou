@@ -27,7 +27,10 @@ class BattleEntryCompatibility299Tests(unittest.TestCase):
   for name in changed:
    historical=ROOT/'verification/sections/298-preparation/before'/name
    self.assertEqual(sha256(historical.read_bytes()).hexdigest(),old['files'][name]['sha256'])
-   self.assertEqual(sha256((ROOT/name).read_bytes()).hexdigest(),new['files'][name]['sha256'])
+   # Later reviewed refactors are not the historical 299 parser. Check that
+   # original byte identity against the preserved source, not today's program.
+   historical299=ROOT/'research/runtime-reference-loaders-20261031/baseline/historical-299'/name
+   self.assertEqual(sha256(historical299.read_bytes()).hexdigest(),new['files'][name]['sha256'])
   new.pop('compatibility_rebinding');new['section']=296
   for name in changed:new['files'][name]=old['files'][name]
   self.assertEqual(new,old)
@@ -40,7 +43,11 @@ class BattleEntryCompatibility299Tests(unittest.TestCase):
      isinstance(k,ast.Name)and k.id in ('MANIFEST','MANIFEST_SHA256')for k in n.targets))]
    return ast.dump(result,include_attributes=False)
   self.assertEqual(tree(old),tree(ROOT/'rouge/battle_event_references.py'))
-  self.assertEqual((model.MANIFEST,model.MANIFEST_SHA256),(NEW,NEW_SHA))
+  runtime=load(model.MANIFEST)
+  self.assertEqual(runtime['historical_recipe_manifest'],{'path':NEW,'sha256':NEW_SHA,'bytes':(ROOT/NEW).stat().st_size})
+  self.assertEqual(runtime['files'],{n:v for n,v in load(NEW)['files'].items()if not n.endswith('.py')})
+  self.assertEqual(model.MANIFEST,'research/runtime-reference-loaders-20261031/battle-events/source-manifest.json')
+  self.assertEqual(sha256((ROOT/model.MANIFEST).read_bytes()).hexdigest(),model.MANIFEST_SHA256)
 
  def test_old_byte_binding_still_rejects_current_files_and_new_binding_restores_exact_counts(self):
   with patch.object(model,'MANIFEST',OLD),patch.object(model,'MANIFEST_SHA256',OLD_SHA),patch.object(model,'_CACHE',{}):

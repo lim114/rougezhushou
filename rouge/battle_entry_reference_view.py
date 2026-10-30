@@ -52,7 +52,7 @@ def event_reference_text(packet,row):
     lines += ['', '【适用范围】','该事件资料记录的主层：'+floors+'。',
         '这些层数只属于这条事件入口，不能当作该战斗所有来源的完整层数。',
         '事件是否出现、按钮是否可选、实际进入哪个关卡版本：仍未确认。',
-        '点击下方入口只会打开助手中的事件资料，并定位到这份完整场景和选项。']
+        '点击“阅读对应事件选项”只会打开助手中的事件资料，并定位到这份完整场景和选项。']
     return '\n'.join(lines)
 
 class BattleEntryReferencePanel(QDialog):

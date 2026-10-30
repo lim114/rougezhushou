@@ -6,10 +6,10 @@ from pathlib import Path,PurePosixPath
 
 ROOT=Path(__file__).resolve().parents[1]
 DATA='rouge/data/named-reward-items.json'
-MANIFEST='research/p3-named-reward-items-301/source-manifest.json'
+MANIFEST = 'research/runtime-reference-loaders-20261031/named-items/source-manifest.json'
 SELECTED_AUTHORITY='research/p3-named-reward-items-301/selected-authority-records.json'
 DATA_SHA256='437684110f9e1190e1e7b681ef14f9d20ceb17e45e814a769244cca1a072353c'
-MANIFEST_SHA256='a7501b82da0c9e3fa75809656f371f20a43c196eeef2cd37cfd388c16f185374'
+MANIFEST_SHA256 = '4af883135686a921d18b332f174c04716e677602896415fbf7976bcceec39ec3'
 EVENT_IDS=tuple('community_group_'+n for n in('005','006','007','008','010','011','019','020','022','025'))
 CHOICE_KEYS={
  'community_group_005':tuple('community_group_005:scene:0:choice:'+str(i)for i in range(3)),
