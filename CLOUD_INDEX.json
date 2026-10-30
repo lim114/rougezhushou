@@ -1,11 +1,11 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 437,
-  "next_section": 438,
-  "current_section_label": "第437节 + 跨已记录楼层查找并定位地图节点",
-  "current_completed_change": "探索地图增加本局节点查找，可按楼层、类型、位置或直接绑定的已读名称查找，选择后切到准确楼层和节点。查找与选中结果在刷新后保留，不把未绑定的场景名称补到地图。所有结果使用本局已有地图记录，不加入示例。",
-  "batch_status": "PLAYER_SECTION437_PUBLISHED",
+  "completed_sections": 438,
+  "next_section": 439,
+  "current_section_label": "第438节 + 回到最近已读位置与地图阅读适配",
+  "current_completed_change": "地图新增回到最近已读位置入口，跨历史楼层查阅后可返回准确模板和节点；历史位置仍标为历史，不冒充当前。没有准确位置时禁用，不随意选择节点。修正跨楼层搜索框的文字对比度，并扩大地图底部标签留白。",
+  "batch_status": "PLAYER_SECTION438_PUBLICATION_PENDING",
   "next_full_validation_after": 440,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
   "latest_full_receipt": "verification/full-425/summary.json",
@@ -16,7 +16,7 @@
   "current_batch_target_section": 440,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "f354d745c4485e8e886e9c2d0f548e8b0966f5716984bede2ce2f544c9b23442",
+    "sha256": "a91ea920c0be0b9a8ede15ad3935af31176c2fd177de02b1ecbae7ba9d44e3eb",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2629,16 +2629,22 @@
       "completion_ref": "player-section-437",
       "topic": "跨已记录楼层查找并定位地图节点",
       "verification": "verification/sections/437.json"
+    },
+    {
+      "number": 438,
+      "completion_ref": "player-section-438",
+      "topic": "回到最近已读位置与地图阅读适配",
+      "verification": "verification/sections/438.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "cbb24c85e1b7c1f3b2d6235f680da0f4cb3c05b356c7e674956b0725467241f1",
+    "DEVELOPMENT_CHECKPOINT.json": "979185b5323a1f8b58fc6b2bad94e74ded7342887a789b92ca98b74004a0b276",
     "PROJECT_PROGRESS.md": "ac3b8d23bc4f7bbd12a0c9a72b4f3a45bb44789c4d0490560894a4665218b595",
-    "WORK_IN_PROGRESS.md": "a40a077990bbb441fc7e21b1caf407670098915346c014472c06927ec98fa8e2",
-    "PROJECT_COMPLETED.md": "eaa66a9d1e5b4454d885dc098467d1883186710f6beae86066276451e8e74381",
-    "AGENTS.md": "9367facc2c7ffa1d2e01b8bafcfc70291f954206bc413545b2d84ba9a85758c4",
-    "PROJECT_REQUIREMENTS.md": "f354d745c4485e8e886e9c2d0f548e8b0966f5716984bede2ce2f544c9b23442",
-    "verification/sections/437.json": "6d3195c55857a3baca30e4239198494c0b2103ad50648be4cd3cb2fdfb2fcef6"
+    "WORK_IN_PROGRESS.md": "8061cd14905866fd6b7198fc3d07188797a1f8cb49eab8426a21c32cd935708a",
+    "PROJECT_COMPLETED.md": "0e4780bba47455d0a423e321f723246a11200bc32b1e2424a130ebb6eb111af7",
+    "AGENTS.md": "1f0ba6fa3c96bee0af4b8afe721f94329dc72e75edd5e5f384528bfc127945e9",
+    "PROJECT_REQUIREMENTS.md": "a91ea920c0be0b9a8ede15ad3935af31176c2fd177de02b1ecbae7ba9d44e3eb",
+    "verification/sections/438.json": "a1405a291c7c7aa5a287ca508a619e09659c7f7700e777546831f26f9ebfca70"
   },
   "private_state_included": false
 }

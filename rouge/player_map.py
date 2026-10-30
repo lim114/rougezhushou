@@ -68,7 +68,7 @@ class PreviewMapView(MapView):
         name=f'area-{floor+1}.png'if floor and floor<6 else'area-1.png'if floor==6 else'blindness.png'
         self.background=QImage(str(ART/name));super().set_map(graph,None,historical=historical);self.set_type_filter(self.filter_kind)
     def _positions(self):
-        canvas=QRectF(self.contentsRect()).adjusted(38,36,-38,-45);points={}
+        canvas=QRectF(self.contentsRect()).adjusted(38,36,-38,-72);points={}
         if self.graph:
             rows=self.graph['grid']['rows'];cols=self.graph['grid']['cols']
             step=min(canvas.width()/max(1,cols-1),canvas.height()/max(1,rows-1),125)
@@ -142,7 +142,8 @@ class MapPanel(QWidget):
         head=QHBoxLayout();self.floors=QTabBar();self.floors.setExpanding(False);self.floors.setAccessibleName('本局已记录楼层');head.addWidget(self.floors,1)
         self.zoom=QComboBox();self.zoom.addItems(['适应窗口','放大125%','放大150%','放大200%']);head.addWidget(self.zoom)
         self.details_toggle=QPushButton('节点资料');self.details_toggle.setCheckable(True);head.addWidget(self.details_toggle);body.addLayout(head)
-        find=QHBoxLayout();self.node_query=QLineEdit();self.node_query.setMaxLength(100);self.node_query.setPlaceholderText('查找本局已记录楼层中的类型、位置或已读名称');find.addWidget(self.node_query,1);self.node_results=QComboBox();self.node_results.setMinimumWidth(200);find.addWidget(self.node_results,2);self.find_node=QPushButton('定位节点');find.addWidget(self.find_node);body.addLayout(find);self.node_query.textChanged.connect(self.update_node_finder);self.find_node.clicked.connect(self.locate_found_node)
+        self.latest_position=QPushButton('回到最近已读位置');self.latest_position.clicked.connect(self.focus_latest_position);head.addWidget(self.latest_position)
+        find=QHBoxLayout();self.node_query=QLineEdit();self.node_query.setMaxLength(100);self.node_query.setPlaceholderText('查找本局已记录楼层中的类型、位置或已读名称');self.node_query.setStyleSheet('QLineEdit{color:#28332e;background:white;border:1px solid #d2d9d5;border-radius:7px;padding:5px;}');find.addWidget(self.node_query,1);self.node_results=QComboBox();self.node_results.setMinimumWidth(200);find.addWidget(self.node_results,2);self.find_node=QPushButton('定位节点');find.addWidget(self.find_node);body.addLayout(find);self.node_query.textChanged.connect(self.update_node_finder);self.find_node.clicked.connect(self.locate_found_node)
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
         self.resources=QLabel();self.resources.setWordWrap(True);body.addWidget(self.resources)
         self.floor_resources=QLabel();self.floor_resources.setWordWrap(True);body.addWidget(self.floor_resources)
@@ -217,6 +218,7 @@ class MapPanel(QWidget):
         facts=overview_facts(self.owner.run.state);self.resources.setText('本局最近记录：　保密等级 '+facts['保密等级']+'　已确认干员 '+facts['已确认干员']+'　已读藏品 '+facts['已读收藏品']+'　零件 '+str((self.owner.run.state.get('resources',{}).get('parts_count')or{}).get('value','未读到'))+'　源石锭 '+str((self.owner.run.state.get('resources',{}).get('gold')or{}).get('value','未读到')))
         if self.owner.run.state.get('inventory_verified')is not True:self.resources.setText(self.resources.text()+'　（藏品数量待核对）')
         if original.graph and original.graph.get('template_id')==(self.graphs.get(original.graph.get('zone_id'))or{}).get('template_id'):self.graphs[original.graph['zone_id']]=deepcopy(original.graph)
+        self.latest_position.setEnabled(self.latest_position_key()is not None)
         self.update_node_finder();self.floors.blockSignals(True)
         while self.floors.count():self.floors.removeTab(0)
         for key,graph in sorted(self.graphs.items(),key=lambda pair:(zone_info(pair[1])[1]or 99,pair[0])):
@@ -239,6 +241,18 @@ class MapPanel(QWidget):
         index=next((i for i in range(self.floors.count())if self.floors.tabData(i)==zone),None)
         if index is None:return False
         self.floors.setCurrentIndex(index);self.view.select_node(node);self.select_interactive(node);return True
+    def latest_position_key(self):
+        original=self.owner.map_view;g=original.graph
+        if not g:return None
+        saved=self.graphs.get(g.get('zone_id'));node=g.get('current_node')or g.get('last_confirmed_current_node')
+        if not saved or saved.get('template_id')!=g.get('template_id')or not any(n['id']==node for n in saved.get('nodes',[])):return None
+        return (g['zone_id'],g['template_id'],node)
+    def focus_latest_position(self):
+        self.refresh();key=self.latest_position_key()
+        if not key:return False
+        index=next((i for i in range(self.floors.count())if self.floors.tabData(i)==key[0]),None)
+        if index is None:return False
+        self.floors.setCurrentIndex(index);self.view.select_node(key[2]);self.select_interactive(key[2]);return True
     def show_floor(self,*_):
         if self.view.graph:
             old=(self.view.graph.get('zone_id'),self.view.graph.get('template_id'));self.readings[old]=(self.view.selected,self.selected_reference,self.detail.verticalScrollBar().value())
