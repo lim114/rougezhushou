@@ -23,6 +23,8 @@ class ItemHoverCard(QDialog):
         self.pools=QComboBox();self.pools.currentIndexChanged.connect(self.read_pool);body.addWidget(self.pools)
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.detail.hide();self.show_conditions.toggled.connect(self.detail.setVisible);self.pools.hide()
         self.open_button=QPushButton('查看这个池的全部物品');self.open_button.clicked.connect(self.open_pool);body.addWidget(self.open_button)
+        self.map_targets=QComboBox();self.map_targets.setAccessibleName('来源明确关联的地图节点类型');body.addWidget(self.map_targets)
+        self.map_button=QPushButton('在本局地图查看这类节点');self.map_button.clicked.connect(self.open_map_source);body.addWidget(self.map_button)
     def set_pinned(self,value):self.pinned=value;self.pin.setText('取消固定'if value else'固定')
     def enterEvent(self,event):self.entered.emit();super().enterEvent(event)
     def leaveEvent(self,event):self.left.emit();super().leaveEvent(event)
@@ -47,6 +49,18 @@ class ItemHoverCard(QDialog):
         text=self.index.describe(self.version,self.identity,pool)if self.index and pool else'所选资料范围未列出此物品的所属池，不能据此认定无法获得。'if self.index else'公开资料暂不可用；旧池与统计已清除。'
         self.cards.select(pool)
         if self.detail.toPlainText()!=text:self.detail.setPlainText(text)
+        from .player_source_map import targets,companion
+        self.map_targets.clear()
+        for kind in targets(self.index,self.version,self.identity,pool):self.map_targets.addItem(kind,kind)
+        visible=self.map_targets.count()>0
+        self.map_targets.setVisible(visible);self.map_button.setVisible(visible);self.map_button.setEnabled(visible and companion(self)is not None)
+        self.map_button.setToolTip('仅标出本局记录中对应类型及候选位置；来源资料不表示当前可达、会出现此物或必掉。')
+    def open_map_source(self):
+        from .player_source_map import targets,companion
+        kind=self.map_targets.currentData();bar=companion(self)
+        if bar is None or kind not in targets(self.index,self.version,self.identity,self.pools.currentData()):return False
+        if bar.open_map()is False:return False
+        bar.map_popup.panel.set_type_filter(kind);return True
     def choose_card(self,identity):
         index=self.pools.findData(identity)
         if index>=0:self.pools.setCurrentIndex(index);self.show_conditions.setChecked(True)

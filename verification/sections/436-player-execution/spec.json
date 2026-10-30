@@ -1,0 +1,23 @@
+{
+  "title": "藏品来源到地图节点的准确定位入口",
+  "change": "藏品来源速览可将明确关联的节点类型标到本局地图，并提供可见的类型提示和一键清除。仅接受公开资料中枚举与中文名称准确对应的来源；事件名、林间空地及未核实的居民来源不擅自映射。沿用现有楼层、已读、模板与候选显示。",
+  "limits": "只定位来源类型，不表示此物品在当前节点可获得、已解锁、必掉或当前可达；资料范围仍需核验。未确定的枚举不自动补猜。",
+  "criteria": [
+    "精确来源及节点类型绑定",
+    "来源卡片直接打开地图",
+    "非快捷图标类型也有提示和清除入口",
+    "刷新保留类型，不改本局记忆"
+  ],
+  "source_files": [
+    "rouge/public_archive.py",
+    "rouge/player_source_map.py",
+    "rouge/player_map_reference.py"
+  ],
+  "test": "tests.test_player_feature_436",
+  "native": "scripts/verify_player_feature_window_436.py",
+  "next": "继续第437节至440，440到期完整验收后发布并暂停。",
+  "unit_receipt": "verification/sections/436-player-checks/process.json",
+  "native_receipt": "verification/sections/436-player-window/window.json",
+  "native_process_receipt": "verification/sections/436-player-window-process/process.json",
+  "source_receipt": "verification/sections/436-reference.json"
+}

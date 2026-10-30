@@ -145,6 +145,7 @@ class MapPanel(QWidget):
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
         self.resources=QLabel();self.resources.setWordWrap(True);body.addWidget(self.resources)
         self.floor_resources=QLabel();self.floor_resources.setWordWrap(True);body.addWidget(self.floor_resources)
+        row=QHBoxLayout();self.filter_notice=QLabel();self.filter_notice.setWordWrap(True);row.addWidget(self.filter_notice,1);self.clear_filter=QPushButton('显示所有类型');self.clear_filter.clicked.connect(lambda:self.set_type_filter(None));row.addWidget(self.clear_filter);body.addLayout(row);self.clear_filter.hide()
         self.split=QSplitter();self.scroll=QScrollArea();self.scroll.setWidgetResizable(True);self.view=PreviewMapView();self.scroll.setWidget(self.view);self.split.addWidget(self.scroll)
         self.palette=QWidget();self.palette.setObjectName('mapNodePalette');self.palette.setFixedWidth(58);self.palette.setStyleSheet('#mapNodePalette{background:#253b39;border:1px solid #82958c;border-radius:23px;} QToolButton{border:0;background:transparent;border-radius:18px;} QToolButton:checked{background:#658979;}')
         palette_layout=QVBoxLayout(self.palette);palette_layout.setContentsMargins(6,12,6,12);self.type_buttons={}
@@ -171,6 +172,8 @@ class MapPanel(QWidget):
     def set_type_filter(self,kind):
         for name,button in self.type_buttons.items():button.setChecked(name==kind)
         self.view.set_type_filter(kind)
+        self.filter_notice.setText(('正在查看：'+kind+'。实线为已读或模板，虚线为候选；不保证可达或掉落。')if kind else'')
+        self.clear_filter.setVisible(bool(kind))
         companion=getattr(self.owner,'compact_window',None)
         if companion is not None and hasattr(companion,'game_overlay'):companion.game_overlay.set_kind(kind)
     def queue_hover(self,node_id,point):
