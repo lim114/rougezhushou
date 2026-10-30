@@ -22,17 +22,29 @@ class ConversationHub extends EventEmitter{
   const s=this.states[mode],id=s.threadId;if(!id)throw Error('请先选择要发送到的会话');if(s.running||s.pending||this.operations.has(id))throw Error('该会话仍在处理或等待确认，请先刷新回复，不要重复发送。');
   this.operations.add(id);s.running=true;s.error=null;s.progress='正在检查会话';this.changed();let before;
   try{before=await this.bridge.read(id);if(!before.thread||before.thread.id!==id)throw Error('客户端返回的会话不匹配');if(mode==='chat'&&before.thread.kind!=='chatgpt')throw Error('目标不是 ChatGPT 聊天');if(active(before.thread.status))throw Error('目标会话正在运行，请等待当前回复完成')}catch(e){s.running=false;s.error=e.message;this.operations.delete(id);this.changed();throw e}
-  s.output='';s.progress='正在发送';s.baselineIds=(before.turns||[]).map(t=>t.id);s.pendingText=text;s.pending=true;this.changed();
+  s.progress='正在发送';s.baselineIds=(before.turns||[]).map(t=>t.id);s.pendingText=text;s.pending=true;this.changed();
   // Persist an unresolved receipt before sending. Restart never silently retries.
-  this.writeReceipt(mode,s);
-  let sendError=null;try{await this.bridge.send(id,text)}catch(e){sendError=e.message}
+  try{this.writeReceipt(mode,s)}catch(e){
+   s.running=false;s.pending=false;s.pendingText=null;s.baselineIds=null;
+   s.progress='未发送：本机回执无法保存';s.error=e.message;
+   this.operations.delete(id);this.changed();throw e;
+  }
+  s.output='';let sendError=null;try{await this.bridge.send(id,text)}catch(e){sendError=e.message}
   s.progress=sendError?'正在确认消息是否送达':'正在等待回复';this.changed();
   void this.observe(mode,id,text,s.baselineIds,sendError);return{accepted:true,mode,threadId:id,deliveryUncertain:!!sendError};
  }
- writeReceipt(mode,s){const records={};try{Object.assign(records,JSON.parse(fs.readFileSync(this.file+'.pending')))}catch{}if(s.pending)records[mode]={threadId:s.threadId,text:s.pendingText,baselineIds:s.baselineIds};else delete records[mode];fs.writeFileSync(this.file+'.pending',JSON.stringify(records))}
- recover(){try{const records=JSON.parse(fs.readFileSync(this.file+'.pending'));for(const [mode,r]of Object.entries(records))if(this.states[mode]?.threadId===r.threadId){Object.assign(this.states[mode],{pending:true,pendingText:r.text,baselineIds:r.baselineIds,progress:'上次发送结果尚需确认，请刷新回复'});}}catch{}}
+ readReceipts(){
+  let records;
+  try{records=JSON.parse(fs.readFileSync(this.file+'.pending'))}
+  catch(e){if(e.code==='ENOENT')return {};throw Error('本机发送回执无法读取，已阻止发送；请保留原文件并检查。')}
+  if(!records||typeof records!=='object'||Array.isArray(records))throw Error('本机发送回执格式无效，已阻止发送。');
+  for(const mode of ['chat','work']){const r=records[mode];if(r!==undefined&&(!r||typeof r!=='object'||typeof r.threadId!=='string'||!r.threadId||typeof r.text!=='string'||!Array.isArray(r.baselineIds)||r.baselineIds.some(id=>typeof id!=='string')))throw Error('本机发送回执不完整，已阻止发送。')}
+  return records;
+ }
+ writeReceipt(mode,s){const records=this.readReceipts();if(s.pending)records[mode]={threadId:s.threadId,text:s.pendingText,baselineIds:s.baselineIds};else delete records[mode];fs.writeFileSync(this.file+'.pending',JSON.stringify(records))}
+ recover(){try{const records=this.readReceipts();for(const mode of ['chat','work']){const r=records[mode];if(r&&this.states[mode].threadId===r.threadId)Object.assign(this.states[mode],{pending:true,pendingText:r.text,baselineIds:r.baselineIds,progress:'上次发送结果尚需确认，请刷新回复'});}}catch(e){this.error=e.message}}
  async observe(mode,id,text,baselineIds,sendError){const s=this.states[mode],deadline=this.clock()+10*60*1000;let matched=false;
-  while(!this.closed&&this.clock()<deadline){try{const raw=await this.bridge.read(id);if(mode==='chat')validateChat(raw,id);const turn=(raw.turns||[]).find(t=>!baselineIds.includes(t.id)&&userText(t,this.bridge.carrierThreadId)===text);if(turn){matched=true;s.output=assistantText(turn);s.progress=s.output?'正在回复':'正在思考';s.error=null;if(['completed','failed','interrupted'].includes(turn.status)){s.running=false;s.pending=false;s.pendingText=null;s.baselineIds=null;s.progress=turn.status==='completed'?'回复完成':turn.status==='interrupted'?'已停止':'任务失败';s.error=turn.error?.message||null;this.writeReceipt(mode,s);this.operations.delete(id);this.changed();return}}else s.progress=sendError?'尚未确认送达，正在读取会话':'正在等待客户端开始回复';this.changed()}catch(e){s.error=e.message;s.progress='连接暂时中断，正在恢复读取';this.changed()}
+  while(!this.closed&&this.clock()<deadline){try{const raw=await this.bridge.read(id);if(mode==='chat')validateChat(raw,id);const turn=(raw.turns||[]).find(t=>!baselineIds.includes(t.id)&&userText(t,this.bridge.carrierThreadId)===text);if(turn){matched=true;s.output=assistantText(turn);s.progress=s.output?'正在回复':'正在思考';s.error=null;if(['completed','failed','interrupted'].includes(turn.status)){s.running=false;s.pending=false;s.pendingText=null;s.baselineIds=null;s.progress=turn.status==='completed'?'回复完成':turn.status==='interrupted'?'已停止':'任务失败';s.error=turn.error?.message||null;try{this.writeReceipt(mode,s)}catch(e){s.error='回复状态已确认，但本机回执保存失败；重启后需重新核对。';s.progress+='（回执未保存）'}this.operations.delete(id);this.changed();return}}else s.progress=sendError?'尚未确认送达，正在读取会话':'正在等待客户端开始回复';this.changed()}catch(e){s.error=e.message;s.progress='连接暂时中断，正在恢复读取';this.changed()}
    await this.sleep(3500);
   }
   s.running=false;s.progress=matched?'回复尚未结束，请稍后刷新':'尚未确认送达，请刷新会话后检查';s.error='不会自动重发此消息。';this.operations.delete(id);this.changed();

@@ -535,6 +535,7 @@ ADDITIONAL_MODULES += ('tests.test_player_feature_433',)
 ADDITIONAL_MODULES += ('tests.test_player_feature_434',)
 ADDITIONAL_MODULES += ('tests.test_player_feature_435', 'tests.test_player_feature_436', 'tests.test_player_feature_437', 'tests.test_player_feature_438', 'tests.test_player_feature_439', 'tests.test_player_feature_440',)
 ADDITIONAL_MODULES += ('tests.test_player_popover_refresh',)
+ADDITIONAL_MODULES += ('tests.test_desktop_receipts',)
 
 if __name__ == '__main__':
     sys.exit(main())

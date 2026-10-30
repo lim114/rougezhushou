@@ -1,0 +1,91 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "全程序审查范围清单与聊天回执修复（整体验证未完成）",
+  "baseline_commit": "83dea9a9e894e6eb1f1aa1bcd0122d554d4c4b07",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "next_functional_section_started": false,
+  "implemented_fixes_passed": true,
+  "application_review_complete": false,
+  "source_inventory_file_count": 525,
+  "source_inventory_role_counts_are_filename_classification": true,
+  "source_inventory": {
+    "path": "research/rea-overall-review-20261031/source-inventory.json",
+    "sha256": "f1d4bf6708877afa3b135edf2a260e958fffef5c45caa91dde1b71712308eb9d",
+    "bytes": 377685
+  },
+  "review_checklist": {
+    "path": "PROGRAM_REVIEW.md",
+    "sha256": "da9e7ce61cedfc4a15d67bce1cf34726af865ee2f4270d595059b56ddcc33d62",
+    "bytes": 5139
+  },
+  "rea_static_scope": "Three bridge sources and previous toolbar pyc only; not the entire Python program. Static relationship unknowns are not confirmed defects.",
+  "final_bridge_sources": {
+    "rouge/bridge/conversation-hub.cjs": {
+      "sha256": "731218afc947dd2cc998c57c8b6bbfe4b256dcca5d4fc2f9745fe0ebf768ba90",
+      "bytes": 9712
+    },
+    "rouge/bridge/desktop-chat.cjs": {
+      "sha256": "750879cd05b069899166e40d1e5894ea5e4e90003e7bf521281d05f2b7068095",
+      "bytes": 3397
+    },
+    "rouge/bridge/worker.cjs": {
+      "sha256": "f398a4d857d04d38e3ce917da3be79350097faa12c00c04abf280d249cda1013",
+      "bytes": 1465
+    }
+  },
+  "fixed": [
+    "pre_send_receipt_failure_unlocks_definitely_unsent_operation_and_preserves_previous_answer",
+    "corrupt_or_unreadable_existing_receipt_is_not_overwritten_and_prevents_delivery",
+    "confirmed_reply_cleanup_failure_reports_local_problem_and_releases_operation_without_resend"
+  ],
+  "controlled_before_after": {
+    "path": "verification/maintenance/overall-review-20261031/send-receipt-before-after.json",
+    "sha256": "6374d8ed2f7391495a88a132b0b6949c35ab4c30939a092b9da623d74511f74a",
+    "bytes": 691
+  },
+  "controlled_final_probe": {
+    "path": "verification/maintenance/overall-review-20261031/send-receipt-final.json",
+    "sha256": "36faa542456e4a916f07e2072f85162a092374691d051cafffa79998c23eb3dd",
+    "bytes": 341
+  },
+  "node_fixture_tests": {
+    "count": 7,
+    "path": "verification/maintenance/overall-review-20261031/tests/node.json",
+    "sha256": "8e1ec49ae6e36d6f73aab7fa9a8d902a96f1cdcfded05b49d887fbad6f053e00",
+    "bytes": 178
+  },
+  "python_integration_and_index_tests": {
+    "count": 30,
+    "contains_Node_fixture_wrapper_and_local_HTTP_services": true,
+    "path": "verification/maintenance/overall-review-20261031/tests/python.json",
+    "sha256": "2c5a45fb8366bd0381d72b1bab0d7e92f340d29a86dc002db34756895ca58ff7",
+    "bytes": 356
+  },
+  "runtime": {
+    "path": "verification/maintenance/overall-review-20261031/live-window/desktop-review.json",
+    "sha256": "3b801cfb6b14b1b972b235e02ce7b6482c42fe2eceeaa26b8252f70db61fc1d6",
+    "bytes": 610
+  },
+  "maintained_selectors_count": 689,
+  "original_selector_order_preserved": true,
+  "full_validation_rerun": false,
+  "prior_full_only_original_frozen_source": true,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "video_parity_complete": false,
+  "real_chat_sent": false,
+  "live_game_operated": false,
+  "external_provider_called": false,
+  "private_data_included": false,
+  "remaining_review": {
+    "startup_and_all_readers": "partial",
+    "capture_and_recognition": "partial; no new game acquisition",
+    "run_and_account_merge_restore": "partial",
+    "operator_and_relic_mechanics": "not fully rechecked",
+    "events_drop_and_map_conditions": "partial",
+    "live_desktop_chat_compatibility": "not tested"
+  },
+  "publication_binding": "enclosing maintenance commit; actual remote checked after ordinary push"
+}
