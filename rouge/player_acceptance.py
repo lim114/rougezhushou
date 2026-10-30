@@ -1,5 +1,8 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==440:
+        from .player_feature_440_acceptance import check as check_feature
+        return check_feature(window,gui,require)
     if section==439:
         from .player_feature_439_acceptance import check as check_feature
         return check_feature(window,gui,require)
@@ -203,7 +206,9 @@ def check(section,window,gui,require):
         require(mp.drawer.isVisible(),'actual_node_click_expands_dossier')
         battle=next((mp.entries.topLevelItem(i).child(j)for i in range(mp.entries.topLevelItemCount())for j in range(mp.entries.topLevelItem(i).childCount())if mp.entries.topLevelItem(i).child(j).data(0,Qt.ItemDataRole.UserRole)[1]=='battle'),None)
         require(battle is not None,'fixed_battle_node_has_stage_previews');mp.entries.setCurrentItem(battle);stage=mp.rows[mp.selected_reference]['id'];mp.open_button.click();gui.processEvents()
-        require(window.battle_preview.current_stage==stage,'map_battle_link_opens_exact_stage')
+        preview=mp.reference_popup
+        require(preview is not None and preview.isVisible()and preview.panel.stage_id==stage,'map_battle_link_opens_exact_stage')
+        require(not window.isVisible(),'map_battle_preview_keeps_large_window_hidden')
         window.show_compact();mp.details_toggle.setChecked(False)
         mp.status.setText('隔离验收示例：公开模板；不是本局游戏读取。点击节点展开事件、奖励与作战资料。')
 

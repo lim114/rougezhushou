@@ -145,6 +145,9 @@ class MapPanel(QWidget):
         self.latest_position=QPushButton('回到最近已读位置');self.latest_position.clicked.connect(self.focus_latest_position);head.addWidget(self.latest_position)
         find=QHBoxLayout();self.node_query=QLineEdit();self.node_query.setMaxLength(100);self.node_query.setPlaceholderText('查找本局已记录楼层中的类型、位置或已读名称');self.node_query.setStyleSheet('QLineEdit{color:#28332e;background:white;border:1px solid #d2d9d5;border-radius:7px;padding:5px;}');find.addWidget(self.node_query,1);self.node_results=QComboBox();self.node_results.setMinimumWidth(200);find.addWidget(self.node_results,2);self.find_node=QPushButton('定位节点');find.addWidget(self.find_node);body.addLayout(find);self.node_query.textChanged.connect(self.update_node_finder);self.find_node.clicked.connect(self.locate_found_node)
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
+        read_row=QHBoxLayout();self.read_scope=QComboBox()
+        for label,key in(('查找全部记录',None),('只查已读或历史类型','read'),('只查模板固定类型','fixed'),('只查尚待确认类型','unknown')):self.read_scope.addItem(label,key)
+        read_row.addWidget(self.read_scope);self.coverage_notice=QLabel();self.coverage_notice.setWordWrap(True);read_row.addWidget(self.coverage_notice,1);body.addLayout(read_row);self.read_scope.currentIndexChanged.connect(self.update_node_finder)
         self.resources=QLabel();self.resources.setWordWrap(True);body.addWidget(self.resources)
         self.floor_resources=QLabel();self.floor_resources.setWordWrap(True);body.addWidget(self.floor_resources)
         row=QHBoxLayout();self.filter_notice=QLabel();self.filter_notice.setWordWrap(True);row.addWidget(self.filter_notice,1);self.clear_filter=QPushButton('显示所有类型');self.clear_filter.clicked.connect(lambda:self.set_type_filter(None));row.addWidget(self.clear_filter);body.addLayout(row);self.clear_filter.hide()
@@ -228,7 +231,9 @@ class MapPanel(QWidget):
     def update_node_finder(self,*_):
         from .player_map_find import rows
         previous=self.node_results.currentData();self.node_results.blockSignals(True);self.node_results.clear()
-        for row in rows(self.graphs,self.node_query.text()):self.node_results.addItem(row['label'],row['key'])
+        from .player_map_find import coverage
+        c=coverage(self.graphs);self.coverage_notice.setText(f"本局已保存{len(self.graphs)}个区域：已读或历史类型{c['read']}处，模板固定{c['fixed']}处，尚待确认{c['unknown']}处。只筛查找列表，不改变地图候选。")
+        for row in rows(self.graphs,self.node_query.text(),self.read_scope.currentData()):self.node_results.addItem(row['label'],row['key'])
         i=self.node_results.findData(previous)
         if i>=0:self.node_results.setCurrentIndex(i)
         self.node_results.blockSignals(False);self.find_node.setEnabled(self.node_results.count()>0)
