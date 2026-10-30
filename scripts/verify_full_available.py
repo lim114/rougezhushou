@@ -543,7 +543,8 @@ ADDITIONAL_MODULES += ('tests.test_battle_reader_review',)
 ADDITIONAL_MODULES += ('tests.test_node_card_source_review',)
 ADDITIONAL_MODULES += ('tests.test_node_card_visual_review',)
 ADDITIONAL_MODULES += ('tests.test_history_reader_review',)
-ADDITIONAL_MODULES += ('tests.test_notes_reader_review',)
+ADDITIONAL_MODULES += ('tests.test_notes_reader_review',
+        'tests.test_inline_notebook_review',)
 
 if __name__ == '__main__':
     sys.exit(main())

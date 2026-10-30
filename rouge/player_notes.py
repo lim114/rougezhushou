@@ -100,7 +100,8 @@ class NotesDialog(QDialog):
         self.key=key;self.digest=digest;self.content=deepcopy({field:content[field]for field in('kind','title','variant_id','event_id')if field in content})
         with QSignalBlocker(self.editor):replace_text(self.editor,text,preserve=same)
         self.dirty=False
-        self.context.setText('笔记对应：'+content['title']+('\n手动选择的固定资料笔记，按准确条目和资料基准分别保存；不表示当前关卡。'if content.get('kind')in('reference-stage','reference-scene')else'\n同名且未确认变体时共用笔记；这不是当前位置声明。'))
+        scope='\n手选范围的通用笔记；不会自动套用为某个具体场景。'if content.get('kind')=='note-scope'else'\n手动选择的固定资料笔记，按准确条目和资料基准分别保存；不表示当前关卡。'if content.get('kind')in('reference-stage','reference-scene')else'\n同名且未确认变体时共用笔记；这不是当前位置声明。'
+        self.context.setText('笔记对应：'+content['title']+scope)
         from .player_reference_notes import sync_note_source
         sync_note_source(self)
         self.status.setText('本地笔记已读取；新笔记尚未保存。'if not text else'本地已保存；不会上传。');self.refresh_preview();return True
@@ -129,3 +130,6 @@ class NotesDialog(QDialog):
         if self.dirty and self.autosave.isChecked():self.save_pending()
         if self.dirty:self.status.setText('修改尚未保存，请保存或放弃后关闭。');event.ignore()
         else:self.autosave_timer.stop();event.accept()
+    def reject(self):
+        # Escape follows the same draft/conflict rule as the close button.
+        self.close()

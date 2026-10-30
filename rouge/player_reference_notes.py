@@ -30,9 +30,7 @@ def request_note_source(dialog):
 def open_note(window,content):
     if reference_target(content)is None:
         window.player_notes.status.setText('所选固定资料暂时无法核对，未切换已有笔记。');return False
-    notes=window.player_notes
-    if not notes.set_context(content):notes.show();notes.raise_();return False
-    window.show_compact();return window.compact_window.present(notes)
+    window.show_compact();return window.compact_window.open_saved_note(content)
 
 def open_reference(window,content):
     target=reference_target(content)

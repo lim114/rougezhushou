@@ -39,11 +39,13 @@ class SceneNoteSelector(QWidget):
         self.floor=QComboBox();self.node=QComboBox();self.scene=QComboBox()
         self.floor.setAccessibleName('笔记层数');self.node.setAccessibleName('笔记节点类别');self.scene.setAccessibleName('笔记准确场景')
         for value,label in stages.FLOORS:self.floor.addItem(label,value)
-        for col,(label,widget)in enumerate(zip(('主题','层数','节点','详情'),(QLabel('黑流树海'),self.floor,self.node,self.scene))):
+        self.theme=QComboBox();self.theme.addItem('黑流树海');self.theme.setAccessibleName('笔记主题')
+        for col,(label,widget)in enumerate(zip(('主题','层数','节点','详情'),(self.theme,self.floor,self.node,self.scene))):
             bar.addWidget(QLabel(label),0,col);bar.addWidget(widget,1,col);bar.setColumnStretch(col,2 if col==3 else 1)
         for combo in(self.floor,self.node,self.scene):combo.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon);combo.setMinimumContentsLength(6)
         self.notice=QLabel();self.notice.setWordWrap(True);bar.addWidget(self.notice,2,0,1,4)
         self.floor.currentIndexChanged.connect(self.filter);self.node.currentIndexChanged.connect(self.filter);self.scene.activated.connect(self.select)
+        for combo in(self.theme,self.floor,self.node):combo.activated.connect(self.select_scope)
         self.reload()
     def reload(self):
         snapshot=catalogue_snapshot();self.rows=snapshot['rows'];missing=snapshot['unavailable'];self.notice.setText('暂不可核对：'+'、'.join(missing)+'；只列仍可核对的资料，不借用其它分类。'if missing else'');self.notice.setVisible(bool(missing))
@@ -52,8 +54,15 @@ class SceneNoteSelector(QWidget):
         index=self.node.findData(old);self.node.setCurrentIndex(max(0,index));self.node.blockSignals(False);self.filter()
     def filter(self,*_):
         old=self.scene.currentData();self.scene.blockSignals(True);self.scene.clear()
+        from .player_note_scopes import scope
+        context=scope(self.rows,self.floor.currentData(),self.node.currentData())
+        if context is not None:self.scene.addItem('通用笔记（当前范围）',context)
         for row in matching(self.rows,self.floor.currentData(),self.node.currentData()):self.scene.addItem(row['label'],row['context'])
         self.scene.setCurrentIndex(self.scene.findData(old)if old is not None else-1);self.scene.setPlaceholderText('选择具体场景');self.scene.blockSignals(False)
     def select(self,*_):
         value=self.scene.currentData()
         if value is not None:self.chosen.emit(dict(value))
+    def select_scope(self,*_):
+        from .player_note_scopes import scope
+        value=scope(self.rows,self.floor.currentData(),self.node.currentData())
+        if value is not None:self.scene.setCurrentIndex(0);self.chosen.emit(value)

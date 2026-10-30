@@ -22,6 +22,11 @@ class ToolPopover(QDialog):
         if self.drag_origin is not None and event.buttons()&Qt.MouseButton.LeftButton:self.move(event.globalPosition().toPoint()-self.drag_origin);event.accept()
     def mouseReleaseEvent(self,event):self.drag_origin=None;super().mouseReleaseEvent(event)
 
+class NotesPopover(ToolPopover):
+    def closeEvent(self,event):
+        if not self.panel.finish_edit():event.ignore();return
+        super().closeEvent(event)
+
 from .player_map import MapPanel
 
 class CompactAssistant(QDialog):
@@ -186,22 +191,25 @@ class CompactAssistant(QDialog):
         if self.note_library is None:
             from .player_note_library import NoteLibraryDialog
             self.note_library=NoteLibraryDialog(self.owner.player_notes.store.folder,self)
-            self.note_library.openContext.connect(self.open_saved_note)
+            self.note_library.openContext.connect(lambda content:self.open_saved_note(content,allow_archived=True))
             from .player_reference_notes import open_reference
             self.note_library.openReference.connect(lambda content:open_reference(self.owner,content))
         self.note_library.refresh();return self.present(self.note_library)
-    def open_saved_note(self,content):
-        notes=self.owner.player_notes
-        if not notes.set_context(content):notes.show();notes.raise_();return False
-        return self.present(notes)
-    def open_recent_notes(self):
+    def open_saved_note(self,content,*,allow_archived=False):
+        popup=self.notes_popup();ready=popup.panel.open_for_context(content,allow_archived=allow_archived)
+        shown=self.present(popup)
+        return ready and shown
+    def notes_popup(self):
         if self.recent_notes_popup is None:
-            from .player_recent_notes import RecentNotesPanel,NOTE_STYLE
-            panel=RecentNotesPanel(self.owner.run,self.owner.player_notes.store)
-            panel.editRequested.connect(self.open_saved_note)
-            self.recent_notes_popup=ToolPopover('备忘录',panel,self,on_show=self.refresh);self.recent_notes_popup.panel=panel
+            from .player_inline_notes import InlineNotesPanel
+            from .player_note_style import NOTE_STYLE
+            panel=InlineNotesPanel(self.owner.run,self.owner.player_notes)
+            self.recent_notes_popup=NotesPopover('备忘录',panel,self,on_show=self.refresh);self.recent_notes_popup.panel=panel
             self.recent_notes_popup.setObjectName('sceneNotesWindow');self.recent_notes_popup.setStyleSheet(NOTE_STYLE)
             self.recent_notes_popup.resize(900,480)
+        return self.recent_notes_popup
+    def open_recent_notes(self):
+        self.notes_popup()
         self.recent_notes_popup.panel.refresh(force=True);return self.present(self.recent_notes_popup)
     def open_scene_battle(self):
         if self.scene_popup is None:

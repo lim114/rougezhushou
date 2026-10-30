@@ -335,6 +335,8 @@ class MainWindow(QMainWindow):
         content=self.run.state.get('last_node_content')
         if not content:
             self.context_bar.label.setText('尚未读取具名节点或关卡，暂不能绑定场景笔记。');return False
+        if not self.diagnostic_layout:
+            self.show_compact();return self.compact_window.open_saved_note(content)
         ready=self.player_notes.set_context(content)
         self.player_notes.show();return ready
 
@@ -2442,7 +2444,9 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         if hasattr(self,'player_notes')and self.player_notes.dirty and self.player_notes.autosave.isChecked():self.player_notes.save_pending()
         if hasattr(self,'player_notes')and self.player_notes.dirty:
-            self.player_notes.show();self.player_notes.status.setText('笔记尚未保存，请保存或放弃后退出助手。');event.ignore();return
+            if self.diagnostic_layout:self.player_notes.show()
+            else:self.show_compact();self.compact_window.open_saved_note(self.player_notes.content)
+            self.player_notes.status.setText('笔记尚未保存，请保存或放弃后退出助手。');event.ignore();return
         if hasattr(self,'player_notes'):self.player_notes.close()
         if getattr(self,'public_statistics',None)is not None:self.public_statistics.close()
         if getattr(self,'public_archive',None)is not None:self.public_archive.close()
