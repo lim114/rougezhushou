@@ -35,6 +35,7 @@ class PopoverRefreshTests(unittest.TestCase):
         self.owner.closing = True
         self.owner.open_scene_notes = lambda: None
         self.owner.open_public_statistics = lambda: None
+        self.owner.node_statistics_source = lambda: None
         self.bar = CompactAssistant(self.owner)
         self.addCleanup(self.owner.deleteLater)
         self.addCleanup(self.bar.close)

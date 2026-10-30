@@ -397,6 +397,30 @@ def _content_identity_status(content,pass_through=False):
             sid=content.get('variant_id')
             unique=bool(isinstance(sid,str) and catalog()['stages'].get(sid,{}).get('name')==title)
     return {'observed_title':title,'status':status,'unique_identity_confirmed':unique}
+def _history_read_rows(node):
+    readings=[('remembered_content',node.get('remembered_content')),
+              *((f'content_history:{i}',c)for i,c in enumerate(node.get('content_history')or[]))]
+    if node.get('observed_type')in('林间空地','曲折密道')and node.get('content'):
+        readings.append(('content_on_passed_node',node['content']))
+    events={};battles={};stages=None
+    for field,content in readings:
+        for reference in _content_event_rows(content):
+            row=events.setdefault(reference['id'],{**reference,'historical_read_reference':True,'reading_sources':[]})
+            row['reading_sources'].append(field)
+        if not content or content.get('kind')!='battle' or not isinstance(content.get('title'),str):continue
+        if stages is None:stages=battle_candidates(context='all')['rows']
+        for stage in stages:
+            if stage['title']!=content['title'] or(content.get('variant_id')and content['variant_id']!=stage['id']):continue
+            row=battles.setdefault(stage['id'],{**stage,'historical_read_reference':True,'reading_sources':[],
+                'observed_variant_reference':bool(content.get('variant_id')),'floor_filter_applied':False})
+            row['reading_sources'].append(field)
+    return {'history_observed_event_rows':list(events.values()),'history_observed_battle_rows':list(battles.values())}
+
+def node_history(graph,node_id):
+    nodes=_graph_nodes(graph);_text(node_id,'节点引用');matches=[n for n in nodes if n['id']==node_id]
+    if len(matches)!=1:raise ValueError('节点引用必须在当前地图唯一。')
+    return _history_read_rows(matches[0])
+
 def node_dossier(graph,node_id,floor=None,special_region=False,difficulty=None):
     nodes=_graph_nodes(graph);_text(node_id,'节点引用');_floor(floor,special_region);_difficulty(difficulty)
     matches=[n for n in nodes if n['id']==node_id]
@@ -413,24 +437,7 @@ def node_dossier(graph,node_id,floor=None,special_region=False,difficulty=None):
     past={e['id']:e for e in events['history_candidates']}
     for e in history_refs:past[e['id']]=e
     identity=_content_identity_status(current,node.get('observed_type') in ('林间空地','曲折密道'))
-    history_read={}
-    readings=[('remembered_content',history),
-              *((f'content_history:{i}',c) for i,c in enumerate(node.get('content_history') or []))]
-    if pass_through and current:readings.append(('content_on_passed_node',current))
-    for field,content in readings:
-        for reference in _content_event_rows(content):
-            row=history_read.setdefault(reference['id'],{**reference,
-                'historical_read_reference':True,'reading_sources':[]})
-            row['reading_sources'].append(field)
-    history_battles={};stage_directory=battle_candidates(context='all')['rows']
-    for field,content in readings:
-        if not content or content.get('kind')!='battle' or not isinstance(content.get('title'),str):continue
-        for stage in stage_directory:
-            if stage['title']!=content['title'] or (content.get('variant_id') and content['variant_id']!=stage['id']):continue
-            row=history_battles.setdefault(stage['id'],{**stage,'historical_read_reference':True,
-                'reading_sources':[],'observed_variant_reference':bool(content.get('variant_id')),
-                'floor_filter_applied':False})
-            row['reading_sources'].append(field)
+    history_rows=_history_read_rows(node)
     history_functions=[];previous_type=node.get('remembered_type')
     if previous_type and previous_type!=node.get('observed_type'):
         history_functions=[{**f,'historical_read_reference':True,'reading_sources':['remembered_type']}
@@ -452,8 +459,7 @@ def node_dossier(graph,node_id,floor=None,special_region=False,difficulty=None):
         revealed_content=deepcopy(current or history),current_content=current,history_content=history,
         content_history=deepcopy(node.get('content_history') or []),
         observed_event_rows=observed_refs,history_event_rows=history_refs,
-        history_observed_event_rows=list(history_read.values()),
-        history_observed_battle_rows=list(history_battles.values()),
+        **history_rows,
         history_observed_function_rows=history_functions,
         observed_title=identity['observed_title'],content_identity_status=identity['status'],
         type_candidates=types,actual_content_identity_confirmed=identity['unique_identity_confirmed'],

@@ -49,7 +49,7 @@ def art_manifest():return json.loads((ART/'sources.json').read_text('utf8'))
 class PreviewMapView(MapView):
     nodeHovered=Signal(str,QPoint)
     def __init__(self):
-        super().__init__();self.atlas=QImage(str(ART/'nodes.png'));self.background=QImage();self.icons={};self.filter_kind=None;self.overlay={};self.hover_id=None;self.setMinimumSize(480,300)
+        super().__init__();self.atlas=QImage(str(ART/'nodes.png'));self.background=QImage();self.icons={};self.filter_kind=None;self.overlay={};self.hover_id=None;self.frequencies=None;self.setMinimumSize(480,300)
     def sprite_for(self,kind):
         key=ICONS.get(kind);sprite=art_manifest()['sprites'].get(key)
         if not sprite:return QImage()
@@ -61,7 +61,7 @@ class PreviewMapView(MapView):
         return self.icons[key]
     def set_type_filter(self,kind):
         from .player_map_reference import overlay_rows
-        self.filter_kind=kind;self.overlay=overlay_rows(self.graph,kind)if kind else{};self.update()
+        self.filter_kind=kind;self.overlay=overlay_rows(self.graph,kind,self.frequencies)if kind else{};self.update()
     def set_map(self,graph,image=None,*,historical=False):
         _,floor=zone_info(graph)
         # Decoration only. Exact zone/topology remains in the graph, not inferred from artwork.
@@ -136,8 +136,8 @@ class PreviewMapView(MapView):
         self.hover_id=None;self.nodeHovered.emit('',QPoint());super().leaveEvent(event)
 
 class MapPanel(QWidget):
-    def __init__(self,owner):
-        super().__init__();self.owner=owner;self.epoch=None;self.graphs={};self.readings={};self.entry_readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None;self.reference_popup=None;self.reference_binding=None
+    def __init__(self,owner,*,statistics_source=None):
+        super().__init__();self.owner=owner;self.statistics_source=statistics_source;self.epoch=None;self.graphs={};self.readings={};self.entry_readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None;self.reference_popup=None;self.reference_binding=None
         body=QVBoxLayout(self);body.setContentsMargins(5,0,5,5)
         head=QHBoxLayout();self.floors=QTabBar();self.floors.setExpanding(False);self.floors.setAccessibleName('本局已记录楼层');head.addWidget(self.floors,1)
         self.zoom=QComboBox();self.zoom.addItems(['适应窗口','放大125%','放大150%','放大200%']);head.addWidget(self.zoom)
@@ -177,6 +177,9 @@ class MapPanel(QWidget):
         self.hover_timer=QTimer(self);self.hover_timer.setSingleShot(True);self.hover_timer.setInterval(180);self.hover_timer.timeout.connect(self.show_hover)
         self.leave_timer=QTimer(self);self.leave_timer.setSingleShot(True);self.leave_timer.setInterval(220);self.leave_timer.timeout.connect(self.leave_hover)
         self.view.nodeHovered.connect(self.queue_hover);self.hover_card.entered.connect(self.leave_timer.stop);self.hover_card.left.connect(self.leave_timer.start)
+        if self.statistics_source is not None:self.statistics_source.changed.connect(self.refresh_statistics)
+    def refresh_statistics(self):
+        if self.isVisible():self.refresh()
     def set_type_filter(self,kind):
         for name,button in self.type_buttons.items():button.setChecked(name==kind)
         self.view.set_type_filter(kind)
@@ -216,6 +219,7 @@ class MapPanel(QWidget):
         super().hideEvent(event)
     def refresh(self):
         epoch=self.owner.run.state['id'];old_key=self.selected_zone
+        if self.statistics_source is not None:self.view.frequencies=self.statistics_source.index
         if epoch!=self.epoch:
             self.close_reference()
             self.readings.clear();self.entry_readings.clear();self.reading_key=None;blocked=self.entry_search.blockSignals(True);self.entry_search.clear();self.entry_search.blockSignals(blocked);old_key=None;self.epoch=epoch;self.selected_zone=None;self.view.set_map(None)
@@ -298,8 +302,7 @@ class MapPanel(QWidget):
         self.selected(node_id)
         if node_id:self.details_toggle.setChecked(True)
     def selected(self,node_id):
-        from . import node_catalog as model
-        from .node_catalog_view import map_conditions
+        from . import player_map_reference as model
         from .map_reporting import format_node,location
         self.remember_entry_reading();graph=self.view.graph
         if self.reference_popup is not None and self.reference_binding[:4]!=(self.epoch,(graph or{}).get('zone_id'),(graph or{}).get('template_id'),node_id):self.close_reference()
@@ -311,12 +314,13 @@ class MapPanel(QWidget):
         self.entry_count.setText('所选节点的资料尚未读取；未用全目录填充。')
         if not graph or not node_id:
             self.title.setText('请选择地图节点');self.detail.setPlainText('点击图标查看事件、奖励与作战；可切换已记录楼层。');self.entries.blockSignals(False);return
-        node=next(n for n in graph['nodes']if n['id']==node_id);self.title.setText(location(node,graph['grid']['rows'])+' · '+(node_style(node)[0]or'类型未确认'))
-        if node_style(node)[0]is None and not(node.get('prediction')or{}).get('candidates'):
-            self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical)+'\n\n类型尚未确认，暂不把全目录当作本节点候选。');self.entries.blockSignals(False);return
-        try:dossier=model.node_dossier(dossier_graph(graph),node_id,**map_conditions(graph,self.owner.run.state.get('config',{})))
+        node=next(n for n in graph['nodes']if n['id']==node_id);kind,note,basis=node_style(node)
+        self.title.setText(location(node,graph['grid']['rows'])+' · '+(kind or'类型未确认')+(' · '+note if basis=='history'else''))
+        try:dossier=model.node_dossier(graph,node_id,self.owner.run.state.get('config',{}))
         except(ValueError,KeyError,TypeError)as error:
             self.detail.setPlainText('节点资料尚不能读取：'+str(error));self.entries.blockSignals(False);return
+        if dossier is None:
+            self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical)+'\n\n类型尚未确认，暂不把全目录当作本节点候选。');self.entries.blockSignals(False);return
         groups=[('事件候选','event',dossier['rows']),('作战预览','battle',dossier['battle_rows']),('功能说明','function',dossier['function_rows']),('已读历史事件','event',dossier['history_observed_event_rows']),('已读历史作战','battle',dossier['history_observed_battle_rows']),('已列条件排除的事件（不是候选）','event',dossier.get('excluded_event_candidates',[]))]
         chosen=None
         total=sum(len(rows)for _,_,rows in groups);shown=0

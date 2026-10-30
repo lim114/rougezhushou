@@ -3,6 +3,7 @@ from pathlib import Path
 from datetime import datetime,timezone
 from hashlib import sha256
 import json,re,urllib.request
+from copy import deepcopy
 SITE='https://www.lubiao.wiki'
 PAGE=SITE+'/tools/blackstream-route'
 LABELS={'combat':'作战','emergency-combat':'紧急作战','danger-enemy':'险路恶敌','rogue-trader':'诡意行商','secret-trader':'秘境行商','encounter':'不期而遇','wish':'得偿所愿','settlement':'“居民”据点','forest-clearing':'林间空地','empty':'林间空地','start':'起点','end':'险路尽头','safe-house':'安全的角落','recruit':'应急助力','duel':'狭路相逢','safe-corner':'安全的角落','gain-loss':'失与得','first-step':'先行一步','narrow-meet':'狭路相逢','emergency-aid':'应急助力','fate-choice':'命运所指','danger-end':'险路尽头','danger-path':'险路小径','overlook':'羽瞰点','winding-path':'曲折密道','wrong-turn':'误入奇境','resident-mark':'居民标记'}
@@ -49,9 +50,9 @@ def parse_counts(script,source_url):
     validate(result);return result
 
 def validate(data):
-    if data.get('schema')!='rouge-public-node-frequency-v1':raise ValueError('不支持的统计文件。')
+    if not isinstance(data,dict)or data.get('schema')!='rouge-public-node-frequency-v1':raise ValueError('不支持的统计文件。')
     meta=data['metadata'];counts=data['counts']
-    if meta.get('sourceSchemaVersion')!='merged-node-distance@1' or not isinstance(meta.get('updatedAt'),str):raise ValueError('统计口径未确认。')
+    if not isinstance(meta,dict)or meta.get('sourceSchemaVersion')!='merged-node-distance@1' or not isinstance(meta.get('updatedAt'),str):raise ValueError('统计口径未确认。')
     datetime.fromisoformat(meta['updatedAt'].replace('Z','+00:00'))
     if not isinstance(counts,dict)or not 1<=len(counts)<=80:raise ValueError('统计类别数量异常。')
     for name,floors in counts.items():
@@ -81,11 +82,33 @@ def fetch():
 
 def load(path=DEFAULT):return validate(json.loads(Path(path).read_text('utf8')))
 
-def frequency_rows(data,floor,distance):
-    validate(data)
+def _selection(floor,distance):
     if floor not in ('0','1','2','3','4','remembrance')or type(distance)is not int or not 0<=distance<=100:raise ValueError('请选择资料覆盖的楼层和距入口步数。')
-    values=[(name,buckets.get(floor,{}).get(str(distance),0))for name,buckets in data['counts'].items()]
+
+def _frequency_rows(values):
     total=sum(n for _,n in values)
     if not total:return []
     # Denominator is all observed node types at this floor/distance, not maps or all distances.
     return [{'type':key,'name':LABELS.get(key,key),'count':n,'total':total,'frequency':n/total}for key,n in values if n>0]
+
+def frequency_rows(data,floor,distance):
+    validate(data);_selection(floor,distance)
+    return _frequency_rows([(name,buckets.get(floor,{}).get(str(distance),0))for name,buckets in data['counts'].items()])
+
+class FrequencyIndex:
+    """Project one accepted public dataset once; readers cannot mutate its rows."""
+    def __init__(self,data=None):
+        self.metadata=None;self.identity=None;self._rows={}
+        if data is None:return
+        validate(data);self.metadata=deepcopy(data['metadata'])
+        frozen={'metadata':self.metadata,'counts':list(data['counts'].items())}
+        self.identity=sha256(json.dumps(frozen,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode('utf8')).hexdigest()
+        buckets={}
+        for name,floors in data['counts'].items():
+            for floor,values in floors.items():
+                for distance,count in values.items():buckets.setdefault((floor,distance),[]).append((name,count))
+        self._rows={key:tuple(_frequency_rows(values))for key,values in buckets.items()}
+
+    def rows(self,floor,distance):
+        _selection(floor,distance)
+        return [dict(row)for row in self._rows.get((floor,str(distance)),())]

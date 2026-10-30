@@ -1,5 +1,6 @@
 """A hoverable, pinnable map card using local references, never a game overlay hook."""
 from PySide6.QtCore import Qt,Signal,QSize
+from datetime import datetime
 from PySide6.QtGui import QIcon,QPixmap
 from PySide6.QtWidgets import (QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout,
     QLabel,QPushButton,QToolButton,QScrollArea,QSizePolicy)
@@ -27,20 +28,27 @@ class NodeHoverCard(QDialog):
         if self.pinned and self.binding!=binding and not force:return False
         node=next((n for n in graph['nodes']if n['id']==node_id),None)
         if node is None:self.dismiss();return False
-        key=(binding,repr(node),repr(config),view.historical)
+        frequencies=model.default_frequencies()if view.frequencies is None else view.frequencies
+        key=(binding,repr(node),repr(config),view.historical,graph['grid']['rows'],frequencies.identity)
         if key==self.content_key:return True
         offset=self.scroll.verticalScrollBar().value()if self.binding==binding else 0;self.binding=binding;self.content_key=key
         from .map_reporting import location
         self.title.setText(location(node,graph['grid']['rows'])+' · 节点速览')
-        self.notice.setText(('历史地图记录；'if view.historical else'最近确认地图；')+'历史节点比例供参考，不是本局概率；未核验当前DLC与本图条件。事件仍需满足前置。')
+        stamp=(frequencies.metadata or{}).get('updatedAt')
+        date=datetime.fromisoformat(stamp.replace('Z','+00:00')).astimezone().strftime('%Y-%m-%d')if stamp else''
+        source='路标统计更新 '+date+'。'if date else'暂无可核对统计。'
+        self.notice.setText(('历史地图记录；'if view.historical else'最近确认地图；')+'历史比例不是本局概率；未核验当前DLC与本图条件。'+source)
         content=QWidget();body=QVBoxLayout(content);types=model.candidate_types(node)
         body.addWidget(QLabel('已读类型'if node.get('observed_type')in types else'模板固定类型'if node.get('template_type')else'可能的节点类型'))
+        previous=node.get('remembered_type')
+        if previous and previous!=node.get('observed_type'):body.addWidget(QLabel('原为'+previous+' · 本局已保存记录，不是当前候选。'))
         grid=QGridLayout();body.addLayout(grid);self.type_values={}
         for i,kind in enumerate(types):
             cell=QWidget();layout=QVBoxLayout(cell);layout.setContentsMargins(3,3,3,3);picture=QLabel();image=view.sprite_for(kind)
             if not image.isNull():picture.setPixmap(QPixmap.fromImage(image).scaled(40,40,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
+            else:picture.hide()
             picture.setAlignment(Qt.AlignmentFlag.AlignCenter);layout.addWidget(picture);label=QLabel(kind);label.setAlignment(Qt.AlignmentFlag.AlignCenter);layout.addWidget(label)
-            row=model.historical_frequency(graph,node,kind);known=model.type_match(node,kind)
+            row=model.historical_frequency(graph,node,kind,frequencies);known=model.type_match(node,kind)
             value='已读'if known=='observed'else'模板固定'if known=='template'else f"历史 {row['frequency']:.2%}"if row else'无对应样本'
             self.type_values[kind]=value;rate=QLabel(value);rate.setAlignment(Qt.AlignmentFlag.AlignCenter);layout.addWidget(rate)
             if row:cell.setToolTip(f"同层、距入口相同步数：{row['count']} / {row['total']}个节点记录。分母未按本图候选重新归一化。")
@@ -49,9 +57,9 @@ class NodeHoverCard(QDialog):
         try:dossier=model.node_dossier(graph,node_id,config)
         except(ValueError,TypeError,KeyError):dossier=None
         self.entry_buttons=[]
-        for label,kind,rows in [('事件候选','event',(dossier or{}).get('rows',[])),('作战候选','battle',(dossier or{}).get('battle_rows',[]))]:
+        for label,kind,rows in [('事件候选','event',(dossier or{}).get('rows',[])),('作战候选','battle',(dossier or{}).get('battle_rows',[])),('已读历史事件','event',(dossier or{}).get('history_observed_event_rows',[])),('已读历史作战','battle',(dossier or{}).get('history_observed_battle_rows',[]))]:
             if not rows:continue
-            heading=QLabel(label+f' · {len(rows)}项');body.addWidget(heading);cards=QGridLayout();body.addLayout(cards)
+            heading=QLabel(label+f' · {len(rows)}项');body.addWidget(heading);cards=QGridLayout();cards.setColumnStretch(0,1);cards.setColumnStretch(1,1);body.addLayout(cards)
             for i,row in enumerate(rows):
                 button=QToolButton();button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextUnderIcon);button.setText(row.get('title')or'名称未确认');button.setMinimumHeight(114);button.setIconSize(QSize(145,75));button.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Preferred)
                 path=model.event_picture(row['id'])if kind=='event'else None
@@ -59,7 +67,8 @@ class NodeHoverCard(QDialog):
                 else:
                     button.setIcon(QIcon(QPixmap.fromImage(view.sprite_for('作战'if kind=='battle'else'不期而遇'))))
                     if kind=='event':button.setText(button.text()+'\n暂无对应插图');button.setMinimumHeight(135)
-                button.setToolTip('点击在地图侧栏阅读。资料候选不等于本局实际出现；发生概率未核验。')
+                historical=label.startswith('已读历史');button.setProperty('referenceScope','history'if historical else'candidate')
+                button.setToolTip('本局曾读到的内容，仅供回看；不表示现在再次发生，不计入当前候选或出现次数。点击在地图侧栏阅读。'if historical else'点击在地图侧栏阅读。资料候选不等于本局实际出现；发生概率未核验。')
                 button.clicked.connect(lambda checked=False,k=kind,identity=row['id']:self.entryRequested.emit(node_id,k,identity));cards.addWidget(button,i//2,i%2);self.entry_buttons.append((kind,row['id'],button))
         body.addStretch();old=self.scroll.takeWidget();self.scroll.setWidget(content)
         if old:old.deleteLater()

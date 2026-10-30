@@ -12,6 +12,7 @@ class ToolbarTests(unittest.TestCase):
     def toolbar(self):
         owner=QWidget();owner.run=SimpleNamespace(state={});owner.closing=True
         owner.open_scene_notes=lambda:None;owner.open_public_statistics=lambda:None
+        owner.node_statistics_source=lambda:None
         bar=CompactAssistant(owner);self.addCleanup(owner.deleteLater);self.addCleanup(bar.close);return bar
     def test_single_row_order_transparency_and_gap_input_region(self):
         bar=self.toolbar();self.assertEqual(tuple(b.accessibleName()for b in bar.tool_buttons),ORDER)

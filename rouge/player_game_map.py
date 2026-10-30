@@ -40,11 +40,11 @@ def payload(reference,current,snapshot,run_id,now=None):
 class OverlaySurface(QWidget):
     def __init__(self,parent):
         flags=Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint|Qt.WindowType.WindowStaysOnTopHint|Qt.WindowType.WindowTransparentForInput|Qt.WindowType.WindowDoesNotAcceptFocus
-        super().__init__(parent,flags);self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground);self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating);self.data=None;self.kind=None;self.setWindowTitle('地图只读标注')
+        super().__init__(parent,flags);self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground);self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating);self.data=None;self.kind=None;self.frequencies=None;self.setWindowTitle('地图只读标注')
     def paintEvent(self,event):
         if not self.data:return
         from .player_map_reference import overlay_rows
-        rows=overlay_rows(self.data['graph'],self.kind);p=QPainter(self);p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        rows=overlay_rows(self.data['graph'],self.kind,self.frequencies);p=QPainter(self);p.setRenderHint(QPainter.RenderHint.Antialiasing)
         for identity,x,y in self.data['points']:
             row=rows[identity]
             if row['match']not in('observed','template','candidate','history'):continue
@@ -55,11 +55,19 @@ class OverlaySurface(QWidget):
         p.setPen(QColor('#d8f4e6'));p.drawText(14,24,'资料标注 · 候选不代表实际生成；历史比例不是本局概率')
 
 class GameMapOverlay(QObject):
-    def __init__(self,companion,owner):
-        super().__init__(companion);self.companion=companion;self.owner=owner;self.enabled=False;self.kind=None;self.surface=OverlaySurface(companion);self.current=None
+    def __init__(self,companion,owner,*,statistics_source=None):
+        super().__init__(companion);self.companion=companion;self.owner=owner;self.statistics_source=statistics_source;self.enabled=False;self.kind=None;self.surface=OverlaySurface(companion);self.current=None
         from .player_game_hover import HoverGate
         self.gate=HoverGate(delay=.35);self.hover_key=None;self.card=None;self.view=None
         self.timer=QTimer(self);self.timer.setInterval(500);self.timer.timeout.connect(self.tick);self.timer.start()
+        if self.statistics_source is not None:
+            self.statistics_source.changed.connect(self.refresh_statistics);self.refresh_statistics()
+    def refresh_statistics(self):
+        self.surface.frequencies=self.statistics_source.index
+        if self.view:self.view.frequencies=self.statistics_source.index
+        if self.card and self.card.isVisible() and self.current:
+            self.card.install(self.card.binding,self.current['graph'],self.card.binding[-1],self.owner.run.state.get('config',{}),self.view,force=True)
+        if self.surface.isVisible():self.surface.update()
     def set_enabled(self,value):self.enabled=bool(value);self.tick()
     def set_kind(self,value):self.kind=value;self.tick()
     def tick(self):
@@ -91,7 +99,9 @@ class GameMapOverlay(QObject):
         if self.card is None:
             from .player_map_hover import NodeHoverCard
             from .player_map import PreviewMapView
-            self.view=PreviewMapView();self.view.historical=False;self.card=NodeHoverCard(self.companion);self.card.setWindowFlag(Qt.WindowType.WindowDoesNotAcceptFocus,True);self.card.entryRequested.connect(self.open_entry)
+            self.view=PreviewMapView();self.view.historical=False
+            if self.statistics_source is not None:self.view.frequencies=self.statistics_source.index
+            self.card=NodeHoverCard(self.companion);self.card.setWindowFlag(Qt.WindowType.WindowDoesNotAcceptFocus,True);self.card.entryRequested.connect(self.open_entry)
         if not self.card.install(key,graph,identity,self.owner.run.state.get('config',{}),self.view):return
         area=data['rect'].intersected(snapshot['screen'].availableGeometry())
         if area.width()<self.card.minimumSizeHint().width()or area.height()<self.card.minimumSizeHint().height():self.clear_hover();return

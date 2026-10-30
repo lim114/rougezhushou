@@ -7,11 +7,15 @@ from . import public_node_statistics as statistics
 @lru_cache(maxsize=1)
 def public_counts():return statistics.load()
 
-@lru_cache(maxsize=256,typed=True)
-def historical_rows(zone_id,distance):
+@lru_cache(maxsize=1)
+def default_frequencies():
+    try:return statistics.FrequencyIndex(public_counts())
+    except(ValueError,KeyError,TypeError,OSError):return statistics.FrequencyIndex()
+
+def historical_rows(zone_id,distance,frequencies=None):
     floor={'zone_1':'0','zone_2':'1','zone_3':'2','zone_4':'3','zone_5':'4'}.get(zone_id)
     if floor is None or type(distance)is not int or distance<0:return ()
-    try:return tuple(statistics.frequency_rows(public_counts(),floor,distance))
+    try:return tuple((default_frequencies()if frequencies is None else frequencies).rows(floor,distance))
     except(ValueError,KeyError,TypeError,OSError):return ()
 
 def candidate_types(node):
@@ -30,15 +34,15 @@ def type_match(node,kind):
     if candidates:return 'candidate'if kind in candidates else'excluded'
     return 'unconfirmed'
 
-def historical_frequency(graph,node,kind):
-    return next((dict(r)for r in historical_rows(graph.get('zone_id'),node.get('distance'))if r['name']==kind),None)
+def historical_frequency(graph,node,kind,frequencies=None):
+    return next((dict(r)for r in historical_rows(graph.get('zone_id'),node.get('distance'),frequencies)if r['name']==kind),None)
 
-def overlay_rows(graph,kind):
+def overlay_rows(graph,kind,frequencies=None):
     result={}
     for node in(graph or{}).get('nodes',[]):
         match=type_match(node,kind)
         # Do not put an uncertain historical rate on revealed, passed or fixed nodes.
-        frequency=historical_frequency(graph,node,kind)if match=='candidate'else None
+        frequency=historical_frequency(graph,node,kind,frequencies)if match=='candidate'else None
         result[node['id']]={'match':match,'frequency':frequency}
     return result
 
@@ -67,5 +71,8 @@ def node_dossier(graph,node_id,config):
     from .player_map import dossier_graph
     node=next((n for n in(graph or{}).get('nodes',[])if n['id']==node_id),None)
     if node is None:return None
-    if not candidate_types(node):return None
+    if not candidate_types(node):
+        history=node_catalog.node_history(graph,node_id)
+        if not any(history.values()):return None
+        return {'rows':[],'battle_rows':[],'function_rows':[],**history}
     return node_catalog.node_dossier(dossier_graph(graph),node_id,**map_conditions(graph,config))

@@ -269,6 +269,7 @@ class MainWindow(QMainWindow):
         self.notes_button=QPushButton('场景笔记');self.notes_button.clicked.connect(self.open_scene_notes)
         self.context_bar.addWidget(self.notes_button)
         self.public_statistics=None
+        self._node_statistics_source=None
         self.public_archive=None
         self.compact_window=None
         self.compact_button=QPushButton('助手小窗');self.compact_button.clicked.connect(self.show_compact)
@@ -318,9 +319,15 @@ class MainWindow(QMainWindow):
         if self.public_archive:self.public_archive.event_note.appendPlainText('本机原文资料尚未收录该精确场景，不能跳到同名替代。')
         return False
 
+    def node_statistics_source(self):
+        if self._node_statistics_source is None:
+            from .node_statistics_source import NodeStatisticsSource
+            self._node_statistics_source=NodeStatisticsSource(ROOT/'.local/public-statistics/nodes.json',self)
+        return self._node_statistics_source
+
     def open_public_statistics(self):
         from .public_node_statistics_view import StatisticsDialog
-        if self.public_statistics is None:self.public_statistics=StatisticsDialog(ROOT/'.local/public-statistics/nodes.json',self)
+        if self.public_statistics is None:self.public_statistics=StatisticsDialog(ROOT/'.local/public-statistics/nodes.json',self,source=self.node_statistics_source())
         self.public_statistics.set_map_node(self.map_view.graph,self.map_view.selected)
         self.public_statistics.show()
 

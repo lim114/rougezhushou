@@ -73,7 +73,7 @@ class CompactAssistant(QDialog):
         from .player_game_hover import GameHover
         self.game_hover=GameHover(self,owner);self.game_hover_enabled.toggled.connect(self.game_hover.set_enabled)
         from .player_game_map import GameMapOverlay
-        self.game_overlay=GameMapOverlay(self,owner);self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
+        self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
     def _layout_dock(self):
         from .player_toolbar import DIAMETER,GAP
         right=self.x()+self.width();x=2;region=QRegion()
@@ -235,7 +235,7 @@ class CompactAssistant(QDialog):
         return self.present(self.inventory_popup)
     def open_map(self):
         if self.map_popup is None:
-            panel=MapPanel(self.owner);self.map_popup=ToolPopover('探索地图与节点',panel,self,on_show=self.refresh);self.map_popup.panel=panel;self.map_popup.resize(1100,650);self.map_popup.setObjectName('videoMapWindow');self.map_popup.setStyleSheet('#videoMapWindow{background:#f5f5f7;border:1px solid #bbc1c5;border-radius:12px;} #videoMapWindow QLabel{color:#25332f;} #videoMapWindow QPushButton,#videoMapWindow QComboBox{color:#263630;background:#e8ebea;border:1px solid #bbc6c1;border-radius:7px;padding:5px;} #videoMapWindow QTabBar{background:#f5f5f7;border:0;} #videoMapWindow QTabBar::tab{color:#35403c;background:#e4e7e6;border:0;border-radius:10px;padding:6px 12px;} #videoMapWindow QTabBar::tab:selected{background:#2c3533;color:white;} #videoMapWindow QPlainTextEdit,#videoMapWindow QTreeWidget{color:#28332e;background:#fff;border:1px solid #d2d9d5;}')
+            panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source());self.map_popup=ToolPopover('探索地图与节点',panel,self,on_show=self.refresh);self.map_popup.panel=panel;self.map_popup.resize(1100,650);self.map_popup.setObjectName('videoMapWindow');self.map_popup.setStyleSheet('#videoMapWindow{background:#f5f5f7;border:1px solid #bbc1c5;border-radius:12px;} #videoMapWindow QLabel{color:#25332f;} #videoMapWindow QPushButton,#videoMapWindow QComboBox{color:#263630;background:#e8ebea;border:1px solid #bbc6c1;border-radius:7px;padding:5px;} #videoMapWindow QTabBar{background:#f5f5f7;border:0;} #videoMapWindow QTabBar::tab{color:#35403c;background:#e4e7e6;border:0;border-radius:10px;padding:6px 12px;} #videoMapWindow QTabBar::tab:selected{background:#2c3533;color:white;} #videoMapWindow QPlainTextEdit,#videoMapWindow QTreeWidget{color:#28332e;background:#fff;border:1px solid #d2d9d5;}')
             panel.resources.requested.connect(self.open_resource)
         return self.present(self.map_popup)
 

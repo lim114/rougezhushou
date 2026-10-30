@@ -2,7 +2,6 @@
 from pathlib import Path
 from threading import Thread
 from datetime import datetime
-import json,os
 from PySide6.QtCore import Signal
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtCore import QUrl
@@ -10,8 +9,9 @@ from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,Q
 from . import public_node_statistics as model
 class StatisticsDialog(QDialog):
     received=Signal(object)
-    def __init__(self,cache,parent=None):
-        super().__init__(parent);self.cache=Path(cache);self.data=None;self.busy=False;self.setWindowTitle('公开节点统计 · 只读');self.resize(690,580)
+    def __init__(self,cache,parent=None,*,source=None):
+        from .node_statistics_source import NodeStatisticsSource
+        super().__init__(parent);self.cache=Path(cache);self.source=source or NodeStatisticsSource(cache,self);self.busy=False;self.setWindowTitle('公开节点统计 · 只读');self.resize(690,580)
         body=QVBoxLayout(self);self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
         bar=QHBoxLayout();self.floor=QComboBox()
         for key,label in [('0','第一层'),('1','第二层'),('2','第三层'),('3','第四层'),('remembrance','第四层·追忆'),('4','第五层')]:self.floor.addItem(label,key)
@@ -23,15 +23,16 @@ class StatisticsDialog(QDialog):
         buttons=QHBoxLayout();self.refresh_button=QPushButton('联网更新公开统计');self.website_button=QPushButton('查看数据来源');buttons.addWidget(self.refresh_button);buttons.addWidget(self.website_button);body.addLayout(buttons)
         self.refresh_button.clicked.connect(self.refresh_online);self.website_button.clicked.connect(lambda:QDesktopServices.openUrl(QUrl(model.PAGE)))
         self.floor.currentIndexChanged.connect(self.render);self.distance.valueChanged.connect(self.render);self.received.connect(self.accept_data)
-        try:self.data=model.load(self.cache if self.cache.is_file()else model.DEFAULT)
-        except(OSError,ValueError,KeyError,TypeError):pass
+        self.source.changed.connect(self.render)
         self.render()
+    @property
+    def data(self):return self.source.data
     def render(self,*_):
         self.table.setRowCount(0)
         if self.data is None:self.status.setText('尚无可用公开统计；可手动联网读取。不会上传对局、截图或笔记。');return
-        try:rows=model.frequency_rows(self.data,self.floor.currentData(),self.distance.value())
+        try:rows=self.source.index.rows(self.floor.currentData(),self.distance.value())
         except(ValueError,KeyError,TypeError):self.status.setText('统计口径无法核对，已清除旧结果。');return
-        meta=self.data['metadata'];date=datetime.fromisoformat(meta['updatedAt'].replace('Z','+00:00')).astimezone().strftime('%Y-%m-%d %H:%M')
+        meta=self.source.index.metadata;date=datetime.fromisoformat(meta['updatedAt'].replace('Z','+00:00')).astimezone().strftime('%Y-%m-%d %H:%M')
         self.status.setText(f"来源：路标档案馆 · 数据更新 {date} · 全表{meta['sampleCount']:,}个节点记录。当前版本适用性尚未核验；以下仅供历史对照。")
         for row in rows:
             i=self.table.rowCount();self.table.insertRow(i)
@@ -58,7 +59,6 @@ class StatisticsDialog(QDialog):
         self.busy=False;self.refresh_button.setEnabled(True)
         if 'error'in result:self.render();self.status.setText('更新失败；'+('仍显示上方日期的离线缓存。'if self.data else'没有可用统计。')+' 可稍后重试。');return
         try:
-            data=model.validate(result['data']);self.cache.parent.mkdir(parents=True,exist_ok=True)
-            temp=self.cache.with_suffix('.tmp');temp.write_text(json.dumps(data,ensure_ascii=False),encoding='utf8');os.replace(temp,self.cache)
+            changed=self.source.accept(result['data'])
         except(OSError,ValueError,KeyError,TypeError):self.render();self.status.setText('新数据无法核对或保存，未替换原缓存。');return
-        self.data=data;self.render()
+        if not changed:self.render()
