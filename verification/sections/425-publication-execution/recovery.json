@@ -1,0 +1,41 @@
+{
+  "section": 425,
+  "recorded_UTC": "2026-10-30T03:32:21.457918+00:00",
+  "kind": "ordinary same-commit transfer recovery, not functional development",
+  "failed_attempt": {
+    "receipt": "verification/sections/425-publication-execution/process.json",
+    "sha256": "f5e8bc7841bad87d19c996d2d776ba7973331b2c8182552e19b179e37ddac20e",
+    "bytes": 215
+  },
+  "failed_stderr": {
+    "receipt": "verification/sections/425-publication-execution/stderr.txt",
+    "sha256": "d6a6ecc1ce87f34cae2b049e819c8390fa49c1fb9983ca767b08dae357d041e8",
+    "bytes": 282
+  },
+  "successful_retry": {
+    "receipt": "verification/sections/425-publication-execution/retry-2/process.json",
+    "sha256": "014ad41b0d9c17b2c63c0b59a0372a1348539fb5f99cac9c8a11426cfa4fa34f",
+    "bytes": 215
+  },
+  "actual_remote_verification": {
+    "receipt": "verification/sections/425-publication.json",
+    "sha256": "96e7a25ffd887232ab242a20ee5bc20ea68a256d1cb20fd54426b3320d82cd9b",
+    "bytes": 1423108
+  },
+  "temporary_transfer_source": {
+    "receipt": "verification/sections/425-publication-execution/temporary-buffered-transfer-source.py",
+    "sha256": "543d8aeeb84926f62896b14bd42e04504869259e93734349c20322fd05b379cd",
+    "bytes": 1177
+  },
+  "functional_commit": "e2a11fc279e17cca12f52002340e42f9a9a62988",
+  "observed_error": "curl65 rewind / Schannel abrupt close; remote remained at previous commit before retry",
+  "intervention": "per-process HTTP/1.1 postBuffer256MiB, certificate verification retained; same verified DNS route",
+  "documentation": "https://git-scm.com/docs/git-config#Documentation/git-config.txt-httppostBuffer",
+  "limits": "Successful buffered retry does not isolate a TLS root cause or prove a general performance improvement. Raising the buffer increases memory use and is not a general push fix.",
+  "system_or_persistent_git_configuration_changed": false,
+  "TLS_verification_disabled": false,
+  "force_push": false,
+  "private_state_included": false,
+  "functional_tests_rerun_for_transfer": false,
+  "public_files_compared": 5494
+}

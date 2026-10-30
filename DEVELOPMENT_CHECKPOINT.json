@@ -20,7 +20,7 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section: commit and ordinary push origin codex/p2-development; full available validation after125 then every15 sections",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": false,
+    "development_paused_by_latest_user_request": true,
     "summary_interval": 5,
     "stop_after_section": 425,
     "each_section_requires_functional_progress": true,
@@ -35,14 +35,14 @@
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
     "current_user_batch_target_section": 425,
-    "current_user_batch_completed": false,
+    "current_user_batch_completed": true,
     "requirements_synced_each_section": true,
     "atomic_section_source_receipt_status_commit": true,
     "verify_remote_head_after_each_push": true,
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
     "repair_full_validation_after_functional_260": true,
-    "new_functional_sections_paused": false,
+    "new_functional_sections_paused": true,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
@@ -60,7 +60,7 @@
     "usage_threshold_changed_on_Beijing": "2026-10-18",
     "finish_entire_active_section_before_usage_wrap_up": true,
     "usage_wrap_up_triggered": false,
-    "pause_after_active_section_requested": false,
+    "pause_after_active_section_requested": true,
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
     "current_usage_remaining_percent": 73,
@@ -81,7 +81,8 @@
     "public_source_reuse_preferred": true,
     "public_source_reuse_requires_local_adaptation": true,
     "public_source_reuse_guidance": "AGENTS.md#公开源码优先复用与本机适配2026-10-29",
-    "dlc1_missing_content_audit_pending": true
+    "dlc1_missing_content_audit_pending": true,
+    "paused_after_completed_section": 425
   },
   "baseline_commit": "0015c20",
   "completed_sections": 425,
@@ -2626,7 +2627,7 @@
     }
   ],
   "next_section": 426,
-  "next_action": "本批第425节完整收尾并核对普通发布后暂停；不启动426，等待用户恢复。",
+  "next_action": "第425节已完成普通发布核对并暂停；426未启动，等待用户明确恢复。",
   "full_validation_due": false,
   "windows_native_validation": "当前425：88项必要检查、25项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -2749,12 +2750,12 @@
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
-    "section": 424,
-    "scope": "previous_functional_section",
+    "section": 425,
+    "scope": "current_functional_section",
     "binding": "verified_remote_commit",
-    "commit": "1289c4b8fc89b677b21375b982f048e0dc12ef38",
-    "proof": "verification/sections/424-publication.json",
-    "proof_sha256": "37a56943c46f4a3a71e55038a43991bddc76a2b9ba423372bb88d1c937297b55"
+    "commit": "e2a11fc279e17cca12f52002340e42f9a9a62988",
+    "proof": "verification/sections/425-publication.json",
+    "proof_sha256": "96e7a25ffd887232ab242a20ee5bc20ea68a256d1cb20fd54426b3320d82cd9b"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -3000,7 +3001,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "PLAYER_SECTION425_PUBLICATION_PENDING",
+  "batch_status": "PLAYER_SECTION425_PUBLISHED_PAUSED",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3165,11 +3166,11 @@
     "start": 414,
     "end": 425,
     "next_full_validation_after": 440,
-    "status": "PLAYER_SECTION425_PUBLICATION_PENDING",
+    "status": "PLAYER_SECTION425_PUBLISHED_PAUSED",
     "completed_sections": 425,
     "next_section": 426,
     "next_section_started": false,
-    "batch_closed": false,
+    "batch_closed": true,
     "receipt": "verification/sections/425.json"
   },
   "current_full140_checkpoint": {
@@ -9197,9 +9198,11 @@
   },
   "cloud_publication_closeout": {
     "section": 425,
-    "current_commit_kind": "functional section pending actual publication",
+    "functional_commit": "e2a11fc279e17cca12f52002340e42f9a9a62988",
+    "proof": "verification/sections/425-publication.json",
+    "current_commit_kind": "publication metadata only",
     "next_section_started": false,
-    "development_paused": false
+    "development_paused": true
   },
   "historical_before381_batch": {
     "current_batch": {
