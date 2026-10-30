@@ -1,0 +1,88 @@
+{
+  "kind": "implementation_maintenance",
+  "title": "REA核对、隐藏阅读器按需刷新与地图界面精简",
+  "baseline_commit": "0de618255555df98760db7d6d53372514fee7a11",
+  "completed_sections": 440,
+  "functional_section_added": false,
+  "next_functional_section_started": false,
+  "implemented": [
+    "hidden_readers_skip_refresh_restore_uses_Qt_showEvent",
+    "visible_exchange_rechecks_hidden_inventory_source",
+    "remove_unused_icons_noop_filter_parent_drag_fallback_and_redundant_parent_guard",
+    "collapse_map_search_and_coverage_without_losing_query_or_selection",
+    "cloud_index_distinguishes_current_maintenance_from_frozen_full_validation"
+  ],
+  "passed": true,
+  "unit_checks": {
+    "initial_targeted_tests": {
+      "path": "verification/maintenance/rea-20261031/targeted-tests/process.json",
+      "sha256": "5ca0d316b49d3c7811cc787cd9d028066ae574d53eadf4049eaced98380b9e75",
+      "bytes": 679
+    },
+    "after_map_cleanup": {
+      "path": "verification/maintenance/rea-20261031/final-map-tests.json",
+      "sha256": "fddbdd76cfe7eb1985d52e2f620a643c0516ced554ae9b68a897769a44d43781",
+      "bytes": 594
+    },
+    "index_checks": {
+      "path": "verification/maintenance/rea-20261031/index-tests.json",
+      "sha256": "994031406d80979e86769623e7d0e14b7ddbb546ac24d19bfd6916f1edc4b800",
+      "bytes": 225
+    }
+  },
+  "native_checks": {
+    "431": {
+      "path": "verification/maintenance/rea-20261031/native-431/process.json",
+      "sha256": "0fce1ed517e93ddfb9e7e8f77f05865a29e77c92e2a9cdc4db01b38f52563825",
+      "bytes": 473
+    },
+    "440": {
+      "path": "verification/maintenance/rea-20261031/native-440/process.json",
+      "sha256": "9719c78899d87350b3ef29595f4a4e13252baae74db92e561875e88fcca43b84",
+      "bytes": 473
+    },
+    "412": {
+      "path": "verification/maintenance/rea-20261031/native-412/process.json",
+      "sha256": "e53a930cbf43ec3bcd5e4503168ed8b857a7b0d9d2e37424ac56e85cc218e19c",
+      "bytes": 473
+    }
+  },
+  "native_final_map": {
+    "path": "verification/maintenance/rea-20261031/native-final-map/process.json",
+    "sha256": "0fab64cf08e586fcdda2eb82047b3d6a99fc819d07f9ac5cb5700db4f8105ad9",
+    "bytes": 366
+  },
+  "benchmark": {
+    "path": "verification/maintenance/rea-20261031/refresh-benchmark.json",
+    "sha256": "bd5a5542c4739f9ee303b37bf871d87ba560e55f8cd6de84074c6fd08b337ce3",
+    "bytes": 1174
+  },
+  "root_visual": {
+    "path": "verification/maintenance/rea-20261031/root-visual-review.json",
+    "sha256": "bbe4f1c2f6a277a879441e4184dad77ac316d8df707ac24af51a7a38ad64e656",
+    "bytes": 1632
+  },
+  "runtime": {
+    "path": "verification/maintenance/rea-20261031/live-window/desktop-review.json",
+    "sha256": "ca20a20a18bc9824f4cec687f0463e5a2fb45fccbc8af7f0390956d1d3d36cf5",
+    "bytes": 628
+  },
+  "maintained_selector_count": 688,
+  "original_selector_order_preserved": true,
+  "full_validation_rerun": false,
+  "full440_only_original_frozen_sources": true,
+  "P3_complete": false,
+  "P2_complete": false,
+  "P1_complete": false,
+  "video_parity_complete": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "private_state_included": false,
+  "third_party_code_newly_copied": false,
+  "remaining_questions": [
+    "video_full_visual_and_interaction_parity",
+    "public_candidate_license_and_compatibility",
+    "other_startup_and_cross_reader_snapshot_performance_not_measured"
+  ],
+  "publication_binding": "enclosing maintenance commit; audit actual remote after ordinary push"
+}

@@ -208,6 +208,14 @@ def update(root=ROOT):
                             for f in files if (root / f).is_file()},
         'private_state_included': False,
     }
+    maintenance = checkpoint.get('current_maintenance_save')
+    maintenance_note = ''
+    if maintenance:
+        _public_json(root, maintenance['receipt'])
+        index['current_maintenance'] = {**maintenance, 'receipt_sha256': hashlib.sha256(
+            (root / maintenance['receipt']).read_bytes()).hexdigest()}
+        maintenance_note = (f'当前实现维护：{maintenance["title"]}；回执 `{maintenance["receipt"]}`。'
+                            '不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。\n\n')
     (root / 'CLOUD_INDEX.json').write_text(json.dumps(index, ensure_ascii=False, indent=2)+'\n', encoding='utf-8', newline='\n')
     path = root / 'CLOUD_HANDOFF.md'
     old = path.read_text(encoding='utf-8')
@@ -228,7 +236,7 @@ def update(root=ROOT):
              'P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。'+('节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。'if checkpoint.get('policy',{}).get('public_statistics_enabled')else'节点只列来源覆盖的候选与条件，不要求生成概率。')+'\n\n'
              f'最新记录全量：`{index["latest_full_receipt"]}`，可用范围全通过：`{index["latest_full_available_checks_passed"]}`。'
              'Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。'
-             f'下面是历史交接，不代表当前节数。\n{END}\n\n')
+             f'{maintenance_note}下面是历史交接，不代表当前节数。\n{END}\n\n')
     path.write_text(block+old, encoding='utf-8', newline='\n')
 
 

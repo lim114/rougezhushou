@@ -50,6 +50,24 @@ class CloudIndexSyncTests(unittest.TestCase):
         receipt.parent.mkdir(parents=True)
         receipt.write_text(json.dumps({'available_checks_passed': False}), encoding='utf-8')
 
+    def test_implementation_maintenance_has_its_own_receipt_without_new_section(self):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        checkpoint = json.loads(path.read_text(encoding='utf-8'))
+        receipt = 'verification/maintenance/example.json'
+        (self.root/receipt).parent.mkdir(exist_ok=True)
+        (self.root/receipt).write_text('{"kind":"implementation_maintenance"}', encoding='utf-8')
+        checkpoint['current_maintenance_save'] = {'title': '浮窗按需刷新',
+            'receipt': receipt, 'binding': 'enclosing_commit', 'functional_section_added': False}
+        path.write_text(json.dumps(checkpoint), encoding='utf-8')
+        update(self.root)
+        index = json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+        self.assertEqual(index['completed_sections'], 185)
+        self.assertEqual(index['current_maintenance']['receipt_sha256'],
+                         hashlib.sha256((self.root/receipt).read_bytes()).hexdigest())
+        handoff = (self.root/'CLOUD_HANDOFF.md').read_text(encoding='utf-8')
+        self.assertIn('当前实现维护：浮窗按需刷新', handoff)
+        self.assertIn('不能作为维护后源码的完整验收', handoff)
+
     def test_requirements_are_versioned_with_current_checkpoint_and_failed_validation(self):
         update(self.root)
         index = json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
