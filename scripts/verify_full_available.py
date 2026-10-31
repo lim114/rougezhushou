@@ -566,6 +566,8 @@ ADDITIONAL_MODULES += ('tests.test_enemy_readers_review',)
 
 ADDITIONAL_MODULES += ('tests.test_guest_readers_review',)
 
+ADDITIONAL_MODULES += ('tests.test_event_battle_reader_review',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

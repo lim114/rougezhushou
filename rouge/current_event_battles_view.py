@@ -18,7 +18,8 @@ class CurrentEventBattlesPanel(QWidget):
         self.choices.currentItemChanged.connect(self._selected);self.stages.currentIndexChanged.connect(self._stage_changed);self.open_button.clicked.connect(self.open_battle);self.refresh_button.clicked.connect(self.refresh_reference);self.refresh_reference(initial_choice=choice_id)
 
     def _close_battle(self):
-        if self.battle_dialog is not None:self.battle_dialog.close()
+        child=self.battle_dialog;self.battle_dialog=None
+        if child is not None:child.close();child.deleteLater()
 
     def clear_reference(self):
         self._close_battle();self._close_flow();self.flow_button.hide();self.result=None;self.choice_id=None
@@ -61,8 +62,13 @@ class CurrentEventBattlesPanel(QWidget):
         if model.reference(self.event_id,self.stage_id)!=self.result:self.clear_reference();return False
         sid=self.stages.currentData()
         if sid not in{v['id']for v in model.stage_rows(self.result,self.choice_id)}:return False
-        from .current_battle_view import CurrentBattleDialog
-        self._close_battle();self.battle_dialog=CurrentBattleDialog(sid,self);self.battle_dialog.show();return True
+        from .player_map_reader import make_reader
+        if self.battle_dialog is not None and self.battle_dialog.panel.stage_id!=sid:self._close_battle()
+        if self.battle_dialog is None:
+            self.battle_dialog=make_reader('battle',{'id':sid,'title':model.stage_label(self.result,self.choice_id,sid)},self)
+        elif self.battle_dialog.panel.refresh_reference()is False:self._close_battle()
+        if self.battle_dialog is None:return False
+        self.battle_dialog.show();self.battle_dialog.raise_();return True
 
     def _close_flow(self):
         if self.flow_dialog is not None:self.flow_dialog.close()
@@ -96,3 +102,5 @@ class CurrentEventBattlesDialog(QDialog):
     def __init__(self,event_id=None,choice_id=None,stage_id=None,parent=None):
         super().__init__(parent);self.setWindowTitle('事件与固定作战 · 选项和版本核对');self.resize(1100,820);layout=QVBoxLayout(self);self.panel=CurrentEventBattlesPanel(event_id,choice_id,stage_id,self);layout.addWidget(self.panel)
     def closeEvent(self,event):self.panel._close_battle();self.panel._close_flow();super().closeEvent(event)
+
+    def reject(self):self.panel._close_battle();self.panel._close_flow();super().reject()
