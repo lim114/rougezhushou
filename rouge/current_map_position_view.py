@@ -42,9 +42,12 @@ class CurrentTileGrid(QWidget):
 
 class CurrentOriginalCenters(QWidget):
     def __init__(self,parent=None):
-        super().__init__(parent);self.pixmap=QPixmap();self.point=None;self.setMinimumSize(300,180);self.setToolTip('请在左侧选格子；右侧只标出已核对的近似中心，不点击图片猜测其它格子。')
+        super().__init__(parent);self.pixmap=QPixmap();self.image_raw=None;self.point=None;self.setMinimumSize(300,180);self.setToolTip('请在左侧选格子；右侧只标出已核对的近似中心，不点击图片猜测其它格子。')
     def set_image(self,raw,point=None):
-        self.pixmap=QPixmap();ok=bool(raw)and self.pixmap.loadFromData(raw,'PNG');self.point=point if ok else None;self.update();return ok
+        if raw != self.image_raw:
+            self.image_raw=bytes(raw) if raw else None;self.pixmap=QPixmap()
+            if raw:self.pixmap.loadFromData(raw,'PNG')
+        ok=not self.pixmap.isNull();self.point=point if ok else None;self.update();return ok
     def image_rect(self):
         if self.pixmap.isNull():return QRectF()
         ratio=min(self.width()/self.pixmap.width(),self.height()/self.pixmap.height());w,h=self.pixmap.width()*ratio,self.pixmap.height()*ratio;return QRectF((self.width()-w)/2,(self.height()-h)/2,w,h)

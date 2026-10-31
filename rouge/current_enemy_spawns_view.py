@@ -58,10 +58,11 @@ class CurrentEnemySpawnsPanel(QWidget):
         if selected is None:return False
         self.actionSelected.emit(selected['action_key']);return True
     def follow_position(self):
-        selected=self._resolve()
-        if selected is None:return False
-        if model.position_reference(self.result,selected['action_key'])is None:self.clear_reference();return False
-        self.actionPositionRequested.emit(selected['action_key']);return True
+        row=self.selected()
+        if row is None:return False
+        # position_reference already re-resolves the exact current enemy/action.
+        if model.position_reference(self.result,row['key'])is None:self.clear_reference();return False
+        self.actionPositionRequested.emit(row['key']);return True
 
 class CurrentEnemySpawnsDialog(QDialog):
     def __init__(self,stage_id,enemy_key,parent=None):
