@@ -1,0 +1,68 @@
+{
+  "section": 441,
+  "kind": "functional_section",
+  "title": "六项界面资源读取与本局资源栏、历史同步",
+  "new_capability": "目标生命、护盾、指挥等级、希望、行动力和总估价从当前标签/图标读值，接入本局保存、重启、数量变化历史及已有资源胶囊；未读保留最近确认值，0与未知分开，生命显示当前值/上限。",
+  "limitations": "希望上限、上限独立变化历史及其余字体/遮挡/布局和连续实机准确性仍未完成；本机旧样本和公开参考图的几何变体不等于独立实机对局。不将显示字段导入未经核验的藏品计算，未声称完整读取提速。",
+  "necessary_validation": {
+    "receipt": "verification/sections/441-hud-checks-current/process.json",
+    "sha256": "41fda7ccebe038b70cdba5bf0e22852c549acaa730d1e6f34ec24883e84904f4",
+    "bytes": 74
+  },
+  "unit_tests_run": 43,
+  "native_windows_validation": {
+    "receipt": "verification/sections/441-native-hud/window.json",
+    "unique_checks": 32,
+    "process": {
+      "receipt": "verification/sections/441-native-hud/process.json",
+      "sha256": "160c8a17b8843578e6bd90ad53cda6c6716a35fed7315b259717aabb629c91b1",
+      "bytes": 68
+    }
+  },
+  "root_visual_review": {
+    "receipt": "verification/sections/441-native-hud/root-image-review.json",
+    "sha256": "84c5b8b024b54c0741ba3dd60e757b1d0941559eb5a9acc88c2a0c53174bdda3",
+    "bytes": 369
+  },
+  "sample_pairs": {
+    "receipt": "verification/sections/441-hud-sample-pairs/results.json",
+    "sha256": "5032273c3ddad968a5565b4b5409dff00e5a03cde022982625bcbf48c8826789",
+    "bytes": 4791
+  },
+  "geometry": {
+    "receipt": "verification/sections/441-hud-geometry-current/results.json",
+    "sha256": "e7f6f491c45a72fdb920aeb414905e1d753bfcfe7626a23cf3a9ded016469b00",
+    "bytes": 4119
+  },
+  "actual_local_test_window": {
+    "receipt": "verification/sections/441-live-window/window.json",
+    "sha256": "f965d3f8fdb8fef51b5585ba06c6b31660857d1576abf18b1753fc08eed2cc8e",
+    "bytes": 166410
+  },
+  "source_sha256": {
+    "rouge/hud_resources.py": "632ec07b54e7d740e7f1d9e978500f3803f853c567c84b77d2af7338474f4d74",
+    "rouge/resource_recognition.py": "bf4cccc187090359dde35ba31aef9b52cec8d82538ae4348d71c5647db62538c",
+    "rouge/run_recognition.py": "0ab31e9b82a86c9ae92ad793438b0597221f7bf8673b0e208cf1d767a9269ee2",
+    "rouge/run_state.py": "bc24ffb3095d2e153b92c8d0b9f3c71809c1b4f93cae1b641f1fdc0bc16e7b84",
+    "rouge/relic_counter_semantics.py": "73197632bb3ca644520a6bda5a85f877aea8256087d0592df1eb53e89988342c",
+    "rouge/player_resource_facts.py": "a89834a7371eb5af985aedd055ad48d3b1ab61e0d4e90af5b724964a312f7b53",
+    "rouge/player_acceptance.py": "84f9c8cd671450b3a8a658bb5c839398489d7e20b1712729b4587475f53b5c04",
+    "rouge/player_resource_acceptance.py": "dabb66186e5178b1d60ccab953cfbdc61722735d6a9b6e11a828e53c74ac949b",
+    "scripts/verify_full_available.py": "52c6f4a7d2ee86ee133a6e60c70e3291b6c3a7895fa53f87eef4d8bc7356dd47",
+    "tests/test_hud_resources_441.py": "b4fce64ae9102fafff71e5e6e3d0ca8c84c24972c5d94cc41d30d00020dba317",
+    "tests/test_player_resource_strip.py": "ce58e54629a4b614c50f4855fbeac7bf3c7c5aa158be20b446df551f61a5b52e",
+    "rouge/data/ui-icons/hud-counter-sources.json": "5b2b151cc126e028bf238d548f55a43004249f2efc39579734a3792b6115de18",
+    "rouge/data/ui-icons/hud-hope.png": "649ddd17ecf96f9450304f11c90878f940cf08da051bac0840e5a7f4f8170133",
+    "rouge/data/ui-icons/hud-shield.png": "ab92efc013ad9a2e3864fbc721aa50fc6c97f28ebc2f65e2bed6b35937c083ec"
+  },
+  "full_suite_rerun": false,
+  "old_full440_proves_current_source": false,
+  "source_review": {
+    "receipt": "verification/sections/441-records/source-review.json",
+    "sha256": "fd928d43f7c46ec2d8b78000da051bcaeafc89b418989e417b5cc5eb30a5880b",
+    "bytes": 3807
+  },
+  "goal_active": true,
+  "whole_program_or_video_complete": false,
+  "at_UTC": "2026-10-31T11:19:40.415211+00:00"
+}

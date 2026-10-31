@@ -87,7 +87,7 @@
     "code_constraints_scope": "new_and_existing_code"
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 440,
+  "completed_sections": 441,
   "sections": [
     {
       "number": 1,
@@ -2716,10 +2716,16 @@
       "completion_ref": "player-section-440",
       "topic": "本局地图读取覆盖与按信息来源查找",
       "verification": "verification/sections/440.json"
+    },
+    {
+      "number": 441,
+      "completion_ref": "player-section-441",
+      "topic": "六项界面资源读取与本局资源栏、历史同步",
+      "verification": "verification/sections/441.json"
     }
   ],
-  "next_section": 441,
-  "next_action": "继续完整程序与视频逐链路回顾、已有三条代码约束整改和P3资料/地图/资源/界面；OCR同步推进探索覆盖、字段归属、连续延迟、分辨率与CPU/游戏同跑核验。Qwen3-VL4B实测可运行但准确性/实时性未过，未接入生产；新模型路线先比较覆盖和资源，不重复无新依据调提示。保留剩余1011敌人引用、完整数值及P3/P2/P1缺口；441未启动。",
+  "next_section": 442,
+  "next_action": "继续全程序与视频逐链路回顾，保留六项已接入读值；补灰色希望上限、上限独立历史、其余布局/遮挡/连续实机准确性与资源成本，继续P3资料/地图/资源和界面。OCR同步优化，存量三条代码规则继续整改；P3/P2/P1、完整数值和全视频未完成。442未启动，下次完整455。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -2836,14 +2842,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 440,
-    "verification": "verification/sections/440.json",
+    "section": 441,
+    "verification": "verification/sections/441.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 440,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "dc620ea0c37f36f6c605b617b5e558fbe6ede375",
     "proof": "verification/sections/440-publication.json",
@@ -3267,20 +3273,21 @@
     437,
     438,
     439,
-    440
+    440,
+    441
   ],
   "current_batch": {
     "kind": "whole_program_review_and_implementation_improvement",
     "start": 441,
     "end": null,
     "status": "IMPLEMENTATION_REVIEW_ACTIVE",
-    "completed_sections": 440,
-    "next_section": 441,
+    "completed_sections": 441,
+    "next_section": 442,
     "next_section_started": false,
     "batch_closed": false,
     "next_full_validation_after": 455,
-    "receipt": "verification/maintenance/page-feature-vector-review-20261031/summary.json",
-    "scope": "Maintenance after functional440. The next numeric pointer is not a claim that functional441 started. Complete whole-program review and video requirements, not a smaller file-inventory goal."
+    "receipt": "verification/sections/441.json",
+    "scope": "Whole-program review and implementation improvement continues. Functional441 resource readout completed;442 not started. Complete all original requirements, not file inventory or isolated compatibility."
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -9267,11 +9274,11 @@
     "development_paused": false
   },
   "current_section_validation": {
-    "section": 440,
-    "receipt": "verification/sections/440.json",
-    "full_suite_rerun": true,
-    "last_full_receipt": "verification/full-440/summary.json",
-    "last_full_receipt_is_historical_for_current_changes": false
+    "section": 441,
+    "receipt": "verification/sections/441.json",
+    "necessary_checks": 43,
+    "native_unique_checks": 32,
+    "full_validation_rerun": false
   },
   "latest_section_environment": {
     "section": 440,
@@ -9730,17 +9737,6 @@
     "functional_section_added": false,
     "functional_development_remains_paused": true
   },
-  "current_maintenance_save": {
-    "kind": "implementation_review_maintenance",
-    "title": "页面特征批量提取与本地视觉模型实测，保留准确性未通过的替换候选",
-    "receipt": "verification/maintenance/page-feature-vector-review-20261031/summary.json",
-    "binding": "enclosing_commit",
-    "functional_section_added": false,
-    "status": "partial_program_review_vectorized_features_and_rejected_VLM_candidate",
-    "review_checklist": "PROGRAM_REVIEW.md",
-    "review_checklist_sha256": "2ebba085452f43ca40ac9473cebb297a5af664c4582ce132f37e1403c5765deb",
-    "application_review_complete": false
-  },
   "historical_before_whole_program_review_batch_20261031": {
     "current_batch": {
       "start": 426,
@@ -9756,5 +9752,16 @@
     "batch_status": "PLAYER_SECTION440_PUBLISHED_PAUSED",
     "batch_start_section": 426,
     "batch_target_section": 440
+  },
+  "historical_implementation_maintenance_before441": {
+    "kind": "implementation_review_maintenance",
+    "title": "页面特征批量提取与本地视觉模型实测，保留准确性未通过的替换候选",
+    "receipt": "verification/maintenance/page-feature-vector-review-20261031/summary.json",
+    "binding": "enclosing_commit",
+    "functional_section_added": false,
+    "status": "partial_program_review_vectorized_features_and_rejected_VLM_candidate",
+    "review_checklist": "PROGRAM_REVIEW.md",
+    "review_checklist_sha256": "2ebba085452f43ca40ac9473cebb297a5af664c4582ce132f37e1403c5765deb",
+    "application_review_complete": false
   }
 }

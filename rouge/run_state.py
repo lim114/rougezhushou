@@ -583,7 +583,10 @@ class RunState:
         for key,record in resource_reads.items():
             # An incomplete field is unread; keep its previous fact and time.
             if not isinstance(record,dict) or 'value' not in record:continue
-            if key not in ('gold','parts_count'):
+            from .relic_counter_semantics import HUD_RESOURCE_LABELS
+            if key in HUD_RESOURCE_LABELS:
+                if type(record['value'])is not int or record['value']<0:continue
+            elif key not in ('gold','parts_count'):
                 from .relic_counter_semantics import valid_counter_resource
                 if not valid_counter_resource(key,record):continue
             if record.get('value')!=state['resources'].get(key,{}).get('value'):

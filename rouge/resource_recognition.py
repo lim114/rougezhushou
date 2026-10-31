@@ -11,8 +11,11 @@ from .anchors import units
 def gold_template():
     return cv2.imdecode(np.fromfile(Path(__file__).with_name('data')/'ui-icons/gold-counter.png',dtype=np.uint8),cv2.IMREAD_GRAYSCALE)
 
-def read_resources(image,texts):
+def read_resources(image,texts,engine=None):
     h,w=image.shape[:2];resources={}
+    if engine is not None:
+        from .hud_resources import read_hud_resources
+        resources.update(read_hud_resources(image,texts,engine))
     parts=next((t for t in texts if t['text']=='零件箱' and t['confidence']>=.9),None)
     if parts:
         x,y=center(parts);ux,uy=units(image,parts,29)

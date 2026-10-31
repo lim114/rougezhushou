@@ -51,17 +51,15 @@ def resource_rows(state):
     rows.append({'key': 'crew', 'name': '干员', 'value': crew_value,
         'note': f'已确认在队{crew}名；' + (f'已读队伍总数{crew_total}名。' if crew_total is not None else '队伍总数未读。')
                 + '不是可携带或可部署人数；点击查看本局队伍。'})
-    for key, name in (('life', '目标生命'), ('shield', '护盾'),
-                      ('command', '指挥等级'), ('hope', '希望')):
-        rows.append({'key': key, 'name': name, 'value': '未读',
-            'note': '当前自动读取尚未覆盖此项，不从分队、保密等级或旧层记录推算。'})
-    gold = resources.get('gold') or {}
-    amount = gold.get('value')
-    rows.append({'key': 'gold', 'name': '源石锭',
-        'value': f'{amount:g}' if numeric_read(amount) else '未读',
-        'note': '本局最近读到的数量。' + observation_time(gold.get('captured_at'))
-                + '；不是所选历史层当时数量，也不代表结算收益。'})
-    for key, name in (('action', '行动力'), ('valuation', '总估价')):
-        rows.append({'key': key, 'name': name, 'value': '未读',
-            'note': '当前自动读取尚未覆盖此项，不根据地图步数、藏品或旧记录推算。'})
+    from .relic_counter_semantics import RESOURCE_LABELS
+    for key in ('life', 'shield', 'command', 'hope', 'gold', 'action', 'valuation'):
+        record = resources.get(key) or {}
+        amount = record.get('value')
+        value = f'{amount:g}' if numeric_read(amount) else '未读'
+        capacity = count(record.get('capacity'))
+        if key in ('life', 'hope') and numeric_read(amount) and capacity is not None and capacity >= amount:
+            value += '/' + str(capacity)
+        rows.append({'key': key, 'name': RESOURCE_LABELS[key], 'value': value,
+            'note': '本局最近读到的数值。' + observation_time(record.get('captured_at'))
+                    + '；未读不代表零，不使用分队或藏品推算，也不是所选历史层当时数值。'})
     return rows

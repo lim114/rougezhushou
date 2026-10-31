@@ -1,10 +1,10 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 440,
-  "next_section": 441,
-  "current_section_label": "第440节 + 本局地图读取覆盖与按信息来源查找",
-  "current_completed_change": "探索地图整合本局已保存区域的读取覆盖：已读或历史类型、模板固定类型和尚待确认类型分开计数，并可按这三类筛选查找列表。刷新保留筛选和准确选中项，未知类型仍可定位查阅，但不以模板或唯一候选冒充已读。",
+  "completed_sections": 441,
+  "next_section": 442,
+  "current_section_label": "第441节 + 六项界面资源读取与本局资源栏、历史同步",
+  "current_completed_change": "目标生命、护盾、指挥等级、希望、行动力和总估价从当前标签/图标读值，接入本局保存、重启、数量变化历史及已有资源胶囊；未读保留最近确认值，0与未知分开，生命显示当前值/上限。",
   "batch_status": "IMPLEMENTATION_REVIEW_ACTIVE",
   "next_full_validation_after": 455,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
@@ -16,7 +16,7 @@
   "current_batch_target_section": null,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "d720cf92064f8637e65999a3136fd32e09a09be442ea114027b2015c86967f43",
+    "sha256": "08616bebc9c17210f3ac9fc5bce2db0319450f5269ef55f975feed1672dc30b3",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2647,28 +2647,22 @@
       "completion_ref": "player-section-440",
       "topic": "本局地图读取覆盖与按信息来源查找",
       "verification": "verification/sections/440.json"
+    },
+    {
+      "number": 441,
+      "completion_ref": "player-section-441",
+      "topic": "六项界面资源读取与本局资源栏、历史同步",
+      "verification": "verification/sections/441.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "582d263139ecf84e544b05116b1ab53638ef64bbc28aaa23e4fcb0513eb8d4a7",
-    "PROJECT_PROGRESS.md": "ac899a317747b70ac8853f9eb2a0911e8e41060e99cea5cec6d9cf3298a50d2f",
-    "WORK_IN_PROGRESS.md": "f88a9f36ad06ff2ae2e90e0da743e1be316b4762b01182c60c8763cdf8e1e315",
-    "PROJECT_COMPLETED.md": "3f585754fe8a0be07d0611dd1addc669c03b9e9f7f749301fe246c6a9fea1b58",
-    "AGENTS.md": "28dd01bd44a7fa0063e81c640f5ca66181f27bc65659b8aec3449e8fe0ec21a9",
-    "PROJECT_REQUIREMENTS.md": "d720cf92064f8637e65999a3136fd32e09a09be442ea114027b2015c86967f43",
-    "verification/sections/440.json": "3fcc5cbceadb45204b47d629c8aea45bd0dd0ff7ad551cbbc0bcf74dcaab07fb"
+    "DEVELOPMENT_CHECKPOINT.json": "b0de0e93a122f0fd731d2d28b1a0d4cb3e20fe7360344188e9c01faeff315cd5",
+    "PROJECT_PROGRESS.md": "a2c9cad3ad242eef50aba13eb3c9c77424c11a15133c2495a902dfa86418f81c",
+    "WORK_IN_PROGRESS.md": "4008385b116131dd0e4f92689764093c8c6158d307022bd4f7021b0b15a54e87",
+    "PROJECT_COMPLETED.md": "42830eef2aadd9819a892dea151c5b60ec4fe0d7c1f69ad9e072528238c381b8",
+    "AGENTS.md": "47237fa766e5d186244fc491dbf88f13632108514b6fb9e7923b547227d5854e",
+    "PROJECT_REQUIREMENTS.md": "08616bebc9c17210f3ac9fc5bce2db0319450f5269ef55f975feed1672dc30b3",
+    "verification/sections/441.json": "18792e478d71a2e05ed0ffb166c5de759995c6c434ec637bf0ddedea28ca2392"
   },
-  "private_state_included": false,
-  "current_maintenance": {
-    "kind": "implementation_review_maintenance",
-    "title": "页面特征批量提取与本地视觉模型实测，保留准确性未通过的替换候选",
-    "receipt": "verification/maintenance/page-feature-vector-review-20261031/summary.json",
-    "binding": "enclosing_commit",
-    "functional_section_added": false,
-    "status": "partial_program_review_vectorized_features_and_rejected_VLM_candidate",
-    "review_checklist": "PROGRAM_REVIEW.md",
-    "review_checklist_sha256": "2ebba085452f43ca40ac9473cebb297a5af664c4582ce132f37e1403c5765deb",
-    "application_review_complete": false,
-    "receipt_sha256": "f40dc9034931bda7c811c6486080791bbc60550c6fcfc8f73604ee4d41e55722"
-  }
+  "private_state_included": false
 }

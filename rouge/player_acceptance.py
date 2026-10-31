@@ -1,5 +1,8 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==441:
+        from .player_resource_acceptance import check_hud
+        return check_hud(window,gui,require)
     if section==440:
         from .player_feature_440_acceptance import check as check_feature
         return check_feature(window,gui,require)

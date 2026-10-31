@@ -16,7 +16,9 @@ COUNTER_BINDINGS = {
     'rogue_6_relic_fight_30': ('probe_stacks','layer_zone_end_battle',99),
     'rogue_6_relic_artifact_7': ('grudge_stacks','layer_after_battle_data',999),
 }
-RESOURCE_LABELS = {'gold':'源石锭','parts_count':'零件数',
+HUD_RESOURCE_LABELS = {'life':'目标生命','shield':'护盾','command':'指挥等级',
+    'hope':'希望','action':'行动力','valuation':'总估价'}
+RESOURCE_LABELS = {**HUD_RESOURCE_LABELS,'gold':'源石锭','parts_count':'零件数',
     'altar_stacks':'圆石祭坛层数','mercenary_stacks':'佣兵饰物层数',
     'fire_rod_stacks':'厄运火杆层数','probe_stacks':'探测先锋层数',
     'grudge_stacks':'仇名录层数'}

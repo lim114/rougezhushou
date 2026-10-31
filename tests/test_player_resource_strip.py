@@ -51,7 +51,7 @@ class ResourceFactsTests(unittest.TestCase):
         self.assertIsNone(inventory_summary(state)['expected_relics'])
         self.assertNotIn('/ 共', overview_facts(state)['已读收藏品'])
 
-    def test_zero_is_read_and_unknown_resources_are_not_filled_from_other_fields(self):
+    def test_zero_and_read_life_do_not_fill_other_unknown_resources(self):
         state = fixture()
         state['resources']['life'] = {'value': 99}
         state['config'] = {'difficulty': {'value': 15}}
@@ -61,7 +61,8 @@ class ResourceFactsTests(unittest.TestCase):
         self.assertEqual(rows['parts']['value'], '2/8')
         self.assertEqual(rows['items']['value'], '3')
         self.assertEqual(rows['crew']['value'], '1/4')
-        for key in ('life', 'shield', 'command', 'hope', 'action', 'valuation'):
+        self.assertEqual(rows['life']['value'], '99')
+        for key in ('shield', 'command', 'hope', 'action', 'valuation'):
             self.assertEqual(rows[key]['value'], '未读')
         self.assertEqual(state, before)
 

@@ -158,7 +158,7 @@ def read_run(image,texts,engine,*,icon_cache=None,run_context=None):
             ranks=read_card_masteries(image,*member['card_position'],len(operator_profiles()[member['id']]['skills']),space=member.get('card_scale',(1,1)))
             member['skill_ranks']={**member['skill_ranks'],**ranks}
             if ranks:member['sources']['skill_ranks']='本局卡片各技能三个亮起专精标记分别确认'
-    resources=read_resources(image,texts) if is_map else {}
+    resources=read_resources(image,texts,engine) if is_map else {}
     counters=[];unbound_counters=[];counter_performance={}
     if held['text']=='收起' and is_map:
         badges,regions,counter_performance,_=read_local_counter_badges(image,texts,held,engine)
