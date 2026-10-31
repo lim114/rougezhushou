@@ -4,7 +4,8 @@ from threading import Thread
 from datetime import datetime,timezone,timedelta
 import json,os
 from PySide6.QtCore import Signal,Qt,QUrl
-from PySide6.QtGui import QDesktopServices,QIcon
+from PySide6.QtGui import QDesktopServices
+from .view_catalog import relic_icon,relic_icon_note
 from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QComboBox,QListWidget,QListWidgetItem,QTableWidget,QTableWidgetItem,QPlainTextEdit,QPushButton,QTabWidget,QCheckBox
 from . import public_archive as model
 class ArchiveDialog(QDialog):
@@ -86,8 +87,9 @@ class ArchiveDialog(QDialog):
             i=self.members.rowCount();self.members.insertRow(i)
             values=[row['name'],f"{row['rate']:.2%}"if row['rate']is not None else'未知',f"{row['count']}／{row['total']}"if row['rate']is not None else'未核对',row['effect']]
             for j,value in enumerate(values):cell=QTableWidgetItem(value);cell.setToolTip(value);self.members.setItem(i,j,cell)
-            icon=Path(__file__).parent/'data/relic-icons'/str((row.get('icon')or'')+'.png')
-            if icon.is_file():self.members.item(i,0).setIcon(QIcon(str(icon)))
+            icon=row.get('icon')or'';self.members.item(i,0).setIcon(relic_icon(icon))
+            note=relic_icon_note(icon)
+            if note:self.members.item(i,0).setToolTip(row['name']+'\n'+note)
         self.members.resizeColumnsToContents();self.members.setColumnWidth(3,280)
     def render_events(self,*_):
         current=self.events.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if current else None

@@ -58,9 +58,8 @@ def comparison_text(comparison):
     return '\n'.join(lines)+'\n\n两次清单可能没有读全，也可能来自不同商店。未读到不等于已购买或下架，变化不证明刷新。'
 
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QIcon
+from .view_catalog import relic_icon,relic_icon_note
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QComboBox,QListWidgetItem,QPlainTextEdit,QLineEdit,QPushButton
-from pathlib import Path
 from .player_catalog_grid import CatalogGrid,add_catalog_controls
 class ShopMemoryPanel(QWidget):
     def __init__(self,run,source_panel=None):
@@ -92,7 +91,8 @@ class ShopMemoryPanel(QWidget):
         if public:
             for record in row.get('items',[]):
                 if query and query not in record['name'].casefold():continue
-                item=public['current']['details']['items'].get(record['id'])or{};path=Path(__file__).with_name('data')/'relic-icons'/((item.get('iconId')or'')+'.png');entry=QListWidgetItem(QIcon(str(path))if path.is_file()else QIcon(),record['name']);entry.setData(Qt.ItemDataRole.UserRole,record['id']);self.entries.addItem(entry)
+                item=public['current']['details']['items'].get(record['id'])or{};icon=item.get('iconId')or''
+                entry=QListWidgetItem(relic_icon(icon),record['name']);entry.setToolTip(relic_icon_note(icon));entry.setData(Qt.ItemDataRole.UserRole,record['id']);self.entries.addItem(entry)
                 if keep==record['id']:self.entries.setCurrentItem(entry)
         self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
     def selected(self,*_):
@@ -100,6 +100,7 @@ class ShopMemoryPanel(QWidget):
         public=packet();entry=self.entries.currentItem();identity=entry.data(Qt.ItemDataRole.UserRole)if entry else None;item=public['current']['details']['items'].get(identity)if public else None
         self.source_button.setEnabled(item is not None)
         self.detail.setPlainText(item['name']+'\n\n资料效果\n'+_plain(item.get('usage'))+'\n\n这是当时读到的名称，不证明持有、购买或当前仍在售。'if item else'选择已读商品查看效果。')
+        if entry and entry.toolTip():self.detail.appendPlainText('\n图片说明\n'+entry.toolTip())
         if not item:self.details_toggle.setChecked(False)
     def open_source(self):
         from .expansion_reference import packet

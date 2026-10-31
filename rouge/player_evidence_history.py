@@ -65,7 +65,7 @@ def evidence_text(row):
 
 from PySide6.QtCore import Qt, QSize
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QTabWidget, QListWidget, QListWidgetItem, QPlainTextEdit
-from .view_catalog import portrait_icon
+from .view_catalog import portrait_icon,relic_icon,relic_icon_note
 from pathlib import Path
 from PySide6.QtGui import QIcon
 
@@ -79,8 +79,7 @@ def evidence_icon(row,items=None):
     identity = item.get('iconId')
     if not isinstance(identity, str) or Path(identity).name != identity or '/' in identity or '\\' in identity:
         return QIcon()
-    path = Path(__file__).with_name('data') / 'relic-icons' / (identity + '.png')
-    return QIcon(str(path)) if path.is_file() else QIcon()
+    return relic_icon(identity)
 
 class EvidenceHistoryPage(QWidget):
     def __init__(self, parent=None):
@@ -107,14 +106,18 @@ class EvidenceHistoryPage(QWidget):
 
     def refresh(self, state):
         rows = evidence_rows(state)
-        key = repr((state.get('id'), rows))
+        from .expansion_reference import packet,_plain
+        data=packet();items=data['current']['details']['items']if data else{}
+        for row in rows:
+            item=items.get(row['id'])or{}
+            if row['kind']!='operator'and row['name']=='固定资料名称未核对'and _plain(item.get('name')):
+                row['name']=_plain(item['name']);row['name_note']='名称引用当前固定国服资料；不表示当时版本或领取来源已核验。'
+        key = repr((state.get('id'), rows, data['source_identity']if data else None))
         if key == self.key:
             return
         changed_run = getattr(self, 'run_id', None) != state.get('id')
         self.run_id = state.get('id')
         self.key, self.rows = key, rows
-        from .expansion_reference import packet
-        data=packet();items=data['current']['details']['items']if data else{}
         for kind, widget in self.lists.items():
             item = widget.currentItem()
             old = item.data(Qt.ItemDataRole.UserRole) if item and not changed_run else None
@@ -127,6 +130,7 @@ class EvidenceHistoryPage(QWidget):
                 item = QListWidgetItem(evidence_icon(row,items),
                                        row['name'] + ' · ' + row['label'])
                 item.setData(Qt.ItemDataRole.UserRole, row['index'])
+                item.setToolTip('\n'.join(note for note in (row.get('name_note',''),relic_icon_note((items.get(row['id'])or{}).get('iconId')or''))if note))
                 widget.addItem(item)
                 if row['index'] == old:
                     widget.setCurrentItem(item)
@@ -138,5 +142,6 @@ class EvidenceHistoryPage(QWidget):
         item = self.tabs.currentWidget().currentItem()
         row = next((row for row in self.rows if row['index'] == item.data(Qt.ItemDataRole.UserRole)), None) if item else None
         text = evidence_text(row) if row else '选择一条已读变化；未读取的发放和消耗不补写。'
+        if item and item.toolTip():text+='\n\n资料说明\n'+item.toolTip()
         if self.detail.toPlainText() != text:
             self.detail.setPlainText(text)

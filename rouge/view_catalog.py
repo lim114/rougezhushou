@@ -46,13 +46,27 @@ def portrait_icon(kind,identity):
     return QIcon(str(path)) if path is not None and path.is_file() else QIcon()
 
 
+@lru_cache(maxsize=1)
+def relic_display_records():
+    """Display references are independent of recognition templates and identity."""
+    path=DATA/'relic-reference-equivalence.json'
+    families=json.loads(path.read_text('utf8'))['families']if path.is_file()else{}
+    records={rid:{'file':family['file']}for family in families.values()for rid in family['ids']}
+    supplement=DATA/'relic-display-icons.json'
+    if supplement.is_file():records.update(json.loads(supplement.read_text('utf8'))['icons'])
+    return records
+
+
+def relic_icon_note(identity):
+    return relic_display_records().get(identity,{}).get('note','')
+
+
 def relic_icon(identity):
-    """Reuse only explicitly documented shared artwork, never infer item identity."""
+    """Exact files first; only declared picture references may fill a missing icon."""
     path=DATA/'relic-icons'/(identity+'.png')
     if not path.is_file():
-        from .relic_recognition import artwork_families
-        family=artwork_families().get(identity)
-        if family:path=DATA/'relic-icons'/(family[0]+'.png')
+        record=relic_display_records().get(identity)
+        if record:path=DATA/record['file']
     return QIcon(str(path)) if path.is_file() else QIcon()
 
 

@@ -2,7 +2,7 @@
 from PySide6.QtCore import Qt,Signal
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QComboBox,QPlainTextEdit
 from .player_item_sources import pool_label,VERSION_LABELS
-from .view_catalog import relic_icon
+from .view_catalog import relic_icon,relic_icon_note
 
 class ItemHoverCard(QDialog):
     entered=Signal()
@@ -37,6 +37,8 @@ class ItemHoverCard(QDialog):
         self.title.setText(row['name']);self.picture.clear()
         self.picture.setPixmap(relic_icon(row.get('icon')or'').pixmap(46,46))
         self.notice.setText(VERSION_LABELS.get(version,'未确认资料范围')+' · 当前DLC适用性待核验。\n比例为历史候选出现频率，不是抽取权重或本局获得概率；不同来源可能重叠，不相加。仅本机查询，不上传本局。')
+        note=relic_icon_note(row.get('icon')or'')
+        if note:self.notice.setText(note+'\n'+self.notice.text())
         self.pools.blockSignals(True);self.pools.clear()
         for pool in index.pools(version,row['id'])if index else[]:self.pools.addItem(pool_label(pool),pool['id'])
         if old is not None and self.pools.findData(old)>=0:self.pools.setCurrentIndex(self.pools.findData(old))

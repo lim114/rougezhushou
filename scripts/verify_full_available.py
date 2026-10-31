@@ -582,6 +582,8 @@ ADDITIONAL_MODULES += ('tests.test_notebook_layout_review',)
 
 ADDITIONAL_MODULES += ('tests.test_replay_layout_review',)
 
+ADDITIONAL_MODULES += ('tests.test_relic_display_images_review',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

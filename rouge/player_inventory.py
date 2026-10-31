@@ -161,12 +161,14 @@ class InventoryPanel(QWidget):
         if rows is not None and data is None:self.status.setText('公开图鉴暂不可用；下方只显示固定国服说明，未沿用旧的图鉴或掉落资料。'+self.status.text())
         if self.access.currentData()or self.source_node.currentData():self.status.setText(self.status.text()+' 当前按来源说明筛选，不判断本局解锁、可选或必掉；未收录不表示没有取得途径。')
     def render_rows(self,rows,selected):
-        from .view_catalog import relic_icon
+        from .view_catalog import relic_icon,relic_icon_note
         offset=self.entries.verticalScrollBar().value()
         self.entries.blockSignals(True);self.entries.clear()
         for row in rows or[]:
             item=QListWidgetItem(relic_icon(row['icon']or''),row['name'])
             item.setToolTip(row['name']+' · '+RARITIES.get(row['rarity'],'未分档')+(' · 本局已确认'if row['held']else' · 资料条目'));item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
+            note=relic_icon_note(row['icon']or'')
+            if note:item.setToolTip(item.toolTip()+'\n'+note)
             if row['id']==selected:self.entries.setCurrentItem(item)
         if selected not in self.rows:self.entries.setCurrentRow(-1)
         self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
@@ -188,6 +190,9 @@ class InventoryPanel(QWidget):
             if doc.get('description'):text+='\n\n藏品简介\n'+reference._plain(doc['description'])
             text+='\n\n说明来源：路标档案馆 · 拓展一图鉴。列出的分档效果不代表本局当前档位；持有、解锁与生效均需另行确认。'
         else:text+='\n\n说明来源：固定国服2026年10月16日；所选图鉴未确认收录此条，不能视为该范围完整说明。'
+        from .view_catalog import relic_icon_note
+        note=relic_icon_note(row['icon']or'')
+        if note:text+='\n\n图片说明\n'+note
         if self.detail.toPlainText()!=text:self.detail.setPlainText(text)
     def open_selected(self):
         item=self.entries.currentItem()
