@@ -51,6 +51,14 @@ def audit(root):
         support='files'not in data
         runtime=data.get('runtime_files',data.get('files',{}))
         if support:runtime={str(p.parent/n):{'sha256':v}for n,v in data.get('support_files_sha256',{}).items()}
+        runtime=dict(runtime);separate=[]
+        if isinstance(env.get('DATA'),str)and isinstance(env.get('DATA_SHA256'),str)and env['DATA']not in runtime:
+            runtime[env['DATA']]={'sha256':env['DATA_SHA256']};separate.append(env['DATA'])
+        if isinstance(env.get('PROOF_SHA256'),str):
+            for node in ast.walk(tree):
+                if isinstance(node,ast.BinOp)and isinstance(node.op,ast.Div)and isinstance(node.right,ast.Constant)and node.right.value=='source-proof.json':
+                    proof=value(node,env)
+                    if isinstance(proof,str)and proof not in runtime:runtime[proof]={'sha256':env['PROOF_SHA256']};separate.append(str(Path(proof).relative_to(root)))
         checks=[]
         for name,expected in runtime.items():
             actual=pin(name)
@@ -60,7 +68,7 @@ def audit(root):
         rows.append({'module':path.stem,'module_path':path.relative_to(root).as_posix(),'source_sha256':sha256(raw).hexdigest(),
                      'manifest':rel,'manifest_digest_matches':pin(rel).get('sha256')==env.get('MANIFEST_SHA256'),
                      'runtime_files':len(checks),'runtime_code_files':[c['path']for c in checks if c['path'].endswith(('.py','.js','.cjs'))],
-                     'runtime_file_checks':checks,'support_only_scope':support})
+                     'runtime_file_checks':checks,'separately_pinned_data_or_proofs':separate,'support_only_scope':support})
     return {'static_resolved_runtime_bindings':len(rows),'unresolved':unresolved,'rows':rows,
             'all_resolved_runtime_bytes_match':all(not r.get('error')and r['manifest_digest_matches']and all(p['matches']for p in r['runtime_file_checks'])for r in rows),
             'limitation':'Static manifest/support-file byte audit only. No importing target modules, no private files or network, no proof that loaders execute or schemas, UI, formulas or actual game mechanisms are correct.'}

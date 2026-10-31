@@ -9,8 +9,8 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = 'research/p3-moving-reward-current/source-manifest.json'
-MANIFEST_SHA256 = '9054b8b1aa72fee634e794a6a39ea255c3b6d2bff195dd64eaccf09cf4596e8f'
+MANIFEST = 'research/runtime-reference-loaders-20261031/moving-rewards/source-manifest.json'
+MANIFEST_SHA256 = '5b23e8f5dbcbe30e537f57825c3c40abb7f140a843d7e45564ed327b94452383'
 DATA = 'rouge/data/moving-reward-current-reference.json'
 ENTITY = 'enemy_2152_shezlc'
 

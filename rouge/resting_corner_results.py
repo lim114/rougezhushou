@@ -7,8 +7,8 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 EVENT='community_group_023'
 DATA='rouge/data/resting-corner-results.json'
-MANIFEST='research/p3-resting-results-293/source-manifest.json'
-MANIFEST_SHA256='3db8aee2815e898211bc902d0314e0d58e5e1fd5c585cd265fde280b4d2b5476'
+MANIFEST = 'research/runtime-reference-loaders-20261031/resting-corner/source-manifest.json'
+MANIFEST_SHA256 = 'cd2b9f01295dbc88fbc44a6bcf8d8dfbc549b8656d345e2bcc969d7ba4e1fb27'
 _CHOICES=tuple(EVENT+f':scene:{scene}:choice:{choice}' for scene,choice in ((1,0),(6,0),(9,1),(11,0)))
 _CACHE={}
 

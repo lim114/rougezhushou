@@ -13,9 +13,9 @@ from pathlib import Path, PurePosixPath
 STAGE_ID = 'ro6_t_12'
 ROOT = Path(__file__).resolve().parents[1]
 DATA = 'rouge/data/stage-entry-configuration-reference.json'
-MANIFEST = 'research/p3-stage-entry-configuration-296/manifest.json'
+MANIFEST = 'research/runtime-reference-loaders-20261031/stage-entry/source-manifest.json'
 DATA_SHA256 = 'd30165125724bad4d520bd84506666f7c4eba151080a4b231bda8721d8761bcf'
-MANIFEST_SHA256 = '47b272989530c116163c59e683dca7cf77a6798f2eb1180b4d112ad350c01976'
+MANIFEST_SHA256 = '7223bdb1ac5dbd003f37bc0e22c2263d620a4093c6686e40d55a3294c9e8ebbc'
 _parsed_packet = None
 
 

@@ -10,8 +10,8 @@ EVENT='community_group_018'
 SCENE=EVENT+':scene:0'
 CHOICE=SCENE+':choice:1'
 DATA='rouge/data/choice-recruitment-results.json'
-MANIFEST='research/p3-choice-recruitment-290/source-manifest.json'
-MANIFEST_SHA256='7f217505013aa77d8b3f1693b802f1fbb2888197180a4b8e64365c0fe055be93'
+MANIFEST = 'research/runtime-reference-loaders-20261031/recruitment/source-manifest.json'
+MANIFEST_SHA256 = 'c50017cce26f0800a642b6a875a5a60213a4eb57ad5c0b74fd0453774b25b41a'
 _CACHE={}
 
 

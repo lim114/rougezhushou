@@ -7,8 +7,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = 'community_group_007'
 DATA = 'rouge/data/event-named-reward-links.json'
-MANIFEST = 'research/p3-event-named-rewards-289/source-manifest.json'
-MANIFEST_SHA256 = 'c1b6ac0ae75261ec5cc56d75334c951145b192259124d0878b97390d254ec8ee'
+MANIFEST = 'research/runtime-reference-loaders-20261031/event-named-links/source-manifest.json'
+MANIFEST_SHA256 = 'c2fe240798dba132f2cc097aedf909ea65ea192f255510f206c46a2cf3f33bd6'
 _CACHE = {}
 
 

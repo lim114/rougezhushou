@@ -9,8 +9,8 @@ EVENT='community_group_019'
 SCENE=EVENT+':scene:1'
 CHOICE=SCENE+':choice:0'
 DATA='rouge/data/peace-guardian-results.json'
-MANIFEST='research/p3-peace-guardian-results-291/source-manifest.json'
-MANIFEST_SHA256='0d601704bff78b79089ce56c49ecce4874f37e134546081d3801575a06d5f5f6'
+MANIFEST = 'research/runtime-reference-loaders-20261031/peace-guardian/source-manifest.json'
+MANIFEST_SHA256 = 'ce6bafd319577204481b485aaace6c8440d61b02c4f836242e0b36aa47df0239'
 _CACHE={}
 
 

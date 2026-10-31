@@ -9,6 +9,13 @@ RECIPES={
     'battle-events':'research/p3-battle-entry-compatibility-299/source-manifest.json',
     'named-items':'research/p3-named-reward-items-301/source-manifest.json',
     'ritual':'research/p3-ritual-weakening-302/source-manifest.json',
+    'recruitment':'research/p3-choice-recruitment-290/source-manifest.json',
+    'current-rewards':'research/p3-current-rewards-315/runtime-manifest.json',
+    'event-named-links':'research/p3-event-named-rewards-289/source-manifest.json',
+    'moving-rewards':'research/p3-moving-reward-current/source-manifest.json',
+    'peace-guardian':'research/p3-peace-guardian-results-291/source-manifest.json',
+    'resting-corner':'research/p3-resting-results-293/source-manifest.json',
+    'stage-entry':'research/p3-stage-entry-configuration-296/manifest.json',
 }
 
 

@@ -26,7 +26,8 @@ class StageEntryConfigurationTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='rouge-296-public-')
         self.root = Path(self.temp.name)
-        manifest_file = PACKET / 'manifest.json'
+        from rouge import stage_entry_reference as current_module
+        manifest_file = Path(current_module.MANIFEST)
         manifest = json.loads((ROOT / manifest_file).read_bytes())
         files = [MODULE, Path('rouge/data/stage-entry-configuration-reference.json'), manifest_file]
         files.extend(Path(name) for name in manifest['files'])
@@ -178,7 +179,7 @@ class StageEntryConfigurationTests(unittest.TestCase):
             with self.subTest(file=relative):
                 self.reject_tamper_and_restore(relative)
 
-    def test_warm_missing_source_and_builder_change_are_rejected(self):
+    def test_warm_missing_data_is_rejected_and_unrelated_builder_change_is_tolerated(self):
         self.reference()
         source = self.root / PACKET / 'original-values/zones--zone_4_1.json'
         raw = source.read_bytes()
@@ -186,7 +187,10 @@ class StageEntryConfigurationTests(unittest.TestCase):
         self.assertEqual(self.module.stage_entry_reference('ro6_t_12')['rows'], [])
         source.write_bytes(raw)
         self.reference()
-        self.reject_tamper_and_restore(Path('scripts/build_stage_entry_configuration_296.py'))
+        before=self.reference()
+        helper=self.root/'scripts/build_stage_entry_configuration_296.py'
+        helper.parent.mkdir(parents=True,exist_ok=True);helper.write_text('# Unrelated build helper; never executed at runtime.\n','utf8')
+        self.assertEqual(self.reference(),before)
 
     def test_runtime_does_not_write_files_or_need_original_large_table(self):
         def files():

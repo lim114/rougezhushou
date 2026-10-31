@@ -17,7 +17,9 @@ class CurrentRewardReference315Tests(unittest.TestCase):
             raw=(cache/(name+'.json')).read_bytes();self.assertEqual(len(raw),pin['bytes']);self.assertEqual(sha256(raw).hexdigest(),pin['sha256']);originals[name]=json.loads(raw)
         for eid,char in ref['selected']['characters'].items():self.assertEqual(char,originals['character_table'][eid])
         for sid,skill in ref['selected']['skills'].items():self.assertEqual(skill,originals['skill_table'][sid])
-        self.assertEqual(build(ROOT),(ROOT/model.MANIFEST).read_bytes())
+        # The original builder reproduces the historical recipe, not the new
+        # runtime manifest that separates build-only provenance.
+        self.assertEqual(build(ROOT),(ROOT/'research/p3-current-rewards-315/runtime-manifest.json').read_bytes())
     def test_every184_stage113_levels_all_supported_device_and_spawn_rows_preserved(self):
         ref=model.packet();stages=ref['current']['version']['current']['details']['stages'];self.assertEqual(len(stages),184);seen=set();counts={'device':0,'rare':0,'moving':0}
         with patch.object(model,'packet',return_value=ref):

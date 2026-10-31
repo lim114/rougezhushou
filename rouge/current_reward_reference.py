@@ -8,8 +8,8 @@ from . import moving_reward_reference as moving
 
 ROOT=Path(__file__).resolve().parents[1]
 PACK='research/p3-current-rewards-315'
-MANIFEST=PACK+'/runtime-manifest.json'
-MANIFEST_SHA256='8125b3f78a849d68a569cb466e4d0561b289155f66788aa3ff02695275a4e831'
+MANIFEST = 'research/runtime-reference-loaders-20261031/current-rewards/source-manifest.json'
+MANIFEST_SHA256 = '7da66825f98c9834a566040f04568e1851dadf385ea4c5194042b6f0134b6b58'
 DEVICES={'trap_320_shtlbx':'sktok_shtlbx','trap_321_shnbox':'sktok_shnbox','trap_322_shrbox':'sktok_shrbox','trap_323_shsbox':'sktok_shsbox','trap_327_shchst':'sktok_shchst'}
 MOVING='enemy_2152_shezlc'
 UNAVAILABLE='本版本的奖励资料无法核对，旧奖励与入口已清除；恢复后请重新选择。'
