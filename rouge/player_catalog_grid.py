@@ -16,7 +16,7 @@ INVENTORY_STYLE='''
 #inventoryWindow QPushButton:hover{background:#3d5e55;color:white;}
 #inventoryWindow QCheckBox{color:#b6c2bc;}
 #inventoryWindow QPlainTextEdit{background:#1b2322;color:#d9e6de;border:1px solid #43514b;border-radius:12px;padding:10px;}
-#inventoryWindow QListWidget{background:#101214;border:0;outline:none;}
+#inventoryWindow QListWidget{background:#101214;color:#8bd3b9;border:0;outline:none;}
 '''
 
 class IconTile(QStyledItemDelegate):
@@ -32,8 +32,8 @@ class IconTile(QStyledItemDelegate):
         picture=QRect(rect.center().x()-size//2,rect.top()+6,size,size)
         if isinstance(icon,QIcon)and not icon.isNull():icon.paint(painter,picture)
         else:
-            painter.setPen(QColor('#a4b1ac'));painter.drawText(picture,Qt.AlignmentFlag.AlignCenter,'暂无图片')
-        painter.setPen(QColor('#8bd3b9'))
+            painter.setPen(QColor('#a4b1ac')if selected else option.palette.text().color());painter.drawText(picture,Qt.AlignmentFlag.AlignCenter,'暂无图片')
+        painter.setPen(QColor('#8bd3b9')if selected else option.palette.text().color())
         text_rect=QRect(rect.left()+4,picture.bottom()+6,rect.width()-8,42)
         painter.drawText(text_rect,Qt.AlignmentFlag.AlignHCenter|Qt.AlignmentFlag.AlignTop|Qt.TextFlag.TextWordWrap,index.data(Qt.ItemDataRole.DisplayRole)or'')
         painter.restore()

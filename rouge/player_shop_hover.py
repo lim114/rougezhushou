@@ -3,6 +3,7 @@ import unicodedata
 import time
 from hashlib import sha256
 import numpy as np
+import cv2
 from . import expansion_reference
 
 def canonical(value):
@@ -18,13 +19,8 @@ def name_catalog(packet):
         if name:result.setdefault(name,[]).append(identity)
     return result
 
-def shop_target(raw,names,point,shape):
-    """Bind the exact name to its own price text; unread cards remain unknown.
-
-    Positions come from this frame. Font-relative limits admit the observed
-    card layout conservatively; they do not infer missing rows or columns.
-    """
-    height,width=shape[:2];records=[]
+def _shop_texts(raw):
+    records=[]
     for box,text,score in raw or[]:
         if float(score)<.85:continue
         xs=[float(p[0])for p in box];ys=[float(p[1])for p in box]
@@ -32,8 +28,17 @@ def shop_target(raw,names,point,shape):
         bounds=(min(xs),min(ys),max(xs),max(ys))
         if bounds[2]<=bounds[0] or bounds[3]<=bounds[1]:continue
         records.append({'text':canonical(text),'score':float(score),'bounds':bounds})
+    return records
+
+def shop_target(raw,names,point,shape):
+    return _shop_target(_shop_texts(raw),names,point,shape)
+
+def _shop_target(records,names,point,shape):
+    """Bind an exact name to its current card, never infer missing neighbours."""
+    height,width=shape[:2]
     words=[r['text']for r in records]
-    is_shop=any('购买'in s for s in words)and any(any(w in s for w in('当前余额','前瞻性投资','刷新'))for s in words)
+    is_shop=(any('购买'in s for s in words)and any(any(w in s for w in('当前余额','前瞻性投资','刷新'))for s in words)
+        or '当前余额'in words and '刷新'in words and any('前瞻性投资'in s for s in words)and words.count('价格')>=2)
     if not is_shop:return None,False
     headers=[{**r,'ids':names[r['text']]}for r in records if r['score']>=.9 and r['text']in names]
     # Pointer over an exact name needs no inferred card extent at all.
@@ -94,6 +99,51 @@ def shop_target(raw,names,point,shape):
             # Keep the existing reader/verification route identifier compatible.
             'source':'shop_exact_name_and_current_grid','card_evidence':evidence},True
 
+def price_region(bounds,shape):
+    x,y,u,v=bounds;font=v-y;h,w=shape[:2]
+    box=(int(x-2*font),int(v-font*.25),int(u+font*.5),int(v+font*2.5))
+    return box if 0<=box[0]<box[2]<=w and 0<=box[1]<box[3]<=h else None
+
+def shop_snapshot(raw,shape,*,image=None,engine=None):
+    """Read visible exact goods and their own displayed prices, not transactions."""
+    records=_shop_texts(raw)
+    if not _shop_target(records,{},(-1,-1),shape)[1]:return None
+    packet=expansion_reference.packet()
+    if packet is None:return None
+    names=name_catalog(packet);items={};readings={}
+    for record in records:
+        ids=names.get(record['text'],[])
+        if record['score']>=.9 and len(ids)==1:
+            identity=ids[0];items[identity]={'id':identity,'name':packet['current']['details']['items'][identity]['name']}
+    for label in records:
+        if label['text']!='价格':continue
+        x,y,u,v=label['bounds'];font=v-y
+        target,_=_shop_target(records,names,((x+u)/2,(y+v)/2),shape)
+        if target is None or target['price_label_bounds']!=tuple(round(n)for n in label['bounds']):continue
+        nearby=[r for r in records if r['bounds'][1]>=v-font*.25 and r['bounds'][3]<=v+font*3.5
+            and font*.7<=r['bounds'][3]-r['bounds'][1]<=font*3
+            and abs(r['bounds'][2]-u)<=font]
+        numbers=[r for r in nearby if r['score']>=.9 and r['text'].isascii()and r['text'].isdigit()]
+        values={int(r['text'])for r in numbers}
+        if not values and not any(r['text'].startswith(('-','+'))for r in nearby)and image is not None and engine is not None:
+            box=price_region(label['bounds'],shape)
+            if box is not None:
+                left,top,right,bottom=box
+                hsv=cv2.cvtColor(image[top:bottom,left:right],cv2.COLOR_BGR2HSV)
+                mask=cv2.inRange(hsv,(0,0,150),(179,75,255))
+                _,groups,stats,_=cv2.connectedComponentsWithStats(mask)
+                glyphs=[(i,xx,yy,ww,hh)for i,(xx,yy,ww,hh,_)in enumerate(stats[1:],1)if font*.65<=hh<=font*2.5]
+                if glyphs and all(xx>0 and yy>0 and xx+ww<mask.shape[1]and yy+hh<mask.shape[0]for _,xx,yy,ww,hh in glyphs):
+                    digits=(np.isin(groups,[g[0]for g in glyphs])*255).astype(np.uint8)
+                    gx,gy,gw,gh=cv2.boundingRect(cv2.findNonZero(digits));digits=digits[gy:gy+gh,gx:gx+gw]
+                    digits=cv2.copyMakeBorder(digits,5,5,5,5,cv2.BORDER_CONSTANT,value=0)
+                    lines,_=engine(cv2.cvtColor(cv2.resize(digits,None,fx=2,fy=2),cv2.COLOR_GRAY2BGR),use_det=False,use_cls=False)
+                    values={int(text)for text,score in lines or[]if score>=.9 and text.isascii()and text.isdigit()}
+        if len(values)==1:readings.setdefault(target['id'],set()).update(values)
+    for identity,values in readings.items():
+        if len(values)==1:items[identity]['price']=next(iter(values))
+    return {'items':list(items.values()),'complete':False,'source':'fresh_shop_exact_names'}if items else None
+
 class ShopNameReader:
     def __init__(self,engine=None):self.engine=engine;self.is_shop=False;self.cached=None
     def ocr(self,image):
@@ -109,16 +159,20 @@ class ShopNameReader:
             raw=cached['raw']
         else:
             raw=self.ocr(image);self.cached=None
-            _,shop=shop_target(raw,names,point,image.shape)
-            if shop:
-                patches=[];h,w=image.shape[:2]
-                for box,label,score in raw:
-                    label=canonical(label)
-                    if score<.85 or not(label in names or any(k in label for k in ('购买','当前余额','前瞻性投资','刷新','编队','价格'))):continue
-                    x=max(0,int(min(p[0]for p in box))-2);y=max(0,int(min(p[1]for p in box))-2);u=min(w,int(max(p[0]for p in box))+2);v=min(h,int(max(p[1]for p in box))+2)
-                    if x<u and y<v:patches.append((x,y,u,v,sha256(image[y:v,x:u].tobytes()).digest()))
-                if patches:self.cached={'at':now,'shape':image.shape,'raw':raw,'patches':patches}
         item,self.is_shop=shop_target(raw,names,point,image.shape)
+        if self.is_shop and self.cached is None:
+            patches=[];h,w=image.shape[:2]
+            for box,label,score in raw:
+                label=canonical(label)
+                if score<.85 or not(label in names or label.isascii()and label.isdigit()or any(k in label for k in ('购买','当前余额','前瞻性投资','刷新','编队','价格'))):continue
+                x=max(0,int(min(p[0]for p in box))-2);y=max(0,int(min(p[1]for p in box))-2);u=min(w,int(max(p[0]for p in box))+2);v=min(h,int(max(p[1]for p in box))+2)
+                if x<u and y<v:patches.append((x,y,u,v,sha256(image[y:v,x:u].tobytes()).digest()))
+                if label=='价格':
+                    bounds=(min(p[0]for p in box),min(p[1]for p in box),max(p[0]for p in box),max(p[1]for p in box))
+                    region=price_region(bounds,image.shape)
+                    if region is not None:
+                        x,y,u,v=region;patches.append((x,y,u,v,sha256(image[y:v,x:u].tobytes()).digest()))
+            if patches:self.cached={'at':now,'shape':image.shape,'raw':raw,'patches':patches}
         if item is not None:
             x0,y0,x1,y1=item['name_bounds'];item['name_pixels_sha256']=sha256(image[y0:y1,x0:x1].tobytes()).hexdigest()
         return item
@@ -139,11 +193,4 @@ class ShopNameReader:
         cached=self.cached
         if not cached or time.monotonic()-cached['at']>=30 or cached['shape']!=image.shape:return None
         if not all(sha256(image[y:v,x:u].tobytes()).digest()==digest for x,y,u,v,digest in cached['patches']):return None
-        packet=expansion_reference.packet()
-        if packet is None:return None
-        names=name_catalog(packet);items={}
-        for box,name,score in cached['raw']:
-            identities=names.get(canonical(name),[])
-            if score>=.9 and len(identities)==1:
-                identity=identities[0];items[identity]={'id':identity,'name':packet['current']['details']['items'][identity]['name']}
-        return {'items':list(items.values()),'complete':False,'source':'fresh_shop_exact_names'}if items else None
+        return shop_snapshot(cached['raw'],image.shape,image=image,engine=self.engine)

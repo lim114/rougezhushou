@@ -600,5 +600,7 @@ ADDITIONAL_MODULES += ('tests.test_hud_resources_441',)
 
 ADDITIONAL_MODULES += ('tests.test_resource_capacity_442',)
 
+ADDITIONAL_MODULES += ('tests.test_shop_prices_443',)
+
 if __name__ == '__main__':
     sys.exit(main())

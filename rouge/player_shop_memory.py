@@ -18,16 +18,22 @@ def qualified(snapshot,*,items=None):
         if not isinstance(row,dict)or not isinstance(row.get('id'),str)or not isinstance(row.get('name'),str):return None
         item=items.get(row.get('id'))
         if not item or canonical(item['name'])!=canonical(row.get('name'))or row['id']in seen:return None
-        seen.add(row['id']);result.append({'id':row['id'],'name':item['name']})
+        seen.add(row['id']);record={'id':row['id'],'name':item['name']}
+        if type(row.get('price'))is int and row['price']>=0:record['price']=row['price']
+        result.append(record)
     return result
 
 def remember(run,snapshot,expected_run,at):
     if run.state.get('id')!=expected_run or type(at)not in(int,float)or not 0<=time.time()-at<=2:return False
+    return record_shop(run.state,snapshot,at)and run.save()
+
+def record_shop(state,snapshot,at):
+    """Shared validated observation entry; callers own freshness and persistence."""
     rows=qualified(snapshot)
     if rows is None:return False
-    previous=next((r for r in reversed(run.state.get('history',[]))if r.get('kind')=='shop_items_read'),None)
+    previous=next((r for r in reversed(state.get('history',[]))if r.get('kind')=='shop_items_read'),None)
     if previous and previous.get('items')==rows:return False
-    run.state['history'].append({'kind':'shop_items_read','at':at,'source':'fresh_shop_exact_names','items':rows,'complete':False});return run.save()
+    state['history'].append({'kind':'shop_items_read','at':at,'source':'fresh_shop_exact_names','items':rows,'complete':False});return True
 
 def recorded_shops(state):
     """Keep observation order; timestamps and the absence of an item prove no sale."""
@@ -53,10 +59,15 @@ def compare_shops(rows,selected):
     current=rows[index][1]['items']
     if index==0:return {'previous':None,'first':current,'added':[],'unread':[],'both':[]}
     previous=rows[index-1][1]['items'];old={r['id']for r in previous};now={r['id']for r in current}
-    return {'previous':rows[index-1][0],'first':[],
+    result={'previous':rows[index-1][0],'first':[],
         'added':[r for r in current if r['id']not in old],
         'unread':[r for r in previous if r['id']not in now],
         'both':[r for r in current if r['id']in old]}
+    prices={r['id']:r['price']for r in previous if 'price'in r}
+    changes=[{'name':r['name'],'previous':prices[r['id']],'current':r['price']}
+        for r in current if 'price'in r and r['id']in prices and r['price']!=prices[r['id']]]
+    if changes:result['price_changes']=changes
+    return result
 
 def comparison_text(comparison):
     if comparison is None:return '尚无可比较的商店读取记录。'
@@ -64,6 +75,7 @@ def comparison_text(comparison):
     lines=['与前一份已读清单对照']
     for key,label in(('added','本次新读到'),('unread','前次读到、本次未读到'),('both','两次都读到')):
         lines.append(label+'：'+('、'.join(r['name']for r in comparison[key])or'无'))
+    for row in comparison.get('price_changes',[]):lines.append(f"已读标价变化：{row['name']} {row['previous']}→{row['current']}源石锭")
     return '\n'.join(lines)+'\n\n两次清单可能没有读全，也可能来自不同商店。未读到不等于已购买或下架，变化不证明刷新。'
 
 from PySide6.QtCore import Qt
@@ -74,7 +86,9 @@ class ShopMemoryPanel(QWidget):
     def __init__(self,run,source_panel=None):
         super().__init__();self.run=run;self.source_panel=source_panel;self.signature=None;self.rows={};body=QVBoxLayout(self);self.notice=QLabel();self.notice.setWordWrap(True);body.addWidget(self.notice);self.snapshots=QComboBox();body.addWidget(self.snapshots)
         self.search=QLineEdit();self.search.setPlaceholderText('在这份已读清单中搜索商品');body.addWidget(self.search)
-        self.comparison=QLabel();self.comparison.setWordWrap(True);body.addWidget(self.comparison)
+        self.comparison_toggle=QPushButton('展开前后清单对照');self.comparison_toggle.setCheckable(True);body.addWidget(self.comparison_toggle)
+        self.comparison=QLabel();self.comparison.setWordWrap(True);body.addWidget(self.comparison);self.comparison.hide()
+        self.comparison_toggle.toggled.connect(self.show_comparison)
         self.entries=CatalogGrid();body.addWidget(self.entries,1);self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.details_toggle,self.icon_scale=add_catalog_controls(body,self.entries,self.detail)
         self.source_button=QPushButton('查看所选商品的取得来源与历史统计');body.addWidget(self.source_button)
         from .player_item_hover import ItemHoverCard
@@ -89,10 +103,13 @@ class ShopMemoryPanel(QWidget):
         signature=(self.run.state.get('id'),rows,self.run.save_issue,source_key)
         if signature==self.signature:return
         same=self.signature and self.signature[0]==signature[0];old=self.snapshots.currentData()if same else None;self.source_card.dismiss();self.signature=deepcopy(signature);self.rows=dict(rows);self.snapshots.blockSignals(True);self.snapshots.clear()
-        if not same:self.search.blockSignals(True);self.search.clear();self.search.blockSignals(False)
+        if not same:self.search.blockSignals(True);self.search.clear();self.search.blockSignals(False);self.comparison_toggle.setChecked(False)
         for i,row in reversed(rows):self.snapshots.addItem(observation_time(row.get('at'))+' · '+str(len(row['items']))+'件已读名称',i)
         self.snapshots.setCurrentIndex(self.snapshots.findData(old)if old in self.rows else 0 if rows else-1);self.snapshots.blockSignals(False);self.show_snapshot()
-        self.notice.setText(('记录暂未保存到本机。'if self.run.save_issue else'')+'仅保留本局可确认的商店商品名称，可能未读全；不代表已经购买或持有。价格、剩余刷新次数及当前是否仍在售：未读。')
+        priced=any('price'in item for _,row in rows for item in row['items'])
+        self.notice.setText(('记录暂未保存到本机。'if self.run.save_issue else'')+'仅保留本局可确认的商店商品名称'+('和当次已读标价'if priced else'')+'，可能未读全；不代表已经购买或持有。'+('标价以所选记录为准；剩余刷新次数及当前是否仍在售：未读。'if priced else'价格、剩余刷新次数及当前是否仍在售：未读。'))
+    def show_comparison(self,visible):
+        self.comparison.setVisible(visible);self.comparison_toggle.setText('收起前后清单对照'if visible else'展开前后清单对照')
     def show_snapshot(self,*_):
         from .expansion_reference import packet
         public=packet();row=self.rows.get(self.snapshots.currentData())or{};old=self.entries.currentItem();keep=old.data(Qt.ItemDataRole.UserRole)if old else None;self.entries.blockSignals(True);self.entries.clear();self.source_card.dismiss()
@@ -101,14 +118,18 @@ class ShopMemoryPanel(QWidget):
             for record in row.get('items',[]):
                 if query and query not in record['name'].casefold():continue
                 item=public['current']['details']['items'].get(record['id'])or{};icon=item.get('iconId')or''
-                entry=QListWidgetItem(relic_icon(icon),record['name']);entry.setToolTip(relic_icon_note(icon));entry.setData(Qt.ItemDataRole.UserRole,record['id']);self.entries.addItem(entry)
+                price='\n标价：'+str(record['price'])if 'price'in record else''
+                entry=QListWidgetItem(relic_icon(icon),record['name']+price);entry.setToolTip(relic_icon_note(icon));entry.setData(Qt.ItemDataRole.UserRole,record['id']);self.entries.addItem(entry)
                 if keep==record['id']:self.entries.setCurrentItem(entry)
         self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
     def selected(self,*_):
         from .expansion_reference import packet,_plain
         public=packet();entry=self.entries.currentItem();identity=entry.data(Qt.ItemDataRole.UserRole)if entry else None;item=public['current']['details']['items'].get(identity)if public else None
         self.source_button.setEnabled(item is not None)
-        self.detail.setPlainText(item['name']+'\n\n资料效果\n'+_plain(item.get('usage'))+'\n\n这是当时读到的名称，不证明持有、购买或当前仍在售。'if item else'选择已读商品查看效果。')
+        snapshot=self.rows.get(self.snapshots.currentData())or{}
+        record=next((r for r in snapshot.get('items',[])if r['id']==identity),{})
+        price=str(record['price'])+'源石锭（当次读取）'if 'price'in record else'未读'
+        self.detail.setPlainText(item['name']+'\n\n标价：'+price+'\n\n资料效果\n'+_plain(item.get('usage'))+'\n\n这是当时读到的名称和标价，不证明持有、购买或当前仍在售。'if item else'选择已读商品查看效果。')
         if entry and entry.toolTip():self.detail.appendPlainText('\n图片说明\n'+entry.toolTip())
         if not item:self.details_toggle.setChecked(False)
     def open_source(self):

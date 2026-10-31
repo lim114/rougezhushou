@@ -520,6 +520,9 @@ class RunState:
                     raise ValueError('强化ID或领取干员职业不符。')
         self.restore_origin_discovery_buffs(observed,repaired_at=captured_at)
         state=self.state;history_start=len(state['history'])
+        if observed.get('shop'):
+            from .player_shop_memory import record_shop
+            record_shop(state,observed['shop'],captured_at)
         relics=dict(observed.get('relics',{'ids':[],'icons':[],'count':None,'source':'unread'}));count=relics.get('count')
         if isinstance(count,bool):
             count=None;relics['count']=None

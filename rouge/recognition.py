@@ -280,6 +280,11 @@ class ScreenReader:
         elapsed('operator')
         run=read_run(image,texts,self._engine,icon_cache=self._icon_cache,run_context=run_context)
         elapsed('run')
+        from .player_shop_hover import shop_snapshot
+        shop=shop_snapshot(raw,image.shape,image=image,engine=self._engine)
+        if shop:
+            run=run or {'page':'shop','operators':[],'relics':{'ids':[],'icons':[],'count':None,'source':'unread'}}
+            run['shop']=shop;page='shop'
         if run and run['page']=='run_roster':page='run_roster'
         elif run and any(t['text']=='收起' and t['confidence']>=.9 for t in texts):page='run_relics'
         content=read_node_content(image,texts,page,stage,nodes)

@@ -62,8 +62,9 @@ def relic_icon_note(identity):
 
 
 def relic_icon(identity):
-    """Exact files first; only declared picture references may fill a missing icon."""
+    """Exact relic/part files first; only declared references fill missing art."""
     path=DATA/'relic-icons'/(identity+'.png')
+    if not path.is_file():path=DATA/'part-icons'/(identity+'.png')
     if not path.is_file():
         record=relic_display_records().get(identity)
         if record:path=DATA/record['file']

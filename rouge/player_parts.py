@@ -1,5 +1,4 @@
 """Fixed part catalogue and an independently observed box count; never fake members."""
-from pathlib import Path
 from . import expansion_reference as source
 
 def part_rows(query='',kind=None):
@@ -20,7 +19,7 @@ def box_status(state):
     return f'最近读到本局零件{value}件；具体成员与剩余使用次数未完整读取。以下为资料目录，不把数量当作成员名单。'
 
 from PySide6.QtCore import Qt,QSize,Signal
-from PySide6.QtGui import QIcon
+from .view_catalog import relic_icon
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QComboBox,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QTabBar
 from .player_catalog_grid import CatalogGrid,add_catalog_controls
 
@@ -42,7 +41,7 @@ class PartsPanel(QWidget):
         if key==self.key:return
         self.key=key;old=self.entries.currentItem();identity=old.data(Qt.ItemDataRole.UserRole)if old else None;offset=self.entries.verticalScrollBar().value();self.rows={r['id']:r for r in rows or[]};self.entries.blockSignals(True);self.entries.clear()
         for row in rows or[]:
-            path=Path(__file__).with_name('data')/'part-icons'/((row['icon']or'')+'.png');item=QListWidgetItem(QIcon(str(path))if path.is_file()else QIcon(),row['name']);item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
+            item=QListWidgetItem(relic_icon(row['icon']or''),row['name']);item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
             if row['id']==identity:self.entries.setCurrentItem(item)
         self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
         if rows is None:self.notice.setText('零件资料暂不可用，旧目录与效果已清除；本局记录没有被重置。')
