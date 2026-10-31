@@ -6,13 +6,14 @@ from PySide6.QtWidgets import QApplication
 from rouge import app as application
 from rouge.run_state import RunState
 from rouge.player_team import crew_rows
-from tests.test_state_calculation_updates import StateCalculationUpdateTests,observation
+from tests import test_state_calculation_updates as update_fixture
 from tests.test_recipient_lifecycle_063 import full_bar,member,popup,SNACK,SNACK_BUFF,COOKIE,COOKIE_BUFF
 
 TRANSITIONS=[]
+observation=update_fixture.observation
 
 class RunLifecycleReviewTests(unittest.TestCase):
- setUp=StateCalculationUpdateTests.setUp
+ setUp=update_fixture.StateCalculationUpdateTests.setUp
  @classmethod
  def setUpClass(cls):cls.qt=QApplication.instance()or QApplication([])
  def apply(self,observed,label):

@@ -3,7 +3,7 @@ from copy import deepcopy
 from .player_resource_history import numeric_read,resource_name
 from .player_replay import observation_time
 
-def record_snapshot(state,observed,at):
+def record_snapshot(state,observed,at,*,history_start=None):
     from .run_config import config_data
     zone=(observed.get('config')or{}).get('zone')or{};graph=observed.get('map')or{};zid=None;template=None
     saved=state.get('maps',{}).get(graph.get('zone_id'))or{}
@@ -20,7 +20,13 @@ def record_snapshot(state,observed,at):
     prior=next((r for r in reversed(state.get('history',[]))if r.get('kind')=='floor_resources_read'),None)
     identity={'zone_id':zid,'template_id':template,'values':values}
     if prior and all(prior.get(k)==v for k,v in identity.items()):return False
-    state['history'].append({'kind':'floor_resources_read','at':at,**identity,'source':'same_frame_zone_and_resources'});return True
+    history=state['history'];index=len(history)
+    if history_start is not None:
+        # Same observation, not an earlier read: keep layout ownership before
+        # the snapshot and let this batch's map rows see its accepted resources.
+        index=next((i for i in range(history_start,len(history))if history[i].get('zone_id')==zid
+                    and history[i].get('kind')in('map_position_updated','map_node_revealed','map_node_passed','map_node_content_confirmed')),index)
+    history.insert(index,{'kind':'floor_resources_read','at':at,**identity,'source':'same_frame_zone_and_resources'});return True
 
 def snapshots(state):
     from .run_config import config_data

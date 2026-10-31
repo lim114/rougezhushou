@@ -572,6 +572,8 @@ ADDITIONAL_MODULES += ('tests.test_enemy_overview_review',)
 
 ADDITIONAL_MODULES += ('tests.test_run_lifecycle_review',)
 
+ADDITIONAL_MODULES += ('tests.test_map_resource_review',)
+
 if __name__ == '__main__':
     sys.exit(main())
 

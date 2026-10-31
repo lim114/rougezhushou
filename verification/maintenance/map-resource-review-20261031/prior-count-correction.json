@@ -1,0 +1,22 @@
+{
+  "supersedes_count_claim_only": "verification/maintenance/run-lifecycle-review-20261031/summary.json",
+  "original_raw_receipts_unchanged": true,
+  "actual_original_verbose_log": {
+    "path": "verification/maintenance/run-lifecycle-review-20261031/tests/stderr.txt",
+    "sha256": "fc9b3fc5030c6930e27d819c623f66536ebc29b64079ef9c3a1893edd64df82f",
+    "bytes": 16706
+  },
+  "original_executions": 89,
+  "original_distinct_test_ids": 83,
+  "duplicate_test_ids": {
+    "tests.test_state_calculation_updates.StateCalculationUpdateTests.test_failed_nested_update_releases_batch_and_direct_controls_still_work": 2,
+    "tests.test_state_calculation_updates.StateCalculationUpdateTests.test_manual_level_skill_and_browsing_survive_repeated_input": 2,
+    "tests.test_state_calculation_updates.StateCalculationUpdateTests.test_one_frame_combines_run_and_account_without_intermediate_calculation": 2,
+    "tests.test_state_calculation_updates.StateCalculationUpdateTests.test_relic_ui_uses_one_current_held_collection_for_all_checkboxes": 2,
+    "tests.test_state_calculation_updates.StateCalculationUpdateTests.test_restart_uses_saved_state_and_only_manual_reset_clears_it": 2,
+    "tests.test_state_calculation_updates.StateCalculationUpdateTests.test_run_update_calculates_final_inputs_once_before_return": 2
+  },
+  "cause": "Directly imported TestCase class was discovered a second time by unittest module loading. Replaced class import with module import; final105 current test IDs proven unique. Test assertions not removed.",
+  "original_83_distinct_results_passed": true,
+  "current_revalidation_included_same_prior_scope": true
+}

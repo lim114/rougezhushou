@@ -1,0 +1,99 @@
+{
+  "baseline_commit": "bb9647cf450eea009a2b37e4fb7937ac2f67fc0e",
+  "changed_source": [
+    {
+      "path": "rouge/run_state.py",
+      "sha256": "03b00619056771742ca53d8742e82d5efade8656c31da813d06997ca99fc47f7",
+      "bytes": 62212
+    },
+    {
+      "path": "rouge/player_floor_resources.py",
+      "sha256": "b615f022c249c9da0f02b323f18b2792f6a111015d1db0230d98d670bb51b2fa",
+      "bytes": 4591
+    }
+  ],
+  "own_prior_source": [
+    {
+      "path": "research/map-resource-review-20261031/before-run-state.py",
+      "sha256": "7380141b503ff75614fc332b2879280fea3b5183c5f31e352b638f4a040ec959",
+      "bytes": 62139
+    },
+    {
+      "path": "research/map-resource-review-20261031/before-player-floor-resources.py",
+      "sha256": "6ad022dad8c1cfcb2e6c7ab41bb484a31c019ada17113bb32bc95f2447a431c7",
+      "bytes": 4080
+    }
+  ],
+  "all_other_RunState_methods_AST_unchanged": true,
+  "other_snapshot_functions_and_FloorResourcesPage_AST_unchanged": true,
+  "unchanged_projections_archive_models_state_and_requirements": [
+    {
+      "path": "rouge/player_replay_nodes.py",
+      "sha256": "df4f3124a2a59c871b750c77f90ef57600af324acfafffd3f092590edcdff6ae",
+      "bytes": 9824
+    },
+    {
+      "path": "rouge/player_replay.py",
+      "sha256": "370acd0d42c6580529cd124a89f446accb47492229ee5eceff38e589a733fe2c",
+      "bytes": 12825
+    },
+    {
+      "path": "rouge/player_history_store.py",
+      "sha256": "2198df351958d17800994cc440a89820823c36efe9627862a320fc4eaf4290e2",
+      "bytes": 5762
+    },
+    {
+      "path": "rouge/map_recognition.py",
+      "sha256": "05f03c77867be3d9bec62057847de13461003d3e3af9240bfe3a05f25d6dcfeb",
+      "bytes": 16561
+    },
+    {
+      "path": "rouge/recipient_state.py",
+      "sha256": "837e7990a8983efb3f64228f1a11511a15749ff8e202305d2fdc10e8efa83785",
+      "bytes": 4666
+    },
+    {
+      "path": "rouge/training_view.py",
+      "sha256": "14153c3de4d8668e8d7d0d98e37f6443a4fb1a5ee23e3a222e40b8c3f59045ba",
+      "bytes": 6994
+    },
+    {
+      "path": "rouge/player_team.py",
+      "sha256": "059a4663fd2a33d798b52851e7507773bb754aa5e75ab2d77a29b69375edf188",
+      "bytes": 7661
+    },
+    {
+      "path": "rouge/app.py",
+      "sha256": "b16410486890f6b3fc663d1f9c55ef7c8b0b2e754fd58f8f01fc50206f4d8c13",
+      "bytes": 161812
+    },
+    {
+      "path": "PROJECT_REQUIREMENTS.md",
+      "sha256": "109ffda0c69be72f82fb994987654ae38b2528153d3271b56d5bdb9aea6e9c93",
+      "bytes": 28399
+    }
+  ],
+  "old_new_reproduction": {
+    "prior_map_rows": 2,
+    "prior_snapshot_values": [
+      null,
+      null
+    ],
+    "current_map_rows": 2,
+    "current_snapshot_values": [
+      {
+        "gold": 7
+      },
+      {
+        "gold": 7
+      }
+    ]
+  },
+  "defect": "Actual accepted one-frame map+gold7 appended resource snapshot after both map rows, so prefix replay showed unknown despite accepted same-frame resource.",
+  "fix": "Pass current apply history_start into existing snapshot writer; after existing acceptance and dedup checks insert before only this observation new same-zone map-reading rows. Layout ownership stays before snapshot. Previous prefix unchanged even if two applies share timestamp.",
+  "preserved_boundaries": "No old history reorder/repair, no lookahead from later timestamps, no new event schema/UUID, no current resource fill, no reward/floor-entry/outcome claim. State save/reset and original source qualification intact.",
+  "first_test_failure": "Reload fixtures lacked required grid and source fields of actual matched game-map shape. Fixed test fixture; original readonly shape guard unchanged. First failed test/source/logs retained. Imported helper also duplicated six existing tests; corrected import and counter proof separate.",
+  "code_size_or_speed_improvement_claimed": false,
+  "REA_scope": "Complete Python source reviewed directly per REA skill; no new REA invocation. Earlier actual bridge/toolbar analysis separate.",
+  "whole_program_complete": false
+}

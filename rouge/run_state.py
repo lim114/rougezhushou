@@ -519,7 +519,8 @@ class RunState:
                 if buff is None or (buff['required_profession'] and profile['profession'] not in buff['required_profession'].split('|')):
                     raise ValueError('强化ID或领取干员职业不符。')
         self.restore_origin_discovery_buffs(observed,repaired_at=captured_at)
-        state=self.state;relics=dict(observed.get('relics',{'ids':[],'icons':[],'count':None,'source':'unread'}));count=relics.get('count')
+        state=self.state;history_start=len(state['history'])
+        relics=dict(observed.get('relics',{'ids':[],'icons':[],'count':None,'source':'unread'}));count=relics.get('count')
         if isinstance(count,bool):
             count=None;relics['count']=None
         from .run_config import config_data,difficulty_value
@@ -751,7 +752,7 @@ class RunState:
         from .recipient_state import invalidate_recipient_absence
         invalidate_recipient_absence(state,members,set(self.held_relic_ids())-prior_held-prior_unknown_held,promoted_ids,captured_at)
         from .player_floor_resources import record_snapshot
-        record_snapshot(state,observed,captured_at)
+        record_snapshot(state,observed,captured_at,history_start=history_start)
         state['last_read']=captured_at
         if state['notice'].startswith('等待'):state['notice']='同一局信息持续累积并保存；开始另一局时请手动清空本局读取。'
         self.save()

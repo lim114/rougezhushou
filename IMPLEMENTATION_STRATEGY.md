@@ -88,3 +88,5 @@ Qt已有置顶及整窗输入穿透标志，但“全部穿透”会使该窗口
 [事件作战入口回顾](research/event-battle-reader-review-20261031/README.md)直接复用已验证make_reader，替换另一套窗口构造；同关刷新复用、换关失效释放，保持原准确来源门槛和完整模型。三次重开原对象/单份刷新有实际证据，未声称速度或全程序正确性。
 
 [敌人总览表格回顾](research/enemy-overview-review-20261031/README.md)复用Qt树表格与原branch icons/精确键/机制全文，补折叠与快速对照而不新建模型；原数值未知保持，未复制Tomimi源码或猜许可。修正隐藏页面最小高度影响其它页的实际回归；源码新增不称精简或速度改善。
+
+[地图资源回顾](research/map-resource-review-20261031/README.md)用当前apply新日志边界复用已有同帧快照和历史前缀投影，修正顺序而不新造时间关联协议。另固定检查Tomimi/stage-viewer/AKSimulator的README树与许可范围，未完成当前国服/Qt适配或取得未明示授权，不把检索当实际复用；保留现有局外/本机架构。
