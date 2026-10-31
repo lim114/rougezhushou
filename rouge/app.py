@@ -114,6 +114,7 @@ class MainWindow(QMainWindow):
         self.busy = False
         self._calculation_batch_depth = 0
         self._calculation_requested = False
+        self._scenario_receivers = ()
         self.closing = False
         self.sample_epoch = 0
         self.last_sample_at = 0
@@ -241,6 +242,12 @@ class MainWindow(QMainWindow):
         from .relic_order_precision_view import RelicOrderPrecisionPanel
         self.relic_order_precision=RelicOrderPrecisionPanel()
         tabs.addTab(self.relic_order_precision,'藏品处理精度')
+        self._scenario_receivers = (
+            self.offline_tools.set_scenario, self.paired_calibration.set_scenario,
+            self.attack_state_sequence.set_context, self.timing_calibration.set_scenario,
+            self.bounded_calibration.set_scenario, self.calibration_experiment.set_scenario,
+            self.recipient_native_ratio.set_context, self.relic_order_precision.set_context,
+        )
         from .technology_view import TechnologyReferencePanel
         self.technology_reference=TechnologyReferencePanel(account_path=Path(OPERATOR_STATE).with_name('technology-state.json'))
         tabs.addTab(self.technology_reference,'长期科技')
@@ -1891,6 +1898,13 @@ class MainWindow(QMainWindow):
         if self._calculation_batch_depth:
             self._calculation_requested = True
             return
+        try:
+            self._calculate_current()
+        finally:
+            if self.damage_result is None:
+                for receive in self._scenario_receivers:receive(None)
+
+    def _calculate_current(self):
         if hasattr(self,'charge_timeline_button'):self.charge_timeline_button.setEnabled(False)
         if hasattr(self,'shield_timeline_button'):self.shield_timeline_button.setEnabled(False)
         if hasattr(self,'healing_budget_button'):self.healing_budget_button.setEnabled(False)
@@ -2055,14 +2069,7 @@ class MainWindow(QMainWindow):
             if self.target_buff_test.isChecked():
                 result['estimate']['notes'].insert(0,'当前启用个人强化测试；测试选项不代表从本局画面读取到的强化，也不写入记忆。')
             self.damage_result = {'scenario':scenario,'result':result}
-            if hasattr(self,'offline_tools'):self.offline_tools.set_scenario(scenario)
-            if hasattr(self,'paired_calibration'):self.paired_calibration.set_scenario(scenario)
-            if hasattr(self,'attack_state_sequence'):self.attack_state_sequence.set_context(scenario)
-            if hasattr(self,'timing_calibration'):self.timing_calibration.set_scenario(scenario)
-            if hasattr(self,'bounded_calibration'):self.bounded_calibration.set_scenario(scenario)
-            if hasattr(self,'calibration_experiment'):self.calibration_experiment.set_scenario(scenario)
-            if hasattr(self,'recipient_native_ratio'):self.recipient_native_ratio.set_context(scenario)
-            if hasattr(self,'relic_order_precision'):self.relic_order_precision.set_context(scenario)
+            for receive in self._scenario_receivers:receive(scenario)
             self.charge_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==3)
             self.shield_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==2)
             from .healing_budget import healing_sources
