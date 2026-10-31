@@ -1,10 +1,20 @@
 """Step-by-step reference for three documented events; owned read-only windows."""
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QSyntaxHighlighter,QTextCharFormat,QFont
 from PySide6.QtWidgets import (QWidget, QDialog, QVBoxLayout, QHBoxLayout, QLabel, QComboBox,
                                QListWidget, QListWidgetItem, QPlainTextEdit, QTabWidget, QPushButton)
 from . import documented_event_flows as model
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .collapsible_section import QCollapsible
+
+
+class EventHeadingHighlighter(QSyntaxHighlighter):
+    def highlightBlock(self,text):
+        end=text.find('】')
+        if text.startswith('【')and end>0:
+            style=QTextCharFormat();style.setFontWeight(QFont.Weight.Bold)
+            self.setFormat(0,end+1,style)
 
 
 class DocumentedEventFlowPanel(QWidget):
@@ -15,12 +25,15 @@ class DocumentedEventFlowPanel(QWidget):
         self.battle_dialog = None
         layout = QVBoxLayout(self)
         notice = QLabel('逐步查阅文献中的选项、结果和后续；不是本局已经走过的流程，完整出现前置仍请核对。')
-        notice.setWordWrap(True); layout.addWidget(notice)
+        notice.setWordWrap(True);header=QWidget();header.setObjectName('eventFlowHeader');heading=QVBoxLayout(header);heading.setContentsMargins(0,0,0,0);heading.addWidget(notice)
+        header.setStyleSheet('#eventFlowHeader,#eventFlowConditions,#eventFlowConditionContent,QWidget#eventFlowConditionRow{background:transparent;border:0;}')
+        self.conditions=QCollapsible('仅本页对照条件',expandedIcon='▼',collapsedIcon='▶');self.conditions.setObjectName('eventFlowConditions');self.conditions.content().setObjectName('eventFlowConditionContent');self.conditions.setDuration(0);self.conditions.content().hide();self.conditions.toggled.connect(self.conditions.content().setVisible);self.conditions.setAccessibleName('仅对照资料，不修改本局的条件');self.conditions.toggleButton().setToolTip('展开或收起本页条件；只对照资料，不改变本局记录。');self.conditions.hide();heading.addWidget(self.conditions);layout.addWidget(header)
         row = QHBoxLayout(); self.scene = QComboBox(); self.scene.setAccessibleName('文献中的事件情景')
         self.refresh_button = QPushButton('重新核对流程'); row.addWidget(self.scene, 1); row.addWidget(self.refresh_button); layout.addLayout(row)
-        self.choices = QListWidget(); self.choices.setAccessibleName('当前文献情景的选项'); self.choices.setMaximumHeight(115); layout.addWidget(self.choices)
+        self.choices = QListWidget(); self.choices.setAccessibleName('当前文献情景的选项'); self.choices.setWordWrap(True);self.choices.setMaximumHeight(115); layout.addWidget(self.choices)
         self.tabs = QTabWidget(); self.player = QPlainTextEdit(); self.technical = QPlainTextEdit()
         for reader in (self.player, self.technical): reader.setReadOnly(True)
+        self.heading_highlighter=EventHeadingHighlighter(self.player.document())
         self.tabs.addTab(self.player, '选项与结果'); self.tabs.addTab(self.technical, '资料与依据'); layout.addWidget(self.tabs, 1)
         row = QHBoxLayout(); self.start_button = QPushButton('回到最初情景'); self.next_button = QPushButton('查看后续情景')
         self.battle_button = QPushButton('查看灰坑固定作战资料')
@@ -30,6 +43,10 @@ class DocumentedEventFlowPanel(QWidget):
         self.refresh_button.clicked.connect(self.refresh_reference); self.start_button.clicked.connect(self.go_start)
         self.next_button.clicked.connect(self.follow_scene); self.battle_button.clicked.connect(self.open_battle)
         self.refresh_reference(initial_scene=scene_id, initial=True)
+
+    def add_condition_row(self,row):
+        widget=QWidget();widget.setObjectName('eventFlowConditionRow');row.setContentsMargins(0,0,0,0);widget.setLayout(row)
+        self.conditions.addWidget(widget);self.conditions.show()
 
     def _close_battle(self):
         if self.battle_dialog is not None: self.battle_dialog.close()

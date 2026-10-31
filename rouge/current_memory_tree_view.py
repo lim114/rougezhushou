@@ -10,12 +10,12 @@ class CurrentMemoryTreePanel(DocumentedEventFlowPanel):
         row=QHBoxLayout();row.addWidget(QLabel('仅本页条件对照：'))
         for name,label in [('action_points','行动力'),('processed_parts','加工品数量')]:
             row.addWidget(QLabel(label));box=QSpinBox();box.setRange(-1,99999);box.setSpecialValueText('未知');box.setValue(-1);box.setAccessibleName('仅本页'+label+'对照');setattr(self,name,box);row.addWidget(box);box.valueChanged.connect(self._conditions_changed)
-        self.layout().insertLayout(1,row);row=QHBoxLayout()
+        self.add_condition_row(row);row=QHBoxLayout()
         for name,label in [('source_key','源私钥'),('controller','笼控器')]:
             row.addWidget(QLabel('仅本页持有：'+label));box=QComboBox();box.setAccessibleName('仅本页'+label+'持有对照')
             for text,value in [('尚未确认',None),('持有',True),('未持有',False)]:box.addItem(text,value)
             setattr(self,name,box);row.addWidget(box);box.currentIndexChanged.connect(self._conditions_changed)
-        self.layout().insertLayout(2,row)
+        self.add_condition_row(row)
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
@@ -29,5 +29,5 @@ class CurrentMemoryTreePanel(DocumentedEventFlowPanel):
 
 class CurrentMemoryTreeDialog(QDialog):
     def __init__(self,scene_id=None,choice_id=None,parent=None):
-        super().__init__(parent);self.setWindowTitle('愈创之心 · 五种选项与追忆');self.resize(1100,820);layout=QVBoxLayout(self);self.panel=CurrentMemoryTreePanel(scene_id,choice_id,self);layout.addWidget(self.panel)
+        super().__init__(parent);self.setWindowTitle('愈创之心 · 五种选项与追忆');self.resize(760,600);layout=QVBoxLayout(self);self.panel=CurrentMemoryTreePanel(scene_id,choice_id,self);layout.addWidget(self.panel)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

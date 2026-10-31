@@ -55,7 +55,8 @@ def make_event_dialog(target, parent=None):
         panel.choices.setCurrentRow(matches[0])
         if panel.choice_id != cid: dialog.close(); return None
     dialog.finished.connect(lambda *_: panel.clear_reference())
-    return dialog
+    from .player_map_reader import readable
+    return readable(dialog)
 
 
 class CurrentEventDirectoryPanel(QWidget):

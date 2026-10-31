@@ -34,5 +34,5 @@ def make_reader(kind,record,parent,*,historical=False,config=None):
         from .current_node_readers import binding_for
         from .current_node_readers_view import make_dialog
         binding=binding_for(record)
-        return readable(make_dialog(binding,parent,historical=historical))if binding else None
+        return make_dialog(binding,parent,historical=historical)if binding else None
     return None

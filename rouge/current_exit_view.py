@@ -11,7 +11,7 @@ class CurrentExitPanel(DocumentedEventFlowPanel):
         row = QHBoxLayout(); row.addWidget(QLabel('仅本页常规模式对照：'))
         for name, label, maximum in (('difficulty', '保密等级', 16), ('action_points', '结算前行动力', 99999), ('gold', '源石锭', 99999)):
             row.addWidget(QLabel(label)); box = QSpinBox(); box.setRange(-1, maximum); box.setSpecialValueText('未知'); box.setValue(-1); box.setAccessibleName('仅本页'+label+'对照'); setattr(self, name, box); row.addWidget(box); box.valueChanged.connect(self._conditions_changed)
-        self.layout().insertLayout(1, row)
+        self.add_condition_row(row)
         if target:
             targets = self.result['source_targets'] if self.result else []
             sid, cid = targets[0] if len(targets) == 1 else (None, None)
@@ -29,6 +29,6 @@ class CurrentExitPanel(DocumentedEventFlowPanel):
 
 class CurrentExitDialog(QDialog):
     def __init__(self, target=None, parent=None):
-        super().__init__(parent); self.setWindowTitle('险路尽头 · 招募、换层与独立奖励'); self.resize(1100, 820)
+        super().__init__(parent); self.setWindowTitle('险路尽头 · 招募、换层与独立奖励'); self.resize(760, 600)
         layout=QVBoxLayout(self); self.panel=CurrentExitPanel(target, self); layout.addWidget(self.panel)
     def closeEvent(self, event): self.panel._close_battle(); super().closeEvent(event)

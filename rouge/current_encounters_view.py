@@ -10,7 +10,7 @@ class CurrentEncountersPanel(DocumentedEventFlowPanel):
         if event_id=='黑诞':
             row=QHBoxLayout();row.addWidget(QLabel('仅本页对照：是否持有笼控器'));self.controller=QComboBox();self.controller.setAccessibleName('本页笼控器持有对照')
             for text,value in(('尚未确认',None),('持有',True),('未持有',False)):self.controller.addItem(text,value)
-            row.addWidget(self.controller,1);self.layout().insertLayout(1,row);self.controller.currentIndexChanged.connect(self._condition_changed)
+            row.addWidget(self.controller,1);self.add_condition_row(row);self.controller.currentIndexChanged.connect(self._condition_changed)
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
@@ -37,5 +37,5 @@ class CurrentEncountersPanel(DocumentedEventFlowPanel):
 
 class CurrentEncountersDialog(QDialog):
     def __init__(self,event_id,scene_id=None,choice_id=None,parent=None):
-        super().__init__(parent);self.setWindowTitle(event_id+' · 完整对话、条件与代价');self.resize(1100,820);layout=QVBoxLayout(self);self.panel=CurrentEncountersPanel(event_id,scene_id,choice_id,self);layout.addWidget(self.panel)
+        super().__init__(parent);self.setWindowTitle(event_id+' · 完整对话、条件与代价');self.resize(760,600);layout=QVBoxLayout(self);self.panel=CurrentEncountersPanel(event_id,scene_id,choice_id,self);layout.addWidget(self.panel)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)
