@@ -259,7 +259,7 @@ class CompactAssistant(QDialog):
         return self.present(self.inventory_popup)
     def open_map(self):
         if self.map_popup is None:
-            panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source());self.map_popup=ToolPopover('探索地图与节点',panel,self,on_show=self.refresh,theme='light',object_name='videoMapWindow');self.map_popup.panel=panel;self.map_popup.resize(1100,650)
+            panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source());self.map_popup=ToolPopover('地图',panel,self,on_show=self.refresh,theme='light',object_name='videoMapWindow',extra_style='#videoMapWindow QPushButton#popoverCloseButton{color:#303139;font-size:12pt;}');self.map_popup.panel=panel;self.map_popup.resize(1200,460)
             panel.resources.requested.connect(self.open_resource)
         return self.present(self.map_popup)
 

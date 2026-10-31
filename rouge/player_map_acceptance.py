@@ -59,5 +59,5 @@ def check(window,gui,require):
     mp.queue_hover(candidate,mp.view.mapToGlobal(mp.view._positions()[1][candidate].toPoint()));QTest.qWait(250);gui.processEvents();card.pin.setChecked(True)
     require(card.binding[-1]==candidate,'return_to_floor_hover_has_own_node')
     mp.status.setText('隔离验收示例：公开模板与声明候选；不是本局游戏识别。历史节点比例不是本局概率。')
-    require('本局最近已读资源'in mp.resources.accessibleName() and all(r['value']=='未读' for r in mp.resources.rows if r['key'] in ('life','shield','command','hope','action','valuation')),'resource_chips_do_not_invent_missing_values')
+    require('所选历史地图资源'in mp.resources.accessibleName()and mp.resources.rows==[{'key':'unread','name':'该层资源','value':'未记录','note':'该层当时资源尚未记录；不使用当前资源补写。'}],'resource_chips_do_not_invent_missing_values')
     window.run.state=before;QTest.qWait(100);gui.processEvents()

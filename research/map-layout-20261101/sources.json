@@ -1,0 +1,58 @@
+{
+  "video": {
+    "sha256": "0b83e44f0816508ef095120961496337e6bd65d5f531ee350c078950dfb98bda",
+    "actual_frames_viewed_seconds": [
+      70,
+      83,
+      141,
+      145
+    ],
+    "local_only_no_video_or_frames_distributed": true,
+    "not_continuous_full_playback": true
+  },
+  "Qt_image_viewer": {
+    "tag": "v6.11.2",
+    "commit": "24627cd36e1593adf22eb1f2950e4248e7bcc1ec",
+    "repository": "https://github.com/qtproject/pyside-pyside-setup",
+    "source_path": "examples/widgets/imageviewer/imageviewer.py",
+    "reviewed_source_functions": [
+      "_scale_image",
+      "_adjust_scrollbar"
+    ],
+    "actual_adoption": "Center-preserving scrollbar formula in MapPanel.change_zoom; no print/file-dialog/demo application code or new dependency.",
+    "upstream_copy": {
+      "path": "research/map-layout-20261101/upstream-qt-imageviewer.py",
+      "sha256": "7167745ffa849adf0342ec28a23391cbec8d014ffa2417a49c804d895e50ac50",
+      "bytes": 11115
+    },
+    "license": {
+      "path": "licenses/qt-image-viewer-BSD-3-Clause.txt",
+      "sha256": "989b8d3ac04380405fb19f458a1d140ea4f986193f8c819fadaf8a81f101c4b7",
+      "bytes": 1529
+    },
+    "readme_sha256": "94ba63b907235169b408b099606c91eaf5cd35ef1c71947a879c51dc239bb8c7"
+  },
+  "superqt_candidate": {
+    "repository": "https://github.com/pyapp-kit/superqt",
+    "commit": "a81c9c707351ce587bbc7a14cd6ad407375a43cf",
+    "reviewed": [
+      "README.md",
+      "LICENSE",
+      "pyproject.toml",
+      "src/superqt/collapsible/_collapsible.py"
+    ],
+    "source_sha256": {
+      "superqt-README.md": "7cda636c2bc9f7459f8c8743cb41acd9e1fbc4a3002cfa7b80473a5ef11cc4cf",
+      "superqt-LICENSE": "ff49f2a51ac178e60c7635e1dc62d2c9d90561aeba7df4671f17dd450895b9af",
+      "superqt-pyproject.toml": "caacbccc2cd4abee40b6be2b0f0ce5708c004c380f590906586890099ce06b76",
+      "superqt-collapsible.py": "e757adcaa1fa154c3baa6f5f12f8e57f009552bccd0884341d24baa1fadae93c"
+    },
+    "adopted": false,
+    "reason": "QtPy/Pygments dependencies and animated general collapsible widget do not replace this map renderer or simplify a single existing tools container; keep native Qt toggle/layout and unchanged upstream BSD Flow Layout."
+  },
+  "previous_production_reuse": [
+    "PyQtDarkTheme2.1.0 static assets",
+    "Qt6.11.2 BSD Flow Layout"
+  ],
+  "reference_video_program_source_obtained": false
+}

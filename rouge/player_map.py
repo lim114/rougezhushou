@@ -6,7 +6,7 @@ import json
 from PySide6.QtCore import Qt,QRectF,QPointF,QPoint,Signal,QTimer,QSize
 from PySide6.QtGui import QColor,QPainter,QPen,QImage,QPainterPath,QIcon,QPixmap
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QTabBar,
-    QPushButton,QScrollArea,QSplitter,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QComboBox,QToolButton,QLineEdit)
+    QPushButton,QScrollArea,QSplitter,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QComboBox,QToolButton,QLineEdit,QFormLayout)
 from .map_view import MapView
 from .run_config import config_data
 
@@ -86,6 +86,7 @@ class PreviewMapView(MapView):
         return min(60,max(28,min((b-a for a,b in zip(xs,xs[1:])),default=85)*.66))
     def paintEvent(self,event):
         p=QPainter(self);p.setRenderHint(QPainter.RenderHint.Antialiasing);p.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
+        outline=QPainterPath();outline.addRoundedRect(QRectF(self.rect()),12,12);p.setClipPath(outline)
         p.fillRect(self.rect(),QColor('#0e1717'))
         if not self.background.isNull():p.drawImage(QRectF(self.rect()),self.background);p.fillRect(self.rect(),QColor(0,0,0,85))
         if not self.graph:
@@ -144,29 +145,35 @@ class PreviewMapView(MapView):
 class MapPanel(QWidget):
     def __init__(self,owner,*,statistics_source=None):
         super().__init__();self.owner=owner;self.statistics_source=statistics_source;self.epoch=None;self.graphs={};self.readings={};self.entry_readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None;self.reference_popup=None;self.reference_binding=None
-        body=QVBoxLayout(self);body.setContentsMargins(5,0,5,5)
+        from .flow_layout import FlowLayout
+        body=QVBoxLayout(self);body.setContentsMargins(5,0,5,5);body.setSpacing(5)
         head=QHBoxLayout();self.floors=QTabBar();self.floors.setExpanding(False);self.floors.setAccessibleName('本局已记录楼层');head.addWidget(self.floors,1)
-        self.zoom=QComboBox();self.zoom.addItems(['适应窗口','放大125%','放大150%','放大200%']);head.addWidget(self.zoom)
-        self.details_toggle=QPushButton('节点资料');self.details_toggle.setCheckable(True);head.addWidget(self.details_toggle);body.addLayout(head)
-        self.finder_toggle=QPushButton('查找节点');self.finder_toggle.setCheckable(True);head.addWidget(self.finder_toggle)
+        self.floors.setObjectName('mapFloorTabs');self.floors.setDrawBase(False);self.floors.setStyleSheet('#mapFloorTabs::tab{background:#e6e6e9;color:#64686b;border:0;border-radius:12px;padding:5px 12px;margin:2px;}#mapFloorTabs::tab:selected{background:#30323a;color:#f7f7f8;}')
+        self.zoom=QComboBox();self.zoom.addItems(['适应窗口','放大125%','放大150%','放大200%'])
+        self.details_toggle=QPushButton('节点资料');self.details_toggle.setCheckable(True);body.addLayout(head)
+        self.finder_toggle=QPushButton('地图工具');self.finder_toggle.setCheckable(True);head.addWidget(self.finder_toggle)
         self.finder=QWidget();finder=QVBoxLayout(self.finder);finder.setContentsMargins(0,0,0,0);body.addWidget(self.finder);self.finder.hide();self.finder_toggle.toggled.connect(self.finder.setVisible)
         self.latest_position=QPushButton('回到最近已读位置');self.latest_position.clicked.connect(self.focus_latest_position)
-        find=QHBoxLayout();self.node_query=QLineEdit();self.node_query.setMaxLength(100);self.node_query.setPlaceholderText('查找本局已记录楼层中的类型、位置或已读名称');self.node_query.setStyleSheet('QLineEdit{color:#28332e;background:white;border:1px solid #d2d9d5;border-radius:7px;padding:5px;}');find.addWidget(self.node_query,1);self.node_results=QComboBox();self.node_results.setMinimumWidth(200);find.addWidget(self.node_results,2);self.find_node=QPushButton('定位节点');find.addWidget(self.find_node);find.addWidget(self.latest_position);finder.addLayout(find);self.node_query.textChanged.connect(self.update_node_finder);self.find_node.clicked.connect(self.locate_found_node)
-        self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
-        read_row=QHBoxLayout();self.read_scope=QComboBox()
+        controls=QWidget();tools=FlowLayout(controls);self.scope_toggle=QPushButton('地图说明');self.scope_toggle.setCheckable(True)
+        for control in(self.zoom,self.details_toggle,self.latest_position,self.scope_toggle):tools.addWidget(control)
+        finder.addWidget(controls)
+        find=QFormLayout();find.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows);find.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
+        self.node_query=QLineEdit();self.node_query.setMaxLength(100);self.node_query.setPlaceholderText('查找类型、位置或已读名称');self.node_query.setStyleSheet('QLineEdit{color:#28332e;background:white;border:1px solid #d2d9d5;border-radius:7px;padding:5px;}');self.node_results=QComboBox();self.node_results.setMinimumContentsLength(10);self.node_results.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon);self.find_node=QPushButton('定位节点');found=QWidget();found_row=QHBoxLayout(found);found_row.setContentsMargins(0,0,0,0);found_row.addWidget(self.node_results,1);found_row.addWidget(self.find_node);find.addRow(self.node_query,found);finder.addLayout(find);self.node_query.textChanged.connect(self.update_node_finder);self.find_node.clicked.connect(self.locate_found_node)
+        self.information=QWidget();information=QVBoxLayout(self.information);information.setContentsMargins(0,0,0,0);self.status=QLabel();self.status.setWordWrap(True);information.addWidget(self.status);self.information.hide();self.scope_toggle.toggled.connect(self.information.setVisible)
+        read_row=QFormLayout();read_row.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows);self.read_scope=QComboBox()
         for label,key in(('查找全部记录',None),('只查已读或历史类型','read'),('只查模板固定类型','fixed'),('只查尚待确认类型','unknown')):self.read_scope.addItem(label,key)
-        read_row.addWidget(self.read_scope);self.coverage_notice=QLabel();self.coverage_notice.setWordWrap(True);read_row.addWidget(self.coverage_notice,1);finder.addLayout(read_row);self.read_scope.currentIndexChanged.connect(self.update_node_finder)
+        self.coverage_notice=QLabel();self.coverage_notice.setWordWrap(True);read_row.addRow(self.read_scope,self.coverage_notice);finder.addLayout(read_row);self.read_scope.currentIndexChanged.connect(self.update_node_finder)
         from .player_resource_strip import ResourceStrip
         self.resources=ResourceStrip(owner.run.state);body.addWidget(self.resources)
-        self.floor_resources=QLabel();self.floor_resources.setWordWrap(True);body.addWidget(self.floor_resources)
-        row=QHBoxLayout();self.filter_notice=QLabel();self.filter_notice.setWordWrap(True);row.addWidget(self.filter_notice,1);self.clear_filter=QPushButton('显示所有类型');self.clear_filter.clicked.connect(lambda:self.set_type_filter(None));row.addWidget(self.clear_filter);body.addLayout(row);self.clear_filter.hide()
-        self.split=QSplitter();self.scroll=QScrollArea();self.scroll.setWidgetResizable(True);self.view=PreviewMapView();self.scroll.setWidget(self.view);self.split.addWidget(self.scroll)
-        self.palette=QWidget();self.palette.setObjectName('mapNodePalette');self.palette.setFixedWidth(58);self.palette.setStyleSheet('#mapNodePalette{background:#253b39;border:1px solid #82958c;border-radius:23px;} QToolButton{border:0;background:transparent;border-radius:18px;} QToolButton:checked{background:#658979;}')
-        palette_layout=QVBoxLayout(self.palette);palette_layout.setContentsMargins(6,12,6,12);self.type_buttons={}
+        self.floor_resources=QLabel();self.floor_resources.setWordWrap(True);information.addWidget(self.floor_resources);self.context_notice=QLabel();self.context_notice.setWordWrap(True);body.addWidget(self.context_notice)
+        row=QHBoxLayout();self.filter_notice=QLabel();self.filter_notice.setWordWrap(True);row.addWidget(self.filter_notice,1);self.clear_filter=QPushButton('显示所有类型');self.clear_filter.clicked.connect(lambda:self.set_type_filter(None));row.addWidget(self.clear_filter);body.addLayout(row);self.clear_filter.hide();self.filter_notice.hide()
+        self.split=QSplitter();self.scroll=QScrollArea();self.scroll.setFrameShape(QScrollArea.Shape.NoFrame);self.scroll.setWidgetResizable(True);self.view=PreviewMapView();self.scroll.setWidget(self.view);self.split.addWidget(self.scroll)
+        self.palette=QWidget();self.palette.setObjectName('mapNodePalette');self.palette.setStyleSheet('#mapNodePalette{background:#e5e9e6;border:0;border-radius:12px;} QToolButton{border:0;background:transparent;border-radius:18px;} QToolButton:checked{background:#658979;}')
+        palette_layout=FlowLayout(self.palette);palette_layout.setContentsMargins(6,3,6,3);self.type_buttons={}
         for kind in ('秘境行商','诡意行商','误入奇境','狭路相逢','不期而遇'):
             button=QToolButton();button.setFixedSize(44,44);button.setIcon(QIcon(QPixmap.fromImage(self.view.sprite_for(kind))))
             button.setIconSize(QSize(36,36));button.setCheckable(True);button.setToolTip(kind+'：在助手地图查看对应位置和历史节点比例');button.setAccessibleName('地图类型筛选：'+kind);button.clicked.connect(lambda checked=False,k=kind:self.set_type_filter(k if checked else None));palette_layout.addWidget(button);self.type_buttons[kind]=button
-        palette_layout.addStretch();stage=QWidget();stage_layout=QHBoxLayout(stage);stage_layout.setContentsMargins(0,0,0,0);stage_layout.addWidget(self.palette);stage_layout.addWidget(self.scroll,1);self.split.insertWidget(0,stage)
+        finder.addWidget(self.palette)
         self.drawer=QWidget();right=QVBoxLayout(self.drawer);right.setContentsMargins(6,0,0,0);self.title=QLabel('请选择地图节点');self.title.setWordWrap(True);right.addWidget(self.title)
         self.entry_search=QLineEdit();self.entry_search.setMaxLength(100);self.entry_search.setPlaceholderText('筛选所选节点的事件或作战名称');self.entry_search.setStyleSheet('QLineEdit{color:#28332e;background:white;border:1px solid #d2d9d5;border-radius:7px;padding:5px;}');right.addWidget(self.entry_search)
         self.entry_count=QLabel();self.entry_count.setWordWrap(True);right.addWidget(self.entry_count)
@@ -174,7 +181,7 @@ class MapPanel(QWidget):
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);right.addWidget(self.detail,2)
         self.open_button=QPushButton('打开完整资料');self.open_button.setEnabled(False);right.addWidget(self.open_button)
         self.split.addWidget(self.drawer);self.split.setSizes([700,300]);self.drawer.hide();body.addWidget(self.split,1)
-        legend=QLabel('实色：已读　半透明：模板固定　金字：本局记录　?：未确认　历史比例不是本局概率；连线不代表现在可通行');legend.setWordWrap(True);body.addWidget(legend)
+        legend=QLabel('实色：已读　半透明：模板固定　金字：本局记录　?：未确认　历史比例不是本局概率；连线不代表现在可通行');legend.setWordWrap(True);information.addWidget(legend);body.insertWidget(2,self.information)
         self.floors.currentChanged.connect(self.show_floor);self.zoom.currentIndexChanged.connect(self.change_zoom);self.view.nodeSelected.connect(self.select_interactive)
         self.details_toggle.toggled.connect(self.drawer.setVisible);self.entries.currentItemChanged.connect(self.read_entry);self.open_button.clicked.connect(self.open_entry);self.refresh()
         self.entry_search.textChanged.connect(lambda _text:self.selected(self.view.selected))
@@ -190,6 +197,7 @@ class MapPanel(QWidget):
         for name,button in self.type_buttons.items():button.setChecked(name==kind)
         self.view.set_type_filter(kind)
         self.filter_notice.setText(('正在查看：'+kind+'。实线为已读或模板，虚线为候选；不保证可达或掉落。')if kind else'')
+        self.filter_notice.setVisible(bool(kind))
         self.clear_filter.setVisible(bool(kind))
         companion=getattr(self.owner,'compact_window',None)
         if companion is not None and hasattr(companion,'game_overlay'):companion.game_overlay.set_kind(kind)
@@ -231,13 +239,12 @@ class MapPanel(QWidget):
             self.close_reference()
             self.readings.clear();self.entry_readings.clear();self.reading_key=None;blocked=self.entry_search.blockSignals(True);self.entry_search.clear();self.entry_search.blockSignals(blocked);old_key=None;self.epoch=epoch;self.selected_zone=None;self.view.set_map(None)
         self.graphs=deepcopy(self.owner.run.state.get('maps',{}));original=self.owner.map_view
-        self.resources.refresh(self.owner.run.state)
         if original.graph and original.graph.get('template_id')==(self.graphs.get(original.graph.get('zone_id'))or{}).get('template_id'):self.graphs[original.graph['zone_id']]=deepcopy(original.graph)
         self.latest_position.setEnabled(self.latest_position_key()is not None)
         self.update_node_finder();self.floors.blockSignals(True)
         while self.floors.count():self.floors.removeTab(0)
         for key,graph in sorted(self.graphs.items(),key=lambda pair:(zone_info(pair[1])[1]or 99,pair[0])):
-            name,floor=zone_info(graph);i=self.floors.addTab(('第'+str(floor)+'层 · 'if floor else'')+name);self.floors.setTabData(i,key)
+            name,floor=zone_info(graph);i=self.floors.addTab('第'+'一二三四五六'[floor-1]+'层'if floor else name);self.floors.setTabData(i,key);self.floors.setTabToolTip(i,name)
         keys=[self.floors.tabData(i)for i in range(self.floors.count())];wanted=old_key if old_key in keys else(original.graph or{}).get('zone_id')
         self.floors.setCurrentIndex(keys.index(wanted)if wanted in keys else 0 if keys else-1);self.floors.blockSignals(False);self.show_floor()
     def update_node_finder(self,*_):
@@ -275,11 +282,17 @@ class MapPanel(QWidget):
             old=(self.view.graph.get('zone_id'),self.view.graph.get('template_id'));self.readings[old]=(self.view.selected,self.selected_reference,self.detail.verticalScrollBar().value())
         index=self.floors.currentIndex();key=self.floors.tabData(index)if index>=0 else None
         graph=self.graphs.get(key);original=self.owner.map_view;self.selected_zone=key
-        from .player_floor_resources import snapshots,snapshot_text
-        row=next((r for r in reversed(snapshots(self.owner.run.state))if r['zone_id']==key),None);self.floor_resources.setText(snapshot_text(row))
+        from .player_floor_resources import snapshots,snapshot_text,snapshot_entries
+        row=next((r for r in reversed(snapshots(self.owner.run.state))if r['zone_id']==key and r.get('template_id')==(graph or{}).get('template_id')),None);self.floor_resources.setText(snapshot_text(row))
         if hasattr(self,'hover_card')and ((self.view.graph or{}).get('zone_id'),(self.view.graph or{}).get('template_id'))!=(key,(graph or{}).get('template_id')):
             self.hover_timer.stop();self.leave_timer.stop();self.hover_pending=None;self.hover_card.dismiss()
         historical=not(graph and original.graph and key==original.graph.get('zone_id')and graph.get('template_id')==original.graph.get('template_id')and not original.historical)
+        if historical and graph:
+            self.resources.set_rows([{**entry,'note':snapshot_text(row)}for entry in snapshot_entries(row)]if row else[{'key':'unread','name':'该层资源','value':'未记录','note':snapshot_text(None)}])
+            self.resources.setAccessibleName('所选历史地图资源；缺记录不借用本局最近值')
+        else:
+            self.resources.refresh(self.owner.run.state);self.resources.setAccessibleName('本局最近已读资源；未读不代表零；不是历史层当时数量')
+        self.context_notice.setText(('历史地图 · '+('资源为该图最后一次读取记录，其它未读'if row else'该图当时资源未记录'))if historical and graph else'最近已读地图 · 资源为本局最近读值'if graph else'尚无地图记录；等待后台读取')
         saved=self.readings.get((key,(graph or{}).get('template_id')),(None,None,0))
         self.view.blockSignals(True);self.view.set_map(graph,historical=historical)
         if graph and saved[0]in {n['id']for n in graph['nodes']}:self.view.select_node(saved[0])
@@ -296,6 +309,7 @@ class MapPanel(QWidget):
         config=self.owner.run.state.get('config',{});grade=difficulty_value(config.get('difficulty'))
         squad=config.get('squad',{}).get('name');squad=squad if isinstance(squad,str) and squad else'未读'
         self.status.setText(self.status.text()+f'　保密等级 {grade if grade is not None else "未读"} · 分队 {squad}')
+        self.context_notice.setToolTip(self.status.text()+'\n'+self.floor_resources.text())
         self.change_zoom()
         if hasattr(self,'hover_card')and self.hover_card.isVisible():
             binding=self.hover_card.binding
@@ -303,8 +317,14 @@ class MapPanel(QWidget):
             else:self.hover_card.install(binding,graph,binding[-1],self.owner.run.state.get('config',{}),self.view,force=True)
         self.check_reference()
     def change_zoom(self,*_):
+        old=self.view.size()
         scale=(1,1.25,1.5,2)[self.zoom.currentIndex()];self.scroll.setWidgetResizable(scale==1)
-        if scale!=1:self.view.resize(max(600,int(self.scroll.viewport().width()*scale)),max(330,int(self.scroll.viewport().height()*scale)))
+        if scale!=1:
+            self.view.resize(max(600,int(self.scroll.viewport().width()*scale)),max(330,int(self.scroll.viewport().height()*scale)))
+            # Qt Image Viewer v6.11.2, Copyright (C) 2022 The Qt Company Ltd.
+            # BSD-3-Clause; licenses/qt-image-viewer-BSD-3-Clause.txt.
+            for bar,factor in((self.scroll.horizontalScrollBar(),self.view.width()/old.width()),(self.scroll.verticalScrollBar(),self.view.height()/old.height())):
+                bar.setValue(int(factor*bar.value()+(factor-1)*bar.pageStep()/2))
     def select_interactive(self,node_id):
         self.selected(node_id)
         if node_id:self.details_toggle.setChecked(True)

@@ -37,6 +37,7 @@ class ResourceStrip(QWidget):
         if rows == self.rows:
             return
         keys={row['key'] for row in rows}
+        old_keys=[row['key']for row in self.rows]
         for key in self.chips.keys()-keys:
             chip=self.chips.pop(key);self.flow.removeWidget(chip);chip.hide();chip.deleteLater()
         self.rows = rows
@@ -59,5 +60,8 @@ class ResourceStrip(QWidget):
             chip.setText(content)
             chip.setAccessibleName(row['name'] + ' ' + row['value'])
             chip.setToolTip(row['note'])
+        if old_keys!=[row['key']for row in rows]:
+            for row in rows:self.flow.removeWidget(self.chips[row['key']])
+            for row in rows:self.flow.addWidget(self.chips[row['key']])
         self.flow.invalidate()
         self.updateGeometry()
