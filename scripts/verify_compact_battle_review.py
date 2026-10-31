@@ -28,7 +28,7 @@ if __name__=='__main__':
         def tab(tabs,widget):
             i=tabs.indexOf(widget);require(i>=0,'requested_player_page_has_actual_tab');QTest.mouseClick(tabs.tabBar(),Qt.MouseButton.LeftButton,pos=tabs.tabBar().tabRect(i).center());gui.processEvents();require(tabs.currentWidget()is widget,'actual_tab_click_selects_exact_page')
         require(p.tabs.count()==4,'four_main_player_sections')
-        require(p.details_toggle.palette().color(QPalette.ColorRole.WindowText).lightness()<100,'disclosure_labels_readable_on_light_player_window')
+        require(p.details_toggle.palette().color(QPalette.ColorRole.WindowText).lightness()>200 and dialog.palette().color(QPalette.ColorRole.Window).lightness()<70,'disclosure_labels_readable_on_video_dark_reference_window')
         require(p.notice.isHidden()and p.rewards.notice.isHidden()and p.settlement.notice.isHidden(),'long_scope_notices_collapsed_by_default')
         require(not window.isVisible(),'reader_does_not_force_full_main_window');save('overview')
         tab(p.tabs,p.rewards);require(p.rewards.sections.count()==2,'both_reward_kinds_share_one_main_section')

@@ -113,7 +113,8 @@ class RecentScenePanel(SceneBattlePanel):
             self.event_key=None;self.refresh();return False
         self._close_event()
         from .current_event_directory_view import make_event_dialog
-        self.event_dialog=make_event_dialog(target,self)
+        from .player_map_reader import readable
+        self.event_dialog=readable(make_event_dialog(target,self))
         if self.event_dialog is None:
             self.event_key=None;self.refresh();return False
         self.event_dialog.show();return True

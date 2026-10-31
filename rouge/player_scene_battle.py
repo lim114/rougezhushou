@@ -20,7 +20,7 @@ def stage_candidates(content):
 
 from PySide6.QtCore import Qt,QSize,Signal
 from PySide6.QtGui import QIcon,QPixmap
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QTabWidget,QDialog
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QTabWidget
 
 class SceneBattlePanel(QWidget):
     noteRequested=Signal(object)
@@ -76,8 +76,11 @@ class SceneBattlePanel(QWidget):
         self.refresh()
         if self.identity is None or self.result is None:return
         if self.dialog is None:
-            from .current_battle_view import CurrentBattlePanel
-            self.dialog=QDialog(self,Qt.WindowType.Tool);self.dialog.setWindowTitle(self.result['name']+' · 固定关卡资料');self.dialog.resize(920,720);layout=QVBoxLayout(self.dialog);self.dialog.panel=CurrentBattlePanel(self.identity);layout.addWidget(self.dialog.panel)
+            from .player_map_reader import make_reader
+            self.dialog=make_reader('battle',{'id':self.identity,'title':self.result['name']},self)
+        elif self.dialog.panel.refresh_reference()is False:
+            self.dialog.close();self.dialog=None
+        if self.dialog is None:return
         self.dialog.show();self.dialog.raise_()
     def closeEvent(self,event):
         if self.dialog is not None:self.dialog.close()
