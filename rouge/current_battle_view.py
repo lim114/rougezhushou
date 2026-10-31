@@ -295,8 +295,9 @@ class CurrentBattlePanel(QWidget):
         if dialog is not None:dialog.close()
 
     def _spawn_source_invalidated(self):
-        dialog=getattr(self,'action_position_dialog',None)
-        if dialog is not None:dialog.close()
+        dialog=getattr(self,'spawn_candidates_position_dialog',None)
+        if dialog is not None:dialog.panel.clear_reference();dialog.close()
+        self.spawn_candidates_position_dialog=None
 
     def _spawn_action_selected(self,key):
         dialog=getattr(self,'spawn_candidates_dialog',None)
@@ -308,7 +309,9 @@ class CurrentBattlePanel(QWidget):
         return self.focus_action(action)
 
     def _spawn_position_requested(self,key):
-        return self._spawn_action_selected(key) and self.open_action_positions()
+        okay=self._spawn_action_selected(key) and self.open_action_positions()
+        if okay:self.spawn_candidates_position_dialog=self.action_position_dialog
+        return okay
 
     def open_spawn_candidates(self):
         if self.result is None:return False
@@ -466,15 +469,21 @@ class CurrentBattlePanel(QWidget):
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
         from .current_action_positions_view import CurrentActionPositionsDialog
         dialog=getattr(self,'action_position_dialog',None)
-        if dialog is not None:dialog.close()
-        self.action_position_dialog=CurrentActionPositionsDialog(self.stage_id,self.action_key,self)
+        self.enemy_spawns_position_dialog=None
+        self.spawn_candidates_position_dialog=None
+        if dialog is None:self.action_position_dialog=CurrentActionPositionsDialog(self.stage_id,self.action_key,self)
+        else:dialog.panel.set_reference(self.stage_id,self.action_key)
         self.action_position_dialog.show();return True
 
     def open_map_positions(self):
         if self.result is None:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
         from .current_map_position_view import CurrentMapPositionDialog
-        self._close_map_positions();self.position_dialog=CurrentMapPositionDialog(self.stage_id,self);self.position_dialog.show();return True
+        self._close_map_positions()
+        dialog=getattr(self,'position_dialog',None)
+        if dialog is None:self.position_dialog=CurrentMapPositionDialog(self.stage_id,self)
+        else:dialog.panel.refresh_reference()
+        self.position_dialog.show();return True
 
     def _close_hanko(self):
         child=getattr(self,'hanko_dialog',None)

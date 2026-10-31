@@ -55,7 +55,7 @@ class CurrentActionPositionsView320Tests(unittest.TestCase):
         self.assertTrue(p.action_position_button.isEnabled()); QTest.mouseClick(p.action_position_button, Qt.MouseButton.LeftButton); child = p.action_position_dialog; self.assertTrue(child.isVisible()); child.panel.combo.setCurrentIndex(1)
         self.assertTrue(p.refresh_reference()); self.assertTrue(child.isVisible()); self.assertEqual(child.panel.combo.currentIndex(), 1)
         p.actions.setCurrentRow(row + 1); self.assertFalse(child.isVisible()); p.actions.setCurrentRow(row); self.assertTrue(p.open_action_positions()); child = p.action_position_dialog
-        self.assertTrue(p.open_action_positions()); self.assertFalse(child.isVisible()); child = p.action_position_dialog; d.close(); self.assertFalse(child.isVisible())
+        self.assertTrue(p.open_action_positions()); self.assertIs(p.action_position_dialog,child); self.assertTrue(child.isVisible()); d.close(); self.assertFalse(child.isVisible())
 
     def test_parent_failure_and_bad_image_decode_cannot_keep_previous_markers(self):
         d = CurrentBattleDialog('ro6_n_2_3'); d.show(); self.addCleanup(d.close); p = d.panel

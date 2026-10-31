@@ -66,7 +66,8 @@ def main():
                 nonlocal done,failure,panel
                 dialog=None
                 try:
-                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_common_reference_tab_opened')
+                    from native_workspace_navigation import click_reader
+                    require(click_reader(tabs,panel,gui),'actual_MainWindow_common_reference_tab_opened')
                     main_panel=panel;require(panel.scope.isHidden(),'common_page_has_no_update_scope_control');require(panel.scope.currentData()is False,'current_complete_stage_catalog_available')
                     battle_dialog=None;owned=None
                     def open_action(sid,key):
@@ -95,7 +96,7 @@ def main():
                         try:QTest.mouseClick(panel.refresh_button,Qt.MouseButton.LeftButton);gui.processEvents();require(panel.result is None and panel.grid.result is None and panel.original.pixmap.isNull()and panel.original.point_center()is None and not panel.technical.toPlainText(),'actual_source_corruption_clears_action_grid_bitmap_marker_and_reader');shot('action-map-source-cleared')
                         finally:target.write_bytes(raw)
                         QTest.mouseClick(panel.refresh_button,Qt.MouseButton.LeftButton);gui.processEvents();require(panel.result is not None and panel.entry_key is None and panel.grid.selected is None and panel.original.point_center()is None,'actual_recovery_requires_new_manual_action_choice')
-                    QTest.mouseClick(battle_dialog.panel.action_position_button,Qt.MouseButton.LeftButton);gui.processEvents();previous=dialog;dialog=battle_dialog.panel.action_position_dialog;require(not previous.isVisible()and dialog.isVisible(),'repeated_action_map_open_closes_previous_owned_dialog');battle_dialog.close();gui.processEvents();require(not dialog.isVisible(),'closing_current_battle_also_closes_action_map_dialog')
+                    QTest.mouseClick(battle_dialog.panel.action_position_button,Qt.MouseButton.LeftButton);gui.processEvents();previous=dialog;dialog=battle_dialog.panel.action_position_dialog;require(previous is dialog and dialog.isVisible(),'repeated_action_map_open_reuses_same_owned_dialog');battle_dialog.close();gui.processEvents();require(not dialog.isVisible(),'closing_current_battle_also_closes_action_map_dialog')
                     panel=main_panel;require(window.run.state==state and window.battle_preview.context==context,'temporary_run_resources_and_legacy_context_unchanged');require(all(v==0 for v in calls.values())and not window.auto.isChecked(),'all_seven_real_game_chat_credential_operations_zero');native();done=True;window.close();gui.processEvents();gui.exit(0)
                 except BaseException as error:
                     failure={'type':type(error).__name__,'message':str(error),'traceback':traceback.format_exc()}

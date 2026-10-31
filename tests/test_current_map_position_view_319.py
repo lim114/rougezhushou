@@ -41,7 +41,7 @@ class CurrentMapPositionView319Tests(unittest.TestCase):
         p=self.panel();p.combo.setCurrentIndex(1)
         with patch.object(model.battle.version,'image_bytes',return_value=b'not a PNG'):self.assertFalse(p.refresh_reference());self.assertIsNone(p.result);self.assertTrue(p.original.pixmap.isNull())
     def test_repeat_parent_close_and_parent_source_loss_close_owned_position_dialog(self):
-        d=CurrentBattleDialog('ro6_n_6_2');d.show();self.addCleanup(d.close);p=d.panel;self.assertTrue(p.open_map_positions());first=p.position_dialog;self.assertTrue(p.open_map_positions());self.assertFalse(first.isVisible());second=p.position_dialog;d.close();self.assertFalse(second.isVisible());d.show();self.assertTrue(p.open_map_positions())
+        d=CurrentBattleDialog('ro6_n_6_2');d.show();self.addCleanup(d.close);p=d.panel;self.assertTrue(p.open_map_positions());first=p.position_dialog;self.assertTrue(p.open_map_positions());self.assertIs(p.position_dialog,first);self.assertTrue(first.isVisible());second=p.position_dialog;d.close();self.assertFalse(second.isVisible());d.show();self.assertTrue(p.open_map_positions())
         with patch.object(model.battle,'stage_reference',return_value=None):self.assertFalse(p.open_map_positions());self.assertFalse(p.position_dialog.isVisible());self.assertFalse(p.position_button.isEnabled())
 
 if __name__=='__main__':unittest.main()

@@ -30,11 +30,18 @@ class CurrentActionPositionsPanel(QWidget):
         blocked = self.combo.blockSignals(True); self.combo.clear(); self.combo.blockSignals(blocked); self.combo.setEnabled(False)
         replace_text(self.player, model.UNAVAILABLE, preserve=False); replace_text(self.technical, '', preserve=False); self.tabs.setCurrentIndex(0)
 
+    def set_reference(self, stage_id, action_key):
+        if (stage_id, action_key) != (self.stage_id, self.action_key):
+            self.clear_reference()
+        self.stage_id = stage_id; self.action_key = action_key
+        return self.refresh_reference()
+
     def refresh_reference(self):
         fresh = model.reference(self.stage_id, self.action_key)
         raw = model.positions.battle.version.image_bytes(fresh['grid']['image']) if fresh else None
         if fresh is None or raw is None: self.clear_reference(); return False
-        keep = self.result is not None and self.result['source_identity'] == fresh['source_identity']
+        keep = (self.result is not None and self.result['source_identity'] == fresh['source_identity']
+                and self.result['stage_id'] == fresh['stage_id'] and self.result['action_key'] == fresh['action_key'])
         key = self.entry_key if keep else None; self.result = fresh; self.image_raw = raw
         blocked = self.combo.blockSignals(True); self.combo.clear(); self.combo.addItem('选择本条记录的位置', None)
         for entry in fresh['entries']: self.combo.addItem(model.entry_label(entry), entry['key'])
