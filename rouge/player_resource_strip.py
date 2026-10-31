@@ -15,7 +15,7 @@ class ResourceStrip(QWidget):
         self.chips = {}
         self.setObjectName('runResourceStrip')
         self.setAccessibleName('本局最近已读资源；未读不代表零；不是所选历史层当时数量')
-        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         self.flow = FlowLayout(self)
         self.flow.setSpacing(6)
         background, foreground = ('#2d3235', '#edf0ee') if dark else ('#e5e6e9', '#44484c')

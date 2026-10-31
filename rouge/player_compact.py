@@ -11,7 +11,7 @@ class ToolPopover(QDialog):
         from .player_theme import apply_theme
         self.setObjectName(object_name);apply_theme(self,theme,extra=extra_style)
         self.on_show=on_show
-        body=QVBoxLayout(self);bar=QHBoxLayout();label=QLabel(title);label.setObjectName('popoverTitle');bar.addWidget(label,1);close=QPushButton('×');close.setObjectName('popoverCloseButton');close.setFixedWidth(30);close.clicked.connect(self.close);bar.addWidget(close);body.addLayout(bar);body.addWidget(content,1)
+        body=QVBoxLayout(self);bar=QHBoxLayout();self.header_bar=bar;self.title_label=QLabel(title);self.title_label.setObjectName('popoverTitle');bar.addWidget(self.title_label,1);close=QPushButton('×');close.setObjectName('popoverCloseButton');close.setFixedWidth(30);close.clicked.connect(self.close);bar.addWidget(close);body.addLayout(bar);body.addWidget(content,1)
 
     def showEvent(self,event):
         super().showEvent(event)
@@ -236,12 +236,14 @@ class CompactAssistant(QDialog):
             from .player_resource_strip import ResourceStrip
             bundle=QWidget();body=QVBoxLayout(bundle);body.setContentsMargins(0,0,0,0)
             resources=ResourceStrip(self.owner.run.state,dark=True);resources.requested.connect(self.open_resource)
-            body.addWidget(resources);body.addWidget(pages,1)
+            body.addWidget(pages,1)
             from .player_catalog_grid import INVENTORY_STYLE
             self.inventory_popup=ToolPopover('收藏品、战术道具与零件',bundle,self,on_show=self.refresh,theme='dark',extra_style=INVENTORY_STYLE,object_name='inventoryWindow')
+            self.inventory_popup.title_label.hide();self.inventory_popup.header_bar.insertWidget(0,resources,1)
             self.inventory_popup.finished.connect(lambda _result:panel.hover_card.dismiss())
             self.inventory_popup.resources=resources
-            self.inventory_popup.panel=panel;self.inventory_popup.pages=pages;self.inventory_popup.parts=parts;self.inventory_popup.tools=tools;self.inventory_popup.shop=shop;self.inventory_popup.resize(840,650)
+            self.inventory_popup.panel=panel;self.inventory_popup.pages=pages;self.inventory_popup.parts=parts;self.inventory_popup.tools=tools;self.inventory_popup.shop=shop
+            area=self.screen().availableGeometry();self.inventory_popup.resize(min(1200,area.width()-40),min(540,area.height()-60))
         return self.present(self.inventory_popup)
     def open_map(self):
         if self.map_popup is None:

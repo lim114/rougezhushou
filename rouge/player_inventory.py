@@ -63,8 +63,10 @@ class InventoryPanel(QWidget):
     openExchangeReference=Signal(str,str)
     def __init__(self,run,public_cache=None):
         super().__init__();self.run=run;self.rows={};self.public_cache=Path(public_cache)if public_cache is not None else None;self.source_stamp=None;self.source_signature=None;self.source_index=None;self.render_key=None;body=QVBoxLayout(self)
-        bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('搜索藏品名称、效果或取得条件，如攻击、独活')
-        self.held=QCheckBox('只看本局已确认持有');self.held.setChecked(True);bar.addWidget(self.search,1);bar.addWidget(self.held);self.more=QPushButton('更多筛选');self.more.setCheckable(True);bar.addWidget(self.more);body.addLayout(bar)
+        body.setContentsMargins(8,4,8,4);body.setSpacing(5)
+        bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('搜索名称、效果或取得条件')
+        self.held=QCheckBox('仅本局已读');self.held.setToolTip('只显示本局已确认持有的收藏品；未读到不代表没有。');self.held.setChecked(True);bar.addWidget(self.search,1);bar.addWidget(self.held);self.more=QPushButton('筛选');self.more.setCheckable(True);bar.addWidget(self.more)
+        self.scope=QPushButton('资料说明');self.scope.setCheckable(True);bar.addWidget(self.scope);body.addLayout(bar)
         self.filter_box=QWidget();filters=QGridLayout(self.filter_box);self.rarity=QComboBox();self.rarity.addItem('全部稀有度',None)
         for key,label in RARITIES.items():self.rarity.addItem(label,key)
         self.exchange=QComboBox();self.exchange.addItem('全部交换资格',None);self.exchange.addItem('资料允许交出',True);self.exchange.addItem('资料不允许交出',False)
@@ -76,7 +78,8 @@ class InventoryPanel(QWidget):
         self.access.setToolTip('按来源标记和原文筛选，不判断本局是否已解锁或可以领取。');filters.addWidget(self.access,2,0)
         self.source_node=QComboBox();self.source_node.addItem('全部关联节点',None);self.source_node.setToolTip('所选资料明确关联的节点，不是当前地图的可取得保证；未列不表示无法取得。');filters.addWidget(self.source_node,2,1)
         body.addWidget(self.filter_box);self.filter_box.hide();self.more.toggled.connect(self.filter_box.setVisible)
-        self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status)
+        self.summary=QLabel();self.summary.setWordWrap(True);body.addWidget(self.summary)
+        self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status);self.status.hide();self.scope.toggled.connect(self.status.setVisible)
         from .player_catalog_grid import CatalogGrid
         self.entries=CatalogGrid();self.splitter=QSplitter(Qt.Orientation.Horizontal);self.splitter.addWidget(self.entries);body.addWidget(self.splitter,1)
         self.reader=QWidget();reader=QVBoxLayout(self.reader);reader.setContentsMargins(8,0,0,0)
@@ -88,10 +91,10 @@ class InventoryPanel(QWidget):
             button=QPushButton(label);button.setCheckable(True);button.setChecked(i==0);self.rarity_buttons.addButton(button,i);bottom.addWidget(button)
         self.rarity_buttons.idClicked.connect(self.rarity.setCurrentIndex);self.rarity.hide()
         self.rarity.currentIndexChanged.connect(lambda i:self.rarity_buttons.button(i).setChecked(True))
-        bottom.addStretch();bottom.addWidget(QLabel('图标大小'));self.icon_scale=QSlider(Qt.Orientation.Horizontal);self.icon_scale.setRange(48,104);self.icon_scale.setValue(72);self.icon_scale.setMaximumWidth(160);bottom.addWidget(self.icon_scale);self.icon_scale.valueChanged.connect(self.entries.set_tile_size);body.addLayout(bottom)
+        bottom.addStretch();bottom.addWidget(QLabel('图标大小'));self.icon_scale=QSlider(Qt.Orientation.Horizontal);self.icon_scale.setRange(48,104);self.icon_scale.setValue(60);self.entries.set_tile_size(60);self.icon_scale.setMaximumWidth(160);bottom.addWidget(self.icon_scale);self.icon_scale.valueChanged.connect(self.entries.set_tile_size);body.addLayout(bottom)
         actions=QHBoxLayout();self.source_button=QPushButton('查看并固定取得来源');actions.addWidget(self.source_button,1)
-        self.reference_button=QPushButton('完整条目与相关查询');actions.addWidget(self.reference_button);body.addLayout(actions)
-        self.exchange_button=QPushButton('查看此提供物对应的换入候选');body.addWidget(self.exchange_button);self.exchange_button.setVisible(False)
+        self.reference_button=QPushButton('完整条目与相关查询');actions.addWidget(self.reference_button);reader.addLayout(actions)
+        self.exchange_button=QPushButton('查看此提供物对应的换入候选');reader.addWidget(self.exchange_button);self.exchange_button.setVisible(False)
         from .player_exchange_view import request_inventory
         self.exchange_button.clicked.connect(lambda:request_inventory(self))
         self.source_button.clicked.connect(self.open_sources);self.reference_button.clicked.connect(self.open_selected);self.entries.currentItemChanged.connect(self.selected);self.entries.itemClicked.connect(lambda _:(self.reader.show(),self.splitter.setSizes([500,310])))
@@ -157,9 +160,13 @@ class InventoryPanel(QWidget):
         elif self.hover_card.isVisible():self.hover_card.install(self.rows[self.hover_card.identity],self.version.currentData(),self.source_index,self.source_signature)
         from .player_exchange_view import update_inventory_button
         update_inventory_button(self)
-        complete=self.run.state.get('inventory_verified')is True
+        from .player_resource_facts import inventory_summary
+        complete=inventory_summary(self.run.state)['complete']
+        self.summary.setText('资料暂不可用，旧列表已清除。'if rows is None else f'显示{len(rows)}件 · '+('持有清单已核对完整'if complete else'持有清单未核对完整，未列出不代表没有'))
         self.status.setText('资料暂不可用，已清除旧列表。'if rows is None else f'找到{len(rows)}件。'+('本局收藏品已核对完整。'if complete else'本局尚未核对读全；未列出不代表没有。')+' 悬停查看所属池，点击阅读效果与取得条件。拓展一图鉴按所选范围显示；其它条目另注明固定基准。不是当前DLC完整目录或已生效证明。')
-        if rows is not None and data is None:self.status.setText('公开图鉴暂不可用；下方只显示固定国服说明，未沿用旧的图鉴或掉落资料。'+self.status.text())
+        if rows is not None and data is None:
+            self.summary.setText(self.summary.text()+' · 公开图鉴暂不可用，仅显示固定说明')
+            self.status.setText('公开图鉴暂不可用；下方只显示固定国服说明，未沿用旧的图鉴或掉落资料。'+self.status.text())
         if self.access.currentData()or self.source_node.currentData():self.status.setText(self.status.text()+' 当前按来源说明筛选，不判断本局解锁、可选或必掉；未收录不表示没有取得途径。')
     def render_rows(self,rows,selected):
         from .view_catalog import relic_icon,relic_icon_note

@@ -52,7 +52,7 @@ class CatalogGrid(QListWidget):
         self.selected_identity=item.data(Qt.ItemDataRole.UserRole)if item else None;self.viewport().update()
     def set_tile_size(self,size):
         size=max(48,min(104,int(size)));self.tile_icon=size
-        self.setIconSize(QSize(size,size));self.setGridSize(QSize(max(104,size+46),size+66));self.doItemsLayout();self.viewport().update()
+        self.setIconSize(QSize(size,size));self.setGridSize(QSize(max(92,size+28),size+60));self.doItemsLayout();self.viewport().update()
 
 def add_catalog_controls(body,grid,detail):
     from PySide6.QtWidgets import QHBoxLayout,QLabel,QSlider,QPushButton
