@@ -1,0 +1,334 @@
+{
+  "baseline_commit": "23030ec53a21fc7c47253c7e65d30d0dfbb27581",
+  "source_files_unchanged": [
+    {
+      "path": "rouge/run_state.py",
+      "sha256": "7380141b503ff75614fc332b2879280fea3b5183c5f31e352b638f4a040ec959",
+      "bytes": 62139
+    },
+    {
+      "path": "rouge/recipient_state.py",
+      "sha256": "837e7990a8983efb3f64228f1a11511a15749ff8e202305d2fdc10e8efa83785",
+      "bytes": 4666
+    },
+    {
+      "path": "rouge/record_flags.py",
+      "sha256": "9f546e072015aeb19bec7c1c8c16b30425ef7c918f2463b88a86e5dff0b2237d",
+      "bytes": 2691
+    },
+    {
+      "path": "rouge/training_view.py",
+      "sha256": "14153c3de4d8668e8d7d0d98e37f6443a4fb1a5ee23e3a222e40b8c3f59045ba",
+      "bytes": 6994
+    },
+    {
+      "path": "rouge/player_team.py",
+      "sha256": "059a4663fd2a33d798b52851e7507773bb754aa5e75ab2d77a29b69375edf188",
+      "bytes": 7661
+    },
+    {
+      "path": "rouge/app.py",
+      "sha256": "b16410486890f6b3fc663d1f9c55ef7c8b0b2e754fd58f8f01fc50206f4d8c13",
+      "bytes": 161812
+    },
+    {
+      "path": "rouge/account_cache.py",
+      "sha256": "cc4dcc7961a44e50f15c1ed1ffff31b0c6f25cbd4ac752a9124d57ee171a1c50",
+      "bytes": 12006
+    },
+    {
+      "path": "rouge/run_recognition.py",
+      "sha256": "c7f32ccd2aef979eecb30367a57af58d164bdb8f98b4c7db4bca1f99f127b150",
+      "bytes": 23560
+    },
+    {
+      "path": "PROJECT_REQUIREMENTS.md",
+      "sha256": "109ffda0c69be72f82fb994987654ae38b2528153d3271b56d5bdb9aea6e9c93",
+      "bytes": 28399
+    }
+  ],
+  "test_source": {
+    "path": "tests/test_run_lifecycle_review.py",
+    "sha256": "4005473c1775bba7d4004fe405fda0f191aff40eddc1f8dccee9af2822404207",
+    "bytes": 6838
+  },
+  "reviewed_chain": "RunState.apply/restore_origin_discovery_buffs, recipient_state merge/invalidation, presence and metadata projection, training_view selected inputs, MainWindow apply/sync/calculate and manual reset, TeamPanel roster qualification; inspected recognition marker source contract.",
+  "verified_transitions": [
+    {
+      "scenario": "精一招募",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 1,
+      "level": 80,
+      "skill": 1,
+      "skill_rank": 7,
+      "char_buff_ids": [],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": "non_emergency"
+    },
+    {
+      "scenario": "完整强化页确认未领取",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 1,
+      "level": 80,
+      "skill": 1,
+      "skill_rank": 7,
+      "char_buff_ids": [],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": "non_emergency"
+    },
+    {
+      "scenario": "读取两件定向藏品",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 1,
+      "level": 80,
+      "skill": 1,
+      "skill_rank": 7,
+      "char_buff_ids": [],
+      "char_buff_pending_ids": [
+        "rogue_6_from_relic_15"
+      ],
+      "recruitment_kind": "non_emergency"
+    },
+    {
+      "scenario": "读取进阶但不猜模组或专精",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 2,
+      "level": 90,
+      "skill": 1,
+      "skill_rank": 10,
+      "char_buff_ids": [],
+      "char_buff_pending_ids": [
+        "rogue_6_from_relic_13",
+        "rogue_6_from_relic_15"
+      ],
+      "recruitment_kind": "non_emergency"
+    },
+    {
+      "scenario": "局部强化页只确认零食盒",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 2,
+      "level": 90,
+      "skill": 1,
+      "skill_rank": 10,
+      "char_buff_ids": [
+        "rogue_6_from_relic_13"
+      ],
+      "char_buff_pending_ids": [
+        "rogue_6_from_relic_15"
+      ],
+      "recruitment_kind": "non_emergency"
+    },
+    {
+      "scenario": "完整强化页确认两个领取",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 2,
+      "level": 90,
+      "skill": 1,
+      "skill_rank": 10,
+      "char_buff_ids": [
+        "rogue_6_from_relic_13",
+        "rogue_6_from_relic_15"
+      ],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": "non_emergency"
+    },
+    {
+      "scenario": "补齐本局等级与三技能专精",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 2,
+      "level": 90,
+      "skill": 3,
+      "skill_rank": 10,
+      "char_buff_ids": [
+        "rogue_6_from_relic_13",
+        "rogue_6_from_relic_15"
+      ],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": "non_emergency"
+    },
+    {
+      "scenario": "普通页面复用培养与强化",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 2,
+      "level": 90,
+      "skill": 3,
+      "skill_rank": 10,
+      "char_buff_ids": [
+        "rogue_6_from_relic_13",
+        "rogue_6_from_relic_15"
+      ],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": "non_emergency"
+    },
+    {
+      "scenario": "重启后继续复用",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 2,
+      "level": 90,
+      "skill": 3,
+      "skill_rank": 10,
+      "char_buff_ids": [
+        "rogue_6_from_relic_13",
+        "rogue_6_from_relic_15"
+      ],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": "non_emergency"
+    },
+    {
+      "scenario": "完整队伍确认机械师离队",
+      "present_ids": [
+        "char_151_myrtle"
+      ],
+      "operator": "mechanist",
+      "elite": 2,
+      "level": 90,
+      "skill": 1,
+      "skill_rank": 10,
+      "char_buff_ids": [],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": null
+    },
+    {
+      "scenario": "重新招募不沿用旧培养与强化",
+      "present_ids": [
+        "mechanist",
+        "char_151_myrtle"
+      ],
+      "operator": "mechanist",
+      "elite": 2,
+      "level": 90,
+      "skill": 1,
+      "skill_rank": 10,
+      "char_buff_ids": [],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": "emergency_hire"
+    },
+    {
+      "scenario": "开始手动重置前的隔离局",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 1,
+      "level": 80,
+      "skill": 1,
+      "skill_rank": 7,
+      "char_buff_ids": [],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": null
+    },
+    {
+      "scenario": "本局初读",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 1,
+      "level": 80,
+      "skill": 1,
+      "skill_rank": 7,
+      "char_buff_ids": [],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": null
+    },
+    {
+      "scenario": "归属先于招募来源读取",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 1,
+      "level": 80,
+      "skill": 1,
+      "skill_rank": 7,
+      "char_buff_ids": [
+        "rogue_6_from_relic_13"
+      ],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": null
+    },
+    {
+      "scenario": "首次确认来源不当重新招募",
+      "present_ids": [
+        "mechanist"
+      ],
+      "operator": "mechanist",
+      "elite": 1,
+      "level": 80,
+      "skill": 1,
+      "skill_rank": 7,
+      "char_buff_ids": [
+        "rogue_6_from_relic_13"
+      ],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": "non_emergency"
+    },
+    {
+      "scenario": "局部队伍不证明其他成员离队",
+      "present_ids": [
+        "mechanist",
+        "char_151_myrtle"
+      ],
+      "operator": "mechanist",
+      "elite": 1,
+      "level": 80,
+      "skill": 1,
+      "skill_rank": 7,
+      "char_buff_ids": [
+        "rogue_6_from_relic_13"
+      ],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": "non_emergency"
+    },
+    {
+      "scenario": "母藏品离开后保留已确认个人强化",
+      "present_ids": [
+        "mechanist",
+        "char_151_myrtle"
+      ],
+      "operator": "mechanist",
+      "elite": 1,
+      "level": 80,
+      "skill": 1,
+      "skill_rank": 7,
+      "char_buff_ids": [
+        "rogue_6_from_relic_13"
+      ],
+      "char_buff_pending_ids": [],
+      "recruitment_kind": "non_emergency"
+    }
+  ],
+  "confirmed_scope": "Continuous E1 recruitment -> empty full popup -> targeted relic discovery -> promotion -> partial/full recipient popup -> E2/S3 training -> ordinary pages -> reload -> full-roster departure -> re-recruit; unknown origin discovery, partial roster, parent-relic loss, stale observation and old-run context after explicit temporary UI reset.",
+  "meaning": "State and calculation-input preservation, not independently calibrated game formulas or actual image recognition. Initial E1 max80/E2 max90 values use current pinned mechanist profile and are not a new model.",
+  "review_result": "No product defect reproduced in the covered transitions. Kept current source unchanged; did not manufacture a numerical or state change to count progress.",
+  "guards_retained": "Do not remove current-run identity/stale-input, unknown presence, positive/negative recipient evidence, source qualification or unreadable-file/non-overwrite protections solely because rare. Existing actual game and persistence permission gaps remain.",
+  "REA_scope": "Complete Python source directly reviewed per REA skill; no new REA invocation and no invented whole-program claim.",
+  "whole_program_complete": false
+}

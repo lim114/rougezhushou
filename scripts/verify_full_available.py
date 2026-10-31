@@ -570,6 +570,8 @@ ADDITIONAL_MODULES += ('tests.test_event_battle_reader_review',)
 
 ADDITIONAL_MODULES += ('tests.test_enemy_overview_review',)
 
+ADDITIONAL_MODULES += ('tests.test_run_lifecycle_review',)
+
 if __name__ == '__main__':
     sys.exit(main())
 
