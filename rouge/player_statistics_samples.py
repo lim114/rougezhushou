@@ -39,7 +39,7 @@ from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QComboBox,QTableWidget,
 class StatisticsSamplesPage(QWidget):
     archiveRequested=Signal(object)
     def __init__(self,parent=None):
-        super().__init__(parent);self.records=[];self.rows=[];self.relic_id=None;self.signature=None
+        super().__init__(parent);self.records=[];self.rows=[];self.relic_id=None;self.signature=None;self.source_available=False
         body=QVBoxLayout(self);self.metric=QComboBox()
         for key,name in MEASURES.items():self.metric.addItem(name,key)
         self.metric.addItem('所选收藏品的归档时持有情况','relic');body.addWidget(self.metric)
@@ -51,11 +51,11 @@ class StatisticsSamplesPage(QWidget):
         self.metric.currentIndexChanged.connect(self.render);self.table.itemSelectionChanged.connect(self.selection_changed);self.open_button.clicked.connect(self.request_archive)
 
     def install(self,records,relic_id):
-        self.records=records;self.relic_id=relic_id;self.render()
+        self.source_available=records is not None;self.records=[]if records is None else records;self.relic_id=relic_id;self.render()
 
     def render(self,*_):
         from .player_replay import observation_time
-        key=self.metric.currentData();rows=sample_rows(self.records,key,self.relic_id);signature=repr((key,self.relic_id,rows))
+        key=self.metric.currentData();rows=sample_rows(self.records,key,self.relic_id);signature=repr((self.source_available,key,self.relic_id,rows))
         if signature==self.signature:return
         old=self.table.currentRow();keep=sample_binding(self.rows[old])if 0<=old<len(self.rows)else None
         self.signature=signature;self.rows=rows;self.table.setRowCount(0)
@@ -66,7 +66,7 @@ class StatisticsSamplesPage(QWidget):
                 self.table.setItem(index,col,QTableWidgetItem(text))
             if keep is not None and sample_binding(row)==keep:self.table.selectRow(index)
         included=sum(row['included']for row in rows)
-        self.notice.setText('请先在上方选择一件收藏品。'if key=='relic'and self.relic_id is None else f'当前筛选下共{len(rows)}局，计入{included}局，另有{len(rows)-included}局未计入。0是实际读到的数量；未知不会当作0。这里只解释归档记录，不是结算、掉落概率或分队强弱。')
+        self.notice.setText('本机历史暂时不可用，本项统计未知；没有将未读记录当作0局。'if not self.source_available else'请先在上方选择一件收藏品。'if key=='relic'and self.relic_id is None else f'当前筛选下共{len(rows)}局，计入{included}局，另有{len(rows)-included}局未计入。0是实际读到的数量；未知不会当作0。这里只解释归档记录，不是结算、掉落概率或分队强弱。')
         self.selection_changed()
 
     def selection_changed(self):

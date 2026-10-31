@@ -23,6 +23,9 @@ def complete_inventory(state):
                 if identity not in known:
                     return False
                 total += 1
+    from .relic_quantities import kettle_copies
+    copies=kettle_copies(state)
+    if copies is not None:total+=copies-1
     return total == state['relic_count']
 
 def unique_archives(records):
@@ -81,7 +84,7 @@ def statistics_text(result):
     return '\n'.join(lines)
 
 from PySide6.QtCore import Signal
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QComboBox, QPlainTextEdit, QPushButton
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QComboBox, QTextBrowser, QPushButton,QScrollArea,QFrame
 
 class PersonalStatisticsPage(QWidget):
     archiveRequested=Signal(object)
@@ -91,7 +94,9 @@ class PersonalStatisticsPage(QWidget):
         self.records = []
         self.result = None
         self.source_available = False
-        body = QVBoxLayout(self)
+        layout=QVBoxLayout(self);layout.setContentsMargins(0,0,0,0)
+        self.scroll=QScrollArea();self.scroll.setWidgetResizable(True);self.scroll.setFrameShape(QFrame.Shape.NoFrame);layout.addWidget(self.scroll)
+        content=QWidget();body=QVBoxLayout(content);self.scroll.setWidget(content)
         self.notice = QLabel('个人统计只使用本机历史归档；尚未归档的当前对局不混入样本。')
         self.notice.setWordWrap(True)
         body.addWidget(self.notice)
@@ -101,8 +106,8 @@ class PersonalStatisticsPage(QWidget):
         for identity, row in catalog()['relics'].items():
             self.relic.addItem(row['name'], identity)
         body.addWidget(self.relic)
-        self.detail = QPlainTextEdit()
-        self.detail.setReadOnly(True)
+        self.detail = QTextBrowser();self.detail.setOpenLinks(False)
+        self.details_open=False;self.detail_key=None;self.detail.anchorClicked.connect(self.toggle_details)
         body.addWidget(self.detail, 1)
         from .player_cohort_ui import attach_filters
         attach_filters(self,body)
@@ -115,6 +120,9 @@ class PersonalStatisticsPage(QWidget):
         self.reload.clicked.connect(self.refresh)
         self.relic.currentIndexChanged.connect(self.render)
         self.refresh()
+
+    def toggle_details(self,_):
+        self.details_open=not self.details_open;self.render()
 
     def refresh(self):
         try:
@@ -141,14 +149,30 @@ class PersonalStatisticsPage(QWidget):
         if not self.source_available:
             self.result = None
             self.card_controls.sync()
+            self.detail_key=None
             self.detail.setPlainText('本机历史暂未读到，统计未知；没有用0局或旧结果替代。')
-            self.samples.install([],self.relic.currentData())
+            self.samples.install(None,self.relic.currentData())
             return
         from .player_cohort_ui import selected_records,filter_notes
         selected=selected_records(self)
         self.result = statistics(selected, self.relic.currentData())
         self.samples.install(selected,self.relic.currentData())
         self.card_controls.sync()
-        text = filter_notes(self)+'\n\n'+statistics_text(self.result)
-        if self.detail.toPlainText() != text:
-            self.detail.setPlainText(text)
+        from html import escape
+        from .player_cohort_ui import filter_text
+        rows=[]
+        for row in self.result['measures'].values():
+            value=f'{row["mean"]:.2f}'if row['mean']is not None else'未知'
+            rows.append((row['name'].removeprefix('归档前最近读到的'),value,str(row['sample_count'])+'局',str(row['missing_count'])+'局'))
+        relic=self.result['relic']
+        if relic is not None:
+            value=f'{relic["fraction"]:.1%}'if relic['fraction']is not None else'未知'
+            rows.append((relic['name']+'持有率',value,str(relic['sample_count'])+'局',str(relic['excluded_incomplete_count'])+'局'))
+        cells=''.join('<tr>'+''.join('<td>'+escape(value)+'</td>'for value in row)+'</tr>'for row in rows)
+        text=('<h3>归档前最近读值 · '+str(self.result['archive_count'])+'局样本</h3><p>'+escape(filter_text(self))+'</p>'
+              '<table cellpadding="5" cellspacing="0" border="1"><tr><th>项目</th><th>平均 / 比例</th><th>计入</th><th>未计入</th></tr>'+cells+'</table>'
+              '<p>未读不当作0；只用本机归档，不上传，样本数不是通关数。<br>平均值不是整局收益；持有率只看完整清单，不是掉落概率。胜率与最终结算仍未知；版本、个人选择与读取缺失可能影响结果。</p>'
+              '<a href="statistics-details" style="color:'+self.detail.palette().text().color().name()+'">'+('收起完整统计口径'if self.details_open else'展开完整统计口径')+'</a>')
+        if self.details_open:text+='<pre style="white-space:pre-wrap">'+escape(filter_notes(self)+'\n\n'+statistics_text(self.result))+'</pre>'
+        if self.detail_key!=text:
+            offset=self.detail.verticalScrollBar().value();self.detail.setHtml(text);self.detail.verticalScrollBar().setValue(offset);self.detail_key=text

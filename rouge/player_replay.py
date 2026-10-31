@@ -151,7 +151,7 @@ class ReplayPanel(QWidget):
         from .player_replay_archive import selected_state,refresh_cards
         refresh_cards(self)
         state = selected_state(self)
-        identity=self.sessions.currentData();self.reading_label.setText('当前对局 · 已读片段'if identity=='current'else'本机历史 · 已读片段'if identity in self.archives else'此前历史暂不可用，请重新选择')
+        identity=self.sessions.currentData();self.reading_label.setText('个人统计 · 本机归档'if self.tabs.currentWidget()is self.statistics else'当前对局 · 已读片段'if identity=='current'else'本机历史 · 已读片段'if identity in self.archives else'此前历史暂不可用，请重新选择')
         self.evidence.refresh(state)
         self.shop.refresh(state)
         key = repr((state.get('id'),state.get('started_at'),state.get('history')))

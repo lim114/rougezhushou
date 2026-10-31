@@ -17,7 +17,7 @@ def attach_history(panel,body):
     panel.reload_history_button=QPushButton('重新读取本机历史');page.addWidget(panel.reload_history_button)
     panel.sessions.hide()
     header=QHBoxLayout();panel.history_list_button=QPushButton('‹ 对局列表');header.addWidget(panel.history_list_button);panel.reading_label=QLabel();panel.reading_label.setWordWrap(True);header.addWidget(panel.reading_label,1)
-    header.addStretch();panel.history_scope_button=QPushButton('记录说明');panel.history_scope_button.setCheckable(True);header.addWidget(panel.history_scope_button);panel.notice.hide();panel.nodes.notice.hide();panel.history_scope_button.toggled.connect(panel.notice.setVisible);panel.history_scope_button.toggled.connect(panel.nodes.notice.setVisible)
+    header.addStretch();panel.history_scope_button=QPushButton('记录说明');panel.history_scope_button.setCheckable(True);header.addWidget(panel.history_scope_button);panel.notice.hide();panel.nodes.notice.hide();panel.history_scope_button.toggled.connect(panel.nodes.notice.setVisible)
     panel.history_views_button=QPushButton('更多记录');panel.history_views_button.setCheckable(True);header.addWidget(panel.history_views_button);body.insertLayout(1,header)
     panel.tabs.tabBar().hide();panel.history_views_button.toggled.connect(panel.tabs.tabBar().setVisible)
     panel.history_list_button.clicked.connect(lambda:panel.tabs.setCurrentWidget(panel.archive_page))
@@ -37,7 +37,10 @@ def attach_history(panel,body):
     panel.tabs.addTab(panel.archive_page,'对局列表')
     def selected_page():
         reading=panel.tabs.currentWidget()is not panel.archive_page
-        panel.history_list_button.setVisible(reading);panel.reading_label.setVisible(reading);panel.notice.setVisible(reading and panel.history_scope_button.isChecked())
+        statistics=panel.tabs.currentWidget()is panel.statistics
+        panel.history_list_button.setVisible(reading);panel.reading_label.setVisible(reading);panel.history_scope_button.setVisible(not statistics);panel.notice.setVisible(reading and not statistics and panel.history_scope_button.isChecked())
+        identity=panel.sessions.currentData();panel.reading_label.setText('个人统计 · 本机归档'if statistics else'当前对局 · 已读片段'if identity=='current'else'本机历史 · 已读片段'if identity in panel.archives else'此前历史暂不可用，请重新选择')
+    panel.history_scope_button.toggled.connect(selected_page)
     panel.tabs.currentChanged.connect(selected_page);selected_page()
 
 

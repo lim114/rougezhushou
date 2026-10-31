@@ -1,0 +1,84 @@
+{
+  "video": {
+    "sha256": "0b83e44f0816508ef095120961496337e6bd65d5f531ee350c078950dfb98bda",
+    "actual_frames_viewed_seconds": [
+      249,
+      257,
+      270
+    ],
+    "frames": [
+      {
+        "second": 249,
+        "file": "249.png",
+        "sha256": "6d6c0f6d48e7c6faa74531985a3e1155ce9b7b249c1fda8f7c7690f02043c9fa"
+      },
+      {
+        "second": 257,
+        "file": "257.png",
+        "sha256": "3f492c2480e276d1a9ef50155ca4602c14afe664f0deed1f7b1e570c20f020d3"
+      },
+      {
+        "second": 270,
+        "file": "270.png",
+        "sha256": "708194a72c97af575fe1047e9522135989be6744a57cc6067afe4478bf539db9"
+      }
+    ],
+    "video_and_frames_local_only": true,
+    "not_continuous_full_playback": true
+  },
+  "Qt_runtime_trace": {
+    "path": "verification/maintenance/history-geometry-20261101/height-trace/height-trace.json",
+    "sha256": "d6ed6bb778ab3bd96d9518b9ebd697d1a90aef464196853bc52815cfd6785531",
+    "bytes": 377797
+  },
+  "Qt_native_source_read_not_copied": [
+    {
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.11.2/src/widgets/kernel/qstackedlayout.cpp",
+      "version": "v6.11.2",
+      "fact": "heightForWidth queries the widgets directly, including hidden pages; a size-policy-only experiment is insufficient.",
+      "license_header_read": "Qt commercial or LGPL3/GPL options; no C++ code copied."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.11.2/src/widgets/widgets/qtabwidget.cpp",
+      "version": "v6.11.2",
+      "fact": "Tab height delegates to stacked pages and adds frame/tab dimensions."
+    }
+  ],
+  "actual_existing_external_code_reused_for_new_card_options": {
+    "project": "Qt for Python",
+    "version": "v6.11.2",
+    "source_url": "https://code.qt.io/cgit/pyside/pyside-setup.git/plain/examples/widgets/layouts/flowlayout/flowlayout.py?h=v6.11.2",
+    "source_sha256": "62bb9a60f08784778c8b72921756a4ebb5cb908ca8adb109475055e3646d4ee2",
+    "source_bytes": 3673,
+    "license": {
+      "path": "licenses/qt-flow-layout-BSD-3-Clause.txt",
+      "sha256": "62803a6fcceef9091a129d7293d2469ea332b35d30f5e1bc4c628a9f35f3d29c",
+      "bytes": 1478
+    },
+    "license_source": "https://code.qt.io/cgit/pyside/pyside-setup.git/plain/LICENSES/BSD-3-Clause.txt?h=v6.11.2",
+    "license_sha256": "62803a6fcceef9091a129d7293d2469ea332b35d30f5e1bc4c628a9f35f3d29c",
+    "changes": "Demo and unused imports removed, authors retained; no new package dependency.",
+    "production_file": {
+      "path": "rouge/flow_layout.py",
+      "sha256": "7e332e8f759cac6eab3d0bfbced3806bb00bad7c89ae5826a3e2bd23b9db61b8",
+      "bytes": 3168
+    },
+    "unchanged_upstream_adaptation": true
+  },
+  "native_Qt_implementation_docs": [
+    "https://doc.qt.io/qt-6/qscrollarea.html",
+    "https://doc.qt.io/qt-6/richtext-html-subset.html"
+  ],
+  "pyqtgraph_candidate": {
+    "documentation": "https://pyqtgraph.readthedocs.io/en/latest/api_reference/widgets/tablewidget.html",
+    "source_actually_read": "https://pyqtgraph.readthedocs.io/en/latest/_modules/pyqtgraph/widgets/TableWidget.html",
+    "documentation_version": "0.15.0.dev0",
+    "actual_scope": "Array/dict data handling, editable/sortable table items and copy/save actions over QTableWidget; not a complete video program.",
+    "adopted_or_installed_or_copied": false,
+    "reason": "These additional capabilities do not simplify four read-only summary rows and an in-place scope link. Use already available native Qt rich-text layout; no measured speed claim or assertion that all external solutions were excluded.",
+    "license_or_commit_not_claimed_as_adopted": true
+  },
+  "reference_video_program_source_obtained": false,
+  "actual_new_third_party_package_integration": false,
+  "previous_production_external_theme_and_BSD_Flow_retained": true
+}

@@ -38,7 +38,8 @@ class CardControls:
     def __init__(self,page,body):
         self.page=page;self.key=None;self.card=None
         body.removeWidget(page.detail);self.pages=QTabWidget();self.pages.addTab(page.detail,'数值与适用范围');body.insertWidget(body.count()-1,self.pages,1)
-        widget=QWidget();layout=QVBoxLayout(widget);self.fields={};bar=QHBoxLayout()
+        from .flow_layout import FlowLayout
+        widget=QWidget();layout=QVBoxLayout(widget);self.fields={};bar=FlowLayout();bar.setSpacing(6)
         for key,label in [('gold','源石锭'),('parts_count','零件'),('relic_count','藏品栏总数'),('relic','所选藏品持有率')]:
             box=QCheckBox(label);box.setChecked(True);self.fields[key]=box;bar.addWidget(box);box.toggled.connect(self.invalidate)
         layout.addLayout(bar);actions=QHBoxLayout();self.build=QPushButton('生成本机展示卡');self.save=QPushButton('保存为图片');self.save.setEnabled(False);actions.addWidget(self.build);actions.addWidget(self.save);layout.addLayout(actions)
