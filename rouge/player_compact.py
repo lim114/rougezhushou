@@ -179,6 +179,7 @@ class CompactAssistant(QDialog):
             from .player_reference_notes import open_note
             panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.replay_popup=ToolPopover('对局记录与个人统计',panel,self,on_show=self.refresh);self.replay_popup.panel=panel;self.replay_popup.resize(900,720)
             self.replay_popup.setObjectName('historyWindow');self.replay_popup.setStyleSheet(HISTORY_STYLE)
+            panel.tabs.setCurrentWidget(panel.archive_page)
         return self.present(self.replay_popup)
     def open_team(self):
         if self.team_popup is None:

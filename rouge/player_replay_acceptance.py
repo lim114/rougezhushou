@@ -3,7 +3,7 @@ from copy import deepcopy
 def check(window,gui,require):
     before=deepcopy(window.run.state)
     window.run.state['history']=[{'at':4,'kind':'node_content_seen','title':'遗忘时间'},{'at':2,'kind':'resource_updated','resource':'gold','value':5},{'at':None,'kind':'unknown_observation'}]
-    window.show_compact();bar=window.compact_window;bar.open_replay();gui.processEvents();popup=bar.replay_popup;panel=popup.panel
+    window.show_compact();bar=window.compact_window;bar.open_replay();gui.processEvents();popup=bar.replay_popup;panel=popup.panel;panel.tabs.setCurrentIndex(0)
     require(popup.isVisible()and not window.isVisible(),'read_only_replay_opens_from_compact_overview')
     require(panel.entries.count()==3 and panel.sessions.count()==1,'current_read_records_without_invented_sessions')
     panel.entries.setCurrentRow(0);gui.processEvents();require('遗忘时间'in panel.detail.toPlainText()and '不是完整游戏日志'in panel.detail.toPlainText(),'player_chinese_record_and_evidence_boundary')

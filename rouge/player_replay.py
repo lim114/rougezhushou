@@ -148,7 +148,8 @@ class ReplayPanel(QWidget):
         self.refresh()
 
     def refresh(self):
-        from .player_replay_archive import selected_state
+        from .player_replay_archive import selected_state,refresh_cards
+        refresh_cards(self)
         state = selected_state(self)
         key = repr((state.get('id'),state.get('started_at'),state.get('history')))
         if key == self.key:

@@ -25,9 +25,14 @@ class ResourceStrip(QWidget):
         self.refresh(state or {})
 
     def refresh(self, state):
-        rows = resource_rows(state)
+        self.set_rows(resource_rows(state))
+
+    def set_rows(self, rows):
         if rows == self.rows:
             return
+        keys={row['key'] for row in rows}
+        for key in self.chips.keys()-keys:
+            chip=self.chips.pop(key);self.flow.removeWidget(chip);chip.hide();chip.deleteLater()
         self.rows = rows
         for row in rows:
             key = row['key']
