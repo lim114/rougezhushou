@@ -66,7 +66,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_search=QLineEdit();self.enemy_search.setMaxLength(120);self.enemy_search.setPlaceholderText('搜索本关敌人名称或图鉴原文，如隐匿、攻击');body.addWidget(self.enemy_search)
         self.enemy_search_notice=QLabel('');self.enemy_search_notice.setWordWrap(True);body.addWidget(self.enemy_search_notice)
         self.enemy_combo = QComboBox()
-        self.enemy_choices = BranchChoice(self.enemy_combo, [], overview_label='总览（本关候选）', placeholder='请选择敌人或关联实体')
+        self.enemy_choices = BranchChoice(self.enemy_combo, [], overview_label='总览（本关候选）', placeholder='总览（按分类查看机制）')
         self.enemy_search.textChanged.connect(self.filter_enemies)
         body.addWidget(self.enemy_choices)
         from .player_catalog_grid import CatalogGrid
@@ -132,7 +132,11 @@ class CurrentBattlePanel(QWidget):
         enemy_detail = QHBoxLayout()
         enemy_detail.addWidget(self.enemy_portrait, 0, Qt.AlignmentFlag.AlignTop)
         enemy_detail.addWidget(self.enemy_player, 1)
-        body.addLayout(enemy_detail, 1)
+        self.enemy_details=QWidget();self.enemy_details.setLayout(enemy_detail);enemy_detail.setContentsMargins(0,0,0,0)
+        from .enemy_overview import EnemyOverview
+        self.enemy_overview=EnemyOverview();self.enemy_overview.selected.connect(self.enemy_choices.select_value)
+        self.enemy_reading_stack=QStackedWidget();self.enemy_reading_stack.addWidget(self.enemy_overview);self.enemy_reading_stack.addWidget(self.enemy_details)
+        body.addWidget(self.enemy_reading_stack,1)
         self.tabs.addTab(enemies, '敌人和机制')
         wave = QWidget()
         body = QVBoxLayout(wave)
@@ -233,6 +237,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_search_notice.setText('当前关卡资料暂不可用，旧搜索结果已清除。')
         self.enemy_choices.set_groups([], emit=False)
         self._sync_enemy_grid()
+        self.enemy_reading_stack.setCurrentWidget(self.enemy_details)
         blocked = self.actions.blockSignals(True)
         self.actions.clear()
         self.action_filter_notice.setText('当前关卡资料暂不可用，旧分组和出怪条目已清除。')
@@ -372,6 +377,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_grid.verticalScrollBar().setValue(offset)
         self.enemy_grid.blockSignals(blocked)
         self.enemy_grid._selected(self.enemy_grid.currentItem())
+        self.enemy_overview.set_rows((self.result or {}).get('enemies',[]),self.enemy_choices.entries(),(self.stage_id,self.source_identity)if self.result else None)
 
     def _enemy_grid_selected(self, item, *_):
         if item is not None:
@@ -401,6 +407,7 @@ class CurrentBattlePanel(QWidget):
         self._select_enemy_tile(key)
         self.enemy_portrait.setVisible(enemy is not None)
         replace_text(self.enemy_player, model.enemy_text(enemy) if enemy else '请选择敌人或关联实体。', preserve=keep)
+        self.enemy_reading_stack.setCurrentWidget(self.enemy_details if enemy is not None or self.result is None else self.enemy_overview)
         self.enemy_portrait.clear()
         pix = QPixmap()
         raw = model.picture_for_enemy(enemy)
