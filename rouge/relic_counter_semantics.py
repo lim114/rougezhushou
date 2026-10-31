@@ -18,6 +18,7 @@ COUNTER_BINDINGS = {
 }
 HUD_RESOURCE_LABELS = {'life':'目标生命','shield':'护盾','command':'指挥等级',
     'hope':'希望','action':'行动力','valuation':'总估价'}
+RESOURCE_CAPACITY_LABELS = {'life':'上限','hope':'上限','parts_count':'容量'}
 RESOURCE_LABELS = {**HUD_RESOURCE_LABELS,'gold':'源石锭','parts_count':'零件数',
     'altar_stacks':'圆石祭坛层数','mercenary_stacks':'佣兵饰物层数',
     'fire_rod_stacks':'厄运火杆层数','probe_stacks':'探测先锋层数',

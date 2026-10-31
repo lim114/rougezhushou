@@ -1,0 +1,71 @@
+test_capacity_change_without_quantity_change_is_not_lost (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_capacity_change_without_quantity_change_is_not_lost) ... FAIL
+test_first_capacity_is_saved_with_its_own_historical_read (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_first_capacity_is_saved_with_its_own_historical_read) ... ERROR
+test_floor_snapshots_distinguish_equal_quantities_with_different_limits (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_floor_snapshots_distinguish_equal_quantities_with_different_limits) ... FAIL
+test_legacy_scalar_read_is_not_backfilled_from_current_resource (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_legacy_scalar_read_is_not_backfilled_from_current_resource) ... ok
+test_missing_capacity_breaks_comparison_and_never_reuses_a_later_limit (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_missing_capacity_breaks_comparison_and_never_reuses_a_later_limit) ... FAIL
+test_parts_capacity_uses_capacity_label_and_preserves_zero_quantity (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_parts_capacity_uses_capacity_label_and_preserves_zero_quantity) ... FAIL
+test_upgrade_records_a_fresh_capacity_without_rewriting_legacy_history (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_upgrade_records_a_fresh_capacity_without_rewriting_legacy_history) ... FAIL
+test_selected_old_limit_survives_newer_data_refresh (tests.test_resource_capacity_442.ResourceCapacityWidgets442Tests.test_selected_old_limit_survives_newer_data_refresh) ... FAIL
+
+======================================================================
+ERROR: test_first_capacity_is_saved_with_its_own_historical_read (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_first_capacity_is_saved_with_its_own_historical_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_resource_capacity_442.py", line 21, in test_first_capacity_is_saved_with_its_own_historical_read
+    self.assertEqual(self.events()[0]['capacity'],13)
+                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'capacity'
+
+======================================================================
+FAIL: test_capacity_change_without_quantity_change_is_not_lost (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_capacity_change_without_quantity_change_is_not_lost)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_resource_capacity_442.py", line 28, in test_capacity_change_without_quantity_change_is_not_lost
+    self.assertEqual(len(rows),2)
+AssertionError: 1 != 2
+
+======================================================================
+FAIL: test_floor_snapshots_distinguish_equal_quantities_with_different_limits (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_floor_snapshots_distinguish_equal_quantities_with_different_limits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_resource_capacity_442.py", line 58, in test_floor_snapshots_distinguish_equal_quantities_with_different_limits
+    self.assertEqual(len(rows),2)
+AssertionError: 1 != 2
+
+======================================================================
+FAIL: test_missing_capacity_breaks_comparison_and_never_reuses_a_later_limit (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_missing_capacity_breaks_comparison_and_never_reuses_a_later_limit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_resource_capacity_442.py", line 43, in test_missing_capacity_breaks_comparison_and_never_reuses_a_later_limit
+    self.assertEqual(len(rows),3)
+AssertionError: 1 != 3
+
+======================================================================
+FAIL: test_parts_capacity_uses_capacity_label_and_preserves_zero_quantity (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_parts_capacity_uses_capacity_label_and_preserves_zero_quantity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_resource_capacity_442.py", line 50, in test_parts_capacity_uses_capacity_label_and_preserves_zero_quantity
+    rows=resource_rows(self.run.state);self.assertEqual(len(rows),2)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 2
+
+======================================================================
+FAIL: test_upgrade_records_a_fresh_capacity_without_rewriting_legacy_history (tests.test_resource_capacity_442.ResourceCapacity442Tests.test_upgrade_records_a_fresh_capacity_without_rewriting_legacy_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_resource_capacity_442.py", line 38, in test_upgrade_records_a_fresh_capacity_without_rewriting_legacy_history
+    self.assertEqual(self.events()[-1].get('capacity'),13)
+AssertionError: None != 13
+
+======================================================================
+FAIL: test_selected_old_limit_survives_newer_data_refresh (tests.test_resource_capacity_442.ResourceCapacityWidgets442Tests.test_selected_old_limit_survives_newer_data_refresh)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_resource_capacity_442.py", line 74, in test_selected_old_limit_survives_newer_data_refresh
+    self.assertIn('13',page.detail.toPlainText())
+AssertionError: '13' not found in '希望\n1970-01-01 08:00:01\n读到数量：7\n相对上次已读数量：未知（缺少相邻的有效读取）\n\n变化只覆盖两次读取之间，期间可能有多次获得或消耗。\n不能据此确定某个节点的奖励、购买金额、掉落或结算收益。'
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.098s
+
+FAILED (failures=6, errors=1)

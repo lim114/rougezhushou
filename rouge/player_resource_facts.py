@@ -1,6 +1,6 @@
 """Player-facing counts: read quantities, qualified members and missing data differ."""
 from .record_flags import active_record, unconfirmed_item_ids
-from .player_resource_history import numeric_read
+from .player_resource_history import numeric_read,read_capacity
 from .player_replay import observation_time
 
 
@@ -36,9 +36,10 @@ def resource_rows(state):
     resources = state.get('resources', {})
     parts = resources.get('parts_count') or {}
     amount = parts.get('value')
-    capacity = count(parts.get('capacity'))
-    value = f'{amount:g}' if numeric_read(amount) else '未读'
-    if numeric_read(amount) and capacity is not None and capacity >= amount:
+    known = numeric_read(amount)
+    capacity = read_capacity(parts.get('capacity'), amount if known else None)
+    value = f'{amount:g}' if known else '未读'
+    if known and capacity is not None:
         value += '/' + str(capacity)
     rows.append({'key': 'parts', 'name': '零件箱', 'value': value,
         'note': '本局最近已读零件数量；容量只在已读且不小于数量时显示。'
@@ -55,11 +56,13 @@ def resource_rows(state):
     for key in ('life', 'shield', 'command', 'hope', 'gold', 'action', 'valuation'):
         record = resources.get(key) or {}
         amount = record.get('value')
-        value = f'{amount:g}' if numeric_read(amount) else '未读'
-        capacity = count(record.get('capacity'))
-        if key in ('life', 'hope') and numeric_read(amount) and capacity is not None and capacity >= amount:
+        known = numeric_read(amount)
+        value = f'{amount:g}' if known else '未读'
+        capacity = read_capacity(record.get('capacity'), amount if known else None)
+        if key in ('life', 'hope') and known and capacity is not None:
             value += '/' + str(capacity)
+        meaning = '当前值/上限。' if key in ('life', 'hope') and known and capacity is not None else ''
         rows.append({'key': key, 'name': RESOURCE_LABELS[key], 'value': value,
-            'note': '本局最近读到的数值。' + observation_time(record.get('captured_at'))
+            'note': meaning + '本局最近读到的数值。' + observation_time(record.get('captured_at'))
                     + '；未读不代表零，不使用分队或藏品推算，也不是所选历史层当时数值。'})
     return rows

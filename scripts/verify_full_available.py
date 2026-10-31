@@ -598,5 +598,7 @@ ADDITIONAL_MODULES += ('tests.test_grade16_review',)
 
 ADDITIONAL_MODULES += ('tests.test_hud_resources_441',)
 
+ADDITIONAL_MODULES += ('tests.test_resource_capacity_442',)
+
 if __name__ == '__main__':
     sys.exit(main())

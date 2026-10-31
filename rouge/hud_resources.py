@@ -97,17 +97,39 @@ def read_hud_resources(image, texts, engine):
             if not current.size:
                 continue
             hsv = cv2.cvtColor(current, cv2.COLOR_BGR2HSV)
-            mask = cv2.inRange(hsv, (18, 90, 100), (40, 255, 255))
-            _, groups, stats, _ = cv2.connectedComponentsWithStats(mask)
-            ids = [i for i, (xx, _, width, height, _) in enumerate(stats[1:], 1)
-                   if xx > 0 and xx+width < mask.shape[1] and font*.55 <= height <= font*1.6]
-            glyphs = (np.isin(groups, ids)*255).astype(np.uint8)
-            points = cv2.findNonZero(glyphs)
-            if points is None:
-                continue
-            gx, gy, gw, gh = cv2.boundingRect(points)
-            digits = cv2.cvtColor(glyphs[gy:gy+gh, gx:gx+gw], cv2.COLOR_GRAY2BGR)
-            value = _number(digits, [], (0., 0., 1., 1.), engine, segmented=True)
+            value = None
+            available = None
+            for field, lower, upper in (('value', (18, 90, 100), (40, 255, 255)),
+                                         ('capacity', (0, 0, 70), (179, 65, 255))):
+                if field == 'capacity' and value is None:
+                    break
+                if field == 'capacity':
+                    right = box[0] + (available[0]+available[2]+4*font)/w
+                    if right > 1 or box[3] > 1:
+                        continue
+                    current = crop(image, (box[0], box[1], right, box[3]))
+                    hsv = cv2.cvtColor(current, cv2.COLOR_BGR2HSV)
+                mask = cv2.inRange(hsv, lower, upper)
+                _, groups, stats, _ = cv2.connectedComponentsWithStats(mask)
+                eligible = [(i, xx, width) for i, (xx, yy2, width, height, _) in enumerate(stats[1:], 1)
+                       if font*.55 <= height <= font*1.6
+                       and (field == 'value' or (xx > available[0]+available[2]
+                           and abs(yy2+height/2-available[1]-available[3]/2) < font*.35))]
+                if field == 'capacity' and any(xx+width >= mask.shape[1] for _, xx, width in eligible):
+                    continue
+                ids = [i for i, xx, width in eligible if xx > 0 and xx+width < mask.shape[1]]
+                glyphs = (np.isin(groups, ids)*255).astype(np.uint8)
+                points = cv2.findNonZero(glyphs)
+                if points is None:
+                    continue
+                gx, gy, gw, gh = cv2.boundingRect(points)
+                digits = cv2.cvtColor(glyphs[gy:gy+gh, gx:gx+gw], cv2.COLOR_GRAY2BGR)
+                reading = _number(digits, [], (0., 0., 1., 1.), engine, segmented=True)
+                if field == 'value':
+                    value = reading
+                    available = (gx, gy, gw, gh)
+                elif reading is not None and reading['value'] >= value['value']:
+                    value['capacity'] = reading['value']
         if value is not None:
             resources[key] = {**value, 'source': ('护盾' if key == 'shield' else '希望') + '当前图标对应数值',
                               'icon_score': float(score)}

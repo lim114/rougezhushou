@@ -4,7 +4,7 @@ from .player_replay import observation_time
 
 def resource_name(key):
     from .relic_counter_semantics import RESOURCE_LABELS
-    return {'gold': '源石锭', 'parts_count': '零件数'}.get(key, RESOURCE_LABELS.get(key, '未核对资源'))
+    return RESOURCE_LABELS.get(key, '未核对资源')
 
 def numeric_read(value):
     try:
@@ -12,8 +12,15 @@ def numeric_read(value):
     except OverflowError:
         return False
 
+def read_capacity(value, amount=None):
+    """Known integer limit, paired with an already-qualified amount or None."""
+    return value if type(value) is int and value >= 0 and (amount is None or value >= amount) else None
+
+
 def resource_rows(state):
+    from .relic_counter_semantics import RESOURCE_CAPACITY_LABELS
     prior = {}
+    prior_capacities = {}
     rows = []
     for index, event in enumerate(state.get('history', [])):
         if not isinstance(event, dict) or event.get('kind') != 'resource_updated':
@@ -24,10 +31,17 @@ def resource_rows(state):
         raw = event.get('value')
         value = raw if numeric_read(raw) else None
         old = prior.get(key)
-        rows.append({'index': index, 'resource': key, 'name': resource_name(key),
+        row = {'index': index, 'resource': key, 'name': resource_name(key),
                      'value': value, 'previous': old,
                      'delta': value - old if value is not None and old is not None else None,
-                     'time': observation_time(event.get('at'))})
+                     'time': observation_time(event.get('at'))}
+        if key in RESOURCE_CAPACITY_LABELS and ('capacity' in event or key in prior_capacities):
+            capacity = read_capacity(event.get('capacity'), value)
+            previous = prior_capacities.get(key)
+            row.update(capacity=capacity, previous_capacity=previous,
+                capacity_delta=capacity-previous if capacity is not None and previous is not None else None)
+            prior_capacities[key] = capacity
+        rows.append(row)
         # An unreadable intermediate record breaks, rather than repairs, the chain.
         prior[key] = value
     return rows
@@ -35,8 +49,14 @@ def resource_rows(state):
 def resource_text(row):
     current = f'{row["value"]:g}' if row['value'] is not None else '本条无法核对'
     delta = f'{row["delta"]:+g}' if row['delta'] is not None else '未知（缺少相邻的有效读取）'
-    return '\n'.join([row['name'], row['time'], '读到数量：' + current,
-                      '相对上次已读数量：' + delta, '',
+    lines = [row['name'], row['time'], '读到数量：' + current, '相对上次已读数量：' + delta]
+    if 'capacity' in row:
+        from .relic_counter_semantics import RESOURCE_CAPACITY_LABELS
+        label = RESOURCE_CAPACITY_LABELS[row['resource']]
+        limit = str(row['capacity']) if row['capacity'] is not None else '未读'
+        change = f'{row["capacity_delta"]:+g}' if row['capacity_delta'] is not None else '未知（缺少相邻的有效读取）'
+        lines += ['读到' + label + '：' + limit, label + '相对上次变化：' + change]
+    return '\n'.join([*lines, '',
                       '变化只覆盖两次读取之间，期间可能有多次获得或消耗。',
                       '不能据此确定某个节点的奖励、购买金额、掉落或结算收益。'])
 
@@ -93,6 +113,11 @@ class ResourceHistoryPage(QWidget):
                 continue
             value = f'{row["value"]:g}' if row['value'] is not None else '未核对'
             delta = f'（变化{row["delta"]:+g}）' if row['delta'] is not None else '（变化未知）'
+            if 'capacity' in row:
+                value += '/' + (str(row['capacity']) if row['capacity'] is not None else '未读')
+                if row['capacity_delta'] is not None:
+                    from .relic_counter_semantics import RESOURCE_CAPACITY_LABELS
+                    delta += f' {RESOURCE_CAPACITY_LABELS[row["resource"]]}{row["capacity_delta"]:+g}'
             item = QListWidgetItem(row['time'] + ' · ' + row['name'] + ' ' + value + delta)
             item.setData(Qt.ItemDataRole.UserRole, row['index'])
             self.entries.addItem(item)

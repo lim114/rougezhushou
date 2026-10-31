@@ -83,6 +83,11 @@ def run(section,receipt):
                 require(win32gui.IsWindowVisible(feature_handle)and win32process.GetWindowThreadProcessId(feature_handle)[1]==os.getpid(),'visible_owned_actual_feature_native_window')
             assert shot_target.grab().save(str(shot))
             images.append({'file':image_name(shot),'sha256':sha256(shot.read_bytes()).hexdigest()})
+            if section==442:
+                replay=window.compact_window.replay_popup.panel
+                replay.tabs.setCurrentWidget(replay.resources);gui.processEvents()
+                limits=receipt.with_name('resource-capacity-detail.png');assert shot_target.grab().save(str(limits))
+                images.append({'file':image_name(limits),'sha256':sha256(limits.read_bytes()).hexdigest()})
             if section==413:
                 detail=shot_target.panel.detail;detail.verticalScrollBar().setValue(detail.verticalScrollBar().maximum());gui.processEvents()
                 lower=receipt.with_name('acquisition-and-limits.png');assert shot_target.grab().save(str(lower))

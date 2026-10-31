@@ -1,10 +1,10 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 441,
-  "next_section": 442,
-  "current_section_label": "第441节 + 六项界面资源读取与本局资源栏、历史同步",
-  "current_completed_change": "目标生命、护盾、指挥等级、希望、行动力和总估价从当前标签/图标读值，接入本局保存、重启、数量变化历史及已有资源胶囊；未读保留最近确认值，0与未知分开，生命显示当前值/上限。",
+  "completed_sections": 442,
+  "next_section": 443,
+  "current_section_label": "第442节 + 希望上限识别与资源上限、容量历史回看",
+  "current_completed_change": "读取灰色希望上限；生命/希望上限与零件容量单独变动也入历史和同区域快照；旧层保留当时上限，刷新保留阅读，不追填旧日志。",
   "batch_status": "IMPLEMENTATION_REVIEW_ACTIVE",
   "next_full_validation_after": 455,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
@@ -16,7 +16,7 @@
   "current_batch_target_section": null,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "08616bebc9c17210f3ac9fc5bce2db0319450f5269ef55f975feed1672dc30b3",
+    "sha256": "7faea79eb06b86e209d7139936ece07210fea094c165b3d3bc357f8dafea5352",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2653,16 +2653,22 @@
       "completion_ref": "player-section-441",
       "topic": "六项界面资源读取与本局资源栏、历史同步",
       "verification": "verification/sections/441.json"
+    },
+    {
+      "number": 442,
+      "completion_ref": "player-section-442",
+      "topic": "希望上限识别与资源上限、容量历史回看",
+      "verification": "verification/sections/442.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "324b9c9d1a6ea8c1737eff5434752b781414a770df3aec39575e3a5a77f6e5bc",
-    "PROJECT_PROGRESS.md": "a2c9cad3ad242eef50aba13eb3c9c77424c11a15133c2495a902dfa86418f81c",
-    "WORK_IN_PROGRESS.md": "4008385b116131dd0e4f92689764093c8c6158d307022bd4f7021b0b15a54e87",
-    "PROJECT_COMPLETED.md": "42830eef2aadd9819a892dea151c5b60ec4fe0d7c1f69ad9e072528238c381b8",
+    "DEVELOPMENT_CHECKPOINT.json": "6111120aa4d493955195879ce44a9d07780a1cae86504335a27145ddcebc4d0b",
+    "PROJECT_PROGRESS.md": "8c35645020d6aa792838c9808e0983767f5bba398b2b02b28630df6ffe5a2e6e",
+    "WORK_IN_PROGRESS.md": "f9e675f53cc8bbec58b9bda830779eb7c62d084ded0387f38d93df52925283e3",
+    "PROJECT_COMPLETED.md": "43a34766e043a1443026ccd77dc7bdfc344139710f2e3c76dfe0261c77b3608b",
     "AGENTS.md": "47237fa766e5d186244fc491dbf88f13632108514b6fb9e7923b547227d5854e",
-    "PROJECT_REQUIREMENTS.md": "08616bebc9c17210f3ac9fc5bce2db0319450f5269ef55f975feed1672dc30b3",
-    "verification/sections/441.json": "18792e478d71a2e05ed0ffb166c5de759995c6c434ec637bf0ddedea28ca2392"
+    "PROJECT_REQUIREMENTS.md": "7faea79eb06b86e209d7139936ece07210fea094c165b3d3bc357f8dafea5352",
+    "verification/sections/442.json": "73c1083667f8f7d3b7b25686427368267cbec3fbcb315f989aa6de11ef13f8f9"
   },
   "private_state_included": false
 }

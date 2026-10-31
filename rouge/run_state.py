@@ -580,17 +580,25 @@ class RunState:
             and (not current_icons or not current_icons.get('complete_bar')))
         resource_reads=observed.get('resources',{})
         if not isinstance(resource_reads,dict):resource_reads={}
+        from .relic_counter_semantics import HUD_RESOURCE_LABELS,RESOURCE_CAPACITY_LABELS,valid_counter_resource
+        capacity_keys=tuple(RESOURCE_CAPACITY_LABELS)
+        last_capacities={e['resource']:e.get('capacity') for e in state['history']
+            if e.get('kind')=='resource_updated' and e.get('resource') in capacity_keys}
         for key,record in resource_reads.items():
             # An incomplete field is unread; keep its previous fact and time.
             if not isinstance(record,dict) or 'value' not in record:continue
-            from .relic_counter_semantics import HUD_RESOURCE_LABELS
             if key in HUD_RESOURCE_LABELS:
                 if type(record['value'])is not int or record['value']<0:continue
             elif key not in ('gold','parts_count'):
-                from .relic_counter_semantics import valid_counter_resource
                 if not valid_counter_resource(key,record):continue
-            if record.get('value')!=state['resources'].get(key,{}).get('value'):
-                state['history'].append({'at':captured_at,'kind':'resource_updated','resource':key,'value':record['value']})
+            previous=state['resources'].get(key,{})
+            capacity_changed=key in RESOURCE_CAPACITY_LABELS and (
+                record.get('capacity')!=previous.get('capacity') or
+                ('capacity'in record and record['capacity']!=last_capacities.get(key)))
+            if record['value']!=previous.get('value') or capacity_changed:
+                event={'at':captured_at,'kind':'resource_updated','resource':key,'value':record['value']}
+                if key in RESOURCE_CAPACITY_LABELS and 'capacity'in record:event['capacity']=record['capacity']
+                state['history'].append(event)
             state['resources'][key]={**record,'captured_at':captured_at}
         signature=sorted([sorted(icon['candidates']) for icon in relics.get('icons',[])])
         previous=state['bar_signature']

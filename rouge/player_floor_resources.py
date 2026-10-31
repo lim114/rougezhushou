@@ -1,6 +1,6 @@
 """Same-frame zone/resource observations, never inferred floor transitions."""
 from copy import deepcopy
-from .player_resource_history import numeric_read,resource_name
+from .player_resource_history import numeric_read,resource_name,read_capacity
 from .player_replay import observation_time
 
 def record_snapshot(state,observed,at,*,history_start=None):
@@ -11,14 +11,19 @@ def record_snapshot(state,observed,at,*,history_start=None):
         zid=graph.get('zone_id');template=graph.get('template_id')
     elif not zone.get('reused_from_run')and(state.get('config',{}).get('zone')or{}).get('captured_at')==at:zid=zone.get('id')
     if zid not in config_data()['zones']:return False
-    values={}
+    from .relic_counter_semantics import RESOURCE_CAPACITY_LABELS
+    values={};capacities={}
     raw=observed.get('resources');raw=raw if isinstance(raw,dict)else{}
     for key,record in raw.items():
         accepted=state.get('resources',{}).get(key)or{}
-        if isinstance(record,dict)and numeric_read(record.get('value'))and accepted.get('value')==record['value']and accepted.get('captured_at')==at:values[key]=record['value']
+        if isinstance(record,dict)and numeric_read(record.get('value'))and accepted.get('value')==record['value']and accepted.get('captured_at')==at:
+            values[key]=record['value']
+            capacity=read_capacity(record.get('capacity'),record['value'])
+            if key in RESOURCE_CAPACITY_LABELS and capacity is not None and accepted.get('capacity')==capacity:capacities[key]=capacity
     if not values:return False
     prior=next((r for r in reversed(state.get('history',[]))if r.get('kind')=='floor_resources_read'),None)
     identity={'zone_id':zid,'template_id':template,'values':values}
+    if capacities or (prior and 'capacities'in prior):identity['capacities']=capacities
     if prior and all(prior.get(k)==v for k,v in identity.items()):return False
     history=state['history'];index=len(history)
     if history_start is not None:
@@ -30,17 +35,28 @@ def record_snapshot(state,observed,at,*,history_start=None):
 
 def snapshots(state):
     from .run_config import config_data
+    from .relic_counter_semantics import RESOURCE_CAPACITY_LABELS
     result=[]
     for index,event in enumerate(state.get('history',[])):
         if not isinstance(event,dict)or event.get('kind')!='floor_resources_read'or event.get('source')!='same_frame_zone_and_resources':continue
         if not isinstance(event.get('zone_id'),str)or event.get('zone_id')not in config_data()['zones']or not isinstance(event.get('values'),dict):continue
         values={k:v for k,v in event['values'].items()if isinstance(k,str)and numeric_read(v)}
-        if values:result.append({**deepcopy(event),'values':values,'index':index})
+        if values:
+            row={**deepcopy(event),'values':values,'index':index}
+            if 'capacities'in event:
+                raw=event['capacities']if isinstance(event['capacities'],dict)else{}
+                row['capacities']={k:c for k,v in values.items()if k in RESOURCE_CAPACITY_LABELS and (c:=read_capacity(raw.get(k),v))is not None}
+            result.append(row)
     return result
+
+def snapshot_entries(row):
+    capacities=row.get('capacities',{})
+    return [{'key':key,'name':resource_name(key),'value':f'{value:g}'+('/'+str(capacities[key])if key in capacities else'')}
+        for key,value in row['values'].items()]
 
 def snapshot_text(row):
     if row is None:return '该层当时资源尚未记录；不使用当前资源补写。'
-    return '该区域读取时（'+observation_time(row.get('at'))+'）：'+'　'.join(resource_name(k)+' '+f'{v:g}'for k,v in row['values'].items())+'。未列字段未读；不是入层、出层或结算。'
+    return '该区域读取时（'+observation_time(row.get('at'))+'）：'+'　'.join(r['name']+' '+r['value']for r in snapshot_entries(row))+'。未列字段未读；不是入层、出层或结算。'
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QListWidget,QListWidgetItem

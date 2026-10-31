@@ -180,15 +180,14 @@ class NodeReplayPage(QWidget):
         self.selected()
 
     def selected(self, *_):
-        from .player_floor_resources import snapshot_text
+        from .player_floor_resources import snapshot_text,snapshot_entries
         item = self.entries.currentItem()
         row = next((row for row in self.rows if row['index'] == item.data(Qt.ItemDataRole.UserRole)), None) if item else None
         graph = template_graph(row) if row else None
         self.view.set_map(graph, historical=True)
         self.resources.setText(snapshot_text(row.get('resource_snapshot')if row else None))
         snapshot=row.get('resource_snapshot')if row else None
-        from .player_resource_history import resource_name
-        self.resource_pills.set_rows([{'key':'history:'+key,'name':resource_name(key),'value':f'{value:g}','note':snapshot_text(snapshot)}for key,value in snapshot['values'].items()]if snapshot else[])
+        self.resource_pills.set_rows([{**entry,'key':'history:'+entry['key'],'note':snapshot_text(snapshot)}for entry in snapshot_entries(snapshot)]if snapshot else[])
         self.resource_pills.setToolTip(snapshot_text(snapshot));self.resources.setVisible(snapshot is None)
         if graph:
             self.view.select_node(row['node_id'])

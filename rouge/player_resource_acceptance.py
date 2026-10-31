@@ -1,5 +1,42 @@
 from copy import deepcopy
 
+def check_capacities(window,gui,require):
+    from PySide6.QtCore import QTimer
+    from .map_recognition import map_data
+    before=deepcopy(window.run.state)
+    for timer in window.findChildren(QTimer):timer.stop()
+    try:
+        data=map_data();template=next(t for t in data['templates']if t['zone_id']=='zone_1')
+        graph={**deepcopy(template),'status':'matched','template_id':template['id'],
+            'grid':{'rows':template['rows'],'cols':template['cols']},'source':deepcopy(data['source'])}
+        at=window.run.state['started_at']+1
+        for index,limit in enumerate((13,17)):
+            graph['current_node']=template['nodes'][index]['id']
+            window.run.apply({'map':graph,'resources':{'hope':{'value':7,'capacity':limit}}},at+index)
+        window.show_compact();bar=window.compact_window;bar.open_map();gui.processEvents()
+        require(bar.map_popup.panel.resources.chips['hope'].accessibleName()=='希望 7/17','capacity442_current_limit_visible')
+        require('当前值/上限'in bar.map_popup.panel.resources.chips['hope'].toolTip(),'capacity442_plain_format_explained')
+        bar.open_replay();gui.processEvents();popup=bar.replay_popup;panel=popup.panel
+        panel.tabs.setCurrentWidget(panel.resources);page=panel.resources
+        page.filter.setCurrentIndex(page.filter.findData('hope'));page.entries.setCurrentRow(1)
+        require(page.entries.count()==2,'capacity442_same_quantity_limit_change_in_history')
+        require('上限相对上次变化：+4'in page.detail.toPlainText(),'capacity442_limit_change_is_separate')
+        require('相对上次已读数量：+0'in page.detail.toPlainText(),'capacity442_no_fake_quantity_gain')
+        page.entries.setCurrentRow(0)
+        require('读到上限：13'in page.detail.toPlainText(),'capacity442_old_limit_visible')
+        window.run.apply({'resources':{'hope':{'value':7,'capacity':19}}},at+2)
+        bar.refresh();gui.processEvents()
+        require(page.entries.currentRow()==0 and '读到上限：13'in page.detail.toPlainText(),'capacity442_refresh_keeps_old_selection')
+        require('19'not in page.detail.toPlainText().split('读到数量：',1)[-1],'capacity442_no_future_limit_in_old_detail')
+        panel.tabs.setCurrentWidget(panel.nodes);panel.nodes.entries.setCurrentRow(0);gui.processEvents()
+        require(panel.nodes.resource_pills.chips['history:hope'].accessibleName()=='希望 7/13','capacity442_old_map_pill_uses_old_limit')
+        require('7/19'not in panel.nodes.resource_pills.toolTip(),'capacity442_map_does_not_use_current_limit')
+        require(window.run.state['resources']['hope']['capacity']==19,'capacity442_history_read_does_not_change_current')
+        window.player_validation_target=popup
+    finally:
+        window.run.state=before
+
+
 def check_hud(window,gui,require):
     from PySide6.QtCore import QTimer
     from .player_resource_history import resource_rows
