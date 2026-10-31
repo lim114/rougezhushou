@@ -1,7 +1,7 @@
 """Read-only picture inventory, with held facts distinct from source descriptions."""
 from pathlib import Path
 from PySide6.QtCore import Qt,QSize,Signal,QTimer,QEvent
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLineEdit,QCheckBox,QLabel,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QComboBox,QGridLayout,QSlider,QSplitter,QButtonGroup
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QFormLayout,QLineEdit,QCheckBox,QLabel,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QComboBox,QGridLayout,QSlider,QSplitter,QButtonGroup
 from . import expansion_reference as reference
 from .record_flags import active_record
 
@@ -81,17 +81,20 @@ class InventoryPanel(QWidget):
         self.summary=QLabel();self.summary.setWordWrap(True);body.addWidget(self.summary)
         self.status=QLabel();self.status.setWordWrap(True);body.addWidget(self.status);self.status.hide();self.scope.toggled.connect(self.status.setVisible)
         from .player_catalog_grid import CatalogGrid
-        self.entries=CatalogGrid();self.splitter=QSplitter(Qt.Orientation.Horizontal);self.splitter.addWidget(self.entries);body.addWidget(self.splitter,1)
+        self.entries=CatalogGrid(descriptions=True);self.splitter=QSplitter(Qt.Orientation.Horizontal);self.splitter.addWidget(self.entries);body.addWidget(self.splitter,1)
         self.reader=QWidget();reader=QVBoxLayout(self.reader);reader.setContentsMargins(8,0,0,0)
         self.hide_reader=QPushButton('收起说明');reader.addWidget(self.hide_reader)
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);reader.addWidget(self.detail,1)
         self.splitter.addWidget(self.reader);self.splitter.setSizes([650,310]);self.reader.hide();self.hide_reader.clicked.connect(self.reader.hide)
-        bottom=QHBoxLayout();bottom.addWidget(QLabel('稀有度'));self.rarity_buttons=QButtonGroup(self);self.rarity_buttons.setExclusive(True)
+        footer=QFormLayout();footer.setContentsMargins(0,0,0,0);footer.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows);footer.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
+        rarity_box=QWidget();bottom=QHBoxLayout(rarity_box);bottom.setContentsMargins(0,0,0,0);bottom.addWidget(QLabel('稀有度'));self.rarity_buttons=QButtonGroup(self);self.rarity_buttons.setExclusive(True)
         for i,label in enumerate(('全部','N','R','SR','未分档')):
             button=QPushButton(label);button.setCheckable(True);button.setChecked(i==0);self.rarity_buttons.addButton(button,i);bottom.addWidget(button)
         self.rarity_buttons.idClicked.connect(self.rarity.setCurrentIndex);self.rarity.hide()
         self.rarity.currentIndexChanged.connect(lambda i:self.rarity_buttons.button(i).setChecked(True))
-        bottom.addStretch();bottom.addWidget(QLabel('图标大小'));self.icon_scale=QSlider(Qt.Orientation.Horizontal);self.icon_scale.setRange(48,104);self.icon_scale.setValue(60);self.entries.set_tile_size(60);self.icon_scale.setMaximumWidth(160);bottom.addWidget(self.icon_scale);self.icon_scale.valueChanged.connect(self.entries.set_tile_size);body.addLayout(bottom)
+        display_box=QWidget();display=QHBoxLayout(display_box);display.setContentsMargins(0,0,0,0);display.addWidget(QLabel('显示大小'));self.icon_scale=QSlider(Qt.Orientation.Horizontal);self.icon_scale.setRange(48,104);self.icon_scale.setValue(60);self.entries.set_tile_size(60);self.icon_scale.setMaximumWidth(160);display.addWidget(self.icon_scale);display.addStretch();self.icon_scale.valueChanged.connect(self.entries.set_tile_size)
+        self.icon_scale.setToolTip('缩到左侧显示图文效果卡片，向右显示图标网格；选择条目可读完整说明。')
+        self.merge_kettles=QCheckBox('合并重复热水壶');self.merge_kettles.setToolTip('只合并已确认件数的热水壶；不合并其它同图、同名或不同分档藏品。件数未确认时不会猜测。');display.addWidget(self.merge_kettles);self.merge_kettles.toggled.connect(self.refresh);footer.addRow(rarity_box,display_box);body.addLayout(footer);self.kettle_quantity=None
         actions=QHBoxLayout();self.source_button=QPushButton('查看并固定取得来源');actions.addWidget(self.source_button,1)
         self.reference_button=QPushButton('完整条目与相关查询');actions.addWidget(self.reference_button);reader.addLayout(actions)
         self.exchange_button=QPushButton('查看此提供物对应的换入候选');reader.addWidget(self.exchange_button);self.exchange_button.setVisible(False)
@@ -100,7 +103,7 @@ class InventoryPanel(QWidget):
         self.source_button.clicked.connect(self.open_sources);self.reference_button.clicked.connect(self.open_selected);self.entries.currentItemChanged.connect(self.selected);self.entries.itemClicked.connect(lambda _:(self.reader.show(),self.splitter.setSizes([500,310])))
         from .player_item_hover import ItemHoverCard
         self.hover_card=ItemHoverCard(self);self.hover_card.poolRequested.connect(self.openPoolReference)
-        self.hover_pending=None;self.hover_timer=QTimer(self);self.hover_timer.setSingleShot(True);self.hover_timer.setInterval(180);self.hover_timer.timeout.connect(self.show_hover)
+        self.hover_pending=None;self.hover_copy=0;self.hover_timer=QTimer(self);self.hover_timer.setSingleShot(True);self.hover_timer.setInterval(180);self.hover_timer.timeout.connect(self.show_hover)
         self.leave_timer=QTimer(self);self.leave_timer.setSingleShot(True);self.leave_timer.setInterval(220);self.leave_timer.timeout.connect(self.leave_hover)
         self.entries.setMouseTracking(True);self.entries.viewport().installEventFilter(self);self.entries.itemEntered.connect(self.queue_hover)
         self.hover_card.entered.connect(self.leave_timer.stop);self.hover_card.left.connect(self.leave_timer.start)
@@ -154,7 +157,9 @@ class InventoryPanel(QWidget):
             self.category.setCurrentIndex(max(0,index));self.category.blockSignals(False)
         current=self.entries.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if current else None
         rows=_filter_rows(available,self.run.state,self.search.text(),self.held.isChecked(),rarity=self.rarity.currentData(),exchange=self.exchange.currentData(),kind=self.kind.currentData(),category=self.category.currentData(),access=self.access.currentData(),source_node=self.source_node.currentData());self.rows={r['id']:r for r in rows or[]}
-        render_key=repr(rows)
+        from .relic_quantities import kettle_copies
+        self.kettle_quantity=kettle_copies(self.run.state);self.merge_kettles.setVisible(self.held.isChecked())
+        render_key=repr((rows,self.kettle_quantity,self.merge_kettles.isChecked(),self.held.isChecked()))
         if render_key!=self.render_key:self.render_rows(rows,selected);self.render_key=render_key
         if self.hover_card.identity not in self.rows:self.hover_card.dismiss()
         elif self.hover_card.isVisible():self.hover_card.install(self.rows[self.hover_card.identity],self.version.currentData(),self.source_index,self.source_signature)
@@ -162,22 +167,32 @@ class InventoryPanel(QWidget):
         update_inventory_button(self)
         from .player_resource_facts import inventory_summary
         complete=inventory_summary(self.run.state)['complete']
-        self.summary.setText('资料暂不可用，旧列表已清除。'if rows is None else f'显示{len(rows)}件 · '+('持有清单已核对完整'if complete else'持有清单未核对完整，未列出不代表没有'))
-        self.status.setText('资料暂不可用，已清除旧列表。'if rows is None else f'找到{len(rows)}件。'+('本局收藏品已核对完整。'if complete else'本局尚未核对读全；未列出不代表没有。')+' 悬停查看所属池，点击阅读效果与取得条件。拓展一图鉴按所选范围显示；其它条目另注明固定基准。不是当前DLC完整目录或已生效证明。')
+        self.summary.setText('资料暂不可用，旧列表已清除。'if rows is None else f'显示{self.entries.count()}项 · '+('持有清单已核对完整'if complete else'持有清单未核对完整，未列出不代表没有'))
+        from .relic_quantities import KETTLE
+        if rows is not None and self.held.isChecked()and KETTLE in self.rows:
+            self.summary.setText(self.summary.text()+(' · 热水壶'+str(self.kettle_quantity)+'件'if self.kettle_quantity is not None else' · 热水壶重复件数未确认'))
+        self.status.setText('资料暂不可用，已清除旧列表。'if rows is None else f'匹配{len(rows)}种收藏品。'+('本局收藏品已核对完整。'if complete else'本局尚未核对读全；未列出不代表没有。')+' 悬停查看所属池，点击阅读效果与取得条件。拓展一图鉴按所选范围显示；其它条目另注明固定基准。不是当前DLC完整目录或已生效证明。')
         if rows is not None and data is None:
             self.summary.setText(self.summary.text()+' · 公开图鉴暂不可用，仅显示固定说明')
             self.status.setText('公开图鉴暂不可用；下方只显示固定国服说明，未沿用旧的图鉴或掉落资料。'+self.status.text())
         if self.access.currentData()or self.source_node.currentData():self.status.setText(self.status.text()+' 当前按来源说明筛选，不判断本局解锁、可选或必掉；未收录不表示没有取得途径。')
     def render_rows(self,rows,selected):
         from .view_catalog import relic_icon,relic_icon_note
+        from .relic_quantities import KETTLE
+        current=self.entries.currentItem();selected_copy=current.data(Qt.ItemDataRole.UserRole+1)or 0 if current else 0
         offset=self.entries.verticalScrollBar().value()
         self.entries.blockSignals(True);self.entries.clear()
         for row in rows or[]:
-            item=QListWidgetItem(relic_icon(row['icon']or''),row['name'])
-            item.setToolTip(row['name']+' · '+RARITIES.get(row['rarity'],'未分档')+(' · 本局已确认'if row['held']else' · 资料条目'));item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
-            note=relic_icon_note(row['icon']or'')
-            if note:item.setToolTip(item.toolTip()+'\n'+note)
-            if row['id']==selected:self.entries.setCurrentItem(item)
+            quantity=self.kettle_quantity if row['id']==KETTLE and self.held.isChecked()else None
+            copies=quantity if quantity is not None and not self.merge_kettles.isChecked()else 1
+            for copy_index in range(copies):
+                label=row['name']+(' ×'+str(quantity)if quantity is not None and quantity>1 and self.merge_kettles.isChecked()else'')
+                if row['id']==KETTLE and self.held.isChecked()and quantity is None:label+='\n件数未确认'
+                item=QListWidgetItem(relic_icon(row['icon']or''),label)
+                item.setToolTip(row['name']+' · '+RARITIES.get(row['rarity'],'未分档')+(' · 本局已确认'if row['held']else' · 资料条目')+'\n'+row['usage']);item.setData(Qt.ItemDataRole.UserRole,row['id']);item.setData(Qt.ItemDataRole.UserRole+1,copy_index);item.setData(Qt.ItemDataRole.UserRole+2,row['usage']);self.entries.addItem(item)
+                note=relic_icon_note(row['icon']or'')
+                if note:item.setToolTip(item.toolTip()+'\n'+note)
+                if row['id']==selected and copy_index==min(selected_copy,copies-1):self.entries.setCurrentItem(item)
         if selected not in self.rows:self.entries.setCurrentRow(-1)
         self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
     def selected(self,*_):
@@ -202,6 +217,8 @@ class InventoryPanel(QWidget):
         from .view_catalog import relic_icon_note
         note=relic_icon_note(row['icon']or'')
         if note:text+='\n\n图片说明\n'+note
+        from .relic_quantities import KETTLE
+        if row['id']==KETTLE and row['held']:text+='\n\n本局重复件数\n'+(str(self.kettle_quantity)+'件（已核对的持有清单确认）'if self.kettle_quantity is not None else'件数未确认；单个资料条目不代表只持有一件。')
         if self.detail.toPlainText()!=text:self.detail.setPlainText(text)
     def open_selected(self):
         item=self.entries.currentItem()
@@ -209,17 +226,18 @@ class InventoryPanel(QWidget):
     def open_sources(self):
         self.refresh();item=self.entries.currentItem()
         if item is None:return False
-        self.hover_card.dismiss();self.hover_pending=item.data(Qt.ItemDataRole.UserRole)
+        self.hover_card.dismiss();self.hover_pending=item.data(Qt.ItemDataRole.UserRole);self.hover_copy=item.data(Qt.ItemDataRole.UserRole+1)or 0
         self.show_hover();self.hover_card.pin.setChecked(True)
         return self.hover_card.isVisible()
     def queue_hover(self,item):
-        self.leave_timer.stop();self.hover_pending=item.data(Qt.ItemDataRole.UserRole);self.hover_timer.start()
+        self.leave_timer.stop();self.hover_pending=item.data(Qt.ItemDataRole.UserRole);self.hover_copy=item.data(Qt.ItemDataRole.UserRole+1)or 0;self.hover_timer.start()
     def show_hover(self):
         row=self.rows.get(self.hover_pending)
         if row is None or not self.isVisible():return
         if not self.hover_card.install(row,self.version.currentData(),self.source_index,self.source_signature):return
         self.hover_card.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,bool(self.window().windowFlags()&Qt.WindowType.WindowStaysOnTopHint));self.hover_card.show()
-        rect=self.entries.visualItemRect(next(self.entries.item(i)for i in range(self.entries.count())if self.entries.item(i).data(Qt.ItemDataRole.UserRole)==row['id']))
+        copies=[self.entries.item(i)for i in range(self.entries.count())if self.entries.item(i).data(Qt.ItemDataRole.UserRole)==row['id']]
+        rect=self.entries.visualItemRect(copies[min(self.hover_copy,len(copies)-1)])
         point=self.entries.viewport().mapToGlobal(rect.topRight());area=self.screen().availableGeometry()
         self.hover_card.move(max(area.left(),min(point.x()+10,area.right()-self.hover_card.width()+1)),max(area.top(),min(point.y(),area.bottom()-self.hover_card.height()+1)))
     def leave_hover(self):

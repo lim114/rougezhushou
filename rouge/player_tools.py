@@ -29,7 +29,7 @@ class ToolsPanel(QWidget):
         bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('查找战术道具或效果');bar.addWidget(self.search)
         self.held=QCheckBox('仅本局已读');self.held.setToolTip('只显示本局已确认持有的道具；未读到不代表没有。');self.held.setChecked(True);bar.addWidget(self.held);body.addLayout(bar)
         self.summary=QLabel();self.summary.setWordWrap(True);body.addWidget(self.summary);self.notice=QLabel();self.notice.setWordWrap(True);body.addWidget(self.notice)
-        self.entries=CatalogGrid();body.addWidget(self.entries,1)
+        self.entries=CatalogGrid(descriptions=True);body.addWidget(self.entries,1)
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.details_toggle,self.icon_scale,self.scope=add_catalog_controls(body,self.entries,self.detail,notice=self.notice)
         self.search.textChanged.connect(self.refresh);self.held.toggled.connect(self.refresh);self.entries.currentItemChanged.connect(self.selected);self.refresh()
     def refresh(self,*_):
@@ -42,7 +42,7 @@ class ToolsPanel(QWidget):
         for row in rows or[]:
             path=Path(__file__).with_name('data')/'relic-icons'/((row['icon']or'')+'.png')
             item=QListWidgetItem(QIcon(str(path))if path.is_file()else QIcon(),row['name'])
-            item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
+            item.setData(Qt.ItemDataRole.UserRole,row['id']);item.setData(Qt.ItemDataRole.UserRole+2,row['usage']);self.entries.addItem(item)
             if row['id']==old:self.entries.setCurrentItem(item)
         self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
     def selected(self,*_):

@@ -6,6 +6,41 @@ from PySide6.QtGui import QMouseEvent
 from PySide6.QtTest import QTest
 from . import public_archive
 
+def check_inventory_modes(window,gui,require):
+    from PySide6.QtCore import QTimer
+    from .relic_quantities import KETTLE,kettle_copies
+    from .player_resource_facts import inventory_summary
+    from tests.test_inventory_modes_446 import observe,OTHER,TOOL
+    before=deepcopy(window.run.state);images={}
+    for timer in window.findChildren(QTimer):timer.stop()
+    try:
+        observe(window.run,[KETTLE]*3+[OTHER,TOOL]);window.show_compact();bar=window.compact_window;bar.open_inventory();popup=bar.inventory_popup;p=popup.panel;gui.processEvents()
+        require(window.run.inventory_status()['complete']and inventory_summary(window.run.state)['relics']==4,'modes446_three_kettles_one_other_one_tool_are_five_physical_items')
+        require(p.entries.count()==4 and len(p.rows)==2,'modes446_unmerged_rows_keep_three_identical_ids')
+        item=next(p.entries.item(i)for i in range(p.entries.count())if p.entries.item(i).data(Qt.ItemDataRole.UserRole)==KETTLE and p.entries.item(i).data(Qt.ItemDataRole.UserRole+1)==2);p.entries.setCurrentItem(item);gui.processEvents()
+        p.merge_kettles.setFocus();QTest.keyClick(p.merge_kettles,Qt.Key.Key_Space);gui.processEvents()
+        require(p.entries.count()==2 and p.entries.currentItem().data(Qt.ItemDataRole.UserRole)==KETTLE and'×3'in p.entries.currentItem().text(),'modes446_keyboard_merge_preserves_kettle_id')
+        require(popup.navigation.tabText(0)=='收藏品 4'and popup.navigation.tabText(1)=='道具 1','modes446_header_counts_physical_items_separately_from_types')
+        popup.resize(1200,540);gui.processEvents();images['merged-kettles']=popup.grab()
+        p.source_button.click();gui.processEvents();require(p.hover_card.isVisible()and p.hover_card.identity==KETTLE and p.hover_card.pinned,'modes446_merged_source_button_still_opens_exact_kettle')
+        p.hover_card.dismiss();p.merge_kettles.click();gui.processEvents();require(p.entries.count()==4,'modes446_expanding_restores_physical_copy_rows')
+        p.held.setChecked(False);p.reader.hide();p.icon_scale.setValue(48);gui.processEvents()
+        for width in(480,760,1200):
+            popup.resize(width,560);gui.processEvents();p.entries.doItemsLayout();gui.processEvents();rect=p.entries.visualItemRect(p.entries.item(0))
+            require(rect.width()>180 and rect.width()<=p.entries.viewport().width(),'modes446_cards_follow_actual_width_'+str(width))
+            require(p.entries.count()==len(p.rows),'modes446_card_mode_does_not_remove_catalogue_entries_'+str(width))
+            require(popup.rect().contains(popup.mapFromGlobal(p.icon_scale.mapToGlobal(p.icon_scale.rect().bottomRight()))),'modes446_wrapping_footer_is_inside_window_'+str(width))
+        popup.resize(1200,620);gui.processEvents();images['effect-cards']=popup.grab()
+        p.entries.setCurrentRow(0);selected=p.entries.currentItem();text=p.detail.toPlainText();p.icon_scale.setValue(104);gui.processEvents();bar.refresh();gui.processEvents();require(p.entries.currentItem()is selected and p.detail.toPlainText()==text,'modes446_card_to_icons_and_refresh_keep_exact_reading')
+        p.reader.hide();images['icon-grid']=popup.grab()
+        for page,name in((popup.parts,'parts'),(popup.tools,'tools'),(popup.shop,'shop')):
+            popup.pages.setCurrentWidget(page);page.icon_scale.setValue(48);gui.processEvents();require(page.entries.descriptions,'modes446_other_item_catalogue_supports_effect_cards_'+name)
+        popup.pages.setCurrentWidget(p);p.held.setChecked(True);p.icon_scale.setValue(60);p.reader.hide();window.run.state['relic_icon_memory']=None;window.run.state['inventory_verified']=False;bar.refresh();gui.processEvents()
+        require('重复件数未确认'in p.summary.text()and p.entries.count()==2,'modes446_missing_quantity_is_not_expanded_or_guessed')
+        require(not window.run.state['resources'],'modes446_copy_count_does_not_invent_life_or_hope')
+        window.player_inventory_mode_images=images;window.player_validation_target=popup
+    finally:window.run.state=before
+
 def check_reading(window,gui,require):
     from PySide6.QtCore import QTimer
     from tests.test_item_reading_444 import choose,IDS

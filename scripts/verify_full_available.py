@@ -614,5 +614,7 @@ ADDITIONAL_MODULES += ('tests.test_inventory_layout_review',)
 
 ADDITIONAL_MODULES += ('tests.test_catalogue_header_review',)
 
+ADDITIONAL_MODULES += ('tests.test_inventory_modes_446',)
+
 if __name__ == '__main__':
     sys.exit(main())

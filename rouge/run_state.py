@@ -643,8 +643,9 @@ class RunState:
                 'captured_at':captured_at,'source':observed.get('tactical_tools',{}).get('source',relics['source']),'held':True}
         # Fully identified current/valid historical slots (or explicit zero)
         # prove removals. A partial observation cannot erase unrelated records.
-        if (count==0 and not incoming_items and not relics['icons']) or (isinstance(expected,(int,float)) and expected>0 and len(incoming_items)==expected and
-                len(relics['icons'])==expected and all(i.get('confirmed') for i in relics['icons'])):
+        from .relic_quantities import confirmed_bar_counts
+        current_counts=confirmed_bar_counts(relics['icons'],expected)
+        if (count==0 and not incoming_items and not relics['icons']) or (current_counts is not None and current_counts.keys()==incoming_items):
             for rid,record in state['relics'].items():
                 if rid not in incoming and record_flag(record,'held') is not False:
                     prior=record_flag(record,'held')
@@ -841,6 +842,9 @@ class RunState:
 
     def inventory_status(self):
         count=self.state['relic_count'];known=len(self.held_relic_ids())
+        from .relic_quantities import kettle_copies
+        copies=kettle_copies(self.state)
+        if copies is not None:known+=copies-1
         tools=len(self.held_tool_ids())
         complete=_inventory_confirmation_flag(self.state['inventory_verified']) and count is not None and known+tools==count
         unknown=unconfirmed_item_ids(self.state)

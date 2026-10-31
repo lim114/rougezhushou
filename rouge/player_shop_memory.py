@@ -89,7 +89,7 @@ class ShopMemoryPanel(QWidget):
         self.comparison_toggle=QPushButton('展开前后清单对照');self.comparison_toggle.setCheckable(True);body.addWidget(self.comparison_toggle)
         self.comparison=QLabel();self.comparison.setWordWrap(True);body.addWidget(self.comparison);self.comparison.hide()
         self.comparison_toggle.toggled.connect(self.show_comparison)
-        self.entries=CatalogGrid();body.addWidget(self.entries,1);self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1)
+        self.entries=CatalogGrid(descriptions=True);body.addWidget(self.entries,1);self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1)
         self.source_button=QPushButton('查看所选商品的取得来源与历史统计');self.details_toggle,self.icon_scale,self.scope=add_catalog_controls(body,self.entries,self.detail,notice=self.notice,actions=(self.source_button,))
         from .player_item_hover import ItemHoverCard
         self.source_card=ItemHoverCard(self)
@@ -120,7 +120,8 @@ class ShopMemoryPanel(QWidget):
                 if query and query not in record['name'].casefold():continue
                 item=public['current']['details']['items'].get(record['id'])or{};icon=item.get('iconId')or''
                 price='\n标价：'+str(record['price'])if 'price'in record else''
-                entry=QListWidgetItem(relic_icon(icon),record['name']+price);entry.setToolTip(relic_icon_note(icon));entry.setData(Qt.ItemDataRole.UserRole,record['id']);self.entries.addItem(entry)
+                from .expansion_reference import _plain
+                entry=QListWidgetItem(relic_icon(icon),record['name']+price);entry.setToolTip(relic_icon_note(icon));entry.setData(Qt.ItemDataRole.UserRole,record['id']);entry.setData(Qt.ItemDataRole.UserRole+2,_plain(item.get('usage')));self.entries.addItem(entry)
                 if keep==record['id']:self.entries.setCurrentItem(entry)
         self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
     def selected(self,*_):

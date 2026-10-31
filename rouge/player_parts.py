@@ -31,7 +31,7 @@ class PartsPanel(QWidget):
         for key,label in [('MOVE','加工品'),('GOODS','自然物'),('PASSIVE','概念体')]:self.kind.addItem(label,key)
         self.kind.hide();body.addLayout(bar);self.branches=QTabBar();self.branches.setExpanding(False)
         for i in range(self.kind.count()):self.branches.addTab(self.kind.itemText(i))
-        self.branches.currentChanged.connect(self.kind.setCurrentIndex);self.kind.currentIndexChanged.connect(self.branches.setCurrentIndex);body.addWidget(self.branches);self.entries=CatalogGrid();body.addWidget(self.entries,1)
+        self.branches.currentChanged.connect(self.kind.setCurrentIndex);self.kind.currentIndexChanged.connect(self.branches.setCurrentIndex);body.addWidget(self.branches);self.entries=CatalogGrid(descriptions=True);body.addWidget(self.entries,1)
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1)
         self.exchange_lookup=lambda identity:False;self.exchange_button=QPushButton('查看此零件对应的换入候选');self.exchange_button.setVisible(False);self.exchange_button.clicked.connect(self.request_exchange)
         self.details_toggle,self.icon_scale,self.scope=add_catalog_controls(body,self.entries,self.detail,notice=self.notice,actions=(self.exchange_button,))
@@ -44,7 +44,7 @@ class PartsPanel(QWidget):
         if key==self.key:return
         self.key=key;old=self.entries.currentItem();identity=old.data(Qt.ItemDataRole.UserRole)if old else None;offset=self.entries.verticalScrollBar().value();self.rows={r['id']:r for r in rows or[]};self.entries.blockSignals(True);self.entries.clear()
         for row in rows or[]:
-            item=QListWidgetItem(relic_icon(row['icon']or''),row['name']);item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
+            item=QListWidgetItem(relic_icon(row['icon']or''),row['name']);item.setData(Qt.ItemDataRole.UserRole,row['id']);item.setData(Qt.ItemDataRole.UserRole+2,row['usage']);self.entries.addItem(item)
             if row['id']==identity:self.entries.setCurrentItem(item)
         self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
     def selected(self,*_):

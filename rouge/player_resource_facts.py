@@ -10,6 +10,9 @@ def count(value):
 
 def inventory_summary(state):
     relics = sum(active_record(r, 'held') for r in state.get('relics', {}).values())
+    from .relic_quantities import kettle_copies
+    copies=kettle_copies(state)
+    if copies is not None:relics+=copies-1
     tools = sum(active_record(r, 'held') for r in state.get('tactical_tools', {}).values())
     total = count(state.get('relic_count'))
     unknown = unconfirmed_item_ids(state)
