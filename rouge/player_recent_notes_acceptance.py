@@ -17,7 +17,7 @@ def check(window,gui,require):
     require('第二阶段'in panel.preview.toPlainText(),'matching_saved_note_automatically_presented')
     require('最近读取'in panel.scene.text()and'不表示当前'in panel.status.text(),'recent_read_not_claimed_as_current_position')
     require(panel.preview.isReadOnly(),'automatic_scene_preview_is_read_only')
-    QTest.mouseClick(panel.edit,Qt.MouseButton.LeftButton);gui.processEvents()
+    panel.more.setChecked(True);gui.processEvents();QTest.mouseClick(panel.edit,Qt.MouseButton.LeftButton);gui.processEvents()
     require(notes.isVisible()and notes.key==content_key(first),'actual_edit_button_routes_existing_exact_note_editor')
     notes.editor.insertPlainText('\n尚未保存的计划');dirty=notes.editor.toPlainText()
     window.run.state['last_node_content']=other;panel.refresh(force=True)

@@ -1,8 +1,8 @@
 """One notebook window, reusing the exact existing editor and local note store."""
-from PySide6.QtCore import Qt,QSignalBlocker
+from PySide6.QtCore import Qt,QSignalBlocker,QEvent,QTimer
 from copy import deepcopy
 from math import ceil
-from PySide6.QtWidgets import QStackedWidget,QCheckBox,QScrollArea,QWidget,QVBoxLayout,QLabel,QPushButton
+from PySide6.QtWidgets import QStackedWidget,QCheckBox,QScrollArea,QWidget,QVBoxLayout,QLabel,QPushButton,QToolButton
 from .player_recent_notes import RecentNotesPanel
 from .player_notes import content_key
 from .player_note_preview import NotePreview
@@ -27,14 +27,85 @@ class InlineNotesPanel(RecentNotesPanel):
         self.layout().insertWidget(3,self.parent_area);self.parent_area.hide();self.parent_toggle.toggled.connect(self.refresh_parents)
         self.parent_signature=None;self.parent_views=[];self.editRequested.connect(self.open_editor)
         self.inline_ready=True
+        self.compact_controls()
+
+    def compact_controls(self):
+        """Reuse the editor's real actions; keep uncommon controls off the page."""
+        body=self.layout();bar=body.itemAt(2).layout();editor=self.note_editor
+        self.options=QWidget();options=QVBoxLayout(self.options);options.setContentsMargins(0,0,0,0)
+        for widget in (self.scene,self.status,self.edit):
+            body.removeWidget(widget);options.addWidget(widget)
+        for widget in (self.follow,self.reload):bar.removeWidget(widget);options.addWidget(widget)
+        for widget in (editor.autosave,editor.status):editor.layout().removeWidget(widget);options.addWidget(widget)
+        options.addLayout(editor.layout().takeAt(editor.layout().count()-1).layout())
+        editor.layout().setContentsMargins(0,0,0,0);editor.pages.tabBar().hide()
+        self.save_state=QLabel();bar.addWidget(self.save_state)
+        self.more=QToolButton();self.more.setText('更多操作');self.more.setCheckable(True);bar.addWidget(self.more)
+        body.insertWidget(3,self.options);self.options.hide();self.more.toggled.connect(self.options.setVisible)
+        self.card=QWidget();self.card.setObjectName('noteCard');card=QVBoxLayout(self.card);card.setContentsMargins(0,0,0,0);card.setSpacing(0)
+        self.card_title=QLabel();self.card_title.setObjectName('noteCardTitle');self.card_title.setWordWrap(True)
+        for surface in (self,self.card,self.card_title):surface.setFocusPolicy(Qt.FocusPolicy.ClickFocus);surface.installEventFilter(self)
+        body.replaceWidget(self.stack,self.card);card.addWidget(self.card_title);card.addWidget(self.stack)
+        self.preview.setMinimumHeight(90);body.setStretchFactor(self.card,0);body.addStretch(1)
+        self.preview.setToolTip('点击正文即可编辑；离开输入区后按自动保存设置处理。也可按回车编辑。')
+        self.preview.viewport().installEventFilter(self);self.preview.installEventFilter(self)
+        editor.editor.installEventFilter(self)
+        self.leave_timer=QTimer(self);self.leave_timer.setSingleShot(True);self.leave_timer.timeout.connect(self.leave_editor)
+        self.preview.document().documentLayout().documentSizeChanged.connect(self.fit_content)
+        editor.editor.textChanged.connect(self.update_save_state);editor.autosave.toggled.connect(self.update_save_state)
+        editor.autosave_timer.timeout.connect(self.update_save_state)
+        editor.save_button.clicked.connect(self.update_save_state);editor.discard_button.clicked.connect(self.update_save_state)
+        self.update_save_state()
+
+    def update_save_state(self,*_):
+        editor=self.note_editor
+        self.save_state.setText('未保存' if editor.dirty else '已保存' if editor.key and editor.store.path(editor.key).is_file() else '自动保存' if editor.autosave.isChecked() else '手动保存')
+        self.save_state.setToolTip(editor.status.text())
+        content=editor.content if self.stack.currentWidget()is editor else self.context
+        title=content['title'] if content else '选择一份笔记'
+        if content and self.archived_key==content_key(content):title+='（原分类暂不可核对）'
+        self.card_title.setText(title)
+
+    def fit_content(self,*_):
+        if not self.inline_ready:return
+        available=max(90,self.height()-self.card.y()-self.card_title.height()-20)
+        desired=220 if self.stack.currentWidget()is self.note_editor else ceil(self.preview.document().size().height())+30
+        self.stack.setFixedHeight(min(available,max(90,desired)))
+
+    def resizeEvent(self,event):
+        super().resizeEvent(event)
+        self.fit_content()
+
+    def eventFilter(self,watched,event):
+        if watched in (self,self.card,self.card_title) and event.type()==QEvent.Type.MouseButtonPress and event.button()==Qt.MouseButton.LeftButton:
+            self.note_editor.editor.clearFocus();self.leave_editor()
+        if watched is self.preview.viewport() and event.type()==QEvent.Type.MouseButtonPress:
+            if event.button()==Qt.MouseButton.LeftButton and not self.preview.anchorAt(event.position().toPoint()) and self.context is not None:
+                self.request_edit();self.note_editor.editor.setFocus(Qt.FocusReason.MouseFocusReason);return True
+        if watched is self.preview and event.type()==QEvent.Type.KeyPress and event.key()in(Qt.Key.Key_Return,Qt.Key.Key_Enter,Qt.Key.Key_F2)and self.context is not None:
+            self.request_edit();self.note_editor.editor.setFocus();return True
+        if watched is self.note_editor.editor:
+            if event.type()==QEvent.Type.FocusOut:self.leave_timer.start(0)
+            elif event.type()==QEvent.Type.FocusIn:self.leave_timer.stop()
+        return super().eventFilter(watched,event)
+
+    def leave_editor(self):
+        if self.stack.currentWidget()is self.note_editor and not self.note_editor.editor.hasFocus():
+            if self.note_editor.autosave.isChecked():
+                if self.finish_edit():
+                    self.stack.setCurrentWidget(self.preview);self.edit.setText('编辑这份笔记');self.refresh(force=True)
+                else:self.more.setChecked(True)
+            self.update_save_state()
 
     def open_editor(self,content):
         accepted=self.note_editor.set_context(content)
         if accepted:self.editor_read_stamp=(self.key,self._stamp)if self.key==self.note_editor.key else None
         self.stack.setCurrentWidget(self.note_editor);self.note_editor.show()
         self.edit.setText('返回阅读')
-        if not accepted:self.status.setText('另有未保存的笔记；请先在这里保存或放弃，再切换。')
+        if not accepted:
+            self.status.setText('另有未保存的笔记；请先在这里保存或放弃，再切换。');self.more.setChecked(True)
         self.refresh_parents()
+        self.fit_content();self.update_save_state()
         return accepted
 
     def request_edit(self):
@@ -64,7 +135,7 @@ class InlineNotesPanel(RecentNotesPanel):
             floor,node=parts
             self.selector.floor.setCurrentIndex(self.selector.floor.findData(floor));self.selector.node.setCurrentIndex(self.selector.node.findData(node));self.selector.scene.setCurrentIndex(0)
         super().select_context(content)
-        if self.context!=content:return False
+        if self.context!=content:self.more.setChecked(True);return False
         self.archived_key=None
         if content.get('kind')!='note-scope':
             row=next((r for r in self.selector.rows if content_key(r['context'])==content_key(content)),None)
@@ -115,8 +186,11 @@ class InlineNotesPanel(RecentNotesPanel):
             else:
                 self.status.setText('上方是最近读取的场景；正在编辑的笔记仍对应“'+editor.content['title']+'”，未随读取转移。')
                 self.edit.setEnabled(True)
+                self.more.setChecked(True)
             editor.context.setVisible(self.key!=editor.key)
         self.refresh_parents()
+        self.fit_content()
+        if hasattr(self,'save_state'):self.update_save_state()
 
     def refresh_parents(self,*_):
         if not self.inline_ready:return

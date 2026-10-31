@@ -1,0 +1,92 @@
+{
+  "baseline_commit": "16275f656caae29729f8ef30bace380fba08a3b3",
+  "changed_source": [
+    {
+      "path": "rouge/player_inline_notes.py",
+      "sha256": "d528f884d74fa507bd2cbc4fd1a30db8a89c6dd360b36d459dfcb516c1ab8205",
+      "bytes": 15222
+    },
+    {
+      "path": "rouge/player_note_style.py",
+      "sha256": "f4f8437a3dac6c340475adb488b72da4e386ef5da0eb539dd0a3cfd1d67bc554",
+      "bytes": 2992
+    },
+    {
+      "path": "rouge/player_compact.py",
+      "sha256": "1abda343a8e0800ae1bb7023d1e58ee8b6a228fab2c4d1e2976371aa0fe50f1d",
+      "bytes": 24035
+    }
+  ],
+  "unchanged_store_notes_models_and_requirements": [
+    {
+      "path": "rouge/player_notes.py",
+      "sha256": "c0d03d8480deba8698a0fd34766e4ffe3a7edb4411534830fc690de96d3cfe8b",
+      "bytes": 9731
+    },
+    {
+      "path": "rouge/player_note_preview.py",
+      "sha256": "c214e6700189bc4378c33f0eeb41f48a1af5a063057b1ae5227db6fe7ee77129",
+      "bytes": 1502
+    },
+    {
+      "path": "rouge/player_note_library.py",
+      "sha256": "ff287f05583ba69d5f70895136935ae0f37886d1748a6788d2fed263d6e5a68c",
+      "bytes": 8102
+    },
+    {
+      "path": "rouge/player_note_export.py",
+      "sha256": "4fdce198dc80482e57dcf514b1fff247b55506875a020f8d96afcd3c2d6ec024",
+      "bytes": 1848
+    },
+    {
+      "path": "rouge/player_note_scopes.py",
+      "sha256": "e6dc5c37c7222c807ebc52fb1cfbb6944f566310cbb7ee8709946753e944e15b",
+      "bytes": 1989
+    },
+    {
+      "path": "rouge/player_recent_notes.py",
+      "sha256": "5a1ff9c5183fac327b51b1103144856b6f9146e5303e234f4bd2e6bc658447f5",
+      "bytes": 6280
+    },
+    {
+      "path": "rouge/player_note_selector.py",
+      "sha256": "79f6ef293eceb4c368e1f63416cc6543651cf818253eda05bca9bd7495997962",
+      "bytes": 5285
+    },
+    {
+      "path": "rouge/run_state.py",
+      "sha256": "03b00619056771742ca53d8742e82d5efade8656c31da813d06997ca99fc47f7",
+      "bytes": 62212
+    },
+    {
+      "path": "rouge/damage.py",
+      "sha256": "fb3de5efa094c951f952f211cf24cce57c60ae95716bc7d021c7e668c7b40497",
+      "bytes": 30953
+    },
+    {
+      "path": "rouge/reporting.py",
+      "sha256": "d04370224b6a965affd41bde82358d1a07bf5c33a2f04b05cfa9083756c22ee3",
+      "bytes": 139449
+    },
+    {
+      "path": "PROJECT_REQUIREMENTS.md",
+      "sha256": "109ffda0c69be72f82fb994987654ae38b2528153d3271b56d5bdb9aea6e9c93",
+      "bytes": 28399
+    }
+  ],
+  "reuse": "One existing NotesDialog/NoteStore/editor/preview/actions, reparented existing control layout into hidden options. Local Qt event filters and existing autosave timer signals; no editor/storage copy or new dependencies.",
+  "native_original_validation_adaptations": "Two original explicit-edit mouse-click paths first reveal More; all prior assertions retained.",
+  "physical_production_lines_net_added": 78,
+  "net_code_reduction_claimed": false,
+  "performance_improvement_claimed": false,
+  "defensive_guards_removed": false,
+  "accuracy_private_state_conflict_guards_retained": true,
+  "initial_real_native_defect": "FocusOut-only handling did not react to an actual click on the notebook blank surface. Added local surface event handling, no global event interception; original failure and executed source retained.",
+  "first_unit_failure": "90 Markdown soft newline lines wrapped into one paragraph, so the fixture wrongly expected scroll. Corrected fixture to separate paragraphs, no product scroll threshold relaxed.",
+  "primary_Qt_sources": [
+    "https://doc.qt.io/qtforpython-6/PySide6/QtCore/QObject.html#PySide6.QtCore.QObject.eventFilter",
+    "https://doc.qt.io/qt-6/qabstracttextdocumentlayout.html#documentSizeChanged"
+  ],
+  "REA_scope": "Skill already read; complete Python source and actual runtime examined, no new REA call. Earlier REA bytecode and CJS analyses not conflated.",
+  "not_complete": "Full video typography, spacing, exact remaining controls, cross-screen/DPI, complete ownership and whole-program review remain. No game or chat validation."
+}

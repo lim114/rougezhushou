@@ -206,7 +206,7 @@ class CompactAssistant(QDialog):
             panel=InlineNotesPanel(self.owner.run,self.owner.player_notes)
             self.recent_notes_popup=NotesPopover('备忘录',panel,self,on_show=self.refresh);self.recent_notes_popup.panel=panel
             self.recent_notes_popup.setObjectName('sceneNotesWindow');self.recent_notes_popup.setStyleSheet(NOTE_STYLE)
-            self.recent_notes_popup.resize(900,480)
+            self.recent_notes_popup.resize(900,360)
         return self.recent_notes_popup
     def open_recent_notes(self):
         self.notes_popup()

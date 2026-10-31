@@ -33,7 +33,7 @@ if __name__=='__main__':
             notes.discard();notes.autosave.setChecked(True);bar.open_recent_notes();popup=bar.recent_notes_popup;panel=popup.panel;panel.timer.start()
             choose(panel.selector.floor,'floor1');floor=scope(panel.selector.rows,'floor1')
             require(panel.context==floor and not panel.follow.isChecked(),'user_floor_choice_opens_manual_general_note_without_live_claim')
-            QTest.mouseClick(panel.edit,Qt.MouseButton.LeftButton);gui.processEvents()
+            panel.more.setChecked(True);gui.processEvents();QTest.mouseClick(panel.edit,Qt.MouseButton.LeftButton);gui.processEvents()
             require(notes.isVisible()and not notes.isWindow()and notes.window()is popup,'existing_editor_is_child_of_same_actual_notebook_window')
             require(panel.store is notes.store and notes.key==content_key(floor),'one_store_and_exact_floor_note_key')
             notes.editor.setPlainText('# 第一层\n\n先核对节点资料，再准备队伍。');QTest.qWait(1100);gui.processEvents()
