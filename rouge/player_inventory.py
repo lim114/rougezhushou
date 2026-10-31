@@ -89,11 +89,12 @@ class InventoryPanel(QWidget):
         self.rarity_buttons.idClicked.connect(self.rarity.setCurrentIndex);self.rarity.hide()
         self.rarity.currentIndexChanged.connect(lambda i:self.rarity_buttons.button(i).setChecked(True))
         bottom.addStretch();bottom.addWidget(QLabel('图标大小'));self.icon_scale=QSlider(Qt.Orientation.Horizontal);self.icon_scale.setRange(48,104);self.icon_scale.setValue(72);self.icon_scale.setMaximumWidth(160);bottom.addWidget(self.icon_scale);self.icon_scale.valueChanged.connect(self.entries.set_tile_size);body.addLayout(bottom)
-        self.reference_button=QPushButton('查看取得来源与相关查询');body.addWidget(self.reference_button)
+        actions=QHBoxLayout();self.source_button=QPushButton('查看并固定取得来源');actions.addWidget(self.source_button,1)
+        self.reference_button=QPushButton('完整条目与相关查询');actions.addWidget(self.reference_button);body.addLayout(actions)
         self.exchange_button=QPushButton('查看此提供物对应的换入候选');body.addWidget(self.exchange_button);self.exchange_button.setVisible(False)
         from .player_exchange_view import request_inventory
         self.exchange_button.clicked.connect(lambda:request_inventory(self))
-        self.reference_button.clicked.connect(self.open_selected);self.entries.currentItemChanged.connect(self.selected);self.entries.itemClicked.connect(lambda _:(self.reader.show(),self.splitter.setSizes([500,310])))
+        self.source_button.clicked.connect(self.open_sources);self.reference_button.clicked.connect(self.open_selected);self.entries.currentItemChanged.connect(self.selected);self.entries.itemClicked.connect(lambda _:(self.reader.show(),self.splitter.setSizes([500,310])))
         from .player_item_hover import ItemHoverCard
         self.hover_card=ItemHoverCard(self);self.hover_card.poolRequested.connect(self.openPoolReference)
         self.hover_pending=None;self.hover_timer=QTimer(self);self.hover_timer.setSingleShot(True);self.hover_timer.setInterval(180);self.hover_timer.timeout.connect(self.show_hover)
@@ -175,6 +176,7 @@ class InventoryPanel(QWidget):
     def selected(self,*_):
         item=self.entries.currentItem();row=self.rows.get(item.data(Qt.ItemDataRole.UserRole))if item else None
         self.reference_button.setEnabled(row is not None)
+        self.source_button.setEnabled(row is not None)
         from .player_exchange_view import update_inventory_button
         update_inventory_button(self)
         if not row:self.detail.clear();self.reader.hide();return
@@ -197,6 +199,12 @@ class InventoryPanel(QWidget):
     def open_selected(self):
         item=self.entries.currentItem()
         if item and item.data(Qt.ItemDataRole.UserRole)in self.rows:self.openReference.emit(item.data(Qt.ItemDataRole.UserRole))
+    def open_sources(self):
+        self.refresh();item=self.entries.currentItem()
+        if item is None:return False
+        self.hover_card.dismiss();self.hover_pending=item.data(Qt.ItemDataRole.UserRole)
+        self.show_hover();self.hover_card.pin.setChecked(True)
+        return self.hover_card.isVisible()
     def queue_hover(self,item):
         self.leave_timer.stop();self.hover_pending=item.data(Qt.ItemDataRole.UserRole);self.hover_timer.start()
     def show_hover(self):

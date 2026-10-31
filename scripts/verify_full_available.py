@@ -604,5 +604,7 @@ ADDITIONAL_MODULES += ('tests.test_shop_prices_443',)
 
 ADDITIONAL_MODULES += ('tests.test_deferred_reference_review',)
 
+ADDITIONAL_MODULES += ('tests.test_item_reading_444',)
+
 if __name__ == '__main__':
     sys.exit(main())

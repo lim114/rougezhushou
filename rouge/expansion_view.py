@@ -1,7 +1,7 @@
 """Plain-language, version-separated update reader; no game interactions."""
 from copy import deepcopy
 import json
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt,QSize
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QLineEdit,QListWidget,QListWidgetItem,QPlainTextEdit,QTabWidget,QPushButton,QSplitter
 from . import expansion_reference as model
 from . import current_stage_directory as stage_directory
@@ -103,8 +103,8 @@ class ExpansionUpdatePanel(QWidget):
         self.ending_button=QPushButton('旧日重燃：事件前置与相关作战');layout.addWidget(self.ending_button);self.ending_button.clicked.connect(self.open_ending_events)
         if categories is not None and 'endings' not in categories:self.ending_button.hide()
         self.count=QLabel();layout.addWidget(self.count)
-        split=QSplitter();layout.addWidget(split,1);self.entries=QListWidget();self.entries.setAccessibleName('本版本资料条目');split.addWidget(self.entries)
-        right=QWidget();body=QVBoxLayout(right);self.map_image=ReferenceImage('选择关卡可查看固定原图');self.map_image.setMinimumSize(260,150);body.addWidget(self.map_image)
+        split=QSplitter();layout.addWidget(split,1);self.entries=QListWidget();self.entries.setAccessibleName('本版本资料条目');self.entries.setIconSize(QSize(36,36));split.addWidget(self.entries)
+        right=QWidget();body=QVBoxLayout(right);self.map_image=ReferenceImage('选择关卡可查看固定原图');self.map_image.setMinimumSize(260,150);self.map_image.hide();body.addWidget(self.map_image)
         self.next_button=QPushButton('查看原资料指定的后续场景');self.next_button.hide();body.addWidget(self.next_button)
         self.flow_button=QPushButton('查看这个情景的选项、奖励和后续');self.flow_button.hide();body.addWidget(self.flow_button);self.flow_button.clicked.connect(self.open_documented_flow)
         self.origins_button=QPushButton('查看已核对的取得方式');self.origins_button.hide();body.addWidget(self.origins_button);self.origins_button.clicked.connect(self.open_reward_origins)
@@ -181,7 +181,7 @@ class ExpansionUpdatePanel(QWidget):
         self._close_exchange();self.exchange_button.hide()
         dialog=getattr(self,'current_battle_dialog',None)
         if dialog is not None:dialog.close()
-        self.result=None;self.image_raw=None;self.map_image.clear();self.map_image.setText(notice);self.next_button.hide();self.next_button.setEnabled(False)
+        self.result=None;self.image_raw=None;self.map_image.clear();self.map_image.setText(notice);self.map_image.hide();self.next_button.hide();self.next_button.setEnabled(False)
         self.stage_info=None;replace_text(self.stage_source,'',preserve=False);self.tabs.setTabVisible(2,False)
         self.battle_button.hide();self.battle_button.setEnabled(False)
         replace_text(self.player,'',preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
@@ -247,9 +247,14 @@ class ExpansionUpdatePanel(QWidget):
             allowed={r['id']for r in stage_directory.rows(self.stage_floor.currentData(),self.stage_kind.currentData(),reference=stage_ref)};items=[r for r in items if r['id']in allowed]
         query=self.search.text().strip();visible=[r for r in items if not query or query in r['name']]
         blocked=self.entries.blockSignals(True);self.entries.clear()
+        from .view_catalog import relic_icon,relic_icon_note
         for row in visible:
             title=stage_directory.label(stage_directory.detail(row['id'],reference=stage_ref))if is_stage else row['label']
-            item=QListWidgetItem(title);item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
+            item=QListWidgetItem(title)
+            if row['category']in('relics','scrap'):
+                icon=(row['value'].get('item')or{}).get('iconId')or''
+                item.setIcon(relic_icon(icon));item.setToolTip(relic_icon_note(icon))
+            item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
             if row['id']==selected:self.entries.setCurrentItem(item)
         self.entries.blockSignals(blocked)
         self.count.setText('当前分类列出'+str(len(visible))+'项资料。条目包含同名变体与强化档位，不等于新增地图或新增分队的数量。')
@@ -582,12 +587,17 @@ class ExpansionUpdatePanel(QWidget):
         self.stage_info=stage_directory.detail(key)if is_stage else None
         if is_stage and self.stage_info is None:self._unavailable();return
         player=(stage_directory.player_text(self.stage_info)+'\n'if self.stage_info else'')+result['player_text']
+        if result['row']['category']in('relics','scrap'):
+            from .view_catalog import relic_icon_note
+            note=relic_icon_note((result['row']['value'].get('item')or{}).get('iconId')or'')
+            if note:player+='\n\n图片说明\n'+note
         self.tabs.setTabVisible(2,is_stage);replace_text(self.stage_source,_technical_json(self.stage_info)if self.stage_info else'',preserve=keep)
         replace_text(self.player,player,preserve=keep);replace_text(self.technical,_technical_json(result),preserve=keep)
         if not keep:self.tabs.setCurrentIndex(0)
         target=result['next_scene'];self.next_button.setVisible(target is not None);self.next_button.setEnabled(target is not None)
         if target:self.next_button.setText('查看后续场景：'+target['title'])
         self.image_raw=model.image_bytes(result['image'])
+        self.map_image.setVisible(result['image']is not None)
         notice='本项无地图资料'if result['image']is None else'固定地图原图暂时无法核对。'
         if not self.map_image.set_data(self.image_raw,notice):self.image_raw=None
         self.map_image.setToolTip('固定原图，可随窗口缩放查看；尚未校准位置，不显示未经核对的出怪标记。')

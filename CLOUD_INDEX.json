@@ -1,10 +1,10 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 443,
-  "next_section": 444,
-  "current_section_label": "第443节 + 商店标价自动读取、离店回看与共享图片和对照",
-  "current_completed_change": "正常后台采样与悬停共用商店名称/标价读取及保存；离店和历史可查当次标价、价格独立变化，旧记录不追填。共享准确零件图片和折叠对照，改善浅色标签。",
+  "completed_sections": 444,
+  "next_section": 445,
+  "current_section_label": "第444节 + 点击查看并固定藏品来源与紧凑条目阅读",
+  "current_completed_change": "目录点击/键盘固定复用的准确来源卡；完整条目分流关闭遮挡目录，真实关闭清卡而暂时隐藏保留；完整阅读器复用物品图片和分组标注、无地图不占位。",
   "batch_status": "IMPLEMENTATION_REVIEW_ACTIVE",
   "next_full_validation_after": 455,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
@@ -16,7 +16,7 @@
   "current_batch_target_section": null,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "7ef9968450d9b617f64a808dd1a96d0094972ad653d0ca9d45b4b60c97a02272",
+    "sha256": "a886cfe6aec67814ee7be4ad0c825881e297c77d538d10b7b2e62961c0677f5d",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2665,34 +2665,22 @@
       "completion_ref": "player-section-443",
       "topic": "商店标价自动读取、离店回看与共享图片和对照",
       "verification": "verification/sections/443.json"
+    },
+    {
+      "number": 444,
+      "completion_ref": "player-section-444",
+      "topic": "点击查看并固定藏品来源与紧凑条目阅读",
+      "verification": "verification/sections/444.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "02081413dc5820c954ab151514ecbbcec77580854cfa023393ab3f23659f4eee",
-    "PROJECT_PROGRESS.md": "00aa11733986ee662fd2ee8a0438333624f4bece77996b60577d8822bdea343d",
-    "WORK_IN_PROGRESS.md": "904ce4a12df358494698999212e933d5ef59b3547f5e338515fbf2de3419475f",
-    "PROJECT_COMPLETED.md": "374e7c5cb62635ce02a52da9451633fd5559fecc4803a716d14130a88908dfa3",
+    "DEVELOPMENT_CHECKPOINT.json": "02d2dc9538ce7335374fe8bab20a86e9b2ad221e8892f144929b0301d41b5049",
+    "PROJECT_PROGRESS.md": "2018fea3aac2ca8f8e47a031f18c605a4485ca9b9ddbd4e7496b57aa1ec4d26b",
+    "WORK_IN_PROGRESS.md": "c4d3c556d80eefaf811c8d48256a1efa1126f8e8558f8d8f04c17146d0a3cda2",
+    "PROJECT_COMPLETED.md": "09fbb9388210b4288c07299c5623fdf03199b27a80583157120d90231ba20950",
     "AGENTS.md": "47237fa766e5d186244fc491dbf88f13632108514b6fb9e7923b547227d5854e",
-    "PROJECT_REQUIREMENTS.md": "7ef9968450d9b617f64a808dd1a96d0094972ad653d0ca9d45b4b60c97a02272",
-    "verification/sections/443.json": "2b28624adcdfda4defafaf189213d5e437ecc20de6f85d07dcba2222fb082f78"
+    "PROJECT_REQUIREMENTS.md": "a886cfe6aec67814ee7be4ad0c825881e297c77d538d10b7b2e62961c0677f5d",
+    "verification/sections/444.json": "a63d1ae2bd6e1f8910091181ee46d16d3522a93eb7953b857769a1954b4568dc"
   },
-  "private_state_included": false,
-  "current_maintenance": {
-    "kind": "implementation_maintenance",
-    "title": "四个资料目录按需填充与准确分类直接打开",
-    "receipt": "verification/maintenance/deferred-reference-review-20261031/summary.json",
-    "binding": "enclosing_commit",
-    "functional_section_added": false,
-    "status": "partial_program_review_reference_population_deferred",
-    "review_checklist": "PROGRAM_REVIEW.md",
-    "review_checklist_sha256": "9fb078b63df185d325fc185b900731d26458dcb8c3f723a5c0a3ed3840e43878",
-    "application_review_complete": false,
-    "verified_publication": {
-      "proof": "verification/maintenance/deferred-reference-review-20261031/publication.json",
-      "proof_sha256": "6b258df92ade885125927f66d6b461aedf733351fb26eacd5d100449ebf66944",
-      "commit": "0c3403f70bccac21bf4523984a933f201dd759d9",
-      "binding": "verified_remote_commit"
-    },
-    "receipt_sha256": "ac2eeeb062da0b7b55367f9f735c186ee00dbf431bcf7a692b69000ca7fed1ba"
-  }
+  "private_state_included": false
 }

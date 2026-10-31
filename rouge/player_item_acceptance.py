@@ -6,6 +6,46 @@ from PySide6.QtGui import QMouseEvent
 from PySide6.QtTest import QTest
 from . import public_archive
 
+def check_reading(window,gui,require):
+    from PySide6.QtCore import QTimer
+    from tests.test_item_reading_444 import choose,IDS
+    before=deepcopy(window.run.state)
+    for timer in window.findChildren(QTimer):timer.stop()
+    try:
+        window.run.state['relics']={identity:{}for identity in IDS}
+        window.show_compact();bar=window.compact_window;bar.open_inventory();popup=bar.inventory_popup;panel=popup.panel;gui.processEvents()
+        choose(panel,IDS[0]);panel.source_button.setFocus();QTest.keyClick(panel.source_button,Qt.Key.Key_Space);gui.processEvents()
+        card=panel.hover_card
+        require(card.isVisible()and card.pinned and card.identity==IDS[0],'item444_keyboard_opens_and_pins_exact_existing_source_card')
+        require(popup.isVisible()and not window.isVisible(),'item444_sources_keep_compact_inventory_not_full_window')
+        pool=card.pools.currentData();text=card.detail.toPlainText();bar.refresh();gui.processEvents()
+        require(card.isVisible()and card.pinned and card.pools.currentData()==pool and card.detail.toPlainText()==text,'item444_refresh_keeps_pinned_source_reading')
+        choose(panel,IDS[1]);panel.source_button.click();gui.processEvents()
+        require(card.identity==IDS[1]and card.pinned,'item444_explicit_source_click_can_replace_another_pinned_item')
+        bar.toggle_visibility();gui.processEvents()
+        require(not popup.isVisible()and not card.isVisible()and card.pinned,'item444_temporary_hide_preserves_pinned_state')
+        bar.toggle_visibility();gui.processEvents()
+        require(popup.isVisible()and card.isVisible()and card.identity==IDS[1],'item444_hotkey_restore_returns_same_source')
+        popup.close();gui.processEvents()
+        require(not card.isVisible()and not card.pinned and card.identity is None,'item444_closing_inventory_clears_invisible_pin')
+        bar.open_inventory();gui.processEvents();choose(panel,IDS[0]);panel.hover_pending=IDS[0];panel.show_hover();gui.processEvents()
+        require(card.isVisible()and card.identity==IDS[0]and not card.pinned,'item444_hover_works_after_reopening_inventory')
+        panel.reference_button.click();gui.processEvents()
+        full=window.reference_panel('relics',activate=False)
+        require(window.isVisible()and not popup.isVisible()and not card.isVisible(),'item444_explicit_full_read_closes_obscuring_inventory')
+        require(full.result['row']['id']==IDS[0],'item444_explicit_full_read_uses_exact_item')
+        require(full.map_image.isHidden(),'item444_no_empty_map_takes_item_reading_space')
+        require(not full.entries.currentItem().icon().pixmap(36,36).isNull(),'item444_full_reader_uses_exact_existing_picture')
+        window.show_compact();bar.open_inventory();gui.processEvents();choose(panel,IDS[0]);panel.source_button.click();gui.processEvents()
+        with patch('rouge.player_inventory.reference.packet',return_value=None):panel.refresh()
+        require(not card.isVisible()and not panel.source_button.isEnabled()and not panel.reference_button.isEnabled(),'item444_source_loss_clears_and_disables_both_entries')
+        panel.refresh();gui.processEvents();require(panel.entries.currentItem()is None,'item444_source_recovery_does_not_restore_old_choice')
+        choose(panel,IDS[0]);panel.source_button.click();gui.processEvents()
+        require(card.isVisible()and card.identity==IDS[0]and card.pinned,'item444_source_entry_recovers_with_manual_selection')
+        require('不是抽取权重或本局获得概率'in card.notice.text(),'item444_statistics_scope_is_readable_before_expanding')
+        window.player_validation_target=card
+    finally:window.run.state=before
+
 def check(window,gui,require):
     original=deepcopy(window.run.state)
     window.run.state['relics']={identity:{} for identity in ('rogue_6_relic_legacy_1','rogue_6_relic_legacy_3','rogue_6_relic_legacy_4')}

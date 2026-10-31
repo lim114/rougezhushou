@@ -221,7 +221,7 @@ class CompactAssistant(QDialog):
     def open_inventory(self):
         if self.inventory_popup is None:
             from .player_inventory import InventoryPanel
-            panel=InventoryPanel(self.owner.run,self.owner.inventory_panel.public_cache);panel.openReference.connect(lambda i:(self.owner.open_item_reference(i),self.open_full()))
+            panel=InventoryPanel(self.owner.run,self.owner.inventory_panel.public_cache);panel.openReference.connect(self.open_inventory_reference)
             panel.openPoolReference.connect(lambda version,identity:self.open_owner_dialog(lambda:self.owner.open_public_pool_reference(version,identity),'public_archive'))
             from .player_parts import PartsPanel
             from .player_tools import ToolsPanel
@@ -238,6 +238,7 @@ class CompactAssistant(QDialog):
             resources=ResourceStrip(self.owner.run.state,dark=True);resources.requested.connect(self.open_resource)
             body.addWidget(resources);body.addWidget(pages,1)
             self.inventory_popup=ToolPopover('收藏品、战术道具与零件',bundle,self,on_show=self.refresh)
+            self.inventory_popup.finished.connect(lambda _result:panel.hover_card.dismiss())
             self.inventory_popup.resources=resources
             from .player_catalog_grid import INVENTORY_STYLE
             self.inventory_popup.setObjectName('inventoryWindow');self.inventory_popup.setStyleSheet(INVENTORY_STYLE)
@@ -255,6 +256,9 @@ class CompactAssistant(QDialog):
             if self.open_inventory() is False:return False
             self.inventory_popup.pages.setCurrentWidget(self.inventory_popup.parts if kind=='parts' else self.inventory_popup.panel)
             return True
+    def open_inventory_reference(self,identity):
+        if not self.owner.open_item_reference(identity):return False
+        self.inventory_popup.close();self.open_full();return True
     def open_archive(self):return self.open_owner_dialog(self.owner.open_public_archive,'public_archive')
     def open_owner_dialog(self,callback,name):
         if self.active_popup is not None and self.active_popup.isVisible()and not self.active_popup.close():

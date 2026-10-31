@@ -1,17 +1,15 @@
 <!-- live-cloud-index:start -->
-# 当前云端续接索引 · 第443节 + 商店标价自动读取、离店回看与共享图片和对照
+# 当前云端续接索引 · 第444节 + 点击查看并固定藏品来源与紧凑条目阅读
 
-实际完成的改动：正常后台采样与悬停共用商店名称/标价读取及保存；离店和历史可查当次标价、价格独立变化，旧记录不追填。共享准确零件图片和折叠对照，改善浅色标签。
+实际完成的改动：目录点击/键盘固定复用的准确来源卡；完整条目分流关闭遮挡目录，真实关闭清卡而暂时隐藏保留；完整阅读器复用物品图片和分组标注、无地图不占位。
 
-[本节验收回执](verification/sections/443.json)。
+[本节验收回执](verification/sections/444.json)。
 
-已完成至443，后续444；本批状态 `IMPLEMENTATION_REVIEW_ACTIVE`。推进终点：未指定数字终点。下次定期全量455。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
+已完成至444，后续445；本批状态 `IMPLEMENTATION_REVIEW_ACTIVE`。推进终点：未指定数字终点。下次定期全量455。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；OCR及识别覆盖、适配、准确率与耗时同步优化；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 
-最新记录全量：`verification/full-440/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。当前实现维护：四个资料目录按需填充与准确分类直接打开；回执 `verification/maintenance/deferred-reference-review-20261031/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
-
-下面是历史交接，不代表当前节数。
+最新记录全量：`verification/full-440/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。下面是历史交接，不代表当前节数。
 <!-- live-cloud-index:end -->
 
 下一到期完整检查须给304/305两份full320验证脚本显式传入--source-freeze及当轮根声明冻结文件；默认320仅供历史绑定，不能把旧摘要改成当前通过。当前335原失败、验证脚本两处绑定维护与完整复验见verification/full-335/summary.json。
