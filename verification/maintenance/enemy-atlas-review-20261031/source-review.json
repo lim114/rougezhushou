@@ -1,0 +1,161 @@
+{
+  "baseline_commit": "4f956331776d491c7348be1d505bbac62f0f9c56",
+  "changed_source": [
+    {
+      "path": "rouge/current_battle_view.py",
+      "sha256": "7085628c97721cea21031b0c04c8f5c224b56e64d7c605ae2252f1bb5429eb72",
+      "bytes": 52462
+    },
+    {
+      "path": "rouge/player_catalog_grid.py",
+      "sha256": "c2d65ba3ad8b12e80c1a72ba7f5249c096d9803ff9cb4f6b7bf7c3ce3a9daa01",
+      "bytes": 4190
+    }
+  ],
+  "unchanged_models_state_consumers_and_requirements": [
+    {
+      "path": "rouge/current_battle_reference.py",
+      "sha256": "584ca27efb06af7fafd4c917cb7036e45ab76ff49f1e118e1fe1185756388a17",
+      "bytes": 12986
+    },
+    {
+      "path": "rouge/current_enemy_traits.py",
+      "sha256": "c6ca725a6507e00f5bd2543e1b6749f58f7e99bf52416e8092b8cb49df661af7",
+      "bytes": 5139
+    },
+    {
+      "path": "rouge/current_reward_reference.py",
+      "sha256": "732f1b61e2705a4d536cc4bcfb83114fef94001ac4386ccd70c83ae0b0ccd724",
+      "bytes": 15205
+    },
+    {
+      "path": "rouge/current_settlement_modes_reference.py",
+      "sha256": "931eb3786a7f39257d4eef740aa447110a7c50fdcb009edda5f10df396cc7b06",
+      "bytes": 11214
+    },
+    {
+      "path": "rouge/branch_choice.py",
+      "sha256": "ea6a27d9bf140d91fd70782ad0938b09f58ed348398a829ff77fb97f3f87ff6a",
+      "bytes": 5834
+    },
+    {
+      "path": "rouge/player_inventory.py",
+      "sha256": "88a1a248f46e360b4fc76492dcc9808c24304f73087002a63fd6256e06cd615e",
+      "bytes": 19566
+    },
+    {
+      "path": "rouge/player_parts.py",
+      "sha256": "c0a5e04ea6a8327539078ed4d844edb0bb061f75d5e8d85b5971c5ac5150404d",
+      "bytes": 5877
+    },
+    {
+      "path": "rouge/player_tools.py",
+      "sha256": "e37f60ff723a5c6ac6f38f2c5f94e590c77cf77f198580f4bb7aff88857e95b4",
+      "bytes": 3944
+    },
+    {
+      "path": "rouge/player_shop_memory.py",
+      "sha256": "a404f9cb75034c3318ff8c7d2e3a8384aaf2dee500b7585148063f5f08042577",
+      "bytes": 9250
+    },
+    {
+      "path": "rouge/run_state.py",
+      "sha256": "7380141b503ff75614fc332b2879280fea3b5183c5f31e352b638f4a040ec959",
+      "bytes": 62139
+    },
+    {
+      "path": "rouge/app.py",
+      "sha256": "b16410486890f6b3fc663d1f9c55ef7c8b0b2e754fd58f8f01fc50206f4d8c13",
+      "bytes": 161812
+    },
+    {
+      "path": "PROJECT_REQUIREMENTS.md",
+      "sha256": "109ffda0c69be72f82fb994987654ae38b2528153d3271b56d5bdb9aea6e9c93",
+      "bytes": 28399
+    }
+  ],
+  "existing_battle_methods_retained": 62,
+  "unchanged_existing_methods": [
+    "_action_changed",
+    "_actions_changed",
+    "_boss_documents_enemy_requested",
+    "_close_boss_documents",
+    "_close_elbert",
+    "_close_enemy_spawns",
+    "_close_event_origins",
+    "_close_guest_crystals",
+    "_close_guest_knights",
+    "_close_guest_material",
+    "_close_hanko",
+    "_close_map_positions",
+    "_close_readers",
+    "_close_route_itinerary",
+    "_close_shop_vault",
+    "_close_spawn_candidates",
+    "_close_stage_objects",
+    "_close_sun_boss",
+    "_enemy_spawns_action_selected",
+    "_enemy_spawns_position_requested",
+    "_enemy_spawns_source_invalidated",
+    "_reward_action_selected",
+    "_route_itinerary_action_selected",
+    "_show_details",
+    "_spawn_action_selected",
+    "_spawn_position_requested",
+    "_spawn_source_invalidated",
+    "_stage_objects_action_selected",
+    "_sync_boss_documents",
+    "_sync_elbert",
+    "_sync_enemy_spawns",
+    "_sync_guest_crystals",
+    "_sync_guest_knights",
+    "_sync_guest_material",
+    "_sync_hanko",
+    "_sync_route_itinerary",
+    "_sync_shop_vault",
+    "_sync_stage_objects",
+    "_sync_sun_boss",
+    "closeEvent",
+    "filter_enemies",
+    "focus_action",
+    "open_action_positions",
+    "open_boss_documents",
+    "open_elbert",
+    "open_enemy_spawns",
+    "open_event_origins",
+    "open_guest_crystals",
+    "open_guest_knights",
+    "open_guest_material",
+    "open_hanko",
+    "open_map_positions",
+    "open_route_itinerary",
+    "open_shop_vault",
+    "open_spawn_candidates",
+    "open_stage_objects",
+    "open_sun_boss",
+    "refresh_reference"
+  ],
+  "edited_existing_methods": [
+    "__init__",
+    "_clear",
+    "_enemy_changed",
+    "install_enemy_choices"
+  ],
+  "new_atlas_methods": [
+    "_enemy_grid_selected",
+    "_select_enemy_tile",
+    "_show_enemy_grid",
+    "_sync_enemy_grid"
+  ],
+  "original_CatalogGrid_methods_and_IconTile_paint_AST_unchanged": true,
+  "reuse": "Existing CatalogGrid, branch icons, exact identity and original enemy text. Atlas rebuilding reads no image bytes; verified icons are shared, not copied through a new model. Delegate sizeHint now returns existing gridSize.",
+  "performance_limit": "No end-to-end latency or recognition speed measurement; no speedup claimed. Production code grows; shared reuse is not net line deletion.",
+  "no_numerical_mechanism_or_data_change": true,
+  "data_and_runtime_manifest_worktree_unchanged": true,
+  "REA_scope": "Complete Python source reviewed directly per REA skill; no new REA call, binary reverse engineering or whole-program completion claimed.",
+  "official_Qt_references": [
+    "https://doc.qt.io/qt-6/qlistwidget.html",
+    "https://doc.qt.io/qt-6/qlistview.html"
+  ],
+  "application_review_complete": false
+}

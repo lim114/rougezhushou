@@ -68,10 +68,25 @@ class CurrentBattlePanel(QWidget):
         self.enemy_choices = BranchChoice(self.enemy_combo, [], overview_label='总览（本关候选）', placeholder='请选择敌人或关联实体')
         self.enemy_search.textChanged.connect(self.filter_enemies)
         body.addWidget(self.enemy_choices)
+        from .player_catalog_grid import CatalogGrid
+        self.enemy_grid_toggle = QPushButton('收起敌人图册')
+        self.enemy_grid_toggle.setCheckable(True)
+        self.enemy_grid_toggle.setChecked(True)
+        body.addWidget(self.enemy_grid_toggle)
+        self.enemy_grid = CatalogGrid()
+        self.enemy_grid.setAccessibleName('本关敌人候选图册；点击图片查看机制')
+        self.enemy_grid.set_tile_size(48)
+        self.enemy_grid.setMinimumHeight(124)
+        self.enemy_grid.setMaximumHeight(132)
+        body.addWidget(self.enemy_grid)
+        self.enemy_grid_toggle.toggled.connect(self._show_enemy_grid)
+        self.enemy_grid.currentItemChanged.connect(self._enemy_grid_selected)
+        self.enemy_choices.branch.currentIndexChanged.connect(self._sync_enemy_grid)
         self.enemy_portrait = QLabel()
         self.enemy_portrait.setMinimumSize(85, 85)
+        self.enemy_portrait.setMaximumSize(96, 96)
+        self.enemy_portrait.setWordWrap(True)
         self.enemy_portrait.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        body.addWidget(self.enemy_portrait)
         self.hanko_button = QPushButton('查看汉科、相关敌人和烟雾弹的完整机制')
         self.hanko_button.hide()
         body.addWidget(self.hanko_button)
@@ -113,7 +128,10 @@ class CurrentBattlePanel(QWidget):
         self.guest_material_button.clicked.connect(self.open_guest_material)
         self.enemy_player = QPlainTextEdit()
         self.enemy_player.setReadOnly(True)
-        body.addWidget(self.enemy_player, 1)
+        enemy_detail = QHBoxLayout()
+        enemy_detail.addWidget(self.enemy_portrait, 0, Qt.AlignmentFlag.AlignTop)
+        enemy_detail.addWidget(self.enemy_player, 1)
+        body.addLayout(enemy_detail, 1)
         self.tabs.addTab(enemies, '敌人和机制')
         wave = QWidget()
         body = QVBoxLayout(wave)
@@ -213,6 +231,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_portrait.clear()
         self.enemy_search_notice.setText('当前关卡资料暂不可用，旧搜索结果已清除。')
         self.enemy_choices.set_groups([], emit=False)
+        self._sync_enemy_grid()
         blocked = self.actions.blockSignals(True)
         self.actions.clear()
         self.action_filter_notice.setText('当前关卡资料暂不可用，旧分组和出怪条目已清除。')
@@ -324,7 +343,48 @@ class CurrentBattlePanel(QWidget):
         blocked=self.enemy_combo.blockSignals(True);self.enemy_choices.set_groups(groups,emit=False)
         if preferred is not None:self.enemy_choices.select_value(preferred,emit=False)
         self.enemy_combo.blockSignals(blocked)
+        self._sync_enemy_grid()
         self.enemy_search_notice.setText(f'原文搜索匹配{len(rows)}条引用资料，可继续按分类查看；不是实际出怪数量。未匹配不表示没有这种机制，隐藏脚本和阶段变化不在此搜索范围。'if query.strip()else'可搜索名称与已列图鉴原文；同名不同引用分别保留，不相加为实际敌人数。')
+
+    def _show_enemy_grid(self, checked):
+        self.enemy_grid.setVisible(checked)
+        self.enemy_grid_toggle.setText('收起敌人图册' if checked else '展开敌人图册')
+
+    def _sync_enemy_grid(self, *_):
+        key = self.enemy_combo.currentData()
+        offset = self.enemy_grid.verticalScrollBar().value()
+        names = {e['key']: e['name'] for e in (self.result or {}).get('enemies', [])}
+        blocked = self.enemy_grid.blockSignals(True)
+        self.enemy_grid.clear()
+        # Reuse the already verified branch icons, without rereading images or
+        # converting candidate references into actual spawn counts.
+        for title, identity, icon in self.enemy_choices.entries():
+            item = QListWidgetItem(icon, names[identity])
+            item.setData(Qt.ItemDataRole.UserRole, identity)
+            item.setToolTip(title + '；候选资料，不是实际出怪数量')
+            self.enemy_grid.addItem(item)
+            if identity == key:
+                self.enemy_grid.setCurrentItem(item)
+        self.enemy_grid.verticalScrollBar().setValue(offset)
+        self.enemy_grid.blockSignals(blocked)
+        self.enemy_grid._selected(self.enemy_grid.currentItem())
+
+    def _enemy_grid_selected(self, item, *_):
+        if item is not None:
+            self.enemy_choices.select_value(item.data(Qt.ItemDataRole.UserRole))
+
+    def _select_enemy_tile(self, key):
+        current = self.enemy_grid.currentItem()
+        if current is not None and current.data(Qt.ItemDataRole.UserRole) == key:
+            return
+        item = next((self.enemy_grid.item(i) for i in range(self.enemy_grid.count())
+                     if self.enemy_grid.item(i).data(Qt.ItemDataRole.UserRole) == key), None)
+        blocked = self.enemy_grid.blockSignals(True)
+        self.enemy_grid.setCurrentItem(item)
+        self.enemy_grid.blockSignals(blocked)
+        self.enemy_grid._selected(item)
+        if item is not None:
+            self.enemy_grid.scrollToItem(item)
 
     def filter_enemies(self,*_):
         preferred=self.enemy_combo.currentData();self.install_enemy_choices(preferred);self._enemy_changed(preserve=True)
@@ -334,6 +394,8 @@ class CurrentBattlePanel(QWidget):
         enemy = next((e for e in self.result['enemies'] if e['key'] == key), None) if self.result else None
         keep = preserve and key == self.enemy_key
         self.enemy_key = key
+        self._select_enemy_tile(key)
+        self.enemy_portrait.setVisible(enemy is not None)
         replace_text(self.enemy_player, model.enemy_text(enemy) if enemy else '请选择敌人或关联实体。', preserve=keep)
         self.enemy_portrait.clear()
         pix = QPixmap()

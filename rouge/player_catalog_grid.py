@@ -20,6 +20,9 @@ INVENTORY_STYLE='''
 '''
 
 class IconTile(QStyledItemDelegate):
+    def sizeHint(self,option,index):
+        return self.parent().gridSize()
+
     def paint(self,painter,option,index):
         painter.save();rect=option.rect.adjusted(3,3,-3,-3)
         selected=index.data(Qt.ItemDataRole.UserRole)==getattr(self.parent(),'selected_identity',None)
