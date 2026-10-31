@@ -602,5 +602,7 @@ ADDITIONAL_MODULES += ('tests.test_resource_capacity_442',)
 
 ADDITIONAL_MODULES += ('tests.test_shop_prices_443',)
 
+ADDITIONAL_MODULES += ('tests.test_deferred_reference_review',)
+
 if __name__ == '__main__':
     sys.exit(main())

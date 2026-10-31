@@ -11,8 +11,9 @@ from .ui_state import replace_text
 
 
 class ExpansionUpdatePanel(QWidget):
-    def __init__(self,parent=None,*,categories=None,full_catalog=False):
+    def __init__(self,parent=None,*,categories=None,full_catalog=False,defer_population=False):
         super().__init__(parent)
+        self._population_pending=True
         self.source_identity=None;self.result=None;self.image_raw=None
         self.full_catalog=full_catalog
         layout=QVBoxLayout(self);self.notice=QLabel(model.NOTICE);self.notice.setWordWrap(True);layout.addWidget(self.notice)
@@ -141,7 +142,8 @@ class ExpansionUpdatePanel(QWidget):
         self.item_kind.currentIndexChanged.connect(self._filter_changed)
         self.entries.currentItemChanged.connect(self._selected);self.next_button.clicked.connect(self.follow_scene);self.refresh_button.clicked.connect(self.refresh_reference)
         self.battle_button.clicked.connect(self.open_current_battle)
-        self.refresh_reference()
+        if not defer_population:self.refresh_reference()
+
         if full_catalog:
             from .player_action_menu import ButtonMenu
             self.query_menu=ButtonMenu(self,[self.enemy_directory_button,self.terrain_directory_button,
@@ -149,6 +151,12 @@ class ExpansionUpdatePanel(QWidget):
                 self.tickets_button,self.bank_button,self.real_domain_button,self.portal_rules_button,
                 self.region_resources_button,self.upgrade_tickets_button,self.legacy_reference_button,
                 self.named_sources_button,self.initial_recruits_button,self.ending_button],title='相关查询')
+
+    def ensure_populated(self):
+        if self._population_pending:self.refresh_reference()
+
+    def showEvent(self,event):
+        self.ensure_populated();super().showEvent(event)
 
     def _clear_detail(self,notice='请先选择一项资料。'):
         if getattr(self,'initial_recruits_origin',None)=='item':self._close_initial_recruits()
@@ -223,6 +231,7 @@ class ExpansionUpdatePanel(QWidget):
         self._populate(preserve=False)
 
     def _populate(self,*,preserve):
+        self._population_pending=False
         reference=model.packet()
         if reference is None:self._unavailable();return False
         same=self.source_identity==reference['source_identity']

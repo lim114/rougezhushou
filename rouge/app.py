@@ -1,4 +1,4 @@
-"""Plain native test UI. Visual polish intentionally deferred."""
+"""Native player assistant and explicit diagnostic workspaces."""
 import json
 import os
 import sys
@@ -181,7 +181,7 @@ class MainWindow(QMainWindow):
             ('items','藏品与零件',('relics','scrap')),
             ('setup','探索设置',('squads','difficulty','initial')),
         ):
-            panel=ExpansionUpdatePanel(categories=categories,full_catalog=True)
+            panel=ExpansionUpdatePanel(categories=categories,full_catalog=True,defer_population=not self.diagnostic_layout)
             self.common_reference_panels[name]=panel
             for category in categories:self.common_reference_categories[category]=name
             tabs.addTab(panel,label)
@@ -2439,13 +2439,13 @@ class MainWindow(QMainWindow):
         """Open the ordinary content page for an exact reference category."""
         if type(category)is not str or category not in self.common_reference_categories:return None
         panel=self.common_reference_panels[self.common_reference_categories[category]]
+        index=panel.category.findData(category)
+        if panel.category.currentIndex()!=index:panel.category.setCurrentIndex(index)
+        panel.ensure_populated()
         if activate:
             for other in self.common_reference_panels.values():
                 if other is not panel:other.close_children()
             self.centralWidget().setCurrentWidget(panel)
-        index=panel.category.findData(category)
-        if index<0:return None
-        if panel.category.currentIndex()!=index:panel.category.setCurrentIndex(index)
         return panel
 
     def closeEvent(self, event):
