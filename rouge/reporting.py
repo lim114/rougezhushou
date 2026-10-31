@@ -1474,6 +1474,23 @@ def build_report(scenario,result):
         report[REFERENCE_KEY]=reference
         sections.append(section(SECTION_ID,'所选模组 · 原件资料与覆盖边界',
             notes=module_source_notes(reference,sections,readable_description)))
+    resolution=result.get('relic_resolution',{})
+    if resolution.get('complete') is False:
+        # Keep the calculator's supported partial values; qualify them at the
+        # shared report boundary rather than guessing missing effect layers.
+        report['relic_coverage']={
+            'status':'partial','complete_result':None,
+            'numeric_scope':'confirmed_effects_reference',
+            'warnings':list(dict.fromkeys(resolution['warnings']))}
+        sections.insert(0,section('relic_coverage','藏品计算范围',[
+            metric('complete_result','包含全部所选藏品的完整结果',None)],
+            ['以下属性、伤害、治疗与技能时间仅供参考：只计入本次已确认并支持的效果。',
+             '未计入的效果可能改变结果；参考值不是完整总量，也不保证是最低值。',
+             '本提示不表示每项数值都受影响；未逐项确认的影响范围不作推断。',
+             *report['relic_coverage']['warnings']]))
+        for block in sections:
+            if block['id'] in ('timing','skill_stats','damage','healing'):
+                block['title']+=' · 已计效果参考'
     return report
 
 
@@ -1523,6 +1540,7 @@ def format_report(result,*,technical=False):
         'once_deploy':'结束后退场','deployment':'部署触发，无原地回转','triggered_ammo':'布子弹药',
         'ammo':'攻击弹药','next_attack':'强化/替代下次攻击','instant':'瞬时触发','timed':'有限持续'}
     rank=report['skill_rank'];rank_text=f'{rank}级' if rank<=7 else f'7级 · 专精{rank-7}'
+    partial_relics=report.get('relic_coverage',{}).get('status')=='partial'
     lines=[report['operator']['name']+' · '+professions.get(report['operator']['profession'],'职业未确认'),
         '计算状态：'+('支持范围内估算' if estimate['complete'] else '不完整（见待确认与适用范围）'),
         '', '【培养信息】',f"精英 {training['elite']} · 等级 {training['level']} · 潜能 {training['potential']} · 信赖加成进度 {training['trust']}%",
@@ -1533,6 +1551,9 @@ def format_report(result,*,technical=False):
         f"攻速：{number(stats.get('attack_speed_reference',stats['attack_speed']))}（游戏数值单位，基础 100）"+
         (f"；攻击间隔使用攻速 {number(stats['attack_speed'])}（10–600 范围，面板攻速保留实际值）" if stats.get('attack_speed_reference',stats['attack_speed'])!=stats['attack_speed'] else ''),
         '', '【当前技能】',f"{estimate['skill']['name']} · {rank_text} · {modes.get(report['mode'],'技能模式未确认')}"]
+    if partial_relics:
+        lines[lines.index('【预计属性】')]='【已计效果下的属性参考】'
+        lines.insert(2,'藏品尚未计全：完整结果未知。以下数值仅作已计效果参考，不是完整总量，也不保证是最低值。')
     enemy=result.get('run_resolution',{}).get('enemy',{})
     if enemy.get('enemy_id')=='enemy_2148_shorbb':
         lines.insert(1,'输出口径：固定行动模式与统一来源列的测试情景。' if enemy.get('type_factors') else

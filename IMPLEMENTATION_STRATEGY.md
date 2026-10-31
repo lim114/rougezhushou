@@ -92,3 +92,5 @@ Qt已有置顶及整窗输入穿透标志，但“全部穿透”会使该窗口
 [地图资源回顾](research/map-resource-review-20261031/README.md)用当前apply新日志边界复用已有同帧快照和历史前缀投影，修正顺序而不新造时间关联协议。另固定检查Tomimi/stage-viewer/AKSimulator的README树与许可范围，未完成当前国服/Qt适配或取得未明示授权，不把检索当实际复用；保留现有局外/本机架构。
 
 [首批技能计算边界回顾](research/core-calculation-review-20261031/README.md)通过实际调用链确定只在统一_prepare_damage校验选择，内部同一选择不重复验证；保留数值/条件与未知边界，删除8条冗余语句并说明内部契约，净减9行。75完整输出对照和公开错误比较保持，不引入新框架或猜机制；查找5→3不当作端到端提速。
+
+[藏品报告共用口径](research/relic-report-scope-review-20261031/README.md)在原build_report/format_report统一读取已有覆盖标记，复用原指标/Qt显示，避免逐干员重复提示或新增计算框架。公式与原字段保持，缺条件不默认为0；净增加提示代码，不称性能或净精简。
