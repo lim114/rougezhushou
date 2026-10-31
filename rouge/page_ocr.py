@@ -84,18 +84,13 @@ class PageOCR:
                 bool(p.use_cls), _callable_identity(p.text_cls), float(p.max_side_len),
                 float(p.min_side_len), float(p.min_height), float(p.width_height_ratio))
 
-    def _cache_key(self, crops):
-        payload = tuple((a.shape, a.dtype.str, np.ascontiguousarray(a).tobytes()) for a in crops)
-        key = tuple((shape, dtype, hashlib.sha256(pixels).digest())
-                    for shape, dtype, pixels in payload)
-        return key, payload
-
     def _recognize_batch(self, crops, *, force_discovery=False):
-        key, payload = self._cache_key(crops)
-        entry = self._cache.get(key)
-        if self.cache_enabled and not force_discovery and entry is not None and entry[0] == payload:
+        key = tuple((a.shape, a.dtype.str, np.ascontiguousarray(a).tobytes())
+                    for a in crops) if self.cache_enabled else None
+        entry = self._cache.get(key) if self.cache_enabled else None
+        if not force_discovery and entry is not None:
             self._cache.move_to_end(key)
-            return deepcopy(entry[1]), 0.0, True
+            return deepcopy(entry[0]), 0.0, True
         r = self.provider.text_rec
         # These are precisely the original globally sorted RapidOCR batches.
         # Splitting into arbitrary page/crop groups would change padding and
@@ -109,15 +104,16 @@ class PageOCR:
         elapsed = time.perf_counter() - started
         result = r.postprocess_op(predictions, False, wh_ratio_list=ratios,
                                   max_wh_ratio=max_ratio)
-        size = sum(len(pixels) for _, _, pixels in payload)
-        if self.cache_enabled and size <= self.max_bytes:
-            if entry is not None:
-                self._bytes -= entry[2]
-            self._cache[key] = (payload, deepcopy(result), size)
-            self._bytes += size
-            while self._bytes > self.max_bytes or len(self._cache) > self.max_entries:
-                _, old = self._cache.popitem(last=False)
-                self._bytes -= old[2]
+        if self.cache_enabled:
+            size = sum(len(pixels) for _, _, pixels in key)
+            if size <= self.max_bytes:
+                if entry is not None:
+                    self._bytes -= entry[1]
+                self._cache[key] = (deepcopy(result), size)
+                self._bytes += size
+                while self._bytes > self.max_bytes or len(self._cache) > self.max_entries:
+                    _, old = self._cache.popitem(last=False)
+                    self._bytes -= old[1]
         return result, elapsed, False
 
     def __call__(self, image, *, regions=None, force_discovery=False, **kwargs):

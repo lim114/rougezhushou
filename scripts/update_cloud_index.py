@@ -196,7 +196,7 @@ def update(root=ROOT):
         'latest_full_receipt': latest.relative_to(root).as_posix() if latest else None,
         'latest_full_available_checks_passed': json.loads(latest.read_text(encoding='utf-8'))['available_checks_passed'] if latest else None,
         'priority_order': ' → '.join(checkpoint.get('policy', {}).get(
-            'priority_order', ['P2', 'P3', 'P1'])) + '；识别优化最后；未完成事项保留',
+            'priority_order', ['P2', 'P3', 'P1'])) + '；OCR及识别覆盖、适配、准确率与耗时同步优化；未完成事项保留',
         'node_scope': ('source-covered events and conditions plus public node probabilities and statistics; no personal uploads or route recommendations'if checkpoint.get('policy',{}).get('public_statistics_enabled')else'list all source-covered possible events and conditions; no generation probabilities'),
         'project_complete': False,
         'current_batch_target_section': checkpoint['policy'].get('current_user_batch_target_section'),

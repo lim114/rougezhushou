@@ -95,6 +95,14 @@ class CloudIndexSyncTests(unittest.TestCase):
                 self.assertIn(index['priority_order'], handoff)
                 self.assertEqual(index['completed_sections'], 185)
 
+    def test_recognition_optimization_is_concurrent_in_current_index_and_handoff(self):
+        update(self.root)
+        index=json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+        handoff=(self.root/'CLOUD_HANDOFF.md').read_text(encoding='utf-8')
+        self.assertIn('同步优化',index['priority_order'])
+        self.assertNotIn('识别优化最后',index['priority_order'])
+        self.assertIn(index['priority_order'],handoff)
+
     def test_repeated_update_preserves_historical_context_and_excludes_private_state(self):
         private = self.root/'.local'
         private.mkdir()

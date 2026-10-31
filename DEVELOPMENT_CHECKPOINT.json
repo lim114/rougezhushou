@@ -82,7 +82,9 @@
     "public_source_reuse_requires_local_adaptation": true,
     "public_source_reuse_guidance": "AGENTS.md#公开源码优先复用与本机适配2026-10-29",
     "dlc1_missing_content_audit_pending": true,
-    "paused_after_completed_section": 440
+    "paused_after_completed_section": 440,
+    "recognition_optimization": "concurrent_with_feature_work_including_existing_code",
+    "code_constraints_scope": "new_and_existing_code"
   },
   "baseline_commit": "0015c20",
   "completed_sections": 440,
@@ -2717,7 +2719,7 @@
     }
   ],
   "next_section": 441,
-  "next_action": "继续全程序与视频回顾：完整敌人预计数值表、其它资料/输入入口及来源刷新、独立机制；OCR及识别覆盖/适配/准确率/耗时同步推进，不再置后。三条实现约束覆盖新增和存量代码，逐模块查明并修正重复校验、过度抽函数和冗余防御；新增低概率防御先征求开发者同意，不冒称已整体整改。",
+  "next_action": "继续全程序与视频回顾：按来源完善当前敌人预计数值表及具体实体/阶段，核对其它资料/输入入口及来源刷新；同步定位完整检测、分类及页面分流的主要耗时，扩大实际页面/连续帧覆盖。两处精确缓存已简化且完整输出保持，但整页未提速，不把局部命中耗时当全流程收益。三条实现规则覆盖新增及存量，逐模块整改，新低概率防御先征求同意。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -3277,7 +3279,7 @@
     "next_section_started": false,
     "batch_closed": false,
     "next_full_validation_after": 455,
-    "receipt": "verification/maintenance/player-tool-navigation-review-20261031/summary.json",
+    "receipt": "verification/maintenance/ocr-cache-review-20261031/summary.json",
     "scope": "Maintenance after functional440. The next numeric pointer is not a claim that functional441 started. Complete whole-program review and video requirements, not a smaller file-inventory goal."
   },
   "current_full140_checkpoint": {
@@ -9730,13 +9732,13 @@
   },
   "current_maintenance_save": {
     "kind": "implementation_review_maintenance",
-    "title": "修复四个技能资料入口，折叠技术查询并更新存量代码与OCR规则",
-    "receipt": "verification/maintenance/player-tool-navigation-review-20261031/summary.json",
+    "title": "精简两处OCR精确缓存，修正云端识别优化优先级",
+    "receipt": "verification/maintenance/ocr-cache-review-20261031/summary.json",
     "binding": "enclosing_commit",
     "functional_section_added": false,
-    "status": "partial_program_review_player_tool_navigation",
+    "status": "partial_program_review_ocr_cache",
     "review_checklist": "PROGRAM_REVIEW.md",
-    "review_checklist_sha256": "8cb021be4bb41046638cb458e25982330c204163858ef2928aca83a1fedaca37",
+    "review_checklist_sha256": "6c6b33774c471b95c42df5cfc35701434537aaa5ad93a96a20e089709e5047be",
     "application_review_complete": false
   },
   "historical_before_whole_program_review_batch_20261031": {

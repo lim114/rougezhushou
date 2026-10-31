@@ -1,0 +1,96 @@
+{
+  "baseline_commit": "be46c55462e3b7d2afeb644fcdefcff87ffdd178",
+  "changed_source": [
+    {
+      "path": "rouge/page_ocr.py",
+      "sha256": "9c00e84343503361a36b23da6487ee16ebf39594059e095b97eb216c2c6ef907",
+      "bytes": 9909
+    },
+    {
+      "path": "rouge/recognition_cache.py",
+      "sha256": "0e546dff2179e20c08f079c18681297b7f2aa34367868db6ecd659b30efa63bd",
+      "bytes": 1855
+    }
+  ],
+  "unchanged_callers_UI_capture_state_and_models": [
+    {
+      "path": "rouge/app.py",
+      "sha256": "05d9d2111b1669a3bb237b50baef9084c6d438ab404f51fbb6f6491241695a7a",
+      "bytes": 161848
+    },
+    {
+      "path": "rouge/recognition.py",
+      "sha256": "99138a09df0126ee23d5182d4d55d903d8b4090cc0326ae91257b855565e1811",
+      "bytes": 23375
+    },
+    {
+      "path": "rouge/dynamic_ocr.py",
+      "sha256": "eb668e09ffd2de9967abfc7bdfb91d3bea1c7c6a56973313cc44d7fa04c42fe8",
+      "bytes": 8804
+    },
+    {
+      "path": "rouge/capture.py",
+      "sha256": "d30eca793fd030ea5489a69212bbd9bef2bc4c875b9010113f875291beec008a",
+      "bytes": 7368
+    },
+    {
+      "path": "rouge/player_workspace.py",
+      "sha256": "a08c69ecaabd948c15acd798eba6e0ff5b57130c00f26fdc1aaacb89dff750ee",
+      "bytes": 6759
+    },
+    {
+      "path": "rouge/current_battle_reference.py",
+      "sha256": "584ca27efb06af7fafd4c917cb7036e45ab76ff49f1e118e1fe1185756388a17",
+      "bytes": 12986
+    },
+    {
+      "path": "rouge/current_battle_view.py",
+      "sha256": "bf672982706505f7cc0c04dd7696e825d801ae981b30605c575abb6acf827dfd",
+      "bytes": 42966
+    },
+    {
+      "path": "rouge/enemy_overview.py",
+      "sha256": "822f7cdc3b04bc8e56657d5541ac929064d76285390d131a51f21c5b84836d2b",
+      "bytes": 4326
+    },
+    {
+      "path": "rouge/damage.py",
+      "sha256": "fb3de5efa094c951f952f211cf24cce57c60ae95716bc7d021c7e668c7b40497",
+      "bytes": 30953
+    },
+    {
+      "path": "rouge/run_state.py",
+      "sha256": "03b00619056771742ca53d8742e82d5efade8656c31da813d06997ca99fc47f7",
+      "bytes": 62212
+    },
+    {
+      "path": "rouge/account_cache.py",
+      "sha256": "cc4dcc7961a44e50f15c1ed1ffff31b0c6f25cbd4ac752a9124d57ee171a1c50",
+      "bytes": 12006
+    }
+  ],
+  "all_PageOCR_methods_except_batch_and_removed_single_use_key_helper_AST_equal": true,
+  "other_ExactImageCache_methods_AST_equal": true,
+  "change": "Use Python built-in tuple/bytes dictionary equality for exact pixels, shape, dtype and original context/batch order, instead of SHA256 key plus second full byte check. Remove unreachable miss-side replacement and the single-use key helper. Disabled PageOCR cache no longer serializes cache keys.",
+  "retained": "Current full detection, original recognition batch ordering/padding, classification, confidence, coordinates, configuration invalidation, force discovery, deep copies, memory/entry budgets and frame snapshot provenance.",
+  "new_low_probability_defensive_branches": false,
+  "formula_data_or_game_actions_changed": false,
+  "physical_production_lines_net_added": -7,
+  "cache_component_benchmark": {
+    "old_exact_ms": 0.14058033392454186,
+    "new_exact_ms": 0.07568266708403826,
+    "old_batch_ms": 0.25092466656739515,
+    "new_batch_ms": 0.12964466664319238
+  },
+  "whole_page_benchmark": {
+    "old": 371.75250006839633,
+    "new": 386.4895000588149,
+    "paired_samples": 8,
+    "not_a_generalized_speedup_claim": true
+  },
+  "whole_page_faster_claimed": false,
+  "private_popup_sample": "Five existing055 tests use their existing original local sample; no image, contents or extracted text copied to this archive. New comparison uses only already-public isolated UI images.",
+  "existing_055_test_change": "Replace obsolete custom-SHA monkeypatch with same independent-return and one-pixel-different-input behavior; public test identity renamed accordingly. No provider/semantic expectation relaxed.",
+  "REA_scope": "Complete Python source plus actual installed OCR runtime comparison; no new REA tool invocation or mechanical bytecode inventory.",
+  "remaining": "Detector/classifier/full routing cost and complete actual game coverage, full existing-code compliance, video enemy table/numeric migration, other source/runtime paths and P3/P2/P1."
+}
