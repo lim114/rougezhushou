@@ -169,8 +169,11 @@ def map_conditions(graph,run_config):
     zones=config_data()['zones'];zone=zones.get((graph or {}).get('zone_id'),{})
     icon=zone.get('zoneIconId');floor=next((n for n in range(1,7) if icon==f'zone_{n}'),None)
     special=bool(zone.get('isHiddenZone')) or not zone
+    grade=difficulty_value((run_config or {}).get('difficulty'))
+    # Reading a current grade does not extend the fixed catalog's proven range.
+    # Keep its difficulty condition unknown instead of substituting grade 15.
     return {'floor':None if special else floor,'special_region':special,
-            'difficulty':difficulty_value((run_config or {}).get('difficulty'))}
+            'difficulty':grade if grade in catalog._data()['valid_difficulties'] else None}
 
 
 def event_text(event_id):

@@ -50,7 +50,7 @@ def without_exact_source_presentation(result):
 
 class DifficultyQualification106Tests(unittest.TestCase):
     def test_all_normal_grades_and_alias_defaults_remain_available(self):
-        for value in range(16):
+        for value in range(17):
             for aliases in ({}, {'mode': 'NORMAL'}, {'modeDifficulty': 'NORMAL'},
                             {'mode': 'NORMAL', 'modeDifficulty': 'NORMAL'}):
                 with self.subTest(value=value, aliases=aliases):
@@ -67,8 +67,8 @@ class DifficultyQualification106Tests(unittest.TestCase):
                        {'value': 2, 'mode': 'NORMAL', 'modeDifficulty': 'MONTH_TEAM'}):
             self.assertIsNone(difficulty_value(record))
 
-    def test_grade_type_and_range_contract_is_not_broadened(self):
-        for grade in (True, False, 2.0, '2', None, [2], {}, -1, 16):
+    def test_grade_type_and_range_follow_current_normal_catalog(self):
+        for grade in (True, False, 2.0, '2', None, [2], {}, -1, 17):
             with self.subTest(grade=grade):
                 self.assertIsNone(difficulty_value({'value': grade}))
 

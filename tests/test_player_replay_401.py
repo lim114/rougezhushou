@@ -20,7 +20,9 @@ class ReplayTests(unittest.TestCase):
         row=history_rows({'history':[{'at':1,'kind':'config_updated','field':'difficulty','current':{'value':15}}]})[0]
         self.assertIn('保密等级：15',event_text(row))
         row=history_rows({'history':[{'at':1,'kind':'config_updated','field':'difficulty','current':{'value':16}}]})[0]
-        self.assertIn('这条记录写有16',event_text(row));self.assertIn('尚未核验',event_text(row))
+        self.assertIn('保密等级：16',event_text(row))
+        row=history_rows({'history':[{'at':1,'kind':'config_updated','field':'difficulty','current':{'value':17}}]})[0]
+        self.assertIn('这条记录写有17',event_text(row));self.assertIn('尚未核验',event_text(row))
 
     def test_empty_and_malformed_history_have_no_invented_entries(self):
         for raw in(None,{},'history'):self.assertEqual(history_rows({'history':raw}),[])

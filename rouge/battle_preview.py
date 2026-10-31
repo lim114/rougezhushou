@@ -80,7 +80,7 @@ def spawn_rows(stage_id,wave=None,enemy_id=None,include_branches=True):
                 'absolute_time':None,'probability':None})
     return result
 
-def enemy_preview(stage_id,enemy_id,level,run_config=None):
+def enemy_preview(stage_id,enemy_id,level,run_config=None,*,difficulty_reference=None):
     stage=battle_data()['stages'][stage_id]
     matches=[e for e in stage['enemies'] if e['id']==enemy_id and e['level']==level]
     if len(matches)!=1:raise ValueError('敌人必须与本关卡的引用等级唯一匹配。')
@@ -96,7 +96,7 @@ def enemy_preview(stage_id,enemy_id,level,run_config=None):
     try:
         partial=entry['fixed_panel_reference']['construction_reference']['mode']=='stage_constructor' and any(
             entry['fixed_panel_reference']['attributes'].get(k) is None for k in ('maxHp','atk','def','magicResistance'))
-        _,resolution=prepare_run(scenario,enemy_panel_only=True) if partial else prepare_run(scenario)
+        _,resolution=prepare_run(scenario,enemy_panel_only=partial,difficulty_reference=difficulty_reference)
         entry['environment']=resolution['enemy']
         entry['context_pending']=resolution['pending']
     except (ValueError,KeyError) as error:

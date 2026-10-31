@@ -24,8 +24,8 @@ def forecasts(result, config):
     old_profile=config_data()['difficulties'].get(str(grade))
     reason=None
     if grade is None or current is None:
-        reason='本页尚无已支持的保密等级；保密等级16及其它模式的数值迁移仍待核验。'
-    elif any(current[key]!=old_profile[key]for key in current):
+        reason='本页尚无已支持的常规保密等级，未借用其它难度或模式。'
+    elif old_profile is not None and any(current[key]!=old_profile[key]for key in current):
         reason='这一难度的资料已变化，暂不套用旧计算。'
     legacy=battle_data()['stages'].get(result['id'])
     if legacy is None or legacy['level_source']['sha256']!=result['source']['sha256']:
@@ -34,6 +34,8 @@ def forecasts(result, config):
     zone_name=zone.get('name')or config_data()['zones'].get(zone.get('id'),{}).get('name')or'区域未确认'
     raw_grade=(config.get('difficulty')or{}).get('value')
     label='保密等级 '+str(raw_grade if raw_grade is not None else'未确认')+' · '+zone_name
+    difficulty_reference=({'profiles':result['difficulty_reference'],'source':result['difficulty_source']}
+                          if current is not None and old_profile is None else None)
     output={}
     for enemy in result['enemies']:
         item={'environment_component':None,'complete_current_total':None,'pending':[reason]if reason else[],
@@ -55,14 +57,15 @@ def forecasts(result, config):
         # Operator squad benefits are not enemy attributes, and relic effects
         # remain a separately unfinished component of the complete total.
         conditions={key:deepcopy(config[key])for key in('difficulty','zone')if key in config}
-        prediction=enemy_preview(result['id'],enemy['id'],enemy['level'],conditions)
+        prediction=enemy_preview(result['id'],enemy['id'],enemy['level'],conditions,difficulty_reference=difficulty_reference)
         environment=prediction['environment']
         if environment is not None:
             item['environment_component']={key:environment['stats'][key]for key in('maxHp','atk','def','magicResistance')}
             item['steps']=deepcopy(environment['steps'])
         item['pending']=list(prediction['context_pending'])
         item['qualified_inputs']={'whole_stage_bytes_equal':True,'four_explicit_core_attributes_equal':True,
-                                  'constructor_mode_and_tier_equal':True,'difficulty_fields_equal':True}
+                                  'constructor_mode_and_tier_equal':True,'difficulty_fields_equal':old_profile is not None}
+        if difficulty_reference is not None:item['difficulty_profile_source']=dict(difficulty_reference['source'])
     for item in output.values():
         scripts=sum(line.startswith('关卡脚本修正待核验：')for line in item['pending'])
         item['player_pending']=[line for line in item['pending']if not line.startswith('关卡脚本修正待核验：')]

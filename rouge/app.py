@@ -414,7 +414,8 @@ class MainWindow(QMainWindow):
         layout.addLayout(methods)
         presets = QHBoxLayout()
         self.difficulty = QComboBox()
-        for grade in catalog()['difficulties']:
+        from .run_config import NORMAL_GRADES
+        for grade in NORMAL_GRADES:
             self.difficulty.addItem(f'保密等级 {grade}',grade)
         self.ending = QComboBox()
         for ending in catalog()['endings']:
@@ -1704,6 +1705,7 @@ class MainWindow(QMainWindow):
         self.difficulty.setToolTip('自动读取本局保密等级；切换页面后保留最近确认值。' if grade is not None else
             '缓存中的保密等级尚未满足当前常规模式资格；原记录保留，此处仅为分析预设。' if difficulty else
             '尚未自动确认；此处仅为分析预设。')
+        if grade==16:self.difficulty.setToolTip('已读取保密等级16；战斗预览可查看已核验分项，干员伤害页的该难度仍待适配。')
         if grade is not None:
             index=self.difficulty.findData(grade)
             if index>=0:self.difficulty.setCurrentIndex(index)

@@ -599,3 +599,5 @@ if __name__ == '__main__':
 
 
 
+
+ADDITIONAL_MODULES += ('tests.test_grade16_review',)

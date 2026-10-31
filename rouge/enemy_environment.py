@@ -12,7 +12,7 @@ def difficulty_rules():
 def damage_factor(scenario,dtype):
     return scenario.get('_run_damage_factor',1)*scenario.get('_enemy_type_factors',{}).get(dtype,1)
 
-def resolve_enemy(scenario,resolution,*,panel_only=False):
+def resolve_enemy(scenario,resolution,*,panel_only=False,difficulty_profiles=None):
     if type(panel_only) is not bool:raise ValueError('局外面板预览标记需要布尔值。')
     target=scenario.get('target_enemy')
     if not target:
@@ -104,7 +104,8 @@ def resolve_enemy(scenario,resolution,*,panel_only=False):
                 multiply('保密等级'+str(rule['grade'])+'+专属属性',rule['factors'])
                 enemy['steps'][-1]['evidence']={k:rules[k] for k in ('source_url','verification','source_note')}
                 enemy['pending'].append(rule['pending'])
-        rate=config_data()['difficulties'][str(grade)]['bossValue']/100
+        profiles=config_data()['difficulties']if difficulty_profiles is None else difficulty_profiles
+        rate=profiles[str(grade)]['bossValue']/100
         zone=(scenario.get('run_config') or {}).get('zone')
         if zone and not isinstance(zone,dict):
             raise ValueError('本局区域配置需要对象。')

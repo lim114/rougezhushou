@@ -6,6 +6,9 @@ from functools import lru_cache
 from .operator_recognition import center
 from .anchors import units
 
+# Fixed current CN topic bee3f83: NORMAL has grades 0 through 16. Recognition
+# eligibility is separate from an individual calculator's versioned profiles.
+NORMAL_GRADES=range(17)
 @lru_cache(maxsize=1)
 def config_data():
     return json.loads((Path(__file__).with_name('data')/'run-config.json').read_text(encoding='utf-8'))
@@ -14,7 +17,7 @@ def difficulty_value(record):
     if not isinstance(record,dict) or any(record.get(field,'NORMAL')!='NORMAL'
             for field in ('modeDifficulty','mode')):return None
     grade=record.get('value')
-    return grade if type(grade) is int and str(grade) in config_data()['difficulties'] else None
+    return grade if type(grade) is int and grade in NORMAL_GRADES else None
 
 
 def confirmed_config(run_context):
@@ -54,9 +57,10 @@ def read_config(image,texts,held,*,engine=None,known_config=None):
     candidates=[]
     if label:
         x,y=center(label);ux,uy=units(image,label,35.2)
+        grade_labels={str(grade)for grade in NORMAL_GRADES}
         candidates=[t for t in texts if t['confidence']>=.95 and re.fullmatch(r'\d{1,2}',t['text'])
                     and .025*ux<center(t)[0]-x<.16*ux and abs(center(t)[1]-y)<.065*uy
-                    and t['text'] in data['difficulties']]
+                    and t['text'] in grade_labels]
     if len(candidates)==1:
         result['difficulty']={'value':int(candidates[0]['text']),'source':'本局信息面板保密等级标签及相邻数字'}
     names={s['name'] for s in data['squads'].values()}

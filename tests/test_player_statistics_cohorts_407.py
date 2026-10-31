@@ -15,7 +15,7 @@ class CohortTests(unittest.TestCase):
         self.assertEqual([r['state']['id']for r in select_cohort(rows,squad='rogue_6_band_1')],['a','b']);self.assertEqual(rows,before)
         self.assertIn('不表示效果完全相同',cohort_note(None,None))
     def test_unread_missing_or_unverified_config_are_separate_from_zero(self):
-        rows=[record('zero',0),record('missing'),record('invalid',True),record('outside',16)]
+        rows=[record('zero',0),record('missing'),record('invalid',True),record('outside',17)]
         self.assertEqual([r['state']['id']for r in select_cohort(rows,difficulty=0)],['zero'])
         self.assertEqual([r['state']['id']for r in select_cohort(rows,difficulty=UNREAD)],['missing','invalid','outside'])
         self.assertEqual(select_cohort(rows,difficulty=True),[])

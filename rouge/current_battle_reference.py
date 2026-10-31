@@ -116,8 +116,9 @@ def stage_reference(stage_id):
         'image':deepcopy(ref['version']['images']['images'].get(stage_id)),
         'source':deepcopy(ref['selection']['original_sources'][key]),'numeric_environment_migrated':False,
         'map_projection_verified':False,'actual_server_verified':False,
-        'difficulty_reference':{str(row['grade']):{k:row[k]for k in('grade','modeDifficulty','bossValue','ruleDesc')}
-            for row in ref['version']['current']['details']['difficulties']if row['modeDifficulty']=='NORMAL'}}
+        'difficulty_reference':{str(row['grade']):{k:row[k]for k in('grade','modeDifficulty','bossValue','ruleDesc','addDesc')}
+            for row in ref['version']['current']['details']['difficulties']if row['modeDifficulty']=='NORMAL'},
+        'difficulty_source':deepcopy(next(row for row in ref['version']['source']['records']if row.get('role')=='current'))}
 
 
 def number(value):

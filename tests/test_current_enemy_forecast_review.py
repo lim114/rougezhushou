@@ -54,7 +54,7 @@ class CurrentEnemyForecastReviewTests(unittest.TestCase):
         self.assertTrue(all(r['environment_component']is None for r in forecasts(changed,self.config()).values()))
 
     def test_unknown_grade_new_grade_and_missing_depth_retain_their_uncertainty(self):
-        for config in(self.config(16),{'difficulty':{'value':15,'mode':'OTHER'}}):
+        for config in(self.config(17),{'difficulty':{'value':15,'mode':'OTHER'}}):
             rows=forecasts(self.stage,config)
             self.assertTrue(all(r['environment_component']is None and r['pending']for r in rows.values()))
         rows=forecasts(self.stage,{'difficulty':{'value':15}})
