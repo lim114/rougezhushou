@@ -8,6 +8,7 @@ from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
 from .reference_image import ReferenceImage
+from .battle_enemy_readers import close_reader, sync_reader, open_reader
 
 
 class CurrentBattlePanel(QWidget):
@@ -486,94 +487,31 @@ class CurrentBattlePanel(QWidget):
         self.position_dialog.show();return True
 
     def _close_hanko(self):
-        child=getattr(self,'hanko_dialog',None)
-        if child is not None:
-            child.panel.clear_reference();child.close()
+        close_reader(self,'hanko')
 
     def _sync_hanko(self,keep):
-        from . import current_hanko as reader
-        available=self.result is not None and self.enemy_key is not None and bool(reader.target_available(self.stage_id,self.enemy_key))
-        self.hanko_button.setVisible(available);self.hanko_button.setEnabled(available)
-        child=getattr(self,'hanko_dialog',None)
-        if child is not None and child.isVisible():
-            if not keep:self._close_hanko()
-            elif not available:child.panel.clear_reference()
-            else:child.panel.refresh_reference()
+        sync_reader(self,'hanko',keep)
 
     def open_hanko(self):
-        if self.result is None or self.enemy_key is None:return False
-        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
-        from . import current_hanko as reader
-        if not reader.target_available(self.stage_id,self.enemy_key):
-            self._close_hanko();self.hanko_button.hide();return False
-        from .current_hanko_view import CurrentHankoDialog
-        self._close_hanko();self.hanko_dialog=CurrentHankoDialog(self.stage_id,self.enemy_key,self)
-        if self.hanko_dialog.panel.result is None:self._close_hanko();return False
-        self.hanko_dialog.show();return True
+        return open_reader(self,'hanko')
 
     def _close_elbert(self):
-        child=getattr(self,'elbert_dialog',None)
-        if child is not None:
-            child.panel.clear_reference();child.close()
+        close_reader(self,'elbert')
 
     def _sync_elbert(self,keep):
-        from . import current_elbert_reference as reader
-        available=self.result is not None and self.enemy_key is not None and bool(reader.locate(self.stage_id,self.enemy_key) is not None)
-        self.elbert_button.setVisible(available);self.elbert_button.setEnabled(available)
-        child=getattr(self,'elbert_dialog',None)
-        if child is not None and child.isVisible():
-            if not keep:self._close_elbert()
-            elif not available:child.panel.clear_reference()
-            else:
-                child.panel.refresh_reference()
-                child_result=child.panel.base
-                if child_result is not None and child_result.get('battle_source_identity')!=self.result['source_identity']:
-                    self._close_elbert()
+        sync_reader(self,'elbert',keep)
 
     def open_elbert(self):
-        if self.result is None or self.enemy_key is None:return False
-        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
-        from . import current_elbert_reference as reader
-        if not reader.locate(self.stage_id,self.enemy_key) is not None:
-            self._close_elbert();self.elbert_button.hide();return False
-        from .current_elbert_view import CurrentElbertDialog
-        self._close_elbert();self.elbert_dialog=CurrentElbertDialog(self.stage_id,self.enemy_key,self)
-        child_result=self.elbert_dialog.panel.result
-        if child_result is None or child_result.get('battle_source_identity')!=self.result['source_identity']:
-            self._close_elbert();return False
-        self.elbert_dialog.show();return True
+        return open_reader(self,'elbert')
 
     def _close_sun_boss(self):
-        child=getattr(self,'sun_boss_dialog',None)
-        if child is not None:
-            child.panel.clear_reference();child.close()
+        close_reader(self,'sun_boss')
 
     def _sync_sun_boss(self,keep):
-        from . import current_sun_boss as reader
-        available=self.result is not None and self.enemy_key is not None and bool(reader.target_available(self.stage_id,self.enemy_key))
-        self.sun_boss_button.setVisible(available);self.sun_boss_button.setEnabled(available)
-        child=getattr(self,'sun_boss_dialog',None)
-        if child is not None and child.isVisible():
-            if not keep:self._close_sun_boss()
-            elif not available:child.panel.clear_reference()
-            else:
-                child.panel.refresh_reference()
-                child_result=child.panel.result
-                if child_result is not None and child_result.get('battle_source_identity')!=self.result['source_identity']:
-                    self._close_sun_boss()
+        sync_reader(self,'sun_boss',keep)
 
     def open_sun_boss(self):
-        if self.result is None or self.enemy_key is None:return False
-        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
-        from . import current_sun_boss as reader
-        if not reader.target_available(self.stage_id,self.enemy_key):
-            self._close_sun_boss();self.sun_boss_button.hide();return False
-        from .current_sun_boss_view import CurrentSunBossDialog
-        self._close_sun_boss();self.sun_boss_dialog=CurrentSunBossDialog(self.stage_id,self.enemy_key,self)
-        child_result=self.sun_boss_dialog.panel.result
-        if child_result is None or child_result.get('battle_source_identity')!=self.result['source_identity']:
-            self._close_sun_boss();return False
-        self.sun_boss_dialog.show();return True
+        return open_reader(self,'sun_boss')
 
     def _boss_documents_enemy_requested(self,key):
         dialog=getattr(self,'boss_documents_dialog',None)
@@ -596,121 +534,40 @@ class CurrentBattlePanel(QWidget):
         return selected
 
     def _close_boss_documents(self):
-        child=getattr(self,'boss_documents_dialog',None)
-        if child is not None:
-            child.panel.clear_reference();child.close()
+        close_reader(self,'boss_documents')
 
     def _sync_boss_documents(self,keep):
-        from . import current_boss_documents as reader
-        available=self.result is not None and self.enemy_key is not None and bool(reader.target_available(self.stage_id,self.enemy_key))
-        self.boss_documents_button.setVisible(available);self.boss_documents_button.setEnabled(available)
-        child=getattr(self,'boss_documents_dialog',None)
-        if child is not None and child.isVisible():
-            if not keep:self._close_boss_documents()
-            elif not available:child.panel.clear_reference()
-            else:
-                child.panel.refresh_reference()
-                child_result=child.panel.result
-                if child_result is not None and child_result.get('battle_source_identity')!=self.result['source_identity']:
-                    self._close_boss_documents()
+        sync_reader(self,'boss_documents',keep)
 
     def open_boss_documents(self):
-        if self.result is None or self.enemy_key is None:return False
-        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
-        from . import current_boss_documents as reader
-        if not reader.target_available(self.stage_id,self.enemy_key):
-            self._close_boss_documents();self.boss_documents_button.hide();return False
-        from .current_boss_documents_view import CurrentBossDocumentsDialog
-        self._close_boss_documents();self.boss_documents_dialog=CurrentBossDocumentsDialog(self.stage_id,self.enemy_key,self)
-        child_result=self.boss_documents_dialog.panel.result
-        if child_result is None or child_result.get('battle_source_identity')!=self.result['source_identity']:
-            self._close_boss_documents();return False
-        self.boss_documents_dialog.panel.enemy_requested.connect(self._boss_documents_enemy_requested)
-        self.boss_documents_dialog.show();return True
+        return open_reader(self,'boss_documents')
 
     def _close_guest_knights(self):
-        child=getattr(self,'guest_knights_dialog',None)
-        if child is not None:child.panel.clear_reference();child.close()
+        close_reader(self,'guest_knights')
 
     def _sync_guest_knights(self,keep):
-        from . import current_guest_knights as reader
-        available=self.result is not None and self.enemy_key is not None and reader.target_available(self.stage_id,self.enemy_key)
-        self.guest_knights_button.setVisible(available);self.guest_knights_button.setEnabled(available)
-        child=getattr(self,'guest_knights_dialog',None)
-        if child is not None and child.isVisible():
-            if not keep:self._close_guest_knights()
-            elif not available:child.panel.clear_reference()
-            else:
-                child.panel.refresh_reference()
-                result=child.panel.result
-                if result is not None and result.get('battle_source_identity')!=self.result['source_identity']:self._close_guest_knights()
+        sync_reader(self,'guest_knights',keep)
 
     def open_guest_knights(self):
-        if self.result is None or self.enemy_key is None:return False
-        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
-        from . import current_guest_knights as reader
-        if not reader.target_available(self.stage_id,self.enemy_key):self._close_guest_knights();self.guest_knights_button.hide();return False
-        from .current_guest_knights_view import CurrentGuestKnightsDialog
-        self._close_guest_knights();self.guest_knights_dialog=CurrentGuestKnightsDialog(self.stage_id,self.enemy_key,self)
-        result=self.guest_knights_dialog.panel.result
-        if result is None or result.get('battle_source_identity')!=self.result['source_identity']:self._close_guest_knights();return False
-        self.guest_knights_dialog.show();return True
+        return open_reader(self,'guest_knights')
 
     def _close_guest_crystals(self):
-        child=getattr(self,'guest_crystals_dialog',None)
-        if child is not None:child.panel.clear_reference();child.close()
+        close_reader(self,'guest_crystals')
 
     def _sync_guest_crystals(self,keep):
-        from . import current_guest_crystals as reader
-        available=self.result is not None and self.enemy_key is not None and reader.target_available(self.stage_id,self.enemy_key)
-        self.guest_crystals_button.setVisible(available);self.guest_crystals_button.setEnabled(available)
-        child=getattr(self,'guest_crystals_dialog',None)
-        if child is not None and child.isVisible():
-            if not keep:self._close_guest_crystals()
-            elif not available:child.panel.clear_reference()
-            else:
-                child.panel.refresh_reference()
-                result=child.panel.result
-                if result is not None and result.get('battle_source_identity')!=self.result['source_identity']:self._close_guest_crystals()
+        sync_reader(self,'guest_crystals',keep)
 
     def open_guest_crystals(self):
-        if self.result is None or self.enemy_key is None:return False
-        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
-        from . import current_guest_crystals as reader
-        if not reader.target_available(self.stage_id,self.enemy_key):self._close_guest_crystals();self.guest_crystals_button.hide();return False
-        from .current_guest_crystals_view import CurrentGuestCrystalsDialog
-        self._close_guest_crystals();self.guest_crystals_dialog=CurrentGuestCrystalsDialog(self.stage_id,self.enemy_key,self)
-        result=self.guest_crystals_dialog.panel.result
-        if result is None or result.get('battle_source_identity')!=self.result['source_identity']:self._close_guest_crystals();return False
-        self.guest_crystals_dialog.show();return True
+        return open_reader(self,'guest_crystals')
 
     def _close_guest_material(self):
-        child=getattr(self,'guest_material_dialog',None)
-        if child is not None:child.panel.clear_reference();child.close()
+        close_reader(self,'guest_material')
 
     def _sync_guest_material(self,keep):
-        from . import current_guest_material as reader
-        available=self.result is not None and self.enemy_key is not None and reader.target_available(self.stage_id,self.enemy_key)
-        self.guest_material_button.setVisible(available);self.guest_material_button.setEnabled(available)
-        child=getattr(self,'guest_material_dialog',None)
-        if child is not None and child.isVisible():
-            if not keep:self._close_guest_material()
-            elif not available:child.panel.clear_reference()
-            else:
-                child.panel.refresh_reference()
-                result=child.panel.result
-                if result is not None and result.get('battle_source_identity')!=self.result['source_identity']:self._close_guest_material()
+        sync_reader(self,'guest_material',keep)
 
     def open_guest_material(self):
-        if self.result is None or self.enemy_key is None:return False
-        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
-        from . import current_guest_material as reader
-        if not reader.target_available(self.stage_id,self.enemy_key):self._close_guest_material();self.guest_material_button.hide();return False
-        from .current_guest_material_view import CurrentGuestMaterialDialog
-        self._close_guest_material();self.guest_material_dialog=CurrentGuestMaterialDialog(self.stage_id,self.enemy_key,self)
-        result=self.guest_material_dialog.panel.result
-        if result is None or result.get('battle_source_identity')!=self.result['source_identity']:self._close_guest_material();return False
-        self.guest_material_dialog.show();return True
+        return open_reader(self,'guest_material')
 
     def _close_event_origins(self):
         dialog=getattr(self,'event_origins_dialog',None)
