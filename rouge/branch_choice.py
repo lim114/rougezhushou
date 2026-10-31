@@ -1,8 +1,25 @@
 """A selectable category branch and its own filtered item choices."""
-from PySide6.QtCore import QSize
-from PySide6.QtWidgets import QWidget,QHBoxLayout,QComboBox
+from PySide6.QtCore import QSize,QRect
+from PySide6.QtWidgets import QWidget,QFormLayout,QComboBox,QStyle,QStyleOptionComboBox
 
 OVERVIEW='__overview__'
+
+
+class CategoryCombo(QComboBox):
+    """Include the active style's arrow/padding in the full category width."""
+    def sizeHint(self):
+        size=super().sizeHint();option=QStyleOptionComboBox();self.initStyleOption(option)
+        option.rect=QRect(0,0,size.width(),size.height())
+        field=self.style().subControlRect(QStyle.ComplexControl.CC_ComboBox,option,
+                                         QStyle.SubControl.SC_ComboBoxEditField,self)
+        needed=max((self.fontMetrics().horizontalAdvance(self.itemText(i))+
+                    (self.iconSize().width()+4 if not self.itemIcon(i).isNull() else 0)
+                    for i in range(self.count())),default=0)
+        # Qt 6.11 QCommonStyle draws noneditable text inside an additional
+        # two-pixel margin on each side of SC_ComboBoxEditField.
+        return QSize(size.width()+max(0,needed+4-field.width()),size.height())
+
+    def minimumSizeHint(self):return self.sizeHint()
 
 
 class BranchChoice(QWidget):
@@ -13,12 +30,15 @@ class BranchChoice(QWidget):
         self.notify_unchanged=notify_unchanged
         self.branch_icons=branch_icons or {}
         self.keep_empty_groups=keep_empty_groups
-        self.branch=QComboBox();self.branch.setAccessibleName(overview_label+'；选择分类分支')
-        self.branch.setIconSize(QSize(26,26))
-        self.branch.setMinimumContentsLength(7)
+        self.branch=CategoryCombo();self.branch.setAccessibleName(overview_label+'；选择分类分支')
+        self.branch.setIconSize(QSize(28,28))
         self.branch.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
-        layout=QHBoxLayout(self);layout.setContentsMargins(0,0,0,0)
-        layout.addWidget(self.branch);layout.addWidget(combo,1)
+        combo.setMinimumContentsLength(12)
+        combo.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
+        layout=QFormLayout(self);layout.setContentsMargins(0,0,0,0)
+        layout.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
+        layout.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
+        layout.addRow(self.branch,combo)
         combo.setIconSize(QSize(28,28));combo.setMaxVisibleItems(24)
         self.set_groups(groups,emit=False)
         self.branch.currentIndexChanged.connect(self._branch_changed)

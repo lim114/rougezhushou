@@ -550,6 +550,8 @@ ADDITIONAL_MODULES += ('tests.test_runtime_reference_review',)
 
 ADDITIONAL_MODULES += ('tests.test_remaining_runtime_guards',)
 
+ADDITIONAL_MODULES += ('tests.test_branch_layout_review',)
+
 if __name__ == '__main__':
     sys.exit(main())
 
