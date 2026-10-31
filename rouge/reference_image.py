@@ -1,5 +1,5 @@
 """Shared fixed-map thumbnail; keep the original pixels for every resize."""
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt,QEvent
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QLabel, QSizePolicy
 
@@ -25,9 +25,15 @@ class ReferenceImage(QLabel):
 
     def _fit(self):
         if not self.original.isNull():
-            self.setPixmap(self.original.scaled(self.contentsRect().size(),
-                Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
+            ratio=self.devicePixelRatioF();pixmap=self.original.scaled(self.contentsRect().size()*ratio,
+                Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+            pixmap.setDevicePixelRatio(ratio);self.setPixmap(pixmap)
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
         self._fit()
+
+    def event(self,event):
+        handled=super().event(event)
+        if event.type()==QEvent.Type.DevicePixelRatioChange:self._fit()
+        return handled

@@ -1,10 +1,10 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 446,
-  "next_section": 447,
-  "current_section_label": "第446节 + 重复热水壶件数、合并与图文卡片切换",
-  "current_completed_change": "完整已确认栏保留重复热水壶物理件数；只合并热水壶并保持来源与选择。四类物品支持图文效果卡/图标网格切换，窄窗页脚换行。",
+  "completed_sections": 447,
+  "next_section": 448,
+  "current_section_label": "第447节 + 深色横向统计卡、最近归档范围与自适应预览",
+  "current_completed_change": "外部MIT布局移植的深色横向统计卡、筛选后最近归档范围、准确藏品图标、缩放预览/独立放大和原尺寸手动图片；放大跟随与高DPI修正。",
   "batch_status": "IMPLEMENTATION_REVIEW_ACTIVE",
   "next_full_validation_after": 455,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
@@ -16,7 +16,7 @@
   "current_batch_target_section": null,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "005daf266d2331d1b93c6bc25e827255fc62b1ef028db2428bb48fe30fd2ba33",
+    "sha256": "b9426850b759472d31bf2223c8461c772022d2b89732a19c027a18ad37568c55",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2683,34 +2683,22 @@
       "completion_ref": "player-section-446",
       "topic": "重复热水壶件数、合并与图文卡片切换",
       "verification": "verification/sections/446.json"
+    },
+    {
+      "number": 447,
+      "completion_ref": "player-section-447",
+      "topic": "深色横向统计卡、最近归档范围与自适应预览",
+      "verification": "verification/sections/447.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "70d9f3fc207e2984ed91ecd996a0a96cce8bdcb1a4076f6256e8b6d2c4a825e4",
-    "PROJECT_PROGRESS.md": "a2ec0251efbc414f8dc4c7b74b34531ac88b942c070d530e2ef75ce7579bdbbf",
-    "WORK_IN_PROGRESS.md": "83e5c83ddaf7a575837fc957f810850b77b3ce748d5d578d06e523c3fff8a53e",
-    "PROJECT_COMPLETED.md": "6159fa981cebafcf904fba3bb202e6990d2d47450a33d6a205420fd14e2bdea6",
+    "DEVELOPMENT_CHECKPOINT.json": "58895983f7e8d27f17ba055221d2845f99db18ba2ed7c9ba3d6fb7ca50ef5e58",
+    "PROJECT_PROGRESS.md": "a8b9794989cf68ed89c7feeda3b469bea83e94f6c4f4abc83520b8b0d9d9bba9",
+    "WORK_IN_PROGRESS.md": "bc31e7cbae0ba821a9961bfbbb9813905e939c86d195fb419b4aeb3145ea79c7",
+    "PROJECT_COMPLETED.md": "80766898235a4590a0848dbbaa64ae7c56dceb88c8c9d0ee77f810aa24b83f8f",
     "AGENTS.md": "c96a3676649e08d3c6693ba31ebb3fbf9ee3add5758badf7c0ac4960101fe22f",
-    "PROJECT_REQUIREMENTS.md": "005daf266d2331d1b93c6bc25e827255fc62b1ef028db2428bb48fe30fd2ba33",
-    "verification/sections/446.json": "d9df3dcdf3f5a1a360b4374100ec53ff650fdb15430079bfa71c3f137b6df0ab"
+    "PROJECT_REQUIREMENTS.md": "b9426850b759472d31bf2223c8461c772022d2b89732a19c027a18ad37568c55",
+    "verification/sections/447.json": "76f7d8e64cefb11ef5b7ec48b005c5330285e6886b8e102448cf89276158abf7"
   },
-  "private_state_included": false,
-  "current_maintenance": {
-    "kind": "implementation_maintenance",
-    "title": "历史窗口实际比例、统计结果前置与重复藏品样本修正",
-    "receipt": "verification/maintenance/history-geometry-20261101/summary.json",
-    "binding": "enclosing_commit",
-    "functional_section_added": false,
-    "status": "listed_scope_passed_video_presentation_card_pending",
-    "review_checklist": "PROGRAM_REVIEW.md",
-    "review_checklist_sha256": "1cacb3646ed296082be3d3167812f83eacb89298865606ba56f57cfd9a22ef1e",
-    "application_review_complete": false,
-    "verified_publication": {
-      "proof": "verification/maintenance/history-geometry-20261101/publication.json",
-      "proof_sha256": "3e8d75b5ef0319ea84f785141a4e641f7a18a1f25922ec5c1705891721aa757b",
-      "commit": "cd7824d2afd15d71eed644b8e7e04cc50241fdd1",
-      "binding": "verified_remote_commit"
-    },
-    "receipt_sha256": "fd76b8c251b91e2690762bdde0dbc5bf36854f8acfc83f7f81d5ce00edc11b14"
-  }
+  "private_state_included": false
 }

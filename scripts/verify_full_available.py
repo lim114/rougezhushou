@@ -622,5 +622,7 @@ ADDITIONAL_MODULES += ('tests.test_notes_history_layout_review',)
 
 ADDITIONAL_MODULES += ('tests.test_history_statistics_layout_review',)
 
+ADDITIONAL_MODULES += ('tests.test_presentation_card_447',)
+
 if __name__ == '__main__':
     sys.exit(main())

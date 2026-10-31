@@ -1,5 +1,8 @@
 """Small, focused acceptance extensions for the player interface batch."""
 def check(section,window,gui,require):
+    if section==447:
+        from .player_statistics_card_acceptance import check_presentation
+        return check_presentation(window,gui,require)
     if section==446:
         from .player_item_acceptance import check_inventory_modes
         return check_inventory_modes(window,gui,require)

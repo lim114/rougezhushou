@@ -56,6 +56,7 @@ class GameWindowBinding(QObject):
         c=self.companion
         values=[c]+[getattr(c,name,None)for name in ('active_popup','inventory_popup','map_popup','overview_popup','settings_popup','recent_notes_popup','scene_popup','team_popup','exchange_popup','replay_popup','note_library')]
         values+=[getattr(self.owner,name,None)for name in ('player_notes','public_archive','public_statistics')]
+        if c.replay_popup is not None:values.append(c.replay_popup.panel.statistics.card_controls.viewer)
         return list(dict.fromkeys(w for w in values if w is not None))
     def set_enabled(self,value):
         self.enabled=bool(value);self.previous=None

@@ -1,0 +1,81 @@
+{
+  "section": 447,
+  "kind": "functional_section",
+  "title": "深色横向统计卡、最近归档范围与自适应预览",
+  "new_capability": "外部MIT布局移植的深色横向统计卡、筛选后最近归档范围、准确藏品图标、缩放预览/独立放大和原尺寸手动图片；放大跟随与高DPI修正。",
+  "limitations": "头像/昵称、组合、评分/实托邦/完整结算与真实游戏跨屏、其余视频/P3/P2/P1仍未完成。不是原视频源码，未接入上游完整渲染器。",
+  "necessary_validation": [
+    {
+      "receipt": "verification/sections/447-presentation-card/related-release/process.json",
+      "sha256": "4f9dd84e6070ee52ef1848708b95178738fc8d954d9964183f5ddf21dab88782",
+      "bytes": 68
+    },
+    {
+      "receipt": "verification/sections/447-presentation-card/binding-regression/process.json",
+      "sha256": "d15e765b701567b50b42ab504dca9f62201450382ad95896c4abfd9471999030",
+      "bytes": 68
+    }
+  ],
+  "unit_tests_run": 60,
+  "unit_test_scopes": [
+    56,
+    4
+  ],
+  "native_windows_scopes": {
+    "native-release2": {
+      "receipt": "verification/sections/447-presentation-card/native-release2/window.json",
+      "unique_checks": 54
+    },
+    "legacy-release-406": {
+      "receipt": "verification/sections/447-presentation-card/legacy-release-406/window.json",
+      "unique_checks": 19
+    },
+    "legacy-release-408": {
+      "receipt": "verification/sections/447-presentation-card/legacy-release-408/window.json",
+      "unique_checks": 24
+    },
+    "legacy-release-416": {
+      "receipt": "verification/sections/447-presentation-card/legacy-release-416/window.json",
+      "unique_checks": 22
+    },
+    "legacy-release-432": {
+      "receipt": "verification/sections/447-presentation-card/legacy-release-432/window.json",
+      "unique_checks": 19
+    }
+  },
+  "density_matrix": {
+    "receipt": "verification/sections/447-presentation-card/density-matrix/summary.json",
+    "sha256": "5a88f089e102dfbc6dcc1c5fde2c3866019b811fdced761b2c6101004a48c874",
+    "bytes": 612
+  },
+  "actual_local_test_window": {
+    "receipt": "verification/sections/447-presentation-card/live-window/window.json",
+    "sha256": "c3244cfa0074b63ed77fedd95dbf5c1adda70add8234a412776f4971fbf44c7d",
+    "bytes": 200994
+  },
+  "source_review": {
+    "receipt": "verification/sections/447-presentation-card/source-review.json",
+    "sha256": "a2f81e1e153d0c48c6b8ed884452d159253d8229286fc96d1aac8902f3def9f8",
+    "bytes": 3408
+  },
+  "source_sha256": {
+    "rouge/player_statistics_card.py": "2627f01aac7d3a0391fd9d68bd1f5566d3da148cd22ef2da4cc3e3b5f4290083",
+    "rouge/player_game_binding.py": "799a2e5d48cc9f59904c4457959d7147d2170a833dceb6d659ec977af9859572",
+    "rouge/reference_image.py": "96fe588622cd6da8b0dc1856616dace8dddf59f657d56de2dcf8225c57e6ec1b",
+    "rouge/player_acceptance.py": "6cc5b29f2a212b619d8e20350d49f691271d5901d5c18d0182e9f12453a2dc7b",
+    "rouge/player_statistics_card_acceptance.py": "a423958953424af330d3fd2c40e3ef2d06ff59777c233788bd09e2429caa1904",
+    "scripts/verify_full_available.py": "b43834094ec22a8f2a8507f080e599ab1ac258dc0e6257634d7b29baaeef2d99",
+    "tests/test_presentation_card_447.py": "a9f177b29397881046792e2db8890072ab47528d536a8d919e0d130a426d0264",
+    "tests/test_battle_reader_review.py": "853f342dcd6345c46f4323b43f8419adf6587e429f7f9c797ccf982f50cd4410"
+  },
+  "external_evidence": {
+    "receipt": "research/presentation-card-20261101/evidence.json",
+    "sha256": "47de098e26024773ff78473b0373b23ba9845cbc88bbe2bf9a379a6d5f5df405",
+    "bytes": 2370
+  },
+  "full_suite_rerun": false,
+  "old_full440_proves_current_source": false,
+  "goal_active": true,
+  "whole_program_or_video_complete": false,
+  "at_UTC": "2026-10-31T23:04:51.555082+00:00"
+}

@@ -48,13 +48,18 @@ class ReaderReviewTests(unittest.TestCase):
             label.resize(width, height); self.qt.processEvents()
             pix = label.pixmap()
             self.assertFalse(pix.isNull())
-            self.assertLessEqual(pix.width(), label.contentsRect().width())
-            self.assertLessEqual(pix.height(), label.contentsRect().height())
+            ratio=label.devicePixelRatioF();self.assertEqual(pix.devicePixelRatioF(),ratio)
+            self.assertLessEqual(pix.deviceIndependentSize().width(), label.contentsRect().width()+.5/ratio)
+            self.assertLessEqual(pix.deviceIndependentSize().height(), label.contentsRect().height()+.5/ratio)
             self.assertAlmostEqual(pix.width()/pix.height(), 3, delta=.06)
             image = pix.toImage()
             self.assertEqual(image.pixelColor(0, image.height()//2), QColor('red'))
             self.assertEqual(image.pixelColor(image.width()-1, image.height()//2), QColor('blue'))
             self.assertEqual(label.original.cacheKey(), original)
+
+    def test_pixel_ratio_event_refits_from_full_source_at_actual_window_density(self):
+        from PySide6.QtCore import QEvent
+        label=ReferenceImage();self.addCleanup(label.close);label.set_data(image_bytes(),'未取得原图');label.resize(301,151);label.show();self.qt.processEvents();original=label.original.cacheKey();ratio=label.devicePixelRatioF();label.setPixmap(label.original.scaled(label.contentsRect().size(),Qt.AspectRatioMode.KeepAspectRatio));self.qt.sendEvent(label,QEvent(QEvent.Type.DevicePixelRatioChange));pix=label.pixmap();self.assertEqual(pix.devicePixelRatioF(),ratio);self.assertLessEqual(pix.deviceIndependentSize().width(),label.contentsRect().width()+.5/ratio);self.assertLessEqual(pix.deviceIndependentSize().height(),label.contentsRect().height()+.5/ratio);image=pix.toImage();self.assertEqual(image.pixelColor(0,image.height()//2),QColor('red'));self.assertEqual(image.pixelColor(image.width()-1,image.height()//2),QColor('blue'));self.assertEqual(label.original.cacheKey(),original)
 
     def test_source_loss_or_invalid_image_does_not_return_after_resize(self):
         label = ReferenceImage(); self.addCleanup(label.close); label.show()
