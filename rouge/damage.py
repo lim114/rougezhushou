@@ -27,15 +27,13 @@ def _skill_damage(scenario: dict) -> dict:
 
 
 def _skill_damage_base(scenario: dict) -> dict:
+    """Internal skill consumer; _prepare_damage owns skill/rank validation.
+
+    build_estimate reuses that same selection for its full-window calculation.
+    """
     scenario=dict(scenario)
     companion_is_bool=isinstance(scenario.get('companion_attack'),bool)
     profile=catalog()['operators'][scenario['operator']]
-    skill=scenario.get('skill')
-    rank=scenario.get('skill_rank',10)
-    if not isinstance(skill,int) or isinstance(skill,bool) or not 1<=skill<=len(profile['skills']):
-        raise ValueError('请选择该干员的有效技能。')
-    if not isinstance(rank,int) or isinstance(rank,bool) or not 1<=rank<=10:
-        raise ValueError('技能等级需要为1–10的整数。')
     for field in ('base_attack','enemy_defense','enemy_resistance','window_seconds','companion_attack'):
         if field not in scenario:continue
         value=float(scenario[field])
@@ -55,15 +53,8 @@ def _skill_damage_base(scenario: dict) -> dict:
     frost = scenario.get('operator') == 'silverash' and scenario.get('skill') == 2
     healing = scenario.get('operator') == 'kaltsit' and scenario.get('skill') in (1,3)
     utility=scenario.get('operator')=='silverash' and scenario.get('skill')==1
-    if not (mechanist or silver or bombard or shield or frost or healing or utility) and (scenario.get('operator') != 'kaltsit' or scenario.get('skill') != 2):
-        raise ValueError('This skill profile has not yet been implemented.')
     base_attack = float(scenario['base_attack'])
-    if not math.isfinite(base_attack) or base_attack < 0:
-        raise ValueError('Base attack must be finite and nonnegative.')
-    profile = catalog()['operators'][scenario['operator']]
     rank = int(scenario.get('skill_rank', 10))
-    if not 1 <= rank <= 10:
-        raise ValueError('技能等级需要在 1–10 之间（8/9/10 为专精一/二/三）。')
     skill_profile = profile['skills'][scenario['skill']-1]['levels'][rank-1]
     bb = skill_profile['values']
     attack_bonus = bb.get('atk', 0)

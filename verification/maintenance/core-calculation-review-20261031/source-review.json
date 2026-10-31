@@ -1,0 +1,104 @@
+{
+  "baseline_commit": "c23e8fb618932d6999c412feedb3c40b46c831b1",
+  "changed_source": [
+    {
+      "path": "rouge/damage.py",
+      "sha256": "fb3de5efa094c951f952f211cf24cce57c60ae95716bc7d021c7e668c7b40497",
+      "bytes": 30953
+    }
+  ],
+  "own_prior_source": {
+    "path": "research/core-calculation-review-20261031/before-damage.py",
+    "sha256": "4155f1534b15a40d726ca85ea5c2bc78f738c3fd74eab8f84fc807652a9e1f4f",
+    "bytes": 31724
+  },
+  "all_other_functions_and_phase_bounds_class_AST_unchanged": true,
+  "removed_private_statements": [
+    "skill = scenario.get('skill')",
+    "rank = scenario.get('skill_rank', 10)",
+    "if not isinstance(skill, int) or isinstance(skill, bool) or (not 1 <= skill <= len(profile['skills'])):\n    raise ValueError('请选择该干员的有效技能。')",
+    "if not isinstance(rank, int) or isinstance(rank, bool) or (not 1 <= rank <= 10):\n    raise ValueError('技能等级需要为1–10的整数。')",
+    "if not (mechanist or silver or bombard or shield or frost or healing or utility) and (scenario.get('operator') != 'kaltsit' or scenario.get('skill') != 2):\n    raise ValueError('This skill profile has not yet been implemented.')",
+    "if not math.isfinite(base_attack) or base_attack < 0:\n    raise ValueError('Base attack must be finite and nonnegative.')",
+    "profile = catalog()['operators'][scenario['operator']]",
+    "if not 1 <= rank <= 10:\n    raise ValueError('技能等级需要在 1–10 之间（8/9/10 为专精一/二/三）。')"
+  ],
+  "remaining_internal_body_AST_exactly_equal_after_added_docstring": true,
+  "removed_assignments": 3,
+  "removed_if_guards": 5,
+  "physical_lines_net_removed": 9,
+  "actual_static_internal_name_load_sites": [
+    {
+      "file": "rouge/damage.py",
+      "line": 11,
+      "name": "_skill_damage_base"
+    },
+    {
+      "file": "rouge/damage.py",
+      "line": 301,
+      "name": "_skill_damage"
+    },
+    {
+      "file": "rouge/damage.py",
+      "line": 302,
+      "name": "_skill_damage"
+    }
+  ],
+  "unchanged_models_state_UI_and_requirements": [
+    {
+      "path": "rouge/estimate.py",
+      "sha256": "d7a7aff356307a1279f6494f6729aad353d1a27e2bec7f0467f5e4b656c80ed3",
+      "bytes": 23955
+    },
+    {
+      "path": "rouge/relics.py",
+      "sha256": "bd78acde986988a3657f24c2abd204af957d6b930c67139f094293ab7ea9da22",
+      "bytes": 42221
+    },
+    {
+      "path": "rouge/relic_attributes.py",
+      "sha256": "9116f1fe75fd45b7bf6157b3ab4848edb643efd0936a99baf31ed6622ff51828",
+      "bytes": 3551
+    },
+    {
+      "path": "rouge/operator_engine.py",
+      "sha256": "c724dce00372cb4ca99716ad03a88c547c878087ea3265e89396944b15681a4c",
+      "bytes": 157746
+    },
+    {
+      "path": "rouge/run_modifiers.py",
+      "sha256": "185e9273d78af55c66cc85f7b6797a386350d65d2d47313a23b4ad76f277fe46",
+      "bytes": 6836
+    },
+    {
+      "path": "rouge/timing.py",
+      "sha256": "d160a2b60121004b410ae52249daf16f1d50eaddac3a84931c475ac2f9723cf6",
+      "bytes": 32177
+    },
+    {
+      "path": "rouge/reporting.py",
+      "sha256": "96ff8f874f52590acce3068530927d9cb27d7db48ce395cd2d743fe43ada264e",
+      "bytes": 137921
+    },
+    {
+      "path": "rouge/app.py",
+      "sha256": "b16410486890f6b3fc663d1f9c55ef7c8b0b2e754fd58f8f01fc50206f4d8c13",
+      "bytes": 161812
+    },
+    {
+      "path": "PROJECT_REQUIREMENTS.md",
+      "sha256": "109ffda0c69be72f82fb994987654ae38b2528153d3271b56d5bdb9aea6e9c93",
+      "bytes": 28399
+    }
+  ],
+  "boundary": "Public calculate_damage/_calculate_damage always call unchanged _prepare_damage. Only the three original operators use _skill_damage; full-window callback keeps the same prepared operator/skill/rank. Private helper is not a separate advertised input API. Numeric/count/active-skill gates remain, including companion boolean and original normalizations.",
+  "comparison_scope": "75 valid public scenarios over all9 initial-operator skills; 54 invalid skill/rank scenarios and8 numeric/active-condition scenarios keep original exception type/message. Tests compare complete result/report/unknowns, not only totals.",
+  "measured_workload_change": {
+    "scope": "catalog lookup calls through damage module binding for mechanist S1, complete result identical",
+    "before": 5,
+    "after": 3,
+    "runtime_speed_claimed": false
+  },
+  "not_proven": "No new independent mechanics/calibration, actual game clock, complete87-skill correctness, whole-program completion or video parity.",
+  "REA_scope": "Complete Python source directly reviewed per REA skill. No new REA invocation; previous actual toolbar/bridge evidence separate."
+}
