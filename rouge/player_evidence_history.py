@@ -86,6 +86,7 @@ class EvidenceHistoryPage(QWidget):
         super().__init__(parent)
         self.rows = []
         self.key = None
+        self.input_key = None
         body = QVBoxLayout(self)
         self.notice = QLabel('藏品、道具与队伍变化分别阅读；只有明确读取的事实，不猜奖励来源。')
         self.notice.setWordWrap(True)
@@ -105,9 +106,12 @@ class EvidenceHistoryPage(QWidget):
         self.tabs.currentChanged.connect(self.selected)
 
     def refresh(self, state):
-        rows = evidence_rows(state)
         from .expansion_reference import packet,_plain
         data=packet();items=data['current']['details']['items']if data else{}
+        input_key=repr((state.get('id'),state.get('history'),data['source_identity']if data else None))
+        if input_key==self.input_key:return
+        self.input_key=input_key
+        rows = evidence_rows(state)
         for row in rows:
             item=items.get(row['id'])or{}
             if row['kind']!='operator'and row['name']=='固定资料名称未核对'and _plain(item.get('name')):

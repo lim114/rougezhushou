@@ -4,17 +4,19 @@ import math
 from copy import deepcopy
 from .player_shop_hover import canonical
 
-def qualified(snapshot):
+def qualified(snapshot,*,items=None):
     from .expansion_reference import packet
     if not isinstance(snapshot,dict)or snapshot.get('source')!='fresh_shop_exact_names'or snapshot.get('complete')is not False:return None
-    public=packet()
-    if public is None:return None
+    if items is None:
+        public=packet()
+        if public is None:return None
+        items=public['current']['details']['items']
     rows=snapshot.get('items')
     if not isinstance(rows,list)or not rows:return None
     result=[];seen=set()
     for row in rows:
         if not isinstance(row,dict)or not isinstance(row.get('id'),str)or not isinstance(row.get('name'),str):return None
-        item=public['current']['details']['items'].get(row.get('id'))
+        item=items.get(row.get('id'))
         if not item or canonical(item['name'])!=canonical(row.get('name'))or row['id']in seen:return None
         seen.add(row['id']);result.append({'id':row['id'],'name':item['name']})
     return result
@@ -29,12 +31,19 @@ def remember(run,snapshot,expected_run,at):
 
 def recorded_shops(state):
     """Keep observation order; timestamps and the absence of an item prove no sale."""
-    result=[]
+    candidates=[]
     for position,row in enumerate(state.get('history',[])):
         if not isinstance(row,dict)or row.get('kind')!='shop_items_read':continue
         at=row.get('at')
         if type(at)not in(int,float)or not math.isfinite(at)or at<0:continue
-        items=qualified(row)
+        candidates.append((position,row))
+    if not candidates:return []
+    from .expansion_reference import packet
+    public=packet()
+    if public is None:return []
+    result=[]
+    for position,row in candidates:
+        items=qualified(row,items=public['current']['details']['items'])
         if items is not None:result.append((position,{**row,'items':items}))
     return result
 

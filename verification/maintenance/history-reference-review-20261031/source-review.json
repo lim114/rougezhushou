@@ -1,0 +1,75 @@
+{
+  "baseline_commit": "9b6c86649a884fb614d665048c13f08565e819e2",
+  "changed_source": [
+    {
+      "path": "rouge/player_replay.py",
+      "sha256": "16510a7742fc4ca89cf29b4c40c43b331e7c38a4eeac369c61dfc50e27cdcbd8",
+      "bytes": 12830
+    },
+    {
+      "path": "rouge/player_evidence_history.py",
+      "sha256": "5d128adc2f5c91a6203a358328c3cf73626f6aa35ef898af2236c3a7e9abd8c2",
+      "bytes": 7895
+    },
+    {
+      "path": "rouge/player_shop_memory.py",
+      "sha256": "06addbaaf1379c1b05ee5c1d93619a0fd67faf855c4395798df3d0bfed88556e",
+      "bytes": 9657
+    }
+  ],
+  "unchanged_source_and_requirements": [
+    {
+      "path": "rouge/expansion_reference.py",
+      "sha256": "ba32768618873ca8bb528e84400ffe74a70b2d603b27e439e63504d797552d22",
+      "bytes": 11873
+    },
+    {
+      "path": "rouge/player_history_store.py",
+      "sha256": "2198df351958d17800994cc440a89820823c36efe9627862a320fc4eaf4290e2",
+      "bytes": 5762
+    },
+    {
+      "path": "rouge/player_history_codec.py",
+      "sha256": "d944582d2d9a8e6a7c5a1a94cd276eb086b8f212499a2607abce3361be1d5b6f",
+      "bytes": 3030
+    },
+    {
+      "path": "rouge/player_replay_nodes.py",
+      "sha256": "f6b0b8f9a0de019c247300e58286cea1a3a86d91238063e197a8ccc0c9656909",
+      "bytes": 11960
+    },
+    {
+      "path": "rouge/player_replay_archive.py",
+      "sha256": "7e85c250b9df4048297cba92cc4e0caf97f94110de6837c2e52449c833374e46",
+      "bytes": 8363
+    },
+    {
+      "path": "rouge/run_state.py",
+      "sha256": "03b00619056771742ca53d8742e82d5efade8656c31da813d06997ca99fc47f7",
+      "bytes": 62212
+    },
+    {
+      "path": "rouge/damage.py",
+      "sha256": "fb3de5efa094c951f952f211cf24cce57c60ae95716bc7d021c7e668c7b40497",
+      "bytes": 30953
+    },
+    {
+      "path": "PROJECT_REQUIREMENTS.md",
+      "sha256": "109ffda0c69be72f82fb994987654ae38b2528153d3271b56d5bdb9aea6e9c93",
+      "bytes": 28399
+    }
+  ],
+  "existing_packet_source_hash_checks_retained": true,
+  "refactor": "Parent refresh always delegates source-dependent evidence/shop to their own local refresh guards, removing duplicate shop call sites. Evidence validates source each call but caches identical raw input before evidence projection; original projected-row guard still preserves objects for unrelated history appends. Shop history validates eligible entries against one coherent packet per invocation rather than loading a packet for each candidate.",
+  "measured_component_work": {
+    "source_reads_for_one_13_candidate_shop_fixture_before": 13,
+    "source_reads_after": 1,
+    "evidence_projection_calls_for_three_stable_parent_refreshes": 0,
+    "source_availability_still_checked": true
+  },
+  "end_to_end_performance_or_RSS_claimed": false,
+  "net_code_reduction_claimed": false,
+  "defensive_source_state_or_send_guards_removed": false,
+  "REA_scope": "Complete Python source and requested native Qt runtime review according to skill; no new REA call, old bytecode/CJS evidence separate.",
+  "remaining": "Other source-dependent readers, raw timeline details and all parent scheduling not exhaustively reviewed; full lifecycle/cross-screen, independent mechanisms and whole program/video remain."
+}

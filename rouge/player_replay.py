@@ -151,18 +151,17 @@ class ReplayPanel(QWidget):
         from .player_replay_archive import selected_state,refresh_cards
         refresh_cards(self)
         state = selected_state(self)
+        self.evidence.refresh(state)
+        self.shop.refresh(state)
         key = repr((state.get('id'),state.get('started_at'),state.get('history')))
         if key == self.key:
             self.snapshot=state
-            self.shop.refresh(state)
             if self.scene_popup is not None and self.scene_popup.isVisible():self.scene_popup.panel.refresh()
             return
         self.key = key
         self.nodes.refresh(state)
         self.resources.refresh(state)
         self.floor_resources.refresh(state)
-        self.evidence.refresh(state)
-        self.shop.refresh(state)
         changed_run = self.snapshot is not None and self.snapshot.get('id') != state.get('id')
         self.snapshot = state
         old = self.entries.currentItem()
