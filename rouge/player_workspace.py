@@ -45,19 +45,21 @@ class PlayerWorkspace(QTabWidget):
 
     def currentWidget(self):
         """Return the selected reader for callers that route exact content."""
-        if self.developer_tools and self.developer_dialog.isVisible():return self.developer_tabs.currentWidget()
+        if self.developer_dialog.isVisible():return self.developer_tabs.currentWidget()
         group=super().currentWidget()
         page=group.currentWidget() if isinstance(group,QTabWidget) else group
         return self.container_leaf.get(page,page)
 
-    def setCurrentWidget(self,page):
+    def setCurrentWidget(self,page,*,explicit_tool=False):
         original=page
         if page in self.aliases:
             page=self.aliases[page];self.container_leaf[page]=original
         if page in self.pages:
             group,_=self.pages[page]
             if group=='developer':
-                if not self.developer_tools:return False
+                if not self.developer_tools and not explicit_tool:return False
+                self.developer_tabs.tabBar().setVisible(self.developer_tools)
+                self.developer_dialog.setWindowTitle('开发核对工具'if self.developer_tools else'局外计算参考')
                 self.developer_tabs.setCurrentWidget(page);self.developer_dialog.show();self._announce();return True
             self.developer_dialog.hide()
             self.groups[group].setCurrentWidget(page)

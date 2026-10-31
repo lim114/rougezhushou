@@ -82,19 +82,19 @@ class MainWindow(QMainWindow):
         panel=self.offline_tools
         panel.family.setCurrentIndex(panel.family.findData('calibration'))
         panel.query.setCurrentIndex(panel.query.findData('barrier-ledger'))
-        self.centralWidget().setCurrentWidget(panel)
+        self.centralWidget().setCurrentWidget(panel,explicit_tool=True)
 
     def show_shield_grants(self):
         self.offline_tools.select_query('calibration','shield-grants')
-        self.centralWidget().setCurrentWidget(self.offline_tools)
+        self.centralWidget().setCurrentWidget(self.offline_tools,explicit_tool=True)
 
     def show_shield_inventory(self):
         self.offline_tools.select_query('calibration','shield-inventory')
-        self.centralWidget().setCurrentWidget(self.offline_tools)
+        self.centralWidget().setCurrentWidget(self.offline_tools,explicit_tool=True)
 
     def show_explosion_values(self):
         self.offline_tools.select_query('calibration','explosion-values')
-        self.centralWidget().setCurrentWidget(self.offline_tools)
+        self.centralWidget().setCurrentWidget(self.offline_tools,explicit_tool=True)
 
     def __init__(self, *, include_historical_route_diagnostics=False, diagnostic_layout=None):
         if diagnostic_layout is not None and type(diagnostic_layout) is not bool:
@@ -954,16 +954,18 @@ class MainWindow(QMainWindow):
         self.shield_breaks.setToolTip('本体与结构性原理的爆炸中，命中当前目标的总次数。用于条件估算，不自动推断弹药消耗。')
         self.barrier_ledger_button=QPushButton('打开有序入伤屏障账本（局外声明）')
         self.barrier_ledger_button.clicked.connect(self.show_barrier_ledger)
-        form.addRow('机械师 S2',self.barrier_ledger_button)
         self.shield_grant_button=QPushButton('初始屏障与藏品生命参考')
         self.shield_grant_button.clicked.connect(self.show_shield_grants)
-        form.addRow('机械师 S2',self.shield_grant_button)
         self.shield_inventory_button=QPushButton('按来源汇总屏障与溢出门（局外声明）')
         self.shield_inventory_button.clicked.connect(self.show_shield_inventory)
-        form.addRow('机械师 S2',self.shield_inventory_button)
         self.explosion_values_button=QPushButton('爆炸双分支定点计算（独立快照）')
         self.explosion_values_button.clicked.connect(self.show_explosion_values)
-        form.addRow('机械师 S2',self.explosion_values_button)
+        from .player_context import Fold
+        mechanism_tools=QWidget();mechanism_layout=QVBoxLayout(mechanism_tools)
+        for button in(self.barrier_ledger_button,self.shield_grant_button,self.shield_inventory_button,self.explosion_values_button):mechanism_layout.addWidget(button)
+        self.mechanist_reference_tools=Fold('技能机制资料（技术核对）',mechanism_tools)
+        self.mechanist_reference_tools.toggle.setToolTip('供核对机制与声明算例使用，需要原始字段；普通属性与技能结果可直接阅读下方中文报告。')
+        form.addRow(self.mechanist_reference_tools)
         self.shield_duration_known=QCheckBox('指定本次技能结束时间（含手动停止）')
         self.shield_duration=number(30,3600,2)
         self.shield_duration.setMinimum(.01)
@@ -1784,10 +1786,7 @@ class MainWindow(QMainWindow):
                     (self.fragile,op=='silverash' and skill==3),
                     (self.charge_count,op=='mechanist' and skill==3),
                     (self.shield_breaks,op=='mechanist' and skill==2),
-                    (self.barrier_ledger_button,op=='mechanist' and skill==2),
-                    (self.shield_grant_button,op=='mechanist' and skill==2),
-                    (self.shield_inventory_button,op=='mechanist' and skill==2),
-                    (self.explosion_values_button,op=='mechanist' and skill==2),
+                    (self.mechanist_reference_tools,op=='mechanist' and skill==2),
                     (self.shield_duration,op=='mechanist' and skill==2),
                     *[(w,op=='silverash' and skill==2) for w in (self.activation_count,self.companion_attack,self.stacks)]]
         for widget,visible in conditions:self.damage_form.setRowVisible(widget,visible)
@@ -1889,8 +1888,7 @@ class MainWindow(QMainWindow):
         if not hasattr(self,'damage_tools_fold'):return
         self.charge_timeline_button.setVisible(op=='mechanist'and skill==3)
         self.shield_timeline_button.setVisible(op=='mechanist'and skill==2)
-        for name in ('barrier_ledger_button','shield_grant_button','shield_inventory_button','explosion_values_button'):
-            self.damage_form.setRowVisible(getattr(self,name),op=='mechanist'and skill==2)
+        self.damage_form.setRowVisible(self.mechanist_reference_tools,op=='mechanist'and skill==2)
         tokens=bool(catalog()['operators'].get(op,{}).get('tokens'))
         self.token_comparison_button.setVisible(tokens);self.token_budget_button.setVisible(tokens)
 

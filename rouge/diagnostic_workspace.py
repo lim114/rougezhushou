@@ -66,7 +66,7 @@ class DiagnosticWorkspace(QTabWidget):
         # The old physical layout keeps the two actual readers separate.
         return None
 
-    def setCurrentWidget(self, page):
+    def setCurrentWidget(self, page, *, explicit_tool=False):
         if self.indexOf(page) < 0:
             return False
         super().setCurrentWidget(page)

@@ -588,6 +588,8 @@ ADDITIONAL_MODULES += ('tests.test_history_reference_review',)
 
 ADDITIONAL_MODULES += ('tests.test_calculation_context_review',)
 
+ADDITIONAL_MODULES += ('tests.test_player_tool_navigation_review',)
+
 if __name__ == '__main__':
     sys.exit(main())
 
