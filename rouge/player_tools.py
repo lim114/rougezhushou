@@ -27,13 +27,14 @@ class ToolsPanel(QWidget):
     def __init__(self,run,parent=None):
         super().__init__(parent);self.run=run;self.rows={};self.key=None;body=QVBoxLayout(self)
         bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('查找战术道具或效果');bar.addWidget(self.search)
-        self.held=QCheckBox('只看本局已确认持有');self.held.setChecked(True);bar.addWidget(self.held);body.addLayout(bar)
-        self.notice=QLabel();self.notice.setWordWrap(True);body.addWidget(self.notice)
+        self.held=QCheckBox('仅本局已读');self.held.setToolTip('只显示本局已确认持有的道具；未读到不代表没有。');self.held.setChecked(True);bar.addWidget(self.held);body.addLayout(bar)
+        self.summary=QLabel();self.summary.setWordWrap(True);body.addWidget(self.summary);self.notice=QLabel();self.notice.setWordWrap(True);body.addWidget(self.notice)
         self.entries=CatalogGrid();body.addWidget(self.entries,1)
-        self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.details_toggle,self.icon_scale=add_catalog_controls(body,self.entries,self.detail)
+        self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.details_toggle,self.icon_scale,self.scope=add_catalog_controls(body,self.entries,self.detail,notice=self.notice)
         self.search.textChanged.connect(self.refresh);self.held.toggled.connect(self.refresh);self.entries.currentItemChanged.connect(self.selected);self.refresh()
     def refresh(self,*_):
         rows=tool_rows(self.run.state,self.search.text(),self.held.isChecked());key=repr(rows)
+        self.summary.setText('道具资料暂不可用，旧列表已清除。'if rows is None else f'显示{len(rows)}件 · '+('本局已确认持有，未列出不代表没有'if self.held.isChecked()else'固定资料目录，不代表持有或当前可用'))
         self.notice.setText('道具资料暂时不可用，旧列表已清除；本局持有记录没有被重置。'if rows is None else f'显示{len(rows)}件战术道具。未列出不表示没有；资料不证明当前可用或本次已经生效。国服10月16日固定基准，当前完整覆盖仍待核验。')
         if key==self.key:return
         self.key=key;current=self.entries.currentItem();old=current.data(Qt.ItemDataRole.UserRole)if current else None;offset=self.entries.verticalScrollBar().value();self.rows={r['id']:r for r in rows or[]}

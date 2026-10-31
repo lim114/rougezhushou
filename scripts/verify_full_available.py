@@ -612,5 +612,7 @@ ADDITIONAL_MODULES += ('tests.test_player_theme_review',)
 
 ADDITIONAL_MODULES += ('tests.test_inventory_layout_review',)
 
+ADDITIONAL_MODULES += ('tests.test_catalogue_header_review',)
+
 if __name__ == '__main__':
     sys.exit(main())

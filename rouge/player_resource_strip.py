@@ -9,7 +9,7 @@ from .player_resource_facts import resource_rows
 class ResourceStrip(QWidget):
     requested = Signal(str)
 
-    def __init__(self, state=None, parent=None, *, dark=False):
+    def __init__(self, state=None, parent=None, *, dark=False, leading=()):
         super().__init__(parent)
         self.rows = []
         self.chips = {}
@@ -18,11 +18,17 @@ class ResourceStrip(QWidget):
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         self.flow = FlowLayout(self)
         self.flow.setSpacing(6)
+        self.leading=leading
+        for widget in leading:self.flow.addWidget(widget)
         background, foreground = ('#2d3235', '#edf0ee') if dark else ('#e5e6e9', '#44484c')
         self.foreground = foreground
         self.setStyleSheet(f'#runResourceStrip QLabel{{background:{background};color:{foreground};'
                           'border:0;border-radius:12px;padding:5px 9px;font-size:9pt;}}')
         self.refresh(state or {})
+
+    def resizeEvent(self,event):
+        for widget in self.leading:widget.setMaximumWidth(self.width())
+        super().resizeEvent(event)
 
     def refresh(self, state):
         self.set_rows(resource_rows(state))

@@ -1,7 +1,7 @@
 """Video-style floating toolbar, with persistent read-only panels opened on demand."""
 from PySide6.QtCore import Qt,QPoint
 from PySide6.QtGui import QRegion
-from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout,QLabel,QPushButton,QCheckBox,QToolButton,QApplication,QPlainTextEdit,QComboBox,QTabWidget,QScrollArea
+from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayout,QLabel,QPushButton,QCheckBox,QToolButton,QApplication,QPlainTextEdit,QComboBox,QTabWidget,QTabBar,QScrollArea
 from .player_overview import overview_facts
 from .player_context import recent_content
 
@@ -158,7 +158,14 @@ class CompactAssistant(QDialog):
         self.buttons['场景笔记'].setEnabled(True);self.setToolTip(self.context.text())
         if self.recent_notes_popup and self.recent_notes_popup.isVisible():self.recent_notes_popup.panel.refresh()
         if self.inventory_popup and self.inventory_popup.isVisible():
-            self.inventory_popup.resources.refresh(self.owner.run.state)
+            from .player_resource_facts import resource_rows,inventory_summary
+            rows=resource_rows(self.owner.run.state);facts={r['key']:r for r in rows};inventory=inventory_summary(self.owner.run.state);popup=self.inventory_popup
+            popup.resources.set_rows([r for r in rows if r['key']not in('items','parts','crew')])
+            popup.navigation.setTabText(0,'收藏品 '+(''if inventory['complete']else'已读')+str(inventory['relics']))
+            popup.navigation.setTabToolTip(0,facts['items']['note']);popup.navigation.setTabText(1,'道具 '+str(inventory['tools']))
+            popup.navigation.setTabToolTip(1,'本局已确认持有的战术道具；不代表当前可用。')
+            popup.navigation.setTabText(2,'零件箱 '+facts['parts']['value']);popup.navigation.setTabToolTip(2,facts['parts']['note']+'这是数量，不是库存成员名单。')
+            popup.crew_button.setText('干员 '+facts['crew']['value']);popup.crew_button.setToolTip(facts['crew']['note'])
             self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();self.inventory_popup.parts.refresh_exchange();self.inventory_popup.shop.refresh()
         for popup in (self.map_popup,self.scene_popup,self.team_popup,self.replay_popup):
             if popup and popup.isVisible():popup.panel.refresh()
@@ -233,13 +240,18 @@ class CompactAssistant(QDialog):
             pages.addTab(panel,'收藏品');pages.addTab(tools,'战术道具');pages.addTab(parts,'零件箱资料')
             from .player_shop_memory import ShopMemoryPanel
             shop=ShopMemoryPanel(self.owner.run,panel);pages.addTab(shop,'商店记录')
+            navigation=QTabBar();navigation.setExpanding(False);navigation.setDrawBase(False);navigation.setUsesScrollButtons(True);navigation.setElideMode(Qt.TextElideMode.ElideNone)
+            for i in range(pages.count()):navigation.addTab(pages.tabText(i))
+            navigation.currentChanged.connect(pages.setCurrentIndex);pages.currentChanged.connect(navigation.setCurrentIndex);pages.tabBar().hide()
+            crew_button=QPushButton('干员 未读');crew_button.clicked.connect(self.open_team)
             from .player_resource_strip import ResourceStrip
             bundle=QWidget();body=QVBoxLayout(bundle);body.setContentsMargins(0,0,0,0)
-            resources=ResourceStrip(self.owner.run.state,dark=True);resources.requested.connect(self.open_resource)
+            resources=ResourceStrip(self.owner.run.state,dark=True,leading=(navigation,crew_button));resources.requested.connect(self.open_resource)
             body.addWidget(pages,1)
             from .player_catalog_grid import INVENTORY_STYLE
             self.inventory_popup=ToolPopover('收藏品、战术道具与零件',bundle,self,on_show=self.refresh,theme='dark',extra_style=INVENTORY_STYLE,object_name='inventoryWindow')
             self.inventory_popup.title_label.hide();self.inventory_popup.header_bar.insertWidget(0,resources,1)
+            self.inventory_popup.navigation=navigation;self.inventory_popup.crew_button=crew_button
             self.inventory_popup.finished.connect(lambda _result:panel.hover_card.dismiss())
             self.inventory_popup.resources=resources
             self.inventory_popup.panel=panel;self.inventory_popup.pages=pages;self.inventory_popup.parts=parts;self.inventory_popup.tools=tools;self.inventory_popup.shop=shop

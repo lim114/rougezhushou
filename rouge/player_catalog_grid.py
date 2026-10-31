@@ -54,9 +54,15 @@ class CatalogGrid(QListWidget):
         size=max(48,min(104,int(size)));self.tile_icon=size
         self.setIconSize(QSize(size,size));self.setGridSize(QSize(max(92,size+28),size+60));self.doItemsLayout();self.viewport().update()
 
-def add_catalog_controls(body,grid,detail):
-    from PySide6.QtWidgets import QHBoxLayout,QLabel,QSlider,QPushButton
-    bar=QHBoxLayout();button=QPushButton('效果说明');button.setCheckable(True);button.toggled.connect(detail.setVisible);bar.addWidget(button);bar.addStretch();bar.addWidget(QLabel('图标大小'))
-    scale=QSlider(Qt.Orientation.Horizontal);scale.setRange(48,104);scale.setValue(72);scale.setMaximumWidth(180);scale.valueChanged.connect(grid.set_tile_size);bar.addWidget(scale);body.addLayout(bar);detail.hide()
+def add_catalog_controls(body,grid,detail,*,notice,actions=()):
+    from PySide6.QtWidgets import QHBoxLayout,QVBoxLayout,QWidget,QSplitter,QLabel,QSlider,QPushButton
+    position=body.indexOf(grid);body.removeWidget(grid);body.removeWidget(detail)
+    reader=QWidget();reading=QVBoxLayout(reader);reading.setContentsMargins(8,0,0,0);reading.addWidget(detail,1)
+    for action in actions:reading.addWidget(action)
+    split=QSplitter(Qt.Orientation.Horizontal);split.addWidget(grid);split.addWidget(reader);split.setSizes([700,320]);body.insertWidget(position,split,1)
+    body.setContentsMargins(8,4,8,4);body.setSpacing(5)
+    bar=QHBoxLayout();button=QPushButton('效果说明');button.setCheckable(True);button.toggled.connect(reader.setVisible);bar.addWidget(button)
+    scope=QPushButton('资料说明');scope.setCheckable(True);scope.toggled.connect(notice.setVisible);bar.addWidget(scope);notice.hide();bar.addStretch();bar.addWidget(QLabel('图标大小'))
+    scale=QSlider(Qt.Orientation.Horizontal);scale.setRange(48,104);scale.setValue(60);grid.set_tile_size(60);scale.setMaximumWidth(180);scale.valueChanged.connect(grid.set_tile_size);bar.addWidget(scale);body.addLayout(bar);reader.hide()
     grid.currentItemChanged.connect(lambda item:button.setChecked(item is not None))
-    return button,scale
+    return button,scale,scope

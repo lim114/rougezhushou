@@ -84,13 +84,13 @@ from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QComboBox,QListWidgetIt
 from .player_catalog_grid import CatalogGrid,add_catalog_controls
 class ShopMemoryPanel(QWidget):
     def __init__(self,run,source_panel=None):
-        super().__init__();self.run=run;self.source_panel=source_panel;self.signature=None;self.rows={};body=QVBoxLayout(self);self.notice=QLabel();self.notice.setWordWrap(True);body.addWidget(self.notice);self.snapshots=QComboBox();body.addWidget(self.snapshots)
+        super().__init__();self.run=run;self.source_panel=source_panel;self.signature=None;self.rows={};body=QVBoxLayout(self);self.summary=QLabel();self.summary.setWordWrap(True);body.addWidget(self.summary);self.notice=QLabel();self.notice.setWordWrap(True);body.addWidget(self.notice);self.snapshots=QComboBox();body.addWidget(self.snapshots)
         self.search=QLineEdit();self.search.setPlaceholderText('在这份已读清单中搜索商品');body.addWidget(self.search)
         self.comparison_toggle=QPushButton('展开前后清单对照');self.comparison_toggle.setCheckable(True);body.addWidget(self.comparison_toggle)
         self.comparison=QLabel();self.comparison.setWordWrap(True);body.addWidget(self.comparison);self.comparison.hide()
         self.comparison_toggle.toggled.connect(self.show_comparison)
-        self.entries=CatalogGrid();body.addWidget(self.entries,1);self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.details_toggle,self.icon_scale=add_catalog_controls(body,self.entries,self.detail)
-        self.source_button=QPushButton('查看所选商品的取得来源与历史统计');body.addWidget(self.source_button)
+        self.entries=CatalogGrid();body.addWidget(self.entries,1);self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1)
+        self.source_button=QPushButton('查看所选商品的取得来源与历史统计');self.details_toggle,self.icon_scale,self.scope=add_catalog_controls(body,self.entries,self.detail,notice=self.notice,actions=(self.source_button,))
         from .player_item_hover import ItemHoverCard
         self.source_card=ItemHoverCard(self)
         if source_panel is not None:self.source_card.poolRequested.connect(source_panel.openPoolReference)
@@ -113,6 +113,7 @@ class ShopMemoryPanel(QWidget):
     def show_snapshot(self,*_):
         from .expansion_reference import packet
         public=packet();row=self.rows.get(self.snapshots.currentData())or{};old=self.entries.currentItem();keep=old.data(Qt.ItemDataRole.UserRole)if old else None;self.entries.blockSignals(True);self.entries.clear();self.source_card.dismiss()
+        self.summary.setText(('记录尚未保存。'if self.run.save_issue else'')+('商品资料暂不可用，旧清单已清除。'if public is None else f'已读商品{len(row.get("items",[]))}件 · 不代表持有或当前仍在售'if row else'尚无本局商店记录'))
         comparison=compare_shops(list(self.rows.items()),self.snapshots.currentData());self.comparison.setText(comparison_text(comparison));query=self.search.text().strip().casefold()
         if public:
             for record in row.get('items',[]):
@@ -129,8 +130,9 @@ class ShopMemoryPanel(QWidget):
         snapshot=self.rows.get(self.snapshots.currentData())or{}
         record=next((r for r in snapshot.get('items',[])if r['id']==identity),{})
         price=str(record['price'])+'源石锭（当次读取）'if 'price'in record else'未读'
-        self.detail.setPlainText(item['name']+'\n\n标价：'+price+'\n\n资料效果\n'+_plain(item.get('usage'))+'\n\n这是当时读到的名称和标价，不证明持有、购买或当前仍在售。'if item else'选择已读商品查看效果。')
-        if entry and entry.toolTip():self.detail.appendPlainText('\n图片说明\n'+entry.toolTip())
+        text=item['name']+'\n\n标价：'+price+'\n\n资料效果\n'+_plain(item.get('usage'))+'\n\n这是当时读到的名称和标价，不证明持有、购买或当前仍在售。'if item else'选择已读商品查看效果。'
+        if entry and entry.toolTip():text+='\n\n图片说明\n'+entry.toolTip()
+        if self.detail.toPlainText()!=text:self.detail.setPlainText(text)
         if not item:self.details_toggle.setChecked(False)
     def open_source(self):
         from .expansion_reference import packet

@@ -26,25 +26,27 @@ from .player_catalog_grid import CatalogGrid,add_catalog_controls
 class PartsPanel(QWidget):
     exchangeRequested=Signal(str)
     def __init__(self,run,parent=None):
-        super().__init__(parent);self.run=run;self.rows={};self.key=None;body=QVBoxLayout(self);self.notice=QLabel();self.notice.setWordWrap(True);body.addWidget(self.notice)
-        bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('搜索零件名称或效果');bar.addWidget(self.search,1);self.kind=QComboBox();self.kind.addItem('全部零件类别',None)
+        super().__init__(parent);self.run=run;self.rows={};self.key=None;body=QVBoxLayout(self);self.summary=QLabel();self.summary.setWordWrap(True);body.addWidget(self.summary);self.notice=QLabel();self.notice.setWordWrap(True);body.addWidget(self.notice)
+        bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('搜索零件名称或效果');bar.addWidget(self.search,1);self.refresh_button=QPushButton('更新资料');bar.addWidget(self.refresh_button);self.kind=QComboBox();self.kind.addItem('全部零件类别',None)
         for key,label in [('MOVE','加工品'),('GOODS','自然物'),('PASSIVE','概念体')]:self.kind.addItem(label,key)
         self.kind.hide();body.addLayout(bar);self.branches=QTabBar();self.branches.setExpanding(False)
         for i in range(self.kind.count()):self.branches.addTab(self.kind.itemText(i))
         self.branches.currentChanged.connect(self.kind.setCurrentIndex);self.kind.currentIndexChanged.connect(self.branches.setCurrentIndex);body.addWidget(self.branches);self.entries=CatalogGrid();body.addWidget(self.entries,1)
-        self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.details_toggle,self.icon_scale=add_catalog_controls(body,self.entries,self.detail);self.refresh_button=QPushButton('重新核对本机零件资料');body.addWidget(self.refresh_button)
-        self.exchange_lookup=lambda identity:False;self.exchange_button=QPushButton('查看此零件对应的换入候选');body.addWidget(self.exchange_button);self.exchange_button.setVisible(False);self.exchange_button.clicked.connect(self.request_exchange)
+        self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1)
+        self.exchange_lookup=lambda identity:False;self.exchange_button=QPushButton('查看此零件对应的换入候选');self.exchange_button.setVisible(False);self.exchange_button.clicked.connect(self.request_exchange)
+        self.details_toggle,self.icon_scale,self.scope=add_catalog_controls(body,self.entries,self.detail,notice=self.notice,actions=(self.exchange_button,))
         self.search.textChanged.connect(self.refresh);self.kind.currentIndexChanged.connect(self.refresh);self.entries.currentItemChanged.connect(self.selected);self.refresh_button.clicked.connect(self.refresh);self.refresh()
     def refresh(self,*_):
+        self.summary.setText(box_status(self.run.state))
         self.notice.setText(box_status(self.run.state)+'资料基准：国服2026年10月16日；当前DLC完整覆盖未核验。')
         rows=part_rows(self.search.text(),self.kind.currentData());key=repr(rows)
+        if rows is None:self.notice.setText('零件资料暂不可用，旧目录与效果已清除；本局记录没有被重置。');self.summary.setText(self.notice.text())
         if key==self.key:return
         self.key=key;old=self.entries.currentItem();identity=old.data(Qt.ItemDataRole.UserRole)if old else None;offset=self.entries.verticalScrollBar().value();self.rows={r['id']:r for r in rows or[]};self.entries.blockSignals(True);self.entries.clear()
         for row in rows or[]:
             item=QListWidgetItem(relic_icon(row['icon']or''),row['name']);item.setData(Qt.ItemDataRole.UserRole,row['id']);self.entries.addItem(item)
             if row['id']==identity:self.entries.setCurrentItem(item)
         self.entries.verticalScrollBar().setValue(offset);self.entries.blockSignals(False);self.entries._selected(self.entries.currentItem());self.selected()
-        if rows is None:self.notice.setText('零件资料暂不可用，旧目录与效果已清除；本局记录没有被重置。')
     def selected(self,*_):
         item=self.entries.currentItem();row=self.rows.get(item.data(Qt.ItemDataRole.UserRole))if item else None
         text=row['name']+' · '+row['kind_name']+'\n'+row['kind_description']+'\n\n效果资料\n'+row['usage']+'\n\n本局是否持有、装载、已经触发或剩余次数未确认；资料效果不是已生效证明。'if row else'选择一件零件阅读效果；未读具体成员时不展示假定库存。'
