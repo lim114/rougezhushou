@@ -19,6 +19,9 @@ def bound_files():
     images=json.loads((ROOT/'research/p3-expansion-313/map-images.json').read_bytes())['images'];names.update(v['file']for v in images.values())
     return{n:sha256((ROOT/n).read_bytes()).hexdigest()for n in sorted(names)}
 
+from scripts.native_workspace_navigation import click_reader
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--receipt',type=Path,required=True);p.add_argument('--visible-ms',type=int,default=60000);args=p.parse_args();dest=args.receipt.resolve();assert not dest.exists();dest.parent.mkdir(parents=True,exist_ok=True)
     before=bound_files();checks=[];images=[];observations=[];refreshes=[];calls={k:0 for k in('game_connect','capture','next_frame','desktop_start','desktop_request','provider_chat','credential_read')};failure=None;window=None;gui=None;exitcode=None;done=False
@@ -78,7 +81,7 @@ def main():
                 nonlocal done,failure,panel
                 dialog=None
                 try:
-                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents()
+                    require(click_reader(tabs,panel,gui),'actual_two_level_workspace_navigation')
                     require(tabs.currentWidget()is panel,'actual_MainWindow_common_reference_tab_opened')
                     main_panel=panel
                     for sid in('ro6_n_2_6','ro6_b_7','ro6_n_4_1_dlc1'):
@@ -118,7 +121,9 @@ def main():
                             shot('new-boss-branches');dialog.resize(900,450);gui.processEvents()
                             for widget,index in((panel.summary,0),(panel.enemy_player,1),(panel.action_player,2),(panel.technical,3)):
                                 if widget is panel.action_player:widget.parentWidget().setSizes([680,160]);gui.processEvents()
-                                QTest.mouseClick(tabbar,Qt.MouseButton.LeftButton,pos=tabbar.tabRect(index).center());gui.processEvents();c=widget.textCursor();c.setPosition(2);c.setPosition(12,QTextCursor.MoveMode.KeepAnchor);widget.setTextCursor(c);scroll=widget.verticalScrollBar();require(scroll.maximum()>0,'real_current_reader_has_nonzero_scroll_without_padding');scroll.setValue(min(6,scroll.maximum()));prior=reading(widget);keys=(panel.enemy_combo.currentData(),panel.action_key,panel.queue_kind.currentData(),panel.tabs.currentIndex())
+                                if panel.source_toggle.isChecked()!=(widget is panel.technical):QTest.mouseClick(panel.source_toggle,Qt.MouseButton.LeftButton)
+                                if widget is not panel.technical:QTest.mouseClick(tabbar,Qt.MouseButton.LeftButton,pos=tabbar.tabRect(index).center())
+                                gui.processEvents();require(widget.isVisible(),'requested_reader_really_visible_after_grouping');c=widget.textCursor();c.setPosition(2);c.setPosition(12,QTextCursor.MoveMode.KeepAnchor);widget.setTextCursor(c);scroll=widget.verticalScrollBar();require(scroll.maximum()>0,'real_current_reader_has_nonzero_scroll_without_padding');scroll.setValue(min(6,scroll.maximum()));prior=reading(widget);keys=(panel.enemy_combo.currentData(),panel.action_key,panel.queue_kind.currentData(),panel.tabs.currentIndex())
                                 QTest.mouseClick(panel.refresh_button,Qt.MouseButton.LeftButton);gui.processEvents();require(reading(widget)==prior and keys==(panel.enemy_combo.currentData(),panel.action_key,panel.queue_kind.currentData(),panel.tabs.currentIndex()),'refresh_preserves_current_branch_identity_tab_selection_and_nonzero_scroll')
                                 refreshes.append({'reader_index':index,'before':prior,'after':reading(widget),'keys':keys,'owned_dialog_size':[dialog.width(),dialog.height()]})
                         dialog.close();panel=main_panel;gui.processEvents()

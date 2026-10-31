@@ -31,6 +31,9 @@ def bound_files():
     return result
 
 
+from scripts.native_workspace_navigation import click_reader
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--receipt',type=Path,required=True);p.add_argument('--visible-ms',type=int,default=120000);args=p.parse_args()
     dest=args.receipt.resolve();assert not dest.exists();dest.parent.mkdir(parents=True,exist_ok=True)
@@ -86,8 +89,9 @@ def main():
                 QTest.mouseClick(main_panel.battle_button,Qt.MouseButton.LeftButton);gui.processEvents();dialog=main_panel.current_battle_dialog;battle_panel=dialog.panel;panel=battle_panel.settlement
                 require(dialog.isVisible()and battle_panel.stage_id==stage_id and panel.stage_id==stage_id,'actual_MainWindow_opens_exact_current_battle_settlement')
                 require(isinstance(panel,CurrentSettlementModesPanel)and len(battle_panel.findChildren(CurrentSettlementModesPanel))==1 and not battle_panel.findChildren(CurrentSettlementPanel),'new_modes_replace_single_current_settlement_not_parallel_old_unknown_panel')
-                index=battle_panel.tabs.indexOf(panel);require(index==5 and battle_panel.tabs.tabText(index)=='通关基础奖励','replacement_keeps_real_current_settlement_tab_and_first5_indices')
-                bar=battle_panel.tabs.tabBar();QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(index).center());gui.processEvents();require(battle_panel.tabs.currentWidget()is panel,'actual_modes_reader_tab_opened')
+                index=battle_panel.tabs.indexOf(battle_panel.rewards);require(index==3 and battle_panel.tabs.count()==4 and battle_panel.tabs.tabText(index)=='奖励与条件','grouped_reward_reader_keeps_first_three_player_categories')
+                bar=battle_panel.tabs.tabBar();QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(index).center());gui.processEvents()
+                sections=battle_panel.rewards.sections;index=sections.indexOf(panel);require(index==1 and sections.tabText(index)=='通关收入','base_modes_keep_their_own_reward_subsection');bar=sections.tabBar();QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(index).center());gui.processEvents();require(sections.currentWidget()is panel and panel.isVisible(),'actual_modes_reader_tab_opened')
                 require(len(panel.findChildren(QComboBox))==2 and panel.entry.currentData()=='unknown'and panel.region.currentData()=='catalog','only_entry_region_declarations_no_auto_player_technology')
                 require(panel.result['conditional_base_experience']is None and panel.result['conditional_full_technology_experience']is None and panel.result['conditional_base_gold']is None,'opening_exact_stage_does_not_guess_entry_from_ID')
                 if old_dialog is not None:require(not old_dialog.isVisible()and old_panel.result is None and old_panel.technical.toPlainText()=='','changing_current_stage_closes_and_clears_previous_modes_reader')
@@ -113,7 +117,7 @@ def main():
             def exercise():
                 nonlocal done,failure,panel,dialog,battle_panel
                 try:
-                    bar=tabs.tabBar();index=tabs.indexOf(main_panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(index).center());gui.processEvents()
+                    require(click_reader(tabs,main_panel,gui),'actual_two_level_workspace_navigation')
                     require(tabs.currentWidget()is main_panel and main_panel.scope.isHidden()and main_panel.scope.currentData()is False,'actual_common_current_stage_page_without_version_only_scope')
                     for stage_id,base,full,gold in(('ro6_n_1_2',10,13,1),('ro6_e_1_2',12,15,2),('ro6_n_6_1',20,26,5)):
                         open_stage(stage_id);choose(panel.entry,'map');require((panel.result['conditional_base_experience'],panel.result['conditional_full_technology_experience'],panel.result['conditional_base_gold'])==(base,full,{'minimum':gold,'maximum':gold}),'normal_emergency_source0_two_independent_experience_values')

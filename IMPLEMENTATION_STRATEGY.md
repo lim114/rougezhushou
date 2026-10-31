@@ -68,3 +68,7 @@ Qt已有置顶及整窗输入穿透标志，但“全部穿透”会使该窗口
 - [Qt窗口标志](https://doc.qt.io/qtforpython-6/PySide6/QtCore/Qt.html)：置顶和整窗输入穿透是不同标志；穿透窗不接收输入。
 - [Qt窗口与对话框](https://doc.qt.io/qtforpython-6.8/overviews/qtwidgets-application-windows.html)：现有Qt可直接构建独立无边框窗口，无需为此更换技术栈。
 - [微软SetWindowDisplayAffinity](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowdisplayaffinity)：WDA_EXCLUDEFROMCAPTURE从Windows 10 2004起支持，只作用于本进程顶层窗等适用条件，不保证所有捕获途径或内容安全；本项目尚未据此完成实际兼容验证。
+
+## 本次明确的新参考来源
+
+原片95/108秒显示Tomimi独立网页资料。已实际克隆并先读[公开仓库](https://github.com/tanch-p/tomimi-dev/tree/5d341e921628dd101004a561ef2d3553ebed1978)README和包/路径元数据；尚未核验源码复用许可，也未阅读完整模拟器、安装运行或移植。它可能提供关卡排版/模拟架构的研究线索，但不等于整个视频助手源码、录像部署版本或游戏引擎的机制证据。继续保持Qt主程序和独立数据来源；若后续取得明确许可和兼容性/离线隐私依据，再比较局部复用的总成本，不因发现仓库立即换框架。详见本批[研究记录](research/compact-battle-review-20261031/README.md)。

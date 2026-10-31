@@ -11,10 +11,17 @@ from .ui_state import replace_text
 
 class CurrentRewardPanel(QWidget):
     actionSelected=Signal(str)
-    def __init__(self,stage_id,parent=None,*,load=True):
+    def __init__(self,stage_id,parent=None,*,load=True,settlement=None):
         super().__init__(parent);self.stage_id=stage_id;self.result=None;self.row_id=None
-        layout=QVBoxLayout(self);self.notice=QLabel(model.NOTICE);self.notice.setWordWrap(True);layout.addWidget(self.notice)
+        self.sections=None
+        body=self if settlement is None else QWidget()
+        if settlement is not None:
+            outer=QVBoxLayout(self);outer.setContentsMargins(0,0,0,0)
+            self.sections=QTabWidget();self.sections.addTab(body,'可能获得');self.sections.addTab(settlement,'通关收入');outer.addWidget(self.sections)
+            settlement.notice.hide();settlement.refresh_button.hide()
+        layout=QVBoxLayout(body);self.notice=QLabel(model.NOTICE);self.notice.setWordWrap(True);layout.addWidget(self.notice)
         self.refresh_button=QPushButton('重新核对奖励资料');layout.addWidget(self.refresh_button)
+        if settlement is not None:self.notice.hide();self.refresh_button.hide()
         self.combo=QComboBox();self.choices=BranchChoice(self.combo,[],overview_label='总览（本关奖励来源）',placeholder='请选择奖励目标');layout.addWidget(self.choices)
         self.portrait=QLabel();self.portrait.setFixedHeight(74);self.portrait.setAlignment(Qt.AlignmentFlag.AlignCenter);self.portrait.hide();layout.addWidget(self.portrait)
         bar=QHBoxLayout();self.source_combo=QComboBox();self.source_combo.setAccessibleName('对应的出现条件');self.source_button=QPushButton('查看这条出现条件');bar.addWidget(self.source_combo,1);bar.addWidget(self.source_button);layout.addLayout(bar)

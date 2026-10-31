@@ -2,6 +2,7 @@
 REFERENCE_STYLE='''
 QDialog#mapReferenceWindow {background:#f5f5f7;color:#25332f;border:1px solid #bbc1c5;border-radius:12px;}
 QDialog#mapReferenceWindow QLabel {color:#25332f;background:transparent;}
+QDialog#mapReferenceWindow QCheckBox {color:#263630;background:transparent;}
 QDialog#mapReferenceWindow QTabWidget::pane {background:#f5f5f7;border:0;}
 QDialog#mapReferenceWindow QTabBar::tab {color:#35403c;background:#e4e7e6;border:0;border-radius:9px;padding:6px 12px;}
 QDialog#mapReferenceWindow QTabBar::tab:selected {background:#2c3533;color:white;}

@@ -37,7 +37,9 @@ class CurrentBattleView314Tests(unittest.TestCase):
         p=self.panel();p.resize(900,440);self.app.processEvents();p.enemy_choices.select_value(p.result['enemies'][0]['key'])
         p.queue_kind.setCurrentIndex(p.queue_kind.findData('branch'));p.actions.setCurrentRow(0);self.app.processEvents()
         for widget in(p.summary,p.enemy_player,p.action_player,p.technical):
-            p.tabs.setCurrentIndex(0 if widget is p.summary else 1 if widget is p.enemy_player else 2 if widget is p.action_player else 3);self.app.processEvents()
+            p.source_toggle.setChecked(widget is p.technical)
+            if widget is not p.technical:p.tabs.setCurrentIndex(0 if widget is p.summary else 1 if widget is p.enemy_player else 2)
+            self.app.processEvents()
             if widget is p.action_player:widget.parentWidget().setSizes([680,160]);self.app.processEvents()
             c=widget.textCursor();c.setPosition(1);c.setPosition(10,QTextCursor.MoveMode.KeepAnchor);widget.setTextCursor(c);bar=widget.verticalScrollBar()
             self.assertGreater(bar.maximum(),0);bar.setValue(min(5,bar.maximum()));prior=(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.enemy_combo.currentData(),p.action_key,p.queue_kind.currentData())

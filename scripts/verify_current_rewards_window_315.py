@@ -21,6 +21,9 @@ def bound_files():
     images=json.loads((ROOT/'research/p3-expansion-313/map-images.json').read_bytes())['images'];names.update(v['file']for v in images.values())
     return{n:sha256((ROOT/n).read_bytes()).hexdigest()for n in sorted(names)}
 
+from scripts.native_workspace_navigation import click_reader
+
+
 def main():
     p=argparse.ArgumentParser();p.add_argument('--receipt',type=Path,required=True);p.add_argument('--visible-ms',type=int,default=60000);args=p.parse_args();dest=args.receipt.resolve();assert not dest.exists();dest.parent.mkdir(parents=True,exist_ok=True)
     before=bound_files();checks=[];images=[];observations=[];refreshes=[];calls={k:0 for k in('game_connect','capture','next_frame','desktop_start','desktop_request','provider_chat','credential_read')};failure=None;window=None;gui=None;exitcode=None;done=False
@@ -64,7 +67,7 @@ def main():
                 nonlocal done,failure,panel
                 dialog=None
                 try:
-                    bar=tabs.tabBar();idx=tabs.indexOf(panel);QTest.mouseClick(bar,Qt.MouseButton.LeftButton,pos=bar.tabRect(idx).center());gui.processEvents();require(tabs.currentWidget()is panel,'actual_MainWindow_common_reference_tab_opened')
+                    require(click_reader(tabs,panel,gui),'actual_two_level_workspace_navigation');require(tabs.currentWidget()is panel,'actual_MainWindow_common_reference_tab_opened')
                     main_panel=panel;require(main_panel.scope.isHidden(),'common_page_has_no_update_scope_control');require(main_panel.scope.currentData()is False,'actual_scope_choice_shows_complete_current_stage_catalog')
                     for sid in('ro6_n_2_6','ro6_t_7','ro6_n_4_1_dlc1'):
                         item=next(main_panel.entries.item(i)for i in range(main_panel.entries.count())if main_panel.entries.item(i).data(Qt.ItemDataRole.UserRole)==sid)
@@ -98,7 +101,7 @@ def main():
                         if sid=='ro6_n_2_6':
                             row=next(r for r in panel.result['rows']if r['kind']=='device'and r['candidate_groups']);panel.choices.select_value(row['id']);panel.source_combo.setCurrentIndex(1);dialog.resize(900,430);gui.processEvents()
                             for reader in(panel.player,panel.technical):
-                                panel.tabs.setCurrentWidget(reader);gui.processEvents();c=reader.textCursor();c.setPosition(2);c.setPosition(12,QTextCursor.MoveMode.KeepAnchor);reader.setTextCursor(c);scroll=reader.verticalScrollBar();require(scroll.maximum()>0,'actual_reward_reader_has_nonzero_scroll_without_padding');scroll.setValue(min(7,scroll.maximum()));prior=reading(reader);keys=(panel.combo.currentData(),panel.source_combo.currentData(),panel.tabs.currentIndex(),panel.choices.branch.currentData());QTest.mouseClick(panel.refresh_button,Qt.MouseButton.LeftButton);gui.processEvents();require(reading(reader)==prior and keys==(panel.combo.currentData(),panel.source_combo.currentData(),panel.tabs.currentIndex(),panel.choices.branch.currentData()),'reward_refresh_preserves_branch_row_source_tab_scroll_and_selection');refreshes.append({'before':prior,'after':reading(reader),'keys':keys,'actual_dialog_size':[dialog.width(),dialog.height()]})
+                                panel.tabs.setCurrentWidget(reader);gui.processEvents();c=reader.textCursor();c.setPosition(2);c.setPosition(12,QTextCursor.MoveMode.KeepAnchor);reader.setTextCursor(c);scroll=reader.verticalScrollBar();require(scroll.maximum()>0,'actual_reward_reader_has_nonzero_scroll_without_padding');scroll.setValue(min(7,scroll.maximum()));prior=reading(reader);keys=(panel.combo.currentData(),panel.source_combo.currentData(),panel.tabs.currentIndex(),panel.choices.branch.currentData());require(current.refresh_button.isVisible(),'shared_parent_refresh_really_visible');QTest.mouseClick(current.refresh_button,Qt.MouseButton.LeftButton);gui.processEvents();require(reading(reader)==prior and keys==(panel.combo.currentData(),panel.source_combo.currentData(),panel.tabs.currentIndex(),panel.choices.branch.currentData()),'reward_refresh_preserves_branch_row_source_tab_scroll_and_selection');refreshes.append({'before':prior,'after':reading(reader),'keys':keys,'actual_dialog_size':[dialog.width(),dialog.height()]})
                         dialog.close();panel=main_panel;gui.processEvents()
                     from rouge.current_reward_view import CurrentRewardPanel
                     panel=CurrentRewardPanel('ro6_n_2_6');panel.resize(950,600);panel.show();gui.processEvents();panel.choices.select_value(panel.result['rows'][0]['id']);panel.source_combo.setCurrentIndex(1)

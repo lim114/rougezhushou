@@ -2,7 +2,7 @@
 import json
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap,QIcon
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog,QLineEdit
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog,QLineEdit,QCheckBox,QStackedWidget
 from . import current_battle_reference as model,expansion_reference as version
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
@@ -19,13 +19,27 @@ class CurrentBattlePanel(QWidget):
         self.enemy_key = None
         self.action_key = None
         layout = QVBoxLayout(self)
+        header = QHBoxLayout()
+        header.addWidget(QLabel('固定关卡参考 · 并非本局实况'), 1)
+        self.details_toggle = QCheckBox('资料说明')
+        self.source_toggle = QCheckBox('原始资料')
+        self.refresh_button = QPushButton('刷新资料')
+        for control in (self.details_toggle, self.source_toggle, self.refresh_button):
+            header.addWidget(control)
+        layout.addLayout(header)
         self.notice = QLabel(model.NOTICE)
         self.notice.setWordWrap(True)
+        self.notice.hide()
         layout.addWidget(self.notice)
-        self.refresh_button = QPushButton('重新核对本关资料')
-        layout.addWidget(self.refresh_button)
+        self.reading_stack = QStackedWidget()
         self.tabs = QTabWidget()
-        layout.addWidget(self.tabs, 1)
+        self.reading_stack.addWidget(self.tabs)
+        self.technical = QPlainTextEdit()
+        self.technical.setReadOnly(True)
+        self.technical.setAccessibleName('本关完整原始资料与来源')
+        self.reading_stack.addWidget(self.technical)
+        layout.addWidget(self.reading_stack, 1)
+        self.source_toggle.toggled.connect(lambda checked: self.reading_stack.setCurrentWidget(self.technical if checked else self.tabs))
         overview = QWidget()
         body = QVBoxLayout(overview)
         self.map_image = ReferenceImage()
@@ -132,22 +146,23 @@ class CurrentBattlePanel(QWidget):
         self.route_itinerary_button = QPushButton('查看完整行程与停留条件')
         body.addWidget(self.route_itinerary_button)
         self.route_itinerary_button.clicked.connect(self.open_route_itinerary)
-        self.technical = QPlainTextEdit()
-        self.technical.setReadOnly(True)
-        self.tabs.addTab(self.technical, '完整原值与来源')
-        from .current_reward_view import CurrentRewardPanel
-        self.rewards = CurrentRewardPanel(stage_id, load=False)
-        self.tabs.addTab(self.rewards, '奖励与条件')
-        self.rewards.actionSelected.connect(self._reward_action_selected)
         from .current_settlement_modes_view import CurrentSettlementModesPanel
         self.settlement = CurrentSettlementModesPanel(stage_id, load=False)
-        self.tabs.addTab(self.settlement, '通关基础奖励')
+        from .current_reward_view import CurrentRewardPanel
+        self.rewards = CurrentRewardPanel(stage_id, load=False, settlement=self.settlement)
+        self.tabs.addTab(self.rewards, '奖励与条件')
+        self.rewards.actionSelected.connect(self._reward_action_selected)
+        self.details_toggle.toggled.connect(self._show_details)
         self.refresh_button.clicked.connect(self.refresh_reference)
         self.enemy_combo.currentIndexChanged.connect(self._enemy_changed)
         self.queue_kind.currentIndexChanged.connect(self._actions_changed)
         self.action_group.currentIndexChanged.connect(self._actions_changed);self.action_focus.currentIndexChanged.connect(self._actions_changed)
         self.actions.currentItemChanged.connect(self._action_changed)
         self.refresh_reference()
+
+    def _show_details(self, checked):
+        for label in (self.notice, self.rewards.notice, self.settlement.notice):
+            label.setVisible(checked)
 
     def _clear(self):
         self._close_guest_material()
@@ -207,6 +222,9 @@ class CurrentBattlePanel(QWidget):
             replace_text(widget, '', preserve=False)
         self.rewards.clear_reference()
         self.settlement.clear_reference()
+        self.source_toggle.setChecked(False)
+        self.details_toggle.setChecked(False)
+        self.rewards.sections.setCurrentIndex(0)
 
     def refresh_reference(self):
         fresh = model.stage_reference(self.stage_id)
@@ -241,6 +259,9 @@ class CurrentBattlePanel(QWidget):
         self._actions_changed(preserve=keep)
         if not keep:
             self.tabs.setCurrentIndex(0)
+            self.source_toggle.setChecked(False)
+            self.details_toggle.setChecked(False)
+            self.rewards.sections.setCurrentIndex(0)
         self.rewards.refresh_reference()
         for name in ('position_dialog', 'action_position_dialog', 'spawn_candidates_dialog'):
             dialog = getattr(self, name, None)
@@ -359,7 +380,8 @@ class CurrentBattlePanel(QWidget):
             blocked=widget.blockSignals(True);widget.setCurrentIndex(0);widget.blockSignals(blocked)
         blocked=self.queue_kind.blockSignals(True);self.queue_kind.setCurrentIndex(self.queue_kind.findData(action['queue']['kind']));self.queue_kind.blockSignals(blocked);self._actions_changed()
         for i in range(self.actions.count()):
-            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==action['key']:self.actions.setCurrentRow(i);self.tabs.setCurrentIndex(2);return True
+            if self.actions.item(i).data(Qt.ItemDataRole.UserRole)==action['key']:
+                self.actions.setCurrentRow(i);self.source_toggle.setChecked(False);self.tabs.setCurrentIndex(2);return True
         return False
 
     def _action_changed(self,item,*_,preserve=False):
@@ -499,7 +521,7 @@ class CurrentBattlePanel(QWidget):
         if self.enemy_combo.findData(key)<0:self.enemy_search.clear()
         selected=self.enemy_choices.select_value(key)
         if selected:
-            self._close_boss_documents();self.tabs.setCurrentIndex(1)
+            self._close_boss_documents();self.source_toggle.setChecked(False);self.tabs.setCurrentIndex(1)
         return selected
 
     def _close_boss_documents(self):

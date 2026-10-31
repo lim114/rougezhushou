@@ -32,8 +32,12 @@ class CurrentSettlementView318Tests(unittest.TestCase):
                 dest=root/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(ROOT/name,dest)
             with patch.object(model,'ROOT',root):
                 file=root/model.DATA;raw=file.read_bytes();file.write_bytes(raw+b' ');self.assertFalse(p.refresh_reference());self.assertIsNone(p.result);self.assertEqual(p.technical.toPlainText(),'');self.assertNotIn('10',p.player.toPlainText());file.write_bytes(raw);self.assertTrue(p.refresh_reference());self.assertEqual(p.result['conditional_base_gold'],{'minimum':1,'maximum':1})
-    def test_parent_indices_unchanged_and_parent_loss_clears_base_subpanel(self):
-        p=CurrentBattlePanel('ro6_n_1_2');self.addCleanup(p.close);self.assertEqual([p.tabs.tabText(i)for i in range(6)],['地图与关卡','敌人和机制','出怪与条件','完整原值与来源','奖励与条件','通关基础奖励']);p.settlement.entry.setCurrentIndex(p.settlement.entry.findData('map'));p._clear();self.assertIsNone(p.settlement.result);self.assertEqual(p.settlement.technical.toPlainText(),'')
+    def test_grouped_reward_entries_and_parent_loss_clears_base_subpanel(self):
+        p=CurrentBattlePanel('ro6_n_1_2');self.addCleanup(p.close)
+        self.assertEqual([p.tabs.tabText(i)for i in range(p.tabs.count())],['地图与关卡','敌人和机制','出怪与条件','奖励与条件'])
+        self.assertEqual([p.rewards.sections.tabText(i)for i in range(2)],['可能获得','通关收入'])
+        self.assertIs(p.rewards.sections.widget(1),p.settlement)
+        p.settlement.entry.setCurrentIndex(p.settlement.entry.findData('map'));p._clear();self.assertIsNone(p.settlement.result);self.assertEqual(p.settlement.technical.toPlainText(),'')
     def test_only_base_source_failure_does_not_claim_other_evidence_failed(self):
         p=CurrentBattlePanel('ro6_n_1_2');self.addCleanup(p.close)
         with patch.object(model,'packet',return_value=None):self.assertTrue(p.refresh_reference());self.assertIsNone(p.settlement.result);self.assertIsNotNone(p.result);self.assertIsNotNone(p.rewards.result);self.assertFalse(p.map_image.pixmap().isNull())

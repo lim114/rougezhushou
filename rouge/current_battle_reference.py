@@ -9,7 +9,7 @@ PACK='research/p3-current-battle-314'
 MANIFEST=PACK+'/runtime-manifest.json'
 MANIFEST_SHA256='5afaa89bda5cee08b90d0db4f536d70a742755d93f073cfd55257f5fd2fbfc13'
 TIERS={'NORMAL':'普通','ELITE':'精英','BOSS':'领袖'}
-NOTICE='国服10月16日更新资料。这里只说明固定关卡中的候选与条件，不读取战斗、不操作游戏；当前难度、分队与敌人技能的完整数值修正仍待迁移。'
+NOTICE='国服10月16日更新资料。这里只说明固定关卡中的候选与条件，不读取战斗、不操作游戏；敌人数值尚未完整计入本局难度、分队和技能影响，请勿当作本局实际面板。'
 UNAVAILABLE='当前版本的关卡资料无法核对，旧内容已清除；资料恢复后请重新选择。'
 
 
