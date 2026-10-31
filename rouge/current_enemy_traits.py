@@ -9,6 +9,7 @@ IMMUNITIES = {
     'teleportImmune': '传送', 'groundBoundImmune': '缚地',
 }
 FIELDS = ('motion', 'applyWay', 'lifePointReduce', 'notCountInTotal')
+CORE_ATTRIBUTES = ('maxHp', 'atk', 'def', 'magicResistance')
 MOTION = {'WALK': '地面行动', 'FLY': '飞行行动'}
 ATTACK = {'MELEE': '近战', 'RANGED': '远程', 'ALL': '近战与远程',
           'NONE': '未配置普通攻击途径；仍可能有技能或特殊行为'}
@@ -26,8 +27,12 @@ def declarations(binding, reference):
                        for row in sorted(rows, key=lambda row: row['level'])
                        if row['level'] <= binding['level'])
     sources.append(('本关明确覆盖', binding.get('overwrittenData') or {}))
-    values, provenance = {}, {}
+    values, provenance, core = {}, {}, {}
     for label, data in sources:
+        for key in CORE_ATTRIBUTES:
+            wrapper = (data.get('attributes') or {}).get(key)
+            if wrapper is not None and wrapper['m_defined'] is True:
+                core[key] = wrapper['m_value']
         for key in (*FIELDS, *IMMUNITIES):
             container = (data.get('attributes') or {}) if key in IMMUNITIES else data
             wrapper = container.get(key)
@@ -49,6 +54,7 @@ def declarations(binding, reference):
     damage = list(raw_damage) if isinstance(raw_damage, list) and all(
         type(value) is str for value in raw_damage) else None
     return {'values': values, 'provenance': provenance, 'handbook_damage_types': damage,
+            'explicit_core_attributes': core,
             'database_level_available': exact if binding['useDb'] is True else None,
             'current_immunity_or_blockability_proven': False,
             'final_life_loss_or_total_count_proven': False}

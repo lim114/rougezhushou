@@ -378,7 +378,7 @@ class MapPanel(QWidget):
         if not row:return False
         self.close_reference()
         from .player_map_reader import make_reader
-        popup=make_reader(key[1],row,self,historical=self.view.historical or key[0].startswith('已读历史'))
+        popup=make_reader(key[1],row,self,historical=self.view.historical or key[0].startswith('已读历史'),config=self.owner.run.state.get('config',{}))
         if popup is not None:
             self.reference_popup=popup;self.reference_binding=binding
             popup.setWindowFlag(Qt.WindowType.Tool,True);popup.show()
@@ -407,3 +407,5 @@ class MapPanel(QWidget):
         if self.reference_binding!=self.reader_binding():self.close_reference();return
         panel=getattr(self.reference_popup,'panel',None)
         if panel is not None and hasattr(panel,'refresh_reference')and panel.refresh_reference()is False:self.close_reference()
+        elif self.selected_reference[1]=='battle':
+            panel.set_context({}if self.view.historical or self.selected_reference[0].startswith('已读历史')else self.owner.run.state.get('config',{}))

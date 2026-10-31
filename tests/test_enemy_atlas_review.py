@@ -14,7 +14,7 @@ class EnemyAtlasReviewTests(unittest.TestCase):
     def setUpClass(cls):cls.qt=QApplication.instance()or QApplication([])
 
     def panel(self):
-        p=CurrentBattlePanel('ro6_n_2_6');p.resize(900,720);p.show();p.tabs.setCurrentIndex(1)
+        p=CurrentBattlePanel('ro6_n_2_6');p.resize(900,720);p.enemy_grid_toggle.setChecked(True);p.show();p.tabs.setCurrentIndex(1)
         self.qt.processEvents();self.addCleanup(p.close);return p
 
     def keys(self,p):return [p.enemy_grid.item(i).data(Qt.ItemDataRole.UserRole)for i in range(p.enemy_grid.count())]

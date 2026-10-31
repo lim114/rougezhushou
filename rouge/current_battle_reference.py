@@ -115,7 +115,9 @@ def stage_reference(stage_id):
         'level':deepcopy(level),'enemies':enemies,'actions':actions,'source_identity':ref['identity'],
         'image':deepcopy(ref['version']['images']['images'].get(stage_id)),
         'source':deepcopy(ref['selection']['original_sources'][key]),'numeric_environment_migrated':False,
-        'map_projection_verified':False,'actual_server_verified':False}
+        'map_projection_verified':False,'actual_server_verified':False,
+        'difficulty_reference':{str(row['grade']):{k:row[k]for k in('grade','modeDifficulty','bossValue','ruleDesc')}
+            for row in ref['version']['current']['details']['difficulties']if row['modeDifficulty']=='NORMAL'}}
 
 
 def number(value):
@@ -137,11 +139,22 @@ def summary_text(result):
     return '\n'.join(lines)
 
 
-def enemy_text(enemy):
+def enemy_text(enemy,forecast=None):
     from .current_enemy_traits import player_lines
-    lines=[enemy['name']+' · '+TIERS.get(enemy['tier'],'类别未确认'),'','【预计面板】',
-        '生命值、攻击力、防御、法抗：未知。当前版本的关卡、保密等级和技能修正尚未完整迁移，不以白值替代。',
-        *player_lines(enemy.get('declared_traits')),
+    lines=[enemy['name']+' · '+TIERS.get(enemy['tier'],'类别未确认'),'','【预计面板】']
+    if forecast is None:
+        lines+=['生命值、攻击力、防御、法抗：未知。当前版本的关卡、保密等级和技能修正尚未完整迁移，不以白值替代。']
+    else:
+        lines+=['完整本局面板：未知；未将敌人阶段、技能和藏品影响当作已经计算。',
+                '参考条件：'+forecast['conditions_label']]
+        values=forecast['environment_component']
+        if values is not None:
+            from .current_enemy_forecast import component_numbers
+            lines+=['','【已证环境分项】',
+                '以下已套用有依据的固定关卡与难度修正，尚未包含全部本局影响，不是白值或完整总量。',
+                '；'.join(label+'：'+value for label,value in zip(('生命值','攻击力','防御','法抗'),component_numbers(forecast)))]
+        lines+=['',*('• '+line for line in forecast['player_pending'])]
+    lines+=[*player_lines(enemy.get('declared_traits')),
         '','【介绍与机制】',enemy['description']or'此精确引用未取得独立介绍。']
     lines+=enemy['abilities']or['此精确引用未取得独立图鉴能力；不能借用同名或派生单位的机制。']
     if not enemy['use_db']:lines+=['本关采用独立配置，未借用数据库图鉴机制。']

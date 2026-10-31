@@ -16,7 +16,7 @@ def readable(dialog):
     if dialog is not None:dialog.setObjectName('mapReferenceWindow');dialog.setStyleSheet(REFERENCE_STYLE)
     return dialog
 
-def make_reader(kind,record,parent,*,historical=False):
+def make_reader(kind,record,parent,*,historical=False,config=None):
     if not isinstance(record,dict)or not isinstance(record.get('id'),str)or not isinstance(record.get('title'),str):return None
     from .player_compact import ToolPopover
     if kind=='battle':
@@ -24,6 +24,7 @@ def make_reader(kind,record,parent,*,historical=False):
         from .current_battle_view import CurrentBattlePanel
         panel=CurrentBattlePanel(identity)
         if panel.result is None:panel.deleteLater();return None
+        if config is not None and not historical:panel.set_context(config)
         dialog=ToolPopover(panel.result['name']+' · 固定作战预览',panel,parent);dialog.panel=panel;dialog.resize(920,720)
         dialog.finished.connect(panel._close_readers)
         return readable(dialog)

@@ -1,5 +1,6 @@
 """Manual current-version battle reader, with real category branches."""
 import json
+from copy import deepcopy
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap,QIcon
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog,QLineEdit,QCheckBox,QStackedWidget
@@ -19,6 +20,8 @@ class CurrentBattlePanel(QWidget):
         self.source_identity = None
         self.enemy_key = None
         self.action_key = None
+        self.run_config = {}
+        self.enemy_forecasts = {}
         layout = QVBoxLayout(self)
         header = QHBoxLayout()
         header.addWidget(QLabel('固定关卡参考 · 并非本局实况'), 1)
@@ -70,9 +73,9 @@ class CurrentBattlePanel(QWidget):
         self.enemy_search.textChanged.connect(self.filter_enemies)
         body.addWidget(self.enemy_choices)
         from .player_catalog_grid import CatalogGrid
-        self.enemy_grid_toggle = QPushButton('收起敌人图册')
+        self.enemy_grid_toggle = QPushButton('展开敌人图册')
         self.enemy_grid_toggle.setCheckable(True)
-        self.enemy_grid_toggle.setChecked(True)
+        self.enemy_grid_toggle.setChecked(False)
         body.addWidget(self.enemy_grid_toggle)
         self.enemy_grid = CatalogGrid()
         self.enemy_grid.setAccessibleName('本关敌人候选图册；点击图片查看机制')
@@ -80,6 +83,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_grid.setMinimumHeight(124)
         self.enemy_grid.setMaximumHeight(132)
         body.addWidget(self.enemy_grid)
+        self.enemy_grid.hide()
         self.enemy_grid_toggle.toggled.connect(self._show_enemy_grid)
         self.enemy_grid.currentItemChanged.connect(self._enemy_grid_selected)
         self.enemy_choices.branch.currentIndexChanged.connect(self._sync_enemy_grid)
@@ -228,6 +232,7 @@ class CurrentBattlePanel(QWidget):
         self.position_button.setEnabled(False)
         self.action_position_button.setEnabled(False)
         self.result = None
+        self.enemy_forecasts = {}
         self.source_identity = None
         self.enemy_key = None
         self.action_key = None
@@ -263,6 +268,9 @@ class CurrentBattlePanel(QWidget):
         old_enemy = self.enemy_combo.currentData() if keep else None
         self.result = fresh
         self.source_identity = fresh['source_identity']
+        if not keep:
+            from .current_enemy_forecast import forecasts
+            self.enemy_forecasts=forecasts(fresh,self.run_config)
         from .current_event_battles import stage_has_reference
         has_origins = stage_has_reference(self.stage_id)
         self.event_origins_button.setVisible(has_origins)
@@ -295,6 +303,16 @@ class CurrentBattlePanel(QWidget):
         self._sync_stage_objects(keep)
         self._sync_route_itinerary(keep)
         return True
+
+    def set_context(self,config):
+        conditions={key:deepcopy(config[key])for key in('difficulty','zone')if key in config}
+        if conditions==self.run_config:
+            return
+        self.run_config=conditions
+        from .current_enemy_forecast import forecasts
+        self.enemy_forecasts=forecasts(self.result,conditions)
+        self._sync_enemy_grid()
+        self._enemy_changed(preserve=True,update_actions=False)
 
     def _close_spawn_candidates(self):
         dialog=getattr(self,'spawn_candidates_dialog',None)
@@ -377,7 +395,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_grid.verticalScrollBar().setValue(offset)
         self.enemy_grid.blockSignals(blocked)
         self.enemy_grid._selected(self.enemy_grid.currentItem())
-        self.enemy_overview.set_rows((self.result or {}).get('enemies',[]),self.enemy_choices.entries(),(self.stage_id,self.source_identity)if self.result else None)
+        self.enemy_overview.set_rows((self.result or {}).get('enemies',[]),self.enemy_choices.entries(),(self.stage_id,self.source_identity)if self.result else None,self.enemy_forecasts)
 
     def _enemy_grid_selected(self, item, *_):
         if item is not None:
@@ -406,7 +424,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_key = key
         self._select_enemy_tile(key)
         self.enemy_portrait.setVisible(enemy is not None)
-        replace_text(self.enemy_player, model.enemy_text(enemy) if enemy else '请选择敌人或关联实体。', preserve=keep)
+        replace_text(self.enemy_player, model.enemy_text(enemy,self.enemy_forecasts.get(key)) if enemy else '请选择敌人或关联实体。', preserve=keep)
         self.enemy_reading_stack.setCurrentWidget(self.enemy_details if enemy is not None or self.result is None else self.enemy_overview)
         self.enemy_portrait.clear()
         pix = QPixmap()

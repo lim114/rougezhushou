@@ -5,9 +5,24 @@ import numpy as np
 from rouge.page_ocr import PageOCR
 from rouge.recognition_cache import ExactImageCache
 from tests.test_page_ocr_058 import _Provider
+from rouge.recognition import ScreenReader
+from unittest.mock import patch
 
 
 class OCRCacheReviewTests(unittest.TestCase):
+    def test_public_screen_read_rejects_empty_input_before_engine_initialization(self):
+        for image in(None,np.zeros((0,40,3),np.uint8)):
+            reader=ScreenReader()
+            with self.assertRaisesRegex(ValueError,'没有有效画面'):reader.read(image)
+            self.assertIsNone(reader._engine)
+
+    def test_public_screen_read_keeps_exact_frame_reuse_after_validated_entry(self):
+        reader=ScreenReader();image=np.zeros((40,60,3),np.uint8)
+        with patch.object(reader,'_read',return_value={'performance':{},'page':'test_page'})as backend:
+            first=reader.read(image);second=reader.read(image.copy())
+        self.assertEqual(first['page'],second['page']);self.assertEqual(backend.call_count,1)
+        self.assertEqual(second['performance']['reuse'],'exact_frame')
+
     def test_strided_and_contiguous_pixels_share_exact_image_result(self):
         image=np.arange(24*40*3,dtype=np.uint8).reshape(24,40,3)[:,::2]
         self.assertFalse(image.flags.c_contiguous)

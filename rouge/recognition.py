@@ -110,8 +110,6 @@ class ScreenReader:
             if self.cache_enabled: self._engine = CachedOCR(self._engine)
             self._frame_ocr=DynamicOCR(self._engine) if self.cache_enabled else self._engine
         elapsed('initialization')
-        if image is None or image.size == 0:
-            raise ValueError('没有有效画面。')
         image,viewport=prepare_frame(image,client_rect)
         elapsed('viewport')
         routing={'strategy':'full_discovery','candidates':[],'visual_ms':0.,

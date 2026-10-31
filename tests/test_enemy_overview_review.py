@@ -25,7 +25,7 @@ class EnemyOverviewReviewTests(unittest.TestCase):
   rows=self.rows(p);self.assertEqual([r.data(0,Qt.ItemDataRole.UserRole)for r in rows],[key for _,key,_ in p.enemy_choices.entries()])
   lookup={e['key']:e for e in p.result['enemies']};icons={key:icon.cacheKey()for _,key,icon in p.enemy_choices.entries()}
   for item in rows:
-   key=item.data(0,Qt.ItemDataRole.UserRole);self.assertEqual([item.text(i)for i in range(3)],overview_cells(lookup[key]));self.assertEqual(item.icon(0).cacheKey(),icons[key]);self.assertIsNone(lookup[key]['expected_stats'])
+   key=item.data(0,Qt.ItemDataRole.UserRole);self.assertEqual([item.text(i)for i in range(7)],overview_cells(lookup[key]));self.assertEqual(item.icon(0).cacheKey(),icons[key]);self.assertIsNone(lookup[key]['expected_stats'])
   self.assertIn('不用白值',p.enemy_overview.notice.text())
   with patch.object(model,'picture_for_enemy',side_effect=AssertionError('reuse verified icons')):p._sync_enemy_grid()
  def test_three_exact_stage_variants_keep_own_prior_full_result_and_each_enemy_player_text(self):
@@ -54,6 +54,6 @@ class EnemyOverviewReviewTests(unittest.TestCase):
   with patch.object(model,'stage_reference',return_value=None):self.assertFalse(p.refresh_reference())
   self.assertEqual(self.rows(p),[]);self.assertFalse(p.enemy_overview.isVisible());self.assertTrue(p.refresh_reference());self.assertEqual(p.tabs.currentIndex(),0);p.tabs.setCurrentIndex(1);self.assertTrue(p.enemy_overview.isVisible());self.assertIsNone(p.enemy_key);self.assertTrue(p.enemy_overview.tree.topLevelItem(0).isExpanded())
  def test_short_summary_is_explicit_and_complete_original_remains_in_tooltip_and_reader(self):
-  e={'name':'long','abilities':['甲'*250],'description':'介绍','declared_traits':None};cells=overview_cells(e);self.assertIn('点选查看全文',cells[2]);self.assertNotEqual(cells[2],e['abilities'][0]);self.assertIn('未核对',cells[1])
+  e={'name':'long','abilities':['甲'*250],'description':'介绍','declared_traits':None};cells=overview_cells(e);self.assertIn('点选查看全文',cells[6]);self.assertNotEqual(cells[6],e['abilities'][0]);self.assertIn('未核对',cells[5]);self.assertEqual(cells[1:5],['未知']*4)
 
 if __name__=='__main__':unittest.main()

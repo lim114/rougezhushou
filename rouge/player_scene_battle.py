@@ -23,6 +23,7 @@ from PySide6.QtGui import QIcon,QPixmap
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QTabWidget
 
 class SceneBattlePanel(QWidget):
+    historical_reading=False
     noteRequested=Signal(object)
     def __init__(self,run,parent=None):
         super().__init__(parent);self.run=run;self.identity=None;self.result=None;self.enemies={};self.context_key=None;self.dialog=None
@@ -43,6 +44,8 @@ class SceneBattlePanel(QWidget):
         content=note_for('stages',self.identity)
         if content is not None:self.noteRequested.emit(content)
     def refresh(self):
+        if self.dialog is not None and self.dialog.isVisible():
+            self.dialog.panel.set_context({}if self.historical_reading else self.run.state.get('config',{}))
         content=self.run.state.get('last_node_content')
         if not isinstance(content,dict):content=None
         rows=stage_candidates(content);reference=model.packet()if rows else None
@@ -77,7 +80,7 @@ class SceneBattlePanel(QWidget):
         if self.identity is None or self.result is None:return
         if self.dialog is None:
             from .player_map_reader import make_reader
-            self.dialog=make_reader('battle',{'id':self.identity,'title':self.result['name']},self)
+            self.dialog=make_reader('battle',{'id':self.identity,'title':self.result['name']},self,historical=self.historical_reading,config=self.run.state.get('config',{}))
         elif self.dialog.panel.refresh_reference()is False:
             self.dialog.close();self.dialog=None
         if self.dialog is None:return
