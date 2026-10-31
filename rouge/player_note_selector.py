@@ -35,7 +35,7 @@ from PySide6.QtWidgets import QWidget,QGridLayout,QLabel,QComboBox
 class SceneNoteSelector(QWidget):
     chosen=Signal(object)
     def __init__(self,parent=None):
-        super().__init__(parent);self.rows=[];bar=QGridLayout(self);bar.setContentsMargins(0,0,0,0)
+        super().__init__(parent);self.rows=[];bar=QGridLayout(self);bar.setContentsMargins(0,0,0,0);bar.setHorizontalSpacing(8);bar.setVerticalSpacing(4)
         self.floor=QComboBox();self.node=QComboBox();self.scene=QComboBox()
         self.floor.setAccessibleName('笔记层数');self.node.setAccessibleName('笔记节点类别');self.scene.setAccessibleName('笔记准确场景')
         for value,label in stages.FLOORS:self.floor.addItem(label,value)

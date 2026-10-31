@@ -4,7 +4,7 @@ QWidget#noteCard{background:white;border:1px solid #dedee5;border-radius:9px;}
 QLabel#noteCardTitle{background:transparent;color:#303139;padding:7px 10px;border-bottom:1px solid #ededf1;}
 QWidget#sceneNotesSurface QWidget#noteCard QTextBrowser,QWidget#sceneNotesSurface QWidget#noteCard QPlainTextEdit{border:0;border-radius:0;padding:8px;}
 QWidget#sceneNotesSurface QToolButton{background:#e6e6eb;color:#303139;border:0;border-radius:8px;padding:4px 9px;}
-QWidget#sceneNotesSurface QComboBox{background:#e6e6eb;color:#303139;border:1px solid #cdcdd5;border-radius:9px;padding:5px;}
+QWidget#sceneNotesSurface QComboBox{background:#e6e6eb;color:#303139;border:1px solid #cdcdd5;border-radius:9px;padding:3px 7px;}
 QWidget#sceneNotesSurface QComboBox QAbstractItemView{background:white;color:#303139;selection-background-color:#cde5eb;selection-color:#25262b;}
 QWidget#sceneNotesSurface QScrollArea,QWidget#noteAncestors,QWidget#noteAncestorsViewport{background:#f5f5f7;border:0;}
 QScrollArea#noteAncestorScroll QScrollBar:vertical{background:#ededf1;width:10px;}

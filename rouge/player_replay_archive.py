@@ -16,7 +16,8 @@ def attach_history(panel,body):
     panel.cards_signature=None
     panel.reload_history_button=QPushButton('重新读取本机历史');page.addWidget(panel.reload_history_button)
     panel.sessions.hide()
-    header=QHBoxLayout();panel.history_list_button=QPushButton('‹ 对局列表');header.addWidget(panel.history_list_button);header.addStretch()
+    header=QHBoxLayout();panel.history_list_button=QPushButton('‹ 对局列表');header.addWidget(panel.history_list_button);panel.reading_label=QLabel();panel.reading_label.setWordWrap(True);header.addWidget(panel.reading_label,1)
+    header.addStretch();panel.history_scope_button=QPushButton('记录说明');panel.history_scope_button.setCheckable(True);header.addWidget(panel.history_scope_button);panel.notice.hide();panel.nodes.notice.hide();panel.history_scope_button.toggled.connect(panel.notice.setVisible);panel.history_scope_button.toggled.connect(panel.nodes.notice.setVisible)
     panel.history_views_button=QPushButton('更多记录');panel.history_views_button.setCheckable(True);header.addWidget(panel.history_views_button);body.insertLayout(1,header)
     panel.tabs.tabBar().hide();panel.history_views_button.toggled.connect(panel.tabs.tabBar().setVisible)
     panel.history_list_button.clicked.connect(lambda:panel.tabs.setCurrentWidget(panel.archive_page))
@@ -36,7 +37,7 @@ def attach_history(panel,body):
     panel.tabs.addTab(panel.archive_page,'对局列表')
     def selected_page():
         reading=panel.tabs.currentWidget()is not panel.archive_page
-        panel.history_list_button.setVisible(reading);panel.notice.setVisible(reading)
+        panel.history_list_button.setVisible(reading);panel.reading_label.setVisible(reading);panel.notice.setVisible(reading and panel.history_scope_button.isChecked())
     panel.tabs.currentChanged.connect(selected_page);selected_page()
 
 
@@ -46,7 +47,10 @@ def card_text(state,title):
     from .player_replay import history_rows
     group=cohort({'state':state})
     grade='保密等级未读到'if group['difficulty']==UNREAD else'保密等级'+str(group['difficulty'])
+    from .relic_quantities import kettle_copies
     relics=sum(isinstance(r,dict)and active_record(r,'held')for r in state.get('relics',{}).values())
+    copies=kettle_copies(state)
+    if copies is not None:relics+=copies-1
     crew=sum(isinstance(r,dict)and active_record(r,'present')for r in state.get('operators',{}).values())
     return title+' · '+observation_time(state.get('started_at'))+'\n'+group['squad_name']+' · '+grade+'\n'+f'已确认藏品 {relics} 件 · 干员 {crew} 名 · {len(history_rows(state))} 条读取记录'+'\n清单可能不完整；胜负、结算分数与种子尚未确认。'
 
@@ -61,8 +65,8 @@ def refresh_cards(panel):
     panel.cards_signature=signature;scroll=panel.session_cards.verticalScrollBar().value()
     panel.session_cards.blockSignals(True);panel.session_cards.clear()
     for identity,text in rows:
-        item=QListWidgetItem(text);item.setData(Qt.ItemDataRole.UserRole,identity);item.setToolTip(text)
-        item.setSizeHint(QSize(0,panel.session_cards.fontMetrics().lineSpacing()*5+28));panel.session_cards.addItem(item)
+        item=QListWidgetItem('\n'.join(text.splitlines()[:3]));item.setData(Qt.ItemDataRole.UserRole,identity);item.setToolTip(text);item.setData(Qt.ItemDataRole.AccessibleDescriptionRole,text)
+        item.setSizeHint(QSize(0,panel.session_cards.fontMetrics().lineSpacing()*4+28));panel.session_cards.addItem(item)
         if identity==panel.sessions.currentData():panel.session_cards.setCurrentItem(item)
     panel.session_cards.verticalScrollBar().setValue(scroll);panel.session_cards.blockSignals(False)
 

@@ -1,0 +1,9 @@
+{
+  "actual_tests_run": 17,
+  "actual_errors": 1,
+  "actual_exit": 1,
+  "test": "tests.test_replay_layout_review.ReplayLayoutReviewTests.test_cards_disclose_missing_results_and_invalid_difficulty_without_guessing",
+  "error": "TypeError: argument of type NoneType is not iterable",
+  "cause": "First attempt reused full-current-state inventory_summary on a partial historical card containing an invalid record; the original card contract accepts partial state.",
+  "repair": "Keep original single card admission/counting; reuse kettle quantity evidence separately and qualify its accepted historical record domain at its own entry. Do not weaken the old partial-state test or change global record flags."
+}

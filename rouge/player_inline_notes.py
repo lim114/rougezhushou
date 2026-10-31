@@ -28,6 +28,7 @@ class InlineNotesPanel(RecentNotesPanel):
         self.parent_signature=None;self.parent_views=[];self.editRequested.connect(self.open_editor)
         self.inline_ready=True
         self.compact_controls()
+        self.layout().setContentsMargins(2,0,2,2);self.layout().setSpacing(7)
 
     def compact_controls(self):
         """Reuse the editor's real actions; keep uncommon controls off the page."""
@@ -46,12 +47,13 @@ class InlineNotesPanel(RecentNotesPanel):
         self.card_title=QLabel();self.card_title.setObjectName('noteCardTitle');self.card_title.setWordWrap(True)
         for surface in (self,self.card,self.card_title):surface.setFocusPolicy(Qt.FocusPolicy.ClickFocus);surface.installEventFilter(self)
         body.replaceWidget(self.stack,self.card);card.addWidget(self.card_title);card.addWidget(self.stack)
-        self.preview.setMinimumHeight(90);body.setStretchFactor(self.card,0);body.addStretch(1)
+        self.preview.setMinimumHeight(56);body.setStretchFactor(self.card,0);body.addStretch(1)
         self.preview.setToolTip('点击正文即可编辑；离开输入区后按自动保存设置处理。也可按回车编辑。')
         self.preview.viewport().installEventFilter(self);self.preview.installEventFilter(self)
         editor.editor.installEventFilter(self)
         self.leave_timer=QTimer(self);self.leave_timer.setSingleShot(True);self.leave_timer.timeout.connect(self.leave_editor)
         self.preview.document().documentLayout().documentSizeChanged.connect(self.fit_content)
+        editor.editor.textChanged.connect(self.fit_content)
         editor.editor.textChanged.connect(self.update_save_state);editor.autosave.toggled.connect(self.update_save_state)
         editor.autosave_timer.timeout.connect(self.update_save_state)
         editor.save_button.clicked.connect(self.update_save_state);editor.discard_button.clicked.connect(self.update_save_state)
@@ -68,9 +70,15 @@ class InlineNotesPanel(RecentNotesPanel):
 
     def fit_content(self,*_):
         if not self.inline_ready:return
-        available=max(90,self.height()-self.card.y()-self.card_title.height()-20)
-        desired=220 if self.stack.currentWidget()is self.note_editor else ceil(self.preview.document().size().height())+30
-        self.stack.setFixedHeight(min(available,max(90,desired)))
+        available=max(56,self.height()-self.card.y()-self.card_title.height()-20)
+        if self.stack.currentWidget()is self.note_editor:
+            edit=self.note_editor.editor;desired=self.note_editor.height()-edit.viewport().height()+2*edit.document().documentMargin();block=edit.document().begin()
+            # QPlainTextDocumentLayout.documentSize height counts paragraphs,
+            # so use Qt's actual wrapped block rectangles, not a pixel guess.
+            while block.isValid()and desired<available:
+                desired+=edit.blockBoundingRect(block).height();block=block.next()
+        else:desired=self.preview.document().size().height()+24
+        self.stack.setFixedHeight(min(available,max(56,ceil(desired))))
 
     def resizeEvent(self,event):
         super().resizeEvent(event)
@@ -119,7 +127,6 @@ class InlineNotesPanel(RecentNotesPanel):
         if editor.dirty and editor.autosave.isChecked():editor.save_pending()
         if editor.dirty:
             self.open_editor(editor.content)
-            editor.status.setText('修改尚未保存，请保存或放弃后切换或关闭。')
             return False
         return True
 

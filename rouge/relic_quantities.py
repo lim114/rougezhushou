@@ -15,7 +15,7 @@ def confirmed_bar_counts(icons,expected):
 
 def kettle_copies(state):
     records={**state.get('relics',{}),**state.get('tactical_tools',{})}
-    if KETTLE not in records or not active_record(records[KETTLE],'held'):return None
+    if KETTLE not in records or not all(isinstance(record,dict)for record in records.values())or not active_record(records[KETTLE],'held'):return None
     # A healthy older complete record with exactly one slot per known ID
     # also proves one kettle; a larger badge never supplies a guessed count.
     if state.get('inventory_verified')is True and type(state.get('relic_count'))is int and not unconfirmed_item_ids(state)and state['relic_count']==sum(active_record(r,'held')for r in records.values()):return 1
