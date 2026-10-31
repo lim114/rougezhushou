@@ -13,7 +13,9 @@ QDialog#mapReferenceWindow QPlainTextEdit,QDialog#mapReferenceWindow QTextBrowse
 '''
 
 def readable(dialog):
-    if dialog is not None:dialog.setObjectName('mapReferenceWindow');dialog.setStyleSheet(REFERENCE_STYLE)
+    if dialog is not None:
+        from .player_theme import apply_theme
+        dialog.setObjectName('mapReferenceWindow');apply_theme(dialog,'dark',extra=REFERENCE_STYLE)
     return dialog
 
 def make_reader(kind,record,parent,*,historical=False,config=None):

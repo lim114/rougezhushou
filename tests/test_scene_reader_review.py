@@ -45,7 +45,7 @@ class SceneReaderReviewTests(unittest.TestCase):
         self.qt.processEvents();d=p.dialog;self.assertIsNotNone(d)
         self.assertEqual(load.call_count,1);self.assertEqual(d.panel.stage_id,'ro6_n_2_6')
         self.assertTrue(d.windowFlags()&Qt.WindowType.FramelessWindowHint)
-        self.assertEqual(d.objectName(),'mapReferenceWindow');self.assertEqual(d.styleSheet(),REFERENCE_STYLE)
+        self.assertEqual(d.objectName(),'mapReferenceWindow');self.assertTrue(d.styleSheet().endswith(REFERENCE_STYLE));self.assertEqual(d.property('playerTheme'),'dark')
         self.assertEqual(d.palette().color(QPalette.ColorRole.Window).name(),'#262528')
         self.assertGreater(d.panel.details_toggle.palette().color(QPalette.ColorRole.WindowText).lightness(),200)
         self.assertEqual(d.panel.tabs.count(),4);self.assertEqual(run.state,state)
@@ -88,7 +88,7 @@ class SceneReaderReviewTests(unittest.TestCase):
         run=SimpleNamespace(state={'id':'event-fixture','last_node_content':{'kind':'event','title':'桑尼的邀请'}});before=deepcopy(run.state)
         p=RecentScenePanel(run);p.show();self.addCleanup(p.close);p.event_choices.setCurrentIndex(1);p.event_entries.setCurrentIndex(1)
         selected=p.event_result['selected'];self.assertTrue(p.open_event());self.qt.processEvents()
-        self.assertEqual(p.event_dialog.objectName(),'mapReferenceWindow');self.assertEqual(p.event_dialog.styleSheet(),REFERENCE_STYLE)
+        self.assertEqual(p.event_dialog.objectName(),'mapReferenceWindow');self.assertTrue(p.event_dialog.styleSheet().endswith(REFERENCE_STYLE));self.assertEqual(p.event_dialog.property('playerTheme'),'dark')
         self.assertEqual(p.event_dialog.panel.result['event']['id'],selected['event_id'])
         self.assertEqual(run.state,before)
 

@@ -5,8 +5,9 @@ from PySide6.QtWidgets import QListWidget,QListView,QStyledItemDelegate
 
 INVENTORY_STYLE='''
 #inventoryWindow{background:#101214;border:1px solid #3b4245;border-radius:14px;}
+#inventoryWindow QWidget{background:transparent;}
 #inventoryWindow QLabel{color:#d7dcdb;background:transparent;}
-#inventoryWindow QTabWidget::pane{border:0;}
+#inventoryWindow QTabWidget::pane{background:#101214;border:0;}
 #inventoryWindow QTabBar::tab{background:#282d30;color:#d6dcda;border:0;border-radius:14px;padding:7px 16px;margin:3px;}
 #inventoryWindow QTabBar::tab:selected{background:#e7ecea;color:#1d2926;}
 #inventoryWindow QLineEdit,#inventoryWindow QComboBox{background:#23292b;color:#e3e9e6;border:1px solid #3d4648;border-radius:12px;padding:6px;}

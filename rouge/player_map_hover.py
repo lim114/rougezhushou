@@ -43,7 +43,8 @@ class NodeHoverCard(QDialog):
         super().__init__(parent,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint)
         self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating);self.setWindowTitle('节点速览');self.resize(self.sizeHint())
         self.binding=None;self.content_key=None;self.pinned=False
-        self.setObjectName('nodeHoverCard');self.setStyleSheet('#nodeHoverCard{background:#263535;border:1px solid #769490;border-radius:12px;} #nodeHoverCard QLabel{color:#e7f5f0;background:transparent;} #nodeHoverCard QScrollArea,#nodeHoverBody{background:#263535;border:0;} #nodeHoverCard QScrollBar:vertical{background:#263535;width:7px;margin:0;} #nodeHoverCard QScrollBar::handle:vertical{background:#81918d;border-radius:3px;min-height:25px;} #nodeHoverCard QScrollBar::add-line:vertical,#nodeHoverCard QScrollBar::sub-line:vertical{height:0;} #nodeHoverCard QScrollBar::add-page:vertical,#nodeHoverCard QScrollBar::sub-page:vertical{background:transparent;} QPushButton{color:#e7f5f0;background:#304746;border:1px solid #617b77;border-radius:7px;padding:4px;}')
+        from .player_theme import apply_theme
+        self.setObjectName('nodeHoverCard');apply_theme(self,'dark',extra='#nodeHoverCard QScrollArea,#nodeHoverBody{border:0;background:#1b2928;}')
         body=QVBoxLayout(self);head=QHBoxLayout();self.title=QLabel();head.addWidget(self.title,1)
         self.pin=QPushButton('固定');self.pin.setCheckable(True);self.pin.toggled.connect(self.set_pinned);head.addWidget(self.pin)
         close=QPushButton('×');close.setFixedWidth(27);close.clicked.connect(self.dismiss);head.addWidget(close);body.addLayout(head)

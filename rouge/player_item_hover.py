@@ -12,7 +12,8 @@ class ItemHoverCard(QDialog):
         super().__init__(parent,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint)
         self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating);self.setWindowTitle('藏品来源速览');self.resize(470,620)
         self.identity=None;self.version=None;self.index=None;self.pinned=False;self.signature=None
-        self.setObjectName('itemHoverCard');self.setStyleSheet('#itemHoverCard{background:#1b2928;border:1px solid #56655f;border-radius:12px;} #itemHoverCard QLabel{color:#e7f5f0;} QComboBox,QPushButton{color:#e7f5f0;background:#304746;border:1px solid #617b77;border-radius:7px;padding:4px;}')
+        from .player_theme import apply_theme
+        self.setObjectName('itemHoverCard');apply_theme(self,'dark')
         body=QVBoxLayout(self);head=QHBoxLayout();self.picture=QLabel();self.picture.setFixedSize(48,48);head.addWidget(self.picture);self.title=QLabel();self.title.setWordWrap(True);head.addWidget(self.title,1)
         self.pin=QPushButton('固定');self.pin.setCheckable(True);self.pin.toggled.connect(self.set_pinned);head.addWidget(self.pin);close=QPushButton('×');close.clicked.connect(self.dismiss);head.addWidget(close);body.addLayout(head)
         self.notice=QLabel();self.notice.setWordWrap(True);body.addWidget(self.notice)

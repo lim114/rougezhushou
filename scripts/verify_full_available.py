@@ -608,5 +608,7 @@ ADDITIONAL_MODULES += ('tests.test_item_reading_444',)
 
 ADDITIONAL_MODULES += ('tests.test_source_nodes_445',)
 
+ADDITIONAL_MODULES += ('tests.test_player_theme_review',)
+
 if __name__ == '__main__':
     sys.exit(main())

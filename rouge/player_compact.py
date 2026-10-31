@@ -6,10 +6,12 @@ from .player_overview import overview_facts
 from .player_context import recent_content
 
 class ToolPopover(QDialog):
-    def __init__(self,title,content,parent,*,on_show=None):
+    def __init__(self,title,content,parent,*,on_show=None,theme='dark',extra_style='',object_name='playerPopover'):
         super().__init__(parent,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint);self.setWindowTitle(title);self.setSizeGripEnabled(True);self.drag_origin=None
+        from .player_theme import apply_theme
+        self.setObjectName(object_name);apply_theme(self,theme,extra=extra_style)
         self.on_show=on_show
-        body=QVBoxLayout(self);bar=QHBoxLayout();bar.addWidget(QLabel(title),1);close=QPushButton('×');close.setObjectName('popoverCloseButton');close.setFixedWidth(30);close.clicked.connect(self.close);bar.addWidget(close);body.addLayout(bar);body.addWidget(content,1)
+        body=QVBoxLayout(self);bar=QHBoxLayout();label=QLabel(title);label.setObjectName('popoverTitle');bar.addWidget(label,1);close=QPushButton('×');close.setObjectName('popoverCloseButton');close.setFixedWidth(30);close.clicked.connect(self.close);bar.addWidget(close);body.addLayout(bar);body.addWidget(content,1)
 
     def showEvent(self,event):
         super().showEvent(event)
@@ -177,8 +179,7 @@ class CompactAssistant(QDialog):
             from .player_replay import ReplayPanel,HISTORY_STYLE
             panel=ReplayPanel(self.owner.run,source_panel=self.owner.inventory_panel)
             from .player_reference_notes import open_note
-            panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.replay_popup=ToolPopover('对局记录与个人统计',panel,self,on_show=self.refresh);self.replay_popup.panel=panel;self.replay_popup.resize(900,720)
-            self.replay_popup.setObjectName('historyWindow');self.replay_popup.setStyleSheet(HISTORY_STYLE)
+            panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.replay_popup=ToolPopover('对局记录与个人统计',panel,self,on_show=self.refresh,theme='light',extra_style=HISTORY_STYLE,object_name='historyWindow');self.replay_popup.panel=panel;self.replay_popup.resize(900,720)
             panel.tabs.setCurrentWidget(panel.archive_page)
         return self.present(self.replay_popup)
     def open_team(self):
@@ -205,8 +206,7 @@ class CompactAssistant(QDialog):
             from .player_inline_notes import InlineNotesPanel
             from .player_note_style import NOTE_STYLE
             panel=InlineNotesPanel(self.owner.run,self.owner.player_notes)
-            self.recent_notes_popup=NotesPopover('备忘录',panel,self,on_show=self.refresh);self.recent_notes_popup.panel=panel
-            self.recent_notes_popup.setObjectName('sceneNotesWindow');self.recent_notes_popup.setStyleSheet(NOTE_STYLE)
+            self.recent_notes_popup=NotesPopover('备忘录',panel,self,on_show=self.refresh,theme='light',extra_style=NOTE_STYLE,object_name='sceneNotesWindow');self.recent_notes_popup.panel=panel
             self.recent_notes_popup.resize(900,360)
         return self.recent_notes_popup
     def open_recent_notes(self):
@@ -237,16 +237,15 @@ class CompactAssistant(QDialog):
             bundle=QWidget();body=QVBoxLayout(bundle);body.setContentsMargins(0,0,0,0)
             resources=ResourceStrip(self.owner.run.state,dark=True);resources.requested.connect(self.open_resource)
             body.addWidget(resources);body.addWidget(pages,1)
-            self.inventory_popup=ToolPopover('收藏品、战术道具与零件',bundle,self,on_show=self.refresh)
+            from .player_catalog_grid import INVENTORY_STYLE
+            self.inventory_popup=ToolPopover('收藏品、战术道具与零件',bundle,self,on_show=self.refresh,theme='dark',extra_style=INVENTORY_STYLE,object_name='inventoryWindow')
             self.inventory_popup.finished.connect(lambda _result:panel.hover_card.dismiss())
             self.inventory_popup.resources=resources
-            from .player_catalog_grid import INVENTORY_STYLE
-            self.inventory_popup.setObjectName('inventoryWindow');self.inventory_popup.setStyleSheet(INVENTORY_STYLE)
             self.inventory_popup.panel=panel;self.inventory_popup.pages=pages;self.inventory_popup.parts=parts;self.inventory_popup.tools=tools;self.inventory_popup.shop=shop;self.inventory_popup.resize(840,650)
         return self.present(self.inventory_popup)
     def open_map(self):
         if self.map_popup is None:
-            panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source());self.map_popup=ToolPopover('探索地图与节点',panel,self,on_show=self.refresh);self.map_popup.panel=panel;self.map_popup.resize(1100,650);self.map_popup.setObjectName('videoMapWindow');self.map_popup.setStyleSheet('#videoMapWindow{background:#f5f5f7;border:1px solid #bbc1c5;border-radius:12px;} #videoMapWindow QLabel{color:#25332f;} #videoMapWindow QPushButton,#videoMapWindow QComboBox{color:#263630;background:#e8ebea;border:1px solid #bbc6c1;border-radius:7px;padding:5px;} #videoMapWindow QTabBar{background:#f5f5f7;border:0;} #videoMapWindow QTabBar::tab{color:#35403c;background:#e4e7e6;border:0;border-radius:10px;padding:6px 12px;} #videoMapWindow QTabBar::tab:selected{background:#2c3533;color:white;} #videoMapWindow QPlainTextEdit,#videoMapWindow QTreeWidget{color:#28332e;background:#fff;border:1px solid #d2d9d5;}')
+            panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source());self.map_popup=ToolPopover('探索地图与节点',panel,self,on_show=self.refresh,theme='light',object_name='videoMapWindow');self.map_popup.panel=panel;self.map_popup.resize(1100,650)
             panel.resources.requested.connect(self.open_resource)
         return self.present(self.map_popup)
 

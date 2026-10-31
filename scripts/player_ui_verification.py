@@ -19,6 +19,7 @@ def source_hashes():
     paths+=list((ROOT/'scripts').glob('verify_player*py'))
     paths+=list((ROOT/'rouge/data/part-icons').glob('*.png'))
     paths+=list((ROOT/'rouge/data/map-art').glob('*'))+list((ROOT/'rouge/data/map-event-art').glob('*'))
+    paths+=[p for p in (ROOT/'rouge/data/player-theme').rglob('*')if p.is_file()]
     paths+=[ROOT/'research/public-statistics-388/nodes.json']
     paths+=[ROOT/'scripts/update_cloud_index.py',ROOT/'research/public-reference-391/snapshot.json']
     paths+=list((ROOT/'research/public-compendium-413').glob('*'))

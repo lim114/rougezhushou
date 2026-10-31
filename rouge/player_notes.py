@@ -51,7 +51,8 @@ class NotesDialog(QDialog):
     def __init__(self,folder,parent=None):
         super().__init__(parent);self.store=NoteStore(folder);self.key=None;self.digest=None;self.dirty=False;self.content=None
         from .player_note_style import NOTE_STYLE
-        self.setObjectName('sceneNotesEditor');self.setStyleSheet(NOTE_STYLE)
+        from .player_theme import apply_theme
+        self.setObjectName('sceneNotesEditor');apply_theme(self,extra=NOTE_STYLE)
         self.setWindowTitle('本地场景笔记');self.resize(900,500);body=QVBoxLayout(self)
         self.context=QLabel();self.context.setWordWrap(True);body.addWidget(self.context)
         self.pages=QTabWidget();body.addWidget(self.pages,1)

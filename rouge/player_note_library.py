@@ -74,7 +74,8 @@ class NoteLibraryDialog(QDialog):
     def __init__(self,folder,parent=None):
         super().__init__(parent);self.library=NoteLibrary(folder);self.rows=[];self.setWindowTitle('本机场景笔记');self.resize(680,560);body=QVBoxLayout(self)
         from .player_note_style import NOTE_STYLE
-        self.setObjectName('sceneNotesLibrary');self.setStyleSheet(NOTE_STYLE)
+        from .player_theme import apply_theme
+        self.setObjectName('sceneNotesLibrary');apply_theme(self,extra=NOTE_STYLE)
         self.notice=QLabel('只查本机笔记；搜索不会上传，旧笔记缺少场景标签时不猜测关联。');self.notice.setWordWrap(True);body.addWidget(self.notice);self.search=QLineEdit();self.search.setPlaceholderText('搜索场景名称或笔记内容');body.addWidget(self.search);self.entries=QListWidget();body.addWidget(self.entries,1);self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.open_button=QPushButton('打开这条笔记对应的编辑页');body.addWidget(self.open_button)
         self.reference_button=QPushButton('查看所选笔记对应的固定资料');body.addWidget(self.reference_button);self.reference_button.clicked.connect(self.open_reference)
         self.search_timer=QTimer(self);self.search_timer.setSingleShot(True);self.search_timer.setInterval(150);self.search_timer.timeout.connect(self.refresh)
