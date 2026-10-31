@@ -1,0 +1,42 @@
+{
+  "baseline_commit": "e4dd8ba4ae1aff7dd386c70fd374898b31d6e37c",
+  "changed_source": [
+    {
+      "path": "rouge/recognition.py",
+      "sha256": "bea6803779fccb9353625e0c14f185dd844d741fd2a2f98acec31da47798714c",
+      "bytes": 23274
+    },
+    {
+      "path": "rouge/player_shop_hover.py",
+      "sha256": "45e6abb2c0dfc847e15b3f265e8646d8b6891de1f2c3a9d549f08f1f9ca28f96",
+      "bytes": 9356
+    }
+  ],
+  "only_intra_op_constant2_to4_changed": true,
+  "new_production_functions_classes_or_guards": 0,
+  "numeric_models_source_data_capture_state_and_UI_changed": false,
+  "package_versions": {
+    "rapidocr_onnxruntime": "1.4.4",
+    "onnxruntime": "1.30.0"
+  },
+  "installed_source_sha256": {
+    "main.py": "156c49e683fddd26f04280f391f882b857a74d2f020497870f7dd8d850ed5a2c",
+    "utils/infer_engine.py": "3e402c95026ab793533b0de296b0b7e897ad50618d089b2b2214bd90833c3f29",
+    "ch_ppocr_rec/text_recognize.py": "48d8656d11403d09b2ed32b65a686906b9502ca1a4e16a3934d91b35129d032a",
+    "ch_ppocr_det/text_detect.py": "fc9d63ba47940d3e5bfefe6738f310b583cd4de4708fefe114fce11236f2c199",
+    "ch_ppocr_cls/text_cls.py": "ead555ddeb7a8a0da067f4d2f9e2760e93db9e46d906888e0522277dda6620c8",
+    "config.yaml": "bf94a1da4cba828e67b1d61e27cee14d9e7da27c9f272e04048a17e41ae97332"
+  },
+  "installed_model_sha256": {
+    "ch_PP-OCRv4_det_infer.onnx": "d2a7720d45a54257208b1e13e36a8479894cb74155a5efe29462512d42f49da9",
+    "ch_PP-OCRv4_rec_infer.onnx": "48fc40f24f6d2a207a2b1091d3437eb3cc3eb6b676dc3ef9c37384005483683b",
+    "ch_ppocr_mobile_v2.0_cls_infer.onnx": "e47acedf663230f8863ff1ab0e64dd2d82b838fceb5957146dab185a89d6215c"
+  },
+  "primary_sources": [
+    "https://github.com/RapidAI/RapidOCR/blob/v1.4.4/python/rapidocr_onnxruntime/ch_ppocr_rec/text_recognize.py",
+    "https://github.com/RapidAI/RapidOCR/blob/v1.4.4/LICENSE",
+    "https://onnxruntime.ai/docs/performance/tune-performance/threading.html"
+  ],
+  "reuse": "Existing installed RapidOCR1.4.4 Apache2.0 interface and ONNX Runtime; no new engine, model, dependency install, copied upstream implementation or local package edits.",
+  "limits": "Per-model parallelism is4; not a claim of at most4 process threads. More CPU may be used; other hardware and playing-game latency/FPS remain unverified."
+}

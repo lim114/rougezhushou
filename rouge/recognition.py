@@ -106,7 +106,7 @@ class ScreenReader:
             mark = now
         if self._engine is None:
             from rapidocr_onnxruntime import RapidOCR
-            self._engine = RapidOCR(intra_op_num_threads=2, inter_op_num_threads=2)
+            self._engine = RapidOCR(intra_op_num_threads=4, inter_op_num_threads=2)
             if self.cache_enabled: self._engine = CachedOCR(self._engine)
             self._frame_ocr=DynamicOCR(self._engine) if self.cache_enabled else self._engine
         elapsed('initialization')

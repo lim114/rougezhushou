@@ -9,7 +9,7 @@
 
 恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。当前工作顺序：P3 → P2 → P1；OCR及识别覆盖、适配、准确率与耗时同步优化；未完成事项保留。P2尚未全部完成；原生动作/结束时钟和当前游戏面板不能用公式参考代替验收。节点概率与联网统计已纳入要求，只读取公开数据并离线计算，不上传个人数据、不推荐或自动选路；历史频率与本局条件概率分别标注。
 
-最新记录全量：`verification/full-440/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。当前实现维护：打通保密等级16的读取、同局复用与已证敌人环境分项；回执 `verification/maintenance/grade16-review-20261031/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
+最新记录全量：`verification/full-440/summary.json`，可用范围全通过：`True`。Windows后台采样和聊天不等于云端验证；本批不操作游戏、不发送聊天。私人配置与本局记忆只保留本机。当前实现维护：复用现有识别库调优并行度，撤回无收益的整帧缓存接入；回执 `verification/maintenance/ocr-runtime-review-20261031/summary.json`。不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。
 
 下面是历史交接，不代表当前节数。
 <!-- live-cloud-index:end -->
