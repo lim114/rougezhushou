@@ -46,6 +46,43 @@ def check_reading(window,gui,require):
         window.player_validation_target=card
     finally:window.run.state=before
 
+def check_source_nodes(window,gui,require):
+    from PySide6.QtCore import QTimer
+    from PySide6.QtWidgets import QLabel
+    from .player_map_acceptance import fixtures
+    from tests.test_item_reading_444 import choose,IDS
+    before=deepcopy(window.run.state)
+    try:
+        for timer in window.findChildren(QTimer):timer.stop()
+        graphs,*_=fixtures();kind='作战';graphs[0]['nodes'][0].update(observed_type=kind)
+        window.run.state['maps']={g['zone_id']:g for g in graphs};window.run.state['relics']={IDS[0]:{}}
+        original=deepcopy(window.run.state);window.show_compact();bar=window.compact_window;bar.open_inventory();panel=bar.inventory_popup.panel
+        choose(panel,IDS[0]);panel.source_button.click();gui.processEvents();card=panel.hover_card
+        labels=[w.text()for w in card.cards.findChildren(QLabel)]
+        require('对应地图节点'in labels and '其它取得来源'in labels,'sources445_separates_map_nodes_from_other_origins')
+        buttons=[b for b in card.cards.buttons if b.property('mapKind')]
+        require(buttons and all(not b.picture.pixmap().isNull()for b in buttons),'sources445_exact_nodes_use_shared_original_icons')
+        origins=[b for b in card.cards.buttons if b.caption.text().startswith('流窜的')]
+        require(origins and all(not hasattr(b,'picture')and'未直接对应地图节点'in b.toolTip()for b in origins),'sources445_roaming_origin_has_no_guessed_map_icon')
+        target=next(b for b in buttons if b.property('mapKind')==kind);pool_id=target.property('poolIdentity');target.setFocus();QTest.keyClick(target,Qt.Key.Key_Space);gui.processEvents();mp=bar.map_popup.panel
+        require(bar.map_popup.isVisible()and not window.isVisible(),'sources445_keyboard_node_card_opens_compact_map')
+        require(mp.view.filter_kind==kind and mp.view.overlay[graphs[0]['nodes'][0]['id']]['match']=='observed','sources445_exact_type_highlights_corresponding_recorded_position')
+        require(not bar.inventory_popup.isVisible()and not card.isVisible(),'sources445_map_navigation_closes_obscuring_origin_card')
+        require(window.run.state==original,'sources445_map_navigation_preserves_run_state')
+        mp.refresh();require(mp.view.filter_kind==kind,'sources445_refresh_keeps_source_type')
+        require('不保证可达或掉落'in mp.filter_notice.text(),'sources445_map_entry_does_not_claim_reachability_or_drop')
+        window.player_source_map_image=bar.map_popup.grab()
+        mp.clear_filter.click();require(mp.view.filter_kind is None,'sources445_existing_clear_type_action_is_preserved')
+        bar.open_inventory();choose(panel,IDS[0]);panel.source_button.click();gui.processEvents()
+        next(b for b in card.cards.buttons if b.property('mapKind')is None).click();gui.processEvents()
+        require(card.isVisible()and card.show_conditions.isChecked()and not bar.map_popup.isVisible(),'sources445_pool_click_reads_conditions_without_opening_map')
+        with patch('rouge.player_inventory.reference.packet',return_value=None):panel.refresh()
+        require(not card.isVisible()and not card.open_map_source(pool_id,kind),'sources445_expired_identity_cannot_navigate')
+        panel.refresh();choose(panel,IDS[0]);panel.source_button.click();gui.processEvents();card.show_conditions.setChecked(False)
+        require('不是抽取权重或本局获得概率'in card.notice.text(),'sources445_frequency_scope_remains_visible')
+        window.player_validation_target=card
+    finally:window.run.state=before
+
 def check(window,gui,require):
     original=deepcopy(window.run.state)
     window.run.state['relics']={identity:{} for identity in ('rogue_6_relic_legacy_1','rogue_6_relic_legacy_3','rogue_6_relic_legacy_4')}

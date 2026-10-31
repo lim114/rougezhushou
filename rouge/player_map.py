@@ -46,19 +46,25 @@ def dossier_graph(graph):
 @lru_cache(maxsize=1)
 def art_manifest():return json.loads((ART/'sources.json').read_text('utf8'))
 
+@lru_cache(maxsize=1)
+def node_atlas():return QImage(str(ART/'nodes.png'))
+
+@lru_cache(maxsize=len(ICONS))
+def node_sprite(kind):
+    """One original atlas crop for map painting and exact source-node cards."""
+    key=ICONS.get(kind);sprite=art_manifest()['sprites'].get(key)
+    if not sprite:return QImage()
+    import numpy as np
+    icon=node_atlas().copy(sprite['x'],sprite['y'],sprite['width'],sprite['height']).convertToFormat(QImage.Format.Format_RGBA8888)
+    alpha=np.frombuffer(icon.bits(),np.uint8).reshape(icon.height(),icon.width(),4)[:,:,3];ys,xs=np.where(alpha>16)
+    return icon.copy(int(xs.min()),int(ys.min()),int(xs.max()-xs.min()+1),int(ys.max()-ys.min()+1))if len(xs)else icon
+
 class PreviewMapView(MapView):
     nodeHovered=Signal(str,QPoint)
     def __init__(self):
-        super().__init__();self.atlas=QImage(str(ART/'nodes.png'));self.background=QImage();self.icons={};self.filter_kind=None;self.overlay={};self.hover_id=None;self.frequencies=None;self.setMinimumSize(480,300)
+        super().__init__();self.background=QImage();self.filter_kind=None;self.overlay={};self.hover_id=None;self.frequencies=None;self.setMinimumSize(480,300)
     def sprite_for(self,kind):
-        key=ICONS.get(kind);sprite=art_manifest()['sprites'].get(key)
-        if not sprite:return QImage()
-        if key not in self.icons:
-            import numpy as np
-            icon=self.atlas.copy(sprite['x'],sprite['y'],sprite['width'],sprite['height']).convertToFormat(QImage.Format.Format_RGBA8888)
-            alpha=np.frombuffer(icon.bits(),np.uint8).reshape(icon.height(),icon.width(),4)[:,:,3];ys,xs=np.where(alpha>16)
-            self.icons[key]=icon.copy(int(xs.min()),int(ys.min()),int(xs.max()-xs.min()+1),int(ys.max()-ys.min()+1))if len(xs)else icon
-        return self.icons[key]
+        return node_sprite(kind)
     def set_type_filter(self,kind):
         from .player_map_reference import overlay_rows
         self.filter_kind=kind;self.overlay=overlay_rows(self.graph,kind,self.frequencies)if kind else{};self.update()

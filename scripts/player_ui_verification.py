@@ -83,6 +83,10 @@ def run(section,receipt):
                 require(win32gui.IsWindowVisible(feature_handle)and win32process.GetWindowThreadProcessId(feature_handle)[1]==os.getpid(),'visible_owned_actual_feature_native_window')
             assert shot_target.grab().save(str(shot))
             images.append({'file':image_name(shot),'sha256':sha256(shot.read_bytes()).hexdigest()})
+            if section==445:
+                require(not window.player_source_map_image.isNull(),'sources445_actual_map_image_was_captured_before_temporary_state_restored')
+                mapped=receipt.with_name('source-type-map.png');assert window.player_source_map_image.save(str(mapped))
+                images.append({'file':image_name(mapped),'sha256':sha256(mapped.read_bytes()).hexdigest()})
             if section==444:
                 window.compact_window.inventory_popup.panel.hover_card.dismiss()
                 require(window.open_item_reference('rogue_6_relic_legacy_1'),'item444_full_reader_screenshot_uses_exact_reference')

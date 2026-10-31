@@ -606,5 +606,7 @@ ADDITIONAL_MODULES += ('tests.test_deferred_reference_review',)
 
 ADDITIONAL_MODULES += ('tests.test_item_reading_444',)
 
+ADDITIONAL_MODULES += ('tests.test_source_nodes_445',)
+
 if __name__ == '__main__':
     sys.exit(main())

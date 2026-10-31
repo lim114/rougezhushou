@@ -17,13 +17,13 @@ class ItemHoverCard(QDialog):
         self.pin=QPushButton('固定');self.pin.setCheckable(True);self.pin.toggled.connect(self.set_pinned);head.addWidget(self.pin);close=QPushButton('×');close.clicked.connect(self.dismiss);head.addWidget(close);body.addLayout(head)
         self.notice=QLabel();self.notice.setWordWrap(True);body.addWidget(self.notice)
         from .player_source_cards import SourceCards
-        self.cards=SourceCards(self);self.cards.poolChosen.connect(self.choose_card);body.addWidget(self.cards,1)
+        self.cards=SourceCards(self);self.cards.poolChosen.connect(self.choose_card);self.cards.nodeChosen.connect(self.open_map_source);body.addWidget(self.cards,1)
         self.show_conditions=QPushButton('展开条件与统计样本');self.show_conditions.setCheckable(True);body.addWidget(self.show_conditions)
         self.pools=QComboBox();self.pools.currentIndexChanged.connect(self.read_pool);body.addWidget(self.pools)
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);body.addWidget(self.detail,1);self.detail.hide();self.show_conditions.toggled.connect(self.detail.setVisible);self.pools.hide()
         self.open_button=QPushButton('查看这个池的全部物品');self.open_button.clicked.connect(self.open_pool);body.addWidget(self.open_button)
         self.map_targets=QComboBox();self.map_targets.setAccessibleName('来源明确关联的地图节点类型');body.addWidget(self.map_targets)
-        self.map_button=QPushButton('在本局地图查看这类节点');self.map_button.clicked.connect(self.open_map_source);body.addWidget(self.map_button)
+        self.map_button=QPushButton('在本局地图查看这类节点');self.map_button.clicked.connect(lambda:self.open_map_source());body.addWidget(self.map_button)
     def set_pinned(self,value):self.pinned=value;self.pin.setText('取消固定'if value else'固定')
     def enterEvent(self,event):self.entered.emit();super().enterEvent(event)
     def leaveEvent(self,event):self.left.emit();super().leaveEvent(event)
@@ -56,10 +56,13 @@ class ItemHoverCard(QDialog):
         visible=self.map_targets.count()>0
         self.map_targets.setVisible(visible);self.map_button.setVisible(visible);self.map_button.setEnabled(visible and companion(self)is not None)
         self.map_button.setToolTip('仅标出本局记录中对应类型及候选位置；来源资料不表示当前可达、会出现此物或必掉。')
-    def open_map_source(self):
+    def open_map_source(self,pool_id=None,kind=None):
         from .player_source_map import targets,companion
-        kind=self.map_targets.currentData();bar=companion(self)
-        if bar is None or kind not in targets(self.index,self.version,self.identity,self.pools.currentData()):return False
+        pool_id=self.pools.currentData()if pool_id is None else pool_id
+        kind=self.map_targets.currentData()if kind is None else kind
+        if kind not in targets(self.index,self.version,self.identity,pool_id):return False
+        self.choose_card(pool_id);self.map_targets.setCurrentIndex(self.map_targets.findData(kind));bar=companion(self)
+        if bar is None:return False
         if bar.open_map()is False:return False
         bar.map_popup.panel.set_type_filter(kind);return True
     def choose_card(self,identity):
