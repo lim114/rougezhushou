@@ -19,7 +19,7 @@ class NodeEntryButton(QToolButton):
     def paintEvent(self,event):
         p=QPainter(self);p.setRenderHint(QPainter.RenderHint.Antialiasing);p.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
         rect=QRectF(self.rect()).adjusted(.5,.5,-.5,-.5);clip=QPainterPath();clip.addRoundedRect(rect,7,7);p.setClipPath(clip)
-        p.fillRect(rect,QColor('#30413f'))
+        p.fillRect(rect,QColor('#303030'))
         if not self.artwork.isNull():
             scale=max(rect.width()/self.artwork.width(),rect.height()/self.artwork.height())
             w,h=rect.width()/scale,rect.height()/scale
@@ -50,7 +50,7 @@ class NodeHoverCard(QDialog):
         self.binding=None;self.content_key=None;self.pinned=False
         self.setProperty('playerVisibility','hover')
         from .player_theme import apply_theme
-        self.setObjectName('nodeHoverCard');apply_theme(self,'dark',extra='#nodeHoverCard QScrollArea,#nodeHoverBody{border:0;background:#1b2928;}')
+        self.setObjectName('nodeHoverCard');apply_theme(self,'dark',extra='#nodeHoverCard QScrollArea,#nodeHoverBody{border:0;background:transparent;}')
         body=QVBoxLayout(self);head=QHBoxLayout();self.title=QLabel();head.addWidget(self.title,1)
         self.pin=QPushButton('固定');self.pin.setCheckable(True);self.pin.toggled.connect(self.set_pinned);head.addWidget(self.pin)
         close=QPushButton('×');close.setFixedWidth(27);close.clicked.connect(self.dismiss);head.addWidget(close);body.addLayout(head)

@@ -774,6 +774,9 @@ class CurrentBattlePanel(QWidget):
         target=self._sync_shop_vault(True)
         if target is None:
             self._close_shop_vault();return False
+        from .player_cannot_links import open_reader
+        opened=open_reader(self,target)
+        if opened is not None:return opened
         from .current_cannot_view import CurrentCannotDialog
         self._close_shop_vault();self.shop_vault_dialog=CurrentCannotDialog(target,self)
         if self.shop_vault_dialog.panel.result is None:

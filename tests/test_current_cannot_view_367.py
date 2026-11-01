@@ -22,7 +22,7 @@ class CurrentCannotView367Tests(unittest.TestCase):
         self.assertFalse(p.floor_row.isVisible());self.assertTrue(p.entries_row.isVisible());self.assertEqual(p.entries.count(),9)
         p.entries.setCurrentIndex(2);self.assertEqual(p.result['target'],model.target_for_reward('ro6_t_6','$.predefines.tokenInsts[0]'))
         self.assertEqual(p.result['selected']['pickup_free_slots_reference'],2)
-        self.assertIn('不是实际已领取',p.player.toPlainText())
+        self.assertIn('不是实际已领取',p.technical.toPlainText());self.assertNotIn('不是实际已领取',p.player.toPlainText())
         self.assertTrue(p.open_link({'kind':'shop','stage_id':None,'key':None}))
         p.floor.setCurrentIndex(4);self.assertEqual([s['id']for s in p.result['stages']],['ro6_t_7'])
 

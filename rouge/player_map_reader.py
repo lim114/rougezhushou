@@ -9,7 +9,7 @@ QDialog#mapReferenceWindow QTabBar::tab {color:#d7d7d7;background:#333333;border
 QDialog#mapReferenceWindow QTabBar::tab:selected {background:#484848;color:white;}
 QDialog#mapReferenceWindow QPushButton,QDialog#mapReferenceWindow QComboBox {color:#ededed;background:#303030;border:1px solid #585858;border-radius:7px;padding:5px;}
 QDialog#mapReferenceWindow QPushButton:disabled {color:#929999;}
-QDialog#mapReferenceWindow QLineEdit {color:#ededed;background:#2a2a2a;border:1px solid #585858;border-radius:7px;padding:6px;selection-background-color:#9bd6c1;selection-color:#152621;}
+QDialog#mapReferenceWindow QLineEdit {color:#ededed;background:#2a2a2a;border:1px solid #585858;border-radius:7px;padding:6px;selection-background-color:#c1c7cb;selection-color:#262528;}
 QDialog#mapReferenceWindow QPlainTextEdit,QDialog#mapReferenceWindow QTextBrowser,QDialog#mapReferenceWindow QListWidget,QDialog#mapReferenceWindow QTreeWidget {color:#ededed;background:#262528;border:1px solid #585858;}
 '''
 

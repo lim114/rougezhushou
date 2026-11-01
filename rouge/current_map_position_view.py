@@ -23,7 +23,7 @@ class CurrentTileGrid(QWidget):
         if self.result is None or not 0<=row<self.result['rows']or not 0<=col<self.result['cols']:return None
         side=rect.width()/self.result['cols'];return QPointF(rect.left()+(col+.5)*side,rect.top()+(row+.5)*side)
     def paintEvent(self,event):
-        p=QPainter(self);p.fillRect(self.rect(),QColor('#15212b'))
+        p=QPainter(self);p.fillRect(self.rect(),self.palette().window().color())
         if self.result is None:return
         rect=self.grid_rect();side=rect.width()/self.result['cols']
         for row in range(self.result['rows']):
@@ -55,7 +55,7 @@ class CurrentOriginalCenters(QWidget):
         if self.point is None or self.pixmap.isNull():return None
         rect=self.image_rect();x,y=self.point['pixel'];return QPointF(rect.left()+x*rect.width()/self.pixmap.width(),rect.top()+y*rect.height()/self.pixmap.height())
     def paintEvent(self,event):
-        p=QPainter(self);p.fillRect(self.rect(),QColor('#15212b'))
+        p=QPainter(self);p.fillRect(self.rect(),self.palette().window().color())
         if self.pixmap.isNull():return
         p.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform);p.drawPixmap(self.image_rect(),self.pixmap,QRectF(self.pixmap.rect()));center=self.point_center()
         if center is not None:

@@ -210,3 +210,5 @@ Qt已有置顶及整窗输入穿透标志，但“全部穿透”会使该窗口
 [第463节](research/material-sources-463/README.md)：复用源绑定Qt页面、官方BSD流式布局和已有事件/交换/作战阅读器；主资料窗接入材料来源，独立工作区入口保留。
 
 [第464节](research/battle-tools-464/README.md)：复用成熟Qt与superqt折叠方案，四类工具和四类地图按现有模型同窗打开；控制器复用原入口检查，当前阅读器显式传递，不占用旧弹窗状态。
+
+[第465节](research/reference-theme-465/README.md)：复用固定版本PyQtDarkTheme生成静态三套主题；原生共享窗按页面切换，不修改系统和应用全局配色。坎诺特链接沿准确关卡、敌人和奖励导航。

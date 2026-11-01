@@ -4,10 +4,10 @@ from PySide6.QtGui import QColor,QPen,QIcon,QTextLayout,QTextOption
 from PySide6.QtWidgets import QListWidget,QListView,QStyledItemDelegate
 
 INVENTORY_STYLE='''
-#inventoryWindow{background:#101214;border:1px solid #3b4245;border-radius:14px;}
+#inventoryWindow{background:#111213;border:1px solid #505354;border-radius:14px;}
 #inventoryWindow QWidget{background:transparent;}
 #inventoryWindow QLabel{color:#d7dcdb;background:transparent;}
-#inventoryWindow QTabWidget::pane{background:#101214;border:0;}
+#inventoryWindow QTabWidget::pane{background:#111213;border:0;}
 #inventoryWindow QTabBar::tab{background:#282d30;color:#d6dcda;border:0;border-radius:14px;padding:7px 16px;margin:3px;}
 #inventoryWindow QTabBar::tab:selected{background:#e7ecea;color:#1d2926;}
 #inventoryWindow QLineEdit,#inventoryWindow QComboBox{background:#23292b;color:#e3e9e6;border:1px solid #3d4648;border-radius:12px;padding:6px;}
@@ -16,8 +16,8 @@ INVENTORY_STYLE='''
 #inventoryWindow QPushButton:checked{background:#e6ece9;color:#17241e;}
 #inventoryWindow QPushButton:hover{background:#3d5e55;color:white;}
 #inventoryWindow QCheckBox{color:#b6c2bc;}
-#inventoryWindow QPlainTextEdit{background:#1b2322;color:#d9e6de;border:1px solid #43514b;border-radius:12px;padding:10px;}
-#inventoryWindow QListWidget{background:#101214;color:#8bd3b9;border:0;outline:none;}
+#inventoryWindow QPlainTextEdit{background:#202224;color:#e7e9e9;border:1px solid #505354;border-radius:12px;padding:10px;}
+#inventoryWindow QListWidget{background:#111213;color:#8bd3b9;border:0;outline:none;}
 '''
 
 class IconTile(QStyledItemDelegate):

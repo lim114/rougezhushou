@@ -28,8 +28,9 @@ class ToolPage(QWidget):
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
         self.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored)
         self.theme = theme
+        self.variant = 'reference' if theme=='dark' and object_name=='mapReferenceWindow' else None
         self.extra_style = extra_style.replace('QDialog#', 'QWidget#')
-        apply_theme(self, theme, extra=self.extra_style)
+        apply_theme(self, theme, extra=self.extra_style, variant=self.variant)
         self.on_show = on_show
         self.prepare = lambda: True
         self.source_parent = None
@@ -129,7 +130,7 @@ class ReferenceWindow(PlayerDialog):
             del self.history[self.cursor+1:]
             self.history.append(page)
             self.cursor = len(self.history)-1
-        apply_theme(self, page.theme)
+        apply_theme(self, page.theme, variant=page.variant)
         self.setWindowTitle('黑流树海助手 · '+page.windowTitle())
         self.headers.setCurrentWidget(page.header)
         self.pages.setCurrentWidget(page)
