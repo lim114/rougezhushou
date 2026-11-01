@@ -395,10 +395,12 @@ class CurrentBattlePanel(QWidget):
         if dialog is not None:dialog.panel.clear_reference();dialog.close()
         self.spawn_candidates_position_dialog=None
 
-    def _spawn_action_selected(self,key):
-        dialog=getattr(self,'spawn_candidates_dialog',None)
-        if self.result is None or dialog is None or dialog.panel.result is None:return False
-        if dialog.panel.result['battle_source_identity']!=self.result['source_identity']:return False
+    def _spawn_action_selected(self,key,*,reader=None):
+        if reader is None:
+            dialog=getattr(self,'spawn_candidates_dialog',None)
+            reader=dialog.panel if dialog is not None else None
+        if self.result is None or reader is None or reader.result is None:return False
+        if reader.result['battle_source_identity']!=self.result['source_identity']:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
         action=next((a for a in self.result['actions']if a['key']==key),None)
         if action is None:return False
@@ -412,6 +414,9 @@ class CurrentBattlePanel(QWidget):
     def open_spawn_candidates(self):
         if self.result is None:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .battle_tool_readers import open_tool
+        opened=open_tool(self,'spawn_candidates')
+        if opened is not None:return opened
         from .current_spawn_candidates_view import CurrentSpawnCandidatesDialog
         self._close_spawn_candidates();self.spawn_candidates_dialog=CurrentSpawnCandidatesDialog(self.stage_id,parent=self)
         panel=self.spawn_candidates_dialog.panel
@@ -579,6 +584,9 @@ class CurrentBattlePanel(QWidget):
     def open_action_positions(self):
         if self.result is None or self.action_key is None:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .battle_tool_readers import open_position
+        opened=open_position(self,'action',(self.stage_id,self.action_key),context=lambda:None if self.result is None else(self.result['source_identity'],self.stage_id,self.action_key))
+        if opened is not None:return opened
         from .current_action_positions_view import CurrentActionPositionsDialog
         dialog=getattr(self,'action_position_dialog',None)
         self.enemy_spawns_position_dialog=None
@@ -590,6 +598,9 @@ class CurrentBattlePanel(QWidget):
     def open_map_positions(self):
         if self.result is None:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .battle_tool_readers import open_position
+        opened=open_position(self,'map',(self.stage_id,),context=lambda:None if self.result is None else(self.result['source_identity'],self.stage_id))
+        if opened is not None:return opened
         from .current_map_position_view import CurrentMapPositionDialog
         self._close_map_positions()
         dialog=getattr(self,'position_dialog',None)
@@ -785,13 +796,15 @@ class CurrentBattlePanel(QWidget):
         if child is not None and child.isVisible():
             if not keep or not available or child.panel.enemy_key!=self.enemy_key:self._close_enemy_spawns()
             else:child.panel.refresh_reference()
-    def _enemy_spawns_action_selected(self,key):
-        child=getattr(self,'enemy_spawns_dialog',None)
-        if self.result is None or child is None or child.panel.result is None:return False
-        if child.panel.result['battle_source_identity']!=self.result['source_identity']or child.panel.enemy_key!=self.enemy_key:return False
+    def _enemy_spawns_action_selected(self,key,*,reader=None):
+        if reader is None:
+            child=getattr(self,'enemy_spawns_dialog',None)
+            reader=child.panel if child is not None else None
+        if self.result is None or reader is None or reader.result is None:return False
+        if reader.result['battle_source_identity']!=self.result['source_identity']or reader.enemy_key!=self.enemy_key:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
         from .current_enemy_spawns import resolve_action
-        if resolve_action(child.panel.result,key)is None:child.panel.clear_reference();return False
+        if resolve_action(reader.result,key)is None:reader.clear_reference();return False
         action=next((a for a in self.result['actions']if a['key']==key),None)
         if action is None:return False
         return self.focus_action(action)
@@ -803,6 +816,9 @@ class CurrentBattlePanel(QWidget):
         if self.result is None or self.enemy_key is None:return False
         if self.enemy_combo.currentData()!=self.enemy_key:self._close_enemy_spawns();return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .battle_tool_readers import open_tool
+        opened=open_tool(self,'enemy_spawns')
+        if opened is not None:return opened
         from .current_enemy_spawns_view import CurrentEnemySpawnsDialog
         self._close_enemy_spawns();self.enemy_spawns_dialog=CurrentEnemySpawnsDialog(self.stage_id,self.enemy_key,self)
         panel=self.enemy_spawns_dialog.panel
@@ -820,18 +836,23 @@ class CurrentBattlePanel(QWidget):
         if child is not None and child.isVisible():
             if not keep:self._close_stage_objects()
             else:child.panel.refresh_reference()
-    def _stage_objects_action_selected(self,key):
-        child=getattr(self,'stage_objects_dialog',None)
-        if self.result is None or child is None or child.panel.result is None:return False
-        if child.panel.result['battle_source_identity']!=self.result['source_identity']:return False
+    def _stage_objects_action_selected(self,key,*,reader=None):
+        if reader is None:
+            child=getattr(self,'stage_objects_dialog',None)
+            reader=child.panel if child is not None else None
+        if self.result is None or reader is None or reader.result is None:return False
+        if reader.result['battle_source_identity']!=self.result['source_identity']:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
         from .current_stage_objects import resolve
-        row=child.panel.selected();action=child.panel.selected_action()
-        if row is None or action is None or action['key']!=key or resolve(child.panel.result,row['key'],key)is None:child.panel.clear_reference();return False
+        row=reader.selected();action=reader.selected_action()
+        if row is None or action is None or action['key']!=key or resolve(reader.result,row['key'],key)is None:reader.clear_reference();return False
         return self.focus_action(action)
     def open_stage_objects(self):
         if self.result is None:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .battle_tool_readers import open_tool
+        opened=open_tool(self,'stage_objects')
+        if opened is not None:return opened
         from .current_stage_objects_view import CurrentStageObjectsDialog
         self._close_stage_objects();self.stage_objects_dialog=CurrentStageObjectsDialog(self.stage_id,self)
         child=self.stage_objects_dialog
@@ -848,18 +869,23 @@ class CurrentBattlePanel(QWidget):
         if child is not None and child.isVisible():
             if not keep:self._close_route_itinerary()
             else:child.panel.refresh_reference()
-    def _route_itinerary_action_selected(self,key):
-        child=getattr(self,'route_itinerary_dialog',None)
-        if self.result is None or child is None or child.panel.result is None:return False
-        if child.panel.result['battle_source_identity']!=self.result['source_identity']:return False
+    def _route_itinerary_action_selected(self,key,*,reader=None):
+        if reader is None:
+            child=getattr(self,'route_itinerary_dialog',None)
+            reader=child.panel if child is not None else None
+        if self.result is None or reader is None or reader.result is None:return False
+        if reader.result['battle_source_identity']!=self.result['source_identity']:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
         from .current_route_itinerary import resolve
-        route=child.panel.selected_route();action=child.panel.selected_action()
-        if action is None or action['key']!=key or resolve(child.panel.result,route['key']if route else None,action_key=key)is None:child.panel.clear_reference();return False
+        route=reader.selected_route();action=reader.selected_action()
+        if action is None or action['key']!=key or resolve(reader.result,route['key']if route else None,action_key=key)is None:reader.clear_reference();return False
         return self.focus_action(action)
     def open_route_itinerary(self):
         if self.result is None:return False
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .battle_tool_readers import open_tool
+        opened=open_tool(self,'route_itinerary')
+        if opened is not None:return opened
         from .current_route_itinerary_view import CurrentRouteItineraryDialog
         self._close_route_itinerary();self.route_itinerary_dialog=CurrentRouteItineraryDialog(self.stage_id,self);child=self.route_itinerary_dialog
         if child.panel.result is None or child.panel.result['battle_source_identity']!=self.result['source_identity']:self._close_route_itinerary();return False

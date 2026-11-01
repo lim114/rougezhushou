@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,Q
 from . import current_enemy_spawns as model
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .reference_copy import mechanism_copy
 
 class CurrentEnemySpawnsPanel(QWidget):
     actionSelected=Signal(str)
@@ -13,7 +14,7 @@ class CurrentEnemySpawnsPanel(QWidget):
     sourceInvalidated=Signal()
     def __init__(self,stage_id,enemy_key,parent=None):
         super().__init__(parent);self.stage_id=stage_id;self.enemy_key=enemy_key;self.result=None;self._view_key=None
-        layout=QVBoxLayout(self);notice=QLabel(model.NOTICE);notice.setWordWrap(True);layout.addWidget(notice)
+        layout=QVBoxLayout(self);notice=QLabel('查看所选敌人的出怪条目、条件和地图位置。');notice.setToolTip(model.NOTICE);notice.setWordWrap(True);layout.addWidget(notice)
         bar=QHBoxLayout();self.kind=QComboBox()
         for k,v in model.KINDS:self.kind.addItem(v,k)
         self.refresh_button=QPushButton('重新核对对应条目');bar.addWidget(self.kind,1);bar.addWidget(self.refresh_button);layout.addLayout(bar)
@@ -40,7 +41,7 @@ class CurrentEnemySpawnsPanel(QWidget):
         if fresh is None:self.clear_reference();return False
         keep=self.result is not None and fresh['source_identity']==self.result['source_identity']and fresh['enemy_key']==self.result['enemy_key']and fresh['stage_id']==self.result['stage_id']
         key=self.entries.currentData()if keep else None;self.result=fresh;rows=model.rows(fresh,self.kind.currentData());self._fill(self.entries,rows,key);self.entries.setEnabled(bool(rows));row=self.selected();view=(deepcopy(fresh['source_identity']),self.kind.currentData(),row['key']if row else None);preserve=keep and view==self._view_key
-        replace_text(self.player,model.player_text(fresh,row),preserve=preserve);replace_text(self.technical,_technical_json({'stage_id':fresh['stage_id'],'enemy_key':fresh['enemy_key'],'selected':row,'source_identity':fresh['source_identity'],'original_level_source':fresh['original_level_source'],'exact_enemy':fresh['enemy'],'all_corresponding_actions':fresh['entries'],'actual_occurrence':None,'actual_count':None,'absolute_time':None}),preserve=preserve)
+        full_text=model.player_text(fresh,row);text=full_text.replace(f"本关资料中找到{len(fresh['entries'])}条直接出怪记录；这是条目数，不是实际出场数量。",f"出怪记录：{len(fresh['entries'])}条。");replace_text(self.player,mechanism_copy(text,model.NOTICE,extra_detail_headings=('【适用范围】',))[0],preserve=preserve);replace_text(self.technical,_technical_json({'完整说明':full_text,'stage_id':fresh['stage_id'],'enemy_key':fresh['enemy_key'],'selected':row,'source_identity':fresh['source_identity'],'original_level_source':fresh['original_level_source'],'exact_enemy':fresh['enemy'],'all_corresponding_actions':fresh['entries'],'actual_occurrence':None,'actual_count':None,'absolute_time':None}),preserve=preserve)
         pix=QPixmap();raw=model.battle.picture_for_enemy(fresh['enemy']);self.portrait.show()
         if raw and pix.loadFromData(raw,'PNG'):self.portrait.setPixmap(pix.scaled(74,74,Qt.AspectRatioMode.KeepAspectRatio,Qt.TransformationMode.SmoothTransformation))
         else:self.portrait.clear();self.portrait.setText('此精确引用未取得图片；不借用同名单位。')

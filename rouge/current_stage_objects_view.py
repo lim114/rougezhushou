@@ -6,12 +6,13 @@ from . import current_stage_objects as model
 from .current_map_position_view import CurrentTileGrid,CurrentOriginalCenters
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .reference_copy import mechanism_copy
 
 class CurrentObjectPositionPanel(QWidget):
     def __init__(self,stage_id,key,parent=None):
-        super().__init__(parent);self.stage_id=stage_id;self.key=key;self.result=None;self.image_raw=None;layout=QVBoxLayout(self);split=QSplitter();self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);layout.addWidget(split,2);self.player=QPlainTextEdit();self.player.setReadOnly(True);layout.addWidget(self.player,1);self.refresh_reference()
+        super().__init__(parent);self.stage_id=stage_id;self.key=key;self.result=None;self.image_raw=None;layout=QVBoxLayout(self);split=QSplitter();self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);layout.addWidget(split,2);self.player=QPlainTextEdit();self.player.setReadOnly(True);self.details=QPlainTextEdit();self.details.setReadOnly(True);self.tabs=QTabWidget();self.tabs.addTab(self.player,'位置');self.tabs.addTab(self.details,'资料说明');self.tabs.setMaximumHeight(150);layout.addWidget(self.tabs);self.refresh_reference()
     def clear_reference(self):
-        self.result=None;self.image_raw=None;self.grid.set_result(None);self.original.set_image(None);replace_text(self.player,model.UNAVAILABLE,preserve=False)
+        self.result=None;self.image_raw=None;self.grid.set_result(None);self.original.set_image(None);replace_text(self.player,model.UNAVAILABLE,preserve=False);replace_text(self.details,'',preserve=False)
     def refresh_reference(self):
         reference=model.stage_reference(self.stage_id);fresh=model.position_reference(reference,self.key)if reference else None
         raw=model.battle.version.image_bytes(fresh['grid']['image'])if fresh else None
@@ -20,7 +21,9 @@ class CurrentObjectPositionPanel(QWidget):
         if not self.original.set_image(raw,fresh['center']):self.clear_reference();return False
         text=fresh['row']['name']+f" · 声明格：第{cell['row']+1}行第{cell['col']+1}列。\n这里只显示原声明格，不代表实际启用、当前存在或实际脚点。\n"
         text+=('该格有既有原图近似参考；误差与其它地块仍需核对。'if fresh['center']else'这个格尚无可用的原图校准；左侧可看格子，右侧保留原图，不猜标记。')
-        replace_text(self.player,text,preserve=keep);return True
+        replace_text(self.details,text,preserve=keep);replace_text(self.player,fresh['row']['name']+f" · 第{cell['row']+1}行，第{cell['col']+1}列。\n原图标记："+('参考位置。'if fresh['center']else'待校准。'),preserve=keep)
+        if not keep:self.tabs.setCurrentIndex(0)
+        return True
 
 from .player_window_frame import PlayerDialog
 
@@ -37,7 +40,7 @@ class CurrentStageObjectsPanel(QWidget):
     actionSelected=Signal(str)
     sourceInvalidated=Signal()
     def __init__(self,stage_id,parent=None):
-        super().__init__(parent);self.stage_id=stage_id;self.result=None;self._view_key=None;self.position_dialog=None;layout=QVBoxLayout(self);notice=QLabel(model.NOTICE);notice.setWordWrap(True);layout.addWidget(notice)
+        super().__init__(parent);self.stage_id=stage_id;self.result=None;self._view_key=None;self.position_dialog=None;layout=QVBoxLayout(self);notice=QLabel('查看本关物件、机关和对应位置。');notice.setToolTip(model.NOTICE);notice.setWordWrap(True);layout.addWidget(notice)
         bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('输入物件中文名');self.kind=QComboBox();self.link=QComboBox()
         for k,v in model.KINDS:self.kind.addItem(v,k)
         for k,v in model.LINKS:self.link.addItem(v,k)
@@ -70,7 +73,7 @@ class CurrentStageObjectsPanel(QWidget):
         if not keep:self.close_children()
         self.result=fresh;rows=model.rows(fresh,self.search.text(),self.kind.currentData(),self.link.currentData());self._fill(self.entries,[(model.label(r),r['key'])for r in rows],key,'请选择一份物件或卡片声明'if rows else'此范围未找到声明');self.entries.setEnabled(bool(rows));row=self.selected();actions=row['activation_actions']if row else[];self._fill(self.activations,[(model.battle.action_label(a),a['key'])for a in actions],action_key,'请选择一条启用记录'if actions else'未找到直接启用记录');self.activations.setEnabled(bool(actions));action=self.selected_action()
         view=(deepcopy(fresh['source_identity']),self.search.text(),self.kind.currentData(),self.link.currentData(),row['key']if row else None,action['key']if action else None);preserve=keep and view==self._view_key
-        replace_text(self.player,model.player_text(fresh,row,action),preserve=preserve);replace_text(self.technical,_technical_json({'reference':fresh,'selected':row,'activation':action,'actual_active':None,'actual_reward':None}),preserve=preserve);self.action_button.setEnabled(action is not None);self.position_button.setEnabled(bool(row and row['kind']=='instance'and isinstance(row['raw'].get('position'),dict)))
+        full_text=model.player_text(fresh,row,action);text=full_text.replace(f"资料中共{len(fresh['entries'])}条预置声明；这不是当前场上数量或本局实际持有数量。",f"预置物件与卡片：{len(fresh['entries'])}条。").replace('。这不证明当前可见或已经启用。','。').replace('；不据此绘制攻击或影响范围。','。');replace_text(self.player,mechanism_copy(text,model.NOTICE,extra_detail_headings=('【使用提醒】',))[0],preserve=preserve);replace_text(self.technical,_technical_json({'完整说明':full_text,'reference':fresh,'selected':row,'activation':action,'actual_active':None,'actual_reward':None}),preserve=preserve);self.action_button.setEnabled(action is not None);self.position_button.setEnabled(bool(row and row['kind']=='instance'and isinstance(row['raw'].get('position'),dict)))
         if not preserve:self.tabs.setCurrentIndex(0)
         if self.position_dialog is not None and self.position_dialog.isVisible():
             if row is None or self.position_dialog.panel.key!=row['key']or not self.position_dialog.panel.refresh_reference():self.close_children()
@@ -86,6 +89,9 @@ class CurrentStageObjectsPanel(QWidget):
         if row is None or row['kind']!='instance':return False
         result=model.position_reference(self.result,row['key'])
         if result is None:self.clear_reference();return False
+        from .battle_tool_readers import open_position
+        opened=open_position(self,'object',(self.stage_id,row['key']))
+        if opened is not None:return opened
         self.close_children();self.position_dialog=CurrentObjectPositionDialog(self.stage_id,row['key'],self)
         if self.position_dialog.panel.result is None:self.close_children();return False
         self.position_dialog.show();return True

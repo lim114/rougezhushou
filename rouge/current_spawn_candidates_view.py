@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (QWidget, QDialog, QVBoxLayout, QHBoxLayout, QLabe
 from . import current_spawn_candidates as model
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .reference_copy import mechanism_copy
 
 
 class CurrentSpawnCandidatesPanel(QWidget):
@@ -21,7 +22,7 @@ class CurrentSpawnCandidatesPanel(QWidget):
         self.result = None
         self._view_key = None
         layout = QVBoxLayout(self)
-        notice = QLabel(model.NOTICE); notice.setWordWrap(True); layout.addWidget(notice)
+        notice = QLabel('查看出怪分组及其关联记录。');notice.setToolTip(model.NOTICE); notice.setWordWrap(True); layout.addWidget(notice)
         bar = QHBoxLayout()
         self.queue_kind = QComboBox()
         for name, key in [('总览（主波次与条件分支）', None), ('主波次', 'main'), ('条件分支', 'branch')]:
@@ -152,8 +153,12 @@ class CurrentSpawnCandidatesPanel(QWidget):
         key = (deepcopy(fresh['source_identity']), kind, queue,
                relation['key'] if relation else None, member['action_key'] if member else None)
         preserve = keep and key == self._view_key
-        replace_text(self.player, model.player_text(fresh, relation, member), preserve=preserve)
-        technical = {'stage_id': fresh['stage_id'], 'origin_action_key': fresh['origin_action_key'],
+        full_text=model.player_text(fresh,relation,member)
+        text=full_text
+        if relation:text=text.replace(f"这份资料列有{len(relation['members'])}条记录，包含空白与未具名项；不能累加为实际敌人数。",f"分组记录：{len(relation['members'])}条（含空白与未具名项）。")
+        if member:text=text.replace('；这是单条配置，不能当作实际生成数量。','（单条记录）。')
+        replace_text(self.player,mechanism_copy(text,model.NOTICE,extra_detail_headings=('【仍未确认】',))[0],preserve=preserve)
+        technical = {'完整说明':full_text,'stage_id': fresh['stage_id'], 'origin_action_key': fresh['origin_action_key'],
                      'source_identity': fresh['source_identity'], 'level_key': fresh['level_key'],
                      'original_level_source': fresh['source'], 'selected_relation': relation,
                      'selected_member': member, 'all_queue_scopes': fresh['scopes'],

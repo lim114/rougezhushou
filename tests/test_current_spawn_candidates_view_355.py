@@ -46,7 +46,7 @@ class CurrentSpawnCandidatesView355Tests(unittest.TestCase):
         self.assertIsNone(self.widget.member_combo.currentData())
         self.assertFalse(self.widget.action_button.isEnabled())
         self.assertFalse(self.widget.position_button.isEnabled())
-        self.assertIn('请手动选择', self.widget.player.toPlainText())
+        self.assertIn('选择分组，再选择成员记录', self.widget.player.toPlainText()); self.assertIn('请手动选择', self.widget.technical.toPlainText())
 
     def test_source_member_and_origin_action_navigation_emit_exact_action_keys(self):
         relation, member = self.select_member(lambda m: m['action_type'] == 'SPAWN')

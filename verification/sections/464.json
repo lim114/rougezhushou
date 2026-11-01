@@ -1,0 +1,51 @@
+{
+  "section": 464,
+  "kind": "functional_section",
+  "title": "出怪、物件与行程同窗定位",
+  "new_capability": "出怪分组、所选敌人的出怪、物件与机关、敌人行程在主资料窗连续查看；出怪、物件、行程环节和整张地图使用同窗位置页。查看原条目可返回关卡中的准确记录，普通返回保留筛选与阅读；行程的其他记录按需展开，放大地图后窗口自动留在屏幕内。",
+  "passed": true,
+  "passed_scope": "Four tool readers and four position readers in one native host; exact original action return and immediate map parent, selection/query/read retention, invalid selection/source descendant removal, original independent dialog paths, original conditions and positions, concise default copy, compact itinerary and screen-fit placement.",
+  "limitations": "优先校正偏绿的窗框与地图底色，再继续坎诺特/保险柜等深层入口和完整工作区整合，对齐视频的布局、字体与图标；识别沿已记录成熟方案继续评估。",
+  "unit_tests_run": 27,
+  "necessary_validation": [
+    {
+      "result": "verification/sections/464-battle-tools/fit-related/results.json",
+      "process": "verification/sections/464-battle-tools/fit-related/process.json",
+      "tests_run": 27,
+      "scope": "current source shared navigation/placement, note veto and refresh"
+    }
+  ],
+  "prior_related_validation": {
+    "result": "verification/sections/464-battle-tools/necessary-final/results.json",
+    "tests_run": 66,
+    "scope": "before placement fix; retained separate evidence, not aggregated as one current run"
+  },
+  "native_windows_scopes": {
+    "current": {
+      "receipt": "verification/sections/464-battle-tools/native-fit/window.json",
+      "unique_checks": 93
+    }
+  },
+  "source_sha256": {
+    "rouge/battle_tool_readers.py": "3a33f73b6884d07ecae0c2487182ac6cea50c68fef989218fdc189670fed0ec5",
+    "rouge/current_action_positions_view.py": "4cd8ed307646ba450e2e962e20875e0aeb1a895fc0b3468f1564379061a3e066",
+    "rouge/current_battle_view.py": "71474f1fad24f6ecde8633bd93fa57233156c9eec379f32894af72d053932e38",
+    "rouge/current_enemy_spawns_view.py": "164ba89a72fd1945747507d35815f65b48664bbd6f08111df6309ca8d2a10c06",
+    "rouge/current_route_itinerary_view.py": "c7a65e8cd9a20cda534a7f331922f0855a15cf164f820202828abff5b573195a",
+    "rouge/current_spawn_candidates_view.py": "dab51fd6c1d0b14666f86dbc8eb69916dd4fdd22c21d56f484f41386a20c2e99",
+    "rouge/current_stage_objects_view.py": "fd835dc85a48881cd97af09b534cd5fc881937886f32681ca392d10192f4ed62",
+    "rouge/player_reference_window.py": "207f719ac47a3d2ee96b4660dea877b6f5c19d41030e6cefefc94c1f6e48cc99",
+    "rouge/reference_copy.py": "2db0688c1d724d66330c8e88fcc27c785242599636d437202012c43313d34b4d",
+    "tests/test_battle_tool_readers_464.py": "9a22bef5113ddd4bc36db851a10b5bb46b7cee7b761140311aa116946b809b0f",
+    "tests/test_current_action_positions_view_320.py": "d3a322a77456e3bccd673266ae07a14bad458d14f925b670b43237fe8400e2e8",
+    "tests/test_current_spawn_candidates_view_355.py": "40be7b32fcc84c40d6e6d4cb4968d8e748953d84dcaa9cd7bbc2d233b48c9a6b"
+  },
+  "source_review": "verification/sections/464-battle-tools/source-review.json",
+  "actual_local_test_window": "verification/sections/464-battle-tools/live-window-fit/window.json",
+  "full_checks_cancelled": true,
+  "full_suite_rerun": false,
+  "recognition_algorithm_changed": false,
+  "whole_program_or_video_complete": false,
+  "goal_active": true,
+  "at_UTC": "2026-11-01T21:31:52.554007+00:00"
+}

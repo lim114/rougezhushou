@@ -5,6 +5,7 @@ from . import current_action_positions as model
 from .current_map_position_view import CurrentTileGrid, CurrentOriginalCenters
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .reference_copy import mechanism_copy
 
 
 class CurrentActionPositionsPanel(QWidget):
@@ -12,7 +13,7 @@ class CurrentActionPositionsPanel(QWidget):
         super().__init__(parent); self.stage_id = stage_id; self.action_key = action_key
         self.result = None; self.entry_key = None; self.image_raw = None
         body = QVBoxLayout(self)
-        notice = QLabel('选择本条记录的一处位置查看；只显示名义格及有依据的原图中心，不模拟实际出怪或寻路。')
+        notice = QLabel('选择位置，在格子图与原图中查看。')
         notice.setWordWrap(True); body.addWidget(notice)
         bar = QHBoxLayout(); self.combo = QComboBox(); self.refresh_button = QPushButton('重新核对本条位置')
         bar.addWidget(self.combo, 1); bar.addWidget(self.refresh_button); body.addLayout(bar)
@@ -55,8 +56,9 @@ class CurrentActionPositionsPanel(QWidget):
         cell = entry['cell'] if entry else None
         self.grid.set_result(self.result['grid'], (cell['row'], cell['col']) if cell else None)
         if not self.original.set_image(self.image_raw, entry['center'] if entry else None): self.clear_reference(); return
-        replace_text(self.player, model.player_text(self.result, entry), preserve=keep)
-        replace_text(self.technical, _technical_json({'reference': self.result, 'selected': entry}), preserve=keep)
+        full_text=model.player_text(self.result,entry)
+        replace_text(self.player,mechanism_copy(full_text,'')[0],preserve=keep)
+        replace_text(self.technical, _technical_json({'完整说明':full_text,'reference': self.result, 'selected': entry}), preserve=keep)
         if not keep: self.tabs.setCurrentIndex(0)
 
 

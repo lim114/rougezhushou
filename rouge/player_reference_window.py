@@ -141,6 +141,8 @@ class ReferenceWindow(PlayerDialog):
             area = self.screen().availableGeometry()
             size = page.preferred_size
             self.resize(min(size.width(), area.width()-24), min(size.height(), area.height()-24))
+            self.move(max(area.left(), min(self.x(), area.right()-self.width()+1)),
+                      max(area.top(), min(self.y(), area.bottom()-self.height()+1)))
         self.update_navigation()
         self.raise_()
         return True

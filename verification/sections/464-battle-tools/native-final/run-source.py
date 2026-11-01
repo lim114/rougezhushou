@@ -1,0 +1,50 @@
+from pathlib import Path
+from hashlib import sha256
+from copy import deepcopy
+import sys,json,subprocess,traceback
+R=Path.cwd();sys.path[:0]=[str(R),str(R/'scripts')];out=R/'verification/sections/464-battle-tools/native-final'
+if len(sys.argv)==1:
+ out.mkdir(exist_ok=False)
+ with(out/'stdout.txt').open('xb')as a,(out/'stderr.txt').open('xb')as b:
+  child=subprocess.Popen([sys.executable,'-B','-X','utf8',__file__,'child'],cwd=R,stdout=a,stderr=b);print({'actual_retained_PID':child.pid},flush=True);code=child.wait()
+ (out/'process.json').write_text(json.dumps({'actual_retained_PID':child.pid,'actual_observed_exit':code},indent=2)+'\n','utf8');(out/'run-source.py').write_bytes(Path(__file__).read_bytes());print({'actual_exit':code});raise SystemExit(code)
+from PySide6.QtCore import Qt,QPoint,QTimer
+from PySide6.QtTest import QTest
+from rouge import player_acceptance,player_map_acceptance as acceptance,public_event_samples as model
+import player_ui_verification as ui
+data_paths=['rouge/battle_tool_readers.py','rouge/current_battle_view.py','rouge/current_spawn_candidates_view.py','rouge/current_enemy_spawns_view.py','rouge/current_stage_objects_view.py','rouge/current_route_itinerary_view.py','rouge/current_action_positions_view.py','rouge/reference_copy.py'];data_before={n:sha256((R/n).read_bytes()).hexdigest()for n in data_paths};(out/'additional-source-before.json').write_text(json.dumps(data_before,indent=2)+'\n','utf8')
+errors=[]
+def hook(kind,value,tb):errors.append(str(value));traceback.print_exception(kind,value,tb)
+sys.excepthook=hook
+
+def check(section,window,gui,require):
+ from rouge.player_reference_notes import note_for
+ from rouge import current_enemy_spawns
+ from PySide6.QtWidgets import QScrollArea
+ from PySide6.QtGui import QTextCursor
+ before=deepcopy(window.run.state);window.player_notes.autosave.setChecked(False);images=[];layouts=[]
+ window.show_compact();c=window.compact_window
+ for timer in window.findChildren(QTimer):timer.stop()
+ def settle():gui.processEvents();QTest.qWait(100);gui.processEvents()
+ def click(button):
+  ancestor=button.parentWidget()
+  while ancestor is not None and ancestor is not host:
+   if isinstance(ancestor,QScrollArea):ancestor.ensureWidgetVisible(button)
+   ancestor=ancestor.parentWidget()
+  settle();require(button.isVisible()and button.isEnabled(),'clickable_'+button.text());QTest.mouseClick(button,Qt.MouseButton.LeftButton);settle()
+ def save(name):
+  path=out/(name+'.png');require(host.grab().save(str(path)),name+'_saved');images.append({'file':path.relative_to(R).as_posix(),'sha256':sha256(path.read_bytes()).hexdigest()})
+ require(c.open_saved_note(note_for('stages','ro6_n_2_3')),'exact_stage_note_entry');settle();c.recent_notes_popup.panel.more.setChecked(True);host=c.reference_window;click(window.player_notes.reference_button);root=host.pages.currentWidget();p=root.panel;require(p.stage_id=='ro6_n_2_3','exact_fixed_stage');handle=int(host.winId())
+ def back(page):host.navigate(host.history.index(page));settle();require(host.pages.currentWidget()is page,'back_to_'+page.windowTitle())
+ p.tabs.setCurrentIndex(0);p.map_section.expand(animate=False);click(p.position_button);grid=host.pages.currentWidget();require(grid.source_parent is root,'whole_map_parent');require(grid.panel.stage_id==p.stage_id,'whole_map_exact_stage');QTest.mouseClick(grid.panel.grid,Qt.MouseButton.LeftButton,pos=grid.panel.grid.center(0,0).toPoint());settle();selected=grid.panel.selected;require(selected==(0,0),'whole_map_grid_selection');save('whole-map');back(root);click(p.position_button);require(host.pages.currentWidget()is grid and grid.panel.selected==selected,'whole_map_reopen_keeps_cell');back(root)
+ p.tabs.setCurrentIndex(2);click(p.spawn_candidates_button);spawn=host.pages.currentWidget();r=spawn.panel;require(spawn.source_parent is root,'spawn_tool_in_main');relation,member=next((g,m)for g in r.result['groups']for m in g['members']if m['action_key']=='1');r.relation_combo.setCurrentIndex(r.relation_combo.findData(relation['key']));r.member_combo.setCurrentIndex(r.member_combo.findData('1'));settle();require(r.position_button.isEnabled(),'spawn_spatial_member');save('spawn-group');click(r.position_button);position=host.pages.currentWidget();require(position.source_parent is spawn and position.panel.action_key=='1','spawn_map_exact_action_and_immediate_parent');position.panel.combo.setCurrentIndex(1);settle();require(position.panel.grid.selected==(6,2),'known_action_grid_cell');require(position.panel.original.point_center()is not None,'known_action_original_marker');save('spawn-position');back(spawn);require(r.member_combo.currentData()=='1','spawn_member_retained');click(r.action_button);require(host.pages.currentWidget()is root and p.action_key=='1','spawn_action_returns_to_original_entry');click(p.action_position_button);direct=host.pages.currentWidget();require(direct.source_parent is root and direct.panel.action_key=='1','direct_action_position_root_parent');back(root)
+ enemy=next(e for e in p.result['enemies']if (current_enemy_spawns.stage_reference(p.stage_id,e['key'])or{}).get('entries'));p.tabs.setCurrentIndex(1);p.enemy_choices.select_value(enemy['key'],emit=True);settle();click(p.enemy_spawns_button);enemy_page=host.pages.currentWidget();er=enemy_page.panel;require(enemy_page.source_parent is root and er.enemy_key==enemy['key'],'enemy_tool_exact_reference');er.entries.setCurrentIndex(1);settle();key=er.entries.currentData();save('enemy-spawn-record');click(er.action_button);require(host.pages.currentWidget()is root and p.action_key==key,'enemy_action_returns_to_exact_record');p.tabs.setCurrentIndex(1);click(p.enemy_spawns_button);require(host.pages.currentWidget()is enemy_page and er.entries.currentData()==key,'enemy_tool_reopen_retains_entry');back(root)
+ p.tabs.setCurrentIndex(0);p.map_details.expand(animate=False);click(p.stage_objects_button);objects=host.pages.currentWidget();obj=objects.panel;obj.entries.setCurrentIndex(1);obj.activations.setCurrentIndex(1);settle();row=obj.selected();require(row is not None and obj.position_button.isEnabled(),'object_with_fixed_position');save('objects');click(obj.position_button);omap=host.pages.currentWidget();require(omap.source_parent is objects and omap.panel.key==row['key'],'object_map_exact_parent_and_key');require(omap.panel.result['row']['raw']['position']==row['raw']['position'],'object_original_position_unchanged');require(omap.panel.grid.selected==(omap.panel.result['cell']['row'],omap.panel.result['cell']['col']),'object_map_grid_marker');require(not omap.panel.original.pixmap.isNull(),'object_original_map_present');require(omap.panel.tabs.currentIndex()==0 and'不代表'not in omap.panel.player.toPlainText(),'object_position_concise_default');require('不代表'in omap.panel.details.toPlainText(),'object_full_scope_available');save('object-position');back(objects);click(obj.action_button);require(host.pages.currentWidget()is root,'object_action_returns_to_battle');require(p.action_key==obj.selected_action()['key'],'object_action_exact_key')
+ p.tabs.setCurrentIndex(2);click(p.route_itinerary_button);routes=host.pages.currentWidget();rr=routes.panel;rr.entries.setCurrentIndex(rr.entries.findData('$.routes[10]'));rr.steps.setCurrentIndex(1);rr.actions.setCurrentIndex(1);settle();step=rr.selected_step();require(step['spatial_reference_permitted'],'route_step_has_fixed_position');save('route-itinerary');click(rr.position_button);route_map=host.pages.currentWidget();require(route_map.source_parent is routes,'route_map_immediate_parent');require((route_map.panel.route_key,route_map.panel.step_key)==('$.routes[10]',step['key']),'route_map_exact_identifiers');require(route_map.panel.result['cell']==step['cell'],'route_map_unchanged_cell');save('route-step-position');back(routes);require(rr.selected_step()['key']==step['key'],'route_step_kept_on_back');rr.steps.setCurrentIndex(2);host.navigate(host.cursor+1);settle();require(route_map not in host.history and host.pages.currentWidget()is routes,'changed_step_discards_old_position');click(rr.action_button);require(host.pages.currentWidget()is root and p.action_key==rr.selected_action()['key'],'route_action_returns_to_exact_record');p.tabs.setCurrentIndex(2);click(p.route_itinerary_button);require(host.pages.currentWidget()is routes,'route_reader_reused')
+ for width,height in[(760,600),(600,500)]:
+  host.resize(width,height);settle();viewport=routes.body_scroll.viewport();layouts.append({'host':[host.width(),host.height()],'viewport':[viewport.width(),viewport.height()],'content':[rr.width(),rr.height()],'horizontal_scroll':routes.body_scroll.horizontalScrollBar().maximum(),'vertical_scroll':routes.body_scroll.verticalScrollBar().maximum()});require(rr.selected_route()['key']=='$.routes[10]',str(width)+'_route_kept_on_resize');require(routes.body_scroll.verticalScrollBar().maximum()==0,str(width)+'_route_default_fits_without_outer_scroll')
+ require(not rr.other_records.isExpanded(),'unassigned_records_collapsed_by_default');rr.other_records.expand(animate=False);settle();require(rr.unassigned.isVisible(),'unassigned_records_can_expand');rr.other_records.collapse(animate=False);settle();save('route-narrow');require(int(host.winId())==handle,'same_native_host_for_all_tools_and_positions');require(all(getattr(p,name,None)is None for name in ['spawn_candidates_dialog','enemy_spawns_dialog','stage_objects_dialog','route_itinerary_dialog','position_dialog','action_position_dialog']),'legacy_tool_dialogs_not_created');require(not window.isVisible(),'full_workspace_hidden');require(all(w is host or w is c or not w.isVisible()for w in gui.topLevelWidgets()),'only_one_reference_host_visible');require(window.run.state==before,'run_memory_unchanged');require(not errors,'no_Qt_slot_errors');window.player_validation_target=host
+ (out/'images.json').write_text(json.dumps({'images':images,'public_fixed_data_only':True},indent=2)+'\n','utf8');(out/'layout.json').write_text(json.dumps(layouts,indent=2)+'\n','utf8')
+
+player_acceptance.check=check
+raise SystemExit(ui.run(464,out/'window.json'))

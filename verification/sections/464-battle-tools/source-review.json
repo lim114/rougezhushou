@@ -1,0 +1,55 @@
+{
+  "section": 464,
+  "changed_or_new_sources": {
+    "rouge/battle_tool_readers.py": {
+      "sha256": "3a33f73b6884d07ecae0c2487182ac6cea50c68fef989218fdc189670fed0ec5",
+      "bytes": 3704
+    },
+    "rouge/current_action_positions_view.py": {
+      "sha256": "4cd8ed307646ba450e2e962e20875e0aeb1a895fc0b3468f1564379061a3e066",
+      "bytes": 4956
+    },
+    "rouge/current_battle_view.py": {
+      "sha256": "71474f1fad24f6ecde8633bd93fa57233156c9eec379f32894af72d053932e38",
+      "bytes": 54214
+    },
+    "rouge/current_enemy_spawns_view.py": {
+      "sha256": "164ba89a72fd1945747507d35815f65b48664bbd6f08111df6309ca8d2a10c06",
+      "bytes": 7033
+    },
+    "rouge/current_route_itinerary_view.py": {
+      "sha256": "c7a65e8cd9a20cda534a7f331922f0855a15cf164f820202828abff5b573195a",
+      "bytes": 13354
+    },
+    "rouge/current_spawn_candidates_view.py": {
+      "sha256": "dab51fd6c1d0b14666f86dbc8eb69916dd4fdd22c21d56f484f41386a20c2e99",
+      "bytes": 11720
+    },
+    "rouge/current_stage_objects_view.py": {
+      "sha256": "fd835dc85a48881cd97af09b534cd5fc881937886f32681ca392d10192f4ed62",
+      "bytes": 11203
+    },
+    "rouge/player_reference_window.py": {
+      "sha256": "207f719ac47a3d2ee96b4660dea877b6f5c19d41030e6cefefc94c1f6e48cc99",
+      "bytes": 9747
+    },
+    "rouge/reference_copy.py": {
+      "sha256": "2db0688c1d724d66330c8e88fcc27c785242599636d437202012c43313d34b4d",
+      "bytes": 11025
+    },
+    "tests/test_battle_tool_readers_464.py": {
+      "sha256": "9a22bef5113ddd4bc36db851a10b5bb46b7cee7b761140311aa116946b809b0f",
+      "bytes": 9823
+    },
+    "tests/test_current_action_positions_view_320.py": {
+      "sha256": "d3a322a77456e3bccd673266ae07a14bad458d14f925b670b43237fe8400e2e8",
+      "bytes": 6235
+    },
+    "tests/test_current_spawn_candidates_view_355.py": {
+      "sha256": "40be7b32fcc84c40d6e6d4cb4968d8e748953d84dcaa9cd7bbc2d233b48c9a6b",
+      "bytes": 8885
+    }
+  },
+  "review": "Source-bound table-driven Qt readers handle four repeated tool families and four map routes. Existing battle entry source checks remain once; legacy dialogs retain their old controllers and cleanup. Controllers accept an explicit current tool reader for the shared host instead of abusing legacy dialog attributes. Tool action requests focus the exact original action and return to its battle page; map requests retain the immediate tool as source parent. Existing validated models resolve membership, enemy reference, predefined objects and route steps; no timing/RNG/position math changes. Full original player text remains in existing details. Mature superqt collapse hides unassigned records by default; ignored tab height preserves compact reading. ReferenceWindow clamps only page-change placement, preserving valid manual positions and unsaved-page veto. No new catch/retry/config persistence.",
+  "whole_program_review_complete": false
+}

@@ -208,3 +208,5 @@ Qt已有置顶及整窗输入穿透标志，但“全部穿透”会使该窗口
 [第462节](research/statistics-462/README.md)：保留共享NodeStatisticsSource和原统计数学；地图显式传递当前视图选择。按Qt源码的延后列布局机制合并行高更新，移除已无调用方的通用弹窗分支。
 
 [第463节](research/material-sources-463/README.md)：复用源绑定Qt页面、官方BSD流式布局和已有事件/交换/作战阅读器；主资料窗接入材料来源，独立工作区入口保留。
+
+[第464节](research/battle-tools-464/README.md)：复用成熟Qt与superqt折叠方案，四类工具和四类地图按现有模型同窗打开；控制器复用原入口检查，当前阅读器显式传递，不占用旧弹窗状态。

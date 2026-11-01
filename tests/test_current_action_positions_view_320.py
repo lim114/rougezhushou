@@ -27,7 +27,7 @@ class CurrentActionPositionsView320Tests(unittest.TestCase):
 
     def test_unmapped_base_cells_still_select_grid_without_guessed_original(self):
         p = self.panel('ro6_n_1_1', '10'); p.combo.setCurrentIndex(1)
-        self.assertIsNotNone(p.grid.selected); self.assertIsNone(p.original.point_center()); self.assertFalse(p.original.pixmap.isNull()); self.assertIn('不猜位置', p.player.toPlainText())
+        self.assertIsNotNone(p.grid.selected); self.assertIsNone(p.original.point_center()); self.assertFalse(p.original.pixmap.isNull()); self.assertIn('待校准', p.player.toPlainText()); self.assertIn('不猜位置', p.technical.toPlainText())
         p.combo.setCurrentIndex(0); self.assertIsNone(p.grid.selected); self.assertIsNone(p.original.point_center())
 
     def test_branch_and_unbound_activation_keep_map_but_no_false_markers(self):
