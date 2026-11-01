@@ -198,7 +198,13 @@ ADDITIONAL_MODULES += ('tests.test_current_portal_rules_358', 'tests.test_curren
 
 def source_hashes():
     files = [*ROOT.glob('rouge/**/*.py'), *ROOT.glob('rouge/data/**/*.json'),
+             *ROOT.glob('third_party/qframelesswindow/**/*.py'),
+             *ROOT.glob('third_party/qframelesswindow/**/*.qrc'),
+             *ROOT.glob('third_party/qframelesswindow/**/*.svg'),
              *ROOT.glob('tests/test_*.py'), *ROOT.glob('scripts/**/*.py'),
+             ROOT / 'third_party/qframelesswindow/LICENSE',
+             ROOT / 'third_party/qframelesswindow/COPYING',
+             ROOT / 'third_party/qframelesswindow/NOTICE.md', ROOT / 'pyproject.toml',
              ROOT / 'tests/player_presentation_legacy_307.py',
              ROOT / 'CORE_0.70_VERIFICATION.json']
     return {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
@@ -627,6 +633,8 @@ ADDITIONAL_MODULES += ('tests.test_presentation_card_447',)
 ADDITIONAL_MODULES += ('tests.test_event_reader_layout_review',)
 
 ADDITIONAL_MODULES += ('tests.test_owned_window_follow_review',)
+
+ADDITIONAL_MODULES += ('tests.test_player_window_frame_review',)
 
 if __name__ == '__main__':
     sys.exit(main())

@@ -14,7 +14,7 @@ if __name__=='__main__':
     def check(section,window,gui,require):
         from PySide6.QtCore import Qt
         from PySide6.QtTest import QTest
-        from PySide6.QtWidgets import QPushButton
+        from PySide6.QtWidgets import QAbstractButton
         from rouge.player_note_scopes import scope
         from rouge.player_notes import content_key
         from rouge.player_reference_notes import open_note
@@ -51,7 +51,7 @@ if __name__=='__main__':
             notes.pages.setCurrentIndex(1);gui.processEvents();require('普通作战'in notes.preview.toPlainText(),'markdown_preview_in_same_window');save(popup,'inline-preview')
             notes.pages.setCurrentIndex(0);notes.autosave.setChecked(False);notes.editor.insertPlainText('\n尚未保存，不能丢失。');draft=notes.editor.toPlainText();QTest.keyClick(notes,Qt.Key.Key_Escape);gui.processEvents()
             require(notes.isVisible()and notes.dirty and notes.editor.toPlainText()==draft,'escape_keeps_unsaved_embedded_draft')
-            close=popup.findChild(QPushButton,'popoverCloseButton');QTest.mouseClick(close,Qt.MouseButton.LeftButton);gui.processEvents()
+            close=popup.findChild(QAbstractButton,'popoverCloseButton');require(close is not None,'actual_notebook_close_control_exists');QTest.mouseClick(close,Qt.MouseButton.LeftButton);gui.processEvents()
             require(popup.isVisible()and notes.dirty and notes.editor.toPlainText()==draft,'actual_notebook_close_refuses_unsaved_manual_draft')
             notes.store.path(notes.key).write_text('外部保存的另一份内容','utf8');notes.autosave.setChecked(True);notes.save_pending();gui.processEvents()
             require(notes.dirty and not notes.autosave.isChecked()and notes.editor.toPlainText()==draft and notes.store.read(notes.key)[0]=='外部保存的另一份内容','external_conflict_keeps_both_versions_and_pauses_autosave')

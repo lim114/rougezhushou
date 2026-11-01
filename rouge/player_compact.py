@@ -5,24 +5,20 @@ from PySide6.QtWidgets import QDialog,QWidget,QVBoxLayout,QHBoxLayout,QGridLayou
 from .player_overview import overview_facts
 from .player_context import recent_content
 
-class ToolPopover(QDialog):
+from .player_window_frame import PlayerDialog
+
+class ToolPopover(PlayerDialog):
     def __init__(self,title,content,parent,*,on_show=None,theme='dark',extra_style='',object_name='playerPopover'):
-        super().__init__(parent,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint);self.setWindowTitle(title);self.setSizeGripEnabled(True);self.drag_origin=None
+        super().__init__(parent);self.setWindowTitle(title)
         from .player_theme import apply_theme
         self.setObjectName(object_name);apply_theme(self,theme,extra=extra_style)
         self.on_show=on_show
-        body=QVBoxLayout(self);bar=QHBoxLayout();self.header_bar=bar;self.title_label=QLabel(title);self.title_label.setObjectName('popoverTitle');bar.addWidget(self.title_label,1);close=QPushButton('×');close.setObjectName('popoverCloseButton');close.setFixedWidth(30);close.clicked.connect(self.close);bar.addWidget(close);body.addLayout(bar);body.addWidget(content,1)
+        body=QVBoxLayout(self);self.header_bar=self.titleBar.hBoxLayout;self.title_label=self.titleBar.titleLabel;body.addWidget(content,1)
 
     def showEvent(self,event):
         super().showEvent(event)
         # Also covers hotkey/game-binding restoration, which bypasses open_*.
         if self.on_show is not None:self.on_show()
-
-    def mousePressEvent(self,event):
-        if event.button()==Qt.MouseButton.LeftButton and event.position().y()<42:self.drag_origin=event.globalPosition().toPoint()-self.pos();event.accept()
-    def mouseMoveEvent(self,event):
-        if self.drag_origin is not None and event.buttons()&Qt.MouseButton.LeftButton:self.move(event.globalPosition().toPoint()-self.drag_origin);event.accept()
-    def mouseReleaseEvent(self,event):self.drag_origin=None;super().mouseReleaseEvent(event)
 
 class NotesPopover(ToolPopover):
     def closeEvent(self,event):

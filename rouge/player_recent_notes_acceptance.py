@@ -1,7 +1,7 @@
 from copy import deepcopy
 from PySide6.QtCore import Qt
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QPushButton
+from PySide6.QtWidgets import QAbstractButton
 
 def check(window,gui,require):
     from .player_notes import content_key
@@ -38,7 +38,7 @@ def check(window,gui,require):
     require('#sceneNotesSurface'in popup.styleSheet()and'background:white'in panel.styleSheet(),'light_surface_and_white_note_card_style_installed')
     panel.preview.linkBlocked.emit();require('不会自动打开'in panel.status.text(),'note_links_do_not_launch_external_apps')
     panel.reload.click()
-    close=popup.findChild(QPushButton,'popoverCloseButton');QTest.mouseClick(close,Qt.MouseButton.LeftButton);gui.processEvents()
+    close=popup.findChild(QAbstractButton,'popoverCloseButton');require(close is not None,'actual_notebook_close_control_exists');QTest.mouseClick(close,Qt.MouseButton.LeftButton);gui.processEvents()
     require(not popup.isVisible(),'actual_notebook_close_button_closes_only_reading_window')
     bar.open_recent_notes();gui.processEvents();require(popup.isVisible(),'toolbar_reopens_existing_notebook_with_saved_reading')
     panel.timer.stop()

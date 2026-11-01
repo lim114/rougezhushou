@@ -15,6 +15,8 @@ sys.path.insert(0,str(ROOT))
 
 def source_hashes():
     paths=list((ROOT/'rouge').glob('*.py'))+[Path(__file__).resolve(),ROOT/'scripts/verify_full_available.py']
+    paths += [p for p in (ROOT/'third_party/qframelesswindow').rglob('*') if p.is_file() and (p.suffix in ('.py','.qrc','.svg') or p.name in ('LICENSE','COPYING','NOTICE.md'))]
+    paths.append(ROOT/'pyproject.toml')
     paths+=list((ROOT/'tests').glob('test_player*py'))
     paths+=list((ROOT/'scripts').glob('verify_player*py'))
     paths+=list((ROOT/'rouge/data/part-icons').glob('*.png'))

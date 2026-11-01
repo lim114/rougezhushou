@@ -15,7 +15,7 @@ if __name__=='__main__':
         from PySide6.QtCore import Qt
         from PySide6.QtGui import QPalette
         from PySide6.QtTest import QTest
-        from PySide6.QtWidgets import QPushButton
+        from PySide6.QtWidgets import QAbstractButton
         import win32gui,win32process
         from rouge import current_battle_reference as model
         from rouge.player_map_reader import make_reader,REFERENCE_STYLE
@@ -44,7 +44,7 @@ if __name__=='__main__':
             dialog.panel.tabs.setCurrentWidget(dialog.panel.rewards);row=next(r for r in dialog.panel.rewards.result['rows']if r['source_action_keys']);dialog.panel.rewards.choices.select_value(row['id']);dialog.panel.rewards.source_combo.setCurrentIndex(1)
             selected=(dialog.panel.rewards.combo.currentData(),dialog.panel.rewards.source_combo.currentData());save(dialog,'recent-rewards')
             require(dialog.panel.open_spawn_candidates(),'owned_spawn_reader_opens');child=dialog.panel.spawn_candidates_dialog;gui.processEvents();require(child.isVisible(),'owned_spawn_reader_really_visible');save(child,'owned-spawn-reader')
-            close=dialog.findChild(QPushButton,'popoverCloseButton');require(close is not None,'shared_window_has_actual_close_button');QTest.mouseClick(close,Qt.MouseButton.LeftButton);gui.processEvents()
+            close=dialog.findChild(QAbstractButton,'popoverCloseButton');require(close is not None,'shared_window_has_actual_close_button');QTest.mouseClick(close,Qt.MouseButton.LeftButton);gui.processEvents()
             require(not dialog.isVisible()and not child.isVisible(),'actual_close_button_closes_owner_and_its_spawn_reader')
             require(dialog.panel.settlement.result is None,'owner_close_reuses_original_reader_cleanup')
             QTest.mouseClick(scene.open_button,Qt.MouseButton.LeftButton);gui.processEvents()

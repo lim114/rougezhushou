@@ -758,7 +758,10 @@ class CurrentBattlePanel(QWidget):
         child.panel.actionSelected.connect(self._route_itinerary_action_selected);child.show();return True
 
 
-class CurrentBattleDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentBattleDialog(PlayerDialog):
     def __init__(self,stage_id,parent=None):
         super().__init__(parent);self.setWindowTitle('固定关卡预览');self.resize(1120,820)
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)

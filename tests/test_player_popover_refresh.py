@@ -6,7 +6,7 @@ import unittest
 from PySide6.QtCore import Qt, QEvent, QPoint, QPointF
 from PySide6.QtGui import QMouseEvent
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication, QWidget, QLineEdit
+from PySide6.QtWidgets import QApplication, QWidget, QLineEdit, QTabBar, QPushButton
 
 from rouge.player_compact import CompactAssistant, ToolPopover
 
@@ -85,22 +85,26 @@ class PopoverRefreshTests(unittest.TestCase):
 
     def test_inventory_bundle_sleeps_and_restores_together(self):
         popup, reader = self.reader('inventory_popup')
-        popup.resources = SimpleNamespace(refresh=Mock())
+        popup.resources = SimpleNamespace(set_rows=Mock())
+        popup.navigation = QTabBar(popup)
+        for label in ('收藏品', '道具', '零件箱', '商店记录'):
+            popup.navigation.addTab(label)
+        popup.crew_button = QPushButton(popup)
         popup.parts = SimpleNamespace(refresh=Mock(), refresh_exchange=Mock())
         popup.tools = SimpleNamespace(refresh=Mock())
         popup.shop = SimpleNamespace(refresh=Mock())
         self.bar.refresh()
         self.assertEqual(reader.calls, 0)
-        popup.resources.refresh.assert_not_called()
+        popup.resources.set_rows.assert_not_called()
         self.bar.present(popup)
         self.assertEqual(reader.calls, 1)
-        for method in (popup.resources.refresh, popup.parts.refresh, popup.parts.refresh_exchange,
+        for method in (popup.resources.set_rows, popup.parts.refresh, popup.parts.refresh_exchange,
                        popup.tools.refresh, popup.shop.refresh):
             self.assertEqual(method.call_count, 1)
         popup.hide()
         self.bar.refresh()
         self.assertEqual(popup.parts.refresh.call_count, 1)
-        self.assertEqual(popup.resources.refresh.call_count, 1)
+        self.assertEqual(popup.resources.set_rows.call_count, 1)
 
     def test_exchange_rechecks_its_source_while_inventory_is_hidden(self):
         inventory, reader = self.reader('inventory_popup')

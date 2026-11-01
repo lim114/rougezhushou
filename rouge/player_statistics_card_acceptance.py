@@ -52,8 +52,15 @@ def check_presentation(window,gui,require):
     window.player_card447_images={'dark-card':card.grab(),'preview-wide':popup.grab()};sizes=[]
     page.scroll.ensureWidgetVisible(controls.view);gui.processEvents();QTest.mouseClick(controls.view,Qt.MouseButton.LeftButton);gui.processEvents();viewer=controls.viewer
     require(viewer is not None and viewer.isVisible(),'card447_real_button_opens_independent_large_card_view')
-    from PySide6.QtWidgets import QPushButton
-    close=viewer.findChild(QPushButton,'popoverCloseButton');require(close.isVisible()and close.width()>=close.fontMetrics().horizontalAdvance('×')and close.palette().buttonText().color().name()=='#f5f5f5','card447_actual_close_symbol_fits_and_has_high_contrast_on_dark_background')
+    from PySide6.QtWidgets import QAbstractButton
+    close=viewer.findChild(QAbstractButton,'popoverCloseButton');require(close is not None,'card447_actual_close_control_exists')
+    from PySide6.QtGui import QColor
+    luminance=[]
+    for color in(close.getNormalColor(),QColor('#1e1e20')):
+        rgb=[v/12.92 if v<=.04045 else((v+.055)/1.055)**2.4 for v in(color.redF(),color.greenF(),color.blueF())]
+        luminance.append(sum(a*b for a,b in zip(rgb,(.2126,.7152,.0722))))
+    contrast=(max(luminance)+.05)/(min(luminance)+.05)
+    require(close.isVisible()and close.width()>=close.fontMetrics().horizontalAdvance('×')and contrast>=4.5 and not close.grab().isNull(),'card447_actual_close_symbol_fits_and_has_high_contrast_on_dark_background')
     controls.open_viewer();gui.processEvents();require(controls.viewer is viewer,'card447_repeated_enlarge_reuses_one_owned_window');window.player_card447_images['enlarged-card']=viewer.grab();QTest.mouseClick(close,Qt.MouseButton.LeftButton);gui.processEvents();require(not viewer.isVisible()and controls.card is card,'card447_actual_mouse_close_keeps_generated_card');controls.open_viewer();gui.processEvents();QTest.keyClick(viewer,Qt.Key.Key_Escape);gui.processEvents()
     require(not viewer.isVisible()and controls.card is card,'card447_actual_escape_closes_viewer_without_destroying_generated_card')
     controls.open_viewer();gui.processEvents();require(controls.viewer is viewer and viewer.isVisible(),'card447_viewer_reopens_same_valid_source')

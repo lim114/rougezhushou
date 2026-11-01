@@ -13,7 +13,7 @@ if __name__=='__main__':
  def check(section,window,gui,require):
   from PySide6.QtCore import Qt,QCoreApplication,QEvent
   from PySide6.QtGui import QPalette,QTextCursor
-  from PySide6.QtWidgets import QPushButton
+  from PySide6.QtWidgets import QAbstractButton
   from PySide6.QtTest import QTest
   from shiboken6 import isValid
   import win32gui,win32process
@@ -38,7 +38,7 @@ if __name__=='__main__':
   require(d.palette().color(QPalette.ColorRole.Window).name()=='#262528','shared_dark_canvas_matches_previously_verified_video_sample');require(d.panel.tabs.count()==4,'four_existing_player_groups_preserved');save(d,'event-battle-shared')
   rewards=d.panel.rewards;d.panel.tabs.setCurrentWidget(rewards);row=next(v for v in rewards.result['rows']if v['source_action_keys']);rewards.choices.select_value(row['id']);choose(rewards.source_combo,rewards.source_combo.itemData(1));selected=(rewards.combo.currentData(),rewards.source_combo.currentData());save(d,'event-battle-rewards')
   require(d.panel.open_event_origins(),'owned_nested_origin_opens');nested=d.panel.event_origins_dialog;gui.processEvents();require(nested.isVisible(),'owned_nested_origin_visible')
-  close=d.findChild(QPushButton,'popoverCloseButton');require(close is not None,'actual_shared_close_button_exists');QTest.mouseClick(close,Qt.MouseButton.LeftButton);gui.processEvents();require(not d.isVisible()and not nested.isVisible()and d.panel.settlement.result is None,'real_close_clears_owned_children_and_settlement')
+  close=d.findChild(QAbstractButton,'popoverCloseButton');require(close is not None,'actual_shared_close_button_exists');QTest.mouseClick(close,Qt.MouseButton.LeftButton);gui.processEvents();require(not d.isVisible()and not nested.isVisible()and d.panel.settlement.result is None,'real_close_clears_owned_children_and_settlement')
   for i in range(3):
    with patch.object(battle,'stage_reference',wraps=battle.stage_reference)as load:QTest.mouseClick(ep.open_button,Qt.MouseButton.LeftButton);gui.processEvents()
    require(ep.battle_dialog is d and load.call_count==1,'same_exact_link_reuses_one_window_and_single_refresh_'+str(i));require(d.panel.settlement.result is not None,'closed_base_reference_rehydrated_'+str(i))

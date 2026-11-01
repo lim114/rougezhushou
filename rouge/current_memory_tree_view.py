@@ -27,7 +27,10 @@ class CurrentMemoryTreePanel(DocumentedEventFlowPanel):
         return model.reference(self.event_id,count('action_points'),count('processed_parts'),held('source_key'),held('controller'))
     def _conditions_changed(self,*_):self.refresh_reference()
 
-class CurrentMemoryTreeDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentMemoryTreeDialog(PlayerDialog):
     def __init__(self,scene_id=None,choice_id=None,parent=None):
         super().__init__(parent);self.setWindowTitle('愈创之心 · 五种选项与追忆');self.resize(760,600);layout=QVBoxLayout(self);self.panel=CurrentMemoryTreePanel(scene_id,choice_id,self);layout.addWidget(self.panel)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

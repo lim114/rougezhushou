@@ -20,7 +20,10 @@ class CurrentVineEventsPanel(DocumentedEventFlowPanel):
         gold=getattr(self,'gold',None);controller=getattr(self,'controller',None);seeds=getattr(self,'seeds',None);return model.reference(self.event_id,None if gold is None or gold.value()<0 else gold.value(),None if controller is None else controller.currentData(),None if seeds is None or seeds.value()<0 else seeds.value())
     def _gold_changed(self,*_):self.refresh_reference()
 
-class CurrentVineEventsDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentVineEventsDialog(PlayerDialog):
     def __init__(self,event_id,scene_id=None,choice_id=None,parent=None):
         super().__init__(parent);self.setWindowTitle(event_id+' · 选项、代价与奖励');self.resize(760,600);layout=QVBoxLayout(self);self.panel=CurrentVineEventsPanel(event_id,scene_id,choice_id,self);layout.addWidget(self.panel)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

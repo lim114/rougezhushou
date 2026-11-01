@@ -106,7 +106,7 @@ class CardControls:
             from .player_compact import ToolPopover
             from .reference_image import ReferenceImage
             picture=ReferenceImage();picture.set_data(self.card.png(),'展示卡图片暂不可读');picture.setAccessibleDescription('\n'.join(self.card.lines))
-            style='#statisticsCardViewer{background:#1e1e20;border-color:#1e1e20;} #statisticsCardViewer #popoverCloseButton{color:#f5f5f5;background:transparent;padding:0;min-width:0;min-height:24px;} #statisticsCardViewer #popoverCloseButton:hover{background:#3a4144;}'
+            style='#statisticsCardViewer{background:#1e1e20;border-color:#1e1e20;} #statisticsCardViewer #popoverCloseButton{color:#f5f5f5;background:transparent;padding:0;min-width:30px;min-height:30px;} #statisticsCardViewer #popoverCloseButton:hover{background:#3a4144;}'
             self.viewer=ToolPopover('统计展示卡',picture,self.page,theme='dark',extra_style=style,object_name='statisticsCardViewer');self.viewer.resize(self.card.width()+32,self.card.height()+72)
         self.viewer.show();self.viewer.raise_();return True
     def export(self):

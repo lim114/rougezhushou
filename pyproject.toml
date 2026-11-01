@@ -9,8 +9,10 @@ description = "Windows blackflow exploration and damage test application"
 requires-python = ">=3.12"
 
 [tool.setuptools.packages.find]
-include = ["rouge*"]
+include = ["rouge*", "third_party.qframelesswindow*"]
 
 [tool.setuptools.package-data]
 rouge = ["data/*.json","data/ui-icons/*.png","data/relic-icons/*.png","data/run-badges/*.webp","data/battle-maps/*.png","data/portraits/*.png","data/skill-icons/*.png","data/profession-icons/*.png","data/page-features/*.json","data/page-features/*.npz","data/page-features/*.png","data/visual-anchors/*.json","data/visual-anchors/*.png","data/player-theme/*.qss","data/player-theme/*.json","data/player-theme/*.txt","data/player-theme/icons/*.svg"]
 "rouge.bridge" = ["*.cjs"]
+
+"third_party.qframelesswindow" = ["LICENSE", "COPYING", "NOTICE.md", "_rc/*.qrc", "_rc/title_bar/*.svg"]

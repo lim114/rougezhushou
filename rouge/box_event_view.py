@@ -24,7 +24,10 @@ class BoxEventPanel(DocumentedEventFlowPanel):
         self._close_battle();self.refresh_reference()
 
 
-class BoxEventDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class BoxEventDialog(PlayerDialog):
     def __init__(self,scene_id=None,choice_id=None,parent=None):
         super().__init__(parent);self.setWindowTitle('窥视箱中 · 条件、对话与相关作战');self.resize(760,600)
         layout=QVBoxLayout(self);self.panel=BoxEventPanel(scene_id,choice_id,self);layout.addWidget(self.panel)

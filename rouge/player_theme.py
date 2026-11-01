@@ -33,3 +33,5 @@ QLabel#popoverTitle{{background:transparent;font-weight:500;}}
 def apply_theme(widget,theme='light',*,extra=''):
     sheet,palette=assets(theme)
     widget.setProperty('playerTheme',theme);widget.setPalette(QPalette(palette));widget.setFont(QFont('Microsoft YaHei UI',9));widget.setStyleSheet(sheet+extra)
+    from .player_window_frame import PlayerDialog
+    if isinstance(widget,PlayerDialog):widget.set_frame_theme(theme)

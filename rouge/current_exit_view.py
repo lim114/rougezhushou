@@ -27,7 +27,10 @@ class CurrentExitPanel(DocumentedEventFlowPanel):
 
     def _conditions_changed(self, *_): self.refresh_reference()
 
-class CurrentExitDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentExitDialog(PlayerDialog):
     def __init__(self, target=None, parent=None):
         super().__init__(parent); self.setWindowTitle('险路尽头 · 招募、换层与独立奖励'); self.resize(760, 600)
         layout=QVBoxLayout(self); self.panel=CurrentExitPanel(target, self); layout.addWidget(self.panel)

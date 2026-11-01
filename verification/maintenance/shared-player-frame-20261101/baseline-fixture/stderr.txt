@@ -1,0 +1,27 @@
+test_inventory_bundle_sleeps_and_restores_together (tests.test_player_popover_refresh.PopoverRefreshTests.test_inventory_bundle_sleeps_and_restores_together) ... ERROR
+
+======================================================================
+ERROR: test_inventory_bundle_sleeps_and_restores_together (tests.test_player_popover_refresh.PopoverRefreshTests.test_inventory_bundle_sleeps_and_restores_together)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_player_popover_refresh.py", line 95, in test_inventory_bundle_sleeps_and_restores_together
+    self.bar.present(popup)
+  File "baseline-player_compact.py", line 155, in present
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\player_game_binding.py", line 75, in eventFilter
+    if event.type()==QEvent.Type.Close and(widget in self.suspended or widget in(self.companion.hidden_windows or[])):
+       ^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\player_game_binding.py", line 75, in eventFilter
+    if event.type()==QEvent.Type.Close and(widget in self.suspended or widget in(self.companion.hidden_windows or[])):
+       ^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\player_game_binding.py", line 75, in eventFilter
+    if event.type()==QEvent.Type.Close and(widget in self.suspended or widget in(self.companion.hidden_windows or[])):
+       ^^^^^^^^^^^^
+  [Previous line repeated 2 more times]
+  File "baseline-player_compact.py", line 19, in showEvent
+  File "baseline-player_compact.py", line 167, in refresh
+AttributeError: Error calling Python override of QObject::eventFilter(): Error calling Python override of QObject::eventFilter(): Error calling Python override of QObject::eventFilter(): Error calling Python override of QObject::eventFilter(): Error calling Python override of QObject::eventFilter(): Error calling Python override of QDialog::showEvent(): 'types.SimpleNamespace' object has no attribute 'set_rows'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.273s
+
+FAILED (errors=1)

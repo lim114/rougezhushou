@@ -1,0 +1,99 @@
+{
+  "repository": "https://github.com/zhiyiYo/PyQt-Frameless-Window",
+  "branch": "PySide6",
+  "commit": "fc00919f4915c91a2b6320a8ae7eb1d977ca4f57",
+  "version": "0.8.2",
+  "license": "LGPL-3.0",
+  "files": {
+    "__init__.py": {
+      "sha256": "be0c785874d794a3687bb04dbef123ed4967eb8b5e70eff829f2f7517477e375",
+      "bytes": 1652
+    },
+    "linux/window_effect.py": {
+      "sha256": "03359734e4dd6bb72a4a309e797c4327b8d355b2ea111f3b7d26be8c3ed09f73",
+      "bytes": 4391
+    },
+    "linux/__init__.py": {
+      "sha256": "4b01b709b29fa115b3b8a54c9d1075e47db4ba8465951ad5bbbfe1b3df29e89e",
+      "bytes": 5124
+    },
+    "mac/window_effect.py": {
+      "sha256": "f9709739533df1fd1327682dfded4c6955001a49b590c009c1a87bfe135b5361",
+      "bytes": 5791
+    },
+    "mac/__init__.py": {
+      "sha256": "900258b6acbbe6df146deb72e0207e9c8ad83f621f056e368164beeccf95d86f",
+      "bytes": 9076
+    },
+    "titlebar/title_bar_buttons.py": {
+      "sha256": "b3ff85e2f1fe7293e6a78189206ac479cac6423a19ce992a36ebd4abfcb244a3",
+      "bytes": 9039
+    },
+    "titlebar/__init__.py": {
+      "sha256": "ec629ab4e421f82e4f472f761b41222cffdb9c3fae7b001281b06064efcd2e36",
+      "bytes": 5124
+    },
+    "utils/linux_utils.py": {
+      "sha256": "688f9b13d2feadb62929ebf0be9cc8a57e2843f6689508877eb6ebbe81466d40",
+      "bytes": 2216
+    },
+    "utils/mac_utils.py": {
+      "sha256": "093c99b175d8be0185cc02c58290ce24994cc80bcfd43e09865687281bf62c4c",
+      "bytes": 3382
+    },
+    "utils/win32_utils.py": {
+      "sha256": "bcad5e0e1dedebaf763e6583aa19fbf42d2495ead14e6c2b1bb39a8d7fb9bed2",
+      "bytes": 11542
+    },
+    "utils/__init__.py": {
+      "sha256": "826e9223fe8583ed0b376e90df7489cb935e26efdf0a3ce43f2d2140a4e793c7",
+      "bytes": 1479
+    },
+    "webengine/__init__.py": {
+      "sha256": "ec13823f11957c58c133b3252fc2b60d9ddcf432ce362c87f0724ef2dcda18d8",
+      "bytes": 777
+    },
+    "windows/c_structures.py": {
+      "sha256": "4f7001b8e691026f232323b722ba6b7d0b1400e9edcbf3520a9679b11abd567a",
+      "bytes": 4297
+    },
+    "windows/window_effect.py": {
+      "sha256": "fccd34bc543fcada95de4f97a67ea2b8bafb5deb75571770fd920f5b447e2c2d",
+      "bytes": 11969
+    },
+    "windows/__init__.py": {
+      "sha256": "db545340c54acf5b754c1ea45099404f3266848ed16258e2a11d068338d26891",
+      "bytes": 10250
+    },
+    "_rc/resource.py": {
+      "sha256": "d22b67526b618074b01690536a09c2326fdbca32214da5cf72404d66bf94f737",
+      "bytes": 1477
+    },
+    "_rc/resource.qrc": {
+      "sha256": "763961b879b9c6eff8de89c5540ebbbbebc886e3cd20c11bbce13da73451a645",
+      "bytes": 135
+    },
+    "_rc/__init__.py": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "_rc/title_bar/close.svg": {
+      "sha256": "ceaa90272c62c59094e1e2cf1e3e5309cf3c077f0c771e209ac2de7e5c3c0235",
+      "bytes": 270
+    }
+  },
+  "all_19_source_files_copied_unmodified": false,
+  "uses": "FramelessDialog and StandardTitleBar; no Acrylic, capture blocking, WebEngine or maximize UI. Only owned reference windows.",
+  "existing_dependency": "pywin32 already in project requirements; no system/global pip change",
+  "other_candidate": "PsinaDev/pyside-frameless e61319c4c7d025545b9f84a6cf243e70b1de1f8c MIT; QMainWindow and app-specific optional drop/maximize behavior would require a different adaptation. qt-custom-window did not expose a license at inspected path and is not adopted.",
+  "unchanged_upstream_source_files": 18,
+  "local_adaptations": {
+    "windows/__init__.py": {
+      "original_sha256": "db545340c54acf5b754c1ea45099404f3266848ed16258e2a11d068338d26891",
+      "sha256": "dfc80f87d35d0c3fce76380efc69a6cea88ce20f8c84625345f3f04d1cf8a8fd",
+      "bytes": 10425,
+      "change": "Only screenChanged SetWindowPos gains SWP_NOACTIVATE and SWP_NOZORDER, with dated modification comment. No other upstream logic changed.",
+      "reason_source": "https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowpos"
+    }
+  }
+}
