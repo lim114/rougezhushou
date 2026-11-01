@@ -109,10 +109,13 @@ class NoteLibraryPanel(QWidget):
         self.reference_button.setEnabled(bool(row and reference_target(row['content'])is not None))
     def open_reference(self):
         from .player_reference_notes import reference_target
-        item=self.entries.currentItem();row=self.rows[item.data(Qt.ItemDataRole.UserRole+1)]if item else None
-        if row and reference_target(row['content'])is not None:self.openReference.emit(row['content'])
+        content=self.reference_context()
+        if reference_target(content)is not None:self.openReference.emit(content)
         else:self.reference_button.setEnabled(False)
     def open_selected(self):
+        content=self.reference_context()
+        if content:self.openContext.emit(content)
+    def reference_context(self):
         item=self.entries.currentItem();row=self.rows[item.data(Qt.ItemDataRole.UserRole+1)]if item else None
-        if row and row['content']:self.openContext.emit(row['content'])
+        return row['content']if row else None
     def hideEvent(self,event):self.search_timer.stop();super().hideEvent(event)

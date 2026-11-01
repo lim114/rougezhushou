@@ -85,11 +85,11 @@ class InlineNotebookTests(unittest.TestCase):
         self.assertEqual(p.context,b);self.assertEqual(self.editor.store.read(content_key(a))[0],'原范围的内容');self.assertFalse(self.editor.dirty);self.assertFalse(self.editor.autosave_timer.isActive())
 
     def test_external_conflict_blocks_close_and_preserves_both_copies(self):
-        from rouge.player_compact import NotesPopover
+        from rouge.player_reference_window import ReferenceWindow,NotesPage
         p=self.panel;a=scope(self.catalogue,'floor1');p.select_context(a);p.edit.click();self.editor.autosave.setChecked(True);self.editor.editor.setPlainText('当前草稿');self.editor.store.folder.mkdir(exist_ok=True);self.editor.store.path(self.editor.key).write_text('外部保存','utf8')
-        owner=QWidget();popup=NotesPopover('隔离备忘录',p,owner);popup.panel=p;popup.show();self.qt.processEvents();self.assertFalse(popup.close())
+        owner=QWidget();owner.reference_window=ReferenceWindow(owner);popup=NotesPage('隔离备忘录',p,owner);popup.panel=p;owner.reference_window.present(popup);self.qt.processEvents();self.assertFalse(owner.reference_window.close())
         self.assertTrue(self.editor.dirty);self.assertFalse(self.editor.autosave.isChecked());self.assertEqual(self.editor.editor.toPlainText(),'当前草稿');self.assertEqual(self.editor.store.read(self.editor.key)[0],'外部保存')
-        self.editor.discard();self.assertTrue(popup.close());owner.deleteLater()
+        self.editor.discard();self.assertTrue(owner.reference_window.close());p.setParent(None);owner.deleteLater()
 
     def test_follow_and_new_run_keep_unsaved_editor_with_visible_owner(self):
         p=self.panel;a={'kind':'battle','title':'第一关','variant_id':'a'};b={**a,'title':'第二关','variant_id':'b'};self.run.state['last_node_content']=a;p.refresh(force=True);p.edit.click();self.editor.editor.setPlainText('未保存正文')

@@ -639,116 +639,12 @@ class ExpansionUpdatePanel(QWidget):
         if self.result is None or self.result['row']['category']not in('scenes','choices','relics'):return False
         category=self.result['row']['category'];fresh=model.detail(category,self.result['row']['id'])
         if fresh!=self.result:self._unavailable();return False
-        from .current_startup import locate as startup_locate
-        target=startup_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_startup_view import CurrentStartupDialog
-            self._close_flow();self.flow_dialog=CurrentStartupDialog(target,self);self.flow_dialog.show();return True
-        from .current_shadow import locate as shadow_locate
-        target=shadow_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_shadow_view import CurrentShadowDialog
-            self._close_flow();self.flow_dialog=CurrentShadowDialog(target,self);self.flow_dialog.show();return True
-        from .current_resting import locate as resting_locate
-        target=resting_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_resting_view import CurrentRestingDialog
-            self._close_flow();self.flow_dialog=CurrentRestingDialog(target,self);self.flow_dialog.show();return True
-        from .current_reconstruction import locate as reconstruction_locate
-        target=reconstruction_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_reconstruction_view import CurrentReconstructionDialog
-            self._close_flow();self.flow_dialog=CurrentReconstructionDialog(target,self);self.flow_dialog.show();return True
-        from .current_peace import locate as peace_locate
-        target=peace_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_peace_view import CurrentPeaceDialog
-            self._close_flow();self.flow_dialog=CurrentPeaceDialog(target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
-        from .current_scout import locate as scout_locate
-        target=scout_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_scout_view import CurrentScoutDialog
-            self._close_flow();self.flow_dialog=CurrentScoutDialog(target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
-        from .current_portal import locate as portal_locate
-        target=portal_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_portal_view import CurrentPortalDialog
-            self._close_flow();self.flow_dialog=CurrentPortalDialog(target,self);self.flow_dialog.show();return True
-        from .current_agency import locate as agency_locate
-        target=agency_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_agency_view import CurrentAgencyDialog
-            self._close_flow();self.flow_dialog=CurrentAgencyDialog(target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
-        from .current_exit import locate as exit_locate
-        target=exit_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_exit_view import CurrentExitDialog
-            self._close_flow();self.flow_dialog=CurrentExitDialog(target,self);self.flow_dialog.show();return True
-        from .current_memory_tree import locate as memory_locate
-        target=memory_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_memory_tree_view import CurrentMemoryTreeDialog
-            self._close_flow();self.flow_dialog=CurrentMemoryTreeDialog(target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
-        from .current_lone_dog import locate as dog_locate
-        target=dog_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_lone_dog_view import CurrentLoneDogDialog
-            self._close_flow();self.flow_dialog=CurrentLoneDogDialog(target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
-        from .current_cave import locate as cave_locate
-        target=cave_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_cave_view import CurrentCaveDialog
-            self._close_flow();self.flow_dialog=CurrentCaveDialog(target,self);self.flow_dialog.show();return True
-        from .current_vine_events import locate as vine_locate
-        target=vine_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_vine_events_view import CurrentVineEventsDialog
-            self._close_flow();self.flow_dialog=CurrentVineEventsDialog(target['event_id'],target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
-        from .current_rest_travel import locate as rest_travel_locate
-        target=rest_travel_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_rest_travel_view import CurrentRestTravelDialog
-            self._close_flow();self.flow_dialog=CurrentRestTravelDialog(target['event_id'],target,self);self.flow_dialog.show();return True
-        from .current_unattended_shop import locate as shop_locate
-        target=shop_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_unattended_shop_view import CurrentUnattendedShopDialog
-            self._close_flow();self.flow_dialog=CurrentUnattendedShopDialog(target,self);self.flow_dialog.show();return True
-        from .current_resource_events import locate as resource_locate
-        target=resource_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_resource_events_view import CurrentResourceEventsDialog
-            self._close_flow();self.flow_dialog=CurrentResourceEventsDialog(target['event_id'],target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
-        from .current_lake import locate as lake_locate
-        target=lake_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_lake_view import CurrentLakeDialog
-            self._close_flow();self.flow_dialog=CurrentLakeDialog(target,self);self.flow_dialog.show();return True
-        from .current_encounters import locate as encounter_locate
-        target=encounter_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_encounters_view import CurrentEncountersDialog
-            self._close_flow();self.flow_dialog=CurrentEncountersDialog(target['event_id'],target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
-        from .current_sand_reference import locate as sand_locate
-        target=sand_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_sand_view import CurrentSandDialog
-            self._close_flow();self.flow_dialog=CurrentSandDialog(target['event_id'],target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
-        from .current_ritual_reference import locate as ritual_locate
-        target=ritual_locate(category,fresh['row']['id'])
-        if target is not None:
-            from .current_ritual_view import CurrentRitualDialog
-            self._close_flow();self.flow_dialog=CurrentRitualDialog(target['event_id'],target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
-        from .documented_event_flows import event_for_scene
-        event_id=event_for_scene(fresh['row']['id'])if category=='scenes'else None
-        if event_id is None:
-            from .box_event_reference import locate
-            target=locate(category,fresh['row']['id'])
-            if target is None:self._close_flow();self.flow_button.hide();return False
-            from .box_event_view import BoxEventDialog
-            self._close_flow();self.flow_dialog=BoxEventDialog(target['scene_id'],target['choice_id'],self);self.flow_dialog.show();return True
-        from .documented_event_flow_view import DocumentedEventFlowDialog
-        self._close_flow();self.flow_dialog=DocumentedEventFlowDialog(event_id,fresh['row']['id'],self);self.flow_dialog.show();return True
+        from .documented_readers import reader_plan,make_flow_reader
+        plan=reader_plan(category,fresh['row']['id']);self._close_flow()
+        if plan is None:self.flow_button.hide();return False
+        self.flow_dialog=make_flow_reader(plan,self)
+        if self.flow_dialog is None:return False
+        self.flow_dialog.show();return True
 
     def _close_origins(self):
         dialog=getattr(self,'origins_dialog',None)

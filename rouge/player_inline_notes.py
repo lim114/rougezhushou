@@ -28,6 +28,8 @@ class InlineNotesPanel(RecentNotesPanel):
         self.parent_signature=None;self.parent_views=[];self.editRequested.connect(self.open_editor)
         self.inline_ready=True
         self.compact_controls()
+        editor.reference_button.clicked.disconnect()
+        editor.reference_button.clicked.connect(self.request_reference)
         self.layout().setContentsMargins(2,0,2,2);self.layout().setSpacing(7)
 
     def compact_controls(self):
@@ -72,12 +74,20 @@ class InlineNotesPanel(RecentNotesPanel):
         editor=self.note_editor
         self.save_state.setText('未保存' if editor.dirty else '已保存' if editor.key and editor.store.path(editor.key).is_file() else '自动保存' if editor.autosave.isChecked() else '手动保存')
         self.save_state.setToolTip(editor.status.text())
-        content=editor.content if self.stack.currentWidget()is editor else self.context
+        content=self.reference_context()
         editor.context.setVisible(self.stack.currentWidget()is editor and self.key!=editor.key)
         editor.status.setVisible(self.more.isChecked() or editor.dirty)
         title=content['title'] if content else '选择一份笔记'
         if content and self.archived_key==content_key(content):title+='（原分类暂不可核对）'
         self.card_title.setText(title)
+
+    def reference_context(self):
+        return self.note_editor.content if self.stack.currentWidget()is self.note_editor else self.context
+
+    def request_reference(self):
+        content=self.reference_context()
+        if content is None:return False
+        self.note_editor.openReference.emit(dict(content));return True
 
     def fit_content(self,*_):
         if not self.inline_ready:return
@@ -216,7 +226,10 @@ class InlineNotesPanel(RecentNotesPanel):
                 self.more.setChecked(True)
         self.refresh_parents()
         self.fit_content()
-        if hasattr(self,'save_state'):self.update_save_state()
+        if hasattr(self,'save_state'):
+            self.update_save_state()
+            from .player_reference_notes import reference_target
+            editor.reference_button.setVisible(reference_target(self.reference_context())is not None)
 
     def refresh_parents(self,*_):
         if not self.inline_ready:return

@@ -35,7 +35,10 @@ def open_note(window,content):
 def open_reference(window,content):
     target=reference_target(content)
     if target is None:
-        window.player_notes.status.setText('笔记对应的原固定资料暂不可用；笔记仍保留，没有打开同名条目。');return False
+        window.player_notes.status.setText('笔记对应资料暂不可用。');return False
+    from .player_note_reference import open_shared
+    opened=open_shared(window,content,target)
+    if opened is not None:return opened
     category,identity=target;panel=window.reference_panel(category)
     if panel is None:return False
     panel.search.clear()

@@ -1,0 +1,34 @@
+test_all_preserved_reader_constructors_match_standalone_panels (tests.test_note_references_458.DocumentedReaderTests.test_all_preserved_reader_constructors_match_standalone_panels) ... ERROR
+test_existing_locator_order_and_fallbacks_resolve_original_inputs (tests.test_note_references_458.DocumentedReaderTests.test_existing_locator_order_and_fallbacks_resolve_original_inputs) ... ok
+test_directory_button_and_unsaved_veto_keep_the_real_editor (tests.test_note_library_457.LibraryPageTests.test_directory_button_and_unsaved_veto_keep_the_real_editor) ... ok
+test_read_failure_keeps_cause_visible_and_files_unchanged (tests.test_note_library_457.LibraryPageTests.test_read_failure_keeps_cause_visible_and_files_unchanged) ... ok
+test_same_name_saved_stages_show_existing_canonical_mode_labels (tests.test_note_library_457.LibraryPageTests.test_same_name_saved_stages_show_existing_canonical_mode_labels) ... ok
+test_saved_file_removal_clears_preview_and_actions (tests.test_note_library_457.LibraryPageTests.test_saved_file_removal_clears_preview_and_actions) ... ok
+test_search_return_only_refreshes_after_an_action_had_focus (tests.test_note_library_457.LibraryPageTests.test_search_return_only_refreshes_after_an_action_had_focus) ... ok
+test_shared_library_scans_once_and_back_keeps_search_selection_reading_and_split (tests.test_note_library_457.LibraryPageTests.test_shared_library_scans_once_and_back_keeps_search_selection_reading_and_split) ... ok
+test_changed_library_selection_removes_the_old_dependent_chain (tests.test_note_references_458.NoteReferenceTests.test_changed_library_selection_removes_the_old_dependent_chain) ... ok
+test_dirty_note_stays_in_editor_until_saved (tests.test_note_references_458.NoteReferenceTests.test_dirty_note_stays_in_editor_until_saved) ... ok
+test_library_opens_exact_stage_and_retains_reading_on_back (tests.test_note_references_458.NoteReferenceTests.test_library_opens_exact_stage_and_retains_reading_on_back) ... ok
+test_lost_source_removes_child_but_keeps_saved_note (tests.test_note_references_458.NoteReferenceTests.test_lost_source_removes_child_but_keeps_saved_note) ... ok
+test_original_scene_and_complete_event_use_same_window (tests.test_note_references_458.NoteReferenceTests.test_original_scene_and_complete_event_use_same_window) ... ok
+test_preview_reference_follows_reading_instead_of_cached_editor (tests.test_note_references_458.NoteReferenceTests.test_preview_reference_follows_reading_instead_of_cached_editor) ... FAIL
+test_wrong_version_same_name_does_not_open_a_substitute (tests.test_note_references_458.NoteReferenceTests.test_wrong_version_same_name_does_not_open_a_substitute) ... ok
+
+======================================================================
+ERROR: test_all_preserved_reader_constructors_match_standalone_panels (tests.test_note_references_458.DocumentedReaderTests.test_all_preserved_reader_constructors_match_standalone_panels)
+----------------------------------------------------------------------
+RuntimeError: libshiboken: Internal C++ object (ReferenceWindow) already deleted.
+
+======================================================================
+FAIL: test_preview_reference_follows_reading_instead_of_cached_editor (tests.test_note_references_458.NoteReferenceTests.test_preview_reference_follows_reading_instead_of_cached_editor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_note_references_458.py", line 46, in test_preview_reference_follows_reading_instead_of_cached_editor
+    p.select_context(self.elite);p.refresh(force=True);self.assertEqual(self.notes.content,self.normal);self.assertEqual(p.reference_context(),self.elite);self.assertTrue(self.notes.reference_button.isVisible())
+                                                                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 15 tests in 29.640s
+
+FAILED (failures=1, errors=1)

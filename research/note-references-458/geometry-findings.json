@@ -1,0 +1,71 @@
+{
+  "observations": [
+    {
+      "step": "plain-only",
+      "size": [
+        600,
+        250
+      ],
+      "layout_hfw": false,
+      "layout_height": -1,
+      "stack_hfw": false,
+      "stack_height": -1,
+      "current_height": -1,
+      "hidden_long_height": 1252,
+      "stack_policy": "Policy.Ignored"
+    },
+    {
+      "step": "hidden-long-registered",
+      "size": [
+        600,
+        250
+      ],
+      "layout_hfw": false,
+      "layout_height": -1,
+      "stack_hfw": false,
+      "stack_height": -1,
+      "current_height": -1,
+      "hidden_long_height": 1252,
+      "stack_policy": "Policy.Ignored"
+    },
+    {
+      "step": "long-active",
+      "size": [
+        600,
+        1314
+      ],
+      "layout_hfw": true,
+      "layout_height": 1314,
+      "stack_hfw": true,
+      "stack_height": 1254,
+      "current_height": 1252,
+      "hidden_long_height": 1252,
+      "stack_policy": "Policy.Ignored"
+    },
+    {
+      "step": "plain-again",
+      "size": [
+        600,
+        250
+      ],
+      "layout_hfw": false,
+      "layout_height": -1,
+      "stack_hfw": false,
+      "stack_height": -1,
+      "current_height": -1,
+      "hidden_long_height": 1252,
+      "stack_policy": "Policy.Ignored"
+    }
+  ],
+  "source": {
+    "rouge/player_reference_window.py": {
+      "sha256": "8aee2b76038c6f29bcda13c57683e1e28fa1ac9dcd7b2e965df8956a6135508d",
+      "bytes": 8900
+    }
+  },
+  "execution": "Completed Windows exec_command invocation, exit0; original invocation did not expose a retained Python PID.",
+  "finding": "Minimal real Qt fixture: active long word-wrapped page hasHeightForWidth=True and changes requested600x800 to600x1314. Hidden registered long page does not change plain600x250. Minimum/size policy alone does not explain the behavior.",
+  "next": "Trace active body height-for-width and isolate its size negotiation from the native window while preserving wrapping/scrolling. Verify all primary-page reading and sizes on the actual application.",
+  "issue451_fixed": false,
+  "original_app_fix_claimed": false
+}
