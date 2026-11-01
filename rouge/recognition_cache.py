@@ -1,7 +1,6 @@
 """Bounded in-memory reuse, requiring byte equality as well as geometry."""
 from collections import OrderedDict
 from copy import deepcopy
-import numpy as np
 
 
 class ExactImageCache:
@@ -12,7 +11,7 @@ class ExactImageCache:
         self.bytes = self.hits = self.misses = 0
 
     def call(self, image, context, compute):
-        pixels = np.ascontiguousarray(image).tobytes()
+        pixels = image.tobytes(order='C')
         key = (image.shape, image.dtype.str, context, pixels)
         entry = self.entries.get(key)
         if entry is not None:

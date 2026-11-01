@@ -1,7 +1,7 @@
 """Current static map comparison; image clicks never infer unmeasured cells."""
 from PySide6.QtCore import Qt,QPointF,QRectF,Signal
 from PySide6.QtGui import QPainter,QPen,QColor,QPixmap
-from PySide6.QtWidgets import QWidget,QDialog,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPushButton,QSplitter,QTabWidget,QPlainTextEdit
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPushButton,QSplitter,QTabWidget,QPlainTextEdit
 from . import current_map_position as model
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
@@ -124,6 +124,11 @@ class CurrentMapPositionPanel(QWidget):
         replace_text(self.player,model.cell_text(self.result,cell),preserve=preserve);replace_text(self.technical,_technical_json({'reference':self.result,'selected_cell':cell}),preserve=preserve)
         if not preserve:self.tabs.setCurrentIndex(0)
 
-class CurrentMapPositionDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentMapPositionDialog(PlayerDialog):
     def __init__(self,stage_id,parent=None):
-        super().__init__(parent);self.setWindowTitle('固定地图 · 格子与原图位置对照');self.resize(1150,800);layout=QVBoxLayout(self);self.panel=CurrentMapPositionPanel(stage_id,self);layout.addWidget(self.panel)
+        super().__init__(parent);self.setWindowTitle('固定地图 · 格子与原图位置对照');layout=QVBoxLayout(self);self.panel=CurrentMapPositionPanel(stage_id,self);layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self);area=self.screen().availableGeometry();self.resize(min(960,area.width()-40),min(640,area.height()-40))

@@ -1,7 +1,7 @@
 """Manual current-version battle reader, with real category branches."""
 import json
 from copy import deepcopy
-from PySide6.QtCore import Qt,QSize
+from PySide6.QtCore import Qt,QSize,QEvent
 from PySide6.QtGui import QPixmap,QIcon
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog,QLineEdit,QCheckBox,QStackedWidget,QScrollArea,QListView,QAbstractItemView,QSizePolicy
 from . import current_battle_reference as model,expansion_reference as version
@@ -62,13 +62,14 @@ class CurrentBattlePanel(QWidget):
         body.addStretch()
         self.overview_scroll.setStyleSheet('#battleOverviewScroll,#battleOverviewViewport{background:#262528;border:0;} #battleOverviewBody,#battleOverviewContent,QFrame#battleOverviewSection{background:transparent;border:0;} QListView#battleQuickEnemies{background:#262528;color:#ededed;border:0;} QListView#battleQuickEnemies::item:selected{background:#3d5e55;}')
         self.map_image = ReferenceImage()
-        self.map_image.setMinimumSize(300, 160)
+        self.map_image.setMinimumSize(300, 80)
         self.map_image.setMaximumHeight(270)
         self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.map_section.addWidget(self.map_image)
-        self.position_button = QPushButton('查看地图格子与已核对的原图位置')
+        self.position_button = QPushButton('放大地图 · 查看格子与原图对照')
         self.map_section.addWidget(self.position_button)
         self.position_button.clicked.connect(self.open_map_positions)
+        self.overview_scroll.viewport().installEventFilter(self)
         self.event_origins_button = QPushButton('查看与本关对应的事件选项')
         self.map_details.addWidget(self.event_origins_button)
         self.event_origins_button.clicked.connect(self.open_event_origins)
@@ -226,6 +227,14 @@ class CurrentBattlePanel(QWidget):
         self.action_group.currentIndexChanged.connect(self._actions_changed);self.action_focus.currentIndexChanged.connect(self._actions_changed)
         self.actions.currentItemChanged.connect(self._action_changed)
         self.refresh_reference()
+
+    def eventFilter(self,watched,event):
+        if watched is self.overview_scroll.viewport()and event.type()==QEvent.Type.Resize:
+            outer=self.map_section.layout();content=self.map_section.content().layout()
+            margins=outer.contentsMargins();inside=content.contentsMargins()
+            overhead=margins.top()+margins.bottom()+inside.top()+inside.bottom()+outer.spacing()+content.spacing()+self.map_section.toggleButton().sizeHint().height()+self.position_button.sizeHint().height()
+            self.map_image.setFixedHeight(max(80,min(270,event.size().height()-overhead)))
+        return super().eventFilter(watched,event)
 
     def resizeEvent(self,event):
         super().resizeEvent(event)
