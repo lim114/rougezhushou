@@ -200,3 +200,5 @@ Qt已有置顶及整窗输入穿透标志，但“全部穿透”会使该窗口
 [第458节](research/note-references-458/README.md)：20个原定位器及原文献/宝箱后备顺序集中一次维护，复用22类现有面板；完整事件直接展示，避免额外原文中转。
 
 [第459节](research/viewport-459/README.md)：优先采用Qt现成滚动容器，保留原有页面与成熟窗框；以实际尺寸追踪定位两处布局影响，避免反复叠加最小尺寸补丁。
+
+[第460节](research/notebook-460/README.md)：采用固定版本Mistune解析Markdown，Qt只负责显示；现成插件处理列表/表格/换行，避免手写Markdown预处理。依赖和BSD许可随项目声明。

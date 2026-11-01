@@ -1,0 +1,47 @@
+{
+  "section": 460,
+  "changed_or_new_sources": {
+    "pyproject.toml": {
+      "sha256": "3092c2b660ed3642ceedf58de4971b70294018d01b4953bec27ed008cc39623a",
+      "bytes": 1015
+    },
+    "requirements-cloud.txt": {
+      "sha256": "7c1940dd66586bd59c10cc93da013fa203fde662b490404fd94faebb5b311358",
+      "bytes": 151
+    },
+    "requirements.txt": {
+      "sha256": "5cb3838639aad9066b11a041bd388b7d44e22c6c612e5fa862933604994b5777",
+      "bytes": 134
+    },
+    "rouge/data/mistune-LICENSE.txt": {
+      "sha256": "539013fd8e19f744f8bf0e27a532bbff54cd689ecef7a800f56ae5dc824be870",
+      "bytes": 1475
+    },
+    "rouge/data/notebook-renderer.json": {
+      "sha256": "ae61d88c67f58cda97e34def19b5093b5fc11cab6efddcf0c31e24b6b56bb59a",
+      "bytes": 647
+    },
+    "rouge/player_note_library.py": {
+      "sha256": "70b7b30d8d41e4daae85fe2227fb402a15c850da31eec5d3a35435ba8b065848",
+      "bytes": 8852
+    },
+    "rouge/player_note_preview.py": {
+      "sha256": "73db3d0dc83c6261227c98e91159631cd1546219b509ccda59799f26a092ed29",
+      "bytes": 2084
+    },
+    "rouge/player_note_style.py": {
+      "sha256": "71cfd402c4040e7f9790c54ccc67280f99b9823a48c03948386d4a0248e47106",
+      "bytes": 3139
+    },
+    "rouge/player_notes.py": {
+      "sha256": "d61b441528bb79b95590e7feb89f2f8601ac5df04796771aa2e2ac7e101d75a6",
+      "bytes": 9503
+    },
+    "tests/test_notebook_rendering_460.py": {
+      "sha256": "4558356f224661109eb1fcd165bd7b9bdf0d976b613d9973a319ae9a57fccd21",
+      "bytes": 4108
+    }
+  },
+  "review": "Adopt pinned mature Mistune3.4.0 for local Markdown with hard wrapping, keep existing Qt resource/link behavior and exact NoteStore/export source. Render library through the same NotePreview and reset its reading only on exact note-path changes. Reuse existing UTF16-aware reading-state helpers for same-note changes; retain no-op refresh. Simplify normal note context/status/button copy while keeping actual conflict/error handling. License and new dependency declared for local/cloud/package installation.",
+  "whole_program_review_complete": false
+}

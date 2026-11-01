@@ -67,7 +67,7 @@ class NoteLibrary:
         return result
 
 from PySide6.QtCore import Signal,Qt,QTimer
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QLineEdit,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QSplitter
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QLineEdit,QListWidget,QListWidgetItem,QPushButton,QSplitter
 class NoteLibraryPanel(QWidget):
     openContext=Signal(object)
     openReference=Signal(object)
@@ -77,7 +77,8 @@ class NoteLibraryPanel(QWidget):
         from .player_theme import apply_theme
         self.setObjectName('sceneNotesLibrary');apply_theme(self,extra=NOTE_STYLE)
         self.notice=QLabel('本机场景笔记');self.notice.setWordWrap(True);body.addWidget(self.notice);self.search=QLineEdit();self.search.setPlaceholderText('搜索场景名称或笔记内容');body.addWidget(self.search)
-        self.split=QSplitter(Qt.Orientation.Horizontal);self.entries=QListWidget();self.entries.setMinimumWidth(130);self.split.addWidget(self.entries);self.detail=QPlainTextEdit();self.detail.setReadOnly(True);self.split.addWidget(self.detail);self.split.setStretchFactor(1,2);self.split.setChildrenCollapsible(False);body.addWidget(self.split,1)
+        from .player_note_preview import NotePreview
+        self.split=QSplitter(Qt.Orientation.Horizontal);self.entries=QListWidget();self.entries.setMinimumWidth(130);self.split.addWidget(self.entries);self.detail=NotePreview();self.detail_key=None;self.split.addWidget(self.detail);self.split.setStretchFactor(1,2);self.split.setChildrenCollapsible(False);body.addWidget(self.split,1)
         from .flow_layout import FlowLayout
         actions=QWidget();row=FlowLayout(actions);self.open_button=QPushButton('编辑笔记');row.addWidget(self.open_button);self.reference_button=QPushButton('查看对应资料');row.addWidget(self.reference_button);body.addWidget(actions);self.reference_button.clicked.connect(self.open_reference)
         for action in (self.open_button,self.reference_button):action.setAutoDefault(False)
@@ -103,7 +104,8 @@ class NoteLibraryPanel(QWidget):
     def selected(self,*_):
         item=self.entries.currentItem();row=self.rows[item.data(Qt.ItemDataRole.UserRole+1)]if item else None
         text=row['text']if row else'选择一条本机笔记。'
-        if self.detail.toPlainText()!=text:self.detail.setPlainText(text)
+        key=str(row['path'])if row else None
+        self.detail.read_markdown(text,preserve=key==self.detail_key);self.detail_key=key
         self.open_button.setEnabled(bool(row and row['content']))
         from .player_reference_notes import reference_target
         self.reference_button.setEnabled(bool(row and reference_target(row['content'])is not None))

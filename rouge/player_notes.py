@@ -64,9 +64,9 @@ class NotesDialog(QDialog):
         self.autosave=QCheckBox('自动保存在本机');self.autosave.setChecked(True);body.addWidget(self.autosave)
         self.autosave_timer=QTimer(self);self.autosave_timer.setSingleShot(True);self.autosave_timer.setInterval(900);self.autosave_timer.timeout.connect(self.save_pending);self.pending_key=None
         self.autosave.toggled.connect(self.set_autosave)
-        self.status=QLabel('编辑停顿后自动保存在本机；不会上传或加入聊天。');self.status.setWordWrap(True);body.addWidget(self.status)
+        self.status=QLabel('编辑停顿后自动保存在本机');self.status.setWordWrap(True);body.addWidget(self.status)
         bar=QHBoxLayout();self.save_button=QPushButton('保存笔记');self.discard_button=QPushButton('放弃未保存修改');bar.addWidget(self.save_button);bar.addWidget(self.discard_button);body.addLayout(bar)
-        self.reference_button=QPushButton('查看笔记对应的固定资料（打开时核对）');bar.addWidget(self.reference_button);self.reference_button.hide()
+        self.reference_button=QPushButton('查看对应资料');bar.addWidget(self.reference_button);self.reference_button.hide()
         from .player_reference_notes import request_note_source
         self.reference_button.clicked.connect(lambda:request_note_source(self))
         self.export_button=QPushButton('导出当前文字');bar.addWidget(self.export_button);self.export_button.clicked.connect(self.export_current)
@@ -75,7 +75,7 @@ class NotesDialog(QDialog):
         from .player_note_export_ui import export_editor
         return export_editor(self)
     def changed(self):
-        self.dirty=True;self.status.setText('有未保存修改；仍绑定上方场景，不会随识别结果转移。')
+        self.dirty=True;self.status.setText('有未保存修改')
         if self.autosave.isChecked()and self.key is not None:self.pending_key=self.key;self.autosave_timer.start()
         if self.pages.currentIndex()==1:self.preview_timer.start()
     def set_autosave(self,value):
@@ -101,7 +101,7 @@ class NotesDialog(QDialog):
         self.key=key;self.digest=digest;self.content=deepcopy({field:content[field]for field in('kind','title','variant_id','event_id')if field in content})
         with QSignalBlocker(self.editor):replace_text(self.editor,text,preserve=same)
         self.dirty=False
-        scope='\n手选范围的通用笔记；不会自动套用为某个具体场景。'if content.get('kind')=='note-scope'else'\n手动选择的固定资料笔记，按准确条目和资料基准分别保存；不表示当前关卡。'if content.get('kind')in('reference-stage','reference-scene')else'\n同名且未确认变体时共用笔记；这不是当前位置声明。'
+        scope='\n通用笔记 · 手动选择范围'if content.get('kind')=='note-scope'else'\n固定资料笔记'if content.get('kind')in('reference-stage','reference-scene')else'\n未确认变体时，同名场景共用笔记'
         self.context.setText('笔记对应：'+content['title']+scope)
         from .player_reference_notes import sync_note_source
         sync_note_source(self)

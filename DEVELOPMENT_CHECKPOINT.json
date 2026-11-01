@@ -64,7 +64,7 @@
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
     "current_usage_remaining_percent": 29,
-    "current_usage_receipt": "verification/sections/459-viewport/usage.json",
+    "current_usage_receipt": "verification/sections/460-notebook/usage.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
     "latest_user_instruction_receipt": "verification/sections/371-preparation/resume-and-scope.json",
     "latest_pause_instruction_receipt": "verification/sections/350-pause-request.json",
@@ -89,7 +89,7 @@
     "full_validation_restore_requires_explicit_user_request": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 459,
+  "completed_sections": 460,
   "sections": [
     {
       "number": 1,
@@ -2832,10 +2832,16 @@
       "completion_ref": "player-section-459",
       "topic": "主资料窗自适应滚动阅读",
       "verification": "verification/sections/459.json"
+    },
+    {
+      "number": 460,
+      "completion_ref": "player-section-460",
+      "topic": "逐行笔记与目录统一排版",
+      "verification": "verification/sections/460.json"
     }
   ],
-  "next_section": 460,
-  "next_action": "继续精简其余玩家页面说明，完成深层资料与公开档案整合、笔记排版及视频细节；按已测开销定位本局信息解析中的重复文字处理。",
+  "next_section": 461,
+  "next_action": "继续其它深层资料与公开档案整合，逐项对齐视频中的字体/间距/窗体；识别重点比较成熟图标匹配方案及现有OpenCV线程开销，先用正确客户区样本核对输出。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -2952,14 +2958,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 459,
-    "verification": "verification/sections/459.json",
+    "section": 460,
+    "verification": "verification/sections/460.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 459,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "bb50c2720480ac3bafdd73ba2087977b2e423201",
     "proof": "verification/maintenance/player-copy-20261102/publication.json",
@@ -3209,7 +3215,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "ACTIVE_AFTER459",
+  "batch_status": "ACTIVE_AFTER460",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3402,20 +3408,21 @@
     456,
     457,
     458,
-    459
+    459,
+    460
   ],
   "current_batch": {
     "kind": "whole_program_review_and_implementation_improvement",
     "start": 451,
     "end": null,
-    "status": "ACTIVE_AFTER459",
-    "completed_sections": 459,
-    "next_section": 460,
+    "status": "ACTIVE_AFTER460",
+    "completed_sections": 460,
+    "next_section": 461,
     "next_section_started": false,
     "batch_closed": false,
     "next_full_validation_after": null,
-    "receipt": "verification/sections/459.json",
-    "scope": "主资料窗保持紧凑尺寸，长正文可以完整滚动阅读；标题栏随当前页面调整，返回后保留阅读位置。修正从藏品页切换后标题过高、首次笔记增高的问题。"
+    "receipt": "verification/sections/460.json",
+    "scope": "备忘录保留输入换行，标题、列表、表格和任务状态统一排版；目录与上级笔记使用同一阅读方式。刷新保留阅读位置和选择，切换笔记回到新正文开头。"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -9402,12 +9409,11 @@
     "development_paused": false
   },
   "current_section_validation": {
-    "section": 459,
-    "receipt": "verification/sections/459.json",
-    "necessary_checks": 66,
+    "section": 460,
+    "receipt": "verification/sections/460.json",
+    "necessary_checks": 63,
     "native_scopes": {
-      "native-final": 52,
-      "native-web": 47
+      "current": 48
     },
     "full_validation_rerun": false
   },
