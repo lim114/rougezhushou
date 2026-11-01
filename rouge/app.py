@@ -82,19 +82,19 @@ class MainWindow(QMainWindow):
         panel=self.offline_tools
         panel.family.setCurrentIndex(panel.family.findData('calibration'))
         panel.query.setCurrentIndex(panel.query.findData('barrier-ledger'))
-        self.centralWidget().setCurrentWidget(panel,explicit_tool=True)
+        self.workspace.setCurrentWidget(panel,explicit_tool=True)
 
     def show_shield_grants(self):
         self.offline_tools.select_query('calibration','shield-grants')
-        self.centralWidget().setCurrentWidget(self.offline_tools,explicit_tool=True)
+        self.workspace.setCurrentWidget(self.offline_tools,explicit_tool=True)
 
     def show_shield_inventory(self):
         self.offline_tools.select_query('calibration','shield-inventory')
-        self.centralWidget().setCurrentWidget(self.offline_tools,explicit_tool=True)
+        self.workspace.setCurrentWidget(self.offline_tools,explicit_tool=True)
 
     def show_explosion_values(self):
         self.offline_tools.select_query('calibration','explosion-values')
-        self.centralWidget().setCurrentWidget(self.offline_tools,explicit_tool=True)
+        self.workspace.setCurrentWidget(self.offline_tools,explicit_tool=True)
 
     def __init__(self, *, include_historical_route_diagnostics=False, diagnostic_layout=None):
         if diagnostic_layout is not None and type(diagnostic_layout) is not bool:
@@ -154,10 +154,11 @@ class MainWindow(QMainWindow):
             from .diagnostic_workspace import DiagnosticWorkspace
             tabs=DiagnosticWorkspace()
         else:tabs = PlayerWorkspace(developer_tools=include_historical_route_diagnostics)
+        self.workspace=tabs
         self.setCentralWidget(tabs)
         tabs.addTab(self.make_capture_tab(), '采样测试')
         tabs.addTab(self.make_damage_tab(), '伤害测试')
-        tabs.addTab(self.make_chat_tab(), '聊天分析')
+        self.chat_page=self.make_chat_tab();tabs.addTab(self.chat_page, '聊天分析')
         self.exploration_map_tab=self.make_map_tab()
         tabs.addTab(self.exploration_map_tab, '地图预览')
         self.battle_preview=BattlePreviewPanel()
@@ -285,7 +286,7 @@ class MainWindow(QMainWindow):
         self.back_button.clicked.connect(tabs.go_back);tabs.backAvailable.connect(self.back_button.setEnabled)
         self.context_bar.addWidget(self.back_button)
         from PySide6.QtGui import QShortcut,QKeySequence
-        self.back_shortcut=QShortcut(QKeySequence('Alt+Left'),self);self.back_shortcut.activated.connect(tabs.go_back)
+        self.back_shortcut=QShortcut(QKeySequence('Alt+Left'),tabs);self.back_shortcut.activated.connect(tabs.go_back)
         if self.diagnostic_layout:
             from .player_action_menu import ButtonMenu
             self.context_bar.hide();self.run_cards.hide();self.capture_details.toggle.setChecked(True);self.damage_tools_fold.toggle.setChecked(True)
@@ -294,6 +295,8 @@ class MainWindow(QMainWindow):
             record_layout(self,'constructed')
 
     def show(self):
+        if not self.diagnostic_layout and self.centralWidget() is None:
+            return self.compact_window.open_full()
         returned=super().show()
         if self.diagnostic_layout:
             from .diagnostic_workspace import record_layout
@@ -346,16 +349,16 @@ class MainWindow(QMainWindow):
         panel.show_directory()
         for control in (panel.kind,panel.node_type,panel.floor):control.setCurrentIndex(0)
         panel.search.setText(title)
-        self.centralWidget().setCurrentWidget(panel)
+        self.workspace.setCurrentWidget(panel)
 
     def make_capture_tab(self):
         tab = QWidget()
         layout = QVBoxLayout(tab)
         from .player_overview import RunOverviewPanel
         self.run_cards=RunOverviewPanel(self.run,
-            show_map=lambda:self.centralWidget().setCurrentWidget(self.exploration_map_tab),
-            show_operators=lambda:self.centralWidget().show_group('干员计算'),
-            show_items=lambda:self.centralWidget().setCurrentWidget(self.inventory_panel))
+            show_map=lambda:self.workspace.setCurrentWidget(self.exploration_map_tab),
+            show_operators=lambda:self.workspace.show_group('干员计算'),
+            show_items=lambda:self.workspace.setCurrentWidget(self.inventory_panel))
         layout.addWidget(self.run_cards)
         from .player_context import Fold
         details=QWidget();details_layout=QVBoxLayout(details)
@@ -1132,7 +1135,7 @@ class MainWindow(QMainWindow):
     def show_catalog_battle(self,sid):
         self.select_battle_stage(sid)
         self.battle_preview.set_stage(sid)
-        self.centralWidget().setCurrentWidget(self.battle_preview)
+        self.workspace.setCurrentWidget(self.battle_preview)
 
     def show_catalog_map_node(self,node_id,binding):
         """Navigate the assistant only, rejecting stale run/template/position links."""
@@ -1153,7 +1156,7 @@ class MainWindow(QMainWindow):
         if isinstance(binding,dict) and binding.get('reference_kind')=='resident_location_reference':
             self.map_view.select_node(node_id,emit_selected=False,reference_binding=binding)
         else:self.map_view.select_node(node_id)
-        self.centralWidget().setCurrentWidget(self.exploration_map_tab)
+        self.workspace.setCurrentWidget(self.exploration_map_tab)
 
     def map_reference_node_selected(self,node_id):
         """Revalidate UI reference origin against the latest graph, run and historical context."""
@@ -1175,7 +1178,7 @@ class MainWindow(QMainWindow):
             self.node_catalog.status.setText('地图当前没有可查看的选中节点；请先选择地图位置。');return
         self.map_view.select_node(node_id)
         self.node_catalog.bind_current_node()
-        self.centralWidget().setCurrentWidget(self.node_catalog)
+        self.workspace.setCurrentWidget(self.node_catalog)
 
     def select_battle_stage(self,sid):
         self.target_stage_choices.select_value(sid)
@@ -1198,7 +1201,7 @@ class MainWindow(QMainWindow):
         # The marker tool owns a declared identity, without a verified map epoch.
         self.map_detail.setPlainText('局外声明节点引用\n地图：'+str(reference.get('map_id'))+
             '\n节点：'+str(reference.get('node_id'))+'\n实际地图绑定未核实；此引用不改变地图选择或本局状态。')
-        self.centralWidget().setCurrentWidget(self.exploration_map_tab)
+        self.workspace.setCurrentWidget(self.exploration_map_tab)
 
     def show_movement_sources(self):
         from .movement_source_view import MovementSourcePanel
@@ -1217,7 +1220,7 @@ class MainWindow(QMainWindow):
         stage_id=self.battle_preview.current_stage
         if not resolve_stage_event_reference(stage_id,token):return False
         if not self.node_catalog.open_battle_event_reference(stage_id,token):return False
-        self.centralWidget().setCurrentWidget(self.node_catalog)
+        self.workspace.setCurrentWidget(self.node_catalog)
         if self.battle_preview.entry_reference_window:self.battle_preview.entry_reference_window.hide()
         return True
 
@@ -1227,7 +1230,7 @@ class MainWindow(QMainWindow):
         panel.floor.setCurrentIndex(0);panel.node_type.setCurrentIndex(0);panel.search.clear();panel.refresh()
         row=next((i for i,e in enumerate(panel.entries) if e['kind']=='event' and e['record']['id']==event_id),None)
         if row is not None:
-            panel.list.setCurrentRow(row);self.centralWidget().setCurrentWidget(panel)
+            panel.list.setCurrentRow(row);self.workspace.setCurrentWidget(panel)
 
     def select_operator(self,op):
         return self.operator_choices.select_value(op)
@@ -2133,8 +2136,10 @@ class MainWindow(QMainWindow):
         tab = QWidget()
         layout = QVBoxLayout(tab)
         form = QFormLayout()
+        self.chat_form=form
+        connection=QWidget();connection_layout=QVBoxLayout(connection)
         self.mode = QComboBox()
-        self.mode.addItems(['ChatGPT 客户端 · 后台管道','服务商 API · 备选'])
+        self.mode.addItems(['ChatGPT 普通聊天','服务商 API'])
         form.addRow('连接方式',self.mode)
         self.desktop_threads = QComboBox()
         form.addRow('普通 ChatGPT 会话',self.desktop_threads)
@@ -2148,7 +2153,7 @@ class MainWindow(QMainWindow):
         self.desktop_read=QPushButton('刷新回复 / 确认送达')
         self.desktop_read.clicked.connect(lambda:self.desktop_request('read'))
         desktop_buttons.addWidget(self.desktop_read)
-        layout.addLayout(desktop_buttons)
+        form.addRow(desktop_buttons);self.chat_desktop_buttons=desktop_buttons
         self.profile = QLineEdit('default')
         form.addRow('配置名称 / 凭据名',self.profile)
         self.base_url = QLineEdit('https://api.deepseek.com')
@@ -2164,19 +2169,20 @@ class MainWindow(QMainWindow):
         self.key.setEchoMode(QLineEdit.EchoMode.Password)
         self.key.setPlaceholderText('本次使用；保存后从 Windows 凭据管理器读取')
         form.addRow('API Key',self.key)
-        self.context = QCheckBox('发送最新观测、难度/结局预设和本地伤害结果（不上传游戏画面）')
+        self.context = QCheckBox('附带本局信息与计算结果')
+        self.context.setToolTip('发送已读取的本局信息、难度、结局预设与本地计算结果。')
         self.context.setChecked(True)
         form.addRow(self.context)
-        layout.addLayout(form)
+        connection_layout.addLayout(form)
         buttons = QHBoxLayout()
-        save = QPushButton('保存配置与凭据')
+        save = QPushButton('保存连接设置')
         save.clicked.connect(self.save_settings)
         buttons.addWidget(save)
-        clear = QPushButton('清空本地聊天')
-        clear.clicked.connect(self.clear_chat)
-        buttons.addWidget(clear)
-        layout.addLayout(buttons)
-        self.chat_status = QLabel('点击刷新会话，选择普通 ChatGPT 聊天后绑定；无需 API Key。')
+        connection_layout.addLayout(buttons)
+        from .collapsible_section import QCollapsible
+        self.chat_connection_fold=QCollapsible('连接设置',collapsedIcon='›',expandedIcon='⌄')
+        self.chat_connection_fold.setContent(connection);self.chat_connection_fold.collapse(animate=False);layout.addWidget(self.chat_connection_fold)
+        self.chat_status = QLabel('展开连接设置，选择并绑定普通 ChatGPT 会话。')
         self.chat_status.setWordWrap(True)
         layout.addWidget(self.chat_status)
         self.transcript = QPlainTextEdit()
@@ -2193,6 +2199,7 @@ class MainWindow(QMainWindow):
         cancel = QPushButton('取消等待 / 后续回读')
         cancel.clicked.connect(self.cancel_chat)
         buttons.addWidget(cancel)
+        clear = QPushButton('清空本地聊天');clear.clicked.connect(self.clear_chat);buttons.addWidget(clear)
         layout.addLayout(buttons)
         self.mode.currentIndexChanged.connect(self.chat_mode_changed)
         self.chat_mode_changed(0)
@@ -2209,9 +2216,12 @@ class MainWindow(QMainWindow):
         self.last_chat_mode=index
         self.history.clear()
         self.transcript.clear()
-        for field in (self.profile,self.base_url,self.protocol,self.model,self.key):field.setEnabled(index==1)
+        for field in (self.profile,self.base_url,self.protocol,self.model,self.key):
+            field.setEnabled(index==1);self.chat_form.setRowVisible(field,index==1)
+        self.chat_form.setRowVisible(self.desktop_threads,index==0);self.chat_form.setRowVisible(self.chat_desktop_buttons,index==0)
         for field in (self.desktop_threads,self.desktop_refresh,self.desktop_bind,self.desktop_read):field.setEnabled(index==0)
-        self.chat_status.setText('ChatGPT 后台管道：请刷新并绑定普通聊天。' if index==0 else '服务商 API：填写地址、模型与凭据。')
+        if self.chat_connection_fold.isExpanded():self.chat_connection_fold.expand(animate=False)
+        self.chat_status.setText('连接设置中选择并绑定普通 ChatGPT 会话。' if index==0 else '连接设置中填写服务商地址、模型与密钥。')
         if index==0 and self.desktop_snapshot:self.desktop_state_received(self.desktop_snapshot)
 
     def desktop_request(self,method,**arguments):
@@ -2413,7 +2423,7 @@ class MainWindow(QMainWindow):
             self.chat_status.setText(message)
 
     def _common_page_changed(self,*_):
-        current=self.centralWidget().currentWidget()
+        current=self.workspace.currentWidget()
         for panel in self.common_reference_panels.values():
             if panel is not current:panel.close_children()
 
@@ -2427,7 +2437,7 @@ class MainWindow(QMainWindow):
         if activate:
             for other in self.common_reference_panels.values():
                 if other is not panel:other.close_children()
-            self.centralWidget().setCurrentWidget(panel)
+            self.workspace.setCurrentWidget(panel)
         return panel
 
     def closeEvent(self, event):

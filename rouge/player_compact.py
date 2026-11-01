@@ -28,7 +28,7 @@ class CompactAssistant(QDialog):
         super().__init__(owner,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint)
         self.owner=owner;self.active_popup=None;self.inventory_popup=None;self.map_popup=None;self.setWindowTitle('黑流树海助手')
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground,True);self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating,True)
-        self.buttons={};self.tool_buttons=[];self._dock_positioned=False;self.archive_popup=None;self.statistics_popup=None
+        self.buttons={};self.tool_buttons=[];self._dock_positioned=False;self.archive_popup=None;self.statistics_popup=None;self.workspace_popup=None
         self.reference_window=ReferenceWindow(self)
         overview=QWidget();layout=QVBoxLayout(overview);self.context=QLabel();self.context.setWordWrap(True);layout.addWidget(self.context);grid=QGridLayout();self.cards={}
         for i,name in enumerate(overview_facts(owner.run.state)):
@@ -327,18 +327,34 @@ class CompactAssistant(QDialog):
     def open_statistics(self):return self.present(self.statistics_reader())
     def open_map_statistics(self,graph,node_id):
         page=self.statistics_reader();page.panel.set_map_node(graph,node_id);return self.present(page)
-    def open_full(self,page=None):
-        if page is not None and not isinstance(page,bool):self.owner.centralWidget().setCurrentWidget(page)
-        self.owner.show();self.owner.raise_();self.owner.activateWindow()
+    def open_full(self,page=None,*,group=None):
+        workspace=self.owner.workspace
+        if self.owner.diagnostic_layout:
+            if page is not None and not isinstance(page,bool):workspace.setCurrentWidget(page)
+            self.owner.show();self.owner.raise_();self.owner.activateWindow();return True
+        if self.workspace_popup is None:
+            from .player_map_reader import REFERENCE_STYLE
+            self.workspace_popup=ToolPage('完整助手',self.owner.takeCentralWidget(),self,object_name='mapReferenceWindow',extra_style=REFERENCE_STYLE)
+            self.workspace_popup.panel=workspace;self.workspace_popup.resize(1040,720)
+            from PySide6.QtWidgets import QSizePolicy
+            def fit_workspace(page):
+                workspace.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Ignored if page is self.owner.chat_page else QSizePolicy.Policy.Preferred)
+            workspace.activePageChanged.connect(fit_workspace);fit_workspace(workspace.currentWidget())
+            back=QPushButton('上一栏目');back.setEnabled(bool(workspace._history));back.clicked.connect(workspace.go_back)
+            workspace.backAvailable.connect(back.setEnabled);self.workspace_popup.header_bar.addWidget(back)
+        if not self.present(self.workspace_popup):return False
+        if group is not None:workspace.setCurrentWidget(workspace.groups[group])
+        elif page is not None and not isinstance(page,bool):workspace.setCurrentWidget(page)
+        self.owner.hide();return True
     def open_operators(self):
-        ws=self.owner.centralWidget();ws.show_group('干员计算');self.open_full(ws.currentWidget())
+        return self.open_full(group='干员计算')
     def open_chat(self):
-        ws=self.owner.centralWidget();ws.show_group('聊天');self.open_full(ws.currentWidget())
+        return self.open_full(group='聊天')
     def exit_application(self):
         self.owner.close()
         if self.owner.closing:QApplication.instance().quit()
     def closeEvent(self,event):
         if self.owner.closing:self.hotkey.close();self.game_binding.close();self.game_hover.close();self.game_overlay.close()
         if not self.owner.closing:self.open_full()
-        self.reference_window.close()
+        else:self.reference_window.close()
         event.accept()

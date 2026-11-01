@@ -1,0 +1,22 @@
+{
+  "external_sources": [
+    {
+      "url": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QMainWindow.html#PySide6.QtWidgets.QMainWindow.takeCentralWidget",
+      "reviewed_excerpt": "Removes the central widget from this main window. The ownership of the removed widget is passed to the caller.",
+      "adaptation": "Use supported native ownership transfer, retain one workspace instance and stable controller routing."
+    },
+    {
+      "url": "https://github.com/pyapp-kit/superqt/tree/a81c9c707351ce587bbc7a14cd6ad407375a43cf",
+      "source": "rouge/collapsible_section.py",
+      "source_pin": {
+        "sha256": "a45aadfb0479107d7e9528fc4f8960f74eecfc7e0d004e74f89d6eb835304650",
+        "bytes": 8490
+      },
+      "license": "licenses/superqt-BSD-3-Clause.txt",
+      "adaptation": "Existing adopted mature collapsible widget reused for optional chat connection settings."
+    }
+  ],
+  "decision": "Retain native Qt page ownership, licensed shared frame and mature fold control. Recreating the calculator/chat or introducing another UI framework would duplicate existing controllers, credentials and local state.",
+  "new_dependency": false,
+  "previous_adoption_counted_as_new_external_project": false
+}
