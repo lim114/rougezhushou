@@ -1,0 +1,30 @@
+{
+  "commit": "ef55f427f2c8b410d34f8a7681020a3000cf6866",
+  "tag": "v6.11.2",
+  "source_files": [
+    {
+      "url": "https://raw.githubusercontent.com/qt/qtbase/ef55f427f2c8b410d34f8a7681020a3000cf6866/src/widgets/styles/qcommonstyle.cpp",
+      "bytes": 267427,
+      "sha256": "341054213e45a370fdab4eab2b1dcfeed7959e12e5fe135873bc556e3068f652",
+      "tag_and_actual_resolved_commit_bytes_equal": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qt/qtbase/ef55f427f2c8b410d34f8a7681020a3000cf6866/src/widgets/itemviews/qstyleditemdelegate.cpp",
+      "bytes": 21181,
+      "sha256": "05d436dc469dd945c3ddb1bd9611fbcae348b5e9a88096857bc0a548919db353",
+      "tag_and_actual_resolved_commit_bytes_equal": true
+    }
+  ],
+  "read_source_ranges": {
+    "commonstyle.cpp": [
+      "823-849 viewItemTextLayout full-height loop",
+      "1002-1023 viewItemDrawText style margin/wrap/direction/alignment"
+    ],
+    "delegate.cpp": [
+      "387-400 sizeHint native style delegation"
+    ]
+  },
+  "adapted_logic": "full-height QTextLayout loop plus exact style focus margin; no maxHeight elision, no last-visible-line/width-used branches",
+  "runtime_not_replaced": true,
+  "CPP_sources_local_only": true
+}

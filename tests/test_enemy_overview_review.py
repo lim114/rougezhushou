@@ -53,7 +53,7 @@ class EnemyOverviewReviewTests(unittest.TestCase):
   p=self.panel();p.enemy_overview.tree.topLevelItem(0).setExpanded(False);p.enemy_choices.select_value(p.result['enemies'][0]['key'])
   with patch.object(model,'stage_reference',return_value=None):self.assertFalse(p.refresh_reference())
   self.assertEqual(self.rows(p),[]);self.assertFalse(p.enemy_overview.isVisible());self.assertTrue(p.refresh_reference());self.assertEqual(p.tabs.currentIndex(),0);p.tabs.setCurrentIndex(1);self.assertTrue(p.enemy_overview.isVisible());self.assertIsNone(p.enemy_key);self.assertTrue(p.enemy_overview.tree.topLevelItem(0).isExpanded())
- def test_short_summary_is_explicit_and_complete_original_remains_in_tooltip_and_reader(self):
-  e={'name':'long','abilities':['甲'*250],'description':'介绍','declared_traits':None};cells=overview_cells(e);self.assertIn('点选查看全文',cells[6]);self.assertNotEqual(cells[6],e['abilities'][0]);self.assertIn('未核对',cells[5]);self.assertEqual(cells[1:5],['未知']*4)
+ def test_complete_mechanism_is_in_table_without_short_summary_and_unknowns_remain(self):
+  e={'name':'long','abilities':['甲'*250],'description':'介绍','declared_traits':None};cells=overview_cells(e);self.assertEqual(cells[6],e['abilities'][0]);self.assertIn('未核对',cells[5]);self.assertEqual(cells[1:5],['未知']*4)
 
 if __name__=='__main__':unittest.main()
