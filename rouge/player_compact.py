@@ -174,6 +174,8 @@ class CompactAssistant(QDialog):
             self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();self.inventory_popup.parts.refresh_exchange();self.inventory_popup.shop.refresh()
         for popup in (self.map_popup,self.scene_popup,self.team_popup,self.replay_popup):
             if popup and popup.isVisible():popup.panel.refresh()
+        if self.reference_window.isVisible() and self.map_popup is not None and not self.map_popup.isVisible() and self.map_popup.panel.reference_popup is not None:
+            self.map_popup.panel.refresh()
         if self.exchange_popup and self.exchange_popup.isVisible():
             source=self.inventory_popup.panel;source.reload_sources()
             self.exchange_popup.panel.refresh_source(source.source_index.data if source.source_index else None,source.source_signature)
@@ -265,7 +267,7 @@ class CompactAssistant(QDialog):
         return self.present(self.inventory_popup)
     def open_map(self):
         if self.map_popup is None:
-            panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source());self.map_popup=ToolPage('地图',panel,self,on_show=self.refresh,theme='light',object_name='videoMapWindow',extra_style='#videoMapWindow QPushButton#popoverCloseButton{color:#303139;font-size:12pt;}');self.map_popup.panel=panel;self.map_popup.resize(1200,460)
+            panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source(),page_owner=self);self.map_popup=ToolPage('地图',panel,self,on_show=self.refresh,theme='light',object_name='videoMapWindow',extra_style='#videoMapWindow QPushButton#popoverCloseButton{color:#303139;font-size:12pt;}');self.map_popup.panel=panel;self.map_popup.resize(1200,460)
             panel.resources.requested.connect(self.open_resource)
         return self.present(self.map_popup)
 

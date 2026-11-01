@@ -143,8 +143,8 @@ class PreviewMapView(MapView):
         self.hover_id=None;self.nodeHovered.emit('',QPoint());super().leaveEvent(event)
 
 class MapPanel(QWidget):
-    def __init__(self,owner,*,statistics_source=None):
-        super().__init__();self.owner=owner;self.statistics_source=statistics_source;self.epoch=None;self.graphs={};self.readings={};self.entry_readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None;self.reference_popup=None;self.reference_binding=None
+    def __init__(self,owner,*,statistics_source=None,page_owner=None):
+        super().__init__();self.owner=owner;self.page_owner=page_owner;self.statistics_source=statistics_source;self.epoch=None;self.graphs={};self.readings={};self.entry_readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None;self.reference_popup=None;self.reference_binding=None
         from .flow_layout import FlowLayout
         body=QVBoxLayout(self);body.setContentsMargins(5,0,5,5);body.setSpacing(5)
         head=QHBoxLayout();self.floors=QTabBar();self.floors.setExpanding(False);self.floors.setAccessibleName('本局已记录楼层');head.addWidget(self.floors,1)
@@ -233,7 +233,8 @@ class MapPanel(QWidget):
         if hasattr(self,'hover_card'):
             self.hover_timer.stop()
             if not suspended:self.hover_card.dismiss()
-        if not suspended:self.close_reference()
+        switching=self.page_owner is not None and self.page_owner.reference_window.switching
+        if not suspended and not switching:self.close_reference()
         super().hideEvent(event)
     def refresh(self):
         epoch=self.owner.run.state['id'];old_key=self.selected_zone
@@ -407,9 +408,13 @@ class MapPanel(QWidget):
         if not row:return False
         self.close_reference()
         from .player_map_reader import make_reader
-        popup=make_reader(key[1],row,self,historical=self.view.historical or key[0].startswith('已读历史'),config=self.owner.run.state.get('config',{}))
+        popup=make_reader(key[1],row,self,historical=self.view.historical or key[0].startswith('已读历史'),config=self.owner.run.state.get('config',{}),page_owner=self.page_owner)
         if popup is not None:
             self.reference_popup=popup;self.reference_binding=binding
+            if self.page_owner is not None:
+                from functools import partial
+                popup.prepare=partial(self.prepare_reference,popup)
+                return self.page_owner.present(popup)
             popup.setWindowFlag(Qt.WindowType.Tool,True);popup.show()
             area=self.screen().availableGeometry();popup.move(max(area.left(),min(self.mapToGlobal(QPoint(20,20)).x(),area.right()-popup.width()+1)),max(area.top(),min(self.mapToGlobal(QPoint(20,20)).y(),area.bottom()-popup.height()+1)))
             return True
@@ -427,13 +432,25 @@ class MapPanel(QWidget):
         return (self.epoch,graph.get('zone_id'),graph.get('template_id'),self.view.selected,self.selected_reference)
 
     def close_reference(self):
-        if self.reference_popup is not None:self.reference_popup.close();self.reference_popup=None
+        popup=self.reference_popup;self.reference_popup=None
         self.reference_binding=None
+        if popup is not None:
+            if self.page_owner is None:popup.close()
+            else:self.page_owner.reference_window.discard(popup,fallback=self.page_owner.map_popup)
+
+    def prepare_reference(self,popup):
+        self.refresh()
+        return self.reference_popup is popup
 
     def check_reference(self):
         if self.reference_popup is None:return
-        if not self.reference_popup.isVisible()and not self.reference_popup.property('playerSuspended'):self.close_reference();return
+        from .player_reference_window import ToolPage
+        if not isinstance(self.reference_popup,ToolPage)and not self.reference_popup.isVisible()and not self.reference_popup.property('playerSuspended'):self.close_reference();return
         if self.reference_binding!=self.reader_binding():self.close_reference();return
+        node_binding=getattr(self.reference_popup,'node_reference_binding',None)
+        if node_binding is not None:
+            from .current_node_readers import recheck
+            if recheck(node_binding)is None:self.close_reference();return
         panel=getattr(self.reference_popup,'panel',None)
         if panel is not None and hasattr(panel,'refresh_reference')and panel.refresh_reference()is False:self.close_reference()
         elif self.selected_reference[1]=='battle':

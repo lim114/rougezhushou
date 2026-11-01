@@ -19,6 +19,7 @@ class ToolPage(QWidget):
         self.extra_style = extra_style.replace('QDialog#', 'QWidget#')
         apply_theme(self, theme, extra=self.extra_style)
         self.on_show = on_show
+        self.prepare = lambda: True
         self.preferred_size = QSize(760, 600)
         self.header = QWidget()
         self.header_bar = QHBoxLayout(self.header)
@@ -45,7 +46,7 @@ class ToolPage(QWidget):
     def closeEvent(self, event):
         super().closeEvent(event)
         self.finished.emit(0)
-        if not self.host.switching:
+        if not self.host.switching and self.host.pages.currentWidget() is self:
             self.host.hide()
 
 
@@ -69,6 +70,7 @@ class ReferenceWindow(PlayerDialog):
         self.history = []
         self.cursor = -1
         self.switching = False
+        self.presenting = False
         self.back = QPushButton('‹')
         self.forward = QPushButton('›')
         for button, label in ((self.back, '返回上一页'), (self.forward, '前往下一页')):
@@ -89,6 +91,8 @@ class ReferenceWindow(PlayerDialog):
         self.update_navigation()
 
     def present(self, page, *, record=True):
+        if not page.prepare():
+            return False
         current = self.pages.currentWidget()
         if current is not None and current is not page:
             current.preferred_size = self.size()
@@ -111,7 +115,9 @@ class ReferenceWindow(PlayerDialog):
         self.headers.setCurrentWidget(page.header)
         self.pages.setCurrentWidget(page)
         page.show()
+        self.presenting = True
         self.show()
+        self.presenting = False
         if current is not page:
             area = self.screen().availableGeometry()
             size = page.preferred_size
@@ -119,6 +125,31 @@ class ReferenceWindow(PlayerDialog):
         self.update_navigation()
         self.raise_()
         return True
+
+    def discard(self, page, *, fallback):
+        """Remove an invalid source page from both navigation directions."""
+        current = self.pages.currentWidget()
+        removed_before = sum(p is page for p in self.history[:self.cursor+1])
+        self.history = [p for p in self.history if p is not page]
+        self.cursor -= removed_before
+        if current is page:
+            self.present(fallback)
+            self.parentWidget().active_popup = fallback
+        else:
+            self.switching = True
+            page.close()
+            self.switching = False
+        self.pages.removeWidget(page)
+        self.headers.removeWidget(page.header)
+        page.header.deleteLater()
+        page.deleteLater()
+        self.update_navigation()
+
+    def showEvent(self, event):
+        current = self.pages.currentWidget()
+        if not self.presenting and current is not None:
+            current.prepare()
+        super().showEvent(event)
 
     def navigate(self, index):
         if 0 <= index < len(self.history) and self.present(self.history[index], record=False):

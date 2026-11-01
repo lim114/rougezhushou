@@ -27,7 +27,7 @@ def prepare_reference_window(dialog,width,height):
     dialog.resize(min(width,area.width()-40),min(height,area.height()-40))
 
 
-def make_reader(kind,record,parent,*,historical=False,config=None):
+def make_reader(kind,record,parent,*,historical=False,config=None,page_owner=None):
     if not isinstance(record,dict)or not isinstance(record.get('id'),str)or not isinstance(record.get('title'),str):return None
     from .player_compact import ToolPopover
     if kind=='battle':
@@ -36,12 +36,18 @@ def make_reader(kind,record,parent,*,historical=False,config=None):
         panel=CurrentBattlePanel(identity)
         if panel.result is None:panel.deleteLater();return None
         if config is not None and not historical:panel.set_context(config)
-        dialog=ToolPopover(panel.result['name']+' · 固定作战预览',panel,parent);dialog.panel=panel;size_battle_window(dialog)
+        title=panel.result['name']+' · 固定作战预览'
+        if page_owner is None:
+            dialog=ToolPopover(title,panel,parent)
+        else:
+            from .player_reference_window import ToolPage
+            dialog=ToolPage(title,panel,page_owner,object_name='mapReferenceWindow',extra_style=REFERENCE_STYLE)
+        dialog.panel=panel;size_battle_window(dialog)
         dialog.finished.connect(panel._close_readers)
-        return readable(dialog)
+        return readable(dialog)if page_owner is None else dialog
     if kind=='event':
         from .current_node_readers import binding_for
         from .current_node_readers_view import make_dialog
         binding=binding_for(record)
-        return make_dialog(binding,parent,historical=historical)if binding else None
+        return make_dialog(binding,parent,historical=historical,page_owner=page_owner)if binding else None
     return None
