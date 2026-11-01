@@ -1,0 +1,183 @@
+{
+  "passed_diagnostic_runtime": true,
+  "cases": [
+    {
+      "case": "life6of6",
+      "expected": "6/6",
+      "only_rec": false,
+      "input_size_wh": [
+        60,
+        22
+      ],
+      "rapid_all": [],
+      "maa_all": [
+        {
+          "text": "1",
+          "score": 0.147358,
+          "box_xywh": [
+            10,
+            10,
+            18,
+            5
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": false,
+      "maa_exact_high_confidence": false
+    },
+    {
+      "case": "life6of6",
+      "expected": "6/6",
+      "only_rec": true,
+      "input_size_wh": [
+        60,
+        22
+      ],
+      "rapid_all": [
+        {
+          "text": "6/6",
+          "score": 0.9000822106997172
+        }
+      ],
+      "maa_all": [
+        {
+          "text": "6/6",
+          "score": 0.93525,
+          "box_xywh": [
+            0,
+            0,
+            60,
+            22
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": true,
+      "maa_exact_high_confidence": true
+    },
+    {
+      "case": "resource0",
+      "expected": "0",
+      "only_rec": false,
+      "input_size_wh": [
+        68,
+        39
+      ],
+      "rapid_all": [
+        {
+          "text": "O",
+          "score": 0.5732153654098511
+        }
+      ],
+      "maa_all": [
+        {
+          "text": "0",
+          "score": 0.217369,
+          "box_xywh": [
+            0,
+            0,
+            68,
+            39
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": false,
+      "maa_exact_high_confidence": false
+    },
+    {
+      "case": "resource0",
+      "expected": "0",
+      "only_rec": true,
+      "input_size_wh": [
+        68,
+        39
+      ],
+      "rapid_all": [
+        {
+          "text": "0",
+          "score": 0.21743713319301605
+        }
+      ],
+      "maa_all": [
+        {
+          "text": "0",
+          "score": 0.217369,
+          "box_xywh": [
+            0,
+            0,
+            68,
+            39
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": false,
+      "maa_exact_high_confidence": false
+    },
+    {
+      "case": "crew3",
+      "expected": "3",
+      "only_rec": false,
+      "input_size_wh": [
+        65,
+        52
+      ],
+      "rapid_all": [
+        {
+          "text": "3",
+          "score": 0.9995772242546082
+        }
+      ],
+      "maa_all": [
+        {
+          "text": "3",
+          "score": 0.999383,
+          "box_xywh": [
+            14,
+            12,
+            28,
+            31
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": true,
+      "maa_exact_high_confidence": true
+    },
+    {
+      "case": "crew3",
+      "expected": "3",
+      "only_rec": true,
+      "input_size_wh": [
+        65,
+        52
+      ],
+      "rapid_all": [
+        {
+          "text": "3 ",
+          "score": 0.8167235255241394
+        }
+      ],
+      "maa_all": [
+        {
+          "text": "3 ",
+          "score": 0.817016,
+          "box_xywh": [
+            0,
+            0,
+            65,
+            52
+          ]
+        }
+      ],
+      "rapid_exact_high_confidence": false,
+      "maa_exact_high_confidence": false
+    }
+  ],
+  "method": "Directly viewed single-field public crops,detector+recognizer versus only_rec with the same existing models;no expected/replace hint.Outcome-selected diagnostics,not localization accuracy or independent full-page evaluation.",
+  "findings": [
+    "6/6 at75percent:both detector routes fail high confidence,recognition-only succeeds above.9.This diagnoses the controlled crop path,not the sole cause of every full-page omission.",
+    "0 remains about.217 confidence in recognition-only for both providers;do not lower threshold or force zero.",
+    "3 is detected with over.999 confidence in this isolated crop,but recognition-only gives trailing space and about.817 confidence;do not globally bypass detection."
+  ],
+  "production_recognition_modified": false,
+  "next": "Anchor-derived field localization and appropriate recognition mode need independent geometry/continuous inputs;raw OCR cannot serve as its own ground truth.",
+  "private_data_or_game_operations": false
+}

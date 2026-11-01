@@ -1,4 +1,4 @@
-"""Reuse the existing environment model only for demonstrated identical inputs."""
+"""Source-qualified environment subtotals from legacy or current snapshots."""
 from copy import deepcopy
 from .battle_preview import battle_data, enemy_preview
 from .enemy_panel import enemy_panel_reference, panel_data
@@ -14,7 +14,7 @@ def component_numbers(forecast):
 def forecasts(result, config):
     """The caller supplies an already verified current stage and local conditions.
 
-    New/changed inputs stay unknown. No current frame, game action, relic state
+    Unqualified declarations stay unknown. No frame, game action, relic state
     or hidden phase is inferred, and no old numerical formula is rewritten.
     """
     if not config or result is None:
@@ -28,8 +28,13 @@ def forecasts(result, config):
     elif old_profile is not None and any(current[key]!=old_profile[key]for key in current):
         reason='这一难度的资料已变化，暂不套用旧计算。'
     legacy=battle_data()['stages'].get(result['id'])
+    current_reference=None
     if legacy is None or legacy['level_source']['sha256']!=result['source']['sha256']:
-        reason='此关为新增或配置已变化，尚未核验新的数值计算。'
+        if reason is None:
+            from .current_enemy_environment import qualify_current
+            current_reference=qualify_current(result)
+            if current_reference is None:
+                reason='此关的当前关卡与敌人属性来源无法核对，未借用旧计算。'
     zone=config.get('zone')or{}
     zone_name=zone.get('name')or config_data()['zones'].get(zone.get('id'),{}).get('name')or'区域未确认'
     raw_grade=(config.get('difficulty')or{}).get('value')
@@ -43,6 +48,21 @@ def forecasts(result, config):
               'battle_source_identity':result['source_identity'],'reference_key':enemy['key'],'conditions_label':label}
         output[enemy['key']]=item
         if reason:
+            continue
+        if current_reference is not None:
+            from .current_enemy_environment import environment
+            component,pending=environment(current_reference,enemy,config,grade)
+            item['scope']='current_declared_fixed_environment_component'
+            if component is None:
+                item['pending'].append(pending)
+            else:
+                item['environment_component']=component['stats']
+                item['steps']=component['steps']
+                item['pending']=component['pending']
+                item['qualified_inputs']={'current_snapshot_level_and_enemy_declarations_equal':True,
+                    'four_core_attributes_explicit':True,'exact_database_level_or_independent_override':True,
+                    'known_tier':True,'shared_documented_environment_rules':True}
+                item['difficulty_profile_source']=dict(result['difficulty_source'])
             continue
         matches=[row for row in legacy['enemies']if row['id']==enemy['id']and row['level']==enemy['level']]
         if len(matches)!=1 or matches[0]['level_type']!=enemy['tier']:

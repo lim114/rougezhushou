@@ -12,6 +12,66 @@ def difficulty_rules():
 def damage_factor(scenario,dtype):
     return scenario.get('_run_damage_factor',1)*scenario.get('_enemy_type_factors',{}).get(dtype,1)
 
+def apply_fixed_environment(enemy,stage,preview,difficulty,zone,*,difficulty_profiles=None):
+    """Apply the shared documented fixed modifiers to an already qualified enemy."""
+    stats=enemy['stats'];record={'id':enemy['enemy_id'],'level_type':enemy['level_type']}
+    def multiply(label,values):
+        for key,value in values.items():
+            if stats.get(key) is not None:stats[key]*=value
+        enemy['steps'].append({'label':label,'factors':values})
+    for rune in preview['runes']:
+        if rune['difficultyMask'] not in (stage['difficulty'],'ALL'):continue
+        if rune['key']=='enemy_attribute_mul':
+            if rune['professionMask']!=1023 or rune['buildableMask']!='ALL':
+                enemy['pending'].append('关卡属性修正的目标范围尚未覆盖。');continue
+            selectors=[b for b in rune['blackboard'] if b['key']=='enemy']
+            if selectors:
+                selector=selectors[0].get('valueStr') if len(selectors)==1 else None
+                known_ids={e['id'] for e in preview['possible_enemies']}
+                if not isinstance(selector,str) or selector not in known_ids:
+                    enemy['pending'].append('关卡属性修正的敌人选择器尚未覆盖。');continue
+                if selector!=record['id']:continue
+            keys={'atk':'atk','def':'def','max_hp':'maxHp','magic_resistance':'magicResistance'}
+            values={keys[b['key']]:b['value'] for b in rune['blackboard'] if b['key'] in keys}
+            if len(values)!=len(rune['blackboard'])-len(selectors):enemy['pending'].append('关卡存在未覆盖的属性修正字段。')
+            multiply('关卡 '+stage['difficulty'],values)
+        elif rune['key']!='level_hidden_group_enable':
+            enemy['pending'].append('关卡脚本修正待核验：'+rune['key'])
+    if preview['global_buffs']:enemy['pending'].append('关卡全局脚本效果尚未逐项计算。')
+    if difficulty:
+        grade=difficulty['value']
+        rules=difficulty_rules()
+        low=rules['exclusive_low_grades'].get(str(grade))
+        if low:
+            multiply('当前低难度独立减益（不累计）',low)
+            enemy['steps'][-1]['evidence']={k:rules[k] for k in ('source_url','verification','source_note')}
+        if grade>=5:multiply('保密等级5+生命',{'maxHp':1.3})
+        if grade>=8 and record['level_type'] in ('ELITE','BOSS'):multiply('保密等级8+精英/领袖攻击',{'atk':1.15})
+        if grade>=11 and record['level_type']=='BOSS':
+            enemy['damage_factor']=.8
+            enemy['steps'].append({'label':'保密等级11+领袖受伤降低20%','damage_factor':.8})
+        for rule in rules['enemy_thresholds']:
+            if grade>=rule['grade'] and record['id']==rule['enemy_id']:
+                multiply('保密等级'+str(rule['grade'])+'+专属属性',rule['factors'])
+                enemy['steps'][-1]['evidence']={k:rules[k] for k in ('source_url','verification','source_note')}
+                enemy['pending'].append(rule['pending'])
+        profiles=config_data()['difficulties']if difficulty_profiles is None else difficulty_profiles
+        rate=profiles[str(grade)]['bossValue']/100
+        if zone and not isinstance(zone,dict):
+            raise ValueError('本局区域配置需要对象。')
+        main=(zone or {}).get('main_zone_index')
+        try:
+            known_zone=bool(zone) and zone.get('id') in config_data()['zones']
+        except TypeError:
+            raise ValueError('本局区域ID不能用于固定区域查询。') from None
+        if known_zone and zone['id'].split('_')[1].isdigit():
+            # zone_4 and zone_4_1 are the same main-region depth.
+            main=int(zone['id'].split('_')[1])
+        if rate and isinstance(main,int) and not isinstance(main,bool) and main in range(1,7):multiply('区域增长（主区域含第1层，黑潭不新增层数）',{'maxHp':(1+rate)**main,'atk':(1+rate)**main})
+        elif rate:enemy['pending'].append('主区域深度尚未确认，未套用区域增长。')
+    else:enemy['pending'].append('本局保密等级尚未确认，未套用难度修正。')
+    if record['level_type'] not in ('NORMAL','ELITE','BOSS'):enemy['pending'].append('敌人类别未确认。')
+
 def resolve_enemy(scenario,resolution,*,panel_only=False,difficulty_profiles=None):
     if type(panel_only) is not bool:raise ValueError('局外面板预览标记需要布尔值。')
     target=scenario.get('target_enemy')
@@ -63,64 +123,8 @@ def resolve_enemy(scenario,resolution,*,panel_only=False,difficulty_profiles=Non
         if fixed_stage is not None:
             component=movement_reference(fixed_stage,stats.get('moveSpeed')).get('conditional_native_movement')
             if component is not None:enemy['movement_source_reference']=component
-    def multiply(label,values):
-        for key,value in values.items():
-            if stats.get(key) is not None:stats[key]*=value
-        enemy['steps'].append({'label':label,'factors':values})
-    for rune in preview['runes']:
-        if rune['difficultyMask'] not in (stage['difficulty'],'ALL'):continue
-        if rune['key']=='enemy_attribute_mul':
-            if rune['professionMask']!=1023 or rune['buildableMask']!='ALL':
-                enemy['pending'].append('关卡属性修正的目标范围尚未覆盖。');continue
-            selectors=[b for b in rune['blackboard'] if b['key']=='enemy']
-            if selectors:
-                selector=selectors[0].get('valueStr') if len(selectors)==1 else None
-                known_ids={e['id'] for e in preview['possible_enemies']}
-                if not isinstance(selector,str) or selector not in known_ids:
-                    enemy['pending'].append('关卡属性修正的敌人选择器尚未覆盖。');continue
-                if selector!=record['id']:continue
-            keys={'atk':'atk','def':'def','max_hp':'maxHp','magic_resistance':'magicResistance'}
-            values={keys[b['key']]:b['value'] for b in rune['blackboard'] if b['key'] in keys}
-            if len(values)!=len(rune['blackboard'])-len(selectors):enemy['pending'].append('关卡存在未覆盖的属性修正字段。')
-            multiply('关卡 '+stage['difficulty'],values)
-        elif rune['key']!='level_hidden_group_enable':
-            enemy['pending'].append('关卡脚本修正待核验：'+rune['key'])
-    if preview['global_buffs']:enemy['pending'].append('关卡全局脚本效果尚未逐项计算。')
-    difficulty=resolution.get('difficulty')
-    if difficulty:
-        grade=difficulty['value']
-        rules=difficulty_rules()
-        low=rules['exclusive_low_grades'].get(str(grade))
-        if low:
-            multiply('当前低难度独立减益（不累计）',low)
-            enemy['steps'][-1]['evidence']={k:rules[k] for k in ('source_url','verification','source_note')}
-        if grade>=5:multiply('保密等级5+生命',{'maxHp':1.3})
-        if grade>=8 and record['level_type'] in ('ELITE','BOSS'):multiply('保密等级8+精英/领袖攻击',{'atk':1.15})
-        if grade>=11 and record['level_type']=='BOSS':
-            enemy['damage_factor']=.8
-            enemy['steps'].append({'label':'保密等级11+领袖受伤降低20%','damage_factor':.8})
-        for rule in rules['enemy_thresholds']:
-            if grade>=rule['grade'] and record['id']==rule['enemy_id']:
-                multiply('保密等级'+str(rule['grade'])+'+专属属性',rule['factors'])
-                enemy['steps'][-1]['evidence']={k:rules[k] for k in ('source_url','verification','source_note')}
-                enemy['pending'].append(rule['pending'])
-        profiles=config_data()['difficulties']if difficulty_profiles is None else difficulty_profiles
-        rate=profiles[str(grade)]['bossValue']/100
-        zone=(scenario.get('run_config') or {}).get('zone')
-        if zone and not isinstance(zone,dict):
-            raise ValueError('本局区域配置需要对象。')
-        main=(zone or {}).get('main_zone_index')
-        try:
-            known_zone=bool(zone) and zone.get('id') in config_data()['zones']
-        except TypeError:
-            raise ValueError('本局区域ID不能用于固定区域查询。') from None
-        if known_zone and zone['id'].split('_')[1].isdigit():
-            # zone_4 and zone_4_1 are the same main-region depth.
-            main=int(zone['id'].split('_')[1])
-        if rate and isinstance(main,int) and not isinstance(main,bool) and main in range(1,7):multiply('区域增长（主区域含第1层，黑潭不新增层数）',{'maxHp':(1+rate)**main,'atk':(1+rate)**main})
-        elif rate:enemy['pending'].append('主区域深度尚未确认，未套用区域增长。')
-    else:enemy['pending'].append('本局保密等级尚未确认，未套用难度修正。')
-    if record['level_type'] not in ('NORMAL','ELITE','BOSS'):enemy['pending'].append('敌人类别未确认。')
+    apply_fixed_environment(enemy,stage,preview,resolution.get('difficulty'),
+        (scenario.get('run_config')or{}).get('zone'),difficulty_profiles=difficulty_profiles)
     if record['id']=='enemy_2148_shorbb':
         rule=difficulty_rules()['orb_active'];mode=target.get('orb_mode','unknown')
         if mode in rule['modes']:

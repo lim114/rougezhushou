@@ -1,10 +1,10 @@
 {
   "project": "rougezhushou",
   "branch": "codex/p2-development",
-  "completed_sections": 447,
-  "next_section": 448,
-  "current_section_label": "第447节 + 深色横向统计卡、最近归档范围与自适应预览",
-  "current_completed_change": "外部MIT布局移植的深色横向统计卡、筛选后最近归档范围、准确藏品图标、缩放预览/独立放大和原尺寸手动图片；放大跟随与高DPI修正。",
+  "completed_sections": 448,
+  "next_section": 449,
+  "current_section_label": "第448节 + 新增与变更关卡的敌人环境分项接入",
+  "current_completed_change": "新增或变更关卡可按当前明确资料，显示已计入有依据关卡、保密等级与区域修正的生命、攻击、防御和法抗分项。新旧入口共享原计算规则并分别核对来源；不借用旧关卡属性，不把分项当完整本局面板。旧目标伤害计算的支持范围保持原边界。",
   "batch_status": "IMPLEMENTATION_REVIEW_ACTIVE",
   "next_full_validation_after": 455,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
@@ -16,7 +16,7 @@
   "current_batch_target_section": null,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "ad684583b6982220f695c2819bfeb69d2486721fdf6b322dd515ba6585884140",
+    "sha256": "2c3c9b9a7abc76991fed51b6d3bc231fdd64cab7afb96b13402ec80da8971f39",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2689,34 +2689,22 @@
       "completion_ref": "player-section-447",
       "topic": "深色横向统计卡、最近归档范围与自适应预览",
       "verification": "verification/sections/447.json"
+    },
+    {
+      "number": 448,
+      "completion_ref": "player-section-448",
+      "topic": "新增与变更关卡的敌人环境分项接入",
+      "verification": "verification/sections/448.json"
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "b68dcb201aefdca5d49ae14977f19eaf66490b55a197faba0abd228151b301b9",
-    "PROJECT_PROGRESS.md": "552bb48b9b4eed3eb7525127e7d96493dbf90372a312feaf291013fe1494e7c5",
-    "WORK_IN_PROGRESS.md": "dcf32f679ef26e4a39327a562203901f625f2d1a4014d2777abb3e16d4904821",
-    "PROJECT_COMPLETED.md": "18a523b466569ed139e14743cdd45f4b416f639ea7cf79ddd82d67153d11705e",
+    "DEVELOPMENT_CHECKPOINT.json": "bbd5247abf6d7358052c0e4d83db414023956d72ed09c9e927e0f6b710b89648",
+    "PROJECT_PROGRESS.md": "87c44f4fd6b1d65fc49f7c8963808ace2336f293c3f8b3c70b70205b08eb59a8",
+    "WORK_IN_PROGRESS.md": "11c0f36f005540472f006f5deba524fdc83b610faba5725ed7737e1cfd5e6feb",
+    "PROJECT_COMPLETED.md": "024d14f7e739c95cbd3635025fc70dece4eb2e7bafe80f8bc532ffbaf23c3051",
     "AGENTS.md": "c96a3676649e08d3c6693ba31ebb3fbf9ee3add5758badf7c0ac4960101fe22f",
-    "PROJECT_REQUIREMENTS.md": "ad684583b6982220f695c2819bfeb69d2486721fdf6b322dd515ba6585884140",
-    "verification/sections/447.json": "76f7d8e64cefb11ef5b7ec48b005c5330285e6886b8e102448cf89276158abf7"
+    "PROJECT_REQUIREMENTS.md": "2c3c9b9a7abc76991fed51b6d3bc231fdd64cab7afb96b13402ec80da8971f39",
+    "verification/sections/448.json": "cdbb24c3fb30c7ad91c0dece89a09f336e2b4f35418e86407bcb14b4e87164bd"
   },
-  "private_state_included": false,
-  "current_maintenance": {
-    "kind": "implementation_maintenance",
-    "title": "机制资料首屏扩容、适用说明折叠与原生OCR反例核对",
-    "receipt": "verification/maintenance/mechanism-reading-density-20261101/summary.json",
-    "binding": "enclosing_commit",
-    "functional_section_added": false,
-    "status": "listed_scope_passed_full_video_pending",
-    "review_checklist": "PROGRAM_REVIEW.md",
-    "review_checklist_sha256": "70e2343b2455f7bcfe7a666fc1c5fe221b3d0c07ff99f87aab223decb0bfec5e",
-    "application_review_complete": false,
-    "verified_publication": {
-      "proof": "verification/maintenance/mechanism-reading-density-20261101/publication.json",
-      "proof_sha256": "8e602790aa6dfd5ec79a03f7702548635767489bc49348c80b53fd7fccbcb5ce",
-      "commit": "9af285f24c89c7a4062933f85e4cdc4c73589151",
-      "binding": "verified_remote_commit"
-    },
-    "receipt_sha256": "f6023a5465136e104b90af70ddac4e7a08de1c87ee1008c0999b1d92e772d5b8"
-  }
+  "private_state_included": false
 }
