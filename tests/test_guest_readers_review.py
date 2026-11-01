@@ -10,6 +10,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QTextCursor
 from PySide6.QtWidgets import QApplication
 from rouge.guest_mechanism_view import GuestMechanismPanel,GuestMechanismDialog
+from rouge.reference_copy import mechanism_copy
 
 ROOT=Path(__file__).resolve().parents[1]
 PROFILES={
@@ -40,7 +41,7 @@ class GuestReadersReviewTests(unittest.TestCase):
    for topic in [None]+[key for key,_ in model.topics(p.result,key)]:
     index=p.topic.findData(topic);self.assertGreaterEqual(index,0);p.topic.setCurrentIndex(index)
     picture=p.portrait.pixmap();image=picture.toImage()if picture and not picture.isNull()else None
-    states.append({'key':p.selected_key,'topic':p.topic.currentData(),'player':sha256(p.player.toPlainText().encode('utf8')).hexdigest(),'technical':sha256(p.technical.toPlainText().encode('utf8')).hexdigest(),'topics':[(p.topic.itemText(i),p.topic.itemData(i))for i in range(p.topic.count())],'related':[(p.related.itemText(i),p.related.itemData(i))for i in range(p.related.count())],'portrait':None if image is None else[image.width(),image.height(),sha256(bytes(image.constBits())).hexdigest()],'missing_picture_text':p.portrait.text(),'map_enabled':p.map_button.isEnabled()})
+    states.append({'key':p.selected_key,'topic':p.topic.currentData(),'player':sha256(mechanism_copy(p.player.toPlainText(),model.NOTICE)[0].encode('utf8')).hexdigest(),'technical':sha256(p.technical.toPlainText().encode('utf8')).hexdigest(),'topics':[(p.topic.itemText(i),p.topic.itemData(i))for i in range(p.topic.count())],'related':[(p.related.itemText(i),p.related.itemData(i))for i in range(p.related.count())],'portrait':None if image is None else[image.width(),image.height(),sha256(bytes(image.constBits())).hexdigest()],'missing_picture_text':p.portrait.text(),'map_enabled':p.map_button.isEnabled()})
   return states
 
  def test_all_ten_exact_stage_variants_keep_every_entity_topic_full_reference_and_text(self):

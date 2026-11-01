@@ -196,7 +196,7 @@ class MapPanel(QWidget):
     def set_type_filter(self,kind):
         for name,button in self.type_buttons.items():button.setChecked(name==kind)
         self.view.set_type_filter(kind)
-        self.filter_notice.setText(('正在查看：'+kind+'。实线为已读或模板，虚线为候选；不保证可达或掉落。')if kind else'')
+        self.filter_notice.setText(('正在查看：'+kind)if kind else'')
         self.filter_notice.setVisible(bool(kind))
         self.clear_filter.setVisible(bool(kind))
         companion=getattr(self.owner,'compact_window',None)
@@ -342,7 +342,7 @@ class MapPanel(QWidget):
         blocked=self.entry_search.blockSignals(True);self.entry_search.setText(reading.get('query',''));self.entry_search.blockSignals(blocked)
         keep=reading.get('selected');query=self.entry_search.text().strip().casefold()
         self.entries.blockSignals(True);self.entries.clear();self.rows={};self.selected_reference=None;self.open_button.setEnabled(False)
-        self.entry_count.setText('所选节点的资料尚未读取；未用全目录填充。')
+        self.entry_count.setText('选择节点查看资料。')
         if not graph or not node_id:
             self.title.setText('请选择地图节点');self.detail.setPlainText('点击图标查看事件、奖励与作战；可切换已记录楼层。');self.entries.blockSignals(False);return
         node=next(n for n in graph['nodes']if n['id']==node_id);kind,note,basis=node_style(node)
@@ -351,7 +351,7 @@ class MapPanel(QWidget):
         except(ValueError,KeyError,TypeError)as error:
             self.detail.setPlainText('节点资料尚不能读取：'+str(error));self.entries.blockSignals(False);return
         if dossier is None:
-            self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical)+'\n\n类型尚未确认，暂不把全目录当作本节点候选。');self.entries.blockSignals(False);return
+            self.detail.setPlainText(format_node(graph,node_id,historical=self.view.historical)+'\n\n节点类型：待确认。');self.entries.blockSignals(False);return
         groups=[('事件候选','event',dossier['rows']),('作战预览','battle',dossier['battle_rows']),('功能说明','function',dossier['function_rows']),('已读历史事件','event',dossier['history_observed_event_rows']),('已读历史作战','battle',dossier['history_observed_battle_rows']),('已列条件排除的事件（不是候选）','event',dossier.get('excluded_event_candidates',[]))]
         chosen=None
         total=sum(len(rows)for _,_,rows in groups);shown=0
@@ -367,7 +367,7 @@ class MapPanel(QWidget):
         if chosen:self.entries.setCurrentItem(chosen)
         self.restore_entry_expansion()
         self.detail.verticalScrollBar().setValue(reading.get('scroll',0)if chosen else 0)
-        self.entry_count.setText(f'显示{shown}/{total}项所选节点资料，含单列的排除说明。名称筛选只改变查阅列表，不改变候选与历史比例；无匹配不表示没有其它内容。')
+        self.entry_count.setText(f'节点资料 {shown} / {total}')
         # Only synchronize the owning current map; historical-floor reading never rebinds it.
         if self.owner.map_view.graph and graph.get('zone_id')==self.owner.map_view.graph.get('zone_id')and graph.get('template_id')==self.owner.map_view.graph.get('template_id'):self.owner.map_view.select_node(node_id)
 

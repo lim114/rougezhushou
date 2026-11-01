@@ -8,7 +8,7 @@ from .ui_state import replace_text
 class CurrentEventBattlesPanel(QWidget):
     def __init__(self,event_id=None,choice_id=None,stage_id=None,parent=None):
         super().__init__(parent);self.event_id=event_id;self.stage_id=stage_id;self.result=None;self.choice_id=None;self.battle_dialog=None;self.flow_dialog=None
-        layout=QVBoxLayout(self);notice=QLabel('具名作战选项与固定地图资料。情景入口仅打开同名事件总览，文献对应不等于本局可选或已经进入。');notice.setWordWrap(True);layout.addWidget(notice)
+        layout=QVBoxLayout(self);notice=QLabel('选择事件选项，查看关联作战。');notice.setWordWrap(True);layout.addWidget(notice)
         self.refresh_button=QPushButton('重新核对事件与作战');layout.addWidget(self.refresh_button);self.choices=QListWidget();self.choices.setMaximumHeight(180);self.choices.setAccessibleName('文献中的作战选项');layout.addWidget(self.choices)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.technical=QPlainTextEdit()
         for v in(self.player,self.technical):v.setReadOnly(True)
@@ -50,7 +50,7 @@ class CurrentEventBattlesPanel(QWidget):
         self.flow_button.setVisible(target is not None);self.flow_button.setEnabled(target is not None)
         if target is None:self._close_flow()
         replace_text(self.player,model.player_text(self.result,cid),preserve=keep);replace_text(self.technical,_technical_json({'choice':c,'source':self.result['data']['source'],'identity':self.result['source_identity']})if c else'',preserve=keep)
-        b=self.stages.blockSignals(True);self.stages.clear();self.stages.addItem('请选择要查阅的配置；不默认本局版本',None)
+        b=self.stages.blockSignals(True);self.stages.clear();self.stages.addItem('选择作战配置',None)
         for row in model.stage_rows(self.result,cid):self.stages.addItem(model.stage_label(self.result,cid,row['id']),row['id'])
         self.stages.setCurrentIndex(max(0,self.stages.findData(sid)));self.stages.blockSignals(b);self.open_button.setEnabled(self.stages.currentData()is not None)
         if not keep:self.tabs.setCurrentIndex(0)

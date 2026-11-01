@@ -48,7 +48,7 @@ class MechanismReadingTests(unittest.TestCase):
    for _ in range(index):QTest.keyClick(p.topic,Qt.Key.Key_Down)
    self.qt.processEvents();self.assertEqual(p.player.textCursor().block().text(),expected[name],name)
    self.assertTrue(p.player.viewport().rect().intersects(p.player.cursorRect()),name)
-   self.assertEqual(p.reading_header.scope.toggleButton().text(),'固定机制资料 · 非本局实况')
+   self.assertEqual(p.reading_header.scope.toggleButton().text(),'资料说明')
    self.assertEqual(p.tabs.tabText(1),'原始资料（调试）')
    cursor=p.player.textCursor();cursor.movePosition(QTextCursor.MoveOperation.NextCharacter,QTextCursor.MoveMode.KeepAnchor);p.player.setTextCursor(cursor)
    before=(p.player.toPlainText(),p.technical.toPlainText(),p.topic.currentData(),cursor.selectedText(),p.player.verticalScrollBar().value())
@@ -63,5 +63,6 @@ class MechanismReadingTests(unittest.TestCase):
   p.card.setFocus();QTest.keyClick(p.card,Qt.Key.Key_Home);QTest.keyClick(p.card,Qt.Key.Key_Down);self.qt.processEvents()
   selected=model.card(p.result,key,p.card.currentData())
   self.assertEqual(p.player.textCursor().block().text(),'【完整文献原项 · '+selected['title']+'】')
-  self.assertEqual(p.player.toPlainText(),model.player_text(p.result,key,'skills',p.card.currentData()))
+  from rouge.reference_copy import mechanism_copy
+  self.assertEqual(p.player.toPlainText(),mechanism_copy(model.player_text(p.result,key,'skills',p.card.currentData()),model.NOTICE)[0])
   self.assertTrue(p.player.viewport().rect().intersects(p.player.cursorRect()));d.reject()

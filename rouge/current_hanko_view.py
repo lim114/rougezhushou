@@ -102,7 +102,7 @@ class CurrentHankoPanel(QWidget):
         keep = identity == self._view_key
         card = model.selected_card(self.result, self.selected_key, topic)
         replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic), preserve=keep,
-            follow_change=self.sender() is self.topic, heading='【完整文献参考 · ' + card['title'] + '】' if card else None)
+            details=self.notice, follow_change=self.sender() is self.topic, heading='【完整文献参考 · ' + card['title'] + '】' if card else None)
         technical = {'stage_id': self.stage_id, 'level_key': self.result['level_key'],
                      'source_identity': self.result['source_identity'], 'current_reference': row,
                      'current_complete_stage': self.result['data']['originals']['stages'][self.stage_id],

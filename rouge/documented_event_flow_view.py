@@ -24,7 +24,7 @@ class DocumentedEventFlowPanel(QWidget):
         self.event_id = event_id; self.result = None; self.scene_id = None; self.choice_id = None
         self.battle_dialog = None
         layout = QVBoxLayout(self)
-        notice = QLabel('逐步查阅文献中的选项、结果和后续；不是本局已经走过的流程，完整出现前置仍请核对。')
+        notice = QLabel('查看事件选项、奖励与后续。')
         notice.setWordWrap(True);header=QWidget();header.setObjectName('eventFlowHeader');heading=QVBoxLayout(header);heading.setContentsMargins(0,0,0,0);heading.addWidget(notice)
         header.setStyleSheet('#eventFlowHeader,#eventFlowConditions,#eventFlowConditionContent,QWidget#eventFlowConditionRow{background:transparent;border:0;}')
         self.conditions=QCollapsible('仅本页对照条件',expandedIcon='▼',collapsedIcon='▶');self.conditions.setObjectName('eventFlowConditions');self.conditions.content().setObjectName('eventFlowConditionContent');self.conditions.setDuration(0);self.conditions.content().hide();self.conditions.toggled.connect(self.conditions.content().setVisible);self.conditions.setAccessibleName('仅对照资料，不修改本局的条件');self.conditions.toggleButton().setToolTip('展开或收起本页条件；只对照资料，不改变本局记录。');self.conditions.hide();heading.addWidget(self.conditions);layout.addWidget(header)

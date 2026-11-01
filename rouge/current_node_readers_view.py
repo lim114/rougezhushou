@@ -56,7 +56,8 @@ def make_dialog(binding, parent=None, *, historical=False, page_owner=None):
         dialog.close()
         dialog.deleteLater()
         return None
-    banner = QLabel(('从历史节点打开的资料参考。' if historical else '从节点目录打开的资料参考。')+model.NOTICE)
+    banner = QLabel('历史节点资料' if historical else '节点资料')
+    banner.setToolTip(model.NOTICE)
     banner.setWordWrap(True)
     banner.setAccessibleName('当前事件资料的版本与范围')
     dialog.layout().insertWidget(0, banner)

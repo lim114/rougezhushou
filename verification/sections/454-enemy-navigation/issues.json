@@ -1,0 +1,21 @@
+{
+  "retained_initial_failures": [
+    "enemy-01/results.json",
+    "copy-final/results.json",
+    "map-selected-final/process.json",
+    "grouped-native-review/process.json"
+  ],
+  "corrections": [
+    "Related-enemy fixture corrected from ro6_b_6 to verified ro6_b_5; production mechanics unchanged.",
+    "Old assertion expecting 暂不可用 updated to the new 暂无敌人资料 label; clearing/recovery assertions retained."
+  ],
+  "native_process_review": {
+    "combined_map_then_guest_test_exit": 3221226505,
+    "same_order_reproduced_twice": true,
+    "restart_condition": "obtain a matched-PID native stack or a smaller lifecycle reproducer before another grouped retry",
+    "isolated_guest_and_separated_map_rerun_passed": true,
+    "cause": "Not yet isolated; grouped-run native failure retained, not counted as passed."
+  },
+  "map_selection_review": "Original native142 used a centre combo with no entries on some maps. Final native147 uses actual grid clicks and requires a nonempty (0,0) selection in all five maps.",
+  "remaining": "后续：事件材料与反查、目录和完整工作区统一，首次打开高度问题，视频外观细节与识别覆盖、准确率、耗时。"
+}

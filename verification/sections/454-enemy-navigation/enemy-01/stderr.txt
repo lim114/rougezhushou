@@ -1,0 +1,20 @@
+test_boss_related_enemy_returns_to_exact_battle_selection (tests.test_enemy_navigation_454.EnemyNavigationTests.test_boss_related_enemy_returns_to_exact_battle_selection) ... ERROR
+test_changed_enemy_cannot_forward_to_previous_exact_mechanism (tests.test_enemy_navigation_454.EnemyNavigationTests.test_changed_enemy_cannot_forward_to_previous_exact_mechanism) ... ok
+test_five_fixed_maps_share_host_and_keep_selected_tile (tests.test_enemy_navigation_454.EnemyNavigationTests.test_five_fixed_maps_share_host_and_keep_selected_tile) ... ok
+test_optional_fixed_map_loss_keeps_valid_mechanism_reader (tests.test_enemy_navigation_454.EnemyNavigationTests.test_optional_fixed_map_loss_keeps_valid_mechanism_reader) ... ok
+test_seven_exact_mechanism_panels_use_one_host_and_keep_reading_on_back (tests.test_enemy_navigation_454.EnemyNavigationTests.test_seven_exact_mechanism_panels_use_one_host_and_keep_reading_on_back) ... ok
+test_six_original_battle_source_checks_including_elbert_base_are_retained (tests.test_enemy_navigation_454.EnemyNavigationTests.test_six_original_battle_source_checks_including_elbert_base_are_retained) ... ok
+
+======================================================================
+ERROR: test_boss_related_enemy_returns_to_exact_battle_selection (tests.test_enemy_navigation_454.EnemyNavigationTests.test_boss_related_enemy_returns_to_exact_battle_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_enemy_navigation_454.py", line 143, in test_boss_related_enemy_returns_to_exact_battle_selection
+    request = next(r for r in model.related_entities(page.panel.result, '0') if r['key'] == '1')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+----------------------------------------------------------------------
+Ran 6 tests in 469.556s
+
+FAILED (errors=1)

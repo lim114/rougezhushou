@@ -131,7 +131,7 @@ class CurrentSunBossPanel(QWidget):
                    'altar': '陨石与祭台 · 首领文献原项'}.get(topic)
         if topic == 'skills' and selected_card: heading = '完整文献原项 · ' + selected_card['title']
         replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic, index), preserve=keep,
-            follow_change=self.sender() in (self.topic, self.card), heading='【' + heading + '】' if heading else None)
+            details=self.notice, follow_change=self.sender() in (self.topic, self.card), heading='【' + heading + '】' if heading else None)
         row = model.entity(self.result, self.selected_key)
         technical = {'stage_id': self.stage_id, 'source_identity': self.result['source_identity'],
             'selected_current_reference': row,
@@ -156,6 +156,11 @@ class CurrentSunBossPanel(QWidget):
         self._close_map()
         if mapped is None:
             self.status.setText('这份准确固定地图暂时无法核对，旧地图已关闭；不借用同名熄日。'); return False
+        from .player_reference_links import open_fixed_map
+        opened=open_fixed_map(self,mapped['stage_id'],
+            context=lambda:None if self.result is None else(self.result['source_identity'],self.stage_id,self.result['level_key']),
+            verify=lambda reader:(fresh:=model.map_reference(self.result))is not None and reader.result==fresh['map'])
+        if opened is not None:return opened
         from .current_map_position_view import CurrentMapPositionDialog
         child = CurrentMapPositionDialog(mapped['stage_id'], self)
         if child.panel.result is None or child.panel.result != mapped['map']:

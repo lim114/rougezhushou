@@ -28,7 +28,7 @@ class RunOverviewPanel(QWidget):
         self.map_button=QPushButton('查看地图与节点');self.operators_button=QPushButton('查看干员与技能');self.items_button=QPushButton('查询藏品与零件')
         for button,slot in ((self.map_button,show_map),(self.operators_button,show_operators),(self.items_button,show_items)):
             button.clicked.connect(slot);bar.addWidget(button)
-        body.addLayout(bar);self.notice=QLabel('展示同一局最近确认的信息；切换游戏页面不会清空记忆，未知项目不会按0处理。');self.notice.setWordWrap(True);body.addWidget(self.notice)
+        body.addLayout(bar);self.notice=QLabel('本局信息随后台读取更新。');self.notice.setWordWrap(True);body.addWidget(self.notice)
         self.refresh()
     def refresh(self):
         for name,value in overview_facts(self.run.state).items():self.cards[name].setText(value)

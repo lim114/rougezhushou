@@ -1,0 +1,33 @@
+test_clear_and_next_document_remove_previous_notes (tests.test_reference_copy_454.ReferenceCopyTests.test_clear_and_next_document_remove_previous_notes) ... ok
+test_game_conditions_and_unrecognised_text_are_preserved_verbatim (tests.test_reference_copy_454.ReferenceCopyTests.test_game_conditions_and_unrecognised_text_are_preserved_verbatim) ... ok
+test_refresh_keeps_reading_and_full_notes_are_available (tests.test_reference_copy_454.ReferenceCopyTests.test_refresh_keeps_reading_and_full_notes_are_available) ... ok
+test_scope_footer_moves_to_details_without_hiding_next_mechanism (tests.test_reference_copy_454.ReferenceCopyTests.test_scope_footer_moves_to_details_without_hiding_next_mechanism) ... ok
+test_source_conflict_remains_visible_as_short_condition (tests.test_reference_copy_454.ReferenceCopyTests.test_source_conflict_remains_visible_as_short_condition) ... ok
+test_changed_unicode_topic_and_empty_document_finish_without_losing_text (tests.test_mechanism_reading_449.MechanismReadingTests.test_changed_unicode_topic_and_empty_document_finish_without_losing_text) ... ok
+test_plain_text_and_chinese_heading_format_do_not_parse_markup (tests.test_mechanism_reading_449.MechanismReadingTests.test_plain_text_and_chinese_heading_format_do_not_parse_markup) ... ok
+test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading (tests.test_mechanism_reading_449.MechanismReadingTests.test_seven_real_topic_choices_reveal_their_own_section_and_keep_refresh_reading) ... ok
+test_sun_skill_card_keyboard_choice_reveals_exact_complete_card (tests.test_mechanism_reading_449.MechanismReadingTests.test_sun_skill_card_keyboard_choice_reveals_exact_complete_card) ... ok
+test_actual_quick_portrait_click_opens_the_exact_original_enemy_detail (tests.test_battle_overview_sections_review.BattleOverviewSectionsReview.test_actual_quick_portrait_click_opens_the_exact_original_enemy_detail) ... ok
+test_filtered_quick_rows_are_qualified_and_empty_search_never_keeps_stale_portraits (tests.test_battle_overview_sections_review.BattleOverviewSectionsReview.test_filtered_quick_rows_are_qualified_and_empty_search_never_keeps_stale_portraits) ... ok
+test_loss_and_recovery_clear_same_shared_model_then_reset_only_invalid_view_state (tests.test_battle_overview_sections_review.BattleOverviewSectionsReview.test_loss_and_recovery_clear_same_shared_model_then_reset_only_invalid_view_state) ... FAIL
+test_native_keyboard_selection_and_activation_have_the_same_exact_target (tests.test_battle_overview_sections_review.BattleOverviewSectionsReview.test_native_keyboard_selection_and_activation_have_the_same_exact_target) ... ok
+test_open_details_and_resize_leave_all_original_controls_reachable_by_scroll (tests.test_battle_overview_sections_review.BattleOverviewSectionsReview.test_open_details_and_resize_leave_all_original_controls_reachable_by_scroll) ... ok
+test_public_collapsible_sections_preserve_existing_four_categories_and_full_summary (tests.test_battle_overview_sections_review.BattleOverviewSectionsReview.test_public_collapsible_sections_preserve_existing_four_categories_and_full_summary) ... ok
+test_quick_view_shares_actual_items_selection_and_icons_without_another_image_read (tests.test_battle_overview_sections_review.BattleOverviewSectionsReview.test_quick_view_shares_actual_items_selection_and_icons_without_another_image_read) ... ok
+test_refresh_keeps_real_folds_horizontal_offset_and_original_text_selection (tests.test_battle_overview_sections_review.BattleOverviewSectionsReview.test_refresh_keeps_real_folds_horizontal_offset_and_original_text_selection) ... ok
+test_same_model_context_update_keeps_quick_selection_and_does_not_claim_new_spawn_counts (tests.test_battle_overview_sections_review.BattleOverviewSectionsReview.test_same_model_context_update_keeps_quick_selection_and_does_not_claim_new_spawn_counts) ... ok
+test_shared_battle_pages_render_the_same_video_neutral_background (tests.test_battle_overview_sections_review.BattleOverviewSectionsReview.test_shared_battle_pages_render_the_same_video_neutral_background) ... ok
+
+======================================================================
+FAIL: test_loss_and_recovery_clear_same_shared_model_then_reset_only_invalid_view_state (tests.test_battle_overview_sections_review.BattleOverviewSectionsReview.test_loss_and_recovery_clear_same_shared_model_then_reset_only_invalid_view_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_battle_overview_sections_review.py", line 36, in test_loss_and_recovery_clear_same_shared_model_then_reset_only_invalid_view_state
+    with patch.object(model,'stage_reference',return_value=None):self.assertFalse(p.refresh_reference());self.assertEqual(p.quick_enemies.model().rowCount(),0);self.assertIn('暂不可用',p.quick_notice.text());self.assertEqual(p.summary.toPlainText(),'');self.assertTrue(p.map_image.original.isNull())
+                                                                                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '暂不可用' not found in '暂无敌人资料。'
+
+----------------------------------------------------------------------
+Ran 19 tests in 28.194s
+
+FAILED (failures=1)

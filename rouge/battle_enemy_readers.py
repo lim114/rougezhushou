@@ -15,19 +15,21 @@ class EnemyMechanismDialog(PlayerDialog):
 class _Reader:
     provider: str
     dialog: str
+    title: str
     availability: str = 'target_available'
     sync_result: str = 'result'
     check_battle_source: bool = True
+    map_cleanup: str | None = None
 
 
 _READERS = {
-    'hanko': _Reader('current_hanko', 'CurrentHankoDialog', check_battle_source=False),
-    'elbert': _Reader('current_elbert_reference', 'CurrentElbertDialog', availability='locate', sync_result='base'),
-    'sun_boss': _Reader('current_sun_boss', 'CurrentSunBossDialog'),
-    'boss_documents': _Reader('current_boss_documents', 'CurrentBossDocumentsDialog'),
-    'guest_knights': _Reader('current_guest_knights', 'CurrentGuestKnightsDialog'),
-    'guest_crystals': _Reader('current_guest_crystals', 'CurrentGuestCrystalsDialog'),
-    'guest_material': _Reader('current_guest_material', 'CurrentGuestMaterialDialog'),
+    'hanko': _Reader('current_hanko', 'CurrentHankoDialog', '汉科与烟雾 · 本关准确实体和机制', check_battle_source=False),
+    'elbert': _Reader('current_elbert_reference', 'CurrentElbertDialog', '埃尔伯特与火种 · 本关机制', availability='locate', sync_result='base'),
+    'sun_boss': _Reader('current_sun_boss', 'CurrentSunBossDialog', '沉沦之人 · 形态、信仰与地形条件', map_cleanup='_close_map'),
+    'boss_documents': _Reader('current_boss_documents', 'CurrentBossDocumentsDialog', '本关完整机制 · 形态、循环与退场条件', map_cleanup='_close_map'),
+    'guest_knights': _Reader('current_guest_knights', 'CurrentGuestKnightsDialog', '恶意讨薪 · 双骑士联动与完整招式', map_cleanup='close_owned_map'),
+    'guest_crystals': _Reader('current_guest_crystals', 'CurrentGuestCrystalsDialog', '晶矿惊蝗 · 双晶兽的护盾与捕杀', map_cleanup='close_owned_map'),
+    'guest_material': _Reader('current_guest_material', 'CurrentGuestMaterialDialog', '“物欲拮抗者” · 指令、屏障与斯第奇', map_cleanup='close_owned_map'),
 }
 
 
@@ -78,6 +80,39 @@ def open_reader(parent, name):
         getattr(parent, name + '_button').hide()
         return False
     view = import_module('.' + spec.provider.removesuffix('_reference') + '_view', __package__)
+    from .player_reference_window import ReferenceWindow, ToolPage
+    host = parent.window()
+    if isinstance(host, ReferenceWindow):
+        def context():
+            if not _available(parent, spec):
+                return None
+            return parent.result['source_identity'], parent.stage_id, parent.enemy_key
+        def qualified(panel):
+            result = getattr(panel, spec.sync_result)
+            return panel.result is not None and (not spec.check_battle_source or
+                (result is not None and result.get('battle_source_identity') == parent.result['source_identity']))
+        def create(owner):
+            from .player_map_reader import REFERENCE_STYLE
+            panel = getattr(view, spec.dialog.replace('Dialog', 'Panel'))(parent.stage_id, parent.enemy_key)
+            if not qualified(panel):
+                panel.deleteLater()
+                return None
+            page = ToolPage(spec.title, panel, owner, object_name='mapReferenceWindow', extra_style=REFERENCE_STYLE)
+            page.panel = panel
+            page.resize(760, 600)
+            if spec.map_cleanup is not None:
+                page.finished.connect(getattr(panel, spec.map_cleanup))
+            if name == 'boss_documents':
+                def select_enemy(key):
+                    selected = parent._boss_documents_enemy_requested(key, reader=panel)
+                    source = page.source_parent
+                    shown = host.parentWidget().present(source)
+                    if page in host.linked_pages.values():
+                        host.discard(page, fallback=source)
+                    return selected and shown
+                panel.enemy_requested.connect(select_enemy)
+            return page
+        return host.open_reference(parent, ('enemy-mechanism', name), context, create, verify=qualified)
     close_reader(parent, name)
     child = getattr(view, spec.dialog)(parent.stage_id, parent.enemy_key, parent)
     setattr(parent, name + '_dialog', child)

@@ -156,7 +156,7 @@ class ReferenceWindow(PlayerDialog):
         self.switching = False
         self.update_navigation()
 
-    def open_reference(self, parent, role, context, factory):
+    def open_reference(self, parent, role, context, factory, *, verify=None):
         """Retain a child reader while its exact parent source/selection matches."""
         from copy import deepcopy
         source = parent
@@ -180,7 +180,8 @@ class ReferenceWindow(PlayerDialog):
             def prepare():
                 if not source.prepare():
                     return False
-                if context() != expected or page.panel.refresh_reference() is False:
+                if (context() != expected or page.panel.refresh_reference() is False
+                        or (verify is not None and not verify(page.panel))):
                     self.discard(page, fallback=source)
                     return False
                 return True

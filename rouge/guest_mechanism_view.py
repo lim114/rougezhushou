@@ -111,7 +111,7 @@ class GuestMechanismPanel(QWidget):
         identity = (self.result['source_identity'], self.stage_id, self.selected_key, topic) if self.result else None
         keep = identity == self._view_key
         replace_mechanism_text(self.player, self.model.player_text(self.result, self.selected_key, topic), preserve=keep,
-            follow_change=self.sender() is self.topic, heading='【' + self.topic.currentText() + '】' if topic is not None else None)
+            details=self.notice, follow_change=self.sender() is self.topic, heading='【' + self.topic.currentText() + '】' if topic is not None else None)
         technical = {'stage_id': self.stage_id, 'level_key': self.result['level_key'],
                      'source_identity': self.result['source_identity'], 'current_reference': row,
                      'current_complete_stage': self.result['data']['originals']['stages'][self.stage_id],
@@ -131,6 +131,11 @@ class GuestMechanismPanel(QWidget):
     def open_map(self):
         target=self.model.map_target(self.result)
         if target is None:self.clear_reference();return False
+        from .player_reference_links import open_fixed_map
+        opened=open_fixed_map(self,target['stage_id'],
+            context=lambda:None if self.result is None else(self.result['source_identity'],self.stage_id,self.result['level_key']),
+            verify=lambda reader:self.model.map_target(self.result)is not None and reader.result.get('current_level_key')==self.result['level_key'])
+        if opened is not None:return opened
         from .current_map_position_view import CurrentMapPositionDialog
         class OwnedMapDialog(CurrentMapPositionDialog):
             def done(self,result):self.panel.clear_reference();super().done(result)

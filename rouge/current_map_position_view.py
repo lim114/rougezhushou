@@ -64,7 +64,7 @@ class CurrentOriginalCenters(QWidget):
 class CurrentMapPositionPanel(QWidget):
     def __init__(self,stage_id,parent=None):
         super().__init__(parent);self.stage_id=stage_id;self.result=None;self.selected=None;self.image_raw=None
-        layout=QVBoxLayout(self);self.notice=QLabel('左侧点格子，右侧看已核对的近似中心。只读固定资料，不读取或操作战斗。');self.notice.setWordWrap(True);layout.addWidget(self.notice)
+        layout=QVBoxLayout(self);self.notice=QLabel('点选格子查看地形与原图位置。');self.notice.setWordWrap(True);layout.addWidget(self.notice)
         bar=QHBoxLayout();self.combo=QComboBox();self.combo.setAccessibleName('已核对的格子中心');self.refresh_button=QPushButton('重新核对本图位置');bar.addWidget(self.combo,1);bar.addWidget(self.refresh_button);layout.addLayout(bar)
         terrain_bar=QHBoxLayout();self.terrain_kind=QComboBox();self.terrain_kind.setAccessibleName('本图地形类型');self.terrain_cells=QComboBox();self.terrain_cells.setAccessibleName('按地形定位格子');terrain_bar.addWidget(QLabel('查找地形'));terrain_bar.addWidget(self.terrain_kind);terrain_bar.addWidget(self.terrain_cells,1);layout.addLayout(terrain_bar)
         split=QSplitter();self.grid=CurrentTileGrid();self.original=CurrentOriginalCenters();split.addWidget(self.grid);split.addWidget(self.original);split.setSizes([500,650]);layout.addWidget(split,2)

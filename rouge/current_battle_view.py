@@ -24,7 +24,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_forecasts = {}
         layout = QVBoxLayout(self)
         header = QHBoxLayout()
-        header.addWidget(QLabel('固定关卡参考 · 并非本局实况'), 1)
+        header.addWidget(QLabel('作战预览'), 1)
         self.details_toggle = QCheckBox('资料说明')
         self.source_toggle = QCheckBox('原始资料')
         self.refresh_button = QPushButton('刷新资料')
@@ -298,13 +298,13 @@ class CurrentBattlePanel(QWidget):
         self.map_image.clear()
         self.map_image.setText(model.UNAVAILABLE)
         self.enemy_portrait.clear()
-        self.enemy_search_notice.setText('当前关卡资料暂不可用，旧搜索结果已清除。')
+        self.enemy_search_notice.setText('暂无关卡资料。')
         self.enemy_choices.set_groups([], emit=False)
         self._sync_enemy_grid()
         self.enemy_reading_stack.setCurrentWidget(self.enemy_details)
         blocked = self.actions.blockSignals(True)
         self.actions.clear()
-        self.action_filter_notice.setText('当前关卡资料暂不可用，旧分组和出怪条目已清除。')
+        self.action_filter_notice.setText('暂无出怪资料。')
         group_blocked=self.action_group.blockSignals(True);self.action_group.clear();self.action_group.addItem('全部波次/分支分组',None);self.action_group.blockSignals(group_blocked)
         self.actions.blockSignals(blocked)
         for widget in (self.summary, self.enemy_player, self.action_player, self.technical):
@@ -433,7 +433,7 @@ class CurrentBattlePanel(QWidget):
         if preferred is not None:self.enemy_choices.select_value(preferred,emit=False)
         self.enemy_combo.blockSignals(blocked)
         self._sync_enemy_grid()
-        self.enemy_search_notice.setText(f'原文搜索匹配{len(rows)}条引用资料，可继续按分类查看；不是实际出怪数量。未匹配不表示没有这种机制，隐藏脚本和阶段变化不在此搜索范围。'if query.strip()else'可搜索名称与已列图鉴原文；同名不同引用分别保留，不相加为实际敌人数。')
+        self.enemy_search_notice.setText(f'找到{len(rows)}条敌人资料。'if query.strip()else'可搜索敌人名称或图鉴描述。')
 
     def _show_enemy_grid(self, checked):
         self.enemy_grid.setVisible(checked)
@@ -460,7 +460,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_grid.blockSignals(blocked)
         self.enemy_grid._selected(self.enemy_grid.currentItem())
         self.quick_enemies.doItemsLayout();self.quick_enemies.horizontalScrollBar().setValue(quick_offset);self._quick_scope=scope
-        self.quick_notice.setText(f'当前筛选显示{self.enemy_grid.count()} / {len(self.result["enemies"])}条敌人资料；同名资料分别保留，不是实际出怪数量。'if self.result else'当前关卡资料暂不可用，旧候选已清除。')
+        self.quick_notice.setText(f'敌人资料 {self.enemy_grid.count()} / {len(self.result["enemies"])}'if self.result else'暂无敌人资料。')
         self.enemy_overview.set_rows((self.result or {}).get('enemies',[]),self.enemy_choices.entries(),(self.stage_id,self.source_identity)if self.result else None,self.enemy_forecasts)
         self.quick_table_notice.setText(self.enemy_overview.notice.text())
 
@@ -541,7 +541,7 @@ class CurrentBattlePanel(QWidget):
         if not any(a['key']==key for a in rows):self.actions.setCurrentRow(-1)
         self._action_changed(self.actions.currentItem(),preserve=preserve)
         self.actions.doItemsLayout();self.actions.verticalScrollBar().setValue(offset)
-        self.action_filter_notice.setText(('请先在敌人页选择准确引用。'if self.action_focus.currentData()=='enemy'and self.enemy_key is None else f'显示{len(rows)}条资料，关卡完整资料共{len(actions)}条。')+'分组、隐藏与随机标记不证明实际触发、数量或出怪时刻；多等级候选仍需分别核对。')
+        self.action_filter_notice.setText('请先选择敌人。'if self.action_focus.currentData()=='enemy'and self.enemy_key is None else f'出怪资料 {len(rows)} / {len(actions)}')
 
     def focus_action(self,action):
         if self.result is None or action not in self.result['actions']:return False
@@ -616,10 +616,15 @@ class CurrentBattlePanel(QWidget):
     def open_sun_boss(self):
         return open_reader(self,'sun_boss')
 
-    def _boss_documents_enemy_requested(self,key):
-        dialog=getattr(self,'boss_documents_dialog',None)
-        if type(key)is not str or self.result is None or dialog is None or not dialog.isVisible():return False
-        child=dialog.panel
+    def _boss_documents_enemy_requested(self,key,*,reader=None):
+        if type(key)is not str or self.result is None:return False
+        if reader is None:
+            dialog=getattr(self,'boss_documents_dialog',None)
+            if dialog is None or not dialog.isVisible():return False
+            child=dialog.panel
+        else:
+            child=reader
+            if not child.isVisible():return False
         if child.result is None or child.stage_id!=self.stage_id or child.result.get('stage_id')!=self.stage_id:
             self._close_boss_documents();return False
         if child.result.get('battle_source_identity')!=self.result['source_identity']:

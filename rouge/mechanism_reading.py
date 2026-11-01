@@ -5,7 +5,13 @@ from .ui_state import replace_text
 
 
 class MechanismTextBrowser(QTextBrowser):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.reference_details = None
+
     def setPlainText(self, text):
+        if self.reference_details is not None:
+            self.reference_details.setText(self.reference_details.property('referenceBaseText'))
         super().setPlainText(text)
         block = self.document().firstBlock()
         while block.isValid():
@@ -21,8 +27,16 @@ class MechanismTextBrowser(QTextBrowser):
             block = block.next()
 
 
-def replace_mechanism_text(widget, text, *, preserve, follow_change, heading=None):
+def replace_mechanism_text(widget, text, *, preserve, follow_change, heading=None, details=None):
+    notes = ''
+    if details is not None:
+        from .reference_copy import mechanism_copy
+        widget.reference_details = details
+        text, notes = mechanism_copy(text, details.property('referenceBaseText'))
     changed = replace_text(widget, text, preserve=preserve)
+    if details is not None:
+        base = details.property('referenceBaseText')
+        details.setText(base + ('\n\n' + notes if notes else ''))
     if follow_change and not preserve and heading:
         target = widget.document().find(heading)
         if not target.isNull():

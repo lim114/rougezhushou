@@ -38,3 +38,22 @@ def open_event_battles(panel, event_id, choice_id):
         page.resize(760, 600)
         return page
     return host.open_reference(panel, ('event-configurations', event_id, choice_id), lambda: event_context(panel), create)
+
+
+def open_fixed_map(panel, stage_id, *, context, verify):
+    host = panel.window()
+    if not isinstance(host, ReferenceWindow):
+        return None
+    def create(owner):
+        from .current_map_position_view import CurrentMapPositionPanel
+        from .player_map_reader import REFERENCE_STYLE
+        reader = CurrentMapPositionPanel(stage_id)
+        if reader.result is None:
+            reader.deleteLater()
+            return None
+        page = ToolPage('固定地图 · 地形与格子', reader, owner,
+                        object_name='mapReferenceWindow', extra_style=REFERENCE_STYLE)
+        page.panel = reader
+        page.resize(900, 650)
+        return page
+    return host.open_reference(panel, ('mechanism-map', stage_id), context, create, verify=verify)
