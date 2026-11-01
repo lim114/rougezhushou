@@ -167,7 +167,9 @@ class CurrentBattlePanel(QWidget):
         body.addWidget(self.enemy_reading_stack,1)
         self.tabs.addTab(enemies, '敌人和机制')
         wave = QWidget()
+        self.wave_scroll=QScrollArea();self.wave_scroll.setWidgetResizable(True);self.wave_scroll.setFrameShape(QScrollArea.Shape.NoFrame)
         body = QVBoxLayout(wave)
+        self.wave_scroll.setWidget(wave)
         self.queue_kind = QComboBox()
         self.queue_kind.addItem('总览（全部条目）', None)
         self.queue_kind.addItem('主波次', 'main')
@@ -178,8 +180,16 @@ class CurrentBattlePanel(QWidget):
         for key,label in(('enemy','含所选敌人的候选条目'),('hidden','带隐藏组标记'),('random','带随机组标记'),('predefined','预置单位或装置条目')):self.action_focus.addItem(label,key)
         filters.addWidget(self.action_focus);body.addLayout(filters)
         self.action_filter_notice=QLabel();self.action_filter_notice.setWordWrap(True);body.addWidget(self.action_filter_notice)
-        split = QSplitter()
+        split = self.action_split = QSplitter()
+        self._action_sizes = {}
         self.actions = QListWidget()
+        self.actions.setAccessibleName('出怪与条件条目；候选资料，不是实际出怪数量')
+        self.actions.setIconSize(QSize(40,40));self.actions.setWordWrap(True)
+        self.actions.setResizeMode(QListView.ResizeMode.Adjust)
+        self.actions.setTextElideMode(Qt.TextElideMode.ElideNone)
+        self.actions.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
+        from .wrapped_item_delegate import WrappedItemDelegate
+        self.actions.setItemDelegate(WrappedItemDelegate(self.actions,(0,)))
         split.addWidget(self.actions)
         self.action_player = QPlainTextEdit()
         self.action_player.setReadOnly(True)
@@ -189,7 +199,7 @@ class CurrentBattlePanel(QWidget):
         self.action_position_button = QPushButton('在地图上查看本条位置参考')
         body.addWidget(self.action_position_button)
         self.action_position_button.clicked.connect(self.open_action_positions)
-        self.tabs.addTab(wave, '出怪与条件')
+        self.tabs.addTab(self.wave_scroll, '出怪与条件')
         self.spawn_candidates_button = QPushButton('查看出怪候选与关联记录')
         body.addWidget(self.spawn_candidates_button)
         self.spawn_candidates_button.clicked.connect(self.open_spawn_candidates)
@@ -210,6 +220,15 @@ class CurrentBattlePanel(QWidget):
         self.action_group.currentIndexChanged.connect(self._actions_changed);self.action_focus.currentIndexChanged.connect(self._actions_changed)
         self.actions.currentItemChanged.connect(self._action_changed)
         self.refresh_reference()
+
+    def resizeEvent(self,event):
+        super().resizeEvent(event)
+        split=self.action_split
+        orientation=Qt.Orientation.Vertical if event.size().width()<self.fontMetrics().horizontalAdvance('界')*56 else Qt.Orientation.Horizontal
+        if split.orientation()!=orientation:
+            self._action_sizes[split.orientation()]=split.sizes()
+            split.setOrientation(orientation)
+            split.setSizes(self._action_sizes.get(orientation,[2,3]))
 
     def _show_details(self, checked):
         for label in (self.notice, self.rewards.notice, self.settlement.notice):
@@ -260,6 +279,7 @@ class CurrentBattlePanel(QWidget):
         self.source_identity = None
         self.enemy_key = None
         self.action_key = None
+        self._enemy_icons = {}
         self.map_image.clear()
         self.map_image.setText(model.UNAVAILABLE)
         self.enemy_portrait.clear()
@@ -292,6 +312,10 @@ class CurrentBattlePanel(QWidget):
         old_enemy = self.enemy_combo.currentData() if keep else None
         self.result = fresh
         self.source_identity = fresh['source_identity']
+        self._enemy_icons = {}
+        for enemy in fresh['enemies']:
+            picture=QPixmap();raw=model.picture_for_enemy(enemy)
+            self._enemy_icons[enemy['key']]=QIcon(picture) if raw and picture.loadFromData(raw,'PNG') else QIcon()
         if not keep:
             from .current_enemy_forecast import forecasts
             self.enemy_forecasts=forecasts(fresh,self.run_config)
@@ -387,9 +411,7 @@ class CurrentBattlePanel(QWidget):
             items=[]
             for enemy in rows:
                 if enemy['tier']!=tier:continue
-                picture=QPixmap();icon=QIcon();raw=model.picture_for_enemy(enemy)
-                if raw and picture.loadFromData(raw,'PNG'):icon=QIcon(picture)
-                items.append((enemy['name']+' · 引用资料'+str(enemy['reference_index']+1),enemy['key'],icon))
+                items.append((enemy['name']+' · 引用资料'+str(enemy['reference_index']+1),enemy['key'],self._enemy_icons[enemy['key']]))
             groups.append((label,items))
         self.enemy_choices.keep_empty_groups=bool(query.strip())
         blocked=self.enemy_combo.blockSignals(True);self.enemy_choices.set_groups(groups,emit=False)
@@ -485,13 +507,19 @@ class CurrentBattlePanel(QWidget):
         if selected_group is not None and index<0:self.action_group.addItem('原分组在当前范围无资料',selected_group);index=self.action_group.count()-1
         self.action_group.setCurrentIndex(max(0,index));self.action_group.blockSignals(blocked)
         rows=action_rows(actions,kind,self.action_group.currentData(),self.action_focus.currentData(),self.enemy_key)
+        offset=self.actions.verticalScrollBar().value()if preserve else 0
         blocked=self.actions.blockSignals(True);self.actions.clear()
         for action in rows:
-            item=QListWidgetItem(model.action_label(action));item.setData(Qt.ItemDataRole.UserRole,action['key']);self.actions.addItem(item)
+            item=QListWidgetItem(model.action_label(action));item.setData(Qt.ItemDataRole.UserRole,action['key'])
+            candidates=action['enemy_candidates']
+            if len(candidates)==1:item.setIcon(self._enemy_icons[candidates[0]['key']])
+            item.setToolTip(item.text()+'；'+('多个引用候选，不任选其中一个头像。'if len(candidates)>1 else'固定资料条目，不证明实际出现或数量。'))
+            self.actions.addItem(item)
             if key==action['key']:self.actions.setCurrentItem(item)
         self.actions.blockSignals(blocked)
         if not any(a['key']==key for a in rows):self.actions.setCurrentRow(-1)
         self._action_changed(self.actions.currentItem(),preserve=preserve)
+        self.actions.doItemsLayout();self.actions.verticalScrollBar().setValue(offset)
         self.action_filter_notice.setText(('请先在敌人页选择准确引用。'if self.action_focus.currentData()=='enemy'and self.enemy_key is None else f'显示{len(rows)}条资料，关卡完整资料共{len(actions)}条。')+'分组、隐藏与随机标记不证明实际触发、数量或出怪时刻；多等级候选仍需分别核对。')
 
     def focus_action(self,action):

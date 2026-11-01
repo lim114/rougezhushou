@@ -1,6 +1,6 @@
 # Qt 文字布局适配
 
-`rouge/wrapped_item_delegate.py` 中 `WrappedItemDelegate.sizeHint` 的逐行排版循环和文字边距规则，改编自 QtBase v6.11.2 的 `QCommonStylePrivate::viewItemTextLayout` 与 `viewItemDrawText`，供敌人及奖励来源表使用：
+`rouge/wrapped_item_delegate.py` 中 `WrappedItemDelegate.sizeHint` 的逐行排版循环和文字边距规则，改编自 QtBase v6.11.2 的 `QCommonStylePrivate::viewItemTextLayout` 与 `viewItemDrawText`，供敌人、奖励来源表及出怪列表使用：
 
 - 原始源码：https://github.com/qt/qtbase/blob/v6.11.2/src/widgets/styles/qcommonstyle.cpp
 - Copyright (C) 2016 The Qt Company Ltd.

@@ -2,7 +2,7 @@
 from math import ceil
 from PySide6.QtCore import QSize,QRect,QPointF
 from PySide6.QtGui import QTextLayout,QTextOption
-from PySide6.QtWidgets import QStyledItemDelegate,QStyleOptionViewItem,QStyle
+from PySide6.QtWidgets import QStyledItemDelegate,QStyleOptionViewItem,QStyle,QTreeView
 
 
 class WrappedItemDelegate(QStyledItemDelegate):
@@ -17,7 +17,8 @@ class WrappedItemDelegate(QStyledItemDelegate):
         size=super().sizeHint(option,index)
         if index.column()not in self.columns:return size
         opt=QStyleOptionViewItem(option);self.initStyleOption(opt,index)
-        tree=self.parent();opt.rect=QRect(0,0,tree.columnWidth(index.column()),size.height())
+        tree=self.parent();width=tree.columnWidth(index.column())if isinstance(tree,QTreeView)else tree.viewport().width()
+        opt.rect=QRect(0,0,width,size.height())
         rect=tree.style().subElementRect(QStyle.SubElement.SE_ItemViewItemText,opt,tree)
         margin=tree.style().pixelMetric(QStyle.PixelMetric.PM_FocusFrameHMargin,None,tree)+1
         text_option=QTextOption();text_option.setWrapMode(QTextOption.WrapMode.WordWrap);text_option.setTextDirection(opt.direction);text_option.setAlignment(QStyle.visualAlignment(opt.direction,opt.displayAlignment))
