@@ -28,7 +28,7 @@ class CompactAssistant(QDialog):
         super().__init__(owner,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint)
         self.owner=owner;self.active_popup=None;self.inventory_popup=None;self.map_popup=None;self.setWindowTitle('黑流树海助手')
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground,True);self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating,True)
-        self.buttons={};self.tool_buttons=[];self._dock_positioned=False
+        self.buttons={};self.tool_buttons=[];self._dock_positioned=False;self.archive_popup=None
         self.reference_window=ReferenceWindow(self)
         overview=QWidget();layout=QVBoxLayout(overview);self.context=QLabel();self.context.setWordWrap(True);layout.addWidget(self.context);grid=QGridLayout();self.cards={}
         for i,name in enumerate(overview_facts(owner.run.state)):
@@ -174,6 +174,7 @@ class CompactAssistant(QDialog):
             self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();self.inventory_popup.parts.refresh_exchange();self.inventory_popup.shop.refresh()
         for popup in (self.map_popup,self.scene_popup,self.team_popup,self.replay_popup):
             if popup and popup.isVisible():popup.panel.refresh()
+        if self.archive_popup is not None and self.archive_popup.isVisible():self.archive_popup.panel.reload_local()
         page=self.reference_window.pages.currentWidget()
         if self.reference_window.isVisible():
             if page is not None and page.source_parent is not None:page.prepare()
@@ -186,7 +187,7 @@ class CompactAssistant(QDialog):
         source=self.inventory_popup.panel;source.reload_sources()
         if self.exchange_popup is None:
             from .player_exchange_view import ExchangePanel
-            panel=ExchangePanel();panel.openPool.connect(lambda version,identity:self.open_owner_dialog(lambda:self.owner.open_public_pool_reference(version,identity),'public_archive'))
+            panel=ExchangePanel();panel.openPool.connect(self.open_archive_pool)
             self.exchange_popup=ToolPage('失与得 · 提供物与换入候选',panel,self,on_show=self.refresh);self.exchange_popup.panel=panel;self.exchange_popup.resize(830,670)
         self.exchange_popup.panel.bind(source.source_index.data if source.source_index else None,version,identity,source.source_signature)
         return self.present(self.exchange_popup)
@@ -244,7 +245,7 @@ class CompactAssistant(QDialog):
         if self.inventory_popup is None:
             from .player_inventory import InventoryPanel
             panel=InventoryPanel(self.owner.run,self.owner.inventory_panel.public_cache);panel.openReference.connect(self.open_inventory_reference)
-            panel.openPoolReference.connect(lambda version,identity:self.open_owner_dialog(lambda:self.owner.open_public_pool_reference(version,identity),'public_archive'))
+            panel.openPoolReference.connect(self.open_archive_pool)
             from .player_parts import PartsPanel
             from .player_tools import ToolsPanel
             pages=QTabWidget();parts=PartsPanel(self.owner.run);tools=ToolsPanel(self.owner.run)
@@ -287,7 +288,39 @@ class CompactAssistant(QDialog):
     def open_inventory_reference(self,identity):
         if not self.owner.open_item_reference(identity):return False
         self.inventory_popup.close();self.open_full();return True
-    def open_archive(self):return self.open_owner_dialog(self.owner.open_public_archive,'public_archive')
+    def archive_reader(self):
+        if self.archive_popup is None:
+            from pathlib import Path
+            from .public_archive_view import ArchivePanel
+            from .player_map_reader import REFERENCE_STYLE
+            panel=ArchivePanel(Path(__file__).resolve().parents[1]/'.local/public-reference/archive.json')
+            panel.openReference.connect(self.open_archive_event);self.owner.public_archive=panel
+            self.archive_popup=ToolPage('路标资料 · 藏品池与事件',panel,self,object_name='mapReferenceWindow',extra_style=REFERENCE_STYLE);self.archive_popup.panel=panel
+            self.archive_popup.prepare=panel.reload_local;self.archive_popup.resize(850,600)
+        return self.archive_popup
+    def open_archive(self):return self.present(self.archive_reader())
+    def open_archive_pool(self,version,identity):
+        page=self.archive_reader();page.panel.reload_local();selected=page.panel.select_exact_pool(version,identity)
+        return self.present(page)and selected
+    def open_archive_event(self,category,identity):
+        from .player_reference_notes import note_for
+        from .documented_readers import reader_plan,make_flow_reader
+        from .player_note_reference import NoteScenePanel
+        from .player_map_reader import REFERENCE_STYLE
+        panel=self.archive_reader().panel;canonical=note_for(category,identity)
+        if category!='scenes'or canonical is None:
+            panel.status.setText('暂无对应事件原文');return False
+        def context():
+            current=panel.reference_context()
+            return {'archive':current,'reference':canonical}if current and current['event']['id'].split(':',1)[-1]==identity and note_for(category,identity)==canonical else None
+        plan=reader_plan(category,identity)
+        def create(owner):
+            if plan is not None:return make_flow_reader(plan,panel,page_owner=owner)
+            reader=NoteScenePanel(identity)
+            if reader.result is None:reader.deleteLater();return None
+            page=ToolPage('事件情景 · '+canonical['title'],reader,owner,object_name='mapReferenceWindow',extra_style=REFERENCE_STYLE)
+            page.panel=reader;page.resize(760,300);return page
+        return self.reference_window.open_reference(panel,('archive-event',identity,plan[0]if plan else'original'),context,create)
     def open_owner_dialog(self,callback,name):
         if self.active_popup is not None and self.active_popup.isVisible()and not self.active_popup.close():
             self.active_popup.raise_();return False

@@ -1,0 +1,30 @@
+{
+  "original_failures": [
+    "../../verification/sections/461-archive/selected01/results.json",
+    "../../verification/sections/461-archive/native01/window.json"
+  ],
+  "corrections": [
+    "Restore the established behavior when an installed public cache disappears: do not replace that selected source with the bundled snapshot.",
+    "Repeated exact-pool navigation originally rebuilt the same view and cleared selected text; retain it when the version/id already match.",
+    "Initial native checks passed logical visibility but layout measured the event button at585–612 below the534px body. Tab vertical size policy now allows the current page to fit; final button434–461 is in view.",
+    "Synthetic table records now carry the actual members() id contract so selection can be preserved. Existing rate/count/icon assertions remain."
+  ],
+  "layout_before": "../../verification/sections/461-archive/native-final2/layout.json",
+  "layout_probe": "../../verification/sections/461-archive/layout-probe/layout.json",
+  "layout_final": {
+    "panel": [
+      798,
+      534
+    ],
+    "viewport": [
+      798,
+      534
+    ],
+    "scroll_max": 0,
+    "event_list_height": 155,
+    "event_button_top": 434,
+    "event_button_bottom": 461
+  },
+  "first_log_viewer": "A PowerShell Get-Content tail of the2.1MB original assertion log stalled before starting the OpenCL query. Exact owned viewer PID1908 was terminated (session27342 exit15); the later standalone capability query completed. No OpenCL driver stall is inferred.",
+  "original_failed_records_retained": true
+}

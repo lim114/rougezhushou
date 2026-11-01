@@ -87,9 +87,9 @@ class ItemSources(unittest.TestCase):
             with patch('rouge.player_inventory.reference.packet',return_value=None):panel.refresh();self.assertEqual(panel.entries.count(),0);self.assertEqual(panel.detail.toPlainText(),'')
         finally:panel.close()
     def test_exact_navigation_reload_never_uses_missing_installed_cache(self):
-        from rouge.public_archive_view import ArchiveDialog
+        from rouge.public_archive_view import ArchivePanel
         with TemporaryDirectory()as d:
-            p=Path(d)/'cache.json';p.write_text(json.dumps(fixture()),encoding='utf8');view=ArchiveDialog(p)
+            p=Path(d)/'cache.json';p.write_text(json.dumps(fixture()),encoding='utf8');view=ArchivePanel(p)
             try:
                 self.assertTrue(view.select_exact_pool('base','pool1'));p.unlink();view.reload_local()
                 self.assertIsNone(view.data);self.assertFalse(view.select_exact_pool('base','pool1'));self.assertEqual(view.members.rowCount(),0)

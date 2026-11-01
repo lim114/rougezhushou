@@ -1,0 +1,28 @@
+{
+  "candidate": {
+    "project": "https://github.com/DennisLiu1993/Fastest_Image_Pattern_Matching",
+    "commit": "00da009cc5f1b1fbaafd010a135764218912b913",
+    "readme": "https://github.com/DennisLiu1993/Fastest_Image_Pattern_Matching/blob/00da009cc5f1b1fbaafd010a135764218912b913/README.md",
+    "readme_blob": "e1acac71bba563a8f6468402f823c99475370fce",
+    "license": "BSD-2-Clause",
+    "license_blob": "4b1f68f70b6e8d8d0095372dc41702e6c685de70",
+    "inspection": "Primary README/license fetched through GitHub connector at the fixed commit. It describes C++/MFC/OpenCV normalized cross-correlation with pyramid/SIMD work and Python bindings for shared-object builds.",
+    "decision": "Candidate for evaluation, not a drop-in replacement for current masked normalized squared difference. Windows binding/build cost, mask behavior and candidate recall need validation before use. No code has been installed, built or adopted."
+  },
+  "opencv_local_capability": {
+    "runtime_version": "4.14.0",
+    "opencl_available": true,
+    "opencl_enabled": true,
+    "default_threads": 18,
+    "optimized": true,
+    "evidence": "Completed standalone Windows exec invocation, exit0; no retained Python PID supplied by that invocation.",
+    "gpu_speedup_claimed": false
+  },
+  "cpu_threads": {
+    "receipt": "../../verification/sections/461-archive/cv-threads/results.json",
+    "inputs": "Two bars extracted by the original matcher from reference-video60/95s composites; exact matcher output equality for all12 calls.",
+    "decision": "Do not change the production thread policy: interleaved1/4/18 thread results show no stable material gain on these two bars.",
+    "scope": "Matcher-only controlled experiment; no game-client accuracy or pipeline speedup claim."
+  },
+  "next": "Evaluate an OpenCL implementation of the same correlation/SSD calculations and compare mature native candidates on bounded client fixtures; preserve original identity/ambiguity decisions."
+}

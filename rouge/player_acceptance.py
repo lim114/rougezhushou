@@ -233,7 +233,7 @@ def check(section,window,gui,require):
         window.show_compact();mp.details_toggle.setChecked(False)
         mp.status.setText('隔离验收示例：公开模板；不是本局游戏读取。点击节点展开事件、奖励与作战资料。')
 
-        window.run.state=old_state;window.public_archive.show();QTest.qWait(150);gui.processEvents()
+        window.run.state=old_state;bar.open_archive();QTest.qWait(150);gui.processEvents()
 
     if section==390:
         ws=window.centralWidget();panel=window.inventory_panel;ws.setCurrentWidget(panel);panel.search.setText('攻击');query=panel.search.text()

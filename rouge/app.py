@@ -307,24 +307,9 @@ class MainWindow(QMainWindow):
         self.compact_window.refresh();self.compact_window.show();self.hide()
 
     def open_public_archive(self):
-        from .public_archive_view import ArchiveDialog
-        if self.public_archive is None:
-            self.public_archive=ArchiveDialog(ROOT/'.local/public-reference/archive.json',self)
-            self.public_archive.openReference.connect(self.open_public_event_reference)
-        self.public_archive.show()
+        self.show_compact();return self.compact_window.open_archive()
     def open_public_pool_reference(self,version,identity):
-        self.open_public_archive()
-        self.public_archive.reload_local()
-        return self.public_archive.select_exact_pool(version,identity)
-
-    def open_public_event_reference(self,category,identity):
-        panel=self.reference_panel(category);panel.scope.setCurrentIndex(panel.scope.findData(False));panel.search.clear()
-        for i in range(panel.entries.count()):
-            if panel.entries.item(i).data(Qt.ItemDataRole.UserRole)==identity:
-                panel.entries.setCurrentRow(i);self.show();self.raise_();return True
-        panel.entries.setCurrentRow(-1)
-        if self.public_archive:self.public_archive.event_note.appendPlainText('本机原文资料尚未收录该精确场景，不能跳到同名替代。')
-        return False
+        self.show_compact();return self.compact_window.open_archive_pool(version,identity)
 
     def node_statistics_source(self):
         if self._node_statistics_source is None:

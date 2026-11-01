@@ -97,15 +97,15 @@ class RelicDisplayImagesReviewTests(unittest.TestCase):
         self.assertEqual(recorded_shops(state),rows);self.assertEqual(state,original)
 
     def test_public_pool_rendering_preserves_every_count_and_probability_cell(self):
-        from rouge.public_archive_view import ArchiveDialog
+        from rouge.public_archive_view import ArchivePanel
         from rouge import public_archive as model
         with TemporaryDirectory()as folder:
-            p=ArchiveDialog(Path(folder)/'no-personal-cache.json');self.addCleanup(p.close)
+            p=ArchivePanel(Path(folder)/'no-personal-cache.json');self.addCleanup(p.close)
             p.pools.setCurrentRow(0)
             self.assertIsNotNone(p.pools.currentItem())
             # Synthetic member records test presentation; these are not a live pool or measured frequency.
-            rows=[{'name':'装饰性佯谬','rate':0.125,'count':1,'total':8,'effect':'测试展示，不是实际统计','icon':'rogue_6_relic_cargo_15'},
-                  {'name':'襁褓中的猫','rate':None,'count':None,'total':None,'effect':'测试分组参考','icon':'rogue_6_legacy_01_1'}]
+            rows=[{'id':'synthetic-decoration','name':'装饰性佯谬','rate':0.125,'count':1,'total':8,'effect':'测试展示，不是实际统计','icon':'rogue_6_relic_cargo_15'},
+                  {'id':'synthetic-cat','name':'襁褓中的猫','rate':None,'count':None,'total':None,'effect':'测试分组参考','icon':'rogue_6_legacy_01_1'}]
             with patch.object(model,'members',return_value=rows):p.render_members()
             self.assertEqual(p.members.rowCount(),2)
             self.assertEqual([p.members.item(0,i).text()for i in range(4)],['装饰性佯谬','12.50%','1／8','测试展示，不是实际统计'])

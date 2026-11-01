@@ -1,0 +1,35 @@
+{
+  "section": 461,
+  "changed_or_new_sources": {
+    "rouge/app.py": {
+      "sha256": "17d2575a5e05f4b0ae204f3f3595b5a51e0a9e23500f792694adc509a8dc8df8",
+      "bytes": 161171
+    },
+    "rouge/player_acceptance.py": {
+      "sha256": "f1735e414780d434010abbe6cb3e806c1429b52f6d734abcf1cb98a4ccacfae9",
+      "bytes": 23754
+    },
+    "rouge/player_compact.py": {
+      "sha256": "c4ea6be194b2636246a977dce5d725c9ff509731735c5e206323fe5f8c88f7b1",
+      "bytes": 29123
+    },
+    "rouge/public_archive_view.py": {
+      "sha256": "bf20ca86755f571064b9e596767a93a56c6af232b1dd8367e613f6b3c31a1d64",
+      "bytes": 14566
+    },
+    "tests/test_player_item_sources_394.py": {
+      "sha256": "f8eac45957683442e85698373f9b498338501a2170a0f9d4c2dd3bebdb9e9793",
+      "bytes": 7864
+    },
+    "tests/test_relic_display_images_review.py": {
+      "sha256": "b3a3345505660f0f920028d65719dd32cfe4109cdce047b567d767dac95bfce4",
+      "bytes": 9826
+    },
+    "tests/test_shared_archive_461.py": {
+      "sha256": "d5659942aad51c8d9aa55b34f9c254f659fa78ffbb19440949a24fdd5368d89a",
+      "bytes": 7342
+    }
+  },
+  "review": "Convert the existing public ArchiveDialog into ArchivePanel without a duplicate dialog wrapper. Retain validated public loading, fixed GET update and exact pool/event identities; use shared ToolPage/navigation and existing full flow/raw-scene readers. Source hash skips identical reloads; disappearance of the installed cache retains original source-loss behavior instead of substituting the bundled source. Same pool/source preserves table identity, column/scroll and note selection. Visible-only tab height prevents hidden page minimums pushing controls below the viewport. Empty frequency columns hide without changing model values; effects use available width and wrapped row heights. Buttons explicitly disable auto-default to keep search Return local. Existing read-only game/private/chat boundaries remain.",
+  "whole_program_review_complete": false
+}
