@@ -1,9 +1,8 @@
 """Foldable, exact-reference mechanism overview; never substitutes base stats."""
-from math import ceil
-from PySide6.QtCore import Qt,QSize,Signal,QRect,QPointF
-from PySide6.QtGui import QTextLayout,QTextOption
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QTreeWidget,QTreeWidgetItem,QHeaderView,QSizePolicy,QStyledItemDelegate,QStyleOptionViewItem,QStyle,QAbstractItemView
+from PySide6.QtCore import Qt,QSize,Signal
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QTreeWidget,QTreeWidgetItem,QHeaderView,QSizePolicy,QAbstractItemView
 from .current_enemy_traits import MOTION,ATTACK,DAMAGE
+from .wrapped_item_delegate import WrappedItemDelegate
 
 
 def overview_cells(enemy,forecast=None):
@@ -16,29 +15,6 @@ def overview_cells(enemy,forecast=None):
     return [enemy['name'],*component_numbers(forecast),'\n'.join(kinds),text]
 
 
-class MechanismDelegate(QStyledItemDelegate):
-    """Qt v6.11.2 viewItemTextLayout port; see licenses/Qt-item-text-layout-NOTICE.md.
-
-    Copyright (C) 2016 The Qt Company Ltd. LGPL-3.0-only.
-    Full-height measurement omits the upstream early-elision branch.
-    """
-    def sizeHint(self,option,index):
-        size=super().sizeHint(option,index)
-        if index.column()not in(5,6):return size
-        opt=QStyleOptionViewItem(option);self.initStyleOption(opt,index)
-        tree=self.parent();opt.rect=QRect(0,0,tree.columnWidth(index.column()),size.height())
-        rect=tree.style().subElementRect(QStyle.SubElement.SE_ItemViewItemText,opt,tree)
-        margin=tree.style().pixelMetric(QStyle.PixelMetric.PM_FocusFrameHMargin,None,tree)+1
-        text_option=QTextOption();text_option.setWrapMode(QTextOption.WrapMode.WordWrap);text_option.setTextDirection(opt.direction);text_option.setAlignment(QStyle.visualAlignment(opt.direction,opt.displayAlignment))
-        layout=QTextLayout(opt.text,opt.font);layout.setTextOption(text_option);height=0;layout.beginLayout()
-        while True:
-            line=layout.createLine()
-            if not line.isValid():break
-            line.setLineWidth(rect.width()-2*margin);line.setPosition(QPointF(0,height));height+=line.height()
-        layout.endLayout()
-        return QSize(size.width(),max(size.height(),ceil(height)+opt.rect.height()-rect.height()))
-
-
 class EnemyOverview(QWidget):
     selected=Signal(str)
 
@@ -48,7 +24,7 @@ class EnemyOverview(QWidget):
         layout=QVBoxLayout(self);layout.setContentsMargins(0,0,0,0)
         self.notice=QLabel('表内直接阅读机制；点选敌人可查看完整资料。本关候选不等于实际敌人数；数值仅为已证环境分项，不含完整藏品、阶段和技能影响，完整本局总量仍未知，不用白值填入。');self.notice.setWordWrap(True);layout.addWidget(self.notice)
         self.tree=QTreeWidget();self.tree.setAccessibleName('按普通精英领袖分组的敌人机制总览');self.tree.setHeaderLabels(['敌人','生命分项','攻击分项','防御分项','法抗分项','行动与攻击（资料）','机制说明']);self.tree.setIconSize(QSize(36,36));self.tree.setWordWrap(True);self.tree.setIndentation(15);self.tree.setAllColumnsShowFocus(True)
-        self.tree.setItemDelegate(MechanismDelegate(self.tree));self.tree.setTextElideMode(Qt.TextElideMode.ElideNone);self.tree.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
+        self.tree.setItemDelegate(WrappedItemDelegate(self.tree,(5,6)));self.tree.setTextElideMode(Qt.TextElideMode.ElideNone);self.tree.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
         header=self.tree.header()
         for column,width in enumerate((150,80,75,70,70,125)):
             header.setSectionResizeMode(column,QHeaderView.ResizeMode.Interactive);self.tree.setColumnWidth(column,width)

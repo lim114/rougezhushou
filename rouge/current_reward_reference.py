@@ -138,8 +138,8 @@ def summary_text(result):
         '这是固定版本资料；实际出现、击倒、开启、偷取和领取均未确认，不改动本局资源。'])
 
 
-def row_text(row):
-    rule=row['rule'];lines=[row['name'],'','【达成什么条件，能得到什么】']
+def outcome_lines(rule):
+    lines=[]
     for outcome in rule['outcomes']:
         lo,hi=outcome['minimum'],outcome['maximum']
         if lo is None or hi is None:amount='数量未知，'
@@ -148,6 +148,11 @@ def row_text(row):
         lines.append(outcome['condition']+'：'+amount+outcome['resource']+'。')
         if outcome.get('cost')is not None:lines.append('开启需消耗'+str(outcome['cost'])+'点部署费用；不是源石锭或探索行动力。')
         if outcome.get('restriction'):lines.append(outcome['restriction'])
+    return lines
+
+
+def row_text(row):
+    rule=row['rule'];lines=[row['name'],'','【达成什么条件，能得到什么】',*outcome_lines(rule)]
     if row['kind']=='device':
         lines+=['','【技能说明】',rule['skill_name']+'：'+battle.plain(rule['original_description'])]
         if not rule['quantity_qualified']:lines+=['本关技能选择或覆盖参数尚未匹配，以上完整数量不能据原说明代入。']
