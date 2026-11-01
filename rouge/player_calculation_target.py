@@ -29,7 +29,7 @@ def open_target(window, *, source='calculator'):
         if page is None:
             status.setText('该关卡暂无作战资料。');status.show()
             return None
-        page.resize(800,600)
+        page.resize(800,480)
         if target is not None:
             matches=[enemy for enemy in page.panel.result['enemies']
                      if enemy['id']==target['enemy_id'] and enemy['level']==target['level']]

@@ -33,7 +33,10 @@ class EnemyAtlasReviewTests(unittest.TestCase):
             if p.enemy_grid.count():
                 p.enemy_grid.setCurrentRow(0);key=self.keys(p)[0]
                 self.assertEqual(p.enemy_combo.currentData(),key)
-                self.assertEqual(p.enemy_player.toPlainText(),model.enemy_text(next(e for e in p.result['enemies']if e['key']==key)))
+                from rouge.reference_copy import mechanism_copy
+                full=model.enemy_text(next(e for e in p.result['enemies']if e['key']==key))
+                self.assertEqual(p.enemy_player.toPlainText(),mechanism_copy(full,model.NOTICE,extra_detail_headings=('【适用提醒】',))[0])
+                p.details_toggle.setChecked(True);self.assertEqual(p.enemy_player.toPlainText(),full);p.details_toggle.setChecked(False)
         p.enemy_choices.select_branch('__overview__');p.enemy_combo.setCurrentIndex(p.enemy_combo.count()-1)
         self.assertEqual(p.enemy_grid.currentItem().data(Qt.ItemDataRole.UserRole),p.enemy_combo.currentData())
 

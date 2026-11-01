@@ -1,7 +1,7 @@
 """Manual current-version battle reader, with real category branches."""
 import json
 from copy import deepcopy
-from PySide6.QtCore import Qt,QSize,QEvent
+from PySide6.QtCore import Qt,QSize,QEvent,QSignalBlocker
 from PySide6.QtGui import QPixmap,QIcon
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog,QLineEdit,QCheckBox,QStackedWidget,QScrollArea,QListView,QAbstractItemView,QSizePolicy
 from . import current_battle_reference as model,expansion_reference as version
@@ -89,7 +89,8 @@ class CurrentBattlePanel(QWidget):
         enemies = QWidget()
         body = QVBoxLayout(enemies)
         self.enemy_scroll=QScrollArea();self.enemy_scroll.setWidgetResizable(True);self.enemy_scroll.setFrameShape(QScrollArea.Shape.NoFrame);self.enemy_scroll.setWidget(enemies)
-        self.enemy_search=QLineEdit();self.enemy_search.setMaxLength(120);self.enemy_search.setPlaceholderText('搜索本关敌人名称或图鉴原文，如隐匿、攻击');body.addWidget(self.enemy_search)
+        self.enemy_search=QLineEdit();self.enemy_search.setMaxLength(120);self.enemy_search.setPlaceholderText('搜索敌人或机制');self.enemy_search.setToolTip('按敌人名称或图鉴描述搜索，如隐匿、攻击。')
+        search_row=QHBoxLayout();search_row.addWidget(self.enemy_search,1);body.addLayout(search_row)
         self.enemy_search_notice=QLabel('');self.enemy_search_notice.setWordWrap(True);body.addWidget(self.enemy_search_notice)
         self.enemy_combo = QComboBox()
         self.enemy_choices = BranchChoice(self.enemy_combo, [], overview_label='总览（本关候选）', placeholder='总览（按分类查看机制）')
@@ -99,7 +100,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_grid_toggle = QPushButton('展开敌人图册')
         self.enemy_grid_toggle.setCheckable(True)
         self.enemy_grid_toggle.setChecked(False)
-        body.addWidget(self.enemy_grid_toggle)
+        search_row.addWidget(self.enemy_grid_toggle)
         self.enemy_grid = CatalogGrid()
         self.enemy_grid.setAccessibleName('本关敌人候选图册；点击图片查看机制')
         self.enemy_grid.set_tile_size(48)
@@ -123,50 +124,58 @@ class CurrentBattlePanel(QWidget):
         self.enemy_portrait.setMaximumSize(96, 96)
         self.enemy_portrait.setWordWrap(True)
         self.enemy_portrait.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.hanko_button = QPushButton('查看汉科、相关敌人和烟雾弹的完整机制')
+        related=QHBoxLayout();related.setContentsMargins(0,0,0,0);body.addLayout(related)
+        self.hanko_button = QPushButton('汉科与烟雾弹')
         self.hanko_button.hide()
-        body.addWidget(self.hanko_button)
+        related.addWidget(self.hanko_button)
         self.hanko_button.clicked.connect(self.open_hanko)
-        self.elbert_button = QPushButton('查看本关首领、关联敌人与火种的完整机制')
+        self.elbert_button = QPushButton('首领与火种')
         self.elbert_button.hide()
-        body.addWidget(self.elbert_button)
+        related.addWidget(self.elbert_button)
         self.elbert_button.clicked.connect(self.open_elbert)
         self.shop_vault_dialog = None
-        self.shop_vault_button = QPushButton('查看坎诺特与保险柜的条件和后果')
+        self.shop_vault_button = QPushButton('坎诺特与保险柜')
         self.shop_vault_button.hide()
         self.shop_vault_button.setEnabled(False)
-        body.addWidget(self.shop_vault_button)
+        related.addWidget(self.shop_vault_button)
         self.shop_vault_button.clicked.connect(self.open_shop_vault)
-        self.sun_boss_button = QPushButton('查看本关多形态首领与祭台的完整机制')
+        self.sun_boss_button = QPushButton('首领与祭台')
         self.sun_boss_button.hide()
-        body.addWidget(self.sun_boss_button)
+        related.addWidget(self.sun_boss_button)
         self.sun_boss_button.clicked.connect(self.open_sun_boss)
-        self.boss_documents_button = QPushButton('查看本关首领与关联实体的完整机制')
+        self.boss_documents_button = QPushButton('首领机制')
         self.boss_documents_button.hide()
-        body.addWidget(self.boss_documents_button)
+        related.addWidget(self.boss_documents_button)
         self.boss_documents_button.clicked.connect(self.open_boss_documents)
         self.enemy_spawns_dialog = None
-        self.enemy_spawns_button = QPushButton('查看这个敌人的出怪条目与条件')
+        self.enemy_spawns_button = QPushButton('出怪与位置')
         self.enemy_spawns_button.hide()
-        body.addWidget(self.enemy_spawns_button)
+        related.addWidget(self.enemy_spawns_button)
         self.enemy_spawns_button.clicked.connect(self.open_enemy_spawns)
-        self.guest_knights_button = QPushButton('恶意讨薪 · 双骑士联动与完整招式')
+        self.guest_knights_button = QPushButton('双骑士机制')
         self.guest_knights_button.hide()
-        body.addWidget(self.guest_knights_button)
+        related.addWidget(self.guest_knights_button)
         self.guest_knights_button.clicked.connect(self.open_guest_knights)
-        self.guest_crystals_button = QPushButton('晶矿惊蝗 · 双晶兽的护盾与捕杀')
+        self.guest_crystals_button = QPushButton('双晶兽机制')
         self.guest_crystals_button.hide()
-        body.addWidget(self.guest_crystals_button)
+        related.addWidget(self.guest_crystals_button)
         self.guest_crystals_button.clicked.connect(self.open_guest_crystals)
-        self.guest_material_button = QPushButton('“物欲拮抗者” · 指令、屏障与斯第奇')
+        self.guest_material_button = QPushButton('物欲拮抗者机制')
         self.guest_material_button.hide()
-        body.addWidget(self.guest_material_button)
+        related.addWidget(self.guest_material_button)
         self.guest_material_button.clicked.connect(self.open_guest_material)
-        self.enemy_player = QPlainTextEdit()
+        related.addStretch(1)
+        from .mechanism_reading import MechanismTextBrowser
+        self.enemy_player = MechanismTextBrowser()
+        self.enemy_player.setObjectName('enemyMechanismText')
+        self.enemy_player.setStyleSheet('QTextBrowser#enemyMechanismText {border:0;padding:0;}')
+        self.enemy_topics=QComboBox();self.enemy_topics.setAccessibleName('跳转到敌人资料分组');self.enemy_topics.addItem('总览',None)
+        self.enemy_topics.currentIndexChanged.connect(lambda:self.enemy_player.scrollToAnchor(self.enemy_topics.currentData()or'mechanism-block-0'))
         self.enemy_player.setReadOnly(True)
         enemy_detail = QHBoxLayout()
         enemy_detail.addWidget(self.enemy_portrait, 0, Qt.AlignmentFlag.AlignTop)
-        enemy_detail.addWidget(self.enemy_player, 1)
+        reading=QVBoxLayout();reading.setContentsMargins(0,0,0,0);reading.addWidget(self.enemy_topics);reading.addWidget(self.enemy_player,1)
+        enemy_detail.addLayout(reading,1)
         self.enemy_details=QWidget();self.enemy_details.setLayout(enemy_detail);enemy_detail.setContentsMargins(0,0,0,0)
         from .enemy_overview import EnemyOverview
         self.enemy_overview=EnemyOverview();self.enemy_overview.selected.connect(self.enemy_choices.select_value)
@@ -175,6 +184,8 @@ class CurrentBattlePanel(QWidget):
         self.quick_section.addWidget(self.quick_table_notice);self.quick_section.addWidget(self.quick_table)
         self.quick_table.clicked.connect(self._preview_enemy_selected);self.quick_table.activated.connect(self._preview_enemy_selected)
         self.enemy_reading_stack=QStackedWidget();self.enemy_reading_stack.addWidget(self.enemy_overview);self.enemy_reading_stack.addWidget(self.enemy_details)
+        self.enemy_reading_stack.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Ignored)
+        self.enemy_player.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Ignored)
         body.addWidget(self.enemy_reading_stack,1)
         self.tabs.addTab(self.enemy_scroll, '敌人和机制')
         wave = QWidget()
@@ -304,7 +315,7 @@ class CurrentBattlePanel(QWidget):
         self.map_image.clear()
         self.map_image.setText(model.UNAVAILABLE)
         self.enemy_portrait.clear()
-        self.enemy_search_notice.setText('暂无关卡资料。')
+        self.enemy_search_notice.setText('暂无关卡资料。');self.enemy_search_notice.show()
         self.enemy_choices.set_groups([], emit=False)
         self._sync_enemy_grid()
         self.enemy_reading_stack.setCurrentWidget(self.enemy_details)
@@ -319,6 +330,8 @@ class CurrentBattlePanel(QWidget):
         self.settlement.clear_reference()
         self.source_toggle.setChecked(False)
         self.details_toggle.setChecked(False)
+        with QSignalBlocker(self.enemy_topics):
+            self.enemy_topics.clear();self.enemy_topics.addItem('总览',None)
         self.rewards.sections.setCurrentIndex(0)
 
     def refresh_reference(self):
@@ -449,6 +462,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_combo.blockSignals(blocked)
         self._sync_enemy_grid()
         self.enemy_search_notice.setText(f'找到{len(rows)}条敌人资料。'if query.strip()else'可搜索敌人名称或图鉴描述。')
+        self.enemy_search_notice.setVisible(bool(query.strip()))
 
     def _show_enemy_grid(self, checked):
         self.enemy_grid.setVisible(checked)
@@ -514,7 +528,17 @@ class CurrentBattlePanel(QWidget):
         text = model.enemy_text(enemy, self.enemy_forecasts.get(key)) if enemy else '请选择敌人或关联实体。'
         if not self.details_toggle.isChecked():
             text, _ = mechanism_copy(text, model.NOTICE, extra_detail_headings=('【适用提醒】',))
-        replace_text(self.enemy_player, text, preserve=keep)
+        topic=self.enemy_topics.currentText()if keep else'总览'
+        if replace_text(self.enemy_player, text, preserve=keep):
+            with QSignalBlocker(self.enemy_topics):
+                self.enemy_topics.clear();self.enemy_topics.addItem('总览',None)
+                block=self.enemy_player.document().firstBlock()
+                while block.isValid():
+                    heading=block.text()
+                    if heading.startswith('【')and heading.endswith('】'):
+                        self.enemy_topics.addItem(heading[1:-1],'mechanism-block-'+str(block.blockNumber()))
+                    block=block.next()
+                self.enemy_topics.setCurrentIndex(max(0,self.enemy_topics.findText(topic)))
         self.enemy_reading_stack.setCurrentWidget(self.enemy_details if enemy is not None or self.result is None else self.enemy_overview)
         self.enemy_portrait.clear()
         pix = QPixmap()

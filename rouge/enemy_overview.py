@@ -35,7 +35,7 @@ class EnemyOverview(QWidget):
         super().__init__(parent);self._scope=None;self._expanded={}
         self.setSizePolicy(QSizePolicy.Policy.Preferred,QSizePolicy.Policy.Ignored)
         layout=QVBoxLayout(self);layout.setContentsMargins(0,0,0,0)
-        self.notice=QLabel('表内直接阅读机制；点选敌人可查看完整资料。本关候选不等于实际敌人数；数值仅为已证环境分项，不含完整藏品、阶段和技能影响，完整本局总量仍未知，不用白值填入。');self.notice.setWordWrap(True);layout.addWidget(self.notice)
+        self.notice=QLabel('按分类查看敌人，点选条目查看机制。');self.notice.setWordWrap(True);layout.addWidget(self.notice)
         self.tree=QTreeWidget();self.tree.setAccessibleName('按普通精英领袖分组的敌人机制总览');self.tree.setHeaderLabels(['敌人','生命分项','攻击分项','防御分项','法抗分项','行动与攻击（资料）','机制说明']);configure_view(self.tree)
         self.preview=QTreeView();self.preview.setAccessibleName('地图下方的敌人机制表；与敌人页共用准确资料');self.preview.setModel(self.tree.model());configure_view(self.preview)
         layout.addWidget(self.tree,1)
@@ -76,6 +76,7 @@ class EnemyOverview(QWidget):
             index=self.tree.indexFromItem(group);preview.setFirstColumnSpanned(index.row(),root,True);preview.setExpanded(index,preview_expanded.get(tier,True))
         for view in(self.tree,preview):
             for column in range(1,5):view.setColumnHidden(column,column not in numeric_columns)
-        self.notice.setText(('首页仅显示有已证数据的数值列；环境分项不含全部藏品、阶段和技能影响，完整本局总量仍未知，不用白值填入。'if numeric_columns else'完整生命、攻击、防御和法抗尚未核验，不用白值填入；首页先显示行动与机制。')+'点选敌人可查看条件和完整资料，候选条数不是实际敌人数。')
+        self.notice.setToolTip(('首页仅显示有已证数据的数值列；环境分项不含全部藏品、阶段和技能影响，完整本局总量仍未知，不用白值填入。'if numeric_columns else'完整生命、攻击、防御和法抗尚未核验，不用白值填入；首页先显示行动与机制。')+'点选敌人可查看条件和完整资料，候选条数不是实际敌人数。')
+        self.notice.setText('数值：关卡与难度修正分项。点选敌人查看条件。'if numeric_columns else'按分类查看敌人，点选条目查看机制。完整面板：待补齐本局修正。')
         self.tree.doItemsLayout();self.tree.verticalScrollBar().setValue(offset);self.tree.horizontalScrollBar().setValue(horizontal);self.tree.blockSignals(blocked)
         preview.doItemsLayout();preview.verticalScrollBar().setValue(preview_offset);preview.horizontalScrollBar().setValue(preview_horizontal)
