@@ -24,11 +24,11 @@ def make_reader(kind,record,parent,*,historical=False,config=None):
     from .player_compact import ToolPopover
     if kind=='battle':
         identity=record.get('id')
-        from .current_battle_view import CurrentBattlePanel
+        from .current_battle_view import CurrentBattlePanel,size_battle_window
         panel=CurrentBattlePanel(identity)
         if panel.result is None:panel.deleteLater();return None
         if config is not None and not historical:panel.set_context(config)
-        dialog=ToolPopover(panel.result['name']+' · 固定作战预览',panel,parent);dialog.panel=panel;dialog.resize(920,720)
+        dialog=ToolPopover(panel.result['name']+' · 固定作战预览',panel,parent);dialog.panel=panel;size_battle_window(dialog)
         dialog.finished.connect(panel._close_readers)
         return readable(dialog)
     if kind=='event':

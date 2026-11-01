@@ -652,5 +652,7 @@ ADDITIONAL_MODULES += ('tests.test_battle_document_review','tests.test_interpret
 
 ADDITIONAL_MODULES += ('tests.test_mechanism_focus_review',)
 
+ADDITIONAL_MODULES += ('tests.test_compact_battle_window_review',)
+
 if __name__ == '__main__':
     sys.exit(main())

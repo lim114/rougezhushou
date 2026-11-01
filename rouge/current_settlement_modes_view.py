@@ -1,6 +1,6 @@
 """Separate documented experience modes; no account or gameplay inputs."""
 import json
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QPushButton, QTabWidget, QPlainTextEdit
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QPushButton, QTabWidget, QPlainTextEdit,QScrollArea
 from . import current_settlement_modes_reference as model
 from .ui_state import replace_text
 
@@ -10,7 +10,8 @@ class CurrentSettlementModesPanel(QWidget):
         super().__init__(parent)
         self.stage_id = stage_id
         self.result = None
-        layout = QVBoxLayout(self)
+        outer=QVBoxLayout(self);body=QWidget();layout=QVBoxLayout(body)
+        self.body_scroll=QScrollArea();self.body_scroll.setWidgetResizable(True);self.body_scroll.setFrameShape(QScrollArea.Shape.NoFrame);self.body_scroll.setWidget(body);outer.addWidget(self.body_scroll)
         self.notice = QLabel('基础与满级生命游戏分别列出，仅用于对照。入口与区域需要确认；这里不假定科技已点满，也不把参考值当实际领奖。')
         self.notice.setWordWrap(True)
         layout.addWidget(self.notice)

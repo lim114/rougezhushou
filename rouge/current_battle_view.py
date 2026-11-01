@@ -3,7 +3,7 @@ import json
 from copy import deepcopy
 from PySide6.QtCore import Qt,QSize
 from PySide6.QtGui import QPixmap,QIcon
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog,QLineEdit,QCheckBox,QStackedWidget,QScrollArea,QListView,QAbstractItemView
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog,QLineEdit,QCheckBox,QStackedWidget,QScrollArea,QListView,QAbstractItemView,QSizePolicy
 from . import current_battle_reference as model,expansion_reference as version
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
@@ -36,6 +36,7 @@ class CurrentBattlePanel(QWidget):
         self.notice.hide()
         layout.addWidget(self.notice)
         self.reading_stack = QStackedWidget()
+        self.reading_stack.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Ignored)
         self.tabs = QTabWidget()
         self.reading_stack.addWidget(self.tabs)
         self.technical = QPlainTextEdit()
@@ -82,6 +83,7 @@ class CurrentBattlePanel(QWidget):
         self.tabs.addTab(self.overview_scroll, '地图与关卡')
         enemies = QWidget()
         body = QVBoxLayout(enemies)
+        self.enemy_scroll=QScrollArea();self.enemy_scroll.setWidgetResizable(True);self.enemy_scroll.setFrameShape(QScrollArea.Shape.NoFrame);self.enemy_scroll.setWidget(enemies)
         self.enemy_search=QLineEdit();self.enemy_search.setMaxLength(120);self.enemy_search.setPlaceholderText('搜索本关敌人名称或图鉴原文，如隐匿、攻击');body.addWidget(self.enemy_search)
         self.enemy_search_notice=QLabel('');self.enemy_search_notice.setWordWrap(True);body.addWidget(self.enemy_search_notice)
         self.enemy_combo = QComboBox()
@@ -169,7 +171,7 @@ class CurrentBattlePanel(QWidget):
         self.quick_table.clicked.connect(self._preview_enemy_selected);self.quick_table.activated.connect(self._preview_enemy_selected)
         self.enemy_reading_stack=QStackedWidget();self.enemy_reading_stack.addWidget(self.enemy_overview);self.enemy_reading_stack.addWidget(self.enemy_details)
         body.addWidget(self.enemy_reading_stack,1)
-        self.tabs.addTab(enemies, '敌人和机制')
+        self.tabs.addTab(self.enemy_scroll, '敌人和机制')
         wave = QWidget()
         self.wave_scroll=QScrollArea();self.wave_scroll.setWidgetResizable(True);self.wave_scroll.setFrameShape(QScrollArea.Shape.NoFrame)
         body = QVBoxLayout(wave)
@@ -828,10 +830,17 @@ class CurrentBattlePanel(QWidget):
 from .player_window_frame import PlayerDialog
 
 
+def size_battle_window(dialog):
+    area=dialog.screen().availableGeometry()
+    dialog.resize(min(800,area.width()-40),min(340,area.height()-40))
+
+
 class CurrentBattleDialog(PlayerDialog):
     def __init__(self,stage_id,parent=None):
-        super().__init__(parent);self.setWindowTitle('固定关卡预览');self.resize(1120,820)
+        super().__init__(parent);self.setWindowTitle('固定关卡预览')
         layout=QVBoxLayout(self);self.panel=CurrentBattlePanel(stage_id);layout.addWidget(self.panel)
+        from .player_map_reader import readable
+        readable(self);size_battle_window(self)
 
     def closeEvent(self, event):
         self.panel._close_readers()
