@@ -8,13 +8,14 @@ from . import player_map_reference as model
 
 class NodeEntryButton(QToolButton):
     """Keep Qt button input/accessibility; draw the reference image with its caption."""
-    def __init__(self,title,artwork,icon,parent=None):
-        super().__init__(parent);self.artwork=QPixmap(str(artwork))if artwork else QPixmap()
+    def __init__(self,title,artwork,icon,parent=None,*,sample=None):
+        super().__init__(parent);self.artwork=QPixmap(str(artwork))if artwork else QPixmap();self.sample_reference=sample
         self.setText(title);self.setAccessibleName(title);self.setIcon(icon);self.setIconSize(QSize(40,40))
         self.setMinimumHeight(96);self.setMinimumWidth(0);self.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Preferred)
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
     def sizeHint(self):return QSize(166,96)
-    def caption_rect(self):return self.rect().adjusted(7,self.height()-30,-7,-5)
+    def caption_rect(self):
+        return self.rect().adjusted(7,self.height()-(50 if self.sample_reference else 30),-7,-(25 if self.sample_reference else 5))
     def paintEvent(self,event):
         p=QPainter(self);p.setRenderHint(QPainter.RenderHint.Antialiasing);p.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
         rect=QRectF(self.rect()).adjusted(.5,.5,-.5,-.5);clip=QPainterPath();clip.addRoundedRect(rect,7,7);p.setClipPath(clip)
@@ -33,6 +34,10 @@ class NodeEntryButton(QToolButton):
         p.setPen(QColor('#f1f7f5'));font=self.font();font.setBold(True);p.setFont(font)
         text=p.fontMetrics().elidedText(self.text(),Qt.TextElideMode.ElideRight,self.caption_rect().width())
         p.drawText(self.caption_rect(),Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter,text)
+        if self.sample_reference:
+            from .public_event_samples import label
+            p.setPen(QColor('#bde9de'));font.setBold(False);p.setFont(font)
+            p.drawText(self.rect().adjusted(7,self.height()-25,-7,-4),Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignVCenter,label(self.sample_reference))
         p.setClipping(False);p.setBrush(Qt.BrushStyle.NoBrush);p.setPen(QPen(QColor('#b4e5d6'if self.hasFocus()else'#49625c'),2 if self.hasFocus()else 1));p.drawRoundedRect(rect,7,7)
 
 class NodeHoverCard(QDialog):
@@ -71,7 +76,7 @@ class NodeHoverCard(QDialog):
         stamp=(frequencies.metadata or{}).get('updatedAt')
         date=datetime.fromisoformat(stamp.replace('Z','+00:00')).astimezone().strftime('%Y-%m-%d')if stamp else''
         source='路标统计更新 '+date+'。'if date else'暂无可核对统计。'
-        self.summary.setText(('历史地图 · 'if view.historical else'')+'历史比例不是本局概率；当前版本适用性待核验。')
+        self.summary.setText(('历史地图 · 'if view.historical else'')+'节点与事件历史比例不是本局概率；当前版本适用性待核验。')
         self.notice.setText(('历史地图记录；'if view.historical else'最近确认地图；')+'历史比例不是本局概率；未核验当前DLC与本图条件。'+source)
         content=QWidget();content.setObjectName('nodeHoverBody');body=QVBoxLayout(content);body.setContentsMargins(0,3,8,6);body.setSpacing(7);types=model.candidate_types(node)
         body.addWidget(QLabel('已读类型'if node.get('observed_type')in types else'模板固定类型'if node.get('template_type')else'可能的节点类型'))
@@ -93,6 +98,8 @@ class NodeHoverCard(QDialog):
         if not types:body.addWidget(QLabel('类型尚未确认；不把全目录当作此处候选。'))
         try:dossier=model.node_dossier(graph,node_id,config)
         except(ValueError,TypeError,KeyError):dossier=None
+        from . import public_event_samples
+        event_samples=public_event_samples.references(graph)
         self.entry_buttons=[]
         for label,kind,rows in [('事件候选','event',(dossier or{}).get('rows',[])),('作战候选','battle',(dossier or{}).get('battle_rows',[])),('已读历史事件','event',(dossier or{}).get('history_observed_event_rows',[])),('已读历史作战','battle',(dossier or{}).get('history_observed_battle_rows',[]))]:
             if not rows:continue
@@ -100,9 +107,12 @@ class NodeHoverCard(QDialog):
             for i,row in enumerate(rows):
                 path=model.event_picture(row['id'])if kind=='event'else None
                 title=row.get('title')or'名称未确认';icon=QIcon(str(path))if path else QIcon(QPixmap.fromImage(view.sprite_for('作战'if kind=='battle'else'不期而遇')))
-                button=NodeEntryButton(title,path,icon)
+                sample=event_samples.get(row['id'])if kind=='event'else None
+                button=NodeEntryButton(title,path,icon,sample=sample)
+                if sample:button.setAccessibleDescription(public_event_samples.explanation(sample))
                 historical=label.startswith('已读历史');button.setProperty('referenceScope','history'if historical else'candidate')
                 button.setToolTip(title+'\n'+('本局曾读到的内容，仅供回看；不表示现在再次发生，不计入当前候选或出现次数。点击在地图侧栏阅读。'if historical else'点击在地图侧栏阅读。资料候选不等于本局实际出现；发生概率未核验。'))
+                if sample:button.setToolTip(button.toolTip()+'\n'+public_event_samples.explanation(sample))
                 button.clicked.connect(lambda checked=False,k=kind,identity=row['id']:self.entryRequested.emit(node_id,k,identity));cards.addWidget(button,i//2,i%2);self.entry_buttons.append((kind,row['id'],button))
         body.addStretch();old=self.scroll.takeWidget();self.scroll.setWidget(content)
         if old:old.deleteLater()
