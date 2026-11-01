@@ -650,5 +650,7 @@ ADDITIONAL_MODULES += ('tests.test_spawn_reading_review',)
 
 ADDITIONAL_MODULES += ('tests.test_battle_document_review','tests.test_interpret_lookup_review')
 
+ADDITIONAL_MODULES += ('tests.test_mechanism_focus_review',)
+
 if __name__ == '__main__':
     sys.exit(main())

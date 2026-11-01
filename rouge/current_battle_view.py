@@ -451,6 +451,7 @@ class CurrentBattlePanel(QWidget):
         self.quick_enemies.doItemsLayout();self.quick_enemies.horizontalScrollBar().setValue(quick_offset);self._quick_scope=scope
         self.quick_notice.setText(f'当前筛选显示{self.enemy_grid.count()} / {len(self.result["enemies"])}条敌人资料；同名资料分别保留，不是实际出怪数量。'if self.result else'当前关卡资料暂不可用，旧候选已清除。')
         self.enemy_overview.set_rows((self.result or {}).get('enemies',[]),self.enemy_choices.entries(),(self.stage_id,self.source_identity)if self.result else None,self.enemy_forecasts)
+        self.quick_table_notice.setText(self.enemy_overview.notice.text())
 
     def _enemy_grid_selected(self, item, *_):
         if item is not None:

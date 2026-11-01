@@ -57,12 +57,14 @@ class EnemyOverview(QWidget):
                 group=self.tree.topLevelItem(i);self._expanded[group.data(0,Qt.ItemDataRole.UserRole+1)]=group.isExpanded()
         else:self._expanded={}
         self._scope=scope;offset=self.tree.verticalScrollBar().value()if same else 0;horizontal=self.tree.horizontalScrollBar().value()if same else 0
-        blocked=self.tree.blockSignals(True);self.tree.clear();lookup={e['key']:e for e in enemies};groups={}
+        blocked=self.tree.blockSignals(True);self.tree.clear();lookup={e['key']:e for e in enemies};groups={};numeric_columns=set()
         for _,key,icon in entries:
             enemy=lookup[key];tier=enemy['tier'];label={'NORMAL':'普通','ELITE':'精英','BOSS':'领袖'}.get(tier,'类别未确认')
             if tier not in groups:
                 group=QTreeWidgetItem([label]);group.setData(0,Qt.ItemDataRole.UserRole+1,tier);self.tree.addTopLevelItem(group);group.setFirstColumnSpanned(True);groups[tier]=group
             forecast=(forecasts or{}).get(key)
+            values=(forecast or{}).get('environment_component')or{}
+            numeric_columns.update(column for column,name in enumerate(('maxHp','atk','def','magicResistance'),1)if values.get(name)is not None)
             item=QTreeWidgetItem(overview_cells(enemy,forecast));item.setData(0,Qt.ItemDataRole.UserRole,key);item.setIcon(0,icon)
             for column in range(7):item.setTextAlignment(column,Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
             item.setToolTip(0,enemy['name']+' · 引用资料'+str(enemy['reference_index']+1)+'；同名不同引用分开保留')
@@ -72,5 +74,7 @@ class EnemyOverview(QWidget):
         for tier,group in groups.items():
             group.setText(0,group.text(0)+' · '+str(group.childCount())+'条候选资料');group.setExpanded(self._expanded.get(tier,True))
             index=self.tree.indexFromItem(group);preview.setFirstColumnSpanned(index.row(),root,True);preview.setExpanded(index,preview_expanded.get(tier,True))
+        for column in range(1,5):preview.setColumnHidden(column,column not in numeric_columns)
+        self.notice.setText(('首页仅显示有已证数据的数值列；环境分项不含全部藏品、阶段和技能影响，完整本局总量仍未知，不用白值填入。'if numeric_columns else'完整生命、攻击、防御和法抗尚未核验，不用白值填入；首页先显示行动与机制。')+'点选敌人可查看条件和完整资料，候选条数不是实际敌人数。')
         self.tree.doItemsLayout();self.tree.verticalScrollBar().setValue(offset);self.tree.horizontalScrollBar().setValue(horizontal);self.tree.blockSignals(blocked)
         preview.doItemsLayout();preview.verticalScrollBar().setValue(preview_offset);preview.horizontalScrollBar().setValue(preview_horizontal)
