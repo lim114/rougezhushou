@@ -59,6 +59,9 @@ class CurrentLakePanel(DocumentedEventFlowPanel):
         if not self._recheck():return False
         target=model.battle_target(self.result,self.scene_id,self.choice_id)
         if target is None:self._close_battle();self.battle_button.setEnabled(False);return False
+        from .player_reference_links import open_event_battles
+        opened=open_event_battles(self,target['event_id'],target['choice_id'])
+        if opened is not None:return opened
         from .current_event_battles_view import CurrentEventBattlesDialog
         self._close_battle();self.battle_dialog=CurrentEventBattlesDialog(target['event_id'],target['choice_id'],parent=self);self.battle_dialog.show();return True
 

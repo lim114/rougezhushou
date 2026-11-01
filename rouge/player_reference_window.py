@@ -20,6 +20,7 @@ class ToolPage(QWidget):
         apply_theme(self, theme, extra=self.extra_style)
         self.on_show = on_show
         self.prepare = lambda: True
+        self.source_parent = None
         self.preferred_size = QSize(760, 600)
         self.header = QWidget()
         self.header_bar = QHBoxLayout(self.header)
@@ -68,6 +69,7 @@ class ReferenceWindow(PlayerDialog):
         self.pages.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored)
         self.headers = QStackedWidget()
         self.history = []
+        self.linked_pages = {}
         self.cursor = -1
         self.switching = False
         self.presenting = False
@@ -127,23 +129,63 @@ class ReferenceWindow(PlayerDialog):
         return True
 
     def discard(self, page, *, fallback):
-        """Remove an invalid source page from both navigation directions."""
+        """Remove an invalid source page and its dependent reading chain."""
         current = self.pages.currentWidget()
-        removed_before = sum(p is page for p in self.history[:self.cursor+1])
-        self.history = [p for p in self.history if p is not page]
+        targets = {page}
+        candidates = set(self.linked_pages.values())
+        while True:
+            children = {p for p in candidates-targets if p.source_parent in targets}
+            if not children:
+                break
+            targets.update(children)
+        self.linked_pages = {k: p for k, p in self.linked_pages.items() if p not in targets}
+        removed_before = sum(p in targets for p in self.history[:self.cursor+1])
+        self.history = [p for p in self.history if p not in targets]
         self.cursor -= removed_before
-        if current is page:
+        if current in targets:
             self.present(fallback)
             self.parentWidget().active_popup = fallback
-        else:
-            self.switching = True
-            page.close()
-            self.switching = False
-        self.pages.removeWidget(page)
-        self.headers.removeWidget(page.header)
-        page.header.deleteLater()
-        page.deleteLater()
+        self.switching = True
+        for target in targets:
+            if target is not current:
+                target.close()
+            self.pages.removeWidget(target)
+            self.headers.removeWidget(target.header)
+            target.header.deleteLater()
+            target.deleteLater()
+        self.switching = False
         self.update_navigation()
+
+    def open_reference(self, parent, role, context, factory):
+        """Retain a child reader while its exact parent source/selection matches."""
+        from copy import deepcopy
+        source = parent
+        while not isinstance(source, ToolPage):
+            source = source.parentWidget()
+        expected = deepcopy(context())
+        if expected is None:
+            return False
+        key = (source, role)
+        page = self.linked_pages.get(key)
+        if page is not None and page.link_context != expected:
+            self.discard(page, fallback=source)
+            page = None
+        if page is None:
+            page = factory(self.parentWidget())
+            if page is None:
+                return False
+            page.source_parent = source
+            page.link_context = expected
+            self.linked_pages[key] = page
+            def prepare():
+                if not source.prepare():
+                    return False
+                if context() != expected or page.panel.refresh_reference() is False:
+                    self.discard(page, fallback=source)
+                    return False
+                return True
+            page.prepare = prepare
+        return self.parentWidget().present(page)
 
     def showEvent(self, event):
         current = self.pages.currentWidget()

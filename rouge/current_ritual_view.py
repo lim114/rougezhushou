@@ -65,6 +65,9 @@ class CurrentRitualPanel(DocumentedEventFlowPanel):
 
     def open_related(self):
         if not self._recheck()or self.event_id!='ritual':return False
+        from .player_reference_links import open_stage
+        opened=open_stage(self,self.result['data']['related_boss_stage_id'])
+        if opened is not None:return opened
         from .current_battle_view import CurrentBattleDialog
         self._close_battle();self.battle_dialog=CurrentBattleDialog(self.result['data']['related_boss_stage_id'],self);self.battle_dialog.show();return True
 

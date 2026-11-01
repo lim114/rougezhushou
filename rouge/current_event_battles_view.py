@@ -62,6 +62,9 @@ class CurrentEventBattlesPanel(QWidget):
         if model.reference(self.event_id,self.stage_id)!=self.result:self.clear_reference();return False
         sid=self.stages.currentData()
         if sid not in{v['id']for v in model.stage_rows(self.result,self.choice_id)}:return False
+        from .player_reference_links import open_stage
+        opened=open_stage(self,sid,context=lambda:None if self.result is None else(self.result['source_identity'],self.choice_id,self.stages.currentData()))
+        if opened is not None:return opened
         from .player_map_reader import make_reader
         if self.battle_dialog is not None and self.battle_dialog.panel.stage_id!=sid:self._close_battle()
         if self.battle_dialog is None:

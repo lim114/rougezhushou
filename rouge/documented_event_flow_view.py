@@ -129,6 +129,9 @@ class DocumentedEventFlowPanel(QWidget):
         if choice is None or len(choice['stage_ids']) != 1 or choice.get('listed_condition_match') is False: return False
         sid = choice['stage_ids'][0]
         if sid not in self.result['data']['originals']['stages']: return False
+        from .player_reference_links import open_stage
+        opened = open_stage(self, sid)
+        if opened is not None: return opened
         from .current_battle_view import CurrentBattleDialog
         self._close_battle(); self.battle_dialog = CurrentBattleDialog(sid, self); self.battle_dialog.show(); return True
 

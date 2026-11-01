@@ -145,12 +145,12 @@ class CompactAssistant(QDialog):
             host=self.reference_window
             if self.active_popup is not None and not isinstance(self.active_popup,ToolPage) and self.active_popup.isVisible():
                 if not self.active_popup.close():self.active_popup.raise_();return False
-            visible=host.isVisible()
+            visible=host.isVisible();page_visible=popup.isVisible()
             if bool(host.windowFlags()&Qt.WindowType.WindowStaysOnTopHint)!=self.pin.isChecked():host.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,self.pin.isChecked())
             if not host.present(popup):return False
             self.active_popup=popup
-            if visible:self.refresh()
-            else:
+            if page_visible and popup.on_show is not None:self.refresh()
+            if not visible:
                 screen=self.screen().availableGeometry();size=host.size();x=max(screen.left(),min(self.x(),screen.right()-size.width()+1));y=self.y()-size.height()-8
                 if y<screen.top():y=min(self.y()+self.height()+8,screen.bottom()-size.height()+1)
                 host.move(x,max(screen.top(),y))
@@ -174,8 +174,10 @@ class CompactAssistant(QDialog):
             self.inventory_popup.panel.refresh();self.inventory_popup.parts.refresh();self.inventory_popup.tools.refresh();self.inventory_popup.parts.refresh_exchange();self.inventory_popup.shop.refresh()
         for popup in (self.map_popup,self.scene_popup,self.team_popup,self.replay_popup):
             if popup and popup.isVisible():popup.panel.refresh()
-        if self.reference_window.isVisible() and self.map_popup is not None and not self.map_popup.isVisible() and self.map_popup.panel.reference_popup is not None:
-            self.map_popup.panel.refresh()
+        page=self.reference_window.pages.currentWidget()
+        if self.reference_window.isVisible():
+            if page is not None and page.source_parent is not None:page.prepare()
+            elif self.map_popup is not None and not self.map_popup.isVisible() and self.map_popup.panel.reference_popup is not None:self.map_popup.panel.refresh()
         if self.exchange_popup and self.exchange_popup.isVisible():
             source=self.inventory_popup.panel;source.reload_sources()
             self.exchange_popup.panel.refresh_source(source.source_index.data if source.source_index else None,source.source_signature)
