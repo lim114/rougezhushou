@@ -24,12 +24,12 @@ def event_excerpt(result,key):
         lines+=['','【选项或结果原文】'+entry['title'],entry['description']]
         if entry['related_item_names']:lines+=['关联提示：'+'、'.join(entry['related_item_names'])]
         if entry['actual_game_button']is False or entry['presentation']=='outcome_reference':
-            lines+=['这是文献中的结果参考，不是可点击的游戏选项。']
+            lines+=['记录类型：选项结果']
         lines+=['','可打开完整流程，或为这段资料写笔记。']
     else:
         lines+=['资料中的节点类别：'+('、'.join(row['node_types'])or'未确认'),
             '上方可以选择具体对话与选项，下面可打开完整流程。']
-    lines+=['','这是固定资料，不代表当前阶段、可选资格或已经获得奖励。未列出的事件及条件仍可能存在。']
+    lines+=['','资料对照：事件选项与结果']
     return '\n'.join(lines)
 
 class RecentScenePanel(SceneBattlePanel):
@@ -41,7 +41,7 @@ class RecentScenePanel(SceneBattlePanel):
         self.event_choices=QComboBox();self.event_choices.setAccessibleName('最近读取事件的准确资料');body.addWidget(self.event_choices)
         self.event_entries=QComboBox();self.event_entries.setAccessibleName('事件中的对话与选项记录');body.addWidget(self.event_entries)
         self.event_text=QPlainTextEdit();self.event_text.setReadOnly(True);body.addWidget(self.event_text,1)
-        self.event_more=QCheckBox('展开来源范围与尚未核验的条件');body.addWidget(self.event_more)
+        self.event_more=QCheckBox('资料说明');body.addWidget(self.event_more)
         self.event_open=QPushButton('打开这份事件的完整流程');body.addWidget(self.event_open)
         self.event_note=QPushButton('为这段准确资料写笔记');body.addWidget(self.event_note)
         self.layout().insertWidget(1,self.event_body,1)
@@ -81,7 +81,7 @@ class RecentScenePanel(SceneBattlePanel):
         for i,row in enumerate(rows,1):self.event_choices.addItem(row['title']+' · '+('、'.join(row['node_types'])or'类别未确认')+' · 资料'+str(i),row['id'])
         self.event_choices.setCurrentIndex(0);self.event_choices.blockSignals(False);self.select_event()
         prefix='历史记录：'if self.historical_reading else'最近读取：'
-        self.notice.setText((prefix+str(content.get('title')or'事件')+'。请选择对应资料；没有判断本局阶段、可选选项或奖励。')if rows else prefix+'事件暂无可核对的准确资料；没有借用相似名称，旧入口已清除。')
+        self.notice.setText((prefix+str(content.get('title')or'事件')+' · 请选择对应事件')if rows else prefix+'事件暂无资料')
 
     def select_event(self,*_):
         self._close_event();identity=self.event_choices.currentData()

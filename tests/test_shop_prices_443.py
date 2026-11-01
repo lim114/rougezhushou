@@ -93,8 +93,10 @@ class ShopPrices443Tests(unittest.TestCase):
             self.assertTrue(remember(run,newer,run.state['id'],at));self.assertFalse(remember(run,newer,run.state['id'],at))
             self.assertEqual(run.state['history'][:len(first)],first)
             rows=recorded_shops(run.state);self.assertEqual(len(rows),2)
-            text=comparison_text(compare_shops(rows,rows[-1][0]))
-            self.assertIn('6→0源石锭',text);self.assertIn('变化不证明刷新',text)
+            comparison=compare_shops(rows,rows[-1][0]);text=comparison_text(comparison)
+            self.assertIn('6→0源石锭',text)
+            self.assertEqual(comparison['added'],[]);self.assertEqual(comparison['unread'],[])
+            self.assertEqual(len(comparison['price_changes']),1)
     def test_old_unpriced_snapshot_is_not_filled_with_newer_price(self):
         frame=public_frame(164);snapshot=shop_snapshot(frame['raw'],frame['shape']);old=deepcopy(snapshot)
         for r in old['items']:r.pop('price',None)
@@ -113,7 +115,7 @@ class ShopPriceWidgets443Tests(unittest.TestCase):
         panel.search.setText('浪花');newer=deepcopy(snapshot);newer['items'][0]['price']=0
         state['history'].append({'kind':'shop_items_read','at':2,**newer});panel.refresh()
         self.assertEqual(panel.snapshots.currentData(),0);self.assertEqual(panel.search.text(),'浪花')
-        self.assertIn('6源石锭',panel.detail.toPlainText());self.assertIn('标价以所选记录为准',panel.notice.text())
+        self.assertIn('6源石锭',panel.detail.toPlainText());self.assertIn('按所选读取记录展示',panel.notice.text())
         panel.snapshots.setCurrentIndex(0);panel.entries.setCurrentRow(0)
         self.assertIn('0源石锭',panel.detail.toPlainText());self.assertIn('标价：0',panel.entries.item(0).text())
         self.assertIn('不证明持有、购买',panel.detail.toPlainText())

@@ -111,7 +111,7 @@ class NodeHoverCard(QDialog):
                 button=NodeEntryButton(title,path,icon,sample=sample)
                 if sample:button.setAccessibleDescription(public_event_samples.explanation(sample))
                 historical=label.startswith('已读历史');button.setProperty('referenceScope','history'if historical else'candidate')
-                button.setToolTip(title+'\n'+('本局曾读到的内容，仅供回看；不表示现在再次发生，不计入当前候选或出现次数。点击在地图侧栏阅读。'if historical else'点击在地图侧栏阅读。资料候选不等于本局实际出现；发生概率未核验。'))
+                button.setToolTip(title+'\n'+('已读历史 · 点击回看'if historical else'候选资料 · 点击在地图侧栏阅读'))
                 if sample:button.setToolTip(button.toolTip()+'\n'+public_event_samples.explanation(sample))
                 button.clicked.connect(lambda checked=False,k=kind,identity=row['id']:self.entryRequested.emit(node_id,k,identity));cards.addWidget(button,i//2,i%2);self.entry_buttons.append((kind,row['id'],button))
         body.addStretch();old=self.scroll.takeWidget();self.scroll.setWidget(content)

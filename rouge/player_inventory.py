@@ -65,7 +65,7 @@ class InventoryPanel(QWidget):
         super().__init__();self.run=run;self.rows={};self.public_cache=Path(public_cache)if public_cache is not None else None;self.source_stamp=None;self.source_signature=None;self.source_index=None;self.render_key=None;body=QVBoxLayout(self)
         body.setContentsMargins(8,4,8,4);body.setSpacing(5)
         bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('搜索名称、效果或取得条件')
-        self.held=QCheckBox('仅本局已读');self.held.setToolTip('只显示本局已确认持有的收藏品；未读到不代表没有。');self.held.setChecked(True);bar.addWidget(self.search,1);bar.addWidget(self.held);self.more=QPushButton('筛选');self.more.setCheckable(True);bar.addWidget(self.more)
+        self.held=QCheckBox('仅本局已读');self.held.setToolTip('显示本局已读到的持有收藏品');self.held.setChecked(True);bar.addWidget(self.search,1);bar.addWidget(self.held);self.more=QPushButton('筛选');self.more.setCheckable(True);bar.addWidget(self.more)
         self.scope=QPushButton('资料说明');self.scope.setCheckable(True);bar.addWidget(self.scope);body.addLayout(bar)
         self.filter_box=QWidget();filters=QGridLayout(self.filter_box);self.rarity=QComboBox();self.rarity.addItem('全部稀有度',None)
         for key,label in RARITIES.items():self.rarity.addItem(label,key)
@@ -167,11 +167,11 @@ class InventoryPanel(QWidget):
         update_inventory_button(self)
         from .player_resource_facts import inventory_summary
         complete=inventory_summary(self.run.state)['complete']
-        self.summary.setText('资料暂不可用，旧列表已清除。'if rows is None else f'显示{self.entries.count()}项 · '+('持有清单已核对完整'if complete else'持有清单未核对完整，未列出不代表没有'))
+        self.summary.setText('暂无收藏品资料'if rows is None else f'显示{self.entries.count()}项 · '+('持有清单已核对完整'if complete else'持有清单待核对'))
         from .relic_quantities import KETTLE
         if rows is not None and self.held.isChecked()and KETTLE in self.rows:
             self.summary.setText(self.summary.text()+(' · 热水壶'+str(self.kettle_quantity)+'件'if self.kettle_quantity is not None else' · 热水壶重复件数未确认'))
-        self.status.setText('资料暂不可用，已清除旧列表。'if rows is None else f'匹配{len(rows)}种收藏品。'+('本局收藏品已核对完整。'if complete else'本局尚未核对读全；未列出不代表没有。')+' 悬停查看所属池，点击阅读效果与取得条件。拓展一图鉴按所选范围显示；其它条目另注明固定基准。不是当前DLC完整目录或已生效证明。')
+        self.status.setText('暂无收藏品资料'if rows is None else f'匹配{len(rows)}种收藏品。悬停查看所属池，点击查看效果与取得条件。目录按所选资料范围显示。')
         if rows is not None and data is None:
             self.summary.setText(self.summary.text()+' · 公开图鉴暂不可用，仅显示固定说明')
             self.status.setText('公开图鉴暂不可用；下方只显示固定国服说明，未沿用旧的图鉴或掉落资料。'+self.status.text())

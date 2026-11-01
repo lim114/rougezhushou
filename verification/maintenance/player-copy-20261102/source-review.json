@@ -1,0 +1,33 @@
+{
+  "section": 459,
+  "kind": "implementation_maintenance",
+  "changed_or_new_sources": {
+    "rouge/player_game_map.py": {
+      "sha256": "ed11bc80167d79f53323784ad6d03176b067e80f5087a7aad96398b40c0da161",
+      "bytes": 10213
+    },
+    "rouge/player_inventory.py": {
+      "sha256": "714d54ac2f055cc48db84b3982438e676d0f741e53ee4fd0d55eb87fa332a1e7",
+      "bytes": 23714
+    },
+    "rouge/player_map_hover.py": {
+      "sha256": "5cfd255b23d31ea0515476205c313ffa413fbf3d70d649ba918dc82efcc9d782",
+      "bytes": 10926
+    },
+    "rouge/player_recent_scene.py": {
+      "sha256": "d3ba9ca231019a4cc474ab193f173d8b0c67ce2e89a65ebf1cb8e7d74c441a27",
+      "bytes": 8181
+    },
+    "rouge/player_shop_memory.py": {
+      "sha256": "85b0bc53445546e4322c8acfe0055146e6aef064038689580a7306f45336c220",
+      "bytes": 11745
+    },
+    "tests/test_shop_prices_443.py": {
+      "sha256": "c1cec4c0ee3a83d3f3dd514b861453dbc204360351cdddef3ea9c48fd8ff65d8",
+      "bytes": 10019
+    }
+  },
+  "review": "Copy-only simplification on inventory, stored shop reads, recent event excerpts, node hover and game-map annotation. Replace repetitive negative caveats with source/status labels. Keep game conditions, data qualification, read-vs-held attribution, history/source actions and price comparisons. Existing tests keep record immutability, deduplication, selected earlier price, held-state and source behavior checks.",
+  "new_logic_or_dependency": false,
+  "functional_section_added": false
+}

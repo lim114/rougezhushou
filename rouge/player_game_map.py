@@ -53,7 +53,7 @@ class OverlaySurface(QWidget):
             if row['frequency']:text+=f" 历史{row['frequency']['frequency']:.1%}"
             p.setPen(QPen(QColor('#ffd38b')if row['match']=='history'else QColor('#92edd1'),2,Qt.PenStyle.DashLine if row['match']=='candidate'else Qt.PenStyle.SolidLine));p.setBrush(Qt.BrushStyle.NoBrush);p.drawEllipse(QPointF(x,y),30,30)
             size=p.fontMetrics().horizontalAdvance(text)+12;p.fillRect(round(x-size/2),round(y+34),size,24,QColor(15,32,29,225));p.setPen(QColor('#eefcf4'));p.drawText(round(x-size/2+6),round(y+51),text)
-        p.setPen(QColor('#d8f4e6'));p.drawText(14,24,'资料标注 · 候选不代表实际生成；历史比例不是本局概率')
+        p.setPen(QColor('#d8f4e6'));p.drawText(14,24,'节点资料 · 候选事件 · 公开历史统计')
 
 class GameMapOverlay(QObject):
     def __init__(self,companion,owner,*,statistics_source=None):

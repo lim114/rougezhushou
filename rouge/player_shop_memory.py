@@ -76,7 +76,7 @@ def comparison_text(comparison):
     for key,label in(('added','本次新读到'),('unread','前次读到、本次未读到'),('both','两次都读到')):
         lines.append(label+'：'+('、'.join(r['name']for r in comparison[key])or'无'))
     for row in comparison.get('price_changes',[]):lines.append(f"已读标价变化：{row['name']} {row['previous']}→{row['current']}源石锭")
-    return '\n'.join(lines)+'\n\n两次清单可能没有读全，也可能来自不同商店。未读到不等于已购买或下架，变化不证明刷新。'
+    return '\n'.join(lines)+'\n\n对照范围：两次读取记录中的商品与标价。'
 
 from PySide6.QtCore import Qt
 from .view_catalog import relic_icon,relic_icon_note
@@ -107,13 +107,13 @@ class ShopMemoryPanel(QWidget):
         for i,row in reversed(rows):self.snapshots.addItem(observation_time(row.get('at'))+' · '+str(len(row['items']))+'件已读名称',i)
         self.snapshots.setCurrentIndex(self.snapshots.findData(old)if old in self.rows else 0 if rows else-1);self.snapshots.blockSignals(False);self.show_snapshot()
         priced=any('price'in item for _,row in rows for item in row['items'])
-        self.notice.setText(('记录暂未保存到本机。'if self.run.save_issue else'')+'仅保留本局可确认的商店商品名称'+('和当次已读标价'if priced else'')+'，可能未读全；不代表已经购买或持有。'+('标价以所选记录为准；剩余刷新次数及当前是否仍在售：未读。'if priced else'价格、剩余刷新次数及当前是否仍在售：未读。'))
+        self.notice.setText(('记录暂未保存到本机。'if self.run.save_issue else'')+'商品'+('与标价'if priced else'')+'按所选读取记录展示。购买与在售状态：待确认。')
     def show_comparison(self,visible):
         self.comparison.setVisible(visible);self.comparison_toggle.setText('收起前后清单对照'if visible else'展开前后清单对照')
     def show_snapshot(self,*_):
         from .expansion_reference import packet
         public=packet();row=self.rows.get(self.snapshots.currentData())or{};old=self.entries.currentItem();keep=old.data(Qt.ItemDataRole.UserRole)if old else None;self.entries.blockSignals(True);self.entries.clear();self.source_card.dismiss()
-        self.summary.setText(('记录尚未保存。'if self.run.save_issue else'')+('商品资料暂不可用，旧清单已清除。'if public is None else f'已读商品{len(row.get("items",[]))}件 · 不代表持有或当前仍在售'if row else'尚无本局商店记录'))
+        self.summary.setText(('记录尚未保存。'if self.run.save_issue else'')+('暂无商品资料'if public is None else f'已读商品{len(row.get("items",[]))}件'if row else'尚无本局商店记录'))
         comparison=compare_shops(list(self.rows.items()),self.snapshots.currentData());self.comparison.setText(comparison_text(comparison));query=self.search.text().strip().casefold()
         if public:
             for record in row.get('items',[]):
