@@ -30,7 +30,7 @@ class CurrentEventBattlesView326Tests(unittest.TestCase):
         p=self.panel('黑诞','choice_ro6_normal2_2');self.assertEqual(p.stages.count(),7);self.assertIn('多个作战名称',p.player.toPlainText());p=self.panel('湖中仙女');self.assertEqual(p.choices.count(),2)
     def test_reverse_stage_excludes_false_emergency_link_and_preserves_own_stage_filter(self):
         for sid,count in(('ro6_t_3',1),('ro6_e_t_3',2)):
-            p=CurrentBattlePanel(sid);p.show();self.addCleanup(p.close);self.assertTrue(p.event_origins_button.isVisible());self.assertTrue(p.open_event_origins());child=p.event_origins_dialog;self.assertEqual(child.panel.stage_id,sid);self.assertEqual(child.panel.choices.count(),count);self.assertTrue(p.refresh_reference());self.assertTrue(child.isVisible());p.close();self.assertFalse(child.isVisible())
+            p=CurrentBattlePanel(sid);p.show();self.addCleanup(p.close);p.map_details.expand(animate=False);self.qt.processEvents();p.overview_scroll.ensureWidgetVisible(p.event_origins_button);self.assertTrue(p.event_origins_button.isVisible());self.assertTrue(p.open_event_origins());child=p.event_origins_dialog;self.assertEqual(child.panel.stage_id,sid);self.assertEqual(child.panel.choices.count(),count);self.assertTrue(p.refresh_reference());self.assertTrue(child.isVisible());p.close();self.assertFalse(child.isVisible())
     def test_two_nonzero_readers_stage_and_nested_owned_reader_keep_refresh(self):
         p=self.panel('鸭托邦','choice_ro6_bat3_3');p.resize(850,450);p.stages.setCurrentIndex(p.stages.findData('ro6_t_3'));p.open_battle();child=p.battle_dialog;child.panel.open_event_origins();grandchild=child.panel.event_origins_dialog
         for reader in(p.player,p.technical):

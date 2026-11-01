@@ -38,7 +38,7 @@ class EventBattleReaderReviewTests(unittest.TestCase):
   self.assertEqual(len(COMPARISONS),20);self.assertEqual(len({v['stage_id']for v in COMPARISONS}),17)
  def test_same_exact_stage_reuses_shared_window_and_preserves_reward_choice_after_close(self):
   p=self.panel('鸭托邦','choice_ro6_bat3_3');self.choose(p,'choice_ro6_bat3_3','ro6_t_3');self.assertTrue(p.open_battle());d=p.battle_dialog
-  self.assertTrue(d.windowFlags()&Qt.WindowType.FramelessWindowHint);self.assertEqual(d.objectName(),'mapReferenceWindow');self.assertEqual(d.styleSheet(),REFERENCE_STYLE)
+  self.assertTrue(d.windowFlags()&Qt.WindowType.FramelessWindowHint);self.assertEqual(d.objectName(),'mapReferenceWindow');self.assertTrue(d.styleSheet().endswith(REFERENCE_STYLE));self.assertEqual(d.property('playerTheme'),'dark')
   self.assertEqual(d.palette().color(QPalette.ColorRole.Window).name(),'#262528');self.assertEqual((d.width(),d.height()),(920,720));self.assertEqual(d.panel.tabs.count(),4)
   reward=d.panel.rewards;row=next(r for r in reward.result['rows']if r['source_action_keys']);reward.choices.select_value(row['id']);reward.source_combo.setCurrentIndex(1);choice=(reward.combo.currentData(),reward.source_combo.currentData());d.panel.tabs.setCurrentWidget(reward)
   for _ in range(3):

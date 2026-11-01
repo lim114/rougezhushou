@@ -123,6 +123,9 @@ def main():
                                 if widget is panel.action_player:widget.parentWidget().setSizes([680,160]);gui.processEvents()
                                 if panel.source_toggle.isChecked()!=(widget is panel.technical):QTest.mouseClick(panel.source_toggle,Qt.MouseButton.LeftButton)
                                 if widget is not panel.technical:QTest.mouseClick(tabbar,Qt.MouseButton.LeftButton,pos=tabbar.tabRect(index).center())
+                                if widget is panel.summary:
+                                    gui.processEvents();panel.overview_scroll.ensureWidgetVisible(panel.map_details.toggleButton());gui.processEvents()
+                                    QTest.mouseClick(panel.map_details.toggleButton(),Qt.MouseButton.LeftButton);gui.processEvents();panel.overview_scroll.ensureWidgetVisible(widget)
                                 gui.processEvents();require(widget.isVisible(),'requested_reader_really_visible_after_grouping');c=widget.textCursor();c.setPosition(2);c.setPosition(12,QTextCursor.MoveMode.KeepAnchor);widget.setTextCursor(c);scroll=widget.verticalScrollBar();require(scroll.maximum()>0,'real_current_reader_has_nonzero_scroll_without_padding');scroll.setValue(min(6,scroll.maximum()));prior=reading(widget);keys=(panel.enemy_combo.currentData(),panel.action_key,panel.queue_kind.currentData(),panel.tabs.currentIndex())
                                 QTest.mouseClick(panel.refresh_button,Qt.MouseButton.LeftButton);gui.processEvents();require(reading(widget)==prior and keys==(panel.enemy_combo.currentData(),panel.action_key,panel.queue_kind.currentData(),panel.tabs.currentIndex()),'refresh_preserves_current_branch_identity_tab_selection_and_nonzero_scroll')
                                 refreshes.append({'reader_index':index,'before':prior,'after':reading(widget),'keys':keys,'owned_dialog_size':[dialog.width(),dialog.height()]})

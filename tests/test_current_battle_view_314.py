@@ -39,7 +39,9 @@ class CurrentBattleView314Tests(unittest.TestCase):
         for widget in(p.summary,p.enemy_player,p.action_player,p.technical):
             p.source_toggle.setChecked(widget is p.technical)
             if widget is not p.technical:p.tabs.setCurrentIndex(0 if widget is p.summary else 1 if widget is p.enemy_player else 2)
+            if widget is p.summary:p.map_details.expand(animate=False);p.overview_scroll.ensureWidgetVisible(widget)
             self.app.processEvents()
+            self.assertTrue(widget.isVisible())
             if widget is p.action_player:widget.parentWidget().setSizes([680,160]);self.app.processEvents()
             c=widget.textCursor();c.setPosition(1);c.setPosition(10,QTextCursor.MoveMode.KeepAnchor);widget.setTextCursor(c);bar=widget.verticalScrollBar()
             self.assertGreater(bar.maximum(),0);bar.setValue(min(5,bar.maximum()));prior=(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.enemy_combo.currentData(),p.action_key,p.queue_kind.currentData())

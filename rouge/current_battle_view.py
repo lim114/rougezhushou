@@ -1,9 +1,9 @@
 """Manual current-version battle reader, with real category branches."""
 import json
 from copy import deepcopy
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt,QSize
 from PySide6.QtGui import QPixmap,QIcon
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog,QLineEdit,QCheckBox,QStackedWidget
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QPushButton,QTabWidget,QSplitter,QListWidget,QListWidgetItem,QDialog,QLineEdit,QCheckBox,QStackedWidget,QScrollArea,QListView,QAbstractItemView
 from . import current_battle_reference as model,expansion_reference as version
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
@@ -44,26 +44,42 @@ class CurrentBattlePanel(QWidget):
         self.reading_stack.addWidget(self.technical)
         layout.addWidget(self.reading_stack, 1)
         self.source_toggle.toggled.connect(lambda checked: self.reading_stack.setCurrentWidget(self.technical if checked else self.tabs))
-        overview = QWidget()
-        body = QVBoxLayout(overview)
+        from .collapsible_section import QCollapsible
+        self.overview_scroll = QScrollArea()
+        self.overview_scroll.setObjectName('battleOverviewScroll');self.overview_scroll.setWidgetResizable(True);self.overview_scroll.setFrameShape(QScrollArea.Shape.NoFrame)
+        self.overview_scroll.viewport().setObjectName('battleOverviewViewport')
+        overview = QWidget();overview.setObjectName('battleOverviewBody');body=QVBoxLayout(overview);body.setContentsMargins(0,0,0,0);self.overview_scroll.setWidget(overview)
+        self.map_section=QCollapsible('地图预览',expandedIcon='−',collapsedIcon='+')
+        self.quick_section=QCollapsible('敌人速览',expandedIcon='−',collapsedIcon='+')
+        self.map_details=QCollapsible('关卡说明与机关',expandedIcon='−',collapsedIcon='+')
+        for section in (self.map_section,self.quick_section,self.map_details):
+            section.setObjectName('battleOverviewSection');section.setDuration(0);section.layout().setContentsMargins(0,0,0,0)
+            section.content().setObjectName('battleOverviewContent');section.content().hide();section.toggled.connect(section.content().setVisible)
+            section.content().layout().setContentsMargins(0,4,0,8)
+            section.toggleButton().setStyleSheet('text-align:left;background:transparent;color:#ededed;border:0;border-bottom:1px solid #585858;border-radius:0;padding:8px 2px;font-weight:600;')
+            body.addWidget(section)
+        body.addStretch()
+        self.overview_scroll.setStyleSheet('#battleOverviewScroll,#battleOverviewViewport{background:#262528;border:0;} #battleOverviewBody,#battleOverviewContent,QFrame#battleOverviewSection{background:transparent;border:0;} QListView#battleQuickEnemies{background:#262528;color:#ededed;border:0;} QListView#battleQuickEnemies::item:selected{background:#3d5e55;}')
         self.map_image = ReferenceImage()
         self.map_image.setMinimumSize(300, 160)
+        self.map_image.setMaximumHeight(270)
         self.map_image.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        body.addWidget(self.map_image)
+        self.map_section.addWidget(self.map_image)
         self.position_button = QPushButton('查看地图格子与已核对的原图位置')
-        body.addWidget(self.position_button)
+        self.map_section.addWidget(self.position_button)
         self.position_button.clicked.connect(self.open_map_positions)
         self.event_origins_button = QPushButton('查看与本关对应的事件选项')
-        body.addWidget(self.event_origins_button)
+        self.map_details.addWidget(self.event_origins_button)
         self.event_origins_button.clicked.connect(self.open_event_origins)
         self.stage_objects_dialog = None
         self.stage_objects_button = QPushButton('查看本关物件与机关')
-        body.addWidget(self.stage_objects_button)
+        self.map_details.addWidget(self.stage_objects_button)
         self.stage_objects_button.clicked.connect(self.open_stage_objects)
         self.summary = QPlainTextEdit()
         self.summary.setReadOnly(True)
-        body.addWidget(self.summary, 1)
-        self.tabs.addTab(overview, '地图与关卡')
+        self.summary.setMinimumHeight(160);self.summary.setMaximumHeight(240)
+        self.map_details.addWidget(self.summary)
+        self.tabs.addTab(self.overview_scroll, '地图与关卡')
         enemies = QWidget()
         body = QVBoxLayout(enemies)
         self.enemy_search=QLineEdit();self.enemy_search.setMaxLength(120);self.enemy_search.setPlaceholderText('搜索本关敌人名称或图鉴原文，如隐匿、攻击');body.addWidget(self.enemy_search)
@@ -83,6 +99,14 @@ class CurrentBattlePanel(QWidget):
         self.enemy_grid.setMinimumHeight(124)
         self.enemy_grid.setMaximumHeight(132)
         body.addWidget(self.enemy_grid)
+        # Two native views share the original items, icons and exact selection.
+        self.quick_enemies=QListView();self.quick_enemies.setObjectName('battleQuickEnemies');self.quick_enemies.setAccessibleName('关卡首页敌人候选速览；点击查看完整机制')
+        self.quick_enemies.setViewMode(QListView.ViewMode.IconMode);self.quick_enemies.setMovement(QListView.Movement.Static);self.quick_enemies.setFlow(QListView.Flow.LeftToRight);self.quick_enemies.setWrapping(False)
+        self.quick_enemies.setIconSize(QSize(48,48));self.quick_enemies.setGridSize(QSize(98,96));self.quick_enemies.setSpacing(3);self.quick_enemies.setWordWrap(True);self.quick_enemies.setUniformItemSizes(True)
+        self.quick_enemies.setMinimumHeight(116);self.quick_enemies.setMaximumHeight(126);self.quick_enemies.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.quick_enemies.setModel(self.enemy_grid.model());self.quick_enemies.setSelectionModel(self.enemy_grid.selectionModel());self._quick_scope=None
+        self.quick_enemies.clicked.connect(lambda _index:self.tabs.setCurrentIndex(1));self.quick_enemies.activated.connect(lambda _index:self.tabs.setCurrentIndex(1))
+        self.quick_notice=QLabel();self.quick_notice.setWordWrap(True);self.quick_section.addWidget(self.quick_enemies);self.quick_section.addWidget(self.quick_notice)
         self.enemy_grid.hide()
         self.enemy_grid_toggle.toggled.connect(self._show_enemy_grid)
         self.enemy_grid.currentItemChanged.connect(self._enemy_grid_selected)
@@ -292,6 +316,7 @@ class CurrentBattlePanel(QWidget):
         self._actions_changed(preserve=keep)
         if not keep:
             self.tabs.setCurrentIndex(0)
+            self.map_section.expand(animate=False);self.quick_section.expand(animate=False);self.map_details.collapse(animate=False)
             self.source_toggle.setChecked(False)
             self.details_toggle.setChecked(False)
             self.rewards.sections.setCurrentIndex(0)
@@ -380,6 +405,8 @@ class CurrentBattlePanel(QWidget):
     def _sync_enemy_grid(self, *_):
         key = self.enemy_combo.currentData()
         offset = self.enemy_grid.verticalScrollBar().value()
+        scope=(self.stage_id,self.source_identity)if self.result else None
+        quick_offset=self.quick_enemies.horizontalScrollBar().value()if self._quick_scope==scope else 0
         names = {e['key']: e['name'] for e in (self.result or {}).get('enemies', [])}
         blocked = self.enemy_grid.blockSignals(True)
         self.enemy_grid.clear()
@@ -395,6 +422,8 @@ class CurrentBattlePanel(QWidget):
         self.enemy_grid.verticalScrollBar().setValue(offset)
         self.enemy_grid.blockSignals(blocked)
         self.enemy_grid._selected(self.enemy_grid.currentItem())
+        self.quick_enemies.doItemsLayout();self.quick_enemies.horizontalScrollBar().setValue(quick_offset);self._quick_scope=scope
+        self.quick_notice.setText(f'当前筛选显示{self.enemy_grid.count()} / {len(self.result["enemies"])}条敌人资料；同名资料分别保留，不是实际出怪数量。'if self.result else'当前关卡资料暂不可用，旧候选已清除。')
         self.enemy_overview.set_rows((self.result or {}).get('enemies',[]),self.enemy_choices.entries(),(self.stage_id,self.source_identity)if self.result else None,self.enemy_forecasts)
 
     def _enemy_grid_selected(self, item, *_):

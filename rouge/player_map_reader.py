@@ -1,6 +1,7 @@
 """Reuse verified event/stage readers alongside the compact exploration map."""
 REFERENCE_STYLE='''
 QDialog#mapReferenceWindow {background:#262528;color:#ededed;border:1px solid #585858;border-radius:12px;}
+QDialog#mapReferenceWindow QWidget {background:#262528;}
 QDialog#mapReferenceWindow QLabel {color:#ededed;background:transparent;}
 QDialog#mapReferenceWindow QCheckBox {color:#ededed;background:transparent;}
 QDialog#mapReferenceWindow QTabWidget::pane {background:#262528;border:0;}
