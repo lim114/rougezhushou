@@ -1,8 +1,20 @@
 """One native reference window; retained Qt pages own their reading state."""
 from PySide6.QtCore import Qt, QSize, Signal
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QStackedWidget, QSizePolicy, QLayout
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QStackedWidget, QSizePolicy, QLayout, QScrollArea
 from .player_window_frame import PlayerDialog
 from .player_theme import apply_theme
+
+
+class PageHeaders(QStackedWidget):
+    """Only the visible page supplies the shared title bar's size hints."""
+
+    def sizeHint(self):
+        page = self.currentWidget()
+        return page.sizeHint() if page is not None else QSize(0, 0)
+
+    def minimumSizeHint(self):
+        page = self.currentWidget()
+        return page.minimumSizeHint() if page is not None else QSize(0, 0)
 
 
 class ToolPage(QWidget):
@@ -31,7 +43,11 @@ class ToolPage(QWidget):
         body = QVBoxLayout(self)
         body.setSizeConstraint(QLayout.SizeConstraint.SetNoConstraint)
         body.setContentsMargins(0, 0, 0, 0)
-        body.addWidget(content, 1)
+        self.body_scroll = QScrollArea()
+        self.body_scroll.setWidgetResizable(True)
+        self.body_scroll.setFrameShape(QScrollArea.Shape.NoFrame)
+        self.body_scroll.setWidget(content)
+        body.addWidget(self.body_scroll, 1)
         # Constructed but unregistered pages must not appear with their host.
         self.hide()
 
@@ -67,7 +83,8 @@ class ReferenceWindow(PlayerDialog):
         self.pages = QStackedWidget()
         self.pages.layout().setSizeConstraint(QLayout.SizeConstraint.SetNoConstraint)
         self.pages.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Ignored)
-        self.headers = QStackedWidget()
+        self.headers = PageHeaders()
+        self.headers.currentChanged.connect(self.headers.updateGeometry)
         self.history = []
         self.linked_pages = {}
         self.cursor = -1
