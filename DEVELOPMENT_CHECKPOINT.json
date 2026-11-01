@@ -2,7 +2,7 @@
   "branch": "codex/p2-development",
   "policy": {
     "commit_after_each_section": true,
-    "full_validation_interval": 15,
+    "full_validation_interval": null,
     "continuous_work_authorized": true,
     "windows_compatibility": "Wine authorized; distinct from native Windows verification",
     "scheduled_background_work": false,
@@ -18,7 +18,7 @@
     "automatic_next_batch": false,
     "commit_interval": 1,
     "commit_after_full_validation_pass": false,
-    "cloud_save_destination": "Every completed section: commit and ordinary push origin codex/p2-development; full available validation after125 then every15 sections",
+    "cloud_save_destination": "Every completed section:commit and ordinary push origin codex/p2-development.Full checks cancelled until explicit user request.",
     "push_after_batch_commit": true,
     "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
@@ -26,9 +26,9 @@
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
-    "full_validation_anchor_section": 125,
-    "next_full_validation_after": 455,
-    "validation_per_section": "Necessary checks tied to changed behavior only; omit when unnecessary. Full available suite unchanged.",
+    "full_validation_anchor_section": null,
+    "next_full_validation_after": null,
+    "validation_per_section": "Only necessary targeted checks tied to current changes;no automatic full suite.",
     "each_section_window_required": false,
     "each_section_requires_meaningful_project_advancement": true,
     "bugfix_only_counts_as_functional_section": false,
@@ -41,7 +41,7 @@
     "verify_remote_head_after_each_push": true,
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
-    "repair_full_validation_after_functional_260": true,
+    "repair_full_validation_after_functional_260": false,
     "new_functional_sections_paused": false,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
@@ -84,7 +84,9 @@
     "dlc1_missing_content_audit_pending": true,
     "paused_after_completed_section": 440,
     "recognition_optimization": "concurrent_with_feature_work_including_existing_code",
-    "code_constraints_scope": "new_and_existing_code"
+    "code_constraints_scope": "new_and_existing_code",
+    "full_validation_mode": "disabled_by_user",
+    "full_validation_restore_requires_explicit_user_request": true
   },
   "baseline_commit": "0015c20",
   "completed_sections": 449,
@@ -2773,7 +2775,7 @@
     }
   ],
   "next_section": 450,
-  "next_action": "继续对照原片改善其它资料窗口、冗长机制总览和地图/事件联动；完整预计数值及成对校准保持未知缺口。识别扩展真实客户区文字锚点与路由、其它数字/布局和连续延迟，不用四个公开字段推定整体覆盖。后续450，下次完整455。",
+  "next_action": "继续对照原片改善其它资料窗口、冗长机制总览和地图/事件联动；完整预计数值及成对校准保持未知缺口。识别扩展真实客户区文字锚点与路由、其它数字/布局和连续延迟，不用四个公开字段推定整体覆盖。后续450；所有原定全量检查已取消，用户明确要求前不得恢复。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -2865,8 +2867,8 @@
     "effective_after_completed_section": 261,
     "commit_interval": 1,
     "push_after_each_section": true,
-    "full_validation_interval": 15,
-    "next_full_validation_after": 455,
+    "full_validation_interval": null,
+    "next_full_validation_after": null,
     "requirements_synced_each_section": true
   },
   "pending_batch_sections": [],
@@ -3092,7 +3094,7 @@
     "full095_deferred_preserved": true,
     "scope": "Current239 maintained available selector union plus inherited bounded healthy functional MainWindow suite. Specialist101–104 receipts separately archived. Missing evidence, original skips and3 actual Wine capability bodies are not PASS."
   },
-  "next_full_validation_after": 455,
+  "next_full_validation_after": null,
   "user_requested_wrap": false,
   "current_full110_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -3341,7 +3343,7 @@
     "next_section": 450,
     "next_section_started": false,
     "batch_closed": false,
-    "next_full_validation_after": 455,
+    "next_full_validation_after": null,
     "receipt": "verification/sections/449.json",
     "scope": "Functional449:seven mechanism readers use native explicit heading navigation,Chinese bold sections and raw/debug tab.Full prose/data unchanged.Refresh/source/map preserved.25current methods,244native checks/11Qt images.Private6 unchanged.Live toolbar running;two detail windows later closed/cleared,cause unknown;no persistent desktop visibility claim.Public anchor-only four fields correct,no overall accuracy/speed claim.450not started."
   },
@@ -10195,5 +10197,18 @@
       "commit": "9af285f24c89c7a4062933f85e4cdc4c73589151",
       "binding": "verified_remote_commit"
     }
+  },
+  "current_maintenance_save": {
+    "title": "按用户要求取消全部预定全量检查",
+    "receipt": "verification/maintenance/full-checks-cancelled-20261101/summary.json",
+    "binding": "enclosing_commit",
+    "functional_section_added": false
+  },
+  "full_checks_cancellation": {
+    "user_instruction": "取消所有原定的全量检查，在我没有明确说明之前不恢复全量检查机制",
+    "after_completed_section": 449,
+    "historical_schedule": "verification/maintenance/full-checks-cancelled-20261101/former-schedule-history.json",
+    "restoration_requires_explicit_user_request": true,
+    "targeted_checks_retained": true
   }
 }

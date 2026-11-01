@@ -1,0 +1,509 @@
+"""Cloud continuation preserves current requirements and truthful validation."""
+import copy
+import hashlib
+import json
+import tempfile
+import unittest
+from pathlib import Path
+from scripts.update_cloud_index import update
+
+
+class CloudIndexSyncTests(unittest.TestCase):
+    def setUp(self):
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        self.root = Path(temp.name)
+        checkpoint = {'branch': 'codex/p2-development',
+                      'completed_sections': 185, 'next_section': 186,
+                      'batch_status': 'IN_PROGRESS', 'next_full_validation_after': 200,
+                      'sections': [{'number': 185, 'verification': 'verification/sections/185.json'}],
+                      'policy': {'current_user_batch_target_section': 285,
+                                 'next_full_validation_after': 200},
+                      'current_batch_commit_policy': {'next_full_validation_after': 200},
+                      'current_section_save': {'section': 185,
+                          'verification': 'verification/sections/185.json',
+                          'scope': 'current_functional_section', 'binding': 'enclosing_commit'}}
+        section = self.root/'verification/sections/185.json'
+        section.parent.mkdir(parents=True)
+        section.write_text(json.dumps({'section': 185}), encoding='utf-8')
+        # Isolated declared publication fixtures exercise consistency only.
+        # Real project commit/remote authenticity belongs to root publication audit.
+        self.previous_commit = 'a' * 40
+        self.current_commit = 'b' * 40
+        state_path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        proof = self.root/'verification/publication/185.json'
+        proof.parent.mkdir(parents=True)
+        proof.write_text(json.dumps({'section': 185, 'passed': True,
+            'branch': 'codex/p2-development', 'commit': self.current_commit,
+            'local_HEAD': self.current_commit, 'remote_HEAD': self.current_commit,
+            'remote_branch': 'origin/codex/p2-development', 'push_primary_exit': 0}), encoding='utf-8')
+        checkpoint['last_verified_cloud_save'] = {'section': 185, 'commit': self.current_commit,
+            'scope': 'current_functional_section', 'binding': 'verified_remote_commit',
+            'proof': 'verification/publication/185.json',
+            'proof_sha256': hashlib.sha256(proof.read_bytes()).hexdigest()}
+        state_path.write_text(json.dumps(checkpoint), encoding='utf-8')
+        for file in ('PROJECT_PROGRESS.md', 'WORK_IN_PROGRESS.md', 'PROJECT_COMPLETED.md', 'AGENTS.md'):
+            (self.root/file).write_text('Public current document: '+file, encoding='utf-8')
+        (self.root/'CLOUD_HANDOFF.md').write_text('Historical migration context', encoding='utf-8')
+        (self.root/'PROJECT_REQUIREMENTS.md').write_text('当前要求：本局只读，未知保留。', encoding='utf-8')
+        receipt = self.root/'verification/full-185/native.json'
+        receipt.parent.mkdir(parents=True)
+        receipt.write_text(json.dumps({'available_checks_passed': False}), encoding='utf-8')
+
+    def test_implementation_maintenance_has_its_own_receipt_without_new_section(self):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        checkpoint = json.loads(path.read_text(encoding='utf-8'))
+        receipt = 'verification/maintenance/example.json'
+        (self.root/receipt).parent.mkdir(exist_ok=True)
+        (self.root/receipt).write_text('{"kind":"implementation_maintenance"}', encoding='utf-8')
+        checkpoint['current_maintenance_save'] = {'title': '浮窗按需刷新',
+            'receipt': receipt, 'binding': 'enclosing_commit', 'functional_section_added': False}
+        path.write_text(json.dumps(checkpoint), encoding='utf-8')
+        update(self.root)
+        index = json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+        self.assertEqual(index['completed_sections'], 185)
+        self.assertEqual(index['current_maintenance']['receipt_sha256'],
+                         hashlib.sha256((self.root/receipt).read_bytes()).hexdigest())
+        handoff = (self.root/'CLOUD_HANDOFF.md').read_text(encoding='utf-8')
+        self.assertIn('当前实现维护：浮窗按需刷新', handoff)
+        self.assertIn('不能作为维护后源码的完整验收', handoff)
+
+    def test_requirements_are_versioned_with_current_checkpoint_and_failed_validation(self):
+        update(self.root)
+        index = json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+        expected = hashlib.sha256((self.root/'PROJECT_REQUIREMENTS.md').read_bytes()).hexdigest()
+        self.assertEqual(index['requirements']['sha256'], expected)
+        self.assertEqual(index['public_pointers']['PROJECT_REQUIREMENTS.md'], expected)
+        self.assertEqual(index['current_batch_target_section'], 285)
+        self.assertFalse(index['latest_full_available_checks_passed'])
+        (self.root/'PROJECT_REQUIREMENTS.md').write_text('更新要求：不发送聊天。', encoding='utf-8')
+        update(self.root)
+        changed = json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+        self.assertNotEqual(changed['requirements']['sha256'], expected)
+
+    def test_latest_priority_is_reflected_in_index_and_handoff(self):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        checkpoint = json.loads(path.read_text(encoding='utf-8'))
+        for order in (['P2', 'P3', 'P1'], ['P3', 'P2', 'P1']):
+            with self.subTest(order=order):
+                checkpoint['policy']['priority_order'] = order
+                path.write_text(json.dumps(checkpoint), encoding='utf-8')
+                update(self.root)
+                index = json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+                handoff = (self.root/'CLOUD_HANDOFF.md').read_text(encoding='utf-8')
+                self.assertTrue(index['priority_order'].startswith(' → '.join(order)))
+                self.assertIn(index['priority_order'], handoff)
+                self.assertEqual(index['completed_sections'], 185)
+
+    def test_recognition_optimization_is_concurrent_in_current_index_and_handoff(self):
+        update(self.root)
+        index=json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+        handoff=(self.root/'CLOUD_HANDOFF.md').read_text(encoding='utf-8')
+        self.assertIn('同步优化',index['priority_order'])
+        self.assertNotIn('识别优化最后',index['priority_order'])
+        self.assertIn(index['priority_order'],handoff)
+
+    def test_repeated_update_preserves_historical_context_and_excludes_private_state(self):
+        private = self.root/'.local'
+        private.mkdir()
+        (private/'run-state.json').write_text('PRIVATE_RUN_SENTINEL', encoding='utf-8')
+        update(self.root)
+        first = (self.root/'CLOUD_HANDOFF.md').read_text(encoding='utf-8')
+        update(self.root)
+        final = (self.root/'CLOUD_HANDOFF.md').read_text(encoding='utf-8')
+        self.assertEqual(first, final)
+        self.assertEqual(final.count('<!-- live-cloud-index:start -->'), 1)
+        self.assertIn('Historical migration context', final)
+        self.assertIn('PROJECT_REQUIREMENTS.md', final)
+        self.assertNotIn('PRIVATE_RUN_SENTINEL', final)
+        self.assertNotIn('PRIVATE_RUN_SENTINEL', (self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+
+    def test_missing_requirements_fail_before_overwriting_existing_index(self):
+        (self.root/'CLOUD_INDEX.json').write_text('Existing publication', encoding='utf-8')
+        (self.root/'PROJECT_REQUIREMENTS.md').unlink()
+        with self.assertRaisesRegex(FileNotFoundError, 'PROJECT_REQUIREMENTS'):
+            update(self.root)
+        self.assertEqual((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'), 'Existing publication')
+
+    def test_declared_repair_receipt_is_preferred_over_first_native_receipt(self):
+        path=self.root/'DEVELOPMENT_CHECKPOINT.json'
+        checkpoint=json.loads(path.read_text(encoding='utf-8'))
+        checkpoint['last_full_validation']={'after_section':185,'receipt':'verification/full-185/native-after-repair.json'}
+        path.write_text(json.dumps(checkpoint),encoding='utf-8')
+        (self.root/'verification/full-185/native-after-repair.json').write_text(json.dumps({'available_checks_passed':True}),encoding='utf-8')
+        update(self.root)
+        index=json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+        self.assertEqual(index['latest_full_receipt'],'verification/full-185/native-after-repair.json')
+        self.assertTrue(index['latest_full_available_checks_passed'])
+        self.assertIn('native-after-repair.json',(self.root/'CLOUD_HANDOFF.md').read_text(encoding='utf-8'))
+
+    def test_missing_or_private_declared_receipt_cannot_overwrite_public_index(self):
+        path=self.root/'DEVELOPMENT_CHECKPOINT.json'
+        checkpoint=json.loads(path.read_text(encoding='utf-8'))
+        for reference in ('verification/full-185/missing.json','.local/run-state.json','verification/full-184/native.json'):
+            with self.subTest(reference=reference):
+                (self.root/'CLOUD_INDEX.json').write_text('Existing publication',encoding='utf-8')
+                checkpoint['last_full_validation']={'after_section':185,'receipt':reference}
+                path.write_text(json.dumps(checkpoint),encoding='utf-8')
+                with self.assertRaises((ValueError,FileNotFoundError)):update(self.root)
+                self.assertEqual((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'),'Existing publication')
+
+    def test_missing_or_stale_current_save_is_rejected_before_any_output_write(self):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        original = json.loads(path.read_text())
+        cases = [
+            ('missing current save', lambda cp: cp.pop('current_section_save')),
+            ('section mismatch', lambda cp: cp['current_section_save'].update(section=149)),
+            ('receipt mismatch', lambda cp: cp['current_section_save'].update(verification='verification/sections/149.json')),
+            ('missing current binding', lambda cp: cp['current_section_save'].pop('binding')),
+        ]
+        for label, mutate in cases:
+            with self.subTest(label=label):
+                cp = copy.deepcopy(original)
+                mutate(cp)
+                path.write_text(json.dumps(cp))
+                self.assert_rejected_without_output_change()
+
+    def assert_rejected_without_output_change(self):
+        index = self.root/'CLOUD_INDEX.json'
+        handoff = self.root/'CLOUD_HANDOFF.md'
+        index.write_text('Original index sentinel')
+        handoff.write_text('Original handoff sentinel')
+        with self.assertRaises((ValueError, FileNotFoundError)):
+            update(self.root)
+        self.assertEqual(index.read_text(), 'Original index sentinel')
+        self.assertEqual(handoff.read_text(), 'Original handoff sentinel')
+
+    def test_stale_unbound_or_forged_publication_is_rejected(self):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        original = json.loads(path.read_text())
+        cases = [
+            ('old section', lambda cp: cp['last_verified_cloud_save'].update(section=149)),
+            ('missing scope', lambda cp: cp['last_verified_cloud_save'].pop('scope')),
+            ('missing binding', lambda cp: cp['last_verified_cloud_save'].pop('binding')),
+            ('abbreviated commit', lambda cp: cp['last_verified_cloud_save'].update(commit=self.current_commit[:8])),
+            ('missing proof', lambda cp: cp['last_verified_cloud_save'].update(proof='verification/publication/missing.json')),
+            ('wrong proof hash', lambda cp: cp['last_verified_cloud_save'].update(proof_sha256='0' * 64)),
+        ]
+        for label, mutate in cases:
+            with self.subTest(label=label):
+                cp = copy.deepcopy(original)
+                mutate(cp)
+                path.write_text(json.dumps(cp))
+                self.assert_rejected_without_output_change()
+        # Matching commit strings and a recomputed hash do not excuse failed publication.
+        cp = copy.deepcopy(original)
+        proof = self.root/'verification/publication/185.json'
+        data = json.loads(proof.read_text())
+        data['passed'] = False
+        proof.write_text(json.dumps(data))
+        cp['last_verified_cloud_save']['proof_sha256'] = hashlib.sha256(proof.read_bytes()).hexdigest()
+        path.write_text(json.dumps(cp))
+        self.assert_rejected_without_output_change()
+
+    def test_next_section_cadence_and_other_current_pointers_must_agree(self):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        original = json.loads(path.read_text())
+        cases = [
+            ('next section', lambda cp: cp.update(next_section=260)),
+            ('policy cadence', lambda cp: cp['policy'].update(next_full_validation_after=185)),
+            ('active cadence', lambda cp: cp['current_batch_commit_policy'].update(next_full_validation_after=185)),
+            ('stale current full', lambda cp: cp.update(current_available_full_validation={'section':140,'receipt':'verification/full-140/summary.json'}, last_full_validation={'after_section':185,'receipt':'verification/full-185/native.json'})),
+            ('stale current batch', lambda cp: cp.update(current_batch={'start':143,'end':150},batch_start_section=151,batch_target_section=285)),
+        ]
+        for label, mutate in cases:
+            with self.subTest(label=label):
+                cp = copy.deepcopy(original)
+                mutate(cp)
+                path.write_text(json.dumps(cp))
+                self.assert_rejected_without_output_change()
+
+    def test_previous_verified_section_is_allowed_for_new_function_but_not_paused_maintenance(self):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        cp = json.loads(path.read_text())
+        cp['last_verified_cloud_save'].update(section=184, commit=self.previous_commit,
+                                             scope='previous_functional_section')
+        proof = self.root/'verification/publication/185.json'
+        proof.write_text(json.dumps({'section':184,'passed':True,
+            'branch':'codex/p2-development','commit':self.previous_commit,
+            'local_HEAD':self.previous_commit,
+            'remote_HEAD':self.previous_commit,'remote_branch':'origin/codex/p2-development',
+            'push_primary_exit':0}))
+        cp['last_verified_cloud_save']['proof_sha256'] = hashlib.sha256(proof.read_bytes()).hexdigest()
+        path.write_text(json.dumps(cp))
+        update(self.root)
+        self.assertEqual(json.loads((self.root/'CLOUD_INDEX.json').read_text())['completed_sections'],185)
+        cp['policy']['new_functional_sections_paused'] = True
+        path.write_text(json.dumps(cp))
+        self.assert_rejected_without_output_change()
+
+    def test_current_verified_publication_allows_maintenance_without_new_section(self):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        cp = json.loads(path.read_text())
+        cp['policy']['new_functional_sections_paused'] = True
+        cp['batch_status'] = 'FUNCTIONAL_TARGET_COMPLETED_FULL_VALIDATION_REPAIR_IN_PROGRESS'
+        cp['current_available_full_validation'] = {'section':185,'receipt':'verification/full-185/native.json'}
+        cp['last_full_validation'] = {'after_section':185,'receipt':'verification/full-185/native.json'}
+        cp.update(batch_start_section=151,batch_target_section=285)
+        cp['current_batch'] = {'start':151,'end':285,'status':cp['batch_status'],
+                               'next_section':186,'next_full_validation_after':200}
+        path.write_text(json.dumps(cp))
+        update(self.root)
+        result = json.loads((self.root/'CLOUD_INDEX.json').read_text())
+        self.assertEqual(result['completed_sections'],185)
+        self.assertEqual(result['next_section'],186)
+        self.assertEqual(len(result['sections']),1)
+        self.assertFalse(result['latest_full_available_checks_passed'])
+
+    def requested_repair_fixture(self, published_section=261):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        cp = json.loads(path.read_text())
+        reference = 'verification/sections/261.json'
+        (self.root/reference).write_text(json.dumps({'section':261,
+            'kind':'user_requested_repair_section', 'user_requested':True,
+            'authorization_quote':'用户明确要求第261节集中修复此前全量问题并最终完整重验。'}))
+        (self.root/'verification/sections/260.json').write_text(json.dumps({
+            'section':260,'kind':'MEANINGFUL_FUNCTIONAL_SECTION'}))
+        cp.update(completed_sections=261,next_section=262,next_full_validation_after=275,
+                  sections=[{'number':261,'verification':reference}])
+        cp['policy'].update(current_user_requested_repair_section=261,
+                            next_full_validation_after=275,new_functional_sections_paused=True)
+        cp['current_batch_commit_policy']['next_full_validation_after']=275
+        cp['current_section_save'].update(section=261,verification=reference,
+                                         scope='current_requested_repair_section')
+        proof = self.root/f'verification/publication/{published_section}.json'
+        commit = self.current_commit if published_section==261 else self.previous_commit
+        proof.write_text(json.dumps({'section':published_section,'passed':True,
+            'branch':'codex/p2-development','commit':commit,'local_HEAD':commit,'remote_HEAD':commit,
+            'remote_branch':'origin/codex/p2-development','push_primary_exit':0}))
+        cp['last_verified_cloud_save'].update(section=published_section,commit=commit,
+            scope='current_requested_repair_section' if published_section==261 else 'previous_functional_section',
+            proof=proof.relative_to(self.root).as_posix(),proof_sha256=hashlib.sha256(proof.read_bytes()).hexdigest())
+        path.write_text(json.dumps(cp))
+        return cp
+
+    def test_user_requested_repair_accepts_exact_authorized_current_and_precommit_publication(self):
+        for saved in (260,261):
+            with self.subTest(saved=saved):
+                self.requested_repair_fixture(saved)
+                update(self.root)
+                index=json.loads((self.root/'CLOUD_INDEX.json').read_text())
+                self.assertEqual((index['completed_sections'],index['next_section']),(261,262))
+                self.assertEqual(index['sections'],[{'number':261,'verification':'verification/sections/261.json'}])
+
+    def test_requested_repair_rejects_missing_stale_or_noninteger_authorization(self):
+        original=self.requested_repair_fixture()
+        for authorization in (None,260,262,True,'261'):
+            with self.subTest(authorization=authorization):
+                cp=copy.deepcopy(original)
+                if authorization is None:cp['policy'].pop('current_user_requested_repair_section')
+                else:cp['policy']['current_user_requested_repair_section']=authorization
+                (self.root/'DEVELOPMENT_CHECKPOINT.json').write_text(json.dumps(cp))
+                self.assert_rejected_without_output_change()
+
+    def test_requested_repair_rejects_wrong_receipt_kind_or_false_user_request(self):
+        self.requested_repair_fixture()
+        receipt=self.root/'verification/sections/261.json'
+        original=json.loads(receipt.read_text())
+        for field,value in (('kind','MEANINGFUL_FUNCTIONAL_SECTION'),('kind','arbitrary'),
+                            ('user_requested',False),('user_requested',1),('user_requested',None)):
+            with self.subTest(field=field,value=value):
+                changed={**original,field:value};receipt.write_text(json.dumps(changed))
+                self.assert_rejected_without_output_change()
+
+    def test_requested_repair_cannot_be_mislabeled_functional_or_arbitrary_scope(self):
+        original=self.requested_repair_fixture()
+        for key in ('current_section_save','last_verified_cloud_save'):
+            for scope in ('current_functional_section','maintenance','previous_requested_repair_section'):
+                with self.subTest(key=key,scope=scope):
+                    cp=copy.deepcopy(original);cp[key]['scope']=scope
+                    (self.root/'DEVELOPMENT_CHECKPOINT.json').write_text(json.dumps(cp))
+                    self.assert_rejected_without_output_change()
+
+    def functional_after_repair_fixture(self):
+        cp=self.requested_repair_fixture()
+        cp['policy'].pop('current_user_requested_repair_section')
+        cp['policy']['new_functional_sections_paused']=False
+        cp.update(completed_sections=262,next_section=263)
+        reference='verification/sections/262.json'
+        (self.root/reference).write_text(json.dumps({'section':262,'kind':'MEANINGFUL_FUNCTIONAL_SECTION'}))
+        cp['sections'].append({'number':262,'verification':reference})
+        cp['current_section_save'].update(section=262,verification=reference,scope='current_functional_section')
+        cp['last_verified_cloud_save']['scope']='previous_requested_repair_section'
+        (self.root/'DEVELOPMENT_CHECKPOINT.json').write_text(json.dumps(cp))
+        return cp
+
+    def test_future_functional_section_accepts_previous_authorized_repair_without_current_repair_policy(self):
+        self.functional_after_repair_fixture()
+        update(self.root)
+        index=json.loads((self.root/'CLOUD_INDEX.json').read_text())
+        self.assertEqual((index['completed_sections'],index['next_section']),(262,263))
+        self.assertEqual(index['sections'][-1],{'number':262,'verification':'verification/sections/262.json'})
+
+    def test_previous_repair_requires_its_receipt_and_cannot_be_claimed_functional(self):
+        cp=self.functional_after_repair_fixture()
+        receipt=self.root/'verification/sections/261.json';original=receipt.read_text()
+        receipt.unlink();self.assert_rejected_without_output_change()
+        receipt.write_text(original)
+        changed=json.loads(original);changed['user_requested']=False;receipt.write_text(json.dumps(changed))
+        self.assert_rejected_without_output_change()
+        receipt.write_text(original)
+        cp['last_verified_cloud_save']['scope']='previous_functional_section'
+        (self.root/'DEVELOPMENT_CHECKPOINT.json').write_text(json.dumps(cp))
+        self.assert_rejected_without_output_change()
+
+
+# Additional current-label controls; original17 tests above remain unchanged.
+from copy import deepcopy
+from hashlib import sha256
+
+MISSING_TITLE = '历史回执未提供改动标题'
+MISSING_CHANGE = '历史回执未提供具体改动摘要，请查阅对应验收回执。'
+
+class CloudIndexLabels306Tests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix='rouge-public-index-label-')
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        self.current_receipt = 'verification/sections/185.json'
+        self.receipt = {'section': 185, 'kind': 'functional_section',
+                        'title': '节点资料完整阅读',
+                        'new_capability': '保留各选项完整结果，并显示未确认的实际领取。'}
+        self.write_json(self.current_receipt, self.receipt)
+        self.write_json('verification/sections/184.json',
+                        {'section': 184, 'title': '原有历史资料', 'new_capability': '完整历史原文'})
+        proof_name = 'verification/publication/185.json'
+        self.write_json(proof_name, {'section': 185, 'passed': True,
+            'branch': 'codex/p2-development', 'commit': 'b' * 40,
+            'local_HEAD': 'b' * 40, 'remote_HEAD': 'b' * 40,
+            'remote_branch': 'origin/codex/p2-development', 'push_primary_exit': 0})
+        self.checkpoint = {'branch': 'codex/p2-development', 'completed_sections': 185,
+            'next_section': 186, 'batch_status': 'CURRENT_ACCEPTED', 'next_full_validation_after': 200,
+            'sections': [
+                {'number': 184, 'topic': '原有历史资料', 'verification': 'verification/sections/184.json'},
+                {'number': 185, 'topic': '不能代替实际回执的计划标题', 'verification': self.current_receipt}],
+            'policy': {'next_full_validation_after': 200},
+            'current_batch_commit_policy': {'next_full_validation_after': 200},
+            'current_section_save': {'section': 185, 'verification': self.current_receipt,
+                                     'scope': 'current_functional_section', 'binding': 'enclosing_commit'},
+            'last_verified_cloud_save': {'section': 185, 'commit': 'b' * 40,
+                'scope': 'current_functional_section', 'binding': 'verified_remote_commit',
+                'proof': proof_name, 'proof_sha256': sha256((self.root / proof_name).read_bytes()).hexdigest()}}
+        self.write_json('DEVELOPMENT_CHECKPOINT.json', self.checkpoint)
+        for name in ('PROJECT_REQUIREMENTS.md', 'PROJECT_PROGRESS.md', 'PROJECT_COMPLETED.md',
+                     'WORK_IN_PROGRESS.md', 'AGENTS.md'):
+            (self.root / name).write_bytes(('公开文件 ' + name + '\n').encode('utf8'))
+        (self.root / 'CLOUD_HANDOFF.md').write_bytes('历史交接原文，不得重排。\n'.encode('utf8'))
+        self.write_json('verification/full-185/native.json', {'available_checks_passed': False})
+
+    def write_json(self, relative, value):
+        path = self.root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes((json.dumps(value, ensure_ascii=False, indent=2) + '\n').encode('utf8'))
+
+    def outputs(self):
+        return (json.loads((self.root / 'CLOUD_INDEX.json').read_bytes()),
+                (self.root / 'CLOUD_HANDOFF.md').read_text(encoding='utf8'))
+
+    def test_current_label_and_full_actual_change_come_from_same_receipt(self):
+        update(self.root)
+        index, handoff = self.outputs()
+        label = '第185节 + 节点资料完整阅读'
+        self.assertEqual(index['current_section_label'], label)
+        self.assertEqual(index['current_completed_change'], self.receipt['new_capability'])
+        self.assertIn(label, handoff)
+        self.assertIn(self.receipt['new_capability'], handoff)
+        self.assertIn('(verification/sections/185.json)', handoff)
+
+    def test_next_plans_and_checkpoint_topic_never_become_completed_label(self):
+        cp = deepcopy(self.checkpoint)
+        cp['next_action'] = '尚未执行的186下一步'
+        cp['active_section'] = {'number': 186, 'title': '计划中的新功能'}
+        self.write_json('DEVELOPMENT_CHECKPOINT.json', cp)
+        self.write_json('verification/sections/186.json',
+                        {'section': 186, 'status': 'planned', 'title': '计划中的新功能',
+                         'new_capability': '尚未执行的186下一步'})
+        update(self.root)
+        index, handoff = self.outputs()
+        self.assertEqual(index['current_section_label'], '第185节 + 节点资料完整阅读')
+        self.assertEqual(index['completed_sections'], 185)
+        block = handoff.split('<!-- live-cloud-index:start -->', 1)[1].split('<!-- live-cloud-index:end -->', 1)[0]
+        for value in ('计划中的新功能', '尚未执行的186下一步', '不能代替实际回执的计划标题'):
+            self.assertNotIn(value, block)
+
+    def test_history_numbers_receipts_and_original_text_are_not_rewritten(self):
+        receipt_bytes = {name: (self.root / name).read_bytes() for name in (
+            self.current_receipt, 'verification/sections/184.json')}
+        update(self.root)
+        index, first_handoff = self.outputs()
+        self.assertEqual(index['sections'], self.checkpoint['sections'])
+        self.assertEqual((index['completed_sections'], index['next_section']), (185, 186))
+        for name, raw in receipt_bytes.items():
+            self.assertEqual((self.root / name).read_bytes(), raw)
+        self.assertIn('历史交接原文，不得重排。', first_handoff)
+        update(self.root)
+        repeated, handoff = self.outputs()
+        self.assertEqual(repeated, index)
+        self.assertEqual(handoff, first_handoff)
+
+    def test_legacy_missing_descriptions_are_explicitly_unknown_not_guessed(self):
+        self.write_json(self.current_receipt, {'section': 185})
+        update(self.root)
+        index, handoff = self.outputs()
+        self.assertEqual(index['current_section_label'], '第185节 + ' + MISSING_TITLE)
+        self.assertEqual(index['current_completed_change'], MISSING_CHANGE)
+        self.assertIn(MISSING_CHANGE, handoff)
+        self.assertNotIn('不能代替实际回执的计划标题', handoff)
+
+    def test_nontext_display_fields_are_not_stringified_as_completed_work(self):
+        for value in (None, True, 306, [], {'planned': '计划哨兵'}):
+            with self.subTest(value=value):
+                self.write_json(self.current_receipt, {'section': 185, 'title': value, 'new_capability': value})
+                update(self.root)
+                index, handoff = self.outputs()
+                self.assertEqual(index['current_section_label'], '第185节 + ' + MISSING_TITLE)
+                self.assertEqual(index['current_completed_change'], MISSING_CHANGE)
+                self.assertNotIn('计划哨兵', handoff)
+
+    def test_change_refreshes_with_same_receipt_pointer_and_hash(self):
+        update(self.root)
+        old_index, _ = self.outputs()
+        updated = {**self.receipt, 'title': '结果说明与来源分开',
+                   'new_capability': '新增只读结果说明；实际奖励依然未确认。'}
+        self.write_json(self.current_receipt, updated)
+        update(self.root)
+        index, handoff = self.outputs()
+        self.assertEqual(index['current_section_label'], '第185节 + 结果说明与来源分开')
+        self.assertEqual(index['current_completed_change'], updated['new_capability'])
+        self.assertNotEqual(index['public_pointers'][self.current_receipt],
+                            old_index['public_pointers'][self.current_receipt])
+        self.assertEqual(index['public_pointers'][self.current_receipt],
+                         sha256((self.root / self.current_receipt).read_bytes()).hexdigest())
+        self.assertIn(updated['new_capability'], handoff)
+        self.assertNotIn(self.receipt['new_capability'], handoff)
+
+    def test_display_does_not_turn_failed_full_validation_into_pass(self):
+        update(self.root)
+        index, handoff = self.outputs()
+        self.assertFalse(index['latest_full_available_checks_passed'])
+        self.assertIn('第185节 + 节点资料完整阅读', handoff)
+        self.assertIn('False', handoff)
+        self.assertNotIn('全部验收通过', handoff)
+
+    def test_advancing_label_keeps_integer_history_and_requires_matching_receipt(self):
+        cp = deepcopy(self.checkpoint)
+        cp.update(completed_sections=186, next_section=187)
+        cp['sections'].append({'number': 186, 'verification': 'verification/sections/186.json'})
+        cp['current_section_save'].update(section=186, verification='verification/sections/186.json')
+        cp['last_verified_cloud_save']['scope'] = 'previous_functional_section'
+        self.write_json('DEVELOPMENT_CHECKPOINT.json', cp)
+        self.write_json('verification/sections/186.json',
+                        {'section': 186, 'kind': 'functional_section', 'title': '新完成的资料入口',
+                         'new_capability': '手动查看对应资料，不改变本局状态。'})
+        update(self.root)
+        index, handoff = self.outputs()
+        self.assertEqual(index['current_section_label'], '第186节 + 新完成的资料入口')
+        self.assertEqual((index['completed_sections'], index['next_section']), (186, 187))
+        self.assertEqual(index['sections'], cp['sections'])
+        self.assertIn('手动查看对应资料，不改变本局状态。', handoff)
+        self.assertEqual(json.loads((self.root / self.current_receipt).read_bytes()), self.receipt)

@@ -50,6 +50,36 @@ class CloudIndexSyncTests(unittest.TestCase):
         receipt.parent.mkdir(parents=True)
         receipt.write_text(json.dumps({'available_checks_passed': False}), encoding='utf-8')
 
+    def test_user_cancelled_full_checks_have_no_schedule_and_cannot_silently_regain_one(self):
+        path = self.root/'DEVELOPMENT_CHECKPOINT.json'
+        checkpoint = json.loads(path.read_text(encoding='utf-8'))
+        checkpoint['next_full_validation_after'] = None
+        checkpoint['current_batch_commit_policy'].update(next_full_validation_after=None, full_validation_interval=None)
+        checkpoint['policy'].update(next_full_validation_after=None, full_validation_interval=None,
+            full_validation_anchor_section=None, full_validation_mode='disabled_by_user',
+            full_validation_restore_requires_explicit_user_request=True)
+        path.write_text(json.dumps(checkpoint), encoding='utf-8')
+        update(self.root)
+        index = json.loads((self.root/'CLOUD_INDEX.json').read_text(encoding='utf-8'))
+        self.assertIsNone(index['next_full_validation_after'])
+        self.assertEqual(index['full_validation_mode'], 'disabled_by_user')
+        text = (self.root/'CLOUD_HANDOFF.md').read_text(encoding='utf-8')
+        self.assertIn('全量检查机制已取消；仅在用户明确要求后恢复。', text)
+        self.assertNotIn('下次定期全量', text)
+        self.assertEqual(index['latest_full_receipt'], 'verification/full-185/native.json')
+        for field, value in [('full_validation_interval',15), ('full_validation_anchor_section',125),
+                             ('full_validation_restore_requires_explicit_user_request',False)]:
+            with self.subTest(field=field):
+                wrong=copy.deepcopy(checkpoint);wrong['policy'][field]=value
+                path.write_text(json.dumps(wrong), encoding='utf-8')
+                with self.assertRaisesRegex(ValueError, 'User-cancelled full checks'):
+                    update(self.root)
+        wrong=copy.deepcopy(checkpoint)
+        for key in ('policy','current_batch_commit_policy'):wrong[key]['next_full_validation_after']=200
+        wrong['next_full_validation_after']=200
+        path.write_text(json.dumps(wrong), encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'User-cancelled full checks'):update(self.root)
+
     def test_implementation_maintenance_has_its_own_receipt_without_new_section(self):
         path = self.root/'DEVELOPMENT_CHECKPOINT.json'
         checkpoint = json.loads(path.read_text(encoding='utf-8'))

@@ -129,6 +129,18 @@ def validate_delivery(root, checkpoint):
     _require(cadence.get('next_full_validation_after') == next_full
              == checkpoint.get('policy', {}).get('next_full_validation_after'),
              'Active batch cadence differs from the authoritative next full validation.')
+    policy = checkpoint.get('policy', {})
+    full_mode = policy.get('full_validation_mode', 'scheduled')
+    if full_mode == 'disabled_by_user':
+        _require(next_full is None
+                 and policy.get('full_validation_interval') is None
+                 and policy.get('full_validation_anchor_section') is None
+                 and cadence.get('full_validation_interval') is None
+                 and policy.get('full_validation_restore_requires_explicit_user_request') is True,
+                 'User-cancelled full checks must have no due section or interval and require an explicit user request to resume.')
+    else:
+        _require(next_full is not None,
+                 'An absent full-check schedule needs the explicit user-cancelled policy.')
     available = checkpoint.get('current_available_full_validation')
     if available is not None:
         last = checkpoint.get('last_full_validation') or {}
@@ -192,6 +204,9 @@ def update(root=ROOT):
         'current_completed_change': change,
         'batch_status': checkpoint.get('batch_status'),
         'next_full_validation_after': checkpoint['next_full_validation_after'],
+        'full_validation_mode': checkpoint.get('policy', {}).get('full_validation_mode', 'scheduled'),
+        'full_validation_restore_requires_explicit_user_request': checkpoint.get('policy', {}).get(
+            'full_validation_restore_requires_explicit_user_request', False),
         'commit_reference': 'the commit containing this index; verify Git branch and remote before resuming',
         'latest_full_receipt': latest.relative_to(root).as_posix() if latest else None,
         'latest_full_available_checks_passed': json.loads(latest.read_text(encoding='utf-8'))['available_checks_passed'] if latest else None,
@@ -223,12 +238,15 @@ def update(root=ROOT):
         before, rest = old.split(START, 1)
         _, after = rest.split(END, 1)
         old = before + after.lstrip('\n')
+    full_notice = ('全量检查机制已取消；仅在用户明确要求后恢复。'
+                   if index['full_validation_mode'] == 'disabled_by_user'
+                   else f'下次定期全量{checkpoint["next_full_validation_after"]}。')
     block = (f'{START}\n# 当前云端续接索引 · {current_label}\n\n'
              f'实际完成的改动：{change}\n\n'
              f'[本节验收回执](verification/sections/{completed:03}.json)。\n\n'
              f'已完成至{completed}，后续{checkpoint["next_section"]}；本批状态 `{checkpoint.get("batch_status")}`。'
              f'推进终点：{index["current_batch_target_section"] if index["current_batch_target_section"] is not None else "未指定数字终点"}。'
-             f'下次定期全量{checkpoint["next_full_validation_after"]}。每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。\n\n'
+             f'{full_notice}每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。\n\n'
              '恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。'
              '当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。'
              '当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。'
