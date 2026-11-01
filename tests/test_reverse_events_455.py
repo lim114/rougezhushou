@@ -107,7 +107,8 @@ class ReverseEventTests(unittest.TestCase):
         origins.panel.stages.setCurrentIndex(origins.panel.stages.findData('ro6_t_13'))
         with patch.object(root,'prepare',return_value=False):
             self.assertFalse(origins.panel.open_battle())
-        self.assertIs(self.host.pages.currentWidget(),origins)
+        self.assertIs(self.host.pages.currentWidget(),root)
+        self.assertNotIn(origins,self.host.history)
 
     def test_changed_choice_and_missing_flow_source_remove_only_dependents(self):
         root, origins = self.origins()

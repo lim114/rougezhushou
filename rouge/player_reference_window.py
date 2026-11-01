@@ -179,6 +179,8 @@ class ReferenceWindow(PlayerDialog):
             self.linked_pages[key] = page
             def prepare():
                 if not source.prepare():
+                    if page in self.linked_pages.values():
+                        self.discard(page, fallback=source)
                     return False
                 if (context() != expected or page.panel.refresh_reference() is False
                         or (verify is not None and not verify(page.panel))):

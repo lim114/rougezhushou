@@ -22,9 +22,12 @@ class CurrentBattlePanel(QWidget):
         self.action_key = None
         self.run_config = {}
         self.enemy_forecasts = {}
+        self.tomimi_dialog = None
         layout = QVBoxLayout(self)
         header = QHBoxLayout()
         header.addWidget(QLabel('作战预览'), 1)
+        self.tomimi_button = QPushButton('Tomimi');self.tomimi_button.setToolTip('查看关卡网页');header.addWidget(self.tomimi_button)
+        self.tomimi_button.clicked.connect(self.open_tomimi)
         self.details_toggle = QCheckBox('资料说明')
         self.source_toggle = QCheckBox('原始资料')
         self.refresh_button = QPushButton('刷新资料')
@@ -250,6 +253,7 @@ class CurrentBattlePanel(QWidget):
             label.setVisible(checked)
 
     def _clear(self):
+        self._close_tomimi();self.tomimi_button.hide();self.tomimi_button.setEnabled(False)
         self._close_guest_material()
         self.guest_material_button.hide()
         self.guest_material_button.setEnabled(False)
@@ -322,11 +326,15 @@ class CurrentBattlePanel(QWidget):
             return False
         keep = self.result is not None and self.source_identity == fresh['source_identity'] and (self.result['id'] == fresh['id'])
         if not keep:
+            self._close_tomimi()
             self._close_event_origins()
             self._close_spawn_candidates()
         old_enemy = self.enemy_combo.currentData() if keep else None
         self.result = fresh
         self.source_identity = fresh['source_identity']
+        from .tomimi_reference import target
+        has_tomimi = target(fresh) is not None
+        self.tomimi_button.setVisible(has_tomimi);self.tomimi_button.setEnabled(has_tomimi)
         self._enemy_icons = {}
         for enemy in fresh['enemies']:
             picture=QPixmap();raw=model.picture_for_enemy(enemy)
@@ -692,7 +700,21 @@ class CurrentBattlePanel(QWidget):
         from .current_event_battles_view import CurrentEventBattlesDialog
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
+    def _close_tomimi(self):
+        child=self.tomimi_dialog;self.tomimi_dialog=None
+        if child is not None:child.close();child.deleteLater()
+
+    def open_tomimi(self):
+        if self.result is None:return False
+        if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
+        from .tomimi_reference import target
+        reference=target(self.result)
+        if reference is None:return False
+        from .tomimi_view import open_reference
+        return open_reference(self,reference)
+
     def _close_readers(self):
+        self._close_tomimi()
         self._close_guest_material()
         self._close_guest_crystals()
         self._close_guest_knights()

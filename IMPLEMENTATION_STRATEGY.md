@@ -192,3 +192,5 @@ Qt已有置顶及整窗输入穿透标志，但“全部穿透”会使该窗口
 [第454节](research/enemy-navigation-454/README.md)：复用现有Qt主窗承载、机制面板和固定地图，保留各自准确来源判断；文案调整只在展示层。
 
 [第455节](research/reverse-events-455/README.md)：继续成熟Qt承载与固定LGPL窗框；已有源面板直接接入，回跳只复用准确上级且先核对依赖来源。
+
+[第456节](research/tomimi-456/README.md)：直接使用已安装QtWebEngine承载成熟网站，采用独立临时浏览配置；固定事实索引定位关卡与配置，保留本地Qt资料和计算。网页复用优先于再造Svelte界面。
