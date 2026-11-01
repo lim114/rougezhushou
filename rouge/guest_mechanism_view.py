@@ -1,7 +1,7 @@
 """Existing guest-boss widgets shared by three exact source adapters."""
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtWidgets import (QWidget, QDialog, QVBoxLayout, QHBoxLayout, QLabel,
+from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QComboBox, QPushButton, QPlainTextEdit, QTabWidget)
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
@@ -121,7 +121,7 @@ class GuestMechanismPanel(QWidget):
 
     def close_owned_map(self):
         child=getattr(self,'map_dialog',None)
-        if child is not None:child.panel.clear_reference();child.close()
+        if child is not None:child.reject()
         self.map_dialog=None
 
     def open_map(self):
@@ -129,8 +129,7 @@ class GuestMechanismPanel(QWidget):
         if target is None:self.clear_reference();return False
         from .current_map_position_view import CurrentMapPositionDialog
         class OwnedMapDialog(CurrentMapPositionDialog):
-            def closeEvent(self,event):self.panel.clear_reference();super().closeEvent(event)
-            def reject(self):self.panel.clear_reference();super().reject()
+            def done(self,result):self.panel.clear_reference();super().done(result)
         self.close_owned_map();self.map_dialog=OwnedMapDialog(target['stage_id'],self)
         result=self.map_dialog.panel.result
         if result is None or result.get('current_level_key')!=self.result['level_key']:
@@ -147,14 +146,13 @@ class GuestMechanismPanel(QWidget):
 
 
 
-class GuestMechanismDialog(QDialog):
+from .battle_enemy_readers import EnemyMechanismDialog
+
+
+class GuestMechanismDialog(EnemyMechanismDialog):
     def __init__(self, stage_id, enemy_key=None, parent=None):
-        super().__init__(parent); self.setWindowTitle(self.title); self.resize(1060, 840)
+        super().__init__(parent); self.setWindowTitle(self.title)
         layout = QVBoxLayout(self); self.panel = self.panel_type(stage_id, enemy_key, self); layout.addWidget(self.panel)
-
-    def closeEvent(self,event):
-        self.panel.clear_reference();super().closeEvent(event)
-
-    def reject(self):
-        self.panel.clear_reference();super().reject()
+        from .player_map_reader import prepare_reference_window
+        prepare_reference_window(self,760,600)
 

@@ -1,7 +1,7 @@
 """Current exact enemy entry into four existing full documentary workflows."""
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtWidgets import (QWidget, QDialog, QVBoxLayout, QHBoxLayout, QLabel,
+from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QPushButton, QComboBox, QTabWidget, QPlainTextEdit)
 from . import current_boss_documents as model
 from .branch_choice import BranchChoice
@@ -45,7 +45,7 @@ class CurrentBossDocumentsPanel(QWidget):
 
     def _close_map(self):
         if self.map_dialog is not None:
-            self.map_dialog.panel.clear_reference(); self.map_dialog.close()
+            self.map_dialog.reject()
         self.map_dialog = None
 
     def _map_finished(self, child):
@@ -148,13 +148,12 @@ class CurrentBossDocumentsPanel(QWidget):
         self.clear_reference(); super().closeEvent(event)
 
 
-class CurrentBossDocumentsDialog(QDialog):
+from .battle_enemy_readers import EnemyMechanismDialog
+
+
+class CurrentBossDocumentsDialog(EnemyMechanismDialog):
     def __init__(self, stage_id, enemy_key=None, parent=None):
-        super().__init__(parent); self.setWindowTitle('本关完整机制 · 形态、循环与退场条件'); self.resize(1100, 850)
+        super().__init__(parent); self.setWindowTitle('本关完整机制 · 形态、循环与退场条件')
         layout = QVBoxLayout(self); self.panel = CurrentBossDocumentsPanel(stage_id, enemy_key, self); layout.addWidget(self.panel)
-
-    def done(self, result):
-        self.panel.clear_reference(); super().done(result)
-
-    def closeEvent(self, event):
-        self.panel.clear_reference(); super().closeEvent(event)
+        from .player_map_reader import prepare_reference_window
+        prepare_reference_window(self,760,600)

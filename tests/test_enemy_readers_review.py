@@ -83,9 +83,9 @@ class EnemyReadersReviewTests(unittest.TestCase):
  def test_invalid_child_still_clears_and_never_shows(self):
   for fixture in self.fixtures:
    name,spec,_,_=fixture;p=self.parent(fixture);view=import_module('rouge.'+spec.provider.removesuffix('_reference')+'_view')
-   child=Mock();child.panel.result=None
+   child=Mock();child.panel.result=None;child.reject.side_effect=child.panel.clear_reference
    with patch.object(view,spec.dialog,return_value=child):self.assertFalse(getattr(p,'open_'+name)())
-   child.show.assert_not_called();child.panel.clear_reference.assert_called_once();child.close.assert_called_once()
+   child.show.assert_not_called();child.panel.clear_reference.assert_called_once();child.reject.assert_called_once();child.close.assert_not_called()
 
 
 if __name__=='__main__':unittest.main()

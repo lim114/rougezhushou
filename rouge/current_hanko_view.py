@@ -1,7 +1,7 @@
 """Manual exact-entity Hanko reader with owned state and separate source text."""
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon, QPixmap
-from PySide6.QtWidgets import (QWidget, QDialog, QVBoxLayout, QHBoxLayout, QLabel,
+from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QComboBox, QPushButton, QPlainTextEdit, QTabWidget)
 from . import current_hanko as model
 from .branch_choice import BranchChoice
@@ -117,7 +117,12 @@ class CurrentHankoPanel(QWidget):
         return True
 
 
-class CurrentHankoDialog(QDialog):
+from .battle_enemy_readers import EnemyMechanismDialog
+
+
+class CurrentHankoDialog(EnemyMechanismDialog):
     def __init__(self, stage_id, enemy_key=None, parent=None):
-        super().__init__(parent); self.setWindowTitle('汉科与烟雾 · 本关准确实体和机制'); self.resize(1060, 840)
+        super().__init__(parent); self.setWindowTitle('汉科与烟雾 · 本关准确实体和机制')
         layout = QVBoxLayout(self); self.panel = CurrentHankoPanel(stage_id, enemy_key, self); layout.addWidget(self.panel)
+        from .player_map_reader import prepare_reference_window
+        prepare_reference_window(self,760,600)

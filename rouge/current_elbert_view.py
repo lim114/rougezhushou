@@ -1,7 +1,7 @@
 """Current exact Elbert/independent Firebrand reader; no game or chat operations."""
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon,QPixmap
-from PySide6.QtWidgets import (QWidget,QDialog,QVBoxLayout,QHBoxLayout,QLabel,
+from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,
                               QComboBox,QPushButton,QPlainTextEdit,QTabWidget)
 from . import current_elbert_reference as model
 from .branch_choice import BranchChoice,OVERVIEW
@@ -112,13 +112,12 @@ class CurrentElbertPanel(QWidget):
         return self.entities.select_value(target['enemy_key'])
 
 
-class CurrentElbertDialog(QDialog):
+from .battle_enemy_readers import EnemyMechanismDialog
+
+
+class CurrentElbertDialog(EnemyMechanismDialog):
     def __init__(self,stage_id,enemy_key=None,parent=None):
-        super().__init__(parent);self.setWindowTitle('埃尔伯特与火种 · 本关机制');self.resize(1080,825)
+        super().__init__(parent);self.setWindowTitle('埃尔伯特与火种 · 本关机制')
         self.panel=CurrentElbertPanel(stage_id,enemy_key,self);QVBoxLayout(self).addWidget(self.panel)
-
-    def done(self,result):
-        self.panel.clear_reference();super().done(result)
-
-    def closeEvent(self,event):
-        self.panel.clear_reference();super().closeEvent(event)
+        from .player_map_reader import prepare_reference_window
+        prepare_reference_window(self,760,600)

@@ -1,0 +1,50 @@
+test_bad_source_clears_content_and_recovery_requires_manual_selection (tests.test_current_boss_documents_view_369.CurrentBossDocumentsView369Tests.test_bad_source_clears_content_and_recovery_requires_manual_selection) ... ok
+test_dialog_rejection_clears_document_and_actual_owned_map_without_parent_refresh (tests.test_current_boss_documents_view_369.CurrentBossDocumentsView369Tests.test_dialog_rejection_clears_document_and_actual_owned_map_without_parent_refresh) ... ok
+test_direct_dialog_close_clears_document_and_actual_owned_map_contents (tests.test_current_boss_documents_view_369.CurrentBossDocumentsView369Tests.test_direct_dialog_close_clears_document_and_actual_owned_map_contents) ... ok
+test_direct_owned_map_close_or_rejection_clears_map_but_keeps_document (tests.test_current_boss_documents_view_369.CurrentBossDocumentsView369Tests.test_direct_owned_map_close_or_rejection_clears_map_but_keeps_document) ... ok
+test_foreign_map_result_after_refresh_clears_only_map_and_retains_document (tests.test_current_boss_documents_view_369.CurrentBossDocumentsView369Tests.test_foreign_map_result_after_refresh_clears_only_map_and_retains_document) ... ok
+test_owned_map_child_closed_on_source_failure_or_parent_close (tests.test_current_boss_documents_view_369.CurrentBossDocumentsView369Tests.test_owned_map_child_closed_on_source_failure_or_parent_close) ... ERROR
+test_owned_map_child_closed_on_source_failure_or_parent_close (tests.test_current_boss_documents_view_369.CurrentBossDocumentsView369Tests.test_owned_map_child_closed_on_source_failure_or_parent_close) ... ERROR
+test_related_request_emits_exact_key_without_game_or_cross_stage_action (tests.test_current_boss_documents_view_369.CurrentBossDocumentsView369Tests.test_related_request_emits_exact_key_without_game_or_cross_stage_action) ... ok
+test_same_source_refresh_keeps_enemy_branch_topic_tab_and_two_reading_positions (tests.test_current_boss_documents_view_369.CurrentBossDocumentsView369Tests.test_same_source_refresh_keeps_enemy_branch_topic_tab_and_two_reading_positions) ... ok
+
+======================================================================
+ERROR: test_owned_map_child_closed_on_source_failure_or_parent_close (tests.test_current_boss_documents_view_369.CurrentBossDocumentsView369Tests.test_owned_map_child_closed_on_source_failure_or_parent_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_current_boss_documents_view_369.py", line 64, in test_owned_map_child_closed_on_source_failure_or_parent_close
+    with patch.object(model, 'reference', return_value=None): self.panel.refresh_reference()
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\current_boss_documents_view.py", line 67, in refresh_reference
+    if fresh is None: self.clear_reference(); return False
+                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\current_boss_documents_view.py", line 56, in clear_reference
+    self._close_map(); self.result = None; self.selected_key = None; self.entry_key = None
+    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\current_boss_documents_view.py", line 48, in _close_map
+    self.map_dialog.reject()
+    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Child' object has no attribute 'reject'
+
+======================================================================
+ERROR: test_owned_map_child_closed_on_source_failure_or_parent_close (tests.test_current_boss_documents_view_369.CurrentBossDocumentsView369Tests.test_owned_map_child_closed_on_source_failure_or_parent_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_current_boss_documents_view_369.py", line 18, in tearDown
+    if hasattr(self, 'panel'): self.panel.close(); self.panel.deleteLater()
+                               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\current_boss_documents_view.py", line 148, in closeEvent
+    self.clear_reference(); super().closeEvent(event)
+    ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\current_boss_documents_view.py", line 56, in clear_reference
+    self._close_map(); self.result = None; self.selected_key = None; self.entry_key = None
+    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\李娜\Desktop\lcn\rouge\rouge\current_boss_documents_view.py", line 48, in _close_map
+    self.map_dialog.reject()
+    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: Error calling Python override of QWidget::closeEvent(): 'Child' object has no attribute 'reject'
+
+----------------------------------------------------------------------
+Ran 8 tests in 18.559s
+
+FAILED (errors=2)

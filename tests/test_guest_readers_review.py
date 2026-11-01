@@ -70,7 +70,7 @@ class GuestReadersReviewTests(unittest.TestCase):
    d=getattr(new,dialog_class)(new.model.STAGES[0]);self.addCleanup(d.close);self.assertIs(d.panel.model,new.model)
    self.assertEqual(type(d.panel).__name__,panel_class);self.assertEqual(type(d).__name__,dialog_class)
    old_dialog=getattr(self.modules[name][0],dialog_class)(new.model.STAGES[0]);self.addCleanup(old_dialog.close)
-   self.assertEqual(d.windowTitle(),old_dialog.windowTitle());self.assertEqual(d.size(),old_dialog.size())
+   self.assertEqual(d.windowTitle(),old_dialog.windowTitle());self.assertEqual((d.width(),d.height()),(760,600))
 
  def test_all_three_keep_reading_selection_on_refresh_and_clear_their_maps_on_source_loss(self):
   for name,(_,new)in self.modules.items():

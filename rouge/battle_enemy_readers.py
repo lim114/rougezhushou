@@ -2,6 +2,13 @@
 from dataclasses import dataclass
 from importlib import import_module
 from . import current_battle_reference as battle
+from .player_window_frame import PlayerDialog
+
+
+class EnemyMechanismDialog(PlayerDialog):
+    def done(self,result):
+        self.panel.clear_reference()
+        super().done(result)
 
 
 @dataclass(frozen=True)
@@ -35,8 +42,7 @@ def _available(parent, spec):
 def close_reader(parent, name):
     child = getattr(parent, name + '_dialog', None)
     if child is not None:
-        child.panel.clear_reference()
-        child.close()
+        child.reject()
 
 
 def sync_reader(parent, name, keep):

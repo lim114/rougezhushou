@@ -4,7 +4,7 @@ from copy import deepcopy
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 from unittest.mock import patch
 import unittest
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QDialog
 from rouge import current_boss_documents as model
 from rouge.current_boss_documents_view import CurrentBossDocumentsPanel, CurrentBossDocumentsDialog
 
@@ -55,15 +55,17 @@ class CurrentBossDocumentsView369Tests(unittest.TestCase):
         class ChildPanel:
             cleared = False
             def clear_reference(self): self.cleared = True
-        class Child:
+        class Child(QDialog):
             closed = False
-            def __init__(self): self.panel = ChildPanel()
-            def close(self): self.closed = True
+            def __init__(self, owner):
+                super().__init__(); self.panel = ChildPanel()
+                self.finished.connect(lambda _: owner._map_finished(self))
+                self.finished.connect(lambda _: setattr(self, 'closed', True))
         self.panel = CurrentBossDocumentsPanel('ro6_b_2', '1')
-        one = Child(); self.panel.map_dialog = one
+        one = Child(self.panel); self.addCleanup(one.deleteLater); self.panel.map_dialog = one
         with patch.object(model, 'reference', return_value=None): self.panel.refresh_reference()
         self.assertTrue(one.closed); self.assertTrue(one.panel.cleared); self.assertIsNone(self.panel.map_dialog)
-        self.panel.refresh_reference(); two = Child(); self.panel.map_dialog = two
+        self.panel.refresh_reference(); two = Child(self.panel); self.addCleanup(two.deleteLater); self.panel.map_dialog = two
         self.panel.close(); self.assertTrue(two.closed); self.assertTrue(two.panel.cleared); self.assertIsNone(self.panel.result)
 
     def test_direct_dialog_close_clears_document_and_actual_owned_map_contents(self):

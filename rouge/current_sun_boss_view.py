@@ -1,7 +1,7 @@
 """Manual form/document reading and an exact fixed-terrain child window."""
 from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import (QWidget, QDialog, QVBoxLayout, QHBoxLayout, QLabel,
+from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QComboBox, QPushButton, QTabWidget, QPlainTextEdit)
 from . import current_sun_boss as model
 from .branch_choice import BranchChoice
@@ -45,7 +45,7 @@ class CurrentSunBossPanel(QWidget):
 
     def _close_map(self):
         if self.map_dialog is not None:
-            self.map_dialog.panel.clear_reference(); self.map_dialog.close()
+            self.map_dialog.reject()
         self.map_dialog = None
 
     def _map_finished(self, child):
@@ -160,13 +160,12 @@ class CurrentSunBossPanel(QWidget):
         self.clear_reference(); super().closeEvent(event)
 
 
-class CurrentSunBossDialog(QDialog):
+from .battle_enemy_readers import EnemyMechanismDialog
+
+
+class CurrentSunBossDialog(EnemyMechanismDialog):
     def __init__(self, stage_id, enemy_key=None, parent=None):
-        super().__init__(parent); self.setWindowTitle('沉沦之人 · 形态、信仰与地形条件'); self.resize(1100, 850)
+        super().__init__(parent); self.setWindowTitle('沉沦之人 · 形态、信仰与地形条件')
         layout = QVBoxLayout(self); self.panel = CurrentSunBossPanel(stage_id, enemy_key, self); layout.addWidget(self.panel)
-
-    def done(self, result):
-        self.panel.clear_reference(); super().done(result)
-
-    def closeEvent(self, event):
-        self.panel.clear_reference(); super().closeEvent(event)
+        from .player_map_reader import prepare_reference_window
+        prepare_reference_window(self,760,600)
