@@ -1,0 +1,30 @@
+test_ancestor_return_rechecks_dependent_source (tests.test_reverse_events_455.ReverseEventTests.test_ancestor_return_rechecks_dependent_source) ... ok
+test_back_reopen_retains_reading_and_configuration_change_keeps_flow (tests.test_reverse_events_455.ReverseEventTests.test_back_reopen_retains_reading_and_configuration_change_keeps_flow) ... ok
+test_changed_choice_and_missing_flow_source_remove_only_dependents (tests.test_reverse_events_455.ReverseEventTests.test_changed_choice_and_missing_flow_source_remove_only_dependents) ... ok
+test_exact_stage_filter_and_full_encounter_share_host (tests.test_reverse_events_455.ReverseEventTests.test_exact_stage_filter_and_full_encounter_share_host) ... ERROR
+test_existing_stage_and_event_ancestors_are_reused_without_parent_cycle (tests.test_reverse_events_455.ReverseEventTests.test_existing_stage_and_event_ancestors_are_reused_without_parent_cycle) ... ok
+test_lake_choices_open_their_exact_stage_and_selected_phase (tests.test_reverse_events_455.ReverseEventTests.test_lake_choices_open_their_exact_stage_and_selected_phase) ... ERROR
+test_short_summary_full_notes_and_refresh_state (tests.test_reverse_events_455.ReverseEventTests.test_short_summary_full_notes_and_refresh_state) ... ok
+
+======================================================================
+ERROR: test_exact_stage_filter_and_full_encounter_share_host (tests.test_reverse_events_455.ReverseEventTests.test_exact_stage_filter_and_full_encounter_share_host)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_reverse_events_455.py", line 46, in test_exact_stage_filter_and_full_encounter_share_host
+    self.assertIsNone(root.panel.event_origins_dialog)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CurrentBattlePanel' object has no attribute 'event_origins_dialog'. Did you mean: 'event_origins_button'?
+
+======================================================================
+ERROR: test_lake_choices_open_their_exact_stage_and_selected_phase (tests.test_reverse_events_455.ReverseEventTests.test_lake_choices_open_their_exact_stage_and_selected_phase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\李娜\Desktop\lcn\rouge\tests\test_reverse_events_455.py", line 72, in test_lake_choices_open_their_exact_stage_and_selected_phase
+    sid = model.choice(reference,cid)['stage_ids'][0]
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+----------------------------------------------------------------------
+Ran 7 tests in 29.174s
+
+FAILED (errors=2)

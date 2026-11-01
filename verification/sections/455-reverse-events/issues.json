@@ -1,0 +1,23 @@
+{
+  "initial_failures": [
+    "reverse-01/results.json",
+    "native-final/window.json",
+    "standalone-final2/results.json"
+  ],
+  "corrections": [
+    "Shared mode intentionally does not create the standalone dialog slot; test checks absence via getattr.",
+    "Lake source rows are choice_ro6_bat5_5 and choice_ro6_bat5_9, not guessed choice_ro6_bat5_7.",
+    "Native forward case must use the real Back button; a new present() appends history and correctly disables Forward.",
+    "Window review found one-choice lists retained excessive blank area; final sources use content-sized lists and a shared refresh header.",
+    "Shorter source/flow text now fits in the old scroll test viewport. Test fixtures use the measured 360px height so both reading positions remain genuinely nonzero; original scroll/selection assertions stay intact."
+  ],
+  "fixed_source": {
+    "rouge/data/current-event-battles.json": {
+      "sha256": "dee4e4cc79c0311253ffdf4d0b8102c6647ec6b814202cad6d38666e2ad20292",
+      "bytes": 69286
+    }
+  },
+  "earlier_native49": "native-final2/window.json",
+  "final_native_receipt": "native-final4/window.json",
+  "earlier_scope_not_reclassified": true
+}

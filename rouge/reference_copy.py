@@ -30,15 +30,20 @@ SHORT_LINES = {
     '当前固定资料：国服2026年10月16日。关卡、准确敌人条目与文献来源分别核对，不按同名推及其他关卡。': '',
     '这是当前四份固定关卡的阅读入口，不表示本局已经遇到哪一份配置。': '',
     '这是独立辅助实体；本关引用不等于实际生成数量，缺少普通出场条目也不表示不会生成。': '类型：辅助实体。',
+    '请选择文献中的作战选项。这里只列具名作战链接，不是该事件的完整选项或本局可选清单；从情景进入只打开同名事件总览，不证明父子关系。': '选择事件选项，查看作战与后续。',
+    '有多份同名配置供核对，不自动指定本局会使用哪一份。': '同名作战有多份配置，可在下方选择。',
+    '同名记录指向不同关卡文件，当前没有足够依据绑定具体配置，地图入口保留未知。': '对应地图：待确认。',
+    '原表列出多个作战名称；它们是文献候选，不表示一次连续进入，也不提供概率。': '此选项关联多场作战，名称见上方列表。',
+    '先选择下方具体配置，再打开固定预览。地图页可查敌人、出怪和奖励条件；未确认的实际版本不会被自动选中。': '选择下方作战配置，可查看地图、敌人、出怪与奖励。',
 }
 
 
-def mechanism_copy(text, base_notice):
+def mechanism_copy(text, base_notice, *, extra_detail_headings=()):
     body, notes = [], []
     in_details = False
     for line in text.splitlines():
         if line.startswith('【'):
-            in_details = line in DETAIL_HEADINGS
+            in_details = line in DETAIL_HEADINGS or line in extra_detail_headings
         if in_details:
             notes.append(line)
         elif line == base_notice:

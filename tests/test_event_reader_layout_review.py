@@ -7,6 +7,7 @@ from PySide6.QtWidgets import QApplication
 from PySide6.QtTest import QTest
 from rouge.current_vine_events_view import CurrentVineEventsDialog
 from rouge.player_map_reader import readable
+from rouge.reference_copy import mechanism_copy
 from tests.test_current_vine_events_333 import by_original
 R=Path(__file__).resolve().parents[1]
 class EventReaderLayoutTests(unittest.TestCase):
@@ -30,10 +31,10 @@ class EventReaderLayoutTests(unittest.TestCase):
   p=self.dialog('沉寂之屋').panel;self.assertFalse(hasattr(p,'controller'));self.assertFalse(hasattr(p,'seeds'));self.assertFalse(p.gold.isVisible());p.conditions.expand(False);self.qt.processEvents();self.pick(p,'choice_ro6_normal1_2');p.gold.setValue(7);self.assertFalse(p.follow_scene());p.gold.setValue(8);self.assertTrue(p.follow_scene())
  def test_headings_are_bold_without_changing_plain_original_or_body(self):
   p=self.dialog().panel;self.pick(p,'choice_ro6_normal3_1');self.qt.processEvents();p.heading_highlighter.rehighlight();from rouge import current_vine_events as m
-  self.assertEqual(p.player.toPlainText(),m.player_text(p.result,p.scene_id,p.choice_id));first=p.player.document().firstBlock();formats=first.layout().formats();self.assertTrue(any(f.start==0 and f.format.fontWeight()==QFont.Weight.Bold for f in formats));self.assertEqual(p.player.toPlainText().splitlines()[0],'【正在查阅】呼吸的红苔')
+  self.assertEqual(p.player.toPlainText(),mechanism_copy(m.player_text(p.result,p.scene_id,p.choice_id),'',extra_detail_headings=('【范围与未知】',))[0]);self.assertEqual(p.reference_notes.toPlainText(),m.player_text(p.result,p.scene_id,p.choice_id));first=p.player.document().firstBlock();formats=first.layout().formats();self.assertTrue(any(f.start==0 and f.format.fontWeight()==QFont.Weight.Bold for f in formats));self.assertEqual(p.player.toPlainText().splitlines()[0],'【正在查阅】呼吸的红苔')
  def test_source_loss_clears_old_reading_and_recovery_requires_selection(self):
   p=self.dialog().panel;p.conditions.expand(False);self.pick(p,'choice_ro6_normal3_1')
-  with patch('rouge.current_vine_events.reference',return_value=None):self.assertFalse(p.refresh_reference());self.assertIsNone(p.result);self.assertEqual(p.technical.toPlainText(),'');self.assertFalse(p.next_button.isEnabled())
+  with patch('rouge.current_vine_events.reference',return_value=None):self.assertFalse(p.refresh_reference());self.assertIsNone(p.result);self.assertEqual(p.technical.toPlainText(),'');self.assertEqual(p.reference_notes.toPlainText(),'');self.assertFalse(p.reference_scope.isExpanded());self.assertFalse(p.next_button.isEnabled())
   self.assertTrue(p.refresh_reference());self.assertIsNone(p.scene_id);self.assertIsNone(p.choice_id);self.assertTrue(p.conditions.isExpanded())
  def test_no_empty_condition_panel_for_other_events(self):
   from rouge.current_encounters_view import CurrentEncountersDialog

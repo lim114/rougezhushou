@@ -4,15 +4,21 @@ from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QComboBox,QListWid
 from . import current_event_battles as model
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .collapsible_section import QCollapsible
+from .reference_copy import mechanism_copy
 
 class CurrentEventBattlesPanel(QWidget):
     def __init__(self,event_id=None,choice_id=None,stage_id=None,parent=None):
         super().__init__(parent);self.event_id=event_id;self.stage_id=stage_id;self.result=None;self.choice_id=None;self.battle_dialog=None;self.flow_dialog=None
-        layout=QVBoxLayout(self);notice=QLabel('选择事件选项，查看关联作战。');notice.setWordWrap(True);layout.addWidget(notice)
-        self.refresh_button=QPushButton('重新核对事件与作战');layout.addWidget(self.refresh_button);self.choices=QListWidget();self.choices.setMaximumHeight(180);self.choices.setAccessibleName('文献中的作战选项');layout.addWidget(self.choices)
+        layout=QVBoxLayout(self);notice=QLabel('选择事件选项，查看关联作战。');notice.setWordWrap(True)
+        header=QHBoxLayout();header.addWidget(notice,1);self.refresh_button=QPushButton('刷新资料');header.addWidget(self.refresh_button);layout.addLayout(header)
+        self.choices=QListWidget();self.choices.setMaximumHeight(180);self.choices.setAccessibleName('文献中的作战选项');layout.addWidget(self.choices)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.technical=QPlainTextEdit()
         for v in(self.player,self.technical):v.setReadOnly(True)
         self.tabs.addTab(self.player,'选项与作战');self.tabs.addTab(self.technical,'原文与依据');layout.addWidget(self.tabs,1)
+        self.scope=QCollapsible('资料说明',expandedIcon='−',collapsedIcon='+');self.scope.setDuration(0)
+        self.reference_notes=QPlainTextEdit();self.reference_notes.setReadOnly(True);self.reference_notes.setMaximumHeight(150);self.scope.addWidget(self.reference_notes)
+        self.scope.content().hide();self.scope.toggled.connect(self.scope.content().setVisible);layout.addWidget(self.scope)
         self.flow_button=QPushButton('查看这一选项的完整对话与代价');self.flow_button.hide();layout.addWidget(self.flow_button);self.flow_button.clicked.connect(self.open_full_flow)
         row=QHBoxLayout();self.stages=QComboBox();self.stages.setAccessibleName('查阅的具体作战配置');self.open_button=QPushButton('打开这份固定作战预览');row.addWidget(self.stages,1);row.addWidget(self.open_button);layout.addLayout(row)
         self.choices.currentItemChanged.connect(self._selected);self.stages.currentIndexChanged.connect(self._stage_changed);self.open_button.clicked.connect(self.open_battle);self.refresh_button.clicked.connect(self.refresh_reference);self.refresh_reference(initial_choice=choice_id)
@@ -24,7 +30,7 @@ class CurrentEventBattlesPanel(QWidget):
     def clear_reference(self):
         self._close_battle();self._close_flow();self.flow_button.hide();self.result=None;self.choice_id=None
         for v in(self.choices,self.stages):b=v.blockSignals(True);v.clear();v.blockSignals(b)
-        self.open_button.setEnabled(False);replace_text(self.player,model.UNAVAILABLE,preserve=False);replace_text(self.technical,'',preserve=False);self.tabs.setCurrentIndex(0)
+        self.open_button.setEnabled(False);replace_text(self.player,model.UNAVAILABLE,preserve=False);replace_text(self.technical,'',preserve=False);replace_text(self.reference_notes,'',preserve=False);self.scope.collapse(animate=False);self.tabs.setCurrentIndex(0)
 
     def refresh_reference(self,*_,initial_choice=None):
         fresh=model.reference(self.event_id,self.stage_id)
@@ -36,6 +42,7 @@ class CurrentEventBattlesPanel(QWidget):
             item=QListWidgetItem(c['event_id']+' · '+c['title']);item.setData(Qt.ItemDataRole.UserRole,c['id']);self.choices.addItem(item)
             if c['id']==selected:self.choices.setCurrentItem(item)
         if selected is None:self.choices.setCurrentRow(-1)
+        self.choices.setMaximumHeight(min(180,sum(self.choices.sizeHintForRow(i)for i in range(self.choices.count()))+2*self.choices.frameWidth()))
         self.choices.blockSignals(b);self._selected(self.choices.currentItem(),preserve=keep)
         if keep and self.battle_dialog is not None and self.battle_dialog.isVisible():self.battle_dialog.panel.refresh_reference()
         if keep and self.flow_dialog is not None and self.flow_dialog.isVisible():self.flow_dialog.panel.refresh_reference()
@@ -49,11 +56,13 @@ class CurrentEventBattlesPanel(QWidget):
         _,target=self._flow_target(cid)
         self.flow_button.setVisible(target is not None);self.flow_button.setEnabled(target is not None)
         if target is None:self._close_flow()
-        replace_text(self.player,model.player_text(self.result,cid),preserve=keep);replace_text(self.technical,_technical_json({'choice':c,'source':self.result['data']['source'],'identity':self.result['source_identity']})if c else'',preserve=keep)
+        full_text=model.player_text(self.result,cid)
+        replace_text(self.player,mechanism_copy(full_text,'',extra_detail_headings=('【从固定关卡反查】','【重复记载】','【仍需区分】'))[0],preserve=keep);replace_text(self.reference_notes,full_text,preserve=keep)
+        replace_text(self.technical,_technical_json({'choice':c,'source':self.result['data']['source'],'identity':self.result['source_identity']})if c else'',preserve=keep)
         b=self.stages.blockSignals(True);self.stages.clear();self.stages.addItem('选择作战配置',None)
         for row in model.stage_rows(self.result,cid):self.stages.addItem(model.stage_label(self.result,cid,row['id']),row['id'])
         self.stages.setCurrentIndex(max(0,self.stages.findData(sid)));self.stages.blockSignals(b);self.open_button.setEnabled(self.stages.currentData()is not None)
-        if not keep:self.tabs.setCurrentIndex(0)
+        if not keep:self.tabs.setCurrentIndex(0);self.scope.collapse(animate=False)
 
     def _stage_changed(self,*_):self._close_battle();self.open_button.setEnabled(self.stages.currentData()is not None)
 
@@ -90,6 +99,9 @@ class CurrentEventBattlesPanel(QWidget):
         if model.reference(self.event_id,self.stage_id)!=self.result:self.clear_reference();return False
         kind,target=self._flow_target(self.choice_id)
         if target is None:self._close_flow();self.flow_button.hide();return False
+        from .player_reference_links import open_full_event
+        opened=open_full_event(self,kind,target)
+        if opened is not None:return opened
         self._close_flow()
         if kind=='lake':
             from .current_lake_view import CurrentLakeDialog

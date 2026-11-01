@@ -7,6 +7,7 @@ from . import documented_event_flows as model
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
 from .collapsible_section import QCollapsible
+from .reference_copy import mechanism_copy
 
 
 class EventHeadingHighlighter(QSyntaxHighlighter):
@@ -35,6 +36,9 @@ class DocumentedEventFlowPanel(QWidget):
         for reader in (self.player, self.technical): reader.setReadOnly(True)
         self.heading_highlighter=EventHeadingHighlighter(self.player.document())
         self.tabs.addTab(self.player, '选项与结果'); self.tabs.addTab(self.technical, '资料与依据'); layout.addWidget(self.tabs, 1)
+        self.reference_scope=QCollapsible('资料说明',expandedIcon='−',collapsedIcon='+');self.reference_scope.setDuration(0)
+        self.reference_notes=QPlainTextEdit();self.reference_notes.setReadOnly(True);self.reference_notes.setMaximumHeight(150);self.reference_scope.addWidget(self.reference_notes)
+        self.reference_scope.content().hide();self.reference_scope.toggled.connect(self.reference_scope.content().setVisible);layout.addWidget(self.reference_scope)
         row = QHBoxLayout(); self.start_button = QPushButton('回到最初情景'); self.next_button = QPushButton('查看后续情景')
         self.battle_button = QPushButton('查看灰坑固定作战资料')
         for button in (self.start_button, self.next_button, self.battle_button): row.addWidget(button)
@@ -57,7 +61,7 @@ class DocumentedEventFlowPanel(QWidget):
             blocked = widget.blockSignals(True); widget.clear(); widget.blockSignals(blocked)
         self.scene.setEnabled(False)
         for button in (self.start_button, self.next_button, self.battle_button): button.hide(); button.setEnabled(False)
-        replace_text(self.player, self.reference_model.UNAVAILABLE, preserve=False); replace_text(self.technical, '', preserve=False); self.tabs.setCurrentIndex(0)
+        replace_text(self.player, self.reference_model.UNAVAILABLE, preserve=False); replace_text(self.technical, '', preserve=False); replace_text(self.reference_notes,'',preserve=False);self.reference_scope.collapse(animate=False);self.tabs.setCurrentIndex(0)
 
     def _fresh_reference(self):
         return self.reference_model.reference(self.event_id)
@@ -86,6 +90,7 @@ class DocumentedEventFlowPanel(QWidget):
             if title is None: title = self.result['data']['originals']['choices'][cid]['title']
             item = QListWidgetItem(model.version._plain(title)); item.setData(Qt.ItemDataRole.UserRole, cid); self.choices.addItem(item)
             if cid == selected: self.choices.setCurrentItem(item)
+        self.choices.setMaximumHeight(min(115,sum(self.choices.sizeHintForRow(i)for i in range(self.choices.count()))+2*self.choices.frameWidth()))
         self.choices.blockSignals(blocked)
         if selected is None: self.choices.setCurrentRow(-1)
         self._choice_changed(self.choices.currentItem(), preserve=keep)
@@ -97,7 +102,10 @@ class DocumentedEventFlowPanel(QWidget):
         self.choice_id = cid
         if self.result is None: return
         choice = self.reference_model.choice_reference(self.result, self.scene_id, cid)
-        replace_text(self.player, self.reference_model.player_text(self.result, self.scene_id, cid), preserve=keep)
+        full_text=self.reference_model.player_text(self.result,self.scene_id,cid)
+        replace_text(self.player,mechanism_copy(full_text,'',extra_detail_headings=('【范围与未知】',))[0],preserve=keep)
+        replace_text(self.reference_notes,full_text,preserve=keep)
+        if not keep:self.reference_scope.collapse(animate=False)
         replace_text(self.technical, _technical_json({'reference': self.result, 'scene': self.scene_id, 'choice': choice}), preserve=keep)
         self.start_button.setVisible(self.scene_id != self.result['event']['entry_scene_id']); self.start_button.setEnabled(True)
         allowed = bool(choice and choice.get('listed_condition_match') is not False)

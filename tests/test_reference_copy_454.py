@@ -28,6 +28,11 @@ class ReferenceCopyTests(unittest.TestCase):
         self.assertEqual(body, '半血条件：低于50% / 不高于50%（资料有差异）。')
         self.assertEqual(notes, line)
 
+    def test_event_scope_heading_is_opt_in_and_game_condition_stays_by_default(self):
+        text = '【仍需区分】\n生命低于50%时转入第二形态。'
+        self.assertEqual(mechanism_copy(text,'范围'),(text,''))
+        self.assertEqual(mechanism_copy(text,'范围',extra_detail_headings=('【仍需区分】',)),('',text))
+
     def browser(self):
         browser = MechanismTextBrowser()
         label = QLabel('资料范围')

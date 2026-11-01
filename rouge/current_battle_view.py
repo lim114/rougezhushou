@@ -686,6 +686,9 @@ class CurrentBattlePanel(QWidget):
         if model.stage_reference(self.stage_id)!=self.result:self._clear();return False
         from .current_event_battles import stage_has_reference
         if not stage_has_reference(self.stage_id):self._close_event_origins();self.event_origins_button.hide();return False
+        from .player_reference_links import open_event_origins
+        opened=open_event_origins(self)
+        if opened is not None:return opened
         from .current_event_battles_view import CurrentEventBattlesDialog
         self._close_event_origins();self.event_origins_dialog=CurrentEventBattlesDialog(stage_id=self.stage_id,parent=self);self.event_origins_dialog.show();return True
 
