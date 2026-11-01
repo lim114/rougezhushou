@@ -37,7 +37,7 @@ class PlayerWindowFrameReview(unittest.TestCase):
  def test_popover_has_one_same_header_no_system_title_and_original_body(self):
   d,body=self.popover();self.assertTrue(d.windowFlags()&Qt.WindowType.FramelessWindowHint);self.assertEqual(d.windowFlags()&Qt.WindowType.WindowType_Mask,Qt.WindowType.Tool);self.assertIs(d.layout().itemAt(0).widget(),d.titleBar);self.assertIs(d.layout().itemAt(1).widget(),body);self.assertIs(d.header_bar,d.titleBar.hBoxLayout);self.assertIs(d.title_label,d.titleBar.titleLabel);self.assertFalse(d.titleBar.minBtn.isVisible());self.assertFalse(d.titleBar.maxBtn.isVisible());self.assertFalse(d.titleBar.iconLabel.isVisible());self.assertTrue(d.titleBar.closeBtn.isVisible())
  def test_title_changes_and_dark_light_close_colors_follow_each_window(self):
-  for theme,color in [('light','#303139'),('dark','#ededed')]:
+  for theme,color in [('light','#ededed'),('dark','#ededed')]:
    d,_=self.popover(theme);d.setWindowTitle('新标题');self.assertEqual(d.titleBar.titleLabel.text(),'新标题');self.assertEqual(d.titleBar.closeBtn.getNormalColor().name(),color);self.assertEqual(d.titleBar.closeBtn.accessibleName(),'关闭此窗口')
  def test_show_restore_does_not_add_another_header_or_reset_choice(self):
   d=self.event();p=d.panel;p.choices.setCurrentRow(0);before=(p.scene_id,p.choice_id,p.player.toPlainText());count=d.layout().count();d.hide();d.show();self.qt.processEvents();self.assertEqual(d.layout().count(),count);self.assertEqual(sum(d.layout().itemAt(i).widget()is d.titleBar for i in range(count)),1);self.assertEqual((p.scene_id,p.choice_id,p.player.toPlainText()),before)
@@ -62,7 +62,7 @@ class PlayerWindowFrameReview(unittest.TestCase):
  def test_layout_keeps_header_close_and_reading_inside_actual_sizes(self):
   d=self.event()
   for size in[(760,600),(900,650),(1000,720)]:
-   d.resize(*size);self.qt.processEvents();self.assertEqual((d.width(),d.height()),size);self.assertTrue(d.rect().contains(d.titleBar.geometry()));self.assertTrue(d.titleBar.rect().contains(d.titleBar.closeBtn.geometry()));self.assertLess(d.titleBar.geometry().bottom(),d.panel.geometry().top());self.assertGreater(d.panel.player.height(),80)
+   d.resize(*size);self.qt.processEvents();self.assertEqual((d.width(),d.height()),size);self.assertTrue(d.rect().contains(d.titleBar.geometry()));self.assertTrue(d.rect().contains(d.titleBar.closeBtn.geometry()));self.assertGreater(d.titleBar.closeBtn.x(),d.titleBar.geometry().right());self.assertLess(d.titleBar.geometry().bottom(),d.panel.geometry().top());self.assertGreater(d.panel.player.height(),80)
  def test_seven_families_and_direct_battle_share_actual_external_frame(self):
   from rouge.current_encounters_view import CurrentEncountersDialog
   from rouge.current_resource_events_view import CurrentResourceEventsDialog
@@ -88,7 +88,7 @@ class PlayerWindowFrameReview(unittest.TestCase):
   for name in ['收藏品 123','道具 5','零件箱 17/17','商店记录']:nav.addTab(name)
   res=ResourceStrip({},dark=True,leading=(nav,QPushButton('干员 49')));d.title_label.hide();d.header_bar.insertWidget(0,res,1)
   for width in [480,640,900,1200]:
-   d.resize(width,540);QTest.qWait(20);self.qt.processEvents();self.assertGreaterEqual(res.height(),res.flow.heightForWidth(res.width()));self.assertTrue(d.rect().contains(d.titleBar.geometry()));self.assertTrue(d.titleBar.rect().contains(d.titleBar.closeBtn.geometry()));self.assertEqual(nav.count(),4)
+   d.resize(width,540);QTest.qWait(20);self.qt.processEvents();self.assertGreaterEqual(res.height(),res.flow.heightForWidth(res.width()));self.assertTrue(d.rect().contains(d.titleBar.geometry()));self.assertTrue(d.rect().contains(d.titleBar.closeBtn.geometry()));self.assertGreater(d.titleBar.closeBtn.x(),d.titleBar.geometry().right());self.assertEqual(nav.count(),4)
  def test_pin_flag_changes_keep_native_resizing_style(self):
   if sys.platform!='win32':self.skipTest('Actual Win32 style only.')
   import win32gui,win32con

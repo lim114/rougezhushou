@@ -6,6 +6,7 @@ Only owned opaque readers use this; the transparent toolbar/game overlay does no
 from functools import lru_cache
 from pathlib import Path
 import json
+from PySide6.QtCore import Qt
 from PySide6.QtGui import QPalette,QColor,QFont
 
 DATA=Path(__file__).with_name('data')/'player-theme'
@@ -32,6 +33,9 @@ QLabel#popoverTitle{{background:transparent;font-weight:500;}}
 
 def apply_theme(widget,theme='light',*,extra=''):
     sheet,palette=assets(theme)
-    widget.setProperty('playerTheme',theme);widget.setPalette(QPalette(palette));widget.setFont(QFont('Microsoft YaHei UI',9));widget.setStyleSheet(sheet+extra)
     from .player_window_frame import PlayerDialog
-    if isinstance(widget,PlayerDialog):widget.set_frame_theme(theme)
+    widget.setProperty('playerTheme',theme);widget.setPalette(QPalette(palette));widget.setFont(QFont('Microsoft YaHei UI',9));widget.setStyleSheet(sheet+extra)
+    if isinstance(widget,PlayerDialog):
+        widget.set_frame_theme(theme)
+        # PlayerDialog draws this same style only over its actual panel rectangle.
+        widget.setAttribute(Qt.WidgetAttribute.WA_StyledBackground,False)

@@ -1,0 +1,44 @@
+{
+  "actual_external_reuse": {
+    "project": "PyQt-Frameless-Window PySide6 branch",
+    "commit": "fc00919f4915c91a2b6320a8ae7eb1d977ca4f57",
+    "version": "0.8.2",
+    "license": "LGPL-3.0",
+    "url": "https://github.com/zhiyiYo/PyQt-Frameless-Window/tree/fc00919f4915c91a2b6320a8ae7eb1d977ca4f57",
+    "scope": "Same existing original CloseButton/SVG, same titlebar/native frame implementation; no vendor file changed this batch. Local outside placement, circle mask, transparent body geometry and visible right-edge adaptation only.",
+    "new_external_project_adoption_this_batch": false
+  },
+  "candidate_inspected_not_adopted": {
+    "project": "gmarull/qtmodern",
+    "commit": "734a3f3be92e2cba8de42e602aa5a8b8b7a4ae34",
+    "url": "https://github.com/gmarull/qtmodern/tree/734a3f3be92e2cba8de42e602aa5a8b8b7a4ae34",
+    "license": "MIT",
+    "files_read": {
+      "README.rst": {
+        "sha256": "8cc8cc886ba57871ecc558728e748b236dc399541cf9567c0926aea19180af26",
+        "bytes": 1351
+      },
+      "LICENSE": {
+        "sha256": "34d8bc940697d73c111b52d5c69515151262c462a58e9cc4ef8c46eb2d88d8ee",
+        "bytes": 1124
+      },
+      "qtmodern/windows.py": {
+        "sha256": "8d7c9dfc39f83ae37ae177df8102609947e7b41c28a57f4cb257615c735f6f2b",
+        "bytes": 9332
+      },
+      "setup.py": {
+        "sha256": "c873345448ebcaaf6db72408991acb104a1f34d007d6c770b8e5b8153798ec7e",
+        "bytes": 899
+      }
+    },
+    "facts": "README uses QtPy and wrapper ModernWindow; constructor embeds supplied widget, sets WA_DeleteOnClose and destroyed child closes wrapper. setup.py declares Development Status Alpha.",
+    "decision": "A second wrapper and changed destruction semantics add integration work without providing video outside circle or solving existing Windows resize. Do not replace already integrated LGPL frame for this gap. No install or code copied."
+  },
+  "official_Qt_rules": [
+    "https://doc.qt.io/qt-6/qtwidgets-widgets-shapedclock-example.html",
+    "https://doc.qt.io/qtforpython-6.11/overviews/qtwidgets-stylesheet-reference.html",
+    "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QWidget.html"
+  ],
+  "style_adaptation": "Use Qt documented QStyleOption/initFrom/PE_Widget to paint original scoped QSS over actual panel rectangle; WA_StyledBackground disabled for automatic full-window fill. No CSS parsing, duplicate theme palette or per-window button clones. Original scoped dark/charcoal/light styles remain.",
+  "REA_scope": "Skill routing read; complete ordinary Python repository available. No REA tool call, decompilation or full-program completion claim."
+}

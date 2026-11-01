@@ -54,9 +54,10 @@ def check_presentation(window,gui,require):
     require(viewer is not None and viewer.isVisible(),'card447_real_button_opens_independent_large_card_view')
     from PySide6.QtWidgets import QAbstractButton
     close=viewer.findChild(QAbstractButton,'popoverCloseButton');require(close is not None,'card447_actual_close_control_exists')
+    require(viewer.rect().contains(close.geometry())and close.width()==close.height()==viewer.CLOSE_SIZE,'card447_outer_circle_fully_fits_native_client_at_shared_size')
     from PySide6.QtGui import QColor
     luminance=[]
-    for color in(close.getNormalColor(),QColor('#1e1e20')):
+    for color in(close.getNormalColor(),close.getNormalBackgroundColor()):
         rgb=[v/12.92 if v<=.04045 else((v+.055)/1.055)**2.4 for v in(color.redF(),color.greenF(),color.blueF())]
         luminance.append(sum(a*b for a,b in zip(rgb,(.2126,.7152,.0722))))
     contrast=(max(luminance)+.05)/(min(luminance)+.05)
