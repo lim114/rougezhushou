@@ -1,15 +1,16 @@
 """Lake-stage reader; separate result buttons never select a real random result."""
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QPushButton
+from PySide6.QtWidgets import QVBoxLayout,QPushButton
 from .documented_event_flow_view import DocumentedEventFlowPanel
 from .ui_state import replace_text
+from .flow_layout import FlowLayout
 from . import current_lake as model
 
 class CurrentLakePanel(DocumentedEventFlowPanel):
     def __init__(self,target=None,parent=None):
         self.requested_choice=target.get('choice_id')if target else None
         super().__init__('lake',target.get('scene_id')if target else None,parent,reference_model=model)
-        row=QHBoxLayout();self.outcome_buttons=[QPushButton(),QPushButton()]
+        row=FlowLayout();self.outcome_buttons=[QPushButton(),QPushButton()]
         for button in self.outcome_buttons:row.addWidget(button);button.clicked.connect(lambda _=False,b=button:self.open_documented_outcome(b.property('sceneId')))
         self.layout().insertLayout(3,row)
         if target and target['phase_needed']:
@@ -61,7 +62,12 @@ class CurrentLakePanel(DocumentedEventFlowPanel):
         from .current_event_battles_view import CurrentEventBattlesDialog
         self._close_battle();self.battle_dialog=CurrentEventBattlesDialog(target['event_id'],target['choice_id'],parent=self);self.battle_dialog.show();return True
 
-class CurrentLakeDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentLakeDialog(PlayerDialog):
     def __init__(self,target=None,parent=None):
-        super().__init__(parent);self.setWindowTitle('湖中仙女 · 阶段、投入与两种结果');self.resize(1100,820);layout=QVBoxLayout(self);self.panel=CurrentLakePanel(target,self);layout.addWidget(self.panel)
+        super().__init__(parent);self.setWindowTitle('湖中仙女 · 阶段、投入与两种结果');layout=QVBoxLayout(self);self.panel=CurrentLakePanel(target,self);layout.addWidget(self.panel)
+        from .documented_event_flow_view import prepare_event_dialog
+        prepare_event_dialog(self)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

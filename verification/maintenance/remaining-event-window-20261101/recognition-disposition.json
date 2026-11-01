@@ -1,0 +1,29 @@
+{
+  "trial": {
+    "receipt": "verification/maintenance/remaining-event-window-20261101/relic-thread-trial/results.json",
+    "sha256": "2730cd4e42d3f1bda9b21366d968e07f0f3a95f856fa840a54c91335359e3c4b",
+    "bytes": 4493
+  },
+  "opencv_version": "4.14.0",
+  "original_threads": 18,
+  "timings": [
+    {
+      "public_second": 44,
+      "median_ms": {
+        "1": 1410.0848999805748,
+        "18": 1403.9662000723183
+      }
+    },
+    {
+      "public_second": 60,
+      "median_ms": {
+        "1": 448.831400135532,
+        "18": 452.3285001050681
+      }
+    }
+  ],
+  "adopted": false,
+  "reason": "Default versus1 thread medians differ by less than1percent,with opposite preferred direction on the two public inputs. No stable gain demonstrated. Official setNumThreads is not thread-safe and controls subsequent regions,so never toggle it inside production matching callbacks. Existing runtime settings unchanged.",
+  "baseline_parity_is_independent_accuracy": false,
+  "scope": "Complete held-bar matcher only; no whole pipeline/realtime/weak-hardware claim. Prior OCR thread trials covered engine work,not this matcher. Prior failed numeric fast-path direction remains deferred."
+}

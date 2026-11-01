@@ -163,3 +163,5 @@ Qt已有置顶及整窗输入穿透标志，但“全部穿透”会使该窗口
 [机制阅读与识别核查](research/mechanism-focus-20261101/README.md)Qt原生显隐保留数据；先复用既有MaaFramework调查，实际RapidOCR参数实验和模板频率不满足直接替换/新增缓存依据，拒绝以新增依赖冒充优化。测试窗更新，桌面像素和真实游戏缺口仍在。
 
 [作战紧凑窗口与数字识别对照](research/compact-battle-window-20261101/README.md)：成熟Qt原生尺寸/视口方案复用既有窗框；RapidOCR现成接口实际试验两种裁切均漏读，不引入无效生产快速路径。实际测试窗更新，桌面像素/游戏缺口保留。
+
+[事件紧凑窗与原生交互](research/remaining-event-window-20261101/README.md)：继续扩展已采用的Qt官方BSD换行、superqt BSD折叠与LGPL窗框，而非重装或新增框架；OpenCV线程实测无稳定收益，保留当前生产设置。当前四图/交互分别核对，不作全片一致声明。

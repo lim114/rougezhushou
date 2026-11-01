@@ -1,6 +1,6 @@
 """Sand-event reader with optional, explicitly local condition comparison."""
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QGridLayout,QHBoxLayout,QGroupBox,QLabel,QComboBox,QSpinBox,QPushButton
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QFormLayout,QHBoxLayout,QComboBox,QSpinBox,QPushButton,QScrollArea
 from .documented_event_flow_view import DocumentedEventFlowPanel
 from . import current_sand_reference as model
 
@@ -8,14 +8,15 @@ class CurrentSandPanel(DocumentedEventFlowPanel):
     def __init__(self,event_id='informer',scene_id=None,choice_id=None,parent=None):
         self.related_dialog=None;self.controls={}
         super().__init__(event_id,scene_id,parent,reference_model=model)
-        group=QGroupBox('可选条件对照 · 只用于本页，不改本局记录');grid=QGridLayout(group)
+        group=QWidget();form=QFormLayout(group);form.setRowWrapPolicy(QFormLayout.RowWrapPolicy.WrapLongRows)
         definitions=[('scope','查看范围',[('当前条件','current'),('历史资料','history')]),('floor','层数',[('未知',None)]+[(str(n),n)for n in range(1,7)]),('node_type','节点',[('未知','unknown'),('不期而遇','不期而遇'),('命运所指','命运所指'),('其它','other')]),('cleared_reboot','强制重启是否已通关',None),('has_alpha','持有沙盘α',None),('has_beta','持有沙盘β',None),('target_marked','窥视箱中已标记',None)]
-        for i,(key,label,values)in enumerate(definitions):
+        for key,label,values in definitions:
             control=QComboBox();control.setAccessibleName('本页对照：'+label)
             for text,value in values or[('未确认',None),('是',True),('否',False)]:control.addItem(text,value)
-            self.controls[key]=control;row,col=divmod(i,3);grid.addWidget(QLabel(label),row,col*2);grid.addWidget(control,row,col*2+1);control.currentIndexChanged.connect(self._context_changed)
-        self.gold=QSpinBox();self.gold.setRange(-1,99999);self.gold.setSpecialValueText('未知');self.gold.setValue(-1);self.gold.setAccessibleName('本页对照：源石锭');grid.addWidget(QLabel('源石锭'),2,2);grid.addWidget(self.gold,2,3);self.gold.valueChanged.connect(self._context_changed)
-        self.layout().insertWidget(1,group);self.related_button=QPushButton('查看窥视箱中：条件与相关作战');self.layout().insertWidget(4,self.related_button);self.related_button.clicked.connect(self.open_related)
+            self.controls[key]=control;form.addRow(label,control);control.currentIndexChanged.connect(self._context_changed)
+        self.gold=QSpinBox();self.gold.setRange(-1,99999);self.gold.setSpecialValueText('未知');self.gold.setValue(-1);self.gold.setAccessibleName('本页对照：源石锭');form.addRow('源石锭',self.gold);self.gold.valueChanged.connect(self._context_changed)
+        self.condition_scroll=QScrollArea();self.condition_scroll.setWidgetResizable(True);self.condition_scroll.setFrameShape(QScrollArea.Shape.NoFrame);self.condition_scroll.setMaximumHeight(150);self.condition_scroll.setWidget(group);row=QHBoxLayout();row.addWidget(self.condition_scroll);self.add_condition_row(row)
+        self.related_button=QPushButton('查看窥视箱中：条件与相关作战');self.layout().insertWidget(4,self.related_button);self.related_button.clicked.connect(self.open_related)
         if choice_id:
             for i in range(self.choices.count()):
                 if self.choices.item(i).data(Qt.ItemDataRole.UserRole)==choice_id:self.choices.setCurrentRow(i);break
@@ -54,12 +55,18 @@ class CurrentSandPanel(DocumentedEventFlowPanel):
         target=locate('scenes','scene_ro6_end2_enter')
         if target is None:self._close_related();return False
         from .box_event_view import BoxEventDialog
-        self._close_related();self.related_dialog=BoxEventDialog(target['scene_id'],None,self);self.related_dialog.show();return True
+        from .player_map_reader import readable
+        self._close_related();self.related_dialog=readable(BoxEventDialog(target['scene_id'],None,self));self.related_dialog.show();return True
 
     def closeEvent(self,event):self._close_related();super().closeEvent(event)
 
-class CurrentSandDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentSandDialog(PlayerDialog):
     def __init__(self,event_id='informer',scene_id=None,choice_id=None,parent=None):
-        super().__init__(parent);self.setWindowTitle('线人 · 沙盘与奖励'if event_id=='informer'else'好奇心与死 · 标记、奖励与条件');self.resize(1100,860)
+        super().__init__(parent);self.setWindowTitle('线人 · 沙盘与奖励'if event_id=='informer'else'好奇心与死 · 标记、奖励与条件')
         layout=QVBoxLayout(self);self.panel=CurrentSandPanel(event_id,scene_id,choice_id,self);layout.addWidget(self.panel)
+        from .documented_event_flow_view import prepare_event_dialog
+        prepare_event_dialog(self)
     def closeEvent(self,event):self.panel._close_related();self.panel._close_battle();super().closeEvent(event)

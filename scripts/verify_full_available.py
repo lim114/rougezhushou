@@ -654,5 +654,7 @@ ADDITIONAL_MODULES += ('tests.test_mechanism_focus_review',)
 
 ADDITIONAL_MODULES += ('tests.test_compact_battle_window_review',)
 
+ADDITIONAL_MODULES += ('tests.test_remaining_event_window_review',)
+
 if __name__ == '__main__':
     sys.exit(main())

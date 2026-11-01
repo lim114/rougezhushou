@@ -1,14 +1,15 @@
 """Owned ritual, source-event and static-battle readers."""
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QPushButton
+from PySide6.QtWidgets import QVBoxLayout,QPushButton
 from .documented_event_flow_view import DocumentedEventFlowPanel
 from . import current_ritual_reference as model
+from .flow_layout import FlowLayout
 
 class CurrentRitualPanel(DocumentedEventFlowPanel):
     def __init__(self,event_id='ritual',scene_id=None,choice_id=None,parent=None):
         self.material_dialog=None
         super().__init__(event_id,scene_id,parent,reference_model=model)
-        row=QHBoxLayout();self.material_button=QPushButton('查看这件材料的来源');self.related_button=QPushButton('查看相关首领：畸症（未套用削弱）')
+        row=FlowLayout();self.material_button=QPushButton('查看这件材料的来源');self.related_button=QPushButton('查看相关首领：畸症（未套用削弱）')
         row.addWidget(self.material_button);row.addWidget(self.related_button);self.layout().insertLayout(3,row)
         self.material_button.clicked.connect(self.open_material);self.related_button.clicked.connect(self.open_related)
         if choice_id:
@@ -70,9 +71,14 @@ class CurrentRitualPanel(DocumentedEventFlowPanel):
     def closeEvent(self,event):
         self._close_material();super().closeEvent(event)
 
-class CurrentRitualDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentRitualDialog(PlayerDialog):
     def __init__(self,event_id='ritual',scene_id=None,choice_id=None,parent=None):
-        super().__init__(parent);self.setWindowTitle('调谐仪式 · 选项、削弱与材料来源'if event_id=='ritual'else'泪之聚落 · 选项与获得');self.resize(1050,810)
+        super().__init__(parent);self.setWindowTitle('调谐仪式 · 选项、削弱与材料来源'if event_id=='ritual'else'泪之聚落 · 选项与获得')
         layout=QVBoxLayout(self);self.panel=CurrentRitualPanel(event_id,scene_id,choice_id,self);layout.addWidget(self.panel)
+        from .documented_event_flow_view import prepare_event_dialog
+        prepare_event_dialog(self)
     def closeEvent(self,event):
         self.panel._close_material();self.panel._close_battle();super().closeEvent(event)

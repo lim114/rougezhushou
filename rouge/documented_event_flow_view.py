@@ -139,6 +139,13 @@ class DocumentedEventFlowPanel(QWidget):
 from .player_window_frame import PlayerDialog
 
 
+def prepare_event_dialog(dialog):
+    from .player_map_reader import readable
+    readable(dialog);area=dialog.screen().availableGeometry()
+    for button in dialog.findChildren(QPushButton):button.setAutoDefault(False)
+    dialog.resize(min(760,area.width()-40),min(600,area.height()-40))
+
+
 class DocumentedEventFlowDialog(PlayerDialog):
     def __init__(self, event_id, scene_id=None, parent=None):
         super().__init__(parent); self.setWindowTitle('事件选项、奖励与后续'); self.resize(1050, 810)
