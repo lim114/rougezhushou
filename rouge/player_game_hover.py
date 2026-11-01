@@ -106,6 +106,7 @@ class GameHover(QObject):
         panel=self.owner.inventory_panel;panel.reload_sources()
         if self.card is None:
             self.card=ItemHoverCard(self.companion)
+            self.card.setProperty('playerVisibility','ephemeral')
             self.card.poolRequested.connect(lambda version,identity:self.companion.open_owner_dialog(lambda:self.owner.open_public_pool_reference(version,identity),'public_archive'))
         row={'id':item['id'],'name':record['name'],'icon':record.get('iconId')}
         if not self.card.install(row,panel.version.currentData(),panel.source_index,panel.source_signature):return

@@ -222,7 +222,8 @@ class ReplayPanel(QWidget):
         self.scene_binding=(self.sessions.currentData(),index,repr(context));self.scene_popup.show();return True
 
     def hideEvent(self,event):
-        self.close_scene();super().hideEvent(event)
+        if not self.window().property('playerSuspended'):self.close_scene()
+        super().hideEvent(event)
 
     def closeEvent(self,event):
         self.close_scene();super().closeEvent(event)

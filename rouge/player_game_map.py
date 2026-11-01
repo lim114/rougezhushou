@@ -41,6 +41,7 @@ class OverlaySurface(QWidget):
     def __init__(self,parent):
         flags=Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint|Qt.WindowType.WindowStaysOnTopHint|Qt.WindowType.WindowTransparentForInput|Qt.WindowType.WindowDoesNotAcceptFocus
         super().__init__(parent,flags);self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground);self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating);self.data=None;self.kind=None;self.frequencies=None;self.setWindowTitle('地图只读标注')
+        self.setProperty('playerVisibility','ephemeral')
     def paintEvent(self,event):
         if not self.data:return
         from .player_map_reference import overlay_rows
@@ -102,6 +103,7 @@ class GameMapOverlay(QObject):
             self.view=PreviewMapView();self.view.historical=False
             if self.statistics_source is not None:self.view.frequencies=self.statistics_source.index
             self.card=NodeHoverCard(self.companion);self.card.setWindowFlag(Qt.WindowType.WindowDoesNotAcceptFocus,True);self.card.entryRequested.connect(self.open_entry)
+            self.card.setProperty('playerVisibility','ephemeral')
         if not self.card.install(key,graph,identity,self.owner.run.state.get('config',{}),self.view):return
         area=data['rect'].intersected(snapshot['screen'].availableGeometry())
         if area.width()<self.card.minimumSizeHint().width()or area.height()<self.card.minimumSizeHint().height():self.clear_hover();return

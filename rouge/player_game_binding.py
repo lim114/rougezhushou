@@ -1,8 +1,9 @@
 """Read-only native window identity/geometry and non-activating companion following."""
 import ctypes,time
 from contextlib import contextmanager
-from PySide6.QtCore import QObject,QTimer,QPoint,QRect,Qt
-from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QObject,QTimer,QPoint,QRect,Qt,QEvent
+from PySide6.QtWidgets import QApplication,QDialog
+from shiboken6 import isValid
 
 @contextmanager
 def physical_pixels():
@@ -39,12 +40,22 @@ class BindingApi:
 def clamp_window(widget,area):
     widget.move(max(area.left(),min(widget.x(),area.right()-widget.width()+1)),max(area.top(),min(widget.y(),area.bottom()-widget.height()+1)))
 
+def retained_window(widget):
+    role=widget.property('playerVisibility')
+    return role!='ephemeral'and(role!='hover'or widget.pinned)
+
+def parent_chain(widget):
+    chain=[]
+    while widget is not None:chain.append(widget);widget=widget.parentWidget()
+    return chain
+
 class GameWindowBinding(QObject):
     def __init__(self,companion,owner,api=None):
         super().__init__(companion);self.companion=companion;self.owner=owner;self.api=api or BindingApi()
         self.enabled=True;self.snapshot=None;self.previous=None;self.suspended=[];self.ever_bound=False
         self._targets=[];self._next_discovery=0.;self.status='尚未找到游戏；可先独立查阅。'
         self.timer=QTimer(self);self.timer.setInterval(250);self.timer.timeout.connect(self.tick);self.timer.start()
+        QApplication.instance().installEventFilter(self)
     def target(self):
         selected=getattr(self.owner.capture,'target',None)
         if selected is not None:return selected
@@ -54,34 +65,55 @@ class GameWindowBinding(QObject):
         return self._targets[0]if len(self._targets)==1 else None
     def surfaces(self):
         c=self.companion
-        values=[c]+[getattr(c,name,None)for name in ('active_popup','inventory_popup','map_popup','overview_popup','settings_popup','recent_notes_popup','scene_popup','team_popup','exchange_popup','replay_popup','note_library')]
-        values+=[getattr(self.owner,name,None)for name in ('player_notes','public_archive','public_statistics')]
-        if c.replay_popup is not None:values.append(c.replay_popup.panel.statistics.card_controls.viewer)
-        return list(dict.fromkeys(w for w in values if w is not None))
+        roots=[c,c.active_popup,self.owner.player_notes,self.owner.public_archive,self.owner.public_statistics];found=[]
+        for widget in QApplication.topLevelWidgets():
+            if not isinstance(widget,QDialog):continue
+            chain=parent_chain(widget)
+            if any(root in chain for root in roots):found.append((len(chain),widget))
+        return [widget for _,widget in sorted(found,key=lambda row:row[0])]
+    def eventFilter(self,widget,event):
+        if event.type()==QEvent.Type.Close and(widget in self.suspended or widget in(self.companion.hidden_windows or[])):
+            # Dispatch the original virtual close handler once, including an
+            # ignored close from an editor with unsaved changes.
+            widget.closeEvent(event)
+            if event.isAccepted():
+                closed={w for w in set(self.suspended).union(self.companion.hidden_windows or[])if not isValid(w)or widget in parent_chain(w)}
+                for w in closed:
+                    if isValid(w):w.setProperty('playerSuspended',False)
+                self.suspended=[w for w in self.suspended if w not in closed]
+                if self.companion.hidden_windows is not None:self.companion.hidden_windows=[w for w in self.companion.hidden_windows if w not in closed]
+            return True
+        return False
     def set_enabled(self,value):
         self.enabled=bool(value);self.previous=None
-        if not value:self.restore();self.status='已暂停跟随游戏，窗口可自由移动。'
-        else:self.tick()
+        self.tick()
     def restore(self):
-        for w in self.suspended:
-            try:w.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating);w.show()
-            except RuntimeError:pass
-        self.suspended=[]
+        while self.suspended:
+            w=self.suspended.pop(0)
+            if isValid(w):
+                if retained_window(w):w.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating);w.show()
+                w.setProperty('playerSuspended',False)
     def apply(self,snapshot):
         self.snapshot=snapshot
-        if not self.enabled:return
-        if getattr(self.companion,'hidden_windows',None)is not None:return
-        if snapshot is None or not snapshot['active']:
-            if self.ever_bound:
-                for w in self.surfaces():
-                    if w.isVisible():
-                        if w not in self.suspended:self.suspended.append(w)
-                        w.hide()
-                self.status='游戏不可见或绑定失效；玩家小窗已隐藏，记录保留。'
-            self.previous=None;return
-        self.ever_bound=True;current=snapshot['logical_client'];area=snapshot['screen'].availableGeometry();c=self.companion
+        if self.enabled and snapshot is not None and snapshot['active']:self.ever_bound=True
+        if QApplication.activeModalWidget()is not None:
+            self.status='当前对话框操作结束后继续更新窗口跟随。';return
+        unavailable=self.enabled and self.ever_bound and(snapshot is None or not snapshot['active'])
+        if self.companion.hidden_windows is not None or unavailable:
+            live=[w for w in self.surfaces()if w.isVisible()]
+            self.suspended.extend(w for w in live if retained_window(w)and w not in self.suspended)
+            for w in live:w.setProperty('playerSuspended',True)
+            for w in live:
+                w.hide()
+                if not retained_window(w):w.setProperty('playerSuspended',False)
+            if unavailable:self.status='游戏不可见或绑定失效；玩家小窗已隐藏，记录保留。'
+            return
+        if not self.enabled:
+            self.restore();self.status='已暂停跟随游戏，窗口可自由移动。';return
+        if snapshot is None or not snapshot['active']:self.restore();return
+        current=snapshot['logical_client'];area=snapshot['screen'].availableGeometry();c=self.companion
         same=self.previous is not None and self.previous['key']==snapshot['key']
-        visible=[w for w in self.surfaces()if w.isVisible()or w in self.suspended]
+        visible=[w for w in self.surfaces()if retained_window(w)and(w.isVisible()or w in self.suspended)]
         if not same:
             c._dock_positioned=True;c._move_dock(QPoint(current.right()-c.width()-12,current.bottom()-c.height()-10))
         elif current!=self.previous['logical_client']:
@@ -97,4 +129,4 @@ class GameWindowBinding(QObject):
         self.apply(self.api.read(self.target()))
         label=getattr(self.companion,'binding_status',None)
         if label is not None:label.setText(self.status)
-    def close(self):self.timer.stop();self.suspended=[];self.snapshot=None
+    def close(self):self.timer.stop();QApplication.instance().removeEventFilter(self);self.suspended=[];self.snapshot=None

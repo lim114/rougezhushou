@@ -1,0 +1,40 @@
+{
+  "base_commit": "79009b919b7084c48141145a36db0eb046837561",
+  "external_evaluation": {
+    "candidate": "PyWinCtl",
+    "repository": "https://github.com/Kalmat/PyWinCtl",
+    "license": "BSD-3-Clause, inspected not redistributed",
+    "inspected": [
+      "official README and Windows implementation getAllWindows",
+      "official documentation and LICENSE.txt"
+    ],
+    "urls": [
+      "https://github.com/Kalmat/PyWinCtl/blob/master/README.md",
+      "https://github.com/Kalmat/PyWinCtl/blob/master/src/pywinctl/_pywinctl_win.py",
+      "https://raw.githubusercontent.com/Kalmat/PyWinCtl/master/LICENSE.txt",
+      "https://pywinctl.readthedocs.io/en/stable/docstrings.html"
+    ],
+    "pinned_adopted_commit": null,
+    "why_not_adopted": "OS-level HWND objects cannot replace Qt parent ownership, hidden-QDialog close acceptance or source refresh lifecycle. Replacing the readonly geometry adapter would add integration without solving the observed defects.",
+    "package_installed_or_product_code_copied": false
+  },
+  "authoritative_Qt_source": {
+    "version": "v6.11.2",
+    "urls": [
+      "https://raw.githubusercontent.com/qt/qtbase/v6.11.2/src/widgets/kernel/qwidget.cpp",
+      "https://raw.githubusercontent.com/qt/qtbase/v6.11.2/src/widgets/dialogs/qdialog.cpp",
+      "https://doc.qt.io/QT-6/qapplication.html",
+      "https://doc.qt.io/QT-6/application-windows.html"
+    ],
+    "actual_source_facts": [
+      "QWidget dispatches Close to virtual closeEvent once.",
+      "Hidden QDialog accepts Close directly, so finished signal alone does not observe all hidden accepted closes.",
+      "Top-level QWidget can still have a parent; ownership is followed with parentWidget chain."
+    ],
+    "runtime_package_upgraded": false
+  },
+  "reuse_scope": "Existing externally adopted PyQtDarkTheme, superqt QCollapsible and Qt BSD Flow remain. Qt API bridge changes this batch are not a new external project adoption.",
+  "MaaFramework": "Existing LGPL3 candidate b176dd8883c19fa1a46e1aa3cb553b0808176347 / isolated5.14.3 reviewed, not newly integrated or benchmarked this turn. Full multi-page/equal-field/continuous-input evidence still needed.",
+  "whole_program_or_video_complete": false,
+  "no_new_mechanism_or_speed_claim": true
+}

@@ -148,4 +148,5 @@ class ShopMemoryPanel(QWidget):
         area=self.screen().availableGeometry();point=self.mapToGlobal(self.rect().topLeft())
         self.source_card.move(max(area.left(),min(point.x(),area.right()-self.source_card.width()+1)),max(area.top(),min(point.y(),area.bottom()-self.source_card.height()+1)))
     def hideEvent(self,event):
-        self.source_card.dismiss();super().hideEvent(event)
+        if not self.window().property('playerSuspended'):self.source_card.dismiss()
+        super().hideEvent(event)

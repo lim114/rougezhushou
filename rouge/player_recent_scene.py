@@ -124,8 +124,5 @@ class RecentScenePanel(SceneBattlePanel):
         content=note_for('scenes',target['scene_id'])if target else None
         if content is not None:self.noteRequested.emit(deepcopy(content))
 
-    def hideEvent(self,event):
-        self._close_event();super().hideEvent(event)
-
-    def closeEvent(self,event):
-        self._close_event();super().closeEvent(event)
+    def _close_readers(self):
+        self._close_event();super()._close_readers()

@@ -1,0 +1,50 @@
+{
+  "actual_before_source": "79009b919b7084c48141145a36db0eb046837561",
+  "before_observation": "before/ shows dynamic event absent from fixed list, zero17/11 movement, hidden accepted close resurrected, modal workflow hidden. This observational exit0 is not acceptance.",
+  "rejected_signal_only_solution": "qt-signal-actual.json confirms hidden accepted close emits no finished; qt-signal-filter-close.json confirms original closeEvent dispatch exactly once with accepted and ignored closes.",
+  "first_native_failure": {
+    "receipt": {
+      "receipt": "verification/maintenance/owned-window-follow-20261101/native/window.json",
+      "sha256": "e0cac4946c940ad568f18599902ca77a25148c173d43571d2101aa820a986230",
+      "bytes": 202210
+    },
+    "actual_exit": 1,
+    "meaning": "Real parent hideEvent closed child source before suspension. Fixed by marking all owned live windows before hide, distinguishing temporary suspension from ordinary hide/close in actual source panels."
+  },
+  "related_final_failure": {
+    "receipt": {
+      "receipt": "verification/maintenance/owned-window-follow-20261101/related-final/results.json",
+      "sha256": "7bb6c99829b76cb30679f83639f201a9c17f3b4a169e274070d0e5de4143470c",
+      "bytes": 601
+    },
+    "actual_exit": 1,
+    "tests": 95,
+    "failed": 1,
+    "meaning": "Qt isAncestorOf is not a complete parentWidget chain across independent windows. Closed parent left nested child pending; fixed common full parent-chain without weakening assertion."
+  },
+  "geometry_observed_failure": {
+    "receipt": {
+      "receipt": "verification/maintenance/owned-window-follow-20261101/geometry-return-before.json",
+      "sha256": "560a12ccc9cbe325a860762df8d4b2b44356858e38db67b10aaf114c7d0c48b7",
+      "bytes": 261
+    },
+    "actual": [
+      200,
+      200
+    ],
+    "expected": [
+      217,
+      211
+    ],
+    "meaning": "Unavailable snapshot previously cleared last applied geometry. Preserve previous rectangle only for return delta; latest snapshot remainsNone and is never treated as a fresh game frame."
+  },
+  "intermediate_passes_not_final_or_accumulated": [
+    "related61",
+    "native-final53",
+    "native-delivery53",
+    "legacy-current393/416/447"
+  ],
+  "current_final": "related-current96 and native-current55; legacy-final393/416/447 separate34/22/54. All bind unchanged current product source through native hashes.",
+  "full_validation_not_run": true,
+  "assertions_not_weakened": true
+}

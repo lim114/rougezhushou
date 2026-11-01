@@ -626,5 +626,7 @@ ADDITIONAL_MODULES += ('tests.test_presentation_card_447',)
 
 ADDITIONAL_MODULES += ('tests.test_event_reader_layout_review',)
 
+ADDITIONAL_MODULES += ('tests.test_owned_window_follow_review',)
+
 if __name__ == '__main__':
     sys.exit(main())

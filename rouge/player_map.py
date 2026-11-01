@@ -229,8 +229,11 @@ class MapPanel(QWidget):
                 if key and key[1:]==(kind,identity):group.setExpanded(True);self.entries.setCurrentItem(item);return True
         return False
     def hideEvent(self,event):
-        if hasattr(self,'hover_card'):self.hover_timer.stop();self.hover_card.dismiss()
-        self.close_reference()
+        suspended=self.window().property('playerSuspended')
+        if hasattr(self,'hover_card'):
+            self.hover_timer.stop()
+            if not suspended:self.hover_card.dismiss()
+        if not suspended:self.close_reference()
         super().hideEvent(event)
     def refresh(self):
         epoch=self.owner.run.state['id'];old_key=self.selected_zone
@@ -429,7 +432,7 @@ class MapPanel(QWidget):
 
     def check_reference(self):
         if self.reference_popup is None:return
-        if not self.reference_popup.isVisible():self.close_reference();return
+        if not self.reference_popup.isVisible()and not self.reference_popup.property('playerSuspended'):self.close_reference();return
         if self.reference_binding!=self.reader_binding():self.close_reference();return
         panel=getattr(self.reference_popup,'panel',None)
         if panel is not None and hasattr(panel,'refresh_reference')and panel.refresh_reference()is False:self.close_reference()

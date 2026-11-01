@@ -85,9 +85,11 @@ class SceneBattlePanel(QWidget):
             self.dialog.close();self.dialog=None
         if self.dialog is None:return
         self.dialog.show();self.dialog.raise_()
-    def closeEvent(self,event):
+    def _close_readers(self):
         if self.dialog is not None:self.dialog.close()
+    def closeEvent(self,event):
+        self._close_readers()
         super().closeEvent(event)
     def hideEvent(self,event):
-        if self.dialog is not None:self.dialog.close()
+        if not self.window().property('playerSuspended'):self._close_readers()
         super().hideEvent(event)

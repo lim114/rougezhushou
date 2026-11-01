@@ -43,6 +43,7 @@ class NodeHoverCard(QDialog):
         super().__init__(parent,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint)
         self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating);self.setWindowTitle('节点速览');self.resize(self.sizeHint())
         self.binding=None;self.content_key=None;self.pinned=False
+        self.setProperty('playerVisibility','hover')
         from .player_theme import apply_theme
         self.setObjectName('nodeHoverCard');apply_theme(self,'dark',extra='#nodeHoverCard QScrollArea,#nodeHoverBody{border:0;background:#1b2928;}')
         body=QVBoxLayout(self);head=QHBoxLayout();self.title=QLabel();head.addWidget(self.title,1)

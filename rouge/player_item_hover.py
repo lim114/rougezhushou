@@ -12,6 +12,7 @@ class ItemHoverCard(QDialog):
         super().__init__(parent,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint)
         self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating);self.setWindowTitle('藏品来源速览');self.resize(470,620)
         self.identity=None;self.version=None;self.index=None;self.pinned=False;self.signature=None
+        self.setProperty('playerVisibility','hover')
         from .player_theme import apply_theme
         self.setObjectName('itemHoverCard');apply_theme(self,'dark')
         body=QVBoxLayout(self);head=QHBoxLayout();self.picture=QLabel();self.picture.setFixedSize(48,48);head.addWidget(self.picture);self.title=QLabel();self.title.setWordWrap(True);head.addWidget(self.title,1)

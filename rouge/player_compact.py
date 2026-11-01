@@ -124,22 +124,26 @@ class CompactAssistant(QDialog):
         if app.activeModalWidget()is not None:return
         if self.hidden_windows is None:
             self.game_hover.invalidate()
-            self.game_binding.suspended=[]
             if self.map_popup is not None:
                 self.map_popup.panel.hover_timer.stop();self.map_popup.panel.leave_timer.stop()
-            self.hidden_windows=[]
+            from .player_game_binding import parent_chain
+            found=[];managed=set(self.game_binding.surfaces())
             for widget in app.topLevelWidgets():
-                parent=widget
-                while parent is not None and parent is not self.owner:parent=parent.parentWidget()
-                if parent is self.owner and widget.isVisible():self.hidden_windows.append(widget)
-            if not self.hidden_windows:self.hidden_windows=None;self.show();self.raise_();return
+                chain=parent_chain(widget)
+                if self.owner in chain and widget.isVisible()and widget not in managed:found.append((len(chain),widget))
+            self.hidden_windows=[widget for _,widget in sorted(found,key=lambda row:row[0])]
+            for widget in self.hidden_windows:widget.setProperty('playerSuspended',True)
+            self.game_binding.apply(self.game_binding.snapshot)
             for widget in self.hidden_windows:widget.hide()
         else:
             from shiboken6 import isValid
-            restore=self.hidden_windows;self.hidden_windows=None
-            for widget in restore:
-                if isValid(widget):widget.show();widget.raise_()
-            self.show();self.raise_()
+            from .player_game_binding import retained_window
+            while self.hidden_windows:
+                widget=self.hidden_windows.pop(0)
+                if isValid(widget):
+                    if retained_window(widget):widget.show();widget.raise_()
+                    widget.setProperty('playerSuspended',False)
+            self.hidden_windows=None;self.game_binding.apply(self.game_binding.snapshot)
     def set_pinned(self,value):
         visible=self.isVisible();self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,value)
         if visible:self.show()
