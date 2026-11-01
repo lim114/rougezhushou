@@ -163,6 +163,10 @@ class CurrentBattlePanel(QWidget):
         self.enemy_details=QWidget();self.enemy_details.setLayout(enemy_detail);enemy_detail.setContentsMargins(0,0,0,0)
         from .enemy_overview import EnemyOverview
         self.enemy_overview=EnemyOverview();self.enemy_overview.selected.connect(self.enemy_choices.select_value)
+        self.quick_table=self.enemy_overview.preview;self.quick_table.setMinimumHeight(280);self.quick_table.setMaximumHeight(440)
+        self.quick_table_notice=QLabel(self.enemy_overview.notice.text());self.quick_table_notice.setWordWrap(True)
+        self.quick_section.addWidget(self.quick_table_notice);self.quick_section.addWidget(self.quick_table)
+        self.quick_table.clicked.connect(self._preview_enemy_selected);self.quick_table.activated.connect(self._preview_enemy_selected)
         self.enemy_reading_stack=QStackedWidget();self.enemy_reading_stack.addWidget(self.enemy_overview);self.enemy_reading_stack.addWidget(self.enemy_details)
         body.addWidget(self.enemy_reading_stack,1)
         self.tabs.addTab(enemies, '敌人和机制')
@@ -451,6 +455,11 @@ class CurrentBattlePanel(QWidget):
     def _enemy_grid_selected(self, item, *_):
         if item is not None:
             self.enemy_choices.select_value(item.data(Qt.ItemDataRole.UserRole))
+
+    def _preview_enemy_selected(self,index):
+        key=index.siblingAtColumn(0).data(Qt.ItemDataRole.UserRole)
+        if key is not None:
+            self.enemy_choices.select_value(key);self.tabs.setCurrentIndex(1)
 
     def _select_enemy_tile(self, key):
         current = self.enemy_grid.currentItem()

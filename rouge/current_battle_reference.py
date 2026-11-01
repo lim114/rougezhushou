@@ -155,9 +155,10 @@ def enemy_text(enemy,forecast=None):
                 '以下已套用有依据的固定关卡与难度修正，尚未包含全部本局影响，不是白值或完整总量。',
                 '；'.join(label+'：'+value for label,value in zip(('生命值','攻击力','防御','法抗'),component_numbers(forecast)))]
         lines+=['',*('• '+line for line in forecast['player_pending'])]
-    lines+=[*player_lines(enemy.get('declared_traits')),
-        '','【介绍与机制】',enemy['description']or'此精确引用未取得独立介绍。']
-    lines+=enemy['abilities']or['此精确引用未取得独立图鉴能力；不能借用同名或派生单位的机制。']
+    lines+=[*player_lines(enemy.get('declared_traits')),'','【介绍与机制】']
+    if enemy['description']and enemy['description']not in enemy['abilities']:lines.append(enemy['description'])
+    lines+=enemy['abilities']
+    if not enemy['description']and not enemy['abilities']:lines.append('此精确引用未取得独立介绍或图鉴能力；不能借用同名或派生单位的机制。')
     if not enemy['use_db']:lines+=['本关采用独立配置，未借用数据库图鉴机制。']
     lines+=['','【适用提醒】','这是关卡候选引用，不证明每次都会出现；同一名字不同引用等级保留为不同资料。',
         '图鉴说明不覆盖全部关卡脚本、当前阶段和本局数值。']

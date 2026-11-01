@@ -1,6 +1,6 @@
 """Foldable, exact-reference mechanism overview; never substitutes base stats."""
-from PySide6.QtCore import Qt,QSize,Signal
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QTreeWidget,QTreeWidgetItem,QHeaderView,QSizePolicy,QAbstractItemView
+from PySide6.QtCore import Qt,QSize,Signal,QModelIndex
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QLabel,QTreeWidget,QTreeWidgetItem,QHeaderView,QSizePolicy,QAbstractItemView,QTreeView
 from .current_enemy_traits import MOTION,ATTACK,DAMAGE
 from .wrapped_item_delegate import WrappedItemDelegate
 
@@ -15,6 +15,19 @@ def overview_cells(enemy,forecast=None):
     return [enemy['name'],*component_numbers(forecast),'\n'.join(kinds),text]
 
 
+def configure_view(view):
+    """Native Qt views use independent delegates over the same source model."""
+    view.setIconSize(QSize(36,36));view.setWordWrap(True);view.setIndentation(15);view.setAllColumnsShowFocus(True)
+    view.setItemDelegate(WrappedItemDelegate(view,(5,6)));view.setTextElideMode(Qt.TextElideMode.ElideNone);view.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
+    view.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+    header=view.header()
+    for column,width in enumerate((150,80,75,70,70,125)):
+        header.setSectionResizeMode(column,QHeaderView.ResizeMode.Interactive);view.setColumnWidth(column,width)
+    header.setSectionResizeMode(6,QHeaderView.ResizeMode.Interactive);view.setColumnWidth(6,240);header.setMinimumSectionSize(65)
+    header.sectionResized.connect(view.doItemsLayout)
+    view.setStyleSheet('QHeaderView::section {background:#333333;color:#ededed;border:1px solid #585858;padding:5px;} QTreeView::item {padding:4px;border-bottom:1px solid #585858;border-right:1px solid #585858;}')
+
+
 class EnemyOverview(QWidget):
     selected=Signal(str)
 
@@ -23,14 +36,8 @@ class EnemyOverview(QWidget):
         self.setSizePolicy(QSizePolicy.Policy.Preferred,QSizePolicy.Policy.Ignored)
         layout=QVBoxLayout(self);layout.setContentsMargins(0,0,0,0)
         self.notice=QLabel('表内直接阅读机制；点选敌人可查看完整资料。本关候选不等于实际敌人数；数值仅为已证环境分项，不含完整藏品、阶段和技能影响，完整本局总量仍未知，不用白值填入。');self.notice.setWordWrap(True);layout.addWidget(self.notice)
-        self.tree=QTreeWidget();self.tree.setAccessibleName('按普通精英领袖分组的敌人机制总览');self.tree.setHeaderLabels(['敌人','生命分项','攻击分项','防御分项','法抗分项','行动与攻击（资料）','机制说明']);self.tree.setIconSize(QSize(36,36));self.tree.setWordWrap(True);self.tree.setIndentation(15);self.tree.setAllColumnsShowFocus(True)
-        self.tree.setItemDelegate(WrappedItemDelegate(self.tree,(5,6)));self.tree.setTextElideMode(Qt.TextElideMode.ElideNone);self.tree.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel)
-        header=self.tree.header()
-        for column,width in enumerate((150,80,75,70,70,125)):
-            header.setSectionResizeMode(column,QHeaderView.ResizeMode.Interactive);self.tree.setColumnWidth(column,width)
-        header.setSectionResizeMode(6,QHeaderView.ResizeMode.Interactive);self.tree.setColumnWidth(6,240);header.setMinimumSectionSize(65)
-        header.sectionResized.connect(self.tree.doItemsLayout)
-        self.tree.setStyleSheet('QHeaderView::section {background:#333333;color:#ededed;border:1px solid #585858;padding:5px;} QTreeWidget::item {padding:4px;border-bottom:1px solid #585858;border-right:1px solid #585858;}')
+        self.tree=QTreeWidget();self.tree.setAccessibleName('按普通精英领袖分组的敌人机制总览');self.tree.setHeaderLabels(['敌人','生命分项','攻击分项','防御分项','法抗分项','行动与攻击（资料）','机制说明']);configure_view(self.tree)
+        self.preview=QTreeView();self.preview.setAccessibleName('地图下方的敌人机制表；与敌人页共用准确资料');self.preview.setModel(self.tree.model());configure_view(self.preview)
         layout.addWidget(self.tree,1)
         self.tree.currentItemChanged.connect(lambda item,_:self._select(item))
         self.tree.itemClicked.connect(lambda item,_:self._select(item))
@@ -42,6 +49,9 @@ class EnemyOverview(QWidget):
 
     def set_rows(self,enemies,entries,scope,forecasts=None):
         same=self._scope==scope and scope is not None
+        preview=self.preview;root=QModelIndex();preview_offset=preview.verticalScrollBar().value()if same else 0;preview_horizontal=preview.horizontalScrollBar().value()if same else 0
+        preview_expanded={self.tree.topLevelItem(i).data(0,Qt.ItemDataRole.UserRole+1):preview.isExpanded(self.tree.model().index(i,0))for i in range(self.tree.topLevelItemCount())}if same else{}
+        preview_key=preview.currentIndex().siblingAtColumn(0).data(Qt.ItemDataRole.UserRole)if same else None
         if same:
             for i in range(self.tree.topLevelItemCount()):
                 group=self.tree.topLevelItem(i);self._expanded[group.data(0,Qt.ItemDataRole.UserRole+1)]=group.isExpanded()
@@ -58,6 +68,9 @@ class EnemyOverview(QWidget):
             item.setToolTip(0,enemy['name']+' · 引用资料'+str(enemy['reference_index']+1)+'；同名不同引用分开保留')
             for column in range(1,5):item.setToolTip(column,'仅已证环境分项；完整本局总量未知。\n'+(forecast or{}).get('conditions_label','难度与区域尚未带入')+'\n'+'\n'.join((forecast or{}).get('player_pending',[])))
             item.setToolTip(5,'资料中的行动与攻击声明，不证明当前阻挡、免疫或阶段状态。');item.setToolTip(6,'\n'.join(enemy['abilities'])or enemy['description']);groups[tier].addChild(item)
+            if preview_key==key:preview.setCurrentIndex(self.tree.indexFromItem(item))
         for tier,group in groups.items():
             group.setText(0,group.text(0)+' · '+str(group.childCount())+'条候选资料');group.setExpanded(self._expanded.get(tier,True))
+            index=self.tree.indexFromItem(group);preview.setFirstColumnSpanned(index.row(),root,True);preview.setExpanded(index,preview_expanded.get(tier,True))
         self.tree.doItemsLayout();self.tree.verticalScrollBar().setValue(offset);self.tree.horizontalScrollBar().setValue(horizontal);self.tree.blockSignals(blocked)
+        preview.doItemsLayout();preview.verticalScrollBar().setValue(preview_offset);preview.horizontalScrollBar().setValue(preview_horizontal)
