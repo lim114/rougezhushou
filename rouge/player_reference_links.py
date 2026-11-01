@@ -128,3 +128,70 @@ def open_fixed_map(panel, stage_id, *, context, verify):
         page.resize(900, 650)
         return page
     return host.open_reference(panel, ('mechanism-map', stage_id), context, create, verify=verify)
+
+
+def open_material_source(panel, source):
+    host = panel.window()
+    if not isinstance(host, ReferenceWindow):
+        return None
+    from . import current_ritual_reference as model
+    def context():
+        current = model.acquisition_reference(panel.result, panel.scene_id, panel.choice_id) if panel.result else None
+        return (event_context(panel), current) if current else None
+    if source['kind'] == 'battle':
+        return open_stage(panel, source['stage_id'], context=context)
+    if source['kind'] == 'event':
+        target = model.locate('choices', source['source_choice_id'])
+        if target is None:
+            panel.clear_reference()
+            return False
+        from .current_ritual_view import CurrentRitualPanel
+        returned = _return_to_ancestor(panel, lambda p: isinstance(p, CurrentRitualPanel)
+            and (p.event_id, p.scene_id, p.choice_id) == (target['event_id'], target['scene_id'], target['choice_id']))
+        if returned is not None:
+            return returned
+    elif source['kind'] == 'exchange':
+        from .current_exchange_reference import target_entry
+        target = target_entry('choices', source['source_choice_id'])
+        if target is None:
+            panel._sync_extra()
+            return False
+    else:
+        return False
+    def create(owner):
+        from .player_map_reader import REFERENCE_STYLE
+        if source['kind'] == 'event':
+            reader = CurrentRitualPanel(target['event_id'], target['scene_id'], target['choice_id'])
+            title = '材料来源 · '+reader.result['event']['title'] if reader.result else ''
+        else:
+            from .current_exchange_view import CurrentExchangePanel
+            reader = CurrentExchangePanel(target)
+            title = '材料来源 · 回滚文明'
+        if reader.result is None:
+            reader.deleteLater()
+            return None
+        page = ToolPage(title, reader, owner, object_name='mapReferenceWindow', extra_style=REFERENCE_STYLE)
+        page.panel = reader
+        page.resize(760, 600)
+        if source['kind'] == 'event':
+            page.finished.connect(reader._close_battle)
+            page.finished.connect(reader._close_material)
+        else:
+            from PySide6.QtWidgets import QPushButton
+            recipe = QPushButton('查看复原条件')
+            recipe.setAutoDefault(False)
+            recipe.setAccessibleName('查看这件材料的复原条件')
+            def read_recipe():
+                if not page.prepare():
+                    return False
+                group = next((g for g in reader.result['data']['document_groups']
+                    if source['recipe_choice_id'] in g['primary_candidate_ids']), None)
+                if group is None:
+                    return False
+                reader.tabs.setCurrentIndex(1)
+                reader._select(reader.groups, group['id'])
+                return True
+            recipe.clicked.connect(read_recipe)
+            page.header_bar.addWidget(recipe)
+        return page
+    return host.open_reference(panel, ('material-source', source['kind']), context, create)

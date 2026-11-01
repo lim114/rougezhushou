@@ -21,7 +21,7 @@ class CurrentExchangeView323Tests(unittest.TestCase):
     def test_all_item_flags_filtered_separately_and_cross_filters_clear_hidden_selection(self):
         p=self.panel();self.assertEqual(p.items.count(),284);self.assertIsNone(p.item_id);self.assertEqual(p.groups.count(),9)
         p.offer.setCurrentIndex(p.offer.findData(False));self.assertEqual(p.items.count(),25);p.change.setCurrentIndex(p.change.findData('added'));self.assertEqual(p.items.count(),4)
-        p._select(p.items,'rogue_6_relic_final_8');self.assertIn('不可交出',p.item_player.toPlainText());self.assertIn('不能说明能否换到',p.item_player.toPlainText())
+        p._select(p.items,'rogue_6_relic_final_8');self.assertIn('不可交出',p.item_player.toPlainText());self.assertIn('不能说明能否换到',p.item_technical.toPlainText());self.assertNotIn('不能说明能否换到',p.item_player.toPlainText())
         p.offer.setCurrentIndex(p.offer.findData(True));self.assertEqual(p.items.count(),8);self.assertIsNone(p.item_id);self.assertNotIn('祭日之契',p.item_player.toPlainText());self.assertEqual(p.item_technical.toPlainText(),'')
         p.search.setText('不存在');self.assertEqual(p.items.count(),0);self.assertIn('0件',p.count.text())
 
@@ -33,7 +33,10 @@ class CurrentExchangeView323Tests(unittest.TestCase):
         p=self.panel(model.target_entry('scenes','scene_ro6_sacrifice1_enter'));self.assertEqual(p.tabs.currentIndex(),1);self.assertIsNone(p.group_id)
 
     def test_same_source_all_four_nonzero_readers_filters_and_selections_survive_refresh(self):
-        p=self.panel();p.resize(850,460);p.offer.setCurrentIndex(p.offer.findData(False));p.change.setCurrentIndex(p.change.findData('added'));p._select(p.items,'rogue_6_relic_final_8');p.groups.setCurrentRow(3)
+        p=self.panel();p.resize(850,460)
+        # Constrain the viewport so even the concise player text exercises real scrolling.
+        for reader in(p.item_player,p.item_technical,p.doc_player,p.doc_technical):reader.setFixedHeight(60)
+        p.offer.setCurrentIndex(p.offer.findData(False));p.change.setCurrentIndex(p.change.findData('added'));p._select(p.items,'rogue_6_relic_final_8');p.groups.setCurrentRow(3)
         for outer,inner,reader in((0,p.item_tabs,p.item_player),(0,p.item_tabs,p.item_technical),(1,p.doc_tabs,p.doc_player),(1,p.doc_tabs,p.doc_technical)):
             p.tabs.setCurrentIndex(outer);inner.setCurrentWidget(reader);self.qt.processEvents();c=reader.textCursor();c.setPosition(2);c.setPosition(13,QTextCursor.MoveMode.KeepAnchor);reader.setTextCursor(c);bar=reader.verticalScrollBar();self.assertGreater(bar.maximum(),0);bar.setValue(min(4,bar.maximum()));before=(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),inner.currentIndex(),p.item_id,p.group_id,p.offer.currentData(),p.change.currentData())
             self.assertTrue(p.refresh_reference());self.qt.processEvents();c=reader.textCursor();self.assertEqual(before,(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),inner.currentIndex(),p.item_id,p.group_id,p.offer.currentData(),p.change.currentData()))

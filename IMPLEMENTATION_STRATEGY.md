@@ -206,3 +206,5 @@ Qt已有置顶及整窗输入穿透标志，但“全部穿透”会使该窗口
 [第461节](research/archive-461/README.md)：复用已有路标本机查询和完整事件阅读器；旧独立ArchiveDialog改为共享ArchivePanel，同源读数不重复重建，深层页面沿现有来源链保持/失效。
 
 [第462节](research/statistics-462/README.md)：保留共享NodeStatisticsSource和原统计数学；地图显式传递当前视图选择。按Qt源码的延后列布局机制合并行高更新，移除已无调用方的通用弹窗分支。
+
+[第463节](research/material-sources-463/README.md)：复用源绑定Qt页面、官方BSD流式布局和已有事件/交换/作战阅读器；主资料窗接入材料来源，独立工作区入口保留。

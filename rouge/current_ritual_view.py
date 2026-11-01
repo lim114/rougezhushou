@@ -47,6 +47,9 @@ class CurrentRitualPanel(DocumentedEventFlowPanel):
         if not self._recheck():return False
         source=model.acquisition_reference(self.result,self.scene_id,self.choice_id)
         if source is None:self._close_material();return False
+        from .player_reference_links import open_material_source
+        opened=open_material_source(self,source)
+        if opened is not None:return opened
         if source['kind']=='event':
             target=model.locate('choices',source['source_choice_id'])
             if target is None:self.clear_reference();return False
