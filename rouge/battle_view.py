@@ -49,7 +49,7 @@ class BattleGrid(QWidget):
         return {'row':r,'col':c} if 0<=r<nr and 0<=c<nc else None
 
     def paintEvent(self,event):
-        painter=QPainter(self);painter.fillRect(self.rect(),QColor('#18222e'))
+        painter=QPainter(self);painter.fillRect(self.rect(),QColor('#262528'))
         if not self.stage:
             painter.setPen(QColor('white'));painter.drawText(self.rect(),Qt.AlignmentFlag.AlignCenter,'请选择战斗关卡')
             return
@@ -182,7 +182,7 @@ class MapOriginal(QWidget):
             painter.drawText(QRectF(center.x()-radius-3,center.y()-radius-3,2*radius+6,2*radius+6),Qt.AlignmentFlag.AlignCenter,'P'+str(marker['ordinal']))
 
     def paintEvent(self,event):
-        painter=QPainter(self);painter.fillRect(self.rect(),QColor('#18222e'))
+        painter=QPainter(self);painter.fillRect(self.rect(),QColor('#262528'))
         if self.pixmap.isNull():return
         rect=self.image_rect();painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
         painter.drawPixmap(rect,self.pixmap,QRectF(self.pixmap.rect()))
@@ -238,26 +238,30 @@ class MapOriginal(QWidget):
 
 class BattlePreviewPanel(QWidget):
     stageSelected=Signal(object)
+    currentStageReferenceRequested=Signal(object)
     entryEventSelected=Signal(object)
     def __init__(self,parent=None):
         super().__init__(parent);self.context={};self.current_stage=None;self.rows=[]
         self._rows_stage=None;self._shown_enemy=None;self._tile_cell=None;self._detail_key=None;self.reward_result=None;self._branch_marker=None
         layout=QVBoxLayout(self)
         from .expansion_reference import LEGACY_NOTICE
-        self.version_notice=QLabel(LEGACY_NOTICE);self.version_notice.setWordWrap(True);layout.addWidget(self.version_notice);controls=QHBoxLayout()
+        self.version_notice=QLabel('计算基准：更新前档案；本局数值尚未完整适配。');self.version_notice.setToolTip(LEGACY_NOTICE);self.version_notice.setWordWrap(True);layout.addWidget(self.version_notice);controls=QHBoxLayout()
         self.stage_combo=QComboBox()
         self.stage_choices=BranchChoice(self.stage_combo,stage_groups(battle_data()['stages']),
             overview_label='总览（全部关卡）',placeholder='尚未选择战斗节点')
         controls.addWidget(self.stage_choices,1)
         self.wave_combo=QComboBox();controls.addWidget(self.wave_combo)
+        self.current_reference_button=QPushButton('查看作战资料');controls.addWidget(self.current_reference_button)
+        self.current_reference_button.clicked.connect(lambda:self.currentStageReferenceRequested.emit(self.current_stage))
         self.enemy_combo=QComboBox()
         self.enemy_choices=BranchChoice(self.enemy_combo,[],overview_label='总览（当前关卡）',placeholder='全部敌人引用',notify_unchanged=True)
         for combo in (self.stage_combo,self.enemy_combo):
             combo.setMinimumContentsLength(12)
             combo.setSizeAdjustPolicy(QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon)
         layout.addLayout(controls)
+        self.current_reference_status=QLabel();self.current_reference_status.hide();layout.addWidget(self.current_reference_status)
         layout.addWidget(self.enemy_choices)
-        self.include_branches=QCheckBox('包含特定条件下才可能出现的敌人（不保证本局出现）');self.include_branches.setChecked(True)
+        self.include_branches=QCheckBox('显示条件分支敌人');self.include_branches.setToolTip('触发条件见出怪与机制资料。');self.include_branches.setChecked(True)
         reading_options=QHBoxLayout();reading_options.addWidget(self.include_branches)
         self.technical=QCheckBox('显示技术资料（原始参数、标识与来源）')
         # Keep both reading options on one row so content changes do not force
@@ -518,11 +522,13 @@ class BattlePreviewPanel(QWidget):
         self._refresh_gold_boss()
         self._branch_marker=None;self.branch_panel.set_stage(sid)
         self.current_stage=sid;stage=battle_data()['stages'].get(sid)
+        self.current_reference_status.hide()
+        self.current_reference_button.setVisible(stage is not None)
         self.duel_reward_button.setVisible(is_duel_stage(sid))
         self.highland_top_button.setEnabled(bool(stage and any(t.get('tileKey')=='tile_wall' and
             t.get('heightType')=='HIGHLAND' for t in stage['tiles'])))
         self.reward_combo.blockSignals(True);self.reward_combo.clear()
-        self.reward_combo.addItem('选择来源查看数量条件；实际奖励总量未知',None)
+        self.reward_combo.addItem('选择奖励来源',None)
         self.reward_result=stage_reward_sources(sid) if stage else None
         for row in (self.reward_result or {}).get('rows',[]):
             cell=row['display_cell'];position=f"第{cell['row']+1}行、第{cell['col']+1}列" if cell else '分支位置未绑定'
@@ -577,7 +583,7 @@ class BattlePreviewPanel(QWidget):
         self.spawn_list.blockSignals(False);self.grid.set_reference(stage,self.rows)
         self.original.set_reference(stage,self.rows)
         self.map_caption.setText('固定原图 · 近似地面位置；连线只表示资料中的途经点，不代表实际行进路径'
-            if self.original.projection else '原图位置尚未核对：请看左侧方格图；不会把未核对的位置画到原图上。')
+            if self.original.projection else '原图标记：待校准。可先查看左侧格图。')
         direct=getattr(self.original.projection,'mapping_mode',None)=='direct_verified_centers'
         if direct:
             count=len(self.original.projection.points)

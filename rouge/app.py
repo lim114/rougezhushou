@@ -163,6 +163,7 @@ class MainWindow(QMainWindow):
         tabs.addTab(self.exploration_map_tab, '地图预览')
         self.battle_preview=BattlePreviewPanel()
         self.battle_preview.stageSelected.connect(self.select_battle_stage)
+        self.battle_preview.currentStageReferenceRequested.connect(lambda _stage:self.open_calculation_target(source='stage'))
         self.battle_preview.entryEventSelected.connect(self.show_battle_event_reference)
         tabs.addTab(self.battle_preview,'战斗计算参考')
         from .node_catalog_view import NodeCatalogPanel
@@ -1047,6 +1048,9 @@ class MainWindow(QMainWindow):
         self.damage_sections=QComboBox();self.damage_sections.setAccessibleName('跳转到结果分组')
         self.damage_sections.addItem('总览',None);report_actions.addWidget(self.damage_sections,1)
         report_actions.addWidget(calculate);layout.addLayout(report_actions)
+        self.target_preview_button=QPushButton('查看目标关卡');self.target_preview_button.setVisible(self.target_stage.currentData()is not None)
+        self.target_preview_button.clicked.connect(lambda:self.open_calculation_target());report_actions.addWidget(self.target_preview_button)
+        self.target_preview_status=QLabel();self.target_preview_status.hide();layout.addWidget(self.target_preview_status)
         self.token_comparison_button=QPushButton('比较召唤物模组升级（局外参考）')
         self.token_comparison_button.clicked.connect(self.show_token_module_comparison)
         layout.addWidget(self.token_comparison_button)
@@ -1136,6 +1140,7 @@ class MainWindow(QMainWindow):
 
     def update_target_enemies(self):
         sid=self.target_stage.currentData()
+        self.target_preview_button.setVisible(sid is not None);self.target_preview_status.hide()
         previous=self.target_enemy.currentData()
         self.target_enemy.blockSignals(True)
         self.target_enemy_choices.set_groups(enemy_groups((stage_previews().get(sid) or {}).get('possible_enemies',[]),
@@ -1147,6 +1152,10 @@ class MainWindow(QMainWindow):
         self.update_enemy_context()
         if hasattr(self,'battle_preview'):self.battle_preview.set_stage(sid)
         if hasattr(self,'offline_tools'):self.offline_tools.set_stage(sid)
+
+    def open_calculation_target(self,*,source='calculator'):
+        from .player_calculation_target import open_target
+        return open_target(self,source=source)
 
     def show_catalog_battle(self,sid):
         self.select_battle_stage(sid)

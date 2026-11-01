@@ -27,6 +27,6 @@ class ExpansionIntegration313Tests(unittest.TestCase):
         self.assertEqual(len(__import__('rouge.battle_preview',fromlist=['battle_data']).battle_data()['stages']),105)
         self.assertEqual(len(model.rows('stages',changes_only=False)),184)
         self.window.show_catalog_battle('ro6_n_1_2');self.qt.processEvents()
-        self.assertEqual(self.window.battle_preview.current_stage,'ro6_n_1_2');self.assertIn('战斗预览',self.window.battle_preview.version_notice.text());self.assertIn('更新前',self.window.battle_preview.version_notice.text())
+        self.assertEqual(self.window.battle_preview.current_stage,'ro6_n_1_2');self.assertIn('战斗预览',self.window.battle_preview.version_notice.toolTip());self.assertIn('更新前',self.window.battle_preview.version_notice.text())
 
 if __name__=='__main__':unittest.main()

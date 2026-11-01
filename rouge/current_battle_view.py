@@ -8,6 +8,7 @@ from . import current_battle_reference as model,expansion_reference as version
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .reference_copy import mechanism_copy
 from .reference_image import ReferenceImage
 from .battle_enemy_readers import close_reader, sync_reader, open_reader
 
@@ -251,6 +252,7 @@ class CurrentBattlePanel(QWidget):
     def _show_details(self, checked):
         for label in (self.notice, self.rewards.notice, self.settlement.notice):
             label.setVisible(checked)
+        self._enemy_changed(preserve=True, update_actions=False)
 
     def _clear(self):
         self._close_tomimi();self.tomimi_button.hide();self.tomimi_button.setEnabled(False)
@@ -509,7 +511,10 @@ class CurrentBattlePanel(QWidget):
         self.enemy_key = key
         self._select_enemy_tile(key)
         self.enemy_portrait.setVisible(enemy is not None)
-        replace_text(self.enemy_player, model.enemy_text(enemy,self.enemy_forecasts.get(key)) if enemy else '请选择敌人或关联实体。', preserve=keep)
+        text = model.enemy_text(enemy, self.enemy_forecasts.get(key)) if enemy else '请选择敌人或关联实体。'
+        if not self.details_toggle.isChecked():
+            text, _ = mechanism_copy(text, model.NOTICE, extra_detail_headings=('【适用提醒】',))
+        replace_text(self.enemy_player, text, preserve=keep)
         self.enemy_reading_stack.setCurrentWidget(self.enemy_details if enemy is not None or self.result is None else self.enemy_overview)
         self.enemy_portrait.clear()
         pix = QPixmap()
@@ -517,7 +522,7 @@ class CurrentBattlePanel(QWidget):
         if raw and pix.loadFromData(raw, 'PNG'):
             self.enemy_portrait.setPixmap(pix.scaled(90, 90, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation))
         else:
-            self.enemy_portrait.setText('此精确引用未取得图片。' if enemy else '')
+            self.enemy_portrait.setText('暂无图片' if enemy else '')
         self._sync_boss_documents(keep)
         if update_actions and self.action_focus.currentData()=='enemy':self._actions_changed(preserve=True)
         self._sync_sun_boss(keep)
