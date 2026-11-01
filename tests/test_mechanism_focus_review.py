@@ -14,7 +14,7 @@ class MechanismFocusReview(unittest.TestCase):
  def panel(self):
   p=CurrentBattlePanel('ro6_n_2_6');p.resize(920,720);p.show();self.addCleanup(p.close);self.qt.processEvents();return p
  def test_default_home_has_three_useful_columns_but_keeps_all_original_data_and_full_reader(self):
-  p=self.panel();v=p.quick_table;t=p.enemy_overview.tree;self.assertEqual([i for i in range(7)if not v.isColumnHidden(i)],[0,5,6]);self.assertEqual([i for i in range(7)if not t.isColumnHidden(i)],list(range(7)));self.assertIs(v.model(),t.model());self.assertIn('尚未核验',p.quick_table_notice.text());self.assertIn('不用白值',p.quick_table_notice.text());self.assertEqual(p.quick_table_notice.text(),p.enemy_overview.notice.text());self.assertEqual(p.result,model.stage_reference(p.stage_id))
+  p=self.panel();v=p.quick_table;t=p.enemy_overview.tree;self.assertEqual([i for i in range(7)if not v.isColumnHidden(i)],[0,5,6]);self.assertEqual([i for i in range(7)if not t.isColumnHidden(i)],[0,5,6]);self.assertIs(v.model(),t.model());self.assertIn('尚未核验',p.quick_table_notice.text());self.assertIn('不用白值',p.quick_table_notice.text());self.assertEqual(p.quick_table_notice.text(),p.enemy_overview.notice.text());self.assertEqual(p.result,model.stage_reference(p.stage_id))
   index=v.model().index(0,0,v.model().index(0,0))
   for c in range(1,5):self.assertEqual(index.siblingAtColumn(c).data(),'未知')
  def test_zero_is_available_and_each_column_requires_a_visible_candidate_value(self):

@@ -167,3 +167,5 @@ Qt已有置顶及整窗输入穿透标志，但“全部穿透”会使该窗口
 [事件紧凑窗与原生交互](research/remaining-event-window-20261101/README.md)：继续扩展已采用的Qt官方BSD换行、superqt BSD折叠与LGPL窗框，而非重装或新增框架；OpenCV线程实测无稳定收益，保留当前生产设置。当前四图/交互分别核对，不作全片一致声明。
 
 [完整地图预览与缓存字节精简](research/map-thumbnail-fit-20261101/README.md)：采用成熟Qt布局提示/视口及现有外部窗框，NumPy现成C顺序导出取代额外连续副本；不新增图像框架、模型或防御分支。当前四图与61原生交互分开，不作全片一致声明。
+
+[作战查阅链与原生OCR可行性](research/battle-reference-chain-20261101/README.md)：继续扩展已采用LGPL窗框并集中公共设置；实际复用已有隔离MaaFramework原生OCR与现有模型，静态图有文本差异，保留独立标注/几何/预处理与部署成本核验，不提前接入生产。

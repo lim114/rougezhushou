@@ -1,6 +1,6 @@
 """Named event-to-battle references and reverse lookup with owned dialogs."""
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget,QDialog,QVBoxLayout,QHBoxLayout,QComboBox,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QTabWidget,QLabel
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QComboBox,QListWidget,QListWidgetItem,QPlainTextEdit,QPushButton,QTabWidget,QLabel
 from . import current_event_battles as model
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
@@ -98,9 +98,14 @@ class CurrentEventBattlesPanel(QWidget):
 
     def closeEvent(self,event):self._close_battle();self._close_flow();super().closeEvent(event)
 
-class CurrentEventBattlesDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentEventBattlesDialog(PlayerDialog):
     def __init__(self,event_id=None,choice_id=None,stage_id=None,parent=None):
-        super().__init__(parent);self.setWindowTitle('事件与固定作战 · 选项和版本核对');self.resize(1100,820);layout=QVBoxLayout(self);self.panel=CurrentEventBattlesPanel(event_id,choice_id,stage_id,self);layout.addWidget(self.panel)
+        super().__init__(parent);self.setWindowTitle('事件与固定作战 · 选项和版本核对');layout=QVBoxLayout(self);self.panel=CurrentEventBattlesPanel(event_id,choice_id,stage_id,self);layout.addWidget(self.panel)
+        from .player_map_reader import prepare_reference_window
+        prepare_reference_window(self,760,600)
     def closeEvent(self,event):self.panel._close_battle();self.panel._close_flow();super().closeEvent(event)
 
     def reject(self):self.panel._close_battle();self.panel._close_flow();super().reject()

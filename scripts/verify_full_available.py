@@ -660,5 +660,7 @@ ADDITIONAL_MODULES += ('tests.test_map_thumbnail_fit_review',)
 
 ADDITIONAL_MODULES += ('tests.test_cache_pixel_bytes_review',)
 
+ADDITIONAL_MODULES += ('tests.test_battle_reference_chain_review',)
+
 if __name__ == '__main__':
     sys.exit(main())

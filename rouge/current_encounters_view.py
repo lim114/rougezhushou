@@ -40,5 +40,7 @@ from .player_window_frame import PlayerDialog
 
 class CurrentEncountersDialog(PlayerDialog):
     def __init__(self,event_id,scene_id=None,choice_id=None,parent=None):
-        super().__init__(parent);self.setWindowTitle(event_id+' · 完整对话、条件与代价');self.resize(760,600);layout=QVBoxLayout(self);self.panel=CurrentEncountersPanel(event_id,scene_id,choice_id,self);layout.addWidget(self.panel)
+        super().__init__(parent);self.setWindowTitle(event_id+' · 完整对话、条件与代价');layout=QVBoxLayout(self);self.panel=CurrentEncountersPanel(event_id,scene_id,choice_id,self);layout.addWidget(self.panel)
+        from .documented_event_flow_view import prepare_event_dialog
+        prepare_event_dialog(self)
     def closeEvent(self,event):self.panel._close_battle();super().closeEvent(event)

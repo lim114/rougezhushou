@@ -130,5 +130,5 @@ from .player_window_frame import PlayerDialog
 class CurrentMapPositionDialog(PlayerDialog):
     def __init__(self,stage_id,parent=None):
         super().__init__(parent);self.setWindowTitle('固定地图 · 格子与原图位置对照');layout=QVBoxLayout(self);self.panel=CurrentMapPositionPanel(stage_id,self);layout.addWidget(self.panel)
-        from .player_map_reader import readable
-        readable(self);area=self.screen().availableGeometry();self.resize(min(960,area.width()-40),min(640,area.height()-40))
+        from .player_map_reader import prepare_reference_window
+        prepare_reference_window(self,960,640)

@@ -2,7 +2,7 @@
 from copy import deepcopy
 from PySide6.QtCore import Qt,Signal
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QWidget,QDialog,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPushButton,QTabWidget,QPlainTextEdit
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPushButton,QTabWidget,QPlainTextEdit
 from . import current_enemy_spawns as model
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
@@ -64,8 +64,13 @@ class CurrentEnemySpawnsPanel(QWidget):
         if model.position_reference(self.result,row['key'])is None:self.clear_reference();return False
         self.actionPositionRequested.emit(row['key']);return True
 
-class CurrentEnemySpawnsDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentEnemySpawnsDialog(PlayerDialog):
     def __init__(self,stage_id,enemy_key,parent=None):
-        super().__init__(parent);self.setWindowTitle('这个敌人的出怪条目与条件');self.resize(1040,780);layout=QVBoxLayout(self);self.panel=CurrentEnemySpawnsPanel(stage_id,enemy_key,self);layout.addWidget(self.panel)
+        super().__init__(parent);self.setWindowTitle('这个敌人的出怪条目与条件');layout=QVBoxLayout(self);self.panel=CurrentEnemySpawnsPanel(stage_id,enemy_key,self);layout.addWidget(self.panel)
+        from .player_map_reader import prepare_reference_window
+        prepare_reference_window(self,760,600)
     def closeEvent(self,event):self.panel.clear_reference();super().closeEvent(event)
     def done(self,result):self.panel.clear_reference();super().done(result)

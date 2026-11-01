@@ -19,6 +19,14 @@ def readable(dialog):
         dialog.setObjectName('mapReferenceWindow');apply_theme(dialog,'dark',extra=REFERENCE_STYLE)
     return dialog
 
+def prepare_reference_window(dialog,width,height):
+    from PySide6.QtWidgets import QPushButton
+    readable(dialog)
+    for button in dialog.findChildren(QPushButton):button.setAutoDefault(False)
+    area=dialog.screen().availableGeometry()
+    dialog.resize(min(width,area.width()-40),min(height,area.height()-40))
+
+
 def make_reader(kind,record,parent,*,historical=False,config=None):
     if not isinstance(record,dict)or not isinstance(record.get('id'),str)or not isinstance(record.get('title'),str):return None
     from .player_compact import ToolPopover

@@ -74,7 +74,8 @@ class EnemyOverview(QWidget):
         for tier,group in groups.items():
             group.setText(0,group.text(0)+' · '+str(group.childCount())+'条候选资料');group.setExpanded(self._expanded.get(tier,True))
             index=self.tree.indexFromItem(group);preview.setFirstColumnSpanned(index.row(),root,True);preview.setExpanded(index,preview_expanded.get(tier,True))
-        for column in range(1,5):preview.setColumnHidden(column,column not in numeric_columns)
+        for view in(self.tree,preview):
+            for column in range(1,5):view.setColumnHidden(column,column not in numeric_columns)
         self.notice.setText(('首页仅显示有已证数据的数值列；环境分项不含全部藏品、阶段和技能影响，完整本局总量仍未知，不用白值填入。'if numeric_columns else'完整生命、攻击、防御和法抗尚未核验，不用白值填入；首页先显示行动与机制。')+'点选敌人可查看条件和完整资料，候选条数不是实际敌人数。')
         self.tree.doItemsLayout();self.tree.verticalScrollBar().setValue(offset);self.tree.horizontalScrollBar().setValue(horizontal);self.tree.blockSignals(blocked)
         preview.doItemsLayout();preview.verticalScrollBar().setValue(preview_offset);preview.horizontalScrollBar().setValue(preview_horizontal)

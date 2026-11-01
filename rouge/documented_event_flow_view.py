@@ -140,10 +140,8 @@ from .player_window_frame import PlayerDialog
 
 
 def prepare_event_dialog(dialog):
-    from .player_map_reader import readable
-    readable(dialog);area=dialog.screen().availableGeometry()
-    for button in dialog.findChildren(QPushButton):button.setAutoDefault(False)
-    dialog.resize(min(760,area.width()-40),min(600,area.height()-40))
+    from .player_map_reader import prepare_reference_window
+    prepare_reference_window(dialog,760,600)
 
 
 class DocumentedEventFlowDialog(PlayerDialog):

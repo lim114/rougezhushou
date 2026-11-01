@@ -1,6 +1,6 @@
 """Manual action-to-map reader, using only explicit nominal cell references."""
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QWidget, QDialog, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QPushButton, QSplitter, QTabWidget, QPlainTextEdit
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QComboBox, QPushButton, QSplitter, QTabWidget, QPlainTextEdit
 from . import current_action_positions as model
 from .current_map_position_view import CurrentTileGrid, CurrentOriginalCenters
 from .boss_hunt_view import _technical_json
@@ -60,7 +60,12 @@ class CurrentActionPositionsPanel(QWidget):
         if not keep: self.tabs.setCurrentIndex(0)
 
 
-class CurrentActionPositionsDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentActionPositionsDialog(PlayerDialog):
     def __init__(self, stage_id, action_key, parent=None):
-        super().__init__(parent); self.setWindowTitle('出怪或装置 · 地图位置参考'); self.resize(1150, 800)
+        super().__init__(parent); self.setWindowTitle('出怪或装置 · 地图位置参考')
         layout = QVBoxLayout(self); self.panel = CurrentActionPositionsPanel(stage_id, action_key, self); layout.addWidget(self.panel)
+        from .player_map_reader import prepare_reference_window
+        prepare_reference_window(self,960,640)

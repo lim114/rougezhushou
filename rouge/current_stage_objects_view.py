@@ -1,7 +1,7 @@
 """Exact current objects and their original activation/map references."""
 from copy import deepcopy
 from PySide6.QtCore import Qt,Signal
-from PySide6.QtWidgets import QWidget,QDialog,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPushButton,QTabWidget,QPlainTextEdit,QLineEdit,QSplitter
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPushButton,QTabWidget,QPlainTextEdit,QLineEdit,QSplitter
 from . import current_stage_objects as model
 from .current_map_position_view import CurrentTileGrid,CurrentOriginalCenters
 from .boss_hunt_view import _technical_json
@@ -22,9 +22,14 @@ class CurrentObjectPositionPanel(QWidget):
         text+=('该格有既有原图近似参考；误差与其它地块仍需核对。'if fresh['center']else'这个格尚无可用的原图校准；左侧可看格子，右侧保留原图，不猜标记。')
         replace_text(self.player,text,preserve=keep);return True
 
-class CurrentObjectPositionDialog(QDialog):
+from .player_window_frame import PlayerDialog
+
+
+class CurrentObjectPositionDialog(PlayerDialog):
     def __init__(self,stage_id,key,parent=None):
-        super().__init__(parent);self.setWindowTitle('物件与机关 · 固定位置参考');self.resize(1150,760);layout=QVBoxLayout(self);self.panel=CurrentObjectPositionPanel(stage_id,key,self);layout.addWidget(self.panel)
+        super().__init__(parent);self.setWindowTitle('物件与机关 · 固定位置参考');layout=QVBoxLayout(self);self.panel=CurrentObjectPositionPanel(stage_id,key,self);layout.addWidget(self.panel)
+        from .player_map_reader import prepare_reference_window
+        prepare_reference_window(self,960,640)
     def closeEvent(self,event):self.panel.clear_reference();super().closeEvent(event)
     def done(self,result):self.panel.clear_reference();super().done(result)
 
@@ -85,8 +90,10 @@ class CurrentStageObjectsPanel(QWidget):
         if self.position_dialog.panel.result is None:self.close_children();return False
         self.position_dialog.show();return True
 
-class CurrentStageObjectsDialog(QDialog):
+class CurrentStageObjectsDialog(PlayerDialog):
     def __init__(self,stage_id,parent=None):
-        super().__init__(parent);self.setWindowTitle('本关物件与机关');self.resize(1080,780);layout=QVBoxLayout(self);self.panel=CurrentStageObjectsPanel(stage_id,self);layout.addWidget(self.panel)
+        super().__init__(parent);self.setWindowTitle('本关物件与机关');layout=QVBoxLayout(self);self.panel=CurrentStageObjectsPanel(stage_id,self);layout.addWidget(self.panel)
+        from .player_map_reader import prepare_reference_window
+        prepare_reference_window(self,760,600)
     def closeEvent(self,event):self.panel.clear_reference();super().closeEvent(event)
     def done(self,result):self.panel.clear_reference();super().done(result)
