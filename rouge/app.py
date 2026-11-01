@@ -6,7 +6,7 @@ import threading
 import time
 import win32gui
 from pathlib import Path
-from PySide6.QtCore import QObject, Signal, Qt, QTimer,QSize
+from PySide6.QtCore import QObject, Signal, Qt, QTimer,QSize,QSignalBlocker
 from PySide6.QtGui import QImage, QPixmap, QIcon
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QFormLayout, QPushButton, QLabel, QComboBox, QTabWidget, QPlainTextEdit, QLineEdit,
@@ -157,7 +157,7 @@ class MainWindow(QMainWindow):
         self.workspace=tabs
         self.setCentralWidget(tabs)
         tabs.addTab(self.make_capture_tab(), '采样测试')
-        tabs.addTab(self.make_damage_tab(), '伤害测试')
+        self.damage_page=self.make_damage_tab();tabs.addTab(self.damage_page, '伤害测试')
         self.chat_page=self.make_chat_tab();tabs.addTab(self.chat_page, '聊天分析')
         self.exploration_map_tab=self.make_map_tab()
         tabs.addTab(self.exploration_map_tab, '地图预览')
@@ -777,8 +777,14 @@ class MainWindow(QMainWindow):
     def make_damage_tab(self):
         tab = QWidget()
         layout = QVBoxLayout(tab)
+        selectors=QFormLayout();layout.addLayout(selectors)
         from .expansion_reference import LEGACY_NOTICE
-        self.damage_version_notice=QLabel(LEGACY_NOTICE);self.damage_version_notice.setWordWrap(True);layout.addWidget(self.damage_version_notice)
+        self.damage_version_notice=QLabel(LEGACY_NOTICE);self.damage_version_notice.setWordWrap(True)
+        scope=QLabel('计算基准：更新前档案');scope.setToolTip(LEGACY_NOTICE);layout.addWidget(scope)
+        self.calculation_scope=QComboBox();self.calculation_scope.addItem('套用本局分队与难度','run');self.calculation_scope.addItem('档案预览：不套用分队与难度','archive')
+        self.calculation_scope.setToolTip('档案预览保留当前培养、藏品和目标设置，仅移除本局分队与难度修正。')
+        self.calculation_scope.currentIndexChanged.connect(lambda:self.calculate() if hasattr(self,'raw_damage') else None)
+        selectors.addRow('计算方式',self.calculation_scope)
         columns = QHBoxLayout()
         form = QFormLayout()
         self.damage_form=form
@@ -789,9 +795,10 @@ class MainWindow(QMainWindow):
             branch_icons=profession_branch_icons())
         self.operator_choices.select_value('kaltsit',emit=False)
         self.operator.currentIndexChanged.connect(self.update_operator)
-        form.addRow('职业 / 干员',self.operator_choices)
+        selectors.addRow('职业 / 干员',self.operator_choices)
         self.operator_picture=SubjectPicture();form.addRow(self.operator_picture)
-        self.use_run_training=QCheckBox('使用已读取的本局培养；缺失项明确显示参考来源')
+        self.use_run_training=QCheckBox('使用本局已读培养')
+        self.use_run_training.setToolTip('培养来源与当前预览条件见下方说明。')
         self.use_run_training.setChecked(True)
         self.use_run_training.toggled.connect(lambda:self.update_operator())
         form.addRow(self.use_run_training)
@@ -818,7 +825,7 @@ class MainWindow(QMainWindow):
         self.skill = QComboBox()
         self.skill.setIconSize(QSize(28,28))
         self.skill.currentIndexChanged.connect(self.skill_changed)
-        form.addRow('技能',self.skill)
+        selectors.addRow('技能',self.skill)
         self.skill_picture=SubjectPicture(edge=48);form.addRow(self.skill_picture)
         self.rank=QLabel('未确认')
         form.addRow('技能等级（自动读取）',self.rank)
@@ -1030,10 +1037,16 @@ class MainWindow(QMainWindow):
         columns.addLayout(relic_layout,1)
         input_widget=QWidget();input_widget.setLayout(columns)
         scroll=QScrollArea();scroll.setWidgetResizable(True);scroll.setWidget(input_widget)
-        layout.addWidget(scroll,2)
-        calculate = QPushButton('计算属性与技能预估')
+        scroll.setMinimumHeight(220);scroll.setMaximumHeight(320)
+        from .collapsible_section import QCollapsible
+        self.damage_settings_fold=QCollapsible('培养、藏品与目标设置',collapsedIcon='›',expandedIcon='⌄')
+        self.damage_settings_fold.addWidget(scroll);self.damage_settings_fold.collapse(animate=False);layout.addWidget(self.damage_settings_fold)
+        calculate = QPushButton('重新计算')
         calculate.clicked.connect(self.calculate)
-        layout.addWidget(calculate)
+        report_actions=QHBoxLayout();report_actions.addWidget(QLabel('查看结果'))
+        self.damage_sections=QComboBox();self.damage_sections.setAccessibleName('跳转到结果分组')
+        self.damage_sections.addItem('总览',None);report_actions.addWidget(self.damage_sections,1)
+        report_actions.addWidget(calculate);layout.addLayout(report_actions)
         self.token_comparison_button=QPushButton('比较召唤物模组升级（局外参考）')
         self.token_comparison_button.clicked.connect(self.show_token_module_comparison)
         layout.addWidget(self.token_comparison_button)
@@ -1091,18 +1104,21 @@ class MainWindow(QMainWindow):
             layout.removeWidget(button);tools_layout.addWidget(button,index//2,index%2)
         from .player_context import Fold
         tool_content=QWidget();tool_content.setLayout(tools_layout)
-        self.damage_tools_fold=Fold('更多计算与比较',tool_content);layout.addWidget(self.damage_tools_fold)
-        self.damage_text = QPlainTextEdit()
+        self.damage_tools_fold=Fold('更多计算与比较',tool_content)
+        from .mechanism_reading import MechanismTextBrowser
+        self.damage_text = MechanismTextBrowser()
         self.damage_text.setReadOnly(True)
+        self.damage_sections.currentIndexChanged.connect(lambda:self.damage_text.scrollToAnchor(self.damage_sections.currentData()or'mechanism-block-0'))
         layout.addWidget(self.damage_text,1)
+        layout.addWidget(self.damage_tools_fold)
         self.raw_damage=QCheckBox('显示结构化计算数据（调试）')
         self.raw_damage.toggled.connect(self.render_damage)
         tools_layout.addWidget(self.raw_damage,7,0,1,2)
-        self.damage_technical=QCheckBox('显示技术资料（来源与原始字段说明）')
-        self.damage_technical.toggled.connect(self.render_damage);layout.addWidget(self.damage_technical)
-        label = QLabel('基础属性只读，只能调整等级进行模拟；精英、信赖、潜能、技能等级和模组来自读取。未确认时明确使用档案预览条件。回转和周期输出均为估计，模组条件机制/特训和部分藏品仍有缺失。')
+        self.damage_technical=QCheckBox('显示完整来源与计算说明')
+        self.damage_technical.toggled.connect(self.render_damage);tools_layout.addWidget(self.damage_technical,8,0,1,2)
+        label = QLabel('可调整等级进行模拟。精英阶段、信赖、潜能、模组和技能等级随已读培养更新；当前采用的条件见结果。')
         label.setWordWrap(True)
-        layout.addWidget(label)
+        form.addRow(label);form.addRow(self.damage_version_notice)
         self.deployment_elapsed.valueChanged.connect(lambda:self.calculate())
         self.healing_targets.valueChanged.connect(lambda:self.calculate())
         self.defense.valueChanged.connect(lambda:self.calculate())
@@ -1974,7 +1990,7 @@ class MainWindow(QMainWindow):
         scenario['inventory_status']=self.run.inventory_status() if self.auto_relics.isChecked() else {
             'source':'manual_test','complete':True,'recognized':len(ids),'expected_count':None}
         if self.auto_relics.isChecked():scenario['relic_history_context']=self.run.relic_history_context()
-        scenario['run_config']=self.run.state.get('config',{})
+        scenario['run_config']=self.run.state.get('config',{})if self.calculation_scope.currentData()=='run'else{}
         target=self.target_enemy.currentData()
         self.defense.setEnabled(target is None);self.resistance.setEnabled(target is None)
         if target:
@@ -2054,6 +2070,7 @@ class MainWindow(QMainWindow):
             if self.target_buff_test.isChecked():
                 result['estimate']['notes'].insert(0,'当前启用个人强化测试；测试选项不代表从本局画面读取到的强化，也不写入记忆。')
             self.damage_result = {'scenario':scenario,'result':result}
+            if self.calculation_scope.currentData()=='archive':self.damage_result['calculation_mode']='archive'
             for receive in self._scenario_receivers:receive(scenario)
             self.charge_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==3)
             self.shield_timeline_button.setEnabled(op=='mechanist' and scenario['skill']==2)
@@ -2122,14 +2139,28 @@ class MainWindow(QMainWindow):
         if not self.damage_result:return
         if self.raw_damage.isChecked():
             self.show_damage_text(json.dumps(self.damage_result,ensure_ascii=False,indent=2))
-        else:self.show_damage_text(format_report(self.damage_result['result'],technical=self.damage_technical.isChecked()))
+        else:
+            text=format_report(self.damage_result['result'],technical=self.damage_technical.isChecked())
+            if self.damage_result.get('calculation_mode')=='archive':text='档案预览 · 未套用本局分队与难度\n'+text
+            self.show_damage_text(text)
 
     def show_damage_text(self,text):
         target=self.target_enemy.currentData() or {}
-        key=(self.operator.currentData(),self.skill.currentData(),self.raw_damage.isChecked(),
+        key=(self.operator.currentData(),self.skill.currentData(),self.raw_damage.isChecked(),self.calculation_scope.currentData(),
              self.damage_technical.isChecked() if hasattr(self,'damage_technical') else False,
              self.target_stage.currentData(),target.get('enemy_id'),target.get('level'))
-        replace_text(self.damage_text,text,preserve=self.damage_detail_key==key)
+        keep=self.damage_detail_key==key;selected=self.damage_sections.currentText()if keep else '总览'
+        changed=replace_text(self.damage_text,text,preserve=keep)
+        if changed:
+            with QSignalBlocker(self.damage_sections):
+                self.damage_sections.clear();self.damage_sections.addItem('总览',None)
+                block=self.damage_text.document().firstBlock()
+                while block.isValid():
+                    heading=block.text()
+                    if heading.startswith('【')and heading.endswith('】'):
+                        self.damage_sections.addItem(heading[1:-1],'mechanism-block-'+str(block.blockNumber()))
+                    block=block.next()
+                self.damage_sections.setCurrentIndex(max(0,self.damage_sections.findText(selected)))
         self.damage_detail_key=key
 
     def make_chat_tab(self):

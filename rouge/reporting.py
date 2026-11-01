@@ -1497,7 +1497,7 @@ def build_report(scenario,result):
 def format_report(result,*,technical=False):
     estimate=result['estimate'];report=result['report'];stats=estimate['base_stats'];training=estimate['training']
     def number(value):
-        if value is None:return '未知（需要条件或尚未建模）'
+        if value is None:return '未知'
         if isinstance(value,str):return value
         return f'{value:,.2f}'.rstrip('0').rstrip('.')
     sources=[]
@@ -1542,9 +1542,9 @@ def format_report(result,*,technical=False):
     rank=report['skill_rank'];rank_text=f'{rank}级' if rank<=7 else f'7级 · 专精{rank-7}'
     partial_relics=report.get('relic_coverage',{}).get('status')=='partial'
     lines=[report['operator']['name']+' · '+professions.get(report['operator']['profession'],'职业未确认'),
-        '计算状态：'+('支持范围内估算' if estimate['complete'] else '不完整（见待确认与适用范围）'),
+        '计算状态：'+('支持范围内估算' if estimate['complete'] else '不完整（部分条件待补充）'),
         '', '【培养信息】',f"精英 {training['elite']} · 等级 {training['level']} · 潜能 {training['potential']} · 信赖加成进度 {training['trust']}%",
-        '', '【预计属性】','含已支持的天赋和藏品；不是未修正基础值。',
+        '', '【预计属性】','已计入适用的天赋与藏品。',
         f"生命值：{number(stats['hp'])}    攻击力：{number(stats['attack'])}",
         f"防御：{number(stats['defense'])}    法抗：{number(stats['resistance'])}",
         f"再部署时间：{stats['redeploy_seconds']:.2f} 秒    阻挡数：{number(stats['block_count'])}",

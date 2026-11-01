@@ -56,7 +56,8 @@ class RelicReportScopeReviewTests(unittest.TestCase):
             before,after=self.compare({'operator':'mechanist','skill':3,
                 'relic_ids':['rogue_6_relic_legacy_60'],'relic_context':{'gold':gold}})
             self.assertEqual(after['report'],before['report'])
-            self.assertEqual(reporting.format_report(after),self.old.format_report(before))
+            expected=self.old.format_report(before).replace('未知（需要条件或尚未建模）','未知').replace('不完整（见待确认与适用范围）','不完整（部分条件待补充）').replace('含已支持的天赋和藏品；不是未修正基础值。','已计入适用的天赋与藏品。')
+            self.assertEqual(reporting.format_report(after),expected)
 
     def test_recruitment_unknown_then_confirmed_keeps_partial_values_and_clears_notice(self):
         scenario={'operator':'mechanist','skill':3,'relic_ids':['rogue_6_relic_cargo_10']}

@@ -214,3 +214,5 @@ Qt已有置顶及整窗输入穿透标志，但“全部穿透”会使该窗口
 [第465节](research/reference-theme-465/README.md)：复用固定版本PyQtDarkTheme生成静态三套主题；原生共享窗按页面切换，不修改系统和应用全局配色。坎诺特链接沿准确关卡、敌人和奖励导航。
 
 [第466节](research/workspace-466/README.md)：采用Qt支持的工作区所有权迁移，保留原控制器与稳定workspace引用；复用固定superqt折叠，按连接方式隐藏无关字段。
+
+[第467节](research/calculator-467/README.md)：复用固定superqt折叠和Qt文本锚点，保留原报告及控件；按文档真实标题建立结果导航，不复制计算公式。显式档案预览供当前计算使用，保持本局记录。
