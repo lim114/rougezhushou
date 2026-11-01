@@ -636,5 +636,7 @@ ADDITIONAL_MODULES += ('tests.test_owned_window_follow_review',)
 
 ADDITIONAL_MODULES += ('tests.test_player_window_frame_review',)
 
+ADDITIONAL_MODULES += ('tests.test_notebook_controls_review',)
+
 if __name__ == '__main__':
     sys.exit(main())

@@ -21,10 +21,10 @@ class InlineNotesPanel(RecentNotesPanel):
         self.stack.addWidget(editor)
         self.stack.setCurrentWidget(self.preview)
         self.parent_toggle=QCheckBox('显示上级内容');self.layout().itemAt(2).layout().insertWidget(1,self.parent_toggle)
-        self.parent_area=QScrollArea();self.parent_area.setObjectName('noteAncestorScroll');self.parent_area.setWidgetResizable(True);self.parent_area.setMinimumHeight(150);self.parent_area.setMaximumHeight(200)
+        self.parent_area=QScrollArea();self.parent_area.setObjectName('noteAncestorScroll');self.parent_area.setWidgetResizable(True);self.parent_area.setMaximumHeight(200)
         self.parent_area.viewport().setObjectName('noteAncestorsViewport')
         self.parent_body=QWidget();self.parent_body.setObjectName('noteAncestors');self.parent_layout=QVBoxLayout(self.parent_body);self.parent_area.setWidget(self.parent_body)
-        self.layout().insertWidget(3,self.parent_area);self.parent_area.hide();self.parent_toggle.toggled.connect(self.refresh_parents)
+        self.layout().insertWidget(3,self.parent_area);self.parent_area.hide();self.parent_toggle.toggled.connect(self.refresh_parents);self.parent_toggle.toggled.connect(self.fit_content)
         self.parent_signature=None;self.parent_views=[];self.editRequested.connect(self.open_editor)
         self.inline_ready=True
         self.compact_controls()
@@ -33,16 +33,24 @@ class InlineNotesPanel(RecentNotesPanel):
     def compact_controls(self):
         """Reuse the editor's real actions; keep uncommon controls off the page."""
         body=self.layout();bar=body.itemAt(2).layout();editor=self.note_editor
-        self.options=QWidget();options=QVBoxLayout(self.options);options.setContentsMargins(0,0,0,0)
-        for widget in (self.scene,self.status,self.edit):
-            body.removeWidget(widget);options.addWidget(widget)
-        for widget in (self.follow,self.reload):bar.removeWidget(widget);options.addWidget(widget)
-        for widget in (editor.autosave,editor.status):editor.layout().removeWidget(widget);options.addWidget(widget)
-        options.addLayout(editor.layout().takeAt(editor.layout().count()-1).layout())
+        self.options=QWidget();self.options.setObjectName('noteOptions');options=QVBoxLayout(self.options);options.setContentsMargins(0,0,0,0)
+        from .flow_layout import FlowLayout
+        self.option_actions=QWidget();self.option_actions.setObjectName('noteOptionActions');self.option_flow=FlowLayout(self.option_actions);self.option_flow.setSpacing(6)
+        options.addWidget(self.option_actions)
+        body.removeWidget(self.edit);bar.removeWidget(self.follow);bar.removeWidget(self.reload);editor.layout().removeWidget(editor.autosave)
+        for widget in (self.edit,self.follow,self.reload,editor.autosave):
+            self.option_flow.addWidget(widget)
+        actions=editor.layout().takeAt(editor.layout().count()-1).layout()
+        while actions.count():self.option_flow.addWidget(actions.takeAt(0).widget())
+        for widget in (self.scene,self.status):body.removeWidget(widget);options.addWidget(widget)
+        for widget in (editor.context,editor.status):editor.layout().removeWidget(widget)
+        body.insertWidget(2,editor.context);body.insertWidget(3,editor.status);editor.status.hide()
         editor.layout().setContentsMargins(0,0,0,0);editor.pages.tabBar().hide()
         self.save_state=QLabel();bar.addWidget(self.save_state)
         self.more=QToolButton();self.more.setText('更多操作');self.more.setCheckable(True);bar.addWidget(self.more)
-        body.insertWidget(3,self.options);self.options.hide();self.more.toggled.connect(self.options.setVisible)
+        self.options_scroll=QScrollArea();self.options_scroll.setObjectName('noteOptionsScroll');self.options_scroll.setWidgetResizable(True);self.options_scroll.setFrameShape(QScrollArea.Shape.NoFrame);self.options_scroll.setWidget(self.options)
+        self.options_scroll.viewport().setObjectName('noteOptionsViewport');body.insertWidget(4,self.options_scroll);self.options_scroll.hide()
+        self.more.toggled.connect(self.options_scroll.setVisible);self.more.toggled.connect(self.update_save_state);self.more.toggled.connect(self.fit_content)
         self.card=QWidget();self.card.setObjectName('noteCard');card=QVBoxLayout(self.card);card.setContentsMargins(0,0,0,0);card.setSpacing(0)
         self.card_title=QLabel();self.card_title.setObjectName('noteCardTitle');self.card_title.setWordWrap(True)
         for surface in (self,self.card,self.card_title):surface.setFocusPolicy(Qt.FocusPolicy.ClickFocus);surface.installEventFilter(self)
@@ -51,6 +59,7 @@ class InlineNotesPanel(RecentNotesPanel):
         self.preview.setToolTip('点击正文即可编辑；离开输入区后按自动保存设置处理。也可按回车编辑。')
         self.preview.viewport().installEventFilter(self);self.preview.installEventFilter(self)
         editor.editor.installEventFilter(self)
+        self.parent_area.viewport().installEventFilter(self)
         self.leave_timer=QTimer(self);self.leave_timer.setSingleShot(True);self.leave_timer.timeout.connect(self.leave_editor)
         self.preview.document().documentLayout().documentSizeChanged.connect(self.fit_content)
         editor.editor.textChanged.connect(self.fit_content)
@@ -64,27 +73,38 @@ class InlineNotesPanel(RecentNotesPanel):
         self.save_state.setText('未保存' if editor.dirty else '已保存' if editor.key and editor.store.path(editor.key).is_file() else '自动保存' if editor.autosave.isChecked() else '手动保存')
         self.save_state.setToolTip(editor.status.text())
         content=editor.content if self.stack.currentWidget()is editor else self.context
+        editor.context.setVisible(self.stack.currentWidget()is editor and self.key!=editor.key)
+        editor.status.setVisible(self.more.isChecked() or editor.dirty)
         title=content['title'] if content else '选择一份笔记'
         if content and self.archived_key==content_key(content):title+='（原分类暂不可核对）'
         self.card_title.setText(title)
 
     def fit_content(self,*_):
         if not self.inline_ready:return
-        available=max(56,self.height()-self.card.y()-self.card_title.height()-20)
-        if self.stack.currentWidget()is self.note_editor:
+        self.options_scroll.setMaximumHeight(4*self.reload.sizeHint().height())
+        if self.parent_toggle.isChecked():
+            height=self.parent_layout.totalHeightForWidth(self.parent_area.viewport().width()) if self.parent_layout.hasHeightForWidth() else self.parent_layout.sizeHint().height()
+            self.parent_area.setFixedHeight(min(200,max(self.fontMetrics().lineSpacing(),height)))
+        minimum=56
+        editing=self.stack.currentWidget()is self.note_editor
+        if editing:
             edit=self.note_editor.editor;desired=self.note_editor.height()-edit.viewport().height()+2*edit.document().documentMargin();block=edit.document().begin()
+            minimum=ceil(desired+4*edit.fontMetrics().lineSpacing())
+        else:desired=self.preview.document().size().height()+24
+        available=max(minimum,self.height()-self.card.y()-self.card_title.height()-20)
+        if editing:
             # QPlainTextDocumentLayout.documentSize height counts paragraphs,
             # so use Qt's actual wrapped block rectangles, not a pixel guess.
             while block.isValid()and desired<available:
                 desired+=edit.blockBoundingRect(block).height();block=block.next()
-        else:desired=self.preview.document().size().height()+24
-        self.stack.setFixedHeight(min(available,max(56,ceil(desired))))
+        self.stack.setFixedHeight(min(available,max(minimum,ceil(desired))))
 
     def resizeEvent(self,event):
         super().resizeEvent(event)
         self.fit_content()
 
     def eventFilter(self,watched,event):
+        if event.type()==QEvent.Type.Resize and watched is self.parent_area.viewport():self.fit_content()
         if watched in (self,self.card,self.card_title) and event.type()==QEvent.Type.MouseButtonPress and event.button()==Qt.MouseButton.LeftButton:
             self.note_editor.editor.clearFocus();self.leave_editor()
         if watched is self.preview.viewport() and event.type()==QEvent.Type.MouseButtonPress:
@@ -194,7 +214,6 @@ class InlineNotesPanel(RecentNotesPanel):
                 self.status.setText('上方是最近读取的场景；正在编辑的笔记仍对应“'+editor.content['title']+'”，未随读取转移。')
                 self.edit.setEnabled(True)
                 self.more.setChecked(True)
-            editor.context.setVisible(self.key!=editor.key)
         self.refresh_parents()
         self.fit_content()
         if hasattr(self,'save_state'):self.update_save_state()
@@ -219,11 +238,13 @@ class InlineNotesPanel(RecentNotesPanel):
             item=self.parent_layout.takeAt(0)
             if item.widget():item.widget().hide();item.widget().deleteLater()
         self.parent_views=[]
-        if not values:self.parent_layout.addWidget(QLabel('当前场景没有可唯一对应的上级范围；可手选楼层或节点后查看通用笔记。'))
+        if not values:
+            label=QLabel('当前场景没有可唯一对应的上级范围；可手选楼层或节点后查看通用笔记。');label.setWordWrap(True);self.parent_layout.addWidget(label)
         for context,text,error in values:
             title=QPushButton(context['title']);title.setToolTip('打开此范围的通用笔记');title.clicked.connect(lambda _checked=False,c=context:self.open_scope(c));self.parent_layout.addWidget(title)
             view=NotePreview();view.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff);view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
             view.document().documentLayout().documentSizeChanged.connect(lambda size,v=view:v.setFixedHeight(max(70,ceil(size.height())+32)))
+            view.document().documentLayout().documentSizeChanged.connect(self.fit_content)
             view.read_markdown(error or text or '此范围尚无笔记。');view.linkBlocked.connect(lambda:self.status.setText('上级笔记中的链接不会自动打开。'))
             self.parent_layout.addWidget(view);self.parent_views.append(view)
 

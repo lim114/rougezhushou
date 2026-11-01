@@ -7,6 +7,7 @@ QWidget#sceneNotesSurface QToolButton{background:#e6e6eb;color:#303139;border:0;
 QWidget#sceneNotesSurface QComboBox{background:#e6e6eb;color:#303139;border:1px solid #cdcdd5;border-radius:9px;padding:3px 7px;}
 QWidget#sceneNotesSurface QComboBox QAbstractItemView{background:white;color:#303139;selection-background-color:#cde5eb;selection-color:#25262b;}
 QWidget#sceneNotesSurface QScrollArea,QWidget#noteAncestors,QWidget#noteAncestorsViewport{background:#f5f5f7;border:0;}
+QWidget#noteOptions,QWidget#noteOptionActions,QWidget#noteOptionsViewport{background:#f5f5f7;border:0;}
 QScrollArea#noteAncestorScroll QScrollBar:vertical{background:#ededf1;width:10px;}
 QScrollArea#noteAncestorScroll QScrollBar::handle:vertical{background:#b3b5bf;border-radius:4px;min-height:24px;}
 QWidget#sceneNotesSurface,QDialog#sceneNotesEditor,QDialog#sceneNotesWindow,QDialog#sceneNotesLibrary{background:#f5f5f7;color:#25262b;}
