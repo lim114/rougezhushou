@@ -18,14 +18,15 @@ class CurrentBossDocumentsPanel(QWidget):
         self.result = None; self.selected_key = None; self._view_key = None
         self._initial = True; self.map_dialog = None
         layout = QVBoxLayout(self)
-        self.notice = QLabel(model.NOTICE); self.notice.setWordWrap(True); layout.addWidget(self.notice)
-        self.refresh_button = QPushButton('重新核对本关完整机制资料'); layout.addWidget(self.refresh_button)
+        self.notice = QLabel(model.NOTICE); self.notice.setWordWrap(True)
+        self.refresh_button = QPushButton('重新核对本关完整机制资料')
         self.enemy_combo = QComboBox(); self.enemy_combo.setAccessibleName('本关具有完整机制文献的准确敌人条目')
         self.enemies = BranchChoice(self.enemy_combo, [], overview_label='总览（本关完整文献）',
             placeholder='请选择准确敌人条目；不表示实际出现或当前形态')
-        layout.addWidget(self.enemies)
-        self.portrait = QLabel(); self.portrait.setFixedHeight(70); self.portrait.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(self.portrait)
+        self.portrait = QLabel(); self.portrait.setMinimumSize(70,70); self.portrait.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        from .mechanism_reader_header import MechanismReaderHeader
+        self.reading_header = MechanismReaderHeader(self.notice, self.enemies, self.portrait, self.refresh_button)
+        layout.addWidget(self.reading_header)
         self.topic = QComboBox(); self.topic.setAccessibleName('完整机制文献的阅读分支'); layout.addWidget(self.topic)
         bar = QHBoxLayout(); self.related = QComboBox(); self.related.setAccessibleName('本关明确关联的准确敌人条目')
         self.related_button = QPushButton('在本关敌人页查看'); bar.addWidget(self.related, 1); bar.addWidget(self.related_button)

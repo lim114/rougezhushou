@@ -167,3 +167,5 @@ REA对三份桥接源码的语法检查/容器覆盖完整，不代表语义或�
 [作战查阅链与原生OCR可行性](research/battle-reference-chain-20261101/README.md)：五类作战附窗与完整对话统一，原面板和关闭/刷新回调AST保持；完整敌人表只收拢空列，来源/未知与0保留，仍非全程序回顾完成。
 
 [机制窗与OCR差异核对](research/mechanism-reader-windows-20261101/README.md)：七类机制窗与五类附属地图关闭路径按可达性精简；来源/地图清理保留，原机制模型与其余面板方法不改，整程序未完成。
+
+[机制阅读密度与OCR反例](research/mechanism-reading-density-20261101/README.md)：七类机制页首屏空间实测扩容，完整文本及其它面板/对话方法保持；新共享头部复用固定来源superqt，不把全部代码/视频视为已完成。

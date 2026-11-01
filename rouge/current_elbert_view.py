@@ -15,12 +15,14 @@ class CurrentElbertPanel(QWidget):
         self.stage_id=stage_id;self.entry_key=enemy_key;self._initial=True
         self.base=self.result=self.source_identity=self.selected_key=self._view_key=None
         self.related_request=None
-        layout=QVBoxLayout(self);self.notice=QLabel(model.NOTICE);self.notice.setWordWrap(True);layout.addWidget(self.notice)
-        self.refresh_button=QPushButton('重新核对本关机制资料');layout.addWidget(self.refresh_button)
+        layout=QVBoxLayout(self);self.notice=QLabel(model.NOTICE);self.notice.setWordWrap(True)
+        self.refresh_button=QPushButton('重新核对本关机制资料')
         self.entity_combo=QComboBox();self.entity_combo.setAccessibleName('本关首领与独立火种')
         self.entities=BranchChoice(self.entity_combo,[],overview_label='总览（本关相关实体）',placeholder='请选择本关首领或火种')
-        layout.addWidget(self.entities)
-        self.portrait=QLabel();self.portrait.setFixedHeight(70);self.portrait.setAlignment(Qt.AlignmentFlag.AlignCenter);layout.addWidget(self.portrait)
+        self.portrait=QLabel();self.portrait.setMinimumSize(70,70);self.portrait.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        from .mechanism_reader_header import MechanismReaderHeader
+        self.reading_header = MechanismReaderHeader(self.notice, self.entities, self.portrait, self.refresh_button)
+        layout.addWidget(self.reading_header)
         bar=QHBoxLayout();self.topic=QComboBox();self.topic.setAccessibleName('所选实体的机制分支')
         self.related_button=QPushButton('查看本关的关联实体');bar.addWidget(self.topic,1);bar.addWidget(self.related_button);layout.addLayout(bar)
         self.tabs=QTabWidget();self.player=QPlainTextEdit();self.technical=QPlainTextEdit()

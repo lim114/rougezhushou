@@ -1,3 +1,11 @@
+<!-- mechanism-reading-density-20261101:start -->
+## 实现维护 · 机制资料首屏扩容、适用说明折叠与原生OCR反例核对
+
+七类机制页复用既有外部superqt折叠说明、头像/选择同排，760×600正文增高52–68逻辑像素；正文与来源全文保留，刷新状态不变。独立人工标注的公开OCR对照出现Maa漏读反例，生产不替换。
+
+21不同方法（四个隔离进程）、220原生检查通过；九张细节及入口Qt图已看、测试窗更新、私人六路径保持。447、后续448、756选择器、下次完整455；其余正文整理、完整数值、全视频、识别连续实机与P3/P2/P1未完成。[回执](verification/maintenance/mechanism-reading-density-20261101/summary.json)。
+<!-- mechanism-reading-density-20261101:end -->
+
 <!-- mechanism-reader-windows-20261101:start -->
 ## 实现维护 · 七类完整机制窗统一、关闭清理精简与原生OCR差异核对
 

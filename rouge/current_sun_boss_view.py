@@ -15,14 +15,15 @@ class CurrentSunBossPanel(QWidget):
         self.stage_id = stage_id; self.entry_key = enemy_key; self.result = None
         self.selected_key = None; self._view_key = None; self._initial = True; self.map_dialog = None
         layout = QVBoxLayout(self)
-        self.notice = QLabel(model.NOTICE); self.notice.setWordWrap(True); layout.addWidget(self.notice)
-        self.refresh_button = QPushButton('重新核对本关形态资料'); layout.addWidget(self.refresh_button)
+        self.notice = QLabel(model.NOTICE); self.notice.setWordWrap(True)
+        self.refresh_button = QPushButton('重新核对本关形态资料')
         self.form_combo = QComboBox(); self.form_combo.setAccessibleName('同一首领的准确形态资料')
         self.forms = BranchChoice(self.form_combo, [], overview_label='总览（同一首领的资料）',
                                   placeholder='请选择形态资料；不代表本局当前形态')
-        layout.addWidget(self.forms)
-        self.portrait = QLabel(); self.portrait.setFixedHeight(70); self.portrait.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(self.portrait)
+        self.portrait = QLabel(); self.portrait.setMinimumSize(70,70); self.portrait.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        from .mechanism_reader_header import MechanismReaderHeader
+        self.reading_header = MechanismReaderHeader(self.notice, self.forms, self.portrait, self.refresh_button)
+        layout.addWidget(self.reading_header)
         bar = QHBoxLayout(); self.topic = QComboBox(); self.topic.setAccessibleName('形态机制阅读分支')
         for key, label in model.TOPICS: self.topic.addItem(label, key)
         self.related = QComboBox(); self.related.setAccessibleName('同一首领的其它准确形态资料')

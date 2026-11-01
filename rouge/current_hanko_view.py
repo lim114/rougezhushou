@@ -15,15 +15,17 @@ class CurrentHankoPanel(QWidget):
         self.stage_id = stage_id; self.entry_key = enemy_key; self.result = None
         self.selected_key = None; self._view_key = None; self._initial = True
         layout = QVBoxLayout(self)
-        self.notice = QLabel(model.NOTICE); self.notice.setWordWrap(True); layout.addWidget(self.notice)
-        self.refresh_button = QPushButton('重新核对本关机制资料'); layout.addWidget(self.refresh_button)
+        self.notice = QLabel(model.NOTICE); self.notice.setWordWrap(True)
+        self.refresh_button = QPushButton('重新核对本关机制资料')
         self.entity_combo = QComboBox()
         self.entity_combo.setAccessibleName('本关首领与独立烟雾实体')
         self.entities = BranchChoice(self.entity_combo, [], overview_label='总览（本关相关实体）',
                                      placeholder='请选择本关的首领或烟雾弹')
-        layout.addWidget(self.entities)
-        self.portrait = QLabel(); self.portrait.setFixedHeight(74)
-        self.portrait.setAlignment(Qt.AlignmentFlag.AlignCenter); layout.addWidget(self.portrait)
+        self.portrait = QLabel(); self.portrait.setMinimumSize(74,74)
+        self.portrait.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        from .mechanism_reader_header import MechanismReaderHeader
+        self.reading_header = MechanismReaderHeader(self.notice, self.entities, self.portrait, self.refresh_button)
+        layout.addWidget(self.reading_header)
         bar = QHBoxLayout(); self.topic = QComboBox(); self.topic.setAccessibleName('当前实体的机制分支')
         self.related = QComboBox(); self.related.setAccessibleName('本关独立关联实体')
         self.related_button = QPushButton('查看这份关联实体')
