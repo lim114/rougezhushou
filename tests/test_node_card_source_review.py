@@ -89,8 +89,8 @@ class SourceAndCardTests(unittest.TestCase):
             self.assertIsNone(damaged.data);self.assertEqual(model.historical_rows('zone_1',2,damaged.index),())
 
     def test_statistics_dialog_and_source_keep_same_snapshot_after_failed_update(self):
-        from rouge.public_node_statistics_view import StatisticsDialog
-        source=self.source();source.accept(public_example());dialog=StatisticsDialog(source.cache,source=source)
+        from rouge.public_node_statistics_view import StatisticsPanel
+        source=self.source();source.accept(public_example());dialog=StatisticsPanel(source.cache,source=source)
         self.addCleanup(dialog.close);dialog.distance.setValue(2)
         self.assertEqual(dialog.table.item(0,1).text(),'70.00%')
         dialog.accept_data({'data':public_example(80)})

@@ -318,10 +318,7 @@ class MainWindow(QMainWindow):
         return self._node_statistics_source
 
     def open_public_statistics(self):
-        from .public_node_statistics_view import StatisticsDialog
-        if self.public_statistics is None:self.public_statistics=StatisticsDialog(ROOT/'.local/public-statistics/nodes.json',self,source=self.node_statistics_source())
-        self.public_statistics.set_map_node(self.map_view.graph,self.map_view.selected)
-        self.public_statistics.show()
+        self.show_compact();return self.compact_window.open_map_statistics(self.map_view.graph,self.map_view.selected)
 
     def open_scene_notes(self):
         content=self.run.state.get('last_node_content')

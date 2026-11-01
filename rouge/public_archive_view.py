@@ -4,10 +4,10 @@ from threading import Thread
 from datetime import datetime,timezone,timedelta
 from hashlib import sha256
 import json,os
-from PySide6.QtCore import Signal,Qt,QUrl
+from PySide6.QtCore import Signal,Qt,QUrl,QTimer
 from PySide6.QtGui import QDesktopServices
 from .view_catalog import relic_icon,relic_icon_note
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QComboBox,QListWidget,QListWidgetItem,QTableWidget,QTableWidgetItem,QPlainTextEdit,QPushButton,QTabWidget,QCheckBox,QSizePolicy
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QComboBox,QListWidget,QListWidgetItem,QTableWidget,QTableWidgetItem,QPlainTextEdit,QPushButton,QTabWidget,QCheckBox,QSizePolicy,QHeaderView,QAbstractItemView
 from . import public_archive as model
 from .ui_state import replace_text
 class ArchivePanel(QWidget):
@@ -21,7 +21,12 @@ class ArchivePanel(QWidget):
         page=QWidget();layout=QVBoxLayout(page);bar=QHBoxLayout();self.version=QComboBox();self.pool_search=QLineEdit();self.pool_search.setPlaceholderText('搜索藏品、零件、效果或藏品池');bar.addWidget(self.version);bar.addWidget(self.pool_search,1);layout.addLayout(bar)
         self.pools=QListWidget();self.pools.setMaximumHeight(155);layout.addWidget(self.pools)
         self.sources=QComboBox();layout.addWidget(self.sources);self.pool_note=QPlainTextEdit();self.pool_note.setReadOnly(True);self.pool_note.setMaximumHeight(100);layout.addWidget(self.pool_note)
-        self.members=QTableWidget(0,4);self.members.setHorizontalHeaderLabels(['物品','候选出现频率','出现次数／统计分母','效果说明']);self.members.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers);self.members.horizontalHeader().setStretchLastSection(True);layout.addWidget(self.members,1)
+        self.members=QTableWidget(0,4);self.members.setHorizontalHeaderLabels(['物品','候选出现频率','出现次数／统计分母','效果说明']);self.members.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+        for column in range(3):self.members.horizontalHeader().setSectionResizeMode(column,QHeaderView.ResizeMode.ResizeToContents)
+        self.members.horizontalHeader().setSectionResizeMode(3,QHeaderView.ResizeMode.Stretch);self.members.setVerticalScrollMode(QAbstractItemView.ScrollMode.ScrollPerPixel);layout.addWidget(self.members,1)
+        # Qt commits column geometry on its next event-loop turn (qtableview.cpp).
+        self.member_resize=QTimer(self);self.member_resize.setSingleShot(True);self.member_resize.timeout.connect(self.members.resizeRowsToContents)
+        self.members.horizontalHeader().sectionResized.connect(lambda column,*_:self.member_resize.start()if column==3 else None)
         self.tabs.addTab(page,'藏品与掉落')
         page=QWidget();layout=QVBoxLayout(page);bar=QHBoxLayout();self.floor=QComboBox()
         for i in range(1,7):self.floor.addItem(f'第{i}层',i)
@@ -110,8 +115,7 @@ class ArchivePanel(QWidget):
             if row['id']==selected:self.members.setCurrentCell(i,column)
             note=relic_icon_note(icon)
             if note:self.members.item(i,0).setToolTip(row['name']+'\n'+note)
-        self.members.resizeColumnsToContents();self.members.setColumnWidth(3,280);self.members.resizeRowsToContents()
-        self.members.verticalScrollBar().setValue(vertical);self.members.horizontalScrollBar().setValue(horizontal)
+        self.member_resize.start();self.members.verticalScrollBar().setValue(vertical);self.members.horizontalScrollBar().setValue(horizontal)
     def render_events(self,*_):
         current=self.events.currentItem();selected=current.data(Qt.ItemDataRole.UserRole)if current else None
         rows=model.event_rows(self.data,self.floor.currentData()or 1,self.treehole.isChecked(),self.event_search.text())if self.data else[]

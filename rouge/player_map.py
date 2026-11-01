@@ -143,6 +143,7 @@ class PreviewMapView(MapView):
         self.hover_id=None;self.nodeHovered.emit('',QPoint());super().leaveEvent(event)
 
 class MapPanel(QWidget):
+    statisticsRequested=Signal(object,object)
     def __init__(self,owner,*,statistics_source=None,page_owner=None):
         super().__init__();self.owner=owner;self.page_owner=page_owner;self.statistics_source=statistics_source;self.epoch=None;self.graphs={};self.readings={};self.entry_readings={};self.selected_zone=None;self.rows={};self.selected_reference=None;self.reading_key=None;self.reference_popup=None;self.reference_binding=None
         from .flow_layout import FlowLayout
@@ -152,6 +153,7 @@ class MapPanel(QWidget):
         self.zoom=QComboBox();self.zoom.addItems(['适应窗口','放大125%','放大150%','放大200%'])
         self.details_toggle=QPushButton('节点资料');self.details_toggle.setCheckable(True);body.addLayout(head)
         self.finder_toggle=QPushButton('地图工具');self.finder_toggle.setCheckable(True);head.addWidget(self.finder_toggle)
+        self.statistics_button=QPushButton('历史统计');self.statistics_button.setVisible(statistics_source is not None);head.addWidget(self.statistics_button);self.statistics_button.clicked.connect(lambda:self.statisticsRequested.emit(self.view.graph,self.view.selected))
         self.finder=QWidget();finder=QVBoxLayout(self.finder);finder.setContentsMargins(0,0,0,0);body.addWidget(self.finder);self.finder.hide();self.finder_toggle.toggled.connect(self.finder.setVisible)
         self.latest_position=QPushButton('回到最近已读位置');self.latest_position.clicked.connect(self.focus_latest_position)
         controls=QWidget();tools=FlowLayout(controls);self.scope_toggle=QPushButton('地图说明');self.scope_toggle.setCheckable(True)
@@ -181,7 +183,7 @@ class MapPanel(QWidget):
         self.detail=QPlainTextEdit();self.detail.setReadOnly(True);right.addWidget(self.detail,2)
         self.open_button=QPushButton('打开完整资料');self.open_button.setEnabled(False);right.addWidget(self.open_button)
         self.split.addWidget(self.drawer);self.split.setSizes([700,300]);self.drawer.hide();body.addWidget(self.split,1)
-        legend=QLabel('实色：已读　半透明：模板固定　金字：本局记录　?：未确认　历史比例不是本局概率；连线不代表现在可通行');legend.setWordWrap(True);information.addWidget(legend);body.insertWidget(2,self.information)
+        legend=QLabel('实色：已读　半透明：模板固定　金字：本局记录　?：待读取　比例：历史统计');legend.setWordWrap(True);information.addWidget(legend);body.insertWidget(2,self.information)
         self.floors.currentChanged.connect(self.show_floor);self.zoom.currentIndexChanged.connect(self.change_zoom);self.view.nodeSelected.connect(self.select_interactive)
         self.details_toggle.toggled.connect(self.drawer.setVisible);self.entries.currentItemChanged.connect(self.read_entry);self.open_button.clicked.connect(self.open_entry);self.refresh()
         self.entry_search.textChanged.connect(lambda _text:self.selected(self.view.selected))
@@ -308,7 +310,7 @@ class MapPanel(QWidget):
                 if item.data(0,Qt.ItemDataRole.UserRole)==saved[1]:self.entries.setCurrentItem(item)
         self.detail.verticalScrollBar().setValue(saved[2])
         self.restore_entry_expansion()
-        name,_=zone_info(graph);self.status.setText(name+(' · 本局历史记录'if historical else' · 最近确认的地图')+'；未揭示内容仍是候选。'if graph else'尚无本局地图记录；读到地图后自动显示，不填入示例。')
+        name,_=zone_info(graph);self.status.setText(name+(' · 本局历史记录'if historical else' · 最近读取')if graph else'等待地图读取，随后自动显示。')
         from .run_config import difficulty_value
         config=self.owner.run.state.get('config',{});grade=difficulty_value(config.get('difficulty'))
         squad=config.get('squad',{}).get('name');squad=squad if isinstance(squad,str) and squad else'未读'

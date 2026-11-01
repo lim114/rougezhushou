@@ -107,10 +107,10 @@ class GameHover(QObject):
         if self.card is None:
             self.card=ItemHoverCard(self.companion)
             self.card.setProperty('playerVisibility','ephemeral')
-            self.card.poolRequested.connect(lambda version,identity:self.companion.open_owner_dialog(lambda:self.owner.open_public_pool_reference(version,identity),'public_archive'))
+            self.card.poolRequested.connect(self.companion.open_archive_pool)
         row={'id':item['id'],'name':record['name'],'icon':record.get('iconId')}
         if not self.card.install(row,panel.version.currentData(),panel.source_index,panel.source_signature):return
-        self.card.notice.setText('游戏画面悬停资料；不表示本局已持有。\n'+self.card.notice.text())
+        self.card.notice.setText('游戏藏品 · '+self.card.notice.text())
         self.card.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating);self.card.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,True)
         rect=snapshot['logical_client'];physical=snapshot['physical_client'];point=QPoint(round(rect.left()+(snapshot['cursor'][0]-physical[0])*rect.width()/physical[2]),round(rect.top()+(snapshot['cursor'][1]-physical[1])*rect.height()/physical[3]))
         area=rect.intersected(snapshot['screen'].availableGeometry())

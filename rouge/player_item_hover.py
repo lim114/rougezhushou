@@ -38,7 +38,7 @@ class ItemHoverCard(QDialog):
         self.signature=key;self.identity=row['id'];self.version=version;self.index=index
         self.title.setText(row['name']);self.picture.clear()
         self.picture.setPixmap(relic_icon(row.get('icon')or'').pixmap(46,46))
-        self.notice.setText(VERSION_LABELS.get(version,'未确认资料范围')+' · 当前DLC适用性待核验。\n比例为历史候选出现频率，不是抽取权重或本局获得概率；不同来源可能重叠，不相加。仅本机查询，不上传本局。')
+        self.notice.setText(VERSION_LABELS.get(version,'资料版本待选择')+' · 藏品来源')
         note=relic_icon_note(row.get('icon')or'')
         if note:self.notice.setText(note+'\n'+self.notice.text())
         self.pools.blockSignals(True);self.pools.clear()
@@ -49,7 +49,7 @@ class ItemHoverCard(QDialog):
         self.cards.install(source_cards(index,version,row['id']));self.read_pool();return True
     def read_pool(self,*_):
         pool=self.pools.currentData();self.open_button.setEnabled(pool is not None and self.index is not None)
-        text=self.index.describe(self.version,self.identity,pool)if self.index and pool else'所选资料范围未列出此物品的所属池，不能据此认定无法获得。'if self.index else'公开资料暂不可用；旧池与统计已清除。'
+        text=self.index.describe(self.version,self.identity,pool)if self.index and pool else'当前资料暂无来源记录。'if self.index else'请先更新公开资料。'
         self.cards.select(pool)
         if self.detail.toPlainText()!=text:self.detail.setPlainText(text)
         from .player_source_map import targets,companion
@@ -57,7 +57,7 @@ class ItemHoverCard(QDialog):
         for kind in targets(self.index,self.version,self.identity,pool):self.map_targets.addItem(kind,kind)
         visible=self.map_targets.count()>0
         self.map_targets.setVisible(visible);self.map_button.setVisible(visible);self.map_button.setEnabled(visible and companion(self)is not None)
-        self.map_button.setToolTip('仅标出本局记录中对应类型及候选位置；来源资料不表示当前可达、会出现此物或必掉。')
+        self.map_button.setToolTip('在地图中标出对应类型的节点。')
     def open_map_source(self,pool_id=None,kind=None):
         from .player_source_map import targets,companion
         pool_id=self.pools.currentData()if pool_id is None else pool_id

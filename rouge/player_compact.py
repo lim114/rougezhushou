@@ -28,7 +28,7 @@ class CompactAssistant(QDialog):
         super().__init__(owner,Qt.WindowType.Tool|Qt.WindowType.FramelessWindowHint)
         self.owner=owner;self.active_popup=None;self.inventory_popup=None;self.map_popup=None;self.setWindowTitle('黑流树海助手')
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground,True);self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating,True)
-        self.buttons={};self.tool_buttons=[];self._dock_positioned=False;self.archive_popup=None
+        self.buttons={};self.tool_buttons=[];self._dock_positioned=False;self.archive_popup=None;self.statistics_popup=None
         self.reference_window=ReferenceWindow(self)
         overview=QWidget();layout=QVBoxLayout(overview);self.context=QLabel();self.context.setWordWrap(True);layout.addWidget(self.context);grid=QGridLayout();self.cards={}
         for i,name in enumerate(overview_facts(owner.run.state)):
@@ -52,7 +52,7 @@ class CompactAssistant(QDialog):
         self.game_hover_enabled=QCheckBox('在游戏藏品上停留5秒后读取资料');self.game_hover_enabled.setChecked(True);layout.addWidget(self.game_hover_enabled)
         self.binding_status=QLabel('尚未找到游戏；可先独立查阅。');self.binding_status.setWordWrap(True);layout.addWidget(self.binding_status)
         public=QPushButton('路标资料：藏品池与节点事件');public.clicked.connect(self.open_archive);layout.addWidget(public)
-        stat=QPushButton('节点历史统计');stat.clicked.connect(lambda:self.open_owner_dialog(owner.open_public_statistics,'public_statistics'));layout.addWidget(stat)
+        stat=QPushButton('节点历史统计');stat.clicked.connect(self.open_statistics);layout.addWidget(stat)
         self.note_library=None;self.note_library_button=QPushButton('查找本机场景笔记');self.note_library_button.clicked.connect(self.open_note_library);layout.addWidget(self.note_library_button)
         close=QPushButton('退出助手');close.clicked.connect(self.exit_application);layout.addWidget(close)
         self.settings_scroll=QScrollArea();self.settings_scroll.setWidgetResizable(True);self.settings_scroll.setWidget(settings);self.settings_popup=ToolPage('工具设置',self.settings_scroll,self,on_show=self.refresh);self.settings_popup.resize(420,570)
@@ -141,22 +141,16 @@ class CompactAssistant(QDialog):
         visible=self.isVisible();self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,value)
         if visible:self.show()
     def present(self,popup):
-        if isinstance(popup,ToolPage):
-            host=self.reference_window
-            if self.active_popup is not None and not isinstance(self.active_popup,ToolPage) and self.active_popup.isVisible():
-                if not self.active_popup.close():self.active_popup.raise_();return False
-            visible=host.isVisible();page_visible=popup.isVisible()
-            if bool(host.windowFlags()&Qt.WindowType.WindowStaysOnTopHint)!=self.pin.isChecked():host.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,self.pin.isChecked())
-            if not host.present(popup):return False
-            self.active_popup=popup
-            if page_visible and popup.on_show is not None:self.refresh()
-            if not visible:
-                screen=self.screen().availableGeometry();size=host.size();x=max(screen.left(),min(self.x(),screen.right()-size.width()+1));y=self.y()-size.height()-8
-                if y<screen.top():y=min(self.y()+self.height()+8,screen.bottom()-size.height()+1)
-                host.move(x,max(screen.top(),y))
-            return True
-        if self.reference_window.isVisible() and not self.reference_window.close():return False
-        self.active_popup=popup;popup.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,self.pin.isChecked());popup.show();popup.raise_();return True
+        host=self.reference_window;visible=host.isVisible();page_visible=popup.isVisible()
+        if bool(host.windowFlags()&Qt.WindowType.WindowStaysOnTopHint)!=self.pin.isChecked():host.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,self.pin.isChecked())
+        if not host.present(popup):return False
+        self.active_popup=popup
+        if page_visible and popup.on_show is not None:self.refresh()
+        if not visible:
+            screen=self.screen().availableGeometry();size=host.size();x=max(screen.left(),min(self.x(),screen.right()-size.width()+1));y=self.y()-size.height()-8
+            if y<screen.top():y=min(self.y()+self.height()+8,screen.bottom()-size.height()+1)
+            host.move(x,max(screen.top(),y))
+        return True
     def refresh(self):
         title=recent_content(self.owner.run.state);self.context.setText('最近读取：'+title if title else'本局信息 · 等待读取节点详情')
         for key,value in overview_facts(self.owner.run.state).items():self.cards[key].setText(value)
@@ -277,6 +271,7 @@ class CompactAssistant(QDialog):
         if self.map_popup is None:
             panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source(),page_owner=self);self.map_popup=ToolPage('地图',panel,self,on_show=self.refresh,theme='light',object_name='videoMapWindow',extra_style='#videoMapWindow QPushButton#popoverCloseButton{color:#303139;font-size:12pt;}');self.map_popup.panel=panel;self.map_popup.resize(1200,460)
             panel.resources.requested.connect(self.open_resource)
+            panel.statisticsRequested.connect(self.open_map_statistics)
         return self.present(self.map_popup)
 
     def open_resource(self,kind):
@@ -321,12 +316,17 @@ class CompactAssistant(QDialog):
             page=ToolPage('事件情景 · '+canonical['title'],reader,owner,object_name='mapReferenceWindow',extra_style=REFERENCE_STYLE)
             page.panel=reader;page.resize(760,300);return page
         return self.reference_window.open_reference(panel,('archive-event',identity,plan[0]if plan else'original'),context,create)
-    def open_owner_dialog(self,callback,name):
-        if self.active_popup is not None and self.active_popup.isVisible()and not self.active_popup.close():
-            self.active_popup.raise_();return False
-        callback();popup=getattr(self.owner,name,None)
-        if popup is not None:return self.present(popup)
-        return False
+    def statistics_reader(self):
+        if self.statistics_popup is None:
+            from pathlib import Path
+            from .public_node_statistics_view import StatisticsPanel
+            from .player_map_reader import REFERENCE_STYLE
+            source=self.owner.node_statistics_source();panel=StatisticsPanel(Path(__file__).resolve().parents[1]/'.local/public-statistics/nodes.json',source=source);self.owner.public_statistics=panel
+            self.statistics_popup=ToolPage('节点历史统计',panel,self,object_name='mapReferenceWindow',extra_style=REFERENCE_STYLE);self.statistics_popup.panel=panel;self.statistics_popup.prepare=panel.render;self.statistics_popup.resize(760,520)
+        return self.statistics_popup
+    def open_statistics(self):return self.present(self.statistics_reader())
+    def open_map_statistics(self,graph,node_id):
+        page=self.statistics_reader();page.panel.set_map_node(graph,node_id);return self.present(page)
     def open_full(self,page=None):
         if page is not None and not isinstance(page,bool):self.owner.centralWidget().setCurrentWidget(page)
         self.owner.show();self.owner.raise_();self.owner.activateWindow()
@@ -341,5 +341,4 @@ class CompactAssistant(QDialog):
         if self.owner.closing:self.hotkey.close();self.game_binding.close();self.game_hover.close();self.game_overlay.close()
         if not self.owner.closing:self.open_full()
         self.reference_window.close()
-        if self.active_popup is not None and not isinstance(self.active_popup,ToolPage):self.active_popup.close()
         event.accept()

@@ -43,7 +43,7 @@ def check(window,gui,require):
     require(bar.hidden_windows is not None and gui.quitOnLastWindowClosed()==original_quit,'hide_preserves_process_policy_and_restore_list')
     toggle();require(bar.isVisible()and bar.map_popup.isVisible()and not window.isVisible(),'native_dispatch_restores_exact_compact_map_view')
     require(mp.view.filter_kind==selected and mp.details_toggle.isChecked(),'restore_preserves_map_filter_and_drawer')
-    notes=window.player_notes;notes.set_context({'title':'隔离快捷键测试','kind':'battle'});bar.open_owner_dialog(notes.show,'player_notes');notes.editor.setPlainText('未保存的隔离测试笔记')
+    notes=window.player_notes;notes.autosave.setChecked(False);from .player_reference_notes import note_for;bar.open_saved_note(note_for('stages','ro6_n_1_2'));notes.editor.setPlainText('未保存的隔离测试笔记')
     toggle();require(notes.dirty and not notes.isVisible(),'hide_does_not_close_or_discard_dirty_note')
     toggle();require(notes.isVisible()and notes.dirty and notes.editor.toPlainText()=='未保存的隔离测试笔记','restore_keeps_unsaved_text')
     window.close();gui.processEvents();require(not window.closing and bar.hotkey.binding is not None,'refused_dirty_exit_keeps_hotkey_registered')

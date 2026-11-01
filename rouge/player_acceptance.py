@@ -193,7 +193,7 @@ def check(section,window,gui,require):
         panel.treehole.setChecked(False);panel.floor.setCurrentIndex(0);panel.events.setCurrentRow(0);identity=panel.events.currentItem().data(256).split(':',1)[-1]
         panel.event_button.click();gui.processEvents();reference=window.reference_panel('scenes',activate=False)
         require(reference.result is not None and reference.result['row']['id']==identity,'exact_event_reference_link')
-        notes=window.player_notes;notes.set_context({'title':'临时测试关卡','kind':'battle'});bar.open_owner_dialog(notes.show,'player_notes');notes.editor.setPlainText('尚未保存的测试笔记')
+        notes=window.player_notes;notes.autosave.setChecked(False);from .player_reference_notes import note_for;bar.open_saved_note(note_for('stages','ro6_n_1_2'));notes.editor.setPlainText('尚未保存的测试笔记')
         require(not bar.open_inventory()and notes.isVisible(),'dirty_note_not_hidden_by_toolbar_switch');notes.discard()
         window.show_compact();bar.open_archive();panel.tabs.setCurrentIndex(0);QTest.qWait(120);gui.processEvents()
         require(not window.isVisible(),'reference_lookup_keeps_large_window_hidden')

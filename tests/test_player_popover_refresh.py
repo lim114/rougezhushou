@@ -9,12 +9,14 @@ from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication, QWidget, QLineEdit, QTabBar, QPushButton
 
 from rouge.player_compact import CompactAssistant, ToolPopover
+from rouge.player_reference_window import ToolPage
 
 
 class Reader(QWidget):
     def __init__(self, run):
         super().__init__()
         self.run = run
+        self.reference_popup = None
         self.calls = 0
         self.snapshot = None
         self.query = QLineEdit(self)
@@ -47,7 +49,7 @@ class PopoverRefreshTests(unittest.TestCase):
 
     def reader(self, slot):
         reader = Reader(self.owner.run)
-        popup = ToolPopover('只读测试', reader, self.bar, on_show=self.bar.refresh)
+        popup = ToolPage('只读测试', reader, self.bar, on_show=self.bar.refresh)
         popup.panel = reader
         setattr(self.bar, slot, popup)
         return popup, reader
@@ -128,12 +130,11 @@ class PopoverRefreshTests(unittest.TestCase):
         owner.refresh.assert_not_called()
 
     def test_unsaved_reader_can_still_veto_navigation(self):
-        class Unsaved(ToolPopover):
+        class Unsaved(ToolPage):
             def closeEvent(self, event):
                 event.ignore()
         veto = Unsaved('尚未保存', QWidget(), self.bar)
-        veto.show()
-        self.bar.active_popup = veto
+        self.assertTrue(self.bar.present(veto))
         popup, reader = self.reader('map_popup')
         self.assertFalse(self.bar.present(popup))
         self.assertFalse(popup.isVisible())
