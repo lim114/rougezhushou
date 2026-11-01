@@ -20,9 +20,9 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section:commit and ordinary push origin codex/p2-development.Full checks cancelled until explicit user request.",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": true,
+    "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
-    "stop_after_section": 450,
+    "stop_after_section": null,
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
@@ -34,20 +34,20 @@
     "bugfix_only_counts_as_functional_section": false,
     "section_definition": "Before a section, bind a remaining todo, new capability and acceptance criteria. Pure bug fixes/tests/research/docs are maintenance and do not increment functional progress.",
     "latest_functional_scope_requirement_Beijing": "2026-10-11",
-    "current_user_batch_target_section": 450,
-    "current_user_batch_completed": true,
+    "current_user_batch_target_section": null,
+    "current_user_batch_completed": false,
     "requirements_synced_each_section": true,
     "atomic_section_source_receipt_status_commit": true,
     "verify_remote_head_after_each_push": true,
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
     "repair_full_validation_after_functional_260": false,
-    "new_functional_sections_paused": true,
+    "new_functional_sections_paused": false,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
     "historical_accuracy_validation_after_section_before261": 115,
-    "batch_target_section": 450,
+    "batch_target_section": null,
     "highest_priority_project_requirements": {
       "path": "PROJECT_REQUIREMENTS.md",
       "section": "项目级最高优先要求（2026-10-15）",
@@ -60,10 +60,10 @@
     "usage_threshold_changed_on_Beijing": "2026-10-18",
     "finish_entire_active_section_before_usage_wrap_up": true,
     "usage_wrap_up_triggered": false,
-    "pause_after_active_section_requested": true,
+    "pause_after_active_section_requested": false,
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
-    "current_usage_remaining_percent": 69,
+    "current_usage_remaining_percent": 32,
     "current_usage_receipt": "verification/maintenance/rea-20261031/usage.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
     "latest_user_instruction_receipt": "verification/sections/371-preparation/resume-and-scope.json",
@@ -89,7 +89,7 @@
     "full_validation_restore_requires_explicit_user_request": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 450,
+  "completed_sections": 451,
   "sections": [
     {
       "number": 1,
@@ -2778,10 +2778,16 @@
       "completion_ref": "player-section-450",
       "topic": "节点事件卡历史样本比例与来源口径",
       "verification": "verification/sections/450.json"
+    },
+    {
+      "number": 451,
+      "completion_ref": "player-section-451",
+      "topic": "主要资料共用浮窗与返回前进导航",
+      "verification": "verification/sections/451.json"
     }
   ],
-  "next_section": 451,
-  "next_action": "保持第450节后暂停，未获明确恢复不启动451。恢复时先读docs/decisions/2026-11-01-video-effects-decisions.md：单一主资料浮窗、成熟网站混合接入、关卡身份与局内实时歼灭总数核对；OBS动态展示不做。其余视频效果与识别缺口继续保留，全部预定全量检查仍取消。",
+  "next_section": 452,
+  "next_action": "继续单一主资料窗：迁入精确作战/事件/敌人详情与笔记目录，保留来源更新、失效清理和阅读状态；尺寸问题须先获得新的Qt/Windows几何调用证据再修，不能重复盲试。按成熟网站/公开代码优先核对许可和本地参数；继续其余视频效果与识别回顾。全量检查保持取消。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -2898,14 +2904,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 450,
-    "verification": "verification/sections/450.json",
+    "section": 451,
+    "verification": "verification/sections/451.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 450,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "38bc89ab3a2cee641dd05a8badfd8afac43f13f4",
     "proof": "verification/sections/450-publication.json",
@@ -3155,7 +3161,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "PAUSED_AFTER450",
+  "batch_status": "ACTIVE_AFTER451",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3339,20 +3345,21 @@
     447,
     448,
     449,
-    450
+    450,
+    451
   ],
   "current_batch": {
     "kind": "whole_program_review_and_implementation_improvement",
-    "start": 441,
-    "end": 450,
-    "status": "PAUSED_AFTER450",
-    "completed_sections": 450,
-    "next_section": 451,
+    "start": 451,
+    "end": null,
+    "status": "ACTIVE_AFTER451",
+    "completed_sections": 451,
+    "next_section": 452,
     "next_section_started": false,
-    "batch_closed": true,
+    "batch_closed": false,
     "next_full_validation_after": null,
-    "receipt": "verification/sections/450.json",
-    "scope": "Functional450:raw public event sample ratios on exact-entry shared hover cards.Main-floor denominator retained;not adjusted/current probability.52targeted methods,67native checks/7images,actual live test card.Private6 unchanged.No full suite;all cadence remains cancelled.Finish ordinary publication then pause by user;451not started."
+    "receipt": "verification/sections/451.json",
+    "scope": "地图、藏品与零件、场景笔记、对局记录、队伍、最近节点资料、概况和设置在同一个原生资料窗切换；返回/前进保留已测搜索、类型筛选、页签和阅读状态。真实未保存笔记可阻止离开、关闭和Esc；收起恢复继续使用原页面。 完整作战/敌人/事件详情、笔记目录、公开档案及完整工作区仍有独立窗口，尚未全部迁入；成熟网页尚未接入。首次打开部分页面仍会在下一轮界面更新后增高，笔记900×360变为约900×662的反例未通过，原因未明；不声称所有页面尺寸或全视频外观一致。导航按钮位置、密度、完整跨屏/游戏绑定仍需继续对照。未修改识别算法，不能宣称本轮识别提速或准确率提升。"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -3485,8 +3492,8 @@
     "full_validation_interval": 5,
     "next_full_validation_after": 120
   },
-  "batch_start_section": 441,
-  "batch_target_section": 450,
+  "batch_start_section": 451,
+  "batch_target_section": null,
   "suspended_target_section": 400,
   "latest_user_resume": {
     "at_Beijing": "2026-10-16T00:17:47.624882+08:00",
@@ -9339,11 +9346,11 @@
     "development_paused": false
   },
   "current_section_validation": {
-    "section": 450,
-    "receipt": "verification/sections/450.json",
-    "necessary_checks": 52,
+    "section": 451,
+    "receipt": "verification/sections/451.json",
+    "necessary_checks": 49,
     "native_scopes": {
-      "current": 67
+      "current": 63
     },
     "full_validation_rerun": false
   },
@@ -10218,12 +10225,6 @@
     "binding": "enclosing_commit",
     "functional_section_added": false
   },
-  "current_maintenance_save": {
-    "title": "保存用户确认的视频取舍与混合接入方向",
-    "receipt": "verification/maintenance/video-decisions-20261101/summary.json",
-    "binding": "enclosing_commit",
-    "functional_section_added": false
-  },
   "latest_video_decisions": {
     "path": "docs/decisions/2026-11-01-video-effects-decisions.md",
     "sha256": "2a1be36d6bb76ea45f67201824362487643427c84b3fa2768aa8cc34b567cb70",
@@ -10233,5 +10234,11 @@
     "mature_site_hybrid_accepted": true,
     "hidden_enemy_detection": "confirmed stage identity plus live in-run elimination total comparison",
     "implementation_completed_by_this_document": false
+  },
+  "historical_video_decisions_before451": {
+    "title": "保存用户确认的视频取舍与混合接入方向",
+    "receipt": "verification/maintenance/video-decisions-20261101/summary.json",
+    "binding": "enclosing_commit",
+    "functional_section_added": false
   }
 }

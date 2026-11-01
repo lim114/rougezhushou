@@ -1,0 +1,20 @@
+{
+  "external_dependencies": {
+    "Qt": {
+      "version": "6.11.2",
+      "official_docs": "https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QStackedWidget.html",
+      "used": "Actual addWidget/setCurrentWidget ownership and retained pages; navigation remains local implementation."
+    },
+    "frameless": {
+      "source": "https://github.com/zhiyiYo/PyQt-Frameless-Window/tree/fc00919f4915c91a2b6320a8ae7eb1d977ca4f57",
+      "commit": "fc00919f4915c91a2b6320a8ae7eb1d977ca4f57",
+      "version": "0.8.2",
+      "license": "LGPL-3.0",
+      "notice": "third_party/qframelesswindow/NOTICE.md",
+      "used": "Previously vendored FramelessDialog and StandardTitleBar, now one reference host. No new upstream patch or package installed."
+    }
+  },
+  "decision": "Reuse mature Qt page ownership and existing legally retained public frame rather than force native QDialogs into a stack or introduce a new full UI framework. Mature website hybrid is approved but not implemented here.",
+  "source_video": "137sec frame revisited locally; single window relationship additionally confirmed by user. Arrow semantics/placement are not claimed verified from video.",
+  "unknown": "完整作战/敌人/事件详情、笔记目录、公开档案及完整工作区仍有独立窗口，尚未全部迁入；成熟网页尚未接入。首次打开部分页面仍会在下一轮界面更新后增高，笔记900×360变为约900×662的反例未通过，原因未明；不声称所有页面尺寸或全视频外观一致。导航按钮位置、密度、完整跨屏/游戏绑定仍需继续对照。未修改识别算法，不能宣称本轮识别提速或准确率提升。"
+}

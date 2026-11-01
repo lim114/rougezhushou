@@ -1,0 +1,28 @@
+{
+  "status": "not_passed",
+  "expected_initial_note_size": [
+    900,
+    360
+  ],
+  "observed_after_process_events": [
+    900,
+    662
+  ],
+  "evidence": [
+    "native-03/window.json",
+    "native-04-diagnostic/window.json",
+    "native-05-current/window.json",
+    "native-06-size-trace/window.json",
+    "native-07-grab-diagnostic/window.json",
+    "native-08-current/window.json",
+    "native-09-window-min/window.json"
+  ],
+  "facts": [
+    "Explicit resize returns requested360, later event delivery increases height.",
+    "Widget/QWindow minimum sizes in latest diagnostic were0; a simple remaining minimum-size explanation is not established.",
+    "Initial native01 exposed visible unregistered settings; fixed via explicit initial page hide, and checked in final native scope.",
+    "Native final delivery does not count initial-size consistency as passed."
+  ],
+  "restart_condition": "New Qt/Windows geometry-event trace or independent minimal reproducer identifying the height-changing caller; no further blind constraint toggling.",
+  "full_video_parity": false
+}

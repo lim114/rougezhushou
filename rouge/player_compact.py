@@ -20,12 +20,8 @@ class ToolPopover(PlayerDialog):
         # Also covers hotkey/game-binding restoration, which bypasses open_*.
         if self.on_show is not None:self.on_show()
 
-class NotesPopover(ToolPopover):
-    def closeEvent(self,event):
-        if not self.panel.finish_edit():event.ignore();return
-        super().closeEvent(event)
-
 from .player_map import MapPanel
+from .player_reference_window import ReferenceWindow, ToolPage, NotesPage
 
 class CompactAssistant(QDialog):
     def __init__(self,owner,hotkey_path=None):
@@ -33,10 +29,11 @@ class CompactAssistant(QDialog):
         self.owner=owner;self.active_popup=None;self.inventory_popup=None;self.map_popup=None;self.setWindowTitle('黑流树海助手')
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground,True);self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating,True)
         self.buttons={};self.tool_buttons=[];self._dock_positioned=False
+        self.reference_window=ReferenceWindow(self)
         overview=QWidget();layout=QVBoxLayout(overview);self.context=QLabel();self.context.setWordWrap(True);layout.addWidget(self.context);grid=QGridLayout();self.cards={}
         for i,name in enumerate(overview_facts(owner.run.state)):
             value=QLabel();value.setWordWrap(True);self.cards[name]=value;grid.addWidget(QLabel(name),i//2*2,i%2);grid.addWidget(value,i//2*2+1,i%2)
-        layout.addLayout(grid);self.scene_button=QPushButton('最近节点 · 事件、关卡与敌人资料');self.scene_button.clicked.connect(self.open_scene_battle);layout.addWidget(self.scene_button);self.scene_popup=None;self.exchange_popup=None;self.replay_popup=None;self.replay_button=QPushButton('查看本局读取记录');self.replay_button.clicked.connect(self.open_replay);layout.addWidget(self.replay_button);self.team_popup=None;self.team_button=QPushButton('本局队伍 · 职业与培养');self.team_button.clicked.connect(self.open_team);layout.addWidget(self.team_button);self.overview_popup=ToolPopover('本局概况',overview,self,on_show=self.refresh);self.overview_popup.resize(460,350)
+        layout.addLayout(grid);self.scene_button=QPushButton('最近节点 · 事件、关卡与敌人资料');self.scene_button.clicked.connect(self.open_scene_battle);layout.addWidget(self.scene_button);self.scene_popup=None;self.exchange_popup=None;self.replay_popup=None;self.replay_button=QPushButton('查看本局读取记录');self.replay_button.clicked.connect(self.open_replay);layout.addWidget(self.replay_button);self.team_popup=None;self.team_button=QPushButton('本局队伍 · 职业与培养');self.team_button.clicked.connect(self.open_team);layout.addWidget(self.team_button);self.overview_popup=ToolPage('本局概况',overview,self,on_show=self.refresh);self.overview_popup.resize(460,350)
         settings=QWidget();layout=QVBoxLayout(settings);self.pin=QCheckBox('保持置顶');self.pin.setChecked(True);self.pin.toggled.connect(self.set_pinned);layout.addWidget(self.pin)
         self.expand=QPushButton('展开完整助手');self.expand.clicked.connect(self.open_full);layout.addWidget(self.expand)
         from .player_hotkey import GlobalHotkey,load_preferences,DEFAULT
@@ -58,7 +55,7 @@ class CompactAssistant(QDialog):
         stat=QPushButton('节点历史统计');stat.clicked.connect(lambda:self.open_owner_dialog(owner.open_public_statistics,'public_statistics'));layout.addWidget(stat)
         self.note_library=None;self.note_library_button=QPushButton('查找本机场景笔记');self.note_library_button.clicked.connect(self.open_note_library);layout.addWidget(self.note_library_button)
         close=QPushButton('退出助手');close.clicked.connect(self.exit_application);layout.addWidget(close)
-        self.settings_scroll=QScrollArea();self.settings_scroll.setWidgetResizable(True);self.settings_scroll.setWidget(settings);self.settings_popup=ToolPopover('工具设置',self.settings_scroll,self,on_show=self.refresh);self.settings_popup.resize(420,570)
+        self.settings_scroll=QScrollArea();self.settings_scroll.setWidgetResizable(True);self.settings_scroll.setWidget(settings);self.settings_popup=ToolPage('工具设置',self.settings_scroll,self,on_show=self.refresh);self.settings_popup.resize(420,570)
         self.recent_notes_popup=None
         actions=[('本局概况','overview',lambda:self.present(self.overview_popup)),('地图与节点','map',self.open_map),('本局藏品','bag',self.open_inventory),('场景笔记','note',self.open_recent_notes),('干员与技能','calc',self.open_operators),('聊天分析','chat',self.open_chat),('工具设置','settings',lambda:self.present(self.settings_popup))]
         from .player_toolbar import DockButton,ORDER,NAMES
@@ -144,14 +141,22 @@ class CompactAssistant(QDialog):
         visible=self.isVisible();self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,value)
         if visible:self.show()
     def present(self,popup):
-        if self.active_popup is not None and self.active_popup is not popup and self.active_popup.isVisible():
-            if not self.active_popup.close():self.active_popup.raise_();return False
-        self.active_popup=popup;popup.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,self.pin.isChecked())
-        if popup.isVisible():self.refresh()
-        popup.show()
-        screen=self.screen().availableGeometry();size=popup.size();x=max(screen.left(),min(self.x(),screen.right()-size.width()+1));y=self.y()-size.height()-8
-        if y<screen.top():y=min(self.y()+self.height()+8,screen.bottom()-size.height()+1)
-        popup.move(x,max(screen.top(),y));popup.raise_();return True
+        if isinstance(popup,ToolPage):
+            host=self.reference_window
+            if self.active_popup is not None and not isinstance(self.active_popup,ToolPage) and self.active_popup.isVisible():
+                if not self.active_popup.close():self.active_popup.raise_();return False
+            visible=host.isVisible()
+            if bool(host.windowFlags()&Qt.WindowType.WindowStaysOnTopHint)!=self.pin.isChecked():host.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,self.pin.isChecked())
+            if not host.present(popup):return False
+            self.active_popup=popup
+            if visible:self.refresh()
+            else:
+                screen=self.screen().availableGeometry();size=host.size();x=max(screen.left(),min(self.x(),screen.right()-size.width()+1));y=self.y()-size.height()-8
+                if y<screen.top():y=min(self.y()+self.height()+8,screen.bottom()-size.height()+1)
+                host.move(x,max(screen.top(),y))
+            return True
+        if self.reference_window.isVisible() and not self.reference_window.close():return False
+        self.active_popup=popup;popup.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint,self.pin.isChecked());popup.show();popup.raise_();return True
     def refresh(self):
         title=recent_content(self.owner.run.state);self.context.setText('最近读取：'+title if title else'本局信息 · 等待读取节点详情')
         for key,value in overview_facts(self.owner.run.state).items():self.cards[key].setText(value)
@@ -178,7 +183,7 @@ class CompactAssistant(QDialog):
         if self.exchange_popup is None:
             from .player_exchange_view import ExchangePanel
             panel=ExchangePanel();panel.openPool.connect(lambda version,identity:self.open_owner_dialog(lambda:self.owner.open_public_pool_reference(version,identity),'public_archive'))
-            self.exchange_popup=ToolPopover('失与得 · 提供物与换入候选',panel,self,on_show=self.refresh);self.exchange_popup.panel=panel;self.exchange_popup.resize(830,670)
+            self.exchange_popup=ToolPage('失与得 · 提供物与换入候选',panel,self,on_show=self.refresh);self.exchange_popup.panel=panel;self.exchange_popup.resize(830,670)
         self.exchange_popup.panel.bind(source.source_index.data if source.source_index else None,version,identity,source.source_signature)
         return self.present(self.exchange_popup)
     def open_replay(self):
@@ -186,7 +191,7 @@ class CompactAssistant(QDialog):
             from .player_replay import ReplayPanel,HISTORY_STYLE
             panel=ReplayPanel(self.owner.run,source_panel=self.owner.inventory_panel)
             from .player_reference_notes import open_note
-            panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.replay_popup=ToolPopover('对局记录',panel,self,on_show=self.refresh,theme='light',extra_style=HISTORY_STYLE,object_name='historyWindow');self.replay_popup.panel=panel
+            panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.replay_popup=ToolPage('对局记录',panel,self,on_show=self.refresh,theme='light',extra_style=HISTORY_STYLE,object_name='historyWindow');self.replay_popup.panel=panel
             panel.tabs.setCurrentWidget(panel.archive_page)
             self.replay_popup.resize(640,650)
         return self.present(self.replay_popup)
@@ -195,7 +200,7 @@ class CompactAssistant(QDialog):
             from .player_team import TeamPanel
             panel=TeamPanel(self.owner.run)
             panel.openOperator.connect(lambda identity:(self.owner.select_operator(identity),self.open_operators()))
-            self.team_popup=ToolPopover('本局队伍 · 已招募干员',panel,self,on_show=self.refresh);self.team_popup.panel=panel;self.team_popup.resize(830,690)
+            self.team_popup=ToolPage('本局队伍 · 已招募干员',panel,self,on_show=self.refresh);self.team_popup.panel=panel;self.team_popup.resize(830,690)
         return self.present(self.team_popup)
     def open_note_library(self):
         if self.note_library is None:
@@ -214,7 +219,7 @@ class CompactAssistant(QDialog):
             from .player_inline_notes import InlineNotesPanel
             from .player_note_style import NOTE_STYLE
             panel=InlineNotesPanel(self.owner.run,self.owner.player_notes)
-            self.recent_notes_popup=NotesPopover('备忘录',panel,self,on_show=self.refresh,theme='light',extra_style=NOTE_STYLE,object_name='sceneNotesWindow');self.recent_notes_popup.panel=panel
+            self.recent_notes_popup=NotesPage('备忘录',panel,self,on_show=self.refresh,theme='light',extra_style=NOTE_STYLE,object_name='sceneNotesWindow');self.recent_notes_popup.panel=panel
             self.recent_notes_popup.resize(900,360)
         return self.recent_notes_popup
     def open_recent_notes(self):
@@ -224,7 +229,7 @@ class CompactAssistant(QDialog):
         if self.scene_popup is None:
             from .player_recent_scene import RecentScenePanel
             from .player_reference_notes import open_note
-            panel=RecentScenePanel(self.owner.run);panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.scene_popup=ToolPopover('最近节点资料',panel,self,on_show=self.refresh);self.scene_popup.panel=panel;self.scene_popup.resize(760,600)
+            panel=RecentScenePanel(self.owner.run);panel.noteRequested.connect(lambda content:open_note(self.owner,content));self.scene_popup=ToolPage('最近节点资料',panel,self,on_show=self.refresh);self.scene_popup.panel=panel;self.scene_popup.resize(760,600)
         return self.present(self.scene_popup)
     def open_inventory(self):
         if self.inventory_popup is None:
@@ -250,7 +255,7 @@ class CompactAssistant(QDialog):
             resources=ResourceStrip(self.owner.run.state,dark=True,leading=(navigation,crew_button));resources.requested.connect(self.open_resource)
             body.addWidget(pages,1)
             from .player_catalog_grid import INVENTORY_STYLE
-            self.inventory_popup=ToolPopover('收藏品、战术道具与零件',bundle,self,on_show=self.refresh,theme='dark',extra_style=INVENTORY_STYLE,object_name='inventoryWindow')
+            self.inventory_popup=ToolPage('收藏品、战术道具与零件',bundle,self,on_show=self.refresh,theme='dark',extra_style=INVENTORY_STYLE,object_name='inventoryWindow')
             self.inventory_popup.title_label.hide();self.inventory_popup.header_bar.insertWidget(0,resources,1)
             self.inventory_popup.navigation=navigation;self.inventory_popup.crew_button=crew_button
             self.inventory_popup.finished.connect(lambda _result:panel.hover_card.dismiss())
@@ -260,7 +265,7 @@ class CompactAssistant(QDialog):
         return self.present(self.inventory_popup)
     def open_map(self):
         if self.map_popup is None:
-            panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source());self.map_popup=ToolPopover('地图',panel,self,on_show=self.refresh,theme='light',object_name='videoMapWindow',extra_style='#videoMapWindow QPushButton#popoverCloseButton{color:#303139;font-size:12pt;}');self.map_popup.panel=panel;self.map_popup.resize(1200,460)
+            panel=MapPanel(self.owner,statistics_source=self.owner.node_statistics_source());self.map_popup=ToolPage('地图',panel,self,on_show=self.refresh,theme='light',object_name='videoMapWindow',extra_style='#videoMapWindow QPushButton#popoverCloseButton{color:#303139;font-size:12pt;}');self.map_popup.panel=panel;self.map_popup.resize(1200,460)
             panel.resources.requested.connect(self.open_resource)
         return self.present(self.map_popup)
 
@@ -293,6 +298,6 @@ class CompactAssistant(QDialog):
     def closeEvent(self,event):
         if self.owner.closing:self.hotkey.close();self.game_binding.close();self.game_hover.close();self.game_overlay.close()
         if not self.owner.closing:self.open_full()
-        for popup in (self.active_popup,self.inventory_popup,self.map_popup,self.overview_popup,self.settings_popup):
-            if popup is not None:popup.close()
+        self.reference_window.close()
+        if self.active_popup is not None and not isinstance(self.active_popup,ToolPage):self.active_popup.close()
         event.accept()
