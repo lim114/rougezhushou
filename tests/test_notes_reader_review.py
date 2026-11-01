@@ -11,7 +11,7 @@ from PySide6.QtWidgets import QApplication
 from rouge.run_state import RunState
 from rouge.player_notes import NoteStore,NotesDialog,content_key
 from rouge.player_recent_notes import RecentNotesPanel
-from rouge.player_note_library import NoteLibrary,NoteLibraryDialog
+from rouge.player_note_library import NoteLibrary,NoteLibraryPanel
 
 class NoteReaderTests(unittest.TestCase):
     @classmethod
@@ -67,7 +67,7 @@ class NoteReaderTests(unittest.TestCase):
     def test_search_burst_has_one_disk_scan_return_is_immediate_and_hidden_stops_pending(self):
         for context,text in((self.a,'普通作战注意'),(self.b,'紧急机关说明')):
             self.save(context,text);NoteLibrary(self.store.folder).record(context)
-        dialog=NoteLibraryDialog(self.store.folder);self.addCleanup(dialog.close);dialog.show();self.qt.processEvents()
+        dialog=NoteLibraryPanel(self.store.folder);self.addCleanup(dialog.close);dialog.show();self.qt.processEvents()
         with patch.object(dialog.library,'rows',wraps=dialog.library.rows)as rows:
             for text in('紧','紧急','紧急机','紧急机关'):dialog.search.setText(text)
             self.assertEqual(rows.call_count,0);QTest.qWait(210);self.qt.processEvents();self.assertEqual(rows.call_count,1);self.assertEqual(dialog.entries.count(),1)

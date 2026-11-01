@@ -208,12 +208,16 @@ class CompactAssistant(QDialog):
         return self.present(self.team_popup)
     def open_note_library(self):
         if self.note_library is None:
-            from .player_note_library import NoteLibraryDialog
-            self.note_library=NoteLibraryDialog(self.owner.player_notes.store.folder,self)
+            from .player_note_library import NoteLibraryPanel
+            from .player_note_style import NOTE_STYLE
+            self.note_library=NoteLibraryPanel(self.owner.player_notes.store.folder,defer_population=True)
+            self.note_library_page=ToolPage('笔记目录',self.note_library,self,theme='light',extra_style=NOTE_STYLE,object_name='sceneNotesLibrary')
+            self.note_library_page.panel=self.note_library;self.note_library_page.prepare=self.note_library.refresh;self.note_library_page.resize(800,430)
+            refresh=QPushButton('刷新目录');refresh.setAutoDefault(False);refresh.clicked.connect(self.note_library.refresh);self.note_library_page.header_bar.addWidget(refresh)
             self.note_library.openContext.connect(lambda content:self.open_saved_note(content,allow_archived=True))
             from .player_reference_notes import open_reference
             self.note_library.openReference.connect(lambda content:open_reference(self.owner,content))
-        self.note_library.refresh();return self.present(self.note_library)
+        return self.present(self.note_library_page)
     def open_saved_note(self,content,*,allow_archived=False):
         popup=self.notes_popup();ready=popup.panel.open_for_context(content,allow_archived=allow_archived)
         shown=self.present(popup)
@@ -224,6 +228,7 @@ class CompactAssistant(QDialog):
             from .player_note_style import NOTE_STYLE
             panel=InlineNotesPanel(self.owner.run,self.owner.player_notes)
             self.recent_notes_popup=NotesPage('备忘录',panel,self,on_show=self.refresh,theme='light',extra_style=NOTE_STYLE,object_name='sceneNotesWindow');self.recent_notes_popup.panel=panel
+            library=QPushButton('笔记目录');library.setAutoDefault(False);library.clicked.connect(self.open_note_library);self.recent_notes_popup.header_bar.addWidget(library)
             self.recent_notes_popup.resize(900,360)
         return self.recent_notes_popup
     def open_recent_notes(self):
