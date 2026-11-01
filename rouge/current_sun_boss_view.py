@@ -7,6 +7,7 @@ from . import current_sun_boss as model
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .mechanism_reading import MechanismTextBrowser, replace_mechanism_text
 
 
 class CurrentSunBossPanel(QWidget):
@@ -30,8 +31,8 @@ class CurrentSunBossPanel(QWidget):
         self.related_button = QPushButton('切换查阅的形态资料')
         bar.addWidget(self.topic, 1); bar.addWidget(self.related, 1); bar.addWidget(self.related_button); layout.addLayout(bar)
         self.card = QComboBox(); self.card.setAccessibleName('当前形态完整原招式与天赋'); layout.addWidget(self.card)
-        self.tabs = QTabWidget(); self.player = QPlainTextEdit(); self.technical = QPlainTextEdit()
-        for area, label in ((self.player, '机制、条件与限制'), (self.technical, '完整原文与准确来源')):
+        self.tabs = QTabWidget(); self.player = MechanismTextBrowser(); self.technical = QPlainTextEdit()
+        for area, label in ((self.player, '机制、条件与限制'), (self.technical, '原始资料（调试）')):
             area.setReadOnly(True); self.tabs.addTab(area, label)
         layout.addWidget(self.tabs, 1)
         self.map_button = QPushButton('查看本关固定地形（不预测二阶段）'); layout.addWidget(self.map_button)
@@ -125,11 +126,16 @@ class CurrentSunBossPanel(QWidget):
         self.map_button.setEnabled(self.result is not None)
         identity = (self.result['source_identity'], self.selected_key, topic, index) if self.result else None
         keep = identity == self._view_key
-        replace_text(self.player, model.player_text(self.result, self.selected_key, topic, index), preserve=keep)
+        selected_card = model.card(self.result, self.selected_key, index)
+        heading = {'faith': '文献中的信仰、状态与阶段', 'terrain': '第二阶段',
+                   'altar': '陨石与祭台 · 首领文献原项'}.get(topic)
+        if topic == 'skills' and selected_card: heading = '完整文献原项 · ' + selected_card['title']
+        replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic, index), preserve=keep,
+            follow_change=self.sender() in (self.topic, self.card), heading='【' + heading + '】' if heading else None)
         row = model.entity(self.result, self.selected_key)
         technical = {'stage_id': self.stage_id, 'source_identity': self.result['source_identity'],
             'selected_current_reference': row,
-            'complete_selected_document_card': model.card(self.result, self.selected_key, index),
+            'complete_selected_document_card': selected_card,
             'complete_form_document': self.result['materials']['forms'].get(row['form']) if row else None,
             'declared_appearances': self.result['declared_appearances'],
             'linked_original_ids_without_independent_current_records': self.result['data']['missing_linked_ids'],

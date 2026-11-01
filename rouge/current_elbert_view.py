@@ -7,6 +7,7 @@ from . import current_elbert_reference as model
 from .branch_choice import BranchChoice,OVERVIEW
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .mechanism_reading import MechanismTextBrowser, replace_mechanism_text
 
 
 class CurrentElbertPanel(QWidget):
@@ -25,8 +26,8 @@ class CurrentElbertPanel(QWidget):
         layout.addWidget(self.reading_header)
         bar=QHBoxLayout();self.topic=QComboBox();self.topic.setAccessibleName('所选实体的机制分支')
         self.related_button=QPushButton('查看本关的关联实体');bar.addWidget(self.topic,1);bar.addWidget(self.related_button);layout.addLayout(bar)
-        self.tabs=QTabWidget();self.player=QPlainTextEdit();self.technical=QPlainTextEdit()
-        for area,label in((self.player,'条件、效果与本关区别'),(self.technical,'完整机制原文与准确来源')):
+        self.tabs=QTabWidget();self.player=MechanismTextBrowser();self.technical=QPlainTextEdit()
+        for area,label in((self.player,'条件、效果与本关区别'),(self.technical,'原始资料（调试）')):
             area.setReadOnly(True);self.tabs.addTab(area,label)
         layout.addWidget(self.tabs,1);self.status=QLabel();self.status.setWordWrap(True);layout.addWidget(self.status)
         self.refresh_button.clicked.connect(self.refresh_reference);self.entity_combo.currentIndexChanged.connect(self._entity_changed)
@@ -95,7 +96,10 @@ class CurrentElbertPanel(QWidget):
         self.result=model.view_result(self.base,self.selected_key,self.topic.currentData())
         if self.result is None:self.clear_reference();return
         identity=(self.source_identity,self.stage_id,self.selected_key,self.topic.currentData());keep=identity==self._view_key
-        replace_text(self.player,model.player_text(self.result),preserve=keep)
+        heading = {'summon': '火种从哪里来', 'blink': '闪现', 'staff': '退场后留下的法杖',
+                   'collision': '碰撞与爆炸', 'configuration': '默认文献如何变化'}.get(self.topic.currentData())
+        replace_mechanism_text(self.player, model.player_text(self.result), preserve=keep,
+            follow_change=self.sender() is self.topic, heading='【' + heading + '】' if heading else None)
         row=self.result['selected'];card=model.selected_card(self.result,self.selected_key)
         original={'source_identity':self.source_identity,'battle_source_identity':self.result['battle_source_identity'],
                   'exact_stage':self.result['stage'],'exact_selected_entity':row,

@@ -7,6 +7,7 @@ from . import current_boss_documents as model
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .mechanism_reading import MechanismTextBrowser, replace_mechanism_text
 
 
 class CurrentBossDocumentsPanel(QWidget):
@@ -31,8 +32,8 @@ class CurrentBossDocumentsPanel(QWidget):
         bar = QHBoxLayout(); self.related = QComboBox(); self.related.setAccessibleName('本关明确关联的准确敌人条目')
         self.related_button = QPushButton('在本关敌人页查看'); bar.addWidget(self.related, 1); bar.addWidget(self.related_button)
         layout.addLayout(bar)
-        self.tabs = QTabWidget(); self.player = QPlainTextEdit(); self.technical = QPlainTextEdit()
-        for area, title in ((self.player, '机制、条件与限制'), (self.technical, '准确来源与新旧差异')):
+        self.tabs = QTabWidget(); self.player = MechanismTextBrowser(); self.technical = QPlainTextEdit()
+        for area, title in ((self.player, '机制、条件与限制'), (self.technical, '原始资料（调试）')):
             area.setReadOnly(True); self.tabs.addTab(area, title)
         layout.addWidget(self.tabs, 1)
         self.map_button = QPushButton('查看这关固定地图（不标记实际首领位置）'); layout.addWidget(self.map_button)
@@ -117,7 +118,8 @@ class CurrentBossDocumentsPanel(QWidget):
         topic = self.topic.currentData()
         identity = (self.result['source_identity'], self.selected_key, topic) if self.result else None
         keep = identity == self._view_key
-        replace_text(self.player, model.player_text(self.result, self.selected_key, topic), preserve=keep)
+        replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic), preserve=keep,
+            follow_change=self.sender() is self.topic, heading='【' + self.topic.currentText() + '】' if topic is not None else None)
         technical = {'stage_id': self.stage_id, 'current_source_identity': self.result['source_identity'],
             'selected_current_reference_and_authentic_legacy_document': model.entity(self.result, self.selected_key),
             'current_level_source': self.result['source'], 'complete_level_qualification': self.result['qualification'],

@@ -8,7 +8,7 @@ class MechanismReaderHeader(QWidget):
     def __init__(self, notice, choices, portrait, refresh):
         super().__init__()
         layout = QVBoxLayout(self); layout.setContentsMargins(0, 0, 0, 0)
-        self.scope = QCollapsible('固定关卡资料 · 使用说明', expandedIcon='−', collapsedIcon='+')
+        self.scope = QCollapsible('固定机制资料 · 非本局实况', expandedIcon='−', collapsedIcon='+')
         self.scope.setAccessibleName('固定关卡参考，不代表本局实况；展开查看适用说明')
         self.scope.setDuration(0); self.scope.addWidget(notice)
         self.scope.content().hide(); self.scope.toggled.connect(self.scope.content().setVisible)

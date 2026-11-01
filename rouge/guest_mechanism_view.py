@@ -6,6 +6,7 @@ from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .mechanism_reading import MechanismTextBrowser, replace_mechanism_text
 
 
 class GuestMechanismPanel(QWidget):
@@ -29,8 +30,8 @@ class GuestMechanismPanel(QWidget):
         self.related = QComboBox(); self.related.setAccessibleName('本关独立关联实体')
         self.related_button = QPushButton('查看这份关联实体')
         bar.addWidget(self.topic, 1); bar.addWidget(self.related, 1); bar.addWidget(self.related_button); layout.addLayout(bar)
-        self.tabs = QTabWidget(); self.player = QPlainTextEdit(); self.technical = QPlainTextEdit()
-        for area, label in ((self.player, '怎样触发、效果与限制'), (self.technical, '准确来源与完整文献')):
+        self.tabs = QTabWidget(); self.player = MechanismTextBrowser(); self.technical = QPlainTextEdit()
+        for area, label in ((self.player, '怎样触发、效果与限制'), (self.technical, '原始资料（调试）')):
             area.setReadOnly(True); self.tabs.addTab(area, label)
         layout.addWidget(self.tabs, 1)
         self.map_dialog=None
@@ -109,7 +110,8 @@ class GuestMechanismPanel(QWidget):
         row = self.model.entity(self.result, self.selected_key); topic = self.topic.currentData()
         identity = (self.result['source_identity'], self.stage_id, self.selected_key, topic) if self.result else None
         keep = identity == self._view_key
-        replace_text(self.player, self.model.player_text(self.result, self.selected_key, topic), preserve=keep)
+        replace_mechanism_text(self.player, self.model.player_text(self.result, self.selected_key, topic), preserve=keep,
+            follow_change=self.sender() is self.topic, heading='【' + self.topic.currentText() + '】' if topic is not None else None)
         technical = {'stage_id': self.stage_id, 'level_key': self.result['level_key'],
                      'source_identity': self.result['source_identity'], 'current_reference': row,
                      'current_complete_stage': self.result['data']['originals']['stages'][self.stage_id],

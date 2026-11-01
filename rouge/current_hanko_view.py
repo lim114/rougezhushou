@@ -7,6 +7,7 @@ from . import current_hanko as model
 from .branch_choice import BranchChoice
 from .boss_hunt_view import _technical_json
 from .ui_state import replace_text
+from .mechanism_reading import MechanismTextBrowser, replace_mechanism_text
 
 
 class CurrentHankoPanel(QWidget):
@@ -30,8 +31,8 @@ class CurrentHankoPanel(QWidget):
         self.related = QComboBox(); self.related.setAccessibleName('本关独立关联实体')
         self.related_button = QPushButton('查看这份关联实体')
         bar.addWidget(self.topic, 1); bar.addWidget(self.related, 1); bar.addWidget(self.related_button); layout.addLayout(bar)
-        self.tabs = QTabWidget(); self.player = QPlainTextEdit(); self.technical = QPlainTextEdit()
-        for area, label in ((self.player, '怎样触发、效果与限制'), (self.technical, '完整原文与准确来源')):
+        self.tabs = QTabWidget(); self.player = MechanismTextBrowser(); self.technical = QPlainTextEdit()
+        for area, label in ((self.player, '怎样触发、效果与限制'), (self.technical, '原始资料（调试）')):
             area.setReadOnly(True); self.tabs.addTab(area, label)
         layout.addWidget(self.tabs, 1)
         self.status = QLabel(); self.status.setWordWrap(True); layout.addWidget(self.status)
@@ -99,11 +100,13 @@ class CurrentHankoPanel(QWidget):
         row = model.entity(self.result, self.selected_key); topic = self.topic.currentData()
         identity = (self.result['source_identity'], self.stage_id, self.selected_key, topic) if self.result else None
         keep = identity == self._view_key
-        replace_text(self.player, model.player_text(self.result, self.selected_key, topic), preserve=keep)
+        card = model.selected_card(self.result, self.selected_key, topic)
+        replace_mechanism_text(self.player, model.player_text(self.result, self.selected_key, topic), preserve=keep,
+            follow_change=self.sender() is self.topic, heading='【完整文献参考 · ' + card['title'] + '】' if card else None)
         technical = {'stage_id': self.stage_id, 'level_key': self.result['level_key'],
                      'source_identity': self.result['source_identity'], 'current_reference': row,
                      'current_complete_stage': self.result['data']['originals']['stages'][self.stage_id],
-                     'selected_document_card': model.selected_card(self.result, self.selected_key, topic),
+                     'selected_document_card': card,
                      'complete_actor_source_cards': self.result['materials']['actors'].get(row['actor']) if row else None,
                      'actual_smoke_cells': None, 'actual_skill_time': None, 'numeric_model_added': False} if self.result else {}
         replace_text(self.technical, _technical_json(technical), preserve=keep)
