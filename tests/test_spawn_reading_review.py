@@ -18,7 +18,7 @@ class SpawnReadingReview(unittest.TestCase):
  def test_all_labels_keys_and_exact_single_candidate_images_match_original_sources(self):
   p=self.panel();self.assertIsNone(p.actions.currentItem());self.assertEqual(p.actions.count(),len(p.result['actions']))
   for i,a in enumerate(p.result['actions']):
-   item=p.actions.item(i);self.assertEqual(item.text(),model.action_label(a));self.assertEqual(item.data(Qt.ItemDataRole.UserRole),a['key'])
+   item=p.actions.item(i);self.assertTrue(item.text().startswith(model.action_label(a).rsplit(' · ',1)[0]+' · '));self.assertIn('本条等待：'+model.number(a['raw'].get('preDelay'))+'秒',item.text());self.assertEqual(item.data(Qt.ItemDataRole.UserRole),a['key'])
    candidates=a['enemy_candidates'];expected=len(candidates)==1 and model.picture_for_enemy(candidates[0])is not None
    self.assertEqual(not item.icon().isNull(),expected,(a['key'],len(candidates)))
  def test_multiple_candidates_and_non_enemy_never_borrow_an_arbitrary_picture(self):
@@ -36,7 +36,7 @@ class SpawnReadingReview(unittest.TestCase):
   with patch.object(model,'stage_reference',return_value=None):self.assertFalse(p.refresh_reference());self.assertEqual(p._enemy_icons,{});self.assertEqual(p.actions.count(),0);self.assertFalse(p.action_position_button.isEnabled())
   self.assertTrue(p.refresh_reference());self.assertIsNone(p.action_key);self.assertTrue(any(not p.actions.item(i).icon().isNull()for i in range(p.actions.count())))
  def test_actual_click_and_keyboard_select_exact_original_full_text(self):
-  p=self.panel();p.actions.scrollToItem(p.actions.item(1));self.qt.processEvents();QTest.mouseClick(p.actions.viewport(),Qt.MouseButton.LeftButton,pos=p.actions.visualItemRect(p.actions.item(1)).center());self.qt.processEvents();self.assertEqual(p.action_key,p.result['actions'][1]['key']);self.assertEqual(p.action_player.toPlainText(),model.action_text(p.result['actions'][1]));QTest.keyClick(p.actions,Qt.Key.Key_Down);self.qt.processEvents();self.assertEqual(p.action_key,p.result['actions'][2]['key']);self.assertIn('准确时刻：未知',p.action_player.toPlainText())
+  p=self.panel();p.details_toggle.setChecked(True);p.actions.scrollToItem(p.actions.item(1));self.qt.processEvents();QTest.mouseClick(p.actions.viewport(),Qt.MouseButton.LeftButton,pos=p.actions.visualItemRect(p.actions.item(1)).center());self.qt.processEvents();self.assertEqual(p.action_key,p.result['actions'][1]['key']);self.assertEqual(p.action_player.toPlainText(),model.action_text(p.result['actions'][1]));QTest.keyClick(p.actions,Qt.Key.Key_Down);self.qt.processEvents();self.assertEqual(p.action_key,p.result['actions'][2]['key']);self.assertIn('准确时刻：未知',p.action_player.toPlainText())
  def test_continuous_width_changes_keep_selected_text_and_per_direction_manual_sizes(self):
   p=self.panel();p.actions.setCurrentRow(1);p.action_split.setSizes([300,540]);self.qt.processEvents();wide=p.action_split.sizes();key=p.action_key;cursor=p.action_player.textCursor();cursor.setPosition(3);cursor.setPosition(15,QTextCursor.MoveMode.KeepAnchor);p.action_player.setTextCursor(cursor)
   p.resize(640,650);self.qt.processEvents();self.assertEqual(p.action_split.orientation(),Qt.Orientation.Vertical);self.assertTrue(all(x>0 for x in p.action_split.sizes()));p.action_split.setSizes([120,300]);self.qt.processEvents();narrow=p.action_split.sizes()

@@ -23,6 +23,7 @@ class CurrentBattlePanel(QWidget):
         self.action_key = None
         self.run_config = {}
         self.enemy_forecasts = {}
+        self._action_object_names = {}
         self.tomimi_dialog = None
         layout = QVBoxLayout(self)
         header = QHBoxLayout()
@@ -196,16 +197,18 @@ class CurrentBattlePanel(QWidget):
         self.queue_kind.addItem('总览（全部条目）', None)
         self.queue_kind.addItem('主波次', 'main')
         self.queue_kind.addItem('条件分支', 'branch')
-        body.addWidget(self.queue_kind)
-        filters=QHBoxLayout();self.action_group=QComboBox();self.action_group.addItem('全部波次/分支分组',None);filters.addWidget(self.action_group)
+        filters=QHBoxLayout();filters.addWidget(self.queue_kind);self.action_group=QComboBox();self.action_group.addItem('全部分组',None);filters.addWidget(self.action_group)
         self.action_focus=QComboBox();self.action_focus.addItem('全部资料条目',None)
-        for key,label in(('enemy','含所选敌人的候选条目'),('hidden','带隐藏组标记'),('random','带随机组标记'),('predefined','预置单位或装置条目')):self.action_focus.addItem(label,key)
+        for key,label in(('enemy','所选敌人'),('hidden','隐藏组'),('random','随机组'),('predefined','装置与预置单位')):self.action_focus.addItem(label,key)
         filters.addWidget(self.action_focus);body.addLayout(filters)
         self.action_filter_notice=QLabel();self.action_filter_notice.setWordWrap(True);body.addWidget(self.action_filter_notice)
         split = self.action_split = QSplitter()
+        split.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Ignored)
         self._action_sizes = {}
         self.actions = QListWidget()
-        self.actions.setAccessibleName('出怪与条件条目；候选资料，不是实际出怪数量')
+        self.actions.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Ignored)
+        self.actions.setAccessibleName('出怪与条件条目；配置数量与等待参数')
+        self.actions.setToolTip('数量和等待来自关卡配置。双击条目或按回车查看对应地图位置。')
         self.actions.setIconSize(QSize(40,40));self.actions.setWordWrap(True)
         self.actions.setResizeMode(QListView.ResizeMode.Adjust)
         self.actions.setTextElideMode(Qt.TextElideMode.ElideNone)
@@ -213,21 +216,24 @@ class CurrentBattlePanel(QWidget):
         from .wrapped_item_delegate import WrappedItemDelegate
         self.actions.setItemDelegate(WrappedItemDelegate(self.actions,(0,)))
         split.addWidget(self.actions)
-        self.action_player = QPlainTextEdit()
+        self.action_player = MechanismTextBrowser()
+        self.action_player.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Ignored)
         self.action_player.setReadOnly(True)
         split.addWidget(self.action_player)
         split.setSizes([350, 650])
         body.addWidget(split, 1)
-        self.action_position_button = QPushButton('在地图上查看本条位置参考')
-        body.addWidget(self.action_position_button)
+        links=QHBoxLayout();body.addLayout(links)
+        self.action_position_button = QPushButton('地图位置')
+        links.addWidget(self.action_position_button)
         self.action_position_button.clicked.connect(self.open_action_positions)
+        self.actions.itemActivated.connect(lambda _item:self.action_position_button.click())
         self.tabs.addTab(self.wave_scroll, '出怪与条件')
-        self.spawn_candidates_button = QPushButton('查看出怪候选与关联记录')
-        body.addWidget(self.spawn_candidates_button)
+        self.spawn_candidates_button = QPushButton('候选与分组')
+        links.addWidget(self.spawn_candidates_button)
         self.spawn_candidates_button.clicked.connect(self.open_spawn_candidates)
         self.route_itinerary_dialog = None
-        self.route_itinerary_button = QPushButton('查看完整行程与停留条件')
-        body.addWidget(self.route_itinerary_button)
+        self.route_itinerary_button = QPushButton('行程与停留')
+        links.addWidget(self.route_itinerary_button)
         self.route_itinerary_button.clicked.connect(self.open_route_itinerary)
         from .current_settlement_modes_view import CurrentSettlementModesPanel
         self.settlement = CurrentSettlementModesPanel(stage_id, load=False)
@@ -264,6 +270,7 @@ class CurrentBattlePanel(QWidget):
         for label in (self.notice, self.rewards.notice, self.settlement.notice):
             label.setVisible(checked)
         self._enemy_changed(preserve=True, update_actions=False)
+        self._action_changed(self.actions.currentItem(),preserve=True)
 
     def _clear(self):
         self._close_tomimi();self.tomimi_button.hide();self.tomimi_button.setEnabled(False)
@@ -312,6 +319,7 @@ class CurrentBattlePanel(QWidget):
         self.enemy_key = None
         self.action_key = None
         self._enemy_icons = {}
+        self._action_object_names = {}
         self.map_image.clear()
         self.map_image.setText(model.UNAVAILABLE)
         self.enemy_portrait.clear()
@@ -322,14 +330,14 @@ class CurrentBattlePanel(QWidget):
         blocked = self.actions.blockSignals(True)
         self.actions.clear()
         self.action_filter_notice.setText('暂无出怪资料。')
-        group_blocked=self.action_group.blockSignals(True);self.action_group.clear();self.action_group.addItem('全部波次/分支分组',None);self.action_group.blockSignals(group_blocked)
+        group_blocked=self.action_group.blockSignals(True);self.action_group.clear();self.action_group.addItem('全部分组',None);self.action_group.blockSignals(group_blocked)
         self.actions.blockSignals(blocked)
+        self.details_toggle.setChecked(False)
         for widget in (self.summary, self.enemy_player, self.action_player, self.technical):
             replace_text(widget, '', preserve=False)
         self.rewards.clear_reference()
         self.settlement.clear_reference()
         self.source_toggle.setChecked(False)
-        self.details_toggle.setChecked(False)
         with QSignalBlocker(self.enemy_topics):
             self.enemy_topics.clear();self.enemy_topics.addItem('总览',None)
         self.rewards.sections.setCurrentIndex(0)
@@ -346,6 +354,9 @@ class CurrentBattlePanel(QWidget):
             self._close_spawn_candidates()
         old_enemy = self.enemy_combo.currentData() if keep else None
         self.result = fresh
+        from .current_stage_objects import from_battle as object_reference
+        objects=object_reference(fresh)
+        self._action_object_names={r['source_selector']:r['name']for r in objects['entries']}if objects is not None and objects['battle_source_identity']==fresh['source_identity']else{}
         self.source_identity = fresh['source_identity']
         from .tomimi_reference import target
         has_tomimi = target(fresh) is not None
@@ -559,12 +570,12 @@ class CurrentBattlePanel(QWidget):
         self._sync_guest_material(keep)
 
     def _actions_changed(self,*_,preserve=False):
-        from .player_spawn_filters import action_rows,group_key,group_label
+        from .player_spawn_filters import action_rows,group_key,group_label,record_text
         old=self.actions.currentItem();key=old.data(Qt.ItemDataRole.UserRole)if old and preserve else None
         kind=self.queue_kind.currentData();actions=self.result['actions']if self.result else[]
         selected_group=None if self.sender()is self.queue_kind else self.action_group.currentData()
         groups=list(dict.fromkeys(group_key(a)for a in action_rows(actions,kind)if group_key(a)is not None))
-        blocked=self.action_group.blockSignals(True);self.action_group.clear();self.action_group.addItem('全部波次/分支分组',None)
+        blocked=self.action_group.blockSignals(True);self.action_group.clear();self.action_group.addItem('全部分组',None)
         for group in groups:self.action_group.addItem(group_label(group),group)
         index=self.action_group.findData(selected_group)
         if selected_group is not None and index<0:self.action_group.addItem('原分组在当前范围无资料',selected_group);index=self.action_group.count()-1
@@ -573,7 +584,7 @@ class CurrentBattlePanel(QWidget):
         offset=self.actions.verticalScrollBar().value()if preserve else 0
         blocked=self.actions.blockSignals(True);self.actions.clear()
         for action in rows:
-            item=QListWidgetItem(model.action_label(action));item.setData(Qt.ItemDataRole.UserRole,action['key'])
+            item=QListWidgetItem(record_text(action,self._action_object_names));item.setData(Qt.ItemDataRole.UserRole,action['key'])
             candidates=action['enemy_candidates']
             if len(candidates)==1:item.setIcon(self._enemy_icons[candidates[0]['key']])
             item.setToolTip(item.text()+'；'+('多个引用候选，不任选其中一个头像。'if len(candidates)>1 else'固定资料条目，不证明实际出现或数量。'))
@@ -602,7 +613,14 @@ class CurrentBattlePanel(QWidget):
             dialog=getattr(self,'action_position_dialog',None)
             if dialog is not None:dialog.close()
         keep=preserve and key==self.action_key;self.action_key=key
-        replace_text(self.action_player,model.action_text(action)if action else'请选择一条出怪、装置或条件分支资料。',preserve=keep)
+        text=model.action_text(action)if action else'请选择一条出怪、装置或条件分支资料。'
+        if not self.details_toggle.isChecked():
+            text,_=mechanism_copy(text,model.NOTICE)
+            if action is not None:
+                text=item.text().splitlines()[0]+'\n'+text.partition('\n')[2]
+                count=model.number(action['raw'].get('count'))
+                text=text.replace('同条目配置数量：'+count+'（可能是候选，不能直接累计）','本条配置数量：'+count)
+        replace_text(self.action_player,text,preserve=keep)
         self.action_position_button.setEnabled(action is not None and action['raw'].get('actionType')in('SPAWN','ACTIVATE_PREDEFINED'))
 
     def _close_map_positions(self):

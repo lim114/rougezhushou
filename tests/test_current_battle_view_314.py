@@ -23,16 +23,17 @@ class CurrentBattleView314Tests(unittest.TestCase):
     def test_each_enemy_exact_identity_picture_or_visible_missing_state_and_no_white_values(self):
         p=self.panel('ro6_n_2_6')
         for e in p.result['enemies']:
-            self.assertTrue(p.enemy_choices.select_value(e['key']));self.app.processEvents();self.assertIn(e['name'],p.enemy_player.toPlainText());self.assertIn('不以白值替代',p.enemy_player.toPlainText())
+            self.assertTrue(p.enemy_choices.select_value(e['key']));self.app.processEvents();self.assertIn(e['name'],p.enemy_player.toPlainText());self.assertIn('待补齐当前版本修正',p.enemy_player.toPlainText());p.details_toggle.setChecked(True);self.assertIn('不以白值替代',p.enemy_player.toPlainText());p.details_toggle.setChecked(False)
             pix=p.enemy_portrait.pixmap()
-            if model.picture_for_enemy(e)is None:self.assertTrue(pix is None or pix.isNull());self.assertIn('未取得图片',p.enemy_portrait.text())
+            if model.picture_for_enemy(e)is None:self.assertTrue(pix is None or pix.isNull());self.assertEqual('暂无图片',p.enemy_portrait.text())
             else:self.assertFalse(pix.isNull())
     def test_main_vs_branch_filter_is_real_separate_choice_without_autoselection(self):
         p=self.panel()
         for kind in('main','branch'):
             p.queue_kind.setCurrentIndex(p.queue_kind.findData(kind));self.app.processEvents();rows=[a for a in p.result['actions']if a['queue']['kind']==kind]
             self.assertEqual(p.actions.count(),len(rows));self.assertIsNone(p.actions.currentItem())
-            if rows:p.actions.setCurrentRow(0);self.assertIn('准确时刻：未知',p.action_player.toPlainText())
+            if rows:
+                p.actions.setCurrentRow(0);self.assertIn('开场后的出怪时刻：待核对',p.action_player.toPlainText());p.details_toggle.setChecked(True);self.assertIn('准确时刻：未知',p.action_player.toPlainText());p.details_toggle.setChecked(False)
     def test_refresh_preserves_selected_enemy_action_filter_tab_real_scroll_and_selection(self):
         p=self.panel();p.resize(900,440);self.app.processEvents();p.enemy_choices.select_value(p.result['enemies'][0]['key'])
         p.queue_kind.setCurrentIndex(p.queue_kind.findData('branch'));p.actions.setCurrentRow(0);self.app.processEvents()

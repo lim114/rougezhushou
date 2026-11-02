@@ -8,6 +8,24 @@ def group_key(action):
 def group_label(key):
     return f'第{key[1]}波 · 第{key[2]}组'if key[0]=='main'else f'条件分支{key[1]} · 第{key[2]}段'
 
+
+def record_text(action,object_names):
+    """Original per-record settings, with their occurrence conditions visible."""
+    from .current_battle_reference import number,action_label
+    title=action_label(action);predefined=action['predefined_candidates']
+    if not action['enemy_candidates']and len(predefined)==1:
+        name=object_names.get(predefined[0]['source_selector'])
+        if name:title=title.rsplit(' · ',1)[0]+' · '+name
+    raw=action['raw'];parts=[]
+    if raw.get('actionType')in('SPAWN','ACTIVATE_PREDEFINED'):
+        parts.extend(('配置数量：'+number(raw.get('count')), '间隔：'+number(raw.get('interval'))+'秒'))
+    parts.append('本条等待：'+number(raw.get('preDelay'))+'秒')
+    if action['queue']['kind']=='branch':parts.append('条件分支')
+    if raw.get('hiddenGroup'):parts.append('隐藏候选')
+    if raw.get('randomSpawnGroupKey')or raw.get('randomSpawnGroupPackKey'):parts.append('随机候选')
+    if raw.get('blockFragment'):parts.append('需等待本组条件')
+    return title+'\n'+' · '.join(parts)
+
 def action_rows(actions,kind=None,group=None,focus=None,enemy_key=None):
     rows=[]
     if focus not in(None,'enemy','hidden','random','predefined'):return rows

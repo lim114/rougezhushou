@@ -59,8 +59,14 @@ def _derive(current,reference):
     return{'stage_id':current['id'],'stage_name':current['name'],'entries':records,'level_key':current['level_key'],'original_level_source':deepcopy(current['source']),'source_identity':(reference['identity'],current['source_identity']),'battle_source_identity':current['source_identity'],'actual_active':None,'actual_server_verified':False,'run_updated':False}
 def stage_reference(stage_id):
     if type(stage_id)is not str:return None
-    current=battle.stage_reference(stage_id);reference=packet()
-    if current is None or reference is None:return None
+    current=battle.stage_reference(stage_id)
+    return from_battle(current)if current is not None else None
+
+
+def from_battle(current):
+    """Resolve objects from an already verified fixed battle reference."""
+    stage_id=current['id'];reference=packet()
+    if reference is None:return None
     if reference['inventory']['battle_identity']!=current['source_identity']or stage_id not in reference['inventory']['stages']:return None
     declared=reference['inventory']['stages'][stage_id]
     if declared['level_key']!=current['level_key']or declared['original_source']!=current['source']:return None
