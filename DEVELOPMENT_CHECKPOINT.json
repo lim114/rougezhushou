@@ -3,7 +3,7 @@
   "policy": {
     "commit_after_each_section": true,
     "full_validation_interval": null,
-    "continuous_work_authorized": true,
+    "continuous_work_authorized": false,
     "windows_compatibility": "Wine authorized; distinct from native Windows verification",
     "scheduled_background_work": false,
     "priority_order": [
@@ -20,9 +20,9 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section:commit and ordinary push origin codex/p2-development.Full checks cancelled until explicit user request.",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": false,
+    "development_paused_by_latest_user_request": true,
     "summary_interval": 5,
-    "stop_after_section": null,
+    "stop_after_section": 472,
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
@@ -63,8 +63,8 @@
     "pause_after_active_section_requested": false,
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
-    "current_usage_remaining_percent": 25,
-    "current_usage_receipt": "verification/sections/471-map-markers/usage.json",
+    "current_usage_remaining_percent": 24,
+    "current_usage_receipt": "verification/sections/472-floor-map/usage.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
     "latest_user_instruction_receipt": "verification/sections/371-preparation/resume-and-scope.json",
     "latest_pause_instruction_receipt": "verification/sections/350-pause-request.json",
@@ -89,7 +89,7 @@
     "full_validation_restore_requires_explicit_user_request": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 471,
+  "completed_sections": 472,
   "sections": [
     {
       "number": 1,
@@ -2904,10 +2904,16 @@
       "completion_ref": "player-section-471",
       "topic": "原图编号点选与格子、出怪位置联动",
       "verification": "verification/sections/471.json"
+    },
+    {
+      "number": 472,
+      "completion_ref": "player-section-472",
+      "topic": "首层四图的入口与保护目标标记",
+      "verification": "verification/sections/472.json"
     }
   ],
-  "next_section": 472,
-  "next_action": "继续补齐固定地图位置校准和当前关卡资料，完善其余事件、奖励与机制阅读；同步推进识别及当前环境数值校准。网页缺少的准确拓展配置等待新资料，不用同名基础配置替代。",
+  "next_section": 473,
+  "next_action": "暂停于第472节。恢复后继续其余固定地图位置、事件与奖励资料、视频交互及识别优化，随后推进干员和藏品数值校准。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -3024,14 +3030,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 471,
-    "verification": "verification/sections/471.json",
+    "section": 472,
+    "verification": "verification/sections/472.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 471,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "0366e696cce36db455c01e34c29deb3010dad3ed",
     "proof": "verification/sections/471-publication.json",
@@ -3281,7 +3287,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "ACTIVE_AFTER471",
+  "batch_status": "PAUSED_AFTER472",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3486,20 +3492,22 @@
     468,
     469,
     470,
-    471
+    471,
+    472
   ],
   "current_batch": {
     "kind": "whole_program_review_and_implementation_improvement",
     "start": 451,
     "end": null,
-    "status": "ACTIVE_AFTER471",
-    "completed_sections": 471,
-    "next_section": 472,
+    "status": "PAUSED_AFTER472",
+    "completed_sections": 472,
+    "next_section": 473,
     "next_section_started": false,
-    "batch_closed": false,
+    "batch_closed": true,
     "next_full_validation_after": null,
-    "receipt": "verification/sections/471.json",
-    "scope": "固定地图和出怪位置页在原图上显示已有位置编号，点击即可联动格子与位置列表；同点多条记录可选择，标记可隐藏。宽窄窗口自动调整两图排列，缩放后资料窗保持在屏幕内；位置说明同步精简，刷新与返回保留有效阅读。"
+    "receipt": "verification/sections/472.json",
+    "scope": "猎犬病原、遗忘时间、急不可耐、灌水贤者加入可点选的入口和保护目标，普通与紧急配置分别核对；点选原图联动格子和出怪位置。地图标题显示关卡和紧急模式，首屏说明精简为操作与位置要点。",
+    "paused_after_section": 472
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -9486,11 +9494,11 @@
     "development_paused": false
   },
   "current_section_validation": {
-    "section": 471,
-    "receipt": "verification/sections/471.json",
-    "necessary_checks": 47,
+    "section": 472,
+    "receipt": "verification/sections/472.json",
+    "necessary_checks": 50,
     "native_scopes": {
-      "current": 56
+      "current": 119
     },
     "full_validation_rerun": false
   },

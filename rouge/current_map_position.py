@@ -50,10 +50,15 @@ def stage_reference(stage_id):
         observed=boss_symbols.mapping_for(stage_id,ref['current'])
         if observed is None or mapping is not None:return None
         mapping=observed['mapping'];points=mapping['points'];identity=(identity,observed['source_identity'])
+    from . import observed_map_symbols as extra_symbols
+    if mapping is None and stage_id in extra_symbols.STAGES:
+        observed=extra_symbols.mapping_for(stage_id,ref['current'])
+        if observed is not None:
+            mapping=observed['mapping'];points=mapping['points'];identity=(identity,observed['source_identity'])
     if mapping:
         envelope={k:level[k]for k in ref['data']['geometry_keys']};digest=sha256(json.dumps(envelope,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
         if mapping['current_level_key']!=key or mapping['image']!=image or mapping['full_selected_geometry_sha256']!=digest:return None
-    return {'stage_id':stage_id,'stage_name':stage['name'],'rows':len(grid),'cols':len(grid[0]),'map':deepcopy(grid),'tiles':deepcopy(tiles),'complete_current_geometry':{k:deepcopy(level[k])for k in ref['data']['geometry_keys']},'current_level_key':key,'image':deepcopy(image),'points':points,'mapping_evidence':mapping,'source_identity':identity,'full_map_projection_verified':False,'supports_inverse':False,'supports_segments':False,'actual_combat_positions_verified':False,'run_updated':False}
+    return {'stage_id':stage_id,'stage_name':stage['name'],'is_elite':stage['isElite'],'rows':len(grid),'cols':len(grid[0]),'map':deepcopy(grid),'tiles':deepcopy(tiles),'complete_current_geometry':{k:deepcopy(level[k])for k in ref['data']['geometry_keys']},'current_level_key':key,'image':deepcopy(image),'points':points,'mapping_evidence':mapping,'source_identity':identity,'full_map_projection_verified':False,'supports_inverse':False,'supports_segments':False,'actual_combat_positions_verified':False,'run_updated':False}
 def cell_reference(result,row,col):
     if result is None or type(row)is not int or type(col)is not int or not 0<=row<result['rows']or not 0<=col<result['cols']:return None
     tile=deepcopy(result['tiles'][result['map'][row][col]]);point=next((deepcopy(p)for p in result['points']if p['row']==row and p['col']==col),None)

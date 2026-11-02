@@ -39,7 +39,7 @@ class CurrentMapPosition319Tests(unittest.TestCase):
         for row in range(r['rows']):
             for col in range(r['cols']):
                 cell=model.cell_reference(r,row,col);self.assertEqual(cell['mapped_to_original'],(row,col)in known)
-        r=model.stage_reference('ro6_n_1_2');self.assertEqual(r['points'],[]);self.assertIn('没有满足条件',model.summary_text(r));self.assertIsNone(model.cell_reference(r,True,0));self.assertIsNone(model.cell_reference(r,0.5,0));self.assertIsNone(model.cell_reference(r,-1,0));self.assertIsNone(model.cell_reference(r,r['rows'],0))
+        r=model.stage_reference('ro6_n_2_1');self.assertEqual(r['points'],[]);self.assertIn('没有满足条件',model.summary_text(r));self.assertIsNone(model.cell_reference(r,True,0));self.assertIsNone(model.cell_reference(r,0.5,0));self.assertIsNone(model.cell_reference(r,-1,0));self.assertIsNone(model.cell_reference(r,r['rows'],0))
     def test_complete_map_properties_and_camera_changes_block_transfer(self):
         with TemporaryDirectory()as folder:
             root=Path(folder);self.clone(root);p=root/'research/p3-current-battle-314/source-inputs.json';base=p.read_bytes();data=json.loads(base);source=json.loads((ROOT/model.DATA).read_bytes());key=source['compatible_stages']['ro6_n_6_2']['current_level_key'];expected={sid for sid,row in source['compatible_stages'].items()if row['current_level_key']==key}

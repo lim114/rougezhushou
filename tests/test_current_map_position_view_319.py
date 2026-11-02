@@ -30,7 +30,7 @@ class CurrentMapPositionView319Tests(unittest.TestCase):
         for reader in(p.player,p.technical):
             p.tabs.setCurrentWidget(reader);self.qt.processEvents();c=reader.textCursor();c.setPosition(2);c.setPosition(12,QTextCursor.MoveMode.KeepAnchor);reader.setTextCursor(c);bar=reader.verticalScrollBar();self.assertGreater(bar.maximum(),0);bar.setValue(min(4,bar.maximum()));before=(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.selected,p.combo.currentIndex());self.assertTrue(p.refresh_reference());self.qt.processEvents();c=reader.textCursor();self.assertEqual(before,(c.anchor(),c.position(),bar.value(),p.tabs.currentIndex(),p.selected,p.combo.currentIndex()))
     def test_unmapped_stage_keeps_grid_and_exact_image_without_point_choices(self):
-        p=self.panel('ro6_n_1_2');self.assertEqual(len(p.result['points']),0);self.assertFalse(p.combo.isEnabled());self.assertFalse(p.original.pixmap.isNull());QTest.mouseClick(p.grid,Qt.MouseButton.LeftButton,pos=p.grid.center(0,0).toPoint());self.assertEqual(p.selected,(0,0));self.assertIsNone(p.original.point_center())
+        p=self.panel('ro6_n_2_1');self.assertEqual(len(p.result['points']),0);self.assertFalse(p.combo.isEnabled());self.assertFalse(p.original.pixmap.isNull());QTest.mouseClick(p.grid,Qt.MouseButton.LeftButton,pos=p.grid.center(0,0).toPoint());self.assertEqual(p.selected,(0,0));self.assertIsNone(p.original.point_center())
     def test_actual_source_damage_clears_every_old_artifact_manual_selection_on_recovery(self):
         p=self.panel();p.combo.setCurrentIndex(1)
         with TemporaryDirectory()as folder:

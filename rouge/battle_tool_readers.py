@@ -64,7 +64,11 @@ def open_position(parent, kind, args, *, context=None):
         if reader.result is None:
             reader.deleteLater()
             return None
-        page = ToolPage(title, reader, owner, object_name='mapReferenceWindow', extra_style=REFERENCE_STYLE)
+        label=title
+        if kind in('map','action'):
+            grid=reader.result if kind=='map'else reader.result['grid']
+            label=grid['stage_name']+(' · 紧急'if grid['is_elite']else'')+' · '+title
+        page = ToolPage(label, reader, owner, object_name='mapReferenceWindow', extra_style=REFERENCE_STYLE)
         page.panel = reader
         page.resize(960, 640)
         return page
