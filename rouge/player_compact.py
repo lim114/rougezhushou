@@ -63,7 +63,7 @@ class CompactAssistant(QDialog):
         for name,label in zip(ORDER,NAMES):
             glyph,callback=by_name[name];button=DockButton(label,glyph,self)
             button.setAccessibleName(name);button.clicked.connect(callback)
-            button.geometryChanged.connect(self._layout_dock);button.hoverChanged.connect(self._hover_tool);button.dragged.connect(self._drag_dock)
+            button.hoverChanged.connect(self._hover_tool);button.dragged.connect(self._drag_dock)
             self.buttons[name]=button;self.tool_buttons.append(button)
         # Retain programmatic shortcut compatibility; statistics lives in the settings menu.
         self.buttons['节点统计']=stat
@@ -74,6 +74,19 @@ class CompactAssistant(QDialog):
         self.game_hover=GameHover(self,owner);self.game_hover_enabled.toggled.connect(self.game_hover.set_enabled)
         from .player_game_map import GameMapOverlay
         self.game_overlay=GameMapOverlay(self,owner,statistics_source=owner.node_statistics_source());self.map_overlay_enabled=QCheckBox('游戏地图显示所选节点类型（只读）');layout.addWidget(self.map_overlay_enabled);self.map_overlay_enabled.toggled.connect(self.game_overlay.set_enabled)
+        from PySide6.QtWidgets import QSystemTrayIcon,QMenu
+        self.tray=QSystemTrayIcon(self.tool_buttons[0].normal_icon,self);self.tray.setToolTip('黑流树海助手')
+        self.tray_menu=QMenu(self)
+        for label in ORDER:
+            action=by_name[label][1]
+            self.tray_menu.addAction(label).triggered.connect(lambda _checked=False,callback=action:self._open_from_tray(callback))
+        self.tray_menu.addSeparator();self.tray_menu.addAction('退出助手').triggered.connect(self.exit_application)
+        self.tray.setContextMenu(self.tray_menu)
+        self.tray.activated.connect(lambda reason:self._open_from_tray(by_name['本局概况'][1])if reason==QSystemTrayIcon.ActivationReason.Trigger else None)
+        self.tray.show()
+    def _open_from_tray(self,callback):
+        if self.hidden_windows is not None:self.toggle_visibility()
+        return callback()
     def _layout_dock(self):
         from .player_toolbar import DIAMETER,GAP
         right=self.x()+self.width();x=2;region=QRegion()
@@ -86,16 +99,26 @@ class CompactAssistant(QDialog):
         if self._dock_positioned:self._move_dock(QPoint(right-self.width(),self.y()))
     def _move_dock(self,position):
         screen=QApplication.screenAt(position+self.rect().center())or self.screen();area=screen.availableGeometry()
+        binding=getattr(self,'game_binding',None)
+        if binding is not None and binding.enabled and binding.snapshot is not None and binding.snapshot['active']:
+            from .player_game_binding import outside_position
+            position=outside_position(binding.snapshot['logical_client'],area,self.size(),position)
+            if position is None:return
         self.move(max(area.left(),min(position.x(),area.right()-self.width()+1)),max(area.top(),min(position.y(),area.bottom()-self.height()+1)))
     def _drag_dock(self,delta):self._move_dock(self.pos()+delta)
     def _hover_tool(self,button):
         for item in self.tool_buttons:item.set_expanded(item is button)
+        from PySide6.QtWidgets import QToolTip
+        if button is None:QToolTip.hideText()
+        else:QToolTip.showText(button.mapToGlobal(QPoint(0,button.height()+8)),button.label,button)
     def showEvent(self,event):
         super().showEvent(event)
         if not self._dock_positioned:
             area=self.screen().availableGeometry();self._dock_positioned=True
             self._move_dock(QPoint(area.right()-self.width()-15,area.bottom()-self.height()-11))
     def hideEvent(self,event):
+        from PySide6.QtWidgets import QToolTip
+        QToolTip.hideText()
         for button in self.tool_buttons:button.set_expanded(False,animate=False)
         super().hideEvent(event)
     def apply_hotkey(self):
@@ -354,7 +377,7 @@ class CompactAssistant(QDialog):
         self.owner.close()
         if self.owner.closing:QApplication.instance().quit()
     def closeEvent(self,event):
-        if self.owner.closing:self.hotkey.close();self.game_binding.close();self.game_hover.close();self.game_overlay.close()
+        if self.owner.closing:self.tray.hide();self.tray_menu.close();self.hotkey.close();self.game_binding.close();self.game_hover.close();self.game_overlay.close()
         if not self.owner.closing:self.open_full()
         else:self.reference_window.close()
         event.accept()

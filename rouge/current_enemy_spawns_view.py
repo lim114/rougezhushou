@@ -26,6 +26,8 @@ class CurrentEnemySpawnsPanel(QWidget):
         self.kind.currentIndexChanged.connect(self._filter_changed);self.entries.currentIndexChanged.connect(self.refresh_reference);self.refresh_button.clicked.connect(self.refresh_reference);self.action_button.clicked.connect(self.follow_action);self.position_button.clicked.connect(self.follow_position);self.refresh_reference()
     @staticmethod
     def _fill(widget,rows,selected=None):
+        expected=[('请选择一条对应记录'if rows else'此范围没有直接出怪记录',None)]+[(r['label'],r['key'])for r in rows]
+        if [(widget.itemText(i),widget.itemData(i))for i in range(widget.count())]==expected and widget.currentData()==selected:return
         blocked=widget.blockSignals(True);widget.clear();widget.addItem('请选择一条对应记录'if rows else'此范围没有直接出怪记录',None)
         for row in rows:widget.addItem(row['label'],row['key'])
         widget.setCurrentIndex(max(0,widget.findData(selected)));widget.blockSignals(blocked)

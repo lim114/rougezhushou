@@ -65,7 +65,14 @@ class BranchChoice(QWidget):
 
     def set_groups(self,groups,*,emit=True):
         previous=self.combo.currentData();key=self.branch.currentData()
-        self.groups=[(name,list(items)) for name,items in groups if items or self.keep_empty_groups]
+        incoming=[(name,list(items)) for name,items in groups if items or self.keep_empty_groups]
+        if self.branch.count() and [(name,[(t,v)for t,v,_ in items])for name,items in incoming]==[(name,[(t,v)for t,v,_ in items])for name,items in self.groups]:
+            self.groups=incoming
+            offset=int(self.placeholder is not None)
+            for i,(_,_,icon)in enumerate(self.entries()):self.combo.setItemIcon(i+offset,icon)
+            if emit and not self.combo.signalsBlocked():self.combo.currentIndexChanged.emit(self.combo.currentIndex())
+            return
+        self.groups=incoming
         blocked=self.branch.blockSignals(True);self.branch.clear()
         self.branch.addItem(self.overview_label,OVERVIEW)
         for name,_ in self.groups:

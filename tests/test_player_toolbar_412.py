@@ -3,7 +3,7 @@ import unittest
 from PySide6.QtCore import Qt,QPoint
 from PySide6.QtWidgets import QApplication,QWidget
 from PySide6.QtTest import QTest
-from rouge.player_toolbar import DockButton,DIAMETER,LABEL_SPACE,ORDER
+from rouge.player_toolbar import DockButton,DIAMETER,ORDER
 from rouge.player_compact import CompactAssistant
 
 class ToolbarTests(unittest.TestCase):
@@ -20,14 +20,14 @@ class ToolbarTests(unittest.TestCase):
         self.assertEqual(len({b.y()for b in bar.tool_buttons}),1);self.assertIsNone(bar.findChild(QWidget,'toolbarShell'))
         first,second=bar.tool_buttons[:2];gap=QPoint((first.geometry().right()+second.x())//2,first.geometry().center().y())
         self.assertFalse(bar.mask().contains(gap));self.assertTrue(bar.mask().contains(first.geometry().center()))
-    def test_name_expands_inside_button_and_collapses_without_second_row(self):
+    def test_hover_keeps_icon_and_click_geometry_fixed(self):
         bar=self.toolbar();button=bar.tool_buttons[-1];height=bar.height();width=bar.width()
-        button.set_expanded(True,animate=False);self.assertGreater(bar.width(),width);self.assertEqual(bar.height(),height)
-        self.assertEqual(button.width(),DIAMETER+LABEL_SPACE);self.assertEqual(button.label,'设置')
+        button.set_expanded(True,animate=False);self.assertEqual(bar.width(),width);self.assertEqual(bar.height(),height)
+        self.assertEqual(button.width(),DIAMETER);self.assertEqual(button.label,'设置')
         button.set_expanded(False,animate=False);self.assertEqual(bar.width(),width)
-    def test_one_hover_target_and_smooth_geometry_changes(self):
+    def test_one_hover_target_without_moving_icons(self):
         bar=self.toolbar();bar._hover_tool(bar.tool_buttons[1]);QTest.qWait(220)
-        self.assertEqual(bar.tool_buttons[1].width(),DIAMETER+LABEL_SPACE)
+        self.assertEqual(bar.tool_buttons[1].width(),DIAMETER)
         bar._hover_tool(bar.tool_buttons[-1]);QTest.qWait(220)
         self.assertEqual(sum(b._target for b in bar.tool_buttons),1);self.assertEqual(bar.tool_buttons[1].width(),DIAMETER)
     def test_transparent_corner_and_white_round_face_are_actual_painted_pixels(self):

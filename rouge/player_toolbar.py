@@ -1,11 +1,10 @@
-"""One-row transparent dock. Names belong inside the hovered button."""
+"""Fixed hit targets on a transparent dock; names use the native tooltip."""
 from PySide6.QtCore import Qt,QSize,QPoint,Signal,Property,QPropertyAnimation,QEasingCurve
 from PySide6.QtGui import QIcon,QPixmap,QPainter,QColor,QPen
 from PySide6.QtWidgets import QToolButton,QApplication
 
 DIAMETER=32
 GAP=8
-LABEL_SPACE=64
 ORDER=('本局概况','聊天分析','本局藏品','地图与节点','场景笔记','干员与技能','工具设置')
 NAMES=('本局','聊天','背包','地图','备忘录','计算器','设置')
 
@@ -27,7 +26,6 @@ def dock_icon(name,light=False):
 
 class DockButton(QToolButton):
     hoverChanged=Signal(object)
-    geometryChanged=Signal()
     dragged=Signal(QPoint)
     def __init__(self,name,glyph,parent=None):
         super().__init__(parent);self.label=name;self.normal_icon=dock_icon(glyph);self.light_icon=dock_icon(glyph,True)
@@ -39,7 +37,7 @@ class DockButton(QToolButton):
         self.animation=QPropertyAnimation(self,b'amount',self);self.animation.setDuration(150);self.animation.setEasingCurve(QEasingCurve.Type.OutCubic)
     def get_amount(self):return self._amount
     def set_amount(self,value):
-        self._amount=max(0.,min(1.,float(value)));self.setFixedWidth(DIAMETER+round(LABEL_SPACE*self._amount));self.geometryChanged.emit();self.update()
+        self._amount=max(0.,min(1.,float(value)));self.update()
     amount=Property(float,get_amount,set_amount)
     def set_expanded(self,value,*,animate=True):
         value=bool(value)
@@ -55,9 +53,6 @@ class DockButton(QToolButton):
         painter.setBrush(QColor(47,50,53,240)if active else QColor('#fbfdfd'))
         painter.drawRoundedRect(self.rect().adjusted(0,0,-1,-1),DIAMETER/2,DIAMETER/2)
         (self.light_icon if active else self.normal_icon).paint(painter,7,7,18,18)
-        if active:
-            painter.setPen(QColor('#fff'));font=painter.font();font.setPixelSize(11);font.setWeight(font.Weight.DemiBold);painter.setFont(font)
-            painter.drawText(self.rect().adjusted(DIAMETER+1,0,-7,0),Qt.AlignmentFlag.AlignVCenter|Qt.AlignmentFlag.AlignLeft,self.label)
         if self.hasFocus()and self._keyboard:
             painter.setPen(QPen(QColor('#54d2e2'),1.5));painter.setBrush(Qt.BrushStyle.NoBrush);painter.drawRoundedRect(self.rect().adjusted(2,2,-3,-3),14,14)
     def enterEvent(self,event):self.hoverChanged.emit(self);super().enterEvent(event)

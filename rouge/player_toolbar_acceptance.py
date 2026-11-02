@@ -7,7 +7,7 @@ from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QWidget
 
 def check(window,gui,require):
-    from .player_toolbar import ORDER,DIAMETER,LABEL_SPACE
+    from .player_toolbar import ORDER,DIAMETER
     import win32gui
     before=deepcopy(window.run.state);window.show_compact();bar=window.compact_window
     area=bar.screen().availableGeometry();bar._move_dock(QPoint(area.center().x()-bar.width()//2,area.center().y()-bar.height()//2))
@@ -40,16 +40,16 @@ def check(window,gui,require):
         window.player_idle_toolbar_image=image
         old_right=bar.x()+bar.width();button=bar.buttons['工具设置']
         owned_hover(button,QPoint(16,16));QTest.qWait(240);gui.processEvents()
-        require(button.width()==DIAMETER+LABEL_SPACE and button._target,'owned_Qt_mouse_enter_expands_settings_name_in_button')
-        require(bar.x()+bar.width()==old_right,'hover_expansion_keeps_right_edge_stationary')
-        require(area.contains(bar.geometry()),'expanded_toolbar_stays_in_available_screen')
+        require(button.width()==DIAMETER and button._target,'owned_Qt_mouse_enter_keeps_settings_click_area_fixed')
+        require(bar.x()+bar.width()==old_right,'hover_keeps_right_edge_stationary')
+        require(area.contains(bar.geometry()),'hovered_toolbar_stays_in_available_screen')
         QTest.mouseClick(button,Qt.MouseButton.LeftButton,pos=QPoint(16,16));gui.processEvents()
         require(bar.settings_popup.isVisible()and not window.isVisible(),'actual_settings_button_keeps_native_compact_navigation')
         bar.settings_popup.close();owned_hover(probe,QPoint(5,5));QTest.qWait(240);gui.processEvents()
         require(all(b.width()==DIAMETER for b in bar.tool_buttons),'leaving_buttons_returns_to_round_faces')
         bar.activateWindow();gui.processEvents();previous=bar.buttons['干员与技能'];previous.setFocus(Qt.FocusReason.OtherFocusReason)
         QTest.keyClick(previous,Qt.Key.Key_Tab);QTest.qWait(220);gui.processEvents()
-        require(button._keyboard and button.width()==DIAMETER+LABEL_SPACE,'owned_keyboard_focus_exposes_name_and_focus_indicator')
+        require(button._keyboard and button.width()==DIAMETER,'owned_keyboard_focus_keeps_fixed_hit_area')
         QTest.keyClick(button,Qt.Key.Key_Space);gui.processEvents()
         require(bar.settings_popup.isVisible(),'owned_space_key_activates_selected_tool_without_external_key_injection')
         bar.settings_popup.close();button.clearFocus();gui.processEvents()
@@ -69,7 +69,7 @@ def check(window,gui,require):
         require(bar.recent_notes_popup.isVisible(),'actual_notebook_icon_retains_scene_notebook_entry')
         bar.recent_notes_popup.close();bar.refresh()
         owned_hover(bar.buttons['工具设置'],QPoint(16,16));QTest.qWait(240);gui.processEvents()
-        require(bar.buttons['工具设置']._amount==1.,'final_native_window_contains_fully_expanded_name_capsule')
+        require(bar.buttons['工具设置']._amount==1.,'final_native_window_contains_highlighted_fixed_button')
         window.player_validation_target=bar
         require(window.run.state==before,'toolbar_appearance_does_not_modify_run_state')
     finally:probe.close();probe.deleteLater()

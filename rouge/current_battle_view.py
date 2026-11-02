@@ -404,9 +404,13 @@ class CurrentBattlePanel(QWidget):
 
     def set_context(self,config):
         conditions={key:deepcopy(config[key])for key in('difficulty','zone')if key in config}
-        if conditions==self.run_config:
-            return
+        # Observation time is provenance, not an enemy attribute. Keep the
+        # latest provenance without rebuilding lists on an unchanged re-read.
+        previous={key:({k:v for k,v in record.items()if k!='captured_at'}if isinstance(record,dict)else record)for key,record in self.run_config.items()}
+        current={key:({k:v for k,v in record.items()if k!='captured_at'}if isinstance(record,dict)else record)for key,record in conditions.items()}
         self.run_config=conditions
+        if current==previous:
+            return
         from .current_enemy_forecast import forecasts
         self.enemy_forecasts=forecasts(self.result,conditions)
         self._sync_enemy_grid()

@@ -5,7 +5,7 @@
   "next_section": 473,
   "current_section_label": "第472节 + 首层四图的入口与保护目标标记",
   "current_completed_change": "猎犬病原、遗忘时间、急不可耐、灌水贤者加入可点选的入口和保护目标，普通与紧急配置分别核对；点选原图联动格子和出怪位置。地图标题显示关卡和紧急模式，首屏说明精简为操作与位置要点。",
-  "batch_status": "GATE0_FIRST_SESSION_COLLECTED_VIDEO_REVIEW_PENDING",
+  "batch_status": "URGENT_UI_REPAIRED_CAPTURE_BACKLOG_PENDING",
   "next_full_validation_after": null,
   "full_validation_mode": "disabled_by_user",
   "full_validation_restore_requires_explicit_user_request": true,
@@ -18,7 +18,7 @@
   "current_batch_target_section": null,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "b446a78accd94271fed9c517ff4399ded244ca5949659936281e77624ecc7805",
+    "sha256": "c870b842208f0af4dec4386dcf6e3c757b0d40f35c3f8f5a0d86ddf3c6be10f1",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2844,20 +2844,20 @@
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "d3385a9eee52fde70c9d336cf9c4bbff75249de225ef94f197685c4bd20e4cd9",
-    "PROJECT_PROGRESS.md": "d945f637c625526f8724eb9f5ad84bfa020c3959f5d4b764d79eb19e442a7b4b",
-    "WORK_IN_PROGRESS.md": "1c3b4fee6a0a45d0744788ab1f046f01ae4c32700552a013659d42117ab67b99",
-    "PROJECT_COMPLETED.md": "ecc66400c6c5fe1f133c9cbffc9737eac9525b2f55c0941d9483496f6948281b",
+    "DEVELOPMENT_CHECKPOINT.json": "d60208d9f14258fde86461828bfc4ddd8eb473537f881e455dfc91b1b70e900d",
+    "PROJECT_PROGRESS.md": "be27a94a5e6a4de3a2f148f277911fe1d3db0969663452e6aebfd34b57337293",
+    "WORK_IN_PROGRESS.md": "9de73def1299a945cc6b0ff8de1f3310524121bca27ebc4d1a60a0ec63e40b44",
+    "PROJECT_COMPLETED.md": "8dbb3746c32ece21096f20a17a2f11ee54e8bf93b912e1ccd40075406ffb76dd",
     "AGENTS.md": "4758520fe7db6c4963a48474f71d884ada1a3100cd8d785d7ee1c40d351f2df0",
-    "PROJECT_REQUIREMENTS.md": "b446a78accd94271fed9c517ff4399ded244ca5949659936281e77624ecc7805",
+    "PROJECT_REQUIREMENTS.md": "c870b842208f0af4dec4386dcf6e3c757b0d40f35c3f8f5a0d86ddf3c6be10f1",
     "verification/sections/472.json": "5db24c70447b443a2f10cdc52fed941eed22104d3a9fabad756d7e17283da4db",
-    "docs/decisions/2026-11-02-experience-gates.md": "1a2bd627e472e139ebe73eedee59e891902a43a0a3e5db916035b54c69c0b575"
+    "docs/decisions/2026-11-02-experience-gates.md": "1e5dd8d1b86a0c6ec09704035a18b24e2b443a91e2177f3ce9c3ca23defe3481"
   },
   "private_state_included": false,
   "current_execution": {
     "plan": "docs/decisions/2026-11-02-experience-gates.md",
     "gate": 0,
-    "status": "FIRST_SESSION_COLLECTED_VIDEO_REVIEW_PENDING",
+    "status": "URGENT_UI_REPAIRED_CAPTURE_BACKLOG_PENDING",
     "real_sessions_completed": 0,
     "required_scenarios": [
       "normal",
@@ -2866,11 +2866,13 @@
     ],
     "functional_breadth_frozen": true,
     "real_sessions_collected": 1,
-    "latest_collection_receipt": "verification/maintenance/gate0-session1-collection.json"
+    "latest_collection_receipt": "verification/maintenance/gate0-session1-collection.json",
+    "urgent_repairs": "docs/decisions/2026-11-03-urgent-player-experience.md",
+    "paired_video_review_complete": false
   },
   "current_maintenance": {
-    "title": "Gate 0首场正常流程采集结束，待录像对照",
-    "receipt": "verification/maintenance/gate0-session1-collection.json",
+    "title": "工具条外置、满屏托盘呼出与刷新稳定性修复",
+    "receipt": "verification/maintenance/player-urgent-20261103/summary.json",
     "binding": "enclosing_commit",
     "functional_section_incremented": false,
     "tools_receipt": "verification/maintenance/gate0-tools/summary.json",
@@ -2879,6 +2881,7 @@
       "proof": "verification/maintenance/gate0-publication.json",
       "proof_sha256": "f933f1d51e17436b5bf0a0cd2e470a091431a916620b0ded02f007e47c28f4c1"
     },
-    "receipt_sha256": "1af30628a63ed9ab251b3d0bbea22cf7b2a6732dd57c29fe82196bb221e7ae58"
+    "previous_collection_receipt": "verification/maintenance/gate0-session1-collection.json",
+    "receipt_sha256": "7c1ba5f4853eb163c07a62ae74f563e087b58c722b267a89b607e8eb54a726d6"
   }
 }
