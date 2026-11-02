@@ -64,7 +64,7 @@
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
     "current_usage_remaining_percent": 25,
-    "current_usage_receipt": "verification/sections/470-spawn-reading/usage.json",
+    "current_usage_receipt": "verification/sections/471-map-markers/usage.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
     "latest_user_instruction_receipt": "verification/sections/371-preparation/resume-and-scope.json",
     "latest_pause_instruction_receipt": "verification/sections/350-pause-request.json",
@@ -89,7 +89,7 @@
     "full_validation_restore_requires_explicit_user_request": true
   },
   "baseline_commit": "0015c20",
-  "completed_sections": 470,
+  "completed_sections": 471,
   "sections": [
     {
       "number": 1,
@@ -2898,10 +2898,16 @@
       "completion_ref": "player-section-470",
       "topic": "出怪数量条件速览与地图直达",
       "verification": "verification/sections/470.json"
+    },
+    {
+      "number": 471,
+      "completion_ref": "player-section-471",
+      "topic": "原图编号点选与格子、出怪位置联动",
+      "verification": "verification/sections/471.json"
     }
   ],
-  "next_section": 471,
-  "next_action": "继续核对成熟公开地图投影和作战网页方案，完善原图位置、当前关卡对应与其余机制阅读；识别和数值校准继续按现有待办推进。",
+  "next_section": 472,
+  "next_action": "继续补齐固定地图位置校准和当前关卡资料，完善其余事件、奖励与机制阅读；同步推进识别及当前环境数值校准。网页缺少的准确拓展配置等待新资料，不用同名基础配置替代。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -3018,14 +3024,14 @@
     "full095_deferred_preserved": true
   },
   "current_section_save": {
-    "section": 470,
-    "verification": "verification/sections/470.json",
+    "section": 471,
+    "verification": "verification/sections/471.json",
     "scope": "current_functional_section",
     "binding": "enclosing_commit"
   },
   "last_verified_cloud_save": {
     "section": 470,
-    "scope": "current_functional_section",
+    "scope": "previous_functional_section",
     "binding": "verified_remote_commit",
     "commit": "014913b13d9ab16657a24875eef15108306b6cec",
     "proof": "verification/sections/470-publication.json",
@@ -3275,7 +3281,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "ACTIVE_AFTER470",
+  "batch_status": "ACTIVE_AFTER471",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3479,20 +3485,21 @@
     467,
     468,
     469,
-    470
+    470,
+    471
   ],
   "current_batch": {
     "kind": "whole_program_review_and_implementation_improvement",
     "start": 451,
     "end": null,
-    "status": "ACTIVE_AFTER470",
-    "completed_sections": 470,
-    "next_section": 471,
+    "status": "ACTIVE_AFTER471",
+    "completed_sections": 471,
+    "next_section": 472,
     "next_section_started": false,
     "batch_closed": false,
     "next_full_validation_after": null,
-    "receipt": "verification/sections/470.json",
-    "scope": "出怪列表直接显示每条配置数量、间隔、等待与条件标记，补齐准确对应的预置物件名称；双击或回车直达地图位置，返回保留选择和阅读。筛选与资料入口合并排列，完整原说明按需展开；物件资料复用已确认关卡，减少重复读取。"
+    "receipt": "verification/sections/471.json",
+    "scope": "固定地图和出怪位置页在原图上显示已有位置编号，点击即可联动格子与位置列表；同点多条记录可选择，标记可隐藏。宽窄窗口自动调整两图排列，缩放后资料窗保持在屏幕内；位置说明同步精简，刷新与返回保留有效阅读。"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -9479,11 +9486,11 @@
     "development_paused": false
   },
   "current_section_validation": {
-    "section": 470,
-    "receipt": "verification/sections/470.json",
-    "necessary_checks": 52,
+    "section": 471,
+    "receipt": "verification/sections/471.json",
+    "necessary_checks": 47,
     "native_scopes": {
-      "current": 57
+      "current": 56
     },
     "full_validation_rerun": false
   },

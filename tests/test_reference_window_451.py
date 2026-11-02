@@ -27,6 +27,12 @@ class ReferenceWindowTests(unittest.TestCase):
         page = ToolPage(title, content, self.owner)
         return page, search, reading
 
+    def test_resizing_visible_host_keeps_window_inside_current_screen(self):
+        page,search,reading=self.page('地图标记');self.assertTrue(self.host.present(page));self.qt.processEvents()
+        area=self.host.screen().availableGeometry();self.host.resize(420,320);self.host.move(area.right()-self.host.width()+1,area.bottom()-self.host.height()+1)
+        search.setText('保留搜索');self.host.resize(min(650,area.width()-24),min(620,area.height()-24));self.qt.processEvents()
+        self.assertTrue(area.contains(self.host.geometry()));self.assertEqual(search.text(),'保留搜索');self.assertIs(self.host.pages.currentWidget(),page)
+
     def test_same_native_host_and_back_forward_preserve_reading_and_size(self):
         a, search, reading = self.page('地图')
         b, _, _ = self.page('历史')

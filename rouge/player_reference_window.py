@@ -142,11 +142,18 @@ class ReferenceWindow(PlayerDialog):
             area = self.screen().availableGeometry()
             size = page.preferred_size
             self.resize(min(size.width(), area.width()-24), min(size.height(), area.height()-24))
-            self.move(max(area.left(), min(self.x(), area.right()-self.width()+1)),
-                      max(area.top(), min(self.y(), area.bottom()-self.height()+1)))
+            self._keep_visible(area)
         self.update_navigation()
         self.raise_()
         return True
+
+    def _keep_visible(self,area):
+        self.move(max(area.left(),min(self.x(),area.right()-self.width()+1)),
+                  max(area.top(),min(self.y(),area.bottom()-self.height()+1)))
+
+    def resizeEvent(self,event):
+        super().resizeEvent(event)
+        if self.isVisible():self._keep_visible(self.screen().availableGeometry())
 
     def discard(self, page, *, fallback):
         """Remove an invalid source page and its dependent reading chain."""
