@@ -5,20 +5,20 @@
   "next_section": 473,
   "current_section_label": "第472节 + 首层四图的入口与保护目标标记",
   "current_completed_change": "猎犬病原、遗忘时间、急不可耐、灌水贤者加入可点选的入口和保护目标，普通与紧急配置分别核对；点选原图联动格子和出怪位置。地图标题显示关卡和紧急模式，首屏说明精简为操作与位置要点。",
-  "batch_status": "PAUSED_AFTER472",
+  "batch_status": "GATE0_TOOLS_READY_REAL_SESSIONS_PENDING",
   "next_full_validation_after": null,
   "full_validation_mode": "disabled_by_user",
   "full_validation_restore_requires_explicit_user_request": true,
   "commit_reference": "the commit containing this index; verify Git branch and remote before resuming",
   "latest_full_receipt": "verification/full-440/summary.json",
   "latest_full_available_checks_passed": true,
-  "priority_order": "P3 → P2 → P1；OCR及识别覆盖、适配、准确率与耗时同步优化；未完成事项保留",
+  "priority_order": "Gate 0 → Gate 1 → Gate 2 → Gate 3；先记录真实体验，再按实测决定修复范围；P3/P2/P1保留为需求分类",
   "node_scope": "source-covered events and conditions plus public node probabilities and statistics; no personal uploads or route recommendations",
   "project_complete": false,
   "current_batch_target_section": null,
   "requirements": {
     "path": "PROJECT_REQUIREMENTS.md",
-    "sha256": "3bd5ea934ffa443b87ab0d83371492402cc4edc637e05ad6bd769e3db5a66649",
+    "sha256": "b446a78accd94271fed9c517ff4399ded244ca5949659936281e77624ecc7805",
     "scope": "current product requirements and delivery rules; historical handoffs do not override it"
   },
   "sections": [
@@ -2844,13 +2844,33 @@
     }
   ],
   "public_pointers": {
-    "DEVELOPMENT_CHECKPOINT.json": "3a75f4706045edc5df2c44e0199e298cd664620ec59e14028e0b81c0706e8b89",
-    "PROJECT_PROGRESS.md": "3b6a3d2785fc1303794ab5e6e4bd9c37bc18ed3984ab05842fa3adc79ea2738d",
-    "WORK_IN_PROGRESS.md": "675a3b8c1396e68f873dbe4f46c4c66742691c8d649b7f0b0dbce9bb86481406",
-    "PROJECT_COMPLETED.md": "d230c6b27f8a8e6b0a5a22a9e132ff0eb6ccb7becf2a9f8fbe378c6088635597",
-    "AGENTS.md": "3b24903cb62532627f1c1303f68aba05198312784e6781692680b162ee5cca2b",
-    "PROJECT_REQUIREMENTS.md": "3bd5ea934ffa443b87ab0d83371492402cc4edc637e05ad6bd769e3db5a66649",
-    "verification/sections/472.json": "5db24c70447b443a2f10cdc52fed941eed22104d3a9fabad756d7e17283da4db"
+    "DEVELOPMENT_CHECKPOINT.json": "eff131a6e98f606d0e52554660c129daa54708ebb783111da2a942b4ad1dabc1",
+    "PROJECT_PROGRESS.md": "f00393c7a3173c5e4cd79f4f8746a33873e5ea8605fbf6f62b54831311857314",
+    "WORK_IN_PROGRESS.md": "555cdb2540a70a4778ed1b4e5a82aff3d4dc2186b8fbcd2e17d44ef9766e4ef1",
+    "PROJECT_COMPLETED.md": "68bafb850030f0511c5583460e6e7e518459f426684f2e62cd22c88c79b70e2d",
+    "AGENTS.md": "4758520fe7db6c4963a48474f71d884ada1a3100cd8d785d7ee1c40d351f2df0",
+    "PROJECT_REQUIREMENTS.md": "b446a78accd94271fed9c517ff4399ded244ca5949659936281e77624ecc7805",
+    "verification/sections/472.json": "5db24c70447b443a2f10cdc52fed941eed22104d3a9fabad756d7e17283da4db",
+    "docs/decisions/2026-11-02-experience-gates.md": "1a2bd627e472e139ebe73eedee59e891902a43a0a3e5db916035b54c69c0b575"
   },
-  "private_state_included": false
+  "private_state_included": false,
+  "current_execution": {
+    "plan": "docs/decisions/2026-11-02-experience-gates.md",
+    "gate": 0,
+    "status": "TOOLS_READY_REAL_SESSIONS_PENDING",
+    "real_sessions_completed": 0,
+    "required_scenarios": [
+      "normal",
+      "transitions",
+      "resize"
+    ],
+    "functional_breadth_frozen": true
+  },
+  "current_maintenance": {
+    "title": "连续体验流程与Gate 0本地记录工具",
+    "receipt": "verification/maintenance/gate0-tools/summary.json",
+    "binding": "enclosing_commit",
+    "functional_section_incremented": false,
+    "receipt_sha256": "3b00cd30ac4eca7dd13c69911a0da65db400b27a375acfa27fcfac4af6a20d06"
+  }
 }

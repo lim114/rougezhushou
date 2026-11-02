@@ -5,23 +5,31 @@ from PySide6.QtCore import QObject,QTimer,Qt,QPointF,QPoint
 from PySide6.QtGui import QPainter,QColor,QPen
 from PySide6.QtWidgets import QWidget
 
-def payload(reference,current,snapshot,run_id,now=None):
+def payload(reference,current,snapshot,run_id,now=None,*,diagnostics=None):
+    def reject(reason):
+        if diagnostics is not None:diagnostics["reason"]=reason
+        return None
     now=time.time()if now is None else now
-    if not reference or not current or not snapshot or not snapshot.get('active')or not snapshot.get('foreground_on_game'):return None
-    if reference.get('run_id')!=run_id:return None
+    if not reference or not current or not snapshot or not snapshot.get('active')or not snapshot.get('foreground_on_game'):return reject('window_not_eligible')
+    if reference.get('run_id')!=run_id:return reject('run_changed')
     observation=reference['observation'];graph=observation.get('map')or{}
-    if graph.get('status')!='matched'or observation.get('page')not in('exploration','node_detail'):return None
-    for frame,limit in ((reference,30),(current,2)):
-        if type(frame.get('captured_at'))not in(int,float)or not 0<=now-frame['captured_at']<=limit:return None
-        if tuple(frame.get('target',{}).get(k)for k in('hwnd','pid'))!=tuple(snapshot['key']):return None
+    if graph.get('status')!='matched'or observation.get('page')not in('exploration','node_detail'):return reject('page_or_map_unmatched')
+    if diagnostics is not None:
+        diagnostics.update(run_id=run_id,zone_id=graph.get('zone_id'),template_id=graph.get('template_id'))
+    for frame,label,limit in ((reference,'reference',30),(current,'current',2)):
+        if type(frame.get('captured_at'))not in(int,float):return reject(label+'_timestamp_invalid')
+        age=now-frame['captured_at']
+        if diagnostics is not None:diagnostics[label+'_age_s']=age
+        if not 0<=age<=limit:return reject(label+'_expired' if label=='reference' else 'current_frame_expired')
+        if tuple(frame.get('target',{}).get(k)for k in('hwnd','pid'))!=tuple(snapshot['key']):return reject('window_changed')
     source=reference['image'];image=current['image'];rect=reference.get('client_rect')
-    if rect is None or rect!=current.get('client_rect')or source.shape!=image.shape:return None
+    if rect is None or rect!=current.get('client_rect')or source.shape!=image.shape:return reject('geometry_changed')
     x0,y0,x1,y1=rect;h,w=source.shape[:2]
-    if not 0<=x0<x1<=w or not 0<=y0<y1<=h or(x1-x0,y1-y0)!=tuple(snapshot['physical_client'][2:]):return None
+    if not 0<=x0<x1<=w or not 0<=y0<y1<=h or(x1-x0,y1-y0)!=tuple(snapshot['physical_client'][2:]):return reject('client_bounds_invalid')
     from .run_config import config_data
     title=config_data()['zones'].get(graph.get('zone_id'),{}).get('name')
     header=next((t for t in observation.get('texts',[])if t.get('text')==title and t.get('confidence',0)>=.85),None)
-    if not header:return None
+    if not header:return reject('title_missing')
     anchors=[];box=header['box'];anchors.append((int(min(p[0]for p in box)*w),int(min(p[1]for p in box)*h),int(max(p[0]for p in box)*w)+1,int(max(p[1]for p in box)*h)+1))
     points=[]
     area=snapshot['logical_client']
@@ -32,9 +40,11 @@ def payload(reference,current,snapshot,run_id,now=None):
         if not x0<=x<x1 or not y0<=y<y1:continue
         points.append((node['id'],(x-x0)*area.width()/(x1-x0),(y-y0)*area.height()/(y1-y0)))
         if node.get('visible')is True:anchors.append((round(x)-12,round(y)-12,round(x)+13,round(y)+13))
-    if len(anchors)<4:return None
+    if diagnostics is not None:diagnostics['anchor_count']=len(anchors)
+    if len(anchors)<4:return reject('anchors_insufficient')
     for x,y,u,v in anchors:
-        if not 0<=x<u<=w or not 0<=y<v<=h or not np.array_equal(source[y:v,x:u],image[y:v,x:u]):return None
+        if not 0<=x<u<=w or not 0<=y<v<=h or not np.array_equal(source[y:v,x:u],image[y:v,x:u]):return reject('anchor_pixels_changed')
+    if diagnostics is not None:diagnostics['reason']='eligible'
     return {'graph':graph,'points':points,'rect':area,'scope':'fresh_pixels_registered_map'}
 
 class OverlaySurface(QWidget):
@@ -73,17 +83,22 @@ class GameMapOverlay(QObject):
     def set_kind(self,value):self.kind=value;self.tick()
     def tick(self):
         self.current=None;c=self.companion;reference=getattr(self.owner,'map_overlay_reference',None)
+        audit=getattr(self.owner,'session_recorder',None);started=time.perf_counter() if audit is not None else None
+        decision={'reason':'disabled' if not self.enabled else 'reference_or_companion_unavailable'} if audit is not None else None
         snapshot=None
         if self.enabled and reference and not self.owner.closing and c.hidden_windows is None:
             snapshot=c.game_binding.api.read(c.game_binding.target())
-            self.current=payload(reference,self.owner.capture.buffer.latest(),snapshot,self.owner.run.state['id'])
+            self.current=payload(reference,self.owner.capture.buffer.latest(),snapshot,self.owner.run.state['id'],diagnostics=decision)
         if not self.current:
-            self.surface.hide();self.surface.data=None;self.clear_hover();return
+            self.surface.hide();self.surface.data=None;self.clear_hover()
+            if audit is not None:audit.overlay({**decision,'evaluation_ms':(time.perf_counter()-started)*1000},did_show=False,enabled=self.enabled,kind=self.kind)
+            return
         graph=self.current['graph'];saved=self.owner.run.state.get('maps',{}).get(graph['zone_id'])or{}
         if saved.get('template_id')==graph['template_id']and saved.get('captured_at')==reference['captured_at']:self.current['graph']=saved
         if self.kind:self.surface.data=self.current;self.surface.kind=self.kind;self.surface.setGeometry(self.current['rect']);self.surface.show();self.surface.update()
         else:self.surface.hide()
         self.hover(self.current,snapshot)
+        if audit is not None:audit.overlay({**decision,'evaluation_ms':(time.perf_counter()-started)*1000},did_show=self.surface.isVisible(),enabled=self.enabled,kind=self.kind)
     def clear_hover(self):
         self.gate.reset();self.hover_key=None
         if self.card:self.card.dismiss()

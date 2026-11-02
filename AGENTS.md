@@ -24,7 +24,7 @@
 
 - 开工先核对 Git/远端及 `CLOUD_HANDOFF.md` 顶部索引，再读 `WORK_IN_PROGRESS.md`、`DEVELOPMENT_CHECKPOINT.json` 和对应回执；保护已有未提交改动。
 - 产品详细要求见 `PROJECT_REQUIREMENTS.md`；剩余事项只放 `PROJECT_PROGRESS.md`，完成范围放 `PROJECT_COMPLETED.md`。完成项及时销项，部分完成仅保留缺口。
-- 功能主线：P3 → P2 → P1；OCR及识别覆盖、适配、准确率与耗时同步优化，不再置于最后。新增与已有识别代码均纳入回顾；不得把搁置或缺证当完成。
+- 当前主线按[连续体验流程](docs/decisions/2026-11-02-experience-gates.md)执行：Gate 0记录 → Gate 1修闭环 → Gate 2收入口 → Gate 3补功能与外观。黄金路径外新增功能先冻结；P3/P2/P1保留为需求分类，由实测决定后续顺序。OCR及识别同步纳入测量与优化。
 - 当前断点、进行中工作与下一完整验收见 `DEVELOPMENT_CHECKPOINT.json` 和 `WORK_IN_PROGRESS.md`；持续进行全程序回顾，维护不增加功能节数。
 
 ## 产品边界与玩家体验

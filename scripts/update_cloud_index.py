@@ -223,6 +223,11 @@ def update(root=ROOT):
                             for f in files if (root / f).is_file()},
         'private_state_included': False,
     }
+    track = checkpoint.get('execution_track')
+    if track:
+        index['current_execution'] = track
+        index['priority_order'] = 'Gate 0 → Gate 1 → Gate 2 → Gate 3；先记录真实体验，再按实测决定修复范围；P3/P2/P1保留为需求分类'
+        index['public_pointers'][track['plan']] = hashlib.sha256((root/track['plan']).read_bytes()).hexdigest()
     maintenance = checkpoint.get('current_maintenance_save')
     maintenance_note = ''
     if maintenance:
@@ -231,6 +236,9 @@ def update(root=ROOT):
             (root / maintenance['receipt']).read_bytes()).hexdigest()}
         maintenance_note = (f'当前实现维护：{maintenance["title"]}；回执 `{maintenance["receipt"]}`。'
                             '不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。\n\n')
+    if track:
+        maintenance_note = (f'当前主线：[连续体验流程]({track["plan"]})；状态 `{track["status"]}`。'
+                            f'实际会话已完成{track["real_sessions_completed"]}场。\n\n') + maintenance_note
     (root / 'CLOUD_INDEX.json').write_text(json.dumps(index, ensure_ascii=False, indent=2)+'\n', encoding='utf-8', newline='\n')
     path = root / 'CLOUD_HANDOFF.md'
     old = path.read_text(encoding='utf-8')

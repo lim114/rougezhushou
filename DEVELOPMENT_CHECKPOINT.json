@@ -3,7 +3,7 @@
   "policy": {
     "commit_after_each_section": true,
     "full_validation_interval": null,
-    "continuous_work_authorized": false,
+    "continuous_work_authorized": true,
     "windows_compatibility": "Wine authorized; distinct from native Windows verification",
     "scheduled_background_work": false,
     "priority_order": [
@@ -20,9 +20,9 @@
     "commit_after_full_validation_pass": false,
     "cloud_save_destination": "Every completed section:commit and ordinary push origin codex/p2-development.Full checks cancelled until explicit user request.",
     "push_after_batch_commit": true,
-    "development_paused_by_latest_user_request": true,
+    "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
-    "stop_after_section": 472,
+    "stop_after_section": null,
     "each_section_requires_functional_progress": true,
     "validation_is_additional_to_functional_progress": true,
     "external_accuracy_sources": "Actual public worked examples with URL, quoted inputs/outputs, version/applicability and explicit comparison; missing or mismatched conditions not PASS.",
@@ -42,7 +42,7 @@
     "uncommitted_or_unverified_preparations_count_as_completed": false,
     "section_status_requirement_Beijing": "2026-10-13",
     "repair_full_validation_after_functional_260": false,
-    "new_functional_sections_paused": false,
+    "new_functional_sections_paused": true,
     "requested_full_validation261_completed": true,
     "historical_before_261_no_automatic_functional_261": true,
     "historical_before_261_current_requested_full_validation_after": 261,
@@ -63,7 +63,7 @@
     "pause_after_active_section_requested": false,
     "historical_before_20261018_usage_threshold_changed_on_Beijing": "2026-10-17",
     "usage_wrap_up_completed": false,
-    "current_usage_remaining_percent": 24,
+    "current_usage_remaining_percent": 23,
     "current_usage_receipt": "verification/sections/472-floor-map/usage.json",
     "section_display_format": "第N节 + 实际完成的改动；N保留稳定历史标识，未验收规划不计完成",
     "latest_user_instruction_receipt": "verification/sections/371-preparation/resume-and-scope.json",
@@ -2913,7 +2913,7 @@
     }
   ],
   "next_section": 473,
-  "next_action": "暂停于第472节。恢复后继续其余固定地图位置、事件与奖励资料、视频交互及识别优化，随后推进干员和藏品数值校准。",
+  "next_action": "Gate 0工具已就绪。用户正常游玩，采集正常流程、转场动画、缩放遮挡三场约10分钟会话；记录实际条件、对照录像并排序原因。未开473，不扩展黄金路径外功能。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -3287,7 +3287,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "PAUSED_AFTER472",
+  "batch_status": "GATE0_TOOLS_READY_REAL_SESSIONS_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3496,18 +3496,17 @@
     472
   ],
   "current_batch": {
-    "kind": "whole_program_review_and_implementation_improvement",
+    "kind": "experience_gates",
     "start": 451,
     "end": null,
-    "status": "PAUSED_AFTER472",
+    "status": "GATE0_TOOLS_READY_REAL_SESSIONS_PENDING",
     "completed_sections": 472,
     "next_section": 473,
     "next_section_started": false,
-    "batch_closed": true,
+    "batch_closed": false,
     "next_full_validation_after": null,
     "receipt": "verification/sections/472.json",
-    "scope": "猎犬病原、遗忘时间、急不可耐、灌水贤者加入可点选的入口和保护目标，普通与紧急配置分别核对；点选原图联动格子和出怪位置。地图标题显示关卡和紧急模式，首屏说明精简为操作与位置要点。",
-    "paused_after_section": 472
+    "scope": "Gate 0真实会话、独立录像对照与问题排序；黄金路径外新增功能冻结。"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -10403,5 +10402,23 @@
       "commit": "bb50c2720480ac3bafdd73ba2087977b2e423201",
       "binding": "verified_remote_commit"
     }
+  },
+  "execution_track": {
+    "plan": "docs/decisions/2026-11-02-experience-gates.md",
+    "gate": 0,
+    "status": "TOOLS_READY_REAL_SESSIONS_PENDING",
+    "real_sessions_completed": 0,
+    "required_scenarios": [
+      "normal",
+      "transitions",
+      "resize"
+    ],
+    "functional_breadth_frozen": true
+  },
+  "current_maintenance_save": {
+    "title": "连续体验流程与Gate 0本地记录工具",
+    "receipt": "verification/maintenance/gate0-tools/summary.json",
+    "binding": "enclosing_commit",
+    "functional_section_incremented": false
   }
 }

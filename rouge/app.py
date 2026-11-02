@@ -96,10 +96,11 @@ class MainWindow(QMainWindow):
         self.offline_tools.select_query('calibration','explosion-values')
         self.workspace.setCurrentWidget(self.offline_tools,explicit_tool=True)
 
-    def __init__(self, *, include_historical_route_diagnostics=False, diagnostic_layout=None):
+    def __init__(self, *, include_historical_route_diagnostics=False, diagnostic_layout=None, session_recorder=None):
         if diagnostic_layout is not None and type(diagnostic_layout) is not bool:
             raise ValueError('诊断布局需要明确的开关。')
         super().__init__()
+        self.session_recorder = session_recorder
         self.diagnostic_layout=(os.environ.get('ROUGE_DIAGNOSTIC_LAYOUT')=='1' if diagnostic_layout is None else diagnostic_layout)
         from .information_scope import require_query_scope
         require_query_scope('exploration',None,include_historical_route_diagnostics)
@@ -713,7 +714,10 @@ class MainWindow(QMainWindow):
         marker=observation.get('_sampling')
         valid=not marker or (marker['epoch']==self.sample_epoch and marker['generation']==self.capture.stats()['generation'])
         self.finish_sample()
-        if not valid or observation.get('captured_at',0)<max(self.last_sample_at,self.run.state['started_at']):return
+        if not valid or observation.get('captured_at',0)<max(self.last_sample_at,self.run.state['started_at']):
+            if self.session_recorder is not None:
+                self.session_recorder.sample(observation,self.run.state,applied=False,reason='stale_generation' if not valid else 'old_frame')
+            return
         self.last_sample_at=observation['captured_at']
         overlay_frame=observation.pop('_overlay_frame',None)
         self.map_overlay_reference={**overlay_frame,'observation':observation}if overlay_frame else None
@@ -774,6 +778,8 @@ class MainWindow(QMainWindow):
         stamp=time.strftime('%H:%M:%S',time.localtime(observation['captured_at']))
         self.capture_status.setText(f'画面{stamp}（{age:.1f}秒前） · {width}×{height} · {observation["page"]} · {len(observation["nodes"])} 个可见标签。'+backend+capture_timing+timing+ui_timing+reuse)
         self.update_sampling_status()
+        if self.session_recorder is not None:
+            self.session_recorder.sample(observation,self.run.state,applied=True,reason='applied',ui_ms=(time.perf_counter()-ui_start)*1000)
 
     def make_damage_tab(self):
         tab = QWidget()
@@ -2449,6 +2455,7 @@ class MainWindow(QMainWindow):
         if self.closing:
             return
         if channel=='capture':
+            if self.session_recorder is not None:self.session_recorder.event('sample_failure',reason='capture_or_recognition',message=message)
             self.next_capture_attempt=time.monotonic()+1
             if not self.auto.isChecked():self.capture.set_collecting(False)
             self.recognition_mode.setEnabled(True)

@@ -9,6 +9,18 @@ from scripts.update_cloud_index import update
 
 
 class CloudIndexSyncTests(unittest.TestCase):
+    def test_experience_track_overrides_old_priority_and_pins_plan(self):
+        path=self.root/'DEVELOPMENT_CHECKPOINT.json';checkpoint=json.loads(path.read_bytes())
+        checkpoint['execution_track']={'plan':'docs/gate-plan.md','status':'TOOLS_READY_REAL_SESSIONS_PENDING','real_sessions_completed':0}
+        path.write_text(json.dumps(checkpoint),'utf8')
+        plan=self.root/'docs/gate-plan.md';plan.parent.mkdir();plan.write_bytes(b'approved plan')
+        update(self.root)
+        index=json.loads((self.root/'CLOUD_INDEX.json').read_bytes())
+        self.assertTrue(index['priority_order'].startswith('Gate 0'))
+        self.assertEqual(index['current_execution']['real_sessions_completed'],0)
+        self.assertEqual(index['public_pointers']['docs/gate-plan.md'],hashlib.sha256(b'approved plan').hexdigest())
+        self.assertIn('连续体验流程',(self.root/'CLOUD_HANDOFF.md').read_text('utf8'))
+
     def setUp(self):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
