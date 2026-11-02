@@ -2913,7 +2913,7 @@
     }
   ],
   "next_section": 473,
-  "next_action": "Gate 0工具已就绪。用户正常游玩，采集正常流程、转场动画、缩放遮挡三场约10分钟会话；记录实际条件、对照录像并排序原因。未开473，不扩展黄金路径外功能。",
+  "next_action": "取得首场本地录屏路径，与本机日志核对页面、状态和更新延迟；后续安排转场动画与缩放遮挡会话。详细私有记录只留本机，不扩展功能，不开473。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -3287,7 +3287,7 @@
     "deferred095_and109_preserved": true
   },
   "batch_stop_after_section": null,
-  "batch_status": "GATE0_TOOLS_READY_REAL_SESSIONS_PENDING",
+  "batch_status": "GATE0_FIRST_SESSION_COLLECTED_VIDEO_REVIEW_PENDING",
   "policy_revision_Beijing": "2026-10-13T18:30:49.162033+08:00",
   "environment_recovery": {
     "actual_remote_baseline": "b1e63a8dd0ff5d75ba5738adce35e801862cdc74",
@@ -3499,14 +3499,14 @@
     "kind": "experience_gates",
     "start": 451,
     "end": null,
-    "status": "GATE0_TOOLS_READY_REAL_SESSIONS_PENDING",
+    "status": "GATE0_FIRST_SESSION_COLLECTED_VIDEO_REVIEW_PENDING",
     "completed_sections": 472,
     "next_section": 473,
     "next_section_started": false,
     "batch_closed": false,
     "next_full_validation_after": null,
     "receipt": "verification/sections/472.json",
-    "scope": "Gate 0真实会话、独立录像对照与问题排序；黄金路径外新增功能冻结。"
+    "scope": "Gate 0首场正常流程已采集，待录像对照；转场动画与缩放遮挡两场待采集。"
   },
   "current_full140_checkpoint": {
     "status": "COMPLETE_AVAILABLE_SCOPE_NOT_NATIVE_WINDOWS_OR_MISSING_EVIDENCE",
@@ -10406,21 +10406,24 @@
   "execution_track": {
     "plan": "docs/decisions/2026-11-02-experience-gates.md",
     "gate": 0,
-    "status": "TOOLS_READY_REAL_SESSIONS_PENDING",
+    "status": "FIRST_SESSION_COLLECTED_VIDEO_REVIEW_PENDING",
     "real_sessions_completed": 0,
     "required_scenarios": [
       "normal",
       "transitions",
       "resize"
     ],
-    "functional_breadth_frozen": true
+    "functional_breadth_frozen": true,
+    "real_sessions_collected": 1,
+    "latest_collection_receipt": "verification/maintenance/gate0-session1-collection.json"
   },
   "current_maintenance_save": {
-    "title": "连续体验流程与Gate 0本地记录工具",
-    "receipt": "verification/maintenance/gate0-tools/summary.json",
+    "title": "Gate 0首场正常流程采集结束，待录像对照",
+    "receipt": "verification/maintenance/gate0-session1-collection.json",
     "binding": "enclosing_commit",
     "functional_section_incremented": false,
-    "verified_publication": {
+    "tools_receipt": "verification/maintenance/gate0-tools/summary.json",
+    "tools_verified_publication": {
       "commit": "83d90344f54c4fa75de53f99a6b20323a95a9795",
       "proof": "verification/maintenance/gate0-publication.json",
       "proof_sha256": "f933f1d51e17436b5bf0a0cd2e470a091431a916620b0ded02f007e47c28f4c1"

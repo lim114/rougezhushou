@@ -238,7 +238,8 @@ def update(root=ROOT):
                             '不增加功能节数；最近全量只证明其原冻结源码，不能作为维护后源码的完整验收。\n\n')
     if track:
         maintenance_note = (f'当前主线：[连续体验流程]({track["plan"]})；状态 `{track["status"]}`。'
-                            f'实际会话已完成{track["real_sessions_completed"]}场。\n\n') + maintenance_note
+                            f'已采集{track.get("real_sessions_collected",track["real_sessions_completed"])}场，'
+                            f'完成录像对照{track["real_sessions_completed"]}场。\n\n') + maintenance_note
     (root / 'CLOUD_INDEX.json').write_text(json.dumps(index, ensure_ascii=False, indent=2)+'\n', encoding='utf-8', newline='\n')
     path = root / 'CLOUD_HANDOFF.md'
     old = path.read_text(encoding='utf-8')

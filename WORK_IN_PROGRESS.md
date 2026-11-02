@@ -1,6 +1,6 @@
 ## 当前续接：Gate 0记录工具与真实会话
 
-最终流程已保存至[docs/decisions/2026-11-02-experience-gates.md](docs/decisions/2026-11-02-experience-gates.md)，恢复开发。记录工具已接入现有采样、叠加判定和共享窗口清单；真实会话尚未开始。功能进度保持第472节，未开473。下一步：用户正常游玩，记录正常流程、转场、缩放遮挡三类会话；按录像核对并排序问题。
+最终流程已保存至[docs/decisions/2026-11-02-experience-gates.md](docs/decisions/2026-11-02-experience-gates.md)，恢复开发。记录工具已接入现有采样、叠加判定和共享窗口清单；首场正常流程已完成采集，待本地录像对照。功能进度保持第472节，未开473。下一步：核对首场录像与本机日志，再安排转场动画、缩放遮挡两场；按证据排序问题。
 
 [使用方法](docs/gate0/README.md) · [工具回执](verification/maintenance/gate0-tools/summary.json)。以下为历史节记录。
 
