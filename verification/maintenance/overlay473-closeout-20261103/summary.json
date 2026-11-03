@@ -1,0 +1,134 @@
+{
+  "scope": "section473 closeout, not a new functional section",
+  "status": "THREE_DECISIONS_IMPLEMENTED_REAL_SCENARIOS_IN_PROGRESS",
+  "completed_sections": 472,
+  "next_section": 473,
+  "section473_complete": false,
+  "base_commit": "44f9de529a7cb04f629da99ee149cfe1e5b90e90",
+  "binding": "enclosing_commit",
+  "source_sha256": {
+    "rouge/player_game_map.py": "eefa37ef4b8287cd176a5e88a86d928beb4006c2eb8f5eb3a954a041524ff9ce",
+    "rouge/player_overlay_settings.py": "6f31a4a4da09297b2c2c3e5595c34a102365b862c519530ab0ecc3d65a1621f2",
+    "tests/test_map_overlay_video.py": "e66655bcfd2ee2cab04399e415c046756eb50ebd95b695880752dff24cacde8c",
+    "tests/test_overlay_display.py": "c53b039bf8c7d1f309f3328662b0ee86b7e0c2ce05c9afb40c1b294f1aa793d5",
+    "tests/test_node_card_source_review.py": "7940e1bdbb65f210aa59b41d2f34b144490bf83dee99daa1c0296dbb360c870b"
+  },
+  "decisions": {
+    "shared_floor_distance_frequency": "implemented; source explanation retained; separate-point statistics removed from473 gaps",
+    "listener": "only card lifetime; startup has no listener; all closing paths stop/join/release",
+    "settings": "one mkdir/open I/O exit; atomic write/commit and unreadable-file preservation kept; first-run unchanged"
+  },
+  "additional_fixes": [
+    "direct owner.session_recorder twice",
+    "report file_details placeholder expanded",
+    "cached node card restores binding before content-cache early return"
+  ],
+  "targeted_checks": [
+    {
+      "tests": 17,
+      "actual_exit": 0,
+      "source_sha256": {
+        "rouge/player_game_map.py": "c0d704f52e33483c032d707fef91344be16d4f440fb6e29613ccc3d33d50fddb",
+        "rouge/player_overlay_settings.py": "6f31a4a4da09297b2c2c3e5595c34a102365b862c519530ab0ecc3d65a1621f2",
+        "tests/test_map_overlay_video.py": "17aef2b0a2bbd4192d3bae23d58dcb9aedb1b45900f1c6549dfd06d9e6628014",
+        "tests/test_overlay_display.py": "c53b039bf8c7d1f309f3328662b0ee86b7e0c2ce05c9afb40c1b294f1aa793d5"
+      },
+      "scope": "ControllerTests and OverlayPreferenceTests; actual unified lifecycle, all close paths, no hook at initialization, atomic save/first-run protections",
+      "full_suite": false
+    },
+    {
+      "code_sha256": {
+        "rouge/player_game_map.py": "eefa37ef4b8287cd176a5e88a86d928beb4006c2eb8f5eb3a954a041524ff9ce",
+        "rouge/player_overlay_settings.py": "6f31a4a4da09297b2c2c3e5595c34a102365b862c519530ab0ecc3d65a1621f2",
+        "tests/test_map_overlay_video.py": "e66655bcfd2ee2cab04399e415c046756eb50ebd95b695880752dff24cacde8c",
+        "tests/test_overlay_display.py": "c53b039bf8c7d1f309f3328662b0ee86b7e0c2ce05c9afb40c1b294f1aa793d5"
+      },
+      "followup_checks": [
+        {
+          "tests": 2,
+          "actual_exit": 0,
+          "scope": "same cached node reopen; all native listener closure paths",
+          "actual_duration_s": 3.349
+        },
+        {
+          "tests": 14,
+          "actual_exit": 0,
+          "scope": "frequency binding and unchanged payload boundaries",
+          "actual_duration_s": 0.26
+        }
+      ],
+      "full_suite_run": false
+    },
+    {
+      "initial_selector_failure": {
+        "command": "unittest tests.test_node_card_source_review.SourceTests.test_accepted_update_reaches_map_pinned_card_and_overlay_without_sampling",
+        "actual_exit": 1,
+        "reason": "SourceTests class does not exist; harness selector typo, no product assertion ran"
+      },
+      "corrected_run": {
+        "command": "unittest tests.test_node_card_source_review.SourceAndCardTests.test_accepted_update_reaches_map_pinned_card_and_overlay_without_sampling",
+        "tests": 1,
+        "actual_exit": 0,
+        "duration_s": 0.566
+      },
+      "fixture_change": "minimum owner now declares MainWindow session_recorder and map_overlay_reference defaults",
+      "source_sha256": "7940e1bdbb65f210aa59b41d2f34b144490bf83dee99daa1c0296dbb360c870b"
+    }
+  ],
+  "payload_ast_unchanged_from_base": true,
+  "full_suite_run": false,
+  "real_verification": {
+    "first_round_previously_accepted": "retained; not repeated",
+    "new_final_visuals": "phase-a screenshots saved, including dark caption backing and full grid; final eefa source screenshots still pending",
+    "actual_stage_web": "user reported stage unconfirmed; no stage title/variant bound; awaiting manual game-detail test",
+    "second_large_size": "awaiting user",
+    "page_return": "dedicated scenario pending",
+    "focus_out_with_card": "dedicated scenario pending",
+    "game_escape": "dedicated scenario pending",
+    "removed_hook_outside_click": "controlled test pending; Windows silent removal not inferred from thread running",
+    "busy_game_click_feel": "awaiting human feedback; API dispatch timing is separate"
+  },
+  "preliminary_placement": {
+    "phase": "round2-closeout-a",
+    "source": "c0d704f52e33483c032d707fef91344be16d4f440fb6e29613ccc3d33d50fddb",
+    "manually_reviewed_positions": 20,
+    "numbers": 7,
+    "wrong_node": 0,
+    "missing": 0,
+    "false_display": 0,
+    "final_second_size_review": null,
+    "per_node_evidence": "local placement-review/phase-a-review.md and annotated full image"
+  },
+  "retained_failures": [
+    {
+      "run": "round2-closeout-a",
+      "issue": "same cached node reopen can leave binding empty and withdraw; repaired, targeted regression passed"
+    },
+    {
+      "run": "round2-closeout-b",
+      "issue": "private screenshot worker reused an existing directory and exited; original traceback kept; phase-c uses unique directory and thread-internal ready event"
+    }
+  ],
+  "pending": [
+    "final-source images and node placement table at second large size",
+    "actual stage webpages or exact unconfirmed-identity diagnosis",
+    "page-return, focus-out and game-Esc scenarios",
+    "hook removal outside-click behavior and busy-click human feedback"
+  ],
+  "not_in_scope": [
+    "800x600 recognition",
+    "resize recovery speed",
+    "cold-start optimization",
+    "overload short-page coverage",
+    "conditional probabilities",
+    "thumbnails/events art"
+  ],
+  "private_evidence": "raw sessions and screenshots remain only in local gate0 directory",
+  "recorder_final_state": {
+    "fixed_time_limit_seconds": null,
+    "thread_ready_confirmed": true,
+    "live_status_field": "screenshot_recorder_alive",
+    "source": "ordinary-closeout-v13.py",
+    "new_round_b_failure_retained": true
+  }
+}

@@ -24,10 +24,11 @@ class OverlayPreferences:
         if self.path is None:return ''
         if not self.readable:return self.warning
         data={**self.data,'enabled':value}
-        try:self.path.parent.mkdir(parents=True,exist_ok=True)
-        except OSError:return '地图叠加设置未保存，请检查文件夹权限。'
         file=QSaveFile(str(self.path));raw=(json.dumps(data,ensure_ascii=False,indent=2)+'\n').encode('utf8')
-        if not file.open(QIODevice.OpenModeFlag.WriteOnly):return '地图叠加设置未保存，请检查文件权限。'
+        try:
+            self.path.parent.mkdir(parents=True,exist_ok=True)
+            if not file.open(QIODevice.OpenModeFlag.WriteOnly):raise OSError(file.errorString())
+        except OSError:return '地图叠加设置未保存，请检查文件或文件夹权限。'
         if file.write(raw)!=len(raw)or not file.commit():
             file.cancelWriting();return '地图叠加设置未保存，原设置保留。'
         self.data=data

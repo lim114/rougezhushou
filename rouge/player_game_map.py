@@ -167,8 +167,9 @@ class NodeCard(RoundPanel):
         from .player_map import node_sprite
         types=candidate_types(node);rows={kind:registered_rows(graph,kind,frequencies)[node['id']]for kind in types};targets=battle_targets(node)
         key=(binding,types,repr(rows),node.get('observed_type'),node.get('template_type'),node.get('remembered_type'),repr(targets),frequencies.identity)
+        self.binding=binding
         if key==self.content_key:return
-        self.content_key=key;self.binding=binding;self.values={}
+        self.content_key=key;self.values={}
         while self.grid.count():self.grid.takeAt(0).widget().deleteLater()
         evidence='已读类型'if node.get('observed_type')in types else'模板固定'if node.get('template_type')else'候选类型'
         if node.get('remembered_type'):evidence+=' · 原为'+node['remembered_type']
@@ -241,14 +242,9 @@ class GameMapOverlay(QObject):
         if statistics_source is not None:statistics_source.changed.connect(self.refresh_statistics)
         self.timer=QTimer(self);self.timer.setInterval(500);self.timer.timeout.connect(self.tick);self.timer.start()
         self.mouse_listener=None;self.mousePressed.connect(self.outside_click,Qt.ConnectionType.QueuedConnection)
-        if QApplication.platformName()=='windows':
-            from pynput.mouse import Listener,Button
-            def click(x,y,button,pressed,injected):
-                if pressed and button==Button.left and self.card.binding is not None:self.mousePressed.emit((self.card.binding,x,y))
-            self.mouse_listener=Listener(on_click=click,suppress=False);self.mouse_listener.start()
         QApplication.instance().installEventFilter(self)
     def record(self,action,**fields):
-        audit=getattr(self.owner,'session_recorder',None)
+        audit=self.owner.session_recorder
         if audit is not None:audit.event('map_overlay_interaction',action=action,**fields)
     def refresh_statistics(self):
         self.frequencies=self.statistics_source.index;self.surface.frequencies=self.frequencies;self.card.content_key=None;self.tick()
@@ -263,7 +259,7 @@ class GameMapOverlay(QObject):
             self.record('percentages_painted',kind=self.kind,latency_ms=(time.perf_counter()-self.pending_paint)*1000,count=count);self.pending_paint=None
     def tick(self):
         self.current=None;c=self.companion;reference=self.owner.map_overlay_reference
-        audit=getattr(self.owner,'session_recorder',None);started=time.perf_counter();decision={'reason':'disabled'if not self.enabled else'reference_or_companion_unavailable'}
+        audit=self.owner.session_recorder;started=time.perf_counter();decision={'reason':'disabled'if not self.enabled else'reference_or_companion_unavailable'}
         if self.enabled and reference and not self.owner.closing and c.hidden_windows is None:
             snapshot=c.game_binding.api.read(c.game_binding.target())
             self.current=payload(reference,self.owner.capture.buffer.latest(),snapshot,self.owner.run.state['id'],diagnostics=decision)
@@ -306,6 +302,12 @@ class GameMapOverlay(QObject):
         graph=self.current['graph'];node=next(n for n in graph['nodes']if n['id']==identity)
         self.card_node=identity;binding=(self.owner.run.state['id'],graph['zone_id'],graph['template_id'],identity)
         self.card.install(binding,graph,node,self.frequencies);self.card.show();self.place_card();self.interaction.register(self.current)
+        if self.mouse_listener is None and QApplication.platformName()=='windows':
+            from pynput.mouse import Listener,Button
+            def click(x,y,button,pressed,injected):
+                if pressed and button==Button.left and self.card.binding is not None:self.mousePressed.emit((self.card.binding,x,y))
+            self.mouse_listener=Listener(on_click=click,suppress=False);self.mouse_listener.start();self.mouse_listener.wait()
+            self.record('mouse_listener_started',listener_id=id(self.mouse_listener))
         self.record('card_shown',node_id=identity,latency_ms=(time.perf_counter()-started)*1000)
     def place_card(self):
         if not self.current or not self.card_node:return
@@ -315,6 +317,9 @@ class GameMapOverlay(QObject):
     def dismiss_card(self,reason='dismissed'):
         if self.card.isVisible():self.record('card_dismissed',reason=reason,node_id=self.card_node)
         self.card.hide();self.card_node=None;self.card.binding=None;self.pending_card=None
+        if self.mouse_listener is not None:
+            listener=self.mouse_listener;self.mouse_listener=None;listener.stop();listener.join()
+            self.record('mouse_listener_stopped',listener_id=id(listener),reason=reason)
     def clear_hover(self):self.dismiss_card()
     def outside_click(self,reading):
         binding,x,y=reading
@@ -354,8 +359,7 @@ class GameMapOverlay(QObject):
                 panel.floors.setCurrentIndex(i);return panel.open_hover_entry(node_id,kind,identity)
         return False
     def close(self):
-        self.timer.stop()
-        if self.mouse_listener is not None:self.mouse_listener.stop()
+        self.timer.stop();self.dismiss_card('window_closed')
         QApplication.instance().removeEventFilter(self);self.surface.close();self.interaction.close();self.current=None
         if self.view:self.more_card.close()
 

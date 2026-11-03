@@ -100,7 +100,7 @@ class SourceAndCardTests(unittest.TestCase):
 
     def map(self,source):
         graphs,node_id,*_=fixtures();node=next(n for n in graphs[0]['nodes']if n['id']==node_id);node['distance']=2
-        owner=SimpleNamespace(run=SimpleNamespace(state={'id':'isolated','maps':{g['zone_id']:g for g in graphs},'config':{}}),
+        owner=SimpleNamespace(session_recorder=None,map_overlay_reference=None,run=SimpleNamespace(state={'id':'isolated','maps':{g['zone_id']:g for g in graphs},'config':{}}),
             map_view=SimpleNamespace(graph=None,historical=False),compact_window=None)
         panel=MapPanel(owner,statistics_source=source);self.addCleanup(panel.close);panel.resize(1000,650);panel.show();self.qt.processEvents()
         return panel,node_id

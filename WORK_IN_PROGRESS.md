@@ -1,3 +1,15 @@
+## 第473节收尾当前在制：决定已落实，补实机验收
+
+[收尾七项回执](verification/maintenance/overlay473-closeout-20261103/README.md)。用户11月3日已确认共用历史频率口径、仅小卡期间装pynput监听、合并mkdir/open错误出口并保留其余保护；已写入docs/decisions/2026-11-03-overlay-video-controls.md。两处session_recorder改直接属性。旧结论报告的file_details占位符已修正。新增修复：关闭后重开同一缓存节点必须恢复binding，否则下一次tick误撤下；2项定向检查通过，正常生命周期/保存17项和原边界14项通过，另1项统计源更新调用方检查通过。
+
+当前唯一测试应用ordinary-closeout-v13.py，读取.cache/overlay-closeout-root.txt和live-status.json，phase=round2-closeout-c；生产叠加源码eefa37ef4b82，设置源码6f31a4a4da09。截图目录screenshots-v13，线程内部确认启动、无固定时长上限；状态screenshot_recorder_alive=True。私有v12采集线程复用目录失败已保留；原A轮c0d704f5的短时关闭为已修复缓存绑定错误，不计最终通过。
+
+用户已完成A轮最终外观图并报告作战卡“关卡待确认”。当前异步问题等待用户手动暂关叠加，打开游戏实际作战详情，再开叠加复测按钮；尚未收到答复。后续第二大尺寸、三类/两未知一作战、切页返回、游戏焦点Esc、卡片失焦及钩子摘除试验仍需进行。第一轮已认可的操作不重做。
+
+A轮实际钩子12次安装/12次成功卸载，窗口关闭路径已实测。62个鼠标回调中57个发生于识别忙时，OS事件至Python延迟0—31毫秒；未据此声称游戏体感已通过。最终版尚待这些场景。A轮20模板位置/7数字已人工对照原图预核对为错/漏/误0；不是要求的最终第二尺寸核对，后者保持未验收。
+
+不操作游戏、不改焦点、不发送游戏输入、不开子代理或全量，不清空本局、不覆盖私人配置。阶段仍472完成/473在制，全部通过才销项。本批源码与在制回执绑定同一提交，普通推送main；远端核对写本机publication文件，不计473完成。
+
 ## 当前续接：结论报告已交付，第一轮交互已记录
 
 先读[结论报告](docs/reports/2026-11-03-exploration-overlay-conclusion.md)，按原单七项交付；[完整逐轮指标](verification/maintenance/map-overlay-video-20261103/conclusion-metrics.json)保留全部轮次与源码摘要。用户已回复最后列表修正版“第一轮卡片完成”；日志有三种不同类型、20次含重复的卡片绘制与一次来源展开。当前仍472/后续473，整节部分通过。

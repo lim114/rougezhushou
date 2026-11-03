@@ -14,6 +14,24 @@ from tests import test_sampling_flow as flow
 
 
 class OverlayPreferenceTests(unittest.TestCase):
+    def test_directory_and_open_failures_share_io_exit_and_keep_saved_data(self):
+        from unittest.mock import Mock
+        for directory_failure in(True,False):
+            with self.subTest(directory_failure=directory_failure),tempfile.TemporaryDirectory()as d:
+                path=Path(d)/'overlay.json';path.write_text('{"enabled":false}','utf8');before=path.read_bytes();settings=OverlayPreferences(path)
+                file=Mock();file.open.return_value=False;file.errorString.return_value='denied'
+                with patch('rouge.player_overlay_settings.QSaveFile',return_value=file),patch.object(Path,'mkdir',side_effect=OSError('denied')if directory_failure else None):
+                    warning=settings.save(True)
+                self.assertEqual(warning,'地图叠加设置未保存，请检查文件或文件夹权限。');self.assertEqual(path.read_bytes(),before);file.write.assert_not_called()
+
+    def test_failed_atomic_write_or_commit_keeps_old_settings(self):
+        from unittest.mock import Mock
+        for write_failure in(True,False):
+            with self.subTest(write_failure=write_failure),tempfile.TemporaryDirectory()as d:
+                path=Path(d)/'overlay.json';path.write_text('{"enabled":false}','utf8');before=path.read_bytes();settings=OverlayPreferences(path)
+                file=Mock();file.open.return_value=True;file.write.side_effect=lambda raw:len(raw)-1 if write_failure else len(raw);file.commit.return_value=False
+                with patch('rouge.player_overlay_settings.QSaveFile',return_value=file):self.assertTrue(settings.save(True))
+                file.cancelWriting.assert_called_once();self.assertEqual(path.read_bytes(),before)
     def test_missing_preference_defaults_on_without_creating_file(self):
         with tempfile.TemporaryDirectory()as d:
             path=Path(d)/'overlay.json';settings=OverlayPreferences(path)
@@ -93,7 +111,7 @@ class OverlayAnchorTests(unittest.TestCase):
     def test_unfiltered_layer_can_show_existing_header_without_node_type_choice(self):
         app=QApplication.instance()or QApplication([]);reference,current,snapshot=fixture();companion=QWidget()
         companion.hidden_windows=None;companion.game_binding=SimpleNamespace(api=SimpleNamespace(read=lambda target:snapshot),target=lambda:reference['target'])
-        owner=SimpleNamespace(map_overlay_reference=reference,closing=False,run=SimpleNamespace(state={'id':'one','maps':{},'config':{}}),capture=SimpleNamespace(buffer=SimpleNamespace(latest=lambda:current)))
+        owner=SimpleNamespace(session_recorder=None,map_overlay_reference=reference,closing=False,run=SimpleNamespace(state={'id':'one','maps':{},'config':{}}),capture=SimpleNamespace(buffer=SimpleNamespace(latest=lambda:current)))
         overlay=GameMapOverlay(companion,owner);overlay.timer.stop()
         try:
             with patch('rouge.player_game_map.time.time',return_value=100):overlay.set_enabled(True)

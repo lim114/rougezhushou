@@ -9,6 +9,14 @@
 - 原大资料卡改由更多入口打开。网页用原TomimiPanel、ToolPage/ReferenceWindow及共享导航入口，显示网址栏并居中，不另建浏览器实现。实际关卡标题/变体未绑定时，按钮标关卡待确认。
 - 绘制窗口全部点击穿透；独立交互窗口用Qt原生区域遮罩，仅类型胶囊、节点热区和小卡接收鼠标，不转发游戏输入。绘制、交互和卡片共用一次payload结果；拒绝一起撤下，网页独立保留。30秒/2秒、0.99和0.9—1.1均不改。
 
+## 11月3日收尾确认的三项决定
+
+1. 同意在具体节点旁显示同层、距入口最短步数相同的共用历史频率。小卡来源现有共用说明保留；独立点位统计不再列为473缺口，本局条件概率留后续。原片hd_70多个位置同时显示27.11%与25.16%，用户已核对为相同口径。
+2. 保留pynput，但仅小卡打开期间创建并启动Listener；换卡不重复安装。卡外、助手Esc、叠加撤下及窗口关闭统一stop并join，清空引用；启动和无卡时不装全局鼠标钩子。回调只发队列信号，不操作游戏。实机记录实际安装/卸载、满载识别时的点击响应与卡外关闭；低级钩子超时可被Windows静默摘除，线程running不能当作仍在系统安装的证据。
+3. 保留QSaveFile原子保存的open/write/commit和损坏文件不覆盖、不误开启的保护。mkdir和open失败合并为一个I/O失败出口和同一句提示；FileNotFoundError首次运行路径保持。
+
+官方依据：[pynput监听线程与停止后新建规则](https://pynput.readthedocs.io/en/latest/mouse.html#the-mouse-listener-thread)、[微软低级鼠标钩子与超时移除说明](https://learn.microsoft.com/en-us/windows/win32/winmsg/lowlevelmouseproc)。本地核对固定pynput1.8.1源码；stop后join用于等待其SystemHook退出、完成UnhookWindowsHookEx，而非重用停止的线程。
+
 ## 统计与位置
 
 现有FrequencyIndex按层和距入口步数分桶，并非按模板内每一个位置单独统计。模板构建使用从入口广度优先遍历的最短距离。画面唯一匹配模板后，节点ID、行列、距离须与来源模板一致，才能把该桶频率映射到此节点；多个节点可以对应同一个桶，不将它们伪装为独立位置统计。模板/距离不能对应的不显示数字。分母仍是同层同距离全部节点，不在当前候选中重新归一化。
@@ -28,22 +36,20 @@
 
 MainWindow初始化直接设置compact_window=None、map_overlay_reference=None。采样入口只判断compact_window是否已经创建，其后直接访问game_overlay；参考帧直接访问。移除该链的嵌套getattr及接收结果时的重复getattr。
 
-## 清理b：本批保留，等待用户确认
+## 清理b：按用户决定落实
 
-| 现有分支 | 触发条件 | 保护范围 | 后续取舍建议 |
-|---|---|---|---|
-| mkdir失败 | 本地目录无权限、被同名文件占用或不可写 | 用户切开关仍可在当前进程生效；提示无法保存 | 可保留保存入口的单一I/O失败提示，合并重复文案 |
-| QSaveFile.open失败 | 临时文件不能创建或目标目录不可写 | 不截断已保存设置 | 保留原子保存方式；可与前项合并报告 |
-| write/commit失败 | 写入不全、提交重命名失败、空间不足等 | 丢弃未提交临时文件，保留旧设置 | 建议保留；失败后声称已保存会丢失明确关闭意图 |
-| 读取/格式失败 | 文件读失败、JSON损坏、enabled不是布尔值 | 不把损坏文件覆盖成默认值，不误开启叠加 | 建议保留不覆盖保护，可再简化报错路径 |
-
-FileNotFoundError是首次启动的正常路径，不属于“文件损坏”；该路径默认开启。本单不删除、添加或改写这些失败分支。
+| 分支 | 处理 | 保留的保护 |
+|---|---|---|
+| mkdir / open失败 | 一个I/O失败出口，同一句文件/目录权限提示 | 目录创建或临时文件打开失败时不截断旧设置 |
+| write / commit失败 | 保留QSaveFile、cancelWriting及原失败出口 | 写入不全、磁盘/提交失败时保留旧设置 |
+| 读取 / 格式失败 | 保留readable=False及不覆盖 | 不把损坏设置改成默认开启 |
+| FileNotFoundError | 原首次启动正常路径不变 | 未保存时默认开启 |
 
 ## 成熟方案与来源
 
 评估了[CrossHairLIN](https://github.com/liuroland55/CrossHairLIN)（PySide6、MIT，自述全窗穿透/交互切换）与[koverlay](https://github.com/erik96/koverlay)（MIT、Wayland）。前者的整窗切换不能直接满足局部热区，后者不适用Windows；未复制其源码。绘制和局部穿透使用Qt6的[窗口类型](https://doc.qt.io/qt-6/qt.html#WindowType-enum)与[区域遮罩](https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QWidget.html#PySide6.QtWidgets.QWidget.setMask)，图集、统计与网页阅读器沿用项目实现。
 
-卡外点击采用成熟的[pynput鼠标监听](https://pynput.readthedocs.io/en/latest/mouse.html#monitoring-the-mouse)，固定1.8.1，仅Windows依赖，LGPLv3许可保存在`licenses/pynput-1.8.1-LGPL.txt`。核对PyPI wheel源码后安装，SHA256为`42dfcf27404459ca16ca889c8fb8ffe42a9fe54f722fd1a3e130728e59e768d2`。仅监听左键按下，`suppress=False`，不创建输入控制器、不监听移动或键盘，退出时停止。替代轮询按键状态，避免漏掉短点击；Esc仍只由助手自身Qt事件处理。
+卡外点击采用成熟的[pynput鼠标监听](https://pynput.readthedocs.io/en/latest/mouse.html#monitoring-the-mouse)，固定1.8.1，仅Windows依赖，LGPLv3许可保存在`licenses/pynput-1.8.1-LGPL.txt`。核对PyPI wheel源码后安装，SHA256为`42dfcf27404459ca16ca889c8fb8ffe42a9fe54f722fd1a3e130728e59e768d2`。仅小卡打开时创建监听器，处理左键按下，`suppress=False`；关闭卡片时stop/join并释放，不创建输入控制器，不注册移动回调或键盘钩子。低级钩子自身仍接收系统鼠标事件，其同步/GIL风险按上面的实测要求核验；Esc只由助手自身Qt事件处理。
 
 ## 游戏光标遮挡
 

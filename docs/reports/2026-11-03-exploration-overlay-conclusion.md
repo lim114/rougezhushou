@@ -1,5 +1,8 @@
 # 探索地图叠加结论报告 · 2026-11-03
 
+> 收尾更新：用户已确认共用频率口径、卡片期间监听及设置保护精简；下面保留上一轮结果。最新实现与剩余实机见[第473节收尾回执](../../verification/maintenance/overlay473-closeout-20261103/README.md)。
+
+
 **结论：第一轮的三类切换和节点卡片交互已有用户确认与日志支持；本节属于部分通过，尚未满足两轮完整验收。** 鼠标靠近小卡消失的主要原因已查明并修正；最后版本完成了列表高度和阅读状态修正。网页实机、第二大窗口、最终图像对照及落点错漏计数仍缺证据，473继续在制。
 
 日常入口的缺口已补：此前只能在独立白色地图选类型，未选择时游戏叠加没有数字；现在游戏客户区内的类型胶囊直接控制相同状态，普通启动不预选类型。
@@ -72,7 +75,45 @@
 | 检查与许可 | tests/test_map_overlay_video.py、test_software_pointer.py、test_frame_buffer.py、test_sampling_flow.py、test_overlay_display.py；pynput1.8.1及LGPL说明 |
 | 项目记录 | requirements/pyproject、VIDEO_PARITY、项目要求/待办/完成范围/断点/在制记录、决定、回执和云端索引 |
 
-{file_details}
+<details>
+<summary>展开该轮完整改动文件清单</summary>
+
+- `CLOUD_HANDOFF.md`
+- `CLOUD_INDEX.json`
+- `DEVELOPMENT_CHECKPOINT.json`
+- `PROJECT_COMPLETED.md`
+- `PROJECT_PROGRESS.md`
+- `PROJECT_REQUIREMENTS.md`
+- `VIDEO_PARITY.md`
+- `WORK_IN_PROGRESS.md`
+- `pyproject.toml`
+- `requirements.txt`
+- `rouge/app.py`
+- `rouge/capture.py`
+- `rouge/frame_buffer.py`
+- `rouge/player_compact.py`
+- `rouge/player_game_binding.py`
+- `rouge/player_game_map.py`
+- `rouge/player_map.py`
+- `rouge/player_reference_links.py`
+- `rouge/player_reference_window.py`
+- `rouge/public_node_statistics.py`
+- `rouge/tomimi_view.py`
+- `rouge/software_pointer.py`
+- `tests/test_frame_buffer.py`
+- `tests/test_map_overlay_video.py`
+- `tests/test_overlay_display.py`
+- `tests/test_sampling_flow.py`
+- `tests/test_software_pointer.py`
+- `docs/decisions/2026-11-03-overlay-video-controls.md`
+- `licenses/pynput-1.8.1-LGPL.txt`
+- `verification/maintenance/map-overlay-video-20261103/summary.json`
+- `verification/maintenance/map-overlay-video-20261103/runs.json`
+- `verification/maintenance/map-overlay-video-20261103/README.md`
+- `docs/reports/2026-11-03-exploration-overlay-conclusion.md`
+- `verification/maintenance/map-overlay-video-20261103/conclusion-metrics.json`
+
+</details>
 
 | 合并前调用 | 合并后调用 |
 |---|---|

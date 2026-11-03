@@ -113,17 +113,39 @@ class ControllerTests(unittest.TestCase):
         node['prediction']['candidates']+=['应急助力','先行一步','秘境行商','安全的角落'];self.overlay.tick();self.qt.processEvents()
         self.assertGreater(card.types_scroll.height(),height);self.assertGreaterEqual(card.types_scroll.height(),min(280,card.grid.sizeHint().height()))
 
+    def test_reopening_same_cached_card_restores_binding_and_survives_refresh(self):
+        identity=self.overlay.current['points'][0][0];self.overlay.open_node(identity);self.qt.processEvents()
+        binding=self.overlay.card.binding;first=self.overlay.card.grid.itemAt(0).widget();self.overlay.card.source.setChecked(True)
+        self.overlay.outside_click((binding,-1797,103));self.assertIsNone(self.overlay.card.binding)
+        self.overlay.open_node(identity);self.overlay.tick();self.qt.processEvents()
+        self.assertEqual(self.overlay.card.binding,binding);self.assertTrue(self.overlay.card.isVisible())
+        self.assertIs(self.overlay.card.grid.itemAt(0).widget(),first);self.assertTrue(self.overlay.card.source.isChecked())
+
     def test_outside_press_closes_but_stale_press_cannot_close_another_card(self):
         a,b=self.overlay.current['points'][:2];self.overlay.open_node(a[0]);old=self.overlay.card.binding
         self.overlay.open_node(b[0]);self.overlay.outside_click((old,-1797,103));self.assertTrue(self.overlay.card.isVisible())
         self.overlay.outside_click((self.overlay.card.binding,-1797,103));self.assertFalse(self.overlay.card.isVisible())
 
-    def test_native_mouse_listener_never_suppresses_and_is_stopped(self):
+    def test_native_mouse_listener_exists_only_during_card_and_all_closures_release_it(self):
         from rouge.player_game_map import GameMapOverlay
-        with patch('pynput.mouse.Listener')as factory,patch('rouge.player_game_map.QApplication.platformName',return_value='windows'):
-            overlay=GameMapOverlay(self.c,self.window)
-        self.assertFalse(factory.call_args.kwargs['suppress']);self.assertNotIn('on_move',factory.call_args.kwargs)
-        factory.return_value.start.assert_called_once();overlay.close();factory.return_value.stop.assert_called_once()
+        from unittest.mock import Mock
+        from PySide6.QtWidgets import QWidget
+        for reason in('outside','escape','withdraw','disable','close'):
+            with self.subTest(reason=reason),patch('pynput.mouse.Listener',side_effect=lambda **kw:Mock())as factory,patch('rouge.player_game_map.QApplication.platformName',return_value='windows'):
+                self.snapshot['foreground_on_game']=True;overlay=GameMapOverlay(self.c,self.window);overlay.timer.stop();overlay.set_enabled(True)
+                factory.assert_not_called();self.assertIsNone(overlay.mouse_listener)
+                a,b=overlay.current['points'][:2];overlay.open_node(a[0]);listener=overlay.mouse_listener
+                factory.assert_called_once();self.assertFalse(factory.call_args.kwargs['suppress']);self.assertNotIn('on_move',factory.call_args.kwargs)
+                listener.start.assert_called_once();listener.wait.assert_called_once();overlay.open_node(b[0]);factory.assert_called_once()
+                other=QWidget();QTest.keyClick(other,Qt.Key.Key_Escape);other.close();self.assertTrue(overlay.card.isVisible())
+                if reason=='outside':overlay.outside_click((overlay.card.binding,-1797,103))
+                elif reason=='escape':QTest.keyClick(self.c,Qt.Key.Key_Escape)
+                elif reason=='withdraw':self.snapshot['foreground_on_game']=False;overlay.tick()
+                elif reason=='disable':overlay.set_enabled(False)
+                else:overlay.close()
+                self.assertFalse(overlay.card.isVisible());self.assertIsNone(overlay.mouse_listener)
+                listener.stop.assert_called_once();listener.join.assert_called_once();overlay.close();listener.stop.assert_called_once()
+        self.snapshot['foreground_on_game']=True
 
     def test_occluded_template_slot_is_not_an_interactive_hotspot(self):
         node=self.reference['observation']['map']['nodes'][0];node['visible']=False;self.overlay.tick()
