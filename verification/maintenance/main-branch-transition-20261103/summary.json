@@ -1,0 +1,38 @@
+{
+  "kind": "branch_policy_maintenance",
+  "title": "当前工作区和后续开发统一main",
+  "passed": true,
+  "passed_scope": "36focused cases;actual local-bare Git recovery for fast-forward, dirty checkout and divergence; portable index/proof consistency.",
+  "current_branch": "main",
+  "retired_branch": "codex/p2-development",
+  "source_merged_commit": "fa9c5dbebd2ffe51b82acaae1e5d9d82884b2f7d",
+  "retired_tip": "862ade87c1cea74bbb607d3db98cdbf2e46ba5a6",
+  "branch_delete_verified_in_this_precommit_receipt": false,
+  "deletion_requires_verified_main_push": true,
+  "functional_section": 472,
+  "functional_section_incremented": false,
+  "product_code_changed": false,
+  "new_dependency_installed": false,
+  "full_suite_run": false,
+  "private_files_included": false,
+  "private_game_state_reset": false,
+  "game_operated": false,
+  "chat_sent": false,
+  "checks": "verification/maintenance/main-branch-transition-20261103/checks-process.json",
+  "historical_publication_bytes_preserved": true,
+  "original_fixture_failures": [
+    {
+      "tool_chunk": "86ec46",
+      "cases": 3,
+      "actual_exit": 1,
+      "cause": "Bundled Git provides GNU Bash as usr/bin/sh.exe, not bin/bash.exe; fixture now resolves the installed shell."
+    },
+    {
+      "tool_chunk": "d248e8",
+      "cases": 3,
+      "actual_exit": 1,
+      "cause": "Bundled shell lacks dirname. Recovery uses Bash native script-directory expansion; final actual Git scenarios pass."
+    }
+  ],
+  "at_UTC": "2026-11-03T11:28:16.857713+00:00"
+}

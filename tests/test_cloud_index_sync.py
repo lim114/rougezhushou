@@ -9,6 +9,36 @@ from scripts.update_cloud_index import update
 
 
 class CloudIndexSyncTests(unittest.TestCase):
+    def test_main_index_keeps_historical_publication_bytes(self):
+        proof=self.root/'verification/publication/185.json';before=proof.read_bytes()
+        update(self.root)
+        index=json.loads((self.root/'CLOUD_INDEX.json').read_bytes())
+        self.assertEqual(index['branch'],'main')
+        self.assertEqual(proof.read_bytes(),before)
+        active=(self.root/'CLOUD_HANDOFF.md').read_text('utf8').split('<!-- live-cloud-index:end -->')[0]
+        self.assertIn('远端 `main`',active)
+        self.assertNotIn('远端 `codex/p2-development`',active)
+
+    def test_retired_active_branch_is_rejected(self):
+        path=self.root/'DEVELOPMENT_CHECKPOINT.json';checkpoint=json.loads(path.read_bytes())
+        checkpoint['branch']='codex/p2-development';path.write_text(json.dumps(checkpoint),'utf8')
+        with self.assertRaisesRegex(ValueError,'branch must be main'):update(self.root)
+
+    def test_main_publication_and_historical_publication_each_match_their_proof(self):
+        path=self.root/'DEVELOPMENT_CHECKPOINT.json';checkpoint=json.loads(path.read_bytes())
+        proof=self.root/'verification/publication/185.json';data=json.loads(proof.read_bytes())
+        data.update(branch='main',remote_branch='origin/main');proof.write_text(json.dumps(data),'utf8')
+        saved=checkpoint['last_verified_cloud_save'];saved['branch']='main'
+        saved['proof_sha256']=hashlib.sha256(proof.read_bytes()).hexdigest()
+        path.write_text(json.dumps(checkpoint),'utf8');update(self.root)
+        saved['branch']='codex/p2-development';path.write_text(json.dumps(checkpoint),'utf8')
+        with self.assertRaisesRegex(ValueError,'publication proof'):update(self.root)
+
+    def test_publication_without_its_original_branch_is_rejected(self):
+        path=self.root/'DEVELOPMENT_CHECKPOINT.json';checkpoint=json.loads(path.read_bytes())
+        checkpoint['last_verified_cloud_save'].pop('branch');path.write_text(json.dumps(checkpoint),'utf8')
+        with self.assertRaisesRegex(ValueError,'original branch'):update(self.root)
+
     def test_experience_track_overrides_old_priority_and_pins_plan(self):
         path=self.root/'DEVELOPMENT_CHECKPOINT.json';checkpoint=json.loads(path.read_bytes())
         checkpoint['execution_track']={'plan':'docs/gate-plan.md','status':'TOOLS_READY_REAL_SESSIONS_PENDING','real_sessions_collected':1,'real_sessions_completed':0}
@@ -26,7 +56,7 @@ class CloudIndexSyncTests(unittest.TestCase):
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
         self.root = Path(temp.name)
-        checkpoint = {'branch': 'codex/p2-development',
+        checkpoint = {'branch': 'main',
                       'completed_sections': 185, 'next_section': 186,
                       'batch_status': 'IN_PROGRESS', 'next_full_validation_after': 200,
                       'sections': [{'number': 185, 'verification': 'verification/sections/185.json'}],
@@ -52,6 +82,7 @@ class CloudIndexSyncTests(unittest.TestCase):
             'remote_branch': 'origin/codex/p2-development', 'push_primary_exit': 0}), encoding='utf-8')
         checkpoint['last_verified_cloud_save'] = {'section': 185, 'commit': self.current_commit,
             'scope': 'current_functional_section', 'binding': 'verified_remote_commit',
+            'branch': 'codex/p2-development',
             'proof': 'verification/publication/185.json',
             'proof_sha256': hashlib.sha256(proof.read_bytes()).hexdigest()}
         state_path.write_text(json.dumps(checkpoint), encoding='utf-8')
@@ -420,7 +451,7 @@ class CloudIndexLabels306Tests(unittest.TestCase):
             'branch': 'codex/p2-development', 'commit': 'b' * 40,
             'local_HEAD': 'b' * 40, 'remote_HEAD': 'b' * 40,
             'remote_branch': 'origin/codex/p2-development', 'push_primary_exit': 0})
-        self.checkpoint = {'branch': 'codex/p2-development', 'completed_sections': 185,
+        self.checkpoint = {'branch': 'main', 'completed_sections': 185,
             'next_section': 186, 'batch_status': 'CURRENT_ACCEPTED', 'next_full_validation_after': 200,
             'sections': [
                 {'number': 184, 'topic': '原有历史资料', 'verification': 'verification/sections/184.json'},
@@ -431,6 +462,7 @@ class CloudIndexLabels306Tests(unittest.TestCase):
                                      'scope': 'current_functional_section', 'binding': 'enclosing_commit'},
             'last_verified_cloud_save': {'section': 185, 'commit': 'b' * 40,
                 'scope': 'current_functional_section', 'binding': 'verified_remote_commit',
+                'branch': 'codex/p2-development',
                 'proof': proof_name, 'proof_sha256': sha256((self.root / proof_name).read_bytes()).hexdigest()}}
         self.write_json('DEVELOPMENT_CHECKPOINT.json', self.checkpoint)
         for name in ('PROJECT_REQUIREMENTS.md', 'PROJECT_PROGRESS.md', 'PROJECT_COMPLETED.md',

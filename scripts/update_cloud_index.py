@@ -40,8 +40,8 @@ def validate_delivery(root, checkpoint):
              'completed_sections must be a positive integer.')
     _require(checkpoint.get('next_section') == section + 1,
              'next_section must be completed_sections + 1.')
-    _require(checkpoint.get('branch') == 'codex/p2-development',
-             'Checkpoint branch must be codex/p2-development.')
+    _require(checkpoint.get('branch') == 'main',
+             'Checkpoint branch must be main.')
     expected_receipt = f'verification/sections/{section:03}.json'
     rows = checkpoint.get('sections')
     _require(isinstance(rows, list) and rows,
@@ -73,6 +73,9 @@ def validate_delivery(root, checkpoint):
              'Current save binding must explicitly be enclosing_commit, not a self hash.')
 
     published = checkpoint.get('last_verified_cloud_save') or {}
+    publication_branch = published.get('branch')
+    _require(isinstance(publication_branch,str) and bool(publication_branch.strip()),
+             'Publication must record its original branch.')
     saved_section = published.get('section')
     _require(type(saved_section) is int and saved_section in (section - 1, section),
              'last_verified_cloud_save must be current or previous section; older records are historical.')
@@ -109,13 +112,13 @@ def validate_delivery(root, checkpoint):
              'Verified publication must bind the exact public proof bytes.')
     _require(proof.get('passed') is True
              and proof.get('section') == saved_section
-             and proof.get('branch') == 'codex/p2-development'
+             and proof.get('branch') == publication_branch
              and proof.get('commit') == commit
              and proof.get('local_HEAD') == commit == proof.get('remote_HEAD')
-             and proof.get('remote_branch') == 'origin/codex/p2-development'
+             and proof.get('remote_branch') == 'origin/'+publication_branch
              and type(proof.get('push_primary_exit')) is int
              and proof.get('push_primary_exit') == 0,
-             'Public publication proof must bind the actual local/remote development SHA.')
+             'Public publication proof must bind the original branch and actual local/remote SHA.')
 
     # Real Git-object/remote freshness is audited at publication, outside this
     # portable reader. Re-reading a hash-bound proof is not a new remote check.
@@ -198,7 +201,7 @@ def update(root=ROOT):
              'PROJECT_COMPLETED.md', 'AGENTS.md', 'PROJECT_REQUIREMENTS.md',
              f'verification/sections/{completed:03}.json']
     index = {
-        'project': 'rougezhushou', 'branch': 'codex/p2-development',
+        'project': 'rougezhushou', 'branch': 'main',
         'completed_sections': completed, 'next_section': checkpoint['next_section'],
         'current_section_label': current_label,
         'current_completed_change': change,
@@ -256,7 +259,7 @@ def update(root=ROOT):
              f'已完成至{completed}，后续{checkpoint["next_section"]}；本批状态 `{checkpoint.get("batch_status")}`。'
              f'推进终点：{index["current_batch_target_section"] if index["current_batch_target_section"] is not None else "未指定数字终点"}。'
              f'{full_notice}每节更新本入口和 CLOUD_INDEX.json 并随功能提交普通推送。\n\n'
-             '恢复时先核对远端 `codex/p2-development`、真实源码和 DEVELOPMENT_CHECKPOINT.json。'
+             '恢复时先核对远端 `main`、真实源码和 DEVELOPMENT_CHECKPOINT.json。'
              '当前待办仅在 PROJECT_PROGRESS.md；完成范围在 PROJECT_COMPLETED.md，逐节回执在 verification/sections/。'
              '当前产品要求与交付边界见 PROJECT_REQUIREMENTS.md，并随每节索引核对摘要、提交到同一分支。'
              f'当前工作顺序：{index["priority_order"]}。'

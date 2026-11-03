@@ -1,5 +1,5 @@
 {
-  "branch": "codex/p2-development",
+  "branch": "main",
   "policy": {
     "commit_after_each_section": true,
     "full_validation_interval": null,
@@ -18,7 +18,7 @@
     "automatic_next_batch": false,
     "commit_interval": 1,
     "commit_after_full_validation_pass": false,
-    "cloud_save_destination": "Every completed section:commit and ordinary push origin codex/p2-development.Full checks cancelled until explicit user request.",
+    "cloud_save_destination": "Every completed section:commit and ordinary push origin main.Full checks cancelled until explicit user request.",
     "push_after_batch_commit": true,
     "development_paused_by_latest_user_request": false,
     "summary_interval": 5,
@@ -2913,7 +2913,7 @@
     }
   ],
   "next_section": 473,
-  "next_action": "继续文字检测吞吐、地图/节点页核心特征与容量压力。当前测试窗口来源.cache/player_test_window_view_sync.py，自动采样开启；先读.cache/current-sync-live-status.json和本机日志指针，避免重复启动。本批游戏未运行，用户正常启动后后台继续读取，首次有效帧后记录60秒。不操作游戏、不重置本局、不发送聊天；保持472、473未开始，不恢复全量。",
+  "next_action": "后续统一在main开发并普通推送，旧开发分支已合并弃用。继续文字检测吞吐、地图/节点页核心特征与容量压力。当前测试窗口来源.cache/player_test_window_view_sync.py，自动采样开启；先读.cache/current-sync-live-status.json和本机日志指针，避免重复启动。本批游戏未运行，用户正常启动后后台继续读取，首次有效帧后记录60秒。不操作游戏、不重置本局、不发送聊天；保持472、473未开始，不恢复全量。",
   "full_validation_due": false,
   "windows_native_validation": "当前440：41项必要检查、15项原生窗口检查通过；隔离状态与九类外部操作零。当前完整可用范围已按本节来源重新验收；原私样本、历史系统和实际游戏/聊天不冒充通过。",
   "wine_validation": "第261节Wine11.19实际全量3897项/3697通过/84声明跳过/175不可用记录，零失败错误、真实退出0；完整4283条/52状态/42投影/精确10桥接及当前30项MainWindow流程通过。原生Windows/游戏/聊天和缺原件不计通过。",
@@ -3041,7 +3041,8 @@
     "binding": "verified_remote_commit",
     "commit": "d4a8fa33a648abae6a176917913a8b4ff008caef",
     "proof": "verification/sections/472-publication.json",
-    "proof_sha256": "6e5095b749727f6939407e8ce260dbab8d41001ce95b8814fd5a059060d114f5"
+    "proof_sha256": "6e5095b749727f6939407e8ce260dbab8d41001ce95b8814fd5a059060d114f5",
+    "branch": "codex/p2-development"
   },
   "current_full100_checkpoint": {
     "after_section": 100,
@@ -10440,5 +10441,14 @@
     "latest_live_validation": "verification/maintenance/hidden-view-sync-20261103/live-window/window.json",
     "live_validation_scope": "原测试窗口已打开且响应，自动采样开启；当前无游戏窗口，本批未做实际游戏延迟或短页通过判断。",
     "previous_implementation_receipt": "verification/maintenance/text-row-sync-20261103/summary.json"
+  },
+  "branch_transition": {
+    "active_branch": "main",
+    "retired_branch": "codex/p2-development",
+    "merged_commit": "fa9c5dbebd2ffe51b82acaae1e5d9d82884b2f7d",
+    "retired_tip": "862ade87c1cea74bbb607d3db98cdbf2e46ba5a6",
+    "historical_publication_branch_preserved": true,
+    "resume_script": "scripts/resume_development.sh",
+    "scope": "User explicitly switched ongoing development to main. Existing unfinished work and cancelled full checks remain."
   }
 }
