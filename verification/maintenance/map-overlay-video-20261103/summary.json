@@ -1,6 +1,6 @@
 {
   "kind": "in_progress_implementation",
-  "status": "IMPLEMENTED_TWO_ROUND_ACCEPTANCE_PENDING",
+  "status": "FIRST_ROUND_INTERACTIONS_RECORDED_CONCLUSION_DELIVERED_FULL_ACCEPTANCE_PENDING",
   "branch": "main",
   "baseline_commit": "a6a9ddbbc17b9de773848cf20c589dfb42964dc4",
   "functional_section_completed": false,
@@ -89,23 +89,26 @@
     }
   },
   "real_acceptance": {
-    "type_switches": "recorded across earlier source versions; final-source two-round sequence pending",
+    "type_switches": "Latest source round1-card-layout: three different types recorded (秘境行商、狭路相逢、不期而遇); user confirmed requested first-round interaction.",
     "white_numbers": "user confirmed readable",
-    "card": "round1-pointer-final: ordinary node presses and card paints recorded, user confirmed move-in and source expansion; matching passes with one cursor-occluded anchor excluded and fourteen retained. Subsequent layout/source-state fix passed12 targeted controller checks; complete two-round test pending.",
+    "card": "Latest source: 20 card paints, including repeated clicks, one source-expansion event; user confirmed first-round cards complete. Final screenshot collector expired before these actions; screenshots still missing.",
     "web": "isolated controller verified; actual game bound-stage web open pending",
     "second_large_size_or_map": "pending",
     "page_return_and_focus_with_card": "pending",
     "wrong_node_missing_false_counts": null,
     "reason_counts": "runs.json; recorded event counts, not time-share",
-    "freshness_and_structure_thresholds": "30s/2s, NCC .99 and contrast .9-1.1 unchanged; title plus >=3 unoccluded node anchors required"
+    "freshness_and_structure_thresholds": "30s/2s, NCC .99 and contrast .9-1.1 unchanged; title plus >=3 unoccluded node anchors required",
+    "first_round_screenshots": "Missing: local screenshot watcher stopped after30 minutes, before later first-round actions; this is a collection failure, not missing user cooperation."
   },
   "data_mapping": "floor and measured distance select one aggregate historical bucket for a canonical template position; different positions may share this bucket; no unique-site probability inferred. Unmatched template, inconsistent or duplicate node identity has no number.",
   "local_only": "all screenshots, recordings, raw observations and per-session logs remain .local; no personal run data included here",
   "pending": [
-    "final layout source: complete both large-window rounds and screenshot comparison",
+    "final-source type/card comparison images",
     "real linked webpage scenario",
-    "all five real metrics including wrong/missing/false node labels",
-    "developer decision on existing settings I/O failure branches; unchanged in this task"
+    "second large-window scenario, page return and focus-out with card",
+    "independent wrong-node/missing/false-display counts",
+    "decision on shared floor/distance aggregate frequency display",
+    "decision on existing settings I/O guards; unchanged"
   ],
   "decision": "docs/decisions/2026-11-03-overlay-video-controls.md",
   "live_test_window": "ordinary startup, no preselected kind; actual launcher and source hashes kept locally",
@@ -142,5 +145,13 @@
     "verification/maintenance/map-overlay-video-20261103/summary.json",
     "verification/maintenance/map-overlay-video-20261103/runs.json",
     "verification/maintenance/map-overlay-video-20261103/README.md"
-  ]
+  ],
+  "conclusion_report": {
+    "path": "docs/reports/2026-11-03-exploration-overlay-conclusion.md",
+    "sha256": "5fcb00611c8f54f32bb3349724a067a003a10d0ce407ba610c144b1e15560cdf"
+  },
+  "conclusion_metrics": {
+    "path": "verification/maintenance/map-overlay-video-20261103/conclusion-metrics.json",
+    "sha256": "ccee1d476bad3da7360956abfe3d899b16a36cec007899e425d6a39b8f6967e9"
+  }
 }
